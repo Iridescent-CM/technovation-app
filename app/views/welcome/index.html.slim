@@ -1,0 +1,49 @@
+/ .panel.panel-primary
+/   .panel-heading Profile Completion
+/   .panel-body
+/     p Your profile is currently 60% complete.
+/     .progress
+/       .progress-bar.progress-bar-success role='progressbar' aria-valuenow='60' area-valuemin='0' aria-valuemax='100' style='width: 60%'
+/     h4 Completed
+/     ul
+/       li COPPA Agreement
+/       li Stuff
+/     h4 Remaining
+/     ul
+/       li Join a Team
+
+h2 Dashboard
+- if current_user.current_team.nil?
+  - pending_requests = current_user.team_requests.pending
+  - if pending_requests.count > 0
+    p You have #{current_user.team_requests.pending.count} team request pending:
+    ul
+      - for req in pending_requests
+        - if req.user_request
+          li
+            ' Sent request to team "#{req.team.name}" pending their approval from #{time_ago_in_words(req.updated_at)} ago
+            = link_to '(Withdraw)', req, method: :delete
+        - else
+          li
+            ' Received request to join team "#{req.team.name}"
+            = link_to '(Approve)', [:approve, req]
+            '
+            = link_to '(Reject)', req, method: :delete
+
+  - else
+      ' You are not yet part of a team. You may either
+      = link_to 'create one', :new_team
+      '  or
+      = link_to 'request to join one', :teams
+      | .
+
+hr
+
+h2 Annoucements
+- for ann in @annoucements
+  h4
+    =ann.title
+    br
+    small Posted #{time_ago_in_words(ann.created_at)} ago
+  p= ann.post
+

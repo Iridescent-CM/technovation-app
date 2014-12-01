@@ -1,0 +1,17 @@
+.page-header
+  h1
+    ' Teams Gallery
+    small #{@year} Season
+
+- if @teams.empty?
+  p There are not yet any teams registered for the #{@year} season.
+
+- else
+  - for t in @teams do
+    .media
+      a.media-left href='#'
+        = image_tag t.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
+      .media-body
+        a href=url_for(t)
+          h4.media-heading= t.name
+        p= t.about

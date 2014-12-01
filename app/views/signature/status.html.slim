@@ -1,0 +1,18 @@
+- if current_user.consent_signed_at == nil
+
+  - if current_user.student?
+    p Before you participate, the consent form must be signed by a parent or guardian.
+
+    p It was last emailed to #{current_user.parent_email} #{current_user.consent_sent_at.nil? ? 'never' : "#{time_ago_in_words(current_user.consent_sent_at)} ago"}.
+
+    p If you have any questions, please email the admins.
+
+    = link_to 'Resend Email', {controller: :signature, action: :resend}, method: :post, class: ['btn', 'btn-warning']
+  - else
+    p
+    ' Before you participate, a volunteer consent form must be electronically signed. Please
+    a href=SignatureController.link(current_user) review the following document
+    '  and sign it before continuing.
+
+- else
+  p Electronics Signature on File at #{current_user.consent_signed_at}

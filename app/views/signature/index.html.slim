@@ -1,0 +1,38 @@
+coffee:
+  validate = ->
+    $('#submit').attr 'disabled', $('#name').val().length == 0 or not $('#agree').is(':checked')
+    return true
+  ready = ->
+    $('#agree').change validate
+    $('#name').keyup validate
+  $(document).on('ready page:load', ready)
+
+/ b Parental Consent for #{@user.first_name} #{@user.last_name} &lt;#{@user.email}&gt;
+
+- unless @user.consent_signed_at.nil?
+  hr
+  b Electronic Signature on File at #{@user.consent_signed_at}
+  hr
+
+- if @user.student?
+  = render "student_waiver"
+else
+  = render "volunteer_waiver"
+
+- if @user.consent_signed_at.nil?
+  hr
+  = form_tag do
+    p
+      = check_box_tag(:agree)
+      b  I ACKNOWLEDGE THAT I HAVE READ AND UNDERSTOOD ALL OF THE TERMS OF THIS AGREEMENT AND THAT I AM VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE COMPANY.
+
+    b
+      | Electronic Signature
+      super *
+    p By typing your name, you affirm that to the best of your knowledge the above information is true and correct.
+    .row
+      .col-sm-6
+        .input-group
+          input.form-control id='name' name='name' type='text'
+          span.input-group-btn
+            button.btn.btn-primary#submit disabled=true data-toggle='tooltip' title='hi' Save

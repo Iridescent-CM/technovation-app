@@ -1,0 +1,27 @@
+- if @team.ineligible?
+  .alert.alert-danger role='alert'
+    p This team is ineligible to participate due to too many student members.
+
+.page-header
+  h1
+    ' #{@team.name}
+    small &#40;##{@team.id}&#41;
+    .pull-right
+      - if policy(@team).join?
+        = link_to 'Request to Join', [:join, @team], method: :post, class: ['btn', 'btn-primary']
+      - if policy(@team).edit?
+        = link_to 'Manage Team', [:edit, @team], class: ['btn', 'btn-primary']
+
+.row
+  .col-sm-4
+    = image_tag @team.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
+  .col-sm-8
+    h3 About
+    p= @team.about
+
+    h3 Members
+    - for user in @team.members
+      p = user.first_name
+
+    h3 Division
+    p= format_division(@team.division)

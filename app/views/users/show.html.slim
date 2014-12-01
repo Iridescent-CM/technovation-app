@@ -1,0 +1,29 @@
+.page-header
+  h1
+    ' #{@user.name}
+    small &#40;##{@user.id}&#41;
+    .pull-right
+      - if policy(@user).edit?
+          = link_to 'Edit Profile', edit_user_registration_path, class: ['btn', 'btn-primary']
+
+.row
+  .col-sm-4
+    = image_tag @user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
+  .col-sm-8
+    dl.dl-horizontal
+      dt City
+      dd= @user.home_city
+      - if @user.current_team
+        dt Current Team
+        dd= link_to @user.current_team.name, @user.current_team
+      - if @user.student?
+        dt Division
+        dd= format_division(@user.division)
+
+.row
+  -unless @user.teams.old.empty?
+    h3 Past Teams
+    ul
+      - for t in @user.teams.old
+        li
+          a href=url_for(t) #{t.name} (#{t.year})

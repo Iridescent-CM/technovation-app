@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    title Technovation
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    nav.navbar.navbar-inverse.navbar-static-top role='navigation'
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed type='button' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar'
+            span.sr-only toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand href='/'
+            | Tech
+            b novation
+
+        #navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              = link_to 'Teams Gallery', :teams
+            - if current_user
+              - if current_user.current_team != nil
+                li
+                  = link_to 'My Team', current_user.current_team
+              li
+                = link_to 'My Profile', @current_user
+              li
+                = link_to 'Sign Out', :destroy_user_session, method: :delete
+            - else current_user
+              li
+                = link_to 'Sign In', :new_user_session
+    .container
+      - if notice
+        .alert.alert-info role='alert'
+          = notice
+      - if alert
+        .alert.alert-danger role='alert'
+          = alert
+      == yield
