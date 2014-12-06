@@ -12,8 +12,14 @@ class TeamsController < ApplicationController
   end
 
   def index
-    @teams = Team.where(year: Setting.year)
-    @year = Setting.year
+    if params[:search]
+      @search = params[:search]
+      @teams = Team.where('name LIKE ?', "%#{@search}%")
+      @season = "All Seasons"
+    else
+      @teams = Team.where(year: Setting.year)
+      @season = "#{Setting.year} Season"
+    end
   end
 
   def create
@@ -68,7 +74,7 @@ class TeamsController < ApplicationController
 
   private
   def team_params
-    params.require(:team).permit(:name, :about, :avatar)
+    params.require(:team).permit(:name, :about, :avatar, :region)
   end
 
 end

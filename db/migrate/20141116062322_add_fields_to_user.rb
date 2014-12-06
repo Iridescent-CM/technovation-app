@@ -7,6 +7,7 @@ class AddFieldsToUser < ActiveRecord::Migration
       # bio
       t.string :first_name, :last_name, null: false
       t.date :birthday, null: false
+      t.text :about
 
       # address
       t.string :home_city, :home_state, :postal_code

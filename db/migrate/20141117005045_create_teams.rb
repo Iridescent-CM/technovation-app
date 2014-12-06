@@ -6,7 +6,7 @@ class CreateTeams < ActiveRecord::Migration
       t.text :about
       t.integer :year, null: false, default: 2014
       t.integer :division
-      t.integer :region
+      t.integer :region, null: false
       t.timestamps
     end
     add_index :teams, :division

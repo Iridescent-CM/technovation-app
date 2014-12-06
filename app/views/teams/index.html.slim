@@ -1,7 +1,16 @@
 .page-header
   h1
-    ' Teams Gallery
-    small #{@year} Season
+    - if @search
+      ' Search Results: "#{@search}"
+    - else
+      ' Teams Gallery
+    small= @season
+    form.navbar-form.navbar-right role='search'
+      .input-group
+        input.form-control type='text' placeholder='search team names'
+        .input-group-btn
+          button.btn.btn-default type='submit'
+            span.glyphicon.glyphicon-search
 
 - if @teams.empty?
   p There are not yet any teams registered for the #{@year} season.

@@ -17,9 +17,9 @@ class SignatureController < ApplicationController
   def resend
     if current_user.consent_signed_at.nil?
       unless current_user.consent_sent_at.nil?
-        sent_mins_ago = ((DateTime.now - User.first.consent_sent_at.to_datetime) * 60 * 24).round
-        if sent_mins_ago < 10
-          flash[:alert] = "Please wait #{10 - sent_mins_ago} more minutes before attempting to resend"
+        sent_mins_ago = ((DateTime.now - current_user.consent_sent_at.to_datetime) * 60 * 24).round
+        if sent_mins_ago < 0
+          flash[:alert] = "Please wait at least #{10 - sent_mins_ago} more minutes before attempting to resend"
           redirect_to :back
           return
         end
@@ -49,7 +49,6 @@ class SignatureController < ApplicationController
 
   def self.link(user)
     Rails.application.routes.url_helpers.url_for(
-      host: 'my.technovationchallenge.org',
       controller: :signature,
       action: :index,
       hash: SignatureController.generate(user.id),

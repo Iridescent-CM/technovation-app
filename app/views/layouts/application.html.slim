@@ -14,7 +14,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand href='/'
+          a.navbar-brand href=url_for(:root)
             | Tech
             b novation
 
@@ -23,7 +23,11 @@ html
             li
               = link_to 'Teams Gallery', :teams
             - if current_user
+              li
+                = link_to 'Dashboard', :root
               - if current_user.current_team != nil
+                li
+                  = link_to 'Mentor Search', :controller => '/mentor', :action => 'index'
                 li
                   = link_to 'My Team', current_user.current_team
               li

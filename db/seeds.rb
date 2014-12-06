@@ -22,7 +22,7 @@ user.save!
 
 setting = Setting.create(
   key: 'year',
-  value: '2014',
+  value: '2015',
 )
 
 setting = Setting.create(

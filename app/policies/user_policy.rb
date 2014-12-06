@@ -6,7 +6,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    @user.consented?
   end
 
   def edit?

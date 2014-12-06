@@ -17,13 +17,7 @@ class Team < ActiveRecord::Base
   has_many :team_requests
 
   has_many :members, -> {where 'team_requests.approved = ?', true}, {through: :team_requests, source: :user}
-  has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user} do
-    def mentors
-      # where('team_requests.approved = ?', true)
-    end
-    def students
-    end
-  end
+  has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
 
   scope :old, -> {where 'year < ?', Setting.year}
 
@@ -40,7 +34,7 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
-    members.students.count > 5
+    members.student.count > 5
   end
 
   def check_empty!

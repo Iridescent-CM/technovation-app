@@ -21,16 +21,17 @@ module Technovation
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    Rails.application.routes.default_url_options[:host] = ENV['HOST_DOMAIN']
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
-    config.action_mailer.raise_delivery_errors = false
+    config.action_mailer.raise_delivery_errors = true
     config.action_mailer.default :charset => "utf-8"
     config.action_mailer.smtp_settings = {
        :authentication => :plain,
        :port => ENV['MAIL_PORT'].to_i,
        :address => ENV['MAIL_ADDRESS'],
        :domain => ENV['MAIL_DOMAIN'],
-       :user_name => ENV['MAIN_USER'],
+       :user_name => ENV['MAIL_USER'],
        :password => ENV['MAIL_PASSWORD'],
     }
 

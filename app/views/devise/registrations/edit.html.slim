@@ -4,8 +4,9 @@ h2 Edit #{resource_name.to_s.humanize}
   = f.alert_message "Please fix the errors below"
 
   = f.email_field :email
-  -  if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    div Currently waiting confirmation for: #{resource.unconfirmed_email}
+  = f.form_group do
+    -  if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      .alert.alert-warning Currently waiting confirmation for #{resource.unconfirmed_email}
 
   = f.file_field :avatar
 

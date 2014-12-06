@@ -21,13 +21,24 @@ class User < ActiveRecord::Base
   has_many :team_requests
   has_many :teams, -> {where 'team_requests.approved = ?', true}, through: :team_requests
 
-  has_flags 1 => :science,
-            2 => :engineering,
-            3 => :project_management,
-            4 => :finance,
-            5 => :marketing,
-            6 => :design,
+  EXPERTISES = [
+    {sym: :science, abbr: 'Sci'},
+    {sym: :engineering, abbr: 'Eng'},
+    {sym: :project_management, abbr: 'PM'},
+    {sym: :finance, abbr: 'Fin'},
+    {sym: :marketing, abbr: 'Mktg'},
+    {sym: :design, abbr: 'Dsn'},
+  ]
+
+  has_flags 1 => EXPERTISES[0][:sym],
+            2 => EXPERTISES[1][:sym],
+            3 => EXPERTISES[2][:sym],
+            4 => EXPERTISES[3][:sym],
+            5 => EXPERTISES[4][:sym],
+            6 => EXPERTISES[5][:sym],
             :column => 'expertise'
+  scope :has_expertise, -> {where.not expertise: 0}
+
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
@@ -50,6 +61,10 @@ class User < ActiveRecord::Base
     teams.where(year: Setting.year).first
   end
 
+  def consented?
+    not consent_signed_at.nil?
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -67,7 +82,7 @@ class User < ActiveRecord::Base
 
   def email_parents_callback
     if student?
-      SignatureMailer.signature_email(current_user).deliver
+      SignatureMailer.signature_email(self).deliver
     end
   end
 

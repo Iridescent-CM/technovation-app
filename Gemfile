@@ -1,11 +1,15 @@
+ruby '2.1.5'
+
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.6'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
-gem 'bootstrap-sass', :git => 'https://github.com/twbs/bootstrap-sass.git', :branch => 'next'
+gem 'bootstrap-sass', :git => 'git://github.com/twbs/bootstrap-sass.git', :branch => 'next'
 gem 'bootstrap_form'
 gem 'autoprefixer-rails'
 gem 'country_select', github: 'stefanpenner/country_select'
@@ -31,8 +35,9 @@ gem 'openssl'
 
 gem 'devise'
 gem 'pundit', github: 'elabs/pundit'
-gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin', github: 'activeadmin'
 gem 'quiet_assets', group: :development
+gem 'has_scope'
 
 
 # Use jquery as the JavaScript library

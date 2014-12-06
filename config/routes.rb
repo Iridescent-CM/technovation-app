@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'signature' => 'signature#status'
   post 'signature' => 'signature#resend'
 
+  get 'mentors' => 'mentor#index'
+
   resources :users, only: [:show]
 
   resources :teams do

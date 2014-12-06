@@ -1,0 +1,36 @@
+.row
+  h1 Mentor Search
+  p.lead Find and connect with nearby mentors
+  hr
+
+.row
+  .col-sm-2
+    h5 Filter by expertise:
+    ul.nav.nav-pills.nav-stacked
+      li
+        a href=url_for(controller: :mentor, action: :index) All
+      - for exp in User::EXPERTISES
+        li class=(params[exp[:sym]] == "true" ? :active : nil)
+          a href=filter_by(exp[:sym]) = exp[:sym].to_s.humanize
+  .col-sm-10
+    - if @mentors.empty?
+      .panel.panel-default
+        .panel-body
+          p There are currently no mentors that match the criteria.
+    - else 
+      - for m in @mentors do
+        .media
+          a.media-left href='#'
+            = image_tag m.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
+          .media-body
+            a href=url_for(m)
+              h4.media-heading= m.name
+            - for exp in User::EXPERTISES
+              - if m.send(exp[:sym])
+                - if params[exp[:sym]] == 'true'
+                  .label.label-warning= exp[:abbr]
+                - else
+                  .label.label-primary= exp[:abbr]
+              - else
+                .label.label-default= exp[:abbr]
+              '

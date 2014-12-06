@@ -1,7 +1,4 @@
 class SettingsController < ApplicationController
-  validates :key, presence: true, uniqueness: true
-  validates :value, presence: true
-
   def create
     Setting.create(params[setting_params])
   end

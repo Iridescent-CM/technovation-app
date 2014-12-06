@@ -2,10 +2,18 @@ class ApplicationController < ActionController::Base
   include Pundit
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  before_action :configure_devise_permitted_parameters, if: :devise_controller?
-  before_action :verify_consent, {unless: :devise_controller?}
   protect_from_forgery with: :exception
-  after_action :verify_authorized, {except: :index, unless: :devise_controller?}
+  before_action :configure_devise_permitted_parameters, if: :devise_controller?
+  after_action :verify_authorized, {except: :index, unless: :special_controller?}
+  before_action :verify_consent, {unless: :special_controller?}
+
+  def special_controller?
+    # since the admin user class is currently seperate from the main devise class,
+    # we need to make sure that pundit doesn't run on these controllers
+    self.class.name.starts_with?('Admin::') || devise_controller?
+  end
+
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected

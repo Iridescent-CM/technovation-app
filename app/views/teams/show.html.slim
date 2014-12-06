@@ -15,13 +15,37 @@
 .row
   .col-sm-4
     = image_tag @team.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
+    hr
+    dl.dl-horizontal
+      dt Season
+      dd= @team.year
+
+      dt Division
+      dd= format_division(@team.division)
+
+      dt Region
+      dd= @team.region.humanize
   .col-sm-8
     h3 About
     p= @team.about
 
     h3 Members
-    - for user in @team.members
-      p = user.first_name
 
-    h3 Division
-    p= format_division(@team.division)
+    h4 Students
+    - if not @team.members.student.empty?
+      ul.list-unstyled
+        - for user in @team.members.student
+          li
+            a href=url_for(user) = user.name
+    - else
+      p There are currently no students on this team
+
+    h4 Mentors
+    - if not @team.members.mentor.empty?
+      ul.list-unstyled
+        - for mentor in @team.members.mentor
+          li
+            a href=url_for(mentor) = mentor.name
+    - else
+      p There are currently no mentors on this team
+
