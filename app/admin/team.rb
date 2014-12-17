@@ -1,4 +1,18 @@
 ActiveAdmin.register Team do
+  config.clear_action_items!
+
+  form do |f|
+    f.inputs "Team Details" do
+      f.input :name
+      f.input :about
+      f.input :year
+      f.input :avatar, as: :file, required: false
+      f.input :region, as: :select, collection: Team.regions.keys
+    end
+    f.actions
+  end
+
+  permit_params :name, :region
 
 
   # See permitted parameters documentation:

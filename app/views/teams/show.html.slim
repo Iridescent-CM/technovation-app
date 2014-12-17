@@ -5,7 +5,7 @@
 .page-header
   h1
     ' #{@team.name}
-    small &#40;##{@team.id}&#41;
+    # small &#40;##{@team.id}&#41;
     .pull-right
       - if policy(@team).join?
         = link_to 'Request to Join', [:join, @team], method: :post, class: ['btn', 'btn-primary']

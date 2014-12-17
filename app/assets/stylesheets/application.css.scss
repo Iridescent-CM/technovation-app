@@ -1,5 +1,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "select2-bootstrap";
+@import "select2";
+
 
 .rails-bootstrap-forms-date-select select,
 .rails-bootstrap-forms-time-select select,
@@ -20,3 +23,12 @@ label.required:after {
   content:" *";
 }
 
+#main-content{
+  padding-bottom: 100px;
+}
+
+.large-checkbox {
+  transform: scale(2);
+  -webkit-transform: scale(2);
+  margin: 8px !important;
+}

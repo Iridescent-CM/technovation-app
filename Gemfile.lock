@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/activeadmin/activeadmin.git
-  revision: 5af560b2b6cd18526d397331c0c5cca90dfcbaeb
+  revision: 85c26616468266fda0c3762a507a7ea68b9b2fec
   specs:
     activeadmin (1.0.0.pre)
       arbre (~> 1.0, >= 1.0.2)
@@ -22,6 +22,18 @@ GIT
   specs:
     pundit (0.3.0)
       activesupport (>= 3.0.0)
+
+GIT
+  remote: git://github.com/plataformatec/devise.git
+  revision: bf30ddddc0d210e96fde364a8614d2171c557344
+  specs:
+    devise (3.4.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
 
 GIT
   remote: git://github.com/stefanpenner/country_select.git
@@ -70,11 +82,11 @@ GEM
     arbre (1.0.2)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
-    autoprefixer-rails (4.0.0.1)
+    autoprefixer-rails (4.0.2.1)
       execjs
-    aws-sdk (1.59.0)
-      aws-sdk-v1 (= 1.59.0)
-    aws-sdk-v1 (1.59.0)
+    aws-sdk (1.59.1)
+      aws-sdk-v1 (= 1.59.1)
+    aws-sdk-v1 (1.59.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     bcrypt (3.1.9)
@@ -85,7 +97,7 @@ GEM
     builder (3.2.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
-    cocaine (0.5.4)
+    cocaine (0.5.5)
       climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -97,13 +109,6 @@ GEM
     countries (0.9.3)
       currencies (~> 0.4.2)
     currencies (0.4.2)
-    devise (3.4.1)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      responders
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
       dotenv (= 1.0.2)
@@ -124,7 +129,7 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 4.2)
       responders (~> 1.0)
-    jbuilder (2.2.4)
+    jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (3.1.2)
@@ -141,13 +146,13 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     mini_portile (0.6.1)
-    minitest (5.4.3)
+    minitest (5.5.0)
     multi_json (1.10.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     openssl (1.0.0.beta)
     orm_adapter (0.5.0)
-    paperclip (4.2.0)
+    paperclip (4.2.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -188,9 +193,9 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.1)
-    rdoc (4.1.2)
+    rdoc (4.2.0)
       json (~> 1.4)
-    redcarpet (3.2.0)
+    redcarpet (3.2.2)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     sass (3.2.19)
@@ -202,6 +207,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    select2-rails (3.5.9.1)
+      thor (~> 0.14)
     slim (2.1.0)
       temple (~> 0.6.9)
       tilt (>= 1.3.3, < 2.1)
@@ -210,7 +217,7 @@ GEM
       activesupport (>= 3.0, < 4.2)
       railties (>= 3.0, < 4.2)
       slim (~> 2.0)
-    spring (1.1.3)
+    spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -224,11 +231,11 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    turbolinks (2.5.1)
+    turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (2.5.3)
+    uglifier (2.6.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicorn (4.8.3)
@@ -251,7 +258,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coffee-script
   country_select!
-  devise
+  devise!
   dotenv-rails
   flag_shih_tzu
   geocoder
@@ -268,6 +275,7 @@ DEPENDENCIES
   redcarpet
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  select2-rails
   slim-rails
   spring
   turbolinks

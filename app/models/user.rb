@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   include FlagShihTzu
 
-  enum role: [:student, :mentor]
+  enum role: [:student, :mentor, :coach]
   enum referral_category: [
     :friend,
     :colleague,
@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
     :social_media,
     :print,
     :web_search,
+    :teacher,
     :other,
   ]
 
@@ -84,10 +85,5 @@ class User < ActiveRecord::Base
     if student?
       SignatureMailer.signature_email(self).deliver
     end
-  end
-
-  protected
-  def confirmation_required?
-    false
   end
 end

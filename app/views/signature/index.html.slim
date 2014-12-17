@@ -23,7 +23,7 @@ else
   hr
   = form_tag do
     p
-      = check_box_tag(:agree)
+      = check_box_tag(:agree, 'yes', false, class: 'large-checkbox')
       b  I ACKNOWLEDGE THAT I HAVE READ AND UNDERSTOOD ALL OF THE TERMS OF THIS AGREEMENT AND THAT I AM VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE COMPANY.
 
     b
@@ -35,4 +35,4 @@ else
         .input-group
           input.form-control id='name' name='name' type='text'
           span.input-group-btn
-            button.btn.btn-primary#submit disabled=true data-toggle='tooltip' title='hi' Save
+            button.btn.btn-primary#submit disabled=true Save

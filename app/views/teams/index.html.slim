@@ -5,9 +5,9 @@
     - else
       ' Teams Gallery
     small= @season
-    form.navbar-form.navbar-right role='search'
+    form.navbar-form.navbar-right role='search' method='get'
       .input-group
-        input.form-control type='text' placeholder='search team names'
+        input.form-control type='text' placeholder='search team names' name='search'
         .input-group-btn
           button.btn.btn-default type='submit'
             span.glyphicon.glyphicon-search
@@ -19,7 +19,7 @@
   - for t in @teams do
     .media
       a.media-left href='#'
-        = image_tag t.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
+        = image_tag t.avatar.url(:thumb), class: ['img-rounded']
       .media-body
         a href=url_for(t)
           h4.media-heading= t.name

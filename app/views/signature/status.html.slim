@@ -5,7 +5,11 @@
 
     p It was last emailed to #{current_user.parent_email} #{current_user.consent_sent_at.nil? ? 'never' : "#{time_ago_in_words(current_user.consent_sent_at)} ago"}.
 
-    p If you have any questions, please email the admins.
+    p
+      ' After your parent signs the consent form online, you may continue the registration process and register with your team. If your parent does not have access to internet, they may
+      a href=doc_path('Technovation Program Participant Agreement.pdf') print the form
+      ', sign it, and you can email it to 
+      a href='mailto:info@technovationchallenge.org' info@technovationchallenge.org
 
     = link_to 'Resend Email', {controller: :signature, action: :resend}, method: :post, class: ['btn', 'btn-warning']
   - else

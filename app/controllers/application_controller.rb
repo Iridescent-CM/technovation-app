@@ -10,9 +10,9 @@ class ApplicationController < ActionController::Base
   def special_controller?
     # since the admin user class is currently seperate from the main devise class,
     # we need to make sure that pundit doesn't run on these controllers
-    self.class.name.starts_with?('Admin::') || devise_controller?
+    puts self.class.name
+    self.class.name.include?('Admin::') || devise_controller?
   end
-
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

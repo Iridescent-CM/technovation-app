@@ -1,33 +1,89 @@
-coffee:
-  toggle_section = (selector, status) ->
-    $("#{selector} :input").attr("disabled", not status)
-    $(selector).toggle(status)
-
-  update_sections = ->
-    console.log 'updating sections'
-    if $('#user_role').val() == 'student'
-      toggle_section('#info-student', true)
-      toggle_section('#info-mentor', false)
-    else
-      toggle_section('#info-student', false)
-      toggle_section('#info-mentor', true)
-
-  ready = ->
-    $('#user_role').change update_sections
-    update_sections()
-  $(document).on('ready page:load', ready)
-
+javascript:
+  $(document).ready(function() {
+    $("#user_home_state").select2({
+      createSearchChoice:function(term, data) { 
+        if ($(data).filter(function() { 
+          return this.text.localeCompare(term)===0; 
+        }).length===0) 
+        {return {id:term, text:"Non-US or Canadian: " + term};} 
+        },
+        multiple: false,
+        data: [
+          { text: "United States", children: [
+              {id: "AL", text: "Alabama"},
+              {id: "AK", text: "Alaska"},
+              {id: "AZ", text: "Arizona"},
+              {id: "AR", text: "Arkansas"},
+              {id: "CA", text: "California"},
+              {id: "CO", text: "Colorado"},
+              {id: "CT", text: "Connecticut"},
+              {id: "DE", text: "Delaware"},
+              {id: "FL", text: "Florida"},
+              {id: "GA", text: "Georgia"},
+              {id: "HI", text: "Hawaii"},
+              {id: "ID", text: "Idaho"},
+              {id: "IL", text: "Illinois"},
+              {id: "IN", text: "Indiana"},
+              {id: "IA", text: "Iowa"},
+              {id: "KS", text: "Kansas"},
+              {id: "KY", text: "Kentucky"},
+              {id: "LA", text: "Louisiana"},
+              {id: "ME", text: "Maine"},
+              {id: "MD", text: "Maryland"},
+              {id: "MA", text: "Massachusetts"},
+              {id: "MI", text: "Michigan"},
+              {id: "MN", text: "Minnesota"},
+              {id: "MS", text: "Mississippi"},
+              {id: "MO", text: "Missouri"},
+              {id: "MT", text: "Montana"},
+              {id: "NE", text: "Nebraska"},
+              {id: "NV", text: "Nevada"},
+              {id: "NH", text: "New Hampshire"},
+              {id: "NJ", text: "New Jersey"},
+              {id: "NM", text: "New Mexico"},
+              {id: "NY", text: "New York"},
+              {id: "NC", text: "North Carolina"},
+              {id: "ND", text: "North Dakota"},
+              {id: "OH", text: "Ohio"},
+              {id: "OK", text: "Oklahoma"},
+              {id: "OR", text: "Oregon"},
+              {id: "PA", text: "Pennsylvania"},
+              {id: "RI", text: "Rhode Island"},
+              {id: "SC", text: "South Carolina"},
+              {id: "SD", text: "South Dakota"},
+              {id: "TN", text: "Tennessee"},
+              {id: "TX", text: "Texas"},
+              {id: "UT", text: "Utah"},
+              {id: "VT", text: "Vermont"},
+              {id: "VA", text: "Virginia"},
+              {id: "WA", text: "Washington"},
+              {id: "WV", text: "West Virginia"},
+              {id: "WI", text: "Wisconsin"},
+              {id: "WY", text: "Wyoming"}
+          ] },
+          { text: "Canada", children: [
+              {id: "ON", text: "Ontario"},
+              {id: "QC", text: "Quebec"},
+              {id: "NS", text: "Nova Scotia"},
+              {id: "NB", text: "New Brunswick"},
+              {id: "MB", text: "Manitoba"},
+              {id: "BC", text: "British Columbia"},
+              {id: "PE", text: "Prince Edward Island"},
+              {id: "SK", text: "Saskatchewan"},
+              {id: "AB", text: "Alberta"},
+              {id: "NL", text: "Newfoundland and Labrador"},
+          ] }
+        ]
+    });
+    $("#user_home_country").select2();
+  });
 
 = bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |f|
 
   = f.alert_message "Please fix the errors below"
   h3 Sign Up
-  p
-    ' Please take the time to fill this out as
-    strong carefully as possible
-    |  as your competition eligability will be determined from it.
 
-  = f.select :role, {'Student' => 'student', "Mentor/Coach" => 'mentor'}, help: 'Select student if you are competing. Select mentor if you are a team coach or plan on advising multiple teams.'
+  = f.hidden_field :role
   = f.email_field :email, autofocus: true
   = f.password_field :password, autocomplete: "off", help: @validatable ? "Must be at least #{@minimum_password_length} characters long" : nil
   = f.password_field :password_confirmation, autocomplete: "off"
@@ -37,52 +93,52 @@ coffee:
   h3 Your Information
   = f.text_field :first_name
   = f.text_field :last_name
-  = f.date_select :birthday, start_year: 1940, order: [:day, :month, :year], help: "Important! This determines your competition division"
-  = f.text_field :home_city
-  = f.text_field :home_state, label: "State or province"
-  = f.form_group :home_country, label: {text: "Home country"} do
+  = f.date_select :birthday, start_year: 1940, order: [:day, :month, :year]
+  = f.text_field :home_city, label: 'City'
+  = f.text_field :home_state, label: 'State or province', help: 'If US or Canada, select from the dropdown list. Otherwise click the dropdown and manually type in your state/province'
+  = f.form_group :home_country, label: {text: 'Country'} do
     = f.country_select :home_country, {priority_countries: ['US']}, {class: 'form-control'}
   = f.text_field :postal_code
 
   hr
 
-  #info-student
-    h3 Student Information
-    = f.text_field :school
-    = f.text_field :grade
+  - if resource.role == 'student'
+    #info-student
+      h3 Student Information
+      = f.text_field :school
+      = f.text_field :grade
 
-    hr
+      hr
 
-    h3 Parental Information
-    = f.text_field :parent_first_name
-    = f.text_field :parent_last_name
-    = f.telephone_field :parent_phone
-    = f.email_field :parent_email
-
-  #info-mentor
-    h3 Mentor Information
-    = f.text_field :school, label: 'School / Company / Employer'
-    = f.text_field :grade, label: 'Job Title'
-    = f.text_field :salutation, help: "What your students should call you (eg. Miss Smith)"
-    = f.form_group :expertise, label: { text: "Expertises" }, help: "Select the fields for which you'd like teams to contact you for advice. Leave blank if you don't want to show up in mentor search results" do
-      = f.check_box :science
-      = f.check_box :engineering
-      = f.check_box :project_management
-      = f.check_box :finance
-      = f.check_box :marketing
-      = f.check_box :design
-    = f.form_group :connect_with_other, label: {text: "Would you be willing to connect with another teacher/parent?"}
-      = f.check_box :connect_with_other
+      h3 Parental Information
+      = f.text_field :parent_first_name
+      = f.text_field :parent_last_name
+      = f.telephone_field :parent_phone, help: "Please include area code"
+      = f.email_field :parent_email, help: "We will be emailing the parental consent form to this email address before you can participate"
+  - else
+    #info-mentor
+      h3 Professional Information
+      = f.text_field :school, label: 'School / Company / Employer'
+      = f.text_field :grade, label: 'Job Title'
+      = f.text_field :salutation, help: "What your students should call you (eg. Miss Smith)"
+      = f.form_group :expertise, label: { text: "Expertise" }, help: "Select the fields for which you'd like teams to contact you for advice. Leave blank if you don't want to show up in mentor search results" do
+        = f.check_box :science
+        = f.check_box :engineering
+        = f.check_box :project_management
+        = f.check_box :finance
+        = f.check_box :marketing
+        = f.check_box :design
+      = f.form_group :connect_with_other, label: {text: "Would you be willing to connect with another coach/mentor?"}
+        = f.check_box :connect_with_other, label: 'Yes!'
 
   hr
 
   h3 How did you hear about us?
-  = f.select :referral_category, User.referral_categories.keys.to_a, label: 'Source', :include_blank => true, :default => nil
-  = f.text_field :referral_details, label: 'Please specify'
+  = f.select :referral_category, User.referral_categories.keys.map {|k|  [k.humanize, k]}, label: 'Source', :include_blank => true, :default => nil
+  = f.text_field :referral_details, label: 'Please specify: was there a specific person or article?'
 
 
   hr
   = f.form_group do
     = f.submit "Sign up"
 
-/ = render "devise/shared/links"

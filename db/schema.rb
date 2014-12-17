@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20141129013520) do
     t.text     "about"
     t.integer  "year",                default: 2014, null: false
     t.integer  "division"
-    t.integer  "region"
+    t.integer  "region",                             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20141129013520) do
     t.string   "first_name",                                    null: false
     t.string   "last_name",                                     null: false
     t.date     "birthday",                                      null: false
+    t.text     "about"
     t.string   "home_city"
     t.string   "home_state"
     t.string   "postal_code"

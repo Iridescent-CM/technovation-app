@@ -11,6 +11,7 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'bootstrap-sass', :git => 'git://github.com/twbs/bootstrap-sass.git', :branch => 'next'
 gem 'bootstrap_form'
+gem 'select2-rails'
 gem 'autoprefixer-rails'
 gem 'country_select', github: 'stefanpenner/country_select'
 
@@ -33,7 +34,7 @@ gem 'aws-sdk'
 
 gem 'openssl'
 
-gem 'devise'
+gem 'devise', github: 'plataformatec/devise'
 gem 'pundit', github: 'elabs/pundit'
 gem 'activeadmin', github: 'activeadmin'
 gem 'quiet_assets', group: :development

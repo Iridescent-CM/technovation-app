@@ -3,15 +3,16 @@ class Team < ActiveRecord::Base
     scope: :year,
     case_sensitive: false,
   }
+  validates_presence_of :division, :region, :year
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   enum division: [:ms, :hs]
   enum region: [
-    :americas,
+    :us,
+    :mexico,
     :europe,
-    :oceana,
-    :asia,
     :africa,
   ]
   has_many :team_requests
