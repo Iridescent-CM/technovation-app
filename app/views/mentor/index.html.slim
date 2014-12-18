@@ -1,17 +1,21 @@
 .row
   h1 Mentor Search
-  p.lead Find and connect with nearby mentors
+  p.lead Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location.
   hr
 
 .row
   .col-sm-2
     h5 Filter by expertise:
-    ul.nav.nav-pills.nav-stacked
-      li
-        a href=url_for(controller: :mentor, action: :index) All
-      - for exp in User::EXPERTISES
-        li class=(params[exp[:sym]] == "true" ? :active : nil)
-          a href=filter_by(exp[:sym]) = exp[:sym].to_s.humanize
+    form method='get'
+      ul.list-unstyled
+        - for exp in User::EXPERTISES
+          li
+            .checkbox
+              label
+                input type='checkbox' name=exp[:sym] value='true' checked=filter_checked(exp)
+                |  #{exp[:sym].to_s.humanize}
+      button.btn.btn-default type='submit' Filter
+
   .col-sm-10
     - if @mentors.empty?
       .panel.panel-default
@@ -23,8 +27,9 @@
           a.media-left href='#'
             = image_tag m.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
           .media-body
-            a href=url_for(m)
-              h4.media-heading= m.name
+            h4.media-heading
+              a href=url_for(m) = m.name
+              small  #{m.home_city}, #{m.home_country}
             - for exp in User::EXPERTISES
               - if m.send(exp[:sym])
                 - if params[exp[:sym]] == 'true'

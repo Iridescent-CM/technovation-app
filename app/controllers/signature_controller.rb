@@ -11,7 +11,7 @@ class SignatureController < ApplicationController
   def create
     @user.consent_signed_at = DateTime.now
     @user.save!
-    SignatureMailer.confirmation_email(current_user).deliver
+    SignatureMailer.confirmation_email(@user).deliver
     render 'index'
   end
 

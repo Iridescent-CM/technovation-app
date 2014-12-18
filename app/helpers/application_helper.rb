@@ -10,17 +10,20 @@ module ApplicationHelper
   end
 
   def format_division(division)
-    if division.to_sym == :hs
-      "High School"
-    elsif division.to_sym == :ms
-      "Middle School"
+    case division.to_sym
+    when :hs
+      'High School'
+    when :ms
+      'Middle School'
+    when :x
+      'Ineligible'
     else
-      "Error"
+      'Error'
     end
   end
 
   def format_region(region, division)
-    case division.to_sym
+    case region.to_sym
     when :us
       "US/Canada"
     when :mexico

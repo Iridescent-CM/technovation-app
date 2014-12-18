@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  after_create :email_parents_callback
-
   include FlagShihTzu
+
+  after_create :email_parents_callback, if: :student?
 
   enum role: [:student, :mentor, :coach]
   enum referral_category: [
@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   validates :first_name, :last_name, presence: true
   validates :home_city, :home_country, presence: true
+  validates :school, presence: true
 
   has_many :team_requests
   has_many :teams, -> {where 'team_requests.approved = ?', true}, through: :team_requests
@@ -70,20 +71,28 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def division
+  def age_before_cutoff
     now = Setting.cutoff
     dob = birthday
-    age_before_cutoff = now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
-    if age_before_cutoff <= 14
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  def division
+    age = age_before_cutoff()
+    if age <= 14
       :ms
-    else
+    elsif age <= 18
       :hs
+    else
+      :x
     end
   end
 
+  def ineligible?
+    division() == :x
+  end
+
   def email_parents_callback
-    if student?
-      SignatureMailer.signature_email(self).deliver
-    end
+    SignatureMailer.signature_email(self).deliver
   end
 end

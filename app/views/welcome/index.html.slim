@@ -33,7 +33,7 @@ ul
           - else
             li
               ' Received request to join team "#{req.team.name}"
-              = link_to '(Approve)', [:approve, req]
+              = link_to '(Approve)', [:approve, req], method: :post
               '
               = link_to '(Reject)', req, method: :delete
 
@@ -53,5 +53,5 @@ h2 Annoucements
     =ann.title
     br
     small Posted #{time_ago_in_words(ann.created_at)} ago
-  p= ann.post
-
+  .markdown-field
+    = render_markdown(ann.post)

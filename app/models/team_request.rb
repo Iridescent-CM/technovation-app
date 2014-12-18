@@ -5,9 +5,11 @@ class TeamRequest < ActiveRecord::Base
   scope :pending, -> { where approved: false }
   scope :approved, -> { where approved: true }
 
-  after_save :update_team_division, :if => :changed_approval?
-  after_destroy :update_team_division, :if => :approved?
-  after_destroy :destroy_empty_teams, :if => :approved?
+  after_save :update_team_division, if: :changed_approval?
+  after_destroy :update_team_division, if: :approved?
+  after_destroy :destroy_empty_teams, if: :approved?
+  after_create :notify_user,
+    if: Proc.new{ self.approved == false and self.user_request == false}
 
 
   def update_team_division
@@ -27,6 +29,9 @@ class TeamRequest < ActiveRecord::Base
     self.approved
   end
 
-
+  private
+  def notify_user
+    InviteMailer.invite_received_email(self.user, self.team).deliver
+  end
 
 end

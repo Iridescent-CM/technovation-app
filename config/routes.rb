@@ -24,7 +24,11 @@ Rails.application.routes.draw do
 
   get 'mentors' => 'mentor#index'
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    member do
+      post 'invite', as: 'invite'
+    end
+  end
 
   resources :teams do
     member do

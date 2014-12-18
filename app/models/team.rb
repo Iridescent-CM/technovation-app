@@ -8,7 +8,11 @@ class Team < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-  enum division: [:ms, :hs]
+  enum division: {
+    ms: 0,
+    hs: 1,
+    x: 2,
+  }
   enum region: [
     :us,
     :mexico,
@@ -22,20 +26,26 @@ class Team < ActiveRecord::Base
 
   scope :old, -> {where 'year < ?', Setting.year}
 
+  # division update logic
   def update_division!
-    puts 'updating division'
-    d = :ms
-    members.student.each do |s|
-      if s.division == :hs
-        d = :hs
-      end
+    div = :x
+
+    # team division is the age of the oldest student
+    div = members.student
+      .map(&:division)
+      .max_by {|d| Team.divisions[d]}
+
+    # or if there are too many students
+    if members.student.count > 5
+      div = :x
     end
-    self.division = d
+
+    self.division = div
     self.save!
   end
 
   def ineligible?
-    members.student.count > 5
+    division.to_sym == :x
   end
 
   def check_empty!

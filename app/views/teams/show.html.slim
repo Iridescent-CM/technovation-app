@@ -1,6 +1,6 @@
 - if @team.ineligible?
   .alert.alert-danger role='alert'
-    p This team is ineligible to participate due to too many student members.
+    p This team is currently ineligble to participate. There must be at most 5 students, all of whom are 18 and under.
 
 .page-header
   h1
@@ -23,7 +23,7 @@
       dd= format_division(@team.division)
 
       dt Region
-      dd= @team.region.humanize
+      dd= format_region(@team.region, @team.division)
   .col-sm-8
     h2 About
     .markdown-field
@@ -37,6 +37,9 @@
         - for user in @team.members.student
           li
             a href=url_for(user) = user.name
+            - if user.ineligible?
+              '
+              span.label.label-danger Ineligible
     - else
       p There are currently no students on this team
 
@@ -49,3 +52,11 @@
     - else
       p There are currently no mentors on this team
 
+    h3 Coaches
+    - if not @team.members.coach.empty?
+      ul.list-unstyled
+        - for coach in @team.members.coach
+          li
+            a href=url_for(coach) = coach.name
+    - else
+      p There are currently no coaches on this team.

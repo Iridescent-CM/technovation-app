@@ -15,7 +15,8 @@ user = User.new(
   birthday: Date.new(1989, 12, 1),
   home_city: 'Raleigh',
   home_state: 'NC',
-  home_country: 'US'
+  home_country: 'US',
+  school: 'MIT',
 )
 user.skip_confirmation!
 user.save!

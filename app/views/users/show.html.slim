@@ -1,10 +1,17 @@
+- if @user.ineligible?
+  .alert.alert-danger role='alert'
+    p This student is ineligible to participate in Technovation due to age.
+
 .page-header
   h1
     ' #{@user.name}
-    / small &#40;##{@user.id}&#41;
+    small= @user.role.humanize 
     .pull-right
       - if policy(@user).edit?
           = link_to 'Edit Profile', edit_user_registration_path, class: ['btn', 'btn-primary']
+      - if policy(@user).invite?
+        = link_to 'Invite to Team', invite_user_path(@user), method: 'post', class: ['btn', 'btn-primary']
+        
 
 .row
   .col-sm-4
