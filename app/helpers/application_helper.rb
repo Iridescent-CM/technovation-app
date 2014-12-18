@@ -1,4 +1,6 @@
 module ApplicationHelper
+  require 'redcarpet/render_strip'
+
   def strikethrough(should, &block)
     if should
       "<s>#{capture(&block)}</s>".html_safe
@@ -43,7 +45,13 @@ module ApplicationHelper
 
   def render_markdown(text)
     renderer = Redcarpet::Render::HTML.new(filter_html: true, no_images: true, hard_wrap: true)
-    md = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
-    md.html_safe
+    parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+    parser.render(text).html_safe
+  end
+
+  def render_markdown_brief(text)
+    renderer = Redcarpet::Render::StripDown.new()
+    parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+    parser.render(text)
   end
 end

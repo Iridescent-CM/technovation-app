@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
     scope: :year,
     case_sensitive: false,
   }
-  validates_presence_of :division, :region, :year
+  validates_presence_of :region, :year
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/

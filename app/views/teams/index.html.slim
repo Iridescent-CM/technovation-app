@@ -23,4 +23,4 @@
       .media-body
         a href=url_for(t)
           h4.media-heading= t.name
-        p= t.about
+        p= truncate(render_markdown_brief(t.about), length: 160)

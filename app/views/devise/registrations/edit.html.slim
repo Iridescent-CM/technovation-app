@@ -8,7 +8,7 @@ h2 Edit #{resource_name.to_s.humanize}
     -  if devise_mapping.confirmable? && resource.pending_reconfirmation?
       .alert.alert-warning Currently waiting confirmation for #{resource.unconfirmed_email}
 
-  = f.file_field :avatar
+  = f.file_field :avatar, label: 'Upload a photo'
 
   = f.password_field :password, help: "(Leave blank if you don't want to change it)"
   = f.password_field :password_confirmation

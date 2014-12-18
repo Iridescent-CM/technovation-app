@@ -5,7 +5,6 @@
 .page-header
   h1
     ' #{@team.name}
-    # small &#40;##{@team.id}&#41;
     .pull-right
       - if policy(@team).join?
         = link_to 'Request to Join', [:join, @team], method: :post, class: ['btn', 'btn-primary']
@@ -26,12 +25,13 @@
       dt Region
       dd= @team.region.humanize
   .col-sm-8
-    h3 About
-    p= @team.about
+    h2 About
+    .markdown-field
+      = render_markdown(@team.about)
 
-    h3 Members
+    h2 Members
 
-    h4 Students
+    h3 Students
     - if not @team.members.student.empty?
       ul.list-unstyled
         - for user in @team.members.student
@@ -40,7 +40,7 @@
     - else
       p There are currently no students on this team
 
-    h4 Mentors
+    h3 Mentors
     - if not @team.members.mentor.empty?
       ul.list-unstyled
         - for mentor in @team.members.mentor
