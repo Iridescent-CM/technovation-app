@@ -12,6 +12,10 @@
           button.btn.btn-default type='submit'
             span.glyphicon.glyphicon-search
 
+    - if current_user.current_team.nil?
+      form.navbar-form.navbar-right
+        = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
+
 - if @teams.empty?
   p There are not yet any teams registered for the #{@year} season.
 
