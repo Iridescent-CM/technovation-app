@@ -8,9 +8,9 @@ class TeamRequest < ActiveRecord::Base
   after_save :update_team_division, if: :changed_approval?
   after_destroy :update_team_division, if: :approved?
   after_destroy :destroy_empty_teams, if: :approved?
-  after_create :notify_user,
-    if: Proc.new{ self.approved == false and self.user_request == false}
 
+  after_create :notify_user_received,
+    if: Proc.new{ self.approved == false and self.user_request == false}
 
   def update_team_division
     team.update_division!
@@ -30,7 +30,7 @@ class TeamRequest < ActiveRecord::Base
   end
 
   private
-  def notify_user
+  def notify_user_received
     InviteMailer.invite_received_email(self.user, self.team).deliver
   end
 

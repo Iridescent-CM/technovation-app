@@ -13,6 +13,11 @@ class TeamRequestsController < ApplicationController
   def approve
     @team_request.approved = true
     @team_request.save!
+
+    if @team_request.user_request
+      InviteMailer.invite_accepted_email(@team_request.user, @team_request.team).deliver
+    end
+
     redirect_to :back
   end
 

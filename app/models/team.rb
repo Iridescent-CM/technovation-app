@@ -52,8 +52,8 @@ class Team < ActiveRecord::Base
   def check_empty!
     if members.count == 0
       team_requests.delete_all
+      self.destroy
     end
-    self.destroy
   end
 
 end
