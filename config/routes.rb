@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
   }
   devise_scope :user do
     get '/users/sign_up/:role', to: 'users/registrations#new', as: 'new_user_with_role'
