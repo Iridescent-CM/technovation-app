@@ -30,7 +30,7 @@ html
                 li
                   = link_to 'My Team', current_user.current_team
               li
-                = link_to 'My Profile', @current_user
+                = link_to 'My Profile', user_path(current_user)
               li
                 = link_to 'Sign Out', :destroy_user_session, method: :delete
             - else current_user

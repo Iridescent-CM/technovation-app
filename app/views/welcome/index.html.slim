@@ -17,7 +17,9 @@ h2 Dashboard
 / confirmation
 ul
   - unless current_user.confirmed? 
-    li Please confirm your email address by clicking the link sent to #{current_user.email}
+    li
+      ' Please confirm your email address by clicking the link sent to #{current_user.email}.
+      a href=new_confirmation_path(:user) Need it resent?
 
   / team infos
   - if current_user.current_team.nil?

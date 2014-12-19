@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   validates :home_city, :home_country, presence: true
   validates :school, presence: true
 
+  validates :parent_email, presence: true, if: :student?
+
   has_many :team_requests
   has_many :teams, -> {where 'team_requests.approved = ?', true}, through: :team_requests
 

@@ -10,6 +10,44 @@ ActiveAdmin.register User do
     actions
   end
 
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+
+    f.inputs "Account Details" do
+      f.input :email
+      f.input :first_name
+      f.input :last_name
+      f.input :birthday
+      f.input :role, as: :select, collection: User.roles.keys
+    end
+
+    f.inputs "User Location" do
+      f.input :home_city
+      f.input :home_state
+      f.input :home_country
+      f.input :postal_code
+    end
+
+    f.inputs "User Bio" do
+      f.input :about
+      f.input :salutation
+      f.input :school
+      f.input :grade
+      f.input :expertise
+      f.input :avatar, as: :file, required: false
+    end
+
+    f.inputs "Parent Details" do
+      f.input :parent_first_name
+      f.input :parent_last_name
+      f.input :parent_phone
+      f.input :parent_email
+    end
+
+    f.actions
+  end
+
+
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #

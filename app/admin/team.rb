@@ -2,6 +2,7 @@ ActiveAdmin.register Team do
   config.clear_action_items!
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs "Team Details" do
       f.input :name
       f.input :about
@@ -11,9 +12,6 @@ ActiveAdmin.register Team do
     end
     f.actions
   end
-
-  permit_params :name, :region
-
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
