@@ -21,6 +21,10 @@ ActiveAdmin.register User do
       f.input :role, as: :select, collection: User.roles.keys
     end
 
+    f.inputs "Consent Form" do
+      f.input :consent_signed_at
+    end
+
     f.inputs "User Location" do
       f.input :home_city
       f.input :home_state
