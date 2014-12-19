@@ -3,7 +3,11 @@ class SignatureMailer < ActionMailer::Base
   def signature_email(user)
     unless user.parent_email.nil?
       @link = SignatureController.link(user)
-      mail(to: user.parent_email, subject: 'Technovation Letter to Parents - your daughter needs your permission to participate')
+      mail(
+        to: user.parent_email,
+        cc: Rails.env.production? ? 'info@technovationchallenge.org' : nil,
+        subject: 'Technovation Letter to Parents - your daughter needs your permission to participate'
+      )
       user.consent_sent_at = DateTime.now
       user.save!
     end
