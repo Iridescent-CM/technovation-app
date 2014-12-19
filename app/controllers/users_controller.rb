@@ -4,6 +4,21 @@ class UsersController < ApplicationController
     authorize @user
   end
 
+  def edit
+    @user = User.find(params[:id])
+    authorize @user
+  end
+
+  def update
+    @user = User.find(params[:id])
+    authorize @user
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      redirect_to :back
+    end
+  end
+
   def invite
     @user = User.find(params[:id])
     authorize @user
@@ -22,4 +37,29 @@ class UsersController < ApplicationController
     end
     redirect_to @user
   end
+
+
+  private
+  def user_params
+    params.require(:user).permit(
+      :avatar,
+      :school,
+      :grade,
+
+      :home_city,
+      :home_state,
+      :home_country,
+      :postal_code,
+
+      :salutation,
+      :science,
+      :engineering,
+      :project_management,
+      :finance,
+      :marketing,
+      :design,
+      :connect_with_other,
+    )
+  end
+
 end

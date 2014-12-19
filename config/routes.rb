@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   get 'mentors' => 'mentor#index'
 
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
     end

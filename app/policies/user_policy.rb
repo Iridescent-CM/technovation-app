@@ -10,7 +10,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    current_user == user
+    current_user == @user
+  end
+
+  def update?
+    current_user == @user
   end
 
   def invite?

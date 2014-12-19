@@ -9,7 +9,7 @@
     small= @user.role.humanize 
     .pull-right
       - if policy(@user).edit?
-          = link_to 'Edit Profile', edit_user_registration_path, class: ['btn', 'btn-primary']
+          = link_to 'Edit Profile', edit_user_path, class: ['btn', 'btn-primary']
       - if policy(@user).invite?
         = link_to 'Invite to Team', invite_user_path(@user), method: 'post', class: ['btn', 'btn-primary']
         

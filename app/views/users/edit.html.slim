@@ -1,0 +1,27 @@
+h1 Edit User Profile
+
+p.lead
+  ' If you need to edit your email or password, please click
+  a href=edit_user_registration_path here instead
+
+hr
+
+= bootstrap_form_for(@user, html: { method: :put }, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f|
+
+  = f.alert_message "Please fix the errors below"
+
+  = f.file_field :avatar, label: 'Upload a photo'
+  hr
+
+  = render :partial => "devise/registrations/location", :locals => {:f => f}
+  hr
+
+  - if @user.student?
+    = f.text_field :school
+    = f.text_field :grade
+  - else
+    = render :partial => "devise/registrations/professional_information", :locals => {:f => f}
+  hr
+
+  = f.form_group do
+    = f.submit 'Update'
