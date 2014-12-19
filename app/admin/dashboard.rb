@@ -31,6 +31,12 @@ ActiveAdmin.register_page "Dashboard" do
                 li "Current Teams: #{Team.count}"
             end
         end
+        panel "Enum Notes" do
+          ul do
+            li p "#{User.roles}"
+            li p "#{Team.regions}"
+          end
+        end
       end
     end
 end

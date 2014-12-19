@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
-    division() == :x
+    division() == :x && student?
   end
 
   def email_parents_callback

@@ -14,6 +14,10 @@ h2 Edit #{resource_name.to_s.humanize}
   = f.password_field :password_confirmation
 
   hr
+  = render :partial => "location", :locals => {:f => f}
+
+
+  hr
 
   = f.password_field :current_password, help: '(We need your current password to confirm your changes)'
   = f.form_group do

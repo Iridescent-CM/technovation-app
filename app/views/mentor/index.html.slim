@@ -24,7 +24,7 @@
     - else 
       - for m in @mentors do
         .media
-          a.media-left href='#'
+          a.media-left href=url_for(m)
             = image_tag m.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
           .media-body
             h4.media-heading

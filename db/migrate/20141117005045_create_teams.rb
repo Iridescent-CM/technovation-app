@@ -5,7 +5,7 @@ class CreateTeams < ActiveRecord::Migration
       t.string :name
       t.text :about
       t.integer :year, null: false, default: 2014
-      t.integer :division
+      t.integer :division, default: 2, null: false
       t.integer :region, null: false
       t.timestamps
     end

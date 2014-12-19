@@ -35,8 +35,9 @@ class Team < ActiveRecord::Base
       .map(&:division)
       .max_by {|d| Team.divisions[d]}
 
-    # or if there are too many students
-    if members.student.count > 5
+    # or if there are too many / not-enough students
+    student_count = members.student.count
+    if student_count < 1 or student_count > 5
       div = :x
     end
 

@@ -12,6 +12,7 @@ class SignatureController < ApplicationController
     @user.consent_signed_at = DateTime.now
     @user.save!
     SignatureMailer.confirmation_email(@user).deliver
+    flash[:notice] = 'Signature signed! If this is your account, you may continue registration by navigating to your dashboard. Otherwise, thanks!'
     render 'index'
   end
 
@@ -19,7 +20,7 @@ class SignatureController < ApplicationController
     if current_user.consent_signed_at.nil?
       unless current_user.consent_sent_at.nil?
         sent_mins_ago = ((DateTime.now - current_user.consent_sent_at.to_datetime) * 60 * 24).round
-        if sent_mins_ago < 0
+        if sent_mins_ago < 10
           flash[:alert] = "Please wait at least #{10 - sent_mins_ago} more minutes before attempting to resend"
           redirect_to :back
           return

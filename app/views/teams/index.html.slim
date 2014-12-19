@@ -18,7 +18,7 @@
 - else
   - for t in @teams do
     .media
-      a.media-left href='#'
+      a.media-left href=url_for(t)
         = image_tag t.avatar.url(:thumb), class: ['img-rounded']
       .media-body
         a href=url_for(t)

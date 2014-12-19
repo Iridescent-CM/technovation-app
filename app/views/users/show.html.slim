@@ -18,16 +18,34 @@
     = image_tag @user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
   .col-sm-8
     dl.dl-horizontal
+
       dt City
       dd= @user.home_city
+      dt Country
+      dd= @user.home_country
       - if @user.current_team
         dt Current Team
         dd= link_to @user.current_team.name, @user.current_team
+
       - if @user.student?
         dt Division
         dd= format_division(@user.division)
-        dt School
-        dd= @user.school
+
+      dt= @user.student? ? "School" : "School/Employer"
+      dd= @user.school
+
+      - unless @user.student?
+        dt Expertise
+        dd
+          - for exp in User::EXPERTISES
+            - if @user.send(exp[:sym])
+              .label.label-primary= exp[:abbr]
+            - else
+              .label.label-default= exp[:abbr]
+            '
+
+
+
 
 .row
   -unless @user.teams.old.empty?

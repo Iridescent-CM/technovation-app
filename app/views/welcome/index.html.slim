@@ -34,7 +34,9 @@ ul
               = link_to '(Withdraw)', req, method: :delete
           - else
             li
-              ' Received request to join team "#{req.team.name}"
+              ' Received request to join team
+              a href=url_for(req.team) "#{req.team.name}"
+              '
               = link_to '(Approve)', [:approve, req], method: :post
               '
               = link_to '(Reject)', req, method: :delete

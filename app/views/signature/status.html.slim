@@ -3,7 +3,7 @@
   - if current_user.student?
     p Before you participate, the consent form must be signed by a parent or guardian.
 
-    p It was last emailed to #{current_user.parent_email} #{current_user.consent_sent_at.nil? ? 'never' : "#{time_ago_in_words(current_user.consent_sent_at)} ago"}.
+    p It was last emailed to #{current_user.parent_email} #{current_user.consent_sent_at.nil? ? 'never' : "#{time_ago_in_words(current_user.consent_sent_at)} ago"}. Please note that emails may take several minutes to deliver.
 
     p
       ' After your parent signs the consent form online, you may continue the registration process and register with your team. If your parent does not have access to internet, they may
