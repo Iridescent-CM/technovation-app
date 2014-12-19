@@ -1,6 +1,13 @@
 ActiveAdmin.register Team do
   config.clear_action_items!
 
+  index do
+    column :name
+    column :region
+    column :division
+    column :year
+  end
+
   form do |f|
     f.semantic_errors *f.object.errors.keys
     f.inputs "Team Details" do
