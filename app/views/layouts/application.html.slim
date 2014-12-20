@@ -26,7 +26,7 @@ html
                 = link_to 'Dashboard', :root
               - unless current_user.current_team.nil?
                 li
-                  = link_to 'Find A Mentor', :controller => '/mentor', :action => 'index'
+                  = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
                 li
                   = link_to 'My Team', current_user.current_team
               li
