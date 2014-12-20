@@ -33,8 +33,9 @@ ActiveAdmin.register_page "Dashboard" do
         end
         panel "Enum Notes" do
           ul do
-            li p "#{User.roles}"
-            li p "#{Team.regions}"
+            li p "Role Enum: #{User.roles}"
+            li p "Region Enum: #{Team.regions}"
+            li p "Expertise Bitmask: #{User::EXPERTISES.each_with_index.map{|k,i| {k[:abbr] => (i+1).to_s(2).rjust(3, '0')}}}"
           end
         end
       end
