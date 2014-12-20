@@ -14,7 +14,8 @@ class TeamsController < ApplicationController
   def index
     if params[:search]
       @search = params[:search]
-      @teams = Team.where('name LIKE ?', "%#{@search}%")
+      t = Team.arel_table
+      @teams = Team.where(t[:name].matches('%'+@search+'%'))
       @season = "All Seasons"
     else
       @teams = Team.where(year: Setting.year)
