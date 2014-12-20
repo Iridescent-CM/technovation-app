@@ -1,5 +1,5 @@
 .page-header
-  h1 Edit #{resource_name.to_s.humanize} Registration
+  h1 Edit Account Settings
 
 = bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f|
   = f.alert_message "Please fix the errors below"
