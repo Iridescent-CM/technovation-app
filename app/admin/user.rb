@@ -41,7 +41,7 @@ ActiveAdmin.register User do
       f.input :avatar, as: :file, required: false
     end
 
-    f.inputs "Parent Details" do
+    f.inputs "Parent / Guardian Information" do
       f.input :parent_first_name
       f.input :parent_last_name
       f.input :parent_phone
