@@ -1,6 +1,14 @@
 module ApplicationHelper
   require 'redcarpet/render_strip'
 
+  def link_user(user)
+    if policy(user).show?
+      link_to user.name, user
+    else
+      user.name
+    end
+  end
+
   def strikethrough(should, &block)
     if should
       "<s>#{capture(&block)}</s>".html_safe

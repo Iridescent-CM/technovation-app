@@ -36,7 +36,7 @@
       ul.list-unstyled
         - for user in @team.members.student
           li
-            a href=url_for(user) = user.name
+            = link_user(user)
             - if user.ineligible?
               '
               span.label.label-danger Ineligible
@@ -48,7 +48,7 @@
       ul.list-unstyled
         - for mentor in @team.members.mentor
           li
-            a href=url_for(mentor) = mentor.name
+            = link_user(mentor)
     - else
       p There are currently no mentors on this team
 
@@ -57,6 +57,6 @@
       ul.list-unstyled
         - for coach in @team.members.coach
           li
-            a href=url_for(coach) = coach.name
+            = link_user(coach)
     - else
       p There are currently no coaches on this team.

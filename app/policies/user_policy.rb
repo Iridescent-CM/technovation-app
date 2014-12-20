@@ -5,22 +5,25 @@ class UserPolicy < ApplicationPolicy
     @user = model
   end
 
-  def show?
-    @user.consented?
+  def show?  # only allow viewing of students on same team for privacy
+    (user == current_user) or
+    (user.consented? and
+      (!user.student? or
+      (!current_user.nil? and !(current_user.teams & user.teams).empty?)))
   end
 
   def edit?
-    current_user == @user
+    current_user == user
   end
 
   def update?
-    current_user == @user
+    current_user == user
   end
 
   def invite?
     current_user.student? and
     not current_user.current_team.nil? and
-    TeamRequest.find_by(team: current_user.current_team, user: @user).nil?
+    TeamRequest.find_by(team: current_user.current_team, user: user).nil?
   end
 
   class Scope < Scope

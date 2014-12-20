@@ -22,7 +22,7 @@ h3 Pending Requests
           td #{time_ago_in_words(req.created_at)} ago
           td= req.user_request ? "Received" : "Sent"
           td
-            a href=user_path(req.user) = req.user.name
+            = link_user(req.user)
           td
             - if policy(req).destroy?
               = link_to 'Reject', req, method: :delete, class: ['btn', 'btn-danger']
