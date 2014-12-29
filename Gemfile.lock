@@ -44,8 +44,7 @@ GIT
 
 GIT
   remote: git://github.com/twbs/bootstrap-sass.git
-  revision: 682467dc274aa11f655a2081a31acf1dcd4e3791
-  branch: next
+  revision: f3b99eda0005cd62a8ab0b1f5df8a04ec9a7bb8d
   specs:
     bootstrap-sass (3.3.1.0)
       sass (~> 3.2)

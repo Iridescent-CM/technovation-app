@@ -9,7 +9,7 @@ gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
-gem 'bootstrap-sass', :git => 'git://github.com/twbs/bootstrap-sass.git', :branch => 'next'
+gem 'bootstrap-sass', :git => 'git://github.com/twbs/bootstrap-sass.git'
 gem 'bootstrap_form'
 gem 'select2-rails'
 gem 'autoprefixer-rails'

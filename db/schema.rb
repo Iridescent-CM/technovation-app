@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141129013520) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "annoucements", force: true do |t|
+  create_table "announcements", force: true do |t|
     t.string   "title"
     t.text     "post"
     t.boolean  "published"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20141129013520) do
     t.string   "name"
     t.text     "about"
     t.integer  "year",                default: 2014, null: false
-    t.integer  "division"
+    t.integer  "division",            default: 2,    null: false
     t.integer  "region",                             null: false
     t.datetime "created_at"
     t.datetime "updated_at"

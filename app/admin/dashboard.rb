@@ -11,10 +11,10 @@ ActiveAdmin.register_page "Dashboard" do
   #   end
     columns do
       column do
-        panel "Recent Annoucements" do
+        panel "Recent Announcements" do
           ul do
-            Annoucement.last(3).map do |post|
-              li link_to(post.title, admin_annoucement_path(post))
+            Announcement.last(3).map do |post|
+              li link_to(post.title, admin_announcement_path(post))
             end
           end
         end

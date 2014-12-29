@@ -15,7 +15,7 @@ There are two major settings that must be present for the application to run cor
 1. *year*: All teams will be created with this year as its season. The team index will also default to showing teams created in this year.
 2. *cutoff* A user's age for division cutoff (high-school, middle-school) will be calculated based on this date.
 
-### Annoucements
+### Announcements
 
-Annoucements can be created in the dashboard with the "New Annoucement" button under the "Annoucements" tab in the administration page.  An annoucement must be published before it will show up on the participant's dashboards.
+Announcements can be created in the dashboard with the "New Announcement" button under the "Announcements" tab in the administration page.  An announcement must be published before it will show up on the participant's dashboards.
 

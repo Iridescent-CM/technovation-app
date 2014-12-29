@@ -1,4 +1,4 @@
-ActiveAdmin.register Annoucement do
+ActiveAdmin.register Announcement do
 
 
   # See permitted parameters documentation:
