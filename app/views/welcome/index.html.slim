@@ -16,19 +16,28 @@
   .alert.alert-danger role='alert'
     markdown:
       You are currently ineligible to participate in Technovation due to age. Eligible age ranges are up to 14 years old for the Middle School Division and 15-18 for the High School Division.
-      
+
       If you think this is a mistake, please email <info@technovationchallenge.org>
 
 h2 Dashboard
 
-/ confirmation
 ul
+  / confirmation
   - unless current_user.confirmed? 
     li
       ' Please confirm your email address by clicking the link sent to #{current_user.email}.
       a href=new_confirmation_path(:user) Need it resent?
 
-  / team infos
+  / team request infos
+  - if !current_user.current_team.nil?
+    - team_requests_count = current_user.current_team.team_requests.pending.count
+    - if team_requests_count > 0
+      li
+        ' Your team has #{team_requests_count} outstanding request.
+        a href=edit_team_path(current_user.current_team, anchor: :pending) (Review/Manage)
+
+
+  / user request infos
   - if current_user.current_team.nil?
     - pending_requests = current_user.team_requests.pending
     - if pending_requests.count > 0
