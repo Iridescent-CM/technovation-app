@@ -12,6 +12,13 @@
 /     ul
 /       li Join a Team
 
+- if current_user.ineligible?
+  .alert.alert-danger role='alert'
+    markdown:
+      You are currently ineligible to participate in Technovation due to age. Eligible age ranges are up to 14 years old for the Middle School Division and 15-18 for the High School Division.
+      
+      If you think this is a mistake, please email <info@technovationchallenge.org>
+
 h2 Dashboard
 
 / confirmation
