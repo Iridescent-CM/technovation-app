@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   include FlagShihTzu
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
 
   after_create :email_parents_callback, if: :student?
 
@@ -71,6 +73,13 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :id],
+    ]
   end
 
   def age_before_cutoff

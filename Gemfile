@@ -23,6 +23,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'flag_shih_tzu'
+gem 'friendly_id', '~> 5.0'
 
 gem 'slim-rails'
 gem 'redcarpet'

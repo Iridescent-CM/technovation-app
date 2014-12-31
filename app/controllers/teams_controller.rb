@@ -7,7 +7,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
+    @team = Team.friendly.find(params[:id])
     authorize @team
   end
 
@@ -42,7 +42,7 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = Team.find(params[:id])
+    @team = Team.friendly.find(params[:id])
     authorize @team
     if @team.update(team_params)
       redirect_to @team
@@ -52,12 +52,12 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    @team = Team.find(params[:id])
+    @team = Team.friendly.find(params[:id])
     authorize @team
   end
 
   def join
-    @team = Team.find(params[:id])
+    @team = Team.friendly.find(params[:id])
     authorize @team
     @team.team_requests << TeamRequest.new(
       user: current_user,

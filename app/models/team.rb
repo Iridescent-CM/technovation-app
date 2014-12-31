@@ -1,4 +1,7 @@
 class Team < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name_and_year, use: :slugged
+
   validates :name, presence: true, uniqueness: {
     scope: :year,
     case_sensitive: false,
@@ -25,6 +28,15 @@ class Team < ActiveRecord::Base
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
 
   scope :old, -> {where 'year < ?', Setting.year}
+
+
+  def name_and_year
+    "#{name}-#{year}"
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 
   # division update logic
   def update_division!
