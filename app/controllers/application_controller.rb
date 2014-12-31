@@ -6,20 +6,27 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
   before_action :verify_consent, {unless: :special_controller?}
+  before_action :verify_bg_check, {unless: :special_controller?}
 
   def special_controller?
     # since the admin user class is currently seperate from the main devise class,
     # we need to make sure that pundit doesn't run on these controllers
-    puts self.class.name
     self.class.name.include?('Admin::') || devise_controller?
   end
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected
+
+  def verify_bg_check
+    if BgCheckController.bg_check_required?(current_user)
+      redirect_to :bg_check
+    end
+  end
+
   def verify_consent
-    if current_user != nil and current_user.consent_signed_at.nil?
-        return redirect_to controller: '/signature', action: :status
+    if !current_user.nil? and current_user.consent_signed_at.nil?
+      return redirect_to controller: '/signature', action: :status
     end
   end
 

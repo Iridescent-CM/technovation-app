@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
 
   after_create :email_parents_callback, if: :student?
 
+  # virtual attributes for social security check
+  attr_accessor :middle_name, :ssn, :phone,
+    :fcra_ok, :drbi_ok,
+    :mn_copy, :ca_copy,
+    :signature
+
   enum role: [:student, :mentor, :coach]
   enum referral_category: [
     :friend,

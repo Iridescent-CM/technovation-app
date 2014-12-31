@@ -1,10 +1,11 @@
 class SignatureController < ApplicationController
   before_action :find_user, except: [:status, :resend]
   skip_before_filter :verify_consent
+  skip_before_filter :verify_bg_check
 
   def status
     if current_user == nil
-      redirect_to '/'
+      redirect_to :root
     end
   end
 
@@ -12,8 +13,13 @@ class SignatureController < ApplicationController
     @user.consent_signed_at = DateTime.now
     @user.save!
     SignatureMailer.confirmation_email(@user).deliver
-    flash[:notice] = 'Signature signed! If this is your account, you may continue registration by navigating to your dashboard. Otherwise, thanks!'
-    render 'index'
+    flash[:notice] = 'Signature signed! Thanks!'
+
+    if current_user.nil? 
+      render 'index'
+    else
+      redirect_to :root
+    end
   end
 
   def resend

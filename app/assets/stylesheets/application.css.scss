@@ -28,6 +28,7 @@ label.required:after {
 }
 
 .large-checkbox {
+  position: relative !important;
   transform: scale(2);
   -webkit-transform: scale(2);
   margin: 8px !important;

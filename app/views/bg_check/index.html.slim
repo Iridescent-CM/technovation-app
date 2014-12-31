@@ -1,0 +1,66 @@
+h1 Submit your background check info
+
+markdown:
+  Irridescent Learning (the "Company") has engaged Checkr, Inc. to obtain a consumer report and/or investigative consumer report for employment purposes. Checkr Inc. will provide a background investigation as a pre-condition of your engagement with the Company and in compliance with federal and state employment laws.
+
+  If you have any questions about the screening process, please contact us at <info@technovationchallenge.org>
+
+= bootstrap_form_for(@user, url: :bg_check_submit, html: { method: :post}, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f|
+  = f.text_field :first_name
+  = f.text_field :middle_name
+  = f.text_field :last_name
+  = f.text_field :email
+  = f.text_field :phone
+  = f.text_field :postal_code
+  = f.date_select :birthday
+  = f.text_field :ssn, label: "SSN", help: "Format: XXX-XX-XXXX"
+
+  hr
+
+  h2 Your rights under the FCRA
+  iframe width="80%" height="300px" src="https://www.consumer.ftc.gov/articles/pdf-0096-fair-credit-reporting-act.pdf"
+
+  = f.check_box :fcra_ok, label: "I acknowledge receipt of the Summary of Your Rights Under the Fair Credit Reporting Act (FCRA) and certify that I have read and understand this document", class: 'large-checkbox'
+
+  hr
+
+  h2 Disclosure regarding background check information
+
+  p Irridescent Learning ("the Company") may obtain information about you from a third party consumer reporting agency for employment purposes.  Thus, you may be the subject of a consumer report and/or an investigative consumer report which may include information about your character, general reputation, personal characteristics, and/or mode of living, and which can involve personal interviews with sources such as your neighbors, friends, or associates.  These reports may contain information regarding your criminal history, social security verification, motor vehicle records (driving records), verification of your education or employment history, or other background checks. 
+   
+  p You have the right, upon written request made within a reasonable time, to request whether a consumer report has been run about you, and disclosure of the nature and scope of any investigative consumer report and to request a copy of your report.  Please be advised that the nature and scope of the most common form of investigative consumer report is an employment history or verification.  These searches will be conducted by Checkr, Inc., 550 15th Street, Suite 27, San Francisco CA 94103, 844-824-3247, checkr.com.  The scope of this disclosure is all-encompassing, however, allowing the Company to obtain from any outside organization all manner of consumer reports throughout the course of your employment to the extent permitted by law. 
+
+  = f.check_box :drbi_ok, label: 'I acknowledge receipt of the Disclosure Regarding Background Investigation and certify that I have read and understand this document', class: 'large-checkbox'
+
+  hr
+
+  h2 Acknowledgement and Authorization for background check
+
+  p I acknowledge receipt of the separate document entitled DISCLOSURE REGARDING BACKGROUND INVESTIGATION and A SUMMARY OF YOUR RIGHTS UNDER THE FAIR CREDIT REPORTING ACT and certify that I have read and understand both of those documents.  I hereby authorize the obtaining of “consumer reports” and/or “investigative consumer reports” by the Company at any time after receipt of this authorization and throughout my employment, if applicable.  To this end, I hereby authorize, without reservation, any law enforcement agency, administrator, state or federal agency, institution, school or university (public or private), information service bureau, employer, or insurance company to furnish any and all background information requested by Checkr, Inc., 550 15th Street, Suite 27, San Francisco CA 94103, 844-824-3247, checkr.io.  I agree that a facsimile (“fax”), electronic or photographic copy of this Authorization shall be as valid as the original.
+
+  h3 New York applicants only
+  p Upon request, you will be informed whether or not a consumer report was requested by the Company, and if such report was requested, informed of the name and address of the consumer reporting agency that furnished the report.   You have the right to inspect and receive a copy of any investigative consumer report requested by the Company by contacting the consumer reporting agency identified above directly. By signing below, you acknowledge receipt of Article 23-A of the New York Correction Law
+  h3 Washington State applicants only
+  p You also have the right to request from the consumer reporting agency a written summary of your rights and remedies under the Washington Fair Credit Reporting Act.  
+  h3 Minnesota and Oklahoma applicants only
+  = f.check_box :mn_copy, label: 'Please check this box if you would like to receive a copy of a consumer report if one is obtained by the Company.'
+ 
+  h3 California applicants only
+  p Under California Civil Code section 1786.22, you are entitled to find out what is in the CRA’s file on you with proper identification, as follows: 
+  ul
+    li In person, by visual inspection of your file during normal business hours and on reasonable notice.  You also may request a copy of the information in person.  The CRA may not charge you more than the actual copying costs for providing you with a copy of your file.
+    li A summary of all information contained in the CRA file on you that is required to be provided by the California Civil Code will be provided to you via telephone, if you have made a written request, with proper identification, for telephone disclosure, and the toll charge, if any, for the telephone call is prepaid by or charged directly to you.
+    li By requesting a copy be sent to a specified addressee by certified mail.  CRAs complying with requests for certified mailings shall not be liable for disclosures to third parties caused by mishandling of mail after such mailings leave the CRAs.
+  p “Proper Identification” includes documents such as a valid driver’s license, social security account number, military identification card, and credit cards.  Only if you cannot identify yourself with such information may the CRA require additional information concerning your employment and personal or family history in order to verify your identity. The CRA will provide trained personnel to explain any information furnished to you and will provide a written explanation of any coded information contained in files maintained on you.  This written explanation will be provided whenever a file is provided to you for visual inspection.  You may be accompanied by one other person of your choosing, who must furnish reasonable identification.  An CRA may require you to furnish a written statement granting permission to the CRA to discuss your file in such person’s presence.
+  = f.check_box :ca_copy, label: 'Please check this box if you would like to receive a copy of an investigative consumer report or  consumer credit report at no charge if one is obtained by the Company whenever you have a right to receive such a copy under California law.'
+
+  h2 Electronic Signature
+  = f.text_field :signature, label: 'Full Name'
+
+  = f.form_group do
+    = f.submit 'Submit'
+
+
+
+
+

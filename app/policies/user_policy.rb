@@ -5,6 +5,10 @@ class UserPolicy < ApplicationPolicy
     @user = model
   end
 
+  def index?
+    true
+  end
+
   def show?  # only allow viewing of students on same team for privacy
     (user == current_user) or
     (user.consented? and

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 
   get 'mentors' => 'mentor#index'
 
+  get 'bg_check' => 'bg_check#index'
+  post 'bg_check' => 'bg_check#update', as: :bg_check_submit
+
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
