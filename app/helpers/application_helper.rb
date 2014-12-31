@@ -55,14 +55,18 @@ module ApplicationHelper
 
 
   def render_markdown(text)
-    renderer = Redcarpet::Render::HTML.new(filter_html: true, no_images: true, hard_wrap: true)
-    parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
-    parser.render(text).html_safe
+    unless text == nil
+      renderer = Redcarpet::Render::HTML.new(filter_html: true, no_images: true, hard_wrap: true)
+      parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+      parser.render(text).html_safe
+    end
   end
 
   def render_markdown_brief(text)
-    renderer = Redcarpet::Render::StripDown.new()
-    parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
-    parser.render(text)
+    unless text == nil
+      renderer = Redcarpet::Render::StripDown.new()
+      parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+      parser.render(text)
+    end
   end
 end

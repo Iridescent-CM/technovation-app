@@ -12,12 +12,19 @@
           = link_to 'Edit Profile', edit_user_path, class: ['btn', 'btn-primary']
       - if policy(@user).invite?
         = link_to 'Invite to Team', invite_user_path(@user), method: 'post', class: ['btn', 'btn-primary']
-        
 
 .row
   .col-sm-4
     = image_tag @user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
   .col-sm-8
+
+    - unless @user.about.blank?
+      h2 About
+      .markdown-field
+        = render_markdown(@user.about)
+      hr
+      h2 Info
+
     dl.dl-horizontal
 
       dt City
@@ -32,6 +39,12 @@
         dt Division
         dd= format_division(@user.division)
 
+      - if @user.mentor?
+        dt Email
+        dd
+          a href="mailto:#{@user.email}" = @user.email
+
+
       dt= @user.student? ? "School" : "School/Employer"
       dd= @user.school
 
@@ -44,9 +57,6 @@
             - else
               .label.label-default= exp[:abbr]
             '
-
-
-
 
 .row
   -unless @user.teams.old.empty?

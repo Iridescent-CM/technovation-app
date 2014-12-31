@@ -28,6 +28,18 @@ ul
       ' Please confirm your email address by clicking the link sent to #{current_user.email}.
       a href=new_confirmation_path(:user) Need it resent?
 
+  / user infos
+  - if current_user.avatar.blank?
+    li
+      ' You haven't uploaded an picture.
+      = link_to 'Upload one now', edit_user_path(current_user)
+      | .
+  - if current_user.about.blank?
+    li
+      ' You haven't given yourself a brief description for potential teammates.
+      = link_to 'Write one now', edit_user_path(current_user)
+      | .
+
   / team request infos
   - if !current_user.current_team.nil?
     - team_requests_count = current_user.current_team.team_requests.pending.count
@@ -35,7 +47,6 @@ ul
       li
         ' Your team has #{team_requests_count} outstanding request.
         a href=edit_team_path(current_user.current_team, anchor: :pending) (Review/Manage)
-
 
   / user request infos
   - if current_user.current_team.nil?
