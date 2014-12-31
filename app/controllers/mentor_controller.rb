@@ -6,6 +6,6 @@ class MentorController < ApplicationController
   end
 
   def index
-    @mentors = apply_scopes(User).mentor.has_expertise
+    @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise
   end
 end
