@@ -1,0 +1,26 @@
+h1 Welcome to Technovation!
+
+markdown:
+  We're excited to launch our new online platform for 2015. 
+
+  Through this platform, you will be able to sign up as an individual, create teams, and also filter for nearby mentors. Start by signing up (if you haven't already) or log in to modify your registration. Have questions? Feel free to email <info@technovationchallenge.org> or check out our FAQ page for more information.
+
+hr
+
+h2 Log In
+
+= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name), layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f|
+
+  = f.email_field :email, autofocus: true
+  = f.password_field :password
+
+  - if devise_mapping.rememberable?
+    = f.form_group do
+      = f.check_box :remember_me
+
+    = f.form_group do
+      = f.submit 'Log in'
+
+hr
+
+= render 'devise/shared/links'
