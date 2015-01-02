@@ -11,7 +11,7 @@ markdown:
   = f.text_field :last_name
   = f.text_field :email
   = f.text_field :phone
-  = f.text_field :postal_code
+  = f.text_field :postal_code, label: 'Zipcode'
   = f.date_select :birthday
   = f.text_field :ssn, label: "SSN", help: "Format: XXX-XX-XXXX"
 
@@ -20,7 +20,8 @@ markdown:
   h2 Your rights under the FCRA
   iframe width="80%" height="300px" src="https://www.consumer.ftc.gov/articles/pdf-0096-fair-credit-reporting-act.pdf"
 
-  = f.check_box :fcra_ok, label: "I acknowledge receipt of the Summary of Your Rights Under the Fair Credit Reporting Act (FCRA) and certify that I have read and understand this document", class: 'large-checkbox'
+  = f.form_group :fcra_ok, label_col: '', control_col: '' do
+    = f.check_box :fcra_ok, label: "I acknowledge receipt of the Summary of Your Rights Under the Fair Credit Reporting Act (FCRA) and certify that I have read and understand this document", class: 'large-checkbox'
 
   hr
 
@@ -30,7 +31,8 @@ markdown:
    
   p You have the right, upon written request made within a reasonable time, to request whether a consumer report has been run about you, and disclosure of the nature and scope of any investigative consumer report and to request a copy of your report.  Please be advised that the nature and scope of the most common form of investigative consumer report is an employment history or verification.  These searches will be conducted by Checkr, Inc., 550 15th Street, Suite 27, San Francisco CA 94103, 844-824-3247, checkr.com.  The scope of this disclosure is all-encompassing, however, allowing the Company to obtain from any outside organization all manner of consumer reports throughout the course of your employment to the extent permitted by law. 
 
-  = f.check_box :drbi_ok, label: 'I acknowledge receipt of the Disclosure Regarding Background Investigation and certify that I have read and understand this document', class: 'large-checkbox'
+  = f.form_group :drbi_ok, label_col: '', control_col: '' do
+    = f.check_box :drbi_ok, label: 'I acknowledge receipt of the Disclosure Regarding Background Investigation and certify that I have read and understand this document', class: 'large-checkbox'
 
   hr
 
@@ -59,8 +61,3 @@ markdown:
 
   = f.form_group do
     = f.submit 'Submit'
-
-
-
-
-

@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20141231142035) do
     t.float    "longitude"
     t.string   "slug"
     t.string   "bg_check_id"
+    t.datetime "bg_check_submitted"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -39,6 +39,7 @@ gem 'aws-sdk'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
 gem 'openssl'
+gem 'typhoeus'
 
 # development gems
 gem 'dotenv-rails', :groups => [:development, :test]
