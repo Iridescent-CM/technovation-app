@@ -49,5 +49,6 @@ gem 'spring',        group: :development
 gem 'quiet_assets', group: :development
 
 # production gems
+gem 'airbrake'
 gem 'rails_12factor', group: :production
 gem 'unicorn'
