@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141231142035) do
+ActiveRecord::Schema.define(version: 20150106004724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,12 +95,12 @@ ActiveRecord::Schema.define(version: 20141231142035) do
   add_index "teams", ["year"], name: "index_teams_on_year", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
+    t.string   "email",                            default: "",    null: false
+    t.string   "encrypted_password",               default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                    default: 0,  null: false
+    t.integer  "sign_in_count",                    default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -111,23 +111,23 @@ ActiveRecord::Schema.define(version: 20141231142035) do
     t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                             default: 0,  null: false
-    t.string   "first_name",                                    null: false
-    t.string   "last_name",                                     null: false
-    t.date     "birthday",                                      null: false
+    t.integer  "role",                             default: 0,     null: false
+    t.string   "first_name",                                       null: false
+    t.string   "last_name",                                        null: false
+    t.date     "birthday",                                         null: false
     t.text     "about"
     t.string   "home_city"
     t.string   "home_state"
     t.string   "postal_code"
-    t.string   "home_country",           limit: 2, default: "", null: false
+    t.string   "home_country",           limit: 2, default: "",    null: false
     t.string   "school"
     t.string   "grade"
     t.string   "salutation"
     t.boolean  "connect_with_other"
-    t.integer  "expertise",                        default: 0,  null: false
+    t.integer  "expertise",                        default: 0,     null: false
     t.string   "parent_first_name"
     t.string   "parent_last_name"
-    t.string   "parent_phone",                     default: "", null: false
+    t.string   "parent_phone",                     default: "",    null: false
     t.string   "parent_email"
     t.datetime "consent_signed_at"
     t.datetime "consent_sent_at"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20141231142035) do
     t.string   "slug"
     t.string   "bg_check_id"
     t.datetime "bg_check_submitted"
+    t.boolean  "disabled",                         default: false, null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

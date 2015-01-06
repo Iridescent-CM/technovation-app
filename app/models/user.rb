@@ -66,6 +66,18 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  def active_for_authentication?
+    super && user_is_enabled?
+  end
+
+  def user_is_enabled?
+    !disabled?
+  end
+
+  def inactive_message
+    user_is_enabled? ? super : :admin_disabled
+  end
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 

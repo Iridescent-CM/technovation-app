@@ -31,6 +31,10 @@ ActiveAdmin.register User do
       f.input :consent_signed_at
     end
 
+    f.inputs "Disabled" do
+      f.input :disabled
+    end
+
     f.inputs "User Location" do
       f.input :home_city
       f.input :home_state
