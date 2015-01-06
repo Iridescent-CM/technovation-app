@@ -265,6 +265,7 @@ DEPENDENCIES
   bootstrap_form
   coffee-rails (~> 4.0.0)
   coffee-script
+  countries
   country_select!
   devise!
   dotenv-rails

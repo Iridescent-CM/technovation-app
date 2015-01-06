@@ -26,6 +26,7 @@ ActiveAdmin.register_page "Dashboard" do
                     ul do
                         li "Students: #{User.student.count}"
                         li "Mentors: #{User.mentor.count}"
+                        li "Coaches: #{User.coach.count}"
                     end
                 end
                 li "Current Teams: #{Team.count}"

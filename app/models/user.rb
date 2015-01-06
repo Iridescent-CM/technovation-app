@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
     :print,
     :web_search,
     :teacher,
+    :parent_family,
     :other,
   ]
 
