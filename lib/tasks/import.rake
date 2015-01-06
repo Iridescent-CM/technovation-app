@@ -160,6 +160,7 @@ def import_users(role, file)
 
 
       user.skip_confirmation!
+      user.skip_parent_email = true
       unless user.save
         puts "ERROR: #{user.email}, #{user.errors.to_a}"
       else

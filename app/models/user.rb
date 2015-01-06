@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
     :mn_copy, :ca_copy,
     :signature
 
+  # skipping the parent email
+  attr_accessor :skip_parent_email
+
   enum role: [:student, :mentor, :coach]
   enum referral_category: [
     :friend,
@@ -123,6 +126,7 @@ class User < ActiveRecord::Base
   end
 
   def email_parents_callback
+    return if skip_parent_email
     SignatureMailer.signature_email(self).deliver
   end
 end
