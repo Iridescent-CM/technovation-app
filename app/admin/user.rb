@@ -7,7 +7,9 @@ ActiveAdmin.register User do
   end
 
   index do
+    selectable_column
     column :email
+    column :role
     column :first_name
     column :last_name
     column :birthday
@@ -31,8 +33,9 @@ ActiveAdmin.register User do
       f.input :consent_signed_at
     end
 
-    f.inputs "Disabled" do
-      f.input :disabled
+    f.inputs "Background Check Info" do
+      f.input :bg_check_id, label: 'Checkr.io Id'
+      f.input :disabled, hint: "Check to disable the user's account"
     end
 
     f.inputs "User Location" do

@@ -8,6 +8,7 @@ ActiveAdmin.register Team do
   end
 
   index do
+    selectable_column
     column :name
     column :region
     column :division
