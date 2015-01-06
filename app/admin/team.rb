@@ -1,11 +1,18 @@
 ActiveAdmin.register Team do
   config.clear_action_items!
 
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+  end
+
   index do
     column :name
     column :region
     column :division
     column :year
+    actions
   end
 
   form do |f|
