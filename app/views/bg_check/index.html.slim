@@ -12,7 +12,7 @@ markdown:
   = f.text_field :email
   = f.text_field :phone
   = f.text_field :postal_code, label: 'Zipcode'
-  = f.date_select :birthday
+  = f.date_select :birthday, start_year: Date.today.year-100, end_year: Date.today.year, order: [:day, :month, :year]
   = f.text_field :ssn, label: "SSN", help: "Format: XXX-XX-XXXX"
 
   hr

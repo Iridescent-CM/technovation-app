@@ -14,7 +14,7 @@
   h3 Your Information
   = f.text_field :first_name
   = f.text_field :last_name
-  = f.date_select :birthday, start_year: 1940, order: [:day, :month, :year]
+  = f.date_select :birthday, start_year: Date.today.year-100, end_year: Date.today.year, order: [:day, :month, :year]
   = render :partial => "location", :locals => {:f => f}
 
   hr
