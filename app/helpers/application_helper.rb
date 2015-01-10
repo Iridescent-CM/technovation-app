@@ -35,15 +35,11 @@ module ApplicationHelper
     when :us
       "US/Canada"
     when :mexico
-      if division.to_sym == :hs
-        "Mexico/Central America/South America/Africa"
-      else
-        "Mexico/Central America/South America/Africa"
-      end
-    when :africa
-      "Africa"
+      "Mexico/Central America/South America"
     when :europe
       "Europe/Australia/New Zealand/Asia"
+    when :africa
+      "Africa"
     else
       "Error"
     end
