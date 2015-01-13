@@ -13,7 +13,10 @@ markdown:
   = f.text_field :phone
   = f.text_field :postal_code, label: 'Zipcode'
   = f.date_select :birthday, start_year: Date.today.year-100, end_year: Date.today.year, order: [:day, :month, :year]
+  hr
+  p For your privacy, Irridescent Learning does not store your Social Security Number in our database.  It is forwarded directly to Checkr, Inc. for the background check.
   = f.text_field :ssn, label: "SSN", help: "Format: XXX-XX-XXXX"
+
 
   hr
 
