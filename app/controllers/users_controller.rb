@@ -15,9 +15,10 @@ class UsersController < ApplicationController
     @user = User.friendly.find(params[:id])
     authorize @user
     if @user.update(user_params)
+      flash[:notice] = 'Profile Updated!'
       redirect_to @user
     else
-      redirect_to :back
+      render :edit
     end
   end
 
