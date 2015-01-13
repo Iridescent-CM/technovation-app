@@ -1,4 +1,5 @@
 class BgCheckController < ApplicationController
+  before_action :authenticate_user!
   before_action :check_user
   skip_before_filter :verify_consent
   skip_before_filter :verify_bg_check
