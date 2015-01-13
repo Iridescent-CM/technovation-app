@@ -37,8 +37,11 @@ class TeamsController < ApplicationController
         approved: true,
       }).save!
     end
-
     redirect_to @team
+
+    rescue ActiveRecord::RecordInvalid => exception
+      flash.now[:alert] = exception
+      render :new
   end
 
   def update
