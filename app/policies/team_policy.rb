@@ -15,7 +15,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    user.current_team == nil
+    !user.student? or !user.has_team_for_season?
   end
 
   def edit?

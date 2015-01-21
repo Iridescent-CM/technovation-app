@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
     teams.where(year: Setting.year).first
   end
 
+  def has_team_for_season?
+    not teams.where(year: Setting.year).empty?
+  end
+
   def consented?
     not consent_signed_at.nil?
   end

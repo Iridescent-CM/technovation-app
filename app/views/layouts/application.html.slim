@@ -24,11 +24,25 @@ html
             - unless current_user.nil?
               li
                 = link_to 'Dashboard', :root
-              - unless current_user.current_team.nil?
+              - unless current_user.teams.empty?
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
-                li
-                  = link_to 'My Team', current_user.current_team
+                li.dropdown
+                  a.dropdown-toggle href='#' data-toggle='dropdown' role='button'
+                    ' My Teams
+                    span.caret
+                  ul.dropdown-menu role='menu'
+                    - teams_by_year = current_user.teams.order(year: :desc, name: :asc).group_by { |t| t.year }
+                    - divider = false
+                    - for year in teams_by_year.keys
+                      - if divider
+                        li.divider
+                      li.dropdown-header= year
+                      - for t in teams_by_year[year]
+                        li
+                          a href=url_for(t) = t.name
+                      - divider = true
+
               li
                 = link_to 'My Profile', user_path(current_user)
               li

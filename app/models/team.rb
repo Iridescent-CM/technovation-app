@@ -28,6 +28,7 @@ class Team < ActiveRecord::Base
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
 
   scope :old, -> {where 'year < ?', Setting.year}
+  scope :current, -> {where year: Setting.year}
 
 
   def name_and_year
