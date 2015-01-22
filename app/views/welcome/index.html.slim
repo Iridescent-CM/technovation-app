@@ -40,6 +40,16 @@ ul
       = link_to 'Write one now', edit_user_path(current_user)
       | .
 
+  li
+    ' If you haven't already, please complete the following
+    - if current_user.student?
+      a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
+    - if current_user.mentor?
+      a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
+    - if current_user.coach?
+      a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
+    | .
+
   / team request infos
   - if !current_user.current_team.nil?
     - team_requests_count = current_user.current_team.team_requests.pending.count
