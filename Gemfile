@@ -42,6 +42,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'openssl'
 gem 'typhoeus'
 
+# google drive/spreadsheets lib
+gem 'google_drive', '= 1.0.0'
+
 # development gems
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sdoc', '~> 0.4.0',          group: :doc
