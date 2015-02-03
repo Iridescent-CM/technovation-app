@@ -8,4 +8,7 @@ class Setting < ActiveRecord::Base
   def self.cutoff
     Setting.find_by_key!('cutoff').value.to_date
   end
+  def self.submissionOpen?
+  	!Setting.find_by_key!('submissionOpen?').value == 'true'
+  end
 end
