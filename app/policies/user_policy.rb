@@ -32,7 +32,7 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.where.not(:consent_signed_at => nil)
+      scope.where.not(:consent_signed_at => nil).where.not(:bg_check_submitted => nil)
     end
   end
 end
