@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   include FlagShihTzu
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -59,10 +60,42 @@ class User < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
 
+  class << self
+
+    def build_survey_url(survey_id, user_id)
+      site = Rails.application.config.env[:surveymonkey][:site]
+      is_ssl = site[:ssl]
+      klass = (is_ssl ? URI::HTTPS : URI::HTTP)
+      klass.build({
+        :host => site[:host], 
+        :path => '/' + [site[:path_base], survey_id].join('/'), 
+        :query => {:custom_id => user_id}.to_query
+      }).to_s
+    end
+
+    def is_survey_done?(user_id)
+      false
+    end
+
+
+  end
+
   def full_address
     [ home_city,
       home_state,
       home_country ].compact.join(', ')
+  end
+
+  def required_survey_id
+    Rails.application.config.env[:surveys][:required][self.role][:url_id]
+  end
+
+  def url_for_survey
+    self.class.build_survey_url(self.required_survey_id, self.id)
+  end
+
+  def is_survey_done?
+    self.class.is_survey_done?(self.id)
   end
 
   # Include default devise modules. Others available are:

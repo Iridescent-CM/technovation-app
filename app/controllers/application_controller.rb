@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
   before_action :verify_consent, {unless: :special_controller?}
   before_action :verify_bg_check, {unless: :special_controller?}
+  before_action :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
 
   def special_controller?
     # since the admin user class is currently seperate from the main devise class,
@@ -22,6 +23,10 @@ class ApplicationController < ActionController::Base
     if BgCheckController.bg_check_required?(current_user)
       redirect_to :bg_check
     end
+  end
+
+  def verify_survey_done
+    redirect_to current_user.url_for_survey unless current_user.is_survey_done?
   end
 
   def verify_consent
