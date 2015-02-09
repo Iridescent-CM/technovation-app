@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def verify_survey_done
-    redirect_to current_user.url_for_survey unless current_user.is_survey_done?
+    redirect_to current_user.url_for_survey unless current_user.db_or_api_is_survey_done?
   end
 
   def verify_consent

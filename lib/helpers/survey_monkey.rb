@@ -4,6 +4,8 @@ module SurveyMonkey
     def request(*args)
       url = url_for(*args.dup)
       options = args.extract_options!.with_indifferent_access
+      verbose = !!options.delete(:verbose)
+
       args = [url.to_s]
       args.push({:ssl => {:ca_path => (Rails.root + 'config' + 'certs' + 'ca-bundle.crt').to_s}}) if url.kind_of? URI::HTTPS
       request = Faraday::Connection.new(*args) do |request|
@@ -12,7 +14,7 @@ module SurveyMonkey
         request.headers['Content-Type'] = 'application/json'
         request.adapter Faraday.default_adapter 
       end
-      puts request.inspect if Rails.env.development?
+      puts request.inspect if verbose
       request_body = (block_given? ? yield : {}).to_json
       ActiveSupport::JSON.decode request.post('', request_body).body
     end
