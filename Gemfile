@@ -42,9 +42,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'openssl'
 gem 'typhoeus'
 
-#surveymonkey
-gem 'faraday'
-
 # development gems
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sdoc', '~> 0.4.0',          group: :doc

@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
     def api_is_survey_done?(survey_id, collector_path, id)
       data = SurveyMonkey.request('surveys','get_respondent_list') { {:survey_id => survey_id, :fields => [:custom_id]} }
       respondents = data['data']['respondents']
-      !!respondents.reject{|r| r['custom_id'].blank? }.find{|respondent| respondent['custom_id'].to_s == id.to_s }
+      !!(respondents.reject{|r| r['custom_id'].blank? }.find{|respondent| respondent['custom_id'].to_s == id.to_s })
     end
 
 
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def db_or_api_is_survey_done?
-    is_survey_done? || api_is_survey_done?
+    !!is_survey_done? || api_is_survey_done?
   end
 
   def api_is_survey_done?
@@ -110,6 +110,7 @@ class User < ActiveRecord::Base
       self.is_survey_done = true
       self.save!
     end
+    boolean
   end
 
   # Include default devise modules. Others available are:
