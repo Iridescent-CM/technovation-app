@@ -38,7 +38,7 @@ class BgCheckController < ApplicationController
     if !@user.errors.empty? or !@user.save
       flash.now[:alert] = 'Please correct the errors below'
     else
-      if ENV['SKIP_CHECKR']
+      if Rails.application.config.env[:checkr][:skip]
         @user.bg_check_id = 'fake'
         @user.bg_check_submitted = DateTime.now
         @user.save!
@@ -48,7 +48,7 @@ class BgCheckController < ApplicationController
       else
         request = Typhoeus.post(
           'https://api.checkr.io/v1/candidates',
-          userpwd: ENV['CHECKRIO_AUTH'],
+          userpwd: Rails.application.config.env[:checkr][:auth],
           params: params,
         )
         if request.success?
@@ -57,9 +57,9 @@ class BgCheckController < ApplicationController
           @user.save!
           report = Typhoeus.post(
             'https://api.checkr.io/v1/reports',
-            userpwd: ENV['CHECKRIO_AUTH'],
+            userpwd: Rails.application.config.env[:checkr][:auth],
             params: {
-              package: ENV['CHECKRIO_PACKAGE'],
+              package: Rails.application.config.env[:checkr][:package],
               candidate_id: @user.bg_check_id,
             }
           )
