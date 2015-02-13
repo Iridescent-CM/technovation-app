@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   include FlagShihTzu
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -59,10 +60,57 @@ class User < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
 
+  class << self
+
+    def build_survey_url(collector_path, user_id)
+      site = Rails.application.config.env[:surveymonkey][:site]
+      is_ssl = site[:ssl]
+      klass = (is_ssl ? URI::HTTPS : URI::HTTP)
+      klass.build({
+        :host => site[:host], 
+        :path => '/' + [site[:path_base], collector_path].join('/'), 
+        :query => {:c => user_id}.to_query
+      }).to_s
+    end
+
+    def api_is_survey_done?(survey_id, collector_path, id)
+      data = SurveyMonkey.request('surveys','get_respondent_list') { {:survey_id => survey_id, :fields => [:custom_id]} }
+      respondents = data['data']['respondents']
+      !!(respondents.reject{|r| r['custom_id'].blank? }.find{|respondent| respondent['custom_id'].to_s == id.to_s })
+    end
+
+
+  end
+
   def full_address
     [ home_city,
       home_state,
       home_country ].compact.join(', ')
+  end
+
+  def collector_path
+    Rails.application.config.env[:surveys][:required][self.role][:url_id]
+  end
+
+  def survey_id
+    Rails.application.config.env[:surveys][:required][self.role][:id]
+  end
+
+  def url_for_survey
+    self.class.build_survey_url(self.collector_path, self.id)
+  end
+
+  def db_or_api_is_survey_done?
+    !!is_survey_done? || api_is_survey_done?
+  end
+
+  def api_is_survey_done?
+    boolean = self.class.api_is_survey_done?(self.survey_id, self.collector_path, self.id)
+    if boolean
+      self.is_survey_done = true
+      self.save!
+    end
+    boolean
   end
 
   # Include default devise modules. Others available are:
