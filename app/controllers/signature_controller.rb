@@ -1,6 +1,7 @@
 class SignatureController < ApplicationController
   before_action :find_user, except: [:status, :resend]
   skip_before_filter :verify_consent
+  skip_before_filter :verify_survey_done
   skip_before_filter :verify_bg_check
 
   def status

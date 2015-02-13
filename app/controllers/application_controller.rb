@@ -5,8 +5,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
-  before_action :verify_consent, {unless: :special_controller?}
+  before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
   before_action :verify_bg_check, {unless: :special_controller?}
+  
 
   def special_controller?
     # since the admin user class is currently seperate from the main devise class,
@@ -24,9 +25,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def verify_survey_done
+    redirect_to current_user.url_for_survey unless current_user.db_or_api_is_survey_done?
+  end
+
   def verify_consent
     if !current_user.nil? and current_user.consent_signed_at.nil?
-      return redirect_to controller: '/signature', action: :status
+      redirect_to controller: '/signature', action: :status
+      return false
     end
   end
 
