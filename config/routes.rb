@@ -8,10 +8,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     confirmations: 'users/confirmations',
   }
-  if Rails.application.config.env[:registration_open]
-    devise_scope :user do
-      get '/users/sign_up/:role', to: 'users/registrations#new', as: 'new_user_with_role'
-    end
+  devise_scope :user do
+    get '/users/sign_up/:role', to: 'users/registrations#new', as: 'new_user_with_role'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -8,11 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if params[:role].present?
         resource.role = params[:role]
       else
-        if Rails.application.config.env[:registration_open]
-          render 'devise/registrations/choose'
-        else
-          render 'devise/registrations/closed'
-        end
+        render 'devise/registrations/choose'
         return
       end
     end
