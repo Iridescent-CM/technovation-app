@@ -19,3 +19,6 @@ There are two major settings that must be present for the application to run cor
 
 Announcements can be created in the dashboard with the "New Announcement" button under the "Announcements" tab in the administration page.  An announcement must be published before it will show up on the participant's dashboards.
 
+### Environment variables
+
+- `SKIP_CHECKR`: Set to `true` to skip the background check API call. Useful for development and staging environments.
