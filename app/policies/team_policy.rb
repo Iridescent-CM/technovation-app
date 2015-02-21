@@ -38,6 +38,10 @@ class TeamPolicy < ApplicationPolicy
     false
   end
 
+  def update_submissions?
+    member?
+  end
+
   private
   def member?
     team.members.include? user

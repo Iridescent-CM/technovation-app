@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  identify_problem: 1
+  address_problem: 1
+  functional: 1
+  external_resources: 1
+  match_features: 1
+  interface: 1
+  description: 1
+  market: 1
+  competition: 1
+  revenue: 1
+  branding: 1
+  pitch: 1
+  launch?: false
+
+two:
+  identify_problem: 1
+  address_problem: 1
+  functional: 1
+  external_resources: 1
+  match_features: 1
+  interface: 1
+  description: 1
+  market: 1
+  competition: 1
+  revenue: 1
+  branding: 1
+  pitch: 1
+  launch?: false

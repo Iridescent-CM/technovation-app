@@ -24,7 +24,7 @@ html
             - unless current_user.nil?
               li
                 = link_to 'Dashboard', :root
-              - unless current_user.teams.empty?
+              - unless current_user.teams.empty? or current_user.judge?
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
                 li.dropdown

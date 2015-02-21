@@ -47,6 +47,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'quiet_assets', group: :development
+gem 'pry-rails', group: :development
 
 # production gems
 gem 'airbrake'

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   # skipping the parent email
   attr_accessor :skip_parent_email
 
-  enum role: [:student, :mentor, :coach]
+  enum role: [:student, :mentor, :coach, :judge]
   enum referral_category: [
     :friend,
     :colleague,

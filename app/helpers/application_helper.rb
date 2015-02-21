@@ -45,10 +45,32 @@ module ApplicationHelper
     end
   end
 
+  def render_video(link)
+    # link = 'http://www.youtube.com/embed/y4sOfO8Ei1g'
+    # http://vimeo.com/channels/staffpicks/59859181
+    # http://vimeo.com/originals/inthemoment/108800637
+    # width = 500
+    # height = 300
+    if link.include? "vimeo"
+      # regex = /^http:\/\/www\.vimeo\.com\/(\d+)/
+      # vid_id = link.match(regex)[1]
+      vid_id = link.split('/')[-1]
+      '<iframe src="//player.vimeo.com/video/'+vid_id+'" width="500" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+    else    
+      regex = /youtube.com.*(?:\/|v=)([^&$]+)/
+      vid_id = link.match(regex)[1]
+      link = 'http://www.youtube.com/embed/' + vid_id
+      '<iframe width="500px" height="350px" src="'+link+'"></iframe>'
+    end
+  end
+
+  def render_pdf(link)
+     '<iframe width="500px" height="400px" src="' + link + '"></iframe>'
+  end
+
   def doc_path(file)
     File.join('/docs', file).to_s
   end
-
 
   def render_markdown(text)
     unless text == nil

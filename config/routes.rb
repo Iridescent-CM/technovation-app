@@ -28,6 +28,12 @@ Rails.application.routes.draw do
   get 'bg_check' => 'bg_check#index'
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
+  get 'rubric' => 'rubric#index'
+
+  # post 'teams/:id/update_submissions' => 'teams#update_submissions'
+  # patch 'teams/:id/update_submissions' => 'teams#update_submissions'
+
+
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
@@ -38,6 +44,8 @@ Rails.application.routes.draw do
     member do
       post 'join'
       post 'leave'
+      # post 'update_submissions'
+      # patch 'update_submissions'
     end
   end
 
@@ -46,6 +54,8 @@ Rails.application.routes.draw do
       post 'approve'
     end
   end
+
+  resources :rubrics
 
   #   member do
   #     post 'approve'

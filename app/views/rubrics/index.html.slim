@@ -1,0 +1,15 @@
+h1 Judge dashboard
+
+p Thanks for judging! Judges help us ensure a high fairness and quality bar for all teams in the competition.
+
+h4 Judge training materials
+
+
+h4
+  ' #{@team.name}
+= link_to 'Judge now', new_rubric_path(:team => @team)
+
+h3 Previously judged teams
+p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
+- for r in @rubrics do
+  = link_to 'Edit', edit_rubric_path(:id => r.id)

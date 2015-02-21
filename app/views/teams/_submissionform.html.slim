@@ -1,0 +1,30 @@
+= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+
+  	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
+    = f.text_area :description, label: "App description", rows: 5
+    = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
+    = f.file_field :code, label: "Source code", data: 'code'
+
+    .h4 Screenshots
+    = f.file_field :screenshot1, label: "1"
+    = f.file_field :screenshot2, label: "2"
+    = f.file_field :screenshot3, label: "3"
+    = f.file_field :screenshot4, label: "4", help: 'optional'
+    = f.file_field :screenshot5, label: "5", help: 'optional'
+
+  	.h4 Pitch Video (4 minutes)
+  	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch' 
+
+  	.h4 Demo Video (2 minutes)
+    = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
+
+    hr
+    h3 Events
+    p Sign your app up to compete in events
+    / = f.collection_select :event_id, Event.all, :name, :name
+
+    h4 Category
+    = f.collection_select :category_id, Category.all, :name, :name
+
+	= f.form_group
+		= f.submit "Update Submission"

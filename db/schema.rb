@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106004724) do
+ActiveRecord::Schema.define(version: 20150218001055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,46 @@ ActiveRecord::Schema.define(version: 20150106004724) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "year"
+  end
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.datetime "whentooccur"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "judges", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rubrics", force: true do |t|
+    t.integer  "identify_problem"
+    t.integer  "address_problem"
+    t.integer  "functional"
+    t.integer  "external_resources"
+    t.integer  "match_features"
+    t.integer  "interface"
+    t.integer  "description"
+    t.integer  "market"
+    t.integer  "competition"
+    t.integer  "revenue"
+    t.integer  "branding"
+    t.integer  "pitch"
+    t.boolean  "launch?"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "team_id"
+  end
+
   create_table "settings", force: true do |t|
     t.string   "key",        null: false
     t.string   "value",      null: false
@@ -78,9 +118,9 @@ ActiveRecord::Schema.define(version: 20150106004724) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "year",                default: 2014, null: false
-    t.integer  "division",            default: 2,    null: false
-    t.integer  "region",                             null: false
+    t.integer  "year",                     default: 2014, null: false
+    t.integer  "division",                 default: 2,    null: false
+    t.integer  "region",                                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -88,6 +128,42 @@ ActiveRecord::Schema.define(version: 20150106004724) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
+    t.string   "description"
+    t.string   "code_file_name"
+    t.string   "code_content_type"
+    t.integer  "code_file_size"
+    t.datetime "code_updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "pitch"
+    t.string   "demo"
+    t.string   "plan_file_name"
+    t.string   "plan_content_type"
+    t.integer  "plan_file_size"
+    t.datetime "plan_updated_at"
+    t.integer  "category_id"
+    t.string   "screenshot1_file_name"
+    t.string   "screenshot1_content_type"
+    t.integer  "screenshot1_file_size"
+    t.datetime "screenshot1_updated_at"
+    t.string   "screenshot2_file_name"
+    t.string   "screenshot2_content_type"
+    t.integer  "screenshot2_file_size"
+    t.datetime "screenshot2_updated_at"
+    t.string   "screenshot3_file_name"
+    t.string   "screenshot3_content_type"
+    t.integer  "screenshot3_file_size"
+    t.datetime "screenshot3_updated_at"
+    t.string   "screenshot4_file_name"
+    t.string   "screenshot4_content_type"
+    t.integer  "screenshot4_file_size"
+    t.datetime "screenshot4_updated_at"
+    t.string   "screenshot5_file_name"
+    t.string   "screenshot5_content_type"
+    t.integer  "screenshot5_file_size"
+    t.datetime "screenshot5_updated_at"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree

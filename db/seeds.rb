@@ -36,6 +36,11 @@ setting = Setting.create(
   value: true,
 )
 
+setting = Setting.create(
+  key: 'submissionDeadline',
+  value: Date.today.to_s,
+)
+
 ann = Announcement.create(
   title: "Welcome to Technovation's new site",
   post: "For the 2015 season, we're using a brand new website to organize, submit, and publish your projects. If you have any questions, please email us at info@technovationchallenge.org!",
