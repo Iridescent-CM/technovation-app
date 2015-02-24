@@ -1,7 +1,12 @@
 class EventsController < ApplicationController
   def index
-    @team = current_user.current_team
-    authorize @team
+  	if current_user.judge?
+  		@team = nil
+  		@user = current_user
+  	else
+	    @team = current_user.current_team
+	    authorize @team
+	end
   end
 
   def edit

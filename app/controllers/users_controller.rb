@@ -14,6 +14,9 @@ class UsersController < ApplicationController
   def update
     @user = User.friendly.find(params[:id])
     authorize @user
+
+    binding.pry
+
     if @user.update(user_params)
       flash[:notice] = 'Profile Updated!'
       redirect_to @user
@@ -34,7 +37,7 @@ class UsersController < ApplicationController
       user_request: false
     )
     if @team.save
-      flash[:notice] = 'Team Request Sent'
+      flash[:notice] = 'Team Request Sent'  
     else
       flash[:alert] = 'An error occured during invite'
     end
@@ -66,6 +69,8 @@ class UsersController < ApplicationController
       :marketing,
       :design,
       :connect_with_other,
+
+      :event_id,
     )
   end
 

@@ -28,9 +28,10 @@ html
                   = link_to 'Teams Gallery', :teams
               li
                 = link_to 'Dashboard', :root
-              - unless current_user.teams.empty? or current_user.judge?
+              - if current_user.judge? or (not current_user.teams.empty?)
                 li
                   = link_to 'Events', :events
+              - unless current_user.teams.empty?
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
                 li.dropdown

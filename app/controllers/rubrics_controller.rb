@@ -31,6 +31,19 @@ class RubricsController < ApplicationController
     authorize @rubric
   end
 
+  def update
+    @rubric = Rubric.find(params[:id])
+    authorize @rubric
+    # redirect_to :rubrics
+
+    if @rubric.update(rubric_params)
+      redirect_to :rubrics
+    else
+      redirect_to :back
+    end
+
+  end   
+
   def create
   	@rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
@@ -47,6 +60,6 @@ class RubricsController < ApplicationController
 
   private
     def rubric_params
-    	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch, :team_id)
+    	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :team_id)
     end
 end

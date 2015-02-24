@@ -55,6 +55,9 @@ class User < ActiveRecord::Base
             :column => 'expertise'
   scope :has_expertise, -> {where.not expertise: 0}
 
+  ## fields used for judge user type only
+  has_one :event
+  has_many :rubrics
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
