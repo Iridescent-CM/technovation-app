@@ -6,10 +6,15 @@ h4 Judge training materials
 
 
 h4
-  ' #{@team.name}
-= link_to 'Judge now', new_rubric_path(:team => @team)
+- if @team.nil?
+	p There are no teams ready to be judged right now. Check back later.
+- else
+	' #{@team.name}
+	= link_to 'Judge now', new_rubric_path(:team => @team)
 
-h3 Previously judged teams
-p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
-- for r in @rubrics do
-  = link_to 'Edit', edit_rubric_path(:id => r.id)
+	h3 Previously judged teams
+	p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
+	- for r in @rubrics do
+	  - unless r.team.nil?
+	    = link_to r.team.name, edit_rubric_path(:id => r.id)
+	    br

@@ -19,8 +19,8 @@
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
 
     hr
-    h3 Events
-    p Sign your app up to compete in events
+    /h3 Events
+    /p Sign your app up to compete in events
     / = f.collection_select :event_id, Event.all, :name, :name
 
     h4 Category

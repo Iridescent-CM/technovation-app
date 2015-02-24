@@ -39,7 +39,7 @@ h3 Submission
   p
     == @team.check_completeness 
 
-= render 'submissionform'
+= render 'submissionform', :locals => {:team => @team}
 
 
 hr

@@ -13,7 +13,7 @@ class CreateRubrics < ActiveRecord::Migration
       t.integer :revenue
       t.integer :branding
       t.integer :pitch
-      t.boolean :launch?
+      t.boolean :launched
 
       t.timestamps
     end

@@ -47,6 +47,8 @@ Rails.application.routes.draw do
       # post 'update_submissions'
       # patch 'update_submissions'
     end
+
+    resources :rubrics
   end
 
   resources :team_requests, only: [:destroy] do
@@ -55,8 +57,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :judges do
+    resources :rubrics
+  end
+
   resources :rubrics
 
+  resources :events
   #   member do
   #     post 'approve'
   #     delete 'destroy'

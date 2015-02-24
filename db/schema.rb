@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150218001055) do
+ActiveRecord::Schema.define(version: 20150224030126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20150218001055) do
     t.integer  "revenue"
     t.integer  "branding"
     t.integer  "pitch"
-    t.boolean  "launch?"
+    t.boolean  "launched"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "team_id"
@@ -129,16 +129,13 @@ ActiveRecord::Schema.define(version: 20150218001055) do
     t.datetime "avatar_updated_at"
     t.string   "slug"
     t.string   "description"
-    t.string   "code_file_name"
-    t.string   "code_content_type"
-    t.integer  "code_file_size"
-    t.datetime "code_updated_at"
+    t.string   "code"
+    t.string   "pitch"
+    t.string   "demo"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string   "pitch"
-    t.string   "demo"
     t.string   "plan_file_name"
     t.string   "plan_content_type"
     t.integer  "plan_file_size"
@@ -164,9 +161,11 @@ ActiveRecord::Schema.define(version: 20150218001055) do
     t.string   "screenshot5_content_type"
     t.integer  "screenshot5_file_size"
     t.datetime "screenshot5_updated_at"
+    t.integer  "event_id"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
+  add_index "teams", ["event_id"], name: "index_teams_on_event_id", using: :btree
   add_index "teams", ["slug"], name: "index_teams_on_slug", unique: true, using: :btree
   add_index "teams", ["year"], name: "index_teams_on_year", using: :btree
 
@@ -219,10 +218,12 @@ ActiveRecord::Schema.define(version: 20150218001055) do
     t.string   "bg_check_id"
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
+    t.integer  "event_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["event_id"], name: "index_users_on_event_id", using: :btree
   add_index "users", ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude", using: :btree
   add_index "users", ["parent_email"], name: "index_users_on_parent_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

@@ -2,7 +2,9 @@
 .h4 App description
 text_area = team.description
 .h4 Source Code
-= link_to 'Download', team.code.url
+
+- unless team.code.nil?
+  = link_to 'Download', team.code.url
 .h4 App Logo
 = image_tag team.logo.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['width:300px;']
 .h4 Screenshots
@@ -12,10 +14,12 @@ text_area = team.description
 = image_tag team.screenshot4.url(:medium), style: ['width:200px']
 = image_tag team.screenshot5.url(:medium), style: ['width:200px']
 .h4 Pitch Video
-- if not team.pitch.empty?
+
+- unless team.pitch.nil? or team.pitch.empty?
   == render_video(team.pitch)
 .h4 Demo Video
-- if not team.demo.empty?
+
+- unless team.demo.nil? or team.demo.empty?
   == render_video(team.demo)
 .h4 Business Plan
 - if not team.plan.url == '/plans/original/missing.png'

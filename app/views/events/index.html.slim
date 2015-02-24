@@ -1,0 +1,14 @@
+h1 Events
+
+- unless @team.nil?
+	- if @team.event_id.nil?
+		p You are currently signed up for no events. 
+		/ = link_to 'Sign up now', new_event_path
+		= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+		    = f.collection_select :event_id, Event.all, :name, :name
+		    = f.form_group
+				= f.submit "Sign Up"
+	- else
+		p link_to 'Edit your event', edit_event_path
+- else
+	p You must create a team before signing up for an event.

@@ -19,12 +19,18 @@ html
 
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
-            li
-              = link_to 'Teams Gallery', :teams
             - unless current_user.nil?
+              - if current_user.judge?
+                li
+                  = link_to 'Rubrics', :rubrics
+              - else
+                li
+                  = link_to 'Teams Gallery', :teams
               li
                 = link_to 'Dashboard', :root
               - unless current_user.teams.empty? or current_user.judge?
+                li
+                  = link_to 'Events', :events
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
                 li.dropdown

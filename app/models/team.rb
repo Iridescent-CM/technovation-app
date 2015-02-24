@@ -9,7 +9,6 @@ class Team < ActiveRecord::Base
   validates_presence_of :region, :year
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
-  has_attached_file :code
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :plan 
 
@@ -45,12 +44,13 @@ class Team < ActiveRecord::Base
     :africa,
   ]
   has_many :team_requests
-  has_one :category
+  has_many :categores
 
   has_many :members, -> {where 'team_requests.approved = ?', true}, {through: :team_requests, source: :user}
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
 
   has_many :rubrics
+  has_one :event
 
   # has_many :submission_attachments, :dependent => :destroy
   # accepts_nested_attributes_for :submission_attachments, :reject_if => lambda { |t| t['submission_attachments'].nil? }

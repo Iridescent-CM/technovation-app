@@ -1,0 +1,9 @@
+h1 Events
+- if current_user.judge?
+  p Sign up for an event to judge.
+- else
+  	p Sign your team up for an event you would like to compete in.
+	= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+	    = f.collection_select :event_id, Event.all, :name, :name
+	    = f.form_group
+			= f.submit "Sign Up"
