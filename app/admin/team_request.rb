@@ -8,6 +8,9 @@ ActiveAdmin.register TeamRequest do
     column "Email" do |teamrequest|
       teamrequest.user.email
     end
+    column "Role" do |teamrequest|
+      teamrequest.user.role
+    end
     column :user_request
     column :approved
     actions
