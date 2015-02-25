@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
 
+  preserve_default_filters!
+  filter :teams_id_not_null, label: "Is On Team", as: :boolean
+
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
