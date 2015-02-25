@@ -5,39 +5,39 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = User.new(
-  first_name: 'Cory',
-  last_name: 'Li',
-  email: 'finalepsilon@gmail.com',
-  parent_email: 'finalepsilon@gmail.com',
-  password: 'testtest',
-  role: 0,
-  password_confirmation: 'testtest',
-  birthday: Date.new(1989, 12, 1),
-  home_city: 'Raleigh',
-  home_state: 'NC',
-  home_country: 'US',
-  school: 'MIT',
-)
-user.skip_confirmation!
-user.save!
+# user = User.new(
+#   first_name: 'Cory',
+#   last_name: 'Li',
+#   email: 'finalepsilon@gmail.com',
+#   parent_email: 'finalepsilon@gmail.com',
+#   password: 'testtest',
+#   role: 0,
+#   password_confirmation: 'testtest',
+#   birthday: Date.new(1989, 12, 1),
+#   home_city: 'Raleigh',
+#   home_state: 'NC',
+#   home_country: 'US',
+#   school: 'MIT',
+# )
+# user.skip_confirmation!
+# user.save!
 
 
-user = User.new(
-  first_name: 'Cassandra',
-  last_name: 'Xia',
-  email: 'cssndrx+judge@gmail.com',
-  password: 'testtest',
-  role: 3,
-  password_confirmation: 'testtest',
-  birthday: Date.new(1989, 12, 1),
-  home_city: 'Boston',
-  home_state: 'MA',
-  home_country: 'US',
-  school: 'MIT',
-)
-user.skip_confirmation!
-user.save!
+# user = User.new(
+#   first_name: 'Cassandra',
+#   last_name: 'Xia',
+#   email: 'cssndrx+judge@gmail.com',
+#   password: 'testtest',
+#   role: 3,
+#   password_confirmation: 'testtest',
+#   birthday: Date.new(1989, 12, 1),
+#   home_city: 'Boston',
+#   home_state: 'MA',
+#   home_country: 'US',
+#   school: 'MIT',
+# )
+# user.skip_confirmation!
+# user.save!
 
 
 setting = Setting.create(
