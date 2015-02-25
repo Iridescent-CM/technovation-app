@@ -63,4 +63,8 @@
 
 hr
 .row
+  .alert.alert-danger role='alert'
+    p
+      == @team.check_completeness 
+
   = render 'submission', team: @team

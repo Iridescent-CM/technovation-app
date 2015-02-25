@@ -21,7 +21,7 @@ class RubricsController < ApplicationController
  
   	@rubrics = Rubric.all
 
-  	## todo change to only teams whose submissions are complete
+  	## todo change to only teams whose submissions are complete??
   end
 
   def edit
@@ -58,7 +58,22 @@ class RubricsController < ApplicationController
   	end
   end
 
+  def rubric_type
+    if between?(Setting.quarterfinalJudgingOpen, Setting.quarterfinalJudgingClose)
+      return 'quarterfinal'
+    if between?(Setting.semifinalJudgingOpen, Setting.semifinalJudgingClose)
+      return 'semifinal'
+    if past?(Setting.semifinalJudgingClose)
+      return 'final'
+  end
+
   private
+    def can_see_rubric?
+      ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
+      ## get the rubric type
+      ## see if the judging for that type has closed
+    end
+
     def rubric_params
     	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :team_id)
     end

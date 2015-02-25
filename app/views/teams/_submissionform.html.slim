@@ -3,7 +3,7 @@
   	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
     = f.text_area :description, label: "App description", rows: 5
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
-    = f.file_field :code, label: "Source code", data: 'code'
+    = f.text_field :code, label: "Source code", data: 'code', help: 'A link to your github account'
 
     .h4 Screenshots
     = f.file_field :screenshot1, label: "1"

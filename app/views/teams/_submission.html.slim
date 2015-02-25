@@ -2,9 +2,8 @@
 .h4 App description
 text_area = team.description
 .h4 Source Code
-
 - unless team.code.nil?
-  = link_to 'Download', team.code.url
+  = link_to 'Github repo', team.code
 .h4 App Logo
 = image_tag team.logo.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['width:300px;']
 .h4 Screenshots
