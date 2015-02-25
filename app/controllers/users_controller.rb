@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.friendly.find(params[:id])
     authorize @user
 
-    binding.pry
+#    binding.pry
 
     if @user.update(user_params)
       flash[:notice] = 'Profile Updated!'
