@@ -21,7 +21,10 @@ class RubricsController < ApplicationController
  
   	@rubrics = Rubric.all
 
-  	## todo change to only teams whose submissions are complete??
+    ## only show rubrics that were done by the judge
+    ## do not show teams that the judge has judged already
+    ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    ## search for teams that have the fewest number of submissions
   end
 
   def edit
@@ -68,11 +71,11 @@ class RubricsController < ApplicationController
   end
 
   private
-    def can_see_rubric?
-      ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
-      ## get the rubric type
-      ## see if the judging for that type has closed
-    end
+    # def can_see_rubric?
+    #   ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
+    #   ## get the rubric type
+    #   ## see if the judging for that type has closed
+    # end
 
     def rubric_params
     	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :team_id)
