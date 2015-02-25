@@ -64,20 +64,23 @@ class RubricsController < ApplicationController
   def rubric_type
     if between?(Setting.quarterfinalJudgingOpen, Setting.quarterfinalJudgingClose)
       return 'quarterfinal'
+    end
     if between?(Setting.semifinalJudgingOpen, Setting.semifinalJudgingClose)
       return 'semifinal'
+    end
     if past?(Setting.semifinalJudgingClose)
       return 'final'
+    end
   end
 
   private
-    # def can_see_rubric?
-    #   ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
-    #   ## get the rubric type
-    #   ## see if the judging for that type has closed
-    # end
+  def can_see_rubric?
+    ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
+    ## get the rubric type
+    ## see if the judging for that type has closed
+  end
 
-    def rubric_params
-    	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :team_id)
-    end
+  def rubric_params
+  	params.require(:rubric).permit(:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :team_id)
+  end
 end
