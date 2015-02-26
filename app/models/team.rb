@@ -44,7 +44,7 @@ class Team < ActiveRecord::Base
     :africa,
   ]
   has_many :team_requests
-  has_many :categores
+  has_many :categories
 
   has_many :members, -> {where 'team_requests.approved = ?', true}, {through: :team_requests, source: :user}
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
