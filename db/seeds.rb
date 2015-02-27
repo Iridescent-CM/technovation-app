@@ -57,6 +57,40 @@ user.skip_confirmation!
 user.save!
 
 
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx+mentor@gmail.com',
+  password: 'testtest',
+  role: 1,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx+coach@gmail.com',
+  password: 'testtest',
+  role: 2,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+
 setting = Setting.create(
   key: 'year',
   value: '2015',

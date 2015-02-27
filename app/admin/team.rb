@@ -13,11 +13,11 @@ ActiveAdmin.register Team do
     column :region
     column :division
     column :year
-    column 'Event' do |t|
-      link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
-    end
     column :rubrics_average
     column :rubrics_count
+    column :event_id do |t|
+      link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+    end
 
     actions
   end
@@ -34,6 +34,7 @@ ActiveAdmin.register Team do
     end
     f.actions
   end
+
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
