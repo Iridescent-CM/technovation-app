@@ -15,6 +15,10 @@ ActiveAdmin.register User do
     column :birthday
     column :home_country
     column :consent_signed_at
+
+    column (:can_judge){|u| u.judge? or u.judging}
+    column (:num_judged){|u| Rubric.where(user_id: u.id).length}
+
     actions
   end
 
