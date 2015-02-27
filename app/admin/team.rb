@@ -13,6 +13,12 @@ ActiveAdmin.register Team do
     column :region
     column :division
     column :year
+    column 'Event' do |t|
+      link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+    end
+    column :rubrics_average
+    column :rubrics_count
+
     actions
   end
 
@@ -24,6 +30,7 @@ ActiveAdmin.register Team do
       f.input :year
       f.input :avatar, as: :file, required: false
       f.input :region, as: :select, collection: Team.regions.keys
+#      f.input :event, as: :select, collection: Event.all
     end
     f.actions
   end

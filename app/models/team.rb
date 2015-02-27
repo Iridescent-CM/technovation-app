@@ -97,14 +97,17 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def missing_field?(a)
+     evaled = eval(a)
+     (evaled.nil? or (evaled.class.name == 'String' and evaled.length == 0)) or (evaled.class.name == 'Paperclip::Attachment' and eval(a+'_file_name').nil?)
+  end
+
   def check_completeness
-#    binding.pry
     required = ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
     missing = required.select {|a| 
-       evaled = eval(a)
-       if (evaled.nil? or (evaled.class.name == 'String' and evaled.length == 0)) or (evaled.class.name == 'Paperclip::Attachment' and eval(a+'_file_name').nil?)
-         a
-       end
+      if (missing_field?(a))
+        a
+      end
      }
     'You still need to upload ' + missing.to_s+ ' to be complete'
   end

@@ -17,4 +17,5 @@ h4
 	- for r in @rubrics do
 	  - unless r.team.nil?
 	    = link_to r.team.name, edit_rubric_path(:id => r.id)
+	    span  Total Score: #{r.score}
 	    br

@@ -9,7 +9,7 @@ user = User.new(
   first_name: 'Cory',
   last_name: 'Li',
   email: 'finalepsilon@gmail.com',
-  parent_email: 'finalepsilon@gmail.com',
+  parent_email: 'cssndrx@gmail.com',
   password: 'testtest',
   role: 0,
   password_confirmation: 'testtest',
@@ -22,6 +22,23 @@ user = User.new(
 user.skip_confirmation!
 user.save!
 
+
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx@gmail.com',
+  parent_email: 'cssndrx@gmail.com',
+  password: 'testtest',
+  role: 0,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
 
 user = User.new(
   first_name: 'Cassandra',

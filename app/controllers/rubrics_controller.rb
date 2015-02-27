@@ -37,9 +37,16 @@ class RubricsController < ApplicationController
   def update
     @rubric = Rubric.find(params[:id])
     authorize @rubric
-    # redirect_to :rubrics
 
     if @rubric.update(rubric_params)
+      @rubric.score = calculate_score
+      @rubric.save
+
+      @rubric.team.rubrics_count = @rubric.team.rubrics.length
+      scores = @rubric.team.rubrics.map{|r| r.score}
+      @rubric.team.rubrics_average = average(scores) # scores.inject(:+).to_f / scores.size
+      @rubric.team.save
+
       redirect_to :rubrics
     else
       redirect_to :back
@@ -50,11 +57,15 @@ class RubricsController < ApplicationController
   def create
   	@rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
+    @rubric.score = calculate_score
+    
     authorize @rubric
-
-    # binding.pry
-
   	if @rubric.save
+      @rubric.team.rubrics_count = @rubric.team.rubrics.length
+      scores = @rubric.team.rubrics.map{|r| r.score}
+      @rubric.team.rubrics_average = average(scores) #scores.inject(:+).to_f / scores.size
+      @rubric.team.save
+
   	  redirect_to :rubrics
   	else
   	  render :new
@@ -74,6 +85,27 @@ class RubricsController < ApplicationController
   end
 
   private
+  def calculate_score
+    score = 0
+    points = [:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch]
+    points.each { |p| score += @rubric[p]}
+
+    if @rubric.launched
+      score += 2
+    end
+
+    # deduct points for missing components (todo)
+    #missing_field?(a)
+    deductions = [:pitch, :demo, :code, :screenshot1, :screenshot2, :screenshot3, :description, :plan]
+    deductions.each{ |d| 
+      if (@rubric.team.missing_field?(d.to_s))
+        score -= 1
+      end
+    }
+
+    score
+  end
+
   def can_see_rubric?
     ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
     ## get the rubric type

@@ -1,0 +1,5 @@
+h2 These are the scores that you have received from judges
+
+- for r in @rubrics do
+	/= render :partial => 'rubrics/rubric', :locals => {@rubric: r}
+	p blah

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225220619) do
+ActiveRecord::Schema.define(version: 20150227034801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,10 @@ ActiveRecord::Schema.define(version: 20150225220619) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "organizer"
+    t.integer  "team_id"
   end
+
+  add_index "events", ["team_id"], name: "index_events_on_team_id", using: :btree
 
   create_table "judges", force: true do |t|
     t.datetime "created_at"
@@ -98,6 +101,7 @@ ActiveRecord::Schema.define(version: 20150225220619) do
     t.integer  "team_id"
     t.integer  "user_id"
     t.string   "round"
+    t.integer  "score"
   end
 
   add_index "rubrics", ["user_id"], name: "index_rubrics_on_user_id", using: :btree
@@ -167,6 +171,10 @@ ActiveRecord::Schema.define(version: 20150225220619) do
     t.integer  "screenshot5_file_size"
     t.datetime "screenshot5_updated_at"
     t.integer  "event_id"
+    t.boolean  "issemifinalist"
+    t.boolean  "isfinalist"
+    t.integer  "rubrics_count"
+    t.integer  "rubrics_average"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree

@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   resources :rubrics
 
   resources :events
+
+  resources :scores
+  
   #   member do
   #     post 'approve'
   #     delete 'destroy'

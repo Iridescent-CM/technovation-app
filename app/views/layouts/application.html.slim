@@ -20,6 +20,9 @@ html
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             - unless current_user.nil?
+              - unless current_user.teams.empty?
+                li
+                  = link_to 'Scores', :scores
               - if current_user.judge?
                 li
                   = link_to 'Rubrics', :rubrics
