@@ -71,6 +71,7 @@ class UsersController < ApplicationController
       :connect_with_other,
 
       :event_id,
+      :judging,
     )
   end
 

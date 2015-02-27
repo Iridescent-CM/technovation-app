@@ -138,4 +138,9 @@ class User < ActiveRecord::Base
     return if skip_parent_email
     SignatureMailer.signature_email(self).deliver
   end
+
+  def is_judge?
+    ## returns true if judge user type or if mentor/coach volunteered to judge
+    role == 'judge' or judging
+  end
 end

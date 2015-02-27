@@ -41,13 +41,13 @@ class RubricsController < ApplicationController
     if @rubric.update(rubric_params)
       @rubric.score = calculate_score
       @rubric.user_id = current_user.id
+
       @rubric.save
 
-      @rubric.team.rubrics_count = @rubric.team.rubrics.length
-      scores = @rubric.team.rubrics.map{|r| r.score}
-      @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) # 
-      @rubric.team.save
-
+      # @rubric.team.rubrics_count = @rubric.team.rubrics.length
+      # scores = @rubric.team.rubrics.map{|r| r.score}
+      # @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) # 
+      # @rubric.team.save
 #      binding.pry
 
       redirect_to :rubrics
@@ -65,10 +65,10 @@ class RubricsController < ApplicationController
     
     authorize @rubric
   	if @rubric.save
-      @rubric.team.rubrics_count = @rubric.team.rubrics.length
-      scores = @rubric.team.rubrics.map{|r| r.score}
-      @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) #
-      @rubric.team.save
+      # @rubric.team.rubrics_count = @rubric.team.rubrics.length
+      # scores = @rubric.team.rubrics.map{|r| r.score}
+      # @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) #
+      # @rubric.team.save
 
   	  redirect_to :rubrics
   	else

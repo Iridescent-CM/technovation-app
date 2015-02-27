@@ -20,10 +20,13 @@ html
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             - unless current_user.nil?
+              - unless (current_user.is_judge? or current_user.student?)
+                li
+                  = link_to 'Become a Judge', :judges
               - unless current_user.teams.empty?
                 li
                   = link_to 'Scores', :scores
-              - if current_user.judge?
+              - if current_user.is_judge?
                 li
                   = link_to 'Rubrics', :rubrics
               - else
@@ -31,7 +34,7 @@ html
                   = link_to 'Teams Gallery', :teams
               li
                 = link_to 'Dashboard', :root
-              - if current_user.judge? or (not current_user.teams.empty?)
+              - if current_user.is_judge? or (not current_user.teams.empty?)
                 li
                   = link_to 'Events', :events
               - unless current_user.teams.empty?

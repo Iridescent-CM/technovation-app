@@ -33,11 +33,13 @@ Rails.application.routes.draw do
   # post 'teams/:id/update_submissions' => 'teams#update_submissions'
   # patch 'teams/:id/update_submissions' => 'teams#update_submissions'
 
+#  get 'judges' => 'judge#index'
 
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
     end
+    resources :rubrics
   end
 
   resources :teams do
@@ -57,16 +59,18 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :judges do
-    resources :rubrics
-  end
+  # resources :judges do
+  #   resources :rubrics
+  # end
 
   resources :rubrics
 
   resources :events
 
   resources :scores
-  
+ 
+  resources :judges
+
   #   member do
   #     post 'approve'
   #     delete 'destroy'

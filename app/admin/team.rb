@@ -13,8 +13,17 @@ ActiveAdmin.register Team do
     column :region
     column :division
     column :year
-    column :rubrics_average
-    column :rubrics_count
+    # column :rubrics_average
+    # column :rubrics_count
+
+    # column (:team_name){|r| Team.find(r.team_id).name}
+    # column (:region){|r| Team.find(r.team_id).region}
+    column (:count){|t| t.rubrics.length}
+    column (:average){|t| 
+      scores = t.rubrics.map{|r| r.score}
+      scores.inject(:+).to_f / scores.size
+      }
+
     column :event_id do |t|
       link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
     end

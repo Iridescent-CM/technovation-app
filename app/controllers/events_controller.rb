@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-  	if current_user.judge?
+  	if current_user.is_judge?
   		@team = nil
   		@user = current_user
   	else
