@@ -1,21 +1,23 @@
 class EventsController < ApplicationController
   def index
-  	if current_user.is_judge?
+  	if current_user.can_judge?
   		@team = nil
   		@user = current_user
-  	else
+  	end
+
+    unless current_user.judge? ## is mentor, coach, or student
 	    @team = current_user.current_team
 	    authorize @team
-	end
+	  end
   end
 
-  def edit
-    @team = current_user.current_team
-    authorize @team
-  end
+  # def edit
+  #   @team = current_user.current_team
+  #   authorize @team
+  # end
 
-  def new
-    @team = current_user.current_team
-    authorize @team
-  end
+  # def new
+  #   @team = current_user.current_team
+  #   authorize @team
+  # end
 end

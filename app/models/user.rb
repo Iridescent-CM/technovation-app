@@ -139,7 +139,7 @@ class User < ActiveRecord::Base
     SignatureMailer.signature_email(self).deliver
   end
 
-  def is_judge?
+  def can_judge?
     ## returns true if judge user type or if mentor/coach volunteered to judge
     role == 'judge' or judging
   end

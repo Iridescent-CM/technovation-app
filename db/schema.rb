@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227191420) do
+ActiveRecord::Schema.define(version: 20150227202255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,19 @@ ActiveRecord::Schema.define(version: 20150227191420) do
     t.integer  "user_id"
     t.string   "round"
     t.integer  "score"
+    t.string   "identify_problem_comment"
+    t.string   "address_problem_comment"
+    t.string   "functional_comment"
+    t.string   "external_resources_comment"
+    t.string   "match_features_comment"
+    t.string   "interface_comment"
+    t.string   "description_comment"
+    t.string   "market_comment"
+    t.string   "competition_comment"
+    t.string   "revenue_comment"
+    t.string   "branding_comment"
+    t.string   "pitch_comment"
+    t.string   "launched_comment"
   end
 
   add_index "rubrics", ["user_id"], name: "index_rubrics_on_user_id", using: :btree
