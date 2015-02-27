@@ -34,6 +34,7 @@ gem 'has_scope'
 gem 'paperclip'
 gem 'pundit', github: 'elabs/pundit'
 gem 'wicked', '~> 1.1'
+gem 'createsend'
 
 # general libraries
 gem 'aws-sdk'

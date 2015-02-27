@@ -4,7 +4,10 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
+  after_create :add_to_campaign_list
   after_create :email_parents_callback, if: :student?
+
+  before_destroy :remove_from_campaign_list
 
   # virtual attributes for social security check
   attr_accessor :middle_name, :ssn, :phone,
@@ -180,5 +183,30 @@ class User < ActiveRecord::Base
   def email_parents_callback
     return if skip_parent_email
     SignatureMailer.signature_email(self).deliver
+  end
+
+  def get_campaign_list
+    if student?
+      Rails.application.config.env[:createsend][:student_list_id]
+    elsif mentor?
+      Rails.application.config.env[:createsend][:mentor_list_id]
+    else
+      Rails.application.config.env[:createsend][:teacher_list_id]
+    end
+  end
+
+  def get_campaign_auth
+    {
+      :api_key => Rails.application.config.env[:createsend][:api_key]
+    }
+  end
+  
+  def add_to_campaign_list
+    CreateSend::Subscriber.add get_campaign_auth, get_campaign_list, email, name, [], true
+  end
+
+  def remove_from_campaign_list
+    subscriber = CreateSend::Subscriber.new get_campaign_auth, get_campaign_list, email
+    subscriber.unsubscribe
   end
 end
