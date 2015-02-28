@@ -1,5 +1,4 @@
-h3 These are the scores that you have received from judges
-
-- for r in @rubrics do
-	= link_to 'Rubric', rubrics_path(r.id)
+h4 Scores for #{@team.name}
+- for i in Array(0.. @rubrics.length-1) do
+	= link_to 'Judge '+(i+1).to_s+"'s feedback", rubric_path(@rubrics[i])
 	br

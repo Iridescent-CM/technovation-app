@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get '/rubrics/:id', to: 'rubrics#show', as: 'rubric'
+
   get 'signature/:hash' => 'signature#index'
   post 'signature/:hash' => 'signature#create'
   get 'signature' => 'signature#status'
