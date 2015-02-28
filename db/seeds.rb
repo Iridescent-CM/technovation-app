@@ -133,6 +133,7 @@ event = Event.create(
   location: 'Online',
   whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
   description: 'Quarterfinals for everyone',
+  organizer: 'Technovation',
 )
 
 event = Event.create(
@@ -140,6 +141,7 @@ event = Event.create(
   location: 'MIT',
   whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
   description: 'Quarterfinals for the Northeast',
+  organizer: 'Women in Science and Engineering',
 )
 
 event = Event.create(
@@ -147,6 +149,7 @@ event = Event.create(
   location: 'Dropbox',
   whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
   description: 'Quarterfinals for the Bay Area',
+  organizer: 'Technovation',
 )
 
 category = Category.create(

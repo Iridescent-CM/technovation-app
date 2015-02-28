@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     member do
       post 'invite', as: 'invite'
     end
-    resources :rubrics
+#    resources :rubrics
   end
 
   resources :teams do
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       # patch 'update_submissions'
     end
 
-    resources :rubrics
+#    resources :rubrics
   end
 
   resources :team_requests, only: [:destroy] do
@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   #   resources :rubrics
   # end
 
+#  resources :rubrics, controller: :rubrics, only: [:index, :show, :new, :edit]
   resources :rubrics
 
   resources :events

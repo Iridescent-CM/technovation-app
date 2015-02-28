@@ -25,6 +25,10 @@ module ApplicationHelper
     end
   end
 
+  def format_date(d)
+    d.strftime("%m/%d/%Y")
+  end
+
   def format_division(division)
     case division.to_sym
     when :hs

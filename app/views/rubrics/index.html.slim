@@ -14,8 +14,14 @@ h4
 
 	h3 Previously judged teams
 	p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
-	- for r in @rubrics do
-	  - unless r.team.nil?
-	    = link_to r.team.name, edit_rubric_path(:id => r.id)
-	    span  Total Score: #{r.score}
-	    br
+	table
+		tr
+			td Team
+			td Total Score
+		- for r in @rubrics do
+		  - unless r.team.nil?
+		  	tr
+		  		td style='padding:2px; padding-right:20px; '
+		    		= link_to r.team.name, edit_rubric_path(:id => r.id)
+		    	td
+		    		'#{r.score}

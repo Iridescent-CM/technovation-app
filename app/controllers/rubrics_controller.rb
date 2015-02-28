@@ -100,12 +100,18 @@ class RubricsController < ApplicationController
 
     # deduct points for missing components (todo)
     #missing_field?(a)
-    deductions = [:pitch, :demo, :code, :screenshot1, :screenshot2, :screenshot3, :description, :plan]
+    deductions = [:pitch, :demo, :code, :description, :plan]
     deductions.each{ |d| 
       if (@rubric.team.missing_field?(d.to_s))
         score -= 1
       end
     }
+
+    deductions = [:screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5]
+    if deductions.map{|d| @rubric.team.missing_field?(d.to_s)}.all?
+      ## if all screenshots are missing then deduct 1 pt
+      score -= 1
+    end
 
     score
   end
