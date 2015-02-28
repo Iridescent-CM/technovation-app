@@ -109,7 +109,11 @@ class Team < ActiveRecord::Base
         a
       end
      }
-    'You still need to upload ' + missing.to_s+ ' to be complete'
+#    'You still need to upload your ' + missing.join(', ')+ ' to complete your submission.'
+    missing.join(', ')
   end
 
+  # def region
+  #   binding.pry
+  # end
 end

@@ -21,5 +21,8 @@ text_area = team.description
 - unless team.demo.nil? or team.demo.empty?
   == render_video(team.demo)
 .h4 Business Plan
-- if not team.plan.url == '/plans/original/missing.png'
+- unless team.plan.url == '/plans/original/missing.png'
   == render_pdf(team.plan.url)
+.h4 Category
+- unless team.category_id.nil?
+  span.badge = Category.find(team.category_id).name

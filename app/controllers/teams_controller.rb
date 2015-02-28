@@ -15,10 +15,10 @@ class TeamsController < ApplicationController
     if params[:search]
       @search = params[:search]
       t = Team.arel_table
-      @teams = Team.where(t[:name].matches('%'+@search+'%'))
+      @teams = Team.where(t[:name].matches('%'+@search+'%')).shuffle
       @season = "All Seasons"
     else
-      @teams = Team.where(year: Setting.year)
+      @teams = Team.where(year: Setting.year).shuffle
       @season = "#{Setting.year} Season"
     end
   end

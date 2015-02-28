@@ -37,7 +37,9 @@ hr
 h3 Submission
 .alert.alert-danger role='alert'
   p
+    span You still need to upload your 
     == @team.check_completeness 
+    span to complete your submission.
 
 = render 'submissionform', :locals => {:team => @team}
 

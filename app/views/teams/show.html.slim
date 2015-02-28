@@ -64,7 +64,9 @@
 hr
 .row
   .alert.alert-danger role='alert'
-    p
+    p 
+      span This team still needs to upload their
       == @team.check_completeness 
+      span  to complete their submission.
 
   = render 'submission', team: @team
