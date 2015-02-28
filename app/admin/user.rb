@@ -18,6 +18,9 @@ ActiveAdmin.register User do
 
     column (:can_judge){|u| u.judge? or u.judging}
     column (:num_judged){|u| Rubric.where(user_id: u.id).length}
+    column (:judging_event){|u| unless u.event_id.nil? 
+                                  link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
+                                end}
 
     actions
   end
