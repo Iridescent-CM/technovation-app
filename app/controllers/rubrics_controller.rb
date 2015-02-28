@@ -9,6 +9,8 @@ class RubricsController < ApplicationController
     ## new rubric needs to take a team
     @rubric = Rubric.new
   	@rubric.team = Team.friendly.find(params[:team])
+
+#    binding.pry
     authorize @rubric
   end
 
