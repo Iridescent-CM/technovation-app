@@ -31,5 +31,5 @@
         span.badge 
           = t.region
         div
-          - unless t.category_id.nil? and t.category_id > 0
+          - if (not t.category_id.nil?) and (t.category_id > 0)
             span.badge = Category.find(t.category_id).name
