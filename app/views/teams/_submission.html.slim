@@ -2,8 +2,12 @@
 .h4 App description
 text_area = team.description
 .h4 Source Code
-- unless team.code.nil?
+- unless (team.code.nil? or team.code.length == 0)
   = link_to 'Github repo', team.code
+.h4 App Listing
+- unless (team.store.nil? or team.store.length == 0)
+  = link_to 'Listing page', team.store
+
 .h4 App Logo
 = image_tag team.logo.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['width:300px;']
 .h4 Screenshots

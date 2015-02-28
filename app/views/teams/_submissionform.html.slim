@@ -5,6 +5,8 @@
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
     = f.text_field :code, label: "Source code", data: 'code', help: 'A link to your github account'
 
+    = f.text_field :store, label: "App listing", help: 'Link to Google Play or App Store listing of your app (optional for 2 additional points)'
+
     .h4 Screenshots
     = f.file_field :screenshot1, label: "1"
     = f.file_field :screenshot2, label: "2"

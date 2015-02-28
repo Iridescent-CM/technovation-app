@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227213627) do
+ActiveRecord::Schema.define(version: 20150228003351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20150227213627) do
     t.boolean  "isfinalist"
     t.integer  "rubrics_count"
     t.integer  "rubrics_average"
+    t.string   "store"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
