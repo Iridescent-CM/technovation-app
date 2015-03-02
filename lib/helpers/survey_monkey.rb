@@ -18,7 +18,6 @@ module SurveyMonkey
           :"Content-Type" => 'application/json'
         }
       )
-      puts response.body
       ActiveSupport::JSON.decode response.body
     end
 
