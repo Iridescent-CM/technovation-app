@@ -1,6 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
+before_filter :registration_override, if: :registration_protected?
 
   # GET /resource/sign_up
   def new
@@ -14,6 +15,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def registration_protected?
+    !Rails.application.config.env[:registration][:open] && 
+      Rails.application.config.env[:registration][:override_username] &&
+      Rails.application.config.env[:registration][:override_password]
+  end
+
+  def registration_override
+    login = authenticate_or_request_with_http_basic do |username, password|
+      username == Rails.application.config.env[:registration][:override_username] &&
+        password == Rails.application.config.env[:registration][:override_password]
+    end
+    session[:registration_override] = login
+  end
+  
   # POST /resource
 
   # def new
