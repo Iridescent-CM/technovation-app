@@ -24,11 +24,11 @@ before_filter :registration_override, if: :registration_protected?
   def registration_override
     login = authenticate_or_request_with_http_basic do |username, password|
       username == Rails.application.config.env[:registration][:override_username] &&
-        password == Rails.application.config.env[:registration][:override_password]
+        Digest::SHA1.hexdigest(password) == Rails.application.config.env[:registration][:override_password]
     end
     session[:registration_override] = login
   end
-  
+
   # POST /resource
 
   # def new
