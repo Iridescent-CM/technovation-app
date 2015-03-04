@@ -24,6 +24,7 @@ ActiveAdmin.register Team do
       f.input :year
       f.input :avatar, as: :file, required: false
       f.input :region, as: :select, collection: Team.regions.keys
+      f.input :division, as: :select, collection: Team.divisions.keys
     end
     f.actions
   end

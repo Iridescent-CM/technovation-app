@@ -36,10 +36,6 @@
         dt Current Team
         dd= link_to @user.current_team.name, @user.current_team
 
-      - if @user.student?
-        dt Division
-        dd= format_division(@user.division)
-
       - if @user.mentor?
         dt Email
         dd
