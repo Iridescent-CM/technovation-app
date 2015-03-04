@@ -100,8 +100,7 @@ class RubricsController < ApplicationController
       score += 2
     end
 
-    # deduct points for missing components (todo)
-    #missing_field?(a)
+    # deduct points for missing components
     deductions = [:pitch, :demo, :code, :description, :plan]
     deductions.each{ |d| 
       if (@rubric.team.missing_field?(d.to_s))

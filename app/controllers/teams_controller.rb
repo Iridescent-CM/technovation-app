@@ -1,6 +1,10 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!, except: :index
 
+  has_scope :has_category
+  has_scope :has_division
+  has_scope :has_region
+
   def new
     @team = Team.new
     authorize @team
@@ -18,7 +22,23 @@ class TeamsController < ApplicationController
       @teams = Team.where(t[:name].matches('%'+@search+'%')).shuffle
       @season = "All Seasons"
     else
-      @teams = Team.where(year: Setting.year).shuffle
+#      @teams = Team.where(year: Setting.year).shuffle
+#      @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise
+#      binding.pry
+      @teams = apply_scopes(Team.where(year: Setting.year))
+
+      unless params[:category].nil?
+        @teams = @teams.has_category(params[:category])
+      end
+      unless params[:region].nil?
+        @teams = @teams.has_region(params[:region])
+      end
+      unless params[:division].nil?
+        @teams = @teams.has_division(params[:division])
+      end
+      
+      @teams.shuffle
+
       @season = "#{Setting.year} Season"
     end
   end

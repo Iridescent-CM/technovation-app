@@ -16,20 +16,51 @@
       form.navbar-form.navbar-right
         = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
 
-- if @teams.empty?
-  p There are not yet any teams registered for the #{@year} season.
 
-- else
-  - for t in @teams do
-    .media
-      a.media-left href=url_for(t)
-        = image_tag t.avatar.url(:medium), class: ['img-rounded']
-      .media-body
-        a href=url_for(t)
-          h4.media-heading= t.name
-        p= truncate(render_markdown_brief(t.about), length: 160)
-        span.badge 
-          = t.region
-        div
-          - if (not t.category_id.nil?) and (t.category_id > 0)
-            span.badge = Category.find(t.category_id).name
+.row
+  .col-sm-2
+    h4 Filter teams
+    form method='get'
+      h5 Category
+      ul.list-unstyled
+        - for c in Category.all
+          li
+            .checkbox
+              label
+                input type='checkbox' name='category' value='#{c.id}' #{c.name}
+      h5 Region
+      ul.list-unstyled
+        - for r in Team.get_regions
+          li
+            .checkbox
+              label
+                input type='checkbox' name='region' value='#{Team.get_regions.index(r)}' #{r}
+
+      h5 Division
+      ul.list-unstyled
+        - for d in Team.get_divisions
+          li
+            .checkbox
+              label
+                input type='checkbox' name='division' value='#{Team.get_divisions.index(d)}' #{d}
+
+      button.btn.btn-default type='submit' Filter
+
+  .col-sm-10
+    - if @teams.empty?
+      p There are not yet any teams registered for the #{@year} season.
+
+    - else
+      - for t in @teams do
+        .media
+          a.media-left href=url_for(t)
+            = image_tag t.avatar.url(:medium), class: ['img-rounded']
+          .media-body
+            a href=url_for(t)
+              h4.media-heading= t.name
+            p= truncate(render_markdown_brief(t.about), length: 160)
+            span.badge 
+              = t.region
+            div
+              - if (not t.category_id.nil?) and (t.category_id > 0)
+                span.badge = Category.find(t.category_id).name

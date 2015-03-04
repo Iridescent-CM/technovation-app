@@ -20,6 +20,7 @@ ActiveAdmin.register Rubric do
 
     column (:team_name){|r| Team.find(r.team_id).name}
     column (:region){|r| Team.find(r.team_id).region}
+
     # column :region, sortable: :region do |r|
     #     Team.find(r.team_id).region
     #   end

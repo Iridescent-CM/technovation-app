@@ -31,7 +31,6 @@ class Team < ActiveRecord::Base
 
   validates_attachment :plan, content_type: { content_type: "application/pdf" }
   
-
   enum division: {
     ms: 0,
     hs: 1,
@@ -57,7 +56,18 @@ class Team < ActiveRecord::Base
 
   scope :old, -> {where 'year < ?', Setting.year}
   scope :current, -> {where year: Setting.year}
+#  scope :has_category, -> {where.not category: 0}
+  scope :has_category, -> (cat) {where('category_id = ?', cat)}
+  scope :has_division, -> (div) {where('division = ?', div)}
+  scope :has_region, -> (reg) {where('region = ?', reg)}
 
+  def self.get_regions
+    ['us', 'mexico', 'europe', 'africa']
+  end
+
+  def self.get_divisions
+    ['ms', 'hs', 'x']
+  end
 
   def name_and_year
     "#{name}-#{year}"
