@@ -1,11 +1,10 @@
 class ScoresController < ApplicationController
 
 	def index
-
-		## todo: make this work for users with multiple teams
-		@team = current_user.teams[0]
-		@rubrics = Rubric.where("team_id = '"+ @team.id.to_s + "'")
-
-		## grab the associated rubrics
+		## send in a hash from team name to rubrics
+		@hash = {}
+		for t in current_user.teams
+			@hash[t.name] = Rubric.where("team_id = '#{t.id}'")
+		end
 	end
 end

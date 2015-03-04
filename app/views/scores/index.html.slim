@@ -1,4 +1,6 @@
-h4 Scores for #{@team.name}
-- for i in Array(0.. @rubrics.length-1) do
-	= link_to 'Judge '+(i+1).to_s+"'s feedback", rubric_path(@rubrics[i])
-	br
+
+- for t in @hash.keys
+	h4 Scores for #{t}
+	- for r in @hash[t] do
+		= link_to "Judge feedback "+(@hash[t].index(r)+1).to_s, rubric_path(r)
+		br
