@@ -1,5 +1,25 @@
 # Readme
 
+## Quick Start
+
+Assuming Rails, Postgres, rbenv, and bundler are all installed...
+
+``` sh
+git clone https://github.com/Iridescent-CM/technovation-app.git
+cd technovation-app
+rbenv install
+bundle install
+createdb technovation_development
+rake db:migrate
+echo HOST_DOMAIN=localhost:3000 > .env
+rake db:seed
+rails s
+```
+
+then navigate to http://localhost:3000
+
+Initial credentials are in [`./db/seeds.rb`](blob/master/db/seeds.rb) to log in.
+
 ## Signatures
 
 Users are required to have a signature on file before doing anything. On registration, an HMAC-signed url is sent to the parent's email for signature. Once the signature button is clicked, the user is then able to perform actions on the site.  In case a url needs to be manually generated and sent, use `rake signature:link[id]` where `id` is the user's numerical id.
