@@ -41,7 +41,7 @@ class RubricsController < ApplicationController
     authorize @rubric
 
     if @rubric.update(rubric_params)
-      @rubric.score = calculate_score
+#      @rubric.score = calculate_score
       @rubric.user_id = current_user.id
 
       @rubric.save
@@ -62,7 +62,7 @@ class RubricsController < ApplicationController
   def create
   	@rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
-    @rubric.score = calculate_score
+#    @rubric.score = calculate_score
     @rubric.user_id = current_user.id
     
     authorize @rubric
@@ -91,31 +91,6 @@ class RubricsController < ApplicationController
   end
 
   private
-  def calculate_score
-    score = 0
-    points = [:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch]
-    points.each { |p| score += @rubric[p]}
-
-    if @rubric.launched
-      score += 2
-    end
-
-    # deduct points for missing components
-    deductions = [:pitch, :demo, :code, :description, :plan]
-    deductions.each{ |d| 
-      if (@rubric.team.missing_field?(d.to_s))
-        score -= 1
-      end
-    }
-
-    deductions = [:screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5]
-    if deductions.map{|d| @rubric.team.missing_field?(d.to_s)}.all?
-      ## if all screenshots are missing then deduct 1 pt
-      score -= 1
-    end
-
-    score
-  end
 
   def can_see_rubric?
     ## todo: depends whether this is a quaterfinal, semifinal, or final rubric

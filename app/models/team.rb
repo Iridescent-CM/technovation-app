@@ -51,12 +51,8 @@ class Team < ActiveRecord::Base
   has_many :rubrics
   has_one :event
 
-  # has_many :submission_attachments, :dependent => :destroy
-  # accepts_nested_attributes_for :submission_attachments, :reject_if => lambda { |t| t['submission_attachments'].nil? }
-
   scope :old, -> {where 'year < ?', Setting.year}
   scope :current, -> {where year: Setting.year}
-#  scope :has_category, -> {where.not category: 0}
   scope :has_category, -> (cat) {where('category_id = ?', cat)}
   scope :has_division, -> (div) {where('division = ?', div)}
   scope :has_region, -> (reg) {where('region = ?', reg)}
@@ -119,11 +115,7 @@ class Team < ActiveRecord::Base
         a
       end
      }
-#    'You still need to upload your ' + missing.join(', ')+ ' to complete your submission.'
     missing.join(', ')
   end
 
-  # def region
-  #   binding.pry
-  # end
 end
