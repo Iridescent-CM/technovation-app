@@ -31,7 +31,7 @@
       dt City
       dd= @user.home_city
       dt Country
-      dd= @user.home_country
+      dd= ISO3166::Country[@user.home_country]
       - if @user.current_team
         dt Current Team
         dd= link_to @user.current_team.name, @user.current_team
