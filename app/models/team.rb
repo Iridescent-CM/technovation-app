@@ -37,10 +37,13 @@ class Team < ActiveRecord::Base
     x: 2,
   }
   enum region: [
-    :us,
-    :mexico,
-    :europe,
-    :africa,
+    :ushs, # High School - US/Canada
+    :mexicohs, # High School - Mexico/Central America/South America
+    :europehs, #High School - Europe/Australia/New Zealand/Asia
+    :africahs, #High School - Africa
+    :usms, #Middle School - US/Canada
+    :mexicoms, #Middle School - Mexico/Central America/South America/Africa
+    :europems, #Middle School - Europe/Australia/New Zealand/Asia
   ]
 
   # enum region: [

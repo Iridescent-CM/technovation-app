@@ -42,16 +42,31 @@ module ApplicationHelper
     end
   end
 
-  def format_region(region, division)
+
+    # :ushs, # High School - US/Canada
+    # :mexicohs, # High School - Mexico/Central America/South America
+    # :europehs, #High School - Europe/Australia/New Zealand/Asia
+    # :africahs, #High School - Africa
+    # :usms, #Middle School - US/Canada
+    # :mexicoms, #Middle School - Mexico/Central America/South America/Africa
+    # :europems, #Middle School - Europe/Australia/New Zealand/Asia
+
+  def format_region(region)
     case region.to_sym
-    when :us
-      "US/Canada"
-    when :mexico
-      "Mexico/Central America/South America"
-    when :europe
-      "Europe/Australia/New Zealand/Asia"
-    when :africa
-      "Africa"
+    when :ushs
+      "High School - US/Canada"
+    when :mexicohs
+      "High School - Mexico/Central America/South America"
+    when :europehs
+      "High School - Europe/Australia/New Zealand/Asia"
+    when :africahs
+      "High School - Africa"
+    when :usms
+      "Middle School - US/Canada"
+    when :mexicoms
+      "Middle School - Mexico/Central America/South America/Africa"
+    when :europems
+      "Middle School - Europe/Australia/New Zealand/Asia"
     else
       "Error"
     end
