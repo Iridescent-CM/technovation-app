@@ -77,7 +77,7 @@ module ApplicationHelper
     else    
       regex = /youtube.com.*(?:\/|v=)([^&$]+)/
       vid_id = link.match(regex)[1]
-      link = 'http://www.youtube.com/embed/' + vid_id
+      link = '//www.youtube.com/embed/' + vid_id
       '<iframe width="500px" height="350px" src="'+link+'"></iframe>'
     end
   end
