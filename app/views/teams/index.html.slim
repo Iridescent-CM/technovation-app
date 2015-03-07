@@ -30,7 +30,7 @@
                 input type='checkbox' name='category' value='#{c.id}' #{c.name}
       h5 Region
       ul.list-unstyled
-        - for r in Team.get_regions
+        - for r in Team.regions
           li
             .checkbox
               label
@@ -38,7 +38,7 @@
 
       h5 Division
       ul.list-unstyled
-        - for d in Team.get_divisions
+        - for d in Team.divisions
           li
             .checkbox
               label

@@ -5,9 +5,9 @@ module ApplicationHelper
     Setting.find_by_key!(name)
   end
 
-  def average(arr)
-    arr.inject(:+).to_f / arr.size
-  end
+  # def average(arr)
+  #   arr.inject(:+).to_f / arr.size
+  # end
 
   def link_user(user)
     if policy(user).show?
@@ -41,15 +41,6 @@ module ApplicationHelper
       'Error'
     end
   end
-
-
-    # :ushs, # High School - US/Canada
-    # :mexicohs, # High School - Mexico/Central America/South America
-    # :europehs, #High School - Europe/Australia/New Zealand/Asia
-    # :africahs, #High School - Africa
-    # :usms, #Middle School - US/Canada
-    # :mexicoms, #Middle School - Mexico/Central America/South America/Africa
-    # :europems, #Middle School - Europe/Australia/New Zealand/Asia
 
   def format_region(region)
     case region.to_sym

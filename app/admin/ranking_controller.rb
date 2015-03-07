@@ -11,24 +11,37 @@ class RankingController < ActionController::Base
 	end
 
 	def self.mark_finalists
+		## the top N scores per region
+		for r in Team.regions
+			num = num_finalists(r)
+			binding.pry
+		end
 	end
 
 	def self.mark_winners
+		## 1 hs winner and 1 ms winner
 	end
 
-	def self.number_finalists(region, division)
-		# High School
-		# US/Canada - 3 finalists
-		# Mexico/Central America/South America - 1 
-		# Europe/Australia/New Zealand/Asia - 1
-		# Africa - 1 
-
-		# Middle School
-		# US/Canada - 2
-		# Mexico/Central America/South America/Africa - 1
-		# Europe/Australia/New Zealand/Asia - 1		
+	def num_finalists(region)
+		case region.to_sym
+		when :ushs
+		  3
+		when :mexicohs
+		  1
+		when :europehs
+		  1    
+		when :africahs
+		  1
+		when :usms
+		  2
+		when :mexicoms
+		  1
+		when :europems
+		  1
+		else
+		  "Error"
+		end
 	end
-
 	
 	# def self.batch_ready?(event)
 	# 	## returns true if all submissions have at least 3 scores

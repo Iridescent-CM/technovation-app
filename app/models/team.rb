@@ -68,13 +68,13 @@ class Team < ActiveRecord::Base
   scope :has_division, -> (div) {where('division = ?', div)}
   scope :has_region, -> (reg) {where('region = ?', reg)}
 
-  def self.get_regions
-    ['us', 'mexico', 'europe', 'africa']
-  end
+  # def self.get_regions
+  #   ['us', 'mexico', 'europe', 'africa']
+  # end
 
-  def self.get_divisions
-    ['ms', 'hs', 'x']
-  end
+  # def self.get_divisions
+  #   ['ms', 'hs', 'x']
+  # end
 
   def name_and_year
     "#{name}-#{year}"
