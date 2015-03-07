@@ -103,28 +103,47 @@ setting = Setting.create(
 
 setting = Setting.create(
   key:'judgeSignupOpen',
-  value: Date.today.to_s,
-)
-
-setting = Setting.create(
-  key:'submissionOpen',
-  value: Date.today.to_s,
+  value: '2015-04-01',
 )
 
 setting = Setting.create(
   key:'judgeSignupClose',
-  value: Date.today.to_s,
+  value: '2015-04-20',
+)
+
+setting = Setting.create(
+  key:'submissionOpen',
+  value: '2015-04-14',
 )
 
 setting = Setting.create(
   key:'submissionClose',
-  value: Date.today.to_s,
+  value: '2015-04-23',
 )
 
-# 04/24/2015 - judging round 1 opens quarterfinalJudgingOpen
-# 05/03/2015 - judging round 1 closes quarterfInalJudgingClose
-# 05/05/2015 - judging round 2 opens semifinalJudgingOpen
-# 05/10/2015 - judging round 2 closes semifinalJudgingClose
+
+######
+
+setting = Setting.create(
+  key:'quarterfinalJudgingOpen',
+  value: '2015-04-24',
+)
+
+setting = Setting.create(
+  key:'quarterfinalJudgingClose',
+  value: '2015-05-03',
+)
+
+setting = Setting.create(
+  key:'semifinalJudgingOpen',
+  value: '2015-05-05',
+)
+
+setting = Setting.create(
+  key:'semifinalJudgingClose',
+  value: '2015-05-10',
+)
+
 # quarterfinalScoresVisible
 # semifinalScoresVisible
 

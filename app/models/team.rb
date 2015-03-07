@@ -42,6 +42,14 @@ class Team < ActiveRecord::Base
     :europe,
     :africa,
   ]
+
+  # enum region: [
+  #   'us/canada',
+  #   :mexico,
+  #   :europe,
+  #   :africa,
+  # ]
+
   has_many :team_requests
   has_many :categories
 

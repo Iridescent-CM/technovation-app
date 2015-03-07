@@ -6,6 +6,12 @@ class Rubric < ActiveRecord::Base
 
 	before_save :calculate_score
 
+	enum stage: [
+	:quarterfinals,
+	:semifinals,
+	:finals,
+	]
+
 	def calculate_score
 		score = 0
 		points = [:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch]
