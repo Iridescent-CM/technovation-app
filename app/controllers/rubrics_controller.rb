@@ -1,9 +1,5 @@
 class RubricsController < ApplicationController
   
-  def show    
-    @rubric = Rubric.find(params[:id])
-    authorize @rubric
-  end
 
   def new
     ## new rubric needs to take a team
@@ -11,6 +7,11 @@ class RubricsController < ApplicationController
   	@rubric.team = Team.friendly.find(params[:team])
 
 #    binding.pry
+    authorize @rubric
+  end
+
+  def show    
+    @rubric = Rubric.find(params[:id])
     authorize @rubric
   end
 
@@ -67,11 +68,6 @@ class RubricsController < ApplicationController
     
     authorize @rubric
   	if @rubric.save
-      # @rubric.team.rubrics_count = @rubric.team.rubrics.length
-      # scores = @rubric.team.rubrics.map{|r| r.score}
-      # @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) #
-      # @rubric.team.save
-
   	  redirect_to :rubrics
   	else
   	  render :new

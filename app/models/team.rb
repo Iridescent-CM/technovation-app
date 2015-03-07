@@ -68,13 +68,9 @@ class Team < ActiveRecord::Base
   scope :has_division, -> (div) {where('division = ?', div)}
   scope :has_region, -> (reg) {where('region = ?', reg)}
 
-  # def self.get_regions
-  #   ['us', 'mexico', 'europe', 'africa']
-  # end
+  #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
+  scope :by_score, :joins => :rubrics, :group => 'team.id', :order => 'AVG(rubrics.score) DESC'
 
-  # def self.get_divisions
-  #   ['ms', 'hs', 'x']
-  # end
 
   def name_and_year
     "#{name}-#{year}"

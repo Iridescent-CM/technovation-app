@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get '/rubrics/:id', to: 'rubrics#show', as: 'rubric'
+#  get '/rubrics/:id', to: 'rubrics#show', as: 'rubric'
 
   get 'signature/:hash' => 'signature#index'
   post 'signature/:hash' => 'signature#create'
@@ -31,9 +31,6 @@ Rails.application.routes.draw do
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
   get 'rubric' => 'rubric#index'
-
-  # post 'teams/:id/update_submissions' => 'teams#update_submissions'
-  # patch 'teams/:id/update_submissions' => 'teams#update_submissions'
 
 #  get 'judges' => 'judge#index'
 

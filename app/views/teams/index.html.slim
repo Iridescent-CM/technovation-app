@@ -34,7 +34,7 @@
           li
             .checkbox
               label
-                input type='checkbox' name='region' value='#{Team.get_regions.index(r)}' #{r}
+                input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
 
       h5 Division
       ul.list-unstyled
@@ -42,7 +42,7 @@
           li
             .checkbox
               label
-                input type='checkbox' name='division' value='#{Team.get_divisions.index(d)}' #{d}
+                input type='checkbox' name='division' value='#{d[1]}' #{format_division(d[0])}
 
       button.btn.btn-default type='submit' Filter
 
