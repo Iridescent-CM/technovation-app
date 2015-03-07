@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     member do
       post 'join'
       post 'leave'
+      post 'submit'
       # post 'update_submissions'
       # patch 'update_submissions'
     end

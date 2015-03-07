@@ -31,10 +31,11 @@ h3#pending Pending Requests
 - else
   p There are no pending requests.
 
+= link_to("Leave this team", [TeamRequest.find_by(user: current_user, team: @team), home: true], method: :delete, class: ['btn', 'btn-danger'], data: {confirm: 'Are you sure you want to leave the team?'})
 
 /-if Setting.submissionOpen?
 hr
-h3 Submission
+h3 id="submission" Submission
 .alert.alert-danger role='alert'
   p
     span You still need to upload your 
@@ -44,6 +45,3 @@ h3 Submission
 = render 'submissionform', :locals => {:team => @team}
 
 
-hr
-= link_to("Leave this team", [TeamRequest.find_by(user: current_user, team: @team), home: true], method: :delete, class: ['btn', 'btn-danger'], data: {confirm: 'Are you sure you want to leave the team?'})
-/-if Setting.submissionOpen?

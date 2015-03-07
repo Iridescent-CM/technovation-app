@@ -24,5 +24,10 @@
     h4 Category
     = f.collection_select :category_id, Category.all, :id, :name
 
-	= f.form_group
-		= f.submit "Update Submission"
+  	= f.submit "Update Submission", class: ['btn', 'btn-primary']
+
+hr
+p If you think your application is complete, you can submit your application.
+= bootstrap_form_for @team, url: url_for(controller: :team, action: :submit), html: {method: :post} do |f|
+  = f.form_group
+    = f.submit 'Submit Submission', class: ['btn', 'btn-primary']
