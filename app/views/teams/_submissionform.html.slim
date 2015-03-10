@@ -1,5 +1,8 @@
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
+    h4 Category
+    = f.collection_select :category_id, Category.all, :id, :name
+
   	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
     = f.text_area :description, label: "App description", rows: 5
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
@@ -19,10 +22,6 @@
 
   	.h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
-
-    hr
-    h4 Category
-    = f.collection_select :category_id, Category.all, :id, :name
 
   	= f.submit "Update Submission", class: ['btn', 'btn-primary']
 
