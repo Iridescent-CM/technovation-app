@@ -30,6 +30,10 @@ class TeamPolicy < ApplicationPolicy
     !user.team_requests.exists?(team: team)
   end
 
+  def submit?
+    member?
+  end
+
   def leave?
     member?
   end

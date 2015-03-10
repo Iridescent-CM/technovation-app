@@ -97,7 +97,16 @@ class TeamsController < ApplicationController
   end
 
   def submit
-    binding.pry
+    @team = Team.friendly.find(params[:id])
+    authorize @team
+
+    ## send out the mail
+    for user in @team.members
+      SubmissionMailer.submission_received_email(user, @team)
+    end
+
+    flash[:notice] = 'Submission Received'
+    redirect_to @team
   end
 
   # def update_submissions

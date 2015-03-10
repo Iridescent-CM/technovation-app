@@ -1,6 +1,5 @@
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
-    h4 Category
     = f.collection_select :category_id, Category.all, :id, :name
 
   	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
@@ -25,8 +24,8 @@
 
   	= f.submit "Update Submission", class: ['btn', 'btn-primary']
 
-/  hr
+hr
   p If you think your application is complete, you can submit your application.
-  = bootstrap_form_for @team, url: url_for(controller: :team, action: :submit), html: {method: :post} do |f|
+  = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
     = f.form_group
       = f.submit 'Submit Submission', class: ['btn', 'btn-primary']
