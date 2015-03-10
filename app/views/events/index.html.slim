@@ -17,6 +17,7 @@ h2 Team Event
 - else
 	h3 This is the event that you are competing in.
 	= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+		= f.hidden_field :event_signup, :value => true
 	    = f.collection_select :event_id, Event.all, :id, :name
 	    = f.form_group
 			= f.submit "Sign Up"

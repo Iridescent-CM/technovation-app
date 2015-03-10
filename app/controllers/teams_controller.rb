@@ -68,7 +68,12 @@ class TeamsController < ApplicationController
     @team = Team.friendly.find(params[:id])
     authorize @team
     if @team.update(team_params)
-      redirect_to @team
+      if params[:team][:event_signup]
+        flash[:notice] = 'Event signup updated'
+        redirect_to :back
+      else
+        redirect_to @team
+      end
     else
       redirect_to :back
     end

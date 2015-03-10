@@ -13,18 +13,19 @@ class RubricsController < ApplicationController
   end
 
   def index
-  	# @rubric = Rubric.friendly.find(params[:id])
   	teams = Team.all
-  	ind = rand(teams.length)
+    ## do not show teams that the judge has judged already
+    ## search for teams that have the fewest number of rubrics
 
+  	ind = rand(teams.length)
   	@team = teams[ind]
  
-  	@rubrics = Rubric.all
 
-    ## only show rubrics that were done by the judge
-    ## do not show teams that the judge has judged already
+    ## only show rubrics that were done by the current judge
+  	@rubrics = Rubric.all.has_judge(current_user)
+
+
     ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
-    ## search for teams that have the fewest number of submissions
   end
 
   def edit

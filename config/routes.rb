@@ -30,9 +30,8 @@ Rails.application.routes.draw do
   get 'bg_check' => 'bg_check#index'
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
-  get 'rubric' => 'rubric#index'
+#  get 'rubric' => 'rubric#index'
 
-#  get 'judges' => 'judge#index'
 
   resources :users, only: [:show, :edit, :update] do
     member do
@@ -58,10 +57,6 @@ Rails.application.routes.draw do
       post 'approve'
     end
   end
-
-  # resources :judges do
-  #   resources :rubrics
-  # end
 
 #  resources :rubrics, controller: :rubrics, only: [:index, :show, :new, :edit]
   resources :rubrics

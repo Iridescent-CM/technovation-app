@@ -12,6 +12,9 @@ class Rubric < ActiveRecord::Base
 	:finals,
 	]
 
+  	scope :has_judge, -> (user) {where('user_id = ?', user.id)}
+  	scope :has_team, -> (team) {where('team_id = ?', team.id)}
+
 	def calculate_score
 		score = 0
 		points = [:identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch]

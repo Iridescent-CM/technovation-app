@@ -46,13 +46,6 @@ class Team < ActiveRecord::Base
     :europems, #Middle School - Europe/Australia/New Zealand/Asia
   ]
 
-  # enum region: [
-  #   'us/canada',
-  #   :mexico,
-  #   :europe,
-  #   :africa,
-  # ]
-
   has_many :team_requests
   has_many :categories
 
@@ -70,6 +63,7 @@ class Team < ActiveRecord::Base
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   scope :by_score, :joins => :rubrics, :group => 'team.id', :order => 'AVG(rubrics.score) DESC'
+  scope :by_rubrics, :joins => :rubrics, :group => 'team.id', :order => 'COUNT(rubrics) ASC'
 
 
   def name_and_year
