@@ -1,38 +1,45 @@
 class RubricPolicy < ApplicationPolicy
-  attr_reader :team, :judge
+  attr_reader :user, :rubric
 
-  def initialize(team, judge)
-    @judge = judge
-    @team = team
+  def initialize(user, rubric)
+    @user = user
+    @rubric = rubric
   end
 
   def new?
-    true
+    user.can_judge?
   end
 
   def index?
-    true
+    user.can_judge?
   end
 
   def show?
-    true
+    user.can_judge? or (@rubric.team.members.include? @user)
   end
 
   def create?
-    true
+    user.can_judge?
   end
 
   def edit?
-    true
+    user.can_judge?
   end
 
   def update?
-    true
+    user.can_judge?
   end
 
   # private
   # def member?
   #   team.members.include? user
+  # end
+
+
+  # def can_see_rubric?
+  #   ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
+  #   ## get the rubric type
+  #   ## see if the judging for that type has closed
   # end
 
 end

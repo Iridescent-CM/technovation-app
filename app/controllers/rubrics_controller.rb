@@ -1,12 +1,9 @@
 class RubricsController < ApplicationController
   
-
   def new
     ## new rubric needs to take a team
     @rubric = Rubric.new
   	@rubric.team = Team.friendly.find(params[:team])
-
-#    binding.pry
     authorize @rubric
   end
 
@@ -42,17 +39,8 @@ class RubricsController < ApplicationController
     authorize @rubric
 
     if @rubric.update(rubric_params)
-#      @rubric.score = calculate_score
       @rubric.user_id = current_user.id
-
       @rubric.save
-
-      # @rubric.team.rubrics_count = @rubric.team.rubrics.length
-      # scores = @rubric.team.rubrics.map{|r| r.score}
-      # @rubric.team.rubrics_average = scores.inject(:+).to_f / scores.size #average(scores) # 
-      # @rubric.team.save
-#      binding.pry
-
       redirect_to :rubrics
     else
       redirect_to :back
@@ -63,7 +51,6 @@ class RubricsController < ApplicationController
   def create
   	@rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
-#    @rubric.score = calculate_score
     @rubric.user_id = current_user.id
     
     authorize @rubric
@@ -87,12 +74,6 @@ class RubricsController < ApplicationController
   end
 
   private
-
-  def can_see_rubric?
-    ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
-    ## get the rubric type
-    ## see if the judging for that type has closed
-  end
 
   def rubric_params
   	params.require(:rubric).permit(:team_id, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :identify_problem_comment, :address_problem_comment, :functional_comment, :external_resources_comment, :match_features_comment, :interface_comment, :description_comment, :market_comment, :competition_comment, :revenue_comment, :branding_comment, :pitch_comment, :launched_comment, )
