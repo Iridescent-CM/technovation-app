@@ -11,10 +11,29 @@
 
     .h4 Screenshots
     = f.file_field :screenshot1, label: "1"
+    - unless @team.screenshot1_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot1.url(:thumb)
+
     = f.file_field :screenshot2, label: "2"
+    - unless @team.screenshot2_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot2.url(:thumb)
+
     = f.file_field :screenshot3, label: "3"
+    - unless @team.screenshot3_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot3.url(:thumb)
+
     = f.file_field :screenshot4, label: "4", help: 'optional'
+    - unless @team.screenshot4_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot4.url(:thumb)
+
     = f.file_field :screenshot5, label: "5", help: 'optional'
+    - unless @team.screenshot5_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot5.url(:thumb)
 
   	.h4 Pitch Video (4 minutes)
   	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch' 

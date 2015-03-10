@@ -53,6 +53,8 @@ class Team < ActiveRecord::Base
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
 
   has_many :rubrics
+  has_many :judges, through: :rubrics, source: :user
+
   has_one :event
 
   scope :old, -> {where 'year < ?', Setting.year}
