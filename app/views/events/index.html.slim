@@ -1,4 +1,4 @@
-- unless @user.nil?
+- if @user.can_judge?
 	h2 Judging Event
 	h3 This is the event that you are judging.
 
@@ -10,17 +10,18 @@
 	- unless @user.event_id.nil?
 		= render partial: 'event', locals: {event: Event.find(@user.event_id)}
 
-hr
-h2 Team Event
-- if @team.nil?
-	p You must create or join a team before signing up for a team event.
-- else
-	h3 This is the event that you are competing in.
-	= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
-		= f.hidden_field :event_signup, :value => true
-	    = f.collection_select :event_id, Event.all, :id, :name
-	    = f.form_group
-			= f.submit "Sign Up"
+- unless @user.judge?
+	hr
+	h2 Team Event
+	- if @team.nil?
+		p You must create or join a team before signing up for a team event.
+	- else
+		h3 This is the event that you are competing in.
+		= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+			= f.hidden_field :event_signup, :value => true
+		    = f.collection_select :event_id, Event.all, :id, :name
+		    = f.form_group
+				= f.submit "Sign Up"
 
-	- unless @team.event_id.nil?
-		= render partial: 'event', locals: {event: Event.find(@team.event_id)}
+		- unless @team.event_id.nil?
+			= render partial: 'event', locals: {event: Event.find(@team.event_id)}

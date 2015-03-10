@@ -26,6 +26,7 @@ class RubricsController < ApplicationController
 
 
     ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    ## if the judge is a mentor/coach, do not show teams from the same region
   end
 
   def edit
