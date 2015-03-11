@@ -15,11 +15,14 @@ class UsersController < ApplicationController
     @user = User.friendly.find(params[:id])
     authorize @user
 
-#    binding.pry
-
     if @user.update(user_params)
-      flash[:notice] = 'Profile Updated!'
-      redirect_to @user
+      if params[:user][:event_signup]
+        flash[:notice] = 'Event signup updated'
+        redirect_to :back
+      else
+        flash[:notice] = 'Profile Updated!'
+        redirect_to @user
+      end
     else
       render :edit
     end
