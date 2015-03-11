@@ -9,9 +9,9 @@
 
 	- unless @user.event_id.nil?
 		= render partial: 'event', locals: {event: Event.find(@user.event_id)}
+	hr
 
 - unless @user.judge?
-	hr
 	h2 Team Event
 	- if @team.nil?
 		p You must create or join a team before signing up for a team event.
