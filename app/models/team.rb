@@ -64,9 +64,23 @@ class Team < ActiveRecord::Base
   scope :has_region, -> (reg) {where('region = ?', reg)}
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
-  scope :by_score, :joins => :rubrics, :group => 'team.id', :order => 'AVG(rubrics.score) DESC'
-  scope :by_rubrics, :joins => :rubrics, :group => 'team.id', :order => 'COUNT(rubrics) ASC'
+  #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association
+  #scope :by_score, joins: :rubrics, group: "teams.id", order: "AVG(rubrics.score) DESC"
+#  scope :by_num_rubrics, :joins => :rubrics, :group => 'teams.id', :order => 'COUNT(rubrics) ASC'
 
+  def self.by_scores
+    select('teams.id, AVG(rubrics.score) AS avg_score').
+    joins(:rubrics).
+    group('teams.id').
+    order('avg_score DESC')
+  end
+
+  def self.by_num_rubrics
+    select('teams.id, COUNT(rubrics.id) AS num_rubrics').
+    joins(:rubrics).
+    group('teams.id').
+    order('num_rubrics ASC')
+  end
 
   def name_and_year
     "#{name}-#{year}"
