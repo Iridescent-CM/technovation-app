@@ -5,10 +5,8 @@ p Since 2010, Technovation has engaged nearly 3000 girls in 25 countries to beco
 p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s important for communities to find ways to harness the full utility of these gadgets. As a judge for Technovation, you’ll have the opportunity to get an inside look at how the youth of today plan to transform smartphones from toys to tools. 
 
 
-h4 Judge training materials
 
-
-h4
+h3 Judge now
 - if @team.nil?
 	p There are no teams ready to be judged right now. Check back later.
 - else
@@ -17,14 +15,17 @@ h4
 
 	h3 Previously judged teams
 	p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
-	table
-		tr
-			td Team
-			td Total Score
-		- for r in @rubrics do
-		  - unless r.team.nil?
-		  	tr
-		  		td style='padding:2px; padding-right:20px; '
-		    		= link_to r.team.name, edit_rubric_path(:id => r.id)
-		    	td
-		    		'#{r.score}
+
+	- if @rubrics.length > 0
+		table
+			tr
+				td style='padding:2px; padding-right:20px; '
+					span Team 
+				td Total score
+			- for r in @rubrics do
+			  - unless r.team.nil?
+			  	tr
+			  		td style='padding:2px; padding-right:20px; '
+			    		= link_to r.team.name, edit_rubric_path(:id => r.id)
+			    	td
+			    		'#{r.score}
