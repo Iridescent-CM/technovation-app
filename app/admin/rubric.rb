@@ -27,7 +27,12 @@ ActiveAdmin.register Rubric do
 
     column (:division){|r| Team.find(r.team_id).division}
 
-    column (:event){|r| Event.find(Team.find(r.team_id).event_id).name}
+    column (:event){|r| 
+      team = Team.find(r.team_id)
+      unless team.event_id.nil?
+        Event.find(team.event_id).name
+      end
+    }
     column :identify_problem
     column :address_problem
     column :functional
