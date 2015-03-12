@@ -62,6 +62,7 @@ class Team < ActiveRecord::Base
   scope :has_category, -> (cat) {where('category_id = ?', cat)}
   scope :has_division, -> (div) {where('division = ?', div)}
   scope :has_region, -> (reg) {where('region = ?', reg)}
+  scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association
@@ -79,12 +80,16 @@ class Team < ActiveRecord::Base
     rubrics.average(:score)
   end
 
-  def self.by_num_rubrics
-    select('teams.id, COUNT(rubrics.id) AS num_rubrics').
-    joins(:rubrics).
-    group('teams.id').
-    order('num_rubrics ASC')
+  def num_rubrics
+    rubrics.length
   end
+
+  # def self.by_num_rubrics
+  #   select('teams.id, COUNT(rubrics.id) AS num_rubrics').
+  #   joins(:rubrics).
+  #   group('teams.id').
+  #   order('num_rubrics ASC')
+  # end
 
   def name_and_year
     "#{name}-#{year}"

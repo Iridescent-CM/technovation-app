@@ -14,19 +14,39 @@ class RubricsController < ApplicationController
 
   def index
   	teams = Team.all
-    ## do not show teams that the judge has judged already
-    ## search for teams that have the fewest number of rubrics
 
-  	ind = rand(teams.length)
-  	@team = teams[ind]
- 
+    ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    if not current_user.event_id.nil?
+      event = Event.find(current_user.event_id)
+      start = (event.whentooccur - 3.hours).to_datetime
+      finish = (event.whentooccur + 10.hours).to_datetime
+      if (start..finish).cover?(DateTime.now)
+        ## only show the teams competing in the event
+        teams = teams.has_event(event)
+      end
+    end
+
+    ## search for teams that have the fewest number of rubrics
+    teams = teams.sort_by(&:num_rubrics)
+
+    ## do not show teams that the judge has judged already
+    teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
+
+    ## if the judge is a mentor/coach, do not show teams from the same region
+    if current_user.coach? or current_user.mentor?
+      interested_regions = current_user.teams.map{|t| t.region}
+      teams.delete_if{|t| interested_regions.include? t.region}
+    end
+
+    if teams.length > 0      
+      teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
+      ind = rand(teams.length)
+      @team = teams[ind]
+    end
 
     ## only show rubrics that were done by the current judge
   	@rubrics = Rubric.all.has_judge(current_user)
 
-
-    ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
-    ## if the judge is a mentor/coach, do not show teams from the same region
   end
 
   def edit
