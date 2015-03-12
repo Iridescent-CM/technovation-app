@@ -68,11 +68,15 @@ class Team < ActiveRecord::Base
   #scope :by_score, joins: :rubrics, group: "teams.id", order: "AVG(rubrics.score) DESC"
 #  scope :by_num_rubrics, :joins => :rubrics, :group => 'teams.id', :order => 'COUNT(rubrics) ASC'
 
-  def self.by_scores
-    select('teams.id, AVG(rubrics.score) AS avg_score').
-    joins(:rubrics).
-    group('teams.id').
-    order('avg_score DESC')
+  # def self.by_scores
+  #   select('teams.id, AVG(rubrics.score) AS avg_score').
+  #   joins(:rubrics).
+  #   group('teams.id').
+  #   order('avg_score DESC')
+  # end
+
+  def avg_score
+    rubrics.average(:score)
   end
 
   def self.by_num_rubrics
