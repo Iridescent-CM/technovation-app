@@ -122,6 +122,24 @@ setting = Setting.create(
 )
 
 
+###
+
+setting = Setting.create(
+  key:'quarterfinalScoresVisible',
+  value: 'false',
+)
+
+setting = Setting.create(
+  key:'semifinalScoresVisible',
+  value: 'false',
+)
+
+setting = Setting.create(
+  key:'finalScoresVisible',
+  value: 'false',
+)
+
+
 ######
 
 setting = Setting.create(
@@ -144,8 +162,6 @@ setting = Setting.create(
   value: '2015-05-10',
 )
 
-# quarterfinalScoresVisible
-# semifinalScoresVisible
 
 event = Event.create(
   name: 'Virtual Judging',

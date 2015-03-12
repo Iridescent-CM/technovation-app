@@ -69,6 +69,12 @@ class RankingController < ActionController::Base
 		  "Error"
 		end
 	end
+
+	def self.toggle_score_visibility(stage)
+		## how are the settings stored?
+		setting = Setting.find_by_key!(stage+'ScoresVisible')
+		setting.update(value: setting.value == 'true' ? 'false': 'true')
+	end
 	
 	# def self.batch_ready?(event)
 	# 	## returns true if all submissions have at least 3 scores

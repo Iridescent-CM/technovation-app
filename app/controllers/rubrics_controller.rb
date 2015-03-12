@@ -64,6 +64,7 @@ class RubricsController < ApplicationController
   end
 
   def rubric_type
+    ## todo: this seems sketchy
     if between?(Setting.quarterfinalJudgingOpen, Setting.quarterfinalJudgingClose)
       return 'quarterfinal'
     end

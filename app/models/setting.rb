@@ -11,4 +11,8 @@ class Setting < ActiveRecord::Base
   def self.submissionOpen?
   	!Setting.find_by_key!('submissionOpen?').value == 'true'
   end
+
+  def self.scoresVisible?(stage)
+    Setting.find_by_key!(stage+'ScoresVisible').value == 'true'
+  end
 end
