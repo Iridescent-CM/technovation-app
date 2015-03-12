@@ -25,7 +25,9 @@ ActiveAdmin.register Team do
       }
 
     column :event_id do |t|
-      link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+      unless t.event_id.nil?
+        link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+      end
     end
 
     actions
