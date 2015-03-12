@@ -40,7 +40,7 @@ ActiveAdmin.register Team do
       f.input :about
       f.input :year
       f.input :avatar, as: :file, required: false
-      f.input :region, as: :select, collection: Team.regions.keys
+      f.input :region, as: :select, collection: Event.regions.keys
 #      f.input :event, as: :select, collection: Event.all
     end
     f.actions
