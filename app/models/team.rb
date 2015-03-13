@@ -1,4 +1,5 @@
 class Team < ActiveRecord::Base
+  include FlagShihTzu
   extend FriendlyId
   friendly_id :name_and_year, use: :slugged
 
@@ -45,6 +46,17 @@ class Team < ActiveRecord::Base
     :mexicoms, #Middle School - Mexico/Central America/South America/Africa
     :europems, #Middle School - Europe/Australia/New Zealand/Asia
   ]
+
+  PLATFORMS = [
+    {sym: :android, abbr: 'Android'},
+    {sym: :ios, abbr: 'iOS'},
+    {sym: :windows, abbr: 'Windows phone'},
+  ]
+
+  has_flags 1 => :android,
+            2 => :ios,
+            3 => :windows,
+            :column => 'platform'
 
   has_many :team_requests
   has_many :categories

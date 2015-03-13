@@ -12,6 +12,15 @@
   .h4 App Listing
   = link_to 'Listing page', team.store
 
+- unless (team.tools.nil? or team.tools.length == 0)
+  .h4 Tools used
+  text_area = team.tools
+
+.h4 Built for
+- for exp in Team::PLATFORMS
+  - if team.send(exp[:sym])
+    .label.label-warning= exp[:abbr]
+
 .h4 App Logo
 = image_tag team.logo.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['width:300px;']
 .h4 Screenshots

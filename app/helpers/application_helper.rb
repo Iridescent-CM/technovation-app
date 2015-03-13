@@ -1,14 +1,6 @@
 module ApplicationHelper
   require 'redcarpet/render_strip'
 
-  def get_setting(name)
-    Setting.find_by_key!(name)
-  end
-
-  # def average(arr)
-  #   arr.inject(:+).to_f / arr.size
-  # end
-
   def link_user(user)
     if policy(user).show?
       link_to user.name, user
