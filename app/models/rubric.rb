@@ -5,11 +5,12 @@ class Rubric < ActiveRecord::Base
 	validates_presence_of :competition, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch
 
 	before_save :calculate_score
+	before_save :calculate_stage
 
 	enum stage: [
-	:quarterfinals,
-	:semifinals,
-	:finals,
+	:quarterfinal,
+	:semifinal,
+	:final,
 	]
 
   	scope :has_judge, -> (user) {where('user_id = ?', user.id)}
@@ -39,6 +40,15 @@ class Rubric < ActiveRecord::Base
 		end
 
 		self.score = score
+	end
+
+	def calculate_stage
+		# for stage in Rubric.stages.keys
+		#   if Setting.judgingRoundActive?(stage)
+		#     self.stage = stage
+		#   end
+		# end
+		self.stage = Setting.stage
 	end
 
 end

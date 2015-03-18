@@ -162,6 +162,22 @@ setting = Setting.create(
   value: '2015-05-10',
 )
 
+setting = Setting.create(
+  key:'finalJudgingOpen',
+  value: '2015-05-14',
+)
+
+setting = Setting.create(
+  key:'finalJudgingClose',
+  value: '2015-05-16',
+)
+
+
+setting = Setting.create(
+  key:'todaysDateForTesting',
+  value: '2015-05-06',
+)
+
 
 event = Event.create(
   name: 'Virtual Judging',

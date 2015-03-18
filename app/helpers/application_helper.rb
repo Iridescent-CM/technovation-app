@@ -75,7 +75,8 @@ module ApplicationHelper
   end
 
   def render_pdf(link)
-     '<iframe width="500px" height="400px" src="' + link + '"></iframe>'
+    link = link.sub('http://', 'https://')
+    '<iframe width="500px" height="400px" src="' + link + '"></iframe>'
   end
 
   def doc_path(file)
@@ -97,4 +98,5 @@ module ApplicationHelper
       parser.render(text)
     end
   end
+
 end
