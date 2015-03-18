@@ -23,7 +23,7 @@ label.required:after {
   content:" *";
 }
 
-#main-content{
+.loggedin#main-content {
   display: inline-block;
   margin-left: -1px;
   border-left-style: solid;

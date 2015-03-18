@@ -95,7 +95,7 @@ html
               - if policy(current_user).edit?
                   = link_to 'Edit Profile', edit_user_path(current_user), class: ['btn', 'btn-primary']
 
-    .container#main-content
+    .container#main-content class=("loggedin" if current_user)
       - if notice
         .alert.alert-info role='alert'
           = notice
