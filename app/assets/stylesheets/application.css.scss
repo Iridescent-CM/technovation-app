@@ -24,7 +24,10 @@ label.required:after {
 }
 
 #main-content{
-  padding-bottom: 100px;
+  display: inline-block;
+  margin-left: -1px;
+  border-left-style: solid;
+  border-left-width: 1px;
 }
 
 .large-checkbox {
@@ -46,7 +49,20 @@ label.required:after {
   h3, h4, h5, h6 { font-size: 14px; }
 }
 
-
+#profile {
+  width: 350px;
+  float: left;
+  border-right-style: solid;
+  border-right-width: 1px;
+  .dl-horizontal dt {
+    text-align: left;
+    width: auto;
+    padding-right: 1em;
+  }
+  .dl-horizontal dd {
+    margin-left: 0;
+  }
+}
 
 
 

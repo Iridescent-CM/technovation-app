@@ -44,12 +44,57 @@ html
                       - divider = true
 
               li
-                = link_to 'My Profile', user_path(current_user)
-              li
                 = link_to 'Sign Out', :destroy_user_session, method: :delete
             - else current_user
               li
                 = link_to 'Sign In', :new_user_session
+    .container#profile
+      - if current_user
+        h3 My Profile
+        .row
+          .col-sm-8
+            h4
+              ' #{current_user.name}
+              small= current_user.role.humanize
+            - unless current_user.about.blank?
+              .markdown-field
+                = render_markdown(current_user.about)
+          .col-sm-4
+            = image_tag current_user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
+        .row
+          .col-sm-12
+            dl.dl-horizontal
+
+              dt City
+              dd= current_user.home_city
+              dt Country
+              dd= ISO3166::Country[current_user.home_country]
+              - if current_user.current_team
+                dt Current Team
+                dd= link_to current_user.current_team.name, current_user.current_team
+
+              - if current_user.mentor?
+                dt Email
+                dd
+                  a href="mailto:#{current_user.email}" = current_user.email
+
+
+              dt= current_user.student? ? "School" : "School/Employer"
+              dd= current_user.school
+
+              - unless current_user.student?
+                dt Expertise
+                dd
+                  - for exp in User::EXPERTISES
+                    - if current_user.send(exp[:sym])
+                      .label.label-primary= exp[:abbr]
+                    - else
+                      .label.label-default= exp[:abbr]
+                    '
+            .pull-right
+              - if policy(current_user).edit?
+                  = link_to 'Edit Profile', edit_user_path(current_user), class: ['btn', 'btn-primary']
+
     .container#main-content
       - if notice
         .alert.alert-info role='alert'
