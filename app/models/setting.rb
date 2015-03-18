@@ -3,11 +3,11 @@ class Setting < ActiveRecord::Base
   validates :value, presence: true
 
   ##### helpers for specific data types
-  def self.boolean(key)
+  def self.get_boolean(key)
     return Setting.find_by_key!(key).value == 'true'
   end
 
-  def self.date(key)
+  def self.get_date(key)
     Setting.find_by_key!(key).value.to_date
   end
   #####
@@ -16,11 +16,13 @@ class Setting < ActiveRecord::Base
   def self.year
     Setting.find_by_key!('year').value.to_i
   end
+
   def self.cutoff
-    self.date(cutoff)
+    self.get_date('cutoff')
   end
+
   def self.submissionOpen?
-    self.boolean('submissionOpen?')
+    self.get_boolean('submissionOpen?')
   end
 
   def self.between(date1, date2)
@@ -32,13 +34,13 @@ class Setting < ActiveRecord::Base
   end
 
   def self.judgingRoundActive?(round)
-    date1 = self.date(round+'JudgingOpen')
-    date2 = self.date(round+'JudgingClose')
+    date1 = self.get_date(round+'JudgingOpen')
+    date2 = self.get_date(round+'JudgingClose')
     return self.between(date1, date2)
   end
 
   def self.scoresVisible?(round)
-    self.boolean(round+'ScoresVisible')
+    self.get_boolean(round+'ScoresVisible')
   end
 
   def self.scoresVisible
@@ -55,7 +57,7 @@ class Setting < ActiveRecord::Base
 
   def self.now
     ## for testing only
-    self.date('todaysDateForTesting')
+    self.get_date('todaysDateForTesting')
 
     ## todo change to 
 #    Time.now
