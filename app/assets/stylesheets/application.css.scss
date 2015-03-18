@@ -46,14 +46,15 @@ label.required:after {
 #profile {
   outline: 2px solid #ccc;
   padding-bottom: 10px;
-  .dl-horizontal dt {
-    text-align: left;
-    width: auto;
-    padding-right: 1em;
-  }
-  .dl-horizontal dd {
-    margin-left: 0;
-  }
+}
+
+.dl-horizontal dt {
+  text-align: left;
+  width: auto;
+  padding-right: 1em;
+}
+.dl-horizontal dd {
+  margin-left: 0;
 }
 
 label.required:after {
