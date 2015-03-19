@@ -1,17 +1,3 @@
-/ .panel.panel-primary
-/   .panel-heading Profile Completion
-/   .panel-body
-/     p Your profile is currently 60% complete.
-/     .progress
-/       .progress-bar.progress-bar-success role='progressbar' aria-valuenow='60' area-valuemin='0' aria-valuemax='100' style='width: 60%'
-/     h4 Completed
-/     ul
-/       li COPPA Agreement
-/       li Stuff
-/     h4 Remaining
-/     ul
-/       li Join a Team
-
 - if current_user.ineligible?
   .alert.alert-danger role='alert'
     markdown:
@@ -99,3 +85,4 @@ h2 Announcements
     small Posted #{time_ago_in_words(ann.created_at)} ago
   .markdown-field
     = render_markdown(ann.post)
+
