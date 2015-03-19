@@ -57,6 +57,13 @@ ActiveAdmin.register Team do
       f.input :region, as: :select, collection: Team.regions.keys
       f.input :division, as: :select, collection: Team.divisions.keys
       f.input :country, as: :country
+
+#      f.input :event, as: :select, collection: Event.all
+
+      f.input :issemifinalist
+      f.input :isfinalist
+      f.input :iswinner
+
     end
     f.actions
   end

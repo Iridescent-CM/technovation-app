@@ -13,7 +13,13 @@ class RubricsController < ApplicationController
   end
 
   def index
-  	teams = Team.all
+    if Setting.stage == 'quarterfinal'
+    	teams = Team.all
+    elsif Setting.stage == 'semifinal'
+      teams = Team.where(issemifinalist: true)
+    elsif Setting.stage == 'final'
+      teams = Team.where(isfinalist: true)
+    end
 
     ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
     event_active = false
