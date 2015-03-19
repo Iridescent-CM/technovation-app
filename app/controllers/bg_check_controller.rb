@@ -38,37 +38,46 @@ class BgCheckController < ApplicationController
     if !@user.errors.empty? or !@user.save
       flash.now[:alert] = 'Please correct the errors below'
     else
-      request = Typhoeus.post(
-        'https://api.checkr.io/v1/candidates',
-        userpwd: ENV['CHECKRIO_AUTH'],
-        params: params,
-      )
-      if request.success?
-        data = JSON.parse(request.body)
-        @user.bg_check_id = data['id']
+      if Rails.application.config.env[:checkr][:skip]
+        @user.bg_check_id = 'fake'
+        @user.bg_check_submitted = DateTime.now
         @user.save!
-        report = Typhoeus.post(
-          'https://api.checkr.io/v1/reports',
-          userpwd: ENV['CHECKRIO_AUTH'],
-          params: {
-            package: ENV['CHECKRIO_PACKAGE'],
-            candidate_id: @user.bg_check_id,
-          }
-        )
-
-        if report.success?
-          @user.bg_check_submitted = DateTime.now
-          @user.save!
-          flash[:notice] = 'Thank you for submitting the background check. Your account is now active.'
-          redirect_to :root
-          return
-        else
-          flash.now[:alert] = "Error: #{report.body}"
-        end
-
+        flash[:notice] = 'Thank you for submitting the background check. Your account is now active.'
+        redirect_to :root
+        return
       else
-        data = JSON.parse(request.body)
-        flash.now[:alert] = data['error']
+        request = Typhoeus.post(
+          'https://api.checkr.io/v1/candidates',
+          userpwd: Rails.application.config.env[:checkr][:auth],
+          params: params,
+        )
+        if request.success?
+          data = JSON.parse(request.body)
+          @user.bg_check_id = data['id']
+          @user.save!
+          report = Typhoeus.post(
+            'https://api.checkr.io/v1/reports',
+            userpwd: Rails.application.config.env[:checkr][:auth],
+            params: {
+              package: Rails.application.config.env[:checkr][:package],
+              candidate_id: @user.bg_check_id,
+            }
+          )
+
+          if report.success?
+            @user.bg_check_submitted = DateTime.now
+            @user.save!
+            flash[:notice] = 'Thank you for submitting the background check. Your account is now active.'
+            redirect_to :root
+            return
+          else
+            flash.now[:alert] = "Error: #{report.body}"
+          end
+
+        else
+          data = JSON.parse(request.body)
+          flash.now[:alert] = data['error']
+        end
       end
     end
     render 'index'

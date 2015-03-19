@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150228003351) do
+ActiveRecord::Schema.define(version: 20150302183715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,9 +143,9 @@ ActiveRecord::Schema.define(version: 20150228003351) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "year",                     default: 2014, null: false
-    t.integer  "division",                 default: 2,    null: false
-    t.integer  "region",                                  null: false
+    t.integer  "year",                          default: 2014, null: false
+    t.integer  "division",                      default: 2,    null: false
+    t.integer  "region",                                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -153,45 +153,7 @@ ActiveRecord::Schema.define(version: 20150228003351) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "description"
-    t.string   "code"
-    t.string   "pitch"
-    t.string   "demo"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.string   "plan_file_name"
-    t.string   "plan_content_type"
-    t.integer  "plan_file_size"
-    t.datetime "plan_updated_at"
-    t.integer  "category_id"
-    t.string   "screenshot1_file_name"
-    t.string   "screenshot1_content_type"
-    t.integer  "screenshot1_file_size"
-    t.datetime "screenshot1_updated_at"
-    t.string   "screenshot2_file_name"
-    t.string   "screenshot2_content_type"
-    t.integer  "screenshot2_file_size"
-    t.datetime "screenshot2_updated_at"
-    t.string   "screenshot3_file_name"
-    t.string   "screenshot3_content_type"
-    t.integer  "screenshot3_file_size"
-    t.datetime "screenshot3_updated_at"
-    t.string   "screenshot4_file_name"
-    t.string   "screenshot4_content_type"
-    t.integer  "screenshot4_file_size"
-    t.datetime "screenshot4_updated_at"
-    t.string   "screenshot5_file_name"
-    t.string   "screenshot5_content_type"
-    t.integer  "screenshot5_file_size"
-    t.datetime "screenshot5_updated_at"
-    t.integer  "event_id"
-    t.boolean  "issemifinalist"
-    t.boolean  "isfinalist"
-    t.integer  "rubrics_count"
-    t.integer  "rubrics_average"
-    t.string   "store"
+    t.string   "country",             limit: 2, default: "",   null: false
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
@@ -248,8 +210,7 @@ ActiveRecord::Schema.define(version: 20150228003351) do
     t.string   "bg_check_id"
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
-    t.integer  "event_id"
-    t.boolean  "judging"
+    t.boolean  "is_survey_done",                   default: false, null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

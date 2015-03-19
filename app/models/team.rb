@@ -68,7 +68,7 @@ class Team < ActiveRecord::Base
   end
 
   # division update logic
-  def update_division!
+  def update_team_data!
     div = :x
 
     # team division is the age of the oldest student
@@ -83,6 +83,10 @@ class Team < ActiveRecord::Base
     end
 
     self.division = div
+
+    self.country = members.group_by(&:home_country)
+      .values.max_by(&:size).first.home_country
+
     self.save!
   end
 
@@ -112,8 +116,4 @@ class Team < ActiveRecord::Base
 #    'You still need to upload your ' + missing.join(', ')+ ' to complete your submission.'
     missing.join(', ')
   end
-
-  # def region
-  #   binding.pry
-  # end
 end

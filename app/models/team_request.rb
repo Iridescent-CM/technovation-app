@@ -5,15 +5,15 @@ class TeamRequest < ActiveRecord::Base
   scope :pending, -> { where approved: false }
   scope :approved, -> { where approved: true }
 
-  after_save :update_team_division, if: :changed_approval?
-  after_destroy :update_team_division, if: :approved?
+  after_save :update_team_data, if: :changed_approval?
+  after_destroy :update_team_data, if: :approved?
   after_destroy :destroy_empty_teams, if: :approved?
 
   after_create :notify_user_received,
     if: Proc.new{ self.approved == false and self.user_request == false}
 
-  def update_team_division
-    team.update_division!
+  def update_team_data
+    team.update_team_data!
   end
 
   def destroy_empty_teams
