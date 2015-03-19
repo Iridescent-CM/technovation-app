@@ -7,7 +7,7 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def new?
-    user.can_judge?
+    user.can_judge? and Setting.anyJudgingRoundActive?
   end
 
   def index?
@@ -19,15 +19,15 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def create?
-    user.can_judge?
+    user.can_judge? and Setting.anyJudgingRoundActive?
   end
 
   def edit?
-    user.can_judge?
+    user.can_judge? and Setting.anyJudgingRoundActive?
   end
 
   def update?
-    user.can_judge?
+    user.can_judge? and Setting.anyJudgingRoundActive?
   end
 
   # private

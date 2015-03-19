@@ -35,6 +35,11 @@ class Setting < ActiveRecord::Base
     return self.now >= date
   end
 
+  def self.anyJudgingRoundActive?()
+    return Rubric.stages.keys.keep_if{ |s| self.judgingRoundActive?(s)}.length > 0
+  end
+
+
   def self.judgingRoundActive?(round)
     date1 = self.get_date(round+'JudgingOpen')
     date2 = self.get_date(round+'JudgingClose')
