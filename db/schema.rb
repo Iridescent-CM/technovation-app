@@ -80,11 +80,6 @@ ActiveRecord::Schema.define(version: 20150302183715) do
 
   add_index "events", ["team_id"], name: "index_events_on_team_id", using: :btree
 
-  create_table "judges", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "rubrics", force: true do |t|
     t.integer  "identify_problem"
     t.integer  "address_problem"
@@ -143,9 +138,9 @@ ActiveRecord::Schema.define(version: 20150302183715) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "year",                          default: 2014, null: false
-    t.integer  "division",                      default: 2,    null: false
-    t.integer  "region",                                       null: false
+    t.integer  "year",                               default: 2014, null: false
+    t.integer  "division",                           default: 2,    null: false
+    t.integer  "region",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -153,7 +148,44 @@ ActiveRecord::Schema.define(version: 20150302183715) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "country",             limit: 2, default: "",   null: false
+    t.string   "country",                  limit: 2, default: "",   null: false
+    t.string   "description"
+    t.string   "code"
+    t.string   "pitch"
+    t.string   "demo"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "plan_file_name"
+    t.string   "plan_content_type"
+    t.integer  "plan_file_size"
+    t.datetime "plan_updated_at"
+    t.integer  "category_id"
+    t.string   "screenshot1_file_name"
+    t.string   "screenshot1_content_type"
+    t.integer  "screenshot1_file_size"
+    t.datetime "screenshot1_updated_at"
+    t.string   "screenshot2_file_name"
+    t.string   "screenshot2_content_type"
+    t.integer  "screenshot2_file_size"
+    t.datetime "screenshot2_updated_at"
+    t.string   "screenshot3_file_name"
+    t.string   "screenshot3_content_type"
+    t.integer  "screenshot3_file_size"
+    t.datetime "screenshot3_updated_at"
+    t.string   "screenshot4_file_name"
+    t.string   "screenshot4_content_type"
+    t.integer  "screenshot4_file_size"
+    t.datetime "screenshot4_updated_at"
+    t.string   "screenshot5_file_name"
+    t.string   "screenshot5_content_type"
+    t.integer  "screenshot5_file_size"
+    t.datetime "screenshot5_updated_at"
+    t.integer  "event_id"
+    t.boolean  "issemifinalist"
+    t.boolean  "isfinalist"
+    t.string   "store"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
@@ -211,6 +243,8 @@ ActiveRecord::Schema.define(version: 20150302183715) do
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
     t.boolean  "is_survey_done",                   default: false, null: false
+    t.integer  "event_id"
+    t.boolean  "judging"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
