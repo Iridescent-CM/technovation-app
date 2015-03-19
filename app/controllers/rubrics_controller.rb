@@ -16,6 +16,7 @@ class RubricsController < ApplicationController
   	teams = Team.all
 
     ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    event_active = false
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
       start = (event.whentooccur - 3.hours).to_datetime
@@ -23,6 +24,7 @@ class RubricsController < ApplicationController
       if (start..finish).cover?(DateTime.now)
         ## only show the teams competing in the event
         teams = teams.has_event(event)
+        event_active = true
       end
     end
 
@@ -41,7 +43,7 @@ class RubricsController < ApplicationController
     if teams.length > 0      
       teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
       ind = rand(teams.length)
-      @team = teams[ind]
+      @teams = event_active ? teams : [ teams[ind] ]
     end
 
     ## only show rubrics that were done by the current judge
