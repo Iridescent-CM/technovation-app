@@ -10,7 +10,9 @@
         = link_to 'Request to Join', [:join, @team], method: :post, class: ['btn', 'btn-primary']
       - if policy(@team).edit?
         = link_to 'Manage Team', [:edit, @team], class: ['btn', 'btn-primary'], style: 'margin-right:10px'
-        = link_to 'Manage Submission', edit_team_path(@team, anchor: :submission), class: ['btn', 'btn-primary']
+
+        - if Setting.submissionOpen?
+          = link_to 'Manage Submission', edit_team_path(@team, anchor: :submission), class: ['btn', 'btn-primary']
 
 .row
   .col-sm-4

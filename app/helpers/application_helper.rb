@@ -61,6 +61,10 @@ module ApplicationHelper
     # http://vimeo.com/originals/inthemoment/108800637
     # width = 500
     # height = 300
+    if link.nil? 
+      return ''
+    end
+
     if link.include? "vimeo"
       # regex = /^http:\/\/www\.vimeo\.com\/(\d+)/
       # vid_id = link.match(regex)[1]
@@ -75,6 +79,10 @@ module ApplicationHelper
   end
 
   def render_pdf(link)
+    if link.nil?
+      return ''
+    end
+
     link = link.sub('http://', 'https://')
     '<iframe width="500px" height="400px" src="' + link + '"></iframe>'
   end
