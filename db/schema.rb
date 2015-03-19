@@ -140,9 +140,9 @@ ActiveRecord::Schema.define(version: 20150319025338) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "year",                     default: 2014, null: false
-    t.integer  "division",                 default: 2,    null: false
-    t.integer  "region",                                  null: false
+    t.integer  "year",                               default: 2014, null: false
+    t.integer  "division",                           default: 2,    null: false
+    t.integer  "region",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -189,9 +189,10 @@ ActiveRecord::Schema.define(version: 20150319025338) do
     t.string   "store"
     t.boolean  "iswinner"
     t.string   "tools"
-    t.integer  "platform",                 default: 0,    null: false
+    t.integer  "platform",                           default: 0,    null: false
     t.string   "challenge"
     t.string   "participation"
+    t.string   "country",                  limit: 2, default: "",   null: false
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
@@ -250,6 +251,7 @@ ActiveRecord::Schema.define(version: 20150319025338) do
     t.boolean  "disabled",                         default: false, null: false
     t.integer  "event_id"
     t.boolean  "judging"
+    t.boolean  "is_survey_done",                   default: false, null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -1,34 +1,28 @@
 # Readme
 
-## Setup
+## Quick Start
 
-Prerequisites: Everything at https://gorails.com/setup/ubuntu/14.04 except for MySQL
+Assuming Rails, Postgres, rbenv, and bundler are all installed...
 
-Once psql is installed create the databases needed for the app,
-sudo -u postgres createdb technovation_development
-sudo -u postgres createdb technovation
-
-You may need to modify database.yml within the app to make the app authentication match what you use to authenticate for the terminal.
-
-Create the database
+``` sh
+git clone https://github.com/Iridescent-CM/technovation-app.git
+cd technovation-app
+rbenv install
+bundle install
+createdb technovation_development
 rake db:migrate
-
-Populate the database using
+echo HOST_DOMAIN=localhost:3000 > .env
 rake db:seed
-
-Run with 
 rails s
+```
+
+then navigate to http://localhost:3000
+
+Initial credentials are in [`./db/seeds.rb`](blob/master/db/seeds.rb) to log in.
 
 ## Signatures
 
 Users are required to have a signature on file before doing anything. On registration, an HMAC-signed url is sent to the parent's email for signature. Once the signature button is clicked, the user is then able to perform actions on the site.  In case a url needs to be manually generated and sent, use `rake signature:link[id]` where `id` is the user's numerical id.
-
-cass@franklin:~/Desktop/technovation/technovation-app$ rake signature:link[1]
-1-259d047685a3e19f38c8da01849b7dd2304543b8
-
-From browser, go to
-http://localhost:3000/signature/1-259d047685a3e19f38c8da01849b7dd2304543b8
-
 
 ## Administration
 
@@ -58,10 +52,14 @@ Admin panel at /admin
 admin@example.com
 password
 
-
 ### Third party
 Attachments handled via Paperclip
 https://github.com/thoughtbot/paperclip
 
 Forms are handled with
 https://github.com/bootstrap-ruby/rails-bootstrap-forms
+
+### Environment variables
+
+- `SKIP_CHECKR`: Set to `true` to skip the background check API call. Useful for development and staging environments.
+

@@ -3,7 +3,12 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
+  after_create :add_to_campaign_list
   after_create :email_parents_callback, if: :student?
+
+  before_destroy :remove_from_campaign_list
+
+
 
   # virtual attributes for social security check
   attr_accessor :middle_name, :ssn, :phone,
@@ -64,10 +69,57 @@ class User < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
 
+  class << self
+
+    def build_survey_url(collector_path, user_id)
+      site = Rails.application.config.env[:surveymonkey][:site]
+      is_ssl = site[:ssl]
+      klass = (is_ssl ? URI::HTTPS : URI::HTTP)
+      klass.build({
+        :host => site[:host], 
+        :path => '/' + [site[:path_base], collector_path].join('/'), 
+        :query => {:c => user_id}.to_query
+      }).to_s
+    end
+
+    def api_is_survey_done?(survey_id, collector_path, id)
+      data = SurveyMonkey.request('surveys','get_respondent_list') { {:survey_id => survey_id, :fields => [:custom_id]} }
+      respondents = data['data']['respondents']
+      !!(respondents.reject{|r| r['custom_id'].blank? }.find{|respondent| respondent['custom_id'].to_s == id.to_s })
+    end
+
+
+  end
+
   def full_address
     [ home_city,
       home_state,
       home_country ].compact.join(', ')
+  end
+
+  def collector_path
+    Rails.application.config.env[:surveys][:required][self.role][:url_id]
+  end
+
+  def survey_id
+    Rails.application.config.env[:surveys][:required][self.role][:id]
+  end
+
+  def url_for_survey
+    self.class.build_survey_url(self.collector_path, self.id)
+  end
+
+  def db_or_api_is_survey_done?
+    !!is_survey_done? || api_is_survey_done?
+  end
+
+  def api_is_survey_done?
+    boolean = self.class.api_is_survey_done?(self.survey_id, self.collector_path, self.id)
+    if boolean
+      self.is_survey_done = true
+      self.save!
+    end
+    boolean
   end
 
   # Include default devise modules. Others available are:
@@ -142,5 +194,34 @@ class User < ActiveRecord::Base
   def can_judge?
     ## returns true if judge user type or if mentor/coach volunteered to judge
     role == 'judge' or judging
+  end
+
+  def get_campaign_list
+    if student?
+      Rails.application.config.env[:createsend][:student_list_id]
+    elsif mentor?
+      Rails.application.config.env[:createsend][:mentor_list_id]
+    else
+      Rails.application.config.env[:createsend][:teacher_list_id]
+    end
+  end
+
+  def get_campaign_auth
+    {
+      :api_key => Rails.application.config.env[:createsend][:api_key]
+    }
+  end
+
+  def add_to_campaign_list
+    CreateSend::Subscriber.add get_campaign_auth, get_campaign_list, email, name, [], true
+    rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
+      puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"
+  end
+
+  def remove_from_campaign_list
+    subscriber = CreateSend::Subscriber.new get_campaign_auth, get_campaign_list, email
+    subscriber.unsubscribe
+    rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
+      puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"
   end
 end

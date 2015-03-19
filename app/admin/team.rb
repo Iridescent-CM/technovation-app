@@ -11,6 +11,9 @@ ActiveAdmin.register Team do
     selectable_column
     column :name
     column :region
+    column :country do |team|
+      ISO3166::Country[team.country]
+    end
     column :division
     column :year
 
@@ -33,6 +36,13 @@ ActiveAdmin.register Team do
     actions
   end
 
+  filter :name
+  filter :region, as: :select, collection: Team.regions.keys
+  filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
+  filter :division, as: :select, collection: Team.divisions.keys
+  filter :year
+  preserve_default_filters!
+
   form do |f|
     f.semantic_errors *f.object.errors.keys
     f.inputs "Team Details" do
@@ -40,8 +50,13 @@ ActiveAdmin.register Team do
       f.input :about
       f.input :year
       f.input :avatar, as: :file, required: false
-      f.input :region, as: :select, collection: Event.regions.keys
-#      f.input :event, as: :select, collection: Event.all
+# <<<<<<< HEAD
+#       f.input :region, as: :select, collection: Event.regions.keys
+# #      f.input :event, as: :select, collection: Event.all
+# =======
+      f.input :region, as: :select, collection: Team.regions.keys
+      f.input :division, as: :select, collection: Team.divisions.keys
+      f.input :country, as: :country
     end
     f.actions
   end

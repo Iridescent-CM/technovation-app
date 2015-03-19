@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
 
+  preserve_default_filters!
+  filter :teams_id_not_null, label: "Is On Team", as: :boolean
+
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
@@ -32,7 +35,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :first_name
       f.input :last_name
-      f.input :birthday
+      f.input :birthday, start_year: 1930, end_year: 2015
       f.input :role, as: :select, collection: User.roles.keys
     end
 

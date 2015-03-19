@@ -27,6 +27,9 @@
 
       dt Region
       dd= format_region(@team.region)
+
+      dt Country
+      dd= ISO3166::Country[@team.country]
   .col-sm-8
     h2 About
     .markdown-field

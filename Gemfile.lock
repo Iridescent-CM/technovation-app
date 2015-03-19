@@ -111,6 +111,10 @@ GEM
     coffee-script-source (1.8.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
+    createsend (4.0.2)
+      hashie (~> 3.0)
+      httparty (~> 0.10)
+      json (~> 1.0)
     currencies (0.4.2)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
@@ -130,7 +134,11 @@ GEM
     has_scope (0.6.0.rc)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
+    hashie (3.4.0)
     hike (1.2.3)
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     inherited_resources (1.5.1)
       actionpack (>= 3.2, < 4.2)
@@ -157,6 +165,7 @@ GEM
     mini_portile (0.6.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     openssl (1.0.0.beta)
@@ -280,6 +289,7 @@ DEPENDENCIES
   coffee-script
   countries
   country_select!
+  createsend
   devise!
   dotenv-rails
   flag_shih_tzu

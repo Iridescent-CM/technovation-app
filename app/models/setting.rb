@@ -52,9 +52,12 @@ class Setting < ActiveRecord::Base
   def self.stage
     for stage in Rubric.stages.keys
       if judgingRoundActive?(stage)
-        self.stage = stage
+        return stage
       end
     end
+
+    ## if no stages are active returns 'quarterfinal'
+    return 'quarterfinal'
   end
 
   def self.now
