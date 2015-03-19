@@ -15,6 +15,13 @@
 - unless (team.tools.nil? or team.tools.length == 0)
   .h4 Tools used
   text_area = team.tools
+- unless (team.challenge.nil? or team.challenge.length == 0)
+  .h4 Biggest challenge
+  text_area = team.challenge
+- unless (team.participation.nil? or team.participation.length == 0)
+  .h4 Why participate in Technovation?
+  text_area = team.participation
+
 
 .h4 Built for
 - for exp in Team::PLATFORMS
