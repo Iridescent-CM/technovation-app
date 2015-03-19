@@ -102,16 +102,6 @@ setting = Setting.create(
 )
 
 setting = Setting.create(
-  key:'judgeSignupOpen',
-  value: '2015-04-01',
-)
-
-setting = Setting.create(
-  key:'judgeSignupClose',
-  value: '2015-04-20',
-)
-
-setting = Setting.create(
   key:'submissionOpen',
   value: '2015-04-14',
 )

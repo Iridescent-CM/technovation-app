@@ -36,15 +36,17 @@ The administration panel can be reached at '/admin'. From there, users, teams, a
 
 ### Settings
 
-There are two major settings that must be present for the application to run correctly.
+There are several major settings that must be present for the application to run correctly.
 
 1. *year*: All teams will be created with this year as its season. The team index will also default to showing teams created in this year.
 2. *cutoff* A user's age for division cutoff (high-school, middle-school) will be calculated based on this date.
+3. *submissionOpen* *submimssionClose* The dates that user submissions should open and close. Dates formatted as 2015-02-03
+4. *quarterfinalJudgingOpen* *quarterfinalJudgingClose* *semifinalJudgingOpen* *semifinalJudgingClose* *finalJudgingOpen* *finalJudgingClose* The dates that various rounds of judging open and close. These are used to determine whether a particular rubric created was for the quarterfinal, semifinal, or final round of judging.
+5. *quarterfinalScoresVisible* *semifinalScoresVisible* *finalScoresVisible* A true or false value indicating whether scores from these rounds are visible to teams.
+6. *todaysDateForTesting* The date that the application believes it to be for testing purposes. When moving from testing to production, the function self.now must be changed from using this setting to using DateTime.now 
 
-From within the irb, type:
-s = Setting.new(key: 'cutoff', value: Date.today.to_s)
-s.save!
-s = Setting.new(key: 'year', value: '2015')
+For existing databases, the code for generating these settings can be copy-pasted from db/seeds.rb into a rails console. Settings can be edited from the admin panel.
+
 
 ### Announcements
 
