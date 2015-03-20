@@ -86,3 +86,9 @@ h2 Announcements
   .markdown-field
     = render_markdown(ann.post)
 
+hr
+
+- unless (current_user.judge? or current_user.student?)
+  = render partial: 'judges/judge', locals: {user: current_user}
+
+
