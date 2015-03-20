@@ -45,8 +45,9 @@ Rails.application.routes.draw do
       post 'join'
       post 'leave'
       post 'submit'
-      # post 'update_submissions'
-      # patch 'update_submissions'
+
+      get 'edit_submission'
+      post 'edit_submission'
     end
 
 #    resources :rubrics

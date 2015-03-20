@@ -26,6 +26,10 @@ class TeamPolicy < ApplicationPolicy
     member? and Setting.submissionOpen?
   end
 
+  def edit_submission?
+    member? and Setting.submissionOpen?
+  end
+
   def join?
     !user.team_requests.exists?(team: team)
   end

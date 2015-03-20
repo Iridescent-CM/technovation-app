@@ -12,7 +12,7 @@
         = link_to 'Manage Team', [:edit, @team], class: ['btn', 'btn-primary'], style: 'margin-right:10px'
 
         - if Setting.submissionOpen?
-          = link_to 'Manage Submission', edit_team_path(@team, anchor: :submission), class: ['btn', 'btn-primary']
+          = link_to 'Manage Submission', edit_submission_team_path(@team), class: ['btn', 'btn-primary']
 
 .row
   .col-sm-4

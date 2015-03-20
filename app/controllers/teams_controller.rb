@@ -114,6 +114,11 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
+  def edit_submission
+    @team = Team.friendly.find(params[:id])
+    authorize @team
+  end
+
   # def update_submissions
   #   # binding.pry
   #   @team = Team.friendly.find(params[:id])
