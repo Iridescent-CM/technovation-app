@@ -48,7 +48,7 @@ class RubricsController < ApplicationController
 
     ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
     unless current_user.conflict_region.nil? 
-      teams.delete_if{|t| current_user.confict_region == t.region}
+      teams.delete_if{|t| current_user.conflict_region == t.region}
     end
 
     if teams.length > 0      

@@ -33,6 +33,8 @@ ActiveAdmin.register Rubric do
         Event.find(team.event_id).name
       end
     }
+
+    column (:score){|r| r.score}
     column :identify_problem
     column :address_problem
     column :functional
