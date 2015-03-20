@@ -88,7 +88,16 @@ h2 Announcements
 
 hr
 
-- unless (current_user.judge? or current_user.student?)
-  = render partial: 'judges/judge', locals: {user: current_user}
-
-
+- unless current_user.nil?
+  .row
+    - unless current_user.judge? or current_user.student?
+      .col-sm-5
+        = render partial: 'judges/judge', locals: {user: current_user}
+    - if current_user.can_judge?
+      .col-sm-5.col-sm-offset-1
+        h2 Judge Teams
+        - if Setting.anyJudgingRoundActive?
+          p The #{Setting.judgingRoundActive}s are currently in progress. Judge teams now.
+          = link_to 'Judge teams now', :rubrics, class: ['btn', 'btn-primary']
+        - else
+          p The #{Setting.nextJudgingRound[0]}s will open on #{Setting.nextJudgingRound[1]}. Please mark your calendar!

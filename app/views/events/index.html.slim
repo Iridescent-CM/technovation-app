@@ -1,7 +1,8 @@
-.alert.alert-info role='alert'
-	p You must sign up for an event before proceeding
-
 - if @user.can_judge?
+	- if @user.event_id.nil?
+		.alert.alert-info role='alert'
+			p You must sign up for a judging event before proceeding
+
 	h2 Judging Event
 	h3 This is the event that you are judging.
 
@@ -20,6 +21,10 @@
 	- if @team.nil?
 		p You must create or join a team before signing up for a team event.
 	- else
+		- if @team.event_id.nil?
+			.alert.alert-info role='alert'
+				p You must sign up for a team event before proceeding
+
 		h3 This is the event that you are competing in.
 		= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 			= f.hidden_field :event_signup, :value => true
