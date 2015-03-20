@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   # skipping the parent email
   attr_accessor :skip_parent_email
 
-  enum role: [:student, :mentor, :coach]
+  enum role: [:student, :mentor, :coach, :judge]
   enum referral_category: [
     :friend,
     :colleague,
@@ -59,6 +59,12 @@ class User < ActiveRecord::Base
             6 => EXPERTISES[5][:sym],
             :column => 'expertise'
   scope :has_expertise, -> {where.not expertise: 0}
+
+  #### fields used for judge user type only
+  has_one :event
+  has_many :rubrics
+#  has_one :conflict_region # a region that the judge should not judge for due to conflict of interest
+  #### end
 
 
   geocoded_by :full_address
@@ -184,6 +190,11 @@ class User < ActiveRecord::Base
   def email_parents_callback
     return if skip_parent_email
     SignatureMailer.signature_email(self).deliver
+  end
+
+  def can_judge?
+    ## returns true if judge user type or if mentor/coach volunteered to judge
+    role == 'judge' or judging
   end
 
   def get_campaign_list

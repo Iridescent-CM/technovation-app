@@ -1,0 +1,60 @@
+= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+
+    = f.collection_select :category_id, Category.all, :id, :name
+
+  	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
+    = f.text_area :description, label: "App description", rows: 5
+    = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
+    = f.text_field :code, label: "Source code", data: 'code', help: 'A link to your github account'
+
+    = f.text_field :tools, label: 'Tools used', help: 'What tools did you use to build your app?'
+
+    = f.text_field :store, label: "App listing", help: 'Link to Google Play or App Store listing of your app (optional for 2 additional points)'
+
+    = f.form_group :platform, label: { text: "Platform" }, help: "Which platform did you build your app for?" do
+      = f.check_box :android
+      = f.check_box :ios
+      = f.check_box :windows
+
+    = f.text_field :challenge, label: "What was your team's biggest challenge?"
+    = f.text_field :participation, label: "Why did you decide to participate in Technovation?"
+
+    .h4 Screenshots
+    = f.file_field :screenshot1, label: "1"
+    - unless @team.screenshot1_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot1.url(:thumb)
+
+    = f.file_field :screenshot2, label: "2"
+    - unless @team.screenshot2_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot2.url(:thumb)
+
+    = f.file_field :screenshot3, label: "3"
+    - unless @team.screenshot3_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot3.url(:thumb)
+
+    = f.file_field :screenshot4, label: "4", help: 'optional'
+    - unless @team.screenshot4_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot4.url(:thumb)
+
+    = f.file_field :screenshot5, label: "5", help: 'optional'
+    - unless @team.screenshot5_file_name.nil?
+      = f.form_group
+        = image_tag @team.screenshot5.url(:thumb)
+
+  	.h4 Pitch Video (4 minutes)
+  	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch' 
+
+  	.h4 Demo Video (2 minutes)
+    = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
+
+  	= f.submit "Update Submission", class: ['btn', 'btn-primary']
+
+hr
+  p If you think your application is complete, you can submit your application.
+  = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
+    = f.form_group
+      = f.submit 'Submit Submission', class: ['btn', 'btn-danger']

@@ -9,8 +9,9 @@ user = User.new(
   first_name: 'Cory',
   last_name: 'Li',
   email: 'finalepsilon@gmail.com',
-  parent_email: 'finalepsilon@gmail.com',
+  parent_email: 'cssndrx@gmail.com',
   password: 'testtest',
+  role: 0,
   password_confirmation: 'testtest',
   birthday: Date.new(1989, 12, 1),
   home_city: 'Raleigh',
@@ -21,6 +22,75 @@ user = User.new(
 user.skip_confirmation!
 user.save!
 
+
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx@gmail.com',
+  parent_email: 'cssndrx@gmail.com',
+  password: 'testtest',
+  role: 0,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+user = User.new(
+  first_name: 'Cassandra',
+  last_name: 'Xia',
+  email: 'cssndrx+judge@gmail.com',
+  password: 'testtest',
+  role: 3,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Boston',
+  home_state: 'MA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx+mentor@gmail.com',
+  password: 'testtest',
+  role: 1,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+
+user = User.new(
+  first_name: 'Cass',
+  last_name: '??',
+  email: 'cssndrx+coach@gmail.com',
+  password: 'testtest',
+  role: 2,
+  password_confirmation: 'testtest',
+  birthday: Date.new(1989, 12, 1),
+  home_city: 'Raleigh',
+  home_state: 'VA',
+  home_country: 'US',
+  school: 'MIT',
+)
+user.skip_confirmation!
+user.save!
+
+
 setting = Setting.create(
   key: 'year',
   value: '2015',
@@ -30,6 +100,124 @@ setting = Setting.create(
   key:'cutoff',
   value: Date.today.to_s,
 )
+
+setting = Setting.create(
+  key:'submissionOpen',
+  value: '2015-04-14',
+)
+
+setting = Setting.create(
+  key:'submissionClose',
+  value: '2015-04-23',
+)
+
+
+###
+
+setting = Setting.create(
+  key:'quarterfinalScoresVisible',
+  value: 'false',
+)
+
+setting = Setting.create(
+  key:'semifinalScoresVisible',
+  value: 'false',
+)
+
+setting = Setting.create(
+  key:'finalScoresVisible',
+  value: 'false',
+)
+
+
+######
+
+setting = Setting.create(
+  key:'quarterfinalJudgingOpen',
+  value: '2015-04-24',
+)
+
+setting = Setting.create(
+  key:'quarterfinalJudgingClose',
+  value: '2015-05-03',
+)
+
+setting = Setting.create(
+  key:'semifinalJudgingOpen',
+  value: '2015-05-05',
+)
+
+setting = Setting.create(
+  key:'semifinalJudgingClose',
+  value: '2015-05-10',
+)
+
+setting = Setting.create(
+  key:'finalJudgingOpen',
+  value: '2015-05-14',
+)
+
+setting = Setting.create(
+  key:'finalJudgingClose',
+  value: '2015-05-16',
+)
+
+
+setting = Setting.create(
+  key:'todaysDateForTesting',
+  value: '2015-05-06',
+)
+
+
+event = Event.create(
+  name: 'Virtual Judging',
+  location: 'Online',
+  whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
+  description: 'Quarterfinals for everyone',
+  organizer: 'Technovation',
+)
+
+event = Event.create(
+  name: 'Northeast Quarterfinals',
+  location: 'MIT',
+  whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
+  description: 'Quarterfinals for the Northeast',
+  organizer: 'Women in Science and Engineering',
+)
+
+event = Event.create(
+  name: 'Bay Area Quarterfinals',
+  location: 'Dropbox',
+  whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
+  description: 'Quarterfinals for the Bay Area',
+  organizer: 'Technovation',
+)
+
+category = Category.create(
+  name: 'Health and fitness',
+  year: '2015',
+)
+
+category = Category.create(
+  name: 'Envrionment',
+  year: '2015',
+)
+
+category = Category.create(
+  name: 'Community values',
+  year: '2015',
+)
+
+
+# setting = Setting.create(
+#   key: 'submissionOpen?',
+#   value: true,
+# )
+
+# setting = Setting.create(
+#   key: 'submissionDeadline',
+#   value: Date.today.to_s,
+# )
 
 ann = Announcement.create(
   title: "Welcome to Technovation's new site",

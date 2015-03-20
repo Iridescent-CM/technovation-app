@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+#  get '/rubrics/:id', to: 'rubrics#show', as: 'rubric'
+
   get 'signature/:hash' => 'signature#index'
   post 'signature/:hash' => 'signature#create'
   get 'signature' => 'signature#status'
@@ -28,9 +30,15 @@ Rails.application.routes.draw do
   get 'bg_check' => 'bg_check#index'
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
+#  get 'rubric' => 'rubric#index'
+
+
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
+  
+      get 'mentor_coach'
+      post 'mentor_coach'
     end
   end
 
@@ -38,6 +46,10 @@ Rails.application.routes.draw do
     member do
       post 'join'
       post 'leave'
+      post 'submit'
+
+      get 'edit_submission'
+      post 'edit_submission'
     end
   end
 
@@ -46,6 +58,14 @@ Rails.application.routes.draw do
       post 'approve'
     end
   end
+
+  resources :rubrics
+
+  resources :events
+
+  resources :scores
+ 
+  resources :judges 
 
   #   member do
   #     post 'approve'

@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
   before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
   before_action :verify_bg_check, {unless: :special_controller?}
+  before_action :verify_other_roles, {unless: :special_controller?, if: :user_signed_in?}
   
 
   def special_controller?
@@ -33,6 +34,13 @@ class ApplicationController < ActionController::Base
     if !current_user.nil? and current_user.consent_signed_at.nil?
       redirect_to controller: '/signature', action: :status
       return false
+    end
+  end
+
+  def verify_other_roles
+    ## judge user types need to verify coach or mentor roles they may have had durin the year
+    if !current_user.nil? and current_user.judge? and current_user.conflict_region.nil? and !self.class.name.include?('UsersController')
+      redirect_to mentor_coach_user_path(current_user)
     end
   end
 

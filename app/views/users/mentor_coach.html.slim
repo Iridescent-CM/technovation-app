@@ -1,0 +1,9 @@
+h2 Judge Signup
+
+p Have you mentored or coached any teams this year? If so, what division is the team competing in?
+
+br
+= bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+    = f.collection_select :conflict_region, regions_to_collection, :id, :name
+    = f.form_group
+		= f.submit "Confirm"

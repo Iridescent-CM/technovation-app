@@ -15,19 +15,27 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    !user.student? or !user.has_team_for_season?
+    !user.student? or !user.has_team_for_season? and Setting.submissionOpen?
   end
 
   def edit?
-    member?
+    member? and Setting.submissionOpen?
   end
 
   def update?
-    member?
+    member? and Setting.submissionOpen?
+  end
+
+  def edit_submission?
+    member? and Setting.submissionOpen?
   end
 
   def join?
     !user.team_requests.exists?(team: team)
+  end
+
+  def submit?
+    member?
   end
 
   def leave?
@@ -37,6 +45,10 @@ class TeamPolicy < ApplicationPolicy
   def destroy?
     false
   end
+
+  # def update_submissions?
+  #   member?
+  # end
 
   private
   def member?

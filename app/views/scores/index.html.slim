@@ -1,0 +1,10 @@
+h1 Scores
+
+- for t in @hash.keys
+	h4 Scores for #{t}
+	- if @hash[t].nil? or @hash[t].length == 0
+		p No scores yet for #{t}. Check back later.
+	- else
+		- for r in @hash[t] do
+			= link_to "Judge feedback "+(@hash[t].index(r)+1).to_s+"--"+r.stage, rubric_path(r)
+			br

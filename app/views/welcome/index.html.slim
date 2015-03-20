@@ -1,17 +1,3 @@
-/ .panel.panel-primary
-/   .panel-heading Profile Completion
-/   .panel-body
-/     p Your profile is currently 60% complete.
-/     .progress
-/       .progress-bar.progress-bar-success role='progressbar' aria-valuenow='60' area-valuemin='0' aria-valuemax='100' style='width: 60%'
-/     h4 Completed
-/     ul
-/       li COPPA Agreement
-/       li Stuff
-/     h4 Remaining
-/     ul
-/       li Join a Team
-
 - if current_user.ineligible?
   .alert.alert-danger role='alert'
     markdown:
@@ -36,19 +22,20 @@ ul
       | .
   - if current_user.about.blank?
     li
-      ' You haven't given yourself a brief description for potential teammates.
+      ' You haven't given yourself a brief description.
       = link_to 'Write one now', edit_user_path(current_user)
       | .
 
-  li
-    ' If you haven't already, please complete the following
-    - if current_user.student?
-      a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
-    - if current_user.mentor?
-      a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
-    - if current_user.coach?
-      a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
-    | .
+  - if not current_user.judge?
+    li
+      ' If you haven't already, please complete the following
+      - if current_user.student?
+        a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
+      - if current_user.mentor?
+        a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
+      - if current_user.coach?
+        a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
+      | .
 
   / team request infos
   - if !current_user.current_team.nil?
@@ -79,13 +66,14 @@ ul
               = link_to '(Reject)', req, method: :delete
 
     - else
-      li
-        'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2015, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
-        ' You may
-        = link_to 'create a team', :new_team
-        '  or
-        = link_to 'request to join an existing team', :teams
-        | .
+      - unless current_user.judge?
+        li
+          'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2015, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
+          ' You may
+          = link_to 'create a team', :new_team
+          '  or
+          = link_to 'request to join an existing team', :teams
+          | .
 
 hr
 
@@ -97,3 +85,4 @@ h2 Announcements
     small Posted #{time_ago_in_words(ann.created_at)} ago
   .markdown-field
     = render_markdown(ann.post)
+
