@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
   before_action :verify_bg_check, {unless: :special_controller?}
   before_action :verify_other_roles, {unless: :special_controller?, if: :user_signed_in?}
+  before_action :verify_event_signup, {unless: :special_controller?, if: :user_signed_in?}
   
 
   def special_controller?
@@ -41,6 +42,13 @@ class ApplicationController < ActionController::Base
     ## judge user types need to verify coach or mentor roles they may have had durin the year
     if !current_user.nil? and current_user.judge? and current_user.conflict_region.nil? and !self.class.name.include?('UsersController')
       redirect_to mentor_coach_user_path(current_user)
+    end
+  end
+
+  def verify_event_signup
+    if !current_user.nil? and ((current_user.can_judge? and current_user.event_id.nil?) or
+      (!current_user.judge? and !current_user.current_team.nil? and current_user.current_team.event.nil?)) and !self.class.name.include?('EventsController') and !self.class.name.include?('UsersController')
+      redirect_to events_path
     end
   end
 

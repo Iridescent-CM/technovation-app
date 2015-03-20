@@ -1,3 +1,6 @@
+.alert.alert-info role='alert'
+	p You must sign up for an event before proceeding
+
 - if @user.can_judge?
 	h2 Judging Event
 	h3 This is the event that you are judging.
@@ -6,7 +9,7 @@
 		= f.hidden_field :event_signup, :value => true
 	    = f.collection_select :event_id, Event.all, :id, :name
 	    = f.form_group
-			= f.submit "Sign Up"
+			= f.submit "Sign Up", class: ['btn', 'btn-primary']
 
 	- unless @user.event_id.nil?
 		= render partial: 'event', locals: {event: Event.find(@user.event_id)}
@@ -22,7 +25,7 @@
 			= f.hidden_field :event_signup, :value => true
 		    = f.collection_select :event_id, Event.all, :id, :name
 		    = f.form_group
-				= f.submit "Sign Up"
+				= f.submit "Sign Up", class: ['btn', 'btn-primary']
 
 		- unless @team.event_id.nil?
 			= render partial: 'event', locals: {event: Event.find(@team.event_id)}
