@@ -46,6 +46,11 @@ class RubricsController < ApplicationController
       teams.delete_if{|t| interested_regions.include? t.region}
     end
 
+    ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
+    unless current_user.conflict_region.nil? 
+      teams.delete_if{|t| current_user.confict_region == t.region}
+    end
+
     if teams.length > 0      
       teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
       ind = rand(teams.length)
