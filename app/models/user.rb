@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
   #### fields used for judge user type only
   has_one :event
   has_many :rubrics
+#  has_one :conflict_region # a region that the judge should not judge for due to conflict of interest
   #### end
 
 

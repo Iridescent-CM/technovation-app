@@ -50,6 +50,10 @@ class UsersController < ApplicationController
   def bg_check
   end
 
+  def mentor_coach
+    @user = User.friendly.find(params[:id])
+    authorize @user
+  end
 
   private
   def user_params
@@ -75,6 +79,7 @@ class UsersController < ApplicationController
 
       :event_id,
       :judging,
+      :conflict_region,
     )
   end
 

@@ -36,8 +36,10 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
+  
+      get 'mentor_coach'
+      post 'mentor_coach'
     end
-#    resources :rubrics
   end
 
   resources :teams do
@@ -49,8 +51,6 @@ Rails.application.routes.draw do
       get 'edit_submission'
       post 'edit_submission'
     end
-
-#    resources :rubrics
   end
 
   resources :team_requests, only: [:destroy] do
@@ -59,14 +59,13 @@ Rails.application.routes.draw do
     end
   end
 
-#  resources :rubrics, controller: :rubrics, only: [:index, :show, :new, :edit]
   resources :rubrics
 
   resources :events
 
   resources :scores
  
-  resources :judges
+  resources :judges 
 
   #   member do
   #     post 'approve'
