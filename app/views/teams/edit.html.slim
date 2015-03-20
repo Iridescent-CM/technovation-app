@@ -1,7 +1,7 @@
 .page-header
-  h1 Manage Team Settings
+  h1 Team Page
 
-h3 Team Settings
+h3 Biographical
 p Change or manage your team's settings from this page.
 = render 'form'
 
@@ -31,5 +31,6 @@ h3#pending Pending Requests
 - else
   p There are no pending requests.
 
-hr
 = link_to("Leave this team", [TeamRequest.find_by(user: current_user, team: @team), home: true], method: :delete, class: ['btn', 'btn-danger'], data: {confirm: 'Are you sure you want to leave the team?'})
+
+

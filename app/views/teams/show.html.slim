@@ -9,7 +9,10 @@
       - if policy(@team).join?
         = link_to 'Request to Join', [:join, @team], method: :post, class: ['btn', 'btn-primary']
       - if policy(@team).edit?
-        = link_to 'Manage Team', [:edit, @team], class: ['btn', 'btn-primary']
+        = link_to 'Manage Team', [:edit, @team], class: ['btn', 'btn-primary'], style: 'margin-right:10px'
+
+        - if Setting.submissionOpen?
+          = link_to 'Manage Submission', edit_submission_team_path(@team), class: ['btn', 'btn-primary']
 
 .row
   .col-sm-4
@@ -23,7 +26,7 @@
       dd= format_division(@team.division)
 
       dt Region
-      dd= format_region(@team.region, @team.division)
+      dd= format_region(@team.region)
 
       dt Country
       dd= ISO3166::Country[@team.country]
@@ -63,3 +66,13 @@
             = link_user(coach)
     - else
       p There are currently no coaches on this team.
+
+hr
+.row
+  .alert.alert-danger role='alert'
+    p 
+      span This team still needs to upload their 
+      == @team.check_completeness 
+      span  to complete their submission.
+
+  = render 'submission', team: @team

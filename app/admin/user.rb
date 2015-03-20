@@ -18,6 +18,13 @@ ActiveAdmin.register User do
     column :birthday
     column :home_country
     column :consent_signed_at
+
+    column (:can_judge){|u| u.judge? or u.judging}
+    column (:num_judged){|u| Rubric.where(user_id: u.id).length}
+    column (:judging_event){|u| unless u.event_id.nil? 
+                                  link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
+                                end}
+
     actions
   end
 
@@ -66,20 +73,4 @@ ActiveAdmin.register User do
 
     f.actions
   end
-
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
-
 end

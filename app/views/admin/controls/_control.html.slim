@@ -1,0 +1,19 @@
+h2 Control Panel
+
+p These buttons allow you to run code from the admin panel.
+
+
+h4 These buttons select the winners of different rounds
+p If you press the button more than once, it will just recalculate the winners based on the top scores.
+= button_to 'Pick Semifinalists', '/admin/controls/mark_semifinalists', :method => :post
+= button_to 'Pick Finalists', '/admin/controls/mark_finalists', :method => :post
+= button_to 'Pick Winners', '/admin/controls/mark_winners', :method => :post
+
+br
+br
+
+h4 These buttons make scores available to teams
+p Clicking once makes the scores visible, clicking again hides the scores.
+= button_to 'Show / hide Quarterfinals scores', '/admin/controls/quarterfinals_visibility', :method=> :post
+= button_to 'Show / hide Semifinals scores', '/admin/controls/semifinals_visibility', :method=> :post
+= button_to 'Show / hide Finals scores', '/admin/controls/finals_visibility', :method=> :post

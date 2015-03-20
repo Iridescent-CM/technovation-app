@@ -38,6 +38,11 @@
       h3 Professional Information
       = render :partial => "professional_information", :locals => {:f => f}
 
+
+    /- if resource.role == 'judge'
+      p Would you be willing to judge for the semifinalist round (in addition the quarter finals)?
+      = f.check_box :connect_with_other, label: 'Yes'
+
   hr
 
   h3 How did you hear about us?

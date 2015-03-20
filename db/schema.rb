@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302183715) do
+ActiveRecord::Schema.define(version: 20150320004517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,68 @@ ActiveRecord::Schema.define(version: 20150302183715) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "year"
+    t.integer  "team_id"
+  end
+
+  add_index "categories", ["team_id"], name: "index_categories_on_team_id", using: :btree
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.datetime "whentooccur"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "organizer"
+    t.integer  "team_id"
+    t.integer  "region"
+  end
+
+  add_index "events", ["team_id"], name: "index_events_on_team_id", using: :btree
+
+  create_table "rubrics", force: true do |t|
+    t.integer  "identify_problem"
+    t.integer  "address_problem"
+    t.integer  "functional"
+    t.integer  "external_resources"
+    t.integer  "match_features"
+    t.integer  "interface"
+    t.integer  "description"
+    t.integer  "market"
+    t.integer  "competition"
+    t.integer  "revenue"
+    t.integer  "branding"
+    t.integer  "pitch"
+    t.boolean  "launched"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.string   "round"
+    t.integer  "score"
+    t.string   "identify_problem_comment"
+    t.string   "address_problem_comment"
+    t.string   "functional_comment"
+    t.string   "external_resources_comment"
+    t.string   "match_features_comment"
+    t.string   "interface_comment"
+    t.string   "description_comment"
+    t.string   "market_comment"
+    t.string   "competition_comment"
+    t.string   "revenue_comment"
+    t.string   "branding_comment"
+    t.string   "pitch_comment"
+    t.string   "launched_comment"
+    t.integer  "stage"
+  end
+
+  add_index "rubrics", ["user_id"], name: "index_rubrics_on_user_id", using: :btree
+
   create_table "settings", force: true do |t|
     t.string   "key",        null: false
     t.string   "value",      null: false
@@ -78,9 +140,9 @@ ActiveRecord::Schema.define(version: 20150302183715) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "year",                          default: 2014, null: false
-    t.integer  "division",                      default: 2,    null: false
-    t.integer  "region",                                       null: false
+    t.integer  "year",                               default: 2014, null: false
+    t.integer  "division",                           default: 2,    null: false
+    t.integer  "region",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -88,10 +150,53 @@ ActiveRecord::Schema.define(version: 20150302183715) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "country",             limit: 2, default: "",   null: false
+    t.string   "country",                  limit: 2, default: "",   null: false
+    t.string   "description"
+    t.string   "code"
+    t.string   "pitch"
+    t.string   "demo"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "plan_file_name"
+    t.string   "plan_content_type"
+    t.integer  "plan_file_size"
+    t.datetime "plan_updated_at"
+    t.integer  "category_id"
+    t.string   "screenshot1_file_name"
+    t.string   "screenshot1_content_type"
+    t.integer  "screenshot1_file_size"
+    t.datetime "screenshot1_updated_at"
+    t.string   "screenshot2_file_name"
+    t.string   "screenshot2_content_type"
+    t.integer  "screenshot2_file_size"
+    t.datetime "screenshot2_updated_at"
+    t.string   "screenshot3_file_name"
+    t.string   "screenshot3_content_type"
+    t.integer  "screenshot3_file_size"
+    t.datetime "screenshot3_updated_at"
+    t.string   "screenshot4_file_name"
+    t.string   "screenshot4_content_type"
+    t.integer  "screenshot4_file_size"
+    t.datetime "screenshot4_updated_at"
+    t.string   "screenshot5_file_name"
+    t.string   "screenshot5_content_type"
+    t.integer  "screenshot5_file_size"
+    t.datetime "screenshot5_updated_at"
+    t.integer  "event_id"
+    t.boolean  "issemifinalist"
+    t.boolean  "isfinalist"
+    t.string   "store"
+    t.boolean  "iswinner"
+    t.string   "tools"
+    t.integer  "platform",                           default: 0,    null: false
+    t.string   "challenge"
+    t.string   "participation"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
+  add_index "teams", ["event_id"], name: "index_teams_on_event_id", using: :btree
   add_index "teams", ["slug"], name: "index_teams_on_slug", unique: true, using: :btree
   add_index "teams", ["year"], name: "index_teams_on_year", using: :btree
 
@@ -145,10 +250,14 @@ ActiveRecord::Schema.define(version: 20150302183715) do
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
     t.boolean  "is_survey_done",                   default: false, null: false
+    t.integer  "event_id"
+    t.boolean  "judging"
+    t.integer  "conflict_region"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["event_id"], name: "index_users_on_event_id", using: :btree
   add_index "users", ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude", using: :btree
   add_index "users", ["parent_email"], name: "index_users_on_parent_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

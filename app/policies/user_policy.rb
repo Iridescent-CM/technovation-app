@@ -24,6 +24,10 @@ class UserPolicy < ApplicationPolicy
     current_user == user
   end
 
+  def mentor_coach?
+    current_user == user
+  end
+
   def invite?
     current_user.student? and
     not current_user.current_team.nil? and

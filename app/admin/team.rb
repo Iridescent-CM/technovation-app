@@ -16,6 +16,23 @@ ActiveAdmin.register Team do
     end
     column :division
     column :year
+
+    column :event_id do |t|
+      unless t.event_id.nil?
+        link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+      end
+    end
+
+    column (:rubrics_count){|t| t.rubrics.length}
+    column (:rubrics_average){|t| 
+      scores = t.rubrics.map{|r| r.score}
+      scores.inject(:+).to_f / scores.size
+      }
+
+    column :issemifinalist
+    column :isfinalist
+    column :iswinner
+
     actions
   end
 
@@ -36,22 +53,14 @@ ActiveAdmin.register Team do
       f.input :region, as: :select, collection: Team.regions.keys
       f.input :division, as: :select, collection: Team.divisions.keys
       f.input :country, as: :country
+
+#      f.input :event, as: :select, collection: Event.all
+
+      f.input :issemifinalist
+      f.input :isfinalist
+      f.input :iswinner
+
     end
     f.actions
   end
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
-
 end

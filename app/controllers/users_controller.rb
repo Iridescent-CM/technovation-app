@@ -14,9 +14,15 @@ class UsersController < ApplicationController
   def update
     @user = User.friendly.find(params[:id])
     authorize @user
+
     if @user.update(user_params)
-      flash[:notice] = 'Profile Updated!'
-      redirect_to @user
+      if params[:user][:event_signup]
+        flash[:notice] = 'Event signup updated'
+        redirect_to :back
+      else
+        flash[:notice] = 'Profile Updated!'
+        redirect_to @user
+      end
     else
       render :edit
     end
@@ -34,7 +40,7 @@ class UsersController < ApplicationController
       user_request: false
     )
     if @team.save
-      flash[:notice] = 'Team Request Sent'
+      flash[:notice] = 'Team Request Sent'  
     else
       flash[:alert] = 'An error occured during invite'
     end
@@ -44,6 +50,10 @@ class UsersController < ApplicationController
   def bg_check
   end
 
+  def mentor_coach
+    @user = User.friendly.find(params[:id])
+    authorize @user
+  end
 
   private
   def user_params
@@ -66,6 +76,10 @@ class UsersController < ApplicationController
       :marketing,
       :design,
       :connect_with_other,
+
+      :event_id,
+      :judging,
+      :conflict_region,
     )
   end
 
