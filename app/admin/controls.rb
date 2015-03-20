@@ -3,24 +3,17 @@ ActiveAdmin.register_page "Controls" do
   	render partial: 'control'
   end
 
-
-  #http://stackoverflow.com/questions/10193334/active-admin-and-custom-method
-  #http://activeadmin.info/docs/10-custom-pages.html
-
 	page_action :mark_semifinalists, method: :post do
-	  # ...
 	  RankingController.mark_semifinalists
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with issemifinalist tag"
 	end
 
 	page_action :mark_finalists, method: :post do
-	  # ...
 	  RankingController.mark_finalists
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with isfinalist tag"
 	end
 
 	page_action :mark_winners, method: :post do
-	  # ...
 	  RankingController.mark_winners
 	  redirect_to admin_controls_path, notice: "Winning teams marked with iswinner tag"
 	end
@@ -42,11 +35,5 @@ ActiveAdmin.register_page "Controls" do
 	  logic = Setting.scoresVisible?('final') ? "" : ' not'
 	  redirect_to admin_controls_path, notice: "Final scores now"+logic+" visible"
 	end
-
-	# def self.set_score_visibility(stage)
-	#   RankingController.toggle_score_visibility(stage)
-	#   logic = Setting.scoresVisible?(stage) ? "" : ' not'
-	#   redirect_to admin_controls_path, notice: stage+" scores now"+logic+" visible"
-	# end
 
 end

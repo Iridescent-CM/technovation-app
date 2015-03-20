@@ -37,7 +37,7 @@ class TeamsController < ApplicationController
         @teams = @teams.has_division(params[:division])
       end
       
-      @teams.shuffle
+      @teams = @teams.shuffle
 
       @season = "#{Setting.year} Season"
     end

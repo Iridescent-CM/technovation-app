@@ -50,10 +50,6 @@ ActiveAdmin.register Team do
       f.input :about
       f.input :year
       f.input :avatar, as: :file, required: false
-# <<<<<<< HEAD
-#       f.input :region, as: :select, collection: Event.regions.keys
-# #      f.input :event, as: :select, collection: Event.all
-# =======
       f.input :region, as: :select, collection: Team.regions.keys
       f.input :division, as: :select, collection: Team.divisions.keys
       f.input :country, as: :country
@@ -67,20 +63,4 @@ ActiveAdmin.register Team do
     end
     f.actions
   end
-
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
-
 end
