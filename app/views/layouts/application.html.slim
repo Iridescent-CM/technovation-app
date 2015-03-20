@@ -65,7 +65,6 @@ html
         - if current_user
           .col-sm-4
             #profile
-              - if current_user
                 h3 My Profile
                 .row
                   .col-sm-8
@@ -93,7 +92,6 @@ html
                         dt Email
                         dd
                           a href="mailto:#{current_user.email}" = current_user.email
-
 
                       dt= current_user.student? ? "School" : "School/Employer"
                       dd= current_user.school

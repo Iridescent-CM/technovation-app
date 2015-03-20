@@ -44,9 +44,11 @@ label.required:after {
 }
 
 #profile {
-  outline: 2px solid #ccc;
+  margin-top: 20px;
+  outline: 1px solid #ccc;
   padding-bottom: 10px;
   padding-top: 1px;
+  overflow:hidden;
 }
 
 .dl-horizontal dt {
