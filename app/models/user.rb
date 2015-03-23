@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   after_create :email_parents_callback, if: :student?
 
   before_destroy :remove_from_campaign_list
+  before_save :check_judging_conflicts
 
 
 
@@ -90,6 +91,14 @@ class User < ActiveRecord::Base
     end
 
 
+  end
+
+  def check_judging_conflicts
+    if !event_id.nil? and !Event.all.find(event_id).region.nil? and !conflict_region.nil?
+      if conflict_region == Event.all.find(event_id).region
+        raise 'Sorry, you cannot judge an event in a division that you have mentored or coached. Sign up for Virtual Judging instead.'
+      end
+    end
   end
 
   def full_address

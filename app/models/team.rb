@@ -76,6 +76,10 @@ class Team < ActiveRecord::Base
   scope :has_region, -> (reg) {where('region = ?', reg)}
   scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
 
+  scope :is_semifinalist, -> {where 'issemifinalist = true'}
+  scope :is_finalist, -> {where 'isfinalist = true'}
+  scope :is_winner, -> {where 'iswinner = true'}
+
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association
   #scope :by_score, joins: :rubrics, group: "teams.id", order: "AVG(rubrics.score) DESC"

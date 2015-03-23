@@ -36,6 +36,15 @@ class TeamsController < ApplicationController
       unless params[:division].nil?
         @teams = @teams.has_division(params[:division])
       end
+      unless params[:issemifinalist].nil?
+        @teams = @teams.is_semifinalist
+      end
+      unless params[:isfinalist].nil?
+        @teams = @teams.is_finalist
+      end
+      unless params[:iswinner].nil?
+        @teams = @teams.is_winner
+      end
       
       @teams = @teams.shuffle
 

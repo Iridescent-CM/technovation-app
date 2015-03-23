@@ -28,14 +28,6 @@
             .checkbox
               label
                 input type='checkbox' name='category' value='#{c.id}' #{c.name}
-      h5 Region
-      ul.list-unstyled
-        - for r in Team.regions
-          li
-            .checkbox
-              label
-                input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
-
       h5 Division
       ul.list-unstyled
         - for d in Team.divisions
@@ -43,12 +35,34 @@
             .checkbox
               label
                 input type='checkbox' name='division' value='#{d[1]}' #{format_division(d[0])}
+      h5 Region
+      ul.list-unstyled
+        - for r in Team.regions
+          li
+            .checkbox
+              label
+                input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
+      h5 Awards
+      ul.list-unstyled
+        li
+          .checkbox
+            label
+              input type='checkbox' name='issemifinalist' value='true' Quarterfinal winner
+        li
+          .checkbox
+            label
+              input type='checkbox' name='isfinalist' value='true' Semifinal winner
+        li
+          .checkbox
+            label
+              input type='checkbox' name='iswinner' value='true' Finals winner
+
 
       button.btn.btn-default type='submit' Filter
 
   .col-sm-10
     - if @teams.empty?
-      p There are not yet any teams registered for the #{@year} season.
+      p There are not yet any teams that match all the requirements of your filter.
 
     - else
       - for t in @teams do
