@@ -50,11 +50,6 @@ class UsersController < ApplicationController
   def bg_check
   end
 
-  def mentor_coach
-    @user = User.friendly.find(params[:id])
-    authorize @user
-  end
-
   private
   def user_params
     params.require(:user).permit(

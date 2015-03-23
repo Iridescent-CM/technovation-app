@@ -39,9 +39,9 @@
       = render :partial => "professional_information", :locals => {:f => f}
 
 
-    /- if resource.role == 'judge'
-      p Would you be willing to judge for the semifinalist round (in addition the quarter finals)?
-      = f.check_box :connect_with_other, label: 'Yes'
+    - if resource.role == 'judge'
+      p Did you judge a team participating in Technovation? If so, what division are they participating in?
+      = f.collection_select :conflict_region, regions_to_collection, :id, :name, label: 'Team region'
 
   hr
 

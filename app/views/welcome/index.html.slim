@@ -91,10 +91,10 @@ hr
 - unless current_user.nil?
   .row
     - unless current_user.judge? or current_user.student?
-      .col-sm-5
+      .col-sm-6
         = render partial: 'judges/judge', locals: {user: current_user}
     - if current_user.can_judge?
-      .col-sm-5.col-sm-offset-1
+      .col-sm-6
         h2 Judge Teams
         - if Setting.anyJudgingRoundActive?
           p The #{Setting.judgingRoundActive}s are currently in progress. Judge teams now.

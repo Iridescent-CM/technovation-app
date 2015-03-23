@@ -32,13 +32,16 @@ Rails.application.routes.draw do
 
 #  get 'rubric' => 'rubric#index'
 
+  # get 'mentor_coach_check' => 'mentor_coach_check#index'
+  # post 'mentor_coach_check' => 'mentor_coach_check#update'
+
 
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
   
-      get 'mentor_coach'
-      post 'mentor_coach'
+      # get 'mentor_coach'
+      # post 'mentor_coach'
     end
   end
 

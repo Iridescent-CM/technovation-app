@@ -114,7 +114,7 @@ module ApplicationHelper
 
   def regions_to_collection
      result = Team.regions.keys.each_with_index.map{|k, i| OpenStruct.new({id: i, name: format_region(k)})}
-     result.push(OpenStruct.new({id: -1, name: 'No teams mentored or coached'}))
+     result.unshift(OpenStruct.new({id: -1, name: 'No teams mentored or coached'}))
      return result
   end
 
