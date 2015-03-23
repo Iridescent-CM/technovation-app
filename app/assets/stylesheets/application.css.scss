@@ -23,9 +23,6 @@ label.required:after {
   content:" *";
 }
 
-#main-content{
-  padding-bottom: 100px;
-}
 
 .large-checkbox {
   position: relative !important;
@@ -50,6 +47,22 @@ label.required:after {
   font-weight:bold;
 }
 
+#profile {
+  outline: 2px solid #ccc;
+  padding-bottom: 10px;
+  padding-top: 1px;
+}
 
+.dl-horizontal dt {
+  text-align: left;
+  width: auto;
+  padding-right: 1em;
+}
+.dl-horizontal dd {
+  margin-left: 0;
+}
 
+label.required:after {
+  content:" *";
+}
 
