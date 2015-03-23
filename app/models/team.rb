@@ -158,7 +158,11 @@ class Team < ActiveRecord::Base
     required = ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
     missing = required.select {|a| 
       if (missing_field?(a))
-        a
+        if a == 'avatar'
+          'app logo'
+        else
+          a
+        end
       end
      }
     missing.join(', ')

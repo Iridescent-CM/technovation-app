@@ -53,8 +53,9 @@
 
   	= f.submit "Update Submission", class: ['btn', 'btn-primary']
 
-hr
-  p If you think your application is complete, you can submit your application.
-  = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
-    = f.form_group
-      = f.submit 'Submit Submission', class: ['btn', 'btn-danger']
+- if !@team.submitted.nil? and !@team.submitted
+  hr
+    p If you think your application is complete, you can submit your application.
+    = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
+      = f.form_group
+        = f.submit 'Submit Submission', class: ['btn', 'btn-danger']

@@ -29,7 +29,7 @@ html
                   = link_to 'Scores', :scores
               - if current_user.can_judge?
                 li
-                  = link_to 'Judge Teams', :rubrics
+                  = link_to 'Judge Submissions', :rubrics
               - if current_user.can_judge? or (not current_user.teams.empty?)
                 li
                   = link_to 'Events', :events

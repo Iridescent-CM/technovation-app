@@ -19,30 +19,30 @@
 
 .row
   .col-sm-2
-    h4 Filter teams
+    h3 Filter teams
     form method='get'
-      h5 Category
+      h4.strong Category
       ul.list-unstyled
         - for c in Category.all
           li
             .checkbox
               label
                 input type='checkbox' name='category' value='#{c.id}' #{c.name}
-      h5 Division
+      h4.strong Division
       ul.list-unstyled
         - for d in Team.divisions
           li
             .checkbox
               label
                 input type='checkbox' name='division' value='#{d[1]}' #{format_division(d[0])}
-      h5 Region
+      h4.strong Region
       ul.list-unstyled
         - for r in Team.regions
           li
             .checkbox
               label
                 input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
-      h5 Awards
+      h4.strong Awards
       ul.list-unstyled
         li
           .checkbox

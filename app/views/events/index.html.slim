@@ -3,8 +3,12 @@
 		.alert.alert-info role='alert'
 			p You must sign up for a judging event before proceeding
 
-	h2 Judging Event
+	h2 Regional Judging Event
 	h3 This is the event that you are judging.
+
+	h5 
+		.alert.alert-info role='alert'
+			p Sign up for Virtual Judging if you will be judging online. Sign up for a specific event only if you will be judging in-person at a live event.
 
 	= bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 		= f.hidden_field :event_signup, :value => true
@@ -17,7 +21,7 @@
 	hr
 
 - unless @user.judge?
-	h2 Team Event
+	h2 Regional Event
 	- if @team.nil?
 		p You must create or join a team before signing up for a team event.
 	- else

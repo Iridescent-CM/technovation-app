@@ -112,6 +112,7 @@ class TeamsController < ApplicationController
 
   def submit
     @team = Team.friendly.find(params[:id])
+    @team.update(submitted: true)
     authorize @team
 
     ## send out the mail

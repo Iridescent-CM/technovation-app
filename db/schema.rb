@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320004517) do
+ActiveRecord::Schema.define(version: 20150323213548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20150320004517) do
     t.string   "challenge"
     t.string   "participation"
     t.string   "country",                  limit: 2, default: "",   null: false
+    t.boolean  "submitted"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
