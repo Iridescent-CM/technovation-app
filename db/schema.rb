@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
+    t.string   "country",                  limit: 2, default: "",   null: false
     t.string   "description"
     t.string   "code"
     t.string   "pitch"
@@ -250,9 +251,9 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.string   "bg_check_id"
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
+    t.boolean  "is_survey_done",                   default: false, null: false
     t.integer  "event_id"
     t.boolean  "judging"
-    t.boolean  "is_survey_done",                   default: false, null: false
     t.integer  "conflict_region"
     t.integer  "judging_region"
   end
