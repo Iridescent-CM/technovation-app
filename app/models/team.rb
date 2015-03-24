@@ -155,8 +155,15 @@ class Team < ActiveRecord::Base
   end
 
   def check_completeness
-    required = ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
-    missing = required.select {|a| 
+    missing_fields.join(', ')
+  end
+
+  def required_fields
+    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+  end
+
+  def missing_fields
+    missing = required_fields.select {|a| 
       if (missing_field?(a))
         if a == 'avatar'
           'app logo'
@@ -165,6 +172,20 @@ class Team < ActiveRecord::Base
         end
       end
      }
-    missing.join(', ')
   end
+
+  def started?
+    return missing_fields.length != required_fields.length 
+  end
+
+  def submission_status
+    if submitted
+      return 'Submitted'
+    elsif started?
+      return 'Started'
+    else
+      return 'Not Started'
+    end
+  end
+
 end
