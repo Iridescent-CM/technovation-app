@@ -53,6 +53,9 @@ Rails.application.routes.draw do
 
       get 'edit_submission'
       post 'edit_submission'
+
+      get 'event_signup'
+      post 'event_signup'
     end
   end
 

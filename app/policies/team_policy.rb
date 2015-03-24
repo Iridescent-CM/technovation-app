@@ -19,11 +19,15 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def edit?
-    member? and Setting.submissionOpen?
+    member? #and Setting.submissionOpen?
   end
 
   def update?
-    member? and Setting.submissionOpen?
+    member? #and Setting.submissionOpen?
+  end
+
+  def event_signup?
+    member?
   end
 
   def edit_submission?

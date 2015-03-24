@@ -27,7 +27,7 @@ class RubricsController < ApplicationController
       event = Event.find(current_user.event_id)
       start = (event.whentooccur - 3.hours).to_datetime
       finish = (event.whentooccur + 10.hours).to_datetime
-      if (start..finish).cover?(DateTime.now)
+      if (start..finish).cover?(Setting.now)
         ## only show the teams competing in the event
         teams = teams.has_event(event)
         event_active = true

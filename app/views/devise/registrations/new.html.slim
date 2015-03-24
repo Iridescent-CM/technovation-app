@@ -40,8 +40,7 @@
 
 
     - if resource.role == 'judge'
-      p Did you judge a team participating in Technovation? If so, what division are they participating in?
-      = f.collection_select :conflict_region, regions_to_collection, :id, :name, label: 'Team region'
+      = f.collection_select :conflict_region, regions_to_collection, :id, :name, label: 'Team region', help: 'Did you judge a team participating in Technovation? If so, what division are they participating in?'
 
   hr
 

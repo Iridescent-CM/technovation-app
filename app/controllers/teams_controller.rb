@@ -124,9 +124,25 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
+  def event_signup
+    @team = Team.friendly.find(params[:id])
+    authorize @team
+  end
+
   def edit_submission
     @team = Team.friendly.find(params[:id])
     authorize @team
+
+    if @team.update(team_params)
+      if params[:team][:event_signup]
+        flash[:notice] = 'Event signup updated'
+        redirect_to :back
+      else
+        redirect_to @team
+      end
+    else
+      redirect_to :back
+    end
   end
 
   # def update_submissions

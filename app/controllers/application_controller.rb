@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
-  before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
+#  before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
   before_action :verify_bg_check, {unless: :special_controller?}
 #  before_action :verify_other_roles, {unless: :special_controller?, if: :user_signed_in?}
-  before_action :verify_event_signup, {unless: :special_controller?, if: :user_signed_in?}
+#  before_action :verify_event_signup, {unless: :special_controller?, if: :user_signed_in?}
   
 
   def special_controller?
@@ -27,9 +27,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def verify_survey_done
-    redirect_to current_user.url_for_survey unless current_user.db_or_api_is_survey_done?
-  end
+  # def verify_survey_done
+  #   redirect_to current_user.url_for_survey unless current_user.db_or_api_is_survey_done?
+  # end
 
   def verify_consent
     if !current_user.nil? and current_user.consent_signed_at.nil?
@@ -46,12 +46,12 @@ class ApplicationController < ActionController::Base
 #     end
 #   end
 
-  def verify_event_signup
-    if !current_user.nil? and ((current_user.can_judge? and current_user.event_id.nil?) or
-      (!current_user.judge? and !current_user.current_team.nil? and current_user.current_team.event.nil?)) 
-      redirect_to events_path
-    end
-  end
+  # def verify_event_signup
+  #   if !current_user.nil? and ((current_user.can_judge? and current_user.event_id.nil?) or
+  #     (!current_user.judge? and !current_user.current_team.nil? and current_user.current_team.event.nil?)) 
+  #     redirect_to events_path
+  #   end
+  # end
 
   def user_not_authorized
     flash[:error] = "You are not authorized to perform this action."

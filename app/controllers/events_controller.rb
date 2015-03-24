@@ -12,6 +12,7 @@ class EventsController < ApplicationController
 
     @user = current_user
     @team = current_user.current_team
+
     unless @team.nil?
       authorize @team
     end
