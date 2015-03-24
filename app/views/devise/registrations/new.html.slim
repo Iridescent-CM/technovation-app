@@ -40,7 +40,12 @@
 
 
     - if resource.role == 'judge'
+      hr
+      h3 Judging Information
       = f.collection_select :conflict_region, regions_to_collection, :id, :name, label: 'Team region', help: 'Did you judge a team participating in Technovation? If so, what division are they participating in?'
+
+      = f.collection_select :event_id, Event.all, :id, :name, help: 'Sign up for Virtual Judging if you will be judging online. Sign up for a specific event only if you will be judging in-person at a live event.'
+
 
   hr
 

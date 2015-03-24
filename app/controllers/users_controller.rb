@@ -75,6 +75,7 @@ class UsersController < ApplicationController
       :event_id,
       :judging,
       :conflict_region,
+      :judging_region,
     )
   end
 

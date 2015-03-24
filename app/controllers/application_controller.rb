@@ -90,6 +90,9 @@ class ApplicationController < ActionController::Base
 
       :referral_category,
       :referral_details,
+
+      :conflict_region,
+      :event_id,
     ]
 
     if params[:action] == 'update'
