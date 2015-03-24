@@ -60,7 +60,7 @@ html
     .container
       .row
         - if current_user
-          .col-sm-4
+          .col-sm-3
             #profile
               - if current_user
                 h3 My Profile
@@ -73,7 +73,7 @@ html
                       .markdown-field
                         = render_markdown(current_user.about)
                   .col-sm-4
-                    = image_tag current_user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar']
+                    = image_tag current_user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['max-width: 200px;']
                 .row
                   .col-sm-12
                     dl.dl-horizontal
@@ -107,7 +107,7 @@ html
                     .pull-right
                       - if policy(current_user).edit?
                           = link_to 'Edit Profile', edit_user_path(current_user), class: ['btn', 'btn-primary']
-          .col-sm-8
+          .col-sm-9
             #main-content.loggedin
               - if notice
                 .alert.alert-info role='alert'
