@@ -1,23 +1,23 @@
-.page-header
-  h1
-    - if @search
-      ' Search Results: "#{@search}"
-    - else
-      ' Teams Gallery
-    small= @season
-    form.navbar-form.navbar-right role='search' method='get'
-      .input-group
-        input.form-control type='text' placeholder='search team names' name='search'
-        .input-group-btn
-          button.btn.btn-default type='submit'
-            span.glyphicon.glyphicon-search
+= stylesheet_link_tag 'teams', media: 'all', 'data-turbolinks-track' => true
+h2
+  - if @search
+    ' Search Results: "#{@search}"
+  - else
+    ' Teams Gallery
+  small= @season
+  form.navbar-form.navbar-right role='search' method='get'
+    .input-group
+      input.form-control type='text' placeholder='search team names' name='search'
+      .input-group-btn
+        button.btn.btn-default type='submit'
+          span.glyphicon.glyphicon-search
 
-    - if current_user && policy(Team).create?
-      form.navbar-form.navbar-right
-        = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
-
+  - if current_user && policy(Team).create?
+    form.navbar-form.navbar-right
+      = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
+hr
 .row
-  .col-sm-2
+  .col-sm-3
     h3 Filter teams
     form method='get'
       h4.strong Category
@@ -59,7 +59,7 @@
 
       button.btn.btn-default type='submit' Filter
 
-  .col-sm-10
+  .col-sm-9
     - if @teams.empty?
       p There are not yet any teams that match all the requirements of your filter.
 
@@ -67,7 +67,7 @@
       - for t in @teams do
         .media
           a.media-left href=url_for(t)
-            = image_tag t.avatar.url(:medium), class: ['img-rounded']
+            = image_tag t.avatar.url(:medium), class: ['img-rounded team-image']
           .media-body
             a href=url_for(t)
               h4.media-heading= t.name
