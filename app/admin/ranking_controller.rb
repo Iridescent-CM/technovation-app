@@ -75,6 +75,31 @@ class RankingController < ActionController::Base
 		setting = Setting.find_by_key!(stage+'ScoresVisible')
 		setting.update(value: setting.value == 'true' ? 'false': 'true')
 	end
+
+
+	def self.assign_judges_to_regions
+		## get the submission distribution across regions
+		## for each region, count the number of teams that are registered for the region
+		freqs = Team.regions.keys.map{|r| Team.where(region: Team.regions[r]).length}
+
+		## normalize these into probabilities
+		probs = freqs.map{|f| f*1.0/ freqs.inject(:+)}
+
+		## assign by probability?
+		User.all.each do |user|
+			if user.can_judge?
+				val = rand
+				sum = 0
+				probs.each_with_index do |prob, ind|
+					sum += prob
+					if sum > val
+						user.update(judging_region: ind)
+						break
+					end
+				end
+			end
+		end
+	end
 	
 	# def self.batch_ready?(event)
 	# 	## returns true if all submissions have at least 3 scores

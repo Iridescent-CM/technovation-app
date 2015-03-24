@@ -43,6 +43,12 @@ ActiveAdmin.register_page "Controls" do
 	  redirect_to admin_controls_path, notice: "Final scores now"+logic+" visible"
 	end
 
+	page_action :assign_judges_to_regions, method: :post do
+	  RankingController.assign_judges_to_regions
+	  redirect_to admin_controls_path, notice: "Judges have been assigned to regions. Click button again to reassign."
+	end
+
+
 	# def self.set_score_visibility(stage)
 	#   RankingController.toggle_score_visibility(stage)
 	#   logic = Setting.scoresVisible?(stage) ? "" : ' not'

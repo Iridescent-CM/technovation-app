@@ -51,6 +51,11 @@ class RubricsController < ApplicationController
       teams.delete_if{|t| current_user.conflict_region == t.region}
     end
 
+    ## judges should only judge within one region for score normalization purposes
+    unless current_user.judging_region.nil?
+      teams.keep_if{|t| current_user.judging_region == t.region}
+    end
+
     if teams.length > 0      
       teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
       ind = rand(teams.length)
