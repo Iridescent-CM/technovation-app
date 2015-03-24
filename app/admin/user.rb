@@ -9,6 +9,19 @@ ActiveAdmin.register User do
     end
   end
 
+  show do
+    attributes_table do
+      row :email
+      row :role
+      row :first_name
+      row :last_name
+      row :birthday
+
+      row :home_country
+      row :consent_signed_at
+    end
+  end
+
   index do
     selectable_column
     column :email
