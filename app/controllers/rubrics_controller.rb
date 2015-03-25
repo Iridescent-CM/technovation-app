@@ -56,6 +56,9 @@ class RubricsController < ApplicationController
       teams.keep_if{|t| current_user.judging_region == t.region}
     end
 
+    ## remove the teams who have region == x
+    teams.delete_if{|t| t.region == Team.divisions['x']}
+
     if teams.length > 0      
       teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
       ind = rand(teams.length)
