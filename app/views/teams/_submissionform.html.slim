@@ -53,7 +53,7 @@
 
     .h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. 
-    = f.collection_select :event_id, Event.all, :id, :name, help: 'Select Virtual Judging if there are no in-person events near you.'
+    = f.collection_select :event_id, Event.open_for_signup, :id, :name, help: 'Select Virtual Judging if there are no in-person events near you.'
 
     - if @team.submitted.nil?
       = f.form_group
