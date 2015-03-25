@@ -193,7 +193,6 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.integer  "platform",                           default: 0,    null: false
     t.string   "challenge"
     t.string   "participation"
-    t.string   "country",                  limit: 2, default: "",   null: false
     t.boolean  "submitted"
   end
 

@@ -7,7 +7,13 @@ before_filter :registration_override, if: :registration_protected?
   def new
     super do |resource|
       if params[:role].present?
-        resource.role = params[:role]
+        if params[:role] != 'judge' && Rails.application.config.env[:registration][:judge_only]
+          redirect_to controller: 'users/registrations', action: 'new', role: nil
+          return
+        else
+          resource.role = params[:role]
+          return
+        end
       else
         render 'devise/registrations/choose'
         return
