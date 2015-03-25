@@ -70,8 +70,9 @@ ul
         li
           'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2015, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
           ' You may
-          = link_to 'create a team', :new_team
-          '  or
+          - if policy(Team).create?
+            = link_to 'create a team', :new_team
+            '  or
           = link_to 'request to join an existing team', :teams
           | .
 

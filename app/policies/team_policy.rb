@@ -15,7 +15,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    !user.student? or !user.has_team_for_season? and Setting.submissionOpen?
+    !user.student? or (!user.has_team_for_season? and Setting.submissionOpen?)
   end
 
   def edit?
