@@ -37,9 +37,9 @@ ActiveAdmin.register Team do
   end
 
   filter :name
-  filter :region, as: :select, collection: Team.regions.keys
+  filter :region, as: :select, collection: Team.regions
   filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
-  filter :division, as: :select, collection: Team.divisions.keys
+  filter :division, as: :select, collection: Team.divisions
   filter :year
   preserve_default_filters!
 
