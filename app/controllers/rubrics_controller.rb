@@ -58,16 +58,16 @@ class RubricsController < ApplicationController
 
     ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
     unless current_user.conflict_region.nil? 
-      teams.delete_if{|t| current_user.conflict_region == t.region}
+      teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
     end
 
     ## judges should only judge within one region for score normalization purposes
     unless current_user.judging_region.nil?
-      teams.keep_if{|t| current_user.judging_region == t.region}
+      teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
     end
 
-    ## remove the teams who have region == x
-    teams.delete_if{|t| t.region == Team.divisions['x']}
+    ## remove the teams who have division == x
+    teams.delete_if{|t| t.division == 'x'}
 
     if teams.length > 0      
       teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
