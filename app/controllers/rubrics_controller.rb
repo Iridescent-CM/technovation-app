@@ -21,16 +21,19 @@ class RubricsController < ApplicationController
       teams = Team.where(isfinalist: true)
     end
 
-    ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    ## if the judge is signed up for an in-person event
+    ## and it is currently the time of the event, only show teams that are signed up for the event
     event_active = false
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
-      start = (event.whentooccur - 3.hours).to_datetime
-      finish = (event.whentooccur + 10.hours).to_datetime
-      if (start..finish).cover?(Setting.now)
-        ## only show the teams competing in the event
-        teams = teams.has_event(event)
-        event_active = true
+      if event.name != 'Virtual Judging'
+        start = (event.whentooccur - 3.hours).to_datetime
+        finish = (event.whentooccur + 10.hours).to_datetime
+        if (start..finish).cover?(Setting.now)
+          ## only show the teams competing in the event
+          teams = teams.has_event(event)
+          event_active = true
+        end
       end
     end
 

@@ -30,7 +30,7 @@ html
               - if current_user.can_judge?
                 li
                   = link_to 'Judge Submissions', :rubrics
-              - if current_user.can_judge? or (not current_user.teams.empty?)
+              - if current_user.can_judge?
                 li
                   = link_to 'Events', :events
               - unless current_user.teams.empty?
