@@ -19,6 +19,12 @@ ActiveAdmin.register User do
 
       row :home_country
       row :consent_signed_at
+
+      row :can_judge
+      row :num_judged
+      row :judging_event
+      row :conflict_region
+      row :judging_region
     end
   end
 
@@ -37,6 +43,9 @@ ActiveAdmin.register User do
     column (:judging_event){|u| unless u.event_id.nil? 
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
+
+    column (:conflict_region){|u| u.conflict_region.nil? ? nil : Team.regions.keys[u.conflict_region]}
+    column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
 
     actions
   end
@@ -83,6 +92,12 @@ ActiveAdmin.register User do
       f.input :parent_phone
       f.input :parent_email
     end
+
+    f.inputs "Judging Information" do
+      f.input :conflict_region, as: :select, collection: Team.regions.keys
+      f.input :judging_region, as: :select, collection: Team.regions.keys
+    end
+
 
     f.actions
   end

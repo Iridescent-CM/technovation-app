@@ -1,5 +1,9 @@
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
+    .h4 Competition Event
+    p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
+    = f.collection_select :event_id, Event.open_for_signup, :id, :name, help: 'Select Virtual Judging if there are no in-person events near you.'
+
     = f.collection_select :category_id, Category.all, :id, :name
 
   	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
@@ -50,10 +54,6 @@
 
   	.h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
-
-    .h4 Competition Event
-    p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. 
-    = f.collection_select :event_id, Event.open_for_signup, :id, :name, help: 'Select Virtual Judging if there are no in-person events near you.'
 
     - if @team.submitted.nil?
       = f.form_group

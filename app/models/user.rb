@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
     {sym: :design, abbr: 'Dsn'},
   ]
 
+
   has_flags 1 => EXPERTISES[0][:sym],
             2 => EXPERTISES[1][:sym],
             3 => EXPERTISES[2][:sym],
