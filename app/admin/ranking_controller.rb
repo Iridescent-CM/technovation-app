@@ -86,17 +86,42 @@ class RankingController < ActionController::Base
 		probs = freqs.map{|f| f*1.0/ freqs.inject(:+)}
 
 		## assign by probability?
+
 		User.all.each do |user|
 			if user.can_judge?
-				val = rand
-				sum = 0
-				probs.each_with_index do |prob, ind|
-					sum += prob
-					if sum > val
-						user.update(judging_region: ind)
-						break
+				## if a judge is signed up for virtual judging
+				## assign a region that does not conflict with the conflict_region
+				if user.event_id.nil? or Event.find(user.event_id).name == 'Virtual Judging'
+					## make a copy of the array
+					probscopy = Array.new(probs)
+					if !user.conflict_region.nil?
+						## remove the index of the conflict region
+						probscopy.delete_at(user.conflict_region)
+
+						## normalize the array
+						prob_conflict = probs[user.conflict_region]
+						if prob_conflict = 1
+							## it may not be possible to assign a judge
+							break
+						end
+						probscopy = probscopy.map{|p| p*1.0/(1-prob_conflict)}
 					end
+
+					val = rand
+					sum = 0
+					probscopy.each_with_index do |prob, ind|
+						sum += prob
+						if sum > val
+							user.update(judging_region: ind)
+							break
+						end
+					end
+				else
+					## if a judge is signed up for an in-person event, get the region from the event
+					event = Event.find(user.event_id)
+					user.update(judging_region: event.region)
 				end
+
 			end
 		end
 	end
