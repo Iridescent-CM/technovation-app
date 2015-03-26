@@ -80,10 +80,10 @@ class Setting < ActiveRecord::Base
   end
 
   def self.now
-    ## for testing only
-    self.get_date('todaysDateForTesting')
-
-    ## todo change to 
-#    Time.now
+    if self.exists?(key: 'todaysDateForTesting')
+      self.get_date('todaysDateForTesting')
+    else
+      Time.now
+    end
   end
 end
