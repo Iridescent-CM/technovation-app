@@ -45,6 +45,6 @@
   .h4 Demo Video
   == render_video(team.demo)
 
-- unless team.plan.url == '/plans/original/missing.png'
+- unless team.plan_file_name.nil?
   .h4 Business Plan
   == render_pdf(team.plan.url)

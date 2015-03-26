@@ -165,11 +165,7 @@ class Team < ActiveRecord::Base
   def missing_fields
     missing = required_fields.select {|a| 
       if (missing_field?(a))
-        if a == 'avatar'
-          'app logo'
-        else
-          a
-        end
+        a
       end
      }
   end
@@ -179,8 +175,10 @@ class Team < ActiveRecord::Base
   end
 
   def submission_status
-    if submitted
-      return 'Submitted'
+    if submitted and missing_fields.empty?
+      return 'Submitted and complete'
+    elsif submitted and !missing_fields.empty?
+      return 'Submitted but missing items'
     elsif started?
       return 'Started'
     else

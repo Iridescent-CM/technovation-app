@@ -27,9 +27,9 @@
 	- else
 		- if @team.event_id.nil?
 			.alert.alert-info role='alert'
-				p You must sign up for a team event before proceeding
+				p Your team must be signed up for an event in order to receive a score.
 
-		h3 This is the event that you are competing in.
+		h3 This is the event at which your team will be competing.
 		= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 			= f.hidden_field :event_signup, :value => true
 		    = f.collection_select :event_id, Event.open_for_signup, :id, :name

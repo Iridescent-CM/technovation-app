@@ -101,13 +101,4 @@ class RankingController < ActionController::Base
 		end
 	end
 	
-	# def self.batch_ready?(event)
-	# 	## returns true if all submissions have at least 3 scores
-	# end
-
-	## we don't have fine enough location information to do this
-	# def assign_event(region, event)
-	# 	## assign unassigned(?)
-	# end
-
 end

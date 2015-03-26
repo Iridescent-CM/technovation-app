@@ -34,6 +34,13 @@ class RubricsController < ApplicationController
       end
     end
 
+    ## if it is the quarterfinals and it is not the time of the judge's event
+    ## only show teams who have signed up for Virtual Judging
+    if Setting.stage == 'quarterfinal' and !event_active
+      id = Event.where(name: 'Virtual Judging').first.id
+      teams = Team.where(event_id: id)
+    end
+
     ## search for teams that have the fewest number of rubrics
     teams = teams.sort_by(&:num_rubrics)
 
