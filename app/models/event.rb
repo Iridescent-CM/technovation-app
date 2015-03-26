@@ -12,6 +12,6 @@ class Event < ActiveRecord::Base
 	:europems, #Middle School - Europe/Australia/New Zealand/Asia
 	]
 
-	scope :open_for_signup, -> {where 'whentooccur >= ?', Setting.now + 1.week}
+	scope :open_for_signup, -> {where "whentooccur >= ? OR name = 'Virtual Judging'", Setting.now + 1.week}
 
 end
