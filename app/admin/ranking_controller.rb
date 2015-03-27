@@ -77,59 +77,55 @@ class RankingController < ActionController::Base
 	end
 
 
+
+
 	def self.assign_judges_to_regions
-		## get the submission distribution across regions
-		## for each region, count the number of teams that are registered for the region
-		freqs = Team.regions.keys.map{|r| 
-			matched = Team.where(region: Team.regions[r])
+    judges = User.all.find_all { |u| u.can_judge? }
+    valid_teams = Team.where("division in (0,1) and country != 'BR'")
+    region_requirements = valid_teams.group(:region).count
+    multiplier = judges.count.fdiv(valid_teams.count)
+    region_requirements = region_requirements.each_with_object({}) { |(region, count), h| h[region] = (count * multiplier).floor }
 
-			## exclude brazil from frequency counts
-			brazil = matched.where(country: 'BR')
-			matched.length - brazil.length
-		}		
+    virtual_judging_id = Event.find_by(name: 'Virtual Judging').id
 
-		## normalize these into probabilities
-		probs = freqs.map{|f| f*1.0/ freqs.inject(:+)}
+    free_judges = []
+    User.all.each do |user|
+      if user.can_judge?
+        if user.event_id == nil or user.event_id == virtual_judging_id
+          free_judges << user
+        else
+          assign_judge(user, Event.regions[Event.find(user.event_id).region], region_requirements)
+        end
+      end
+    end
 
-		## assign by probability?
+    free_judges.each do |user|
+      valid_regions = region_requirements.keys
 
-		User.all.each do |user|
-			if user.can_judge?
-				## if a judge is signed up for virtual judging
-				## assign a region that does not conflict with the conflict_region
-				if user.event_id.nil? or Event.find(user.event_id).name == 'Virtual Judging'
-					## make a copy of the array
-					probscopy = Array.new(probs)
-					if !user.conflict_region.nil?
-						## remove the index of the conflict region
-						probscopy.delete_at(user.conflict_region)
+      if !user.conflict_region.nil?
+        valid_regions.delete(user.conflict_region)
+      end
 
-						## normalize the array
-						prob_conflict = probs[user.conflict_region]
-						if prob_conflict == 1
-							## it may not be possible to assign a judge
-							break
-						end
-						probscopy = probscopy.map{|p| p*1.0/(1-prob_conflict)}
-					end
+      if valid_regions.length == 0
+        valid_regions = Team.distinct.pluck(:region)
+        if !user.conflict_region.nil?
+          valid_regions.delete(user.conflict_region)
+        end
+      end
 
-					val = rand
-					sum = 0
-					probscopy.each_with_index do |prob, ind|
-						sum += prob
-						if sum > val
-							user.update(judging_region: ind)
-							break
-						end
-					end
-				else
-					## if a judge is signed up for an in-person event, get the region from the event
-					event = Event.find(user.event_id)
-					user.update(judging_region: event.region)
-				end
-
-			end
-		end
+      assign_judge(user, valid_regions.sample, region_requirements)
+    end
 	end
-	
+
+  private
+
+  def self.assign_judge(judge, judging_region, region_requirements)
+    judge.update(judging_region: judging_region)
+    if region_requirements.has_key?(judging_region)
+      region_requirements[judging_region] = region_requirements[judging_region] - 1
+      if region_requirements[judging_region] <= 0
+        region_requirements.delete(judging_region)
+      end
+    end
+  end
 end
