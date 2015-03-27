@@ -4,7 +4,11 @@ ActiveAdmin.register_page "Controls" do
   end
 
 	page_action :mark_semifinalists, method: :post do
-	  RankingController.mark_semifinalists
+	  begin
+	    RankingController.mark_semifinalists
+	  rescue ArgumentError
+		redirect_to admin_controls_path, notice: "Marking did not succeed. Check that all teams have at least 1 rubric."
+	  end
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with issemifinalist tag"
 	end
 

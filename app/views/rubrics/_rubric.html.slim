@@ -1,4 +1,4 @@
-- if current_user.id != @rubric.user_id
+- if current_user.id != @rubric.user_id or Setting.stage != @rubric.stage
   javascript:
     $(document).ready(function() {
       $('input').attr('disabled', 'disabled')
