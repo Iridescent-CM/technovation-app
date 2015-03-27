@@ -1,3 +1,9 @@
+- if current_user.id != @rubric.user_id
+  javascript:
+    $(document).ready(function() {
+      $('input').attr('disabled', 'disabled')
+    })
+
 h3 Objective score
 h4 Ideation score
 
