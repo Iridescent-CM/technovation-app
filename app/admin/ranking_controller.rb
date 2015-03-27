@@ -33,7 +33,7 @@ class RankingController < ActionController::Base
 		for r in Team.regions
 			num_teams = self.num_finalists(r)
 			region_id = Team.regions[r]
-			winners = Team.has_region(region_id).sort_by(&:avg_score).reverse.take(num_teams).each { |w|
+			winners = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse.take(num_teams).each { |w|
 				w.update(isfinalist:true)
 			}
 		end
@@ -45,8 +45,8 @@ class RankingController < ActionController::Base
 		ms = ['usms', 'mexicoms', 'europems'].map{|x| Team.regions[x]}
 
 		Team.update_all(iswinner:false)
-		Team.where(region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
-		Team.where(region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
+		Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
+		Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
 	end
 
 	def self.num_finalists(region)
@@ -80,7 +80,13 @@ class RankingController < ActionController::Base
 	def self.assign_judges_to_regions
 		## get the submission distribution across regions
 		## for each region, count the number of teams that are registered for the region
-		freqs = Team.regions.keys.map{|r| Team.where(region: Team.regions[r]).length}
+		freqs = Team.regions.keys.map{|r| 
+			matched = Team.where(region: Team.regions[r])
+
+			## exclude brazil from frequency counts
+			brazil = matched.where(country: 'BR')
+			matched.length - brazil.length
+		}		
 
 		## normalize these into probabilities
 		probs = freqs.map{|f| f*1.0/ freqs.inject(:+)}
@@ -100,7 +106,7 @@ class RankingController < ActionController::Base
 
 						## normalize the array
 						prob_conflict = probs[user.conflict_region]
-						if prob_conflict = 1
+						if prob_conflict == 1
 							## it may not be possible to assign a judge
 							break
 						end
