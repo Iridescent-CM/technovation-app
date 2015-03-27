@@ -8,6 +8,7 @@ ActiveAdmin.register_page "Controls" do
 	    RankingController.mark_semifinalists
 	  rescue ArgumentError
 		redirect_to admin_controls_path, notice: "Marking did not succeed. Check that all teams have at least 1 rubric."
+		return
 	  end
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with issemifinalist tag"
 	end
