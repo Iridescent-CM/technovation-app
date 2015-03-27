@@ -67,3 +67,10 @@ label.required:after {
   content:" *";
 }
 
+.rubric-box{
+  overflow-y:scroll; 
+  height:100%; 
+  border: 1px rgb(220,220,220) solid;
+  padding: 20px;
+}
+

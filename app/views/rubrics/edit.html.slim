@@ -1,9 +1,11 @@
 .row style='height:800px'
-  .col-sm-6 style='overflow-y:scroll; height:100%; border: 3px rgb(220,220,220) solid; border-radius: 5px; margin-right: 40px;'
-    div 
-      h1 #{@rubric.team.name}
-      = render partial: "teams/submission", locals: {team: @rubric.team}
-  .col-sm-5 style='overflow-y:scroll; height:100%; border: 3px rgb(220,220,220) solid; border-radius: 5px; padding: 20px;'
+  div style='padding-left:20px;'
+    h1 Now judging: #{@rubric.team.name}
+
+  .col-sm-8 
+      div class='rubric-box' style='margin-right: 40px;'
+        = render partial: "teams/submission", locals: {team: @rubric.team}
+  .col-sm-4 class='rubric-box'
 
     div
       p DIRECTIONS: The judging rubric for Technovation 2015 contains objective and subjective scoring. The objective score composes of the Ideation, Technical, and Entrepreneurial scores. It is possible for all teams in your scoring batch to receive a perfect score on these objective scoring. The Overall Impression score is where you should score the apps in your batch relative to each other for a subjective score. Maximum points on the subjective part should only be awarded if the submission has truly exhausted their research and development for a complete prototype.
