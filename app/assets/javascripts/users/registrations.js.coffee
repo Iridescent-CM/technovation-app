@@ -3,15 +3,17 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready -> 
-  getValidEvents = (e) ->
-    $.get('/valid_events', { conflict_region: e.target.value }, (data) ->
+  getValidEvents = () ->
+    $.get('/valid_events', { conflict_region: $('.js-conflict-region').val() }, (data) ->
+      currentOption = parseInt($('.js-events option:selected').val(), 10)
       $('.js-events').each( ->
         options = this.options
         options.length = 0
         data.forEach((event) ->
-          options[options.length] = new Option(event.name, event.id)
+          options[options.length] = new Option(event.name, event.id, options.length == 0, event.id == currentOption)
         )
       )
     )
 
   $('.js-conflict-region').change(getValidEvents)
+  getValidEvents()
