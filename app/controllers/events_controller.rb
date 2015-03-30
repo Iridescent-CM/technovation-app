@@ -28,4 +28,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def valid_events
+    conflict_region = params[:conflict_region].to_i
+    events = {}
+    if conflict_region < 0
+      events = Event.open_for_signup().order("name!='Virtual Judging', name")
+    else
+      events = Event.open_for_signup.where("region != ? OR region IS NULL", conflict_region).order("name!='Virtual Judging', name")
+    end
+    render json: events
+  end
 end

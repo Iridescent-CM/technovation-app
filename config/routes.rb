@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   get 'mentors' => 'mentor#index'
 
+  get 'valid_events' => 'events#valid_events'
+
   get 'bg_check' => 'bg_check#index'
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
