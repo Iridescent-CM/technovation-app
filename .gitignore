@@ -33,3 +33,4 @@ bower.json
 .env
 
 *.sublime-workspace
+*.sublime-project
