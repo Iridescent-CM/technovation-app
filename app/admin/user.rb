@@ -94,8 +94,10 @@ ActiveAdmin.register User do
     end
 
     f.inputs "Judging Information" do
-      f.input :conflict_region, as: :select, collection: Team.regions.keys
-      f.input :judging_region, as: :select, collection: Team.regions.keys
+      f.input :conflict_region, as: :select, collection: Team.regions
+      f.input :judging_region, as: :select, collection: Team.regions
+      #= f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name
+      f.input :event_id, as: :select, collection: Event.all
     end
 
 
