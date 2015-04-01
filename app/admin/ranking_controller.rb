@@ -1,6 +1,6 @@
 class RankingController < ActionController::Base
 
-	def take_with_ties(arr, n)
+	def self.take_with_ties(arr, n)
 		if n >= arr.length
 			return arr
 		end
