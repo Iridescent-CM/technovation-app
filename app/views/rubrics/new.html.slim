@@ -13,6 +13,6 @@
       hr
 
       = bootstrap_form_for @rubric do |f|
-        = render partial: 'rubriceditable', locals: {f: f}
+        = render partial: 'rubric', locals: {f: f}
         = f.form_group do
           = f.submit 'Submit'

@@ -4,6 +4,8 @@ class RubricsController < ApplicationController
     ## new rubric needs to take a team
     @rubric = Rubric.new
   	@rubric.team = Team.friendly.find(params[:team])
+
+    @rubric_is_new = true
     authorize @rubric
   end
 

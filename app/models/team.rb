@@ -159,13 +159,18 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    # 'avatar', 
+    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
   end
 
   def missing_fields
     missing = required_fields.select {|a| 
       if (missing_field?(a))
-        a
+        if a == 'category_id'
+          'category'
+        else
+          a
+        end
       end
      }
   end
@@ -175,7 +180,9 @@ class Team < ActiveRecord::Base
   end
 
   def submission_status
-    if submitted and missing_fields.empty?
+    if Setting.beforeSubmissionsOpen?
+      return 'Submissions not yet open'
+    elsif submitted and missing_fields.empty?
       return 'Submitted and complete'
     elsif submitted and !missing_fields.empty?
       return 'Submitted but missing items'

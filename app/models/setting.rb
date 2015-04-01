@@ -21,6 +21,11 @@ class Setting < ActiveRecord::Base
     self.get_date('cutoff')
   end
 
+  def self.beforeSubmissionsOpen?
+    date1 = self.get_date('submissionOpen')
+    return self.now < date1
+  end
+
   def self.submissionOpen?
     date1 = self.get_date('submissionOpen')
     date2 = self.get_date('submissionClose')
