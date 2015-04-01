@@ -1,5 +1,14 @@
 class RankingController < ActionController::Base
 
+	def take_with_ties(arr, n)
+		if n >= arr.length
+			return arr
+		end
+
+		score_needed = arr[n-1].avg_score
+		return arr.keep_if{|team| team.avg_score >= score_needed}
+	end
+
 	def self.mark_semifinalists
 		## 1 team moves on if <= 10 people
 		## 2 teams move on if 11 - 20 people
@@ -24,15 +33,10 @@ class RankingController < ActionController::Base
 			# winners = e.teams.sort_by(&:avg_score).reverse.take(num_teams).each { |w|
 			# 	w.update(issemifinalist: true)				
 			# }
-			sorted = e.teams.sort_by(&:avg_score).reverse
-			score_needed = sorted.last.avg_score
-			for team in sorted
-				if team.avg_score > score_needed
-					team.update(issemifinalist: true)
-				else
-					break
-				end
-			end 
+
+			winners = take_with_ties(e.teams.sort_by(&:avg_score).reverse, num_teams).each { |w|
+				w.update(issemifinalist: true)				
+			}
 		end
 	end
 
@@ -46,15 +50,9 @@ class RankingController < ActionController::Base
 			# 	w.update(isfinalist:true)
 			# }
 
-			sorted = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse
-			score_needed = sorted.last.avg_score
-			for team in sorted
-				if team.avg_score > score_needed
-					team.update(isfinalist: true)
-				else
-					break
-				end
-			end 
+			winners = take_with_ties(Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse, num_teams).each { |w|
+				w.update(isfinalist:true)
+			}
 
 		end
 	end
@@ -65,8 +63,12 @@ class RankingController < ActionController::Base
 		ms = ['usms', 'mexicoms', 'europems'].map{|x| Team.regions[x]}
 
 		Team.update_all(iswinner:false)
-		Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
-		Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
+		# Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
+		# Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
+
+		take_with_ties(Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+		take_with_ties(Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+
 	end
 
 	def self.num_finalists(region)
