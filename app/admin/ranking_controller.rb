@@ -21,9 +21,18 @@ class RankingController < ActionController::Base
 		Team.update_all(issemifinalist:false)
 		for e in Event.all
 			num_teams = [0, (e.teams.length-1)/10 + 1].max
-			winners = e.teams.sort_by(&:avg_score).reverse.take(num_teams).each { |w|
-				w.update(issemifinalist: true)				
-			}
+			# winners = e.teams.sort_by(&:avg_score).reverse.take(num_teams).each { |w|
+			# 	w.update(issemifinalist: true)				
+			# }
+			sorted = e.teams.sort_by(&:avg_score).reverse
+			score_needed = sorted.last.avg_score
+			for team in sorted
+				if team.avg_score > score_needed
+					team.update(issemifinalist: true)
+				else
+					break
+				end
+			end 
 		end
 	end
 
@@ -33,9 +42,20 @@ class RankingController < ActionController::Base
 		for r in Team.regions
 			num_teams = self.num_finalists(r)
 			region_id = Team.regions[r]
-			winners = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse.take(num_teams).each { |w|
-				w.update(isfinalist:true)
-			}
+			# winners = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse.take(num_teams).each { |w|
+			# 	w.update(isfinalist:true)
+			# }
+
+			sorted = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse
+			score_needed = sorted.last.avg_score
+			for team in sorted
+				if team.avg_score > score_needed
+					team.update(isfinalist: true)
+				else
+					break
+				end
+			end 
+
 		end
 	end
 
