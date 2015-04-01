@@ -100,17 +100,10 @@ class RankingController < ActionController::Base
     end
 
     free_judges.each do |user|
-      valid_regions = region_requirements.keys
-
-      if !user.conflict_region.nil?
-        valid_regions.delete(user.conflict_region)
-      end
+      valid_regions = region_requirements.keys - user.conflict_regions
 
       if valid_regions.length == 0
-        valid_regions = Team.distinct.pluck(:region)
-        if !user.conflict_region.nil?
-          valid_regions.delete(user.conflict_region)
-        end
+        valid_regions = Team.distinct.pluck(:region) - user.conflict_regions
       end
 
       assign_judge(user, valid_regions.sample, region_requirements)

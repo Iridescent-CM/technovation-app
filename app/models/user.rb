@@ -68,7 +68,6 @@ class User < ActiveRecord::Base
 #  has_one :conflict_region # a region that the judge should not judge for due to conflict of interest
   #### end
 
-
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
 
@@ -235,4 +234,13 @@ class User < ActiveRecord::Base
     rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
       puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"
   end
+
+  def conflict_regions
+    regions = teams.select('DISTINCT region').map { |r| Team.regions[r.region] }
+    if conflict_region != nil and !regions.include?(conflict_region)
+      regions << conflict_region
+    end
+    regions
+  end
+
 end
