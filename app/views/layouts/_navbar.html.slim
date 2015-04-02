@@ -1,0 +1,51 @@
+    nav.navbar.navbar-default.navbar-static-top role='navigation'
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed type='button' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar'
+            span.sr-only toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand href=url_for(:root)
+            = image_tag "technovation-logo.png", style: 'max-height: 36px; margin-top: -7px;'
+
+        #navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            - unless current_user.nil?
+              li
+                = link_to 'Dashboard', :root
+              li
+                = link_to 'Teams Gallery', :teams
+              - if !current_user.teams.empty? and Setting.anyScoresVisible?
+                li
+                  = link_to 'Scores', :scores
+              - if current_user.can_judge?
+                li
+                  = link_to 'Judge Submissions', :rubrics
+              - if current_user.can_judge?
+                li
+                  = link_to 'Your Judge Event', :events
+              - unless current_user.teams.empty?
+                li
+                  = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
+                li.dropdown
+                  a.dropdown-toggle href='#' data-toggle='dropdown' role='button'
+                    ' My Teams
+                    span.caret
+                  ul.dropdown-menu role='menu'
+                    - teams_by_year = current_user.teams.order(year: :desc, name: :asc).group_by { |t| t.year }
+                    - divider = false
+                    - for year in teams_by_year.keys
+                      - if divider
+                        li.divider
+                      li.dropdown-header= year
+                      - for t in teams_by_year[year]
+                        li
+                          a href=url_for(t) = t.name
+                      - divider = true
+
+              li
+                = link_to 'Sign Out', :destroy_user_session, method: :delete
+            - else current_user
+              li
+                = link_to 'Sign In', :new_user_session

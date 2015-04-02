@@ -50,6 +50,8 @@ class TeamsController < ApplicationController
 
       @season = "#{Setting.year} Season"
     end
+
+    render layout: 'noprofile'
   end
 
   def create
