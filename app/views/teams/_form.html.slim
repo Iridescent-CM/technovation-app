@@ -1,6 +1,6 @@
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
   = f.text_field :name
-  = f.select :region, Team.regions.keys.map {|k| [format_region(k), k]}
+  = f.select :region, @team.valid_regions.keys.map {|k| [format_region(k), k]}
   = f.file_field :avatar, label: "Team Photo", help: "Images will be rescaled to 300x300"
   = f.text_area :about, help: "How did you meet? Is this your first experience in programming? You may use <a href='http://daringfireball.net/projects/markdown/'>markdown</a> to format your team description".html_safe, rows: 15, label: 'Team Bio'
   = f.form_group
