@@ -55,6 +55,11 @@ module ApplicationHelper
     end
   end
 
+  def geographic_regions
+    ["US/Canada", "Mexico/Central America/South America", "Europe/Australia/New Zealand/Asia", "Africa"]
+  end
+
+
   def render_video(link)
     # link = 'http://www.youtube.com/embed/y4sOfO8Ei1g'
     # http://vimeo.com/channels/staffpicks/59859181

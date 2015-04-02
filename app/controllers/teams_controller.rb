@@ -112,16 +112,23 @@ class TeamsController < ApplicationController
 
   def submit
     @team = Team.friendly.find(params[:id])
-    @team.update(submitted: true)
     authorize @team
 
-    ## send out the mail
-    for user in @team.members
-      SubmissionMailer.submission_received_email(user, @team)
+    if @team.update(team_params)
+
+      ## update submitted field
+      @team.update(submitted: true)
+      ## send out the mail
+      for user in @team.members
+        SubmissionMailer.submission_received_email(user, @team)
+      end
+
+      flash[:notice] = 'Submission Received'
+      redirect_to @team
+    else
+      redirect_to :back
     end
 
-    flash[:notice] = 'Submission Received'
-    redirect_to @team
   end
 
   def event_signup
