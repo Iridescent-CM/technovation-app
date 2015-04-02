@@ -16,11 +16,11 @@ class RubricsController < ApplicationController
 
   def index
     if Setting.stage == 'quarterfinal'
-    	teams = Team.all
+    	teams = Team.where(region: current_user.judging_region)
     elsif Setting.stage == 'semifinal'
-      teams = Team.where(issemifinalist: true)
+      teams = Team.where(issemifinalist: true, region: current_user.judging_region)
     elsif Setting.stage == 'final'
-      teams = Team.where(isfinalist: true)
+      teams = Team.where(isfinalist: true, region: current_user.judging_region)
     end
 
     ## if the judge is signed up for an in-person event

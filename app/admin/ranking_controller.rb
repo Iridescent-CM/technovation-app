@@ -26,7 +26,6 @@ class RankingController < ActionController::Base
 		# 	winners = Team.where(event_id: e.id).joins(:rubrics).select("teams.id, AVG(rubrics.score) as avgscore").group("teams.id").order("avgscore DESC").limit(num_teams)
 		# 	winners.update_all(issemifinalist:true)
 		# end
-
 		Team.update_all(issemifinalist:false)
 		for e in Event.all
 			num_teams = [0, (e.teams.length-1)/10 + 1].max

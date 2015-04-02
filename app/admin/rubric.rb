@@ -19,6 +19,7 @@ ActiveAdmin.register Rubric do
       end
     }
 
+    column :stage
     column (:score){|r| r.score}
     column :identify_problem
     column :address_problem
