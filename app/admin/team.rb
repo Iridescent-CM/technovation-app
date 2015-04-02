@@ -60,6 +60,8 @@ ActiveAdmin.register Team do
       f.input :isfinalist
       f.input :iswinner
 
+      f.input :event_id, as: :select, collection: Event.all
+
     end
     f.actions
   end

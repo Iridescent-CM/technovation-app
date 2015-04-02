@@ -11,6 +11,7 @@ ActiveAdmin.register User do
 
   show do
     attributes_table do
+      row :id
       row :email
       row :role
       row :first_name
@@ -30,6 +31,7 @@ ActiveAdmin.register User do
 
   index do
     selectable_column
+    column :id
     column :email
     column :role
     column :first_name
