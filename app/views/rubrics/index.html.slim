@@ -6,11 +6,14 @@ p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s i
 
 - if Setting.anyJudgingRoundActive?
 	h3 You are currently judging for the #{Setting.stage}s
+	- unless @event.nil?
+		h4 Teams competing in #{@event.name}
 	- if @teams.nil? or @teams.empty?
 		p There are no teams ready to be judged right now. Check back later.
 	- else
 		- for team in @teams
 			= link_to 'Judge ' + team.name, new_rubric_path(:team => team)
+			br
 
 	h3 Previously judged teams
 	p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.

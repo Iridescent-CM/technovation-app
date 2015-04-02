@@ -34,6 +34,7 @@ class RubricsController < ApplicationController
         if (start..finish).cover?(Setting.now)
           ## only show the teams competing in the event
           teams = teams.has_event(event)
+          @event = event
           event_active = true
         end
       end
