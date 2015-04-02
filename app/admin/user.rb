@@ -24,7 +24,7 @@ ActiveAdmin.register User do
       row :can_judge
       row :num_judged
       row :judging_event
-      row :conflict_region
+      row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
       row :judging_region
     end
   end
@@ -46,7 +46,7 @@ ActiveAdmin.register User do
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
 
-    column (:conflict_region){|u| u.conflict_region.nil? ? nil : Team.regions.keys[u.conflict_region]}
+    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
     column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
 
     actions
