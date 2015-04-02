@@ -74,13 +74,20 @@ class RubricsController < ApplicationController
     ## remove the teams who have division == x
     teams.delete_if{|t| t.division == 'x'}
 
-    if teams.length > 0      
-      teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
-      ind = rand(teams.length)
-      @teams = event_active ? teams : [ teams[ind] ]
+    if event_active
+      ## show all teams for in-person events
+      @teams = teams
+    else
+      ## show a randomly drawn team with the minimum number rubrics for virtual judging
+      if teams.length > 0
+        teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
+        ind = rand(teams.length)
+        @teams = [ teams[ind] ]
+      end    
     end
 
-    ## only show rubrics that were done by the current judge
+
+    ## show all past rubrics that were done by the current judge for editing
   	@rubrics = Rubric.all.has_judge(current_user)
 
   end
