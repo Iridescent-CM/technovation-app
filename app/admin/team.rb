@@ -24,10 +24,10 @@ ActiveAdmin.register Team do
     end
 
     column (:rubrics_count){|t| t.rubrics.length}
-    column (:rubrics_average){|t| 
-      scores = t.rubrics.map{|r| r.score}
-      scores.inject(:+).to_f / scores.size
-      }
+    column (:rubrics_average){|t| t.avg_score}
+    column (:quarterfinal_average){|t| t.avg_quarterfinal_score}
+    column (:semifinal_average){|t| t.avg_semifinal_score}
+    column (:final_average){|t| t.avg_final_score}
 
     column :issemifinalist
     column :isfinalist

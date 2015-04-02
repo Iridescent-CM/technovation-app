@@ -33,7 +33,7 @@ class RankingController < ActionController::Base
 			# 	w.update(issemifinalist: true)				
 			# }
 
-			winners = take_with_ties(e.teams.sort_by(&:avg_score).reverse, num_teams).each { |w|
+			winners = take_with_ties(e.teams.sort_by(&:avg_quarterfinal_score).reverse, num_teams).each { |w|
 				w.update(issemifinalist: true)				
 			}
 		end
@@ -49,7 +49,7 @@ class RankingController < ActionController::Base
 			# 	w.update(isfinalist:true)
 			# }
 
-			winners = take_with_ties(Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse, num_teams).each { |w|
+			winners = take_with_ties(Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_semifinal_score).reverse, num_teams).each { |w|
 				w.update(isfinalist:true)
 			}
 
@@ -65,8 +65,8 @@ class RankingController < ActionController::Base
 		# Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
 		# Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
 
-		take_with_ties(Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse, 1).each{ |w| w.update(iswinner:true) }
-		take_with_ties(Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+		take_with_ties(Team.where(isfinalist: true, region: hs).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+		take_with_ties(Team.where(isfinalist: true, region: ms).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
 
 	end
 

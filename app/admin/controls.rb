@@ -14,13 +14,23 @@ ActiveAdmin.register_page "Controls" do
 	end
 
 	page_action :mark_finalists, method: :post do
-	  RankingController.mark_finalists
+	  begin
+	    RankingController.mark_finalists
+	  rescue ArgumentError
+		redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric for the stage."
+		return
+	  end
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with isfinalist tag"
 	end
 
 	page_action :mark_winners, method: :post do
-	  RankingController.mark_winners
-	  redirect_to admin_controls_path, notice: "Winning teams marked with iswinner tag"
+	  begin
+	    RankingController.mark_winners
+	  rescue ArgumentError
+		redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric for the stage."
+		return
+	  end
+	  redirect_to admin_controls_path, notice: "Advancing teams marked with iswinner tag"
 	end
 
 	page_action :quarterfinals_visibility, method: :post do
