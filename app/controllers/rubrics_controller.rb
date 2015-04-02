@@ -52,21 +52,24 @@ class RubricsController < ApplicationController
     ## do not show teams that the judge has judged already
     teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
 
-    ## if the judge is a mentor/coach, do not show teams from the same region
-    if current_user.coach? or current_user.mentor?
-      interested_regions = current_user.teams.map{|t| t.region}
-      teams.delete_if{|t| interested_regions.include? t.region}
-    end
 
-    ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
-    unless current_user.conflict_region.nil? 
-      teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
-    end
+    ## todo: conflict_region should be assigned correctly for both judge user types and for mentor/coach turned judges
+    ## todo: judging_region should be assigned correctly for judges signed up for in-person events (and based on conflict_region)
+    # ## if the judge is a mentor/coach, do not show teams from the same region
+    # if current_user.coach? or current_user.mentor?
+    #   interested_regions = current_user.teams.map{|t| t.region}
+    #   teams.delete_if{|t| interested_regions.include? t.region}
+    # end
 
-    ## judges should only judge within one region for score normalization purposes
-    unless current_user.judging_region.nil?
-      teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
-    end
+    # ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
+    # unless current_user.conflict_region.nil? 
+    #   teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
+    # end
+
+    # ## judges should only judge within one region for score normalization purposes
+    # unless current_user.judging_region.nil?
+    #   teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
+    # end
 
     ## remove the teams who have division == x
     teams.delete_if{|t| t.division == 'x'}
