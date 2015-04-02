@@ -26,7 +26,7 @@ hr
           li
             .checkbox
               label
-                input type='checkbox' name='category' value='#{c.id}' #{c.name}
+                input type='checkbox' name='category[]' value='#{c.id}' #{c.name}
       h4.strong Division
       ul.list-unstyled
         - for d in Team.divisions
@@ -34,14 +34,14 @@ hr
             li
               .checkbox
                 label
-                  input type='checkbox' name='division' value='#{d[1]}' #{format_division(d[0])}
+                  input type='checkbox' name='division[]' value='#{d[1]}' #{format_division(d[0])}
       h4.strong Region
       ul.list-unstyled
-        - for r in Team.regions
+        - for r in geographic_regions
           li
             .checkbox
               label
-                input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
+                input type='checkbox' name='region[]' value='#{geographic_regions.index(r)}' #{r}
       h4.strong Awards
       ul.list-unstyled
         li
