@@ -1,3 +1,17 @@
+javascript:
+  $(document).ready(function() {
+    $('#team_event_id').change(function(){
+      var selected = $(this).find('option:selected').text();
+
+      if (selected != 'Virtual Judging'){
+        var warning = "You are signing up for " + selected + " which is an in-person pitch event-- your team will be presenting and scored at that event. If you do not attend, your submission will not be scored. Sign up for Virtual Judging instead, if you cannot attend " + selected + ".";
+
+        alert(warning);      
+      }
+    });
+  })
+
+
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
     .h4 Competition Event
