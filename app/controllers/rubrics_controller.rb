@@ -15,14 +15,6 @@ class RubricsController < ApplicationController
   end
 
   def index
-    if Setting.stage == 'quarterfinal'
-    	teams = Team.where(region: current_user.judging_region)
-    elsif Setting.stage == 'semifinal'
-      teams = Team.where(issemifinalist: true, region: current_user.judging_region)
-    elsif Setting.stage == 'final'
-      teams = Team.where(isfinalist: true, region: current_user.judging_region)
-    end
-
     ## if the judge is signed up for an in-person event
     ## and it is currently the time of the event, only show teams that are signed up for the event
     event_active = false
@@ -33,18 +25,23 @@ class RubricsController < ApplicationController
         finish = (event.whentooccur + 10.hours).to_datetime
         if (start..finish).cover?(Setting.now)
           ## only show the teams competing in the event
-          teams = teams.has_event(event)
+          teams = Team.all.has_event(event)
           @event = event
           event_active = true
         end
       end
     end
 
-    ## if it is the quarterfinals and it is not the time of the judge's event
-    ## only show teams who have signed up for Virtual Judging
+
     if Setting.stage == 'quarterfinal' and !event_active
+      ## if it is the quarterfinals and it is not the time of the judge's event
+      ## only show teams who have signed up for Virtual Judging
       id = Event.where(name: 'Virtual Judging').first.id
-      teams = Team.where(event_id: id)
+      teams = Team.where(region: current_user.judging_region, event_id: id)
+    elsif Setting.stage == 'semifinal'
+      teams = Team.where(issemifinalist: true, region: current_user.judging_region)
+    elsif Setting.stage == 'final'
+      teams = Team.where(isfinalist: true, region: current_user.judging_region)
     end
 
     ## search for teams that have the fewest number of rubrics

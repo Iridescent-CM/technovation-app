@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
       @teams = apply_scopes(Team.where(year: Setting.year))
 
       unless params[:category].nil?
-        @teams = @teams.has_category(params[:category])
+        @teams = @teams.where(category: params[:category])
       end
       unless params[:region].nil?
         ## calculate a real region id from the division and the geographic region coming in
