@@ -16,4 +16,5 @@ $(document).ready ->
     )
 
   $('.js-conflict-region').change(getValidEvents)
-  getValidEvents()
+  if $('.js-conflict-region').length
+    getValidEvents()

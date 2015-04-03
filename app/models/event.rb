@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
     where("whentooccur >= ? OR name = 'Virtual Judging'", Setting.now + 1.week).order("name!='Virtual Judging', name")
   }
   scope :nonconflicting_events, ->(conflict_regions) {
-    open_for_signup.where("region not in (?) OR region=-1 OR region IS NULL", conflict_regions)
+    open_for_signup.where("region not in (?) OR region=-1 OR region IS NULL", (conflict_regions << -1))
   }
 
 end
