@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324023614) do
+ActiveRecord::Schema.define(version: 20150403023308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,19 +101,19 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.integer  "user_id"
     t.string   "round"
     t.integer  "score"
-    t.string   "identify_problem_comment"
-    t.string   "address_problem_comment"
-    t.string   "functional_comment"
-    t.string   "external_resources_comment"
-    t.string   "match_features_comment"
-    t.string   "interface_comment"
-    t.string   "description_comment"
-    t.string   "market_comment"
-    t.string   "competition_comment"
-    t.string   "revenue_comment"
-    t.string   "branding_comment"
-    t.string   "pitch_comment"
-    t.string   "launched_comment"
+    t.text     "identify_problem_comment"
+    t.text     "address_problem_comment"
+    t.text     "functional_comment"
+    t.text     "external_resources_comment"
+    t.text     "match_features_comment"
+    t.text     "interface_comment"
+    t.text     "description_comment"
+    t.text     "market_comment"
+    t.text     "competition_comment"
+    t.text     "revenue_comment"
+    t.text     "branding_comment"
+    t.text     "pitch_comment"
+    t.text     "launched_comment"
     t.integer  "stage"
   end
 
@@ -150,8 +150,7 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "country",                  limit: 2, default: "",   null: false
-    t.string   "description"
+    t.text     "description"
     t.string   "code"
     t.string   "pitch"
     t.string   "demo"
@@ -189,10 +188,11 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.boolean  "isfinalist"
     t.string   "store"
     t.boolean  "iswinner"
-    t.string   "tools"
+    t.text     "tools"
     t.integer  "platform",                           default: 0,    null: false
-    t.string   "challenge"
-    t.string   "participation"
+    t.text     "challenge"
+    t.text     "participation"
+    t.string   "country",                  limit: 2, default: "",   null: false
     t.boolean  "submitted"
   end
 
@@ -250,9 +250,9 @@ ActiveRecord::Schema.define(version: 20150324023614) do
     t.string   "bg_check_id"
     t.datetime "bg_check_submitted"
     t.boolean  "disabled",                         default: false, null: false
-    t.boolean  "is_survey_done",                   default: false, null: false
     t.integer  "event_id"
     t.boolean  "judging"
+    t.boolean  "is_survey_done",                   default: false, null: false
     t.integer  "conflict_region"
     t.integer  "judging_region"
   end
