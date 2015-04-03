@@ -81,14 +81,15 @@ javascript:
         = f.submit "Save Submission", class: ['btn', 'btn-primary']
     - else
       = f.form_group
+        p You can update your submission up until the submission deadline
         = f.submit "Update Submission", class: ['btn', 'btn-primary']
 
     br
     br
 
-- if @team.submitted.nil?
-  hr
-    p If you think your application is complete, you can submit your application.
-    = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
-      = f.form_group
-        = f.submit 'Submit Submission', class: ['btn', 'btn-danger']
+/ - if @team.submitted.nil?
+    hr
+      p If you think your application is complete, you can submit your application.
+      = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
+        = f.form_group
+          = f.submit 'Submit Submission', class: ['btn', 'btn-danger']

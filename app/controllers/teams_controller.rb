@@ -123,10 +123,7 @@ class TeamsController < ApplicationController
     @team = Team.friendly.find(params[:id])
     authorize @team
 
-    if @team.update(team_params)
-
-      ## update submitted field
-      @team.update(submitted: true)
+    if @team.update(submitted: true)
       ## send out the mail
       for user in @team.members
         SubmissionMailer.submission_received_email(user, @team)

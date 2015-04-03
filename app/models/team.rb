@@ -202,15 +202,27 @@ class Team < ActiveRecord::Base
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'
-    elsif submitted and missing_fields.empty?
-      return 'Submitted and complete'
-    elsif submitted and !missing_fields.empty?
-      return 'Submitted but missing items'
+    elsif missing_fields.empty?
+      return 'Submission complete'
+    elsif !missing_fields.empty?
+      return 'Submission missing items'
     elsif started?
       return 'Started'
     else
       return 'Not Started'
     end
+
+    # if Setting.beforeSubmissionsOpen?
+    #   return 'Submissions not yet open'
+    # elsif submitted and missing_fields.empty?
+    #   return 'Submitted and complete'
+    # elsif submitted and !missing_fields.empty?
+    #   return 'Submitted but missing items'
+    # elsif started?
+    #   return 'Started'
+    # else
+    #   return 'Not Started'
+    # end
   end
 
   def valid_regions
