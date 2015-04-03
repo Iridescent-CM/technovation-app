@@ -4,7 +4,10 @@
       p You must sign up for a judging event before proceeding
 
   h2 Regional Judging Event
-  h3 This is the event that you are judging.
+
+  - unless @user.event_id.nil?
+    h3 This is the event that you are judging.
+    = render partial: 'event', locals: {event: Event.find(@user.event_id)}
 
   h5 
     .alert.alert-info role='alert'
@@ -22,6 +25,3 @@
         p.form-control-static.js-event-date
     = f.form_group
       = f.submit "Sign Up", class: ['btn', 'btn-primary']
-
-  - unless @user.event_id.nil?
-    = render partial: 'event', locals: {event: Event.find(@user.event_id)}
