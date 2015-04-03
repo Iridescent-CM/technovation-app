@@ -47,6 +47,13 @@ class Team < ActiveRecord::Base
     :europems, #Middle School - Europe/Australia/New Zealand/Asia
   ]
 
+  HIGHSCHOOL_REGIONS = {
+    ushs: regions[:ushs],
+    mexicohs: regions[:mexicohs],
+    europehs: regions[:europehs],
+    africahs: regions[:africahs]
+  }
+
   PLATFORMS = [
     {sym: :android, abbr: 'Android'},
     {sym: :ios, abbr: 'iOS'},
@@ -206,4 +213,11 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def valid_regions
+    if ms?
+      Team.regions
+    else
+      Team::HIGHSCHOOL_REGIONS
+    end
+  end
 end
