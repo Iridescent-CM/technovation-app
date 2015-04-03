@@ -16,11 +16,18 @@ javascript:
 
     .h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
-    = f.collection_select :event_id, Event.open_for_signup, :id, :name, help: 'Select Virtual Judging if there are no in-person events near you.'
-
+    = f.collection_select :event_id, Event.open_for_signup, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
+    .js-event-details
+      = f.form_group label: { text: "Description" }
+        p.form-control-static.js-event-description
+      = f.form_group label: { text: "Location" }
+        p.form-control-static.js-event-location
+      = f.form_group label: { text: "Date" }
+        p.form-control-static.js-event-date
+    hr
     = f.collection_select :category_id, Category.all, :id, :name
 
-  	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
+    = f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
     = f.text_area :description, label: "App description", rows: 5
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
     = f.text_field :code, label: "Source code", data: 'code', help: 'A link to your github account'

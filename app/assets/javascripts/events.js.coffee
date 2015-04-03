@@ -9,7 +9,7 @@ $(document).ready ->
       $('.js-event-description').html(data.description)
       $('.js-event-location').html(data.location)
       date = new Date(data.whentooccur)
-      $('.js-event-date').html(date.toLocaleDateString() + ', ' + date.toTimeString())
+      $('.js-event-date').html(date.toLocaleDateString())
     )
 
   if $('.js-event-select').length
