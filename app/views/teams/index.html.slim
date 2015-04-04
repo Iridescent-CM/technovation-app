@@ -1,60 +1,74 @@
-.page-header
-  h1
-    - if @search
-      ' Search Results: "#{@search}"
-    - else
-      ' Teams Gallery
-    small= @season
-    form.navbar-form.navbar-right role='search' method='get'
-      .input-group
-        input.form-control type='text' placeholder='search team names' name='search'
-        .input-group-btn
-          button.btn.btn-default type='submit'
-            span.glyphicon.glyphicon-search
+= stylesheet_link_tag 'teams', media: 'all', 'data-turbolinks-track' => true
+h2
+  - if @search
+    ' Search Results: "#{@search}"
+  - else
+    ' Teams Gallery
+  small= @season
+  form.navbar-form.navbar-right role='search' method='get'
+    .input-group
+      input.form-control type='text' placeholder='search team names' name='search'
+      .input-group-btn
+        button.btn.btn-default type='submit'
+          span.glyphicon.glyphicon-search
 
-    - if current_user && policy(Team).create?
-      form.navbar-form.navbar-right
-        = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
-
-
+  - if current_user && policy(Team).create?
+    form.navbar-form.navbar-right
+      = link_to 'Create New Team', :new_team, class: ['btn', 'btn-primary']
+hr
 .row
-  .col-sm-2
-    h4 Filter teams
+  .col-sm-3
+    h3 Filter teams
     form method='get'
-      h5 Category
+      h4.strong Category
       ul.list-unstyled
         - for c in Category.all
           li
             .checkbox
               label
-                input type='checkbox' name='category' value='#{c.id}' #{c.name}
-      h5 Region
-      ul.list-unstyled
-        - for r in Team.regions
-          li
-            .checkbox
-              label
-                input type='checkbox' name='region' value='#{r[1]}' #{format_region(r[0])}
-
-      h5 Division
+                input type='checkbox' name='category[]' value='#{c.id}' #{c.name}
+      h4.strong Division
       ul.list-unstyled
         - for d in Team.divisions
+          - unless d[0] == 'x'
+            li
+              .checkbox
+                label
+                  input type='checkbox' name='division[]' value='#{d[1]}' #{format_division(d[0])}
+      h4.strong Region
+      ul.list-unstyled
+        - for r in geographic_regions
           li
             .checkbox
               label
-                input type='checkbox' name='division' value='#{d[1]}' #{format_division(d[0])}
+                input type='checkbox' name='region[]' value='#{geographic_regions.index(r)}' #{r}
+      h4.strong Awards
+      ul.list-unstyled
+        li
+          .checkbox
+            label
+              input type='checkbox' name='issemifinalist' value='true' Quarterfinal winner
+        li
+          .checkbox
+            label
+              input type='checkbox' name='isfinalist' value='true' Semifinal winner
+        li
+          .checkbox
+            label
+              input type='checkbox' name='iswinner' value='true' Finals winner
+
 
       button.btn.btn-default type='submit' Filter
 
-  .col-sm-10
+  .col-sm-9
     - if @teams.empty?
-      p There are not yet any teams registered for the #{@year} season.
+      p There are not yet any teams that match all the requirements of your filter.
 
     - else
       - for t in @teams do
         .media
           a.media-left href=url_for(t)
-            = image_tag t.avatar.url(:medium), class: ['img-rounded']
+            = image_tag t.avatar.url(:medium), class: ['img-rounded team-image']
           .media-body
             a href=url_for(t)
               h4.media-heading= t.name

@@ -9,9 +9,6 @@ html
     = render 'layouts/navbar', current_user: current_user
     .container
       .row
-        - if current_user
-          = render 'layouts/profile', current_user: current_user
-        - else
           .col-sm-12
             #main-content
               - if notice

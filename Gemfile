@@ -23,6 +23,7 @@ gem 'countries'
 gem 'country_select', github: 'stefanpenner/country_select'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 # rails functionality extensions
 gem 'activeadmin', github: 'activeadmin'

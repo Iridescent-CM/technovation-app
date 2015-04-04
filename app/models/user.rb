@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   after_create :email_parents_callback, if: :student?
 
   before_destroy :remove_from_campaign_list
+  before_save :check_judging_conflicts
 
 
 
@@ -51,6 +52,7 @@ class User < ActiveRecord::Base
     {sym: :design, abbr: 'Dsn'},
   ]
 
+
   has_flags 1 => EXPERTISES[0][:sym],
             2 => EXPERTISES[1][:sym],
             3 => EXPERTISES[2][:sym],
@@ -65,7 +67,6 @@ class User < ActiveRecord::Base
   has_many :rubrics
 #  has_one :conflict_region # a region that the judge should not judge for due to conflict of interest
   #### end
-
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
@@ -90,6 +91,14 @@ class User < ActiveRecord::Base
     end
 
 
+  end
+
+  def check_judging_conflicts
+    if !event_id.nil? and !Event.all.find(event_id).region.nil? and !conflict_region.nil?
+      if conflict_region == Event.all.find(event_id).region
+        raise 'Sorry, you cannot judge an event in a division that you have mentored or coached. Sign up for Virtual Judging instead.'
+      end
+    end
   end
 
   def full_address
@@ -225,4 +234,13 @@ class User < ActiveRecord::Base
     rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
       puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"
   end
+
+  def conflict_regions
+    regions = teams.select('DISTINCT region').map { |r| Team.regions[r.region] }
+    if conflict_region != nil and !regions.include?(conflict_region)
+      regions << conflict_region
+    end
+    regions
+  end
+
 end

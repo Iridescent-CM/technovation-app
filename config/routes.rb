@@ -27,18 +27,23 @@ Rails.application.routes.draw do
 
   get 'mentors' => 'mentor#index'
 
+  get 'valid_events' => 'events#valid_events'
+
   get 'bg_check' => 'bg_check#index'
   post 'bg_check' => 'bg_check#update', as: :bg_check_submit
 
 #  get 'rubric' => 'rubric#index'
+
+  # get 'mentor_coach_check' => 'mentor_coach_check#index'
+  # post 'mentor_coach_check' => 'mentor_coach_check#update'
 
 
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
   
-      get 'mentor_coach'
-      post 'mentor_coach'
+      # get 'mentor_coach'
+      # post 'mentor_coach'
     end
   end
 
@@ -50,6 +55,9 @@ Rails.application.routes.draw do
 
       get 'edit_submission'
       post 'edit_submission'
+
+      get 'event_signup'
+      post 'event_signup'
     end
   end
 

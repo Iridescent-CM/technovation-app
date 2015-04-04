@@ -4,18 +4,33 @@ ActiveAdmin.register_page "Controls" do
   end
 
 	page_action :mark_semifinalists, method: :post do
-	  RankingController.mark_semifinalists
+	  begin
+	    RankingController.mark_semifinalists
+	  rescue ArgumentError
+		redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric."
+		return
+	  end
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with issemifinalist tag"
 	end
 
 	page_action :mark_finalists, method: :post do
-	  RankingController.mark_finalists
+	  begin
+	    RankingController.mark_finalists
+	  rescue ArgumentError
+		redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric for the stage."
+		return
+	  end
 	  redirect_to admin_controls_path, notice: "Advancing teams marked with isfinalist tag"
 	end
 
 	page_action :mark_winners, method: :post do
-	  RankingController.mark_winners
-	  redirect_to admin_controls_path, notice: "Winning teams marked with iswinner tag"
+	  begin
+	    RankingController.mark_winners
+	  rescue ArgumentError
+		redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric for the stage."
+		return
+	  end
+	  redirect_to admin_controls_path, notice: "Advancing teams marked with iswinner tag"
 	end
 
 	page_action :quarterfinals_visibility, method: :post do
@@ -35,5 +50,17 @@ ActiveAdmin.register_page "Controls" do
 	  logic = Setting.scoresVisible?('final') ? "" : ' not'
 	  redirect_to admin_controls_path, notice: "Final scores now"+logic+" visible"
 	end
+
+	page_action :assign_judges_to_regions, method: :post do
+	  RankingController.assign_judges_to_regions
+	  redirect_to admin_controls_path, notice: "Judges have been assigned to regions. Click button again to reassign."
+	end
+
+
+	# def self.set_score_visibility(stage)
+	#   RankingController.toggle_score_visibility(stage)
+	#   logic = Setting.scoresVisible?(stage) ? "" : ' not'
+	#   redirect_to admin_controls_path, notice: stage+" scores now"+logic+" visible"
+	# end
 
 end

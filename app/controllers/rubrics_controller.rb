@@ -4,6 +4,8 @@ class RubricsController < ApplicationController
     ## new rubric needs to take a team
     @rubric = Rubric.new
   	@rubric.team = Team.friendly.find(params[:team])
+
+    @rubric_is_new = true
     authorize @rubric
   end
 
@@ -13,25 +15,33 @@ class RubricsController < ApplicationController
   end
 
   def index
-    if Setting.stage == 'quarterfinal'
-    	teams = Team.all
-    elsif Setting.stage == 'semifinal'
-      teams = Team.where(issemifinalist: true)
-    elsif Setting.stage == 'final'
-      teams = Team.where(isfinalist: true)
-    end
-
-    ## if the judge is signed up for an event, and it is currently the time of the event, only show teams that are signed up for the event
+    ## if the judge is signed up for an in-person event
+    ## and it is currently the time of the event, only show teams that are signed up for the event
     event_active = false
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
-      start = (event.whentooccur - 3.hours).to_datetime
-      finish = (event.whentooccur + 10.hours).to_datetime
-      if (start..finish).cover?(DateTime.now)
-        ## only show the teams competing in the event
-        teams = teams.has_event(event)
-        event_active = true
+      if event.name != 'Virtual Judging'
+        start = (event.whentooccur - 3.hours).to_datetime
+        finish = (event.whentooccur + 10.hours).to_datetime
+        if (start..finish).cover?(Setting.now)
+          ## only show the teams competing in the event
+          teams = Team.all.has_event(event)
+          @event = event
+          event_active = true
+        end
       end
+    end
+
+
+    if Setting.stage == 'quarterfinal' and !event_active
+      ## if it is the quarterfinals and it is not the time of the judge's event
+      ## only show teams who have signed up for Virtual Judging
+      id = Event.where(name: 'Virtual Judging').first.id
+      teams = Team.where(region: current_user.judging_region, event_id: id)
+    elsif Setting.stage == 'semifinal'
+      teams = Team.where(issemifinalist: true, region: current_user.judging_region)
+    elsif Setting.stage == 'final'
+      teams = Team.where(isfinalist: true, region: current_user.judging_region)
     end
 
     ## search for teams that have the fewest number of rubrics
@@ -40,24 +50,42 @@ class RubricsController < ApplicationController
     ## do not show teams that the judge has judged already
     teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
 
-    ## if the judge is a mentor/coach, do not show teams from the same region
-    if current_user.coach? or current_user.mentor?
-      interested_regions = current_user.teams.map{|t| t.region}
-      teams.delete_if{|t| interested_regions.include? t.region}
+
+    ## todo: conflict_region should be assigned correctly for both judge user types and for mentor/coach turned judges
+    ## todo: judging_region should be assigned correctly for judges signed up for in-person events (and based on conflict_region)
+    # ## if the judge is a mentor/coach, do not show teams from the same region
+    # if current_user.coach? or current_user.mentor?
+    #   interested_regions = current_user.teams.map{|t| t.region}
+    #   teams.delete_if{|t| interested_regions.include? t.region}
+    # end
+
+    # ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
+    # unless current_user.conflict_region.nil? 
+    #   teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
+    # end
+
+    # ## judges should only judge within one region for score normalization purposes
+    # unless current_user.judging_region.nil?
+    #   teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
+    # end
+
+    ## remove the teams who have division == x
+    teams.delete_if{|t| t.division == 'x'}
+
+    if event_active
+      ## show all teams for in-person events
+      @teams = teams
+    else
+      ## show a randomly drawn team with the minimum number rubrics for virtual judging
+      if teams.length > 0
+        teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
+        ind = rand(teams.length)
+        @teams = [ teams[ind] ]
+      end    
     end
 
-    ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
-    unless current_user.conflict_region.nil? 
-      teams.delete_if{|t| current_user.conflict_region == t.region}
-    end
 
-    if teams.length > 0      
-      teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
-      ind = rand(teams.length)
-      @teams = event_active ? teams : [ teams[ind] ]
-    end
-
-    ## only show rubrics that were done by the current judge
+    ## show all past rubrics that were done by the current judge for editing
   	@rubrics = Rubric.all.has_judge(current_user)
 
   end

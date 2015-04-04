@@ -1,3 +1,10 @@
+- unless @rubric_is_new
+  - if current_user.id != @rubric.user_id or Setting.stage != @rubric.stage
+    javascript:
+      $(document).ready(function() {
+        $('input').attr('disabled', 'disabled')
+      })
+
 h3 Objective score
 h4 Ideation score
 
@@ -100,7 +107,7 @@ br
 br
 br
 
-= f.form_group :branding, label: {text: 'Potential revenue'} do
+= f.form_group :branding, label: {text: 'Branding and Promotion'} do
   = f.radio_button :branding, 0, label: 'None [0]'
   = f.radio_button :branding, 1, label: 'A logo or promotional sources are included, but explanations are sparse or nonexistent. [1]'
   = f.radio_button :branding, 2, label: 'Logo and limited promotional sources are included. Explanations for promotional plan could be more thorough. [2]'
@@ -134,3 +141,8 @@ br
 
 hr 
 
+- if @rubric.score
+h3 Total Score: #{@rubric.score}
+
+br
+br

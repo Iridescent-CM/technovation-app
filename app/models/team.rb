@@ -47,6 +47,13 @@ class Team < ActiveRecord::Base
     :europems, #Middle School - Europe/Australia/New Zealand/Asia
   ]
 
+  HIGHSCHOOL_REGIONS = {
+    ushs: regions[:ushs],
+    mexicohs: regions[:mexicohs],
+    europehs: regions[:europehs],
+    africahs: regions[:africahs]
+  }
+
   PLATFORMS = [
     {sym: :android, abbr: 'Android'},
     {sym: :ios, abbr: 'iOS'},
@@ -76,6 +83,10 @@ class Team < ActiveRecord::Base
   scope :has_region, -> (reg) {where('region = ?', reg)}
   scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
 
+  scope :is_semifinalist, -> {where 'issemifinalist = true'}
+  scope :is_finalist, -> {where 'isfinalist = true'}
+  scope :is_winner, -> {where 'iswinner = true'}
+
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association
   #scope :by_score, joins: :rubrics, group: "teams.id", order: "AVG(rubrics.score) DESC"
@@ -91,6 +102,19 @@ class Team < ActiveRecord::Base
   def avg_score
     rubrics.average(:score)
   end
+
+  def avg_quarterfinal_score
+    rubrics.where(stage:0).average(:score)
+  end
+
+  def avg_semifinal_score
+    rubrics.where(stage:1).average(:score)
+  end
+
+  def avg_final_score
+    rubrics.where(stage:2).average(:score)
+  end
+
 
   def num_rubrics
     rubrics.length
@@ -151,12 +175,61 @@ class Team < ActiveRecord::Base
   end
 
   def check_completeness
-    required = ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'avatar', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
-    missing = required.select {|a| 
+    missing_fields.join(', ')
+  end
+
+  def required_fields
+    # 'avatar', 
+    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+  end
+
+  def missing_fields
+    missing = required_fields.select {|a| 
       if (missing_field?(a))
-        a
+        if a == 'category_id'
+          'category'
+        else
+          a
+        end
       end
      }
-    missing.join(', ')
+  end
+
+  def started?
+    return missing_fields.length != required_fields.length 
+  end
+
+  def submission_status
+    if Setting.beforeSubmissionsOpen?
+      return 'Submissions not yet open'
+    elsif missing_fields.empty?
+      return 'Submission complete'
+    elsif !missing_fields.empty?
+      return 'Submission missing items'
+    elsif started?
+      return 'Started'
+    else
+      return 'Not Started'
+    end
+
+    # if Setting.beforeSubmissionsOpen?
+    #   return 'Submissions not yet open'
+    # elsif submitted and missing_fields.empty?
+    #   return 'Submitted and complete'
+    # elsif submitted and !missing_fields.empty?
+    #   return 'Submitted but missing items'
+    # elsif started?
+    #   return 'Started'
+    # else
+    #   return 'Not Started'
+    # end
+  end
+
+  def valid_regions
+    if ms?
+      Team.regions
+    else
+      Team::HIGHSCHOOL_REGIONS
+    end
   end
 end

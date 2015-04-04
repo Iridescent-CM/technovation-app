@@ -55,6 +55,11 @@ module ApplicationHelper
     end
   end
 
+  def geographic_regions
+    ["US/Canada", "Mexico/Central America/South America", "Europe/Australia/New Zealand/Asia", "Africa"]
+  end
+
+
   def render_video(link)
     # link = 'http://www.youtube.com/embed/y4sOfO8Ei1g'
     # http://vimeo.com/channels/staffpicks/59859181
@@ -70,7 +75,7 @@ module ApplicationHelper
       # vid_id = link.match(regex)[1]
       tokens = link.split('/')
       vid_id = tokens[-1]
-      '<iframe src="//player.vimeo.com/video/'+vid_id+'" width="500" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+      '<iframe src="//player.vimeo.com/video/'+vid_id+'" width="400" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
     else    
       regex = /youtube.com.*(?:\/|v=)([^&$]+)/
       matches = link.match(regex)
@@ -79,7 +84,7 @@ module ApplicationHelper
       end
       vid_id = matches[1]
       link = '//www.youtube.com/embed/' + vid_id
-      '<iframe width="500px" height="350px" src="'+link+'"></iframe>'
+      '<iframe width="400px" height="300px" src="'+link+'"></iframe>'
     end
   end
 
@@ -89,7 +94,7 @@ module ApplicationHelper
     end
 
     link = link.sub('http://', 'https://')
-    '<iframe width="500px" height="400px" src="' + link + '"></iframe>'
+    '<iframe width="400px" height="300px" src="' + link + '"></iframe>'
   end
 
   def doc_path(file)
@@ -114,7 +119,7 @@ module ApplicationHelper
 
   def regions_to_collection
      result = Team.regions.keys.each_with_index.map{|k, i| OpenStruct.new({id: i, name: format_region(k)})}
-     result.push(OpenStruct.new({id: -1, name: 'No teams mentored or coached'}))
+     result.unshift(OpenStruct.new({id: -1, name: 'No teams mentored or coached'}))
      return result
   end
 

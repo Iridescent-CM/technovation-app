@@ -9,8 +9,29 @@ ActiveAdmin.register User do
     end
   end
 
+  show do
+    attributes_table do
+      row :id
+      row :email
+      row :role
+      row :first_name
+      row :last_name
+      row :birthday
+
+      row :home_country
+      row :consent_signed_at
+
+      row :can_judge
+      row :num_judged
+      row :judging_event
+      row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
+      row :judging_region
+    end
+  end
+
   index do
     selectable_column
+    column :id
     column :email
     column :role
     column :first_name
@@ -24,6 +45,9 @@ ActiveAdmin.register User do
     column (:judging_event){|u| unless u.event_id.nil? 
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
+
+    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
+    column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
 
     actions
   end
@@ -70,6 +94,14 @@ ActiveAdmin.register User do
       f.input :parent_phone
       f.input :parent_email
     end
+
+    f.inputs "Judging Information" do
+      f.input :conflict_region, as: :select, collection: Team.regions
+      f.input :judging_region, as: :select, collection: Team.regions
+      #= f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name
+      f.input :event_id, as: :select, collection: Event.all
+    end
+
 
     f.actions
   end

@@ -70,8 +70,9 @@ ul
         li
           'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2015, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
           ' You may
-          = link_to 'create a team', :new_team
-          '  or
+          - if policy(Team).create?
+            = link_to 'create a team', :new_team
+            '  or
           = link_to 'request to join an existing team', :teams
           | .
 
@@ -86,3 +87,18 @@ h2 Announcements
   .markdown-field
     = render_markdown(ann.post)
 
+hr
+
+- unless current_user.nil?
+  .row
+    - unless current_user.judge? or current_user.student?
+      .col-sm-6
+        = render partial: 'judges/judge', locals: {user: current_user}
+    - if current_user.can_judge?
+      .col-sm-6
+        h2 Judge Submissions
+        - if Setting.anyJudgingRoundActive?
+          p The #{Setting.judgingRoundActive}s are currently in progress. Judge submissions now.
+          = link_to 'Judge now', :rubrics, class: ['btn', 'btn-primary']
+        - else
+          p Judging for the #{Setting.nextJudgingRound[0]}s will open on #{Setting.nextJudgingRound[1]}. Please mark your calendar!

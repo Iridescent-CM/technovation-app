@@ -19,6 +19,12 @@ class UsersController < ApplicationController
       if params[:user][:event_signup]
         flash[:notice] = 'Event signup updated'
         redirect_to :back
+      elsif params[:user][:judging] == '0'
+        flash[:notice] = "You are no longer signed up to judge."        
+        redirect_to :back
+      elsif params[:user][:judging] == '1'
+        flash[:notice] = "You are now a judge! Sign up for an event to judge."
+        redirect_to events_path
       else
         flash[:notice] = 'Profile Updated!'
         redirect_to @user
@@ -50,11 +56,6 @@ class UsersController < ApplicationController
   def bg_check
   end
 
-  def mentor_coach
-    @user = User.friendly.find(params[:id])
-    authorize @user
-  end
-
   private
   def user_params
     params.require(:user).permit(
@@ -80,6 +81,7 @@ class UsersController < ApplicationController
       :event_id,
       :judging,
       :conflict_region,
+      :judging_region,
     )
   end
 

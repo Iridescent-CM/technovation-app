@@ -2,6 +2,10 @@
   .alert.alert-danger role='alert'
     p This team is currently ineligble to participate. There must between 1 to 5 students inclusive, all of whom are 18 and under.
 
+- if @team.avatar_file_name.nil?
+  .alert.alert-danger role='alert'
+    p You still need to upload a team photo.
+
 .page-header
   h1
     ' #{@team.name}

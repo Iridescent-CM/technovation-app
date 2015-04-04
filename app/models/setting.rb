@@ -21,6 +21,11 @@ class Setting < ActiveRecord::Base
     self.get_date('cutoff')
   end
 
+  def self.beforeSubmissionsOpen?
+    date1 = self.get_date('submissionOpen')
+    return self.now < date1
+  end
+
   def self.submissionOpen?
     date1 = self.get_date('submissionOpen')
     date2 = self.get_date('submissionClose')
@@ -35,10 +40,20 @@ class Setting < ActiveRecord::Base
     return self.now >= date
   end
 
-  def self.anyJudgingRoundActive?()
+  def self.anyJudgingRoundActive?
     return Rubric.stages.keys.keep_if{ |s| self.judgingRoundActive?(s)}.length > 0
   end
 
+  def self.judgingRoundActive
+    ## return the active judging round
+    active = Rubric.stages.keys.keep_if{ |s| self.judgingRoundActive? (s)}
+    return active.empty? ? 'no round' : active[0]
+  end
+
+  def self.nextJudgingRound
+    date = self.get_date(self.stage + 'JudgingOpen')
+    return [self.stage, date]
+  end
 
   def self.judgingRoundActive?(round)
     date1 = self.get_date(round+'JudgingOpen')
@@ -54,6 +69,10 @@ class Setting < ActiveRecord::Base
     Rubric.stages.keys.keep_if{ |s| scoresVisible?(s) }
   end
 
+  def self.anyScoresVisible?
+    return self.scoresVisible.length > 0
+  end
+
   def self.stage
     for stage in Rubric.stages.keys
       if judgingRoundActive?(stage)
@@ -66,10 +85,10 @@ class Setting < ActiveRecord::Base
   end
 
   def self.now
-    ## for testing only
-    self.get_date('todaysDateForTesting')
-
-    ## todo change to 
-#    Time.now
+    if self.exists?(key: 'todaysDateForTesting')
+      self.get_date('todaysDateForTesting')
+    else
+      Time.now
+    end
   end
 end

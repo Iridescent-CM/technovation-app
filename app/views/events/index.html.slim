@@ -1,28 +1,27 @@
 - if @user.can_judge?
-	h2 Judging Event
-	h3 This is the event that you are judging.
+  - if @user.event_id.nil?
+    .alert.alert-info role='alert'
+      p You must sign up for a judging event before proceeding
 
-	= bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
-		= f.hidden_field :event_signup, :value => true
-	    = f.collection_select :event_id, Event.all, :id, :name
-	    = f.form_group
-			= f.submit "Sign Up"
+  h2 Regional Judging Event
 
-	- unless @user.event_id.nil?
-		= render partial: 'event', locals: {event: Event.find(@user.event_id)}
-	hr
+  - unless @user.event_id.nil?
+    h3 This is the event that you are judging.
+    = render partial: 'event', locals: {event: Event.find(@user.event_id)}
 
-- unless @user.judge?
-	h2 Team Event
-	- if @team.nil?
-		p You must create or join a team before signing up for a team event.
-	- else
-		h3 This is the event that you are competing in.
-		= bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
-			= f.hidden_field :event_signup, :value => true
-		    = f.collection_select :event_id, Event.all, :id, :name
-		    = f.form_group
-				= f.submit "Sign Up"
+  h5 
+    .alert.alert-info role='alert'
+      p Sign up for Virtual Judging if you will be judging online. Sign up for a specific event only if you will be judging in-person at a live event.
 
-		- unless @team.event_id.nil?
-			= render partial: 'event', locals: {event: Event.find(@team.event_id)}
+  = bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+    = f.hidden_field :event_signup, :value => true
+    = f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name, {}, { class: 'js-event-select' }
+    .js-event-details
+      = f.form_group label: { text: "Description" }
+        p.form-control-static.js-event-description 
+      = f.form_group label: { text: "Location" }
+        p.form-control-static.js-event-location
+      = f.form_group label: { text: "Date" }
+        p.form-control-static.js-event-date
+    = f.form_group
+      = f.submit "Sign Up", class: ['btn', 'btn-primary']

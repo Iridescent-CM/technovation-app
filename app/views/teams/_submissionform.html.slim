@@ -1,8 +1,33 @@
+javascript:
+  $(document).ready(function() {
+    $('#team_event_id').change(function(){
+      var selected = $(this).find('option:selected').text();
+
+      if (selected != 'Virtual Judging'){
+        var warning = "You are signing up for " + selected + " which is an in-person pitch event-- your team will be presenting and scored at that event. If you do not attend, your submission will not be scored. Sign up for Virtual Judging instead, if you cannot attend " + selected + ".";
+
+        alert(warning);      
+      }
+    });
+  })
+
+
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
+    .h4 Competition Event
+    p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
+    = f.collection_select :event_id, Event.open_for_signup, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
+    .js-event-details
+      = f.form_group label: { text: "Description" }
+        p.form-control-static.js-event-description
+      = f.form_group label: { text: "Location" }
+        p.form-control-static.js-event-location
+      = f.form_group label: { text: "Date" }
+        p.form-control-static.js-event-date
+    hr
     = f.collection_select :category_id, Category.all, :id, :name
 
-  	= f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
+    = f.file_field :logo, label: "App logo", help: "Images will be rescaled to 300x300", data: 'logo'
     = f.text_area :description, label: "App description", rows: 5
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
     = f.text_field :code, label: "Source code", data: 'code', help: 'A link to your github account'
@@ -51,10 +76,20 @@
   	.h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
 
-  	= f.submit "Update Submission", class: ['btn', 'btn-primary']
+    - if @team.submitted.nil?
+      = f.form_group
+        = f.submit "Save Submission", class: ['btn', 'btn-primary']
+    - else
+      = f.form_group
+        p You can update your submission up until the submission deadline
+        = f.submit "Update Submission", class: ['btn', 'btn-primary']
 
-hr
-  p If you think your application is complete, you can submit your application.
-  = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
-    = f.form_group
-      = f.submit 'Submit Submission', class: ['btn', 'btn-danger']
+    br
+    br
+
+/ - if @team.submitted.nil?
+    hr
+      p If you think your application is complete, you can submit your application.
+      = bootstrap_form_for @team, url: url_for(controller: :teams, action: :submit), html: {method: :post} do |f|
+        = f.form_group
+          = f.submit 'Submit Submission', class: ['btn', 'btn-danger']

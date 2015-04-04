@@ -12,10 +12,25 @@ class EventsController < ApplicationController
 
     @user = current_user
     @team = current_user.current_team
+
     unless @team.nil?
       authorize @team
     end
 
   end
 
+  def show
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.json{
+        render json: @event
+      }
+    end
+  end
+
+  def valid_events
+    conflict_region = params[:conflict_region].to_i
+    events = Event.nonconflicting_events([conflict_region])
+    render json: events
+  end
 end

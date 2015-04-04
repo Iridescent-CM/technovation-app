@@ -24,10 +24,10 @@ ActiveAdmin.register Team do
     end
 
     column (:rubrics_count){|t| t.rubrics.length}
-    column (:rubrics_average){|t| 
-      scores = t.rubrics.map{|r| r.score}
-      scores.inject(:+).to_f / scores.size
-      }
+    column (:rubrics_average){|t| t.avg_score}
+    column (:quarterfinal_average){|t| t.avg_quarterfinal_score}
+    column (:semifinal_average){|t| t.avg_semifinal_score}
+    column (:final_average){|t| t.avg_final_score}
 
     column :issemifinalist
     column :isfinalist
@@ -37,9 +37,9 @@ ActiveAdmin.register Team do
   end
 
   filter :name
-  filter :region, as: :select, collection: Team.regions.keys
+  filter :region, as: :select, collection: Team.regions
   filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
-  filter :division, as: :select, collection: Team.divisions.keys
+  filter :division, as: :select, collection: Team.divisions
   filter :year
   preserve_default_filters!
 
@@ -59,6 +59,8 @@ ActiveAdmin.register Team do
       f.input :issemifinalist
       f.input :isfinalist
       f.input :iswinner
+
+      f.input :event_id, as: :select, collection: Event.all
 
     end
     f.actions

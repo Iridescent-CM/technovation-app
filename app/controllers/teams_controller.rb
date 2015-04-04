@@ -22,25 +22,43 @@ class TeamsController < ApplicationController
       @teams = Team.where(t[:name].matches('%'+@search+'%')).shuffle
       @season = "All Seasons"
     else
-#      @teams = Team.where(year: Setting.year).shuffle
-#      @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise
-#      binding.pry
       @teams = apply_scopes(Team.where(year: Setting.year))
 
       unless params[:category].nil?
-        @teams = @teams.has_category(params[:category])
+        @teams = @teams.where(category: params[:category])
       end
       unless params[:region].nil?
-        @teams = @teams.has_region(params[:region])
+        ## calculate a real region id from the division and the geographic region coming in
+        if params[:division].nil? or params[:division].length == 2
+          regions_hs = params[:region].map{|r| r.to_i}
+          regions_ms = regions_hs.map{|r| r + 4}
+          @teams = @teams.where(region: regions_hs+regions_ms)  
+        elsif params[:division].length == 1
+          ## flip the bit
+          division = (params[:division][0].to_i - 1).abs
+          converted = params[:region].map{|r| division * 4 + r.to_i}
+          @teams = @teams.where(region: converted)
+        end
       end
       unless params[:division].nil?
-        @teams = @teams.has_division(params[:division])
+        @teams = @teams.where(division: params[:division])
+      end
+      unless params[:issemifinalist].nil?
+        @teams = @teams.is_semifinalist
+      end
+      unless params[:isfinalist].nil?
+        @teams = @teams.is_finalist
+      end
+      unless params[:iswinner].nil?
+        @teams = @teams.is_winner
       end
       
       @teams = @teams.shuffle
 
       @season = "#{Setting.year} Season"
     end
+
+    render layout: 'noprofile'
   end
 
   def create
@@ -105,18 +123,39 @@ class TeamsController < ApplicationController
     @team = Team.friendly.find(params[:id])
     authorize @team
 
-    ## send out the mail
-    for user in @team.members
-      SubmissionMailer.submission_received_email(user, @team)
+    if @team.update(submitted: true)
+      ## send out the mail
+      for user in @team.members
+        SubmissionMailer.submission_received_email(user, @team)
+      end
+
+      flash[:notice] = 'Submission Received'
+      redirect_to @team
+    else
+      redirect_to :back
     end
 
-    flash[:notice] = 'Submission Received'
-    redirect_to @team
+  end
+
+  def event_signup
+    @team = Team.friendly.find(params[:id])
+    authorize @team
   end
 
   def edit_submission
     @team = Team.friendly.find(params[:id])
     authorize @team
+
+    # if @team.update(team_params)
+    #   if params[:team][:event_signup]
+    #     flash[:notice] = 'Event signup updated'
+    #     redirect_to :back
+    #   else
+    #     redirect_to @team
+    #   end
+    # else
+    #   redirect_to :back
+    # end
   end
 
   # def update_submissions
