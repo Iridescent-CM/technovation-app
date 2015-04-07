@@ -205,7 +205,7 @@ class Team < ActiveRecord::Base
     elsif missing_fields.empty?
       return 'Submission complete'
     elsif !missing_fields.empty?
-      return 'Submission missing items'
+      return 'Submitted but missing items'
     elsif started?
       return 'Started'
     else
