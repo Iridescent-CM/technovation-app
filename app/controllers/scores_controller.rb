@@ -1,4 +1,5 @@
 class ScoresController < ApplicationController
+  before_action :authenticate_user!
 
 	def index
 		## send in a hash from team name to rubrics
