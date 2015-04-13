@@ -152,8 +152,10 @@ class Team < ActiveRecord::Base
 
     self.division = div
 
-    self.country = members.group_by(&:home_country)
-      .values.max_by(&:size).first.home_country
+    if members.count > 0
+      self.country = members.group_by(&:home_country)
+        .values.max_by(&:size).first.home_country
+    end
 
     self.save!
   end
