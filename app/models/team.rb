@@ -186,13 +186,11 @@ class Team < ActiveRecord::Base
   end
 
   def missing_fields
-    missing = required_fields.select {|a| 
-      if (missing_field?(a))
-        if a == 'category_id'
-          'category'
-        else
-          a
-        end
+    missing = required_fields.select {|a| missing_field?(a)}.map {|a|
+      if a == 'category_id'
+        'category'
+      else
+        a
       end
      }
   end
