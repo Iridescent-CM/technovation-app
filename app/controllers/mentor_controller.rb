@@ -7,7 +7,7 @@ class MentorController < ApplicationController
 
   def index
     @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise
-    if current_user.geocoded?
+    if current_user and current_user.geocoded?
       @mentors = @mentors.near(current_user, 10000)
     end
   end

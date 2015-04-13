@@ -1,4 +1,5 @@
 class RubricsController < ApplicationController
+  before_action :authenticate_user!
   
   def new
     ## new rubric needs to take a team
