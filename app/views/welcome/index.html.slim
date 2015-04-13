@@ -8,6 +8,12 @@
 h2 Dashboard
 
 ul
+  / submissions open
+  - if Setting.submissionOpen? and not current_user.judge?
+    - submissionClose = Setting.get_date('submissionClose')
+    li
+      strong Submissions now open for #{submissionClose.year} through #{submissionClose.strftime("%B #{submissionClose.day.ordinalize}, %Y")}, 5pm PDT
+
   / confirmation
   - unless current_user.confirmed? 
     li
@@ -26,16 +32,19 @@ ul
       = link_to 'Write one now', edit_user_path(current_user)
       | .
 
-  - if not current_user.judge?
+  - unless current_user.judge?
     li
       ' If you haven't already, please complete the following
-      - if current_user.student?
-        a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
-      - if current_user.mentor?
-        a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
-      - if current_user.coach?
-        a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
-      | .
+      - if Setting.submissionOpen? and current_user.student?
+          a href='https://www.surveymonkey.com/s/post-survey2015' student post-program survey
+      - else
+        - if current_user.student?
+          a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
+        - if current_user.mentor?
+          a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
+        - if current_user.coach?
+          a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
+        | .
 
   / team request infos
   - if !current_user.current_team.nil?
