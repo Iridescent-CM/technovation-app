@@ -66,7 +66,7 @@ class Team < ActiveRecord::Base
             :column => 'platform'
 
   has_many :team_requests
-  has_many :categories
+  belongs_to :category
 
   has_many :members, -> {where 'team_requests.approved = ?', true}, {through: :team_requests, source: :user}
   has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
