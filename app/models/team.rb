@@ -202,7 +202,7 @@ class Team < ActiveRecord::Base
         self.submitted=true
         ## send out the mail
         for user in members
-          SubmissionMailer.submission_received_email(user, self)
+          SubmissionMailer.submission_received_email(user, self).deliver
         end
       end
     else
