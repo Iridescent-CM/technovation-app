@@ -1,10 +1,15 @@
 hr
 h1 id="submission" Submission
-.alert.alert-danger role='alert'
-  p
-    span You still need to upload your 
-    == @team.check_completeness 
-    span  to complete your submission.
+- if @team.missing_fields.empty?
+  .alert.alert-success role='alert'
+    p
+      span This team has completed their submission.
+-else
+  .alert.alert-danger role='alert'
+    p
+      span You still need to upload your 
+      == @team.check_completeness 
+      span  to complete your submission.
 
 = render 'submissionform', :locals => {:team => @team}
 

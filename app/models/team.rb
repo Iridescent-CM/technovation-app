@@ -2,6 +2,7 @@ class Team < ActiveRecord::Base
   include FlagShihTzu
   extend FriendlyId
   friendly_id :name_and_year, use: :slugged
+  before_save :update_submission_status
 
   validates :name, presence: true, uniqueness: {
     scope: :year,
@@ -182,7 +183,7 @@ class Team < ActiveRecord::Base
 
   def required_fields
     # 'avatar', 
-    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
   end
 
   def missing_fields
@@ -195,6 +196,23 @@ class Team < ActiveRecord::Base
      }
   end
 
+  def update_submission_status
+    if not submitted
+      if missing_fields.empty?
+        self.submitted=true
+        ## send out the mail
+        for user in members
+          SubmissionMailer.submission_received_email(user, self).deliver
+        end
+      end
+    else
+      if not missing_fields.empty?
+        self.submitted=false
+      end
+    end
+    true
+  end
+
   def started?
     return missing_fields.length != required_fields.length 
   end
@@ -202,27 +220,13 @@ class Team < ActiveRecord::Base
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'
+    elsif !started?
+      return 'Not Started'
     elsif missing_fields.empty?
       return 'Submission complete'
-    elsif !missing_fields.empty?
-      return 'Submitted but missing items'
-    elsif started?
-      return 'Started'
-    else
-      return 'Not Started'
+    else !missing_fields.empty?
+      return 'In Progress'
     end
-
-    # if Setting.beforeSubmissionsOpen?
-    #   return 'Submissions not yet open'
-    # elsif submitted and missing_fields.empty?
-    #   return 'Submitted and complete'
-    # elsif submitted and !missing_fields.empty?
-    #   return 'Submitted but missing items'
-    # elsif started?
-    #   return 'Started'
-    # else
-    #   return 'Not Started'
-    # end
   end
 
   def valid_regions
