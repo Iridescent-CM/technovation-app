@@ -210,6 +210,7 @@ class Team < ActiveRecord::Base
         self.submitted=false
       end
     end
+    true
   end
 
   def started?
