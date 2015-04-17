@@ -35,8 +35,13 @@ ul
   - unless current_user.judge?
     li
       ' If you haven't already, please complete the following
-      - if Setting.submissionOpen? and current_user.student?
+      - if Setting.submissionOpen?
+        - if current_user.student?
           a href='https://www.surveymonkey.com/s/post-survey2015' student post-program survey
+        - if current_user.mentor?
+          a href='https://www.surveymonkey.com/s/KV57HR6' mentor post-program survey
+        - if current_user.coach?
+          a href='https://www.surveymonkey.com/s/K7NCRZ8' coach post-program survey
       - else
         - if current_user.student?
           a href='https://www.surveymonkey.com/s/5K293XJ' student pre-program survey
@@ -44,7 +49,7 @@ ul
           a href='https://www.surveymonkey.com/s/FHRH7SM' mentor pre-program survey
         - if current_user.coach?
           a href='https://www.surveymonkey.com/s/F6GYPG9' coach pre-program survey
-        | .
+      | .
 
   / team request infos
   - if !current_user.current_team.nil?
