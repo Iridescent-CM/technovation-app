@@ -183,7 +183,7 @@ class Team < ActiveRecord::Base
 
   def required_fields
     # 'avatar', 
-    ['category_id', 'name', 'about', 'region', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
   end
 
   def missing_fields
@@ -220,14 +220,12 @@ class Team < ActiveRecord::Base
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'
+    elsif !started?
+      return 'Not Started'
     elsif missing_fields.empty?
       return 'Submission complete'
-    elsif !missing_fields.empty?
-      return 'Submitted but missing items'
-    elsif started?
-      return 'Started'
-    else
-      return 'Not Started'
+    else !missing_fields.empty?
+      return 'In Progress'
     end
   end
 
