@@ -2,6 +2,7 @@ class Team < ActiveRecord::Base
   include FlagShihTzu
   extend FriendlyId
   friendly_id :name_and_year, use: :slugged
+  before_save :update_submission_status
 
   validates :name, presence: true, uniqueness: {
     scope: :year,
@@ -195,6 +196,22 @@ class Team < ActiveRecord::Base
      }
   end
 
+  def update_submission_status
+    if not submitted
+      if missing_fields.empty?
+        self.submitted=true
+        ## send out the mail
+        for user in members
+          SubmissionMailer.submission_received_email(user, self)
+        end
+      end
+    else
+      if not missing_fields.empty?
+        self.submitted=false
+      end
+    end
+  end
+
   def started?
     return missing_fields.length != required_fields.length 
   end
@@ -211,18 +228,6 @@ class Team < ActiveRecord::Base
     else
       return 'Not Started'
     end
-
-    # if Setting.beforeSubmissionsOpen?
-    #   return 'Submissions not yet open'
-    # elsif submitted and missing_fields.empty?
-    #   return 'Submitted and complete'
-    # elsif submitted and !missing_fields.empty?
-    #   return 'Submitted but missing items'
-    # elsif started?
-    #   return 'Started'
-    # else
-    #   return 'Not Started'
-    # end
   end
 
   def valid_regions
