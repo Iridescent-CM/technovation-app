@@ -73,10 +73,15 @@
 
 hr
 .row
-  .alert.alert-danger role='alert'
-    p 
-      span This team still needs to upload their 
-      == @team.check_completeness 
-      span  to complete their submission.
+  - if @team.missing_fields.empty?
+    .alert.alert-success role='alert'
+      p
+        span This team has completed their submission.
+  -else
+    .alert.alert-danger role='alert'
+      p
+        span This team still needs to upload their 
+        == @team.check_completeness
+        span  to complete their submission.
 
   = render 'submission', team: @team
