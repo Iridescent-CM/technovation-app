@@ -7,7 +7,7 @@
   text_area = team.description
 - unless (team.code.nil? or team.code.length == 0)
   .h4 Source Code
-  = link_to 'Github repo', team.code
+  = link_to team.code, team.code
 - unless (team.store.nil? or team.store.length == 0)
   .h4 App Listing
   = link_to 'Listing page', team.store
