@@ -31,6 +31,8 @@ class Team < ActiveRecord::Base
   validates_attachment_content_type :screenshot4, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot5, :content_type => /\Aimage\/.*\Z/
 
+  validates_attachment_file_name :plan, :matches => /pdf\Z/
+  
   enum division: {
     ms: 0,
     hs: 1,
