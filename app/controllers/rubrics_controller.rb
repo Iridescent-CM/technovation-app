@@ -22,8 +22,8 @@ class RubricsController < ApplicationController
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
       if event.name != 'Virtual Judging'
-        start = (event.whentooccur - 3.hours).to_datetime
-        finish = (event.whentooccur + 10.hours).to_datetime
+        start = (event.whentooccur - 48.hours).to_datetime
+        finish = (event.whentooccur + 24.hours).to_datetime
         if (start..finish).cover?(Setting.now)
           ## only show the teams competing in the event
           teams = Team.all.has_event(event)
