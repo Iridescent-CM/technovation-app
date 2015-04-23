@@ -80,8 +80,13 @@ module ApplicationHelper
       regex = /youtube.com.*(?:\/|v=)([^&$]+)/
       matches = link.match(regex)
       if matches.nil? or matches.length < 2
-        return 'Your link seems broken. Please edit it.'
+        regex = /youtu\.be\/([a-zA-Z0-9]+)/
+        matches = link.match(regex)
+        if matches.nil? or matches.length < 2
+          return 'Your link seems broken. Please edit it.'
+        end
       end
+
       vid_id = matches[1]
       link = '//www.youtube.com/embed/' + vid_id
       '<iframe width="400px" height="300px" src="'+link+'"></iframe>'
