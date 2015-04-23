@@ -80,7 +80,7 @@ module ApplicationHelper
       regex = /youtube.com.*(?:\/|v=)([^&$]+)/
       matches = link.match(regex)
       if matches.nil? or matches.length < 2
-        regex = /youtu\.be\/([a-zA-Z0-9]+)/
+        regex = /youtu\.be\/([a-zA-Z0-9-]+)/
         matches = link.match(regex)
         if matches.nil? or matches.length < 2
           return 'Your link seems broken. Please edit it.'
