@@ -73,6 +73,9 @@ class RubricsController < ApplicationController
     ## remove the teams who have division == x
     teams.delete_if{|t| t.division == 'x'}
 
+    ## remove teams that have entered less than three fields of information
+    teams.delete_if{|t| t.required_fields.length - t.missing_fields.length < 3}
+
     if event_active
       ## show all teams for in-person events
       @teams = teams
