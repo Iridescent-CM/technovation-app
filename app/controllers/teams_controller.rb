@@ -52,7 +52,10 @@ class TeamsController < ApplicationController
       unless params[:iswinner].nil?
         @teams = @teams.is_winner
       end
-      
+      unless params[:showincomplete] == 'true'
+        @teams = @teams.is_submitted
+      end
+
       @teams = @teams.shuffle
 
       @season = "#{Setting.year} Season"
