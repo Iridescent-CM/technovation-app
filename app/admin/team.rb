@@ -36,6 +36,32 @@ ActiveAdmin.register Team do
     actions
   end
 
+  csv do
+    column :name
+    column :region
+    column :country do |team|
+      ISO3166::Country[team.country]
+    end
+    column :division
+    column :year
+
+    column :event_id do |t|
+      unless t.event_id.nil?
+        link_to Event.find(t.event_id).name, admin_event_path(t.event_id)
+      end
+    end
+
+    column (:rubrics_count){|t| t.rubrics.length}
+    column (:rubrics_average){|t| t.avg_score}
+    column (:quarterfinal_average){|t| t.avg_quarterfinal_score}
+    column (:semifinal_average){|t| t.avg_semifinal_score}
+    column (:final_average){|t| t.avg_final_score}
+
+    column :issemifinalist
+    column :isfinalist
+    column :iswinner
+  end
+
   filter :name
   filter :region, as: :select, collection: Team.regions
   filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
