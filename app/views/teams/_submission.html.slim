@@ -47,4 +47,5 @@
 
 - unless team.plan_file_name.nil?
   .h4 Business Plan
+  p = link_to 'Download', team.plan.url
   == render_pdf(team.plan.url)
