@@ -4,7 +4,7 @@ class RubricsController < ApplicationController
   def new
     ## new rubric needs to take a team
     @rubric = Rubric.new
-  	@rubric.team = Team.friendly.find(params[:team])
+    @rubric.team = Team.friendly.find(params[:team])
 
     @rubric_is_new = true
     authorize @rubric
@@ -90,14 +90,14 @@ class RubricsController < ApplicationController
 
 
     ## show all past rubrics that were done by the current judge for editing
-  	@rubrics = Rubric.all.has_judge(current_user)
+    @rubrics = Rubric.all.has_judge(current_user)
 
   end
 
   def edit
-  	## find the team associated with the rubric
-  	@rubric = Rubric.find(params[:id])
-  	@team = @rubric.team
+    ## find the team associated with the rubric
+    @rubric = Rubric.find(params[:id])
+    @team = @rubric.team
     authorize @rubric
   end
 
@@ -116,16 +116,17 @@ class RubricsController < ApplicationController
   end   
 
   def create
-  	@rubric = Rubric.new(rubric_params)
+    @rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
     @rubric.user_id = current_user.id
     
     authorize @rubric
-  	if @rubric.save
-  	  redirect_to :rubrics
-  	else
-  	  render :new
-  	end
+    if @rubric.save
+      redirect_to :rubrics
+    else
+      @rubric_is_new = true
+      render :new
+    end
   end
 
   def rubric_type
@@ -144,6 +145,6 @@ class RubricsController < ApplicationController
   private
 
   def rubric_params
-  	params.require(:rubric).permit(:team_id, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :identify_problem_comment, :address_problem_comment, :functional_comment, :external_resources_comment, :match_features_comment, :interface_comment, :description_comment, :market_comment, :competition_comment, :revenue_comment, :branding_comment, :pitch_comment, :launched_comment, )
+    params.require(:rubric).permit(:team_id, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :identify_problem_comment, :address_problem_comment, :functional_comment, :external_resources_comment, :match_features_comment, :interface_comment, :description_comment, :market_comment, :competition_comment, :revenue_comment, :branding_comment, :pitch_comment, :launched_comment, )
   end
 end
