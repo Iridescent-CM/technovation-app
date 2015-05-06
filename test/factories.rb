@@ -7,9 +7,12 @@ FactoryGirl.define do
     last_name "Stub"
     home_city "Angel Grove"
     school "Angel Grove High School"
-    sequence(:email) { |n| "email#{ n }@example.com" }
-    sequence(:parent_email) { |n| "parent#{ n }@example.com" }
+    email { "#{first_name}.#{last_name}@example.com".downcase }
+    parent_email { "#{first_name}.#{last_name}.parent@example.com".downcase }
     password "testtest"
     birthday { 16.years.ago }
+    home_country 'US'
+
+    after(:create) { |u| u.confirm! }
   end
 end
