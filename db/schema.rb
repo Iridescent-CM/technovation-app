@@ -150,7 +150,6 @@ ActiveRecord::Schema.define(version: 20150403023308) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "country",                  limit: 2, default: "",   null: false
     t.text     "description"
     t.string   "code"
     t.string   "pitch"
@@ -188,6 +187,7 @@ ActiveRecord::Schema.define(version: 20150403023308) do
     t.boolean  "issemifinalist"
     t.boolean  "isfinalist"
     t.string   "store"
+    t.string   "country",                  limit: 2, default: "",   null: false
     t.boolean  "iswinner"
     t.text     "tools"
     t.integer  "platform",                           default: 0,    null: false

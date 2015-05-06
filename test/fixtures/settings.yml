@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  key: MyString
-  value: MyString
+settings_year:
+  key: year
+  value: 2015
 
-two:
-  key: MyString
-  value: MyString
+settings_cutoff:
+  key: cutoff
+  value: <%= Date.today.to_s %>

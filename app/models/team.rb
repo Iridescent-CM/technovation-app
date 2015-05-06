@@ -141,17 +141,14 @@ class Team < ActiveRecord::Base
   def update_team_data!
     div = :x
 
-    # team division is the age of the oldest student
-    div = members.student
-      .map(&:division)
-      .max_by {|d| Team.divisions[d]}
-
-    # or if there are too many / not-enough students
+    # update team division to age of oldest student only if there is a valid
+    # number of team members
     student_count = members.student.count
-    if student_count < 1 or student_count > 5
-      div = :x
+    if student_count >= 1 and student_count <= 5
+      div = members.student
+        .map(&:division)
+        .max_by {|d| Team.divisions[d]}
     end
-
     self.division = div
 
     if members.count > 0
