@@ -44,14 +44,28 @@ gem 'jbuilder', '~> 2.0'
 gem 'openssl'
 gem 'typhoeus'
 
-# development gems
-gem 'dotenv-rails', :groups => [:development, :test]
-gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
-gem 'quiet_assets', group: :development
-gem 'pry-rails', group: :development
-
-# production gems
 gem 'airbrake'
-gem 'rails_12factor', group: :production
 gem 'unicorn'
+
+group :doc do
+  gem 'sdoc', '~> 0.4.0'
+end
+
+group :development, :test do
+  gem 'dotenv-rails'
+end
+
+group :development do
+  gem 'spring'
+  gem 'quiet_assets'
+  gem 'pry-rails'
+end
+
+group :test do
+  gem 'webmock'
+end
+
+group :production do
+  gem 'rails_12factor'
+end
+

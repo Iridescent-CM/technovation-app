@@ -20,6 +20,13 @@ then navigate to http://localhost:3000
 
 Initial credentials are in [`./db/seeds.rb`](blob/master/db/seeds.rb) to log in.
 
+## Testing
+
+```
+RAILS_ENV=test rake db:setup
+rake test
+```
+
 ## Signatures
 
 Users are required to have a signature on file before doing anything. On registration, an HMAC-signed url is sent to the parent's email for signature. Once the signature button is clicked, the user is then able to perform actions on the site.  In case a url needs to be manually generated and sent, use `rake signature:link[id]` where `id` is the user's numerical id.
