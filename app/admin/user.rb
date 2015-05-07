@@ -22,11 +22,31 @@ ActiveAdmin.register User do
       row :consent_signed_at
 
       row :can_judge
-      row :num_judged
+      row (:num_judged){|u| u.rubrics.length}
       row :judging_event
       row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
       row :judging_region
     end
+  end
+
+  csv do
+    column :id
+    column :email
+    column :role
+    column :first_name
+    column :last_name
+    column :birthday
+    column :home_country
+    column :consent_signed_at
+
+    column (:can_judge){|u| u.judge? or u.judging}
+    column (:num_judged){|u| u.rubrics.length}
+    column (:judging_event){|u| unless u.event_id.nil? 
+                                  Event.find(u.event_id).name
+                                end}
+
+    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
+    column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
   end
 
   index do
@@ -41,7 +61,7 @@ ActiveAdmin.register User do
     column :consent_signed_at
 
     column (:can_judge){|u| u.judge? or u.judging}
-    column (:num_judged){|u| Rubric.where(user_id: u.id).length}
+    column (:num_judged){|u| u.rubrics.length}
     column (:judging_event){|u| unless u.event_id.nil? 
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
