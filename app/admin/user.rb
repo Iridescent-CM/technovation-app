@@ -37,6 +37,7 @@ ActiveAdmin.register User do
     column :last_name
     column :birthday
     column :home_country
+    column :school
     column :consent_signed_at
 
     column (:can_judge){|u| u.judge? or u.judging}
