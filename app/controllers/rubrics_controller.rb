@@ -40,9 +40,9 @@ class RubricsController < ApplicationController
       id = Event.where(name: 'Virtual Judging').first.id
       teams = Team.where(region: current_user.judging_region, event_id: id)
     elsif Setting.stage == 'semifinal' and current_user.semifinals_judge?
-      teams = Team.where(issemifinalist: true, region: current_user.judging_region)
+      teams = Team.where(issemifinalist: true)
     elsif Setting.stage == 'final' and current_user.finals_judge?
-      teams = Team.where(isfinalist: true, region: current_user.judging_region)
+      teams = Team.where(isfinalist: true)
     else
       teams = Team.none
     end
