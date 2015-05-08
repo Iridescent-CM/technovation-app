@@ -121,6 +121,8 @@ ActiveAdmin.register User do
       f.input :judging_region, as: :select, collection: Team.regions
       #= f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name
       f.input :event_id, as: :select, collection: Event.all
+      f.input :semifinals_judge
+      f.input :finals_judge
     end
 
 
