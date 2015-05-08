@@ -39,10 +39,12 @@ class RubricsController < ApplicationController
       ## only show teams who have signed up for Virtual Judging
       id = Event.where(name: 'Virtual Judging').first.id
       teams = Team.where(region: current_user.judging_region, event_id: id)
-    elsif Setting.stage == 'semifinal'
+    elsif Setting.stage == 'semifinal' and current_user.semifinals_judge?
       teams = Team.where(issemifinalist: true, region: current_user.judging_region)
-    elsif Setting.stage == 'final'
+    elsif Setting.stage == 'final' and current_user.finals_judge?
       teams = Team.where(isfinalist: true, region: current_user.judging_region)
+    else
+      teams = Team.none
     end
 
     ## search for teams that have the fewest number of rubrics
