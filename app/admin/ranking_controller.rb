@@ -17,23 +17,12 @@ class RankingController < ActionController::Base
     ## calculate number of teams advancing
     ## sort the teams by the to p average score
 
-    # http://stackoverflow.com/questions/19339140/ruby-on-rails-order-users-based-on-average-ratings-with-most-reviews
-    #Team.joins(:rubrics).select("teams.id, AVG(rubrics.score) as avg_score, count(rubrics.id) as num_rubrics").group("teams.id").order("avg_score DESC")
-
-    # Team.update_all(issemifinalist:false)
-    # for e in Event.all
-    #   num_teams = [0, (e.teams.length-1)/10 + 1].max
-    #   winners = Team.where(event_id: e.id).joins(:rubrics).select("teams.id, AVG(rubrics.score) as avgscore").group("teams.id").order("avgscore DESC").limit(num_teams)
-    #   winners.update_all(issemifinalist:true)
-    # end
     Team.update_all(issemifinalist:false)
     for e in Event.all
-      num_teams = [0, (e.teams.length-1)/10 + 1].max
-      # winners = e.teams.sort_by(&:avg_score).reverse.take(num_teams).each { |w|
-      #   w.update(issemifinalist: true)        
-      # }
+      teams = e.teams.joins(:rubrics).uniq
+      num_teams = [0, (teams.length-1)/10 + 1].max
 
-      winners = take_with_ties(e.teams.sort_by(&:avg_quarterfinal_score).reverse, num_teams).each { |w|
+      winners = take_with_ties(teams.sort_by(&:avg_quarterfinal_score).reverse, num_teams).each { |w|
         w.update(issemifinalist: true)        
       }
     end
@@ -42,14 +31,10 @@ class RankingController < ActionController::Base
   def self.mark_finalists
     ## the top N scores per region
     Team.update_all(isfinalist:false)
-    for r in Team.regions
-      num_teams = self.num_finalists(r)
-      region_id = Team.regions[r]
-      # winners = Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_score).reverse.take(num_teams).each { |w|
-      #   w.update(isfinalist:true)
-      # }
+    for region_name, region_id in Team.regions
+      num_teams = self.num_finalists(region_name)
 
-      winners = take_with_ties(Team.where(issemifinalist:true).has_region(region_id).sort_by(&:avg_semifinal_score).reverse, num_teams).each { |w|
+      winners = take_with_ties(Team.joins(:rubrics).where(issemifinalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(region_id).uniq.sort_by(&:avg_semifinal_score).reverse, num_teams).each { |w|
         w.update(isfinalist:true)
       }
 
@@ -71,7 +56,7 @@ class RankingController < ActionController::Base
   end
 
   def self.num_finalists(region)
-    case region[0].to_sym
+    case region.to_sym
     when :ushs
       3
     when :mexicohs
