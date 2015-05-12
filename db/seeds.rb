@@ -5,6 +5,20 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+if Rails.env == 'test'
+  require 'webmock'
+  include WebMock::API
+
+  default_response = {
+    status: 200,
+    body: '{"results":[]}',
+    headers: {}
+  }
+
+  stub_request(:any, /.*/).to_return(default_response)
+end
+
 user = User.new(
   first_name: 'Cory',
   last_name: 'Li',
