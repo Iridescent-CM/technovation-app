@@ -53,7 +53,6 @@ class RubricsController < ApplicationController
     ## do not show teams that the judge has judged already
     teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
 
-
     ## todo: conflict_region should be assigned correctly for both judge user types and for mentor/coach turned judges
     ## todo: judging_region should be assigned correctly for judges signed up for in-person events (and based on conflict_region)
     # ## if the judge is a mentor/coach, do not show teams from the same region
@@ -85,8 +84,7 @@ class RubricsController < ApplicationController
       ## show a randomly drawn team with the minimum number rubrics for virtual judging
       if teams.length > 0
         teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
-        ind = rand(teams.length)
-        @teams = [ teams[ind] ]
+        @teams = [ teams.sample ]
       end    
     end
 
