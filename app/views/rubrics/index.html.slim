@@ -5,7 +5,7 @@ p Since 2010, Technovation has engaged nearly 3000 girls in 25 countries to beco
 p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s important for communities to find ways to harness the full utility of these gadgets. As a judge for Technovation, you’ll have the opportunity to get an inside look at how the youth of today plan to transform smartphones from toys to tools. 
 
 - if Setting.anyJudgingRoundActive?
-	h3 You are currently judging for the #{Setting.stage}s
+	h3 You are currently judging for the #{Setting.judgingRound}s
 	- unless @event.nil?
 		h4 Teams competing in #{@event.name}
 	- if @teams.nil? or @teams.empty?

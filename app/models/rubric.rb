@@ -43,12 +43,7 @@ class Rubric < ActiveRecord::Base
 	end
 
 	def calculate_stage
-		# for stage in Rubric.stages.keys
-		#   if Setting.judgingRoundActive?(stage)
-		#     self.stage = stage
-		#   end
-		# end
-		self.stage = Setting.stage
+		self.stage = Setting.nextJudgingRound.first
 	end
 
 end

@@ -60,6 +60,7 @@ class RubricsControllerTest < ActionController::TestCase
 
     assert_select "div.loggedin h1", "Judge dashboard"
     assert_select "div.loggedin h3", false, "No judging round active"
+    assert_select "div.loggedin h4", /No judging rounds/
     assert_select "div.loggedin a", false
   end
 
@@ -74,7 +75,7 @@ class RubricsControllerTest < ActionController::TestCase
     assert assigns(:rubrics).empty?
     assert_not_nil assigns(:teams)
 
-    assert_select "div.loggedin h3", 2
+    assert_select "div.loggedin h3", /quarterfinals/
 
     # Should skip Golden Oldies due to invalid division
     # Should skip Avengers because it has more rubrics already
@@ -127,12 +128,40 @@ class RubricsControllerTest < ActionController::TestCase
 
     assert assigns(:rubrics).empty?
 
+    assert_select "div.loggedin h3", /semifinals/
+
     # Should skip Justice League due to mismatched region
     # Should skip Watchmen because it's not a semifinalist
     assert_equal "The Avengers", assigns(:teams).first.name
   end
 
-  #test "handle in-person events - something about event_active" do
+  test "inbetween date" do
+    # in between semifinal judging close and final judging open
+    @today.value = '2015-01-19'
+    @today.save!
 
-  #end
+    create_team("Watchmen")
+    create_team("The Pitches")
+
+    assert !Setting.anyJudgingRoundActive?
+
+    get :index
+    assert_response :success
+
+    assert_select "div.loggedin h4", /No judging rounds/
+
+    assert assigns(:rubrics).empty?
+    assert_nil assigns(:teams)
+  end
+
+  test "handle in-person events - something about event_active" do
+#event = Event.create(
+  #name: 'Bay Area Quarterfinals',
+  #location: 'Dropbox',
+  #whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
+  #description: 'Quarterfinals for the Bay Area',
+  #organizer: 'Technovation',
+#)
+
+  end
 end
