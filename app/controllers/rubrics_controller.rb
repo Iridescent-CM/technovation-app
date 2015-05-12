@@ -129,19 +129,6 @@ class RubricsController < ApplicationController
     end
   end
 
-  def rubric_type
-    ## todo: this seems sketchy
-    if between?(Setting.quarterfinalJudgingOpen, Setting.quarterfinalJudgingClose)
-      return 'quarterfinal'
-    end
-    if between?(Setting.semifinalJudgingOpen, Setting.semifinalJudgingClose)
-      return 'semifinal'
-    end
-    if past?(Setting.semifinalJudgingClose)
-      return 'final'
-    end
-  end
-
   private
 
   def rubric_params

@@ -42,6 +42,10 @@ class Setting < ActiveRecord::Base
     return self.now >= date
   end
 
+  def self.before(date)
+    self.now < date
+  end
+
   def self.anyJudgingRoundActive?
     !self.judgingRoundByDate.nil?
   end
@@ -51,9 +55,15 @@ class Setting < ActiveRecord::Base
   end
 
   def self.nextJudgingRound
-    stage = self.judgingRoundByDate || 'quarterfinal'
-    date = self.get_date(stage + 'JudgingOpen')
-    [stage, date]
+    Rubric.stages.keys.each do |round|
+      closing_date = self.get_date(round+'JudgingClose')
+      if self.before(closing_date)
+        return [round, self.get_date(round+'JudgingOpen')]
+      end
+    end
+
+    # Return quarterfinals by default
+    ['quarterfinal', self.get_date('quarterfinalJudgingOpen')]
   end
 
   def self.judgingRoundActive?(round)

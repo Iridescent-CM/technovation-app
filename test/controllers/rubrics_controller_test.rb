@@ -115,22 +115,34 @@ class RubricsControllerTest < ActionController::TestCase
     assert_equal "The Avengers", rubrics[0].team.name
   end
 
-  test "semifinals" do
+  test "semifinals, not marked as judge" do
     @today.value = '2015-01-13'
     @today.save!
 
-    @justice_league = create_team("Justice League", issemifinalist: true, region: 3)
+    @avengers = create_team("The Avengers", issemifinalist: true)
+
+    get :index
+    assert_response :success
+
+    # Maybe this h3 shouldn't be visible if !user.semifinals_judge?
+    assert_select "div.loggedin h3", /semifinals/
+    assert_nil assigns(:teams)
+  end
+
+  test "semifinals, marked as judge" do
+    @today.value = '2015-01-13'
+    @today.save!
+
+    @me.update_attribute(:semifinals_judge, true)
+
     @watchmen = create_team("Watchmen")
     @avengers = create_team("The Avengers", issemifinalist: true)
 
     get :index
     assert_response :success
 
-    assert assigns(:rubrics).empty?
-
+    # Maybe this h3 shouldn't be visible if !user.semifinals_judge?
     assert_select "div.loggedin h3", /semifinals/
-
-    # Should skip Justice League due to mismatched region
     # Should skip Watchmen because it's not a semifinalist
     assert_equal "The Avengers", assigns(:teams).first.name
   end
