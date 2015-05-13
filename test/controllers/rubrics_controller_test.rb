@@ -9,14 +9,9 @@ class RubricsControllerTest < ActionController::TestCase
     @me = FactoryGirl.create(:user, judging_region: 0)
     sign_in @me
 
-    Setting.create!(key:'quarterfinalJudgingOpen', value: '2015-01-01')
-    Setting.create!(key:'quarterfinalJudgingClose', value: '2015-01-10')
-    Setting.create!(key:'semifinalJudgingOpen', value: '2015-01-13')
-    Setting.create!(key:'semifinalJudgingClose', value: '2015-01-18')
-    Setting.create!(key:'finalJudgingOpen', value: '2015-01-22')
-    Setting.create!(key:'finalJudgingClose', value: '2015-01-24')
+    @dates = create_judging_date_settings(Date.new(2015, 1, 1))
 
-    @today = Setting.create!(key:'todaysDateForTesting', value: '2015-01-01')
+    @today = Setting.create!(key:'todaysDateForTesting', value: @dates[:qf_open])
     @qfs = Event.create!(name: 'Virtual Judging') # quarterfinals
   end
 
@@ -48,7 +43,7 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "blank slate" do
-    @today.value = '2014-12-31'
+    @today.value = @dates[:qf_open] - 1.day
     @today.save!
 
     assert !Setting.anyJudgingRoundActive?
@@ -65,9 +60,9 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "simple quarterfinals case" do
-    @power_rangers = create_team("Power Rangers", num_rubrics: 1)
-    @avengers = create_team("The Avengers", num_rubrics: 3)
-    @golden_oldies = create_team("Golden Oldies", division: 2) # div 'x' = dq'ed
+    power_rangers = create_team("Power Rangers", num_rubrics: 1)
+    create_team("The Avengers", num_rubrics: 3)
+    create_team("Golden Oldies", division: 2) # div 'x' = dq'ed
 
     get :index
     assert_response :success
@@ -79,13 +74,13 @@ class RubricsControllerTest < ActionController::TestCase
 
     # Should skip Golden Oldies due to invalid division
     # Should skip Avengers because it has more rubrics already
-    assert_equal "Power Rangers", assigns(:teams).first.name
+    assert_equal power_rangers.name, assigns(:teams).first.name
   end
 
   test "should hide teams that i've judged already" do
-    @power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
-    @avengers = create_team("The Avengers", num_rubrics: 3)
-    @powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
+    power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
+    create_team("The Avengers", num_rubrics: 3)
+    powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
 
     get :index
     assert_response :success
@@ -93,33 +88,33 @@ class RubricsControllerTest < ActionController::TestCase
     assert_equal 1, assigns(:rubrics).size
     assert_not_nil assigns(:teams)
 
-    assert_equal "PowerPuff Girls", assigns(:teams).first.name
-    assert_equal "Power Rangers", assigns(:rubrics).first.team.name
+    assert_equal powerpuff_girls.name, assigns(:teams).first.name
+    assert_equal power_rangers.name, assigns(:rubrics).first.team.name
   end
 
   test "ensure multiple rubrics are handled correctly" do
-    @avengers = create_team("The Avengers", num_rubrics: 3)
-    @powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
-    @power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
+    avengers = create_team("The Avengers", num_rubrics: 3)
+    powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
+    power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
 
-    FactoryGirl.create(:rubric, team: @powerpuff_girls, user: @me)
-    FactoryGirl.create(:rubric, team: @avengers, user: @me)
+    FactoryGirl.create(:rubric, team: powerpuff_girls, user: @me)
+    FactoryGirl.create(:rubric, team: avengers, user: @me)
 
     get :index
     assert_response :success
     assert_nil assigns(:teams)
     rubrics = assigns(:rubrics)
     assert_equal 3, rubrics.size
-    assert_equal "Power Rangers", rubrics[2].team.name
-    assert_equal "PowerPuff Girls", rubrics[1].team.name
-    assert_equal "The Avengers", rubrics[0].team.name
+    assert_equal power_rangers.name, rubrics[2].team.name
+    assert_equal powerpuff_girls.name, rubrics[1].team.name
+    assert_equal avengers.name, rubrics[0].team.name
   end
 
   test "semifinals, not marked as judge" do
-    @today.value = '2015-01-13'
+    @today.value = @dates[:sf_open]
     @today.save!
 
-    @avengers = create_team("The Avengers", issemifinalist: true)
+    create_team("The Avengers", issemifinalist: true)
 
     get :index
     assert_response :success
@@ -130,13 +125,13 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "semifinals, marked as judge" do
-    @today.value = '2015-01-13'
+    @today.value = @dates[:sf_open]
     @today.save!
 
     @me.update_attribute(:semifinals_judge, true)
 
-    @watchmen = create_team("Watchmen")
-    @avengers = create_team("The Avengers", issemifinalist: true)
+    create_team("Watchmen")
+    avengers = create_team("The Avengers", issemifinalist: true)
 
     get :index
     assert_response :success
@@ -144,12 +139,12 @@ class RubricsControllerTest < ActionController::TestCase
     # Maybe this h3 shouldn't be visible if !user.semifinals_judge?
     assert_select "div.loggedin h3", /semifinals/
     # Should skip Watchmen because it's not a semifinalist
-    assert_equal "The Avengers", assigns(:teams).first.name
+    assert_equal avengers.name, assigns(:teams).first.name
   end
 
   test "inbetween date" do
     # in between semifinal judging close and final judging open
-    @today.value = '2015-01-19'
+    @today.value = @dates[:sf_close] + 1.day
     @today.save!
 
     create_team("Watchmen")
@@ -166,14 +161,35 @@ class RubricsControllerTest < ActionController::TestCase
     assert_nil assigns(:teams)
   end
 
-  test "handle in-person events - something about event_active" do
-#event = Event.create(
-  #name: 'Bay Area Quarterfinals',
-  #location: 'Dropbox',
-  #whentooccur: DateTime.new(2015, 07, 11, 20, 10, 0),
-  #description: 'Quarterfinals for the Bay Area',
-  #organizer: 'Technovation',
-#)
+  test "in-person events - defer to event when active" do
+    event = Event.create(
+      name: 'Bay Area Quarterfinals',
+      whentooccur: Setting.now
+    )
+    @me.event_id = event.id
 
+    create_team("Watchmen")
+    tmnt = create_team("Teenage Mutant Ninja Turtles", event: event)
+
+    get :index
+    assert_response :success
+
+    assert_equal tmnt.name, assigns(:teams).first.name
+  end
+
+  test "in-person events - ignore assigned event if not active" do
+    event = Event.create(
+      name: 'Bay Area Quarterfinals',
+      whentooccur: @dates[:f_open]
+    )
+    @me.event_id = event.id
+
+    watchmen = create_team("Watchmen")
+    create_team("Teenage Mutant Ninja Turtles", event: event)
+
+    get :index
+    assert_response :success
+
+    assert_equal watchmen.name, assigns(:teams).first.name
   end
 end
