@@ -45,7 +45,7 @@ class UsersController < ApplicationController
       text_box name, :at => [150,310], :width => 420, :height => 32, :align => :center
     end
 
-    send_file("rendered.pdf", :filename => "technovation_certificate.pdf", :disposition => "inline", :type => "application.pdf")
+    send_file("rendered.pdf", :filename => "technovation_certificate.pdf", :type => "application.pdf")
   end
 
   def invite
