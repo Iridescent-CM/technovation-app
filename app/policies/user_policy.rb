@@ -9,6 +9,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def get_certificate?
+    current_user == user
+  end
+
   def show?  # only allow viewing of students on same team for privacy
     (user == current_user) or
     (user.consented? and

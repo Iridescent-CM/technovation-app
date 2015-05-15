@@ -43,12 +43,12 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update] do
     member do
       post 'invite', as: 'invite'
-  
+      get 'get_certificate'
+
       # get 'mentor_coach'
       # post 'mentor_coach'
     end
   end
-
   resources :teams do
     member do
       post 'join'
