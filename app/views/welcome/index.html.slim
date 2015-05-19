@@ -8,6 +8,14 @@
 h2 Dashboard
 
 ul
+  / completion certificate
+  - if Rails.application.config.env[:show_certificate]
+    - if current_user.student? and !current_user.current_team.nil? and current_user.current_team.submission_eligible?
+      li
+        'Click
+        = link_to 'here', get_certificate_user_path(current_user)
+        '  to receive your Technovation certificate!
+
   / submissions open
   - if Setting.submissionOpen? and not current_user.judge?
     - submissionClose = Setting.get_date('submissionClose') - 1.day
@@ -89,12 +97,6 @@ ul
             '  or
           = link_to 'request to join an existing team', :teams
           | .
-
-  - if current_user.student?
-    li
-      'Click
-      = link_to 'here', get_certificate_user_path(current_user)
-      '  to receive your Technovation certificate!
 hr
 
 h2 Announcements

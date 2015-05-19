@@ -215,6 +215,10 @@ class Team < ActiveRecord::Base
     return missing_fields.length != required_fields.length 
   end
 
+  def submission_eligible?
+    return (required_fields.length - missing_fields.length > 4)
+  end
+
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'
