@@ -34,6 +34,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_certificate
+    @user = User.friendly.find(params[:id])
+    authorize @user
+
+    filename = "template.pdf"
+    name = current_user.first_name + ' ' + current_user.last_name
+    Prawn::Document.generate("rendered.pdf", :template => filename) do
+      font_size 32
+      text_box name, :at => [150,310], :width => 420, :height => 32, :align => :center
+    end
+
+    send_file("rendered.pdf", :filename => "technovation_certificate.pdf", :type => "application.pdf")
+  end
+
   def invite
     @user = User.friendly.find(params[:id])
     authorize @user

@@ -34,3 +34,5 @@ bower.json
 
 *.sublime-workspace
 *.sublime-project
+
+rendered.pdf
