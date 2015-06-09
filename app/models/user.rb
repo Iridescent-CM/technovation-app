@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
     {sym: :design, abbr: 'Dsn'},
   ]
 
-
   has_flags 1 => EXPERTISES[0][:sym],
             2 => EXPERTISES[1][:sym],
             3 => EXPERTISES[2][:sym],
@@ -133,6 +132,20 @@ class User < ActiveRecord::Base
     boolean
   end
 
+  def certificate_file
+    if !on_submitted_team?
+      nil
+    elsif student?
+      'student_template.pdf'
+    elsif coach?
+      'coach_template.pdf'
+    elsif mentor?
+      'mentor_template.pdf'
+    else
+      nil
+    end
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -155,6 +168,10 @@ class User < ActiveRecord::Base
 
   def current_team
     teams.where(year: Setting.year).first
+  end
+
+  def on_submitted_team?
+    not teams.where(year: Setting.year).to_a.keep_if { |t| t.submission_eligible? }.empty?
   end
 
   def has_team_for_season?

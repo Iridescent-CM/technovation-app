@@ -10,7 +10,7 @@ h2 Dashboard
 ul
   / completion certificate
   - if Rails.application.config.env[:show_certificate]
-    - if current_user.student? and !current_user.current_team.nil? and current_user.current_team.submission_eligible?
+    - if current_user.certificate_file
       li
         'Click
         = link_to 'here', get_certificate_user_path(current_user)
