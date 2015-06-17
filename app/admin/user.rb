@@ -2,9 +2,9 @@ ActiveAdmin.register User do
 
   filter :teams_id_not_null, label: "Is On Team", as: :boolean
   filter :teams_name_cont, label: "Team"
-  filter :event, collection: proc { Event.order(:name) }
+  filter :event, collection: Event.order(:name)
   filter :email_eq, label: "Email"
-  filter :role, as: :select, collection: proc { User.roles.sort }
+  filter :role, as: :select, collection: User.roles.sort
   filter :school_cont, label: "School"
   filter :first_name_cont, label: "First Name"
   filter :last_name_cont, label: "Last Name"
@@ -18,8 +18,8 @@ ActiveAdmin.register User do
   filter :parent_email_equal, label: "Parent Email"
   filter :is_survey_done
   filter :judging
-  filter :conflict_region, as: :select, collection: proc { Team.regions }
-  filter :judging_region, as: :select, collection: proc { Team.regions }
+  filter :conflict_region, as: :select, collection: Team.regions.sort
+  filter :judging_region, as: :select, collection: Team.regions.sort
   filter :semifinals_judge
   filter :finals_judge
 
