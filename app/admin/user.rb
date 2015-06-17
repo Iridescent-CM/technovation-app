@@ -1,7 +1,27 @@
 ActiveAdmin.register User do
 
-  preserve_default_filters!
   filter :teams_id_not_null, label: "Is On Team", as: :boolean
+  filter :teams_name_cont, label: "Team"
+  filter :event, collection: proc { Event.order(:name) }
+  filter :email_eq, label: "Email"
+  filter :role, as: :select, collection: proc { User.roles.sort }
+  filter :school_cont, label: "School"
+  filter :first_name_cont, label: "First Name"
+  filter :last_name_cont, label: "Last Name"
+  filter :home_city_cont, label: "Home City"
+  filter :home_state_cont, label: "Home State"
+  filter :postal_code_cont, label: "Postal Code"
+  filter :home_country_cont, label: "Home Country"
+  filter :birthday
+  filter :parent_first_name_cont, label: "Parent First Name"
+  filter :parent_last_name_cont, label: "Parent Last Name"
+  filter :parent_email_equal, label: "Parent Email"
+  filter :is_survey_done
+  filter :judging
+  filter :conflict_region, as: :select, collection: proc { Team.regions }
+  filter :judging_region, as: :select, collection: proc { Team.regions }
+  filter :semifinals_judge
+  filter :finals_judge
 
   controller do
     def find_resource
