@@ -21,6 +21,7 @@ ActiveAdmin.register User do
       row :home_country
       row :consent_signed_at
 
+      row (:teams){|u| u.teams.nil? ? nil : raw(u.teams.map {|t| raw(link_to(t.name, admin_team_path(t.id)))}.join(', '))}
       row :can_judge
       row (:num_judged){|u| u.rubrics.length}
       row :judging_event
@@ -40,6 +41,7 @@ ActiveAdmin.register User do
     column :school
     column :consent_signed_at
 
+    column (:teams){|u| u.teams.nil? ? nil : u.teams.map {|t| t.name}.join(', ')}
     column (:can_judge){|u| u.judge? or u.judging}
     column (:num_judged){|u| u.rubrics.length}
     column (:judging_event){|u| unless u.event_id.nil? 
@@ -61,6 +63,7 @@ ActiveAdmin.register User do
     column :home_country
     column :consent_signed_at
 
+    column (:teams){|u| u.teams.nil? ? nil : raw(u.teams.map {|t| raw(link_to(t.name, admin_team_path(t.id)))}.join(', '))}
     column (:can_judge){|u| u.judge? or u.judging}
     column (:num_judged){|u| u.rubrics.length}
     column (:judging_event){|u| unless u.event_id.nil? 
