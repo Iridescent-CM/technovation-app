@@ -28,6 +28,7 @@
               - unless current_user.teams.empty?
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
+              - unless current_user.judge?
                 li.dropdown
                   a.dropdown-toggle href='#' data-toggle='dropdown' role='button'
                     ' My Teams
@@ -35,6 +36,9 @@
                   ul.dropdown-menu role='menu'
                     - teams_by_year = current_user.teams.order(year: :desc, name: :asc).group_by { |t| t.year }
                     - divider = false
+                    - if current_user && policy(Team).create?
+                      li = link_to 'Create New Team', :new_team
+                      - divider = true
                     - for year in teams_by_year.keys
                       - if divider
                         li.divider
