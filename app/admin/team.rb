@@ -1,6 +1,19 @@
 ActiveAdmin.register Team do
   config.clear_action_items!
 
+  filter :name_eq, label: "Name"
+  filter :region, as: :select, collection: Team.regions.sort
+  filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
+  filter :division, as: :select, collection: Team.divisions.sort
+  filter :year_eq, label: "Year"
+  filter :category, as: :select, collection: Category.order(:name)
+  filter :event, as: :select, collection: Event.order(:name)
+  filter :description_cont, label: "Description"
+  filter :issemifinalist
+  filter :isfinalist
+  filter :iswinner
+  filter :submitted
+
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
@@ -61,13 +74,6 @@ ActiveAdmin.register Team do
     column :isfinalist
     column :iswinner
   end
-
-  filter :name
-  filter :region, as: :select, collection: Team.regions
-  filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
-  filter :division, as: :select, collection: Team.divisions
-  filter :year
-  preserve_default_filters!
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
