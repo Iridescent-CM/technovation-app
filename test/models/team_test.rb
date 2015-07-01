@@ -16,11 +16,7 @@ class TeamTest < ActiveSupport::TestCase
     @age_17_birthday = 17.years.ago
     @age_22_birthday = 22.years.ago
 
-    @power_rangers = Team.create(
-      name: 'Power Rangers',
-      year: Setting.year,
-      region: 0
-    ) # defaults to division 2
+    @power_rangers = FactoryGirl.create(:team)
 
     [ @jason, @zack, @trini, @billy, @kimberly ].each do |ranger|
       add_to_team(ranger, @power_rangers)
@@ -36,11 +32,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test "toggle division based on team size" do
-    new_power_rangers = Team.create(
-      name: 'New Power Rangers',
-      year: Setting.year,
-      region: 0
-    )
+    new_power_rangers = FactoryGirl.create(:team, name: 'New Power Rangers')
 
     new_power_rangers.update_team_data!
     assert new_power_rangers.ineligible?

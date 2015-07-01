@@ -12,7 +12,34 @@ FactoryGirl.define do
     password "testtest"
     birthday { 16.years.ago }
     home_country 'US'
+    consent_signed_at { 1.minute.ago }
 
     after(:create) { |u| u.confirm! }
+  end
+
+  factory :team do
+    sequence(:name) { |n| "Team #{ n }" }
+    year { Setting.year }
+    region 0
+    category { Category.last }
+    code "http://drive.google.com/FAKE_URL_HERE"
+    pitch "255 characters leading up to some pitch for this app"
+    description "a longer text description for the app going on forever"
+    demo "http://www.youtube.com/watch?v=HEXSTRINGHERE"
+  end
+
+  factory :rubric do
+    identify_problem 1
+    address_problem 1
+    functional 1
+    external_resources 1
+    match_features 1
+    interface 1
+    description 1
+    market 1
+    competition 1
+    revenue 1
+    branding 1
+    pitch 1
   end
 end

@@ -34,14 +34,14 @@ class RubricsController < ApplicationController
     end
 
 
-    if Setting.stage == 'quarterfinal' and !event_active
+    if Setting.judgingRound == 'quarterfinal' and !event_active
       ## if it is the quarterfinals and it is not the time of the judge's event
       ## only show teams who have signed up for Virtual Judging
       id = Event.where(name: 'Virtual Judging').first.id
       teams = Team.where(region: current_user.judging_region, event_id: id)
-    elsif Setting.stage == 'semifinal' and current_user.semifinals_judge?
+    elsif Setting.judgingRound == 'semifinal' and current_user.semifinals_judge?
       teams = Team.where(issemifinalist: true)
-    elsif Setting.stage == 'final' and current_user.finals_judge?
+    elsif Setting.judgingRound == 'final' and current_user.finals_judge?
       teams = Team.where(isfinalist: true)
     else
       teams = Team.none
@@ -52,7 +52,6 @@ class RubricsController < ApplicationController
 
     ## do not show teams that the judge has judged already
     teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
-
 
     ## todo: conflict_region should be assigned correctly for both judge user types and for mentor/coach turned judges
     ## todo: judging_region should be assigned correctly for judges signed up for in-person events (and based on conflict_region)
@@ -85,8 +84,7 @@ class RubricsController < ApplicationController
       ## show a randomly drawn team with the minimum number rubrics for virtual judging
       if teams.length > 0
         teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
-        ind = rand(teams.length)
-        @teams = [ teams[ind] ]
+        @teams = [ teams.sample ]
       end    
     end
 
@@ -128,19 +126,6 @@ class RubricsController < ApplicationController
     else
       @rubric_is_new = true
       render :new
-    end
-  end
-
-  def rubric_type
-    ## todo: this seems sketchy
-    if between?(Setting.quarterfinalJudgingOpen, Setting.quarterfinalJudgingClose)
-      return 'quarterfinal'
-    end
-    if between?(Setting.semifinalJudgingOpen, Setting.semifinalJudgingClose)
-      return 'semifinal'
-    end
-    if past?(Setting.semifinalJudgingClose)
-      return 'final'
     end
   end
 

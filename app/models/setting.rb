@@ -2,6 +2,8 @@ class Setting < ActiveRecord::Base
   validates :key, presence: true, uniqueness: true
   validates :value, presence: true
 
+  NO_ROUND = 'no round'
+
   ##### helpers for specific data types
   def self.get_boolean(key)
     return Setting.find_by_key!(key).value == 'true'
@@ -40,19 +42,28 @@ class Setting < ActiveRecord::Base
     return self.now >= date
   end
 
-  def self.anyJudgingRoundActive?
-    return Rubric.stages.keys.keep_if{ |s| self.judgingRoundActive?(s)}.length > 0
+  def self.before(date)
+    self.now < date
   end
 
-  def self.judgingRoundActive
-    ## return the active judging round
-    active = Rubric.stages.keys.keep_if{ |s| self.judgingRoundActive? (s)}
-    return active.empty? ? 'no round' : active[0]
+  def self.anyJudgingRoundActive?
+    !self.judgingRoundByDate.nil?
+  end
+
+  def self.judgingRound
+    self.judgingRoundByDate || NO_ROUND
   end
 
   def self.nextJudgingRound
-    date = self.get_date(self.stage + 'JudgingOpen')
-    return [self.stage, date]
+    Rubric.stages.keys.each do |round|
+      closing_date = self.get_date(round+'JudgingClose')
+      if self.before(closing_date)
+        return [round, self.get_date(round+'JudgingOpen')]
+      end
+    end
+
+    # Return quarterfinals by default
+    ['quarterfinal', self.get_date('quarterfinalJudgingOpen')]
   end
 
   def self.judgingRoundActive?(round)
@@ -70,18 +81,7 @@ class Setting < ActiveRecord::Base
   end
 
   def self.anyScoresVisible?
-    return self.scoresVisible.length > 0
-  end
-
-  def self.stage
-    for stage in Rubric.stages.keys
-      if judgingRoundActive?(stage)
-        return stage
-      end
-    end
-
-    ## if no stages are active returns 'quarterfinal'
-    return 'quarterfinal'
+    self.scoresVisible.length > 0
   end
 
   def self.now
@@ -90,5 +90,10 @@ class Setting < ActiveRecord::Base
     else
       Time.now
     end
+  end
+
+  private
+  def self.judgingRoundByDate
+    Rubric.stages.keys.detect{ |s| self.judgingRoundActive?(s) }
   end
 end
