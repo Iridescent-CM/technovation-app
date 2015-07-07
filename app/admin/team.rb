@@ -52,6 +52,20 @@ ActiveAdmin.register Team do
   csv do
     column :name
     column :region
+    column :city do |t|
+      members_by_city = t.members(true).student.group_by(&:home_city)
+      if members_by_city.size > 0
+        members_by_city.values.max_by(&:size).first.home_city
+      end
+    end
+
+    column :state do |t|
+      members_by_state = t.members(true).student.group_by(&:home_state)
+      if members_by_state.size > 0
+        members_by_state.values.max_by(&:size).first.home_state
+      end
+    end
+
     column :country do |team|
       ISO3166::Country[team.country]
     end
