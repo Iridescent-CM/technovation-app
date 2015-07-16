@@ -40,7 +40,7 @@ ul
       = link_to 'Write one now', edit_user_path(current_user)
       | .
 
-  - unless current_user.judge?
+  - unless current_user.judge? or true
     li
       ' If you haven't already, please complete the following
       - if Setting.submissionOpen?
@@ -90,7 +90,7 @@ ul
     - else
       - unless current_user.judge?
         li
-          'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2015, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
+          'You are registered as an individual but not as part of a team yet. In order to be fully registered for Technovation 2016, you must be attached to a team (even if you plan on participating by yourself, in which case you would be a team of 1 student).
           ' You may
           - if policy(Team).create?
             = link_to 'create a team', :new_team
@@ -110,7 +110,7 @@ h2 Announcements
 
 hr
 
-- unless current_user.nil?
+- unless current_user.nil? or true
   .row
     - unless current_user.judge? or current_user.student?
       .col-sm-6

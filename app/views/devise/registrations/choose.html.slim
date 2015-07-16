@@ -3,7 +3,7 @@
     h1 Technovation Registration
 
   p.lead
-    | Welcome to Technovation 2015! We’re excited to have you as a participant this year! This form serves as your profile registration for the 2015 season. After confirmation of your profile, you can complete your 2015 registration by attaching yourself to a team.
+    | Welcome to Technovation 2016! We’re excited to have you as a participant this year! This form serves as your profile registration for the 2016 season. After confirmation of your profile, you can complete your 2016 registration by attaching yourself to a team.
 
 
 
@@ -36,6 +36,10 @@
       hr
       p Select mentor if you are a female professional in technology or business and you plan to support one or more Technovation teams
   .col-sm-3
-    a.btn.btn-primary.btn-lg.btn-block href=new_user_with_role_path(:judge) Judge
+    a.btn.btn-primary.btn-lg.btn-block.disabled  Judge
     hr
-    p Select judge if you will be scoring the submissions of one or more Technovation teams
+    p Judge registrations are closed.
+  /.col-sm-3
+  /  a.btn.btn-primary.btn-lg.btn-block href=new_user_with_role_path(:judge) Judge
+  /  hr
+  /  p Select judge if you will be scoring the submissions of one or more Technovation teams
