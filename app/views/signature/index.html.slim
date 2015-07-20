@@ -16,7 +16,7 @@ coffee:
 
 - if @user.student?
   = render "student_waiver"
-else
+- else
   = render "volunteer_waiver"
 
 - if @user.consent_signed_at.nil?
