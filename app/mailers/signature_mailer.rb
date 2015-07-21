@@ -5,7 +5,6 @@ class SignatureMailer < ActionMailer::Base
       @link = SignatureController.link(user)
       mail(
         to: user.parent_email,
-        cc: Rails.env.production? ? 'info@technovationchallenge.org' : nil,
         subject: 'Technovation Letter to Parents - your daughter needs your permission to participate'
       )
       user.consent_sent_at = DateTime.now
