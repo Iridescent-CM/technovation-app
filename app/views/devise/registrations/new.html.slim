@@ -5,6 +5,7 @@
   h3 Sign Up
 
   = f.hidden_field :role
+  = f.hidden_field :is_registered, :value => 1
   = f.email_field :email, autofocus: true
   = f.password_field :password, autocomplete: "off", help: @validatable ? "Must be at least #{@minimum_password_length} characters long" : nil
   = f.password_field :password_confirmation, autocomplete: "off"

@@ -93,6 +93,7 @@ class ApplicationController < ActionController::Base
 
       :conflict_region,
       :event_id,
+      :is_registered
     ]
 
     if params[:action] == 'update'

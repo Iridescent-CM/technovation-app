@@ -25,6 +25,9 @@ class UsersController < ApplicationController
       elsif params[:user][:judging] == '1'
         flash[:notice] = "You are now a judge! Sign up for an event to judge."
         redirect_to events_path
+      elsif params[:user][:is_registered]
+        flash[:notice] = "You are now registered for the 2016 Technovation season!"
+        redirect_to :back
       else
         flash[:notice] = 'Profile Updated!'
         redirect_to @user
@@ -98,6 +101,7 @@ class UsersController < ApplicationController
       :judging,
       :conflict_region,
       :judging_region,
+      :is_registered
     )
   end
 
