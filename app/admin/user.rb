@@ -36,7 +36,7 @@ ActiveAdmin.register User do
       row :role
       row :first_name
       row :last_name
-      row :birthday
+      row (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
 
       row :home_country
       row :consent_signed_at
@@ -56,7 +56,7 @@ ActiveAdmin.register User do
     column :role
     column :first_name
     column :last_name
-    column :birthday
+    column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
     column :home_country
     column :school
     column :consent_signed_at
@@ -79,7 +79,7 @@ ActiveAdmin.register User do
     column :role
     column :first_name
     column :last_name
-    column :birthday
+    column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
     column :home_country
     column :consent_signed_at
 
