@@ -156,6 +156,11 @@ class Team < ActiveRecord::Base
       self.country = members_by_country.values.max_by(&:size).first.home_country
     end
 
+    members_by_state = members(true).group_by(&:home_state)
+    if members_by_state.size > 0
+      self.state = members_by_state.values.max_by(&:size).first.home_state
+    end
+
     self.save!
   end
 

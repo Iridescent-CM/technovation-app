@@ -38,6 +38,7 @@ gem 'wicked', '~> 1.1'
 gem 'createsend'
 gem 'prawn'
 gem 'prawn-templates'
+gem 'cancan'
 
 # general libraries
 gem 'aws-sdk'
