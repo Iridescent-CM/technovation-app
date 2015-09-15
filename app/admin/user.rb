@@ -1,6 +1,7 @@
 ActiveAdmin.register User do
 
   filter :teams_id_not_null, label: "Is On Team", as: :boolean
+  filter :is_registered, label: "Registered for Season"
   filter :teams_name_cont, label: "Team"
   filter :event, collection: Event.order(:name)
   filter :email_eq, label: "Email"
@@ -22,6 +23,9 @@ ActiveAdmin.register User do
   filter :judging_region, as: :select, collection: Team.regions.sort
   filter :semifinals_judge
   filter :finals_judge
+  filter :confirmed_at_not_null, as: :boolean, label: "Confirmation Signed"
+  filter :consent_signed_at_not_null, as: :boolean, label: "Consent Signed"
+  filter :bg_check_submitted_not_null, as: :boolean, label: "Background Check Submitted"
 
   controller do
     def find_resource
@@ -36,6 +40,7 @@ ActiveAdmin.register User do
       row :role
       row :first_name
       row :last_name
+      row (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
       row (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
 
       row :home_country
@@ -56,6 +61,7 @@ ActiveAdmin.register User do
     column :role
     column :first_name
     column :last_name
+    column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
     column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
     column :home_country
     column :school
@@ -79,6 +85,7 @@ ActiveAdmin.register User do
     column :role
     column :first_name
     column :last_name
+    column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
     column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
     column :home_country
     column :consent_signed_at

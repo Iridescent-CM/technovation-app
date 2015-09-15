@@ -22,14 +22,14 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Statistics" do
             ul do
-                li "Current Users: #{User.count}" do
+                li "Current Users: #{User.is_registered.count}" do
                     ul do
-                        li "Students: #{User.student.count}"
-                        li "Mentors: #{User.mentor.count}"
-                        li "Coaches: #{User.coach.count}"
+                        li "Students: #{User.student.is_registered.count}"
+                        li "Mentors: #{User.mentor.is_registered.count}"
+                        li "Coaches: #{User.coach.is_registered.count}"
                     end
                 end
-                li "Current Teams: #{Team.count}"
+                li "Current Teams: #{Team.current.count}"
             end
         end
         panel "Enum Notes" do

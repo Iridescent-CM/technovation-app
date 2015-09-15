@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
             6 => EXPERTISES[5][:sym],
             :column => 'expertise'
   scope :has_expertise, -> {where.not expertise: 0}
+  scope :is_registered, -> {where 'is_registered = true'}
 
   #### fields used for judge user type only
   has_one :event
