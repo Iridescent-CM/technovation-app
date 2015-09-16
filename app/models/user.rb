@@ -242,13 +242,23 @@ class User < ActiveRecord::Base
   end
 
   def add_to_campaign_list
-    CreateSend::Subscriber.add get_campaign_auth, get_campaign_list, email, name, [], true
+    api_data = get_campaign_auth
+    if !api_data[:api_key]
+      return
+    end
+
+    CreateSend::Subscriber.add api_data, get_campaign_list, email, name, [], true
     rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
       puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"
   end
 
   def remove_from_campaign_list
-    subscriber = CreateSend::Subscriber.new get_campaign_auth, get_campaign_list, email
+    api_data = get_campaign_auth
+    if !api_data[:api_key]
+      return
+    end
+
+    subscriber = CreateSend::Subscriber.new api_data, get_campaign_list, email
     subscriber.unsubscribe
     rescue CreateSend::BadRequest, CreateSend::Unauthorized => error
       puts "Failed to add user #{email} to campaign monitor. Error code: #{error.data.Code}, Message: #{error.data.Message}"

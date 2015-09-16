@@ -69,7 +69,7 @@ group :test do
   gem 'webmock'
 end
 
-group :production do
+group :production, :staging do
   gem 'rails_12factor'
 end
 

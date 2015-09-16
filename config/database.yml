@@ -81,3 +81,7 @@ test:
 production:
   <<: *default
   database: technovation_production
+
+staging:
+  <<: *default
+  database: technovation_staging
