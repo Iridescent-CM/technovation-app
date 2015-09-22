@@ -151,9 +151,13 @@ class Team < ActiveRecord::Base
     end
     self.division = div
 
-    if !valid_regions.include?(region)
+    if !valid_regions.values.include?(Team.regions[region])
       self.division = :x
     end
+
+
+
+    true
   end
 
   # division update logic
