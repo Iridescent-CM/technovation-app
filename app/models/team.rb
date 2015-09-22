@@ -144,12 +144,16 @@ class Team < ActiveRecord::Base
     # update team division to age of oldest student only if there is a valid
     # number of team members
     student_count = members.student.count
-    if student_count >= 1 and student_count <= 5 and valid_regions.include?(region)
+    if student_count >= 1 and student_count <= 5
       div = members.student
         .map(&:division)
         .max_by {|d| Team.divisions[d]}
     end
     self.division = div
+
+    if !valid_regions.include?(region)
+      self.division = :x
+    end
 
     members_by_country = members(true).group_by(&:home_country)
     if members_by_country.size > 0
