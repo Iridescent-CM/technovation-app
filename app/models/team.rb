@@ -237,7 +237,7 @@ class Team < ActiveRecord::Base
   end
 
   def valid_regions
-    if ms?
+    if ms? or x?
       Team.regions
     else
       Team::HIGHSCHOOL_REGIONS
