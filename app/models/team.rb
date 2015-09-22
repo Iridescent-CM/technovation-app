@@ -3,6 +3,7 @@ class Team < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name_and_year, use: :slugged
   before_save :update_submission_status
+  before_save :update_division
 
   validates :name, presence: true, uniqueness: {
     scope: :year,
@@ -137,8 +138,7 @@ class Team < ActiveRecord::Base
     name_changed?
   end
 
-  # division update logic
-  def update_team_data!
+  def update_division
     div = :x
 
     # update team division to age of oldest student only if there is a valid
@@ -154,6 +154,11 @@ class Team < ActiveRecord::Base
     if !valid_regions.include?(region)
       self.division = :x
     end
+  end
+
+  # division update logic
+  def update_team_data!
+    update_division
 
     members_by_country = members(true).group_by(&:home_country)
     if members_by_country.size > 0
