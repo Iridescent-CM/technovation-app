@@ -194,14 +194,13 @@ class RubricsControllerTest < ActionController::TestCase
   test "in-person events - ignore assigned event if not active" do
     event = Event.create(
       name: 'Bay Area Quarterfinals',
-      whentooccur: @dates[:f_open],
-      region: Region.first
+      whentooccur: @dates[:f_open]
     )
-    @me.event_id = event.id
+    @me.event = event
     @me.save!
 
     watchmen = create_team("Watchmen", @jason, issemifinalist: true)
-    create_team("Teenage Mutant Ninja Turtles", @jason, event: event, issemifinalist: true)
+    create_team("Teenage Mutant Ninja Turtles", @jason, event_id: event.id, issemifinalist: true)
 
     get :index
     assert_response :success
