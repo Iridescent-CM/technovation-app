@@ -7,3 +7,7 @@ settings_year:
 settings_cutoff:
   key: cutoff
   value: <%= Date.today.to_s %>
+
+submission_close:
+  key: submissionClose
+  value: <%= Date.today.to_s %>

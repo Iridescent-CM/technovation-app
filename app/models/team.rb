@@ -9,7 +9,7 @@ class Team < ActiveRecord::Base
     scope: :year,
     case_sensitive: false,
   }
-  validates_presence_of :region, :year
+  validates_presence_of :region, :region_id, :year
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
@@ -39,22 +39,6 @@ class Team < ActiveRecord::Base
     hs: 1,
     x: 2,
   }
-  enum region: [
-    :ushs, # High School - US/Canada
-    :mexicohs, # High School - Mexico/Central America/South America
-    :europehs, #High School - Europe/Australia/New Zealand/Asia
-    :africahs, #High School - Africa
-    :usms, #Middle School - US/Canada
-    :mexicoms, #Middle School - Mexico/Central America/South America/Africa
-    :europems, #Middle School - Europe/Australia/New Zealand/Asia
-  ]
-
-  HIGHSCHOOL_REGIONS = {
-    ushs: regions[:ushs],
-    mexicohs: regions[:mexicohs],
-    europehs: regions[:europehs],
-    africahs: regions[:africahs]
-  }
 
   PLATFORMS = [
     {sym: :android, abbr: 'Android'},
@@ -77,12 +61,13 @@ class Team < ActiveRecord::Base
   has_many :judges, through: :rubrics, source: :user
 
   has_one :event
+  belongs_to :region
 
   scope :old, -> {where 'year < ?', Setting.year}
   scope :current, -> {where year: Setting.year}
   scope :has_category, -> (cat) {where('category_id = ?', cat)}
   scope :has_division, -> (div) {where('division = ?', div)}
-  scope :has_region, -> (reg) {where('region = ?', reg)}
+  scope :has_region, -> (reg) {where('region_id = ?', reg)}
   scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
 
   scope :is_semifinalist, -> {where 'issemifinalist = true'}
@@ -151,11 +136,9 @@ class Team < ActiveRecord::Base
     end
     self.division = div
 
-    if !valid_regions.values.include?(Team.regions[region])
+    if :hs? and region.ms?
       self.division = :x
     end
-
-
 
     true
   end
@@ -251,9 +234,9 @@ class Team < ActiveRecord::Base
 
   def valid_regions
     if ms? or x?
-      Team.regions
+      Region.all
     else
-      Team::HIGHSCHOOL_REGIONS
+      Region.where(division: Region.divisions[:hs])
     end
   end
 end

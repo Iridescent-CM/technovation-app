@@ -238,3 +238,11 @@ ann = Announcement.create(
   post: "For the 2015 season, we're using a brand new website to organize, submit, and publish your projects. If you have any questions, please email us at info@technovationchallenge.org!",
   published: true,
 )
+
+Region.create(id: 0, region_name: "US/Canada", division: :hs, num_finalists: 3)
+Region.create(id: 1, region_name: "Mexico/Central America/South America", division: :hs, num_finalists: 1)
+Region.create(id: 2, region_name: "Europe/Australia/New Zealand/Asia", division: :hs, num_finalists: 1)
+Region.create(id: 3, region_name: "Africa", division: :hs, num_finalists: 1)
+Region.create(id: 4, region_name: "US/Canada", division: :ms, num_finalists: 2)
+Region.create(id: 5, region_name: "Mexico/Central America/South America/Africa", division: :ms, num_finalists: 1)
+Region.create(id: 6, region_name: "Europe/Australia/New Zealand/Asia", division: :ms, num_finalists: 1)

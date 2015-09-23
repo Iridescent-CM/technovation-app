@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
       :referral_category,
       :referral_details,
 
-      :conflict_region,
+      :conflict_region_id,
       :event_id,
       :is_registered
     ]

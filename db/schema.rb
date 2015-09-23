@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914164105) do
+ActiveRecord::Schema.define(version: 20150923133336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,10 +79,19 @@ ActiveRecord::Schema.define(version: 20150914164105) do
     t.datetime "updated_at"
     t.string   "organizer"
     t.integer  "team_id"
-    t.integer  "region"
+    t.integer  "region_id"
   end
 
+  add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
   add_index "events", ["team_id"], name: "index_events_on_team_id", using: :btree
+
+  create_table "regions", force: true do |t|
+    t.string   "region_name"
+    t.integer  "division"
+    t.integer  "num_finalists", default: 1, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rubrics", force: true do |t|
     t.integer  "identify_problem"
@@ -145,7 +154,6 @@ ActiveRecord::Schema.define(version: 20150914164105) do
     t.text     "about"
     t.integer  "year",                               default: 2014, null: false
     t.integer  "division",                           default: 2,    null: false
-    t.integer  "region",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -198,10 +206,12 @@ ActiveRecord::Schema.define(version: 20150914164105) do
     t.text     "participation"
     t.boolean  "submitted"
     t.string   "state"
+    t.integer  "region_id"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
   add_index "teams", ["event_id"], name: "index_teams_on_event_id", using: :btree
+  add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
   add_index "teams", ["slug"], name: "index_teams_on_slug", unique: true, using: :btree
   add_index "teams", ["year"], name: "index_teams_on_year", using: :btree
 
@@ -257,16 +267,18 @@ ActiveRecord::Schema.define(version: 20150914164105) do
     t.boolean  "is_survey_done",                   default: false, null: false
     t.integer  "event_id"
     t.boolean  "judging"
-    t.integer  "conflict_region"
-    t.integer  "judging_region"
+    t.integer  "conflict_region_id"
+    t.integer  "judging_region_id"
     t.boolean  "semifinals_judge"
     t.boolean  "finals_judge"
     t.boolean  "is_registered",                    default: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["conflict_region_id"], name: "index_users_on_conflict_region_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["event_id"], name: "index_users_on_event_id", using: :btree
+  add_index "users", ["judging_region_id"], name: "index_users_on_judging_region_id", using: :btree
   add_index "users", ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude", using: :btree
   add_index "users", ["parent_email"], name: "index_users_on_parent_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

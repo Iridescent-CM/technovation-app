@@ -16,49 +16,53 @@ class TeamsController < ApplicationController
   end
 
   def index
+
     if params[:search]
       @search = params[:search]
       t = Team.arel_table
       @teams = Team.where(t[:name].matches('%'+@search+'%')).shuffle
       @season = "All Seasons"
     else
-      @teams = apply_scopes(Team.where(year: Setting.year))
+      @teams = apply_scopes(Team.all)
 
+      if params[:previous_years].nil?
+        @teams = @teams.where(year: Setting.year)
+        @season = "#{Setting.year} Season"
+      else
+        @season = "All Seasons"
+        @previous_years = true
+      end
       unless params[:category].nil?
         @teams = @teams.where(category: params[:category])
+        @category = params[:category]
       end
       unless params[:region].nil?
-        ## calculate a real region id from the division and the geographic region coming in
-        if params[:division].nil? or params[:division].length == 2
-          regions_hs = params[:region].map{|r| r.to_i}
-          regions_ms = regions_hs.map{|r| r + 4}
-          @teams = @teams.where(region: regions_hs+regions_ms)  
-        elsif params[:division].length == 1
-          ## flip the bit
-          division = (params[:division][0].to_i - 1).abs
-          converted = params[:region].map{|r| division * 4 + r.to_i}
-          @teams = @teams.where(region: converted)
-        end
+        @teams = @teams.where(region: params[:region])
+        @region = params[:region]
       end
       unless params[:division].nil?
         @teams = @teams.where(division: params[:division])
+        @division = params[:division]
       end
       unless params[:issemifinalist].nil?
         @teams = @teams.is_semifinalist
+        @issemifinalist = true
       end
       unless params[:isfinalist].nil?
         @teams = @teams.is_finalist
+        @isfinalist = true
       end
       unless params[:iswinner].nil?
         @teams = @teams.is_winner
+        @iswinner = true
       end
       unless params[:showincomplete] == 'true'
         @teams = @teams.is_submitted
+        @showincomplete = true
       end
 
       @teams = @teams.shuffle
 
-      @season = "#{Setting.year} Season"
     end
 
     render layout: 'noprofile'
@@ -154,7 +158,7 @@ class TeamsController < ApplicationController
 
   private
   def team_params
-    params.require(:team).permit(:category_id, :name, :about, :avatar, :region, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation)
+    params.require(:team).permit(:category_id, :name, :about, :avatar, :region_id, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation)
   end
 
 end
