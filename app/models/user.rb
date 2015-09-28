@@ -64,9 +64,10 @@ class User < ActiveRecord::Base
   scope :is_registered, -> {where 'is_registered = true'}
 
   #### fields used for judge user type only
-  has_one :event
+  belongs_to :event
   has_many :rubrics
-#  has_one :conflict_region # a region that the judge should not judge for due to conflict of interest
+  belongs_to :conflict_region, class_name: "Region"
+  belongs_to :judging_region, class_name: "Region"
   #### end
 
   geocoded_by :full_address
@@ -96,7 +97,7 @@ class User < ActiveRecord::Base
 
   def check_judging_conflicts
     if !event_id.nil? and !Event.all.find(event_id).region.nil? and !conflict_region.nil?
-      if conflict_region == Event.all.find(event_id).region
+      if conflict_region.id == Event.all.find(event_id).region.id
         raise 'Sorry, you cannot judge an event in a division that you have mentored or coached. Sign up for Virtual Judging instead.'
       end
     end
@@ -265,11 +266,11 @@ class User < ActiveRecord::Base
   end
 
   def conflict_regions
-    regions = teams.select('DISTINCT region').map { |r| Team.regions[r.region] }
-    if conflict_region != nil and !regions.include?(conflict_region)
-      regions << conflict_region
+    regions = teams.select('DISTINCT region_id').map { |r| r.region_id }
+    if conflict_region != nil and !regions.include?(conflict_region.id)
+      regions << conflict_region.id
     end
-    regions
+    Region.where(id: regions)
   end
 
   def send_judge_signup_email

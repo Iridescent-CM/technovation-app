@@ -19,8 +19,8 @@ ActiveAdmin.register User do
   filter :parent_email_equal, label: "Parent Email"
   filter :is_survey_done
   filter :judging
-  filter :conflict_region, as: :select, collection: Team.regions.sort
-  filter :judging_region, as: :select, collection: Team.regions.sort
+  filter :conflict_region
+  filter :judging_region
   filter :semifinals_judge
   filter :finals_judge
   filter :confirmed_at_not_null, as: :boolean, label: "Confirmation Signed"
@@ -50,7 +50,7 @@ ActiveAdmin.register User do
       row :can_judge
       row (:num_judged){|u| u.rubrics.length}
       row :judging_event
-      row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
+      row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| r.name}.join(', ')}
       row :judging_region
     end
   end
@@ -74,8 +74,8 @@ ActiveAdmin.register User do
                                   Event.find(u.event_id).name
                                 end}
 
-    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
-    column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
+    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| r.name}.join(', ')}
+    column :judging_region
   end
 
   index do
@@ -97,8 +97,7 @@ ActiveAdmin.register User do
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
 
-    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| Team.regions.keys[r]}.join(', ')}
-    column (:judging_region){|u| u.judging_region.nil? ? nil : Team.regions.keys[u.judging_region]}
+    column :judging_region
 
     actions
   end
@@ -147,8 +146,8 @@ ActiveAdmin.register User do
     end
 
     f.inputs "Judging Information" do
-      f.input :conflict_region, as: :select, collection: Team.regions
-      f.input :judging_region, as: :select, collection: Team.regions
+      f.input :conflict_region
+      f.input :judging_region
       #= f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name
       f.input :event_id, as: :select, collection: Event.all
       f.input :semifinals_judge

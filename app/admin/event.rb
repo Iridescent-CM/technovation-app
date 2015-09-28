@@ -7,7 +7,7 @@ ActiveAdmin.register Event do
       f.input :whentooccur
       f.input :description
       f.input :organizer
-      f.input :region, as: :select, collection: Team.regions.keys
+      f.input :region
     end
     f.actions
   end

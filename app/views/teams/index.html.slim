@@ -26,7 +26,7 @@ hr
           li
             .checkbox
               label
-                input type='checkbox' name='category[]' value='#{c.id}' #{c.name}
+                input type='checkbox' name='category[]' checked=(@category and @category.include?(c.id.to_s)) value='#{c.id}' #{c.name}
       h4.strong Division
       ul.list-unstyled
         - for d in Team.divisions
@@ -34,28 +34,34 @@ hr
             li
               .checkbox
                 label
-                  input type='checkbox' name='division[]' value='#{d[1]}' #{format_division(d[0])}
+                  input type='checkbox' name='division[]' checked=(@division and @division.include?(d[1].to_s)) value='#{d[1]}' #{format_division(d[0])}
       h4.strong Region
       ul.list-unstyled
-        - for r in geographic_regions
+        - for r in Region.all
           li
             .checkbox
               label
-                input type='checkbox' name='region[]' value='#{geographic_regions.index(r)}' #{r}
+                input type='checkbox' name='region[]' checked=(@region and @region.include?(r.id.to_s)) value='#{r.id}' #{r.name}
       h4.strong Awards
       ul.list-unstyled
         li
           .checkbox
             label
-              input type='checkbox' name='issemifinalist' value='true' Quarterfinal winner
+              input type='checkbox' name='issemifinalist' value='true' checked=@issemifinalist Quarterfinal winner
         li
           .checkbox
             label
-              input type='checkbox' name='isfinalist' value='true' Semifinal winner
+              input type='checkbox' name='isfinalist' value='true' checked=@isfinalist Semifinal winner
         li
           .checkbox
             label
-              input type='checkbox' name='iswinner' value='true' Finals winner
+              input type='checkbox' name='iswinner' value='true' checked=@iswinner Finals winner
+      h4.strong Year
+      ul.list-unstyled
+        li
+          .checkbox
+            label
+              input type='checkbox' name='previous_years' checked=@previous_years value='true' Show all seasons
 
 
       button.btn.btn-default type='submit' Filter
@@ -74,7 +80,7 @@ hr
               h4.media-heading= t.name
             p= truncate(render_markdown_brief(t.about), length: 160)
             span.badge 
-              = t.region
+              = t.region.name
             div
               - if (not t.category_id.nil?) and (t.category_id > 0)
                 span.badge = Category.find(t.category_id).name

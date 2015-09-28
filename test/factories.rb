@@ -20,7 +20,7 @@ FactoryGirl.define do
   factory :team do
     sequence(:name) { |n| "Team #{ n }" }
     year { Setting.year }
-    region 0
+    region { Region.first }
     category { Category.last }
     code "http://drive.google.com/FAKE_URL_HERE"
     pitch "255 characters leading up to some pitch for this app"
@@ -41,5 +41,11 @@ FactoryGirl.define do
     revenue 1
     branding 1
     pitch 1
+  end
+
+  factory :region do
+    region_name 'Test Region'
+    division 1
+    num_finalists 1
   end
 end

@@ -30,7 +30,7 @@
       dd= format_division(@team.division)
 
       dt Region
-      dd= format_region(@team.region)
+      dd= @team.region.name
 
       dt Country
       dd= ISO3166::Country[@team.country]

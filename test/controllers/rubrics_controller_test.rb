@@ -3,10 +3,20 @@ require 'test_helper'
 class RubricsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  def add_to_team(user, team)
+    TeamRequest.create(
+      user: user,
+      team: team,
+      approved: true
+    )
+  end
+
   def setup
     super
 
-    @me = FactoryGirl.create(:user, judging_region: 0)
+    @jason = FactoryGirl.create(:user)
+
+    @me = FactoryGirl.create(:user, judging_region: Region.first)
     sign_in @me
 
     @dates = create_judging_date_settings(Date.new(2015, 1, 1))
@@ -15,7 +25,7 @@ class RubricsControllerTest < ActionController::TestCase
     @qfs = Event.create!(name: 'Virtual Judging') # quarterfinals
   end
 
-  def create_team(name, options = {})
+  def create_team(name, user, options = {})
     has_judged = !!options.delete(:has_judged)
     num_rubrics = options.delete(:num_rubrics).to_i
 
@@ -27,15 +37,18 @@ class RubricsControllerTest < ActionController::TestCase
       {
         name: name,
         event_id: @qfs.id,
-        division: 0,
+        division: 1,
         region: @me.judging_region
       }.merge(options))
+    if user
+      add_to_team(user, team)
+    end
     if has_judged
       FactoryGirl.create(:rubric, team: team, user: @me)
       num_rubrics -= 1
     end
     num_rubrics.times do
-      u = FactoryGirl.create(:user, judging_region: 0)
+      u = FactoryGirl.create(:user, judging_region: Region.first)
       FactoryGirl.create(:rubric, team: team, user: u)
     end
 
@@ -60,9 +73,9 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "simple quarterfinals case" do
-    power_rangers = create_team("Power Rangers", num_rubrics: 1)
-    create_team("The Avengers", num_rubrics: 3)
-    create_team("Golden Oldies", division: 2) # div 'x' = dq'ed
+    power_rangers = create_team("Power Rangers", @jason, num_rubrics: 1)
+    create_team("The Avengers", @jason, num_rubrics: 3)
+    create_team("Golden Oldies", nil) # div 'x' = dq'ed
 
     get :index
     assert_response :success
@@ -78,9 +91,9 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "should hide teams that i've judged already" do
-    power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
-    create_team("The Avengers", num_rubrics: 3)
-    powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
+    power_rangers = create_team("Power Rangers", @jason, num_rubrics: 1, has_judged: true)
+    create_team("The Avengers", @jason, num_rubrics: 3)
+    powerpuff_girls = create_team("PowerPuff Girls", @jason, num_rubrics: 2)
 
     get :index
     assert_response :success
@@ -93,9 +106,9 @@ class RubricsControllerTest < ActionController::TestCase
   end
 
   test "ensure multiple rubrics are handled correctly" do
-    avengers = create_team("The Avengers", num_rubrics: 3)
-    powerpuff_girls = create_team("PowerPuff Girls", num_rubrics: 2)
-    power_rangers = create_team("Power Rangers", num_rubrics: 1, has_judged: true)
+    avengers = create_team("The Avengers", @jason, num_rubrics: 3)
+    powerpuff_girls = create_team("PowerPuff Girls", @jason, num_rubrics: 2)
+    power_rangers = create_team("Power Rangers", @jason, num_rubrics: 1, has_judged: true)
 
     FactoryGirl.create(:rubric, team: powerpuff_girls, user: @me)
     FactoryGirl.create(:rubric, team: avengers, user: @me)
@@ -114,7 +127,7 @@ class RubricsControllerTest < ActionController::TestCase
     @today.value = @dates[:sf_open]
     @today.save!
 
-    create_team("The Avengers", issemifinalist: true)
+    create_team("The Avengers", @jason, issemifinalist: true)
 
     get :index
     assert_response :success
@@ -130,8 +143,8 @@ class RubricsControllerTest < ActionController::TestCase
 
     @me.update_attribute(:semifinals_judge, true)
 
-    create_team("Watchmen")
-    avengers = create_team("The Avengers", issemifinalist: true)
+    create_team("Watchmen", @jason)
+    avengers = create_team("The Avengers", @jason, issemifinalist: true)
 
     get :index
     assert_response :success
@@ -147,8 +160,8 @@ class RubricsControllerTest < ActionController::TestCase
     @today.value = @dates[:sf_close] + 1.day
     @today.save!
 
-    create_team("Watchmen")
-    create_team("The Pitches")
+    create_team("Watchmen", @jason)
+    create_team("The Pitches", @jason)
 
     assert !Setting.anyJudgingRoundActive?
 
@@ -166,10 +179,11 @@ class RubricsControllerTest < ActionController::TestCase
       name: 'Bay Area Quarterfinals',
       whentooccur: Setting.now
     )
-    @me.event_id = event.id
+    @me.event = event
+    @me.save!
 
-    create_team("Watchmen")
-    tmnt = create_team("Teenage Mutant Ninja Turtles", event: event)
+    create_team("Watchmen", @jason, issemifinalist: true)
+    tmnt = create_team("Teenage Mutant Ninja Turtles", @jason, event_id: event.id, issemifinalist: true)
 
     get :index
     assert_response :success
@@ -182,10 +196,11 @@ class RubricsControllerTest < ActionController::TestCase
       name: 'Bay Area Quarterfinals',
       whentooccur: @dates[:f_open]
     )
-    @me.event_id = event.id
+    @me.event = event
+    @me.save!
 
-    watchmen = create_team("Watchmen")
-    create_team("Teenage Mutant Ninja Turtles", event: event)
+    watchmen = create_team("Watchmen", @jason, issemifinalist: true)
+    create_team("Teenage Mutant Ninja Turtles", @jason, event_id: event.id, issemifinalist: true)
 
     get :index
     assert_response :success

@@ -31,49 +31,21 @@ class RankingController < ActionController::Base
   def self.mark_finalists
     ## the top N scores per region
     Team.update_all(isfinalist:false)
-    for region_name, region_id in Team.regions
-      num_teams = self.num_finalists(region_name)
+    Region.all.each do |r|
+      num_teams = r.num_finalists
 
-      winners = take_with_ties(Team.joins(:rubrics).where(issemifinalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(region_id).uniq.sort_by(&:avg_semifinal_score).reverse, num_teams).each { |w|
+      winners = take_with_ties(Team.joins(:rubrics).where(issemifinalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_semifinal_score).reverse, r.num_finalists).each { |w|
         w.update(isfinalist:true)
       }
-
     end
   end
 
   def self.mark_winners
-    ## 1 hs winner and 1 ms winner
-    hs = ['ushs', 'mexicohs', 'europehs', 'africahs'].map{|x| Team.regions[x]}
-    ms = ['usms', 'mexicoms', 'europems'].map{|x| Team.regions[x]}
-
     Team.update_all(iswinner:false)
-    # Team.where(isfinalist: true, region: hs).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
-    # Team.where(isfinalist: true, region: ms).sort_by(&:avg_score).reverse.take(1).each{ |w| w.update(iswinner:true) }
 
-    take_with_ties(Team.where(isfinalist: true, region: hs).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
-    take_with_ties(Team.where(isfinalist: true, region: ms).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+    take_with_ties(Team.joins(:region).where(isfinalist: true, regions: { division: Region.divisions[:hs] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+    take_with_ties(Team.joins(:region).where(isfinalist: true, regions: { division: Region.divisions[:ms] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
 
-  end
-
-  def self.num_finalists(region)
-    case region.to_sym
-    when :ushs
-      3
-    when :mexicohs
-      1
-    when :europehs
-      1    
-    when :africahs
-      1
-    when :usms
-      2
-    when :mexicoms
-      1
-    when :europems
-      1
-    else
-      "Error"
-    end
   end
 
   def self.toggle_score_visibility(stage)
@@ -82,13 +54,10 @@ class RankingController < ActionController::Base
     setting.update(value: setting.value == 'true' ? 'false': 'true')
   end
 
-
-
-
   def self.assign_judges_to_regions
     judges = User.all.find_all { |u| u.can_judge? }
     valid_teams = Team.where("division in (0,1) and country != 'BR'")
-    region_requirements = valid_teams.group(:region).count
+    region_requirements = valid_teams.group(:region_id).count
     multiplier = judges.count.fdiv(valid_teams.count)
     region_requirements = region_requirements.each_with_object({}) { |(region, count), h| h[region] = (count * multiplier).floor }
 
@@ -100,19 +69,18 @@ class RankingController < ActionController::Base
         if user.event_id == nil or user.event_id == virtual_judging_id
           free_judges << user
         else
-          assign_judge(user, Event.regions[Event.find(user.event_id).region], region_requirements)
+          assign_judge(user, Event.find(user.event_id).region, region_requirements)
         end
       end
     end
 
     free_judges.each do |user|
-      valid_regions = region_requirements.keys - user.conflict_regions
-
+      valid_regions = region_requirements.keys - user.conflict_regions.pluck(:id)
       if valid_regions.length == 0
-        valid_regions = Team.distinct.pluck(:region) - user.conflict_regions
+        valid_regions = Team.distinct.pluck(:region_id) - user.conflict_regions.pluck(:id)
       end
 
-      assign_judge(user, valid_regions.sample, region_requirements)
+      assign_judge(user, Region.find(valid_regions.sample), region_requirements)
     end
   end
 
@@ -120,10 +88,10 @@ class RankingController < ActionController::Base
 
   def self.assign_judge(judge, judging_region, region_requirements)
     judge.update(judging_region: judging_region)
-    if region_requirements.has_key?(judging_region)
-      region_requirements[judging_region] = region_requirements[judging_region] - 1
-      if region_requirements[judging_region] <= 0
-        region_requirements.delete(judging_region)
+    if region_requirements.has_key?(judging_region.id)
+      region_requirements[judging_region.id] = region_requirements[judging_region.id] - 1
+      if region_requirements[judging_region.id] <= 0
+        region_requirements.delete(judging_region.id)
       end
     end
   end

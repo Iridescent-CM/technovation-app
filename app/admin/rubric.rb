@@ -4,7 +4,7 @@ ActiveAdmin.register Rubric do
     column (:judge_email){|r| User.find(r.user_id).email}
 
     column (:team_name){|r| Team.find(r.team_id).name}
-    column (:region){|r| Team.find(r.team_id).region}
+    column (:region){|r| r.team.region.name}
 
     # column :region, sortable: :region do |r|
     #     Team.find(r.team_id).region

@@ -2,7 +2,7 @@ ActiveAdmin.register Team do
   config.clear_action_items!
 
   filter :name_eq, label: "Name"
-  filter :region, as: :select, collection: Team.regions.sort
+  filter :region
   filter :country, as: :select, collection: ActionView::Helpers::FormOptionsHelper::COUNTRIES
   filter :division, as: :select, collection: Team.divisions.sort
   filter :year_eq, label: "Year"
@@ -96,7 +96,7 @@ ActiveAdmin.register Team do
       f.input :about
       f.input :year
       f.input :avatar, as: :file, required: false
-      f.input :region, as: :select, collection: Team.regions.keys
+      f.input :region
       f.input :division, as: :select, collection: Team.divisions.keys
       f.input :country, as: :country
 
