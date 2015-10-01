@@ -75,7 +75,8 @@ ActiveAdmin.register User do
                                 end}
 
     column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| r.name}.join(', ')}
-    column :judging_region
+    column (:judging_region){|u| u.judging_region.nil? ? nil : u.judging_region.name}
+    column ('Connect With Other Mentors') {|u| u.connect_with_other ? 'Yes' : 'No'}
   end
 
   index do
