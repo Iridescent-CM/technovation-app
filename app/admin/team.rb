@@ -24,6 +24,7 @@ ActiveAdmin.register Team do
     selectable_column
     column :name
     column :region
+    column :state
     column :country do |team|
       ISO3166::Country[team.country]
     end
@@ -59,12 +60,7 @@ ActiveAdmin.register Team do
       end
     end
 
-    column :state do |t|
-      members_by_state = t.members(true).student.group_by(&:home_state)
-      if members_by_state.size > 0
-        members_by_state.values.max_by(&:size).first.home_state
-      end
-    end
+    column :state
 
     column :country do |team|
       ISO3166::Country[team.country]
