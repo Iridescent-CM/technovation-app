@@ -43,6 +43,8 @@ ActiveAdmin.register User do
       row (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
       row (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
 
+      row :home_city
+      row :home_state
       row :home_country
       row :consent_signed_at
 
@@ -63,6 +65,8 @@ ActiveAdmin.register User do
     column :last_name
     column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
     column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
+    column :home_city
+    column :home_state
     column :home_country
     column :school
     column :consent_signed_at
@@ -88,6 +92,8 @@ ActiveAdmin.register User do
     column :last_name
     column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
     column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
+    column :home_city
+    column :home_state
     column :home_country
     column :consent_signed_at
 
