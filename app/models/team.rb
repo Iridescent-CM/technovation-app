@@ -136,7 +136,7 @@ class Team < ActiveRecord::Base
     end
     self.division = div
 
-    if :hs? and region.ms?
+    if hs? and region.ms?
       self.division = :x
     end
 
