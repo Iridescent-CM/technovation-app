@@ -50,7 +50,7 @@
         = link_to 'Write one now', edit_user_path(current_user)
         | .
 
-    - unless current_user.judge? or true
+    - unless current_user.judge? or current_user.db_or_api_is_survey_done?
       li
         ' If you haven't already, please complete the following
         - if Setting.submissionOpen?
