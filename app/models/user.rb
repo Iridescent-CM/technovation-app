@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   after_create :add_to_campaign_list
   after_create :send_judge_signup_email, if: :judge?
+  after_create :send_mentor_signup_email, if: :mentor?
   after_create :email_parents_callback, if: :student?
 
   before_destroy :remove_from_campaign_list
@@ -275,5 +276,9 @@ class User < ActiveRecord::Base
 
   def send_judge_signup_email
     SignupMailer.judge_signup_email(self).deliver
+  end
+
+  def send_mentor_signup_email
+    SignupMailer.mentor_signup_email(self).deliver
   end
 end
