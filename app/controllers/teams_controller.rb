@@ -56,10 +56,10 @@ class TeamsController < ApplicationController
         @teams = @teams.is_winner
         @iswinner = true
       end
-      unless params[:showincomplete] == 'true'
-        @teams = @teams.is_submitted
-        @showincomplete = true
-      end
+      # unless params[:showincomplete] == 'true'
+      #   @teams = @teams.is_submitted
+      #   @showincomplete = true
+      # end
 
       @teams = @teams.shuffle
 
