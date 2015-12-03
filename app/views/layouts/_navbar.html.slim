@@ -25,7 +25,7 @@
               - if current_user.can_judge?
                 li
                   = link_to 'Your Judge Event', :events
-              - unless current_user.teams.empty?
+              - unless !current_user.mentor? and current_user.teams.empty?
                 li
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
               - unless current_user.judge?
