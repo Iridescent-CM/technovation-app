@@ -6,11 +6,21 @@ class Ability
       can :manage, :all
     else
       if user.country == 'US'
-        can :read, User, :home_country => user.country, :home_state => user.state
-        can :read, Team, :country => user.country, :state => user.state
+        if user.state?
+          can :read, User, :home_country => user.country, :home_state => user.state
+          can :read, Team, :country => user.country, :state => user.state
+        else
+          can :read, User, :home_country => user.country
+          can :read, Team, :country => user.country
+        end
       else
-        can :read, User, :home_country => user.country
-        can :read, Team, :country => user.country
+        if user.country?
+          can :read, User, :home_country => user.country
+          can :read, Team, :country => user.country
+        else
+          can :read, User
+          can :read, Team
+        end
       end
       can :read, ActiveAdmin::Page, :name => 'Dashboard'
     end
