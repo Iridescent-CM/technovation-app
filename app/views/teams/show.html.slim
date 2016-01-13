@@ -47,6 +47,8 @@
         - for user in @team.members.student
           li
             = link_user(user)
+            - if @team.members.include? current_user
+              span.pull-right #{user.email} 
             - if user.ineligible?
               '
               span.label.label-danger Ineligible
@@ -59,6 +61,8 @@
         - for mentor in @team.members.mentor
           li
             = link_user(mentor)
+            - if @team.members.include? current_user
+              span.pull-right #{mentor.email} 
     - else
       p There are currently no mentors on this team
 
@@ -68,6 +72,8 @@
         - for coach in @team.members.coach
           li
             = link_user(coach)
+            - if @team.members.include? current_user
+              span.pull-right #{coach.email} 
     - else
       p There are currently no coaches on this team.
 
