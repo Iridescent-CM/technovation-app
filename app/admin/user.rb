@@ -31,6 +31,15 @@ ActiveAdmin.register User do
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
+
+    def update
+      if params[:user][:password].blank?
+        params[:user].delete("password")
+        params[:user].delete("password_confirmation")
+      end
+      super
+    end
+
   end
 
   show do
@@ -111,6 +120,11 @@ ActiveAdmin.register User do
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
+
+    f.inputs "Password reset" do
+      f.input :password
+      f.input :password_confirmation
+    end
 
     f.inputs "Account Details" do
       f.input :email
