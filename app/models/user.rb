@@ -206,7 +206,7 @@ class User < ActiveRecord::Base
     age = age_before_cutoff()
     if age <= 14
       :ms
-    elsif age <= 18
+    elsif age <= 19
       :hs
     else
       :x
