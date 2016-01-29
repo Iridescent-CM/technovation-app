@@ -49,6 +49,7 @@ gem 'typhoeus'
 
 gem 'airbrake'
 gem 'unicorn'
+gem 'newrelic_rpm'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'
