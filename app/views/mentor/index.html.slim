@@ -35,7 +35,6 @@ hr
               a href=url_for(m) = m.name
               small
                 '  #{m.school} &mdash; #{m.home_city}, #{ISO3166::Country[m.home_country]}
-                / - unless m.current_team.nil?
             - for exp in User::EXPERTISES
               - if m.send(exp[:sym])
                 - if params[exp[:sym]] == 'true'
@@ -46,6 +45,6 @@ hr
                 .label.label-default= exp[:abbr]
               '
 
-            - if m.current_team.nil?
+            - if @taken.include? m
               .label.label-success data-toggle='tooltip' title='This mentor is not yet on a team and open to mentoring requests'
                 | Teamless
