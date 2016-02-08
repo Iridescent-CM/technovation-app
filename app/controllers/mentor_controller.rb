@@ -6,7 +6,7 @@ class MentorController < ApplicationController
   end
 
   def index
-    @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise
+    @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise.is_registered
     @taken = @mentors.joins(team_requests: :team).where(team_requests: { approved: true }, teams: { year: Setting.year })
     if current_user and current_user.geocoded?
       @mentors = @mentors.near(current_user, 10000)
