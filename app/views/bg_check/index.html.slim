@@ -7,7 +7,7 @@ markdown:
 
 = bootstrap_form_for(@user, url: :bg_check_submit, html: { method: :post}, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f|
   = f.text_field :first_name
-  = f.text_field :middle_name
+  = f.text_field :middle_name, label_class: 'required'
   = f.text_field :last_name
   = f.text_field :email
   = f.text_field :phone
