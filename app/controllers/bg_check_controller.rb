@@ -35,6 +35,10 @@ class BgCheckController < ApplicationController
       @user.errors.add :signature, 'You must sign the document'
     end
 
+    if @user.middle_name.blank?
+      @user.errors.add :middle_name, 'You must provide your middle name for the background check'
+    end
+
     if !@user.errors.empty? or !@user.save
       flash.now[:alert] = 'Please correct the errors below'
     else
