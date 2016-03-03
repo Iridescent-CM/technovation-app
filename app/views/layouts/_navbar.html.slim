@@ -14,8 +14,9 @@
             - unless current_user.nil?
               li
                 = link_to 'Dashboard', :root
-              li
-                = link_to 'Teams Gallery', :teams
+              - unless current_user.judge?
+                li
+                  = link_to 'Teams Gallery', :teams
               - if !current_user.teams.empty? and Setting.anyScoresVisible?
                 li
                   = link_to 'Scores', :scores
