@@ -84,6 +84,10 @@ class Setting < ActiveRecord::Base
     self.scoresVisible.length > 0
   end
 
+  def self.registrationOpen?(userType)
+    self.get_boolean(userType+'RegistrationOpen')
+  end
+
   def self.now
     if self.exists?(key: 'todaysDateForTesting')
       self.get_date('todaysDateForTesting')
