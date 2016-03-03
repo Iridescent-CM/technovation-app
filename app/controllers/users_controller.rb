@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :verify_registered, only: [:update]
 
   def show
     @user = User.friendly.find(params[:id])

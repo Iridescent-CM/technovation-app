@@ -14,22 +14,22 @@
             - unless current_user.nil?
               li
                 = link_to 'Dashboard', :root
-              li
+              li class=('disabled' if !current_user.is_registered?)
                 = link_to 'Teams Gallery', :teams
               - if !current_user.teams.empty? and Setting.anyScoresVisible?
-                li
+                li class=('disabled' if !current_user.is_registered?)
                   = link_to 'Scores', :scores
               - if current_user.can_judge?
-                li
+                li class=('disabled' if !current_user.is_registered?)
                   = link_to 'Judge Submissions', :rubrics
               - if current_user.can_judge?
-                li
+                li class=('disabled' if !current_user.is_registered?)
                   = link_to 'Your Judge Event', :events
               - unless !current_user.mentor? and current_user.teams.empty?
-                li
+                li class=('disabled' if !current_user.is_registered?)
                   = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
               - unless current_user.judge?
-                li.dropdown
+                li.dropdown class=('disabled' if !current_user.is_registered?)
                   a.dropdown-toggle href='#' data-toggle='dropdown' role='button'
                     ' My Teams
                     span.caret
@@ -37,14 +37,15 @@
                     - teams_by_year = current_user.teams.order(year: :desc, name: :asc).group_by { |t| t.year }
                     - divider = false
                     - if current_user && policy(Team).create?
-                      li = link_to 'Create New Team', :new_team
+                      li class=('disabled' if !current_user.is_registered?)
+                        = link_to 'Create New Team', :new_team
                       - divider = true
                     - for year in teams_by_year.keys
                       - if divider
                         li.divider
                       li.dropdown-header= year
                       - for t in teams_by_year[year]
-                        li
+                        li class=('disabled' if !current_user.is_registered?)
                           a href=url_for(t) = t.name
                       - divider = true
 

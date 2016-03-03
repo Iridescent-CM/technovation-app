@@ -6,12 +6,13 @@
       If you think this is a mistake, please email <info@technovationchallenge.org>
 
 - if !current_user.is_registered?
-  h2 Registration
-
-  p Registration for the 2016 Technovation season is now open! Click the button below to register for the new season.
-  = bootstrap_form_for current_user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
-    = f.hidden_field :is_registered, :value => 1
-    = f.submit "Register for 2016"
+  div.panel.panel-warning
+    div.panel-body.bg-warning
+      h2 Registration
+      p Registration for the 2016 Technovation season is now open! Click the button below to register for the new season.
+      = bootstrap_form_for current_user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
+        = f.hidden_field :is_registered, :value => 1
+        = f.submit "Register for 2016"
 
 
 - else
