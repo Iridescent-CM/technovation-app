@@ -28,7 +28,11 @@ class UsersController < ApplicationController
         redirect_to events_path
       elsif params[:user][:is_registered]
         flash[:notice] = "You are now registered for the 2016 Technovation season!"
-        redirect_to :back
+        if @user.judge?
+          redirect_to events_path
+        else
+          redirect_to :back
+        end
       else
         flash[:notice] = 'Profile Updated!'
         redirect_to @user
