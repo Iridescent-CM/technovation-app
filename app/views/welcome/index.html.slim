@@ -120,11 +120,12 @@ h2 Announcements
 
 hr
 
-- unless current_user.nil? or true
+- unless current_user.nil?
   .row
     - unless current_user.judge? or current_user.student?
-      .col-sm-6
-        = render partial: 'judges/judge', locals: {user: current_user}
+      - if Setting.registrationOpen? 'judge'
+        .col-sm-6
+          = render partial: 'judges/judge', locals: {user: current_user}
     - if current_user.can_judge?
       .col-sm-6
         h2 Judge Submissions
