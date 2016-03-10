@@ -112,12 +112,15 @@ hr
 
 h2 Announcements
 - for ann in @announcements
-  h4
-    =ann.title
-    br
-    small Posted #{time_ago_in_words(ann.created_at)} ago
-  .markdown-field
-    = render_markdown(ann.post)
+  div.panel.panel-default
+    div.panel-heading
+      h4
+        =ann.title
+        br
+        small Posted #{time_ago_in_words(ann.created_at)} ago
+    div.panel-body
+      .markdown-field
+        = render_markdown(ann.post)
 
 hr
 
