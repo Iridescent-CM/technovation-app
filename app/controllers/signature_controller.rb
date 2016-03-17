@@ -3,6 +3,7 @@ class SignatureController < ApplicationController
   skip_before_filter :verify_consent
   skip_before_filter :verify_survey_done
   skip_before_filter :verify_bg_check
+  skip_before_filter :verify_registered
 
   def status
     if current_user == nil
