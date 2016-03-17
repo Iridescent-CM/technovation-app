@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, {except: :index, unless: :special_controller?}
   before_action :verify_consent, :verify_survey_done, {unless: :special_controller?, if: :user_signed_in?}
+  before_action :verify_registered, {unless: :devise_controller?, if: :user_signed_in?}
   before_action :verify_bg_check, {unless: :special_controller?}
 #  before_action :verify_other_roles, {unless: :special_controller?, if: :user_signed_in?}
 #  before_action :verify_event_signup, {unless: :special_controller?, if: :user_signed_in?}
@@ -34,6 +35,13 @@ class ApplicationController < ActionController::Base
   def verify_consent
     if !current_user.nil? and current_user.consent_signed_at.nil?
       redirect_to controller: '/signature', action: :status
+      return false
+    end
+  end
+
+  def verify_registered
+    if !current_user.nil? and !current_user.is_registered?
+      redirect_to controller: '/welcome'
       return false
     end
   end

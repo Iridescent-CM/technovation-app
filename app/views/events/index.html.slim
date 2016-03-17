@@ -11,7 +11,7 @@
 
   h5 
     .alert.alert-info role='alert'
-      p Sign up for Virtual Judging if you will be judging online. Sign up for a specific event only if you will be judging in-person at a live event.
+      p Sign up for Virtual Judging if you will be judging online. Judging for in-person events is by invitation only. Please sign up for a specific event only if you have been invited to do so by the event organizer.
 
   = bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
     = f.hidden_field :event_signup, :value => true
@@ -24,4 +24,8 @@
       = f.form_group label: { text: "Date" }
         p.form-control-static.js-event-date
     = f.form_group
-      = f.submit "Sign Up", class: ['btn', 'btn-primary']
+      - if @user.event_id.nil?
+        = f.submit "Sign Up", class: ['btn', 'btn-primary']
+      - else
+        = f.submit "Update", class: ['btn', 'btn-primary']
+

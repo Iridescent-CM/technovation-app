@@ -45,7 +45,7 @@
       h3 Judging Information
       = f.collection_select :conflict_region_id, regions_to_collection, :id, :name, { label: 'Team region', help: 'Did you mentor a team participating in Technovation? If so, what division are they participating in?' }, { class: 'js-conflict-region' }
 
-      = f.collection_select :event_id, {}, :id, :name, { help: 'Sign up for Virtual Judging if you will be judging online. Sign up for a specific event only if you will be judging in-person at a live event.' }, { class: 'js-events' }
+      = f.collection_select :event_id, {}, :id, :name, { help: 'Sign up for Virtual Judging if you will be judging online. Judging for in-person events is by invitation only. Please sign up for a specific event only if you have been invited to do so by the event organizer.' }, { class: 'js-events' }
 
 
   hr

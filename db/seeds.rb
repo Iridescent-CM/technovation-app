@@ -176,6 +176,26 @@ setting = Setting.create(
   value: '2015-05-16',
 )
 
+setting = Setting.create(
+  key:'studentRegistrationOpen',
+  value: true,
+)
+
+setting = Setting.create(
+  key:'coachRegistrationOpen',
+  value: true,
+)
+
+setting = Setting.create(
+  key:'mentorRegistrationOpen',
+  value: true,
+)
+
+setting = Setting.create(
+  key:'judgeRegistrationOpen',
+  value: true,
+)
+
 
 setting = Setting.create(
   key:'todaysDateForTesting',
