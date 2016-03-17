@@ -124,7 +124,7 @@ h2 Announcements
 
 hr
 
-- unless current_user.nil?
+- unless current_user.nil? or !current_user.is_registered?
   .row
     - unless current_user.judge? or current_user.student?
       - if Setting.registrationOpen? 'judge'
