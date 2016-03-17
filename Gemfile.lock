@@ -184,7 +184,6 @@ GEM
     newrelic_rpm (3.14.2.312)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
-    openssl (1.0.0.beta)
     orm_adapter (0.5.0)
     paperclip (4.2.1)
       activemodel (>= 3.0.0)
@@ -337,7 +336,6 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   newrelic_rpm
-  openssl
   paperclip
   pg
   prawn

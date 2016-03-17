@@ -1,31 +1,34 @@
 # Readme
 
 ## Quick Start
+### Database
+[Install PostgreSQL](#pg-install)
 
-Assuming Rails, Postgres, rbenv, and bundler are all installed...
-
+### Project Setup
 ``` sh
 git clone https://github.com/Iridescent-CM/technovation-app.git
 cd technovation-app
 rbenv install
+gem install bundler
 bundle install
-createdb technovation_development
-rake db:migrate
-echo HOST_DOMAIN=localhost:3000 > .env
-rake db:seed
-rails s
+
+bundle exec rake db:setup
+cp .env.example .env
 ```
 
+### Environment variables
+
+- `HOST_DOMAIN`: Configure the App Host. Used for URLs sent in e-mails.
+- `SKIP_CHECKR`: Set to `true` to skip the background check API call. Useful for development and staging environments.
+
+
+### Run App
+``` sh
+bundle exec rails server
+```
 then navigate to http://localhost:3000
 
 Initial credentials are in [`./db/seeds.rb`](blob/master/db/seeds.rb) to log in.
-
-## Testing
-
-```
-RAILS_ENV=test rake db:setup
-rake test
-```
 
 ## Signatures
 
@@ -34,6 +37,20 @@ Users are required to have a signature on file before doing anything. On registr
 ## Administration
 
 The administration panel can be reached at '/admin'. From there, users, teams, and various settings can be added, editing, and removed.
+
+For create a admin user, execute:
+
+``` sh
+bundle exec rails runner "AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')"
+```
+
+
+For `development` environment the default credentials are:
+
+
+**user**: `admin@example.com` \
+**pass**: `password`
+
 
 ### Settings
 
@@ -48,16 +65,9 @@ There are several major settings that must be present for the application to run
 
 For existing databases, the code for generating these settings can be copy-pasted from db/seeds.rb into a rails console. Settings can be edited from the admin panel.
 
-
 ### Announcements
 
 Announcements can be created in the dashboard with the "New Announcement" button under the "Announcements" tab in the administration page.  An announcement must be published before it will show up on the participant's dashboards.
-
-### Authentication
-
-Admin panel at /admin
-admin@example.com
-password
 
 ### Third party
 Attachments handled via Paperclip
@@ -66,7 +76,18 @@ https://github.com/thoughtbot/paperclip
 Forms are handled with
 https://github.com/bootstrap-ruby/rails-bootstrap-forms
 
-### Environment variables
 
-- `SKIP_CHECKR`: Set to `true` to skip the background check API call. Useful for development and staging environments.
+### <a id="pg-install"> Install PostgreSQL 9.3</a>
+``` sh
+brew update
+brew install  homebrew/versions/postgresql93
+```
+#### Create a PostgreSQL instance
+``` sh
+pg_ctl -D /usr/local/pgsql/data initdb
+```
 
+#### Initialize Database
+``` sh
+pg_ctl -D /usr/local/pgsql/data start
+```
