@@ -44,7 +44,6 @@ gem 'cancan'
 gem 'aws-sdk'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
-gem 'openssl'
 gem 'typhoeus'
 
 gem 'airbrake'
@@ -73,4 +72,3 @@ end
 group :production, :staging do
   gem 'rails_12factor'
 end
-
