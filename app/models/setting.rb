@@ -4,16 +4,15 @@ class Setting < ActiveRecord::Base
 
   NO_ROUND = 'no round'
 
-  ##### helpers for specific data types
   def self.get_boolean(key)
-    return Setting.find_by_key!(key).value == 'true'
+    return Setting.find_by!(key: key).value == 'true'
+  rescue ActiveRecord::RecordNotFound
+    false
   end
 
   def self.get_date(key)
     Setting.find_by_key!(key).value.to_date
   end
-  #####
-
 
   def self.year
     Setting.find_by_key!('year').value.to_i
