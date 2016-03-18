@@ -36,3 +36,5 @@ bower.json
 *.sublime-project
 
 rendered.pdf
+.DS_Store
+.byebug_history
