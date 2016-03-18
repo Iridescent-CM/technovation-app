@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     confirmations: 'users/confirmations',
   }
   devise_scope :user do
+    get '/users/sign_up', to: 'users/registrations#new', as: 'new_user_without_role'
     get '/users/sign_up/:role', to: 'users/registrations#new', as: 'new_user_with_role'
   end
 
@@ -72,8 +73,8 @@ Rails.application.routes.draw do
   resources :events
 
   resources :scores
- 
-  resources :judges 
+
+  resources :judges
 
   #   member do
   #     post 'approve'
