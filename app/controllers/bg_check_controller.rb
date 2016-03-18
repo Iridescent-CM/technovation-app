@@ -3,6 +3,7 @@ class BgCheckController < ApplicationController
   before_action :check_user
   skip_before_filter :verify_consent
   skip_before_filter :verify_bg_check
+  skip_before_filter :verify_registered
 
   def index
   end
