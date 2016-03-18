@@ -6,18 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-if Rails.env == 'test'
-  require 'webmock'
-  include WebMock::API
-
-  default_response = {
-    status: 200,
-    body: '{"results":[]}',
-    headers: {}
-  }
-
-  stub_request(:any, /.*/).to_return(default_response)
-end
 
 user = User.new(
   first_name: 'Cory',
@@ -105,22 +93,22 @@ user.skip_confirmation!
 user.save!
 
 
-setting = Setting.create(
+Setting.create(
   key: 'year',
   value: '2015',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'cutoff',
   value: Date.today.to_s,
 )
 
-setting = Setting.create(
+Setting.create(
   key:'submissionOpen',
   value: '2015-04-14',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'submissionClose',
   value: '2015-04-23',
 )
@@ -128,17 +116,17 @@ setting = Setting.create(
 
 ###
 
-setting = Setting.create(
+Setting.create(
   key:'quarterfinalScoresVisible',
   value: 'false',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'semifinalScoresVisible',
   value: 'false',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'finalScoresVisible',
   value: 'false',
 )
@@ -146,58 +134,57 @@ setting = Setting.create(
 
 ######
 
-setting = Setting.create(
+Setting.create(
   key:'quarterfinalJudgingOpen',
   value: '2015-04-24',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'quarterfinalJudgingClose',
   value: '2015-05-03',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'semifinalJudgingOpen',
   value: '2015-05-05',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'semifinalJudgingClose',
   value: '2015-05-10',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'finalJudgingOpen',
   value: '2015-05-14',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'finalJudgingClose',
   value: '2015-05-16',
 )
 
-setting = Setting.create(
+Setting.create(
   key:'studentRegistrationOpen',
   value: true,
 )
 
-setting = Setting.create(
+Setting.create(
   key:'coachRegistrationOpen',
   value: true,
 )
 
-setting = Setting.create(
+Setting.create(
   key:'mentorRegistrationOpen',
   value: true,
 )
 
-setting = Setting.create(
+Setting.create(
   key:'judgeRegistrationOpen',
   value: true,
 )
 
-
-setting = Setting.create(
+Setting.create(
   key:'todaysDateForTesting',
   value: '2015-05-06',
 )
@@ -243,12 +230,12 @@ category = Category.create(
 )
 
 
-# setting = Setting.create(
+# Setting.create(
 #   key: 'submissionOpen?',
 #   value: true,
 # )
 
-# setting = Setting.create(
+# Setting.create(
 #   key: 'submissionDeadline',
 #   value: Date.today.to_s,
 # )
