@@ -100,6 +100,7 @@ GEM
       sass (~> 3.2)
       thor
     builder (3.2.2)
+    byebug (8.2.2)
     cancan (1.6.10)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -122,6 +123,7 @@ GEM
       httparty (~> 0.10)
       json (~> 1.0)
     currencies (0.4.2)
+    diff-lcs (1.2.5)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
       dotenv (= 1.0.2)
@@ -250,6 +252,23 @@ GEM
     redcarpet (3.2.2)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-rails (3.4.2)
+      actionpack (>= 3.0, < 4.3)
+      activesupport (>= 3.0, < 4.3)
+      railties (>= 3.0, < 4.3)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     ruby-rc4 (0.1.5)
     safe_yaml (1.0.4)
     sass (3.2.19)
@@ -319,6 +338,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass!
   bootstrap_form
+  byebug
   cancan
   coffee-rails (~> 4.0.0)
   coffee-script
@@ -346,6 +366,7 @@ DEPENDENCIES
   rails (= 4.1.6)
   rails_12factor
   redcarpet
+  rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   select2-rails
@@ -358,5 +379,8 @@ DEPENDENCIES
   webmock
   wicked (~> 1.1)
 
+RUBY VERSION
+   ruby 2.1.5p273
+
 BUNDLED WITH
-   1.10.6
+   1.12.0.pre.2

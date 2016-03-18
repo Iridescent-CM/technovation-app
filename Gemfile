@@ -56,12 +56,14 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
+  gem 'rspec-rails'
 end
 
 group :development do
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'byebug'
 end
 
 group :test do
