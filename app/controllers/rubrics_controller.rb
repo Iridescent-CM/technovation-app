@@ -1,6 +1,6 @@
 class RubricsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def new
     ## new rubric needs to take a team
     @rubric = Rubric.new
@@ -10,7 +10,7 @@ class RubricsController < ApplicationController
     authorize @rubric
   end
 
-  def show    
+  def show
     @rubric = Rubric.find(params[:id])
     authorize @rubric
   end
@@ -21,7 +21,7 @@ class RubricsController < ApplicationController
     event_active = false
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
-      if event.name != 'Virtual Judging'
+      unless event.is_virtual?
         start = (event.whentooccur - 48.hours).to_datetime
         finish = (event.whentooccur + 24.hours).to_datetime
         if (start..finish).cover?(Setting.now)
@@ -38,7 +38,7 @@ class RubricsController < ApplicationController
       if !event_active
         ## if it is the quarterfinals and it is not the time of the judge's event
         ## only show teams who have signed up for Virtual Judging
-        id = Event.where(name: 'Virtual Judging').first.id
+        id = Event.virtual_for_current_season.id
         teams = Team.where(region: current_user.judging_region, event_id: id)
       end
     elsif Setting.judgingRound == 'semifinal' and current_user.semifinals_judge?
@@ -64,7 +64,7 @@ class RubricsController < ApplicationController
     # end
 
     # ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
-    # unless current_user.conflict_region.nil? 
+    # unless current_user.conflict_region.nil?
     #   teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
     # end
 
@@ -87,7 +87,7 @@ class RubricsController < ApplicationController
       if teams.length > 0
         teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
         @teams = [ teams.sample ]
-      end    
+      end
     end
 
 
@@ -115,13 +115,13 @@ class RubricsController < ApplicationController
       redirect_to :back
     end
 
-  end   
+  end
 
   def create
     @rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
     @rubric.user_id = current_user.id
-    
+
     authorize @rubric
     if @rubric.save
       redirect_to :rubrics
