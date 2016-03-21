@@ -58,6 +58,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'byebug'
+  gem 'capybara'
+  gem 'site_prism'
 end
 
 group :development do
