@@ -14,4 +14,12 @@ class Event < ActiveRecord::Base
     open_for_signup.where("region_id not in (?) OR region_id=-1 OR region_id IS NULL", (conflict_regions << -1))
   }
 
+  scope :virtual, -> {
+    open_for_signup.where(is_virtual: true)
+  }
+
+  def self.virtual_for_current_season
+    virtual.first
+  end
+
 end
