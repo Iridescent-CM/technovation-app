@@ -1,16 +1,19 @@
 javascript:
   $(document).ready(function() {
-    $('#team_event_id').change(function(){
-      var selected = $(this).find('option:selected').text();
+    var events = JSON.parse('#{raw Event.open_for_signup.to_json}');
 
-      if (selected != 'Virtual Judging'){
-        var warning = "You are signing up for " + selected + " which is an in-person pitch event-- your team will be presenting and scored at that event. If you do not attend, your submission will not be scored. Sign up for Virtual Judging instead, if you cannot attend " + selected + ".";
+    $('#team_event_id').change(function(e){
+      var selected_id = $(this).find('option:selected').attr('value');
+      var selected_element = $.grep(events, function(e) { return e.id == selected_id })[0];
 
-        alert(warning);      
+      if (!selected_element.is_virtual){
+        var event_name = "'"+ selected_element.name + "'"; 
+        var warning = "You are signing up for " + event_name + " which is an in-person pitch event-- your team will be presenting and scored at that event. If you do not attend, your submission will not be scored. Sign up for Virtual Judging instead, if you cannot attend " + event_name + ".";
+
+        alert(warning);
       }
     });
   })
-
 
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
@@ -71,7 +74,7 @@ javascript:
         = image_tag @team.screenshot5.url(:thumb)
 
   	.h4 Pitch Video (4 minutes)
-  	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch' 
+  	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch'
 
   	.h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
