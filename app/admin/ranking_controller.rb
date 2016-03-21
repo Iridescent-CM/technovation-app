@@ -23,7 +23,7 @@ class RankingController < ActionController::Base
       num_teams = [0, (teams.length-1)/10 + 1].max
 
       winners = take_with_ties(teams.sort_by(&:avg_quarterfinal_score).reverse, num_teams).each { |w|
-        w.update(issemifinalist: true)        
+        w.update(issemifinalist: true)
       }
     end
   end
@@ -61,7 +61,7 @@ class RankingController < ActionController::Base
     multiplier = judges.count.fdiv(valid_teams.count)
     region_requirements = region_requirements.each_with_object({}) { |(region, count), h| h[region] = (count * multiplier).floor }
 
-    virtual_judging_id = Event.find_by(name: 'Virtual Judging').id
+    virtual_judging_id = Event.virtual_for_current_season.id
 
     free_judges = []
     User.all.each do |user|
