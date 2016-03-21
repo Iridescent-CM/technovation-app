@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   belongs_to :region
 
   scope :display_order, -> {
-    order("name!='Virtual Judging', name")
+    order(is_virtual: :desc)
   }
 
   scope :open_for_signup, -> {
