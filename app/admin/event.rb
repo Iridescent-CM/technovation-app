@@ -3,6 +3,7 @@ ActiveAdmin.register Event do
     f.semantic_errors *f.object.errors.keys
     f.inputs "Event Details" do
       f.input :name
+      f.input :is_virtual, label: "Is it a virtual event?"
       f.input :location
       f.input :whentooccur
       f.input :description
@@ -11,6 +12,4 @@ ActiveAdmin.register Event do
     end
     f.actions
   end
-
-
 end
