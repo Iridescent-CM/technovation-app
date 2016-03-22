@@ -1,10 +1,10 @@
 #
-# This file configures the New Relic Agent.  New Relic monitors Ruby, Java,
+  # This file configures the New Relic Agent.  New Relic monitors Ruby, Java,
 # .NET, PHP, Python and Node applications with deep visibility and low
 # overhead.  For more information, visit www.newrelic.com.
 #
 # Generated January 29, 2016
-# 
+#
 # This configuration file is custom generated for app32249283@heroku.com
 #
 # For full documentation of agent configuration options, please refer to
@@ -12,7 +12,7 @@
 
 common: &default_settings
   # Required license key associated with your New Relic account.
-  license_key: cb096dc1ed60dfe40319b162658673951e2da73d
+  license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
