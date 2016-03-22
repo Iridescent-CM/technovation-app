@@ -3,6 +3,7 @@
 ## Quick Start
 ### Database
 [Install PostgreSQL](#pg-install)
+[Install ImageMagick](#im-install)
 
 ### Project Setup
 ``` sh
@@ -80,13 +81,6 @@ For existing databases, the code for generating these settings can be copy-paste
 
 Announcements can be created in the dashboard with the "New Announcement" button under the "Announcements" tab in the administration page.  An announcement must be published before it will show up on the participant's dashboards.
 
-### Third party
-Attachments handled via Paperclip
-https://github.com/thoughtbot/paperclip
-
-Forms are handled with
-https://github.com/bootstrap-ruby/rails-bootstrap-forms
-
 
 ### <a id="pg-install"> Install PostgreSQL 9.3</a>
 ``` sh
@@ -101,4 +95,10 @@ pg_ctl -D /usr/local/pgsql/data initdb
 #### Initialize Database
 ``` sh
 pg_ctl -D /usr/local/pgsql/data start
+```
+
+### <a id="im-install"> Install ImageMagick</a>
+So that Paperclip works properly, you need to install ImageMagick. ImageMagick resizes thumbnails images. For more information click <a href="https://github.com/thoughtbot/paperclip">here.</a>
+``` sh
+brew install imagemagick
 ```
