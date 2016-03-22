@@ -1,8 +1,10 @@
 # Readme
 
 ## Quick Start
-### Database
+### Database (required)
 [Install PostgreSQL](#pg-install)
+
+### ImageMagick (required)
 [Install ImageMagick](#im-install)
 
 ### Project Setup
