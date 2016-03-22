@@ -60,6 +60,7 @@ group :development, :test do
   gem 'byebug'
   gem 'capybara'
   gem 'site_prism'
+  gem 'faker'
 end
 
 group :development do

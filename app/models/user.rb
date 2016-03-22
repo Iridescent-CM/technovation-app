@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   after_create :send_judge_signup_email, if: :judge?
   after_create :send_mentor_signup_email, if: :mentor?
   after_create :email_parents_callback, if: :student?
+  after_update :send_judging_email_when_account_is_promoted
 
   before_destroy :remove_from_campaign_list
   before_save :check_judging_conflicts
@@ -272,6 +273,11 @@ class User < ActiveRecord::Base
       regions << conflict_region.id
     end
     Region.where(id: regions)
+  end
+
+
+  def send_judging_email_when_account_is_promoted
+      SignupMailer.judge_signup_email(self).deliver if judging_changed? && judging
   end
 
   def send_judge_signup_email
