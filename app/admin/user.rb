@@ -1,4 +1,4 @@
-ActiveAdmin.register User do
+  ActiveAdmin.register User do
 
   filter :teams_id_not_null, label: "Is On Team", as: :boolean
   filter :is_registered, label: "Registered for Season"
@@ -73,6 +73,7 @@ ActiveAdmin.register User do
     column :first_name
     column :last_name
     column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
+    column (:disabled) { |u| u.disabled ? 'Yes' : 'No'}
     column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
     column :home_city
     column :home_state
@@ -83,7 +84,7 @@ ActiveAdmin.register User do
     column (:teams){|u| u.teams.nil? ? nil : u.teams.map {|t| t.name}.join(', ')}
     column (:can_judge){|u| u.judge? or u.judging}
     column (:num_judged){|u| u.rubrics.length}
-    column (:judging_event){|u| unless u.event_id.nil? 
+    column (:judging_event){|u| unless u.event_id.nil?
                                   Event.find(u.event_id).name
                                 end}
 
@@ -109,7 +110,7 @@ ActiveAdmin.register User do
     column (:teams){|u| u.teams.nil? ? nil : raw(u.teams.map {|t| raw(link_to(t.name, admin_team_path(t.id)))}.join(', '))}
     column (:can_judge){|u| u.judge? or u.judging}
     column (:num_judged){|u| u.rubrics.length}
-    column (:judging_event){|u| unless u.event_id.nil? 
+    column (:judging_event){|u| unless u.event_id.nil?
                                   link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
                                 end}
 
