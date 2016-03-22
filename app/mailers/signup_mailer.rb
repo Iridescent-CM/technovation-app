@@ -3,7 +3,7 @@ class SignupMailer < ActionMailer::Base
 
   def judge_signup_email(user)
     @user = user
-    mail(to: user.email, subject: 'Subject: Getting Started as a Technovation Judge')
+    mail(to: user.email, subject: 'Getting Started as a Technovation Judge')
   end
 
   def mentor_signup_email(user)
