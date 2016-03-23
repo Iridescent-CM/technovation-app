@@ -84,7 +84,7 @@ production:
 
 qa:
   <<: *default
-  database: technovation_staging
+  database: technovation_qa
 
 staging:
   <<: *default
