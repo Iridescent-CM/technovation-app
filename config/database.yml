@@ -82,6 +82,10 @@ production:
   <<: *default
   database: technovation_production
 
+qa:
+  <<: *default
+  database: technovation_staging
+
 staging:
   <<: *default
   database: technovation_staging
