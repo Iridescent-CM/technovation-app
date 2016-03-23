@@ -81,9 +81,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     afm (0.2.2)
-    airbrake (4.1.0)
-      builder
-      multi_json
+    airbrake (5.2.1)
+      airbrake-ruby (~> 1.2)
+    airbrake-ruby (1.2.1)
     arbre (1.0.2)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -346,7 +346,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
-  airbrake
+  airbrake (~> 5.2.0)
   autoprefixer-rails
   aws-sdk
   bcrypt (~> 3.1.7)

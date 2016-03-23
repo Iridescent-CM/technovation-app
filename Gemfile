@@ -45,7 +45,7 @@ gem 'aws-sdk'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
 gem 'typhoeus'
-gem 'airbrake'
+gem 'airbrake', '~> 5.2.0'
 gem 'unicorn'
 gem 'newrelic_rpm'
 
