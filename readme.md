@@ -1,6 +1,19 @@
 # Readme
 
+**BUILD**
+[![Build Status](https://snap-ci.com/VZFas7ngsZ1NZNRdEmOsk2V-ZtOXuB3wJcXsdzL3jj0/build_image)](https://snap-ci.com/Iridescent-CM/technovation-app/branch/master)
+
+https://snap-ci.com/Iridescent-CM/technovation-app/branch/master
+
+### Environments
+**QA:** https://technovation-qa.herokuapp.com/
+
+**STAGING:** https://technovation-staging.herokuapp.com/
+
+
+
 ## Quick Start
+
 ### Database (required)
 [Install PostgreSQL](#pg-install)
 
