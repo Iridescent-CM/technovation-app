@@ -1,6 +1,6 @@
 # Readme
 
-**BUILD**
+### BUILD
 [![Build Status](https://snap-ci.com/VZFas7ngsZ1NZNRdEmOsk2V-ZtOXuB3wJcXsdzL3jj0/build_image)](https://snap-ci.com/Iridescent-CM/technovation-app/branch/master)
 
 https://snap-ci.com/Iridescent-CM/technovation-app/branch/master
@@ -9,10 +9,6 @@ https://snap-ci.com/Iridescent-CM/technovation-app/branch/master
 **QA:** https://technovation-qa.herokuapp.com/
 
 **STAGING:** https://technovation-staging.herokuapp.com/
-
-
-
-## Quick Start
 
 ### Database (required)
 [Install PostgreSQL](#pg-install)
@@ -75,7 +71,7 @@ bundle exec rails runner "AdminUser.create!(email: 'admin@example.com', password
 For `development` environment the default credentials are:
 
 
-**user**: `admin@example.com` \
+**user**: `admin@example.com` 
 **pass**: `password`
 
 
