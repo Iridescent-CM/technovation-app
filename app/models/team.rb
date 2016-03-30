@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
-  has_attached_file :plan 
+  has_attached_file :plan
 
   has_attached_file :screenshot1, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :screenshot2, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
@@ -32,8 +32,10 @@ class Team < ActiveRecord::Base
   validates_attachment_content_type :screenshot4, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot5, :content_type => /\Aimage\/.*\Z/
 
+  validates_attachment_size :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :logo, less_than: 100.kilobytes
+
   validates_attachment_file_name :plan, :matches => /pdf\Z/
-  
+
   enum division: {
     ms: 0,
     hs: 1,
@@ -181,7 +183,7 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    # 'avatar', 
+    # 'avatar',
     ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
   end
 
@@ -213,7 +215,7 @@ class Team < ActiveRecord::Base
   end
 
   def started?
-    return missing_fields.length != required_fields.length 
+    return missing_fields.length != required_fields.length
   end
 
   def submission_eligible?
