@@ -111,7 +111,6 @@ class Team < ActiveRecord::Base
     rubrics.where(stage:2).average(:score)
   end
 
-
   def num_rubrics
     rubrics.length
   end
@@ -132,6 +131,18 @@ class Team < ActiveRecord::Base
   end
 
   def update_division
+    if Setting.get_boolean('region_selection')
+      new_update_division
+    else
+      old_update_division
+    end
+  end
+
+  def new_update_division
+    self.division = self.region.division
+  end
+
+  def old_update_division
     div = :x
 
     # update team division to age of oldest student only if there is a valid
@@ -140,7 +151,7 @@ class Team < ActiveRecord::Base
     if student_count >= 1 and student_count <= 5
       div = members.student
         .map(&:division)
-        .max_by {|d| Team.divisions[d]}
+        .max_by { |d| Team.divisions[d] }
     end
     self.division = div
 
@@ -149,6 +160,7 @@ class Team < ActiveRecord::Base
     end
 
     true
+
   end
 
   # division update logic
@@ -181,7 +193,7 @@ class Team < ActiveRecord::Base
 
   def missing_field?(a)
      evaled = eval(a)
-     (evaled.nil? or (evaled.class.name == 'String' and evaled.length == 0)) or (evaled.class.name == 'Paperclip::Attachment' and eval(a+'_file_name').nil?)
+     (evaled== false or evaled.nil? or (evaled.class.name == 'String' and evaled.length == 0)) or (evaled.class.name == 'Paperclip::Attachment' and eval(a+'_file_name').nil?)
   end
 
   def check_completeness
@@ -189,7 +201,9 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3', 'confirm_region']
+    fields = ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    fields.push('confirm_region') if Setting.get_boolean('region_selection')
+    fields
   end
 
   def missing_fields

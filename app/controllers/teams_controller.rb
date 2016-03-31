@@ -91,8 +91,9 @@ class TeamsController < ApplicationController
 
   def update
     @team = Team.friendly.find(params[:id])
+  
     authorize @team
-    if @team.update(team_params)
+    if @team.update(update_params)
       if params[:team][:event_signup]
         flash[:notice] = 'Event signup updated'
         redirect_to :back
@@ -157,6 +158,13 @@ class TeamsController < ApplicationController
   # end
 
   private
+
+  def update_params
+    default_values = { confirm_region: false }
+    return default_values.merge(team_params) if Setting.get_boolean('region_selection')
+    default_values
+  end
+
   def team_params
     params.require(:team)
       .permit(:category_id, :name, :about, :avatar, :region_id, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation, :confirm_region)
