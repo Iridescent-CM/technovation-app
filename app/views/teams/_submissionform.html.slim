@@ -44,7 +44,7 @@ javascript:
 
     p
       | Please submit an image smaller than 100Kb in the field bellow. Images greater than 100Kb will not be accepted. If you need to resize your pictures please find
-      a href="http://picresize.com/"  here
+      a href="http://picresize.com/" target="_blank"  here
       |  one live option.
     = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100Kb.", data: 'logo', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
     = f.text_area :description, label: "App description", rows: 5
@@ -66,7 +66,7 @@ javascript:
     .h4 Screenshots
     p
       | Please submit images smaller than 100Kb. Images greater than 100Kb will not be accepted. If you need to resize your pictures please find
-      a href="http://picresize.com/"  here
+      a href="http://picresize.com/" target="_blank"  here
       |  one live option.
 
     = f.file_field :screenshot1, label: "1", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
