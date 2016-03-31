@@ -183,8 +183,7 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    # 'avatar',
-    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3', 'confirm_region']
   end
 
   def missing_fields

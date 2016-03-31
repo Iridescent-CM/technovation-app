@@ -44,12 +44,14 @@ javascript:
       .panel-heading
           h3.panel-title Warning
       .panel-body
-        | You are submitting your app in the
-        strong =" #{@team.region.name}. "
-        |Please make sure this information is correct. Any differences will result on your team disqualification. Please click this box to confirm your division and region are correct. To make changes to your division or region, click here  <open the dropdown with regions on the current page>.
-        = f.check_box :confirm_region, required: true, label: "Is the division and region are correct?"
-        = f.select :region_id, @team.valid_regions.map {|r| [r.name, r.id]}
+        |You are submitting your app in the
+        strong#region_name ="#{@team.region.name}."
+        |Please make sure this information is correct. Any differences will result on your team disqualification.
+        a#region_button href='#' To make changes click here
+        #select_region.hide-select
+          = f.select :region_id, @team.valid_regions.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
 
+        = f.check_box :confirm_region, label: "Are the division and region correct?"
 
     = f.collection_select :category_id, Category.all, :id, :name
 
