@@ -32,6 +32,7 @@ javascript:
     .h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
     = f.collection_select :event_id, Event.open_for_signup, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
+
     .js-event-details
       = f.form_group label: { text: "Description" }
         p.form-control-static.js-event-description
@@ -40,6 +41,19 @@ javascript:
       = f.form_group label: { text: "Date" }
         p.form-control-static.js-event-date
     hr
+    .panel.panel-warning
+      .panel-heading
+          h3.panel-title Warning
+      .panel-body
+        |You are submitting your app in the
+        strong#region_name ="#{@team.region.name}."
+        |Please make sure this information is correct. Any differences will result on your team disqualification.
+        a#region_button href='#' To make changes click here
+        #select_region.hide-select
+          = f.select :region_id, @team.valid_regions.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
+
+        = f.check_box :confirm_region, label: "Are the division and region correct?"
+
     = f.collection_select :category_id, Category.all, :id, :name
 
     p
@@ -47,6 +61,10 @@ javascript:
       a href="http://picresize.com/" target="_blank"  here
       |  one live option.
     = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100Kb.", data: 'logo', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    - unless @team.logo_file_name.nil?
+      = f.form_group
+        = image_tag @team.logo.url(:thumb)
+
     = f.text_area :description, label: "App description", rows: 5
     = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
     = f.text_field :code, label: "Source code", data: 'code', help: 'A link to GitHub or Google Drive'

@@ -32,7 +32,13 @@ class Team < ActiveRecord::Base
   validates_attachment_content_type :screenshot4, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot5, :content_type => /\Aimage\/.*\Z/
 
-  validates_attachment_size :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :logo, less_than: 100.kilobytes
+  validates_attachment_size :screenshot1, less_than: 100.kilobytes, if: -> { screenshot1.dirty? }
+  validates_attachment_size :screenshot2, less_than: 100.kilobytes, if: -> { screenshot2.dirty? }
+  validates_attachment_size :screenshot3, less_than: 100.kilobytes, if: -> { screenshot3.dirty? }
+  validates_attachment_size :screenshot4, less_than: 100.kilobytes, if: -> { screenshot4.dirty? }
+  validates_attachment_size :screenshot5, less_than: 100.kilobytes, if: -> { screenshot5.dirty? }
+  validates_attachment_size :logo, less_than: 100.kilobytes, if: -> { logo.dirty? }
+
 
   validates_attachment_file_name :plan, :matches => /pdf\Z/
 
@@ -183,8 +189,7 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    # 'avatar',
-    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
+    ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3', 'confirm_region']
   end
 
   def missing_fields

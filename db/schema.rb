@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160321175732) do
+ActiveRecord::Schema.define(version: 20160330193033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 20160321175732) do
     t.boolean  "submitted"
     t.string   "state"
     t.integer  "region_id"
+    t.boolean  "confirm_region"
   end
 
   add_index "teams", ["division"], name: "index_teams_on_division", using: :btree
