@@ -51,7 +51,7 @@ javascript:
           |Please make sure this information is correct. Any differences will result on your team disqualification.
           a#region_button href='#' To make changes click here
           #select_region.hide-select
-            = f.select :region_id, @team.valid_regions.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
+            = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
           = f.check_box :confirm_region, label: "Are the division and region correct?"
 
     = f.collection_select :category_id, Category.all, :id, :name

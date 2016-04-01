@@ -203,7 +203,7 @@ class Team < ActiveRecord::Base
 
   def required_fields
     fields = ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
-    fields.push('confirm_region') if Setting.get_boolean('manual_region_selection')
+    fields.concat ['confirm_region', 'confirm_acceptance_of_rules'] if Setting.get_boolean('manual_region_selection')
     fields
   end
 
@@ -251,14 +251,6 @@ class Team < ActiveRecord::Base
       return 'Submission complete'
     else !missing_fields.empty?
       return 'In Progress'
-    end
-  end
-
-  def valid_regions
-    if ms? or x?
-      Region.all
-    else
-      Region.where(division: Region.divisions[:hs])
     end
   end
 end
