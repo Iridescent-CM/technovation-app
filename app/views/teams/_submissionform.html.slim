@@ -115,13 +115,17 @@ javascript:
   	.h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
 
+    #confirm_acceptance_of_rules
+    = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge rules</a>".html_safe
+
     - if !@team.submitted
       = f.form_group
         = f.submit "Save Submission", class: ['btn', 'btn-primary']
     - else
       = f.form_group
-        p You can update your submission up until the submission deadline
+
         = f.submit "Update Submission", class: ['btn', 'btn-primary']
+      p You can update your submission up until the submission deadline
 
     br
     br

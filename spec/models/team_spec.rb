@@ -26,6 +26,7 @@ describe Team, type: :model do
 
   describe 'attributes' do
     it { is_expected.to respond_to(:confirm_region) }
+    it { is_expected.to respond_to(:confirm_acceptance_of_rules) }
   end
 
   describe '.update_division' do
@@ -72,10 +73,12 @@ describe Team, type: :model do
         .and_return(region_submisssion_enabled?)
     end
     it { is_expected.to include('confirm_region') }
+    it { is_expected.to include('confirm_acceptance_of_rules') }
 
     context 'when the feature manual_region_selection is off' do
       let(:region_submisssion_enabled?) { false }
       it { is_expected.to_not include('confirm_region') }
+      it { is_expected.to_not include('confirm_acceptance_of_rules') }
     end
   end
 end
