@@ -7,8 +7,8 @@ h1 id="submission" Submission
 -else
   .alert.alert-danger role='alert'
     p
-      span You still need to upload your 
-      == @team.check_completeness 
+      span You still need populate&nbsp;
+      == @team.check_completeness
       span  to complete your submission.
 
 = render 'submissionform', :locals => {:team => @team}

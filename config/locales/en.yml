@@ -19,5 +19,21 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
+
 en:
-  hello: "Hello world"
+  team:
+    errors:
+      required_fields:
+        confirm_region: "confirm your region/division"
+        confirm_acceptance_of_rules: "accept the rules"
+        code: "source code"
+        category_id: "category"
+        pitch: "pitch video"
+        demo: "demo video"
+        description: "app description"
+        logo: "app logo"
+        plan: "business plan"
+        screenshot1: "upload screenshot 1"
+        screenshot1: "upload screenshot 2"
+        screenshot1: "upload screenshot 3"
+

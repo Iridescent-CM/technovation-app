@@ -198,7 +198,7 @@ class Team < ActiveRecord::Base
   end
 
   def check_completeness
-    missing_fields.join(', ')
+     missing_fields.map { |field| I18n.t field, scope: [:team, :errors, :required_fields] }.to_sentence(last_word_connector: ' and ')
   end
 
   def required_fields

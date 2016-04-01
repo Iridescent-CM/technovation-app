@@ -29,7 +29,7 @@ javascript:
 
 = bootstrap_form_for @team, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", :html => {:multipart => true} do |f|
 
-    .h4 Competition Event
+    h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
     = f.collection_select :event_id, Event.open_for_signup, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
 
@@ -52,7 +52,7 @@ javascript:
           a#region_button href='#' To make changes click here
           #select_region.hide-select
             = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
-          = f.check_box :confirm_region, label: "Are the division and region correct?"
+          = f.check_box :confirm_region, label: "<strong>Are the division and region correct?</strong>".html_safe
 
     = f.collection_select :category_id, Category.all, :id, :name
 
@@ -78,54 +78,60 @@ javascript:
     = f.text_field :challenge, label: "What was your team's biggest challenge?"
     = f.text_field :participation, label: "Why did you decide to participate in Technovation?"
 
-    .h4 Screenshots
+    h4 Screenshots
     p
-      | Please submit images smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click&nbsp
+      | Please submit images smaller than 100KB. If you need to resize your picture, please click&nbsp
       a href="http://picresize.com/" target="_blank" here
       |  for a website to help you.
 
-    = f.file_field :screenshot1, label: "1", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :screenshot1, label: "1", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot1_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot1.url(:thumb)
 
-    = f.file_field :screenshot2, label: "2", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :screenshot2, label: "2", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot2_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot2.url(:thumb)
 
-    = f.file_field :screenshot3, label: "3", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :screenshot3, label: "3", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot3_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot3.url(:thumb)
 
-    = f.file_field :screenshot4, label: "4", help: 'optional', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :screenshot4, label: "4", help: 'optional', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot4_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot4.url(:thumb)
 
-    = f.file_field :screenshot5, label: "5", help: 'optional', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :screenshot5, label: "5", help: 'optional', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot5_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot5.url(:thumb)
 
-  	.h4 Pitch Video (4 minutes)
+  	h4 Pitch Video (4 minutes)
   	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch'
 
-  	.h4 Demo Video (2 minutes)
+  	h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
 
+    h4 Rules
+
     #confirm_acceptance_of_rules
-    = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge rules</a>".html_safe
+      = f.form_group label: {text:'Technovation Rules'}
+        = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
+
+    h4 Submission
+    smalll
+      span.help-block TIP: You can update your submission up until the submission deadline
+
 
     - if !@team.submitted
-      = f.form_group
-        = f.submit "Save Submission", class: ['btn', 'btn-primary']
+      = f.submit "Save Submission", class: ['btn', 'btn-primary']
     - else
-      = f.form_group
+      = f.submit "Update Submission", class: ['btn', 'btn-primary']
 
-        = f.submit "Update Submission", class: ['btn', 'btn-primary']
-      p You can update your submission up until the submission deadline
+
 
     br
     br
