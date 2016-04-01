@@ -203,6 +203,7 @@ class User < ActiveRecord::Base
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
 
+  # Remove this method if you remove the manual_region_selection feature_flag bellow
   def division
     age = age_before_cutoff()
     if age <= 14
@@ -215,7 +216,8 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
-    division() == :x && student?
+    return false if Setting.get_boolean('manual_region_selection')
+    division == :x && student?
   end
 
   def email_parents_callback

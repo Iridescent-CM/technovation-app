@@ -131,7 +131,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_division
-    if Setting.get_boolean('region_selection')
+    if Setting.get_boolean('manual_region_selection')
       new_update_division
     else
       old_update_division
@@ -181,6 +181,7 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
+    return false if Setting.get_boolean('manual_region_selection')
     division.to_sym == :x
   end
 
@@ -202,7 +203,7 @@ class Team < ActiveRecord::Base
 
   def required_fields
     fields = ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
-    fields.push('confirm_region') if Setting.get_boolean('region_selection')
+    fields.push('confirm_region') if Setting.get_boolean('manual_region_selection')
     fields
   end
 

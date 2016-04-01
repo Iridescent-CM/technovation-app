@@ -1,3 +1,4 @@
+- # Remove this part when you remove the manual_region_selection feature_flag 
 - if @team.ineligible?
   .alert.alert-danger role='alert'
     p This team is currently ineligble to participate. There must between 1 to 5 students inclusive, all of whom are 19 and under. If in a Middle School region, all students must be under 15.
@@ -48,7 +49,8 @@
           li
             = link_user(user)
             - if @team.members.include? current_user
-              span.pull-right #{user.email} 
+              span.pull-right #{user.email}
+            - # Remove this part when you remove the manual_region_selection feature_flag
             - if user.ineligible?
               '
               span.label.label-danger Ineligible

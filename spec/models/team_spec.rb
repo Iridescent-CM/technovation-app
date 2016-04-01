@@ -34,7 +34,7 @@ describe Team, type: :model do
     before do
       allow(Setting)
         .to receive(:get_boolean)
-        .with('region_selection')
+        .with('manual_region_selection')
         .and_return(region_submisssion_enabled?)
     end
 
@@ -45,7 +45,7 @@ describe Team, type: :model do
     it  { expect(team).to receive(:new_update_division) }
     it  { expect(team).to_not receive(:old_update_division) }
 
-    context 'when the feature region_selection is off' do
+    context 'when the feature manual_region_selection is off' do
       let(:region_submisssion_enabled?) { false }
 
       it  { expect(team).to receive(:old_update_division) }
@@ -68,12 +68,12 @@ describe Team, type: :model do
     before do
       allow(Setting)
         .to receive(:get_boolean)
-        .with('region_selection')
+        .with('manual_region_selection')
         .and_return(region_submisssion_enabled?)
     end
     it { is_expected.to include('confirm_region') }
 
-    context 'when the feature region_selection is off' do
+    context 'when the feature manual_region_selection is off' do
       let(:region_submisssion_enabled?) { false }
       it { is_expected.to_not include('confirm_region') }
     end

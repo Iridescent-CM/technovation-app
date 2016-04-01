@@ -161,7 +161,7 @@ class TeamsController < ApplicationController
 
   def update_params
     default_values = { confirm_region: false }
-    return default_values.merge(team_params) if Setting.get_boolean('region_selection')
+    return default_values.merge(team_params) if Setting.get_boolean('manual_region_selection')
     default_values
   end
 

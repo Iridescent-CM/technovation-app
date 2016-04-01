@@ -41,7 +41,7 @@ javascript:
       = f.form_group label: { text: "Date" }
         p.form-control-static.js-event-date
     hr
-    - if Setting.get_boolean('region_selection')
+    - if Setting.get_boolean('manual_region_selection')
       #region_submisssion.panel.panel-warning
         .panel-heading
             h3.panel-title Warning - Confirm your Division and Region
