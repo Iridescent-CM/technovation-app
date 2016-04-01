@@ -16,7 +16,7 @@ javascript:
   })
 
   function validateFiles(inputFile) {
-    var maxExceededMessage = "This file exceeds the maximum allowed file size (100Kb)";
+    var maxExceededMessage = "This file exceeds the maximum allowed file size (100KB)";
     var maxFileSize = $(inputFile).data('max-file-size');
 
     $.each(inputFile.files, function() {
@@ -57,10 +57,7 @@ javascript:
     = f.collection_select :category_id, Category.all, :id, :name
 
     p
-      | Please submit an image smaller than 100Kb in the field bellow. Images greater than 100Kb will not be accepted. If you need to resize your pictures please find
-      a href="http://picresize.com/" target="_blank"  here
-      |  one live option.
-    = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100Kb.", data: 'logo', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click <a href='http://picresize.com/' target='_blank'> here</a> for a website to help you.".html_safe, data: 'logo', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
     - unless @team.logo_file_name.nil?
       = f.form_group
         = image_tag @team.logo.url(:thumb)
@@ -83,9 +80,9 @@ javascript:
 
     .h4 Screenshots
     p
-      | Please submit images smaller than 100Kb. Images greater than 100Kb will not be accepted. If you need to resize your pictures please find
-      a href="http://picresize.com/" target="_blank"  here
-      |  one live option.
+      | Please submit images smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click&nbsp
+      a href="http://picresize.com/" target="_blank" here
+      |  for a website to help you.
 
     = f.file_field :screenshot1, label: "1", :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
     - unless @team.screenshot1_file_name.nil?
