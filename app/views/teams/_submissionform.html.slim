@@ -52,7 +52,7 @@ javascript:
           a#region_button href='#' To make changes click here
           #select_region.hide-select
             = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
-          = f.check_box :confirm_region, label: "<strong>Are the division and region correct?</strong>".html_safe
+          = f.check_box :confirm_region, label: "<strong>Check the box if the division and region are correct.</strong>".html_safe
 
     = f.collection_select :category_id, Category.all, :id, :name
 

@@ -248,7 +248,7 @@ class Team < ActiveRecord::Base
     elsif !started?
       return 'Not Started'
     elsif missing_fields.empty?
-      return 'Submission complete'
+      return 'Submitted'
     else !missing_fields.empty?
       return 'In Progress'
     end
