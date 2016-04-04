@@ -242,6 +242,18 @@ class Team < ActiveRecord::Base
     return (required_fields.length - missing_fields.length > 4)
   end
 
+  def submission_symbol
+    if Setting.beforeSubmissionsOpen?
+      :submissions_not_yet_open
+    elsif !started?
+      :not_started
+    elsif missing_fields.empty?
+      :submitted
+    else !missing_fields.empty?
+      :in_progress
+    end
+  end
+  
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'

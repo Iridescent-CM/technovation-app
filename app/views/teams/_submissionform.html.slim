@@ -21,7 +21,7 @@ javascript:
 
     $.each(inputFile.files, function() {
       if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
-        window.alert(maxExceededMessage);
+        alert(maxExceededMessage);
         $(inputFile).val('');
       };
     });
