@@ -117,9 +117,9 @@ javascript:
 
     - if Setting.get_boolean('manual_region_selection')
       h4 Rules
-        #confirm_acceptance_of_rules
-          = f.form_group label: {text:'Technovation Rules'}
-            = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
+      #confirm_acceptance_of_rules
+        = f.form_group label: {text:'Technovation Rules'}
+          = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
 
     h4 Submission
     smalll
