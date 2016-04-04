@@ -72,7 +72,7 @@ javascript:
 
     = f.form_group :platform, label: { text: "Platform" }, help: "Which platform did you build your app for?" do
       = f.check_box :android
-      = f.check_box :ios
+      = f.check_box :ios, label: 'iOS'
       = f.check_box :windows
 
     = f.text_field :challenge, label: "What was your team's biggest challenge?"
@@ -110,16 +110,16 @@ javascript:
         = image_tag @team.screenshot5.url(:thumb)
 
   	h4 Pitch Video (4 minutes)
-  	= f.text_field :pitch, label: "Youtube or vimeo link", data: 'pitch'
+  	= f.text_field :pitch, label: "Youtube or Vimeo link", data: 'pitch'
 
   	h4 Demo Video (2 minutes)
-    = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
+    = f.text_field :demo, label: "Youtube or Vimeo link", data: 'demo'
 
-    h4 Rules
     - if Setting.get_boolean('manual_region_selection')
-      #confirm_acceptance_of_rules
-        = f.form_group label: {text:'Technovation Rules'}
-          = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
+      h4 Rules
+        #confirm_acceptance_of_rules
+          = f.form_group label: {text:'Technovation Rules'}
+            = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
 
     h4 Submission
     smalll
