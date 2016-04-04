@@ -1,8 +1,8 @@
 javascript:
   $(document).ready(function() {
     var events = JSON.parse('#{raw Event.open_for_signup.to_json}');
-
-    $('#team_event_id').change(function(e){
+    $('#team_event_id').off()
+    $('#team_event_id').on('change', function(e){
       var selected_id = $(this).find('option:selected').attr('value');
       var selected_element = $.grep(events, function(e) { return e.id == selected_id })[0];
 
@@ -48,7 +48,7 @@ javascript:
         .panel-body
           |You are submitting your app in the
           strong#region_name ="#{@team.region.name}."
-          |Please make sure this information is correct. Any differences will result on your team disqualification.
+          |Please make sure this information is correct. Any differences will result on your team disqualification.&nbsp;
           a#region_button href='#' To make changes click here
           #select_region.hide-select
             = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
@@ -116,10 +116,10 @@ javascript:
     = f.text_field :demo, label: "Youtube or vimeo link", data: 'demo'
 
     h4 Rules
-
-    #confirm_acceptance_of_rules
-      = f.form_group label: {text:'Technovation Rules'}
-        = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
+    - if Setting.get_boolean('manual_region_selection')
+      #confirm_acceptance_of_rules
+        = f.form_group label: {text:'Technovation Rules'}
+          = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
 
     h4 Submission
     smalll
