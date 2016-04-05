@@ -17,12 +17,11 @@ class TeamsController < ApplicationController
   end
 
   def index
-
     if params[:search]
       @search = params[:search]
       t = Team.arel_table
-      @teams = Team.where(t[:name].matches('%'+@search+'%')).randomized(@seed)
-      @season = "All Seasons"
+      @teams = Team.where(t[:name].matches('%' + @search + '%')).randomized(@seed)
+      @season = 'All Seasons'
     else
       @teams = apply_scopes(Team.randomized(@seed).all)
 
@@ -30,7 +29,7 @@ class TeamsController < ApplicationController
         @teams = @teams.where(year: Setting.year)
         @season = "#{Setting.year} Season"
       else
-        @season = "All Seasons"
+        @season = 'All Seasons'
         @previous_years = true
       end
       unless params[:category].nil?
@@ -62,7 +61,7 @@ class TeamsController < ApplicationController
       #   @showincomplete = true
       # end
 
-       @teams = @teams.page params[:page] 
+      @teams = @teams.page params[:page]
 
     end
 
@@ -76,12 +75,10 @@ class TeamsController < ApplicationController
 
     Team.transaction do
       @team.save!
-      @team_request = TeamRequest.new({
-        user: current_user,
-        team: @team,
-        user_request: true,
-        approved: true,
-      }).save!
+      @team_request = TeamRequest.new(user: current_user,
+                                      team: @team,
+                                      user_request: true,
+                                      approved: true).save!
     end
     redirect_to @team
 
@@ -160,14 +157,12 @@ class TeamsController < ApplicationController
 
   private
 
-
   def team_params
     params.require(:team)
-      .permit(:category_id, :name, :about, :avatar, :region_id, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation, :confirm_region, :confirm_acceptance_of_rules)
+          .permit(:category_id, :name, :about, :avatar, :region_id, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation, :confirm_region, :confirm_acceptance_of_rules)
   end
 
   def set_random_seed
-    @seed = params.fetch( :seed, Random.new.rand(0.0..1.0).round(1) )
+    @seed = params.fetch(:seed, Random.new.rand(0.0..1.0).round(1))
   end
-
 end
