@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!, except: :index
+  before_filter :set_random_seed
 
   has_scope :has_category
   has_scope :has_division
@@ -20,10 +21,10 @@ class TeamsController < ApplicationController
     if params[:search]
       @search = params[:search]
       t = Team.arel_table
-      @teams = Team.where(t[:name].matches('%'+@search+'%')).shuffle
+      @teams = Team.where(t[:name].matches('%'+@search+'%')).randomized(@seed)
       @season = "All Seasons"
     else
-      @teams = apply_scopes(Team.all)
+      @teams = apply_scopes(Team.randomized(@seed).all)
 
       if params[:previous_years].nil?
         @teams = @teams.where(year: Setting.year)
@@ -61,7 +62,7 @@ class TeamsController < ApplicationController
       #   @showincomplete = true
       # end
 
-      @teams = @teams.shuffle
+       @teams = @teams.page params[:page] 
 
     end
 
@@ -163,6 +164,10 @@ class TeamsController < ApplicationController
   def team_params
     params.require(:team)
       .permit(:category_id, :name, :about, :avatar, :region_id, :code, :logo, :pitch, :demo, :plan, :description, :screenshot1, :screenshot2, :screenshot3, :screenshot4, :screenshot5, :event_id, :store, :tools, :android, :ios, :windows, :challenge, :participation, :confirm_region, :confirm_acceptance_of_rules)
+  end
+
+  def set_random_seed
+    @seed = params.fetch( :seed, Random.new.rand(0.0..1.0).round(1) )
   end
 
 end
