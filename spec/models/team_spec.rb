@@ -72,11 +72,22 @@ describe Team, type: :model do
         .with('manual_region_selection')
         .and_return(region_submisssion_enabled?)
     end
-    it { is_expected.to include('confirm_region') }
-    it { is_expected.to include('confirm_acceptance_of_rules') }
+
+    let(:expected_required_fields) do
+      %w(
+        code
+        pitch
+        description
+        plan
+        confirm_acceptance_of_rules
+      )
+    end
+
+    it { is_expected.to contain_exactly(*expected_required_fields) }
 
     context 'when the feature manual_region_selection is off' do
       let(:region_submisssion_enabled?) { false }
+
       it { is_expected.to_not include('confirm_region') }
       it { is_expected.to_not include('confirm_acceptance_of_rules') }
     end

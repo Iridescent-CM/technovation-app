@@ -202,8 +202,8 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    fields = ['category_id', 'code', 'pitch', 'demo', 'description', 'logo',  'plan', 'screenshot1', 'screenshot2', 'screenshot3']
-    fields.concat ['confirm_region', 'confirm_acceptance_of_rules'] if Setting.get_boolean('manual_region_selection')
+    fields = ['code', 'pitch', 'description', 'plan']
+    fields.concat ['confirm_acceptance_of_rules'] if Setting.get_boolean('manual_region_selection')
     fields
   end
 
