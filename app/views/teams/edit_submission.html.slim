@@ -15,7 +15,12 @@ css:
   }
   .tip {
     clear: both;
+    overflow: hidden;
   }
+  .tip-to-submit {
+     width: 90%;
+     float: right;
+    }
   hr {
     clear: both;
   }
@@ -33,13 +38,16 @@ h1 id="submission" Submission
 hr
 .alert.alert-info.tip
   span.glyphicon.glyphicon-info-sign.info
-  strong  Tip:
-  |  Your submission will be completed once your team fills are the required fields.
-  |  You can change all the fields of your team's submission until the submission deadline.
-  |  At 
-  strong 5pm PT on April 21, 2016
-  |, the most recently saved version of your app will be submitted to the competition.
-  |  Required fields are indicated by a * symbol.
+  .tip-to-submit
+    strong  Tip:
+    |  Teams should submit all of the deliverables in order to receive the highest possible score in the competition. 
+    |  At a minimum, you must complete the five required fields in order for your submission to be judged.
+    |  Required fields are indicated by a * symbol.
+    |  You may change any of the deliverables in your team's submission until the
+    |  submission deadline
+    strong  5pm PT on April 21, 2016.
+    |  Please make sure you save your submission before that time.
+
 - unless @team.missing_fields.empty?
   .alert.alert-danger role='alert'
     p
