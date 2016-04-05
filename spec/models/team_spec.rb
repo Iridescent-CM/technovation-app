@@ -1,8 +1,6 @@
 require 'rails_helper'
 include WebMock::API
 
-
-
 describe Team, type: :model do
   subject(:team) { build(:team) }
 
@@ -22,7 +20,6 @@ describe Team, type: :model do
     include_examples 'validates images size of', :screenshot5, 100.kilobytes
     include_examples 'validates images size of', :logo, 100.kilobytes
   end
-
 
   describe 'attributes' do
     it { is_expected.to respond_to(:confirm_region) }
@@ -79,6 +76,7 @@ describe Team, type: :model do
         pitch
         description
         plan
+        confirm_region
         confirm_acceptance_of_rules
       )
     end
