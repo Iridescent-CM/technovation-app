@@ -22,6 +22,12 @@
 
 en:
   team:
+    submission:
+      status:
+        submitted: Submitted
+        in_progress: In Progress
+        not_started: Not Started
+        submissions_not_yet_open: Submission Not Yet Open
     errors:
       required_fields:
         confirm_region: "confirm your region/division"

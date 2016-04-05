@@ -24,12 +24,23 @@ describe 'teams/edit_submission.html.slim', type: :view do
 
   it { is_expected.to have_selector('#region_submisssion') }
   it { is_expected.to have_selector('.submission-status') }
-  it { is_expected.to have_selector('.submission-status .alert.alert-success') }
 
-  context 'when the submisssion-status is different of submitted' do
-    let(:submission_symbol) { :any_other_status }
-    it do
-      is_expected.to have_selector('.submission-status .alert.alert-warning')
+  context 'display the submittion status' do 
+    it 'there is a message status box' do
+      is_expected.to have_selector('.submission-status .alert.alert-success')
+    end
+
+    let(:expected_status) do
+      I18n.t(submission_symbol, scope: [:team, :submission, :status])
+    end
+
+    it { is_expected.to have_text(expected_status) }
+
+    context 'when the submisssion-status is different of submitted' do
+      let(:submission_symbol) { :any_other_status }
+      it do
+        is_expected.to have_selector('.submission-status .alert.alert-warning')
+      end
     end
   end
 

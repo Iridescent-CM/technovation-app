@@ -24,11 +24,11 @@ h1 id="submission" Submission
   - if current_user.current_team.submission_symbol == :submitted
     .alert.alert-success
       strong Submission status: 
-      = current_user.current_team.submission_symbol
+      = t current_user.current_team.submission_symbol, scope: [:team, :submission, :status]
   - else
     .alert.alert-warning
       strong Submission status: 
-      = current_user.current_team.submission_symbol
+      = t current_user.current_team.submission_symbol, scope: [:team, :submission, :status]
 
 hr
 .alert.alert-info.tip
