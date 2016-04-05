@@ -11,6 +11,8 @@ class Team < ActiveRecord::Base
   }
   validates_presence_of :region, :region_id, :year
 
+  paginates_per 10
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
   has_attached_file :plan
@@ -94,6 +96,11 @@ class Team < ActiveRecord::Base
   #   group('teams.id').
   #   order('avg_score DESC')
   # end
+
+  def self.randomized(seed = nil)
+    connection.execute "select setseed(#{seed})"
+    order("RANDOM()")
+  end
 
   def avg_score
     rubrics.average(:score)

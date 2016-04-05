@@ -41,6 +41,15 @@ describe 'teams/edit_submission.html.slim', type: :view do
       it do
         is_expected.to have_selector('.submission-status .alert.alert-warning')
       end
+      context 'when the user there is not a team' do
+        let(:team) { nil }
+        before do
+          allow_any_instance_of(User).to receive(:current_team).and_return(nil)
+        end
+        it do
+          is_expected.to_not have_selector('.submission-status')
+        end
+      end
     end
   end
 

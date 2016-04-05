@@ -72,15 +72,17 @@ hr
 
     - else
       - for t in @teams do
-        .media
+        .media.team
           a.media-left href=url_for(t)
             = image_tag t.avatar.url(:medium), class: ['img-rounded team-image']
           .media-body
             a href=url_for(t)
               h4.media-heading= t.name
             p= truncate(render_markdown_brief(t.about), length: 160)
-            span.badge 
+            span.badge
               = t.region.name
             div
               - if (not t.category_id.nil?) and (t.category_id > 0)
                 span.badge = Category.find(t.category_id).name
+    .text-center
+      = paginate @teams, params:{seed:@seed}
