@@ -74,7 +74,6 @@ describe Team, type: :model do
       %w(
         code
         pitch
-        description
         plan
         confirm_region
         confirm_acceptance_of_rules
