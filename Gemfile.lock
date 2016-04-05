@@ -366,6 +366,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
+  kaminari
   newrelic_rpm
   paperclip
   pg
