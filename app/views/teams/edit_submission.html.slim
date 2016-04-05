@@ -28,11 +28,11 @@ h1 id="submission" Submission
 .submission-status
   - if current_user.current_team.submission_symbol == :submitted
     .alert.alert-success
-      strong Submission status: 
+      strong Submission status:&nbsp
       = t current_user.current_team.submission_symbol, scope: [:team, :submission, :status]
   - else
     .alert.alert-warning
-      strong Submission status: 
+      strong Submission status:&nbsp
       = t current_user.current_team.submission_symbol, scope: [:team, :submission, :status]
 
 hr
@@ -40,11 +40,11 @@ hr
   span.glyphicon.glyphicon-info-sign.info
   .tip-to-submit
     strong  Tip:
-    |  Teams should submit all of the deliverables in order to receive the highest possible score in the competition. 
+    |  Teams should submit all of the deliverables in order to receive the highest possible score in the competition.
     |  At a minimum, you must complete the five required fields in order for your submission to be judged.
     |  Required fields are indicated by a * symbol.
     |  You may change any of the deliverables in your team's submission until the
-    |  submission deadline
+    |  submission deadline at
     strong  5pm PT on April 21, 2016.
     |  Please make sure you save your submission before that time.
 
@@ -56,5 +56,3 @@ hr
       span  to complete your submission.
 
 = render 'submissionform', :locals => {:team => @team}
-
-
