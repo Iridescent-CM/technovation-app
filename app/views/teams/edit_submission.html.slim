@@ -24,11 +24,11 @@ h1 id="submission" Submission
   - if current_user.current_team.submission_symbol == :submitted
     .alert.alert-success
       strong Submission status: 
-      = t(current_user.current_team.submission_symbol)
+      = current_user.current_team.submission_symbol
   - else
     .alert.alert-warning
       strong Submission status: 
-      = t(current_user.current_team.submission_symbol)
+      = current_user.current_team.submission_symbol
 
 hr
 .alert.alert-info.tip
@@ -39,7 +39,7 @@ hr
   |  At 
   strong 5pm PT on April 21, 2016
   |, the most recently saved version of your app will be submitted to the competition.
-
+  |  Required fields are indicated by a * symbol.
 - unless @team.missing_fields.empty?
   .alert.alert-danger role='alert'
     p
