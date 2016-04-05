@@ -84,11 +84,14 @@ hr
   - if @team.missing_fields.empty?
     .alert.alert-success role='alert'
       p
-        span This team has completed their submission.
+        span
+        |This team has completed their submission. You may change any of the deliverables in your team's submission until the submission deadline at
+        strong  5pm PT on April 21, 2016.&nbsp
+        |Please make sure you save your submission before that time.
   -else
     .alert.alert-danger role='alert'
       p
-        span You still need populate&nbsp; 
+        span You still need populate&nbsp;
         == @team.check_completeness
         span  to complete their submission.
 
