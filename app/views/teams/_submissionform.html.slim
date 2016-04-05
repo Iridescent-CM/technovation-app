@@ -53,7 +53,7 @@ javascript:
           #select_region.hide-select
             = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
           = f.hidden_field :confirm_region, value: 0
-          = f.check_box :confirm_region, label: "<strong>Check the box if the division and region are correct.</strong>".html_safe
+          = f.check_box :confirm_region, label: "<strong>Check the box if the division and region are correct. *</strong>".html_safe
 
     = f.collection_select :category_id, Category.all, :id, :name
 
@@ -64,8 +64,8 @@ javascript:
         = image_tag @team.logo.url(:thumb)
 
     = f.text_area :description, label: "App description", rows: 5
-    = f.file_field :plan, label: "Business plan", help: "PDF format", data: 'plan'
-    = f.text_field :code, label: "Source code", data: 'code', help: 'A link to GitHub or Google Drive'
+    = f.file_field :plan, label: "Business plan *", help: "PDF format", data: 'plan'
+    = f.text_field :code, label: "Source code *", data: 'code', help: 'A link to GitHub or Google Drive'
 
     = f.text_field :tools, label: 'Tools used', help: 'What tools did you use to build your app?'
 
@@ -111,7 +111,7 @@ javascript:
         = image_tag @team.screenshot5.url(:thumb)
 
   	h4 Pitch Video (4 minutes)
-  	= f.text_field :pitch, label: "Youtube or Vimeo link", data: 'pitch'
+  	= f.text_field :pitch, label: "Youtube or Vimeo link *", data: 'pitch'
 
   	h4 Demo Video (2 minutes)
     = f.text_field :demo, label: "Youtube or Vimeo link", data: 'demo'
@@ -119,7 +119,7 @@ javascript:
     - if Setting.get_boolean('manual_region_selection')
       h4 Rules
       #confirm_acceptance_of_rules
-        = f.form_group label: {text:'Technovation Rules'}
+        = f.form_group label: {text:'Technovation Rules *'}
           = f.hidden_field :confirm_acceptance_of_rules, value: 0
           = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
 
