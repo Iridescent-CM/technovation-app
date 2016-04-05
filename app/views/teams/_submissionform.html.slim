@@ -52,6 +52,7 @@ javascript:
           a#region_button href='#' To make changes click here
           #select_region.hide-select
             = f.select :region_id, Region.all.map {|r| [r.name, r.id] } , label: "Division/<br/>Region".html_safe
+          = f.hidden_field :confirm_region, value: 0
           = f.check_box :confirm_region, label: "<strong>Check the box if the division and region are correct.</strong>".html_safe
 
     = f.collection_select :category_id, Category.all, :id, :name
@@ -119,6 +120,7 @@ javascript:
       h4 Rules
       #confirm_acceptance_of_rules
         = f.form_group label: {text:'Technovation Rules'}
+          = f.hidden_field :confirm_acceptance_of_rules, value: 0
           = f.check_box :confirm_acceptance_of_rules, label: "I have read and accepted the <a href='http://www.technovationchallenge.org/additional-resources/official-rules/' target='_blank'>Technovation Challenge Rules</a>".html_safe
 
     h4 Submission

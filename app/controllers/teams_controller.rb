@@ -93,7 +93,7 @@ class TeamsController < ApplicationController
     @team = Team.friendly.find(params[:id])
 
     authorize @team
-    if @team.update(update_params)
+    if @team.update(team_params)
       if params[:team][:event_signup]
         flash[:notice] = 'Event signup updated'
         redirect_to :back
@@ -159,9 +159,6 @@ class TeamsController < ApplicationController
 
   private
 
-  def update_params
-    Teams::DefaultParams.params(team_params)
-  end
 
   def team_params
     params.require(:team)
