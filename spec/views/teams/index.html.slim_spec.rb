@@ -19,7 +19,6 @@ describe 'teams/index.html.slim', type: :view do
 
   describe 'pagination' do
     it { is_expected.to have_selector('.pagination') }
-    it { is_expected.to have_selector('.pagination') }
     it { is_expected.to have_selector('.team', count: 10) }
     it { is_expected.to have_selector('a[rel="next"]') }
   end

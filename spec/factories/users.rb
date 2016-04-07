@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :user do
+    id nil
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     home_city { Faker::Address.city }
@@ -11,5 +12,21 @@ FactoryGirl.define do
     birthday { Faker::Date.between(2.days.ago, Date.today) }
     password { Faker::Internet.password }
     role 2
+
+    trait :student do
+      role 0
+    end
+
+    trait :coach do
+      role 1
+    end
+
+    trait :mentor do
+      role 2
+    end
+
+    trait :judge do
+      role 3
+    end
   end
 end
