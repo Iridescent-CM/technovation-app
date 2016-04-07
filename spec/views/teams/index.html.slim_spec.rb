@@ -16,7 +16,7 @@ describe 'teams/index.html.slim', type: :view do
       subject
     end
   end
-  
+
   describe 'pagination' do
     it { is_expected.to have_selector('.pagination') }
     it { is_expected.to have_selector('.pagination') }
