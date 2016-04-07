@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Setting, type: :model do
-
   describe '.get_boolean' do
     subject { Setting.get_boolean(key) }
 
@@ -12,17 +11,17 @@ describe Setting, type: :model do
 
     before do
       allow(Setting)
-         .to receive(:find_by!)
-         .with(key: key)
-         .and_return(fake_setting)
+        .to receive(:find_by!)
+        .with(key: key)
+        .and_return(fake_setting)
     end
 
-     it { is_expected.to eql expected_value }
+    it { is_expected.to eql expected_value }
 
-     it 'calls find_by with key' do
-       expect(Setting).to receive(:find_by!).with(key: key)
-       subject
-     end
+    it 'calls find_by with key' do
+      expect(Setting).to receive(:find_by!).with(key: key)
+      subject
+    end
 
     context 'when an invalid value is used' do
       let(:value) { 'ANY VALUE DIFFERENT OF TRUE OR FALSE' }
@@ -43,5 +42,4 @@ describe Setting, type: :model do
       it { is_expected.to eql expected_value }
     end
   end
-
 end

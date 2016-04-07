@@ -10,5 +10,4 @@ FactoryGirl.define do
       is_virtual false
     end
   end
-
 end

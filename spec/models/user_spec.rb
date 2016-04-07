@@ -3,7 +3,6 @@ require 'webmock'
 include WebMock::API
 
 describe User, type: :model do
-
   context '.save' do
     context 'when user is promoted to judging' do
       let(:user) do
@@ -18,12 +17,12 @@ describe User, type: :model do
         }
 
         User.skip_callback(
-           :create,
-           :add_to_campaign_list,
-           :send_judge_signup_email,
-           :send_mentor_signup_email,
-           :email_parents_callback
-         )
+          :create,
+          :add_to_campaign_list,
+          :send_judge_signup_email,
+          :send_mentor_signup_email,
+          :email_parents_callback
+        )
         stub_request(:any, /.*/).to_return(default_response)
 
         user.save(validate: false)

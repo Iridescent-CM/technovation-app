@@ -2,7 +2,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
@@ -58,7 +58,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  Geocoder.configure(:lookup => :test)
+  Geocoder.configure(lookup: :test)
 
   Geocoder::Lookup::Test.set_default_stub(
     [
@@ -72,6 +72,5 @@ RSpec.configure do |config|
         'country_code' => 'US'
       }
     ]
-)
+  )
 end
-

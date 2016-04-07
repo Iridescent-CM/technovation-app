@@ -28,14 +28,14 @@ describe 'teams/edit_submission.html.slim', type: :view do
   it { is_expected.to have_selector('#region_submisssion') }
   it { is_expected.to have_selector('.submission-status') }
 
-  describe 'categories' do 
+  describe 'categories' do
     it do
       expect(Category).to receive(:of_season).with(season_year).and_return([])
       subject
     end
   end
 
-  context 'display the submittion status' do 
+  context 'display the submittion status' do
     it 'there is a message status box' do
       is_expected.to have_selector('.submission-status .alert.alert-success')
     end

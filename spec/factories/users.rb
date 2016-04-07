@@ -11,6 +11,5 @@ FactoryGirl.define do
     birthday { Faker::Date.between(2.days.ago, Date.today) }
     password { Faker::Internet.password }
     role 2
-
   end
 end

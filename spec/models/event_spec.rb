@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Event, type: :model do
-
   describe '.is_virtual' do
     subject(:event) { build(:event) }
 
@@ -58,8 +57,6 @@ describe Event, type: :model do
       it 'returns the first virtual event for the current season' do
         is_expected.to eq(event)
       end
-
     end
-
   end
 end
