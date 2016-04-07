@@ -12,21 +12,33 @@ FactoryGirl.define do
     birthday { Faker::Date.between(2.days.ago, Date.today) }
     password { Faker::Internet.password }
     role 2
-
+    is_registered true
+    expertise 31
+    consent_signed_at { DateTime.now } 
+    
     trait :student do
       role 0
     end
 
-    trait :coach do
+
+    trait :mentor do
       role 1
     end
 
-    trait :mentor do
+    trait :coach do
       role 2
     end
-
+    
     trait :judge do
       role 3
     end
+
+
+    trait :with_fake_cheker do
+      bg_check_id 'fake'
+      bg_check_submitted DateTime.now
+    end
+
+    factory :mentor, traits: [:mentor, :with_fake_cheker]
   end
 end
