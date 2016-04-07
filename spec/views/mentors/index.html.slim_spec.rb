@@ -26,6 +26,6 @@ describe 'mentors/index.html.slim', type: :view do
   end
 
   describe 'pagination' do
-    it { is_expected.to have_selector('.pagination') }
+    it { is_expected.to have_selector('.pagination', count: 1) }
   end
 end
