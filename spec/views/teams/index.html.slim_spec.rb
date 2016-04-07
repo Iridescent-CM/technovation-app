@@ -1,4 +1,3 @@
-
 describe "teams/index.html.slim", :type => :view do
   subject { render }
   let(:teams) { build_list(:team, 11) }

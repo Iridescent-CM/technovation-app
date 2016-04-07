@@ -1,13 +1,16 @@
 
+
 describe 'teams/edit_submission.html.slim', type: :view do
   subject { render }
   let(:events) { build_list(:event, 1) }
   let(:region_submisssion_enabled?) { true }
   let(:user) { create(:user) }
   let(:team) { double }
-
   let(:submission_symbol) { :submitted }
+  let(:season_year) { 2010 }
+
   before do
+    allow(Setting).to receive(:year).and_return(season_year)
     allow(Event)
       .to receive(:open_for_signup)
       .and_return(events)
@@ -24,6 +27,13 @@ describe 'teams/edit_submission.html.slim', type: :view do
 
   it { is_expected.to have_selector('#region_submisssion') }
   it { is_expected.to have_selector('.submission-status') }
+
+  describe 'categories' do 
+    it do
+      expect(Category).to receive(:of_season).with(season_year).and_return([])
+      subject
+    end
+  end
 
   context 'display the submittion status' do 
     it 'there is a message status box' do

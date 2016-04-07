@@ -55,7 +55,7 @@ javascript:
           = f.hidden_field :confirm_region, value: 0
           = f.check_box :confirm_region, label: "<strong>Check the box if the division and region are correct. *</strong>".html_safe
 
-    = f.collection_select :category_id, Category.all, :id, :name
+    = f.collection_select :category_id, Category.of_season(Setting.year), :id, :name
 
     p
     = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click <a href='http://picresize.com/' target='_blank'> here</a> for a website to help you.".html_safe, data: 'logo', :onchange => 'validateFiles(this);', :data => { :max_file_size => 100.kilobytes }
