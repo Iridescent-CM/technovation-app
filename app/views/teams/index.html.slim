@@ -22,7 +22,7 @@ hr
     form method='get'
       h4.strong Category
       ul.list-unstyled
-        - for c in Category.all
+        - for c in Category.of_season(@season)
           li
             .checkbox
               label
