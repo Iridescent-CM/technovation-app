@@ -70,8 +70,8 @@ group :development do
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry-rails'
-  gem 'seedbank', require: false
 end
+gem 'seedbank', require: false
 
 group :test do
   gem 'webmock'
