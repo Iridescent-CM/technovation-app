@@ -70,6 +70,7 @@ group :development do
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'spring-commands-rspec'
 end
 gem 'seedbank', require: false
 
