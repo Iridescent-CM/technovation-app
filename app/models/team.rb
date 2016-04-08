@@ -27,13 +27,13 @@ class Team < ActiveRecord::Base
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
-
   validates_attachment_content_type :screenshot1, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot2, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot3, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot4, :content_type => /\Aimage\/.*\Z/
   validates_attachment_content_type :screenshot5, :content_type => /\Aimage\/.*\Z/
 
+  validates_attachment_size :avatar, less_than: 100.kilobytes, if: -> { avatar.dirty? }
   validates_attachment_size :screenshot1, less_than: 100.kilobytes, if: -> { screenshot1.dirty? }
   validates_attachment_size :screenshot2, less_than: 100.kilobytes, if: -> { screenshot2.dirty? }
   validates_attachment_size :screenshot3, less_than: 100.kilobytes, if: -> { screenshot3.dirty? }
