@@ -3,7 +3,7 @@ ruby '2.1.5'
 source 'https://rubygems.org'
 
 # core rails gems
-gem 'rails', '4.1.6'
+gem 'rails', '~> 4.1.15'
 gem 'pg'
 
 # core compiler / language gems
