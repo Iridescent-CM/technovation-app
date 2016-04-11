@@ -1,4 +1,4 @@
-class MentorController < ApplicationController
+class MentorsController < ApplicationController
   before_action :authenticate_user!, except: :index
 
   User::EXPERTISES.each do |s|
@@ -6,10 +6,13 @@ class MentorController < ApplicationController
   end
 
   def index
-    @mentors = apply_scopes(policy_scope(User)).mentor.has_expertise.is_registered
+    @mentors = apply_scopes(policy_scope(User)).can_mentor
+
     @taken = @mentors.joins(team_requests: :team).where(team_requests: { approved: true }, teams: { year: Setting.year })
     if current_user and current_user.geocoded?
       @mentors = @mentors.near(current_user, 10000)
     end
+    @mentors = @mentors.page params[:page]
   end
+
 end

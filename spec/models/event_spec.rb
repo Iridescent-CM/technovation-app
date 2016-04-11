@@ -59,4 +59,16 @@ describe Event, type: :model do
       end
     end
   end
+  describe '.display_order' do
+    let(:event) { double }
+    let(:result) { [event, event] }
+
+    before do
+      allow(Event).to receive(:order).with(is_virtual: :desc, name: :asc)
+    end
+    it 'calls display_order with the right parameters' do
+      Event.display_order
+      expect(Event).to have_received(:order).with(is_virtual: :desc, name: :asc)
+    end
+  end
 end

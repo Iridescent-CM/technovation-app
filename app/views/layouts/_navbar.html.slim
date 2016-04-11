@@ -28,7 +28,7 @@
                   = link_to 'Your Judge Event', :events
               - unless !current_user.mentor? and current_user.teams.empty?
                 li class=('disabled' if !current_user.is_registered?)
-                  = link_to 'Find a Mentor', :controller => '/mentor', :action => 'index'
+                  = link_to 'Find a Mentor', :controller => '/mentors', :action => 'index'
               - unless current_user.judge?
                 li.dropdown class=('disabled' if !current_user.is_registered?)
                   a.dropdown-toggle href='#' data-toggle='dropdown' role='button'

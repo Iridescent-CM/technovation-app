@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   belongs_to :region
 
   scope :display_order, -> {
-    order(is_virtual: :desc)
+    order(is_virtual: :desc, name: :asc)
   }
 
   scope :open_for_signup, -> {

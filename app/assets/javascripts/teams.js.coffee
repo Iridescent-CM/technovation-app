@@ -37,5 +37,17 @@ $(document).ready ->
     else
       $('#region_name').removeClass('hightlight')
 
+  validateFiles = (event) ->
+    inputFile = event.currentTarget
+    maxExceededMessage = 'This file exceeds the maximum allowed file size (100KB)'
+    maxFileSize = $(inputFile).data('max-file-size')
+    $.each inputFile.files, ->
+      if @size and maxFileSize and @size > parseInt(maxFileSize)
+        alert maxExceededMessage
+        $(inputFile).val ''
+      return
+    return
+
   $('a#region_button').click(toggleForChangeRegion)
   $('#team_region_id').change(changeRegion)
+  $('input[type="file"]').change(validateFiles)

@@ -27,7 +27,7 @@ hr
           p There are currently no mentors that match the criteria.
     - else 
       - for m in @mentors do
-        .media
+        .media.mentor-item
           a.media-left href=url_for(m)
             = image_tag m.avatar.url(:thumb), class: ['img-responsive', 'img-rounded']
           .media-body
@@ -48,3 +48,6 @@ hr
             - if @taken.exclude? m
               .label.label-success data-toggle='tooltip' title='This mentor is not yet on a team and open to mentoring requests'
                 | Teamless
+
+      .text-center
+        = paginate @mentors

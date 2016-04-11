@@ -19,6 +19,7 @@ describe Team, type: :model do
     include_examples 'validates images size of', :screenshot4, 100.kilobytes
     include_examples 'validates images size of', :screenshot5, 100.kilobytes
     include_examples 'validates images size of', :logo, 100.kilobytes
+    include_examples 'validates images size of', :avatar, 100.kilobytes
   end
 
   describe 'attributes' do

@@ -34,6 +34,14 @@ cp .env.example .env
 - `SKIP_CHECKR`: Set to `true` to skip the background check API call. Useful for development and staging environments.
 
 
+### Seed up your development environment
+The app use [spring](https://github.com/rails/spring) and [spring-command-rspec](https://github.com/jonleighton/spring-commands-rspec) to speed up the development, to install use: 
+
+``` sh
+bundle exec spring binstub --all
+bundle exec spring binstub rspec
+```
+
 ### Run App
 ``` sh
 bundle exec rails server

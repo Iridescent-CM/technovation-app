@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get 'signature' => 'signature#status'
   post 'signature' => 'signature#resend'
 
-  get 'mentors' => 'mentor#index'
+  get 'mentors' => 'mentors#index'
 
   get 'valid_events' => 'events#valid_events'
 
