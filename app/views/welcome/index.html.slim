@@ -56,11 +56,11 @@
         ' If you haven't already, please complete the following
         - if Setting.submissionOpen?
           - if current_user.student?
-            a href='http://rockman.co1.qualtrics.com/SE/?SID=SV_0cankgvZeqVcy3P' student post-program survey
+            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_0cankgvZeqVcy3P' student post-program survey
           - if current_user.mentor?
-            a href='http://rockman.co1.qualtrics.com/SE/?SID=SV_bjRy3xD4O81l6i9' mentor post-program survey
+            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_bjRy3xD4O81l6i9' mentor post-program survey
           - if current_user.coach?
-            a href='http://rockman.co1.qualtrics.com/SE/?SID=SV_cN166tnJClpa7jf' coach post-program survey
+            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_cN166tnJClpa7jf' coach post-program survey
         - else
           - if current_user.student?
             a href='https://www.surveymonkey.com/s/683JH6K' student pre-program survey
