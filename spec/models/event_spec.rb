@@ -14,8 +14,8 @@ describe Event, type: :model do
   end
 
   describe '.open_for_signup_by_region' do
-    let(:fake_relation){ double(where: nil) }
-    let(:region_id){ Faker::Number.number(5) }
+    let(:fake_relation) { double(where: nil) }
+    let(:region_id) { Faker::Number.number(5) }
 
     before do
       allow(Event).to receive(:display_order).and_return(fake_relation)
@@ -33,9 +33,7 @@ describe Event, type: :model do
     it 'filter by region' do
       expect(fake_relation).to receive(:where).with(region_id: region_id)
       Event.open_for_signup_by_region(region_id)
-
     end
-
   end
 
   describe '.virtual' do

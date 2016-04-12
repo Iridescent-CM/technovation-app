@@ -14,12 +14,11 @@ FactoryGirl.define do
     role 2
     is_registered true
     expertise 31
-    consent_signed_at { DateTime.now } 
-    
+    consent_signed_at { DateTime.now }
+
     trait :student do
       role 0
     end
-
 
     trait :mentor do
       role 1
@@ -28,11 +27,10 @@ FactoryGirl.define do
     trait :coach do
       role 2
     end
-    
+
     trait :judge do
       role 3
     end
-
 
     trait :with_fake_cheker do
       bg_check_id 'fake'

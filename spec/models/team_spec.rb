@@ -101,7 +101,7 @@ describe Team, type: :model do
     let(:region) { build(:region) }
     let(:team) { build(:team, region: region, event: event) }
     let(:region_changed?) { false }
-    
+
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
     end
@@ -113,7 +113,7 @@ describe Team, type: :model do
 
     context 'when the team region is changed' do
       let(:region_changed?) { true }
-      
+
       it 'remove the team event' do
         team.check_event_region
         expect(team.event).to be(nil)
