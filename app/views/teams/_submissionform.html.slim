@@ -1,6 +1,6 @@
 javascript:
   $(document).ready(function() {
-    var events = JSON.parse('#{raw Event.open_for_signup.to_json}');
+    var events = JSON.parse('#{raw @events.to_json}');
     $('#team_event_id').off()
     $('#team_event_id').on('change', function(e){
       var selected_id = $(this).find('option:selected').attr('value');
@@ -19,7 +19,7 @@ javascript:
 
     h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
-    = f.collection_select :event_id, Event.open_for_signup, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
+    = f.collection_select :event_id, @events, :id, :name, { help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' }
 
     .js-event-details
       = f.form_group label: { text: "Description" }

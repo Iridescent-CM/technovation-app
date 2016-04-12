@@ -1,4 +1,4 @@
-
+require 'rails_helper'
 
 describe 'teams/edit_submission.html.slim', type: :view do
   subject { render }
@@ -11,10 +11,8 @@ describe 'teams/edit_submission.html.slim', type: :view do
 
   before do
     allow(Setting).to receive(:year).and_return(season_year)
-    allow(Event)
-      .to receive(:open_for_signup)
-      .and_return(events)
     assign(:team, build(:team))
+    assign(:events, events)
 
     allow_any_instance_of(User).to receive(:current_team).and_return(team)
     allow(team).to receive(:submission_symbol).and_return(submission_symbol)

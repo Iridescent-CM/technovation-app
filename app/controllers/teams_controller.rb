@@ -126,28 +126,9 @@ class TeamsController < ApplicationController
 
   def edit_submission
     @team = Team.friendly.find(params[:id])
+    @events = Event.open_for_signup_by_region(@team.region_id)
     authorize @team
-
-    # if @team.update(team_params)
-    #   if params[:team][:event_signup]
-    #     flash[:notice] = 'Event signup updated'
-    #     redirect_to :back
-    #   else
-    #     redirect_to @team
-    #   end
-    # else
-    #   redirect_to :back
-    # end
   end
-
-  # def update_submissions
-  #   # binding.pry
-  #   @team = Team.friendly.find(params[:id])
-  #   authorize @team
-  #   params[:team][:submission_attachment].map { |k, v| sa = SubmissionAttachment.new({link: k, variety: 1, team_id: params[:id]}); sa.save! }
-
-  #   redirect_to @team
-  # end
 
   private
 
