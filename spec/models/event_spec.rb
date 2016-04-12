@@ -13,6 +13,31 @@ describe Event, type: :model do
     end
   end
 
+  describe '.open_for_signup_by_region' do
+    let(:fake_relation){ double(where: nil) }
+    let(:region_id){ Faker::Number.number(5) }
+
+    before do
+      allow(Event).to receive(:display_order).and_return(fake_relation)
+    end
+
+    it 'respond to open_for_signup_by_region' do
+      expect(Event).to respond_to(:open_for_signup_by_region)
+    end
+
+    it 'calls display_order_scope' do
+      expect(Event).to receive(:display_order)
+      Event.open_for_signup_by_region(region_id)
+    end
+
+    it 'filter by region' do
+      expect(fake_relation).to receive(:where).with(region_id: region_id)
+      Event.open_for_signup_by_region(region_id)
+
+    end
+
+  end
+
   describe '.virtual' do
     subject { described_class }
 
