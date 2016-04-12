@@ -22,6 +22,10 @@ describe Team, type: :model do
     include_examples 'validates images size of', :avatar, 100.kilobytes
   end
 
+  describe 'callbacks' do
+    it { is_expected.to callback(:check_event_region).before(:save) }
+  end
+
   describe 'attributes' do
     it { is_expected.to respond_to(:confirm_region) }
     it { is_expected.to respond_to(:confirm_acceptance_of_rules) }
@@ -89,6 +93,31 @@ describe Team, type: :model do
 
       it { is_expected.to_not include('confirm_region') }
       it { is_expected.to_not include('confirm_acceptance_of_rules') }
+    end
+  end
+
+  describe '.check_event_region' do
+    let(:event) { build(:event) }
+    let(:region) { build(:region) }
+    let(:team) { build(:team, region: region, event: event) }
+    let(:region_changed?) { false }
+    
+    before do
+      allow(team).to receive(:region_id_changed?).and_return region_changed?
+    end
+
+    it 'dont change the team event' do
+      team.check_event_region
+      expect(team.event).to be(event)
+    end
+
+    context 'when the team region is changed' do
+      let(:region_changed?) { true }
+      
+      it 'remove the team event' do
+        team.check_event_region
+        expect(team.event).to be(nil)
+      end
     end
   end
 end

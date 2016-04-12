@@ -4,6 +4,7 @@ class Team < ActiveRecord::Base
   friendly_id :name_and_year, use: :slugged
   before_save :update_submission_status
   before_save :update_division
+  before_save :check_event_region
 
   validates :name, presence: true, uniqueness: {
     scope: :year,
@@ -271,5 +272,10 @@ class Team < ActiveRecord::Base
     else !missing_fields.empty?
       return 'In Progress'
     end
+  end
+
+  def check_event_region
+    self.event = nil if region_id_changed?
+    true
   end
 end

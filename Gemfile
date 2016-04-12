@@ -76,6 +76,7 @@ gem 'seedbank', require: false
 
 group :test do
   gem 'webmock'
+  gem 'shoulda-callback-matchers'
 end
 
 group :production, :staging do
