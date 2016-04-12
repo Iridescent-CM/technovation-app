@@ -11,7 +11,7 @@ class Event < ActiveRecord::Base
   }
 
   scope :open_for_signup_by_region, ->(region_id) {
-    display_order.where(region_id: region_id)
+    open_for_signup.where("(region_id = ?) OR ( is_virtual = ? AND extract(year from whentooccur) = ?)", region_id, true, Setting.year)
   }
 
 

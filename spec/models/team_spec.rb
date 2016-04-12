@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 include WebMock::API
 
@@ -97,18 +98,22 @@ describe Team, type: :model do
   end
 
   describe '.check_event_region' do
-    let(:event) { build(:event) }
+    let(:event_id) { 1 }
+    let(:event){ build :event, :virtual_event, id: event_id }
     let(:region) { build(:region) }
-    let(:team) { build(:team, region: region, event: event) }
+    let(:team) { build(:team, region: region, event_id: event_id) }
     let(:region_changed?) { false }
+    let(:has_a_virtual_event?) { false }
+
 
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
+      allow(team).to receive(:has_a_virtual_event?).and_return has_a_virtual_event?
     end
 
     it 'dont change the team event' do
       team.check_event_region
-      expect(team.event).to be(event)
+      expect(team.event_id).to be(event_id)
     end
 
     context 'when the team region is changed' do
@@ -116,8 +121,44 @@ describe Team, type: :model do
 
       it 'remove the team event' do
         team.check_event_region
-        expect(team.event).to be(nil)
+        expect(team.event_id).to be(nil)
+      end
+      context 'and team event is virtual' do
+        let(:region_changed?) { true }
+        let(:has_a_virtual_event?) { true }
+
+        it 'dont change the team event' do
+          team.check_event_region
+          expect(team.event_id).to be(event_id)
+        end
       end
     end
   end
+  describe '.has_a_virtual_event?' do
+    subject(:team) { build(:team, event_id: event_id).has_a_virtual_event? }
+    let(:event) { build(:event, :virtual_event) }
+    let(:event_id) { Faker::Number.number 4 }
+
+    before do
+      allow(Event).to receive(:find).and_return(event)
+    end
+
+    it { is_expected.to be true }
+
+    context 'when is not a virtual event' do
+      let(:event) { build(:event, :non_virtual_event) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is not a event' do
+      let(:event_id) { nil }
+      let(:event) { nil }
+
+      it { is_expected.to be false }
+    end
+  end
+
+
+
 end

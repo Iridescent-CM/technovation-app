@@ -274,8 +274,13 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def has_a_virtual_event?
+    return false if event_id.nil?
+    Event.find(event_id).is_virtual
+  end
+
   def check_event_region
-    self.event = nil if region_id_changed?
+    self.event_id = nil if region_id_changed? && !has_a_virtual_event?
     true
   end
 end

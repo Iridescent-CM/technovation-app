@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :event do
+    id nil
     is_virtual nil
+
     name { Faker::Name.first_name }
 
     trait :virtual_event do
