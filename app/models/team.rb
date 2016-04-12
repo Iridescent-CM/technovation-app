@@ -205,13 +205,11 @@ class Team < ActiveRecord::Base
   end
 
   def check_completeness
-     missing_fields.map { |field| I18n.t field, scope: [:team, :errors, :required_fields] }.to_sentence(last_word_connector: ' and ')
+     missing_fields.map { |field| I18n.t field, scope: [:team, :errors, :required_fields] }
   end
 
   def required_fields
-
-
-    fields = ['code', 'pitch', 'plan']
+    fields = ['code', 'pitch', 'plan', 'event_id']
     fields.concat ['confirm_acceptance_of_rules', 'confirm_region'] if Setting.get_boolean('manual_region_selection')
     fields
   end

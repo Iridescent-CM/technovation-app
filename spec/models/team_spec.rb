@@ -73,6 +73,7 @@ describe Team, type: :model do
 
     let(:expected_required_fields) do
       %w(
+        event_id
         code
         pitch
         plan

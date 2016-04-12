@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!, except: :index
   before_filter :set_random_seed
+  helper TeamsHelper
 
   has_scope :has_category
   has_scope :has_division

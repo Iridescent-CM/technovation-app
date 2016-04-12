@@ -1,4 +1,4 @@
-- # Remove this part when you remove the manual_region_selection feature_flag 
+- # Remove this part when you remove the manual_region_selection feature_flag
 - if @team.ineligible?
   .alert.alert-danger role='alert'
     p This team is currently ineligble to participate. There must between 1 to 5 students inclusive, all of whom are 19 and under. If in a Middle School region, all students must be under 15.
@@ -92,8 +92,8 @@ hr
   -else
     .alert.alert-danger role='alert'
       p
-        span You still need populate&nbsp;
-        == @team.check_completeness
-        span  to complete their submission.
+        span You still need fill the fields:&nbsp;
+        == show_all_errors(@team.check_completeness)
+        span  to complete your submission.
 
   = render 'submission', team: @team
