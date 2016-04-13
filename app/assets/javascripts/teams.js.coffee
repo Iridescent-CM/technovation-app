@@ -30,7 +30,7 @@ $(document).ready ->
   changeRegion = (e) ->
     new_region = $('#select_region option:selected' ).text() + '.'
     $('#region_name').html(new_region)
-    $('#team_confirm_region').attr('checked', false)
+    $('input#team_confirm_region[type=checkbox]').attr('checked', false))
 
     if getCurrentRegion() != initial_region
       $('#region_name').addClass('hightlight')
