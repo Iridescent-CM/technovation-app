@@ -19,7 +19,7 @@ javascript:
 
     h4 Competition Event
     p If you are located near an event and want to compete in-person, select an event from this list. Select Virtual Judging to compete online. Your team must be signed up for an event in order to receive a score.
-    = f.collection_select :event_id, @events, :id, :name, { prompt: '-- Select an event --', help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' } 
+    = f.collection_select :event_id, @events, :id, :name, {label: 'Event *', prompt: '-- Select an event --', help: 'Select Virtual Judging if there are no in-person events near you.' }, { class: 'js-event-select' } 
 
     .js-event-details
       = f.form_group label: { text: "Description" }
