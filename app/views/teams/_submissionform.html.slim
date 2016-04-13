@@ -52,7 +52,7 @@ javascript:
         = image_tag @team.logo.url(:thumb)
 
     = f.text_area :description, label: "App description", rows: 5
-    = f.file_field :plan, label: "Business plan *", help: "PDF format", data: 'plan'
+    = f.file_field :plan, label: "Business plan *", help: "PDF Format. Please submit a PDF file smaller than 500KB. Documents greater than 500KB will not be accepted. If you need to compress your document, please click <a href='http://www.ilovepdf.com/compress_pdf' target='_blank'> here</a> for a website to help you.".html_safe, data: 'plan', :data => { :max_file_size => 500.kilobytes }
     = f.text_field :code, label: "Source code *", data: 'code', help: 'A link to GitHub or Google Drive'
 
     = f.text_field :tools, label: 'Tools used', help: 'What tools did you use to build your app?'

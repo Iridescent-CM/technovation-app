@@ -39,8 +39,9 @@ $(document).ready ->
 
   validateFiles = (event) ->
     inputFile = event.currentTarget
-    maxExceededMessage = 'This file exceeds the maximum allowed file size (100KB)'
     maxFileSize = $(inputFile).data('max-file-size')
+    maxFileSizeKilobytes = maxFileSize / Math.pow(1024, 1)
+    maxExceededMessage = "This file exceeds the maximum allowed file size (#{maxFileSizeKilobytes}KB)"
     $.each inputFile.files, ->
       if @size and maxFileSize and @size > parseInt(maxFileSize)
         alert maxExceededMessage
