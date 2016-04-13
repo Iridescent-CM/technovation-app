@@ -41,6 +41,7 @@ class Team < ActiveRecord::Base
   validates_attachment_size :screenshot4, less_than: 100.kilobytes, if: -> { screenshot4.dirty? }
   validates_attachment_size :screenshot5, less_than: 100.kilobytes, if: -> { screenshot5.dirty? }
   validates_attachment_size :logo, less_than: 100.kilobytes, if: -> { logo.dirty? }
+  validates_attachment_size :plan, less_than: 500.kilobytes, if: -> { plan.dirty? }
 
 
   validates_attachment_file_name :plan, :matches => /pdf\Z/
@@ -261,7 +262,7 @@ class Team < ActiveRecord::Base
       :in_progress
     end
   end
-  
+
   def submission_status
     if Setting.beforeSubmissionsOpen?
       return 'Submissions not yet open'

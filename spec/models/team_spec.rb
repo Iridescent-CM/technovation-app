@@ -6,7 +6,7 @@ describe Team, type: :model do
   subject(:team) { build(:team) }
 
   describe 'validations' do
-    shared_examples 'validates images size of' do |field, filesize|
+    shared_examples 'validates file size of' do |field, filesize|
       it do
         is_expected
           .to validate_attachment_size(field)
@@ -14,13 +14,14 @@ describe Team, type: :model do
       end
     end
 
-    include_examples 'validates images size of', :screenshot1, 100.kilobytes
-    include_examples 'validates images size of', :screenshot2, 100.kilobytes
-    include_examples 'validates images size of', :screenshot3, 100.kilobytes
-    include_examples 'validates images size of', :screenshot4, 100.kilobytes
-    include_examples 'validates images size of', :screenshot5, 100.kilobytes
-    include_examples 'validates images size of', :logo, 100.kilobytes
-    include_examples 'validates images size of', :avatar, 100.kilobytes
+    include_examples 'validates file size of', :screenshot1, 100.kilobytes
+    include_examples 'validates file size of', :screenshot2, 100.kilobytes
+    include_examples 'validates file size of', :screenshot3, 100.kilobytes
+    include_examples 'validates file size of', :screenshot4, 100.kilobytes
+    include_examples 'validates file size of', :screenshot5, 100.kilobytes
+    include_examples 'validates file size of', :logo, 100.kilobytes
+    include_examples 'validates file size of', :avatar, 100.kilobytes
+    include_examples 'validates file size of', :plan, 500.kilobytes
   end
 
   describe 'callbacks' do
