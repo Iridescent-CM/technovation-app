@@ -46,6 +46,8 @@ class User < ActiveRecord::Base
   has_many :team_requests
   has_many :teams, -> {where 'team_requests.approved = ?', true}, through: :team_requests
 
+  VALID_AGE_RANGE = 8..19
+
   EXPERTISES = [
     {sym: :science, abbr: 'Sci'},
     {sym: :engineering, abbr: 'Eng'},
@@ -83,8 +85,8 @@ class User < ActiveRecord::Base
       is_ssl = site[:ssl]
       klass = (is_ssl ? URI::HTTPS : URI::HTTP)
       klass.build({
-        :host => site[:host], 
-        :path => '/' + [site[:path_base], collector_path].join('/'), 
+        :host => site[:host],
+        :path => '/' + [site[:path_base], collector_path].join('/'),
         :query => {:c => user_id}.to_query
       }).to_s
     end
@@ -217,7 +219,7 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
-    return false if Setting.get_boolean('manual_region_selection')
+    return student? && !VALID_AGE_RANGE.include?(age_before_cutoff()) if Setting.get_boolean('manual_region_selection')
     division == :x && student?
   end
 
