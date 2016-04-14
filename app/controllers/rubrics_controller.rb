@@ -74,7 +74,7 @@ class RubricsController < ApplicationController
     # end
 
     ## remove the teams who have division == x
-    teams.delete_if{|t| t.division == 'x'}
+    teams.delete_if{|t| t.ineligible?}
 
     ## remove teams that have entered less than five fields of information
     teams.delete_if{|t| !t.submission_eligible?}
