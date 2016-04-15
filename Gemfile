@@ -13,7 +13,6 @@ gem 'slim-rails'
 gem 'redcarpet'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-gem 'rack-timeout'
 gem 'puma_worker_killer'
 
 # view / templating gems / front-end gems
@@ -81,4 +80,5 @@ end
 
 group :production, :staging do
   gem 'rails_12factor'
+  gem 'rack-timeout'
 end
