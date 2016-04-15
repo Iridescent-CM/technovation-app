@@ -56,14 +56,14 @@ describe User, type: :model do
     subject(:user) { build(:user, birthday: birthday, role: role).ineligible? }
     let(:birthday) { 7.years.ago.to_datetime }
     let(:role) { :student }
-    let(:region_submission_enabled?) { true }
+    let(:allow_new_logic?) { true }
     let(:cutoff_day) { DateTime.now }
 
     before do
       allow(Setting)
         .to receive(:get_boolean)
-        .with('manual_region_selection')
-        .and_return(region_submission_enabled?)
+        .with('allow_ineligibility_logic')
+        .and_return(allow_new_logic?)
 
       allow(Setting)
         .to receive(:get_date)
@@ -102,7 +102,12 @@ describe User, type: :model do
         let (:role) { :judge }
         it { is_expected.to be false}
       end
+    end
 
+    context 'when allow_ineligibility_logic is off' do
+      let(:allow_new_logic?) { false }
+
+      it { is_expected.to be false}
     end
 
   end

@@ -140,36 +140,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_division
-    if Setting.get_boolean('manual_region_selection')
-      new_update_division
-    else
-      old_update_division
-    end
-  end
-
-  def new_update_division
-    self.division = self.region.division
-  end
-
-  def old_update_division
-    div = :x
-
-    # update team division to age of oldest student only if there is a valid
-    # number of team members
-    student_count = members.student.count
-    if student_count >= 1 and student_count <= 5
-      div = members.student
-        .map(&:division)
-        .max_by { |d| Team.divisions[d] }
-    end
-    self.division = div
-
-    if hs? and region.ms?
-      self.division = :x
-    end
-
-    true
-
+      self.division = self.region.division
   end
 
   # division update logic
@@ -190,7 +161,7 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
-    return false if Setting.get_boolean('manual_region_selection')
+    return false if Setting.get_boolean('allow_ineligibility_logic')
     division.to_sym == :x
   end
 
@@ -211,9 +182,7 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    fields = ['code', 'pitch', 'plan', 'event_id']
-    fields.concat ['confirm_acceptance_of_rules', 'confirm_region'] if Setting.get_boolean('manual_region_selection')
-    fields
+    ['code', 'pitch', 'plan', 'event_id', 'confirm_acceptance_of_rules', 'confirm_region']
   end
 
   def missing_fields

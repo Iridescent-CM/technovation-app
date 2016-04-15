@@ -3,7 +3,6 @@ require 'rails_helper'
 describe 'teams/edit_submission.html.slim', type: :view do
   subject { render }
   let(:events) { build_list(:event, 1) }
-  let(:region_submisssion_enabled?) { true }
   let(:user) { create(:user) }
   let(:team) { double }
   let(:submission_symbol) { :submitted }
@@ -16,10 +15,6 @@ describe 'teams/edit_submission.html.slim', type: :view do
 
     allow_any_instance_of(User).to receive(:current_team).and_return(team)
     allow(team).to receive(:submission_symbol).and_return(submission_symbol)
-    allow(Setting)
-      .to receive(:get_boolean)
-      .with('manual_region_selection')
-      .and_return(region_submisssion_enabled?)
     sign_in user
   end
 
@@ -59,10 +54,5 @@ describe 'teams/edit_submission.html.slim', type: :view do
         end
       end
     end
-  end
-
-  context 'when the feature manual_region_selection is off' do
-    let(:region_submisssion_enabled?) { false }
-    it { is_expected.to_not have_selector('#region_submisssion') }
   end
 end

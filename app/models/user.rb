@@ -219,8 +219,8 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
-    return student? && !VALID_AGE_RANGE.include?(age_before_cutoff()) if Setting.get_boolean('manual_region_selection')
-    division == :x && student?
+    return student? && !VALID_AGE_RANGE.include?(age_before_cutoff()) if Setting.get_boolean('allow_ineligibility_logic')
+    false
   end
 
   def email_parents_callback
