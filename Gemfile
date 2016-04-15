@@ -66,19 +66,19 @@ group :development, :test do
 end
 
 group :development do
+  gem 'seedbank', require: false
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'spring-commands-rspec'
 end
-gem 'seedbank', require: false
 
 group :test do
   gem 'webmock'
   gem 'shoulda-callback-matchers'
 end
 
-group :production, :staging do
+group :production, :staging, :qa do
   gem 'rails_12factor'
   gem 'rack-timeout'
 end
