@@ -161,8 +161,11 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
-    ineligible_students = members.select {|u| u.ineligible?}
-    return !ineligible_students.empty? || members.size > 5 if Setting.get_boolean('allow_ineligibility_logic')
+    max_number_of_students = 5
+    students = members(true).select {|u| u.student?}
+    ineligible_students = students.select {|u| u.ineligible?}
+
+    return students.size > max_number_of_students || !ineligible_students.empty? if Setting.get_boolean('allow_ineligibility_logic')
     false
   end
 

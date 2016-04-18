@@ -124,18 +124,18 @@ describe Team, type: :model do
     subject() { team.ineligible? }
 
     let(:team) { build(:team) }
-    let(:user) { build(:user, :student) }
+    let(:student) { build(:user, :student) }
     let(:allow_new_logic?) { true }
     let(:user_ineligible?) { true }
-    let(:users) { [user] }
+    let(:team_members) { [student] }
 
     before do
       allow(Setting)
         .to receive(:get_boolean)
         .with('allow_ineligibility_logic')
         .and_return(allow_new_logic?)
-      allow(user).to receive(:ineligible?).and_return(user_ineligible?)
-      allow(team).to receive(:members).and_return(users)
+      allow(student).to receive(:ineligible?).and_return(user_ineligible?)
+      allow(team).to receive(:members).and_return(team_members)
     end
 
     context 'when team contains at least one ineligible student' do
@@ -145,7 +145,7 @@ describe Team, type: :model do
     context 'when team has more than 5 students' do
       let(:user_ineligible?) { Faker::Boolean.boolean }
       let(:number_of_students) { Faker::Number.between(6)}
-      let(:users) { [user] * number_of_students }
+      let(:team_members) { [student] * number_of_students }
 
       it { is_expected.to be true }
     end
@@ -153,11 +153,19 @@ describe Team, type: :model do
     context 'when team has less than 5 students and all are eligible' do
       let(:user_ineligible?) { false }
       let(:number_of_students) { Faker::Number.between(1,5) }
-      let(:users) { [user] * number_of_students }
+      let(:team_members) { [student] * number_of_students }
 
       it { is_expected.to be false }
     end
 
+    context "when team has 5 students and at least one coach and one mentor" do
+      let(:user_ineligible?) { false }
+      let(:user_coach) { build(:user, :coach) }
+      let(:user_mentor) { build(:user, :mentor) }
+      let(:team_members) {[student, student, student, student, student, user_mentor, user_coach]}
+
+      it { is_expected.to be false}
+    end
   end
 
 end
