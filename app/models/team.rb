@@ -163,7 +163,7 @@ class Team < ActiveRecord::Base
   def ineligible?
     ineligible_students = members.select {|u| u.ineligible?}
     return !ineligible_students.empty? || members.size > 5 if Setting.get_boolean('allow_ineligibility_logic')
-    division.to_sym == :x
+    false
   end
 
   def check_empty!
