@@ -150,6 +150,14 @@ describe Team, type: :model do
       it { is_expected.to be true }
     end
 
+    context 'when team has no student' do
+      let(:user_coach) { build(:user, :coach) }
+      let(:user_mentor) { build(:user, :mentor) }
+      let(:team_members) { [user_mentor, user_coach] }
+
+      it { is_expected.to be true }
+    end
+
     context 'when team has less than 5 students and all are eligible' do
       let(:user_ineligible?) { false }
       let(:number_of_students) { Faker::Number.between(1,5) }
