@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Rubric::CreateToBrazil do
+describe Rubric::CreatePlaceHolder do
   subject { described_class.run!(year: year, regions: regions, country: country) }
 
   let(:year) { 2016 }

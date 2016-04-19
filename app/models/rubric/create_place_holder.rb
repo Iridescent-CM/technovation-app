@@ -1,5 +1,5 @@
 class Rubric
-  class CreateToBrazil
+  class CreatePlaceHolder
     def self.run!(year:, regions:, country:)
       new(year, regions, country).run!
     end

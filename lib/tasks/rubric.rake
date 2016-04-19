@@ -4,7 +4,7 @@ namespace :rubric do
     country = 'BR'
     regions = [1,5]
     
-    Rubric::CreateToBrazil.run!(
+    Rubric::CreatePlaceHolder.run!(
       regions: regions,
       country: country,
       year: year
