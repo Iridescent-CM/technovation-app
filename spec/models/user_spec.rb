@@ -62,7 +62,7 @@ describe User, type: :model do
     before do
       allow(Setting)
         .to receive(:get_boolean)
-        .with('allow_ineligibility_logic')
+        .with('allow_ineligibility_logic_for_students')
         .and_return(allow_new_logic?)
 
       allow(Setting)
@@ -90,24 +90,31 @@ describe User, type: :model do
     context 'when user is not a student' do
       context 'and is a coach' do
         let (:role) { :coach }
-        it { is_expected.to be false}
+        it { is_expected.to be false }
       end
 
       context 'and is a mentor' do
         let (:role) { :mentor }
-        it { is_expected.to be false}
+        it { is_expected.to be false }
       end
 
       context 'and is a judge' do
         let (:role) { :judge }
-        it { is_expected.to be false}
+        it { is_expected.to be false }
       end
     end
 
-    context 'when allow_ineligibility_logic is off' do
+    context 'when allow_ineligibility_logic_for_students is off' do
       let(:allow_new_logic?) { false }
 
-      it { is_expected.to be false}
+      context 'all students are eligible regardless their age' do
+        let(:role) { :student }
+        let(:year) { Faker::Number.number 3 }
+        let(:birthday) { Faker::Date.between(100.years.ago, Date.today) }
+
+        it { is_expected.to be false }
+      end
+
     end
 
   end
