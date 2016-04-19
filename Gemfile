@@ -58,6 +58,7 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
+  gem 'fantaskspec'
   gem 'rspec-rails'
   gem 'byebug'
   gem 'capybara'
@@ -76,7 +77,6 @@ end
 group :test do
   gem 'webmock'
   gem 'shoulda-callback-matchers'
-  gem "fantaskspec"
 end
 
 group :production, :staging, :qa do
