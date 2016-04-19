@@ -76,6 +76,7 @@ end
 group :test do
   gem 'webmock'
   gem 'shoulda-callback-matchers'
+  gem "fantaskspec"
 end
 
 group :production, :staging, :qa do

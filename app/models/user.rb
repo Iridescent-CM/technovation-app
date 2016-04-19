@@ -67,6 +67,13 @@ class User < ActiveRecord::Base
   scope :has_expertise, -> { where.not expertise: 0 }
   scope :is_registered, -> { where 'is_registered = true' }
   scope :can_mentor, -> { mentor.has_expertise.is_registered }
+  scope :judge_or_can_judge, -> {
+    is_registered.where("role = ? or judging = ?", 3, true)
+  }
+
+  scope :judges_from, -> (country) {
+    judge_or_can_judge.where(home_country: country)
+  }
 
   #### fields used for judge user type only
   belongs_to :event
