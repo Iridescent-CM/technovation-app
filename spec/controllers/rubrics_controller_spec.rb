@@ -88,6 +88,11 @@ describe RubricsController, type: :controller do
       let(:today) { whentooccur_event }
       let(:teams) { create_list(:team, 3, isfinalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
+      
+      it 'shows all teams for this event' do
+        get :index
+        expect(assigns[:teams]).to eq(teams)
+      end
     end
   end
 end
