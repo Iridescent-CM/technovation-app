@@ -22,20 +22,22 @@ class RubricsController < ApplicationController
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
       unless event.is_virtual?
-        start = Setting.get_date('quarterfinalJudgingOpen') if Setting.judgingRound == 'quarterfinal'
-        finish = Setting.get_date('quarterfinalJudgingClose') if Setting.judgingRound == 'quarterfinal'
+        if (Setting.anyJudgingRoundActive?)
+          start = Setting.get_date('quarterfinalJudgingOpen') if Setting.judgingRound == 'quarterfinal'
+          finish = Setting.get_date('quarterfinalJudgingClose') if Setting.judgingRound == 'quarterfinal'
 
-        start = Setting.get_date('semifinalJudgingOpen') if Setting.judgingRound == 'semifinal'
-        finish = Setting.get_date('semifinalJudgingClose') if Setting.judgingRound == 'semifinal'
+          start = Setting.get_date('semifinalJudgingOpen') if Setting.judgingRound == 'semifinal'
+          finish = Setting.get_date('semifinalJudgingClose') if Setting.judgingRound == 'semifinal'
 
-        start = Setting.get_date('finalJudgingOpen') if Setting.judgingRound == 'final'
-        finish = Setting.get_date('finalJudgingClose') if Setting.judgingRound == 'final'
+          start = Setting.get_date('finalJudgingOpen') if Setting.judgingRound == 'final'
+          finish = Setting.get_date('finalJudgingClose') if Setting.judgingRound == 'final'
 
-        if (start..finish).cover?(Setting.now)
-          ## only show the teams competing in the event
-          teams = Team.all.has_event(event)
-          @event = event
-          event_active = true
+          if (start..finish).cover?(Setting.now)
+            ## only show the teams competing in the event
+            teams = Team.all.has_event(event)
+            @event = event
+            event_active = true
+          end
         end
       end
     end

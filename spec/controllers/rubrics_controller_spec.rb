@@ -11,6 +11,7 @@ describe RubricsController, type: :controller do
     let(:round_start) { Faker::Date.forward(2) }
     let(:round_end) { round_start + 4.day }
     let(:today) { Faker::Date.between(round_start, round_end) }
+    let(:judging_round) { '' }
 
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
@@ -47,6 +48,9 @@ describe RubricsController, type: :controller do
         .to receive(:get_date)
         .with(judging_round+"JudgingClose")
         .and_return(round_end)
+      allow(Setting)
+        .to receive(:anyJudgingRoundActive?)
+        .and_return(!judging_round.empty?)
     end
 
     context 'when its quarterfinals time' do
