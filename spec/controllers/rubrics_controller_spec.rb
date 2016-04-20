@@ -53,6 +53,13 @@ describe RubricsController, type: :controller do
         .and_return(!judging_round.empty?)
     end
 
+    context 'when its not time to judge' do
+      let(:today) { Faker::Date.between(round_start - 2.day, round_start - 1.day) }
+      it 'does not show teams to be judged' do
+        expect(assigns[:teams]).to be_nil
+      end
+    end
+
     context 'when its quarterfinals time' do
       let(:judging_round) { 'quarterfinal' }
 
