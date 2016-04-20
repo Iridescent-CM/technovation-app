@@ -6,9 +6,11 @@ describe RubricsController, type: :controller do
     let(:event){ build(:event, :non_virtual_event, id: event_id, whentooccur: whentooccur_event) }
     let(:whentooccur_event) { Faker::Date.forward(10) }
     let(:user) { build(:user, :judge, event_id: event_id) }
-    let(:teams) { build_list(:team, 3, event: event) }
+    let(:teams) { build_list(:team, 5, event: event) }
     let(:submission_eligible?) { true }
-    let(:today) { Setting.now }
+    let(:round_start) { Faker::Date.forward(2) }
+    let(:round_end) { round_start + 4.day }
+    let(:today) { Faker::Date.between(round_start, round_end) }
 
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
@@ -37,11 +39,18 @@ describe RubricsController, type: :controller do
       allow(Event).to receive(:find)
         .with(event_id)
         .and_return(event)
+      allow(Setting)
+        .to receive(:get_date)
+        .with(judging_round+"JudgingOpen")
+        .and_return(round_start)
+      allow(Setting)
+        .to receive(:get_date)
+        .with(judging_round+"JudgingClose")
+        .and_return(round_end)
     end
 
     context 'when its quarterfinals time' do
       let(:judging_round) { 'quarterfinal' }
-      let(:today) { whentooccur_event }
 
       it 'shows all teams for this event' do
         get :index
@@ -51,7 +60,7 @@ describe RubricsController, type: :controller do
       context 'and its a virtual event' do
         let(:region) { build(:region) }
         let(:event) { create(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
-        let(:teams) { create_list(:team, 3, event_id: event.id, year: Setting.year, region: region) }
+        let(:teams) { create_list(:team, 10, event_id: event.id, year: Setting.year, region: region) }
         let(:user) { create(:user, :judge, event: event, judging_region: region) }
 
         it 'shows a sample of teams for the virtual event' do
@@ -63,8 +72,7 @@ describe RubricsController, type: :controller do
 
     context 'when its semifinals time' do
       let(:judging_round) { 'semifinal' }
-      let(:today) { whentooccur_event }
-      let(:teams) { create_list(:team, 3, event: event, issemifinalist: true, year: Setting.year) }
+      let(:teams) { create_list(:team, 8, event: event, issemifinalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
 
       it 'shows all teams for this event' do
@@ -74,7 +82,7 @@ describe RubricsController, type: :controller do
 
       context 'and its a virtual event' do
         let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
-        let(:teams) { create_list(:team, 3, event: event, issemifinalist: true, year: Setting.year) }
+        let(:teams) { create_list(:team, 5, event: event, issemifinalist: true, year: Setting.year) }
 
         it 'shows a sample of teams for the virtual event' do
           get :index
@@ -85,10 +93,9 @@ describe RubricsController, type: :controller do
 
     context 'when its finals time' do
       let(:judging_round) { 'final' }
-      let(:today) { whentooccur_event }
-      let(:teams) { create_list(:team, 3, isfinalist: true, year: Setting.year) }
+      let(:teams) { create_list(:team, 4, isfinalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
-      
+
       it 'shows all teams for this event' do
         get :index
         expect(assigns[:teams]).to eq(teams)
