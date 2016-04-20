@@ -7,6 +7,7 @@ FactoryGirl.define do
     division { Faker::Number.between(0, 2) }
     confirm_acceptance_of_rules { Faker::Boolean.boolean }
     avatar_file_name { Faker::Name.name }
+    year nil
 
     association :event
   end

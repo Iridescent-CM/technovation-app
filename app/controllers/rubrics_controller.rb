@@ -73,7 +73,7 @@ class RubricsController < ApplicationController
     #   teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
     # end
 
-    ## remove the teams who have division == x
+    ## remove the teams who are not eligible
     teams.delete_if{|t| t.ineligible?}
 
     ## remove teams that have entered less than five fields of information

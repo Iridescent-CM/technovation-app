@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def check_judging_conflicts
-    if !event_id.nil? and !Event.all.find(event_id).region.nil? and !conflict_region.nil?
+    if !event_id.nil? and !Event.find(event_id).region.nil? and !conflict_region.nil?
       if conflict_region.id == Event.all.find(event_id).region.id
         raise 'Sorry, you cannot judge an event in a division that you have mentored or coached. Sign up for Virtual Judging instead.'
       end
