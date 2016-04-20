@@ -58,18 +58,17 @@ describe RubricsController, type: :controller do
     context 'when its not time to judge' do
       let(:today) { Faker::Date.between(round_start - 2.day, round_start - 1.day) }
       it 'does not show teams to be judged' do
+        get :index
         expect(assigns[:teams]).to be_nil
       end
     end
 
     describe 'brazilian cases' do
       let(:judging_round) { 'quarterfinal' }
-      let(:today) { whentooccur_event }
       let(:brazil) { 'BR' }
       let(:non_brazilian_country) { 'CH' }
       let(:region) { build(:region) }
       let(:judge_country) { non_brazilian_country }
-
       let(:user) do
         build(
           :user, :judge,
@@ -109,11 +108,13 @@ describe RubricsController, type: :controller do
 
       it 'shows only non brazilian teams' do
         get :index
+        
         expect(assigns[:teams]).to eq non_brazilian_teams
       end
 
       context 'when judge is brazilian' do
         let(:judge_country) { brazil }
+        
         it 'shows only brazilian teams' do
           get :index
           expect(assigns[:teams]).to eq brazilian_teams
