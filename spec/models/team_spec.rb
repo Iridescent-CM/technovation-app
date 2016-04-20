@@ -59,12 +59,11 @@ describe Team, type: :model do
 
   describe '.check_event_region' do
     let(:event_id) { 1 }
-    let(:event){ build :event, :virtual_event, id: event_id }
+    let(:event) { build :event, :virtual_event, id: event_id }
     let(:region) { build(:region) }
     let(:team) { build(:team, region: region, event_id: event_id) }
     let(:region_changed?) { false }
     let(:has_a_virtual_event?) { false }
-
 
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
@@ -120,7 +119,7 @@ describe Team, type: :model do
   end
 
   describe '.ineligible?' do
-    subject() { team.ineligible? }
+    subject { team.ineligible? }
 
     let(:team) { build(:team) }
     let(:student) { build(:user, :student) }
@@ -151,7 +150,7 @@ describe Team, type: :model do
       let(:user_ineligible?) { true }
 
       context 'and team has more than 5 students' do
-        let(:number_of_students) { Faker::Number.between(6)}
+        let(:number_of_students) { Faker::Number.between(6) }
         let(:team_members) { [student] * number_of_students }
 
         it { is_expected.to be true }
@@ -165,14 +164,31 @@ describe Team, type: :model do
         it { is_expected.to be true }
       end
 
-      context "and team has 5 students and at least one coach and one mentor" do
+      context 'and team has 5 students and at least one coach and one mentor' do
         let(:user_coach) { build(:user, :coach) }
         let(:user_mentor) { build(:user, :mentor) }
-        let(:team_members) {[student, student, student, student, student, user_mentor, user_coach]}
+        let(:team_members) { [student, student, student, student, student, user_mentor, user_coach] }
 
-        it { is_expected.to be false}
+        it { is_expected.to be false }
       end
     end
   end
 
+  describe 'by_country' do
+    subject { Team.by_country(country) }
+    let(:country) { Faker::Address.country_code }
+    let(:current_relation) { double(where: nil) }
+    before do
+      allow(Team).to receive(:current).and_return(current_relation)
+    end
+
+    it 'calls current scope' do
+      expect(Team).to receive(:current)
+      subject
+    end
+    it 'filters by country' do
+      expect(current_relation).to receive(:where).with(country: country)
+      subject
+    end
+  end
 end
