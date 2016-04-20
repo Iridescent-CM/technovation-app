@@ -34,17 +34,20 @@ class RubricsController < ApplicationController
       end
     end
 
-    if Setting.judgingRound == 'quarterfinal'
+    case Setting.judgingRound
+    when 'quarterfinal'
       if !event_active
         ## if it is the quarterfinals and it is not the time of the judge's event
         ## only show teams who have signed up for Virtual Judging
         id = Event.virtual_for_current_season.id
         teams = Team.where(region: current_user.judging_region, event_id: id)
       end
-    elsif Setting.judgingRound == 'semifinal' and current_user.semifinals_judge?
-      teams = Team.where(issemifinalist: true)
-    elsif Setting.judgingRound == 'final' and current_user.finals_judge?
-      teams = Team.where(isfinalist: true)
+      
+    when 'semifinal'
+      teams = Team.where(issemifinalist: true) if current_user.semifinals_judge?
+
+    when 'final'
+      teams = Team.where(isfinalist: true) if current_user.finals_judge?
     else
       teams = Team.none
     end
