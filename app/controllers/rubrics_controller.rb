@@ -49,32 +49,24 @@ class RubricsController < ApplicationController
       teams = Team.none
     end
     
-    ## search for teams that have the fewest number of rubrics
-    teams = teams.sort_by(&:num_rubrics)
+    teams = teams
+            .sort_by(&:num_rubrics)
+            .delete_if { |team| team.judges.map{|j| j.id }.include? current_user.id }
+            .delete_if { |team| team.ineligible? }
+            .delete_if { |team| !team.submission_eligible? }
 
-    ## do not show teams that the judge has judged already
-    teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
+    teams = if current_user.home_country == 'BR'
+              teams.delete_if { |team| team.country != 'BR' }
+            else
+              teams.delete_if { |team| team.country == 'BR' }
+            end
 
-    ## remove the teams who are not eligible
-    teams.delete_if{|t| t.ineligible?}
-
-    ## remove teams that have entered less than five fields of information
-    teams.delete_if{|t| !t.submission_eligible?}
-
-    if current_user.home_country == 'BR'
-      teams.delete_if{ |team| team.country != 'BR' }
-    else
-      teams.delete_if{ |team| team.country == 'BR' }
-    end
-
-    if event_active
-      ## show all teams for in-person events
-      @teams = teams
-    else
+    @teams = teams
+    unless event_active
       ## show a randomly drawn team with the minimum number rubrics for virtual judging
-      if teams.length > 0
-        teams.keep_if{|t| t.num_rubrics == teams[0].num_rubrics}
-        @teams = [ teams.sample ]
+      unless teams.empty? 
+        teams.keep_if { |t| t.num_rubrics == teams[0].num_rubrics }
+        @teams = [teams.sample]
       end
     end
 

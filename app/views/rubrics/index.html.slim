@@ -8,7 +8,7 @@ p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s i
 	h3 You are currently judging for the #{Setting.judgingRound}s
 	- unless @event.nil?
 		h4 Teams competing in #{@event.name}
-	- if @teams.nil? or @teams.empty?
+	- if  @teams.empty?
 		p There are no teams ready to be judged right now. Please check back on Friday, April 22nd.
 	- else
 		- for team in @teams

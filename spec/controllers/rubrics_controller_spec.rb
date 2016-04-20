@@ -28,28 +28,35 @@ describe RubricsController, type: :controller do
       allow(Setting)
         .to receive(:now)
         .and_return(today)
+      
       allow(Team)
         .to receive(:find)
         .with(user.event_id)
         .and_return(teams)
+      
       allow(Team)
         .to receive(:has_event)
         .with(event)
         .and_return(teams)
+      
       allow_any_instance_of(Team)
         .to receive(:submission_eligible?)
         .and_return(true)
+      
       allow(Event).to receive(:find)
         .with(event_id)
         .and_return(event)
+      
       allow(Setting)
         .to receive(:get_date)
         .with(judging_round+"JudgingOpen")
         .and_return(round_start)
+
       allow(Setting)
         .to receive(:get_date)
         .with(judging_round+"JudgingClose")
         .and_return(round_end)
+      
       allow(Setting)
         .to receive(:anyJudgingRoundActive?)
         .and_return(!judging_round.empty?)
@@ -59,7 +66,7 @@ describe RubricsController, type: :controller do
       let(:today) { Faker::Date.between(round_start - 2.day, round_start - 1.day) }
       it 'does not show teams to be judged' do
         get :index
-        expect(assigns[:teams]).to be_nil
+        expect(assigns[:teams]).to be_empty
       end
     end
 
