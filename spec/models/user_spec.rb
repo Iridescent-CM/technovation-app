@@ -115,35 +115,5 @@ describe User, type: :model do
         it { is_expected.to be false }
       end
     end
-
-    describe '.judge_or_can_judge' do
-      subject(:user) { User.judge_or_can_judge }
-
-      let(:fake_relation) { double(where: nil) }
-
-      before do
-        allow(User).to receive(:is_registered).and_return(fake_relation)
-      end
-
-      it 'filters judges by country' do
-        expect(fake_relation).to receive(:where).with("role = ? or judging = ?", 3, true)
-        subject
-      end
-    end
-    
-    describe '.judges_from' do
-      subject(:user) { User.judges_from(country) }
-      let(:country) { 'BR' }
-      let(:fake_relation) { double(where: nil) }
-
-      before do
-        allow(User).to receive(:judge_or_can_judge).and_return(fake_relation)
-      end
-
-      it 'filters judges by country' do
-        expect(fake_relation).to receive(:where).with(home_country: country)
-        subject
-      end
-    end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419191927) do
+ActiveRecord::Schema.define(version: 20160420142348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(version: 20160419191927) do
     t.text     "pitch_comment"
     t.text     "launched_comment"
     t.integer  "stage"
-    t.boolean  "has_scored",                 default: false
   end
 
   add_index "rubrics", ["user_id"], name: "index_rubrics_on_user_id", using: :btree
@@ -157,6 +156,7 @@ ActiveRecord::Schema.define(version: 20160419191927) do
     t.text     "about"
     t.integer  "year",                                  default: 2014, null: false
     t.integer  "division",                              default: 2,    null: false
+    t.integer  "region_id",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 20160419191927) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
-    t.string   "country",                     limit: 2, default: "",   null: false
     t.text     "description"
     t.string   "code"
     t.string   "pitch"
@@ -202,6 +201,7 @@ ActiveRecord::Schema.define(version: 20160419191927) do
     t.boolean  "issemifinalist"
     t.boolean  "isfinalist"
     t.string   "store"
+    t.string   "country",                     limit: 2, default: "",   null: false
     t.boolean  "iswinner"
     t.text     "tools"
     t.integer  "platform",                              default: 0,    null: false
@@ -209,7 +209,6 @@ ActiveRecord::Schema.define(version: 20160419191927) do
     t.text     "participation"
     t.boolean  "submitted"
     t.string   "state"
-    t.integer  "region_id"
     t.boolean  "confirm_region"
     t.boolean  "confirm_acceptance_of_rules"
   end

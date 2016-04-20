@@ -86,9 +86,6 @@ class Team < ActiveRecord::Base
   scope :is_finalist, -> {where 'isfinalist = true'}
   scope :is_winner, -> {where 'iswinner = true'}
   scope :is_submitted, -> {where(submitted: true)}
-  scope :by_regions_year_and_country, -> (regions, year, country) {
-    where(region_id: regions, year: year, country: country)
-  }
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association

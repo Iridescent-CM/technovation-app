@@ -58,7 +58,6 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
-  gem 'fantaskspec'
   gem 'rspec-rails'
   gem 'byebug'
   gem 'capybara'
