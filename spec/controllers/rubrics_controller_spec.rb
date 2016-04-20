@@ -3,7 +3,7 @@ require 'rails_helper'
 describe RubricsController, type: :controller do
   describe '.index' do
     let(:event_id) { 1 }
-    let(:event){ build(:event, :non_virtual_event, id: event_id, whentooccur: whentooccur_event) }
+    let(:event) { build(:event, :non_virtual_event, id: event_id, whentooccur: whentooccur_event) }
     let(:whentooccur_event) { Faker::Date.forward(10) }
     let(:user) { build(:user, :judge, event_id: event_id) }
     let(:teams) { build_list(:team, 5, event: event) }
@@ -20,9 +20,11 @@ describe RubricsController, type: :controller do
       allow(Setting)
         .to receive(:judgingRound)
         .and_return(judging_round)
+
       allow(Setting)
         .to receive(:year)
         .and_return(2016)
+
       allow(Setting)
         .to receive(:now)
         .and_return(today)
@@ -57,6 +59,65 @@ describe RubricsController, type: :controller do
       let(:today) { Faker::Date.between(round_start - 2.day, round_start - 1.day) }
       it 'does not show teams to be judged' do
         expect(assigns[:teams]).to be_nil
+      end
+    end
+
+    describe 'brazilian cases' do
+      let(:judging_round) { 'quarterfinal' }
+      let(:today) { whentooccur_event }
+      let(:brazil) { 'BR' }
+      let(:non_brazilian_country) { 'CH' }
+      let(:region) { build(:region) }
+      let(:judge_country) { non_brazilian_country }
+
+      let(:user) do
+        build(
+          :user, :judge,
+          event: event,
+          judging_region: region,
+          home_country: judge_country
+        )
+      end
+
+      let(:non_brazilian_teams) do
+        build_list(
+          :team, 3,
+          event_id: event.id,
+          year: Setting.year,
+          region: region,
+          country: non_brazilian_country
+        )
+      end
+
+      let(:brazilian_teams) do
+        build_list(
+          :team, 3,
+          event_id: event.id,
+          year: Setting.year,
+          region: region,
+          country: brazil
+        )
+      end
+
+      let(:teams) do
+        non_brazilian_teams + brazilian_teams
+      end
+
+      before do
+        allow(controller).to receive(:current_user).and_return(user)
+      end
+
+      it 'shows only non brazilian teams' do
+        get :index
+        expect(assigns[:teams]).to eq non_brazilian_teams
+      end
+
+      context 'when judge is brazilian' do
+        let(:judge_country) { brazil }
+        it 'shows only brazilian teams' do
+          get :index
+          expect(assigns[:teams]).to eq brazilian_teams
+        end
       end
     end
 

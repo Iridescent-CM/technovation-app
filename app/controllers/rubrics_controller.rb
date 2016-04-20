@@ -48,36 +48,24 @@ class RubricsController < ApplicationController
     else
       teams = Team.none
     end
-
+    
     ## search for teams that have the fewest number of rubrics
     teams = teams.sort_by(&:num_rubrics)
 
     ## do not show teams that the judge has judged already
     teams.delete_if{|team| team.judges.map{|j| j.id}.include? current_user.id }
 
-    ## todo: conflict_region should be assigned correctly for both judge user types and for mentor/coach turned judges
-    ## todo: judging_region should be assigned correctly for judges signed up for in-person events (and based on conflict_region)
-    # ## if the judge is a mentor/coach, do not show teams from the same region
-    # if current_user.coach? or current_user.mentor?
-    #   interested_regions = current_user.teams.map{|t| t.region}
-    #   teams.delete_if{|t| interested_regions.include? t.region}
-    # end
-
-    # ## if the judge was a mentor/coach, but this is not a mentor coach account (late signups)
-    # unless current_user.conflict_region.nil?
-    #   teams.delete_if{|t| current_user.conflict_region == Team.regions[t.region]}
-    # end
-
-    # ## judges should only judge within one region for score normalization purposes
-    # unless current_user.judging_region.nil?
-    #   teams.keep_if{|t| current_user.judging_region == Team.regions[t.region]}
-    # end
-
     ## remove the teams who are not eligible
     teams.delete_if{|t| t.ineligible?}
 
     ## remove teams that have entered less than five fields of information
     teams.delete_if{|t| !t.submission_eligible?}
+
+    if current_user.home_country == 'BR'
+      teams.delete_if{ |team| team.country != 'BR' }
+    else
+      teams.delete_if{ |team| team.country == 'BR' }
+    end
 
     if event_active
       ## show all teams for in-person events
@@ -89,7 +77,6 @@ class RubricsController < ApplicationController
         @teams = [ teams.sample ]
       end
     end
-
 
     ## show all past rubrics that were done by the current judge for editing
     @rubrics = Rubric.all.has_judge(current_user)
