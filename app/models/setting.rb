@@ -12,6 +12,8 @@ class Setting < ActiveRecord::Base
 
   def self.get_date(key)
     Setting.find_by_key!(key).value.to_date
+  rescue ArgumentError, ActiveRecord::RecordNotFound
+    nil
   end
 
   def self.year
