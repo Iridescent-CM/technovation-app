@@ -4,13 +4,11 @@ describe 'teams/show.html.slim', type: :view do
 
   let(:season_year) { 2015 }
   let(:team_year) { 2015 }
-  let(:submissionOpen?) { true }
   let(:team) { build(:team, id: 123, year: team_year) }
-  let(:fake_policy) { double(join?: true, edit?: true) }
+  let(:fake_policy) { double(join?: true, edit?: true, edit_submission?: true) }
 
   before do
     allow(Setting).to receive(:year).and_return(season_year)
-    allow(Setting).to receive(:submissionOpen?).and_return(submissionOpen?)
     allow(view).to receive(:policy).and_return(fake_policy)
 
     assign(:team, team)
@@ -25,6 +23,13 @@ describe 'teams/show.html.slim', type: :view do
     let(:season_year) { 2015 }
 
     it { is_expected.to_not have_selector('#request-join-button') }
+    it { is_expected.to_not have_selector('#edit-team-button') }
+    it { is_expected.to_not have_selector('#edit-submission-button') }
+  end
+
+  context 'submission is closed' do
+    let(:fake_policy) { double(join?: true, edit?: false, edit_submission?: false) }
+
     it { is_expected.to_not have_selector('#edit-team-button') }
     it { is_expected.to_not have_selector('#edit-submission-button') }
   end
