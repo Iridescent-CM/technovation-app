@@ -22,6 +22,7 @@ module ApplicationHelper
   end
 
   def format_division(division)
+    return 'Error' unless division 
     case division.to_sym
     when :hs
       'High School'

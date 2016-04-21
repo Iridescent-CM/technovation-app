@@ -74,12 +74,12 @@ class RankingController < ActionController::Base
 
     free_judges.each do |user|
       valid_regions = region_requirements.keys - user.conflict_regions.pluck(:id)
-      if valid_regions.length == 0
+      if valid_regions.empty?
         valid_regions = Team.distinct.pluck(:region_id) - user.conflict_regions.pluck(:id)
       end
-
       assign_judge(user, Region.find(valid_regions.sample), region_requirements)
     end
+
   end
 
   private
