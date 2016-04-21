@@ -55,7 +55,7 @@ class RankingController < ActionController::Base
   end
 
   def self.assign_judges_to_regions
-    judges = User.all.where.not(home_country: "BR").find_all { |u| u.can_judge? }
+    judges = User.all.where.not(home_country: 'BR').find_all { |u| u.can_judge? }
     valid_teams = Team.where("division in (0,1)").where.not(country: 'BR')
     assign_judges_to_region_to_world(judges, valid_teams)
 
@@ -83,7 +83,9 @@ class RankingController < ActionController::Base
       if valid_regions.empty?
         valid_regions = Team.distinct.pluck(:region_id) - user.conflict_regions.pluck(:id)
       end
-      assign_judge(user, Region.find(valid_regions.sample), region_requirements)
+      unless valid_regions.empty?
+        assign_judge(user, Region.find(valid_regions.sample), region_requirements)
+      end
     end
   end
 

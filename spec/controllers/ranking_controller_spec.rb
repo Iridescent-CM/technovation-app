@@ -27,7 +27,6 @@ describe RankingController, type: :controller do
 
     before do
       allow(Setting).to receive(:year).and_return year
-      allow(judge).to receive(:conflict_regions).and_return judge_conflict_regions
     end
 
     it 'assign to same region as the event' do
@@ -48,10 +47,6 @@ describe RankingController, type: :controller do
         virtual_event
       end
 
-      let(:region_ids) do
-        regions.map(&:id)
-      end
-
       it 'assigns a region to judge' do
         RankingController.assign_judges_to_regions
         judge.reload
@@ -59,8 +54,25 @@ describe RankingController, type: :controller do
           regions.map(&:id).include?(judging_region_id)
         end
       end
-    end
 
+      context 'when a judge has a conflict with all region' do
+        let(:regions) { create_list(:region, 10) }
+        let(:judge_conflict_regions){ regions }
+
+        before do
+          allow_any_instance_of(User).
+            to receive(:conflict_regions)
+            .and_return double(pluck: judge_conflict_regions.map(&:id))
+        end
+        
+        it 'does not receive a region to judge' do
+          RankingController.assign_judges_to_regions
+          judge.reload
+          expect(judge.judging_region_id).to be_nil 
+        end
+      end
+    end
+    
     context 'when there is brazilian judge' do
       let(:judge_country) { 'BR' }
       let(:judge_event) { in_person_event_brazilian_event }
