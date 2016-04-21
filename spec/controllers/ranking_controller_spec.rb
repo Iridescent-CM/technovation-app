@@ -23,9 +23,11 @@ describe RankingController, type: :controller do
     let!(:teams) { create_list(:team, 10, region_id: region.id, year: year) }
     let(:ms_division) { 0 }
     let(:hs_division) { 1 }
+    let(:judge_conflict_regions) { [] }
 
     before do
       allow(Setting).to receive(:year).and_return year
+      allow(judge).to receive(:conflict_regions).and_return judge_conflict_regions
     end
 
     it 'assign to same region as the event' do
@@ -48,6 +50,14 @@ describe RankingController, type: :controller do
 
       let(:region_ids) do
         regions.map(&:id)
+      end
+
+      it 'assigns a region to judge' do
+        RankingController.assign_judges_to_regions
+        judge.reload
+        expect(judge.judging_region_id).to satisfy do |judging_region_id|
+          regions.map(&:id).include?(judging_region_id)
+        end
       end
     end
 
