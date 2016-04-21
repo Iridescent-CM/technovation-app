@@ -90,7 +90,7 @@ class Team < ActiveRecord::Base
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
   #http://stackoverflow.com/questions/8696005/rails-3-activerecord-order-by-count-on-association
-  
+
   def self.randomized(seed = nil)
     connection.execute "select setseed(#{seed})"
     order("RANDOM()")
