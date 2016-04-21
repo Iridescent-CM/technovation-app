@@ -77,12 +77,12 @@ describe User, type: :model do
       end
 
       context 'and their age is greater than 19 years old' do
-        let (:birthday) { 20.years.ago.to_datetime }
+        let (:birthday) { cutoff_day - 20.years }
         it { is_expected.to be true }
       end
 
       context 'and their age is within range' do
-        let (:birthday) { 19.years.ago.to_datetime }
+        let (:birthday) { Faker::Date.between(cutoff_day - 19.years, cutoff_day - 8.years) }
         it { is_expected.to be false }
       end
     end
@@ -110,7 +110,7 @@ describe User, type: :model do
       context 'all students are eligible regardless their age' do
         let(:role) { :student }
         let(:year) { Faker::Number.number 3 }
-        let(:birthday) { Faker::Date.between(100.years.ago, Date.today) }
+        let(:birthday) { Faker::Date.between(cutoff_day - 100.years, Date.today) }
 
         it { is_expected.to be false }
       end
