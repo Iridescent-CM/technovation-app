@@ -191,4 +191,18 @@ describe Team, type: :model do
       subject
     end
   end
+
+  describe '.submission_eligible' do
+    subject { team.submission_eligible? }
+    let(:plan) { File.new("./spec/support/files/plan_example.pdf") }
+    let(:team) { build(:team, event_id: 1, confirm_acceptance_of_rules: true, confirm_region: true, plan: plan) }
+
+    it { is_expected.to be true }
+
+    context ' missing at least one required field for submission' do
+      let(:plan) { nil }
+      it { is_expected.to be false }
+    end
+  end
+
 end

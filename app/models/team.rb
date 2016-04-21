@@ -212,7 +212,7 @@ class Team < ActiveRecord::Base
   end
 
   def submission_eligible?
-    return (required_fields.length - missing_fields.length > 4)
+    return missing_fields.length <= 0
   end
 
   def submission_symbol

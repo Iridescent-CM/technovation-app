@@ -8,7 +8,8 @@ FactoryGirl.define do
     confirm_acceptance_of_rules { Faker::Boolean.boolean }
     avatar_file_name { Faker::Name.name }
     year nil
-
+    code { Faker::Internet.url }
+    pitch { Faker::Internet.url }
     association :event
   end
 end
