@@ -60,9 +60,7 @@ class RankingController < ActionController::Base
     region_requirements = valid_teams.group(:region_id).count
     multiplier = judges.count.fdiv(valid_teams.count)
     region_requirements = region_requirements.each_with_object({}) { |(region, count), h| h[region] = (count * multiplier).floor }
-
     virtual_judging_id = Event.virtual_for_current_season.id
-
     free_judges = []
     User.all.each do |user|
       if user.can_judge?
