@@ -23,7 +23,7 @@ describe RankingController, type: :controller do
     let!(:teams) { create_list(:team, 10, region_id: region.id, year: year) }
     let(:ms_division) { 0 }
     let(:hs_division) { 1 }
-    
+
     before do
       allow(Setting).to receive(:year).and_return year
     end
@@ -33,7 +33,7 @@ describe RankingController, type: :controller do
       judge.reload
       expect(judge.judging_region_id).to be(in_person_event.region_id)
     end
-    
+
     context 'when the event is virtual' do
       let(:regions) { create_list(:region, 10) }
       let!(:teams) do
@@ -63,34 +63,34 @@ describe RankingController, type: :controller do
       end
 
       let(:ms_south_american_region) do
-        create(:region, region_name: "MS - South America", division: ms_division) 
+        create(:region, region_name: 'MS - South America', division: ms_division)
       end
-      
+
       let(:hs_south_american_region) do
-        create(:region, region_name: "HS - South America", division: hs_division) 
+        create(:region, region_name: 'HS - South America', division: hs_division)
       end
-      
-      let!(:south_american_regions) do 
+
+      let!(:south_american_regions) do
         [
           ms_south_american_region,
           hs_south_american_region
         ]
       end
-      
+
       let(:brazilian_team_region) { judge_event.region }
       let(:brazilian_team_division) { judge_event.region.division }
       let(:brazilian_team_event) { judge_event }
-      
+
       let!(:brazilian_teams) do
-          create_list(
-            :team,
-            10,
-            year: year,
-            event_id: judge_event.id,
-            country: 'BR',
-            region:  brazilian_team_region,
-            division: brazilian_team_division
-          )
+        create_list(
+          :team,
+          10,
+          year: year,
+          event_id: judge_event.id,
+          country: 'BR',
+          region:  brazilian_team_region,
+          division: brazilian_team_division
+        )
       end
 
       it 'assign to same region as the event' do
@@ -98,13 +98,12 @@ describe RankingController, type: :controller do
         judge.reload
         expect(judge.judging_region_id).to be(judge_event.region_id)
       end
-      
+
       context 'and the event is virtual' do
         let(:judge_event) { virtual_event }
-        let(:brazilian_team_region) { south_american_regions.sample  }
+        let(:brazilian_team_region) { south_american_regions.sample }
         let(:brazilian_team_division) { brazilian_team_region.division }
 
-        
         it 'assigns a region to judge' do
           RankingController.assign_judges_to_regions
           judge.reload
