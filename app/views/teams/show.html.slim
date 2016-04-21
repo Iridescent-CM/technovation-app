@@ -17,7 +17,7 @@
       - if policy(@team).edit? && @team.year == Setting.year
         = link_to 'Manage Team', edit_team_path(@team), class: ['btn', 'btn-primary'], id: 'edit-team-button', style: 'margin-right:10px'
 
-        - if Setting.submissionOpen? && @team.year == Setting.year
+        - if policy(@team).edit_submission? && @team.year == Setting.year
           = link_to 'Manage Submission', edit_submission_team_path(@team), class: ['btn', 'btn-primary'], id: 'edit-submission-button'
 
 .row
@@ -65,7 +65,7 @@
           li
             = link_user(mentor)
             - if @team.members.include? current_user
-              span.pull-right #{mentor.email} 
+              span.pull-right #{mentor.email}
     - else
       p There are currently no mentors on this team
 
@@ -76,7 +76,7 @@
           li
             = link_user(coach)
             - if @team.members.include? current_user
-              span.pull-right #{coach.email} 
+              span.pull-right #{coach.email}
     - else
       p There are currently no coaches on this team.
 
