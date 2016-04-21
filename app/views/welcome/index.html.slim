@@ -31,7 +31,7 @@
     - if Setting.submissionOpen? and not current_user.judge?
       - submissionClose = Setting.get_date('submissionClose')
       li
-        strong Submissions now open for #{submissionClose.year} through #{submissionClose.strftime("%B #{submissionClose.day.ordinalize}, %Y")}, 5pm PDT
+        strong Submissions now open for #{submissionClose.year} through April 21, 5pm PDT
 
     / confirmation
     - unless current_user.confirmed? 
