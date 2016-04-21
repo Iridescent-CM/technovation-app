@@ -55,20 +55,26 @@ class RankingController < ActionController::Base
   end
 
   def self.assign_judges_to_regions
-    judges = User.all.find_all { |u| u.can_judge? }
-    valid_teams = Team.where("division in (0,1) and country != 'BR'")
-    region_requirements = valid_teams.group(:region_id).count
-    multiplier = judges.count.fdiv(valid_teams.count)
+    judges = User.all.where.not(home_country: "BR").find_all { |u| u.can_judge? }
+    valid_teams = Team.where("division in (0,1)").where.not(country: 'BR')
+    assign_judges_to_region_to_world(judges, valid_teams)
+
+    judges = User.where(home_country: "BR").find_all { |u| u.can_judge? }
+    valid_teams = Team.where("division in (0,1)").where(country: 'BR')
+    assign_judges_to_region_to_world(judges, valid_teams)
+  end
+
+  def self.assign_judges_to_region_to_world(judges, teams)
+    region_requirements = teams.group(:region_id).count
+    multiplier = judges.count.fdiv(teams.count)
     region_requirements = region_requirements.each_with_object({}) { |(region, count), h| h[region] = (count * multiplier).floor }
     virtual_judging_id = Event.virtual_for_current_season.id
     free_judges = []
-    User.all.each do |user|
-      if user.can_judge?
-        if user.event_id == nil or user.event_id == virtual_judging_id
-          free_judges << user
-        else
-          assign_judge(user, Event.find(user.event_id).region, region_requirements)
-        end
+    judges.each do |user|
+      if user.event_id == nil or user.event_id == virtual_judging_id
+        free_judges << user
+      else
+        assign_judge(user, Event.find(user.event_id).region, region_requirements)
       end
     end
 
@@ -79,7 +85,6 @@ class RankingController < ActionController::Base
       end
       assign_judge(user, Region.find(valid_regions.sample), region_requirements)
     end
-
   end
 
   private

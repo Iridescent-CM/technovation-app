@@ -12,13 +12,28 @@ describe RankingController, type: :controller do
     let!(:virtual_event) { create(:event, :virtual_event, whentooccur: whentooccur_event) }
     let(:judge_event) {  in_person_event }
     let(:judge_country) { 'CH' }
-    let!(:judge) { create(:user, :judge, judging_region_id: nil, event_id: judge_event.id) }
+    let!(:judge) do
+      create(
+        :user,
+        :judge,
+        judging_region_id: nil,
+        event_id: judge_event.id,
+        home_country: judge_country
+      )
+    end
+
     let!(:teams) { create_list(:team, 10, region_id: region.id, year: year) }
     let(:ms_division) { 0 }
     let(:hs_division) { 1 }
 
-    let(:ms_south_american_region) { create(:region, division: ms_division) }
-    let(:hs_south_american_region) { create(:region, division: hs_division) }
+    let(:ms_south_american_region) do
+      create(:region, region_name: "MS - South America", division: ms_division) 
+    end
+    
+    let(:hs_south_american_region) do
+      create(:region, region_name: "HS - South America", division: hs_division) 
+    end
+    
     let!(:south_american_region_ids) do 
       [
         ms_south_american_region.id,
@@ -48,22 +63,27 @@ describe RankingController, type: :controller do
     before do
       brazilian_teams
       allow(Setting).to receive(:year).and_return year
+      RankingController.assign_judges_to_regions
+      judge.reload
     end
 
     it 'assigns a region to judge' do
-      RankingController.assign_judges_to_regions
-      judge.reload
       expect(judge.judging_region_id).to eq region.id
+    end
+
+    it 'assign to same region as the event' do
+      expect(judge.judging_region_id).to be(in_person_event.region_id)
     end
 
     context 'when there is brazilian judge' do
       let(:judge_country) { 'BR' }
-      it 'assign to any south american region' do
-        RankingController.assign_judges_to_regions
-        judge.reload
-        expect(judge.judging_region_id).to satisfy do |judging_region_id|
-          south_american_region_ids.include?(judging_region_id)
-        end
+      let(:judge_event) { in_person_event_brazilian_event }
+      let(:in_person_event_brazilian_event) do
+        create(:event, region_id: south_american_region_ids.sample, whentooccur: whentooccur_event)
+      end
+      
+      it 'assign to same region as the event' do
+        expect(judge.judging_region_id).to be(judge_event.region_id)
       end
     end
     
@@ -84,8 +104,6 @@ describe RankingController, type: :controller do
       end
 
       it 'assigns a region to judge' do
-        RankingController.assign_judges_to_regions
-        judge.reload
         expect(judge.judging_region_id).to_not be_nil
         expect(judge.judging_region_id).to satisfy { |judging_region_id| region_ids.include?(judging_region_id) }
       end
