@@ -74,7 +74,7 @@ class RubricsController < ApplicationController
     end
 
     ## show all past rubrics that were done by the current judge for editing
-    @rubrics = Rubric.all.has_judge(current_user)
+    @rubrics = Rubric.where("extract(year from created_at) = ?", Setting.year).has_judge(current_user)
 
   end
 

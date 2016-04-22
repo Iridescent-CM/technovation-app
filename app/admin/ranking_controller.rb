@@ -93,6 +93,7 @@ class RankingController < ActionController::Base
 
   def self.assign_judge(judge, judging_region, region_requirements)
     if judging_region
+      Rails.logger.info("Assing judge #{judge.id} #{judge.name} to region #{judging_region.id} #{judging_region.name}")
       judge.update(judging_region: judging_region)
       if region_requirements.has_key?(judging_region.id)
         region_requirements[judging_region.id] = region_requirements[judging_region.id] - 1
