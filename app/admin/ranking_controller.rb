@@ -92,11 +92,13 @@ class RankingController < ActionController::Base
   private
 
   def self.assign_judge(judge, judging_region, region_requirements)
-    judge.update(judging_region: judging_region)
-    if region_requirements.has_key?(judging_region.id)
-      region_requirements[judging_region.id] = region_requirements[judging_region.id] - 1
-      if region_requirements[judging_region.id] <= 0
-        region_requirements.delete(judging_region.id)
+    if judging_region
+      judge.update(judging_region: judging_region)
+      if region_requirements.has_key?(judging_region.id)
+        region_requirements[judging_region.id] = region_requirements[judging_region.id] - 1
+        if region_requirements[judging_region.id] <= 0
+          region_requirements.delete(judging_region.id)
+        end
       end
     end
   end
