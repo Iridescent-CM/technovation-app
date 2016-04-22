@@ -56,11 +56,11 @@ class RankingController < ActionController::Base
 
   def self.assign_judges_to_regions
     judges = User.all.where.not(home_country: 'BR').find_all { |u| u.can_judge? }
-    valid_teams = Team.where("division in (0,1)").where.not(country: 'BR')
+    valid_teams = Team.where(year: Setting.year).where("division in (0,1)").where.not(country: 'BR')
     assign_judges_to_region_to_world(judges, valid_teams)
 
     judges = User.where(home_country: "BR").find_all { |u| u.can_judge? }
-    valid_teams = Team.where("division in (0,1)").where(country: 'BR')
+    valid_teams = Team.where(year: Setting.year).where("division in (0,1)").where(country: 'BR')
     assign_judges_to_region_to_world(judges, valid_teams)
   end
 
