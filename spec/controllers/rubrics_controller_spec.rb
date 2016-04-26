@@ -12,6 +12,7 @@ describe RubricsController, type: :controller do
     let(:round_end) { round_start + 4.day }
     let(:today) { Faker::Date.between(round_start, round_end) }
     let(:judging_round) { '' }
+    let(:region) { build(:region) }
 
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
@@ -70,6 +71,76 @@ describe RubricsController, type: :controller do
       end
     end
 
+    context 'when its quarterfinals time' do
+      let(:judging_round) { 'quarterfinal' }
+
+      it 'shows all teams for this event' do
+        get :index
+        expect(assigns[:teams]).to eq(teams)
+      end
+
+      context 'and its a virtual event' do
+        let(:event) { create(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
+        let(:teams) { create_list(:team, 1, event_id: event.id, year: Setting.year, region: region) }
+        let(:user) { create(:user, :judge, event: event, judging_region: region) }
+
+        it 'shows a sample of teams for the virtual event' do
+          get :index
+          expect(assigns[:teams]).not_to be_empty
+        end
+
+        context 'and some teams has been judged already' do
+          let(:keep_team_1) { create(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:keep_team_2) { create(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:do_not_keep_team) { create(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:teams) { [keep_team_1, keep_team_2, do_not_keep_team] }
+
+          before do
+            allow(keep_team_1).to receive(:num_rubrics).and_return(1)
+            allow(keep_team_2).to receive(:num_rubrics).and_return(1)
+            allow(do_not_keep_team).to receive(:num_rubrics).and_return(2)
+          end
+
+          it 'shows only teams with less rubrics to be judged' do
+            get :index
+            expect(assigns[:teams]).to_not contain_exactly(do_not_keep_team)
+          end
+        end
+      end
+    end
+
+    context 'when its semifinals time' do
+      let(:judging_round) { 'semifinal' }
+      let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
+      let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
+
+      it 'shows all teams for this event' do
+        get :index
+        expect(assigns[:teams]).to eq(teams)
+      end
+
+      context 'and its a virtual event' do
+        let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
+        let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
+
+        it 'shows a sample of teams for the virtual event' do
+          get :index
+          expect(assigns[:teams]).not_to be_empty
+        end
+      end
+    end
+
+    context 'when its finals time' do
+      let(:judging_round) { 'final' }
+      let(:teams) { create_list(:team, 1, isfinalist: true, year: Setting.year) }
+      let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
+
+      it 'shows all teams for this event' do
+        get :index
+        expect(assigns[:teams]).to eq(teams)
+      end
+    end
+
     describe 'brazilian cases' do
       let(:judging_round) { 'quarterfinal' }
       let(:brazil) { 'BR' }
@@ -115,70 +186,17 @@ describe RubricsController, type: :controller do
 
       it 'shows only non brazilian teams' do
         get :index
-        
+
         expect(assigns[:teams]).to eq non_brazilian_teams
       end
 
       context 'when judge is brazilian' do
         let(:judge_country) { brazil }
-        
+
         it 'shows only brazilian teams' do
           get :index
           expect(assigns[:teams]).to eq brazilian_teams
         end
-      end
-    end
-
-    context 'when its quarterfinals time' do
-      let(:judging_round) { 'quarterfinal' }
-
-      it 'shows all teams for this event' do
-        get :index
-        expect(assigns[:teams]).to eq(teams)
-      end
-
-      context 'and its a virtual event' do
-        let(:region) { build(:region) }
-        let(:event) { create(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
-        let(:teams) { create_list(:team, 1, event_id: event.id, year: Setting.year, region: region) }
-        let(:user) { create(:user, :judge, event: event, judging_region: region) }
-
-        it 'shows a sample of teams for the virtual event' do
-          get :index
-          expect(assigns[:teams]).not_to be_empty
-        end
-      end
-    end
-
-    context 'when its semifinals time' do
-      let(:judging_round) { 'semifinal' }
-      let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
-      let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
-
-      it 'shows all teams for this event' do
-        get :index
-        expect(assigns[:teams]).to eq(teams)
-      end
-
-      context 'and its a virtual event' do
-        let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
-        let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
-
-        it 'shows a sample of teams for the virtual event' do
-          get :index
-          expect(assigns[:teams]).not_to be_empty
-        end
-      end
-    end
-
-    context 'when its finals time' do
-      let(:judging_round) { 'final' }
-      let(:teams) { create_list(:team, 1, isfinalist: true, year: Setting.year) }
-      let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
-
-      it 'shows all teams for this event' do
-        get :index
-        expect(assigns[:teams]).to eq(teams)
       end
     end
   end
