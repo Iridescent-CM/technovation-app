@@ -90,12 +90,15 @@ describe RubricsController, type: :controller do
         end
 
         context 'and some teams has been judged already' do
-          let(:keep_team_1) { create(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:keep_team_2) { create(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:do_not_keep_team) { create(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:keep_team_1) { build(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:keep_team_2) { build(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:do_not_keep_team) { build(:team, event_id: event.id, year: Setting.year, region: region) }
           let(:teams) { [keep_team_1, keep_team_2, do_not_keep_team] }
 
           before do
+            allow(Team).to receive(:where).with(region: user.judging_region, event_id: event.id)
+              .and_return(teams)
+
             allow(keep_team_1).to receive(:num_rubrics).and_return(1)
             allow(keep_team_2).to receive(:num_rubrics).and_return(1)
             allow(do_not_keep_team).to receive(:num_rubrics).and_return(2)
