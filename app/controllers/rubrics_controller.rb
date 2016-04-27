@@ -67,9 +67,9 @@ class RubricsController < ApplicationController
     @teams = teams
     unless event_active
       ## show a randomly drawn team with the minimum number rubrics for virtual judging
-      unless teams.empty? 
+      unless teams.empty?
         teams.keep_if { |t| t.num_rubrics == teams[0].num_rubrics }
-        @teams = [teams.sample]
+        @teams = teams.sample(3)
       end
     end
 

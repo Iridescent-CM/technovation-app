@@ -94,6 +94,7 @@ describe RubricsController, type: :controller do
           let(:keep_team_2) { build(:team, event_id: event.id, year: Setting.year, region: region) }
           let(:do_not_keep_team) { build(:team, event_id: event.id, year: Setting.year, region: region) }
           let(:teams) { [keep_team_1, keep_team_2, do_not_keep_team] }
+          let(:expected_teams) { [keep_team_1, keep_team_2] }
 
           before do
             allow(Team).to receive(:where).with(region: user.judging_region, event_id: event.id)
@@ -104,9 +105,14 @@ describe RubricsController, type: :controller do
             allow(do_not_keep_team).to receive(:num_rubrics).and_return(2)
           end
 
-          it 'shows only teams with less rubrics to be judged' do
+          it 'does not show teams that has been judged more than others' do
             get :index
             expect(assigns[:teams]).to_not contain_exactly(do_not_keep_team)
+          end
+
+          it 'shows only teams that has been less judged' do
+            get :index
+            expect(assigns[:teams].length).to eq(2)
           end
         end
       end
