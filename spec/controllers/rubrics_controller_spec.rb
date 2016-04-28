@@ -80,28 +80,33 @@ describe RubricsController, type: :controller do
       end
 
       context 'and its a virtual event' do
-        let(:event) { create(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
-        let(:teams) { create_list(:team, 1, event_id: event.id, year: Setting.year, region: region) }
-        let(:user) { create(:user, :judge, event: event, judging_region: region) }
+        let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
+        let(:teams) { build_list(:team, 5, event_id: event.id, year: Setting.year, region: region) }
+        let(:user) { build(:user, :judge, event: event, judging_region: region) }
 
-        it 'shows a sample of teams for the virtual event' do
+        before do
+          allow(Event).to receive(:virtual_for_current_season).and_return(event)
+
+          allow(Team).to receive(:where).with(region: user.judging_region, event_id: event.id)
+            .and_return(teams)
+        end
+
+        it 'shows a three of the teams for virtual event' do
           get :index
-          expect(assigns[:teams]).not_to be_empty
+          expect(assigns[:teams].length).to eq 3
         end
 
         context 'and some teams has been judged already' do
           let(:keep_team_1) { build(:team, event_id: event.id, year: Setting.year, region: region) }
           let(:keep_team_2) { build(:team, event_id: event.id, year: Setting.year, region: region) }
+          let(:keep_team_3) { build(:team, event_id: event.id, year: Setting.year, region: region) }
           let(:do_not_keep_team) { build(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:teams) { [keep_team_1, keep_team_2, do_not_keep_team] }
-          let(:expected_teams) { [keep_team_1, keep_team_2] }
+          let(:teams) { [keep_team_1, keep_team_2, keep_team_3, do_not_keep_team] }
 
           before do
-            allow(Team).to receive(:where).with(region: user.judging_region, event_id: event.id)
-              .and_return(teams)
-
             allow(keep_team_1).to receive(:num_rubrics).and_return(1)
             allow(keep_team_2).to receive(:num_rubrics).and_return(1)
+            allow(keep_team_3).to receive(:num_rubrics).and_return(1)
             allow(do_not_keep_team).to receive(:num_rubrics).and_return(2)
           end
 
@@ -110,9 +115,9 @@ describe RubricsController, type: :controller do
             expect(assigns[:teams]).to_not contain_exactly(do_not_keep_team)
           end
 
-          it 'shows only teams that has been less judged' do
+          it 'shows the three teams that has been less judged' do
             get :index
-            expect(assigns[:teams].length).to eq(2)
+            expect(assigns[:teams].length).to be 3
           end
         end
       end
@@ -120,8 +125,12 @@ describe RubricsController, type: :controller do
 
     context 'when its semifinals time' do
       let(:judging_round) { 'semifinal' }
-      let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
+      let(:teams) { build_list(:team, 5, event: event, issemifinalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
+
+      before do
+        allow(Team).to receive(:where).with(issemifinalist: true).and_return(teams)
+      end
 
       it 'shows all teams for this event' do
         get :index
@@ -130,19 +139,23 @@ describe RubricsController, type: :controller do
 
       context 'and its a virtual event' do
         let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
-        let(:teams) { create_list(:team, 1, event: event, issemifinalist: true, year: Setting.year) }
+        let(:teams) { build_list(:team, 5, event: event, issemifinalist: true, year: Setting.year) }
 
         it 'shows a sample of teams for the virtual event' do
           get :index
-          expect(assigns[:teams]).not_to be_empty
+          expect(assigns[:teams].length).to be 3
         end
       end
     end
 
     context 'when its finals time' do
       let(:judging_round) { 'final' }
-      let(:teams) { create_list(:team, 1, isfinalist: true, year: Setting.year) }
+      let(:teams) { build_list(:team, 5, isfinalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
+
+      before do
+        allow(Team).to receive(:where).with(isfinalist: true).and_return(teams)
+      end
 
       it 'shows all teams for this event' do
         get :index
