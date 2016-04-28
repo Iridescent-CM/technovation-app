@@ -135,6 +135,26 @@ describe RankingController, type: :controller do
           end
         end
       end
+        context 'and all regions are conflict regions' do
+          let!(:non_brazilian_region) { create(:region, id: 100) }
+          let!(:non_brazilian_team) { create(:team, region: non_brazilian_region, year: year) }
+          let(:judge_conflict_regions) { south_american_regions }
+          let(:judge_event) { virtual_event }
+          let(:brazilian_team_region) { south_american_regions.sample }
+          let(:brazilian_team_division) { brazilian_team_region.division }
+
+          before do
+            allow_any_instance_of(User).
+              to receive(:conflict_regions)
+              .and_return double(pluck: judge_conflict_regions.map(&:id))
+          end
+
+          it 'judge should not receive any region' do
+            RankingController.assign_judges_to_regions
+            judge.reload
+            expect(judge.judging_region_id).to be_nil
+          end
+        end
     end
   end
 end

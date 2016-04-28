@@ -80,9 +80,6 @@ class RankingController < ActionController::Base
 
     free_judges.each do |user|
       valid_regions = region_requirements.keys - user.conflict_regions.pluck(:id)
-      if valid_regions.empty?
-        valid_regions = Team.where(year: Setting.year).distinct.pluck(:region_id) - user.conflict_regions.pluck(:id)
-      end
       unless valid_regions.empty?
         assign_judge(user, Region.find(valid_regions.sample), region_requirements)
       end
