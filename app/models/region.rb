@@ -5,16 +5,18 @@ class Region < ActiveRecord::Base
     x: 2,
   }
 
-  def name
-    division = case
-    when ms?
-      'Middle School'
-    when hs?
-      'High School'
-    else
-      'Invalid Division'
+  def division_description
+    case
+      when ms?
+        'Middle School'
+      when hs?
+        'High School'
+      else
+        'Invalid Division'
     end
+  end
 
-    division + ' - ' + region_name
+  def name
+    "#{division_description} - #{region_name}"
   end
 end
