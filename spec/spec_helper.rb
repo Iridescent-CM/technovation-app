@@ -18,7 +18,6 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'paperclip/matchers'
-require 'byebug'
 
 RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
