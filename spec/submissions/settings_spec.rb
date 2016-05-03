@@ -13,6 +13,12 @@ RSpec.describe Setting do
       end
     end
 
+    it "is not open before the submissionOpen date" do
+      Timecop.freeze("2015-04-13") do
+        expect(Setting.submissionOpen?).to be false
+      end
+    end
+
     it "is open after the submissionOpen date" do
       Timecop.freeze("2015-04-15") do
         expect(Setting.submissionOpen?).to be true
