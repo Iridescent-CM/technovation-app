@@ -16,7 +16,8 @@ p <b>If you don’t have the appropriate device to test the features firsthand</
 
 - if Setting.anyJudgingRoundActive?
 	h3 You are currently judging for the #{Setting.judgingRound}s
-	h4 You are judging teams from the #{current_user.judging_region.division_description} division
+	- unless current_user.judging_region.nil?
+		h4 You are judging teams from #{current_user.judging_region.division_description} - #{current_user.judging_region.region_name}
 	- unless @event.nil?
 		h4 Teams competing in #{@event.name}
 	- if  @teams.empty?
