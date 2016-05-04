@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Setting do
   describe ".submissionOpen?" do
-    before(:all) do
+    before do
       Submissions.open!("2015-04-14")
       Submissions.close!("2015-04-16")
     end
