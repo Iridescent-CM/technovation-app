@@ -90,11 +90,7 @@ class Setting < ActiveRecord::Base
   end
 
   def self.now
-    if self.exists?(key: 'todaysDateForTesting')
-      self.get_date('todaysDateForTesting')
-    else
-      Time.now
-    end
+    Date.today
   end
 
   private
