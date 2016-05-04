@@ -2,11 +2,7 @@ class RubricsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    ## new rubric needs to take a team
-    @rubric = Rubric.new
-    @rubric.team = Team.friendly.find(params[:team])
-
-    @rubric_is_new = true
+    @rubric = Rubric.new(team: Team.friendly.find(params[:team]))
     authorize @rubric
   end
 
@@ -17,10 +13,13 @@ class RubricsController < ApplicationController
 
   def index
     ## if the judge is signed up for an in-person event
-    ## and it is currently the time of the event, only show teams that are signed up for the event
+    ## and it is currently the time of the event,
+    ## only show teams that are signed up for the event
     event_active = false
+
     if not current_user.event_id.nil?
       event = Event.find(current_user.event_id)
+
       if not event.is_virtual? && Setting.anyJudgingRoundActive?
         round = Setting.judgingRound
         start = Setting.get_date(round+'JudgingOpen')
@@ -35,6 +34,7 @@ class RubricsController < ApplicationController
     end
 
     case Setting.judgingRound
+
     when 'quarterfinal'
       if !event_active
         id = Event.virtual_for_current_season.id
@@ -46,6 +46,7 @@ class RubricsController < ApplicationController
 
     when 'final'
       teams = Team.where(isfinalist: true) if current_user.finals_judge?
+
     else
       teams = Team.none
     end
@@ -63,23 +64,26 @@ class RubricsController < ApplicationController
             end
 
     @teams = teams
+
     unless event_active
-      ## show a randomly drawn team with the minimum number rubrics for virtual judging
+      ## show a randomly drawn team with
+      ## the minimum number rubrics
+      ## for virtual judging
       unless teams.empty?
         teams.keep_if { |t| t.num_rubrics == teams[0].num_rubrics }
         @teams = teams.sample(3)
       end
     end
 
-    ## show all past rubrics that were done by the current judge for editing
+    ## show all past rubrics that were
+    ## done by the current judge for editing
     @rubrics = Rubric.where("extract(year from created_at) = ?", Setting.year).has_judge(current_user)
 
   end
 
   def edit
-    ## find the team associated with the rubric
     @rubric = Rubric.find(params[:id])
-    @team = @rubric.team
+    @team = @rubric.team # Why not use @rubric.team in the view?
     authorize @rubric
   end
 
@@ -94,7 +98,6 @@ class RubricsController < ApplicationController
     else
       redirect_to :back
     end
-
   end
 
   def create
@@ -106,14 +109,21 @@ class RubricsController < ApplicationController
     if @rubric.save
       redirect_to :rubrics
     else
-      @rubric_is_new = true
       render :new
     end
   end
 
   private
-
   def rubric_params
-    params.require(:rubric).permit(:team_id, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :launched, :pitch, :identify_problem_comment, :address_problem_comment, :functional_comment, :external_resources_comment, :match_features_comment, :interface_comment, :description_comment, :market_comment, :competition_comment, :revenue_comment, :branding_comment, :pitch_comment, :launched_comment, )
+    params.require(:rubric).permit(
+      :team_id, :identify_problem, :address_problem, :functional,
+      :external_resources, :match_features, :interface, :description,
+      :market, :competition, :revenue, :branding, :launched, :pitch,
+      :identify_problem_comment, :address_problem_comment,
+      :functional_comment, :external_resources_comment,
+      :match_features_comment, :interface_comment, :description_comment,
+      :market_comment, :competition_comment, :revenue_comment,
+      :branding_comment, :pitch_comment, :launched_comment
+    )
   end
 end

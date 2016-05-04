@@ -228,9 +228,10 @@ class User < ActiveRecord::Base
     SignatureMailer.signature_email(self).deliver
   end
 
-  def can_judge?
-    ## returns true if judge user type or if mentor/coach volunteered to judge
-    role == 'judge' or judging
+  def can_judge?(team = nil)
+    # We can only check for team region conflict in RubricPolicy right now
+    team_check = team ? (team.region_id != conflict_region_id) : true
+    (role == 'judge' || judging) && team_check
   end
 
   def get_campaign_list

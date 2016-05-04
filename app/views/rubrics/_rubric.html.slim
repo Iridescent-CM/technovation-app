@@ -1,4 +1,4 @@
-- unless @rubric_is_new
+- unless @rubric.new_record?
   - if current_user.id != @rubric.user_id or Setting.judgingRound != @rubric.stage
     javascript:
       $(document).ready(function() {

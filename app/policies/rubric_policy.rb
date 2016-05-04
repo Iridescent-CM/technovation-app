@@ -1,13 +1,16 @@
-class RubricPolicy < ApplicationPolicy
-  attr_reader :user, :rubric
+require "./app/policies/application_policy"
 
-  def initialize(user, rubric)
+class RubricPolicy < ApplicationPolicy
+  attr_reader :user, :rubric, :setting
+
+  def initialize(user, rubric, setting = Setting)
     @user = user
     @rubric = rubric
+    @setting = setting
   end
 
   def new?
-    user.can_judge? and Setting.anyJudgingRoundActive?
+    user.can_judge?(rubric.team) && setting.anyJudgingRoundActive?
   end
 
   def index?
@@ -29,17 +32,4 @@ class RubricPolicy < ApplicationPolicy
   def update?
     user.can_judge? and Setting.anyJudgingRoundActive?
   end
-
-  # private
-  # def member?
-  #   team.members.include? user
-  # end
-
-
-  # def can_see_rubric?
-  #   ## todo: depends whether this is a quaterfinal, semifinal, or final rubric
-  #   ## get the rubric type
-  #   ## see if the judging for that type has closed
-  # end
-
 end

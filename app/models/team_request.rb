@@ -1,7 +1,9 @@
 class TeamRequest < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
+
   validates_uniqueness_of :team_id, scope: :user_id
+
   scope :pending, -> { where approved: false }
   scope :approved, -> { where approved: true }
 
@@ -33,5 +35,4 @@ class TeamRequest < ActiveRecord::Base
   def notify_user_received
     InviteMailer.invite_received_email(self.user, self.team).deliver
   end
-
 end
