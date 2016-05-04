@@ -77,6 +77,7 @@ group :test do
   gem 'timecop'
   gem 'webmock'
   gem 'shoulda-callback-matchers'
+  gem 'database_cleaner'
 end
 
 group :production, :staging, :qa do

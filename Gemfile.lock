@@ -130,6 +130,7 @@ GEM
       httparty (~> 0.10)
       json (~> 1.0)
     currencies (0.4.2)
+    database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
@@ -368,6 +369,7 @@ DEPENDENCIES
   countries
   country_select!
   createsend
+  database_cleaner
   devise!
   dotenv-rails
   factory_girl_rails
