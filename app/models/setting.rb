@@ -25,14 +25,11 @@ class Setting < ActiveRecord::Base
   end
 
   def self.beforeSubmissionsOpen?
-    date1 = self.get_date('submissionOpen')
-    return Date.today < date1
+    Date.today < Submissions.opening_date
   end
 
   def self.submissionOpen?
-    open = get_date('submissionOpen')
-    close = Submissions.closing_date
-    between(open, close)
+    between(Submissions.opening_date, Submissions.closing_date)
   end
 
   def self.between(date1, date2)

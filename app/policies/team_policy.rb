@@ -23,7 +23,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def update?
-    member? #and Setting.submissionOpen?
+    member?
   end
 
   def event_signup?

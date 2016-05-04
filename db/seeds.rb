@@ -17,15 +17,8 @@ Setting.find_or_create_by(
   value: Date.today.to_s
 )
 
-Setting.find_or_create_by(
-  key: 'submissionOpen',
-  value: '2015-04-14'
-)
-
-Setting.find_or_create_by(
-  key: 'submissionClose',
-  value: '2015-04-23'
-)
+Submissions.open!("2015-04-14")
+Submissions.close!("2015-04-23")
 
 ###
 

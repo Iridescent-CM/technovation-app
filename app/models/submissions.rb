@@ -18,6 +18,10 @@ class Submissions
       Date.parse(setting.find_by!(key: 'submissionClose').value)
     end
 
+    def opening_date
+      Date.parse(setting.find_by!(key: 'submissionOpen').value)
+    end
+
     private
     def setting
       Setting

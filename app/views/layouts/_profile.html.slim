@@ -44,7 +44,7 @@
                       - if current_user.current_team
                         dt Submission Status
                         dd= current_user.current_team.submission_status
-                                                  
+
                     .pull-right
                       - if policy(current_user).edit?
                           = link_to 'Edit Profile', edit_user_path(current_user)
