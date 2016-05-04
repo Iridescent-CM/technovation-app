@@ -22,12 +22,25 @@ RSpec.describe "Calculate scores" do
     expect(rubric.score).to eq(1)
   end
 
+  it "scores an extra 2 points when launched is true" do
+    attributes = Hash[points.map { |point| [point, 0] }]
+    rubric = TestRubric.new(attributes.merge(launched: true))
+
+    CalculateScore.call(rubric)
+
+    expect(rubric.score).to eq(2)
+  end
+
   class CalculateScore
     class << self
       def call(rubric)
-        rubric.score = scoring_attributes.inject(0) do |accumulator, attr|
+        initial_score = scoring_attributes.inject(0) do |accumulator, attr|
           accumulator + rubric.send(attr)
         end
+
+        extra_score = rubric.launched ? 2 : 0
+
+        rubric.score = initial_score + extra_score
       end
 
       def scoring_attributes
