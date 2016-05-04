@@ -15,7 +15,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    (!user.student? or !user.has_team_for_season?) and (Setting.get_date('submissionClose') > Date.today)
+    (!user.student? or !user.has_team_for_season?) and (Submssions.closing_date > Date.today)
   end
 
   def edit?

@@ -29,7 +29,7 @@
 
     / submissions open
     - if Setting.submissionOpen? and not current_user.judge?
-      - submissionClose = Setting.get_date('submissionClose')
+      - submissionClose = Submissions.closing_date
       li
         strong Submissions now open for #{submissionClose.year} through April 21, 5pm PDT
 
