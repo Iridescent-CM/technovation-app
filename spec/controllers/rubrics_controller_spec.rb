@@ -29,7 +29,7 @@ describe RubricsController, type: :controller do
       allow(Setting)
         .to receive(:now)
         .and_return(today)
-      
+
       allow(Team)
         .to receive(:find)
         .with(user.event_id)

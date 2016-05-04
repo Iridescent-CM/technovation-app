@@ -57,6 +57,7 @@ describe Setting, type: :model do
         .to receive(:find_by!)
         .with(key: key)
         .and_return(fake_setting)
+
       allow(Setting)
         .to receive(:now)
         .and_return(now)

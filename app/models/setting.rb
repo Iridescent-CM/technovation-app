@@ -26,7 +26,7 @@ class Setting < ActiveRecord::Base
 
   def self.beforeSubmissionsOpen?
     date1 = self.get_date('submissionOpen')
-    return self.now < date1
+    return Date.today < date1
   end
 
   def self.submissionOpen?
@@ -36,15 +36,15 @@ class Setting < ActiveRecord::Base
   end
 
   def self.between(date1, date2)
-    return (date1..date2).cover?(self.now)
+    return (date1..date2).cover?(Date.today)
   end
 
   def self.after(date)
-    return self.now >= date
+    return Date.today >= date
   end
 
   def self.before(date)
-    self.now < date
+    Date.today < date
   end
 
   def self.anyJudgingRoundActive?
@@ -89,7 +89,9 @@ class Setting < ActiveRecord::Base
     self.get_boolean(userType+'RegistrationOpen')
   end
 
+  # @deprecated
   def self.now
+    Rails.logger.warn("Setting.now is deprecated. Use Date.today instead")
     Date.today
   end
 
