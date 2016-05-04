@@ -1,15 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.find_or_create_by([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.find_or_create_by(name: 'Emanuel', city: cities.first)
-
+yesterday = Date.today - 1
+tomorrow = Date.today + 1
+day_after_close = tomorrow + 1
 
 Setting.find_or_create_by(
   key: 'year',
-  value: '2015'
+  value: Date.today.year.to_s
 )
 
 Setting.find_or_create_by(
@@ -17,8 +12,8 @@ Setting.find_or_create_by(
   value: Date.today.to_s
 )
 
-Submissions.open!("2015-04-14")
-Submissions.close!("2015-04-23")
+Submissions.open!(yesterday.to_s)
+Submissions.close!(tomorrow.to_s)
 
 ###
 
@@ -41,52 +36,52 @@ Setting.find_or_create_by(
 
 Setting.find_or_create_by(
   key: 'quarterfinalJudgingOpen',
-  value: '2015-04-24'
+  value: day_after_close.to_s
 )
 
 Setting.find_or_create_by(
   key: 'quarterfinalJudgingClose',
-  value: '2015-05-03'
+  value: (day_after_close + 1).to_s
 )
 
 Setting.find_or_create_by(
   key: 'semifinalJudgingOpen',
-  value: '2015-05-05'
+  value: (day_after_close + 2).to_s
 )
 
 Setting.find_or_create_by(
   key: 'semifinalJudgingClose',
-  value: '2015-05-10'
+  value: (day_after_close + 3).to_s
 )
 
 Setting.find_or_create_by(
   key: 'finalJudgingOpen',
-  value: '2015-05-14'
+  value: (day_after_close + 4).to_s
 )
 
 Setting.find_or_create_by(
   key: 'finalJudgingClose',
-  value: '2015-05-16'
+  value: (day_after_close + 5).to_s
 )
 
 Setting.find_or_create_by(
   key: 'studentRegistrationOpen',
-  value: true
+  value: 'true'
 )
 
 Setting.find_or_create_by(
   key: 'coachRegistrationOpen',
-  value: true
+  value: 'true'
 )
 
 Setting.find_or_create_by(
   key: 'mentorRegistrationOpen',
-  value: true
+  value: 'true'
 )
 
 Setting.find_or_create_by(
   key: 'judgeRegistrationOpen',
-  value: true
+  value: 'true'
 )
 
 Region.create(region_name: 'US/Canada', division: :hs, num_finalists: 3)
