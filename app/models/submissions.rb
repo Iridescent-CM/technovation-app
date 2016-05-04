@@ -14,6 +14,10 @@ class Submissions
       })
     end
 
+    def closing_date
+      Date.parse(setting.find_by!(key: 'submissionClose').value)
+    end
+
     private
     def setting
       Setting
