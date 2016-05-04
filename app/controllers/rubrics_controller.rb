@@ -37,12 +37,10 @@ class RubricsController < ApplicationController
     case Setting.judgingRound
     when 'quarterfinal'
       if !event_active
-        ## if it is the quarterfinals and it is not the time of the judge's event
-        ## only show teams who have signed up for Virtual Judging
         id = Event.virtual_for_current_season.id
         teams = Team.where(region: current_user.judging_region, event_id: id)
       end
-      
+
     when 'semifinal'
       teams = Team.where(issemifinalist: true) if current_user.semifinals_judge?
 
@@ -51,7 +49,7 @@ class RubricsController < ApplicationController
     else
       teams = Team.none
     end
-    
+
     teams = teams
             .sort_by(&:num_rubrics)
             .delete_if { |team| team.judges.map{|j| j.id }.include? current_user.id }

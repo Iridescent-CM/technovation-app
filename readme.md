@@ -92,7 +92,6 @@ There are several major settings that must be present for the application to run
 3. *submissionOpen* *submimssionClose* The dates that user submissions should open and close. Dates formatted as 2015-02-03
 4. *quarterfinalJudgingOpen* *quarterfinalJudgingClose* *semifinalJudgingOpen* *semifinalJudgingClose* *finalJudgingOpen* *finalJudgingClose* The dates that various rounds of judging open and close. These are used to determine whether a particular rubric created was for the quarterfinal, semifinal, or final round of judging.
 5. *quarterfinalScoresVisible* *semifinalScoresVisible* *finalScoresVisible* A true or false value indicating whether scores from these rounds are visible to teams.
-6. *todaysDateForTesting* The date that the application believes it to be for testing purposes. When moving from testing to production, the function self.now must be changed from using this setting to using DateTime.now
 
 For existing databases, the code for generating these settings can be copy-pasted from db/seeds.rb into a rails console. Settings can be edited from the admin panel.
 

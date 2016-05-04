@@ -96,11 +96,6 @@ Setting.find_or_create_by(
   value: true
 )
 
-Setting.find_or_create_by(
-  key: 'todaysDateForTesting',
-  value: '2015-05-06'
-)
-
 Region.create(id: 0, region_name: 'US/Canada', division: :hs, num_finalists: 3)
 Region.create(id: 1, region_name: 'Mexico/Central America/South America', division: :hs, num_finalists: 1)
 Region.create(id: 2, region_name: 'Europe/Australia/New Zealand/Asia', division: :hs, num_finalists: 1)
