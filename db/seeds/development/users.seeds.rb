@@ -28,34 +28,34 @@ def self.create_default_users
     email: 'finalepsilon@gmail.com',
     parent_email: 'cssndrx@gmail.com',
     password: 'testtest',
-    role: 0
+    role: :student
   )
 
   create_user(
     email: 'cssndrx@gmail.com',
     parent_email: 'cssndrx@gmail.com',
     password: 'testtest',
-    role: 0
+    role: :student
   )
 
   create_user(
     email: 'cssndrx+judge@gmail.com',
     parent_email: 'cssndrx@gmail.com',
     password: 'testtest',
-    role: 3,
+    role: :judge,
   )
 
   create_user(
     email: 'cssndrx+mentor@gmail.com',
     parent_email: 'cssndrx@gmail.com',
     password: 'testtest',
-    role: 1
+    role: :mentor
   )
 
   create_user(
     email: 'cssndrx+coach@gmail.com',
     password: 'testtest',
-    role: 2,
+    role: :coach,
     password_confirmation: 'testtest',
     birthday: Date.new(1989, 12, 1)
   )
