@@ -19,7 +19,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def edit?
-    member? and Setting.submissionOpen?
+    member? and Submissions.open?
   end
 
   def update?
@@ -31,7 +31,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def edit_submission?
-    member? and Setting.submissionOpen?
+    member? and Submissions.open?
   end
 
   def join?

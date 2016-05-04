@@ -28,12 +28,8 @@ class Setting < ActiveRecord::Base
     Date.today < Submissions.opening_date
   end
 
-  def self.submissionOpen?
-    between(Submissions.opening_date, Submissions.closing_date)
-  end
-
   def self.between(date1, date2)
-    return (date1..date2).cover?(Date.today)
+    (date1..date2).cover?(Date.today)
   end
 
   def self.after(date)

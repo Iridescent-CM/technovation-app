@@ -28,7 +28,7 @@
           '  to receive your Technovation certificate!
 
     / submissions open
-    - if Setting.submissionOpen? and not current_user.judge?
+    - if Submissions.open? and not current_user.judge?
       - submissionClose = Submissions.closing_date
       li
         strong Submissions now open for #{submissionClose.year} through April 21, 5pm PDT
@@ -54,7 +54,7 @@
     - unless current_user.judge?
       li
         ' If you haven't already, please complete the following
-        - if Setting.submissionOpen?
+        - if Submissions.open?
           - if current_user.student?
             a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_0cankgvZeqVcy3P' student post-program survey
           - if current_user.mentor?

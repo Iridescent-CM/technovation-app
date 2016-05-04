@@ -49,7 +49,7 @@
                       - if policy(current_user).edit?
                           = link_to 'Edit Profile', edit_user_path(current_user)
                       br
-                      - if current_user.current_team and Setting.submissionOpen?
+                      - if current_user.current_team and Submissions.open?
                           = link_to 'Edit Submission', edit_submission_team_path(current_user.current_team)
 
           .col-sm-9

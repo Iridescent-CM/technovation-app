@@ -7,6 +7,10 @@ class Submissions
       })
     end
 
+    def open?
+      (opening_date..closing_date).cover?(Date.today)
+    end
+
     def close!(date)
       setting.find_or_create_by({
         key: 'submissionClose',
