@@ -2,9 +2,10 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
-if Rails.env.development? || Rails.env.test?
+
+if Rails.env.development?
   require 'seedbank'
-  Seedbank.load_tasks if defined?(Seedbank)
+  Seedbank.load_tasks
 end
 
 Rails.application.load_tasks
