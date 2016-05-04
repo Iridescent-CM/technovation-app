@@ -11,9 +11,10 @@ class CalculateScore
     end
 
     def scoring_attributes
-      %i{identify_problem address_problem functional external_resources
-          match_features interface description market competition
-          revenue branding pitch}
+      %i{identify_problem address_problem functional
+         external_resources match_features interface
+         description market competition revenue branding
+         pitch}
     end
   end
 end

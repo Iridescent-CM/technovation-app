@@ -7,7 +7,7 @@ FactoryGirl.define do
     division nil
     confirm_acceptance_of_rules { Faker::Boolean.boolean }
     avatar_file_name { Faker::Name.name }
-    year nil
+    year Date.today.year
     code { Faker::Internet.url }
     pitch { Faker::Internet.url }
     association :event

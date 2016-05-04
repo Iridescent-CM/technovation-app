@@ -36,10 +36,6 @@ class Setting < ActiveRecord::Base
     return Date.today >= date
   end
 
-  def self.before(date)
-    Date.today < date
-  end
-
   def self.anyJudgingRoundActive?
     !self.judgingRoundByDate.nil?
   end
@@ -51,7 +47,7 @@ class Setting < ActiveRecord::Base
   def self.nextJudgingRound
     Rubric.stages.keys.each do |round|
       closing_date = self.get_date(round+'JudgingClose')
-      if self.before(closing_date)
+      if Date.today < closing_date
         return [round, self.get_date(round+'JudgingOpen')]
       end
     end
