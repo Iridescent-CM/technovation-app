@@ -22,7 +22,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def edit?
-    member? and Submissions.open?
+    member? && Submissions.open?
   end
 
   def update?
