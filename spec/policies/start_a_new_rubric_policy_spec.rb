@@ -2,7 +2,7 @@ require "spec_helper"
 require "./app/policies/rubric_policy"
 require "ostruct"
 
-RSpec.describe RubricPolicy do
+RSpec.describe "Policy to start a new rubric" do
   describe "#new?" do
     it "is restricted against judges in conflicted regions" do
       team = double(:team, region_id: 1)
