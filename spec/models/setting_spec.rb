@@ -2,44 +2,24 @@ require 'rails_helper'
 
 describe Setting, type: :model do
   describe '.get_boolean' do
-    subject { Setting.get_boolean(key) }
+    subject { Setting.send(:get_boolean, key) }
 
     let(:key) { 'ANY KEY' }
-    let(:value) { 'true' }
-    let(:expected_value) { true }
-    let(:fake_setting) { double(value: value) }
+    let(:value) { true }
 
-    before do
-      allow(Setting)
-        .to receive(:find_by!)
-        .with(key: key)
-        .and_return(fake_setting)
-    end
+    before { Setting.find_or_create_by!(key: key, value: value) }
 
-    it { is_expected.to eql expected_value }
-
-    it 'calls find_by with key' do
-      expect(Setting).to receive(:find_by!).with(key: key)
-      subject
-    end
+    it { is_expected.to be true }
 
     context 'when an invalid value is used' do
       let(:value) { 'ANY VALUE DIFFERENT OF TRUE OR FALSE' }
-      let(:expected_value) { false }
-
-      it { is_expected.to eql expected_value }
+      it { is_expected.to be false }
     end
 
     context 'when the key does not exist' do
-      let(:expected_value) { false }
-
-      before do
-        allow(Setting)
-          .to receive(:find_by!)
-          .and_raise(ActiveRecord::RecordNotFound)
+      it "is false" do
+        expect(Setting.send(:get_boolean, "no exist")).to be false
       end
-
-      it { is_expected.to eql expected_value }
     end
   end
 
