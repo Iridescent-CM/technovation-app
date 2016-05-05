@@ -229,9 +229,7 @@ class User < ActiveRecord::Base
   end
 
   def can_judge?(team = nil)
-    # We can only check for team region conflict in RubricPolicy right now
-    team_check = team ? (team.region_id != conflict_region_id) : true
-    (role == 'judge' || judging) && team_check
+    CheckJudgingPolicy.call(self, team)
   end
 
   def get_campaign_list

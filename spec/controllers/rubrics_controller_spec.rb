@@ -1,32 +1,6 @@
 require 'rails_helper'
 
 describe RubricsController, type: :controller do
-  describe "GET #new" do
-    it "restricts judges in the conflict region" do
-      Setting.create!({
-        key: 'quarterfinalJudgingOpen',
-        value: Date.today - 1
-      })
-
-      Setting.create!({
-        key: 'quarterfinalJudgingClose',
-        value: Date.today + 1
-      })
-
-      team = FactoryGirl.create(:team)
-      judge = FactoryGirl.create(:user,
-                                 role: :judge,
-                                 conflict_region_id: team.region_id)
-
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in(judge)
-
-      get :new, team: team.id
-
-      expect(response.status).to eq(302)
-    end
-  end
-
   describe '.index' do
     let(:event_id) { 1 }
     let(:event) { build(:event, :non_virtual_event, id: event_id, whentooccur: whentooccur_event) }
