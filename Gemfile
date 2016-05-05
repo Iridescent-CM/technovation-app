@@ -66,7 +66,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'seedbank', require: false
+  gem 'seedbank'
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry-rails'

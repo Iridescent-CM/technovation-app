@@ -1,5 +1,6 @@
 require 'factory_girl_rails'
-puts 'Generate users for dev env...'
+
+$stdout.write "Generate users for dev env...\n"
 
 Geocoder.configure(lookup: :test)
 
@@ -21,6 +22,7 @@ def self.create_user(attrs)
   user = FactoryGirl.build(:user, attrs)
   user.skip_confirmation!
   user.save!
+  $stdout.write("Created #{attrs[:role]} with email #{attrs[:email]}\n")
 end
 
 def self.create_default_users
@@ -62,5 +64,10 @@ def self.create_default_users
 end
 
 create_default_users
+
+$stdout.write("All passwords are `testtest`\n")
+
+$stdout.write("Generating user and mentor lists...\n")
+
 FactoryGirl.create_list(:user, 10, is_registered: true)
 FactoryGirl.create_list(:mentor, 100, :mentor)
