@@ -152,11 +152,11 @@ describe RubricsController, type: :controller do
 
     context 'when its semifinals time' do
       let(:judging_round) { 'semifinal' }
-      let(:teams) { build_list(:team, 5, event: event, issemifinalist: true, year: Setting.year) }
+      let(:teams) { build_list(:team, 5, event: event, is_semi_finalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
 
       before do
-        allow(Team).to receive(:where).with(issemifinalist: true).and_return(teams)
+        allow(Team).to receive(:where).with(is_semi_finalist: true).and_return(teams)
       end
 
       it 'shows all teams for this event' do
@@ -166,7 +166,7 @@ describe RubricsController, type: :controller do
 
       context 'and its a virtual event' do
         let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
-        let(:teams) { build_list(:team, 5, event: event, issemifinalist: true, year: Setting.year) }
+        let(:teams) { build_list(:team, 5, event: event, is_semi_finalist: true, year: Setting.year) }
 
         it 'shows a sample of teams for the virtual event' do
           get :index

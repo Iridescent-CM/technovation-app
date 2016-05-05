@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420142348) do
+ActiveRecord::Schema.define(version: 20160505174228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20160420142348) do
     t.integer  "screenshot5_file_size"
     t.datetime "screenshot5_updated_at"
     t.integer  "event_id"
-    t.boolean  "issemifinalist"
+    t.boolean  "is_semi_finalist"
     t.boolean  "isfinalist"
     t.string   "store"
     t.string   "country",                     limit: 2, default: "",   null: false

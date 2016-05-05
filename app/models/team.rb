@@ -84,7 +84,7 @@ class Team < ActiveRecord::Base
   scope :has_region, -> (reg) {where('region_id = ?', reg)}
   scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
 
-  scope :is_semifinalist, -> {where 'issemifinalist = true'}
+  scope :is_semi_finalist, -> {where 'is_semi_finalist = true'}
   scope :is_finalist, -> {where 'isfinalist = true'}
   scope :is_winner, -> {where 'iswinner = true'}
   scope :is_submitted, -> {where(submitted: true)}

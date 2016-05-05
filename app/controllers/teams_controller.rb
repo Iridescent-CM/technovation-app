@@ -45,9 +45,9 @@ class TeamsController < ApplicationController
         @teams = @teams.where(division: params[:division])
         @division = params[:division]
       end
-      unless params[:issemifinalist].nil?
-        @teams = @teams.is_semifinalist
-        @issemifinalist = true
+      unless params[:is_semi_finalist].nil?
+        @teams = @teams.is_semi_finalist
+        @is_semi_finalist = true
       end
       unless params[:isfinalist].nil?
         @teams = @teams.is_finalist

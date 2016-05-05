@@ -17,13 +17,13 @@ class RankingController < ActionController::Base
     ## calculate number of teams advancing
     ## sort the teams by the to p average score
 
-    Team.update_all(issemifinalist:false)
+    Team.update_all(is_semi_finalist:false)
     for e in Event.all
       teams = e.teams.joins(:rubrics).uniq
       num_teams = [0, (teams.length-1)/10 + 1].max
 
       winners = take_with_ties(teams.sort_by(&:avg_quarterfinal_score).reverse, num_teams).each { |w|
-        w.update(issemifinalist: true)
+        w.update(is_semi_finalist: true)
       }
     end
   end
@@ -34,7 +34,7 @@ class RankingController < ActionController::Base
     Region.all.each do |r|
       num_teams = r.num_finalists
 
-      winners = take_with_ties(Team.joins(:rubrics).where(issemifinalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_semifinal_score).reverse, r.num_finalists).each { |w|
+      winners = take_with_ties(Team.joins(:rubrics).where(is_semi_finalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_semifinal_score).reverse, r.num_finalists).each { |w|
         w.update(isfinalist:true)
       }
     end

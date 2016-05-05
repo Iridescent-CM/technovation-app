@@ -9,7 +9,7 @@ ActiveAdmin.register Team do
   filter :category, as: :select, collection: Category.order(:name)
   filter :event, as: :select, collection: Event.order(:name)
   filter :description_cont, label: "Description"
-  filter :issemifinalist
+  filter :is_semi_finalist
   filter :isfinalist
   filter :iswinner
   filter :submitted
@@ -43,7 +43,7 @@ ActiveAdmin.register Team do
     column (:semifinal_average){|t| t.avg_semifinal_score}
     column (:final_average){|t| t.avg_final_score}
 
-    column :issemifinalist
+    column :is_semi_finalist
     column :isfinalist
     column :iswinner
 
@@ -80,7 +80,7 @@ ActiveAdmin.register Team do
     column (:semifinal_average){|t| t.avg_semifinal_score}
     column (:final_average){|t| t.avg_final_score}
 
-    column :issemifinalist
+    column :is_semi_finalist
     column :isfinalist
     column :iswinner
   end
@@ -98,7 +98,7 @@ ActiveAdmin.register Team do
 
 #      f.input :event, as: :select, collection: Event.all
 
-      f.input :issemifinalist
+      f.input :is_semi_finalist
       f.input :isfinalist
       f.input :iswinner
 
