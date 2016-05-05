@@ -1,3 +1,6 @@
+require "./app/policies/application_policy"
+require "./app/models/submissions"
+
 class TeamPolicy < ApplicationPolicy
   attr_reader :user, :team
 
@@ -15,7 +18,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    (!user.student? or !user.has_team_for_season?) and (Submissions.closing_date > Date.today)
+    (!user.student? || !user.has_team_for_season?) && Submissions.open?
   end
 
   def edit?
