@@ -24,6 +24,7 @@ class TeamPolicy < ApplicationPolicy
   def edit?
     member? && Submissions.open?
   end
+  alias_method :edit_submission?, :edit?
 
   def update?
     member?
@@ -31,10 +32,6 @@ class TeamPolicy < ApplicationPolicy
 
   def event_signup?
     member?
-  end
-
-  def edit_submission?
-    member? and Submissions.open?
   end
 
   def join?
