@@ -1,7 +1,9 @@
 class Team < ActiveRecord::Base
   include FlagShihTzu
   extend FriendlyId
+
   friendly_id :name_and_year, use: :slugged
+
   before_save :update_submission_status
   before_save :update_division
   before_save :check_event_region

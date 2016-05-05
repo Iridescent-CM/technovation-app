@@ -174,15 +174,15 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def current_team
-    teams.where(year: Setting.year).first
+    teams.current.first
   end
 
   def on_submitted_team?
-    not teams.where(year: Setting.year).to_a.keep_if { |t| t.submission_eligible? }.empty?
+    teams.current.any?(&:submission_eligible?)
   end
 
   def has_team_for_season?
-    teams.where(year: Setting.year).any?
+    teams.current.any?
   end
 
   def consented?

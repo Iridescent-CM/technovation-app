@@ -27,7 +27,7 @@ class TeamsController < ApplicationController
       @teams = apply_scopes(Team.randomized(@seed).all)
 
       if params[:previous_years].nil?
-        @teams = @teams.where(year: Setting.year)
+        @teams = @teams.current
         @season = "#{Setting.year} Season"
       else
         @season = 'All Seasons'
