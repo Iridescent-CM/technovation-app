@@ -129,14 +129,16 @@ describe Team, type: :model do
     let(:team_members) { [student] }
 
     before do
-      allow(Setting)
-        .to receive(:get_boolean)
-        .with('allow_ineligibility_logic')
-        .and_return(allow_new_logic?)
-      allow(Setting)
-        .to receive(:get_boolean)
-        .with('allow_ineligibility_logic_for_students')
-        .and_return(allow_new_logic_for_students?)
+      Setting.find_or_create_by!({
+        key: 'allow_ineligibility_logic',
+        value: allow_new_logic?.to_s
+      })
+
+      Setting.find_or_create_by!({
+        key: 'allow_ineligibility_logic_for_students',
+        value: allow_new_logic_for_students?.to_s
+      })
+
       allow(student).to receive(:ineligible?).and_return(user_ineligible?)
       allow(team).to receive(:members).and_return(team_members)
     end

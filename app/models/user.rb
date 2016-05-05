@@ -219,7 +219,7 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
-    return student? && !VALID_AGE_RANGE.include?(age_before_cutoff()) if Setting.get_boolean('allow_ineligibility_logic_for_students')
+    return student? && !VALID_AGE_RANGE.include?(age_before_cutoff()) if Setting.allow_ineligibility_logic_for_students
     false
   end
 

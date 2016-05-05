@@ -60,10 +60,10 @@ describe User, type: :model do
     let(:cutoff_day) { DateTime.now }
 
     before do
-      allow(Setting)
-        .to receive(:get_boolean)
-        .with('allow_ineligibility_logic_for_students')
-        .and_return(allow_new_logic?)
+      Setting.find_or_create_by!({
+        key: 'allow_ineligibility_logic_for_students',
+        value: allow_new_logic?
+      })
 
       allow(Setting)
         .to receive(:get_date)

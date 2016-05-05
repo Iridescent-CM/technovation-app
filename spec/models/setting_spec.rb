@@ -88,7 +88,5 @@ describe Setting, type: :model do
 
       it { is_expected.to eq(expected_value) }
     end
-
   end
-
 end
