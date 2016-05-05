@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   end
 
   def has_team_for_season?
-    not teams.where(year: Setting.year).empty?
+    teams.where(year: Setting.year).any?
   end
 
   def consented?

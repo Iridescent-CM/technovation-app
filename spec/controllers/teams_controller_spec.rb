@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe TeamsController, type: :controller do
   describe '.edit_submission' do
-    subject { sign_in; get :edit_submission, id: 1 } 
+    subject { sign_in; get :edit_submission, id: 1 }
 
     let(:region_id) { Faker::Number.number(5).to_i }
     let(:region) { build(:region, id: region_id) }
