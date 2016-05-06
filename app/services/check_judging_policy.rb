@@ -1,16 +1,18 @@
 class CheckJudgingPolicy
   def self.call(judge, team)
     if team.nil?
-      # stop-gap solution to deal with legacy code
+      # temporary solution to deal with legacy code
       # that doesn't pass in the team
       judge.role == 'judge' || judge.judging?
     else
-      judge_role = check_judge_role_policy(judge, team)
-      judging_enabled = check_judging_enabled_policy(judge, team)
+      can_judge_as_judge = check_judge_role_policy(judge, team)
+      can_judge_as_judging_enabled = check_judging_enabled_policy(judge, team)
 
-      judge_role || !!judging_enabled
-      # `false || nil` returns nil,
-      # so convert right-side truthy/falsy results
+      can_judge_as_judge || !!can_judge_as_judging_enabled
+      # can_judge_as_judging_enabled sometimes returns nil
+      # `false || nil` will return nil
+      # !! converts truthy/falsy variables
+      # to their corresponding True/False
     end
   end
 
