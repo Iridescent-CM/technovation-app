@@ -24,8 +24,6 @@ class CheckJudgingPolicy
 
   def self.check_judging_enabled_policy(judge, team)
     judge.judging? &&
-      judge.team_requests
-           .where(team_id: team.id, approved: true)
-           .any?
+      judge.team_requests.where(team_id: team.id).empty?
   end
 end

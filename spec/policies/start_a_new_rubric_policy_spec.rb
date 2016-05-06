@@ -39,29 +39,29 @@ RSpec.describe "Policy to start a new rubric" do
     end
 
     context "for judging enabled" do
-      it "must be assigned through an approved team request" do
+      it "restricted against users assigned through a team request" do
         team_request = double(:team_request)
         team_requests = double(:team_requests_relation)
         coach = TestJudgingEnabled.new(team_requests: team_requests)
         policy = RubricPolicy.new(coach, rubric, setting)
 
         expect(team_requests).to receive(:where)
-          .with(team_id: team.id, approved: true)
+          .with(team_id: team.id)
           .and_return([team_request])
 
-        expect(policy.new?).to be true
+        expect(policy.new?).to be false
       end
 
-      it "will not pass for coaches without the approved team request" do
+      it "will pass for coaches without the team request" do
         team_requests = double(:team_requests_relation)
         coach = TestJudgingEnabled.new(team_requests: team_requests)
         policy = RubricPolicy.new(coach, rubric, setting)
 
         expect(team_requests).to receive(:where)
-          .with(team_id: team.id, approved: true)
+          .with(team_id: team.id)
           .and_return([])
 
-        expect(policy.new?).to be false
+        expect(policy.new?).to be true
       end
     end
   end
