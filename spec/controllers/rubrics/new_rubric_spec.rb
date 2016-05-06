@@ -60,8 +60,12 @@ RSpec.describe RubricsController do
     end
 
     context "judging enabled rubric policy" do
-      let(:judge) { FactoryGirl.create(:user, judging: true,
-                                              role: %i{coach mentor}.sample) }
+      let(:judge) { FactoryGirl.create(:user, role: %i{coach mentor}.sample,
+                                              judging: true,
+                                              judging_region_id: region.id,
+                                              event_id: event,
+                                              conflict_region_id: 2) }
+
 
       it "restricts against judges assigned through team requests" do
         judge.team_requests.create!(team: team)

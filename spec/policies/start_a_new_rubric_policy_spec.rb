@@ -1,10 +1,13 @@
 require "spec_helper"
+require "./spec/policies/judging_policy_tests"
 require "./app/services/check_judging_policy"
 require "./app/policies/rubric_policy"
 require "ostruct"
 
 RSpec.describe "Policy to start a new rubric" do
   describe "#new?" do
+    include JudgingPolicyTests
+
     let(:setting) { double(:setting, :anyJudgingRoundActive? => true) }
 
     let(:team) { double(:team, id: 1, region_id: 1, event_id: 1) }
@@ -18,50 +21,38 @@ RSpec.describe "Policy to start a new rubric" do
 
       subject(:policy) { RubricPolicy.new(judge, rubric, setting) }
 
-      it "is true for a valid judge" do
-        expect(policy.new?).to be true
-      end
-
-      it "must be for a team in their judging region" do
-        judge.judging_region_id = 2
-        expect(policy.new?).to be false
-      end
-
-      it "cannot be for a team in their conflict region" do
-        judge.conflict_region_id = 1
-        expect(policy.new?).to be false
-      end
-
-      it "must be in the same event as the team" do
-        judge.event_id = 2
-        expect(policy.new?).to be false
+      it "passes judging tests" do
+        test_valid_judge(policy)
+        test_judge_region_policies(judge, policy)
+        test_judge_event_policies(judge, policy)
       end
     end
 
     context "for judging enabled" do
-      it "restricted against users assigned through a team request" do
-        team_request = double(:team_request)
-        team_requests = double(:team_requests_relation)
-        coach = TestJudgingEnabled.new(team_requests: team_requests)
-        policy = RubricPolicy.new(coach, rubric, setting)
+      let(:team_requests) { double(:team_requests_relation) }
+      let(:coach) { TestJudgingEnabled.new(judging_region_id: 1,
+                                           event_id: 1,
+                                           conflict_region_id: 2,
+                                           team_requests: team_requests) }
 
-        expect(team_requests).to receive(:where)
-          .with(team_id: team.id)
-          .and_return([team_request])
+      subject(:policy) { RubricPolicy.new(coach, rubric, setting) }
 
-        expect(policy.new?).to be false
-      end
-
-      it "will pass for coaches without the team request" do
-        team_requests = double(:team_requests_relation)
-        coach = TestJudgingEnabled.new(team_requests: team_requests)
-        policy = RubricPolicy.new(coach, rubric, setting)
-
-        expect(team_requests).to receive(:where)
+      it "passes judging tests" do
+        allow(team_requests).to receive(:where)
           .with(team_id: team.id)
           .and_return([])
 
-        expect(policy.new?).to be true
+        test_valid_judge(policy)
+        test_judge_region_policies(coach, policy)
+        test_judge_event_policies(coach, policy)
+      end
+
+      it "restricted against users assigned through a team request" do
+        expect(team_requests).to receive(:where)
+          .with(team_id: team.id)
+          .and_return(['something'])
+
+        expect(policy.new?).to be false
       end
     end
   end
