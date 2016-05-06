@@ -77,7 +77,7 @@ class Team < ActiveRecord::Base
   has_many :rubrics
   has_many :judges, through: :rubrics, source: :user
 
-  has_one :event
+  belongs_to :event
   belongs_to :region
 
   scope :old, -> {where 'year < ?', Setting.year}
