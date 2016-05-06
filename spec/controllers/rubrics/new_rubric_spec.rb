@@ -63,16 +63,16 @@ RSpec.describe RubricsController do
       let(:judge) { FactoryGirl.create(:user, judging: true,
                                               role: %i{coach mentor}.sample) }
 
-      it "requires assignment through approved team request" do
-        judge.team_requests.create!(team: team, approved: false)
+      it "restricts against judges assigned through team requests" do
+        judge.team_requests.create!(team: team)
         sign_in(judge)
 
         get :new, team: team.id
         expect(response.status).to eq(302)
       end
 
-      it "allows a coach/mentor with an approved team request" do
-        judge.team_requests.create!(team: team, approved: true)
+      it "allows a coach/mentor outside of a team request" do
+        judge.team_requests.destroy
         sign_in(judge)
 
         get :new, team: team.id
