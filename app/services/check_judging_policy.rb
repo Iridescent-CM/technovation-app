@@ -16,7 +16,7 @@ class CheckJudgingPolicy
 
   private
   def self.check_judge_role_policy(judge, team)
-    judge.conflict_region_id != team.region_id &&
+    !judge.conflict_region_ids.include?(team.region_id) &&
       judge.judging_region_id == team.region_id &&
         judge.event_id == team.event_id
   end

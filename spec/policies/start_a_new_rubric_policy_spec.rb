@@ -17,14 +17,14 @@ RSpec.describe "Policy to start a new rubric" do
     context "for judge roles" do
       let(:judge) { TestJudge.new(judging_region_id: 1,
                                   event_id: 1,
-                                  conflict_region_id: 2) }
+                                  conflict_region_ids: [2]) }
 
       subject(:policy) { RubricPolicy.new(judge, rubric, setting) }
 
       it "passes judging tests" do
         test_valid_judge(policy)
-        test_judge_region_policies(judge, policy)
-        test_judge_event_policies(judge, policy)
+        test_judge_region_policies(policy)
+        test_judge_event_policies(policy)
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe "Policy to start a new rubric" do
       let(:team_requests) { double(:team_requests_relation) }
       let(:coach) { TestJudgingEnabled.new(judging_region_id: 1,
                                            event_id: 1,
-                                           conflict_region_id: 2,
+                                           conflict_region_ids: [2],
                                            team_requests: team_requests) }
 
       subject(:policy) { RubricPolicy.new(coach, rubric, setting) }
@@ -43,8 +43,8 @@ RSpec.describe "Policy to start a new rubric" do
           .and_return([])
 
         test_valid_judge(policy)
-        test_judge_region_policies(coach, policy)
-        test_judge_event_policies(coach, policy)
+        test_judge_region_policies(policy)
+        test_judge_event_policies(policy)
       end
 
       it "restricted against users assigned through a team request" do

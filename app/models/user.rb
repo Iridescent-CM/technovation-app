@@ -12,8 +12,6 @@ class User < ActiveRecord::Base
   before_destroy :remove_from_campaign_list
   before_save :check_judging_conflicts
 
-
-
   # virtual attributes for social security check
   attr_accessor :middle_name, :ssn, :phone,
     :fcra_ok, :drbi_ok,
@@ -64,6 +62,7 @@ class User < ActiveRecord::Base
             5 => EXPERTISES[4][:sym],
             6 => EXPERTISES[5][:sym],
             :column => 'expertise'
+
   scope :has_expertise, -> { where.not expertise: 0 }
   scope :is_registered, -> { where 'is_registered = true' }
   scope :can_mentor, -> { mentor.has_expertise.is_registered }
@@ -79,7 +78,6 @@ class User < ActiveRecord::Base
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
 
   class << self
-
     def build_survey_url(collector_path, user_id)
       site = Rails.application.config.env[:surveymonkey][:site]
       is_ssl = site[:ssl]
@@ -96,8 +94,6 @@ class User < ActiveRecord::Base
       respondents = data['data']['respondents']
       !!(respondents.reject{|r| r['custom_id'].blank? }.find{|respondent| respondent['custom_id'].to_s == id.to_s })
     end
-
-
   end
 
   def check_judging_conflicts
@@ -272,11 +268,17 @@ class User < ActiveRecord::Base
   end
 
   def conflict_regions
-    regions = teams.select('DISTINCT region_id').map { |r| r.region_id }
-    if conflict_region != nil and !regions.include?(conflict_region.id)
+    regions = teams.select('DISTINCT region_id').collect(&:region_id)
+
+    if conflict_region && !regions.include?(conflict_region.id)
       regions << conflict_region.id
     end
+
     Region.where(id: regions)
+  end
+
+  def conflict_region_ids
+    conflict_regions.collect(&:id)
   end
 
 
