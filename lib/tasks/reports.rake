@@ -32,4 +32,37 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a rubrics report on teams"
+  task team_rubrics: :environment do
+    rubrics = Rubric.joins(:team)
+                    .quarter_finals
+                    .where('teams.year = ? AND teams.event_id = ?', 2016, 73)
+                    .select do |rubric|
+                      team = rubric.team
+                      !team.ineligible? && team.submission_eligible?
+                    end
+
+    headers = ["Team Name", "Team ID", "Region", "Division", "Event"]
+    headers += CalculateScore.scoring_attributes.map(&:to_s)
+                                                .map(&:humanize)
+                                                .map(&:titleize)
+    headers += %w{launched score}
+
+    CSV.open("./public/team_rubrics.csv", "wb") do |csv|
+      csv << headers
+
+      rubrics.each do |rubric|
+        team = rubric.team
+
+        row = [team.name, team.id, team.region_name, team.division, team.event_name]
+        row += CalculateScore.scoring_attributes.map do |a|
+                 rubric.public_send(a)
+               end
+        row += [!!rubric.launched, rubric.score]
+
+        csv << row
+      end
+    end
+  end
 end
