@@ -12,23 +12,23 @@ namespace :reports do
 
   desc "Generate a score report on teams"
   task team_scores: :environment do
-    teams = Team.joins(:rubrics)
-                    .where('teams.year = 2016 AND teams.event_id = 73')
-                    .select { |team|
-                      !team.ineligible? && team.submission_eligible?
-                    }
+    teams = Team.where(year: 2016, event_id: 73)
+                .select do |team|
+                  !team.ineligible? && team.submission_eligible?
+                end
 
-    headers = ["Team Name", "Region", "City", "State", "Country", "Division",
-                "Year", "Event", "Rubrics count", "Rubrics average",
-                "Quarterfinal average", "Launched (TRUE/FALSE)"]
+    headers = ["Team Name", "Team ID", "Region", "City", "State", "Country",
+               "Division", "Year", "Event", "Rubrics count", "Rubrics average",
+               "Quarterfinal average", "Launched (TRUE/FALSE)"]
 
     CSV.open("./public/team_scores.csv", "wb") do |csv|
       csv << headers
 
       teams.each do |team|
-        csv << [team.name, team.region_name, team.members.first.home_city, team.state, team.country,
-                team.division, team.year, team.event_name, team.rubrics.count,
-                team.avg_score, team.avg_quarterfinal_score, team.rubrics.first.launched]
+        csv << [team.name, team.id, team.region_name, team.members.first.home_city,
+                team.state, team.country, team.division, team.year, team.event_name,
+                team.rubrics.quarter_finals.count, team.avg_score, team.avg_quarterfinal_score,
+                team.rubrics.quarter_finals.first.try(:launched) || false]
       end
     end
   end

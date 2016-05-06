@@ -15,6 +15,7 @@ class Rubric < ActiveRecord::Base
 
   scope :has_judge, -> (user) {where('user_id = ?', user.id)}
   scope :has_team, -> (team) {where('team_id = ?', team.id)}
+  scope :quarter_finals, -> { where(stage: 0) }
 
   def calculate_score
     CalculateScore.call(self)
