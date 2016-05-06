@@ -14,6 +14,9 @@ class Team < ActiveRecord::Base
   }
   validates_presence_of :region, :region_id, :year
 
+  delegate :name, to: :region, prefix: true, allow_nil: true
+  delegate :name, to: :event, prefix: true, allow_nil: true
+
   paginates_per 10
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" }, :default_url => "/images/:style/missing.png"
