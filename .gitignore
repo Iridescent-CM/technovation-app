@@ -38,3 +38,4 @@ bower.json
 rendered.pdf
 .DS_Store
 .byebug_history
+public/*.csv
