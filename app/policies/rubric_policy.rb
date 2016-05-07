@@ -10,7 +10,7 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def new?
-    user.can_judge?(rubric.team) && setting.anyJudgingRoundActive?
+    user.can_judge? && setting.anyJudgingRoundActive?
   end
 
   def index?
