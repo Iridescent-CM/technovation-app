@@ -11,7 +11,7 @@ ActiveAdmin.register Team do
   filter :description_cont, label: "Description"
   filter :is_semi_finalist
   filter :is_finalist
-  filter :iswinner
+  filter :is_winner
   filter :submitted
 
   controller do
@@ -45,7 +45,7 @@ ActiveAdmin.register Team do
 
     column :is_semi_finalist
     column :is_finalist
-    column :iswinner
+    column :is_winner
 
     actions
   end
@@ -82,7 +82,7 @@ ActiveAdmin.register Team do
 
     column :is_semi_finalist
     column :is_finalist
-    column :iswinner
+    column :is_winner
   end
 
   form do |f|
@@ -100,7 +100,7 @@ ActiveAdmin.register Team do
 
       f.input :is_semi_finalist
       f.input :is_finalist
-      f.input :iswinner
+      f.input :is_winner
 
       f.input :event_id, as: :select, collection: Event.all
 

@@ -58,9 +58,9 @@ class Team < ActiveRecord::Base
   }
 
   PLATFORMS = [
-    {sym: :android, abbr: 'Android'},
-    {sym: :ios, abbr: 'iOS'},
-    {sym: :windows, abbr: 'Windows phone'},
+    { sym: :android, abbr: 'Android' },
+    { sym: :ios, abbr: 'iOS' },
+    { sym: :windows, abbr: 'Windows phone' },
   ]
 
   has_flags 1 => :android,
@@ -71,8 +71,8 @@ class Team < ActiveRecord::Base
   has_many :team_requests
   belongs_to :category
 
-  has_many :members, -> {where 'team_requests.approved = ?', true}, {through: :team_requests, source: :user}
-  has_many :pending, -> {where 'team_requests.approved != ?', true}, {through: :team_requests, source: :user}
+  has_many :members, -> { where('team_requests.approved = ?', true) }, { through: :team_requests, source: :user }
+  has_many :pending, -> { where('team_requests.approved != ?', true) }, { through: :team_requests, source: :user }
 
   has_many :rubrics
   has_many :judges, through: :rubrics, source: :user
@@ -80,17 +80,17 @@ class Team < ActiveRecord::Base
   belongs_to :event
   belongs_to :region
 
-  scope :old, -> {where 'year < ?', Setting.year}
-  scope :current, -> {where year: Setting.year}
-  scope :has_category, -> (cat) {where('category_id = ?', cat)}
-  scope :has_division, -> (div) {where('division = ?', div)}
-  scope :has_region, -> (reg) {where('region_id = ?', reg)}
-  scope :has_event, -> (ev) {where('event_id = ?', ev.id)}
+  scope :old, -> { where('year < ?', Setting.year) }
+  scope :current, -> { where(year: Setting.year) }
+  scope :has_category, -> (cat) { where('category_id = ?', cat) }
+  scope :has_division, -> (div) { where('division = ?', div) }
+  scope :has_region, -> (reg) { where('region_id = ?', reg) }
+  scope :has_event, -> (ev) { where('event_id = ?', ev.id) }
 
   scope :is_semi_finalist, -> { where(is_semi_finalist: true) }
   scope :is_finalist, -> { where(is_finalist: true) }
-  scope :is_winner, -> {where 'iswinner = true'}
-  scope :is_submitted, -> {where(submitted: true)}
+  scope :is_winner, -> { where(is_winner: true) }
+  scope :is_submitted, -> { where(submitted: true) }
   scope :by_country, -> (country) { current.where(country: country) }
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails

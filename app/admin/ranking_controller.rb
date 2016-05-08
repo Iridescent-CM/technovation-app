@@ -41,10 +41,10 @@ class RankingController < ActionController::Base
   end
 
   def self.mark_winners
-    Team.update_all(iswinner:false)
+    Team.update_all(is_winner:false)
 
-    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:hs] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
-    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:ms] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:hs] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(is_winner:true) }
+    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:ms] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(is_winner:true) }
 
   end
 

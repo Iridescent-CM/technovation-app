@@ -30,7 +30,7 @@ ActiveAdmin.register_page "Controls" do
       redirect_to admin_controls_path, alert: "Marking did not succeed. Check that all teams have at least 1 rubric for the stage."
       return
     end
-    redirect_to admin_controls_path, notice: "Advancing teams marked with iswinner tag"
+    redirect_to admin_controls_path, notice: "Advancing teams marked with is_winner tag"
   end
 
   page_action :quarterfinals_visibility, method: :post do
