@@ -49,9 +49,9 @@ class TeamsController < ApplicationController
         @teams = @teams.is_semi_finalist
         @is_semi_finalist = true
       end
-      unless params[:isfinalist].nil?
+      unless params[:is_finalist].nil?
         @teams = @teams.is_finalist
-        @isfinalist = true
+        @is_finalist = true
       end
       unless params[:iswinner].nil?
         @teams = @teams.is_winner

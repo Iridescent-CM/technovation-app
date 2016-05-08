@@ -151,11 +151,11 @@ describe RubricsController, type: :controller do
 
     context 'when its finals time' do
       let(:judging_round) { 'final' }
-      let(:teams) { build_list(:team, 5, isfinalist: true, year: Setting.year) }
+      let(:teams) { build_list(:team, 5, is_finalist: true, year: Setting.year) }
       let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
 
       before do
-        allow(Team).to receive(:where).with(isfinalist: true).and_return(teams)
+        allow(Team).to receive(:where).with(is_finalist: true).and_return(teams)
       end
 
       it 'shows all teams for this event' do

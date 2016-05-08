@@ -10,7 +10,7 @@ ActiveAdmin.register Team do
   filter :event, as: :select, collection: Event.order(:name)
   filter :description_cont, label: "Description"
   filter :is_semi_finalist
-  filter :isfinalist
+  filter :is_finalist
   filter :iswinner
   filter :submitted
 
@@ -44,7 +44,7 @@ ActiveAdmin.register Team do
     column (:final_average){|t| t.avg_final_score}
 
     column :is_semi_finalist
-    column :isfinalist
+    column :is_finalist
     column :iswinner
 
     actions
@@ -81,7 +81,7 @@ ActiveAdmin.register Team do
     column (:final_average){|t| t.avg_final_score}
 
     column :is_semi_finalist
-    column :isfinalist
+    column :is_finalist
     column :iswinner
   end
 
@@ -99,7 +99,7 @@ ActiveAdmin.register Team do
 #      f.input :event, as: :select, collection: Event.all
 
       f.input :is_semi_finalist
-      f.input :isfinalist
+      f.input :is_finalist
       f.input :iswinner
 
       f.input :event_id, as: :select, collection: Event.all

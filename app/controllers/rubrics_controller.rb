@@ -45,7 +45,7 @@ class RubricsController < ApplicationController
       teams = Team.where(is_semi_finalist: true) if current_user.semifinals_judge?
 
     when 'final'
-      teams = Team.where(isfinalist: true) if current_user.finals_judge?
+      teams = Team.where(is_finalist: true) if current_user.finals_judge?
 
     else
       teams = Team.none

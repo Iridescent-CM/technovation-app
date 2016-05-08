@@ -30,12 +30,12 @@ class RankingController < ActionController::Base
 
   def self.mark_finalists
     ## the top N scores per region
-    Team.update_all(isfinalist:false)
+    Team.update_all(is_finalist:false)
     Region.all.each do |r|
       num_teams = r.num_finalists
 
       winners = take_with_ties(Team.joins(:rubrics).where(is_semi_finalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_semifinal_score).reverse, r.num_finalists).each { |w|
-        w.update(isfinalist:true)
+        w.update(is_finalist:true)
       }
     end
   end
@@ -43,8 +43,8 @@ class RankingController < ActionController::Base
   def self.mark_winners
     Team.update_all(iswinner:false)
 
-    take_with_ties(Team.joins(:region).where(isfinalist: true, regions: { division: Region.divisions[:hs] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
-    take_with_ties(Team.joins(:region).where(isfinalist: true, regions: { division: Region.divisions[:ms] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:hs] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
+    take_with_ties(Team.joins(:region).where(is_finalist: true, regions: { division: Region.divisions[:ms] }).sort_by(&:avg_final_score).reverse, 1).each{ |w| w.update(iswinner:true) }
 
   end
 
