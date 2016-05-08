@@ -8,7 +8,7 @@ $(document).ready ->
     $.get('/events/' + eventId, { }, (data) ->
       $('.js-event-description').html(data.description)
       $('.js-event-location').html(data.location)
-      date = new Date(data.whentooccur)
+      date = new Date(data.when_to_occur)
       $('.js-event-date').html(date.toLocaleDateString())
     )
 

@@ -3,8 +3,8 @@ require 'rails_helper'
 describe RubricsController, type: :controller do
   describe '.index' do
     let(:event_id) { 1 }
-    let(:event) { build(:event, :non_virtual_event, id: event_id, whentooccur: whentooccur_event) }
-    let(:whentooccur_event) { Faker::Date.forward(10) }
+    let(:event) { build(:event, :non_virtual_event, id: event_id, when_to_occur: when_to_occur_event) }
+    let(:when_to_occur_event) { Faker::Date.forward(10) }
     let(:user) { build(:user, :judge, event_id: event_id) }
     let(:teams) { build_list(:team, 5, event: event) }
     let(:submission_eligible?) { true }
@@ -81,7 +81,7 @@ describe RubricsController, type: :controller do
       end
 
       context 'and its a virtual event' do
-        let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event, region: region) }
+        let(:event) { build(:event, :virtual_event, id: event_id, when_to_occur: when_to_occur_event, region: region) }
         let(:teams) { build_list(:team, 5, event_id: event.id, year: Setting.year, region: region) }
         let(:user) { build(:user, :judge, event: event, judging_region: region) }
 
@@ -139,7 +139,7 @@ describe RubricsController, type: :controller do
       end
 
       context 'and its a virtual event' do
-        let(:event) { build(:event, :virtual_event, id: event_id, whentooccur: whentooccur_event) }
+        let(:event) { build(:event, :virtual_event, id: event_id, when_to_occur: when_to_occur_event) }
         let(:teams) { build_list(:team, 5, event: event, is_semi_finalist: true, year: Setting.year) }
 
         it 'shows a sample of teams for the virtual event' do

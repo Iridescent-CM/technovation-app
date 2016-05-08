@@ -7,11 +7,11 @@ class Event < ActiveRecord::Base
   }
 
   scope :open_for_signup, -> {
-    display_order.where("extract(year from whentooccur) = ?", Setting.year)
+    display_order.where("extract(year from when_to_occur) = ?", Setting.year)
   }
 
   scope :open_for_signup_by_region, ->(region_id) {
-    open_for_signup.where("(region_id = ?) OR ( is_virtual = ? AND extract(year from whentooccur) = ?)", region_id, true, Setting.year)
+    open_for_signup.where("(region_id = ?) OR ( is_virtual = ? AND extract(year from when_to_occur) = ?)", region_id, true, Setting.year)
   }
 
 

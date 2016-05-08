@@ -1,13 +1,13 @@
 p
-	span The 
-	span style='font-weight:bold'
-		= event.name
-	span  will be held at 
-	span style='font-weight:bold'
-		= event.location
-	span  on 
-	span style='font-weight:bold'
-		= format_date(event.whentooccur)
+  span The 
+    span style='font-weight:bold'
+      = event.name
+        span  will be held at 
+        span style='font-weight:bold'
+          = event.location
+        span  on 
+        span style='font-weight:bold'
+          = format_date(event.when_to_occur)
 p
-	span style='font-weight:bold' Event description: 
-	= event.description
+  span style='font-weight:bold' Event description: 
+    = event.description

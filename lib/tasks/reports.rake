@@ -6,7 +6,7 @@ namespace :reports do
 
     Event.open_for_signup.each do |event|
       eligible, ineligible = event.teams.partition { |t| t.submission_eligible? }
-      puts [event.id, event.name, event.whentooccur, event.teams.size, eligible.size].to_csv(:col_sep => "\t")
+      puts [event.id, event.name, event.when_to_occur, event.teams.size, eligible.size].to_csv(:col_sep => "\t")
     end
   end
 

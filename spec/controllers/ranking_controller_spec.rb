@@ -13,14 +13,14 @@ describe RankingController, type: :controller do
     end
 
     let(:in_person_event) do
-      create(:event, region_id: region.id, whentooccur: whentooccur_event)
+      create(:event, region_id: region.id, when_to_occur: when_to_occur_event)
     end
 
     let(:judge_event) { in_person_event }
-    let(:whentooccur_event) { Faker::Date.forward(10) }
-    let(:year) { whentooccur_event.year }
+    let(:when_to_occur_event) { Faker::Date.forward(10) }
+    let(:year) { when_to_occur_event.year }
     let!(:region) { create(:region) }
-    let!(:virtual_event) { create(:event, :virtual_event, whentooccur: whentooccur_event) }
+    let!(:virtual_event) { create(:event, :virtual_event, when_to_occur: when_to_occur_event) }
     let(:judge_country) { 'CH' }
     let!(:teams) { create_list(:team, 10, region_id: region.id, year: year) }
     let(:ms_division) { 0 }
@@ -83,7 +83,7 @@ describe RankingController, type: :controller do
         create(
           :event,
           region_id: south_american_regions.sample.id,
-          whentooccur: whentooccur_event
+          when_to_occur: when_to_occur_event
         )
       end
 

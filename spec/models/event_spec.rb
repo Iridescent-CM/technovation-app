@@ -33,7 +33,7 @@ describe Event, type: :model do
     end
 
     it 'filter by region or virtual event from current season' do
-      expect(fake_relation).to receive(:where).with("(region_id = ?) OR ( is_virtual = ? AND extract(year from whentooccur) = ?)", region_id, true, year)
+      expect(fake_relation).to receive(:where).with("(region_id = ?) OR ( is_virtual = ? AND extract(year from when_to_occur) = ?)", region_id, true, year)
       Event.open_for_signup_by_region(region_id)
     end
   end
@@ -50,13 +50,13 @@ describe Event, type: :model do
         let(:current_when_to_occur) { DateTime.new(2016, 1, 1) }
         let(:previous_when_to_occur) { DateTime.new(2015, 1, 1) }
 
-        let(:expected_event) { create(:event, :virtual_event, whentooccur: current_when_to_occur) }
+        let(:expected_event) { create(:event, :virtual_event, when_to_occur: current_when_to_occur) }
 
         before do
           allow(Setting).to receive(:year).and_return(2016)
-          create(:event, :virtual_event, whentooccur: previous_when_to_occur)
-          create(:event, :non_virtual_event, whentooccur: current_when_to_occur)
-          create(:event, :non_virtual_event, whentooccur: previous_when_to_occur)
+          create(:event, :virtual_event, when_to_occur: previous_when_to_occur)
+          create(:event, :non_virtual_event, when_to_occur: current_when_to_occur)
+          create(:event, :non_virtual_event, when_to_occur: previous_when_to_occur)
         end
 
         it 'returns current season event only' do

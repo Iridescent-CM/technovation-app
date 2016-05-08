@@ -5,7 +5,7 @@ ActiveAdmin.register Event do
       f.input :name
       f.input :is_virtual, label: "Is it a virtual event?"
       f.input :location
-      f.input :whentooccur
+      f.input :when_to_occur
       f.input :description
       f.input :organizer
       f.input :region
