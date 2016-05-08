@@ -42,10 +42,10 @@ class RubricsController < ApplicationController
       end
 
     when 'semifinal'
-      teams = Team.where(is_semi_finalist: true) if current_user.semifinals_judge?
+      teams = Team.is_semi_finalist if current_user.semifinals_judge?
 
     when 'final'
-      teams = Team.where(is_finalist: true) if current_user.finals_judge?
+      teams = Team.is_finalist if current_user.finals_judge?
 
     else
       teams = Team.none
@@ -78,7 +78,6 @@ class RubricsController < ApplicationController
     ## show all past rubrics that were
     ## done by the current judge for editing
     @rubrics = Rubric.where("extract(year from created_at) = ?", Setting.year).has_judge(current_user)
-
   end
 
   def edit
