@@ -39,3 +39,5 @@ rendered.pdf
 .DS_Store
 .byebug_history
 public/*.csv
+public/test
+public/development

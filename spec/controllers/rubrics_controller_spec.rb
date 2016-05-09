@@ -1,70 +1,27 @@
 require 'rails_helper'
 
 describe RubricsController, type: :controller do
-  describe '.index' do
-    let(:event_id) { 1 }
-    let(:event) { build(:event, :non_virtual_event, id: event_id, when_to_occur: when_to_occur_event) }
-    let(:when_to_occur_event) { Faker::Date.forward(10) }
-    let(:user) { build(:user, :judge, event_id: event_id) }
-    let(:teams) { build_list(:team, 5, event: event) }
-    let(:submission_eligible?) { true }
-    let(:round_start) { Faker::Date.forward(2) }
-    let(:round_end) { round_start + 4.day }
-    let(:today) { Faker::Date.between(round_start, round_end) }
-    let(:judging_round) { '' }
-    let(:region) { build(:region) }
+  describe 'GET #index' do
+    let(:region) { create(:region) }
+    let(:event) { create(:event, when_to_occur: Date.today) }
+    let(:user) { create(:user, role: :judge, event: event,
+                                             home_country: 'US',
+                                             judging_region: region,
+                                             semifinals_judge: true,
+                                             finals_judge: true) }
 
     before do
+      Setting.create!(key: 'year', value: Date.today.year)
       @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in user
-
-      allow(Setting)
-        .to receive(:judgingRound)
-        .and_return(judging_round)
-
-      allow(Setting)
-        .to receive(:year)
-        .and_return(Date.today.year)
-
-      allow(Setting)
-        .to receive(:now)
-        .and_return(today)
-
-      allow(Team)
-        .to receive(:find)
-        .with(user.event_id)
-        .and_return(teams)
-
-      allow(Team)
-        .to receive(:has_event)
-        .with(event)
-        .and_return(teams)
-
-      allow_any_instance_of(Team)
-        .to receive(:submission_eligible?)
-        .and_return(true)
-
-      allow(Event).to receive(:find)
-        .with(event_id)
-        .and_return(event)
-
-      allow(Setting)
-        .to receive(:get_date)
-        .with(judging_round+"JudgingOpen")
-        .and_return(round_start)
-
-      allow(Setting)
-        .to receive(:get_date)
-        .with(judging_round+"JudgingClose")
-        .and_return(round_end)
-
-      allow(Setting)
-        .to receive(:anyJudgingRoundActive?)
-        .and_return(!judging_round.empty?)
+      sign_in(user)
     end
 
     context 'when its not time to judge' do
-      let(:today) { Faker::Date.between(round_start - 2.day, round_start - 1.day) }
+      before do
+        Setting.find_by!(key: 'year').update_attributes({
+          value: (Date.today.year + 1).to_s
+        })
+      end
 
       it 'does not show teams to be judged' do
         get :index
@@ -73,152 +30,147 @@ describe RubricsController, type: :controller do
     end
 
     context 'when its quarterfinals time' do
-      let(:judging_round) { 'quarterfinal' }
+      before do
+        Judging.open!(:quarterfinal, Date.today)
+        Judging.close!(:quarterfinal, Date.today + 1)
+      end
 
       it 'shows all teams for this event' do
+        team = create(:team, :eligible, event: event)
+        team2 = create(:team, :eligible)
+
+        create(:user, role: :student).team_requests.create!(
+                                       team: team, approved: true
+                                     )
+        create(:user, role: :student).team_requests.create!(
+                                       team: team2, approved: true
+                                     )
+
         get :index
-        expect(assigns[:teams]).to eq(teams)
+        expect(assigns[:teams]).to eq([team])
       end
 
       context 'and its a virtual event' do
-        let(:event) { build(:event, :virtual_event, id: event_id, when_to_occur: when_to_occur_event, region: region) }
-        let(:teams) { build_list(:team, 5, event_id: event.id, year: Setting.year, region: region) }
-        let(:user) { build(:user, :judge, event: event, judging_region: region) }
+        let(:teams) { create_list(:team, 5, :eligible, event: event, region: region) }
 
         before do
-          allow(Event).to receive(:virtual_for_current_season).and_return(event)
+          event.update_attributes(is_virtual: true)
+          student = create(:user, role: :student)
 
-          allow(Team).to receive(:where).with(region: user.judging_region, event_id: event.id)
-            .and_return(teams)
+          teams.each do |team|
+            student.team_requests.create!(team: team, approved: true)
+          end
         end
 
-        it 'shows a three of the teams for virtual event' do
+        it 'shows three random teams for virtual event' do
           get :index
-          expect(assigns[:teams].length).to eq 3
+          expect(assigns[:teams].count).to eq(3)
         end
 
         context 'and some teams has been judged already' do
-          let(:keep_team_1) { build(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:keep_team_2) { build(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:keep_team_3) { build(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:do_not_keep_team) { build(:team, event_id: event.id, year: Setting.year, region: region) }
-          let(:teams) { [keep_team_1, keep_team_2, keep_team_3, do_not_keep_team] }
-
           before do
-            allow(keep_team_1).to receive(:num_rubrics).and_return(1)
-            allow(keep_team_2).to receive(:num_rubrics).and_return(1)
-            allow(keep_team_3).to receive(:num_rubrics).and_return(1)
-            allow(do_not_keep_team).to receive(:num_rubrics).and_return(2)
+            teams.each do |team|
+              3.times { create(:rubric, team: team) }
+            end
+
+            create(:rubric, team: teams[0])
+            create(:rubric, team: teams[3])
           end
 
           it 'does not show teams that has been judged more than others' do
             get :index
-            expect(assigns[:teams]).to_not contain_exactly(do_not_keep_team)
-          end
-
-          it 'shows the three teams that has been less judged' do
-            get :index
-            expect(assigns[:teams].length).to be 3
+            expect(assigns[:teams]).not_to include(teams[0])
+            expect(assigns[:teams]).not_to include(teams[3])
           end
         end
       end
     end
 
     context 'when its semifinals time' do
-      let(:judging_round) { 'semifinal' }
-      let(:teams) { build_list(:team, 5, event: event, is_semi_finalist: true, year: Setting.year) }
-      let(:user) { build(:user, :judge, event_id: event_id, semifinals_judge: true) }
-
       before do
-        allow(Team).to receive(:where).with(is_semi_finalist: true).and_return(teams)
+        Judging.open!(:semifinal, Date.today)
+        Judging.close!(:semifinal, Date.today + 1)
       end
 
       it 'shows all teams for this event' do
+        team = create(:team, :eligible, is_semi_finalist: true,
+                                        event: event)
+        team2 = create(:team, :eligible, is_semi_finalist: false,
+                                         event: event)
+
+        create(:user, role: :student).team_requests.create!(
+                                       team: team, approved: true
+                                     )
+        create(:user, role: :student).team_requests.create!(
+                                       team: team2, approved: true
+                                     )
+
         get :index
-        expect(assigns[:teams]).to eq(teams)
-      end
-
-      context 'and its a virtual event' do
-        let(:event) { build(:event, :virtual_event, id: event_id, when_to_occur: when_to_occur_event) }
-        let(:teams) { build_list(:team, 5, event: event, is_semi_finalist: true, year: Setting.year) }
-
-        it 'shows a sample of teams for the virtual event' do
-          get :index
-          expect(assigns[:teams].length).to be 3
-        end
+        expect(assigns[:teams]).to eq([team])
       end
     end
 
     context 'when its finals time' do
-      let(:judging_round) { 'final' }
-      let(:teams) { build_list(:team, 5, is_finalist: true, year: Setting.year) }
-      let(:user) { build(:user, :judge, event_id: event_id, finals_judge: true) }
-
       before do
-        allow(Team).to receive(:where).with(is_finalist: true).and_return(teams)
+        Judging.open!(:final, Date.today)
+        Judging.close!(:final, Date.today + 1)
       end
 
       it 'shows all teams for this event' do
+        team = create(:team, :eligible, is_finalist: true,
+                                        event: event)
+        team2 = create(:team, :eligible, is_finalist: false,
+                                         event: event)
+
+        create(:user, role: :student).team_requests.create!(
+                                       team: team, approved: true
+                                     )
+        create(:user, role: :student).team_requests.create!(
+                                       team: team2, approved: true
+                                     )
+
         get :index
-        expect(assigns[:teams]).to eq(teams)
+        expect(assigns[:teams]).to eq([team])
       end
     end
 
     describe 'brazilian cases' do
-      let(:judging_round) { 'quarterfinal' }
-      let(:brazil) { 'BR' }
-      let(:non_brazilian_country) { 'CH' }
-      let(:region) { build(:region) }
-      let(:judge_country) { non_brazilian_country }
-      let(:user) do
-        build(
-          :user, :judge,
-          event: event,
-          judging_region: region,
-          home_country: judge_country
-        )
-      end
-
-      let(:non_brazilian_teams) do
-        build_list(
-          :team, 3,
-          event_id: event.id,
-          year: Setting.year,
-          region: region,
-          country: non_brazilian_country
-        )
-      end
-
-      let(:brazilian_teams) do
-        build_list(
-          :team, 3,
-          event_id: event.id,
-          year: Setting.year,
-          region: region,
-          country: brazil
-        )
-      end
-
-      let(:teams) do
-        non_brazilian_teams + brazilian_teams
-      end
-
       before do
-        allow(controller).to receive(:current_user).and_return(user)
+        Judging.open!(:quarterfinal, Date.today)
+        Judging.close!(:quarterfinal, Date.today + 1)
       end
 
       it 'shows only non brazilian teams' do
-        get :index
+        us = create(:team, :eligible, country: 'US', event: event)
+        br = create(:team, :eligible, country: 'BR', event: event)
 
-        expect(assigns[:teams]).to eq non_brazilian_teams
+        create(:user, home_country: 'US',
+                      role: :student).team_requests.create!(team: us,
+                                                            approved: true)
+        create(:user, home_country: 'BR',
+                      role: :student).team_requests.create!(team: br,
+                                                            approved: true)
+
+        get :index
+        expect(assigns[:teams]).to eq([us])
       end
 
       context 'when judge is brazilian' do
-        let(:judge_country) { brazil }
+        before { user.update_attributes(home_country: 'BR') }
 
         it 'shows only brazilian teams' do
+          us = create(:team, :eligible, country: 'US', event: event)
+          br = create(:team, :eligible, country: 'BR', event: event)
+
+          create(:user, home_country: 'US',
+                        role: :student).team_requests.create!(team: us,
+                                                              approved: true)
+          create(:user, home_country: 'BR',
+                        role: :student).team_requests.create!(team: br,
+                                                              approved: true)
+
           get :index
-          expect(assigns[:teams]).to eq brazilian_teams
+          expect(assigns[:teams]).to eq([br])
         end
       end
     end
