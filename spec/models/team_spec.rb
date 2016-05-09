@@ -66,6 +66,7 @@ describe Team, type: :model do
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
       allow(team).to receive(:has_a_virtual_event?).and_return has_a_virtual_event?
+      allow(team).to receive(:persisted?).and_return true
     end
 
     it 'dont change the team event' do
@@ -92,26 +93,19 @@ describe Team, type: :model do
     end
   end
   describe '.has_a_virtual_event?' do
-    subject(:team) { build(:team, event_id: event_id).has_a_virtual_event? }
     let(:event) { build(:event, :virtual_event) }
-    let(:event_id) { Faker::Number.number 4 }
 
-    before do
-      allow(Event).to receive(:find).and_return(event)
-    end
+    subject(:team) { build(:team, event: event).has_a_virtual_event? }
 
     it { is_expected.to be true }
 
     context 'when is not a virtual event' do
       let(:event) { build(:event, :non_virtual_event) }
-
       it { is_expected.to be false }
     end
 
     context 'when there is not a event' do
-      let(:event_id) { nil }
       let(:event) { nil }
-
       it { is_expected.to be false }
     end
   end
