@@ -2,7 +2,7 @@ namespace :controls do
   namespace :judges do
     desc "Enable judges of virtual events to become semifinals judges"
     task enable_semifinals_on_virtual: :environment do
-      judges = User.where(year: Setting.year).select(&:virtual_judge?)
+      judges = User.is_registered.select(&:virtual_judge?)
 
       judges.each do |j|
         $stdout.write("Enabling semifinals for #{j.email}\n")
