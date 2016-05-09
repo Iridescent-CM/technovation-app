@@ -3,8 +3,6 @@ class Setting < ActiveRecord::Base
   validates :key, presence: true, uniqueness: true
   validates :value, presence: true
 
-  NO_ROUND = 'no round'
-
   def self.allow_ineligibility_logic_for_students
     get_boolean('allow_ineligibility_logic_for_students')
   end
@@ -44,7 +42,7 @@ class Setting < ActiveRecord::Base
   end
 
   def self.judgingRound
-    self.judgingRoundByDate || NO_ROUND
+    self.judgingRoundByDate || 'no round'
   end
 
   def self.nextJudgingRound
@@ -60,9 +58,9 @@ class Setting < ActiveRecord::Base
   end
 
   def self.judgingRoundActive?(round)
-    date1 = self.get_date(round+'JudgingOpen')
-    date2 = self.get_date(round+'JudgingClose')
-    return self.between(date1, date2)
+    date1 = get_date(round+'JudgingOpen')
+    date2 = get_date(round+'JudgingClose')
+    between(date1, date2)
   end
 
   def self.scoresVisible?(round)
@@ -89,7 +87,7 @@ class Setting < ActiveRecord::Base
 
   private
   def self.judgingRoundByDate
-    Rubric.stages.keys.detect{ |s| self.judgingRoundActive?(s) }
+    Rubric.stages.keys.detect { |s| self.judgingRoundActive?(s) }
   end
 
   # @deprecating
