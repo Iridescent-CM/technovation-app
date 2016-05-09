@@ -12,11 +12,11 @@ class RubricsController < ApplicationController
   end
 
   def index
-    find_event_and_teams
-    @teams = select_teams_for_current_judging_round
-    @teams = select_eligible_teams
-    @teams = select_teams_based_on_judge_home_country
-    @teams = select_random_teams_judged_the_same
+    select_judging_teams = SelectJudgingTeams.new(current_user)
+    select_judging_teams.call
+
+    @event = select_judging_teams.event
+    @teams = select_judging_teams.teams
     @rubrics = current_user.rubrics.where("extract(year from created_at) = ?",
                                           Setting.year)
   end
@@ -54,70 +54,6 @@ class RubricsController < ApplicationController
   end
 
   private
-  def find_event_and_teams
-    if current_user.event
-      @event = current_user.event
-      @teams = if not @event.is_virtual? && Setting.anyJudgingRoundActive?
-                 @event.teams
-               else
-                 []
-               end
-    else
-      @event = NoEvent.new
-      @teams = []
-    end
-  end
-
-  def select_teams_for_current_judging_round
-    case Setting.judgingRound
-    when 'quarterfinal'
-      if @event.is_virtual?
-        @event = Event.virtual_for_current_season
-        @event.teams.where(region: current_user.judging_region)
-      else
-        @teams
-      end
-    when 'semifinal'
-      if current_user.semifinals_judge?
-        Team.is_semi_finalist
-      else
-        @teams
-      end
-    when 'final'
-      if current_user.finals_judge?
-        Team.is_finalist
-      else
-        @teams
-      end
-    else
-      Team.none
-    end
-  end
-
-  def select_eligible_teams
-    @teams.reject { |team| team.judges.include?(current_user) }
-          .reject(&:ineligible?)
-          .select(&:submission_eligible?)
-  end
-
-  def select_teams_based_on_judge_home_country
-    if current_user.home_country == 'BR'
-      @teams.select { |team| team.country == 'BR' }
-    else
-      @teams.select { |team| team.country != 'BR' }
-    end
-  end
-
-  def select_random_teams_judged_the_same
-    if @event.is_virtual? && Setting.anyJudgingRoundActive?
-      @teams.sort_by(&:num_rubrics)
-            .select { |t| t.num_rubrics == @teams[0].num_rubrics }
-            .sample(3)
-    else
-      @teams
-    end
-  end
-
   def rubric_params
     params.require(:rubric).permit(
       :team_id, :identify_problem, :address_problem, :functional,
