@@ -1,13 +1,7 @@
-class Season
+class Season < DateBasedSetting
   class << self
     def open!(year)
-      setting.find_by(key: 'year').try(:destroy)
-      setting.create!(key: 'year', value: year.to_s)
-    end
-
-    private
-    def setting
-      Setting
+      reset_setting(:year, year)
     end
   end
 end
