@@ -34,15 +34,15 @@ class Setting < ActiveRecord::Base
   end
 
   def self.after(date)
-    return Date.today >= date
+    Date.today >= date
   end
 
   def self.anyJudgingRoundActive?
-    !self.judgingRoundByDate.nil?
+    !!judgingRoundByDate
   end
 
   def self.judgingRound
-    self.judgingRoundByDate || 'no round'
+    judgingRoundByDate || 'no_round'
   end
 
   def self.nextJudgingRound
@@ -87,7 +87,7 @@ class Setting < ActiveRecord::Base
 
   private
   def self.judgingRoundByDate
-    Rubric.stages.keys.detect { |s| self.judgingRoundActive?(s) }
+    Rubric.stages.keys.detect { |s| judgingRoundActive?(s) }
   end
 
   # @deprecating

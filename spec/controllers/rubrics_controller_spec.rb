@@ -11,16 +11,18 @@ describe RubricsController, type: :controller do
                                              finals_judge: true) }
 
     before do
-      Setting.create!(key: 'year', value: Date.today.year)
+      Season.open!(Date.today.year)
+      Judging.open!(:quarterfinal, Date.today)
+      Judging.close!(:quarterfinal, Date.today + 1)
+
       @request.env['devise.mapping'] = Devise.mappings[:user]
       sign_in(user)
     end
 
     context 'when its not time to judge' do
       before do
-        Setting.find_by!(key: 'year').update_attributes({
-          value: (Date.today.year + 1).to_s
-        })
+        Judging.open!(:quarterfinal, Date.today - 2)
+        Judging.close!(:quarterfinal, Date.today - 1)
       end
 
       it 'does not show teams to be judged' do
@@ -30,11 +32,6 @@ describe RubricsController, type: :controller do
     end
 
     context 'when its quarterfinals time' do
-      before do
-        Judging.open!(:quarterfinal, Date.today)
-        Judging.close!(:quarterfinal, Date.today + 1)
-      end
-
       it 'shows all teams for this event' do
         team = create(:team, :eligible, event: event)
         team2 = create(:team, :eligible)
@@ -78,6 +75,9 @@ describe RubricsController, type: :controller do
 
     context 'when its semifinals time' do
       before do
+        Judging.open!(:quarterfinal, Date.today - 2)
+        Judging.close!(:quarterfinal, Date.today - 1)
+
         Judging.open!(:semifinal, Date.today)
         Judging.close!(:semifinal, Date.today + 1)
       end
@@ -95,6 +95,12 @@ describe RubricsController, type: :controller do
 
     context 'when its finals time' do
       before do
+        Judging.open!(:quarterfinal, Date.today - 4)
+        Judging.close!(:quarterfinal, Date.today - 3)
+
+        Judging.open!(:semifinal, Date.today - 2)
+        Judging.close!(:semifinal, Date.today - 1)
+
         Judging.open!(:final, Date.today)
         Judging.close!(:final, Date.today + 1)
       end
