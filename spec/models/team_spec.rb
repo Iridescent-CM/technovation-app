@@ -44,14 +44,12 @@ describe Team, type: :model do
     subject { team.required_fields }
 
     let(:expected_required_fields) do
-      %w(
-        event_id
-        code
-        pitch
-        plan
-        confirm_region
-        confirm_acceptance_of_rules
-      )
+      %i(event_id
+         code
+         pitch
+         plan
+         confirm_region
+         confirm_acceptance_of_rules)
     end
 
     it { is_expected.to contain_exactly(*expected_required_fields) }

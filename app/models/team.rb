@@ -137,7 +137,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_division
-      self.division = self.region.division
+    self.division = self.region.division
   end
 
   # division update logic
@@ -145,11 +145,13 @@ class Team < ActiveRecord::Base
     update_division
 
     members_by_country = members(true).group_by(&:home_country)
+
     if members_by_country.size > 0
       self.country = members_by_country.values.max_by(&:size).first.home_country
     end
 
     members_by_state = members(true).group_by(&:home_state)
+
     if members_by_state.size > 0
       self.state = members_by_state.values.max_by(&:size).first.home_state
     end
@@ -158,11 +160,11 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
-    min, max = [1, 5]
-    students = members(true).select {|u| u.student?}
-    ineligible_students = students.select {|u| u.ineligible?} if Setting.allow_ineligibility_logic_for_students
-    return !(min..max).include?(students.size) || (!ineligible_students.nil? && !ineligible_students.empty?) if Setting.allow_ineligibility_logic
-    false
+    if Setting.allow_ineligibility_logic
+      !(1..5).include?(students.size) || ineligible_students.any?
+    else
+      false
+    end
   end
 
   def check_empty!
@@ -173,8 +175,14 @@ class Team < ActiveRecord::Base
   end
 
   def missing_field?(a)
-     evaled = eval(a)
-     (evaled== false or evaled.nil? or (evaled.class.name == 'String' and evaled.length == 0)) or (evaled.class.name == 'Paperclip::Attachment' and eval(a+'_file_name').nil?)
+     value = send(a)
+
+     (value == false ||
+       value.nil? ||
+         (value.class.name == 'String' &&
+           value.length == 0)) ||
+       (value.class.name == 'Paperclip::Attachment' &&
+          send("#{a}_file_name").nil?)
   end
 
   def check_completeness
@@ -182,17 +190,18 @@ class Team < ActiveRecord::Base
   end
 
   def required_fields
-    ['code', 'pitch', 'plan', 'event_id', 'confirm_acceptance_of_rules', 'confirm_region']
+    %i{code pitch plan event_id confirm_acceptance_of_rules confirm_region}
   end
 
   def missing_fields
-    missing = required_fields.select {|a| missing_field?(a)}.map {|a|
-      if a == 'category_id'
-        'category'
-      else
-        a
-      end
-     }
+   required_fields.select { |a| missing_field?(a) }
+                  .map { |a|
+                    if a == 'category_id'
+                      'category'
+                    else
+                      a
+                    end
+                  }
   end
 
   def update_submission_status
@@ -213,11 +222,11 @@ class Team < ActiveRecord::Base
   end
 
   def started?
-    return missing_fields.length != required_fields.length
+    missing_fields.length != required_fields.length
   end
 
   def submission_eligible?
-    return missing_fields.length <= 0
+    missing_fields.length <= 0
   end
 
   def submission_symbol
@@ -245,12 +254,31 @@ class Team < ActiveRecord::Base
   end
 
   def has_a_virtual_event?
-    return false if event_id.nil?
-    Event.find(event_id).is_virtual
+    !!event && event.is_virtual?
+  end
+
+  def has_no_virtual_event?
+    !has_a_virtual_event?
   end
 
   def check_event_region
-    self.event_id = nil if region_id_changed? && !has_a_virtual_event?
+    if persisted? && region_id_changed? && has_no_virtual_event?
+      self.event_id = nil
+    end
+
     true
+  end
+
+  private
+  def students
+    members(true).select(&:student?)
+  end
+
+  def ineligible_students
+    if Setting.allow_ineligibility_logic_for_students
+      students.select(&:ineligible?)
+    else
+      []
+    end
   end
 end
