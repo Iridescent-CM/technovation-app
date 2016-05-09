@@ -228,6 +228,10 @@ class User < ActiveRecord::Base
     CheckJudgingPolicy.call(self, team)
   end
 
+  def virtual_judge?
+    can_judge? && event && event.is_virtual?
+  end
+
   def get_campaign_list
     if student?
       Rails.application.config.env[:createsend][:student_list_id]
