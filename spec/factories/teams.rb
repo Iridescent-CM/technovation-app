@@ -10,6 +10,7 @@ FactoryGirl.define do
     code { Faker::Internet.url }
     pitch { Faker::Internet.url }
     association :event
+    country 'US'
 
     trait :eligible do
       code 'ok'
@@ -17,6 +18,11 @@ FactoryGirl.define do
       pitch 'ok'
       confirm_acceptance_of_rules true
       confirm_region true
+
+      after(:create) do |team, _|
+        create(:user, role: :student, home_country: team.country)
+          .team_requests.create!(team: team, approved: true)
+      end
     end
   end
 end

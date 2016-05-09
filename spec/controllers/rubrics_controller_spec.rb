@@ -39,27 +39,17 @@ describe RubricsController, type: :controller do
         team = create(:team, :eligible, event: event)
         team2 = create(:team, :eligible)
 
-        create(:user, role: :student).team_requests.create!(
-                                       team: team, approved: true
-                                     )
-        create(:user, role: :student).team_requests.create!(
-                                       team: team2, approved: true
-                                     )
-
         get :index
         expect(assigns[:teams]).to eq([team])
       end
 
       context 'and its a virtual event' do
-        let(:teams) { create_list(:team, 5, :eligible, event: event, region: region) }
+        let(:teams) { [] }
 
         before do
           event.update_attributes(is_virtual: true)
-          student = create(:user, role: :student)
-
-          teams.each do |team|
-            student.team_requests.create!(team: team, approved: true)
-          end
+          teams = create_list(:team, 5, :eligible, event: event,
+                                                   region: region)
         end
 
         it 'shows three random teams for virtual event' do
@@ -98,13 +88,6 @@ describe RubricsController, type: :controller do
         team2 = create(:team, :eligible, is_semi_finalist: false,
                                          event: event)
 
-        create(:user, role: :student).team_requests.create!(
-                                       team: team, approved: true
-                                     )
-        create(:user, role: :student).team_requests.create!(
-                                       team: team2, approved: true
-                                     )
-
         get :index
         expect(assigns[:teams]).to eq([team])
       end
@@ -122,13 +105,6 @@ describe RubricsController, type: :controller do
         team2 = create(:team, :eligible, is_finalist: false,
                                          event: event)
 
-        create(:user, role: :student).team_requests.create!(
-                                       team: team, approved: true
-                                     )
-        create(:user, role: :student).team_requests.create!(
-                                       team: team2, approved: true
-                                     )
-
         get :index
         expect(assigns[:teams]).to eq([team])
       end
@@ -144,13 +120,6 @@ describe RubricsController, type: :controller do
         us = create(:team, :eligible, country: 'US', event: event)
         br = create(:team, :eligible, country: 'BR', event: event)
 
-        create(:user, home_country: 'US',
-                      role: :student).team_requests.create!(team: us,
-                                                            approved: true)
-        create(:user, home_country: 'BR',
-                      role: :student).team_requests.create!(team: br,
-                                                            approved: true)
-
         get :index
         expect(assigns[:teams]).to eq([us])
       end
@@ -161,13 +130,6 @@ describe RubricsController, type: :controller do
         it 'shows only brazilian teams' do
           us = create(:team, :eligible, country: 'US', event: event)
           br = create(:team, :eligible, country: 'BR', event: event)
-
-          create(:user, home_country: 'US',
-                        role: :student).team_requests.create!(team: us,
-                                                              approved: true)
-          create(:user, home_country: 'BR',
-                        role: :student).team_requests.create!(team: br,
-                                                              approved: true)
 
           get :index
           expect(assigns[:teams]).to eq([br])
