@@ -7,6 +7,12 @@ class SelectJudgingTeams
     @teams = event.teams
   end
 
+  def self.call(judge)
+    instance = new(judge)
+    instance.call
+    instance
+  end
+
   def call
     if Setting.anyJudgingRoundActive?
       @teams = send("select_#{Setting.judgingRound}_teams")
