@@ -1,7 +1,17 @@
 namespace :controls do
+  namespace :judges do
+    desc "Enable judges of virtual events to become semifinals judges"
+    task enable_semifinals_on_virtual: :environment do
+      judges = User.all.select { |u| u.can_judge? && u.event && u.event.is_virtual? }
+
+      judges.each do |j|
+        $stdout.write("Enabling semifinals for #{j.email}\n")
+        j.update_attributes(semifinals_judge: true)
+      end
+    end
+  end
 
   namespace :events do
-
     desc "Reassign the teams in the event to Virtual Judging"
     task :make_virtual, [:id] => :environment do |t, args|
       event = Event.find(args[:id])
@@ -14,7 +24,5 @@ namespace :controls do
         team.save!
       end
     end
-
   end
-
 end
