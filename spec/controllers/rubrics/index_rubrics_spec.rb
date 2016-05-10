@@ -19,6 +19,11 @@ RSpec.describe RubricsController do
       sign_in(user)
     end
 
+    it "assigns the event" do
+      get :index
+      expect(assigns[:event]).to eq(event)
+    end
+
     context 'when its not time to judge' do
       before do
         Judging.open!(:quarterfinal, Date.today - 2)

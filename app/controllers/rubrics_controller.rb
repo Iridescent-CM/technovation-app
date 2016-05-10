@@ -12,7 +12,9 @@ class RubricsController < ApplicationController
   end
 
   def index
-    @teams = SelectJudgingTeams.call(current_user).teams
+    team_selection = SelectJudgingTeams.call(current_user)
+    @event = team_selection.event
+    @teams = team_selection.teams
     @rubrics = current_user.rubrics.where("extract(year from created_at) = ?",
                                           Setting.year)
   end
