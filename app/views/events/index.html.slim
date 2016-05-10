@@ -1,13 +1,13 @@
 - if @user.can_judge?
-  - if @user.event_id.nil?
+  - if @user.event.nil?
     .alert.alert-info role='alert'
       p You must sign up for a judging event before proceeding
 
   h2 Regional Judging Event
 
-  - unless @user.event_id.nil?
+  - unless @user.event.nil?
     h3 This is the event that you are judging.
-    = render partial: 'event', locals: {event: Event.find(@user.event_id)}
+    = render 'event', event: @user.event
 
   h5 
     .alert.alert-info role='alert'
