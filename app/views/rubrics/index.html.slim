@@ -7,42 +7,45 @@ p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s i
 h4 Downloading and Testing App Inventor Code
 ul.list-unstyled
   li 1. Download the .aia code from the link submitted by the team.
-    li 2. Open up a new tab or window and go to <a href='http://ai2.appinventor.mit.edu' target='_blank'> ai2.appinventor.mit.edu</a>. You’ll be prompted to log in with a gmail account (this is correct!).
-      li 3. Import the .aia code into your App Inventor account under “My Projects”.
-        li 4. Test the app using the <a href='http://appinventor.mit.edu/explore/ai2/setup-device-wifi.html' target='_blank'> following instructions</a> on your Android device, or with <a href='http://appinventor.mit.edu/explore/ai2/setup-emulator.html' target='_blank'>the emulator</a> if you don’t have an Android device.
+  li 2. Open up a new tab or window and go to <a href='http://ai2.appinventor.mit.edu' target='_blank'> ai2.appinventor.mit.edu</a>. You’ll be prompted to log in with a gmail account (this is correct!).
+  li 3. Import the .aia code into your App Inventor account under “My Projects”.
+  li 4. Test the app using the <a href='http://appinventor.mit.edu/explore/ai2/setup-device-wifi.html' target='_blank'> following instructions</a> on your Android device, or with <a href='http://appinventor.mit.edu/explore/ai2/setup-emulator.html' target='_blank'>the emulator</a> if you don’t have an Android device.
 
 p <b>If you don’t have the appropriate device to test the features firsthand</b>, do your best based on the demo video and inspection of the code.
 
-
 - if Setting.anyJudgingRoundActive?
   h3 You are currently judging for the #{Setting.judgingRound}s
-    - unless current_user.judging_region.nil?
-      h4 You are judging teams from #{current_user.judging_region.division_description} - #{current_user.judging_region.region_name}
-        - unless @event.nil?
-          h4 Teams competing in #{@event.name}
-        - if  @teams.empty?
-          p There are no teams ready to be judged right now.
-        - else
-          - for team in @teams
-            = link_to 'Judge ' + team.name, new_rubric_path(:team => team)
-              br
 
-        h3 Previously judged teams
-        p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
+  - unless current_user.judging_region.nil?
+    h4 You are judging teams from #{current_user.judging_region.division_description} - #{current_user.judging_region.region_name}
+    - unless @event.nil?
+      h4 Teams competing in #{@event.name}
+    - if  @teams.empty?
+      p There are no teams ready to be judged right now.
+    - else
+      - for team in @teams
+        = link_to 'Judge ' + team.name, new_rubric_path(:team => team)
+          br
 
-        - if @rubrics.length > 0
-          table
+    h3 Previously judged teams
+
+    p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
+
+    - if @rubrics.any?
+      table
+        thead
+          tr
+            th style='padding:2px; padding-right:20px; '
+              span Team
+            th Total score
+        tbody
+          - @rubrics.each do |rubric|
+            - next unless rubric.team
             tr
               td style='padding:2px; padding-right:20px; '
-                span Team
-                  td Total score
-                    - for r in @rubrics do
-                      - unless r.team.nil?
-                        tr
-                          td style='padding:2px; padding-right:20px; '
-                            = link_to r.team.name, edit_rubric_path(:id => r.id)
-                              td
-                                '#{r.score}
+                = link_to rubric.team.name, edit_rubric_path(rubric)
+              td
+                = rubric.score
 - else
   hr
     h4 No judging rounds are open right now. Please check back later.
