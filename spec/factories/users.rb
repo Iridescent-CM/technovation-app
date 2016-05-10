@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :user do
-    id nil
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     home_city { Faker::Address.city }

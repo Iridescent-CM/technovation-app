@@ -4,7 +4,7 @@ describe MentorsController, type: :controller do
   describe 'index' do
     subject { get :index }
     let(:season_year) { 2016 }
-    let(:mentors) { build_list(:user, 10, :mentor, id: 1) }
+    let(:mentors) { build_list(:user, 10, :mentor) }
     let(:relation) { double(ActiveRecord::Relation) }
     before do
       allow(Setting).to receive(:year).and_return(season_year)

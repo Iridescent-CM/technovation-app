@@ -9,7 +9,7 @@ describe Event, type: :model do
     context 'when not set up' do
       subject { event.is_virtual }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
   end
 

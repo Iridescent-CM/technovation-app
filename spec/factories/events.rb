@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :event do
-    id nil
-    is_virtual nil
+    is_virtual false
     when_to_occur nil
 
     name { Faker::Name.first_name }

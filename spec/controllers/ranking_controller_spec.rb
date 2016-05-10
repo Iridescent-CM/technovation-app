@@ -140,7 +140,7 @@ describe RankingController, type: :controller do
       end
 
       context 'and all regions are conflict regions' do
-        let!(:non_brazilian_region) { create(:region, id: 100) }
+        let!(:non_brazilian_region) { create(:region) }
         let!(:non_brazilian_team) { create(:team, region: non_brazilian_region, year: year) }
         let(:judge_conflict_regions) { south_american_regions }
         let(:judge_event) { virtual_event }

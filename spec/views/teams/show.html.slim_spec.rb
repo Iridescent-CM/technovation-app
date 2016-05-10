@@ -4,7 +4,7 @@ describe 'teams/show.html.slim', type: :view do
 
   let(:season_year) { 2015 }
   let(:team_year) { 2015 }
-  let(:team) { build(:team, id: 123, year: team_year) }
+  let(:team) { create(:team, year: team_year) }
   let(:fake_policy) { double(join?: true, edit?: true, edit_submission?: true) }
 
   before do

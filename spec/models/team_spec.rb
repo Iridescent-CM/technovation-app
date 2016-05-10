@@ -54,10 +54,9 @@ describe Team, type: :model do
   end
 
   describe '.check_event_region' do
-    let(:event_id) { 1 }
-    let(:event) { build :event, :virtual_event, id: event_id }
-    let(:region) { build(:region) }
-    let(:team) { build(:team, region: region, event_id: event_id) }
+    let(:event) { create :event, :virtual_event }
+    let(:region) { create(:region) }
+    let(:team) { create(:team, region: region, event: event) }
     let(:region_changed?) { false }
     let(:has_a_virtual_event?) { false }
 
@@ -69,7 +68,7 @@ describe Team, type: :model do
 
     it 'dont change the team event' do
       team.check_event_region
-      expect(team.event_id).to be(event_id)
+      expect(team.event).to be(event)
     end
 
     context 'when the team region is changed' do
@@ -77,7 +76,7 @@ describe Team, type: :model do
 
       it 'remove the team event' do
         team.check_event_region
-        expect(team.event_id).to be(nil)
+        expect(team.event).to be(nil)
       end
       context 'and team event is virtual' do
         let(:region_changed?) { true }
@@ -85,7 +84,7 @@ describe Team, type: :model do
 
         it 'dont change the team event' do
           team.check_event_region
-          expect(team.event_id).to be(event_id)
+          expect(team.event).to be(event)
         end
       end
     end
@@ -188,7 +187,7 @@ describe Team, type: :model do
   describe '.submission_eligible' do
     subject { team.submission_eligible? }
     let(:plan) { File.new("./spec/support/files/plan_example.pdf") }
-    let(:team) { build(:team, event_id: 1, confirm_acceptance_of_rules: true, confirm_region: true, plan: plan) }
+    let(:team) { create(:team, confirm_acceptance_of_rules: true, confirm_region: true, plan: plan) }
 
     it { is_expected.to be true }
 
