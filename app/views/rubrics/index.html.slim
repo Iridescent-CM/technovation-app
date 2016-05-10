@@ -18,14 +18,17 @@ p <b>If you don’t have the appropriate device to test the features firsthand</
 
   - unless current_user.judging_region.nil?
     h4 You are judging teams from #{current_user.judging_region.division_description} - #{current_user.judging_region.region_name}
+
     - unless @event.nil?
       h4 Teams competing in #{@event.name}
-    - if  @teams.empty?
+
+    - if @teams.empty?
       p There are no teams ready to be judged right now.
+
     - else
-      - for team in @teams
-        = link_to 'Judge ' + team.name, new_rubric_path(:team => team)
-          br
+      - @teams.each do |team|
+        = link_to "Judge #{team.name}", new_rubric_path(team: team)
+        br
 
     h3 Previously judged teams
 
