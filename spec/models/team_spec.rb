@@ -7,9 +7,7 @@ describe Team, type: :model do
   describe 'validations' do
     shared_examples 'validates file size of' do |field, filesize|
       it do
-        is_expected
-          .to validate_attachment_size(field)
-          .less_than(filesize)
+        is_expected.to validate_attachment_size(field).less_than(filesize)
       end
     end
 
@@ -92,6 +90,7 @@ describe Team, type: :model do
       end
     end
   end
+
   describe '.has_a_virtual_event?' do
     let(:event) { build(:event, :virtual_event) }
 
@@ -198,5 +197,4 @@ describe Team, type: :model do
       it { is_expected.to be false }
     end
   end
-
 end
