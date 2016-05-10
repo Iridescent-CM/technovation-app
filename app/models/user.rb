@@ -229,7 +229,7 @@ class User < ActiveRecord::Base
   end
 
   def virtual_judge?
-    can_judge? && event && event.is_virtual?
+    judge? && event && event.is_virtual?
   end
 
   def get_campaign_list
