@@ -36,6 +36,15 @@ RSpec.describe RubricsController do
       end
     end
 
+    context "when the judge doesn't have an event assigned" do
+      it "sets teams to an empty array" do
+        no_events = create(:user, role: :judge, event: nil)
+        sign_in(no_events)
+        get :index
+        expect(assigns[:teams]).to be_empty
+      end
+    end
+
     context 'when its quarterfinals time' do
       it 'shows all teams for this event' do
         team = create(:team, :eligible, event: event)

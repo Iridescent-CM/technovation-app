@@ -4,7 +4,7 @@ class SelectJudgingTeams
   def initialize(judge)
     @judge = judge
     @event = judge.event
-    @teams = event.teams
+    @teams = !!event ? event.teams : []
   end
 
   def self.call(judge)
@@ -19,13 +19,13 @@ class SelectJudgingTeams
       filter_for_eligible_teams
       filter_for_teams_based_on_judge_home_country
 
-      select_random_teams_judged_the_same if event.is_virtual?
+      select_random_teams_judged_the_same if event && event.is_virtual?
     end
   end
 
   private
   def select_quarterfinal_teams
-    if event.is_virtual?
+    if event && event.is_virtual?
       @event = Event.virtual_for_current_season
       event.teams.where(region: judge.judging_region)
     else
