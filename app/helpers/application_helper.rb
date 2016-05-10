@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def format_division(division)
-    return 'Error' unless division 
+    return 'Error' unless division
     case division.to_sym
     when :hs
       'High School'
@@ -60,14 +60,13 @@ module ApplicationHelper
     ["US/Canada", "Mexico/Central America/South America", "Europe/Australia/New Zealand/Asia", "Africa"]
   end
 
-
   def render_video(link)
     # link = 'http://www.youtube.com/embed/y4sOfO8Ei1g'
     # http://vimeo.com/channels/staffpicks/59859181
     # http://vimeo.com/originals/inthemoment/108800637
     # width = 500
     # height = 300
-    if link.nil? 
+    if link.nil?
       return ''
     end
 
@@ -77,7 +76,7 @@ module ApplicationHelper
       tokens = link.split('/')
       vid_id = tokens[-1]
       '<iframe src="//player.vimeo.com/video/'+vid_id+'" width="400" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
-    else    
+    else
       regex = /youtube.com.*(?:\/|v=)([^&$]+)/
       matches = link.match(regex)
       if matches.nil? or matches.length < 2
@@ -110,7 +109,7 @@ module ApplicationHelper
   def render_markdown(text)
     unless text == nil
       renderer = Redcarpet::Render::HTML.new(filter_html: true, no_images: true, hard_wrap: true)
-      parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+      parser = Redcarpet::Markdown.new(renderer, autolink: true, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
       parser.render(text).html_safe
     end
   end
@@ -118,7 +117,7 @@ module ApplicationHelper
   def render_markdown_brief(text)
     unless text == nil
       renderer = Redcarpet::Render::StripDown.new()
-      parser = Redcarpet::Markdown.new(renderer, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
+      parser = Redcarpet::Markdown.new(renderer, autolink: true, tables: true, fenced_code_blocks: true, strikethrough: true, superscript: true, underline: true, highlight: true)
       parser.render(text)
     end
   end
