@@ -49,16 +49,14 @@ describe Team, type: :model do
     it { is_expected.to contain_exactly(*expected_required_fields) }
   end
 
-  describe '.check_event_region' do
-    let(:event) { create :event, :virtual_event }
+  describe '#check_event_region' do
+    let(:event) { create(:event) }
     let(:region) { create(:region) }
-    let(:team) { create(:team, region: region, event: event) }
+    let(:team) { create(:team, event: event) }
     let(:region_changed?) { false }
-    let(:has_a_virtual_event?) { false }
 
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
-      allow(team).to receive(:has_a_virtual_event?).and_return has_a_virtual_event?
       allow(team).to receive(:persisted?).and_return true
     end
 
@@ -74,6 +72,7 @@ describe Team, type: :model do
         team.check_event_region
         expect(team.event).to be(nil)
       end
+
       context 'and team event is virtual' do
         let(:region_changed?) { true }
         let(:has_a_virtual_event?) { true }
