@@ -4,11 +4,10 @@ RSpec.describe RubricsController do
   describe 'GET #index' do
     let(:region) { create(:region) }
     let(:event) { create(:event, when_to_occur: Date.today) }
-    let(:user) { create(:user, role: :judge, event: event,
-                                             home_country: 'US',
-                                             judging_region: region,
-                                             semifinals_judge: true,
-                                             finals_judge: true) }
+    let(:judge) { create(:user, role: :judge, event: event,
+                                              judging_region: region,
+                                              semifinals_judge: true,
+                                              finals_judge: true) }
 
     before do
       Season.open!(Date.today.year)
@@ -16,7 +15,7 @@ RSpec.describe RubricsController do
       Judging.close!(:quarterfinal, Date.today + 1)
 
       @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in(user)
+      sign_in(judge)
     end
 
     it "assigns the event" do
@@ -134,6 +133,7 @@ RSpec.describe RubricsController do
       before do
         Judging.open!(:quarterfinal, Date.today)
         Judging.close!(:quarterfinal, Date.today + 1)
+        judge.update_attributes(home_country: 'US')
       end
 
       it 'shows only non brazilian teams' do
@@ -145,7 +145,7 @@ RSpec.describe RubricsController do
       end
 
       context 'when judge is brazilian' do
-        before { user.update_attributes(home_country: 'BR') }
+        before { judge.update_attributes(home_country: 'BR') }
 
         it 'shows only brazilian teams' do
           us = create(:team, :eligible, country: 'US', event: event)
