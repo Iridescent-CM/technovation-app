@@ -224,8 +224,8 @@ class User < ActiveRecord::Base
     SignatureMailer.signature_email(self).deliver
   end
 
-  def can_judge?(team = nil)
-    CheckJudgingPolicy.call(self, team)
+  def can_judge?
+    judge? || judging?
   end
 
   def virtual_judge?
