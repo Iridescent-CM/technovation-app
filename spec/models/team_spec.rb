@@ -21,10 +21,6 @@ describe Team, type: :model do
     include_examples 'validates file size of', :plan, 500.kilobytes
   end
 
-  describe 'callbacks' do
-    it { is_expected.to callback(:check_event_region).before(:save) }
-  end
-
   describe 'attributes' do
     it { is_expected.to respond_to(:confirm_region) }
     it { is_expected.to respond_to(:confirm_acceptance_of_rules) }

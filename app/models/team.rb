@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
 
   before_save :update_submission_status
   before_save :update_division
-  before_save :check_event_region
+  before_update :check_event_region
 
   validates :name, presence: true, uniqueness: {
     scope: :year,
@@ -262,7 +262,7 @@ class Team < ActiveRecord::Base
   end
 
   def check_event_region
-    if persisted? && region_id_changed? && has_no_virtual_event?
+    if region_id_changed? && has_no_virtual_event?
       self.event_id = nil
     end
 
