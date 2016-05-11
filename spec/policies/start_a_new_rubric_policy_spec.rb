@@ -14,6 +14,17 @@ RSpec.describe "Policy to start a new rubric" do
 
     let(:rubric) { double(:rubric, team: team) }
 
+    it "requires the http referer to be the rubrics page" do
+      user = double(:user_context, user: TestJudge.new, referer: 'bad')
+      policy = RubricPolicy.new(user, rubric, setting)
+      expect(policy.new?).to be false
+
+      user = double(:user_context, user: TestJudge.new,
+                                   referer: 'http://example.com/rubrics')
+      policy = RubricPolicy.new(user, rubric, setting)
+      expect(policy.new?).to be true
+    end
+
     context "for judge roles" do
       let(:judge) { TestJudge.new(judging_region_id: 1,
                                   event_id: 1,

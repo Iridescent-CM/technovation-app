@@ -7,17 +7,10 @@ RSpec.describe RubricsController do
     let(:team) { FactoryGirl.create(:team, event: event, region: region) }
 
     before do
-      Setting.create!({
-        key: 'quarterfinalJudgingOpen',
-        value: Date.today - 1
-      })
-
-      Setting.create!({
-        key: 'quarterfinalJudgingClose',
-        value: Date.today + 1
-      })
-
+      Judging.open!(:quarterfinal, Date.today - 1)
+      Judging.close!(:quarterfinal, Date.today + 1)
       @request.env['devise.mapping'] = Devise.mappings[:user]
+      @request.env['HTTP_REFERER'] = rubrics_url
     end
 
     context "judge role rubric policy" do
@@ -28,6 +21,20 @@ RSpec.describe RubricsController do
 
       it "allows the valid judge" do
         sign_in(judge)
+        get :new, team: team.id
+        expect(response.status).to eq(200)
+      end
+
+      it "doesn't allow access from an empty HTTP_REFERER" do
+        sign_in(judge)
+
+        [nil, "", " ", root_url, events_url].each do |bad_referer|
+          @request.env['HTTP_REFERER'] = bad_referer
+          get :new, team: team.id
+          expect(response.status).to eq(302)
+        end
+
+        @request.env['HTTP_REFERER'] = rubrics_url
         get :new, team: team.id
         expect(response.status).to eq(200)
       end

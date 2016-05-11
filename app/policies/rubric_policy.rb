@@ -1,16 +1,20 @@
 require "./app/policies/application_policy"
 
 class RubricPolicy < ApplicationPolicy
-  attr_reader :user, :rubric, :setting
+  attr_reader :user, :rubric, :referer, :setting
 
   def initialize(user, rubric, setting = Setting)
-    @user = user
+    @user = user.user
     @rubric = rubric
+    @referer = user.referer
     @setting = setting
   end
 
   def new?
-    user.can_judge? && setting.anyJudgingRoundActive?
+    !!referer &&
+      !!referer.match(/\/rubrics\z/) &&
+        user.can_judge? &&
+          setting.anyJudgingRoundActive?
   end
 
   def index?

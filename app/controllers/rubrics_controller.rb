@@ -64,4 +64,8 @@ class RubricsController < ApplicationController
       :branding_comment, :pitch_comment, :launched_comment
     )
   end
+
+  def pundit_user
+    UserContext.new(current_user, request.referer)
+  end
 end
