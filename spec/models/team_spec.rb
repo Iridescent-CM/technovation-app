@@ -49,38 +49,20 @@ describe Team, type: :model do
     it { is_expected.to contain_exactly(*expected_required_fields) }
   end
 
-  describe '#check_event_region' do
+  describe '#check_event_region (as an update callback)' do
     let(:event) { create(:event) }
-    let(:region) { create(:region) }
-    let(:team) { create(:team, event: event) }
-    let(:region_changed?) { false }
+    let!(:team) { create(:team, event: event) }
 
-    before do
-      allow(team).to receive(:region_id_changed?).and_return region_changed?
+    it 'removes the event when the region is changed' do
+      region = create(:region)
+      team.update_attributes(region: region)
+      expect(team.event).to be(nil)
     end
 
-    it 'dont change the team event' do
-      team.check_event_region
+    it 'does not change the team event if the event is virtual' do
+      event.update_attributes(is_virtual: true)
+      team.update_attributes(region: build(:region))
       expect(team.event).to be(event)
-    end
-
-    context 'when the team region is changed' do
-      let(:region_changed?) { true }
-
-      it 'remove the team event' do
-        team.check_event_region
-        expect(team.event).to be(nil)
-      end
-
-      context 'and team event is virtual' do
-        let(:region_changed?) { true }
-        let(:has_a_virtual_event?) { true }
-
-        it 'dont change the team event' do
-          team.check_event_region
-          expect(team.event).to be(event)
-        end
-      end
     end
   end
 
