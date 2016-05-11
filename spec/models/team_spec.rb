@@ -57,7 +57,6 @@ describe Team, type: :model do
 
     before do
       allow(team).to receive(:region_id_changed?).and_return region_changed?
-      allow(team).to receive(:persisted?).and_return true
     end
 
     it 'dont change the team event' do
