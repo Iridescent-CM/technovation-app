@@ -2,11 +2,9 @@ ruby '2.1.5'
 
 source 'https://rubygems.org'
 
-# core rails gems
 gem 'rails', '~> 4.1.15'
 gem 'pg'
 
-# core compiler / language gems
 gem 'coffee-script'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'slim-rails'
@@ -15,9 +13,8 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'puma_worker_killer'
 
-# view / templating gems / front-end gems
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass', :git => 'git://github.com/twbs/bootstrap-sass.git'
+gem 'bootstrap-sass', github: 'twbs/bootstrap-sass'
 gem 'bootstrap_form'
 gem 'select2-rails'
 gem 'countries'
@@ -27,7 +24,6 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'kaminari'
 
-# rails functionality extensions
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise', github: 'plataformatec/devise'
 gem 'geocoder'
@@ -42,7 +38,6 @@ gem 'prawn'
 gem 'prawn-templates'
 gem 'cancan'
 
-# general libraries
 gem 'aws-sdk'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
