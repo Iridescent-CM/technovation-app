@@ -43,7 +43,7 @@
                       - divider = true
                     - elsif teams_by_year.empty?
                       li.dropdown-header Team registration is closed now, sorry!
-                    for year in teams_by_year.keys
+                    - for year in teams_by_year.keys
                       - if divider
                         li.divider
                       li.dropdown-header= year
