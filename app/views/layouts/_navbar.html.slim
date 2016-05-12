@@ -42,8 +42,8 @@
                         = link_to 'Create New Team', :new_team
                       - divider = true
                     - elsif teams_by_year.empty?
-                      li.dropdown-header You don't have any teams yet
-                    - for year in teams_by_year.keys
+                      li.dropdown-header Team registration is closed now, sorry!
+                    for year in teams_by_year.keys
                       - if divider
                         li.divider
                       li.dropdown-header= year
