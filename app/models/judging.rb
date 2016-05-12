@@ -3,14 +3,14 @@ class Judging
   attr_reader :judge, :event, :setting
 
   public
-  def initialize(judge, setting = Setting)
+  def initialize(judge = nil, setting = Setting)
     @judge = judge
-    @event = judge.event
+    @event = !!judge ? judge.event : nil
     @setting = setting
   end
 
   def teams(stage)
-    event.teams
+    !!event ? event.teams : []
   end
 
   def open!(stage, date)
