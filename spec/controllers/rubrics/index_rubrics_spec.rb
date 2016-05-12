@@ -11,8 +11,7 @@ RSpec.describe RubricsController do
 
     before do
       Season.open!(Date.today.year)
-      Judging.open!(:quarterfinal, Date.today)
-      Judging.close!(:quarterfinal, Date.today + 1)
+      Quarterfinal.open!(close: Date.today + 1)
 
       @request.env['devise.mapping'] = Devise.mappings[:user]
       sign_in(judge)
@@ -24,10 +23,7 @@ RSpec.describe RubricsController do
     end
 
     context 'when its not time to judge' do
-      before do
-        Judging.open!(:quarterfinal, Date.today - 2)
-        Judging.close!(:quarterfinal, Date.today - 1)
-      end
+      before { Quarterfinal.close! }
 
       it 'does not show teams to be judged' do
         get :index
@@ -88,11 +84,8 @@ RSpec.describe RubricsController do
 
     context 'when its semifinals time' do
       before do
-        Judging.open!(:quarterfinal, Date.today - 2)
-        Judging.close!(:quarterfinal, Date.today - 1)
-
-        Judging.open!(:semifinal, Date.today)
-        Judging.close!(:semifinal, Date.today + 1)
+        Quarterfinal.close!
+        Semifinal.open!(close: Date.today + 1)
       end
 
       it 'shows all teams for this event' do
@@ -108,14 +101,9 @@ RSpec.describe RubricsController do
 
     context 'when its finals time' do
       before do
-        Judging.open!(:quarterfinal, Date.today - 4)
-        Judging.close!(:quarterfinal, Date.today - 3)
-
-        Judging.open!(:semifinal, Date.today - 2)
-        Judging.close!(:semifinal, Date.today - 1)
-
-        Judging.open!(:final, Date.today)
-        Judging.close!(:final, Date.today + 1)
+        Quarterfinal.close!
+        Semifinal.close!
+        Final.open!(close: Date.today + 1)
       end
 
       it 'shows all teams for this event' do
@@ -131,8 +119,7 @@ RSpec.describe RubricsController do
 
     describe 'brazilian cases' do
       before do
-        Judging.open!(:quarterfinal, Date.today)
-        Judging.close!(:quarterfinal, Date.today + 1)
+        Quarterfinal.open!(close: Date.today + 1)
         judge.update_attributes(home_country: 'US')
       end
 

@@ -2,35 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Score an actual rubric" do
   before do
-    Setting.create!({
-      key: 'quarterfinalJudgingOpen',
-      value: Date.today - 1
-    })
-
-    Setting.create!({
-      key: 'semifinalJudgingOpen',
-      value: Date.today - 1
-    })
-
-    Setting.create!({
-      key: 'finalJudgingOpen',
-      value: Date.today - 1
-    })
-
-    Setting.create!({
-      key: 'quarterfinalJudgingClose',
-      value: Date.today + 1
-    })
-
-    Setting.create!({
-      key: 'semifinalJudgingClose',
-      value: Date.today + 1
-    })
-
-    Setting.create!({
-      key: 'finalJudgingClose',
-      value: Date.today + 1
-    })
+    Quarterfinal.open!
+    Semifinal.open!
+    Final.open!
   end
 
   it "scores correctly for a given rubric" do

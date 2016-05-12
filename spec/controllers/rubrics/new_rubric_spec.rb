@@ -7,8 +7,7 @@ RSpec.describe RubricsController do
     let(:team) { FactoryGirl.create(:team, event: event, region: region) }
 
     before do
-      Judging.open!(:quarterfinal, Date.today - 1)
-      Judging.close!(:quarterfinal, Date.today + 1)
+      Quarterfinal.open!
       @request.env['devise.mapping'] = Devise.mappings[:user]
       @request.env['HTTP_REFERER'] = rubrics_url
     end
