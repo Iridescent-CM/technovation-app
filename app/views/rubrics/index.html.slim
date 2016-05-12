@@ -15,41 +15,16 @@ ul.list-unstyled
 p <b>If you don’t have the appropriate device to test the features firsthand</b>, do your best based on the demo video and inspection of the code.
 
 - if Setting.anyJudgingRoundActive?
-  h3 You are currently judging for the #{Setting.judgingRound}s
 
-  - unless current_user.judging_region.nil?
-    h4 You are judging teams from #{current_user.judging_region.division_description} - #{current_user.judging_region.region_name}
+  ul.nav.nav-tabs
+    - Rubric.stages.each do |stage, _|
+      li role="presentation" class=active_if_current_round(stage)
+        = link_to stage.capitalize, "##{stage}"
 
-    - unless @event.nil?
-      h4 Teams competing in #{@event.name}
-
-    - if @teams.empty?
-      p There are no teams ready to be judged right now.
-
-    - else
-      - @teams.each do |team|
-        = link_to "Judge #{team.name}", new_rubric_path(team: team)
-        br
-
-    h3 Previously judged teams
-
-    p You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.
-
-    - if @rubrics.any?
-      table
-        thead
-          tr
-            th style='padding:2px; padding-right:20px; '
-              span Team
-            th Total score
-        tbody
-          - @rubrics.each do |rubric|
-            - next unless rubric.team
-            tr
-              td style='padding:2px; padding-right:20px; '
-                = link_to rubric.team.name, edit_rubric_path(rubric)
-              td
-                = rubric.score
+  .tab-content
+    - Rubric.stages.each do |stage, _|
+      div class="tab-pane #{active_if_current_round(stage)}" role="tabpanel" id=stage
+        = render 'stage', event: @event, teams: @teams, rubrics: @rubrics, stage: stage
 - else
   hr
     h4 No judging rounds are open right now. Please check back later.

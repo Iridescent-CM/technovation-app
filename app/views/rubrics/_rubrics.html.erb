@@ -1,0 +1,20 @@
+<% if rubrics.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>Total score</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% rubrics.each do |rubric| %>
+        <% next unless rubric.team %>
+        <tr>
+          <td><%= link_to rubric.team.name, edit_rubric_path(rubric) %></td>
+          <td><%= rubric.score %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

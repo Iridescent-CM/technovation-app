@@ -1,0 +1,9 @@
+<% if teams.any? %>
+  <ul class="list-unstyled">
+    <% teams.each do |team| %>
+      <li><%= link_to "Judge #{team.name}", new_rubric_path(team: team) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no teams ready to be judged right now.</p>
+<% end %>

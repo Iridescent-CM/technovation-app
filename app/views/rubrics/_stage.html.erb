@@ -1,0 +1,21 @@
+<h3><%= stage.capitalize %></h3>
+
+<hr />
+
+<% unless current_user.judging_region.nil? %>
+  <h4>
+    You are judging teams from <%= current_user.judging_region.division_description %> - <%= current_user.judging_region.region_name %>
+  </h4>
+
+  <% unless event.nil? %>
+    <h4>Teams competing in <%= event.name %></h4>
+  <% end %>
+
+  <%= render 'teams', teams: teams %>
+
+  <h3>Previously judged teams</h3>
+
+  <p>You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.</p>
+
+  <%= render 'rubrics', rubrics: rubrics %>
+<% end %>
