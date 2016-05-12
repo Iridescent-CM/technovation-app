@@ -3,6 +3,9 @@
 @import "select2-bootstrap";
 @import "select2";
 
+body {
+  padding-bottom: 2rem;
+}
 
 .rails-bootstrap-forms-date-select select,
 .rails-bootstrap-forms-time-select select,
