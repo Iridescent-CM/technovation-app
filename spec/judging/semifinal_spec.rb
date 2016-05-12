@@ -21,8 +21,8 @@ RSpec.describe "Selecting team to judge for semifinal" do
     let(:judge) { double(:judge, semifinals_judge?: false) }
 
     it "does not show any team" do
-       is_expected.to be_empty
-     end
-   end
+      is_expected.to be_empty
+    end
+  end
 
 end

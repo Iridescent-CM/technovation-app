@@ -17,16 +17,12 @@ RSpec.describe "Selecting teams for judging" do
   end
 
   context "for semifinals" do
-    let(:team1) { double(:team, is_semi_finalist: true) }
-
-    before do
-      allow(Team).to receive(:is_semi_finalist).and_return([team1])
-    end
+    let(:team1) { create(:team, is_semi_finalist: true) }
+    let(:team2) { create(:team, is_semi_finalist: false) }
 
     it "selects semifinals teams" do
 
       setting = double
-      team2 = double(:team, is_semi_finalist: false)
       judge = double(:judge, semifinals_judge?: true)
       round = Semifinal.new
 
@@ -35,4 +31,5 @@ RSpec.describe "Selecting teams for judging" do
       expect(judging.teams(round)).to eq([team1])
     end
   end
+
 end
