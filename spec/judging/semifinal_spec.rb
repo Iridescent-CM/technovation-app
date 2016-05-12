@@ -1,5 +1,4 @@
 require 'rails_helper'
-require "./app/models/judging"
 
 RSpec.describe "Selecting team to judge for semifinal" do
 

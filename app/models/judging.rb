@@ -1,15 +1,24 @@
 class Judging
   private
-  attr_reader :judge, :setting
+  attr_reader :judge, :event, :team_list, :setting
 
   public
-  def initialize(judge = nil, setting = Setting)
+  def initialize(judge = nil, team_list = Team, setting = Setting)
     @judge = judge
+    @event = !!judge ? judge.event : nil
     @setting = setting
+    @team_list = team_list
   end
 
-  def teams(round)
-    round.teams_to_judge(judge)
+  def teams
+    case current_round
+    when 'no_round'
+      []
+    when 'semifinal'
+      judge.semifinals_judge? ? team_list.is_semi_finalist : []
+    else
+      event.teams
+    end
   end
 
   def open!(stage, date)
