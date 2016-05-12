@@ -24,7 +24,7 @@ p <b>If you don’t have the appropriate device to test the features firsthand</
   .tab-content
     - Rubric.stages.each do |stage, _|
       div class="tab-pane #{active_if_current_round(stage)}" role="tabpanel" id=stage
-        = render 'stage', event: @event, teams: @teams, rubrics: @rubrics, stage: stage
+        = render 'stage', event: @event, teams: instance_variable_get("@#{stage}_teams"), rubrics: @rubrics, stage: stage
 - else
   hr
     h4 No judging rounds are open right now. Please check back later.
