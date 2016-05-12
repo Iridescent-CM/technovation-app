@@ -37,7 +37,7 @@ class SelectJudgingTeams
     if judge.semifinals_judge?
       Team.is_semi_finalist
     else
-      teams
+      Team.none
     end
   end
 
@@ -45,7 +45,7 @@ class SelectJudgingTeams
     if judge.finals_judge?
       Team.is_finalist
     else
-      teams
+      Team.none
     end
   end
 
