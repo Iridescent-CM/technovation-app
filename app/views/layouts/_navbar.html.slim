@@ -41,6 +41,8 @@
                       li class=('disabled' if !current_user.is_registered?)
                         = link_to 'Create New Team', :new_team
                       - divider = true
+                    - elsif teams_by_year.empty?
+                      li.dropdown-header You don't have any teams yet
                     - for year in teams_by_year.keys
                       - if divider
                         li.divider
