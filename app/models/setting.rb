@@ -85,6 +85,16 @@ class Setting < ActiveRecord::Base
     Date.today
   end
 
+  def self.reset(key, value)
+    attrs = { key: key.to_s, value: value.to_s }
+
+    if setting = find_by(key: key)
+      setting.update_attributes(attrs)
+    else
+      create!(attrs)
+    end
+  end
+
   private
   def self.judgingRoundByDate
     Rubric.stages.keys.detect { |s| judgingRoundActive?(s) }
