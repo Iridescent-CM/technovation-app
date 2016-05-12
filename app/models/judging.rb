@@ -1,15 +1,48 @@
-class Judging < DateBasedSetting
+class Judging
+  private
+  attr_reader :judge, :event, :setting
+
+  public
+  def initialize(judge, setting = Setting)
+    @judge = judge
+    @event = judge.event
+    @setting = setting
+  end
+
+  def teams(stage)
+    event.teams
+  end
+
+  def open!(stage, date)
+    setting.reset("#{stage}JudgingOpen", date)
+  end
+
+  def close!(stage, date)
+    setting.reset("#{stage}JudgingClose", date)
+  end
+
+  def current_round
+    setting.judgingRound
+  end
+
   class << self
     def open!(stage, date)
-      reset_setting("#{stage}JudgingOpen", date)
+      instance.open!(stage, date)
+      true
     end
 
     def close!(stage, date)
-      reset_setting("#{stage}JudgingClose", date)
+      instance.close!(stage, date)
+      true
     end
 
     def current_round
-      setting.judgingRound
+      instance.current_round
+    end
+
+    private
+    def instance
+      new
     end
   end
 end
