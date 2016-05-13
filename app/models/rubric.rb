@@ -17,6 +17,18 @@ class Rubric < ActiveRecord::Base
   scope :has_team, -> (team) {where('team_id = ?', team.id)}
   scope :quarter_finals, -> { where(stage: 0) }
 
+  scope :by_year, ->(year) {
+    where("extract(year from created_at) = ?", year)
+  }
+
+  scope :quarterfinal, ->(year = Setting.year) {
+    by_year(year).where(stage: Rubric.stages[:quarterfinal])
+  }
+
+  scope :semifinal, ->(year = Setting.year) {
+    by_year(year).where(stage: Rubric.stages[:semifinal])
+  }
+
   def calculate_score
     CalculateScore.call(self)
   end
