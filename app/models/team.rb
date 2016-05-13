@@ -160,11 +160,14 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
-    if Setting.allow_ineligibility_logic
-      !(1..5).include?(students.size) || ineligible_students.any?
-    else
-      false
-    end
+    !(1..5).include?(students.size) || ineligible_students.any?
+  end
+
+  def eligible?(judge)
+    submission_eligible? &&
+      !judges.include?(judge) &&
+        !ineligible? &&
+          eligible_country?(judge)
   end
 
   def check_empty!
@@ -275,10 +278,14 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible_students
-    if Setting.allow_ineligibility_logic_for_students
-      students.select(&:ineligible?)
+    students.select(&:ineligible?)
+  end
+
+  def eligible_country?(judge)
+    if judge.home_country == 'BR'
+      country == 'BR'
     else
-      []
+      country != 'BR'
     end
   end
 end

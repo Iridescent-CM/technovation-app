@@ -15,14 +15,13 @@ class Judging
   end
 
   def teams
-    teams_for_round = send("#{current_round}_teams")
-    eligible_teams = select_eligible_teams(teams_for_round)
-    teams_for_country = select_teams_for_judge_country(eligible_teams)
+    selected_teams = send("#{current_round}_teams")
+                     .select { |t| t.eligible?(judge) }
 
     if event.is_virtual?
-      select_random_teams_judged_the_same(teams_for_country)
+      select_random_teams_judged_the_same(selected_teams)
     else
-      teams_for_country
+      selected_teams
     end
   end
 
@@ -31,20 +30,6 @@ class Judging
   end
 
   private
-  def select_eligible_teams(teams)
-    teams.reject { |team| team.judges.include?(judge) }
-         .reject(&:ineligible?)
-         .select(&:submission_eligible?)
-  end
-
-  def select_teams_for_judge_country(teams)
-    if judge.home_country == 'BR'
-      teams.select { |team| team.country == 'BR' }
-    else
-      teams.select { |team| team.country != 'BR' }
-    end
-  end
-
   def select_random_teams_judged_the_same(teams)
     teams.sort_by(&:num_rubrics)
          .select { |t| t.num_rubrics == teams[0].num_rubrics }

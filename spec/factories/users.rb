@@ -8,7 +8,7 @@ FactoryGirl.define do
     parent_email { Faker::Internet.email }
     email { Faker::Internet.email }
     judging { false }
-    birthday { Faker::Date.between(2.days.ago, Date.today) }
+    birthday { Faker::Date.between(19.years.ago, 8.years.ago) }
     password { Faker::Internet.password }
     role 2
     is_registered true

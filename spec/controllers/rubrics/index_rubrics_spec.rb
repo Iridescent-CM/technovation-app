@@ -12,6 +12,7 @@ RSpec.describe RubricsController do
     before do
       Season.open!(Date.today.year)
       Quarterfinal.open!(close: Date.today + 1)
+      allow(Setting).to receive(:cutoff) { Date.yesterday }
 
       @request.env['devise.mapping'] = Devise.mappings[:user]
       sign_in(judge)
