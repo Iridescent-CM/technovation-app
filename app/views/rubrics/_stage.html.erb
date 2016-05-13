@@ -3,9 +3,7 @@
     You are judging teams from <%= current_user.judging_region.division_description %> - <%= current_user.judging_region.region_name %>
   </h5>
 
-  <% unless event.nil? %>
-    <h4>Teams competing in <%= event.name %></h4>
-  <% end %>
+  <h4>Teams competing in <%= event.name %></h4>
 
   <%= render 'teams', teams: teams %>
 

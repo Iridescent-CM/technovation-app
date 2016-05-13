@@ -55,6 +55,7 @@ class Judging
   end
 
   class NoEvent
+    def name; 'No event assigned'; end
     def is_virtual?; false; end
     def teams; []; end
   end
