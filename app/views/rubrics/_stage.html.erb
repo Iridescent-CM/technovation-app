@@ -1,7 +1,3 @@
-<h3><%= stage.capitalize %></h3>
-
-<hr />
-
 <% unless current_user.judging_region.nil? %>
   <h4>
     You are judging teams from <%= current_user.judging_region.division_description %> - <%= current_user.judging_region.region_name %>

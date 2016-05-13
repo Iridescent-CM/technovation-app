@@ -15,16 +15,15 @@ class RubricsController < ApplicationController
     judging = Judging.new(current_user)
 
     @event = judging.event
-    @teams = judging.teams
-    @rubrics = current_user.rubrics.where("extract(year from created_at) = ?", Setting.year)
 
-    @quarterfinal_teams = []
-    @semifinal_teams = []
-    @final_teams = []
+    @quarterfinal_teams = judging.teams(:quarterfinal)
+    @semifinal_teams = judging.teams(:semifinal)
+    @final_teams = judging.teams(:final)
 
-    @quarterfinal_rubrics = []
-    @semifinal_rubrics = []
-    @final_rubrics = []
+    rubrics = current_user.rubrics.where("extract(year from created_at) = ?", Setting.year)
+    @quarterfinal_rubrics = rubrics.where(stage: Rubric.stages[:quarterfinal])
+    @semifinal_rubrics = rubrics.where(stage: Rubric.stages[:semifinal])
+    @final_rubrics = rubrics.where(stage: Rubric.stages[:final])
   end
 
   def edit

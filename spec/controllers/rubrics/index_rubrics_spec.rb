@@ -28,7 +28,9 @@ RSpec.describe RubricsController do
 
       it 'does not show teams to be judged' do
         get :index
-        expect(assigns[:teams]).to be_empty
+        expect(assigns[:quarterfinal_teams]).to be_empty
+        expect(assigns[:semifinal_teams]).to be_empty
+        expect(assigns[:final_teams]).to be_empty
       end
     end
 
@@ -37,7 +39,9 @@ RSpec.describe RubricsController do
         no_events = create(:user, role: :judge, event: nil)
         sign_in(no_events)
         get :index
-        expect(assigns[:teams]).to be_empty
+        expect(assigns[:quarterfinal_teams]).to be_empty
+        expect(assigns[:semifinal_teams]).to be_empty
+        expect(assigns[:final_teams]).to be_empty
       end
     end
 
@@ -47,7 +51,7 @@ RSpec.describe RubricsController do
         team2 = create(:team, :eligible)
 
         get :index
-        expect(assigns[:teams]).to eq([team])
+        expect(assigns[:quarterfinal_teams]).to eq([team])
       end
 
       context 'and its a virtual event' do
@@ -60,7 +64,7 @@ RSpec.describe RubricsController do
 
         it 'shows three random teams for virtual event' do
           get :index
-          expect(assigns[:teams].count).to eq(3)
+          expect(assigns[:quarterfinal_teams].count).to eq(3)
         end
 
         context 'and some teams has been judged already' do
@@ -75,8 +79,8 @@ RSpec.describe RubricsController do
 
           it 'does not show teams that has been judged more than others' do
             get :index
-            expect(assigns[:teams]).not_to include(teams[0])
-            expect(assigns[:teams]).not_to include(teams[3])
+            expect(assigns[:quarterfinal_teams]).not_to include(teams[0])
+            expect(assigns[:quarterfinal_teams]).not_to include(teams[3])
           end
         end
       end
@@ -93,7 +97,7 @@ RSpec.describe RubricsController do
         team2 = create(:team, :eligible, is_semi_finalist: false, event: event)
 
         get :index
-        expect(assigns[:teams]).to eq([team])
+        expect(assigns[:semifinal_teams]).to eq([team])
       end
     end
 
@@ -109,7 +113,7 @@ RSpec.describe RubricsController do
         team2 = create(:team, :eligible, is_finalist: false, event: event)
 
         get :index
-        expect(assigns[:teams]).to eq([team])
+        expect(assigns[:final_teams]).to eq([team])
       end
     end
 
@@ -124,7 +128,7 @@ RSpec.describe RubricsController do
         br = create(:team, :eligible, country: 'BR', event: event)
 
         get :index
-        expect(assigns[:teams]).to eq([us])
+        expect(assigns[:quarterfinal_teams]).to eq([us])
       end
 
       context 'when judge is brazilian' do
@@ -135,7 +139,7 @@ RSpec.describe RubricsController do
           br = create(:team, :eligible, country: 'BR', event: event)
 
           get :index
-          expect(assigns[:teams]).to eq([br])
+          expect(assigns[:quarterfinal_teams]).to eq([br])
         end
       end
     end
