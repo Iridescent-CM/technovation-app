@@ -89,22 +89,10 @@ describe Team, type: :model do
 
     let(:team) { build(:team) }
     let(:student) { build(:user, :student) }
-    let(:allow_new_logic?) { true }
-    let(:allow_new_logic_for_students?) { true }
     let(:user_ineligible?) { true }
     let(:team_members) { [student] }
 
     before do
-      Setting.find_or_create_by!({
-        key: 'allow_ineligibility_logic',
-        value: allow_new_logic?.to_s
-      })
-
-      Setting.find_or_create_by!({
-        key: 'allow_ineligibility_logic_for_students',
-        value: allow_new_logic_for_students?.to_s
-      })
-
       allow(student).to receive(:ineligible?).and_return(user_ineligible?)
       allow(team).to receive(:members).and_return(team_members)
     end
