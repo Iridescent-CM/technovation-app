@@ -88,7 +88,6 @@ class Team < ActiveRecord::Base
   scope :has_event, -> (ev) { where('event_id = ?', ev.id) }
 
   scope :is_semi_finalist, -> { where(is_semi_finalist: true) }
-  scope :is_semifinalist, -> { where(is_semi_finalist: true) }
   scope :is_finalist, -> { where(is_finalist: true) }
   scope :is_winner, -> { where(is_winner: true) }
   scope :is_submitted, -> { where(submitted: true) }
@@ -122,17 +121,6 @@ class Team < ActiveRecord::Base
   def avg_final_score
     rubrics.where(stage:2).average(:score)
   end
-
-  def num_rubrics
-    rubrics.length
-  end
-
-  # def self.by_num_rubrics
-  #   select('teams.id, COUNT(rubrics.id) AS num_rubrics').
-  #   joins(:rubrics).
-  #   group('teams.id').
-  #   order('num_rubrics ASC')
-  # end
 
   def name_and_year
     "#{name}-#{year}"

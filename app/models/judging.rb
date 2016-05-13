@@ -15,40 +15,34 @@ class Judging
   end
 
   def teams(round = setting.judgingRound)
-    round_teams = send("#{round}_teams") || []
+    selected = teams_by_round(round).select { |t| t.eligible?(judge) }
 
     if event.is_virtual?
-      team_list.least_judged(round_teams).sample(3)
+      team_list.least_judged(selected).sample(3)
     else
-      round_teams
+      selected
     end
   end
 
   private
-  def no_round_teams; end
-
-  def quarterfinal_teams
-    teams = event.teams
-    teams = teams.where(region: judge.judging_region) if event.is_virtual?
-    eligible_teams_for_judge(teams)
-  end
-
-  def semifinal_teams
-    teams_by_round(:semifinal)
-  end
-
-  def final_teams
-    teams_by_round(:final)
-  end
-
   def teams_by_round(round)
-    if judge.send("#{round}s_judge?")
-      eligible_teams_for_judge(team_list.send("is_#{round}ist"))
+    case round.to_s
+    when 'no_round'; []
+    when 'quarterfinal'; quarterfinal_teams
+    else; send("#{round}_teams") || []
     end
   end
 
-  def eligible_teams_for_judge(teams)
-    teams.select { |t| t.eligible?(judge) }
+  def quarterfinal_teams
+    event.is_virtual? ? event.teams.where(region: judge.judging_region) : event.teams
+  end
+
+  def semifinal_teams
+    team_list.is_semi_finalist if judge.semifinals_judge?
+  end
+
+  def final_teams
+    team_list.is_finalist if judge.finals_judge?
   end
 
   class NoEvent
