@@ -88,6 +88,7 @@ class Team < ActiveRecord::Base
   scope :has_event, -> (ev) { where('event_id = ?', ev.id) }
 
   scope :is_semi_finalist, -> { where(is_semi_finalist: true) }
+  scope :is_semifinalist, -> { where(is_semi_finalist: true) }
   scope :is_finalist, -> { where(is_finalist: true) }
   scope :is_winner, -> { where(is_winner: true) }
   scope :is_submitted, -> { where(submitted: true) }
@@ -164,10 +165,8 @@ class Team < ActiveRecord::Base
   end
 
   def eligible?(judge)
-    submission_eligible? &&
-      !judges.include?(judge) &&
-        !ineligible? &&
-          eligible_country?(judge)
+    !ineligible? && submission_eligible? &&
+      !judges.include?(judge) && eligible_country?(judge)
   end
 
   def check_empty!

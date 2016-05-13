@@ -14,19 +14,14 @@ class Judging
     @team_list = team_list
   end
 
-  def teams
-    selected_teams = send("#{current_round}_teams")
-                     .select { |t| t.eligible?(judge) }
+  def teams(round = setting.judgingRound)
+    round_teams = send("#{round}_teams") || []
 
     if event.is_virtual?
-      select_random_teams_judged_the_same(selected_teams)
+      select_random_teams_judged_the_same(round_teams)
     else
-      selected_teams
+      round_teams
     end
-  end
-
-  def current_round
-    setting.judgingRound
   end
 
   private
@@ -36,41 +31,34 @@ class Judging
          .sample(3)
   end
 
-  def no_round_teams
-    []
-  end
+  def no_round_teams; end
 
   def quarterfinal_teams
-    if event.is_virtual?
-      event.teams.where(region: judge.judging_region)
-    else
-      event.teams
-    end
+    teams = event.teams
+    teams = teams.where(region: judge.judging_region) if event.is_virtual?
+    eligible_teams_for_judge(teams)
   end
 
   def semifinal_teams
-    if judge.semifinals_judge?
-      team_list.is_semi_finalist
-    else
-      []
-    end
+    teams_by_round(:semifinal)
   end
 
   def final_teams
-    if judge.finals_judge?
-      team_list.is_finalist
-    else
-      []
+    teams_by_round(:final)
+  end
+
+  def teams_by_round(round)
+    if judge.send("#{round}s_judge?")
+      eligible_teams_for_judge(team_list.send("is_#{round}ist"))
     end
   end
 
-  class NoEvent
-    def is_virtual?
-      false
-    end
+  def eligible_teams_for_judge(teams)
+    teams.select { |t| t.eligible?(judge) }
+  end
 
-    def teams
-      []
-    end
+  class NoEvent
+    def is_virtual?; false; end
+    def teams; []; end
   end
 end
