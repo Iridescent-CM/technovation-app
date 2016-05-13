@@ -25,7 +25,7 @@ RSpec.describe "Selecting teams for judging" do
 
   context "for semifinals" do
     let(:team) { double(:team, :eligible? => true) }
-    let(:team_list) { double(:Team, joins: double(is_semi_finalist: [team])) }
+    let(:team_list) { double(:Team, includes: double(is_semi_finalist: [team])) }
     let(:setting) { double(:setting, judgingRound: 'semifinal') }
 
     it "selects semifinals teams" do
