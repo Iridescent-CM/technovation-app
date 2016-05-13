@@ -18,19 +18,13 @@ class Judging
     round_teams = send("#{round}_teams") || []
 
     if event.is_virtual?
-      select_random_teams_judged_the_same(round_teams)
+      team_list.least_judged(round_teams).sample(3)
     else
       round_teams
     end
   end
 
   private
-  def select_random_teams_judged_the_same(teams)
-    teams.sort_by(&:num_rubrics)
-         .select { |t| t.num_rubrics == teams[0].num_rubrics }
-         .sample(3)
-  end
-
   def no_round_teams; end
 
   def quarterfinal_teams
