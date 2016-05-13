@@ -45,7 +45,6 @@ class RubricsController < ApplicationController
     @rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
     @rubric.user_id = current_user.id
-    @rubric.stage = Setting.judgingRound
 
     authorize @rubric
     if @rubric.save
@@ -65,7 +64,7 @@ class RubricsController < ApplicationController
       :functional_comment, :external_resources_comment,
       :match_features_comment, :interface_comment, :description_comment,
       :market_comment, :competition_comment, :revenue_comment,
-      :branding_comment, :pitch_comment, :launched_comment
+      :branding_comment, :pitch_comment, :launched_comment, :stage
     )
   end
 

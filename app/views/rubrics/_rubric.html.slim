@@ -129,5 +129,5 @@ p Has the app already been launched the the Play Store or App Store? (2 possible
 = f.form_group :launched do
   = f.check_box :launched, label: "Launched [2]"
 = f.text_area :launched_comment, label: 'Comment (optional)'
-br
-br
+
+= f.hidden_field :stage, value: params[:stage] || @rubric.stage
