@@ -9,13 +9,13 @@ hr
 - if Setting.anyJudgingRoundActive?
   ul.nav.nav-tabs
     - Rubric.stages.each do |stage, _|
-      - next if stage == 'final'
+      - next if stage == 'final' || !current_user.send("#{stage}s_judge?")
       li role="presentation" class=active_if_current_round(stage)
         = link_to stage.capitalize, "##{stage}"
 
   .tab-content
     - Rubric.stages.each do |stage, _|
-      - next if stage == 'final'
+      - next if stage == 'final' || !current_user.send("#{stage}s_judge?")
       div class="tab-pane #{active_if_current_round(stage)}" role="tabpanel" id=stage
         = render 'stage', event: @event,
                           teams: instance_variable_get("@#{stage}_teams"),

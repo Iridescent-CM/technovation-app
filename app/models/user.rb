@@ -228,6 +228,10 @@ class User < ActiveRecord::Base
     judge? || judging?
   end
 
+  def quarterfinals_judge?
+    can_judge?
+  end
+
   def virtual_judge?
     judge? && event && event.is_virtual?
   end
