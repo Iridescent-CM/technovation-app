@@ -17,6 +17,13 @@ class RubricsController < ApplicationController
     @teams = team_selection.teams
     @rubrics = current_user.rubrics.where("extract(year from created_at) = ?",
                                           Setting.year)
+    @quarterfinal_teams = []
+    @semifinal_teams = []
+    @final_teams = []
+
+    @quarterfinal_rubrics = []
+    @semifinal_rubrics = []
+    @final_rubrics = []
   end
 
   def edit
