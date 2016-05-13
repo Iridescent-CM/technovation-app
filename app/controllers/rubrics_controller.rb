@@ -25,7 +25,6 @@ class RubricsController < ApplicationController
 
   def edit
     @rubric = Rubric.find(params[:id])
-    @team = @rubric.team # Why not use @rubric.team in the view?
     authorize @rubric
   end
 

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :verify_bg_check, {unless: :special_controller?}
 #  before_action :verify_other_roles, {unless: :special_controller?, if: :user_signed_in?}
 #  before_action :verify_event_signup, {unless: :special_controller?, if: :user_signed_in?}
-  
+
 
   def special_controller?
     # since the admin user class is currently seperate from the main devise class,
@@ -56,13 +56,13 @@ class ApplicationController < ActionController::Base
 
   # def verify_event_signup
   #   if !current_user.nil? and ((current_user.can_judge? and current_user.event_id.nil?) or
-  #     (!current_user.judge? and !current_user.current_team.nil? and current_user.current_team.event.nil?)) 
+  #     (!current_user.judge? and !current_user.current_team.nil? and current_user.current_team.event.nil?))
   #     redirect_to events_path
   #   end
   # end
 
   def user_not_authorized
-    flash[:error] = "You are not authorized to perform this action."
+    flash[:alert] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)
   end
 

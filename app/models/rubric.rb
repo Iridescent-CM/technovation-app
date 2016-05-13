@@ -13,10 +13,6 @@ class Rubric < ActiveRecord::Base
     :final,
   ]
 
-  scope :has_judge, -> (user) {where('user_id = ?', user.id)}
-  scope :has_team, -> (team) {where('team_id = ?', team.id)}
-  scope :quarter_finals, -> { where(stage: 0) }
-
   scope :by_year, ->(year) {
     where("extract(year from created_at) = ?", year)
   }

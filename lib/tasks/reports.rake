@@ -27,8 +27,8 @@ namespace :reports do
       teams.each do |team|
         csv << [team.name, team.id, team.region_name, team.members.first.home_city,
                 team.state, team.country, team.division, team.year, team.event_name,
-                team.rubrics.quarter_finals.count, team.avg_score, team.avg_quarterfinal_score,
-                team.rubrics.quarter_finals.first.try(:launched) || false]
+                team.rubrics.quarterfinal.count, team.avg_score, team.avg_quarterfinal_score,
+                team.rubrics.quarterfinal.first.try(:launched) || false]
       end
     end
   end
@@ -36,8 +36,8 @@ namespace :reports do
   desc "Generate a rubrics report on teams"
   task team_rubrics: :environment do
     rubrics = Rubric.joins(:team)
-                    .quarter_finals
-                    .where('teams.year = ? AND teams.event_id = ?', 2016, 73)
+                    .quarterfinal
+                    .where('teams.event_id = ?', 73)
                     .select do |rubric|
                       team = rubric.team
                       !team.ineligible? && team.submission_eligible?

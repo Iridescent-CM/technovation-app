@@ -1,63 +1,63 @@
-          .col-sm-3
-            #profile
-                h3 My Profile
-                .row
-                  .col-sm-8
-                    h4
-                      ' #{current_user.name}
-                      small= current_user.role.humanize
-                    - unless current_user.about.blank?
-                      .markdown-field
-                        = render_markdown(current_user.about)
-                  .col-sm-4
-                    = image_tag current_user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['max-width: 200px;']
-                .row
-                  .col-sm-12
-                    dl.dl-horizontal
+.col-sm-3
+  #profile
+      h3 My Profile
+      .row
+        .col-sm-8
+          h4
+            ' #{current_user.name}
+            small= current_user.role.humanize
+          - unless current_user.about.blank?
+            .markdown-field
+              = render_markdown(current_user.about)
+        .col-sm-4
+          = image_tag current_user.avatar.url(:medium), class: ['img-responsive', 'img-rounded', 'img-avatar'], style: ['max-width: 200px;']
+      .row
+        .col-sm-12
+          dl.dl-horizontal
 
-                      dt City
-                      dd= current_user.home_city
-                      dt Country
-                      dd= ISO3166::Country[current_user.home_country]
-                      - if current_user.current_team
-                        dt Current Team
-                        dd= link_to current_user.current_team.name, current_user.current_team
+            dt City
+            dd= current_user.home_city
+            dt Country
+            dd= ISO3166::Country[current_user.home_country]
+            - if current_user.current_team
+              dt Current Team
+              dd= link_to current_user.current_team.name, current_user.current_team
 
-                      - if current_user.mentor?
-                        dt Email
-                        dd
-                          a href="mailto:#{current_user.email}" = current_user.email
+            - if current_user.mentor?
+              dt Email
+              dd
+                a href="mailto:#{current_user.email}" = current_user.email
 
-                      dt= current_user.student? ? "School" : "School/Employer"
-                      dd= current_user.school
+            dt= current_user.student? ? "School" : "School/Employer"
+            dd= current_user.school
 
-                      - unless current_user.student?
-                        dt Expertise
-                        dd
-                          - for exp in User::EXPERTISES
-                            - if current_user.send(exp[:sym])
-                              .label.label-primary= exp[:abbr]
-                            - else
-                              .label.label-default= exp[:abbr]
-                            '
+            - unless current_user.student?
+              dt Expertise
+              dd
+                - for exp in User::EXPERTISES
+                  - if current_user.send(exp[:sym])
+                    .label.label-primary= exp[:abbr]
+                  - else
+                    .label.label-default= exp[:abbr]
+                  '
 
-                      - if current_user.current_team
-                        dt Submission Status
-                        dd= current_user.current_team.submission_status
+            - if current_user.current_team
+              dt Submission Status
+              dd= current_user.current_team.submission_status
 
-                    .pull-right
-                      - if policy(current_user).edit?
-                          = link_to 'Edit Profile', edit_user_path(current_user)
-                      br
-                      - if current_user.current_team and Submissions.open?
-                          = link_to 'Edit Submission', edit_submission_team_path(current_user.current_team)
+          .pull-right
+            - if policy(current_user).edit?
+                = link_to 'Edit Profile', edit_user_path(current_user)
+            br
+            - if current_user.current_team and Submissions.open?
+                = link_to 'Edit Submission', edit_submission_team_path(current_user.current_team)
 
-          .col-sm-9
-            #main-content.loggedin
-              - if notice
-                .alert.alert-info role='alert'
-                  = notice
-              - if alert
-                .alert.alert-danger role='alert'
-                  = alert
-              == yield
+.col-sm-9
+  #main-content.loggedin
+    - if notice
+      .alert.alert-info role='alert'
+        = notice
+    - if alert
+      .alert.alert-danger role='alert'
+        = alert
+    == yield
