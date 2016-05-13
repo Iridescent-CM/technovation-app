@@ -1,7 +1,7 @@
 <% unless current_user.judging_region.nil? %>
-  <h4>
+  <h5>
     You are judging teams from <%= current_user.judging_region.division_description %> - <%= current_user.judging_region.region_name %>
-  </h4>
+  </h5>
 
   <% unless event.nil? %>
     <h4>Teams competing in <%= event.name %></h4>
@@ -9,7 +9,7 @@
 
   <%= render 'teams', teams: teams %>
 
-  <h3>Previously judged teams</h3>
+  <h4>Previously judged teams</h4>
 
   <p>You may want to return and edit your scoring for previous teams, to ensure that your scoring is fair.</p>
 

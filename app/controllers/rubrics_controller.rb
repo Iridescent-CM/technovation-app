@@ -18,12 +18,10 @@ class RubricsController < ApplicationController
 
     @quarterfinal_teams = judging.teams(:quarterfinal)
     @semifinal_teams = judging.teams(:semifinal)
-    @final_teams = judging.teams(:final)
 
     rubrics = current_user.rubrics.where("extract(year from created_at) = ?", Setting.year)
     @quarterfinal_rubrics = rubrics.where(stage: Rubric.stages[:quarterfinal])
     @semifinal_rubrics = rubrics.where(stage: Rubric.stages[:semifinal])
-    @final_rubrics = rubrics.where(stage: Rubric.stages[:final])
   end
 
   def edit
