@@ -1,5 +1,6 @@
 - unless @rubric.new_record?
-  - if current_user.id != @rubric.user_id or Setting.judgingRound != @rubric.stage
+  /! 2016 season - rubrics created on quartefinals should be able to be updated til the end of semifinal round
+  - if current_user.id != @rubric.user_id or (@rubric.stage != 'quarterfinal' && Setting.judgingRound != 'semifinal')
     javascript:
       $(document).ready(function() {
         $('input:radio').attr('disabled', 'disabled')
