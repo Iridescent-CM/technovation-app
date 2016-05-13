@@ -8,9 +8,9 @@ class Rubric < ActiveRecord::Base
   before_save :calculate_stage
 
   enum stage: [
-  :quarterfinal,
-  :semifinal,
-  :final,
+    :quarterfinal,
+    :semifinal,
+    :final,
   ]
 
   scope :has_judge, -> (user) {where('user_id = ?', user.id)}
