@@ -1,21 +1,12 @@
-h1 Judge dashboard
+h1 Judge Submissions
 
-p Since 2010, Technovation has engaged more than 4500 girls in 45 countries to become innovative problem solvers and create for the future. These young innovators have built mobile apps to tackle problems ranging from clean water access to women’s safety in urban areas. Over the course of 12 weeks, teams work on building their mobile app prototypes and refining a business plan which includes everything from market size assessment to potential revenue. At the end of the prototyping period, teams submit a pitch video, business plan, and prototype for the opportunity to win $10,000 in seed funding for further development of their app and business.
+= render 'download_instructions'
 
-p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s important for communities to find ways to harness the full utility of these gadgets. As a judge for Technovation, you’ll have the opportunity to get an inside look at how the youth of today plan to transform smartphones from toys to tools.
+p <strong>If you don’t have the appropriate device to test the features firsthand</strong>, do your best based on the demo video and inspection of the code.
 
-h4 Downloading and Testing App Inventor Code
-
-ul.list-unstyled
-  li 1. Download the .aia code from the link submitted by the team.
-  li 2. Open up a new tab or window and go to <a href='http://ai2.appinventor.mit.edu' target='_blank'> ai2.appinventor.mit.edu</a>. You’ll be prompted to log in with a gmail account (this is correct!).
-  li 3. Import the .aia code into your App Inventor account under “My Projects”.
-  li 4. Test the app using the <a href='http://appinventor.mit.edu/explore/ai2/setup-device-wifi.html' target='_blank'> following instructions</a> on your Android device, or with <a href='http://appinventor.mit.edu/explore/ai2/setup-emulator.html' target='_blank'>the emulator</a> if you don’t have an Android device.
-
-p <b>If you don’t have the appropriate device to test the features firsthand</b>, do your best based on the demo video and inspection of the code.
+hr
 
 - if Setting.anyJudgingRoundActive?
-
   ul.nav.nav-tabs
     - Rubric.stages.each do |stage, _|
       li role="presentation" class=active_if_current_round(stage)
@@ -29,5 +20,11 @@ p <b>If you don’t have the appropriate device to test the features firsthand</
                           rubrics: instance_variable_get("@#{stage}_rubrics"),
                           stage: stage
 - else
-  hr
-    h4 No judging rounds are open right now. Please check back later.
+  h4 No judging rounds are open right now. Please check back later.
+
+hr
+
+p Since 2010, Technovation has engaged more than 4500 girls in 45 countries to become innovative problem solvers and create for the future. These young innovators have built mobile apps to tackle problems ranging from clean water access to women’s safety in urban areas. Over the course of 12 weeks, teams work on building their mobile app prototypes and refining a business plan which includes everything from market size assessment to potential revenue. At the end of the prototyping period, teams submit a pitch video, business plan, and prototype for the opportunity to win $10,000 in seed funding for further development of their app and business.
+
+p Smartphones are becoming more ubiquitous in our day-to-day lives, and it’s important for communities to find ways to harness the full utility of these gadgets. As a judge for Technovation, you’ll have the opportunity to get an inside look at how the youth of today plan to transform smartphones from toys to tools.
+
