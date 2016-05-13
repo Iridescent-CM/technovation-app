@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   validates :first_name, :last_name, presence: true
   validates :home_city, :home_country, presence: true
-  validates :school, presence: true
+  validates :school, :birthday, presence: true
 
   validates :parent_email, presence: true, if: :student?
 
