@@ -154,6 +154,7 @@ class Team < ActiveRecord::Base
   end
 
   def ineligible?
+    return false # Disabled for 2016 season
     !(1..5).include?(students.size) || ineligible_students.any?
   end
 

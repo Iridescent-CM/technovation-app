@@ -215,6 +215,7 @@ class User < ActiveRecord::Base
   end
 
   def ineligible?
+    return false # Disabled for 2016 season
     student? && !VALID_AGE_RANGE.include?(age_before_cutoff)
   end
 

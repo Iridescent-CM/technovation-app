@@ -20,6 +20,7 @@ RSpec.describe "Teams eligible for judging" do
   end
 
   it "is not eligible if there are not enough students" do
+    skip "disabled for 2016 season"
     add_members_to_team(team, 0)
     expect(team.eligible?(judge)).to be false
   end
@@ -30,6 +31,7 @@ RSpec.describe "Teams eligible for judging" do
   end
 
   it "is not eligible if there are too many students" do
+    skip "disabled for 2016 season"
     add_members_to_team(team, 6)
     expect(team.eligible?(judge)).to be false
   end

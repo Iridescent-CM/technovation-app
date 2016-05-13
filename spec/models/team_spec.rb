@@ -87,6 +87,10 @@ describe Team, type: :model do
   describe '.ineligible?' do
     subject { team.ineligible? }
 
+    context "disabled for 2016 season" do
+      it { is_expected.to be false }
+    end
+
     let(:team) { build(:team) }
     let(:student) { build(:user, :student) }
     let(:user_ineligible?) { true }
@@ -98,7 +102,7 @@ describe Team, type: :model do
     end
 
     context 'when team contains at least one ineligible student' do
-      it { is_expected.to be true }
+      it { skip; is_expected.to be true }
     end
 
     context 'when allow_ineligibility_logic_for_students is off' do
@@ -109,7 +113,7 @@ describe Team, type: :model do
         let(:number_of_students) { Faker::Number.between(6) }
         let(:team_members) { [student] * number_of_students }
 
-        it { is_expected.to be true }
+        it { skip; is_expected.to be true }
       end
 
       context 'and team has no student' do
@@ -117,7 +121,7 @@ describe Team, type: :model do
         let(:user_mentor) { build(:user, :mentor) }
         let(:team_members) { [user_mentor, user_coach] }
 
-        it { is_expected.to be true }
+        it { skip; is_expected.to be true }
       end
 
       context 'and team has 5 students and at least one coach and one mentor' do
@@ -125,7 +129,7 @@ describe Team, type: :model do
         let(:user_mentor) { build(:user, :mentor) }
         let(:team_members) { [student, student, student, student, student, user_mentor, user_coach] }
 
-        it { is_expected.to be false }
+        it { skip; is_expected.to be false }
       end
     end
   end
