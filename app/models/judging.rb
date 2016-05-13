@@ -34,15 +34,15 @@ class Judging
   end
 
   def quarterfinal_teams
-    event.is_virtual? ? event.teams.where(region: judge.judging_region) : event.teams
+    event.is_virtual? ? event.teams.includes(:members).where(region: judge.judging_region) : event.teams
   end
 
   def semifinal_teams
-    team_list.is_semi_finalist if judge.semifinals_judge?
+    team_list.includes(:members).is_semi_finalist if judge.semifinals_judge?
   end
 
   def final_teams
-    team_list.is_finalist if judge.finals_judge?
+    team_list.includes(:members).is_finalist if judge.finals_judge?
   end
 
   class NoEvent
