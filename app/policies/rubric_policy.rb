@@ -30,7 +30,7 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.can_judge? and Semifinal.after_close? and rubric.user == user
+    user.can_judge? and !Semifinal.after_close? and rubric.user == user
   end
 
   def update?

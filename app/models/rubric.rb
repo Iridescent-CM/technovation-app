@@ -5,7 +5,6 @@ class Rubric < ActiveRecord::Base
   validates_presence_of :competition, :identify_problem, :address_problem, :functional, :external_resources, :match_features, :interface, :description, :market, :competition, :revenue, :branding, :pitch
 
   before_save :calculate_score
-  before_save :calculate_stage
 
   enum stage: [
     :quarterfinal,
@@ -27,9 +26,5 @@ class Rubric < ActiveRecord::Base
 
   def calculate_score
     CalculateScore.call(self)
-  end
-
-  def calculate_stage
-    self.stage = Setting.nextJudgingRound.first
   end
 end

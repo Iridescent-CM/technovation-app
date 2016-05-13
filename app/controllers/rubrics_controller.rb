@@ -45,6 +45,7 @@ class RubricsController < ApplicationController
     @rubric = Rubric.new(rubric_params)
     @rubric.team = Team.find(@rubric.team_id)
     @rubric.user_id = current_user.id
+    @rubric.stage = Setting.judgingRound
 
     authorize @rubric
     if @rubric.save
