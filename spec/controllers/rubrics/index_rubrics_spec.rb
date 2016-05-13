@@ -54,8 +54,7 @@ RSpec.describe RubricsController do
 
         before do
           event.update_attributes(is_virtual: true)
-          teams = create_list(:team, 5, :eligible, event: event,
-                                                   region: region)
+          teams = create_list(:team, 5, :eligible, event: event, region: region)
         end
 
         it 'shows three random teams for virtual event' do
@@ -89,10 +88,8 @@ RSpec.describe RubricsController do
       end
 
       it 'shows all teams for this event' do
-        team = create(:team, :eligible, is_semi_finalist: true,
-                                        event: event)
-        team2 = create(:team, :eligible, is_semi_finalist: false,
-                                         event: event)
+        team = create(:team, :eligible, is_semi_finalist: true, event: event)
+        team2 = create(:team, :eligible, is_semi_finalist: false, event: event)
 
         get :index
         expect(assigns[:teams]).to eq([team])
@@ -107,10 +104,8 @@ RSpec.describe RubricsController do
       end
 
       it 'shows all teams for this event' do
-        team = create(:team, :eligible, is_finalist: true,
-                                        event: event)
-        team2 = create(:team, :eligible, is_finalist: false,
-                                         event: event)
+        team = create(:team, :eligible, is_finalist: true, event: event)
+        team2 = create(:team, :eligible, is_finalist: false, event: event)
 
         get :index
         expect(assigns[:teams]).to eq([team])
