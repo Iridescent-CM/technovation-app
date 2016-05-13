@@ -30,7 +30,6 @@ RSpec.describe RubricsController do
         get :index
         expect(assigns[:quarterfinal_teams]).to be_empty
         expect(assigns[:semifinal_teams]).to be_empty
-        expect(assigns[:final_teams]).to be_empty
       end
     end
 
@@ -41,7 +40,6 @@ RSpec.describe RubricsController do
         get :index
         expect(assigns[:quarterfinal_teams]).to be_empty
         expect(assigns[:semifinal_teams]).to be_empty
-        expect(assigns[:final_teams]).to be_empty
       end
     end
 
@@ -98,22 +96,6 @@ RSpec.describe RubricsController do
 
         get :index
         expect(assigns[:semifinal_teams]).to eq([team])
-      end
-    end
-
-    context 'when its finals time' do
-      before do
-        Quarterfinal.close!
-        Semifinal.close!
-        Final.open!(close: Date.today + 1)
-      end
-
-      it 'shows all teams for this event' do
-        team = create(:team, :eligible, is_finalist: true, event: event)
-        team2 = create(:team, :eligible, is_finalist: false, event: event)
-
-        get :index
-        expect(assigns[:final_teams]).to eq([team])
       end
     end
 
