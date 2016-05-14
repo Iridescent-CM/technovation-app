@@ -9,6 +9,11 @@ class Quarterfinal
       open!(open: open, close: close)
     end
 
+    def after_close?
+      date = setting.get_date("quarterfinalJudgingClose")
+      Date.today > date
+    end
+
     private
     def setting
       Setting
