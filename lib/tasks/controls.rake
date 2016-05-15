@@ -27,4 +27,27 @@ namespace :controls do
       end
     end
   end
+
+  namespace :rubrics do
+    desc "Create rubric for all judges who attended in-person event but moved for virtual events to judge semifinals"
+    task :crete_rubrics_for_in_person_events, [:event_id, :judge_id] => :environment do |t, args|
+      event = Event.find(args[:event_id])
+      $stdout.write("Creating rubric for event #{event.name}:")
+      judge = User.find(args[:judge_id])
+      teams_with_no_rubric = event.teams
+                              .where(year: 2016)
+                              .select{|t| t.rubrics.where("extract(year from created_at) = ?", 2016)
+                                  .where(stage: 'quarterfinal', user_id: judge.id).empty?
+                              }
+      teams_with_no_rubric.each do |team|
+        Rubric.new(user_id: judge.id, team_id: team.id,
+          stage: 0, competition: 0, identify_problem: 0, address_problem: 0, functional: 0,
+          external_resources: 0, match_features: 0, interface: 0, description: 0, market: 0,
+          revenue: 0, branding: 0, pitch: 0)
+          .save!
+        $stdout.write("Rubric created for judge: #{judge.email} and team: #{team.name}\n")
+      end
+    end
+  end
+
 end

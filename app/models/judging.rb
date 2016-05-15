@@ -31,6 +31,7 @@ class Judging
 
   def quarterfinal_teams
     if event.is_virtual?
+      #2016 season detail
       Quarterfinal.after_close? ? [] : event.teams.includes(team_requests: :user)
                  .where(region: judge.judging_region)
     else
