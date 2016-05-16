@@ -10,7 +10,53 @@ p
 
 .col-sm-4 class='rubric-box'
   = bootstrap_form_for @rubric do |f|
-    = render 'rubric', f: f
+    h3 Objective score
+
+    h4 Ideation score
+
+    = f.hidden_field :team_id
+    = f.hidden_field :stage, value: params[:stage] || @rubric.stage
+
+    = render 'field', f: f, name: :identify_problem
+    = render 'field', f: f, name: :address_problem
+
+    hr
+
+    h4 Technical score
+
+    = render 'field', f: f, name: :functional
+    = render 'field', f: f, name: :external_resources
+    = render 'field', f: f, name: :match_features
+    = render 'field', f: f, name: :interface
+
+    hr
+
+    h4 Entrepreneurial score
+
+    = render 'field', f: f, name: :description
+    = render 'field', f: f, name: :market
+    = render 'field', f: f, name: :competition
+    = render 'field', f: f, name: :revenue
+    = render 'field', f: f, name: :branding
+
+    hr
+
+    h3 Subjective score
+
+    p Overall Impression - Award points based on which ones gave the best pitch in your batch.
+
+    = render 'field', f: f, name: :pitch
+
+    hr
+
+    h3 Bonus
+
+    p Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
+
+    = f.form_group :launched do
+      = f.check_box :launched, label: "Launched [2]"
+
+    = f.text_area :launched_comment, label: 'Comment (optional)'
 
     = f.form_group do
       = f.submit 'Submit'

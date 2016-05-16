@@ -1,0 +1,11 @@
+<% field = ScoreField.new(name) %>
+
+<%= f.form_group name, label: { text: field.label } do %>
+  <% field.value_labels.each do |value_label| %>
+    <%= f.radio_button name,
+                      value_label.value,
+                      label: "#{value_label.label} [#{value_label.value}]" %>
+  <% end %>
+
+  <%= f.text_area "#{name}_comment", label: 'Comment (optional)' %>
+<% end %>

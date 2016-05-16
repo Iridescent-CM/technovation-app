@@ -1,0 +1,15 @@
+<% score = Score.new(@rubric, name) %>
+
+<p><strong><%= score.label %></strong></p>
+<p><%= score.value %> &ndash; <%= score.explanation %></p>
+
+<p>
+  Possible scores:
+  <ul>
+    <% score.possible_scores.each do |possible_score| %>
+      <li><%= possible_score.value %> &ndash; <%= possible_score.explanation %></li>
+    <% end %>
+  </ul>
+</p>
+
+<hr>
