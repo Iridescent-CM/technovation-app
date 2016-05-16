@@ -102,8 +102,8 @@ class Team < ActiveRecord::Base
   end
 
   def self.least_judged(teams)
-    teams.sort_by { |t| t.rubrics.count }
-         .select { |t| t.rubrics.count == teams.first.rubrics.count }
+    teams = teams.sort_by { |t| t.rubrics.count }
+    teams.select { |t| t.rubrics.count == teams.first.rubrics.count }
   end
 
   def avg_score

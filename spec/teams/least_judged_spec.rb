@@ -12,7 +12,7 @@ RSpec.describe "Select the least judged teams" do
     create(:rubric, team: judged_little)
     create(:rubric, team: judged_little_also)
 
-    teams = [judged_little, judged_lots, judged_little_also]
+    teams = [judged_lots, judged_little, judged_little_also]
 
     expect(Team.least_judged(teams)).to match_array(
       [judged_little, judged_little_also]
