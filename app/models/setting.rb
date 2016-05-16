@@ -64,11 +64,11 @@ class Setting < ActiveRecord::Base
   end
 
   def self.scoresVisible?(round)
-    self.get_boolean(round+'ScoresVisible')
+    self.get_boolean("#{round}ScoresVisible")
   end
 
   def self.scoresVisible
-    Rubric.stages.keys.keep_if{ |s| scoresVisible?(s) }
+    Rubric.stages.keys.select { |s| scoresVisible?(s) }
   end
 
   def self.anyScoresVisible?

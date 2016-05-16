@@ -22,7 +22,7 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def show?
-    Setting.scoresVisible.include?(Rubric.stages[rubric.stage]) &&
+    Setting.scoresVisible?(rubric.stage) &&
       (rubric.user == user || rubric.team.members.include?(user))
   end
 
