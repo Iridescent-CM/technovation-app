@@ -22,7 +22,8 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def show?
-    rubric.user == user || rubric.team.members.include?(user)
+    Setting.scoresVisible.include?(Rubric.stages[rubric.stage]) &&
+      (rubric.user == user || rubric.team.members.include?(user))
   end
 
   def create?
