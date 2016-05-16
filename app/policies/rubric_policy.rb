@@ -22,7 +22,7 @@ class RubricPolicy < ApplicationPolicy
   end
 
   def show?
-    user.can_judge? or (@rubric.team.members.include? @user)
+    rubric.user == user && (user.can_judge? or rubric.team.members.include?(user))
   end
 
   def create?
