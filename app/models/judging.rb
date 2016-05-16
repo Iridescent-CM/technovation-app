@@ -40,7 +40,7 @@ class Judging
   end
 
   def semifinal_teams
-    if judge.semifinals_judge?
+    if judge.semifinals_judge? && Semifinal.is_opened?
       team_list.includes(team_requests: :user).is_semi_finalist
     end
   end

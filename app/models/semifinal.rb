@@ -14,6 +14,11 @@ class Semifinal
       Date.today > date
     end
 
+    def is_opened?
+      date = setting.get_date("semifinalJudgingOpen")
+      (date <= Date.today) && !after_close?
+    end
+
     private
     def setting
       Setting

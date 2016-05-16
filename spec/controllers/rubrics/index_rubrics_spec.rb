@@ -12,6 +12,7 @@ RSpec.describe RubricsController do
     before do
       Season.open!(Date.today.year)
       Quarterfinal.open!(close: Date.today + 1)
+      Semifinal.close!
       allow(Setting).to receive(:cutoff) { Date.yesterday }
 
       @request.env['devise.mapping'] = Devise.mappings[:user]
@@ -24,7 +25,10 @@ RSpec.describe RubricsController do
     end
 
     context 'when its not time to judge' do
-      before { Quarterfinal.close! }
+      before do
+         Quarterfinal.close!
+         Semifinal.close!
+       end
 
       it 'does not show teams to be judged' do
         get :index
@@ -44,6 +48,8 @@ RSpec.describe RubricsController do
     end
 
     context 'when its quarterfinals time' do
+      before { Semifinal.close! }
+
       it 'shows all teams for this event' do
         team = create(:team, :eligible, event: event)
         team2 = create(:team, :eligible)
@@ -102,6 +108,7 @@ RSpec.describe RubricsController do
     describe 'brazilian cases' do
       before do
         Quarterfinal.open!(close: Date.today + 1)
+        Semifinal.close!
         judge.update_attributes(home_country: 'US')
       end
 
