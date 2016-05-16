@@ -2,6 +2,7 @@
 
 <p><strong><%= score.label %></strong></p>
 <p><%= score.value %> &ndash; <%= score.explanation %></p>
+<p><%= @rubric.public_send("#{name}_comment") %></p>
 
 <p>
   Possible scores:
