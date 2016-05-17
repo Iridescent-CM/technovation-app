@@ -85,12 +85,11 @@ class Team < ActiveRecord::Base
   scope :has_category, -> (cat) { where('category_id = ?', cat) }
   scope :has_division, -> (div) { where('division = ?', div) }
   scope :has_region, -> (reg) { where('region_id = ?', reg) }
-  scope :has_event, -> (ev) { where('event_id = ?', ev.id) }
 
-  scope :is_semi_finalist, -> { where(is_semi_finalist: true) }
-  scope :is_finalist, -> { where(is_finalist: true) }
-  scope :is_winner, -> { where(is_winner: true) }
-  scope :is_submitted, -> { where(submitted: true) }
+  scope :is_semi_finalist, -> { current.where(is_semi_finalist: true) }
+  scope :is_finalist, -> { current.where(is_finalist: true) }
+  scope :is_winner, -> { current.where(is_winner: true) }
+  scope :is_submitted, -> { current.where(submitted: true) }
   scope :by_country, -> (country) { current.where(country: country) }
 
   #http://stackoverflow.com/questions/14762714/how-to-list-top-10-school-with-active-record-rails
