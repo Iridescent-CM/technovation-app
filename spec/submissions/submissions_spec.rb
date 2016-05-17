@@ -21,8 +21,8 @@ RSpec.describe "Submissions" do
 
   describe ".open?" do
     before do
-      Submissions.open!("2015-04-14")
-      Submissions.close!("2015-04-16")
+      Submissions.open!(open: Date.new(2015, 4, 14))
+      Submissions.close!(close: Date.new(2015, 4, 16))
     end
 
     it "is open on the submissionOpen date" do
