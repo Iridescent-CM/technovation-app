@@ -48,7 +48,6 @@ class Team < ActiveRecord::Base
   validates_attachment_size :logo, less_than: 100.kilobytes, if: -> { logo.dirty? }
   validates_attachment_size :plan, less_than: 500.kilobytes, if: -> { plan.dirty? }
 
-
   validates_attachment_file_name :plan, :matches => /pdf\Z/
 
   enum division: {
@@ -267,12 +266,12 @@ class Team < ActiveRecord::Base
     true
   end
 
-  # @deprecated
-  def rubrics_in(round)
-    Rails.logger.warn("Team#rubrics_in is deprecated, do not use it")
+  def is_semifinalist?
+    is_semi_finalist?
+  end
 
-    rubrics.where('extract(year from created_at) = ?', Setting.year)
-           .where(stage: Rubric.stages[round])
+  def is_quarterfinalist?
+    true
   end
 
   private

@@ -301,4 +301,12 @@ class User < ActiveRecord::Base
   def send_mentor_signup_email
     SignupMailer.mentor_signup_email(self).deliver
   end
+
+  def quarterfinal_judge?
+    can_judge?
+  end
+
+  def semifinal_judge?
+    semifinals_judge?
+  end
 end

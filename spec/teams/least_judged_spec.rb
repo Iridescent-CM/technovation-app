@@ -27,13 +27,14 @@ RSpec.describe "Select the least judged teams" do
     Quarterfinal.close!
     Semifinal.open!
 
+    judge = create(:user, :judge, semifinals_judge: true)
     judged_last_round = create(:team, is_semi_finalist: true)
     judged_this_round = create(:team, is_semi_finalist: true)
     judged_this_round_also = create(:team, is_semi_finalist: true)
 
     2.times { create(:rubric, team: judged_last_round, stage: Rubric.stages[:quarterfinal]) }
-    create(:rubric, team: judged_this_round, stage: Rubric.stages[:semifinal])
-    create(:rubric, team: judged_this_round_also, stage: Rubric.stages[:semifinal])
+    create(:rubric, team: judged_this_round, user: judge, stage: Rubric.stages[:semifinal])
+    create(:rubric, team: judged_this_round_also, user: judge, stage: Rubric.stages[:semifinal])
 
     teams = [judged_last_round, judged_this_round_also, judged_this_round]
 

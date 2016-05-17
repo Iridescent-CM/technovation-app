@@ -13,5 +13,6 @@ FactoryGirl.define do
     branding 0
     pitch 0
     team
+    user { build(:user, :judge) }
   end
 end

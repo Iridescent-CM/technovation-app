@@ -31,6 +31,21 @@ class Rubric < ActiveRecord::Base
   end
 
   def protect_stage_from_fraud
-    self.stage = 'quarterfinal' if team && !team.is_semi_finalist?
+    self.stage ||= Setting.judgingRound
+
+    if stage_allowed?
+      true
+    elsif stage == Setting.judgingRound
+      self.stage = nil
+    else
+      self.stage = Setting.judgingRound
+      protect_stage_from_fraud
+    end
+  end
+
+  def stage_allowed?
+    team &&
+      team.public_send("is_#{stage}ist?") &&
+        user.public_send("#{stage}_judge?")
   end
 end
