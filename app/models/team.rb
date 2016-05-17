@@ -100,9 +100,12 @@ class Team < ActiveRecord::Base
     order("RANDOM()")
   end
 
-  def self.least_judged(teams)
-    teams = teams.sort_by { |t| t.rubrics.count }
-    teams.select { |t| t.rubrics.count == teams.first.rubrics.count }
+  def self.least_judged(teams, round = Setting.judgingRound)
+    sorted = teams.sort_by { |t| t.rubrics_in(round).count }
+
+    teams.select do |t|
+      t.rubrics_in(round).count == sorted.first.rubrics_in(round).count
+    end
   end
 
   def avg_score
@@ -262,6 +265,14 @@ class Team < ActiveRecord::Base
     end
 
     true
+  end
+
+  # @deprecated
+  def rubrics_in(round)
+    Rails.logger.warn("Team#rubrics_in is deprecated, do not use it")
+
+    rubrics.where('extract(year from created_at) = ?', Setting.year)
+           .where(stage: Rubric.stages[round])
   end
 
   private
