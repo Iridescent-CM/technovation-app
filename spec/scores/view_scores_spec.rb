@@ -31,6 +31,6 @@ RSpec.feature "View scores" do
 
     visit scores_path
 
-    expect(page).to have_link('Judge feedback 1 -- quarterfinal')
+    expect(page).to have_link('Judge feedback 1')
   end
 end

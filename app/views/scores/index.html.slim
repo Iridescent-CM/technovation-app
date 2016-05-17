@@ -6,6 +6,6 @@ h1 Scores
   - if score.rubrics.any?
     ul
       - score.rubrics.each.with_index do |rubric, index|
-        li = link_to "Judge feedback #{index + 1} -- #{rubric.stage}", rubric
+        li = link_to "Judge feedback #{index + 1}", rubric
   - else
     p No scores yet for #{score.team}. Check back later.
