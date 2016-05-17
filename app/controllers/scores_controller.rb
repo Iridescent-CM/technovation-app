@@ -1,18 +1,20 @@
 class ScoresController < ApplicationController
+  TeamScore = Struct.new(:team, :rubrics)
+
   before_action :authenticate_user!
 
-	def index
-		## send in a hash from team name to rubrics
-		@hash = {}
-		for t in current_user.teams
-			## add in visibility
-			visible_stages = Setting.scoresVisible.map{|s| Rubric.stages[s]}
+  def index
+    @scores = current_user.teams.map do |team|
+      visible_stages = Setting.scoresVisible.map do |s|
+        Rubric.stages[s]
+      end
 
-			if visible_stages.length > 0
-				rubrics = Rubric.where(team_id: t.id, stage: visible_stages)
-			end
-
-			@hash[t.name] = rubrics
-		end
-	end
+      if visible_stages.any?
+        rubrics = team.rubrics.where(stage: visible_stages)
+        TeamScore.new(team.name, rubrics)
+      else
+        TeamScore.new(team.name, [])
+      end
+    end
+  end
 end

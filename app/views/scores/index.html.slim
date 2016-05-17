@@ -1,10 +1,11 @@
 h1 Scores
 
-- for t in @hash.keys
-	h4 Scores for #{t}
-	- if @hash[t].nil? or @hash[t].length == 0
-		p No scores yet for #{t}. Check back later.
-	- else
-		- for r in @hash[t] do
-			= link_to "Judge feedback "+(@hash[t].index(r)+1).to_s+"--"+r.stage, rubric_path(r)
-			br
+- @scores.each do |score|
+  h4 Scores for #{score.team}
+
+  - if score.rubrics.any?
+    ul
+      - score.rubrics.each.with_index do |rubric, index|
+        li = link_to "Judge feedback #{index + 1} -- #{rubric.stage}", rubric
+  - else
+    p No scores yet for #{score.team}. Check back later.
