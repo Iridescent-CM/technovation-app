@@ -73,6 +73,7 @@ group :test do
   gem 'webmock'
   gem 'shoulda-callback-matchers'
   gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :production, :staging, :qa do

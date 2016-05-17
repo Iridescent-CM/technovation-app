@@ -185,6 +185,8 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
@@ -382,6 +384,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   kaminari
+  launchy
   newrelic_rpm
   paperclip
   pg
