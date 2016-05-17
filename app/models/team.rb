@@ -100,10 +100,10 @@ class Team < ActiveRecord::Base
   end
 
   def self.least_judged(teams, round = Setting.judgingRound)
-    sorted = teams.sort_by { |t| t.rubrics_in(round).count }
+    sorted = teams.sort_by { |t| t.rubrics.public_send(round).count }
 
     teams.select do |t|
-      t.rubrics_in(round).count == sorted.first.rubrics_in(round).count
+      t.rubrics.public_send(round).count == sorted.first.rubrics.public_send(round).count
     end
   end
 
