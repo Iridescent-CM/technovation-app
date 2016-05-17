@@ -10,16 +10,14 @@ class VisibleScores
 
   def each(&block)
     @teams.each do |team|
-      block.call(TeamScore.new(team.name, rubrics(team)))
+      block.call(TeamScore.new(team.name, visible_rubrics(team)))
     end
   end
 
   private
-  def rubrics(team)
-    rubrics = @setting.scoresVisible.flat_map do |stage|
+  def visible_rubrics(team)
+    @setting.scoresVisible.flat_map do |stage|
       team.public_send("#{stage}_rubrics")
     end
-
-    rubrics || []
   end
 end
