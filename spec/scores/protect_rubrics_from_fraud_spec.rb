@@ -9,7 +9,7 @@ RSpec.describe "Protect rubrics from fraud" do
 
     rubric = create(:rubric, team: team, user: user)
 
-    expect(rubric.stage).to eq('semifinal')
+    expect(rubric.reload.stage).to eq('semifinal')
   end
 
   it "doesn't allow final setting for non finalists" do
@@ -18,7 +18,7 @@ RSpec.describe "Protect rubrics from fraud" do
 
     rubric = create(:rubric, team: team, user: user, stage: Rubric.stages[:final])
 
-    expect(rubric.stage).to eq('semifinal')
+    expect(rubric.reload.stage).to eq('semifinal')
   end
 
   it "doesn't allow semifinal setting for non semi finalists" do
@@ -30,7 +30,7 @@ RSpec.describe "Protect rubrics from fraud" do
 
     rubric = create(:rubric, team: team, user: user, stage: Rubric.stages[:semifinal])
 
-    expect(rubric.stage).to eq('quarterfinal')
+    expect(rubric.reload.stage).to eq('quarterfinal')
   end
 
   it "doesn't allow the wrong judge to score in the wrong round" do
@@ -39,7 +39,7 @@ RSpec.describe "Protect rubrics from fraud" do
 
     rubric = create(:rubric, team: team, user: user, stage: Rubric.stages[:semifinal])
 
-    expect(rubric.stage).to be_nil
+    expect(rubric.reload.stage).to be_nil
   end
 end
 
