@@ -14,6 +14,8 @@ class TeamRequest < ActiveRecord::Base
   after_create :notify_user_received,
     if: Proc.new{ self.approved == false and self.user_request == false}
 
+  delegate :email, :role, to: :user, prefix: true, allow_nil: true
+
   def update_team_data
     team.update_team_data!
   end

@@ -5,11 +5,11 @@ ActiveAdmin.register TeamRequest do
     selectable_column
     column :team
     column :user
-    column "Email" do |teamrequest|
-      teamrequest.user.email
+    column "Email" do |team_request|
+      team_request.user_email
     end
-    column "Role" do |teamrequest|
-      teamrequest.user.role
+    column "Role" do |team_request|
+      team_request.user_role
     end
     column :user_request
     column :approved
