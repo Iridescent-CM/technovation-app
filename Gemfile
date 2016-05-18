@@ -30,7 +30,7 @@ gem 'geocoder', "~> 1.2.6"
 gem 'flag_shih_tzu', "~> 0.3.15"
 gem 'friendly_id', '~> 5.0.4'
 gem 'has_scope', "~> 0.6.0.rc"
-gem 'paperclip', "~> 4.2.1"
+gem 'paperclip', "~> 4.3.6"
 gem 'pundit', '~> 0.3.0'
 gem 'wicked', '~> 1.1.0'
 gem 'createsend', "~> 4.0.2"
@@ -38,7 +38,7 @@ gem 'prawn', "~> 0.15.0"
 gem 'prawn-templates', "~> 0.0.3"
 gem 'cancan', "~> 1.6.10"
 
-gem 'aws-sdk', "~> 2.3.5"
+gem 'aws-sdk', "~> 1.66.0"
 gem 'bcrypt', '~> 3.1.9'
 gem 'jbuilder', '~> 2.2.5'
 gem 'typhoeus', "~> 0.6.9"
