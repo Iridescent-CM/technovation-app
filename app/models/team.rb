@@ -99,12 +99,8 @@ class Team < ActiveRecord::Base
     order("RANDOM()")
   end
 
-  def self.least_judged(teams, round = Setting.judgingRound)
-    sorted = teams.sort_by { |t| t.rubrics.public_send(round).count }
-
-    teams.select do |t|
-      t.rubrics.public_send(round).count == sorted.first.rubrics.public_send(round).count
-    end
+  def scores(round)
+    send("#{round}_rubrics")
   end
 
   def quarterfinal_rubrics

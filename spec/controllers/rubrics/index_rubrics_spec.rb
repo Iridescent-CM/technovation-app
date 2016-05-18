@@ -66,7 +66,7 @@ RSpec.describe RubricsController do
           teams = create_list(:team, 5, :eligible, event: event, region: region)
         end
 
-        it 'shows three random teams for virtual event' do
+        it 'selects three teams for virtual event' do
           get :index
           expect(assigns[:quarterfinal_teams].count).to eq(3)
         end

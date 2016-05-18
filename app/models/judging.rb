@@ -18,7 +18,7 @@ class Judging
     selected = (send("#{round}_teams") || []).select { |t| t.eligible?(judge) }
 
     if event.is_virtual?
-      team_list.least_judged(selected, round).sample(3)
+      selected.min_by(3) { |t| t.scores(round).count }
     else
       selected
     end
