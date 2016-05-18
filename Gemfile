@@ -14,24 +14,24 @@ gem 'uglifier', '~> 2.6.0'
 gem 'puma_worker_killer', "~> 0.0.6"
 
 gem 'autoprefixer-rails', "~> 4.0.2.1"
-gem 'bootstrap-sass', github: 'twbs/bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.1'
 gem 'bootstrap_form', "~> 2.3.0"
 gem 'select2-rails', "~> 3.5.9.1"
 gem 'countries', "~> 0.9.3"
-gem 'country_select', github: 'stefanpenner/country_select'
+gem 'country_select', '~> 2.1.0'
 gem 'jquery-rails', "~> 3.1.2"
 gem 'turbolinks', "~> 2.5.3"
 gem 'jquery-turbolinks', "~> 2.1.0"
 gem 'kaminari', "~> 0.16.1"
 
-gem 'activeadmin', github: 'activeadmin'
-gem 'devise', github: 'plataformatec/devise'
+gem 'activeadmin', '~> 1.0.0.pre'
+gem 'devise', github: 'plataformatec/devise', ref: 'bf30dddd'
 gem 'geocoder', "~> 1.2.6"
 gem 'flag_shih_tzu', "~> 0.3.15"
 gem 'friendly_id', '~> 5.0.4'
 gem 'has_scope', "~> 0.6.0.rc"
 gem 'paperclip', "~> 4.2.1"
-gem 'pundit', github: 'elabs/pundit'
+gem 'pundit', '~> 0.3.0'
 gem 'wicked', '~> 1.1.0'
 gem 'createsend', "~> 4.0.2"
 gem 'prawn', "~> 0.15.0"
