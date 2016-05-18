@@ -34,9 +34,9 @@ class RankingController < ActionController::Base
     Region.all.each do |r|
       num_teams = r.num_finalists
 
-      winners = take_with_ties(Team.joins(:rubrics).where(is_semi_finalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_semifinal_score).reverse, r.num_finalists).each { |w|
-        w.update(is_finalist:true)
-      }
+      team_list_semifinals = Team.joins(:rubrics).where(is_semi_finalist:true, rubrics: { stage: Rubric.stages[:semifinal] }).has_region(r.id).uniq.sort_by(&:avg_score).reverse
+      team_list_finals = take_with_ties(team_list_semifinals, r.num_finalists)
+      winners = team_list_finals.each { |w| w.update(is_finalist:true)}
     end
   end
 
