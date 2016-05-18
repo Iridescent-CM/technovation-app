@@ -111,6 +111,10 @@ class Team < ActiveRecord::Base
     rubrics.semifinal
   end
 
+  def final_rubrics
+    rubrics.final
+  end
+
   def avg_score
     rubrics.average(:score)
   end

@@ -25,6 +25,10 @@ class Rubric < ActiveRecord::Base
     by_year(year).where(stage: Rubric.stages[:semifinal])
   }
 
+  scope :final, ->(year = Setting.year) {
+    by_year(year).where(stage: Rubric.stages[:final])
+  }
+
   private
   def calculate_score
     CalculateScore.call(self)
