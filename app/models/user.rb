@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
     :mn_copy, :ca_copy,
     :signature
 
-  # skipping the parent email
   attr_accessor :skip_parent_email
 
   enum role: [:student, :mentor, :coach, :judge]
@@ -289,9 +288,8 @@ class User < ActiveRecord::Base
     conflict_regions.collect(&:id)
   end
 
-
   def send_judging_email_when_account_is_promoted
-      SignupMailer.judge_signup_email(self).deliver if judging_changed? && judging
+    SignupMailer.judge_signup_email(self).deliver if judging_changed? && judging
   end
 
   def send_judge_signup_email

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
         flash[:notice] = 'Event signup updated'
         redirect_to :back
       elsif params[:user][:judging] == '0'
-        flash[:notice] = "You are no longer signed up to judge."        
+        flash[:notice] = "You are no longer signed up to judge."
         redirect_to :back
       elsif params[:user][:judging] == '1'
         flash[:notice] = "You are now a judge! Sign up for an event to judge."
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       user_request: false
     )
     if @team.save
-      flash[:notice] = 'Team Request Sent'  
+      flash[:notice] = 'Team Request Sent'
     else
       flash[:alert] = 'An error occured during invite'
     end
