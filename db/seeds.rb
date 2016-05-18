@@ -12,8 +12,7 @@ Setting.find_or_create_by(
   value: Date.today.to_s
 )
 
-Submissions.open!(yesterday.to_s)
-Submissions.close!(tomorrow.to_s)
+Submissions.open!(open: yesterday)
 
 ###
 
