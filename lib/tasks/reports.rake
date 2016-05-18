@@ -65,4 +65,36 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a rubrics report on semifinalist teams"
+  task semifinal_team_rubrics: :environment do
+    rubrics = Rubric.joins(:team)
+                    .where(stage: Rubric.stages["semifinal"])
+                    .select do |rubric|
+                      team = rubric.team and team.year = Setting.year
+                    end
+
+    headers = ["Team Name", "Team ID", "Region", "Division", "Event", "Avg Score", "Avg Quarterfinal Score", "Avg SemiFinal Score"]
+    headers += CalculateScore.scoring_attributes.map(&:to_s)
+                                                .map(&:humanize)
+                                                .map(&:titleize)
+    headers += %w{launched score}
+
+    CSV.open("./public/semifinal_team_rubrics.csv", "wb") do |csv|
+      csv << headers
+
+      rubrics.each do |rubric|
+        team = rubric.team
+
+        row = [team.name, team.id, team.region_name, team.division, team.event_name, team.avg_score, team.avg_quarterfinal_score, team.avg_semifinal_score]
+        row += CalculateScore.scoring_attributes.map do |a|
+                 rubric.public_send(a)
+               end
+        row += [!!rubric.launched, rubric.score]
+
+        csv << row
+      end
+    end
+  end
+
 end
