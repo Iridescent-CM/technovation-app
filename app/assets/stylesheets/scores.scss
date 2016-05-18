@@ -1,0 +1,11 @@
+.score-table {
+  thead {
+    tr:first-child {
+      background: $gray-lighter;
+    }
+  }
+}
+
+.score-panel-body {
+  padding: 0;
+}

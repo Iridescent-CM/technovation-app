@@ -1,16 +1,51 @@
 <% score = Score.new(@rubric, name) %>
 
-<p><strong><%= score.label %></strong></p>
-<p><%= score.value %> &ndash; <%= score.explanation %></p>
-<p><%= @rubric.public_send("#{name}_comment") %></p>
+<div class="panel panel-default">
+  <div class="panel-body score-panel-body">
+    <table class="table score-table">
+      <thead>
+        <tr>
+          <th colspan="2"><%= score.label %></th>
+        </tr>
+        <tr>
+          <th width="100">Your score</th>
+          <th>Explanation</th>
+        </tr>
+      </thead>
 
-<p>
-  Possible scores:
-  <ul>
-    <% score.possible_scores.each do |possible_score| %>
-      <li><%= possible_score.value %> &ndash; <%= possible_score.explanation %></li>
-    <% end %>
-  </ul>
-</p>
+      <tbody>
+        <tr>
+          <td><%= score.value %></td>
+          <td><%= score.explanation %></td>
+        </tr>
 
-<hr>
+        <tr>
+          <th colspan="2">Judge's comment</th>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <% if @rubric.public_send("#{name}_comment").blank? %>
+              No comment
+            <% else %>
+              <%= @rubric.public_send("#{name}_comment") %>
+            <% end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <%= link_to "Show other possible scores",
+                        "#scores_#{score.field_name}",
+                        data: { toggle: 'content' } %>
+            <ul id="<%= "scores_#{score.field_name}" %>", class="content-toggle">
+              <% score.possible_scores.each do |possible_score| %>
+                <li><%= possible_score.value %> &ndash; <%= possible_score.explanation %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

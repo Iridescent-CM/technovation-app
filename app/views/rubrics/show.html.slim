@@ -1,22 +1,14 @@
 p DIRECTIONS: The judging rubric for Technovation 2016 contains objective and subjective scoring. The objective score composes of the Ideation, Technical, and Entrepreneurial scores. It is possible for all teams in your scoring batch to receive a perfect score on these objective scoring. The Overall Impression score is where you should score the apps in your batch relative to each other for a subjective score. Maximum points on the subjective part should only be awarded if the submission has truly exhausted their research and development for a complete prototype.
 
-h2 Total score: #{@rubric.score}
-
-h3 Objective score
-
-h4 Ideation score
+h2 Total score from this judge: #{@rubric.score} / #{Score.total_possible}
 
 = render 'score', name: :identify_problem
 = render 'score', name: :address_problem
-
-h4 Technical score
 
 = render 'score', name: :functional
 = render 'score', name: :external_resources
 = render 'score', name: :match_features
 = render 'score', name: :interface
-
-h4 Entrepreneurial score
 
 = render 'score', name: :description
 = render 'score', name: :market
@@ -24,11 +16,7 @@ h4 Entrepreneurial score
 = render 'score', name: :revenue
 = render 'score', name: :branding
 
-h3 Subjective score
-
 = render 'score', name: :pitch
-
-h3 Bonus
 
 p Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
 

@@ -9,6 +9,14 @@ class Score
     @value = @rubric.public_send(@field)
   end
 
+  def self.total_possible
+    max_score_values.reduce(0) { |s, i| s + i }
+  end
+
+  def field_name
+    @field
+  end
+
   def label
     config.fetch('label')
   end
@@ -24,12 +32,21 @@ class Score
     end
   end
 
+  def config
+    @config ||= self.class.config.fetch(@field)
+  end
+
+  def self.config
+    @@config ||= YAML.load_file('./config/score_fields.yml')
+  end
+
   private
   def values
     config.fetch('values')
   end
 
-  def config
-    @config ||= YAML.load_file('./config/score_fields.yml').fetch(@field)
+  def self.max_score_values
+    config.values.flat_map { |i| i.fetch('values').keys.max }
   end
 end
+
