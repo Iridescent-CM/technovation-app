@@ -8,7 +8,7 @@ gem 'pg', "~> 0.18.4"
 gem 'coffee-script', "~> 2.3.0"
 gem 'coffee-rails', '~> 4.0.1'
 gem 'slim-rails', "~> 2.1.5"
-gem 'redcarpet', "~> 3.2.2"
+gem 'redcarpet', "~> 3.3.4"
 gem 'sass-rails', '~> 4.0.5'
 gem 'uglifier', '~> 2.6.0'
 gem 'puma_worker_killer', "~> 0.0.6"
