@@ -4,17 +4,21 @@ class VisibleScores
   include Enumerable
 
   def initialize(teams, setting = Setting)
-    @teams = [teams].flatten
     @setting = setting
+    @teams = initialize_teams(teams)
   end
 
   def each(&block)
-    @teams.each do |team|
-      block.call(TeamScore.new(team.name, visible_rubrics(team)))
-    end
+    @teams.each { |team| block.call(team) }
   end
 
   private
+  def initialize_teams(teams)
+    [teams].flatten.compact.map do |team|
+      TeamScore.new(team.name, visible_rubrics(team))
+    end
+  end
+
   def visible_rubrics(team)
     @setting.scoresVisible.flat_map do |stage|
       team.public_send("#{stage}_rubrics")
