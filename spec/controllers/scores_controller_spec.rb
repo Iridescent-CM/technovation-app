@@ -19,20 +19,5 @@ describe ScoresController, type: :controller do
       expect(assigns[:scores].count).to eq 1
       expect(assigns[:scores].first.team).to eq "nice_name"
     end
-
-    it 'renders scores related to teams from the current year' do
-      Season.open!
-      Quarterfinal.showScores!
-
-      current_team = create :team, year: Date.today.year
-      current_user = create :user
-      rubric = create :rubric, team: current_team, stage: "quarterfinal"
-      current_user.team_requests.create!(team: current_team, approved: true)
-
-      sign_in(current_user)
-      get :index
-
-      expect(assigns[:scores].first.rubrics.count).to eq 1
-    end
   end
 end
