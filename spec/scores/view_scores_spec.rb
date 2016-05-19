@@ -1,36 +1,30 @@
 require "rails_helper"
 
 RSpec.feature "View scores" do
-  scenario "scores not available" do
+  let(:user) { create(:user) }
+  let(:team) { create(:team, name: 'Cool team') }
+
+  before do
     Season.open!
     Submissions.open!
 
-    user = create(:user)
-    team = create(:team, name: 'Cool team')
     team.team_requests.create!(user: user, approved: true)
-    create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
 
     sign_in(user)
+  end
 
+  scenario "scores not available" do
+    rubric = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
     visit scores_path
-
-    expect(page).to have_content('There are no scores available for Cool team.')
+    expect(page).not_to have_link('', href: rubric_path(rubric))
   end
 
   scenario "scores available" do
-    Season.open!
-    Submissions.open!
+    rubric = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
+
     QuarterfinalScores.enable!
-
-    user = create(:user)
-    team = create(:team, name: 'Cool team')
-    team.team_requests.create!(user: user, approved: true)
-    create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
-
-    sign_in(user)
-
     visit scores_path
 
-    expect(page).to have_link('Judge feedback 1')
+    expect(page).to have_link('', href: rubric_path(rubric))
   end
 end
