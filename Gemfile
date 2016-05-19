@@ -74,6 +74,7 @@ group :test do
   gem 'shoulda-callback-matchers', "~> 1.1.3"
   gem 'database_cleaner', "~> 1.5.3"
   gem 'launchy', "~> 2.4.3"
+  gem 'simplecov', "~> 0.11.2"
 end
 
 group :production, :staging, :qa do
