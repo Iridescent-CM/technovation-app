@@ -14,7 +14,7 @@ RSpec.feature "View scores" do
 
     visit scores_path
 
-    expect(page).to have_content('No scores yet for Cool team. Check back later.')
+    expect(page).to have_content('There are no scores available for Cool team.')
   end
 
   scenario "scores available" do
