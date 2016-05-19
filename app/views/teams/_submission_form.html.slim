@@ -45,13 +45,13 @@ javascript:
     = f.collection_select :category_id, Category.of_season(Setting.year), :id, :name
 
     p
-    = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click <a href='http://picresize.com/' target='_blank'> here</a> for a website to help you.".html_safe, data: 'logo', :data => { :max_file_size => 100.kilobytes }
+    = f.file_field :logo, label: "App logo", help: "Please submit an image smaller than 100KB. Images greater than 100KB will not be accepted. If you need to resize your picture, please click <a href='http://picresize.com/' target='_blank'> here</a> for a website to help you.".html_safe, data: { logo: true, max_file_size: 100.kilobytes }
     - unless @team.logo_file_name.nil?
       = f.form_group
         = image_tag @team.logo.url(:thumb)
 
     = f.text_area :description, label: "App description", rows: 5
-    = f.file_field :plan, label: "Business plan *", help: "PDF Format. Please submit a PDF file smaller than 500KB. Documents greater than 500KB will not be accepted. If you need to compress your document, please click <a href='http://www.ilovepdf.com/compress_pdf' target='_blank'> here</a> for a website to help you.".html_safe, data: 'plan', :data => { :max_file_size => 500.kilobytes }
+    = f.file_field :plan, label: "Business plan *", help: "PDF Format. Please submit a PDF file smaller than 500KB. Documents greater than 500KB will not be accepted. If you need to compress your document, please click <a href='http://www.ilovepdf.com/compress_pdf' target='_blank'> here</a> for a website to help you.".html_safe, data: { plan: true, max_file_size: 500.kilobytes }
     = f.text_field :code, label: "Source code *", data: 'code', help: 'A link to GitHub or Google Drive'
 
     = f.text_field :tools, label: 'Tools used', help: 'What tools did you use to build your app?'
@@ -87,12 +87,12 @@ javascript:
       = f.form_group
         = image_tag @team.screenshot3.url(:thumb)
 
-    = f.file_field :screenshot4, label: "4", help: 'optional', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
+    = f.file_field :screenshot4, label: "4", :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot4_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot4.url(:thumb)
 
-    = f.file_field :screenshot5, label: "5", help: 'optional', :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
+    = f.file_field :screenshot5, label: "5", :data => { :max_file_size => 100.kilobytes }, help: 'Images greater than 100KB will not be accepted.'
     - unless @team.screenshot5_file_name.nil?
       = f.form_group
         = image_tag @team.screenshot5.url(:thumb)

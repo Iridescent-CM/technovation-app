@@ -4,11 +4,11 @@ css:
     float: left;
     margin-right: 15px;
     color: #fff;
-    }
-   #submission {
-     float: left;
-     width: 200px;
-   }
+  }
+  #submission {
+    float: left;
+    width: 200px;
+  }
   .submission-status{
     float: right;
     width: auto;
@@ -18,9 +18,9 @@ css:
     overflow: hidden;
   }
   .tip-to-submit {
-     width: 90%;
-     float: right;
-    }
+    width: 90%;
+    float: right;
+  }
   hr {
     clear: both;
   }
@@ -57,4 +57,4 @@ hr
       == show_all_errors(@team.check_completeness)
       span  to complete your submission.
 
-= render 'submissionform', :locals => {:team => @team}
+= render 'submission_form', :locals => {:team => @team}
