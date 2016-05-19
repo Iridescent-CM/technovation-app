@@ -22,7 +22,7 @@ RSpec.feature "View scores" do
   scenario "scores available" do
     rubric = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
 
-    QuarterfinalScores.enable!
+    Quarterfinal.enable_scores!
     visit scores_path
 
     expect(page).to have_link('', href: rubric_path(rubric))
