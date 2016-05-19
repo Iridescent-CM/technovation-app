@@ -14,6 +14,10 @@ class Quarterfinal
       Date.today > date
     end
 
+    def showScores!
+      setting.reset("quarterfinalScoresVisible", true)
+    end
+
     private
     def setting
       Setting

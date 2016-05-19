@@ -8,4 +8,4 @@ h1 Scores
       - score.rubrics.each.with_index do |rubric, index|
         li = link_to "Judge feedback #{index + 1}", rubric
   - else
-    p There are no scores available for #{score.team}.
+    p No scores yet for #{score.team}. Check back later.
