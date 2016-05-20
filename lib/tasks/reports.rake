@@ -97,4 +97,20 @@ namespace :reports do
     end
   end
 
+  desc "Generate a csv with parent's email for students in the current season"
+  task parent_emails: :environment do
+    parents = User.where(is_registered: true).where(role: 'student').map{|u| u.parent_email }
+
+    headers = ["Parent Email"]
+
+    CSV.open("./public/parent_emails_teste.csv", "wb") do |csv|
+      csv << headers
+
+      parents.each do |parent_email|
+        csv << [parent_email]
+      end
+    end
+  end
+
+
 end
