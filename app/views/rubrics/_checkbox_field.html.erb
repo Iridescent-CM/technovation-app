@@ -1,0 +1,6 @@
+<% field = ScoreField.new(name) %>
+
+<%= f.form_group name, label: { text: field.label } do %>
+  <%= f.check_box name, label: name.capitalize %>
+  <%= f.text_area "#{name}_comment", label: 'Comment (optional)' %>
+<% end %>

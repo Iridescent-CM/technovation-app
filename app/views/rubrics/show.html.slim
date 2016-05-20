@@ -18,8 +18,4 @@ h2 Total score from this judge: #{@rubric.score} / #{Score.total_possible}
 
 = render 'score', name: :pitch
 
-p Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
-
-p = @rubric.launched? ? 'yes' : 'no'
-
-p = @rubric.launched_comment
+= render 'score', name: :launched

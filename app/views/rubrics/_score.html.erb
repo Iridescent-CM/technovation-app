@@ -25,10 +25,10 @@
 
         <tr>
           <td colspan="2">
-            <% if @rubric.public_send("#{name}_comment").blank? %>
+            <% if @rubric.public_send("#{score.field_name}_comment").blank? %>
               No comment
             <% else %>
-              <%= @rubric.public_send("#{name}_comment") %>
+              <%= @rubric.public_send("#{score.field_name}_comment") %>
             <% end %>
           </td>
         </tr>

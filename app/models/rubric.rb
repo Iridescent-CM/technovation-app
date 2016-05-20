@@ -1,4 +1,6 @@
 class Rubric < ActiveRecord::Base
+  BONUS_POINTS = 2
+
   belongs_to :team
   belongs_to :user
 
@@ -28,6 +30,19 @@ class Rubric < ActiveRecord::Base
   scope :final, ->(year = Setting.year) {
     by_year(year).where(stage: Rubric.stages[:final])
   }
+
+  def score_value(field)
+    case self[field]
+    when Integer
+      self[field]
+    when TrueClass
+      BONUS_POINTS
+    when FalseClass
+      0
+    else
+      raise "Cannot return scorable value for #{self[field]}"
+    end
+  end
 
   private
   def calculate_score

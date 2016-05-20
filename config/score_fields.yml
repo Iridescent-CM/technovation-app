@@ -93,3 +93,9 @@ pitch:
     2: 'I understand their argument, but I am not sold.'
     5: 'Compelling arguments were made, and a small following may form.'
     10: 'Yes! The argument was compelling enough to think this app has true growth potential.'
+
+launched:
+  label: Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
+  values:
+    0: 'No'
+    2: 'Yes'

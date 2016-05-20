@@ -6,11 +6,11 @@ class Score
   def initialize(rubric, field)
     @rubric = rubric
     @field = field.to_s
-    @value = @rubric.public_send(@field)
+    @value = @rubric.score_value(@field)
   end
 
   def self.total_possible
-    max_score_values.reduce(0) { |s, i| s + i }
+    max_score_values.reduce(0) { |s, i| s + i } - Rubric::BONUS_POINTS
   end
 
   def field_name
@@ -49,4 +49,3 @@ class Score
     config.values.flat_map { |i| i.fetch('values').keys.max }
   end
 end
-
