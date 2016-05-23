@@ -10,7 +10,7 @@ class Score
   end
 
   def self.total_possible
-    max_score_values.reduce(0) { |s, i| s + i } - Rubric::BONUS_POINTS
+    max_score_values.reduce(0) { |s, i| s + i }
   end
 
   def field_name
