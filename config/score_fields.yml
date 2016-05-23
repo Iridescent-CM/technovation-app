@@ -1,101 +1,106 @@
-identify_problem:
-  label: 'Did the team identify a real problem in their community?'
-  values:
-    0: 'No'
-    1: 'The problem identified is more of a nuisance, and does not have larger social implications.'
-    3: 'The problem seems to be real, but could use a little more detail.'
-    5: 'Yes'
+ideation:
+  identify_problem:
+    label: 'Did the team identify a real problem in their community?'
+    values:
+      0: 'No'
+      1: 'The problem identified is more of a nuisance, and does not have larger social implications.'
+      3: 'The problem seems to be real, but could use a little more detail.'
+      5: 'Yes'
 
-address_problem:
-  label: 'Does the app address the problem that they identified?'
-  values:
-    0: 'No'
-    1: 'The app addresses a tangential problem.'
-    3: 'The app addresses some parts of the problem.'
-    5: 'Yes'
+  address_problem:
+    label: 'Does the app address the problem that they identified?'
+    values:
+      0: 'No'
+      1: 'The app addresses a tangential problem.'
+      3: 'The app addresses some parts of the problem.'
+      5: 'Yes'
 
-functional:
-  label: 'Is the prototype they submitted fully functional? (All buttons and links functional and no obvious bugs.)'
-  values:
-    0: 'No'
-    1: 'Only superficial functionality. (i.e. screen transitions)'
-    3: 'Mostly, except for a few minor issues. I can still get the general idea.'
-    5: 'Yes, no bugs that I could see.'
+technical:
+  functional:
+    label: 'Is the prototype they submitted fully functional? (All buttons and links functional and no obvious bugs.)'
+    values:
+      0: 'No'
+      1: 'Only superficial functionality. (i.e. screen transitions)'
+      3: 'Mostly, except for a few minor issues. I can still get the general idea.'
+      5: 'Yes, no bugs that I could see.'
 
-external_resources:
-  label: 'Does the prototype go beyond static information? (e.g. calls another app on the phone, saves information to an external server to coordinate multiple users, etc)'
-  values:
-    0: 'No, only information stored directly in the app is used.'
-    1: 'The app uses other resources, but it seems unnecessary for the purpose of the app.'
-    3: 'Mostly, but there are one or two other places where the app could have used an external service to be more effective.'
-    5: 'Yes, the app uses multiple resources and does so effectively.'
+  external_resources:
+    label: 'Does the prototype go beyond static information? (e.g. calls another app on the phone, saves information to an external server to coordinate multiple users, etc)'
+    values:
+      0: 'No, only information stored directly in the app is used.'
+      1: 'The app uses other resources, but it seems unnecessary for the purpose of the app.'
+      3: 'Mostly, but there are one or two other places where the app could have used an external service to be more effective.'
+      5: 'Yes, the app uses multiple resources and does so effectively.'
 
-match_features:
-  label: 'Does the prototype match the feature list defined in their product description?'
-  values:
-    0: 'No'
-    1: 'Less than half of the features listed are in the prototype and minimal explanation for why features are missing.'
-    3: 'More than half of the features are in the prototype, and there is a reasonable explanation for the missing features.'
-    5: 'Yes, everything stated is included.'
+  match_features:
+    label: 'Does the prototype match the feature list defined in their product description?'
+    values:
+      0: 'No'
+      1: 'Less than half of the features listed are in the prototype and minimal explanation for why features are missing.'
+      3: 'More than half of the features are in the prototype, and there is a reasonable explanation for the missing features.'
+      5: 'Yes, everything stated is included.'
 
-interface:
-  label: 'User Interface. Is the UI intuitive and easy to use?'
-  values:
-    0: 'No'
-    1: 'All the functionality is there, but I had to watch the demo video and read the product description to understand the app.'
-    3: 'The app was obvious after thoroughly reading the product description.'
-    5: 'A quick skim of the defined problem and product description was enough to understand how to use the app.'
+  interface:
+    label: 'User Interface. Is the UI intuitive and easy to use?'
+    values:
+      0: 'No'
+      1: 'All the functionality is there, but I had to watch the demo video and read the product description to understand the app.'
+      3: 'The app was obvious after thoroughly reading the product description.'
+      5: 'A quick skim of the defined problem and product description was enough to understand how to use the app.'
 
-description:
-  label: 'Product description'
-  values:
-    0: 'None'
-    1: 'A short and vague description.'
-    2: 'Describes the app, but value of the app is vague.'
-    3: 'Describes app and value added.'
+business:
+  description:
+    label: 'Product description'
+    values:
+      0: 'None'
+      1: 'A short and vague description.'
+      2: 'Describes the app, but value of the app is vague.'
+      3: 'Describes app and value added.'
 
-market:
-  label: 'Potential market size'
-  values:
-    0: 'None'
-    1: 'Groups of people mentioned, but no estimates done.'
-    2: 'Estimates done and some groups defined. Could have been more thorough.'
-    3: 'Estimates done and groups defined. Estimates clearly explained.'
+  market:
+    label: 'Potential market size'
+    values:
+      0: 'None'
+      1: 'Groups of people mentioned, but no estimates done.'
+      2: 'Estimates done and some groups defined. Could have been more thorough.'
+      3: 'Estimates done and groups defined. Estimates clearly explained.'
 
-competition:
-  label: 'Competitive analysis'
-  values:
-    0: 'None'
-    1: 'Competitors are named, but explanations are sparse or nonexistent.'
-    2: 'Competitors are named, and explanations are provided. Could have been more thorough.'
-    3: 'Analysis is exhaustive.'
+  competition:
+    label: 'Competitive analysis'
+    values:
+      0: 'None'
+      1: 'Competitors are named, but explanations are sparse or nonexistent.'
+      2: 'Competitors are named, and explanations are provided. Could have been more thorough.'
+      3: 'Analysis is exhaustive.'
 
-revenue:
-  label: 'Potential revenue'
-  values:
-    0: 'None'
-    1: 'Calculations are suspect, and explanations are unclear.'
-    2: 'Calculations exist, but basis of the calculations could use more explanation.'
-    3: 'Calculations and explanations are thorough and believable.'
+  revenue:
+    label: 'Potential revenue'
+    values:
+      0: 'None'
+      1: 'Calculations are suspect, and explanations are unclear.'
+      2: 'Calculations exist, but basis of the calculations could use more explanation.'
+      3: 'Calculations and explanations are thorough and believable.'
 
-branding:
-  label: 'Branding and Promotion'
-  values:
-    0: 'None'
-    1: 'A logo or promotional sources are included, but explanations are sparse or nonexistent.'
-    2: 'Logo and limited promotional sources are included. Explanations for promotional plan could be more thorough.'
-    3: 'Logo and promotional plans are included, well explained and exhaustive.'
+  branding:
+    label: 'Branding and Promotion'
+    values:
+      0: 'None'
+      1: 'A logo or promotional sources are included, but explanations are sparse or nonexistent.'
+      2: 'Logo and limited promotional sources are included. Explanations for promotional plan could be more thorough.'
+      3: 'Logo and promotional plans are included, well explained and exhaustive.'
 
-pitch:
-  label: 'Overall Pitch Quality. Is the Pitch compelling? Can you see this app being used by consumers?'
-  values:
-    0: 'Not at all. Argument was flawed and difficult to follow.'
-    2: 'I understand their argument, but I am not sold.'
-    5: 'Compelling arguments were made, and a small following may form.'
-    10: 'Yes! The argument was compelling enough to think this app has true growth potential.'
+subjective:
+  pitch:
+    label: 'Overall Pitch Quality. Is the Pitch compelling? Can you see this app being used by consumers?'
+    values:
+      0: 'Not at all. Argument was flawed and difficult to follow.'
+      2: 'I understand their argument, but I am not sold.'
+      5: 'Compelling arguments were made, and a small following may form.'
+      10: 'Yes! The argument was compelling enough to think this app has true growth potential.'
 
-launched:
-  label: Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
-  values:
-    0: 'No'
-    2: 'Yes'
+bonus:
+  launched:
+    label: Has the app already been launched the the Play Store or App Store? (2 possible bonus points)
+    values:
+      0: 'No'
+      2: 'Yes'

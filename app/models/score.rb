@@ -3,8 +3,9 @@ class Score
 
   attr_reader :value
 
-  def initialize(rubric, field)
+  def initialize(rubric, category, field)
     @rubric = rubric
+    @category = category.to_s
     @field = field.to_s
     @value = @rubric.score_value(@field)
   end
@@ -33,7 +34,7 @@ class Score
   end
 
   def config
-    @config ||= self.class.config.fetch(@field)
+    @config ||= self.class.config.fetch(@category).fetch(@field)
   end
 
   def self.config
@@ -46,6 +47,6 @@ class Score
   end
 
   def self.max_score_values
-    config.values.flat_map { |i| i.fetch('values').keys.max }
+    config.values.flat_map(&:values).flat_map { |i| i.fetch('values').keys.map(&:to_i).max }
   end
 end

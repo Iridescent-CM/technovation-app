@@ -2,20 +2,20 @@ p DIRECTIONS: The judging rubric for Technovation 2016 contains objective and su
 
 h2 Total score from this judge: #{@rubric.score} / #{Score.total_possible}
 
-= render 'score', name: :identify_problem
-= render 'score', name: :address_problem
+= render 'score', category: :ideation, field_name: :identify_problem
+= render 'score', category: :ideation, field_name: :address_problem
 
-= render 'score', name: :functional
-= render 'score', name: :external_resources
-= render 'score', name: :match_features
-= render 'score', name: :interface
+= render 'score', category: :technical, field_name: :functional
+= render 'score', category: :technical, field_name: :external_resources
+= render 'score', category: :technical, field_name: :match_features
+= render 'score', category: :technical, field_name: :interface
 
-= render 'score', name: :description
-= render 'score', name: :market
-= render 'score', name: :competition
-= render 'score', name: :revenue
-= render 'score', name: :branding
+= render 'score', category: :business, field_name: :description
+= render 'score', category: :business, field_name: :market
+= render 'score', category: :business, field_name: :competition
+= render 'score', category: :business, field_name: :revenue
+= render 'score', category: :business, field_name: :branding
 
-= render 'score', name: :pitch
+= render 'score', category: :subjective, field_name: :pitch
 
-= render 'score', name: :launched
+= render 'score', category: :bonus, field_name: :launched
