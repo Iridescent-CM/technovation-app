@@ -1,3 +1,4 @@
+*.dump
 *.rbc
 capybara-*.html
 .rspec
