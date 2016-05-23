@@ -14,6 +14,11 @@ class Score
     max_score_values.reduce(0) { |s, i| s + i }
   end
 
+  def self.fields(category_name)
+    category_data = config.fetch(String(category_name)) { {} }
+    category_data.keys
+  end
+
   def field_name
     @field
   end
