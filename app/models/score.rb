@@ -5,8 +5,8 @@ class Score
 
   def initialize(rubric, category, field)
     @rubric = rubric
-    @category = category.to_s
-    @field = field.to_s
+    @category = String(category)
+    @field = String(field)
     @value = @rubric.score_value(@field)
   end
 

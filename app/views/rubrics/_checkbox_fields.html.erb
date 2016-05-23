@@ -1,0 +1,7 @@
+<h4><%= String(category).capitalize %> score</h4>
+
+<% Score.fields(category).each do |field| %>
+  <%= render "checkbox_field", f: f, category: category, field_name: field %>
+<% end %>
+
+<hr />

@@ -12,46 +12,19 @@ p
   = bootstrap_form_for @rubric do |f|
     h3 Objective score
 
-    h4 Ideation score
-
     = f.hidden_field :team_id
     = f.hidden_field :stage, value: params[:stage] || @rubric.stage
 
-    = render 'field', f: f, name: :identify_problem
-    = render 'field', f: f, name: :address_problem
+    = render 'fields', f: f, category: :ideation
 
-    hr
+    = render 'fields', f: f, category: :technical
 
-    h4 Technical score
+    = render 'fields', f: f, category: :business
 
-    = render 'field', f: f, name: :functional
-    = render 'field', f: f, name: :external_resources
-    = render 'field', f: f, name: :match_features
-    = render 'field', f: f, name: :interface
+    = render layout: 'fields', locals: { f: f, category: :subjective }
+      p Overall Impression - Award points based on which ones gave the best pitch in your batch.
 
-    hr
-
-    h4 Entrepreneurial score
-
-    = render 'field', f: f, name: :description
-    = render 'field', f: f, name: :market
-    = render 'field', f: f, name: :competition
-    = render 'field', f: f, name: :revenue
-    = render 'field', f: f, name: :branding
-
-    hr
-
-    h3 Subjective score
-
-    p Overall Impression - Award points based on which ones gave the best pitch in your batch.
-
-    = render 'field', f: f, name: :pitch
-
-    hr
-
-    h3 Bonus
-
-    = render 'checkbox_field', f: f, name: :launched
+    = render 'checkbox_fields', f: f, category: :bonus
 
     = f.form_group do
       = f.submit 'Submit'
