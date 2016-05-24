@@ -1,17 +1,12 @@
 class MeaningfulScores
+  WeightedScore = Struct.new(:score, :weight)
+
   include Enumerable
 
   def initialize(score_or_scores, limit = 0)
     scores = Array(score_or_scores)
-    commented = self.class.config.flat_map do |category, weight_and_fields|
-                  (weight_and_fields.keys - ['weight']).flat_map do |field|
-                    scores.select do |score|
-                      !score.public_send("#{field}_comment").empty?
-                    end
-                  end
-                end
-    sorted = commented | scores
-    @scores = sorted.first(limit)
+    @scores = weigh_scores(scores).max_by(limit) { |w| w.weight }
+                                  .collect(&:score)
   end
 
   def each(&block)
@@ -28,5 +23,31 @@ class MeaningfulScores
 
   def self.config
     {}
+  end
+
+  private
+  def weigh_scores(scores)
+    self.class.config.flat_map do |_, weight_and_fields|
+      scores.flat_map do |score|
+        WeightedScore.new(score, weigh_score(score, weight_and_fields))
+      end
+    end
+  end
+
+  def weigh_score(score, weight_and_fields)
+    category_weight = weight_and_fields.fetch('weight')
+    fields = (weight_and_fields.keys - ['weight'])
+
+    initial_weight = category_weight * score.present_comments_count(*fields)
+
+    initial_weight * adjusted_category_weight(category_weight)
+  end
+
+  def adjusted_category_weight(category_weight)
+    Float(category_weight) / heaviest_weight
+  end
+
+  def heaviest_weight
+    self.class.config.values.max_by { |v| v == 'value' }.fetch('weight')
   end
 end
