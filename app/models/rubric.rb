@@ -16,7 +16,7 @@ class Rubric < ActiveRecord::Base
   ]
 
   scope :by_year, ->(year) {
-    where("extract(year from created_at) = ?", year)
+    where("extract(year from #{table_name}.created_at) = ?", year)
   }
 
   scope :quarterfinal, ->(year = Setting.year) {
