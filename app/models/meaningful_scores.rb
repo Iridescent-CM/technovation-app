@@ -38,7 +38,7 @@ class MeaningfulScores
     category_weight = weight_and_fields.fetch('weight')
     fields = (weight_and_fields.keys - ['weight'])
 
-    initial_weight = category_weight * score.present_comments_count(*fields)
+    initial_weight = category_weight * score.provided_feedback_count(*fields)
 
     initial_weight * adjusted_category_weight(category_weight)
   end

@@ -9,14 +9,14 @@ RSpec.describe "Select meaningful scores" do
 
   it "returns <limit> scores for a given limit" do
     allow(MeaningfulScores).to receive(:config) { config }
-    collection = [double(:score, present_comments_count: 0)] * 2
+    collection = [double(:score, provided_feedback_count: 0)] * 2
     scores = MeaningfulScores.new(collection, 1)
     expect(scores.count).to eq(1)
   end
 
   it "returns a result with a 1-weighted judge comment at the top" do
-    empty_comment = double(:empty_comment, present_comments_count: 0)
-    has_comment = double(:has_comment, present_comments_count: 1)
+    empty_comment = double(:empty_comment, provided_feedback_count: 0)
+    has_comment = double(:has_comment, provided_feedback_count: 1)
     collection = [empty_comment, has_comment]
 
     allow(MeaningfulScores).to receive(:config) { config }
@@ -33,14 +33,14 @@ RSpec.describe "Select meaningful scores" do
 
     allow(MeaningfulScores).to receive(:config) { config }
 
-    expect(one_weighted).to receive(:present_comments_count)
+    expect(one_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 1 }
-    expect(one_weighted).to receive(:present_comments_count)
+    expect(one_weighted).to receive(:provided_feedback_count)
       .with('two_weighted') { 0 }
 
-    expect(two_weighted).to receive(:present_comments_count)
+    expect(two_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 1 } # doesn't completely matter
-    expect(two_weighted).to receive(:present_comments_count)
+    expect(two_weighted).to receive(:provided_feedback_count)
       .with('two_weighted') { 1 }
 
     scores = MeaningfulScores.new(collection, 2)
@@ -56,19 +56,19 @@ RSpec.describe "Select meaningful scores" do
 
     allow(MeaningfulScores).to receive(:config) { config }
 
-    expect(one_weighted).to receive(:present_comments_count)
+    expect(one_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 2 }
-    expect(one_weighted).to receive(:present_comments_count)
+    expect(one_weighted).to receive(:provided_feedback_count)
       .with('two_weighted') { 0 }
 
-    expect(also_one_weighted).to receive(:present_comments_count)
+    expect(also_one_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 2 }
-    expect(also_one_weighted).to receive(:present_comments_count)
+    expect(also_one_weighted).to receive(:provided_feedback_count)
       .with('two_weighted') { 0 }
 
-    expect(two_weighted).to receive(:present_comments_count)
+    expect(two_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 0 }
-    expect(two_weighted).to receive(:present_comments_count)
+    expect(two_weighted).to receive(:provided_feedback_count)
       .with('two_weighted') { 1 }
 
     scores = MeaningfulScores.new(collection, 2)
