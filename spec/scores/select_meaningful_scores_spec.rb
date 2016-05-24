@@ -3,8 +3,8 @@ require "spec_helper"
 class MeaningfulScores
   include Enumerable
 
-  def initialize(score_or_scores)
-    @scores = Array(score_or_scores)
+  def initialize(score_or_scores, limit = 0)
+    @scores = Array(score_or_scores).first(limit)
   end
 
   def each(&block)
@@ -22,7 +22,12 @@ RSpec.describe "Select meaningful scores" do
     expect(scores).to be_empty
   end
 
-  it "returns <limit> scores for a given limit"
+  it "returns <limit> scores for a given limit" do
+    collection = [double] * 2
+    scores = MeaningfulScores.new(collection, 1)
+    expect(scores.count).to eq(1)
+  end
+
   it "returns the first <limit> scores when all the comments are empty"
 
   it "returns a result with a 1-weighted comment at the top"
