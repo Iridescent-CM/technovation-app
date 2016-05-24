@@ -14,6 +14,13 @@ class MeaningfulScores
   def empty?
     !@scores.any?
   end
+
+  def last
+    @scores[-1]
+  end
+
+  def self.config
+  end
 end
 
 RSpec.describe "Select meaningful scores" do
@@ -28,11 +35,22 @@ RSpec.describe "Select meaningful scores" do
     expect(scores.count).to eq(1)
   end
 
-  it "returns the first <limit> scores when all the comments are empty"
+  it "returns the first <limit> scores when all the judge comments are empty" do
+    collection = 2.times.map { |n| double(:score, id: n, attribute_comment: "") }
 
-  it "returns a result with a 1-weighted comment at the top"
-  it "returns a result with a 2-weighted comment over 1-weighted results"
-  it "returns a result with a 3-weighted comment over 1- and 2-weighted results"
+    allow(MeaningfulScores).to receive(:config) { basic_config }
+
+    scores = MeaningfulScores.new(collection, 1)
+    expect(scores.last.id).to eq(0)
+  end
+
+  it "returns a result with a 1-weighted judge comment at the top"
+  it "returns a result with a 2-weighted judge comment over 1-weighted results"
+  it "returns a result with a 3-weighted judge comment over 1- and 2-weighted results"
 
   it "selects the top <limit> scores sorted descending by varied weights"
+
+  def basic_config
+    { "category_name" => { "attribute" => {} } }
+  end
 end
