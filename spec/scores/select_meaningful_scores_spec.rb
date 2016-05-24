@@ -4,7 +4,10 @@ class MeaningfulScores
   include Enumerable
 
   def initialize(score_or_scores, limit = 0)
-    @scores = Array(score_or_scores).first(limit)
+    scores = Array(score_or_scores)
+    commented = scores.select { |score| !score.field_comment.empty? }
+    sorted = commented | scores
+    @scores = sorted.first(limit)
   end
 
   def each(&block)
@@ -18,9 +21,6 @@ class MeaningfulScores
   def last
     @scores[-1]
   end
-
-  def self.config
-  end
 end
 
 RSpec.describe "Select meaningful scores" do
@@ -30,27 +30,23 @@ RSpec.describe "Select meaningful scores" do
   end
 
   it "returns <limit> scores for a given limit" do
-    collection = [double] * 2
+    collection = [double.as_null_object] * 2
     scores = MeaningfulScores.new(collection, 1)
     expect(scores.count).to eq(1)
   end
 
-  it "returns the first <limit> scores when all the judge comments are empty" do
-    collection = 2.times.map { |n| double(:score, id: n, attribute_comment: "") }
+  it "returns a result with a 1-weighted judge comment at the top" do
+    empty_comment = double(:empty_comment, id: 0, field_comment: "")
+    has_comment = double(:has_comment, id: 1, field_comment: "content exists")
+    collection = [empty_comment, has_comment]
 
-    allow(MeaningfulScores).to receive(:config) { basic_config }
+    scores = MeaningfulScores.new(collection, 2)
 
-    scores = MeaningfulScores.new(collection, 1)
-    expect(scores.last.id).to eq(0)
+    expect(scores.first).to eq(has_comment)
   end
 
-  it "returns a result with a 1-weighted judge comment at the top"
   it "returns a result with a 2-weighted judge comment over 1-weighted results"
   it "returns a result with a 3-weighted judge comment over 1- and 2-weighted results"
 
   it "selects the top <limit> scores sorted descending by varied weights"
-
-  def basic_config
-    { "category_name" => { "attribute" => {} } }
-  end
 end
