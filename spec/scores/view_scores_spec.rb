@@ -27,4 +27,33 @@ RSpec.feature "View scores" do
 
     expect(page).to have_link('', href: rubric_path(rubric))
   end
+
+  scenario 'meaningful scores' do
+    zero_feedback = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
+
+    lowest_feedback = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal],
+                             description_comment: "1 point feedback")
+
+    create(:rubric, team: team, stage: Rubric.stages[:quarterfinal],
+           address_problem_comment: "2 point feedback")
+
+    create(:rubric, team: team, stage: Rubric.stages[:quarterfinal],
+           functional_comment: "3 point feedback")
+
+    create(:rubric, team: team, stage: Rubric.stages[:quarterfinal],
+           address_problem_comment: "2 point feedback",
+           external_resources_comment: "3 point feedback")
+
+    highest_feedback = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal],
+                              description_comment: "1 point feedback",
+                              address_problem_comment: "2 point feedback",
+                              external_resources_comment: "3 point feedback")
+
+    Quarterfinal.enable_scores!
+    visit scores_path
+
+    expect(page).not_to have_link('', href: rubric_path(zero_feedback))
+    expect(page.find('.scores li:first-child')).to have_link('', href: rubric_path(highest_feedback))
+    expect(page.find('.scores li:last-child')).to have_link('', href: rubric_path(lowest_feedback))
+  end
 end

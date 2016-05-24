@@ -10,7 +10,11 @@ class MeaningfulScores
   end
 
   def each(&block)
-    @scores.each { |s| block.call(s) }
+    if block_given?
+      @scores.each { |s| block.call(s) }
+    else
+      @scores.each
+    end
   end
 
   def empty?
@@ -22,25 +26,25 @@ class MeaningfulScores
   end
 
   def self.config
-    {}
+    YAML.load_file('./config/score_fields.yml')
   end
 
   private
   def weigh_scores(scores)
-    self.class.config.flat_map do |_, weight_and_fields|
-      scores.flat_map do |score|
-        WeightedScore.new(score, weigh_score(score, weight_and_fields))
-      end
+    scores.flat_map do |score|
+      WeightedScore.new(score, weigh_score(score))
     end
   end
 
-  def weigh_score(score, weight_and_fields)
-    category_weight = weight_and_fields.fetch('weight')
-    fields = (weight_and_fields.keys - ['weight'])
+  def weigh_score(score)
+    self.class.config.reduce(0) do |sum, (_, weight_and_fields)|
+      category_weight = weight_and_fields.fetch('weight') { 0 }
+      fields = (weight_and_fields.keys - ['weight'])
 
-    initial_weight = category_weight * score.provided_feedback_count(*fields)
+      initial_weight = category_weight * score.provided_feedback_count(*fields)
 
-    initial_weight * adjusted_category_weight(category_weight)
+      sum + (initial_weight * adjusted_category_weight(category_weight))
+    end
   end
 
   def adjusted_category_weight(category_weight)

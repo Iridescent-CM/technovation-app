@@ -44,6 +44,10 @@ class Rubric < ActiveRecord::Base
     end
   end
 
+  def provided_feedback_count(*fields)
+    fields.count { |f| !send("#{f}_comment").blank? }
+  end
+
   private
   def calculate_score
     CalculateScore.call(self)

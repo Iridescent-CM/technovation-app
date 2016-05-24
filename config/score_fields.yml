@@ -1,4 +1,5 @@
 ideation:
+  weight: 2
   identify_problem:
     label: 'Did the team identify a real problem in their community?'
     values:
@@ -16,6 +17,7 @@ ideation:
       5: 'Yes'
 
 technical:
+  weight: 3
   functional:
     label: 'Is the prototype they submitted fully functional? (All buttons and links functional and no obvious bugs.)'
     values:
@@ -49,6 +51,7 @@ technical:
       5: 'A quick skim of the defined problem and product description was enough to understand how to use the app.'
 
 business:
+  weight: 1
   description:
     label: 'Product description'
     values:
