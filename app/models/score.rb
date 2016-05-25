@@ -16,7 +16,7 @@ class Score
 
   def self.fields(category_name)
     category_data = config.fetch(String(category_name)) { {} }
-    category_data.keys
+    category_data.keys - ['weight']
   end
 
   def field_name
