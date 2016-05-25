@@ -52,6 +52,6 @@ class Score
   end
 
   def self.max_score_values
-    config.values.flat_map(&:values).flat_map { |i| i.fetch('values').keys.map(&:to_i).max }
+    config.values.flat_map(&:values).select { |i| i.respond_to?(:fetch) }.flat_map { |i| i.fetch('values').keys.map(&:to_i).max }
   end
 end
