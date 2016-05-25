@@ -15,9 +15,9 @@ RSpec.feature "Edit scores" do
     sign_in(user)
     visit edit_rubric_path(rubric)
 
-    choose '1', from: :address_problem
-    click_button 'Save'
+    fill_in 'rubric_description_comment', with: 'Great description, well done!'
+    click_button 'Submit'
 
-    expect(rubric.reload.address_problem).to eq(1)
+    expect(rubric.reload.description_comment).to eq('Great description, well done!')
   end
 end
