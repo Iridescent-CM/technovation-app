@@ -37,10 +37,10 @@ class Rubric < ActiveRecord::Base
       self[field]
     when TrueClass
       BONUS_POINTS
-    when FalseClass
+    when FalseClass, NilClass
       0
     else
-      raise "Cannot return scorable value for #{self[field]}"
+      raise "Cannot return scorable value for #{self[field].inspect}"
     end
   end
 
