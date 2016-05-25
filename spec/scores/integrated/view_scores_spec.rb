@@ -28,6 +28,18 @@ RSpec.feature "View scores" do
     expect(page).to have_link('', href: rubric_path(rubric))
   end
 
+  scenario "view scores" do
+    rubric = create(:rubric, team: team,
+                             description_comment: "You did great on the description",
+                             stage: Rubric.stages[:quarterfinal])
+
+    Quarterfinal.enable_scores!
+    visit scores_path
+    click_link '', href: rubric_path(rubric)
+
+    expect(page).to have_content("You did great on the description")
+  end
+
   scenario 'meaningful scores' do
     zero_feedback = create(:rubric, team: team, stage: Rubric.stages[:quarterfinal])
 
