@@ -52,6 +52,6 @@ class MeaningfulScores
   end
 
   def heaviest_weight
-    self.class.config.values.max_by { |v| v == 'value' }.fetch('weight')
+    self.class.config.values.max_by { |h| h.fetch('weight') { 0 } }.fetch('weight')
   end
 end
