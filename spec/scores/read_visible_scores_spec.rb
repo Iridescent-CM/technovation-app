@@ -8,14 +8,14 @@ RSpec.describe "Read visible scores" do
 
     expect(team).to receive('quarterfinal_rubrics')
     expect(team).to receive('semifinal_rubrics')
-    VisibleScores.new(team, setting)
+    VisibleScores.new(team, setting: setting)
   end
 
   it "sets rubrics to empty when scores are not visible" do
     setting = double(:setting, scoresVisible: [])
     teams = [double(:team, name: 'team')]
 
-    scores = VisibleScores.new(teams, setting)
+    scores = VisibleScores.new(teams, setting: setting)
     score = scores.first
 
     expect(score.rubrics).to be_empty

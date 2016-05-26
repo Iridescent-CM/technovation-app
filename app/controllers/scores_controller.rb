@@ -2,11 +2,8 @@ class ScoresController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    visible_scores = VisibleScores.new(current_user.teams.current)
-
-    @scores = visible_scores.map do |score|
-      rubrics = MeaningfulScores.new(score.rubrics, 5)
-      VisibleScores::TeamScore.new(score.team, rubrics)
-    end
+    @scores = VisibleScores.new(current_user.teams.current,
+                                filter_with: MeaningfulScores,
+                                filter_limit: 5)
   end
 end
