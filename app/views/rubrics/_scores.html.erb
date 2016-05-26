@@ -1,3 +1,3 @@
-<% Score.fields(category).each do |field| %>
-  <%= render 'score', category: category, field_name: field %>
+<% ScoreConfig.fields(category).each do |field| %>
+  <%= render 'score', field_name: field %>
 <% end %>

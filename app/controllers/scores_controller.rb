@@ -1,12 +1,13 @@
 class ScoresController < ApplicationController
+  TeamWithScores = Struct.new(:team_name, :rubrics)
+
   before_action :authenticate_user!
 
   def index
-    visible_scores = VisibleScores.new(current_user.teams.current)
-
-    @scores = visible_scores.map do |score|
-      rubrics = MeaningfulScores.new(score.rubrics, 5)
-      VisibleScores::TeamScore.new(score.team, rubrics)
+    @scores = current_user.teams.current.flat_map do |team|
+      visible = VisibleScores.new(team)
+      meaningful = MeaningfulScores.new(visible, 5)
+      TeamWithScores.new(team.name, meaningful)
     end
   end
 end

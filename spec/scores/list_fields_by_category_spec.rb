@@ -2,20 +2,20 @@ require 'spec_helper'
 require './app/scores/score'
 
 RSpec.describe "list fields by category" do
-  subject(:fields) { Score.fields(:category_name) }
+  subject(:fields) { ScoreConfig.fields(:category_name) }
 
   it "is empty when the category does not exist" do
-    allow(Score).to receive(:config) { {} }
+    allow(ScoreConfig).to receive(:loaded_config) { {} }
     expect(fields).to be_empty
   end
 
   it "is empty when the category does not have any fields" do
-    allow(Score).to receive(:config) { { "category_name" => {} } }
+    allow(ScoreConfig).to receive(:loaded_config) { { "category_name" => {} } }
     expect(fields).to be_empty
   end
 
   it "lists all category fields" do
-    allow(Score).to receive(:config) { category_has_fields_config }
+    allow(ScoreConfig).to receive(:loaded_config) { category_has_fields_config }
     expect(fields).to eq(["field_name"])
   end
 

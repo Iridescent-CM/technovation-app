@@ -1,21 +1,23 @@
 class VisibleScores
-  TeamScore = Struct.new(:team, :rubrics)
-
   include Enumerable
 
-  def initialize(teams, setting = Setting)
-    @setting = setting
-    @teams = initialize_teams(teams)
+  def initialize(team_or_teams, options = {})
+    @setting = options.fetch(:setting) { Setting }
+    @scores = initialize_scores(team_or_teams)
   end
 
   def each(&block)
-    @teams.each { |team| block.call(team) }
+    @scores.each { |score| block.call(score) }
+  end
+
+  def empty?
+    @scores.empty?
   end
 
   private
-  def initialize_teams(teams)
-    [teams].flatten.compact.map do |team|
-      TeamScore.new(team.name, visible_rubrics(team))
+  def initialize_scores(team_or_teams)
+    Array(team_or_teams).compact.flat_map do |team|
+      visible_rubrics(team)
     end
   end
 
