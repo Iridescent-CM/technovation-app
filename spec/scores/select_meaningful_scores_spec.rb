@@ -1,5 +1,5 @@
 require "spec_helper"
-require "./app/models/meaningful_scores"
+require "./app/scores/meaningful_scores"
 
 RSpec.describe "Select meaningful scores" do
   it "is empty for no scores" do

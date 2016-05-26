@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './app/models/score'
+require './app/scores/score'
 
 RSpec.describe "total possible score" do
   subject(:total_possible) { Score.total_possible }

@@ -1,5 +1,5 @@
 require "./app/policies/application_policy"
-require "./app/models/submissions"
+require "./app/judging/submissions"
 
 class TeamPolicy < ApplicationPolicy
   attr_reader :user, :team

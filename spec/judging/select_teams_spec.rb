@@ -1,5 +1,5 @@
 require "spec_helper"
-require "./app/models/judging"
+require "./app/judging/judging"
 
 RSpec.describe "Selecting teams for judging" do
   it "returns no teams for no round active" do

@@ -1,5 +1,5 @@
 require "spec_helper"
-require "./app/models/visible_scores"
+require "./app/scores/visible_scores"
 
 RSpec.describe "Read visible scores" do
   it "sets rubrics  when the round's scores are visible" do

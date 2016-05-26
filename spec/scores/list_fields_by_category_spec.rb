@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './app/models/score'
+require './app/scores/score'
 
 RSpec.describe "list fields by category" do
   subject(:fields) { Score.fields(:category_name) }
