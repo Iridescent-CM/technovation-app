@@ -1,7 +1,8 @@
 class SelectSurvey
 
-  def initialize(user)
+  def initialize(user, submissions)
     @user = user
+    @period = submissions.has_opened? ? :post : :pre
   end
 
   def link
