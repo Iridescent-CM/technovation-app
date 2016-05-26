@@ -55,4 +55,31 @@ RSpec.describe "Submissions" do
       end
     end
   end
+
+  describe ".has_opened?" do
+    before do
+      Submissions.open!(open: Date.new(2016, 4, 14))
+      Submissions.close!(close: Date.new(2016, 4, 20))
+    end
+
+    it "has not opened before the submissionOpen date" do
+      Timecop.freeze("2016-04-10") do
+          expect(Submissions.has_opened?).to be false
+      end
+
+    end
+
+    it "has opened on the submissionOpen date" do
+      Timecop.freeze("2016-04-14") do
+        expect(Submissions.has_opened?).to be true
+      end
+    end
+
+    it "has opened after the submissionClose date" do
+      Timecop.freeze("2016-04-21") do
+        expect(Submissions.has_opened?).to be true
+      end
+    end
+
+  end
 end

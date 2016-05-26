@@ -22,5 +22,9 @@ class Submissions < DateBasedSetting
     def opening_date
       Date.parse(setting.find_by!(key: 'submissionOpen').value)
     end
+
+    def has_opened?
+      Date.today >= opening_date
+    end
   end
 end
