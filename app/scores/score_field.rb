@@ -1,8 +1,7 @@
 class ScoreField
   ValueLabel = Struct.new(:value, :label)
 
-  def initialize(category, field)
-    @category = String(category)
+  def initialize(field)
     @field = String(field)
   end
 
@@ -18,6 +17,6 @@ class ScoreField
 
   private
   def config
-    @config ||= YAML.load_file('./config/score_fields.yml').fetch(@category).fetch(@field)
+    ScoreConfig.field(@field)
   end
 end

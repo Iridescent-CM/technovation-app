@@ -3,7 +3,7 @@
 <%= yield %>
 
 <% Score.fields(category).each do |field| %>
-  <%= render "field", f: f, category: category, field_name: field %>
+  <%= render "field", f: f, field_name: field %>
 <% end %>
 
 <hr />
