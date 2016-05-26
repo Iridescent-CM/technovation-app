@@ -1,3 +1,5 @@
+require "./app/scores/score_config"
+
 class Score
   PossibleValue = Struct.new(:value, :explanation)
 
@@ -11,12 +13,7 @@ class Score
   end
 
   def self.total_possible
-    max_score_values.reduce(0) { |s, i| s + i }
-  end
-
-  def self.fields(category_name)
-    category_data = config.fetch(String(category_name)) { {} }
-    category_data.keys - ['weight']
+    ScoreConfig.max_score_values.reduce(0) { |s, i| s + i }
   end
 
   def field_name
@@ -38,20 +35,12 @@ class Score
     end
   end
 
-  def config
-    @config ||= self.class.config.fetch(@category).fetch(@field)
-  end
-
-  def self.config
-    @@config ||= YAML.load_file('./config/score_fields.yml')
-  end
-
   private
   def values
     config.fetch('values')
   end
 
-  def self.max_score_values
-    config.values.flat_map(&:values).select { |i| i.respond_to?(:fetch) }.flat_map { |i| i.fetch('values').keys.map(&:to_i).max }
+  def config
+    ScoreConfig.field(@field)
   end
 end

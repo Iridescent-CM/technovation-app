@@ -5,17 +5,17 @@ RSpec.describe "total possible score" do
   subject(:total_possible) { Score.total_possible }
 
   it "returns 0 for a config of 0 values" do
-    allow(Score).to receive(:config) { all_zeros_config }
+    allow(ScoreConfig).to receive(:loaded_config) { all_zeros_config }
     expect(total_possible).to eq(0)
   end
 
   it "returns a sum of all 1 values" do
-    allow(Score).to receive(:config) { all_ones_config }
+    allow(ScoreConfig).to receive(:loaded_config) { all_ones_config }
     expect(total_possible).to eq(1)
   end
 
   it "returns the sum of the maximum values" do
-    allow(Score).to receive(:config) { mixed_values_config }
+    allow(ScoreConfig).to receive(:loaded_config) { mixed_values_config }
     expect(total_possible).to eq(8)
   end
 
