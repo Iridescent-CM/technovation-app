@@ -5,9 +5,8 @@ class Score
 
   attr_reader :value
 
-  def initialize(rubric, category, field)
+  def initialize(rubric, field)
     @rubric = rubric
-    @category = String(category)
     @field = String(field)
     @value = @rubric.score_value(@field)
   end
