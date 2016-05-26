@@ -54,20 +54,8 @@
     - unless current_user.judge?
       li
         ' If you haven't already, please complete the following
-        - if Submissions.open?
-          - if current_user.student?
-            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_0cankgvZeqVcy3P' student post-program survey
-          - if current_user.mentor?
-            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_bjRy3xD4O81l6i9' mentor post-program survey
-          - if current_user.coach?
-            a target="_blank" href='http://rockman.co1.qualtrics.com/SE/?SID=SV_cN166tnJClpa7jf' coach post-program survey
-        - else
-          - if current_user.student?
-            a href='https://www.surveymonkey.com/s/683JH6K' student pre-program survey
-          - if current_user.mentor?
-            a href='https://www.surveymonkey.com/s/6GLCHTB' mentor pre-program survey
-          - if current_user.coach?
-            a href='https://www.surveymonkey.com/s/SV2FST7' coach pre-program survey
+        - selected_survey = SelectSurvey.new(current_user, Submissions)
+        a target="_blank" href=selected_survey.link #{current_user.role} survey
         | .
 
     / team request infos
