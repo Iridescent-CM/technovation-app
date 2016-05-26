@@ -2,6 +2,9 @@ require 'spec_helper'
 require './app/models/select_survey.rb'
 
 RSpec.describe "select survey" do
+  before do
+      allow(SelectSurvey).to receive(:data) { mixed_survey_config }
+  end
   context "selects pre-survey before submission has opened" do
     let(:submissions) { double(:submissions, has_opened?: false) }
 
@@ -9,21 +12,21 @@ RSpec.describe "select survey" do
       student = double(:user, role: :student, is_registered: true)
       selected_survey = SelectSurvey.new(student, submissions)
 
-      expect(selected_survey.link).to eq("https://www.surveymonkey.com/s/683JH6K")
+      expect(selected_survey.link).to eq("pre survey student")
     end
 
     it "selects mentor survey for mentors" do
       mentor = double(:user, role: :mentor, is_registered: true)
       selected_survey = SelectSurvey.new(mentor, submissions)
 
-      expect(selected_survey.link).to eq("https://www.surveymonkey.com/s/6GLCHTB")
+      expect(selected_survey.link).to eq("pre survey mentor")
     end
 
     it "selects coach survey for coaches" do
       coach = double(:user, role: :coach, is_registered: true)
       selected_survey = SelectSurvey.new(coach, submissions)
 
-      expect(selected_survey.link).to eq("https://www.surveymonkey.com/s/SV2FST7")
+      expect(selected_survey.link).to eq("pre survey coach")
     end
   end
 
@@ -34,21 +37,39 @@ RSpec.describe "select survey" do
       student = double(:user, role: :student, is_registered: true)
       selected_survey = SelectSurvey.new(student, submissions)
 
-      expect(selected_survey.link).to eq("http://rockman.co1.qualtrics.com/SE/?SID=SV_0cankgvZeqVcy3P")
+      expect(selected_survey.link).to eq("post survey student")
     end
 
     it "selects mentor survey for mentors" do
       mentor = double(:user, role: :mentor, is_registered: true)
       selected_survey = SelectSurvey.new(mentor, submissions)
 
-      expect(selected_survey.link).to eq("http://rockman.co1.qualtrics.com/SE/?SID=SV_bjRy3xD4O81l6i9")
+      expect(selected_survey.link).to eq("post survey mentor")
     end
 
     it "selects coach survey for coaches" do
       coach = double(:user, role: :coach, is_registered: true)
       selected_survey = SelectSurvey.new(coach, submissions)
 
-      expect(selected_survey.link).to eq("http://rockman.co1.qualtrics.com/SE/?SID=SV_cN166tnJClpa7jf")
+      expect(selected_survey.link).to eq("post survey coach")
     end
   end
+
+  def mixed_survey_config
+    {
+      :student => {
+        :pre => "pre survey student",
+        :post => "post survey student"
+      },
+      :mentor => {
+        :pre => "pre survey mentor",
+        :post => "post survey mentor"
+      },
+      :coach => {
+        :pre => "pre survey coach",
+        :post => "post survey coach"
+      }
+    }
+    end
+
 end

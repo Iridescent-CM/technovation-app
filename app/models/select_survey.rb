@@ -2,6 +2,20 @@ require 'ostruct'
 
 class SelectSurvey
 
+
+  def initialize(user, submissions)
+    @user = user
+    @period = submissions.has_opened? ? :post : :pre
+  end
+
+  def link
+    self.class.data[@user.role][@period]
+  end
+
+  def self.data
+    SurveyData
+  end
+
   SurveyData = OpenStruct.new({
     :student => OpenStruct.new({
                 pre: "https://www.surveymonkey.com/s/683JH6K",
@@ -17,13 +31,4 @@ class SelectSurvey
               })
     })
 
-
-  def initialize(user, submissions)
-    @user = user
-    @period = submissions.has_opened? ? :post : :pre
-  end
-
-  def link
-    SurveyData[@user.role][@period]
-  end
 end
