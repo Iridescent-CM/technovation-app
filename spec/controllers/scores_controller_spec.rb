@@ -17,7 +17,7 @@ describe ScoresController, type: :controller do
       get :index
 
       expect(assigns[:scores].count).to eq 1
-      expect(assigns[:scores].first.team).to eq "nice_name"
+      expect(assigns[:scores].first.team_name).to eq "nice_name"
     end
   end
 end

@@ -1,11 +1,11 @@
 h1 Scores
 
 - @scores.each do |score|
-  h4 Scores for #{score.team}
+  h4 Scores for #{score.team_name}
 
   - if score.rubrics.any?
     ul.scores
       - score.rubrics.each.with_index do |rubric, index|
         li = link_to "Judge feedback #{index + 1}", rubric
   - else
-    p There are no scores available for #{score.team}. Check back later.
+    p There are no scores available for #{score.team_name}. Check back later.
