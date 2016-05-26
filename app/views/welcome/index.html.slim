@@ -34,7 +34,7 @@
         strong Submissions now open for #{submissionClose.year} through April 21, 5pm PDT
 
     / confirmation
-    - unless current_user.confirmed? 
+    - unless current_user.confirmed?
       li
         ' Please confirm your email address by clicking the link sent to #{current_user.email}.
         a href=new_confirmation_path(:user) Need it resent?
