@@ -8,24 +8,25 @@ class SelectSurvey
     if !@user.is_registered
       return ""
     else
-      Survey.new(@user.role).link
+      Survey.new(@user).link
     end
   end
 end
 
 
 class Survey
-  def initialize(role)
-    @role = role
-    @link = link_for(role)
+  def initialize(user)
+    @user = user
   end
 
   def link
-    @link
-  end
-
-  private
-    def link_for(role)
-      "#{role}_link"
+    case @user.role
+    when :student
+      "https://www.surveymonkey.com/s/683JH6K"
+    when :mentor
+      "https://www.surveymonkey.com/s/6GLCHTB"
+    when :coach
+      "https://www.surveymonkey.com/s/SV2FST7"
     end
+  end
 end
