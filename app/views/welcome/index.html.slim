@@ -52,7 +52,7 @@
         | .
 
     - unless current_user.judge?
-      li
+      li id="survey-link"
         ' If you haven't already, please complete the following
         - selected_survey = SelectSurvey.new(current_user, Submissions)
         a target="_blank" href=selected_survey.link #{current_user.role} survey
