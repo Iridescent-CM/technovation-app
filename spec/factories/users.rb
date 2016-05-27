@@ -37,5 +37,7 @@ FactoryGirl.define do
     end
 
     factory :mentor, traits: [:mentor, :with_fake_cheker]
+
+    after(:create) { |user| user.confirm! }
   end
 end
