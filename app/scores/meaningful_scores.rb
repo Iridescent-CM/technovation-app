@@ -26,7 +26,7 @@ class MeaningfulScores
   end
 
   def self.config
-    YAML.load_file('./config/score_fields.yml')
+    ScoreConfig.loaded_config
   end
 
   private
