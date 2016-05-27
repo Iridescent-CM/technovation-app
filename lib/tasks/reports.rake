@@ -1,5 +1,6 @@
 namespace :reports do
-  desc "Generate tsv about events, detailing team counts and eligible submission counts"
+
+  desc "Generate csv about events, detailing team counts and eligible submission counts"
   task events: :environment do
     puts ['Event ID', 'Event', 'Event date', '# teams', '# eligible submissions'].to_csv(:col_sep => "\t")
 
