@@ -111,5 +111,17 @@ namespace :reports do
     end
   end
 
+  desc "Generate a CSV with mentors/coaches and their companies"
+  task mentor_coach_companies: :environment do
+    CSV.open("./public/mentor_coach_companies.csv", "wb") do |csv|
+      csv << %w{Name Email Role Company}
 
+      current_year_users = User.is_registered
+
+      (current_year_users.mentor | current_year_users.coach).each do |user|
+        # school is used for company name for non-students
+        csv << [user.name, user.email, user.role, user.school]
+      end
+    end
+  end
 end
