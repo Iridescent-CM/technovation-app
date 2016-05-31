@@ -1,11 +1,10 @@
 namespace :reports do
-
   desc "Generate tsv about events, detailing team counts and eligible submission counts"
   task events: :environment do
     puts ['Event ID', 'Event', 'Event date', '# teams', '# eligible submissions'].to_csv(:col_sep => "\t")
 
     Event.open_for_signup.each do |event|
-      eligible, ineligible = event.teams.partition { |t| t.submission_eligible? }
+      eligible, _ = event.teams.partition { |t| t.submission_eligible? }
       puts [event.id, event.name, event.when_to_occur, event.teams.size, eligible.size].to_csv(:col_sep => "\t")
     end
   end
@@ -103,7 +102,7 @@ namespace :reports do
 
     headers = ["Parent Email"]
 
-    CSV.open("./public/parent_emails_teste.csv", "wb") do |csv|
+    CSV.open("./public/parent_emails_test.csv", "wb") do |csv|
       csv << headers
 
       parents.each do |parent_email|
