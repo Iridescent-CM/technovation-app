@@ -23,9 +23,10 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
     respond_to do |format|
       format.json{
-        render json: @event
+        render json: @event.as_json.merge(:when_to_occur_formatted => @event.when_to_occur.strftime("%m/%d/%y"))
       }
     end
   end
