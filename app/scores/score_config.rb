@@ -38,11 +38,32 @@ class ScoreConfig
     end
   end
 
+  def self.weigh_score(score)
+    loaded_config.reduce(0) do |sum, (_, weight_and_fields)|
+      category_weight = weight_and_fields.fetch('weight') { 0 }
+      fields = (weight_and_fields.keys - ['weight'])
+
+      initial_weight = category_weight * score.provided_feedback_count(*fields)
+
+      sum + (initial_weight * adjusted_category_weight(category_weight))
+    end
+  end
+
   def self.loaded_config
     YAML.load_file(filepath)
   end
 
   def self.filepath
     './config/score_fields.yml'
+  end
+
+  private
+  def self.adjusted_category_weight(category_weight)
+    Float(category_weight) / ScoreConfig.heaviest_weight
+  end
+
+  def self.heaviest_weight
+    loaded_config.values.max_by { |h| h.fetch('weight') { 0 } }
+                        .fetch('weight')
   end
 end

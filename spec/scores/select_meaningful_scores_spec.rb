@@ -8,7 +8,7 @@ RSpec.describe "Select meaningful scores" do
   end
 
   it "returns <limit> scores for a given limit" do
-    allow(MeaningfulScores).to receive(:config) { config }
+    allow(ScoreConfig).to receive(:loaded_config) { config }
     collection = [double(:score, provided_feedback_count: 0)] * 2
     scores = MeaningfulScores.new(collection, 1)
     expect(scores.count).to eq(1)
@@ -19,7 +19,7 @@ RSpec.describe "Select meaningful scores" do
     has_comment = double(:has_comment, provided_feedback_count: 1)
     collection = [empty_comment, has_comment]
 
-    allow(MeaningfulScores).to receive(:config) { config }
+    allow(ScoreConfig).to receive(:loaded_config) { config }
 
     scores = MeaningfulScores.new(collection, 2)
 
@@ -31,7 +31,7 @@ RSpec.describe "Select meaningful scores" do
     two_weighted = double(:two_weighted)
     collection = [one_weighted, two_weighted]
 
-    allow(MeaningfulScores).to receive(:config) { config }
+    allow(ScoreConfig).to receive(:loaded_config) { config }
 
     expect(one_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 1 }
@@ -54,7 +54,7 @@ RSpec.describe "Select meaningful scores" do
     two_weighted = double(:two_weighted)
     collection = [one_weighted, also_one_weighted, two_weighted]
 
-    allow(MeaningfulScores).to receive(:config) { config }
+    allow(ScoreConfig).to receive(:loaded_config) { config }
 
     expect(one_weighted).to receive(:provided_feedback_count)
       .with('one_weighted') { 2 }
