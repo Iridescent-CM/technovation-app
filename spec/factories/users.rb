@@ -31,12 +31,17 @@ FactoryGirl.define do
       role 3
     end
 
-    trait :with_fake_cheker do
+    trait :with_fake_checker do
       bg_check_id 'fake'
       bg_check_submitted DateTime.now
     end
 
-    factory :mentor, traits: [:mentor, :with_fake_cheker]
+    trait :with_fake_checker_not_ok do
+      bg_check_id 'fake'
+      bg_check_submitted nil
+    end
+
+    factory :mentor, traits: [:mentor, :with_fake_checker]
 
     after(:create) { |user| user.confirm! }
   end

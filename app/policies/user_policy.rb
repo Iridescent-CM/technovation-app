@@ -40,7 +40,7 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.where.not(:consent_signed_at => nil).where("bg_check_submitted IS NOT NULL OR role != ? ", User.roles[:mentor])
+      scope.where.not(:consent_signed_at => nil)
     end
   end
 end

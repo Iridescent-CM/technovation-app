@@ -61,10 +61,10 @@ class User < ActiveRecord::Base
             5 => EXPERTISES[4][:sym],
             6 => EXPERTISES[5][:sym],
             :column => 'expertise'
-
-  scope :has_expertise, -> { where.not expertise: 0 }
+            
   scope :is_registered, -> { where 'is_registered = true' }
-  scope :can_mentor, -> { mentor.has_expertise.is_registered }
+  scope :is_mentor_bg_check_ok, -> { where "(home_country = ? AND bg_check_submitted IS NOT NULL) OR (home_country != ?)", "US", "US" }
+  scope :can_mentor, -> { mentor.is_registered.is_mentor_bg_check_ok }
 
   #### fields used for judge user type only
   belongs_to :event
