@@ -1,0 +1,19 @@
+<h1>Scores</h1>
+
+<p>
+  Hey there! We want to make sure you get the best feedback possible. So just to
+  let you know, we designed our system to select the most meaningful scores to
+  present to you. On this page, you're going to see the scores that had the most
+  custom comments.
+</p>
+
+<p>
+  Please email us at <%= mail_to("info@technovationchallenge.org") %>
+  if you have any questions about your scores.
+</p>
+
+<% @scores.each do |score| %>
+  <h4>Scores for <%= score.team_name %></h4>
+  <%= render 'scores/rubrics',  rubrics: score.rubrics,
+                                team_name: score.team_name %>
+<% end %>
