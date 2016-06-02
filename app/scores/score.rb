@@ -20,25 +20,20 @@ class Score
   end
 
   def label
-    config.fetch('label')
+    config.label
   end
 
   def explanation
-    values.fetch(value)
+    config.explanation(value)
   end
 
   def possible_scores
-    other_values = values.select { |k| k != value }
-    other_values.map do |value, explanation|
+    config.values_not(value).map do |value, explanation|
       PossibleValue.new(value, explanation)
     end
   end
 
   private
-  def values
-    config.fetch('values')
-  end
-
   def config
     ScoreConfig.field(@field)
   end

@@ -6,13 +6,13 @@ class ScoreField
   end
 
   def value_labels
-    @values ||= config.fetch('values').map do |value, label|
+    @values ||= config.values.map do |value, label|
       ValueLabel.new(value, label)
     end
   end
 
   def label
-    @label ||= config.fetch('label')
+    config.label
   end
 
   private

@@ -8,12 +8,9 @@ RSpec.describe "Score config" do
 
   it "returns config for a field" do
     allow(ScoreConfig).to receive(:loaded_config) { basic_config }
-    expect(ScoreConfig.field(:field)).to eq({
-      "label" => "Something good",
-      "values" => {
-        0 => "Okay"
-      }
-    })
+
+    expect(ScoreConfig.field(:field).label).to eq("Something good")
+    expect(ScoreConfig.field(:field).values).to eq({ 0 => "Okay" })
   end
 
   def basic_config
