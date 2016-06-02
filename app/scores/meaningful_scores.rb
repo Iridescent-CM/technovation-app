@@ -6,8 +6,8 @@ class MeaningfulScores
   include Enumerable
 
   def initialize(score_or_scores, limit = 0)
-    scores = Array(score_or_scores)
-    @scores = weigh_scores(scores).max_by(limit, &:weight).map(&:score)
+    weighed = weigh_scores(Array(score_or_scores))
+    @scores = weighed.max_by(limit, &:weight).map(&:score)
   end
 
   def each(&block)
