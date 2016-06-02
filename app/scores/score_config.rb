@@ -5,7 +5,7 @@ class ScoreConfig
     end
 
     def explanation(value)
-      field.values.fetch(value)
+      values.fetch(value)
     end
 
     def label

@@ -6,11 +6,22 @@ RSpec.describe "Score config" do
     expect(ScoreConfig.filepath).to eq('./config/score_fields.yml')
   end
 
-  it "returns config for a field" do
+  before do
     allow(ScoreConfig).to receive(:loaded_config) { basic_config }
+  end
 
-    expect(ScoreConfig.field(:field).label).to eq("Something good")
-    expect(ScoreConfig.field(:field).values).to eq({ 0 => "Okay" })
+  let(:field) { ScoreConfig.field(:field) }
+
+  it "returns a field's label" do
+    expect(field.label).to eq("Something good")
+  end
+
+  it "returns a field's values" do
+    expect(field.values).to eq({ 0 => "Okay" })
+  end
+
+  it "returns a field's value explanation" do
+    expect(field.explanation(0)).to eq("Okay")
   end
 
   def basic_config

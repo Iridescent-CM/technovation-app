@@ -15,6 +15,8 @@ RSpec.feature "Edit scores" do
     sign_in(user)
     visit edit_rubric_path(rubric)
 
+    expect(page).to have_css 'label', text: "No [0]"
+
     fill_in 'rubric_description_comment', with: 'Great description, well done!'
     click_button 'Submit'
 

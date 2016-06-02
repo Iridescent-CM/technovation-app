@@ -67,5 +67,9 @@ RSpec.feature "View scores" do
     expect(page).not_to have_link('', href: rubric_path(zero_feedback))
     expect(page.find('.scores li:first-child')).to have_link('', href: rubric_path(highest_feedback))
     expect(page.find('.scores li:last-child')).to have_link('', href: rubric_path(lowest_feedback))
+
+    click_link('', href: rubric_path(lowest_feedback))
+
+    expect(page).to have_css ".explanation", text: "No"
   end
 end
