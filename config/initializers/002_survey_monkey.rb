@@ -1,1 +1,0 @@
-SurveyMonkey::Configuration.load!

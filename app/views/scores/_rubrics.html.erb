@@ -1,9 +1,0 @@
-<% if rubrics.empty? %>
-  <p>There are no scores available for <%= team_name %>. Check back later.</p>
-<% else %>
-  <ul class="scores">
-    <% rubrics.each.with_index(1) do |rubric, i| %>
-      <li><%= link_to "Judge feedback #{i}", rubric %></li>
-    <% end %>
-  </ul>
-<% end %>
