@@ -125,4 +125,19 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a rubrics report for all teams which submitted their app"
+  task teams_who_submitted_app: :environment do
+    teams = Team.joins(:category).where(year: Setting.year)
+    headers = ["Team Name", "Division/Region", "Country", "App Category/Theme", "Team Description", "Semifinalist", "Finalist"]
+
+    CSV.open("./public/teams_who_submitted_app.csv", "wb") do |csv|
+      csv << headers
+
+      teams.each do |team|
+        row = [team.name, team.region_name, team.country, team.category.name, team.description, team.is_semi_finalist, team.is_finalist]
+        csv << row
+      end
+    end
+  end
 end
