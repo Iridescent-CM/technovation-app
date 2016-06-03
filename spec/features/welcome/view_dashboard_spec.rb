@@ -1,4 +1,5 @@
 require 'rails_helper'
+require './app/models/survey/survey.rb'
 
 RSpec.feature "view dashboard" do
   let!(:student) { create(:user, :student) }
@@ -7,9 +8,7 @@ RSpec.feature "view dashboard" do
   before do
     Season.open!
     Submissions.open!
-
-    Setting.create!(key: 'pre_program_survey', value: 'true')
-    Setting.create!(key: 'post_program_survey', value: 'false')
+    Survey.show_pre_program
   end
 
   scenario "shows pre program survey link for students" do

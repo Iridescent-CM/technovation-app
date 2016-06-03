@@ -1,5 +1,6 @@
 require 'spec_helper'
-require './app/models/select_survey.rb'
+require './app/models/survey/select_survey.rb'
+require './app/models/survey/survey.rb'
 
 RSpec.describe "select survey" do
   before do

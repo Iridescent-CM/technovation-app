@@ -1,4 +1,5 @@
 require 'rails_helper'
+require './app/models/survey/survey.rb'
 
 RSpec.feature "Find a mentor" do
   let!(:student) { create(:user, :student) }
@@ -9,8 +10,7 @@ RSpec.feature "Find a mentor" do
   before do
     Season.open!
     Submissions.open!
-    Setting.create!(key: 'pre_program_survey', value: 'false')
-    Setting.create!(key: 'post_program_survey', value: 'false')
+    Survey.hide_all
   end
 
   scenario "show all valid mentors" do

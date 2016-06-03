@@ -1,4 +1,5 @@
 require "rails_helper"
+require './app/models/survey/survey.rb'
 
 RSpec.feature "View scores" do
   let(:user) { create(:user) }
@@ -7,8 +8,7 @@ RSpec.feature "View scores" do
   before do
     Season.open!
     Submissions.open!
-    Setting.create!(key: 'pre_program_survey', value: 'false')
-    Setting.create!(key: 'post_program_survey', value: 'false')
+    Survey.hide_all
 
     team.team_requests.create!(user: user, approved: true)
 
