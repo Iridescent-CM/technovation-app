@@ -9,6 +9,8 @@ RSpec.feature "Find a mentor" do
   before do
     Season.open!
     Submissions.open!
+    Setting.create!(key: 'pre_program_survey', value: 'false')
+    Setting.create!(key: 'post_program_survey', value: 'false')
   end
 
   scenario "show all valid mentors" do

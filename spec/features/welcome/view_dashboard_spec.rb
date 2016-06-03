@@ -7,6 +7,9 @@ RSpec.feature "view dashboard" do
   before do
     Season.open!
     Submissions.open!
+
+    Setting.create!(key: 'pre_program_survey', value: 'true')
+    Setting.create!(key: 'post_program_survey', value: 'false')
   end
 
   scenario "shows pre program survey link for students" do

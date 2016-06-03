@@ -7,6 +7,8 @@ RSpec.feature "View scores" do
   before do
     Season.open!
     Submissions.open!
+    Setting.create!(key: 'pre_program_survey', value: 'false')
+    Setting.create!(key: 'post_program_survey', value: 'false')
 
     team.team_requests.create!(user: user, approved: true)
 

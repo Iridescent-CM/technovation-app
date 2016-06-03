@@ -3,13 +3,24 @@ require 'ostruct'
 class SelectSurvey
 
 
-  def initialize(user, submissions)
+  def initialize(user, setting)
     @user = user
-    @period = submissions.has_opened? ? :post : :pre
+    @period = self.class.select_period(setting)
   end
 
   def link
     self.class.data[@user.role][@period]
+  end
+
+  def self.select_period(setting)
+    case
+      when setting.pre_program_survey_visible?
+        :pre
+      when setting.post_program_survey_visible?
+        :post
+      else
+        :none
+      end
   end
 
   def self.data
