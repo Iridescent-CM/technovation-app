@@ -4,6 +4,7 @@ p These buttons allow you to run code from the admin panel.
 
 h4 Miscellaneous
 = button_to 'Assign Judges to Regions', '/admin/controls/assign_judges_to_regions', :method => :post
+
 br
 br
 
@@ -26,6 +27,10 @@ br
 br
 
 h4 These buttons make pre-program and post-program surveys available to students, mentors and coaches of the current season
-p Add here which survey is visible at the moment
-= button_to 'Show / Hide Pre-Program Survey', '/admin/controls/pre_program_survey_visibility', :method=> :post
+
+- if Setting.pre_program_survey_visible?
+  = button_to 'Hide Pre-Program Survey' , '/admin/controls/pre_program_survey_visibility', :method=> :post
+- else
+  = button_to 'Show Pre-Program Survey' , '/admin/controls/pre_program_survey_visibility', :method=> :post
+
 = button_to 'Show / Hide Post-Program Survey', '/admin/controls/post_program_survey_visibility', :method=> :post

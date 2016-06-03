@@ -58,7 +58,8 @@ ActiveAdmin.register_page "Controls" do
 
   page_action :pre_program_survey_visibility, method: :post do
     ToggleController.pre_program_survey
-    redirect_to admin_controls_path, notice: "Pre-Program Survey is visible for students, mentors and coaches"
+    pre_state = Setting.find_by_key!('pre_program_survey').value == 'true'? 'visible' : 'not visible'
+    redirect_to admin_controls_path, notice: "Pre-Program Survey is #{pre_state} for students, mentors and coaches"
   end
 
 end
