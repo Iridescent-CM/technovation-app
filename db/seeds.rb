@@ -34,6 +34,13 @@ Setting.find_or_create_by(
 ######
 
 Setting.find_or_create_by(
+  key: 'pre_program_survey',
+  value: 'false'
+)
+
+#####
+
+Setting.find_or_create_by(
   key: 'quarterfinalJudgingOpen',
   value: day_after_close.to_s
 )

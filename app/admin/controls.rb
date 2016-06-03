@@ -55,5 +55,10 @@ ActiveAdmin.register_page "Controls" do
     RankingController.assign_judges_to_regions
     redirect_to admin_controls_path, notice: "Judges have been assigned to regions. Click button again to reassign."
   end
-  
+
+  page_action :pre_program_survey_visibility, method: :post do
+    ToggleController.pre_program_survey
+    redirect_to admin_controls_path, notice: "Pre-Program Survey is visible for students, mentors and coaches"
+  end
+
 end
