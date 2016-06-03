@@ -99,6 +99,10 @@ class Setting < ActiveRecord::Base
     Setting.find_by_key!('pre_program_survey').value == 'true'
   end
 
+  def self.post_program_survey_visible?
+    Setting.find_by_key!('post_program_survey').value == 'true'
+  end
+
   private
   def self.judgingRoundByDate
     Rubric.stages.keys.detect { |s| judgingRoundActive?(s) }

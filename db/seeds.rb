@@ -38,6 +38,11 @@ Setting.find_or_create_by(
   value: 'false'
 )
 
+Setting.find_or_create_by(
+  key: 'post_program_survey',
+  value: 'false'
+)
+
 #####
 
 Setting.find_or_create_by(
