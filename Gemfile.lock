@@ -160,7 +160,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   minitest-rails
-  pg (~> 0.15)
+  pg (~> 0.18)
   quiet_assets
   rails (= 4.2.6)
   rails-assets-tether
