@@ -38,7 +38,7 @@ module TechnovationApp
       g.assets false
       g.helper false
       g.factory_girl false
-      g.factory_girl dir: 'spec/factories'
+      g.factory_girl dir: 'test/factories'
     end
   end
 end
