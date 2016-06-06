@@ -7,5 +7,8 @@ class WelcomeController < ApplicationController
       roles.push(Announcement.roles['judge'])
     end
     @announcements = Announcement.where(published: true, role: roles).order(created_at: :desc).limit(5)
+    @selected_survey = SelectSurvey.new(current_user, Setting)
   end
+
+
 end

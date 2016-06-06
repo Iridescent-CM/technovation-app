@@ -5,6 +5,7 @@ RSpec.feature "Edit scores" do
     Season.open!
     Submissions.open!
     Semifinal.open!
+    Survey.hide_all
 
     region = create(:region)
     event = create(:event, :non_virtual_event, region: region)
