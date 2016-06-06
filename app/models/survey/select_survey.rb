@@ -9,7 +9,7 @@ class SelectSurvey
   end
 
   def link
-    @period? self.class.data[@user.role][@period] : ""
+    valid_period? ? self.class.data[@user.role][@period] : ""
   end
 
   def self.select_period(setting)
@@ -21,6 +21,10 @@ class SelectSurvey
       else
         :none
       end
+  end
+
+  def valid_period?
+    self.class.data[@user.role].to_h.has_key?(@period)
   end
 
   def self.data

@@ -14,7 +14,7 @@ RSpec.describe "select survey" do
       student = double(:user, role: :student, is_registered: true)
       selected_survey = SelectSurvey.new(student, setting)
 
-      expect(selected_survey.link).to be_nil
+      expect(selected_survey.link).to be_empty
     end
   end
 
