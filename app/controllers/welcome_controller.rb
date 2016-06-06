@@ -1,3 +1,5 @@
+require './app/models/survey/select_survey.rb'
+
 class WelcomeController < ApplicationController
   before_action :authenticate_user!
   skip_before_action :verify_registered

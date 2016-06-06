@@ -9,7 +9,7 @@ class SelectSurvey
   end
 
   def link
-    self.class.data[@user.role][@period]
+    @period? self.class.data[@user.role][@period] : ""
   end
 
   def self.select_period(setting)

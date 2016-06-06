@@ -7,7 +7,18 @@ RSpec.describe "select survey" do
       allow(SelectSurvey).to receive(:data) { mixed_survey_config }
   end
 
-  context "selects pre-survey if pre_program_survey is visible" do
+  context "neither pre_program_survey and post_program_survey is visible" do
+    let(:setting) { double(:setting, pre_program_survey_visible?: false, post_program_survey_visible?: false) }
+
+    it "selects none" do
+      student = double(:user, role: :student, is_registered: true)
+      selected_survey = SelectSurvey.new(student, setting)
+
+      expect(selected_survey.link).to be_nil
+    end
+  end
+
+  context "pre_program_survey is visible" do
     let(:setting) { double(:setting, pre_program_survey_visible?: true, post_program_survey_visible?: false) }
 
     it "selects student survey for students" do
@@ -32,7 +43,7 @@ RSpec.describe "select survey" do
     end
   end
 
-  context "selects post-survey if post_program_survey_visible is visible" do
+  context "post_program_survey_visible is visible" do
     let(:setting) { double(:setting, pre_program_survey_visible?: false, post_program_survey_visible?: true) }
 
     it "selects student survey for students" do
