@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508135717) do
+ActiveRecord::Schema.define(version: 20160606181333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,10 @@ ActiveRecord::Schema.define(version: 20160508135717) do
   end
 
   add_index "categories", ["team_id"], name: "index_categories_on_team_id", using: :btree
+
+  create_table "country_codes", force: true do |t|
+    t.string "name", limit: 64, null: false
+  end
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -164,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160508135717) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "slug"
+    t.string   "country",                     limit: 2, default: "",   null: false
     t.text     "description"
     t.string   "code"
     t.string   "pitch"
@@ -201,7 +206,6 @@ ActiveRecord::Schema.define(version: 20160508135717) do
     t.boolean  "is_semi_finalist"
     t.boolean  "is_finalist"
     t.string   "store"
-    t.string   "country",                     limit: 2, default: "",   null: false
     t.boolean  "is_winner"
     t.text     "tools"
     t.integer  "platform",                              default: 0,    null: false
