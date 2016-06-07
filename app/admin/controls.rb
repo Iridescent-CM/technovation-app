@@ -1,3 +1,5 @@
+require './app/models/survey/survey.rb'
+
 ActiveAdmin.register_page "Controls" do
   content do
     render partial: 'control'
@@ -57,13 +59,13 @@ ActiveAdmin.register_page "Controls" do
   end
 
   page_action :pre_program_survey_visibility, method: :post do
-    ToggleController.pre_program_survey
+    Survey.toggle_pre_program
     pre_state = Setting.find_by_key!('pre_program_survey').value == 'true'? 'visible' : 'not visible'
     redirect_to admin_controls_path, notice: "Pre-Program Survey is #{pre_state} for students, mentors and coaches"
   end
 
   page_action :post_program_survey_visibility, method: :post do
-    ToggleController.post_program_survey
+    Survey.toggle_post_program
     pre_state = Setting.find_by_key!('post_program_survey').value == 'true'? 'visible' : 'not visible'
     redirect_to admin_controls_path, notice: "Post-Program Survey is #{pre_state} for students, mentors and coaches"
   end
