@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160607173755) do
   add_index "registrations", ["season_id"], name: "index_registrations_on_season_id", using: :btree
 
   create_table "seasons", force: :cascade do |t|
-    t.string   "year",       null: false
+    t.integer  "year",       null: false
     t.datetime "starts_at",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
