@@ -30,15 +30,13 @@ class Division < ActiveRecord::Base
 
   class CreateHighSchool < Create
     def process(params)
-      params.deep_merge!(division: { name: :high_school })
-      super(params)
+      super(params.deep_merge(division: { name: :high_school }))
     end
   end
 
   class CreateMiddleSchool < Create
     def process(params)
-      params.deep_merge!(division: { name: :middle_school })
-      super(params)
+      super(params.deep_merge(division: { name: :middle_school }))
     end
   end
 end
