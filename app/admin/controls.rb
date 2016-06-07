@@ -60,14 +60,14 @@ ActiveAdmin.register_page "Controls" do
 
   page_action :pre_program_survey_visibility, method: :post do
     Survey.toggle_pre_program
-    pre_state = Setting.find_by_key!('pre_program_survey').value == 'true'? 'visible' : 'not visible'
+    pre_state = Survey.showing_pre_program_link? ? 'visible' : 'not visible'
     redirect_to admin_controls_path, notice: "Pre-Program Survey is #{pre_state} for students, mentors and coaches"
   end
 
   page_action :post_program_survey_visibility, method: :post do
     Survey.toggle_post_program
-    pre_state = Setting.find_by_key!('post_program_survey').value == 'true'? 'visible' : 'not visible'
-    redirect_to admin_controls_path, notice: "Post-Program Survey is #{pre_state} for students, mentors and coaches"
+    post_state = Survey.showing_post_program_link? ? 'visible' : 'not visible'
+    redirect_to admin_controls_path, notice: "Post-Program Survey is #{post_state} for students, mentors and coaches"
   end
 
 end
