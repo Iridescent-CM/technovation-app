@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 20160607173755) do
 
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
-    t.integer  "member_id"
-    t.string   "member_type"
-    t.integer  "joinable_id"
-    t.string   "joinable_type"
+    t.integer  "member_id",     null: false
+    t.string   "member_type",   null: false
+    t.integer  "joinable_id",   null: false
+    t.string   "joinable_type", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
