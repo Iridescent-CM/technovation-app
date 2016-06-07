@@ -26,9 +26,7 @@ class Team < ActiveRecord::Base
 
     private
     def register_in_current_year!
-      season = Season.find_or_create_by(year: Time.current.year,
-                                        starts_at: Time.current - 30.days)
-      model.registrations.create!(season: season)
+      Registration::Create.(registration: { registerable: model })
     end
   end
 end
