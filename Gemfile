@@ -30,6 +30,8 @@ group :development, :test do
   gem 'pry-nav'
   gem 'quiet_assets'
   gem "minitest-rails"
+  gem "minitest-around"
+  gem 'database_cleaner'
 end
 
 group :development do
