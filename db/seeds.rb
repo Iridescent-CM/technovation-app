@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Division::CreateHighSchool.run({}) do |op|
+  puts "Created Division: #{op.model.name}"
+end
+
+Division::CreateMiddleSchool.run({}) do |op|
+  puts "Created Division: #{op.model.name}"
+end
+
+Region::Create.run(region: { name: "US/Canada" }) do |op|
+  puts "Created Region: #{op.model.name}"
+end
+
+Season::Create.run(season: { year: Time.current.year,
+                             starts_at: Time.current }) do |op|
+  puts "Created Season: #{op.model.year}"
+end
