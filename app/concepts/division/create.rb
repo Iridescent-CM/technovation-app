@@ -27,16 +27,4 @@ class Division < ActiveRecord::Base
       params.deep_merge(division: { name: Division.names[name] })[:division]
     end
   end
-
-  class CreateHighSchool < Create
-    def process(params)
-      super(params.deep_merge(division: { name: :high_school }))
-    end
-  end
-
-  class CreateMiddleSchool < Create
-    def process(params)
-      super(params.deep_merge(division: { name: :middle_school }))
-    end
-  end
 end
