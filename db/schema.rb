@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160607173755) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "registrations", force: :cascade do |t|
+  create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",         null: false
     t.integer  "registerable_id",   null: false
     t.string   "registerable_type", null: false
@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(version: 20160607173755) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "registrations", ["registerable_type", "registerable_id"], name: "index_registrations_on_registerable_type_and_registerable_id", using: :btree
-  add_index "registrations", ["season_id"], name: "index_registrations_on_season_id", using: :btree
+  add_index "season_registrations", ["registerable_id"], name: "season_registerable_ids", using: :btree
+  add_index "season_registrations", ["registerable_type"], name: "season_registerable_types", using: :btree
+  add_index "season_registrations", ["season_id"], name: "index_season_registrations_on_season_id", using: :btree
 
   create_table "seasons", force: :cascade do |t|
     t.integer  "year",       null: false
@@ -104,7 +105,7 @@ ActiveRecord::Schema.define(version: 20160607173755) do
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
   add_foreign_key "events", "regions"
-  add_foreign_key "registrations", "seasons"
+  add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"

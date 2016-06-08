@@ -1,7 +1,7 @@
-class Registration < ActiveRecord::Base
+class SeasonRegistration < ActiveRecord::Base
   class Create < Trailblazer::Operation
     include Model
-    model Registration, :create
+    model SeasonRegistration, :create
 
     contract do
       property :registerable
@@ -21,7 +21,7 @@ class Registration < ActiveRecord::Base
     private
     def params_defaulted_to_current_season(params)
       season = Season::Current.({}).model
-      params.deep_merge(registration: { season: season })[:registration]
+      params.deep_merge(season_registration: { season: season })[:season_registration]
     end
   end
 end
