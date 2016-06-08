@@ -14,7 +14,7 @@ class Season < ActiveRecord::Base
     end
 
     def process(params)
-      validate(params[:season]) do |f|
+      validate(params.fetch(:season)) do |f|
         f.save
       end
     end

@@ -12,7 +12,9 @@ class SeasonRegistration < ActiveRecord::Base
     end
 
     def process(params)
-      registration_params = params_defaulted_to_current_season(params)
+      registration_params = params_defaulted_to_current_season(
+                              params.fetch(:season_registration)
+                            )
       validate(registration_params) do |f|
         f.save
       end

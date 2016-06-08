@@ -17,7 +17,7 @@ class Team < ActiveRecord::Base
     end
 
     def process(params)
-      validate(params[:team]) do |f|
+      validate(params.fetch(:team)) do |f|
         f.save
 
         register_in_current_year!
