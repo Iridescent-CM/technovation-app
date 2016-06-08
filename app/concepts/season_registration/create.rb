@@ -22,8 +22,7 @@ class SeasonRegistration < ActiveRecord::Base
 
     private
     def params_defaulted_to_current_season(params)
-      season = Season::Current.({}).model
-      params.deep_merge(season_registration: { season: season })[:season_registration]
+      params.merge(season: Season::Current.({}).model)
     end
   end
 end
