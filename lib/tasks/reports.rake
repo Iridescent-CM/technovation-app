@@ -140,4 +140,17 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a CSV of all current year teams' cities and countries"
+  task team_city_countries: :environment do
+    teams = Team.includes(team_requests: :user).current
+
+    CSV.open("./public/team_cities_countries.csv", "wb") do |csv|
+      csv << %w{Team Coach Email City Country}
+
+      teams.each do |team|
+        csv << [team.name, team.coach_name, team.coach_email, team.city, team.country_name]
+      end
+    end
+  end
 end

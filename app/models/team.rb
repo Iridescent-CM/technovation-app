@@ -282,6 +282,22 @@ class Team < ActiveRecord::Base
     true
   end
 
+  def city
+    (student = members.student.first) && student.home_city
+  end
+
+  def coach_name
+    (coach = members.coach.first) && coach.name
+  end
+
+  def coach_email
+    (coach = members.coach.first) && coach.email
+  end
+
+  def country_name
+    ISO3166::Country.new(country).name
+  end
+
   private
   def students
     members(true).select(&:student?)
