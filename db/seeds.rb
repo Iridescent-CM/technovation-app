@@ -2,10 +2,8 @@ Region::Create.run(region: { name: "US/Canada" }) do |op|
   puts "Created Region: #{op.model.name}"
 end
 
-Season::Create.run(season: { year: Time.current.year,
-                             starts_at: Time.current }) do |op|
-  puts "Created Season: #{op.model.year}"
-end
+Season.create(year: Time.current.year, starts_at: Time.current)
+puts "Created Season: #{op.model.year}"
 
 ScoreCategory::Create.run(score_category: {
                             name: "Ideation",

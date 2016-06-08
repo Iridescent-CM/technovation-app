@@ -2,7 +2,7 @@ require "rails_helper"
 
 class RegisterationTest < Minitest::Test
   def test_register_in_current_season
-    Season::Create.(season: { year: Time.current.year, starts_at: Time.current })
+    Season.create(year: Time.current.year, starts_at: Time.current)
 
     region = Region::Create.(region: { name: "US/Midwest" }).model
 
