@@ -27,7 +27,7 @@ class Team < ActiveRecord::Base
 
     private
     def register_in_current_year!
-      Registration::Create.(registration: { registerable: model })
+      SeasonRegistration::Create.(season_registration: { registerable: model })
     end
   end
 end
