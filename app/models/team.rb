@@ -7,4 +7,9 @@ class Team < ActiveRecord::Base
 
   has_many :memberships, as: :joinable
   has_many :members, through: :memberships, source_type: "TeamMember"
+
+  validates :name, uniqueness: true, presence: true
+  validates :description, presence: true
+  validates :division, presence: true
+  validates :region, presence: true
 end
