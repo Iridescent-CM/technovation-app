@@ -12,6 +12,7 @@ class Team < ActiveRecord::Base
       property :region_id
 
       validates :name, unique: true, presence: true
+      validates :description, presence: true
       validates :division_id, presence: true
       validates :region_id, presence: true
     end
