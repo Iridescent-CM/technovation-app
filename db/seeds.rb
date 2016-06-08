@@ -1,11 +1,3 @@
-Division::CreateHighSchool.run({}) do |op|
-  puts "Created Division: #{op.model.name}"
-end
-
-Division::CreateMiddleSchool.run({}) do |op|
-  puts "Created Division: #{op.model.name}"
-end
-
 Region::Create.run(region: { name: "US/Canada" }) do |op|
   puts "Created Region: #{op.model.name}"
 end
