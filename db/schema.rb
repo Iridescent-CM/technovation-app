@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607173755) do
+ActiveRecord::Schema.define(version: 20160608201103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,31 @@ ActiveRecord::Schema.define(version: 20160607173755) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "score_attributes", force: :cascade do |t|
+    t.integer  "score_category_id", null: false
+    t.text     "label",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "score_attributes", ["score_category_id"], name: "index_score_attributes_on_score_category_id", using: :btree
+
+  create_table "score_categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "score_values", force: :cascade do |t|
+    t.integer  "score_attribute_id", null: false
+    t.integer  "value",              null: false
+    t.text     "label",              null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "score_values", ["score_attribute_id"], name: "index_score_values_on_score_attribute_id", using: :btree
 
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",         null: false
@@ -105,6 +130,8 @@ ActiveRecord::Schema.define(version: 20160607173755) do
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
   add_foreign_key "events", "regions"
+  add_foreign_key "score_attributes", "score_categories"
+  add_foreign_key "score_values", "score_attributes"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
