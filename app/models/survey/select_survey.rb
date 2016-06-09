@@ -2,6 +2,8 @@ require 'ostruct'
 
 class SelectSurvey
 
+  public
+  attr_reader :period
 
   def initialize(user, setting)
     @user = user

@@ -55,7 +55,7 @@
       - unless @selected_survey.link.empty?
         li
           ' If you haven't already, please complete the following
-          a id="survey-link" target="_blank" href=@selected_survey.link #{current_user.role} survey
+          a id="survey-link" target="_blank" href=@selected_survey.link #{current_user.role} #{@selected_survey.period} survey
           ' .
 
     / team request infos
