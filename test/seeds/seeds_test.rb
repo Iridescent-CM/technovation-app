@@ -29,11 +29,16 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_score_value
-    assert ScoreValue.count == 1
-    assert ScoreCategory.last.score_attributes.last
+    assert ScoreValue.count == 2
+    assert ScoreCategory.last.score_attributes.first
                         .score_values.last.label == "No"
-    assert ScoreCategory.last.score_attributes.last
+    assert ScoreCategory.last.score_attributes.first
                         .score_values.last.value.zero?
+
+    assert ScoreCategory.last.score_attributes.last
+                        .score_values.last.label == "Yes"
+    assert ScoreCategory.last.score_attributes.last
+                        .score_values.last.value == 3
   end
 
   private

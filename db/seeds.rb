@@ -17,4 +17,7 @@ if ScoreCategory.create(name: "Ideation").valid?
 
   score_value = score_attribute.score_values.create(value: 0, label: "No")
   puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
+
+  score_value = score_attribute.score_values.create(value: 3, label: "Yes")
+  puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
 end
