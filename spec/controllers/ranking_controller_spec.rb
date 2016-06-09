@@ -64,8 +64,8 @@ describe RankingController, type: :controller do
 
         before do
           allow_any_instance_of(User).
-            to receive(:conflict_regions)
-            .and_return double(pluck: judge_conflict_regions.map(&:id))
+            to receive(:conflict_region_ids)
+            .and_return judge_conflict_regions.map(&:id)
         end
 
         it 'does not receive a region to judge' do
@@ -149,8 +149,8 @@ describe RankingController, type: :controller do
 
         before do
           allow_any_instance_of(User).
-            to receive(:conflict_regions)
-            .and_return double(pluck: judge_conflict_regions.map(&:id))
+            to receive(:conflict_region_ids)
+            .and_return judge_conflict_regions.map(&:id)
         end
 
         it 'judge should not receive any region' do
