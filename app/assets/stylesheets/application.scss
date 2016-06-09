@@ -1,1 +1,23 @@
-@import "bootstrap";
+@import "bourbon/bourbon";
+$visual-grid: true !default;
+@import "neat/neat";
+@import "base/base";
+
+@import "refills/tables-minimal";
+
+.container {
+  @include outer-container;
+}
+
+.inline-radio {
+  display: block;
+  margin: 1rem 0;
+
+  label {
+    display: inline;
+  }
+}
+
+label {
+  cursor: pointer;
+}
