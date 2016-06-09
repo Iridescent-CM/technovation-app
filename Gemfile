@@ -15,16 +15,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "trailblazer"
-gem "trailblazer-rails"
-
-gem "reform", "2.1.0"
-gem "reform-rails"
-
-gem "trailblazer-cells"
-gem "cells-erb"
-gem "cells-rails"
-
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
