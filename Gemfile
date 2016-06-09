@@ -61,6 +61,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'active_record_query_trace'
   gem 'seedbank', "~> 0.3.0"
   gem 'spring', "~> 1.6.4"
   gem 'quiet_assets', "~> 1.0.3"

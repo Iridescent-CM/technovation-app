@@ -28,6 +28,7 @@ GEM
       activesupport (= 4.1.15)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active_record_query_trace (1.5.3)
     activeadmin (1.0.0.pre2)
       arbre (~> 1.0, >= 1.0.2)
       bourbon
@@ -345,6 +346,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_query_trace
   activeadmin (~> 1.0.0.pre)
   airbrake (~> 5.2.1)
   autoprefixer-rails (~> 4.0.2.1)
@@ -410,4 +412,4 @@ RUBY VERSION
    ruby 2.1.5p273
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
