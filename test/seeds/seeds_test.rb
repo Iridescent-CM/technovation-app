@@ -3,10 +3,7 @@ require "rails_helper"
 class SeedsTest < Minitest::Test
   def setup
     Rails.application.load_tasks
-
-    capture_stdout do
-      Rake.application["db:seed"].invoke
-    end
+    capture_stdout { Rake.application["db:seed"].invoke }
   end
 
   def test_seed_adds_region
