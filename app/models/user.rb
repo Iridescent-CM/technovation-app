@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
             5 => EXPERTISES[4][:sym],
             6 => EXPERTISES[5][:sym],
             :column => 'expertise'
-            
+
   scope :is_registered, -> { where 'is_registered = true' }
   scope :is_mentor_bg_check_ok, -> { where "(home_country = ? AND bg_check_submitted IS NOT NULL) OR (home_country != ?)", "US", "US" }
   scope :can_mentor, -> { mentor.is_registered.is_mentor_bg_check_ok }
@@ -75,6 +75,9 @@ class User < ActiveRecord::Base
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.home_city.present? and obj.home_city_changed? }
+
+  delegate :name, to: :event, prefix: true, allow_nil: true
+  delegate :name, to: :judging_region, prefix: true, allow_nil: true
 
   class << self
     def build_survey_url(collector_path, user_id)
@@ -275,13 +278,7 @@ class User < ActiveRecord::Base
   end
 
   def conflict_regions
-    regions = teams.select('DISTINCT region_id').collect(&:region_id)
-
-    if conflict_region && !regions.include?(conflict_region.id)
-      regions << conflict_region.id
-    end
-
-    Region.where(id: regions)
+    (teams.flat_map(&:region) << conflict_region).uniq.compact
   end
 
   def conflict_region_ids

@@ -1,5 +1,4 @@
-  ActiveAdmin.register User do
-
+ActiveAdmin.register User do
   filter :teams_id_not_null, label: "Is On Team", as: :boolean
   filter :is_registered, label: "Registered for Season"
   filter :teams_name_cont, label: "Team"
@@ -37,9 +36,13 @@
         params[:user].delete("password")
         params[:user].delete("password_confirmation")
       end
+
       super
     end
 
+    def scoped_collection
+      super.includes :event, { team_requests: :team }, :teams, :judging_region, :conflict_region, :rubrics
+    end
   end
 
   show do
@@ -49,19 +52,19 @@
       row :role
       row :first_name
       row :last_name
-      row (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
-      row (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
+      row (:is_registered) { |r| r.is_registered ? 'Yes' : 'No' }
+      row (:birthday) { |u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u }
 
       row :home_city
       row :home_state
       row :home_country
       row :consent_signed_at
 
-      row (:teams){|u| u.teams.nil? ? nil : raw(u.teams.map {|t| raw(link_to(t.name, admin_team_path(t.id)))}.join(', '))}
-      row :can_judge
-      row (:num_judged){|u| u.rubrics.length}
+      row (:teams) { |u| u.teams.map { |t| link_to(t.name, admin_team_path(t)) }.join(', ').html_safe }
+      row :can_judge?
+      row (:num_judged) { |u| u.rubrics.length }
       row :judging_event
-      row (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| r.name}.join(', ')}
+      row (:conflict_regions) { |u| u.conflict_regions.map(&:name).join(', ') }
       row :judging_region
     end
   end
@@ -72,25 +75,23 @@
     column :role
     column :first_name
     column :last_name
-    column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
-    column (:disabled) { |u| u.disabled ? 'Yes' : 'No'}
-    column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
+    column (:is_registered) { |r| r.is_registered ? 'Yes' : 'No' }
+    column (:disabled) { |u| u.disabled ? 'Yes' : 'No' }
+    column (:birthday) { |u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u }
     column :home_city
     column :home_state
     column :home_country
     column :school
     column :consent_signed_at
 
-    column (:teams){|u| u.teams.nil? ? nil : u.teams.map {|t| t.name}.join(', ')}
-    column (:can_judge){|u| u.judge? or u.judging}
-    column (:num_judged){|u| u.rubrics.length}
-    column (:judging_event){|u| unless u.event_id.nil?
-                                  Event.find(u.event_id).name
-                                end}
+    column (:teams) { |u| u.teams.map(&:name).join(', ') }
+    column :can_judge?
+    column (:num_judged) { |u| u.rubrics.length }
+    column (:judging_event) { |u| u.event_name }
 
-    column (:conflict_regions){|u| u.conflict_regions.nil? ? nil : u.conflict_regions.map {|r| r.name}.join(', ')}
-    column (:judging_region){|u| u.judging_region.nil? ? nil : u.judging_region.name}
-    column ('Connect With Other Mentors') {|u| u.connect_with_other ? 'Yes' : 'No'}
+    column (:conflict_regions) { |u| u.conflict_regions.map(&:name).join(', ') }
+    column (:judging_region) { |u| u.judging_region_name }
+    column ('Connect With Other Mentors') { |u| u.connect_with_other ? 'Yes' : 'No' }
   end
 
   index do
@@ -100,19 +101,17 @@
     column :role
     column :first_name
     column :last_name
-    column (:is_registered){|r| r.is_registered ? 'Yes' : 'No'}
-    column (:birthday){|u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u}
+    column (:is_registered) { |r| r.is_registered ? 'Yes' : 'No' }
+    column (:birthday) { |u| u.birthday.strftime('%B %e, %Y') if authorized? :update, u }
     column :home_city
     column :home_state
     column :home_country
     column :consent_signed_at
 
-    column (:teams){|u| u.teams.nil? ? nil : raw(u.teams.map {|t| raw(link_to(t.name, admin_team_path(t.id)))}.join(', '))}
-    column (:can_judge){|u| u.judge? or u.judging}
-    column (:num_judged){|u| u.rubrics.length}
-    column (:judging_event){|u| unless u.event_id.nil?
-                                  link_to Event.find(u.event_id).name, admin_event_path(u.event_id)
-                                end}
+    column (:teams) { |u| u.teams.map { |t| link_to(t.name, admin_team_path(t)) }.join(', ').html_safe }
+    column :can_judge?
+    column (:num_judged) { |u| u.rubrics.length }
+    column (:judging_event) { |u| link_to u.event_name, admin_event_path(u.event) }
 
     column :judging_region
 
@@ -170,12 +169,10 @@
     f.inputs "Judging Information" do
       f.input :conflict_region
       f.input :judging_region
-      #= f.collection_select :event_id, Event.nonconflicting_events(@user.conflict_regions), :id, :name
       f.input :event_id, as: :select, collection: Event.all
       f.input :semifinals_judge
       f.input :finals_judge
     end
-
 
     f.actions
   end
