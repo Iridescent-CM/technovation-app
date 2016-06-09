@@ -6,19 +6,15 @@ if Season.create(year: Time.current.year, starts_at: Time.current).valid?
   puts "Created Season: #{Season.current.year}"
 end
 
-if ScoreCategory.create({ name: "Ideation",
-                          score_attributes_attributes: {
-                            0 => {
-                              label: "Did the team identify a real problem in their community?",
-                              score_values_attributes: {
-                                0 => {
-                                  value: 0,
-                                  label: "No",
-                                },
-                              },
-                            },
-                          },
-                        }).valid?
+if ScoreCategory.create(name: "Ideation").valid?
   category = ScoreCategory.last
-  puts "Created ScoreCategory: #{category.name}, #{category.score_attributes.collect(&:label)}, #{category.score_attributes.flat_map(&:score_values).collect(&:label)}"
+  puts "Created ScoreCategory: #{category.name}"
+
+  score_attribute = category.score_attributes.create(
+    label: "Did the team identify a real problem in their community?"
+  )
+  puts "Created ScoreAttribute: #{score_attribute.label}"
+
+  score_value = score_attribute.score_values.create(value: 0, label: "No")
+  puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
 end
