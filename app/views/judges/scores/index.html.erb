@@ -1,0 +1,20 @@
+<h1>Scores</h1>
+
+<p>
+  <%= link_to 'Add score', new_judges_score_path, class: "btn" %>
+</p>
+
+<table class="table-minimal">
+  <thead>
+    <tr>
+      <th>Total given</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @scores.each do |score| %>
+      <tr>
+        <td><%= score.total %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

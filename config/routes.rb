@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  root to: "static#index"
+  namespace :judges do
+    resources :scores
+  end
+
+  root to: "judges/scores#index"
 end

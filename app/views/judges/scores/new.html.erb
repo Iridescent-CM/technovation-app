@@ -1,0 +1,16 @@
+<h1>Add new score</h1>
+
+<%= simple_form_for [:judges, @score] do |f| %>
+  <% @score.categories.each do |category| %>
+
+    <h2><%= category.name %></h2>
+
+    <% category.score_attributes.each do |attribute| %>
+      <%= f.label attribute.label %>
+
+      <%= f.collection_radio_buttons :entry, attribute.score_values.map { |v| [v.value, v.label] }, :first, :last, item_wrapper_class: "inline-radio" %>
+    <% end %>
+  <% end %>
+
+  <%= f.button :submit, "Save" %>
+<% end %>
