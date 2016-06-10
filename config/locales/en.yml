@@ -11,7 +11,7 @@ en:
   views:
     application:
       actions: "Actions"
-      browser_title: "Technovation Challenge"
+      site_title: "Technovation Challenge"
       edit: "Edit"
     judges:
       scores:

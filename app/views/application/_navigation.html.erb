@@ -1,0 +1,19 @@
+<header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <%= link_to t('views.application.site_title'), root_path, class: "logo" %>
+
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+
+    <div class="navigation-tools">
+      <div class="search-bar">
+        <form role="search">
+          <input type="search" placeholder="Enter Search" />
+          <button type="submit">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png" alt="Search Icon">
+          </button>
+        </form>
+      </div>
+      <a href="javascript:void(0)" class="sign-up">Sign Up</a>
+    </div>
+  </div>
+</header>

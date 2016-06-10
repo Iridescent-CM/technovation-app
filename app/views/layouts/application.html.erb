@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t('views.application.browser_title') %></title>
+    <title><%= t('views.application.site_title') %></title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="container">
-    <%= render 'flash_messages' %>
-    <%= yield %>
+  <body>
+    <%= render 'navigation' %>
+
+    <div class="container">
+      <%= render 'flash_messages' %>
+      <%= yield %>
+    </div>
   </body>
 </html>

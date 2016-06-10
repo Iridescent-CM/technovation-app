@@ -1,10 +1,15 @@
 @import "bourbon/bourbon";
-$visual-grid: true !default;
+$visual-grid: false !default;
 @import "neat/neat";
 @import "base/base";
 
 @import "refills/tables-minimal";
 @import "refills/flashes";
+@import "refills/navigation";
+
+body {
+  margin: 0;
+}
 
 .container {
   @include outer-container;
