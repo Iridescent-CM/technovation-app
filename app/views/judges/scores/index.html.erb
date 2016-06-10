@@ -1,13 +1,15 @@
-<h1>Scores</h1>
+<h1><%= t('views.judges.scores.index.title') %></h1>
 
 <p>
-  <%= link_to 'Add score', new_judges_score_path, class: "btn" %>
+  <%= link_to t('controllers.judges.scores.new.add'),
+              new_judges_score_path,
+              class: "btn" %>
 </p>
 
 <table class="table-minimal">
   <thead>
     <tr>
-      <th>Total given</th>
+      <th><%= t('models.scores.total') %></th>
     </tr>
   </thead>
   <tbody>

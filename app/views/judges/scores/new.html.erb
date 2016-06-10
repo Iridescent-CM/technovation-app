@@ -1,4 +1,4 @@
-<h1>Add new score</h1>
+<h1><%= t('views.judges.scores.new.title') %></h1>
 
 <%= simple_form_for [:judges, @score] do |f| %>
   <% @categories.each do |category| %>
@@ -17,5 +17,5 @@
     </div>
   <% end %>
 
-  <%= f.button :submit, "Save" %>
+  <%= f.button :submit, t('views.judges.scores.form.save') %>
 <% end %>
