@@ -4,12 +4,12 @@ class Judges::ScoresController < ApplicationController
   end
 
   def new
-    @score = Score.new
+    @score = submission.scores.build
     categories
   end
 
   def create
-    @score = Score.new(score_params)
+    @score = submission.scores.build(score_params)
 
     if @score.save
       redirect_to judges_scores_path, success: t("controllers.judges.scores.create.success")
@@ -48,6 +48,10 @@ class Judges::ScoresController < ApplicationController
   end
 
   def score
-    @score ||= Score.find(params[:id])
+    @score ||= submission.scores.find_by(id: params.fetch(:id))
+  end
+
+  def submission
+    @submission ||= Submission.find(params.fetch(:submission_id))
   end
 end

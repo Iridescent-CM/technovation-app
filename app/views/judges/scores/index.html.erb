@@ -1,11 +1,5 @@
 <h1><%= t('views.judges.scores.index.title') %></h1>
 
-<p>
-  <%= link_to t('controllers.judges.scores.new.add'),
-              new_judges_score_path,
-              class: "btn" %>
-</p>
-
 <table class="table-minimal">
   <thead>
     <tr>
@@ -13,11 +7,17 @@
       <th><%= t('views.application.actions') %></th>
     </tr>
   </thead>
+
   <tbody>
     <% @scores.each do |score| %>
       <tr>
         <td><%= score.total %></td>
-        <td><%= link_to t('views.application.edit'), edit_judges_score_path(score) %></td>
+        <td>
+          <%= link_to(
+                t('views.application.edit'),
+                edit_judges_submission_score_path(score.submission, score)
+              ) %>
+        </td>
       </tr>
     <% end %>
   </tbody>

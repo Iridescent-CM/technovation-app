@@ -1,6 +1,6 @@
 <h1><%= t('views.judges.scores.new.title') %></h1>
 
-<%= simple_form_for [:judges, @score] do |f| %>
+<%= simple_form_for [:judges, @submission, @score] do |f| %>
   <%= render partial: 'judges/scores/form_fields/score_category',
              collection: @categories,
              locals: { f: f } %>

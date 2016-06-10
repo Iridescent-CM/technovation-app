@@ -89,9 +89,12 @@ ActiveRecord::Schema.define(version: 20160610155017) do
   add_index "score_values_scores", ["score_value_id"], name: "index_score_values_scores_on_score_value_id", using: :btree
 
   create_table "scores", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "submission_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
+
+  add_index "scores", ["submission_id"], name: "index_scores_on_submission_id", using: :btree
 
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",         null: false
@@ -147,6 +150,7 @@ ActiveRecord::Schema.define(version: 20160610155017) do
   add_foreign_key "score_values", "score_attributes"
   add_foreign_key "score_values_scores", "score_values"
   add_foreign_key "score_values_scores", "scores"
+  add_foreign_key "scores", "submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
