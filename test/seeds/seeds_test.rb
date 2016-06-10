@@ -6,6 +6,10 @@ class SeedsTest < Minitest::Test
     capture_stdout { Rake.application["db:seed"].invoke }
   end
 
+  def teardown
+    Rake::Task.clear
+  end
+
   def test_seed_adds_region
     assert Region.count == 1
     assert Region.last.name == "US/Canada"
@@ -31,9 +35,9 @@ class SeedsTest < Minitest::Test
   def test_seed_adds_score_value
     assert ScoreValue.count == 2
     assert ScoreCategory.last.score_attributes.first
-                        .score_values.last.label == "No"
+                        .score_values.first.label == "No"
     assert ScoreCategory.last.score_attributes.first
-                        .score_values.last.value.zero?
+                        .score_values.first.value.zero?
 
     assert ScoreCategory.last.score_attributes.last
                         .score_values.last.label == "Yes"
