@@ -82,18 +82,19 @@
 
 hr
 .row
-  - if @team.missing_fields.empty?
-    .alert.alert-success role='alert'
-      p
-        span
-        |This team has completed their submission. You may change any of the deliverables in your team's submission until the submission deadline at
-        strong  5pm PT on April 21, 2016.&nbsp
-        |Please make sure you save your submission before that time.
-  -else
-    .alert.alert-danger role='alert'
-      p
-        span You still need fill the fields:&nbsp;
-        == show_all_errors(@team.check_completeness)
-        span  to complete your submission.
+- unless @team.is_old?
+    - if @team.missing_fields.empty?
+      .alert.alert-success role='alert'
+        p
+          span
+          |This team has completed their submission. You may change any of the deliverables in your team's submission until the submission deadline at
+          strong  5pm PT on April 21, 2016.&nbsp
+          |Please make sure you save your submission before that time.
+    - else
+      .alert.alert-danger role='alert'
+        p
+          span You still need fill the fields:&nbsp;
+          == show_all_errors(@team.check_completeness)
+          span  to complete your submission.
 
-  = render 'submission', team: @team
+= render 'submission', team: @team

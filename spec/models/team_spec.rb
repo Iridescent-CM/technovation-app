@@ -164,4 +164,13 @@ describe Team, type: :model do
       it { is_expected.to be false }
     end
   end
+
+  describe '.is_old?' do
+    before { Season.open! }
+
+    subject { team.is_old? }
+    let(:team) { create(:team, year: 2015) }
+
+    it { is_expected.to be true }
+  end
 end

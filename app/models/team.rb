@@ -298,6 +298,10 @@ class Team < ActiveRecord::Base
     ISO3166::Country.new(country).name
   end
 
+  def is_old?
+    Team.old.include?(self)
+  end
+
   private
   def students
     members(true).select(&:student?)
