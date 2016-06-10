@@ -20,8 +20,12 @@ class Judges::ScoresController < ApplicationController
 
   private
   def score_params
-    params.require(:score).permit(:score_value_ids).tap do |list|
-      list[:score_value_ids] = params.fetch(:score).fetch(:score_value_ids).values.flatten
+    begin
+      params.require(:score).permit(:score_value_ids).tap do |list|
+        list[:score_value_ids] = params.fetch(:score).fetch(:score_value_ids).values.flatten
+      end
+    rescue ActionController::ParameterMissing
+      { }
     end
   end
 end
