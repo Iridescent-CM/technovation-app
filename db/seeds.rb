@@ -6,18 +6,19 @@ if Season.create(year: Time.current.year, starts_at: Time.current).valid?
   puts "Created Season: #{Season.current.year}"
 end
 
-if ScoreCategory.create(name: "Ideation").valid?
-  category = ScoreCategory.last
+if (category = CreateScoringRubric.(
+     category: "Ideation",
+     attributes: [{ label: "Did the team identify a real problem in their community?",
+                    values: [{ value: 0, label: "No" },
+                             { value: 3, label: "Yes" }] }]
+   )).valid?
   puts "Created ScoreCategory: #{category.name}"
 
-  score_attribute = category.score_attributes.create(
-    label: "Did the team identify a real problem in their community?"
-  )
-  puts "Created ScoreAttribute: #{score_attribute.label}"
+  category.score_attributes.each do |score_attribute|
+    puts "Created ScoreAttribute: #{score_attribute.label}"
 
-  score_value = score_attribute.score_values.create(value: 0, label: "No")
-  puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
-
-  score_value = score_attribute.score_values.create(value: 3, label: "Yes")
-  puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
+    score_attribute.score_values.each do |score_value|
+      puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
+    end
+  end
 end
