@@ -4,6 +4,7 @@ $visual-grid: true !default;
 @import "base/base";
 
 @import "refills/tables-minimal";
+@import "refills/flashes";
 
 .container {
   @include outer-container;

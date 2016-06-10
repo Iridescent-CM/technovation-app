@@ -12,7 +12,7 @@ class Judges::ScoresController < ApplicationController
     @score = Score.new(score_params)
 
     if @score.save
-      redirect_to judges_scores_path, notice: t("controllers.judges.scores.create.success")
+      redirect_to judges_scores_path, success: t("controllers.judges.scores.create.success")
     else
       render :new
     end
