@@ -1,20 +1,20 @@
 <h1>Add new score</h1>
 
 <%= simple_form_for [:judges, @score] do |f| %>
-  <% @score.categories.each do |category| %>
+  <% @categories.each do |category| %>
+    <div class="<%= category.name.downcase.underscore %>">
+      <h2><%= category.name %></h2>
 
-    <h2><%= category.name %></h2>
+      <% category.score_attributes.each do |attribute| %>
+        <h4><%= attribute.label %></h4>
 
-    <% category.score_attributes.each do |attribute| %>
-      <%= f.label attribute.label %>
-
-      <%= f.collection_radio_buttons :score_value_id,
-                                     attribute.score_values.map { |v|
-                                       [v.id, v.label]
-                                     },
-                                     :first, :last,
-                                     item_wrapper_class: "inline-radio" %>
-    <% end %>
+        <%= f.collection_radio_buttons :score_value_ids,
+                                       attribute.score_values,
+                                       :id, :label,
+                                       { item_wrapper_class: "inline-radio" },
+                                       name: "score[score_value_ids][#{attribute.id}][]" %>
+      <% end %>
+    </div>
   <% end %>
 
   <%= f.button :submit, "Save" %>

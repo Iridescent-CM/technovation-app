@@ -1,22 +1,7 @@
-class Score
-  include ActiveModel::Model
+class Score < ActiveRecord::Base
+  has_and_belongs_to_many :score_values
 
-  def self.all
-    Feedback.all
-  end
-
-  def categories
-    ScoreCategory.all
-  end
-
-  def score_value_id
-  end
-
-  def score_value_id=(score_value_id)
-    Feedback.create(score_value_id: score_value_id)
-  end
-
-  def save
-    true
+  def total
+    score_values.inject(0) { |acc, value| value.value + acc }
   end
 end

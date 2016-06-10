@@ -1,8 +1,6 @@
-class CreateFeedbacks < ActiveRecord::Migration
+class CreateScores < ActiveRecord::Migration
   def change
-    create_table :feedbacks do |t|
-      t.references :score_value, foreign_key: true, index: true, null: false
-
+    create_table :scores do |t|
       # t.references :submission, foreign_key: true, index: true, null: false
       # t.references :judge, foreign_key: true, index: true, null: false
 
