@@ -6,4 +6,8 @@ class Score < ActiveRecord::Base
   def total
     score_values.total
   end
+
+  def score_value_selected?(score_value)
+    score_value_ids.include?(score_value.id)
+  end
 end

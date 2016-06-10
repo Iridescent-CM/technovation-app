@@ -1,14 +1,18 @@
 en:
-  application:
-    browser_title: "Technovation Challenge"
   controllers:
     judges:
       scores:
         create:
           success: "Thanks for scoring a submission!"
+        update:
+          success: "You updated your score. Nice!"
         new:
           add: "Add a score"
   views:
+    application:
+      actions: "Actions"
+      browser_title: "Technovation Challenge"
+      edit: "Edit"
     judges:
       scores:
         form:

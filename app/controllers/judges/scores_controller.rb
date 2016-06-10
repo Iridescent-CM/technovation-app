@@ -5,7 +5,7 @@ class Judges::ScoresController < ApplicationController
 
   def new
     @score = Score.new
-    @categories = ScoreCategory.all
+    categories
   end
 
   def create
@@ -13,6 +13,20 @@ class Judges::ScoresController < ApplicationController
 
     if @score.save
       redirect_to judges_scores_path, success: t("controllers.judges.scores.create.success")
+    else
+      render :new
+    end
+  end
+
+  def edit
+    score
+    categories
+    render :new
+  end
+
+  def update
+    if score.update_attributes(score_params)
+      redirect_to judges_scores_path, success: t("controllers.judges.scores.update.success")
     else
       render :new
     end
@@ -27,5 +41,13 @@ class Judges::ScoresController < ApplicationController
     rescue ActionController::ParameterMissing
       { }
     end
+  end
+
+  def categories
+    @categories ||= ScoreCategory.all
+  end
+
+  def score
+    @score ||= Score.find(params[:id])
   end
 end

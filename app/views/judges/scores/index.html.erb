@@ -10,12 +10,14 @@
   <thead>
     <tr>
       <th><%= t('models.scores.total') %></th>
+      <th><%= t('views.application.actions') %></th>
     </tr>
   </thead>
   <tbody>
     <% @scores.each do |score| %>
       <tr>
         <td><%= score.total %></td>
+        <td><%= link_to t('views.application.edit'), edit_judges_score_path(score) %></td>
       </tr>
     <% end %>
   </tbody>

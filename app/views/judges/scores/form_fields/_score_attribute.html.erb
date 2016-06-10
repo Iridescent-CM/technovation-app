@@ -1,9 +1,5 @@
 <h4><%= score_attribute.label %></h4>
 
-<%= f.collection_radio_buttons(
-      :score_value_ids,
-      score_attribute.score_values,
-      :id, :label,
-      { item_wrapper_class: "inline-radio" },
-      name: "score[score_value_ids][#{score_attribute.id}][]"
-    ) %>
+<%= render partial: 'judges/scores/form_fields/score_value',
+           collection: score_attribute.score_values,
+           locals: { f: f, score_attribute: score_attribute } %>
