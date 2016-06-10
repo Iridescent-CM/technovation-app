@@ -1,6 +1,7 @@
 class Judges::ScoresController < ApplicationController
   def index
     @scores = Score.all
+    @submissions = Submission.all
   end
 
   def new

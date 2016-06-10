@@ -45,6 +45,15 @@ class SeedsTest < Minitest::Test
                         .score_values.last.value == 3
   end
 
+  def test_seed_adds_team
+    assert Team.count == 1
+    assert Team.last.name == "The Techno Girls"
+  end
+
+  def test_seed_adds_team_submission
+    assert Team.last.submissions.count == 1
+  end
+
   private
   def capture_stdout
     s = StringIO.new

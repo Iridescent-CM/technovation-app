@@ -7,7 +7,7 @@ en:
         update:
           success: "You updated your score. Nice!"
         new:
-          add: "Add a score"
+          add: "Judge submission for %{team_name}"
   views:
     application:
       actions: "Actions"

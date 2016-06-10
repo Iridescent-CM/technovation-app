@@ -1,5 +1,13 @@
 <h1><%= t('views.judges.scores.index.title') %></h1>
 
+<ul>
+  <% @submissions.each do |submission| %>
+    <li><%= link_to t('controllers.judges.scores.new.add',
+                      team_name: submission.team_name),
+                    new_judges_submission_score_path(submission) %></li>
+  <% end %>
+</ul>
+
 <table class="table-minimal">
   <thead>
     <tr>

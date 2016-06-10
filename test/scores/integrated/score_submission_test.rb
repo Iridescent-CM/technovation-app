@@ -11,10 +11,12 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
                                         values: [{ label: "No", value: 0 },
                                                  { label: "Yes", value: 7 }] }])
 
+    submission
   end
 
   def test_score_submission
-    visit new_judges_submission_score_path(submission)
+    visit judges_scores_path
+    click_link 'Judge submission for Test team'
     within('.ideation') { choose 'No' }
     within('.technology') { choose 'Yes' }
     click_button 'Save'
@@ -24,7 +26,8 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   end
 
   def test_edit_score
-    visit new_judges_submission_score_path(submission)
+    visit judges_scores_path
+    click_link 'Judge submission for Test team'
     within('.ideation') { choose 'No' }
     within('.technology') { choose 'Yes' }
     click_button 'Save'
@@ -40,6 +43,11 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
 
   private
   def submission
-    @submission ||= Submission.create!
+    return @submission if defined?(@submission)
+    team = Team.create!(name: "Test team",
+                        description: "Real creative name",
+                        division: Division.high_school,
+                        region: Region.find_or_create_by(name: "US/Canada"))
+    @submission = team.submissions.create!
   end
 end

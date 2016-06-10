@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20160610155017) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "team_id"
+    t.integer  "team_id",     null: false
     t.text     "description"
     t.string   "code"
     t.string   "pitch"
