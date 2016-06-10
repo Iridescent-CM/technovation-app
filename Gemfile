@@ -19,8 +19,10 @@ group :development, :test do
   gem 'pry-nav'
   gem 'quiet_assets'
   gem "minitest-rails"
+  gem "minitest-rails-capybara"
   gem "minitest-around"
   gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development do

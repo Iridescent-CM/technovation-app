@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
+require "minitest/rails/capybara"
 require 'database_cleaner'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
@@ -23,7 +24,6 @@ DatabaseCleaner.strategy = :transaction
 class Minitest::Test
   def around(&block)
     DatabaseCleaner.start
-    block.call
-    DatabaseCleaner.clean
+    DatabaseCleaner.cleaning(&block)
   end
 end
