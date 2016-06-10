@@ -95,21 +95,21 @@
               '  or
             = link_to 'request to join an existing team', :teams
             | .
-hr
+      hr
 
-h2 Announcements
-- for ann in @announcements
-  div.panel.panel-default
-    div.panel-heading
-      h4
-        =ann.title
-        br
-        small Posted #{time_ago_in_words(ann.created_at)} ago
-    div.panel-body
-      .markdown-field
-        = render_markdown(ann.post)
+      h2 Announcements
+      - for ann in @announcements
+        div.panel.panel-default
+          div.panel-heading
+            h4
+              =ann.title
+              br
+              small Posted #{time_ago_in_words(ann.created_at)} ago
+          div.panel-body
+            .markdown-field
+              = render_markdown(ann.post)
 
-hr
+          hr
 
 - unless current_user.nil? or !current_user.is_registered?
   .row
