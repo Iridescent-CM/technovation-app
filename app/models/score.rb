@@ -2,18 +2,18 @@ class Score
   include ActiveModel::Model
 
   def self.all
-    Entry.all
+    Feedback.all
   end
 
   def categories
     ScoreCategory.all
   end
 
-  def entry
+  def score_value_id
   end
 
-  def entry=(entry)
-    Entry.create(value: entry)
+  def score_value_id=(score_value_id)
+    Feedback.create(score_value_id: score_value_id)
   end
 
   def save

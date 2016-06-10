@@ -22,12 +22,6 @@ ActiveRecord::Schema.define(version: 20160609221233) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "entries", force: :cascade do |t|
-    t.integer  "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.string   "name",         null: false
     t.text     "description",  null: false
@@ -41,6 +35,14 @@ ActiveRecord::Schema.define(version: 20160609221233) do
 
   add_index "events", ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer  "score_value_id", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "feedbacks", ["score_value_id"], name: "index_feedbacks_on_score_value_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
@@ -136,6 +138,7 @@ ActiveRecord::Schema.define(version: 20160609221233) do
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
   add_foreign_key "events", "regions"
+  add_foreign_key "feedbacks", "score_values"
   add_foreign_key "score_attributes", "score_categories"
   add_foreign_key "score_values", "score_attributes"
   add_foreign_key "season_registrations", "seasons"

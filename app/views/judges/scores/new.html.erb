@@ -8,7 +8,12 @@
     <% category.score_attributes.each do |attribute| %>
       <%= f.label attribute.label %>
 
-      <%= f.collection_radio_buttons :entry, attribute.score_values.map { |v| [v.value, v.label] }, :first, :last, item_wrapper_class: "inline-radio" %>
+      <%= f.collection_radio_buttons :score_value_id,
+                                     attribute.score_values.map { |v|
+                                       [v.id, v.label]
+                                     },
+                                     :first, :last,
+                                     item_wrapper_class: "inline-radio" %>
     <% end %>
   <% end %>
 
