@@ -14,10 +14,10 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
 
     visit new_judges_score_path
     within('.ideation') { choose 'Yes' }
-    within('.technology') { choose 'Yes' }
+    within('.technology') { choose 'No' }
     click_button 'Save'
 
     assert_equal 1, Score.count
-    assert_equal 6, Score.last.total
+    assert_equal 3, Score.last.total
   end
 end
