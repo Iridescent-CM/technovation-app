@@ -1,21 +1,9 @@
 <h1><%= t('views.judges.scores.new.title') %></h1>
 
 <%= simple_form_for [:judges, @score] do |f| %>
-  <% @categories.each do |category| %>
-    <div class="<%= category.name.downcase.underscore %>">
-      <h2><%= category.name %></h2>
-
-      <% category.score_attributes.each do |attribute| %>
-        <h4><%= attribute.label %></h4>
-
-        <%= f.collection_radio_buttons :score_value_ids,
-                                       attribute.score_values,
-                                       :id, :label,
-                                       { item_wrapper_class: "inline-radio" },
-                                       name: "score[score_value_ids][#{attribute.id}][]" %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render partial: 'judges/scores/form_fields/score_category',
+             collection: @categories,
+             locals: { f: f } %>
 
   <%= f.button :submit, t('views.judges.scores.form.save') %>
 <% end %>

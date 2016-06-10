@@ -1,0 +1,7 @@
+<div class="<%= score_category.name.downcase.underscore %>">
+  <h2><%= score_category.name %></h2>
+
+  <%= render partial: 'judges/scores/form_fields/score_attribute',
+             collection: score_category.score_attributes,
+             locals: { f: f } %>
+</div>
