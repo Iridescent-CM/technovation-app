@@ -92,10 +92,11 @@ hr
           strong  5pm PT on April 21, 2016.&nbsp
           |Please make sure you save your submission before that time.
     - else
-      .alert.alert-danger role='alert'
-        p
-          span You still need fill the fields:&nbsp;
-          == show_all_errors(@team.check_completeness)
-          span  to complete your submission.
+      - if policy(@team).edit?
+        .alert.alert-danger role='alert'
+          p
+            span You still need fill the fields:&nbsp;
+            == show_all_errors(@team.check_completeness)
+            span  to complete your submission.
 
 = render 'submission', team: @team
