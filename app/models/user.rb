@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
     expertises << expertise
   end
 
+  def judge?
+    roles.any? { |r| r.judge? }
+  end
+
   def authenticated?
     true
   end
