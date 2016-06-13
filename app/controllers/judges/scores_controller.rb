@@ -48,7 +48,7 @@ class Judges::ScoresController < ApplicationController
   end
 
   def categories
-    @categories ||= ScoreCategory.all
+    @categories ||= ScoreCategory.by_expertise(current_judge)
   end
 
   def score

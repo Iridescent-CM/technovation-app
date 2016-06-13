@@ -5,7 +5,8 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     create_test_scoring_environment
     judge = CreateJudge.(email: "judge@judging.com",
                          password: "secret1234",
-                         password_confirmation: "secret1234")
+                         password_confirmation: "secret1234",
+                         expertises: ScoreCategory.all)
     sign_in(judge)
   end
 
