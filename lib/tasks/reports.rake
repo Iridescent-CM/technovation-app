@@ -153,4 +153,15 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a CSV of all current year users with roles and country"
+  task users_roles_countries: :environment do
+    CSV.open("./public/users_roles_countries.csv", "wb") do |csv|
+      csv << %w{Name Email Country Role}
+
+      User.is_registered.each do |user|
+        csv << [user.name, user.email, Country[user.home_country].name, user.role]
+      end
+    end
+  end
 end
