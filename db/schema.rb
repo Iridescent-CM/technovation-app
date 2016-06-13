@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613142659) do
+ActiveRecord::Schema.define(version: 20160613200728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,14 +25,6 @@ ActiveRecord::Schema.define(version: 20160613142659) do
   end
 
   add_index "authentications", ["email"], name: "index_authentications_on_email", using: :btree
-
-  create_table "authentications_roles", id: false, force: :cascade do |t|
-    t.integer "authentication_id"
-    t.integer "role_id"
-  end
-
-  add_index "authentications_roles", ["authentication_id"], name: "index_authentications_roles_on_authentication_id", using: :btree
-  add_index "authentications_roles", ["role_id"], name: "index_authentications_roles_on_role_id", using: :btree
 
   create_table "divisions", force: :cascade do |t|
     t.integer  "name",       null: false
@@ -173,8 +165,24 @@ ActiveRecord::Schema.define(version: 20160613142659) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
-  add_foreign_key "authentications_roles", "authentications"
-  add_foreign_key "authentications_roles", "roles"
+  create_table "user_roles", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "role_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id", using: :btree
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.integer  "authentication_id", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "users", ["authentication_id"], name: "index_users_on_authentication_id", using: :btree
+
   add_foreign_key "events", "regions"
   add_foreign_key "score_attributes", "score_categories"
   add_foreign_key "score_values", "score_attributes"
@@ -185,4 +193,7 @@ ActiveRecord::Schema.define(version: 20160613142659) do
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
+  add_foreign_key "users", "authentications"
 end
