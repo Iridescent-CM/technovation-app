@@ -32,3 +32,7 @@ group :development do
   gem 'spring'
   gem "refills"
 end
+
+group :qa, :production do
+  gem 'rails_12factor'
+end
