@@ -2,14 +2,14 @@ require "rails_helper"
 
 class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
-    CreateScoringRubric.(category: "Ideation",
-                         attributes: [{ label: "Was the idea good?",
-                                        values: [{ label: "No", value: 0 },
-                                                 { label: "Yes", value: 3 }] }])
-    CreateScoringRubric.(category: "Technology",
-                         attributes: [{ label: "Was the tech good?",
-                                        values: [{ label: "No", value: 0 },
-                                                 { label: "Yes", value: 7 }] }])
+    CreateScoringRubric.([{ category: "Ideation",
+                            attributes: [{ label: "Was the idea good?",
+                                            values: [{ label: "No", value: 0 },
+                                                    { label: "Yes", value: 3 }] }] },
+                          { category: "Technology",
+                            attributes: [{ label: "Was the tech good?",
+                                          values: [{ label: "No", value: 0 },
+                                                    { label: "Yes", value: 7 }] }] }])
 
     judge = CreateAuthentication.(email: "judge@judging.com",
                                   password: "secret1234",
