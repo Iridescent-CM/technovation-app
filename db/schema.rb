@@ -116,10 +116,12 @@ ActiveRecord::Schema.define(version: 20160613142659) do
 
   create_table "scores", force: :cascade do |t|
     t.integer  "submission_id", null: false
+    t.integer  "judge_id",      null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
+  add_index "scores", ["judge_id"], name: "index_scores_on_judge_id", using: :btree
   add_index "scores", ["submission_id"], name: "index_scores_on_submission_id", using: :btree
 
   create_table "season_registrations", force: :cascade do |t|

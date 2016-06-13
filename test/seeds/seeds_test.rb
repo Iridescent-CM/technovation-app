@@ -54,6 +54,10 @@ class SeedsTest < Minitest::Test
     assert Team.last.submissions.count == 1
   end
 
+  def test_seed_adds_judge
+    assert Authentication.count == 1
+  end
+
   private
   def capture_stdout
     s = StringIO.new

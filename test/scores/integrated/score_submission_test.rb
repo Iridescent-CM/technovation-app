@@ -11,6 +11,11 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
                                         values: [{ label: "No", value: 0 },
                                                  { label: "Yes", value: 7 }] }])
 
+    judge = CreateAuthentication.(email: "judge@judging.com",
+                                  password: "secret1234",
+                                  password_confirmation: "secret1234")
+    sign_in(judge)
+
     submission
   end
 
@@ -39,6 +44,16 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
 
     assert_equal 1, submission.scores.count
     assert_equal 3, submission.scores.last.total
+  end
+
+  def test_score_only_once
+    visit judges_scores_path
+    click_link 'Judge submission for Test team'
+    within('.ideation') { choose 'No' }
+    within('.technology') { choose 'Yes' }
+    click_button 'Save'
+
+    assert !page.has_link?('Judge submission for Test team')
   end
 
   private

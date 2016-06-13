@@ -1,7 +1,9 @@
 class Judges::ScoresController < ApplicationController
+  before_filter :authenticate_judge!
+
   def index
     @scores = Score.all
-    @submissions = Submission.all
+    @submissions = Submission.not_yet_judged_by(current_judge)
   end
 
   def new
@@ -38,6 +40,7 @@ class Judges::ScoresController < ApplicationController
     begin
       params.require(:score).permit(:score_value_ids).tap do |list|
         list[:score_value_ids] = params.fetch(:score).fetch(:score_value_ids).values.flatten
+        list[:judge_id] = current_judge.id
       end
     rescue ActionController::ParameterMissing
       { }

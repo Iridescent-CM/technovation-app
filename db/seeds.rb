@@ -33,3 +33,9 @@ if (team = Team.create(name: "The Techno Girls",
   team.submissions.create!
   puts "Created Submission"
 end
+
+if (judge = CreateAuthentication.(email: "judge@judging.com",
+                                  password: "judge@judging.com",
+                                  password_confirmation: "judge@judging.com")).valid?
+  puts "Created Judge: #{judge.email} with password #{judge.password}"
+end
