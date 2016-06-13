@@ -1,0 +1,2 @@
+class Signin < Authentication
+end

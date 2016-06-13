@@ -11,6 +11,8 @@ require 'database_cleaner'
 
 require "minitest/pride"
 
+Dir[Rails.root.join('test/support/**/*.rb')].each { |f| require f }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 class ActiveSupport::TestCase
@@ -22,6 +24,8 @@ end
 DatabaseCleaner.strategy = :transaction
 
 class Minitest::Test
+  include SigninHelper
+
   def around(&block)
     DatabaseCleaner.start
     DatabaseCleaner.cleaning(&block)

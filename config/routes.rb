@@ -7,5 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'login', to: 'signins#new', as: :signin
+  resources :signins, only: :create
+
   root to: "judges/scores#index"
 end

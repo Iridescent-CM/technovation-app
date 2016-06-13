@@ -1,5 +1,8 @@
 en:
   controllers:
+    application:
+      unauthenticated: "You need to sign in before you go there!"
+
     judges:
       scores:
         create:
@@ -8,6 +11,11 @@ en:
           success: "You updated your score. Nice!"
         new:
           add: "Judge submission for %{team_name}"
+
+    signins:
+      create:
+        success: "Hey! Welcome back!"
+        error: "Sorry, we didn't recognize that name and password"
 
   models:
     scores:
@@ -28,3 +36,9 @@ en:
           title: "Scores"
         new:
           title: "Score a Submission"
+
+    signins:
+      form:
+        signin: "Sign in"
+      new:
+        title: "Sign in"
