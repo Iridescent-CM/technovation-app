@@ -25,6 +25,7 @@ DatabaseCleaner.strategy = :transaction
 
 class Minitest::Test
   include SigninHelper
+  include ScoringEnvironmentHelper
 
   def around(&block)
     DatabaseCleaner.start

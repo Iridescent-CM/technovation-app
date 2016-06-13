@@ -2,21 +2,11 @@ require "rails_helper"
 
 class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
-    CreateScoringRubric.([{ category: "Ideation",
-                            attributes: [{ label: "Was the idea good?",
-                                            values: [{ label: "No", value: 0 },
-                                                    { label: "Yes", value: 3 }] }] },
-                          { category: "Technology",
-                            attributes: [{ label: "Was the tech good?",
-                                          values: [{ label: "No", value: 0 },
-                                                    { label: "Yes", value: 7 }] }] }])
-
-    judge = CreateAuthentication.(email: "judge@judging.com",
-                                  password: "secret1234",
-                                  password_confirmation: "secret1234")
+    create_test_scoring_environment
+    judge = CreateJudge.(email: "judge@judging.com",
+                         password: "secret1234",
+                         password_confirmation: "secret1234")
     sign_in(judge)
-
-    submission
   end
 
   def test_score_submission
@@ -57,12 +47,4 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   end
 
   private
-  def submission
-    return @submission if defined?(@submission)
-    team = Team.create!(name: "Test team",
-                        description: "Real creative name",
-                        division: Division.high_school,
-                        region: Region.find_or_create_by(name: "US/Canada"))
-    @submission = team.submissions.create!
-  end
 end
