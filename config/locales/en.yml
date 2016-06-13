@@ -8,11 +8,18 @@ en:
           success: "You updated your score. Nice!"
         new:
           add: "Judge submission for %{team_name}"
+
+  models:
+    scores:
+      team_name: "Team name"
+      total: "Total"
+
   views:
     application:
       actions: "Actions"
       site_title: "Technovation Challenge"
       edit: "Edit"
+
     judges:
       scores:
         form:
