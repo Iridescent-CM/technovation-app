@@ -2,13 +2,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
+  helper_method :authenticated?
+
   private
+  def authenticated?
+    !!current_judge
+  end
+
   def authenticate_judge!
-    if current_judge
-      true
-    else
-      redirect_to signin_path, notice: t("controllers.application.unauthenticated")
-    end
+    authenticated? ||
+      redirect_to(signin_path, notice: t("controllers.application.unauthenticated"))
   end
 
   def current_judge

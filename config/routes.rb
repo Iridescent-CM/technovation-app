@@ -7,8 +7,13 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'login', to: 'signins#new', as: :signin
+  get 'login', to: 'signins#new', as: :login
+  get 'signin', to: 'signins#new', as: :signin
+
+  match 'logout',  to: 'signins#destroy', as: :logout, via: [:get, :delete]
+  match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
+
   resources :signins, only: :create
 
-  root to: "judges/scores#index"
+  root to: "static#index"
 end

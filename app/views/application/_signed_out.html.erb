@@ -1,0 +1,3 @@
+<% unless authenticated? %>
+  <%= link_to t('views.application.signin'), signin_path, class: "sign-in" %>
+<% end %>

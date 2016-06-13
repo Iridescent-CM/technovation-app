@@ -16,6 +16,8 @@ en:
       create:
         success: "Hey! Welcome back!"
         error: "Sorry, we didn't recognize that name and password"
+      destroy:
+        success: "You're signed out. See you next time!"
 
   models:
     scores:
@@ -25,8 +27,10 @@ en:
   views:
     application:
       actions: "Actions"
-      site_title: "Technovation Challenge"
       edit: "Edit"
+      signin: 'Sign in'
+      signout: 'Logout'
+      site_title: "Technovation Challenge"
 
     judges:
       scores:

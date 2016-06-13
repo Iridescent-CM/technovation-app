@@ -15,6 +15,11 @@ class SigninsController < ApplicationController
     end
   end
 
+  def destroy
+    cookies.delete(:auth_token)
+    redirect_to root_path, success: t('controllers.signins.destroy.success')
+  end
+
   private
   def signin_params
     params.require(:signin).permit(:email, :password)
