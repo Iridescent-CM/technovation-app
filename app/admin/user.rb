@@ -111,7 +111,11 @@ ActiveAdmin.register User do
     column (:teams) { |u| u.teams.map { |t| link_to(t.name, admin_team_path(t)) }.join(', ').html_safe }
     column :can_judge?
     column (:num_judged) { |u| u.rubrics.length }
-    column (:judging_event) { |u| link_to u.event_name, admin_event_path(u.event) }
+    column (:judging_event) do |u|
+      if !!u.event
+        link_to u.event_name, admin_event_path(u.event)
+      end
+    end
 
     column :judging_region
 
