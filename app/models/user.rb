@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   def add_expertise(expertise)
     expertises << expertise
   end
+
+  def authenticated?
+    true
+  end
 end

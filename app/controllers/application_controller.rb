@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticated?
-    !!current_judge
+    current_judge.authenticated?
   end
 
   def authenticate_judge!
@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_judge
-    @current_judge ||= Authentication.find_by(auth_token: cookies.fetch(:auth_token, ""))
+    @current_judge ||= Authentication.find_by(auth_token: cookies.fetch(:auth_token, "")).user
   end
 end
