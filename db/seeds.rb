@@ -39,6 +39,7 @@ end
 
 if (judge = CreateJudge.(email: "judge@judging.com",
                          password: "judge@judging.com",
-                         password_confirmation: "judge@judging.com")).valid?
+                         password_confirmation: "judge@judging.com",
+                         expertises: ScoreCategory.all)).valid?
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
