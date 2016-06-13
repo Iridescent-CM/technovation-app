@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610155017) do
+ActiveRecord::Schema.define(version: 20160613142659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: :cascade do |t|
+    t.string   "email",           null: false
+    t.string   "password_digest", null: false
+    t.string   "auth_token",      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "authentications", ["email"], name: "index_authentications_on_email", using: :btree
+
+  create_table "authentications_roles", id: false, force: :cascade do |t|
+    t.integer "authentication_id"
+    t.integer "role_id"
+  end
+
+  add_index "authentications_roles", ["authentication_id"], name: "index_authentications_roles_on_authentication_id", using: :btree
+  add_index "authentications_roles", ["role_id"], name: "index_authentications_roles_on_role_id", using: :btree
 
   create_table "divisions", force: :cascade do |t|
     t.integer  "name",       null: false
@@ -54,6 +72,14 @@ ActiveRecord::Schema.define(version: 20160610155017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer  "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "score_attributes", force: :cascade do |t|
     t.integer  "score_category_id", null: false
@@ -145,6 +171,8 @@ ActiveRecord::Schema.define(version: 20160610155017) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
+  add_foreign_key "authentications_roles", "authentications"
+  add_foreign_key "authentications_roles", "roles"
   add_foreign_key "events", "regions"
   add_foreign_key "score_attributes", "score_categories"
   add_foreign_key "score_values", "score_attributes"
