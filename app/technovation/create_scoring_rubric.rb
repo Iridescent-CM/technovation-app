@@ -1,13 +1,11 @@
 module CreateScoringRubric
   def self.call(rubric_or_rubrics)
-    categories = [rubric_or_rubrics].flatten.map do |attributes|
+    [rubric_or_rubrics].flatten.map { |attributes|
       category = create_score_category(attributes.fetch(:category))
       build_score_attributes(category, attributes.fetch(:attributes))
       category.save
       category
-    end
-
-    categories.all?(&:valid?)
+    }.all?(&:valid?)
   end
 
   private
