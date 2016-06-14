@@ -5,8 +5,4 @@ class User < ActiveRecord::Base
   has_many :roles, through: :user_roles
 
   delegate :email, :password, to: :authentication, prefix: false
-
-  def authenticated?
-    true
-  end
 end

@@ -3,16 +3,20 @@ class Authentication < ActiveRecord::Base
   has_one :user
   has_many :roles, through: :user
 
-  def self.find_by(*args)
-    super(*args) || GuestAuth.new
+  def self.authenticated?(cookies)
+    !!authenticate_judge(cookies)
   end
 
-  class GuestAuth
-    def user; Guest.new; end
-    def authenticate(*); false; end
+  def self.authenticate_judge(cookies, callbacks = {})
+    default_callbacks = { failure: -> { } }.merge(callbacks)
+    current_judge(cookies) || default_callbacks.fetch(:failure).call
+  end
 
-    class Guest
-      def authenticated?; false; end
+  def self.current_judge(cookies)
+    if !!(@current_judge ||= find_by(auth_token: cookies.fetch(:auth_token, "")))
+      @current_judge.user
+    else
+      false
     end
   end
 end

@@ -6,15 +6,17 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticated?
-    current_judge.authenticated?
+    Authentication.authenticated?(cookies)
   end
 
   def authenticate_judge!
-    authenticated? || (save_redirected_path && go_to_signin)
+    Authentication.authenticate_judge(cookies, failure: -> {
+      save_redirected_path && go_to_signin
+    })
   end
 
   def current_judge
-    @current_judge ||= Authentication.find_by(auth_token: cookies.fetch(:auth_token, "")).user
+    @current_judge ||= Authentication.current_judge(cookies)
   end
 
   def save_redirected_path
