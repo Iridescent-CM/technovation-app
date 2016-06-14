@@ -11,7 +11,7 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
     judge = CreateJudge.(email: "judge@judging.com",
                          password: "judge@judging.com",
                          password_confirmation: "judge@judging.com",
-                         expertises: [tech, biz])
+                         expertise_ids: [tech.id, biz.id])
 
     sign_in(judge)
 

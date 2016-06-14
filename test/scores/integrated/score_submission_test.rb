@@ -7,7 +7,7 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     @judge ||= CreateJudge.(email: "judge@judging.com",
                             password: "secret1234",
                             password_confirmation: "secret1234",
-                            expertises: ScoreCategory.all)
+                            expertise_ids: ScoreCategory.pluck(:id))
     sign_in(@judge)
 
     visit judges_scores_path
