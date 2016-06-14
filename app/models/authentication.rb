@@ -3,6 +3,8 @@ class Authentication < ActiveRecord::Base
   has_one :user
   has_many :roles, through: :user
 
+  validates :email, presence: true, uniqueness: true
+
   def self.authenticated?(cookies)
     !!authenticate_judge(cookies)
   end

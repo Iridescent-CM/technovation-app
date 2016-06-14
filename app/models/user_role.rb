@@ -4,4 +4,6 @@ class UserRole < ActiveRecord::Base
 
   has_many :judge_expertises, -> { joins(:roles).where(role: { name: Role.names[:judge] }) }
   has_many :expertises, -> { joins(:roles).where(role: { name: Role.names[:judge] }) }, through: :judge_expertises
+
+  validates :user_id, :role_id, presence: true
 end

@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
   has_many :roles, through: :user_roles
 
   delegate :email, :password, to: :authentication, prefix: false
+
+  validates :authentication_id, presence: true
 end
