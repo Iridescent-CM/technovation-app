@@ -58,7 +58,7 @@ class SeedsTest < Minitest::Test
     assert User.count == 1
     assert UserRole.count == 1
     assert Authentication.count == 1
-    assert User.last.judge?
+    assert User.last.roles.last.judge?
   end
 
   private

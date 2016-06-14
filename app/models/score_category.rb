@@ -7,6 +7,6 @@ class ScoreCategory < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   scope :by_expertise, ->(judge) {
-    all.select { |sc| judge.expertises.include?(sc) }
+    all.select { |sc| JudgingEnabledUserRole.find_by(user_id: judge.id).expertises.include?(sc) }
   }
 end

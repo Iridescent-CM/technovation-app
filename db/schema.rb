@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_index "events", ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
 
+  create_table "judge_expertises", force: :cascade do |t|
+    t.integer  "judging_enabled_user_role_id", null: false
+    t.integer  "expertise_id",                 null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "judge_expertises", ["expertise_id"], name: "index_judge_expertises_on_expertise_id", using: :btree
+  add_index "judge_expertises", ["judging_enabled_user_role_id"], name: "index_judge_expertises_on_judging_enabled_user_role_id", using: :btree
+
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
     t.integer  "member_id",     null: false
@@ -159,16 +169,6 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
-  create_table "user_expertises", force: :cascade do |t|
-    t.integer  "user_id",      null: false
-    t.integer  "expertise_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "user_expertises", ["expertise_id"], name: "index_user_expertises_on_expertise_id", using: :btree
-  add_index "user_expertises", ["user_id"], name: "index_user_expertises_on_user_id", using: :btree
-
   create_table "user_roles", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "role_id",    null: false
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_index "users", ["authentication_id"], name: "index_users_on_authentication_id", using: :btree
 
   add_foreign_key "events", "regions"
+  add_foreign_key "judge_expertises", "score_categories", column: "expertise_id"
+  add_foreign_key "judge_expertises", "user_roles", column: "judging_enabled_user_role_id"
   add_foreign_key "score_attributes", "score_categories"
   add_foreign_key "score_values", "score_attributes"
   add_foreign_key "score_values_scores", "score_values"
@@ -197,8 +199,6 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"
-  add_foreign_key "user_expertises", "score_categories", column: "expertise_id"
-  add_foreign_key "user_expertises", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "users", "authentications"

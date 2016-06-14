@@ -4,18 +4,7 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, through: :user_roles
 
-  has_many :user_expertises
-  has_many :expertises, through: :user_expertises
-
   delegate :email, :password, to: :authentication, prefix: false
-
-  def add_expertise(expertise)
-    expertises << expertise
-  end
-
-  def judge?
-    roles.any? { |r| r.judge? }
-  end
 
   def authenticated?
     true
