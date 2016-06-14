@@ -12,7 +12,7 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
 
     visit judges_scores_path
 
-    click_link 'Judge submission for Test team'
+    click_link 'Judge submissions'
 
     within('.ideation') { choose 'No' }
     within('.technology') { choose 'Yes' }
@@ -26,7 +26,10 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   end
 
   def test_score_only_once
-    assert !page.has_link?('Judge submission for Test team')
+    refute page.has_link?('Judge submissions')
+    assert page.has_content?(
+      "There are no more submissions for you to judge. Thank you for your feedback!"
+    )
   end
 
   def test_edit_score

@@ -8,4 +8,8 @@ class Submission < ActiveRecord::Base
   }
 
   delegate :name, to: :team, prefix: true
+
+  def self.random
+    order('random()').limit(1).first
+  end
 end

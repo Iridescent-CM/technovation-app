@@ -1,0 +1,9 @@
+<p>
+  <% if @submission %>
+    <%= link_to t('controllers.judges.scores.new.add'),
+                new_judges_submission_score_path(@submission) %>
+  <% else %>
+    <%= t('views.judges.scores.index.no_submissions') %>
+  <% end %>
+</p>
+

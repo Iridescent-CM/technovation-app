@@ -10,7 +10,7 @@ en:
         update:
           success: "You updated your score. Nice!"
         new:
-          add: "Judge submission for %{team_name}"
+          add: "Judge submissions"
 
     signins:
       create:
@@ -37,6 +37,7 @@ en:
         form:
           save: "Save"
         index:
+          no_submissions: "There are no more submissions for you to judge. Thank you for your feedback!"
           title: "Scores"
         new:
           title: "Score a Submission"

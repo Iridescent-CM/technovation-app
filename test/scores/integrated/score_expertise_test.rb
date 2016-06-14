@@ -16,7 +16,7 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
     sign_in(judge)
 
     visit judges_scores_path
-    click_link 'Judge submission for Test team'
+    click_link 'Judge submissions'
 
     assert page.has_content?('Technology')
     assert page.has_content?('Business')

@@ -3,7 +3,7 @@ class Judges::ScoresController < ApplicationController
 
   def index
     @scores = Score.all
-    @submissions = Submission.visible_to(current_judge)
+    @submission = Submission.visible_to(current_judge).random
   end
 
   def new
