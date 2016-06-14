@@ -10,15 +10,15 @@ class User < ActiveRecord::Base
 
   validates :authentication_id, presence: true
 
+  def submission_ids
+    !!judge_role && judge_role.submission_ids
+  end
+
   def judge_role_id
     !!judge_role && judge_role.id
   end
 
   def judge_role
     user_roles.judge
-  end
-
-  def submission_ids
-    judge_role.submission_ids
   end
 end
