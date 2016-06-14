@@ -45,9 +45,10 @@ class SeedsTest < Minitest::Test
                         .score_values.last.value == 3
   end
 
-  def test_seed_adds_team
-    assert Team.count == 1
-    assert Team.last.name == "The Techno Girls"
+  def test_seed_adds_teams
+    names = Team.pluck(:name)
+    assert names.include?("The Techno Girls")
+    assert names.include?("Girl Power")
   end
 
   def test_seed_adds_team_submission

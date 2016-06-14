@@ -37,6 +37,17 @@ if (team = Team.create(name: "The Techno Girls",
   puts "Created Submission"
 end
 
+if (team = Team.create(name: "Girl Power",
+                       description: "Another great team of smart and capable girls!",
+                       division: Division.high_school,
+                       region: Region.last)).valid?
+
+  puts "Created Team: #{team.name}"
+
+  team.submissions.create!
+  puts "Created Submission"
+end
+
 if (judge = CreateJudge.(email: "judge@judging.com",
                          password: "judge@judging.com",
                          password_confirmation: "judge@judging.com",
