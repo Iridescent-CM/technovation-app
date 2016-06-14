@@ -2,7 +2,7 @@ class Judges::ScoresController < ApplicationController
   before_filter :authenticate_judge!
 
   def index
-    @scores = Score.all
+    @scores = Score.visible_to(current_judge)
     @submission = Submission.visible_to(current_judge).random
   end
 

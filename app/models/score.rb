@@ -6,6 +6,10 @@ class Score < ActiveRecord::Base
   has_one :team, through: :submission
   has_and_belongs_to_many :score_values
 
+  scope :visible_to, ->(user) {
+    joins(:judge).where(judge_id: user.user_role_ids)
+  }
+
   delegate :name, to: :team, prefix: true
 
   def total
