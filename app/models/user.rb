@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
   delegate :email, :password, to: :authentication, prefix: false
 
   validates :authentication_id, presence: true
+
+  def judge_role_id
+    !!user_roles.judge && user_roles.judge.id
+  end
 end

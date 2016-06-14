@@ -5,7 +5,7 @@ class Submission < ActiveRecord::Base
   scope :visible_to, ->(judge) {
     joins('LEFT JOIN scores on scores.submission_id = submissions.id')
     .where('scores.judge_id NOT IN (?) OR scores.submission_id IS NULL',
-           GetJudgeRole.(judge).id)
+           judge.judge_role_id)
   }
 
   delegate :name, to: :team, prefix: true
