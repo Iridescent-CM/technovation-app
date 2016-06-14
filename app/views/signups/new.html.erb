@@ -6,6 +6,8 @@
   <%= f.input :password_confirmation,
               label: t('views.signups.form.confirm_password') %>
 
+  <h4><%= t('views.signups.form.choose_expertises') %></h4>
+
   <%= collection_check_boxes :signup,
                              :expertise_ids,
                              @expertises,

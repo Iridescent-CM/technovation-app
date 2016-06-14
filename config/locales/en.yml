@@ -51,6 +51,7 @@ en:
 
     signups:
       form:
+        choose_expertises: "Choose expertise(s)"
         confirm_password: 'Confirm password'
         signup: "Sign up"
       new:
