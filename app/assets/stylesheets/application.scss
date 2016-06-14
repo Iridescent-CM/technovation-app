@@ -15,7 +15,7 @@ body {
   @include outer-container;
 }
 
-.inline-radio {
+.inline-radio, .inline-checkbox {
   display: block;
   margin: 1rem 0;
 
