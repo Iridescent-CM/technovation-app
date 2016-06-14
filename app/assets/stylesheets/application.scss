@@ -6,8 +6,9 @@ $visual-grid: false !default;
 @import "refills/tables-minimal";
 @import "refills/flashes";
 @import "refills/navigation";
+@import "refills/footer-2";
 
-body {
+body, html {
   margin: 0;
 }
 

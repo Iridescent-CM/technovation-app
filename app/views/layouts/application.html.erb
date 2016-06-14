@@ -13,11 +13,15 @@
   </head>
 
   <body>
-    <%= render 'navigation' %>
+    <div class="main">
+      <%= render 'navigation' %>
 
-    <div class="container">
-      <%= render 'flash_messages' %>
-      <%= yield %>
+      <div class="container">
+        <%= render 'flash_messages' %>
+        <%= yield %>
+      </div>
     </div>
+
+    <%= render 'footer' %>
   </body>
 </html>
