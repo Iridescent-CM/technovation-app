@@ -147,12 +147,6 @@ ActiveRecord::Schema.define(version: 20160613203318) do
 
   add_index "submissions", ["team_id"], name: "index_submissions_on_team_id", using: :btree
 
-  create_table "team_members", force: :cascade do |t|
-    t.integer  "role",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string   "name",        null: false
     t.text     "description", null: false

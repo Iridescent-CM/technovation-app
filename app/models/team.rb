@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
   belongs_to :region
 
   has_many :memberships, as: :joinable
-  has_many :members, through: :memberships, source_type: "TeamMember"
+  has_many :members, through: :memberships
 
   has_many :submissions
 
