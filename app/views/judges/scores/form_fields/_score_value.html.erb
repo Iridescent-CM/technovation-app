@@ -1,7 +1,7 @@
 <span class="inline-radio">
   <%= f.radio_button :score_value_ids,
                      score_value.id,
-                     name: "score[score_value_ids][#{score_attribute.id}][]",
+                     name: "score[score_value_ids][#{score_question.id}][]",
                      checked: f.object.score_value_selected?(score_value) %>
 
   <%= f.label :score_value_ids,

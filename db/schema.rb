@@ -83,30 +83,30 @@ ActiveRecord::Schema.define(version: 20160613203318) do
 
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
-  create_table "score_attributes", force: :cascade do |t|
-    t.integer  "score_category_id", null: false
-    t.text     "label",             null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "score_attributes", ["score_category_id"], name: "index_score_attributes_on_score_category_id", using: :btree
-
   create_table "score_categories", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "score_values", force: :cascade do |t|
-    t.integer  "score_attribute_id", null: false
-    t.integer  "value",              null: false
-    t.text     "label",              null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+  create_table "score_questions", force: :cascade do |t|
+    t.integer  "score_category_id", null: false
+    t.text     "label",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "score_values", ["score_attribute_id"], name: "index_score_values_on_score_attribute_id", using: :btree
+  add_index "score_questions", ["score_category_id"], name: "index_score_questions_on_score_category_id", using: :btree
+
+  create_table "score_values", force: :cascade do |t|
+    t.integer  "score_question_id", null: false
+    t.integer  "value",             null: false
+    t.text     "label",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "score_values", ["score_question_id"], name: "index_score_values_on_score_question_id", using: :btree
 
   create_table "score_values_scores", id: false, force: :cascade do |t|
     t.integer "score_value_id", null: false
@@ -190,8 +190,8 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_foreign_key "events", "regions"
   add_foreign_key "judge_expertises", "score_categories", column: "expertise_id"
   add_foreign_key "judge_expertises", "user_roles", column: "judging_enabled_user_role_id"
-  add_foreign_key "score_attributes", "score_categories"
-  add_foreign_key "score_values", "score_attributes"
+  add_foreign_key "score_questions", "score_categories"
+  add_foreign_key "score_values", "score_questions"
   add_foreign_key "score_values_scores", "score_values"
   add_foreign_key "score_values_scores", "scores"
   add_foreign_key "scores", "submissions"

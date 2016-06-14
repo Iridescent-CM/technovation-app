@@ -1,4 +1,4 @@
-class ScoreAttribute < ActiveRecord::Base
+class ScoreQuestion < ActiveRecord::Base
   belongs_to :score_category
   has_many :score_values, dependent: :destroy
 

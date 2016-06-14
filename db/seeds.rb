@@ -8,18 +8,18 @@ end
 
 if CreateScoringRubric.({
      category: "Ideation",
-     attributes: [{ label: "Did the team identify a real problem in their community?",
-                    values: [{ value: 0, label: "No" },
-                             { value: 3, label: "Yes" }] }]
+     questions: [{ label: "Did the team identify a real problem in their community?",
+                   values: [{ value: 0, label: "No" },
+                            { value: 3, label: "Yes" }] }]
    })
 
   ScoreCategory.all.each do |category|
     puts "Created ScoreCategory: #{category.name}"
 
-    category.score_attributes.each do |score_attribute|
-      puts "Created ScoreAttribute: #{score_attribute.label}"
+    category.score_questions.each do |score_question|
+      puts "Created ScoreQuestion: #{score_question.label}"
 
-      score_attribute.score_values.each do |score_value|
+      score_question.score_values.each do |score_value|
         puts "Created ScoreValue: #{score_value.label} - #{score_value.value}"
       end
     end

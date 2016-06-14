@@ -25,23 +25,23 @@ class SeedsTest < Minitest::Test
     assert ScoreCategory.last.name == "Ideation"
   end
 
-  def test_seed_adds_score_attribute
-    assert ScoreAttribute.count == 1
-    assert ScoreCategory.last.score_attributes.last.label ==(
+  def test_seed_adds_score_question
+    assert ScoreQuestion.count == 1
+    assert ScoreCategory.last.score_questions.last.label ==(
       "Did the team identify a real problem in their community?"
     )
   end
 
   def test_seed_adds_score_value
     assert ScoreValue.count == 2
-    assert ScoreCategory.last.score_attributes.first
+    assert ScoreCategory.last.score_questions.first
                         .score_values.first.label == "No"
-    assert ScoreCategory.last.score_attributes.first
+    assert ScoreCategory.last.score_questions.first
                         .score_values.first.value.zero?
 
-    assert ScoreCategory.last.score_attributes.last
+    assert ScoreCategory.last.score_questions.last
                         .score_values.last.label == "Yes"
-    assert ScoreCategory.last.score_attributes.last
+    assert ScoreCategory.last.score_questions.last
                         .score_values.last.value == 3
   end
 

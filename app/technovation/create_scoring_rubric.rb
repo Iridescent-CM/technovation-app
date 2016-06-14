@@ -2,7 +2,7 @@ module CreateScoringRubric
   def self.call(rubric_or_rubrics)
     [rubric_or_rubrics].flatten.map { |attributes|
       category = create_score_category(attributes.fetch(:category))
-      build_score_attributes(category, attributes.fetch(:attributes))
+      build_score_questions(category, attributes.fetch(:questions))
       category.save
       category
     }.all?(&:valid?)
@@ -13,16 +13,16 @@ module CreateScoringRubric
     ScoreCategory.find_or_create_by(name: name)
   end
 
-  def self.build_score_attributes(category, attributes)
+  def self.build_score_questions(category, attributes)
     attributes.each do |attr|
-      attribute = category.score_attributes.build(label: attr.fetch(:label))
-      build_score_values(attribute, attr.fetch(:values))
+      question = category.score_questions.build(label: attr.fetch(:label))
+      build_score_values(question, attr.fetch(:values))
     end
   end
 
-  def self.build_score_values(score_attribute, value_attributes)
+  def self.build_score_values(score_question, value_attributes)
     value_attributes.each do |value|
-      score_attribute.score_values.build(label: value.fetch(:label),
+      score_question.score_values.build(label: value.fetch(:label),
                                          value: value.fetch(:value))
     end
   end
