@@ -3,7 +3,7 @@ class Judges::ScoresController < ApplicationController
 
   def index
     @scores = Score.all
-    @submissions = Submission.not_yet_judged_by(current_judge)
+    @submissions = Submission.visible_to(current_judge)
   end
 
   def new
@@ -36,6 +36,18 @@ class Judges::ScoresController < ApplicationController
   end
 
   private
+  def categories
+    @categories ||= ScoreCategory.visible_to(current_judge)
+  end
+
+  def score
+    @score ||= submission.scores.find(params.fetch(:id))
+  end
+
+  def submission
+    @submission ||= Submission.find(params.fetch(:submission_id))
+  end
+
   def score_params
     begin
       params.require(:score).permit(:score_value_ids).tap do |list|
@@ -45,17 +57,5 @@ class Judges::ScoresController < ApplicationController
     rescue ActionController::ParameterMissing
       { }
     end
-  end
-
-  def categories
-    @categories ||= ScoreCategory.by_expertise(current_judge)
-  end
-
-  def score
-    @score ||= submission.scores.find_by(id: params.fetch(:id))
-  end
-
-  def submission
-    @submission ||= Submission.find(params.fetch(:submission_id))
   end
 end

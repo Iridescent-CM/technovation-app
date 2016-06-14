@@ -5,7 +5,7 @@ class ScoreCategory < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
-  scope :by_expertise, ->(judge) {
+  scope :visible_to, ->(judge) {
     joins('LEFT JOIN judge_expertises on judge_expertises.expertise_id = score_categories.id')
     .where('judge_expertises.user_role_id IN (?)', judge.user_role_ids)
   }
