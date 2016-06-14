@@ -6,7 +6,7 @@ class SigninsController < ApplicationController
   def create
     @signin = Signin.find_by(email: signin_params.fetch(:email))
 
-    if @signin.authenticate(signin_params.fetch(:password))
+    if !!@signin && @signin.authenticate(signin_params.fetch(:password))
       sign_in(@signin)
     else
       @signin = Signin.new
