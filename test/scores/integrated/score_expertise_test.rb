@@ -4,9 +4,9 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
   def test_judge_sees_their_own_expertise
     create_test_scoring_environment
 
-    CreateExpertise.(name: "Ideation")
-    tech = CreateExpertise.(name: "Technology")
-    biz = CreateExpertise.(name: "Business")
+    ScoreCategory.find_or_create_by(name: "Ideation")
+    tech = ScoreCategory.find_or_create_by(name: "Technology")
+    biz = ScoreCategory.find_or_create_by(name: "Business")
 
     judge = CreateJudge.(email: "judge@judging.com",
                          password: "judge@judging.com",
