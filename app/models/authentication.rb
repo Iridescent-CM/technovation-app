@@ -5,10 +5,6 @@ class Authentication < ActiveRecord::Base
 
   validates :email, presence: true, uniqueness: true
 
-  def judge_user_role
-    user.judge_user_role
-  end
-
   def self.authenticated?(cookies)
     exists?(auth_token: cookies.fetch(:auth_token) { "" })
   end
@@ -22,7 +18,7 @@ class Authentication < ActiveRecord::Base
     auth = find_by(auth_token: cookies.fetch(:auth_token) { "" })
 
     if !!auth
-      auth.judge_user_role
+      auth.user.judge_user_role
     else
       NoJudgeFound.new
     end

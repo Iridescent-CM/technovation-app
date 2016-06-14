@@ -11,10 +11,6 @@ class UserRole < ActiveRecord::Base
 
   validates :user_id, :role_id, presence: true
 
-  def self.judge
-    joins(:role).where(roles: { name: Role.names[:judge] }).first
-  end
-
   def submission_ids
     scores.select('submission_id as id')
   end
