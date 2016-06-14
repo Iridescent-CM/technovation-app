@@ -19,6 +19,10 @@ en:
       destroy:
         success: "You're signed out. See you next time!"
 
+    signups:
+      create:
+        success: "Welcome to the Technovation Challenge!"
+
   models:
     scores:
       team_name: "Team name"
