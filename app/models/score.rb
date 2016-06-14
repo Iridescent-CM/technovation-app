@@ -9,8 +9,8 @@ class Score < ActiveRecord::Base
   has_many :scored_values, dependent: :destroy
   has_many :score_values, through: :scored_values
 
-  scope :visible_to, ->(user) {
-    joins(:judge).where(judge_id: user.user_role_ids)
+  scope :visible_to, ->(user_role) {
+    joins(:judge).where(judge_id: user_role.id)
   }
 
   delegate :name, to: :team, prefix: true

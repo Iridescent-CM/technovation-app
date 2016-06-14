@@ -16,4 +16,8 @@ class UserRole < ActiveRecord::Base
   def submission_ids
     scores.select('submission_id as id')
   end
+
+  def authenticated?
+    true
+  end
 end
