@@ -18,6 +18,8 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
     visit judges_scores_path
     click_link 'Judge submission for Test team'
 
+    assert page.has_content?('Technology')
+    assert page.has_content?('Business')
     refute page.has_content?('Ideation')
   end
 end
