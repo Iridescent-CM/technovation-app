@@ -108,13 +108,13 @@ ActiveRecord::Schema.define(version: 20160613203318) do
 
   add_index "score_values", ["score_question_id"], name: "index_score_values_on_score_question_id", using: :btree
 
-  create_table "score_values_scores", id: false, force: :cascade do |t|
+  create_table "scored_values", force: :cascade do |t|
     t.integer "score_value_id", null: false
     t.integer "score_id",       null: false
   end
 
-  add_index "score_values_scores", ["score_id"], name: "index_score_values_scores_on_score_id", using: :btree
-  add_index "score_values_scores", ["score_value_id"], name: "index_score_values_scores_on_score_value_id", using: :btree
+  add_index "scored_values", ["score_id"], name: "index_scored_values_on_score_id", using: :btree
+  add_index "scored_values", ["score_value_id"], name: "index_scored_values_on_score_value_id", using: :btree
 
   create_table "scores", force: :cascade do |t|
     t.integer  "submission_id", null: false
@@ -192,8 +192,8 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_foreign_key "judge_expertises", "user_roles"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"
-  add_foreign_key "score_values_scores", "score_values"
-  add_foreign_key "score_values_scores", "scores"
+  add_foreign_key "scored_values", "score_values"
+  add_foreign_key "scored_values", "scores"
   add_foreign_key "scores", "submissions"
   add_foreign_key "scores", "user_roles", column: "judge_id"
   add_foreign_key "season_registrations", "seasons"

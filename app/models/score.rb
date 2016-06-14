@@ -2,9 +2,12 @@ class Score < ActiveRecord::Base
   default_scope { includes(:score_values) }
 
   belongs_to :judge, class_name: "UserRole"
+
   belongs_to :submission
   has_one :team, through: :submission
-  has_and_belongs_to_many :score_values
+
+  has_many :scored_values, dependent: :destroy
+  has_many :score_values, through: :scored_values
 
   scope :visible_to, ->(user) {
     joins(:judge).where(judge_id: user.user_role_ids)
