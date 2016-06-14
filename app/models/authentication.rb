@@ -1,6 +1,6 @@
 class Authentication < ActiveRecord::Base
   has_secure_password
-  has_one :user
+  has_one :user, dependent: :destroy
   has_many :roles, through: :user
 
   validates :email, presence: true, uniqueness: true
