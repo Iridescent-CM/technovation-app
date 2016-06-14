@@ -1,19 +1,21 @@
 module ScoringEnvironmentHelper
   def create_test_scoring_environment
-    CreateScoringRubric.([{ category: "Ideation",
-                            questions: [{ label: "Was the idea good?",
-                                          values: [{ label: "No", value: 0 },
-                                                   { label: "Yes", value: 3 }] }] },
+    ideation = { category: "Ideation",
+                 questions: [{ label: "Was the idea good?",
+                               values: [{ label: "No", value: 0 },
+                                        { label: "Yes", value: 3 }] }] }
 
-                          { category: "Technology",
-                            questions: [{ label: "Was the tech good?",
-                                          values: [{ label: "No", value: 0 },
-                                                   { label: "Yes", value: 7 }] }] },
+    technology = { category: "Technology",
+                   questions: [{ label: "Was the tech good?",
+                                 values: [{ label: "No", value: 0 },
+                                          { label: "Yes", value: 7 }] }] }
 
-                          { category: "Business",
-                            questions: [{ label: "Was the biz good?",
-                                          values: [{ label: "No", value: 0 },
-                                                   { label: "Yes", value: 5 }] }] }])
+    business = { category: "Business",
+                 questions: [{ label: "Was the biz good?",
+                               values: [{ label: "No", value: 0 },
+                                        { label: "Yes", value: 5 }] }] }
+
+    @rubric ||= CreateScoringRubric.([ideation, technology, business])
 
     submission
   end
