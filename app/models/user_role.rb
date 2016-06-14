@@ -1,4 +1,6 @@
 class UserRole < ActiveRecord::Base
+  default_scope { includes(:role) }
+
   belongs_to :user
   belongs_to :role
 
