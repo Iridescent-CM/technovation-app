@@ -1,7 +1,7 @@
 class Score < ActiveRecord::Base
   default_scope { includes(:score_values) }
 
-  belongs_to :judge
+  belongs_to :judge, class_name: "UserRole"
   belongs_to :submission
   has_one :team, through: :submission
   has_and_belongs_to_many :score_values

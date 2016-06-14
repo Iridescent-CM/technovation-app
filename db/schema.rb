@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_foreign_key "score_values_scores", "score_values"
   add_foreign_key "score_values_scores", "scores"
   add_foreign_key "scores", "submissions"
+  add_foreign_key "scores", "user_roles", column: "judge_id"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
