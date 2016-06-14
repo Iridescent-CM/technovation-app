@@ -13,8 +13,8 @@ class Authentication < ActiveRecord::Base
   end
 
   def self.current_judge(cookies)
-    if !!(@current_judge ||= find_by(auth_token: cookies.fetch(:auth_token, "")))
-      @current_judge.user
+    if !!(current_judge = find_by(auth_token: cookies.fetch(:auth_token, "")))
+      current_judge.user
     else
       false
     end
