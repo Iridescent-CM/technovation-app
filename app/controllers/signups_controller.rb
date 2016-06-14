@@ -8,7 +8,7 @@ class SignupsController < ApplicationController
     @signup = CreateSignup.(signup_params)
 
     if @signup.valid?
-      redirect_to root_path, success: t('controllers.signups.create.success')
+      sign_in(@signup, t('controllers.signups.create.success'))
     else
       expertises
       render :new

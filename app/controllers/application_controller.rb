@@ -27,9 +27,10 @@ class ApplicationController < ActionController::Base
     redirect_to signin_path, notice: t("controllers.application.unauthenticated")
   end
 
-  def sign_in(signin)
+  def sign_in(signin, success_msg = t('controllers.signins.create.success'))
     cookies[:auth_token] = signin.auth_token
-    redirect_to cookies.delete(:redirected_from) || root_path,
-                success: t('controllers.signins.create.success')
+
+    redirect_to cookies.delete(:redirected_from) ||
+      root_path, success: success_msg
   end
 end
