@@ -7,9 +7,9 @@ class SigninsController < ApplicationController
     @signin = Signin.find_by(email: signin_params.fetch(:email))
 
     if @signin.authenticate(signin_params.fetch(:password))
-      cookies[:auth_token] = @signin.auth_token
-      redirect_to root_path, success: t('controllers.signins.create.success')
+      sign_in(@signin)
     else
+      @signin = Signin.new
       flash[:error] = t('controllers.signins.create.error')
       render :new
     end

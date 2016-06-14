@@ -9,6 +9,7 @@ class Authentication < ActiveRecord::Base
 
   class GuestAuth
     def user; Guest.new; end
+    def authenticate(*); false; end
 
     class Guest
       def authenticated?; false; end
