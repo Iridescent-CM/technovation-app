@@ -28,7 +28,3 @@ body, html {
 label {
   cursor: pointer;
 }
-
-.sign-in, .sign-out {
-  @extend .sign-up;
-}
