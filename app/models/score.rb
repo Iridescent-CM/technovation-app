@@ -6,7 +6,6 @@ class Score < ActiveRecord::Base
   has_one :team, through: :submission
   has_and_belongs_to_many :score_values
 
-
   delegate :name, to: :team, prefix: true
 
   def total
