@@ -7,6 +7,6 @@ class ScoreCategory < ActiveRecord::Base
 
   scope :by_expertise, ->(judge) {
     joins('LEFT JOIN judge_expertises on judge_expertises.expertise_id = score_categories.id')
-    .where('judge_expertises.judging_enabled_user_role_id IN (?)', judge.user_role_ids)
+    .where('judge_expertises.user_role_id IN (?)', judge.user_role_ids)
   }
 end

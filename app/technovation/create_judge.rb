@@ -1,7 +1,7 @@
 module CreateJudge
   def self.call(attrs)
     auth = CreateAuthentication.(attrs)
-    role = JudgingEnabledUserRole.create(user: auth.user, role: Role.judge)
+    role = UserRole.create(user: auth.user, role: Role.judge)
 
     attrs.fetch(:expertises, []).each do |expertise|
       role.expertises << expertise
