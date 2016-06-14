@@ -1,6 +1,9 @@
 module CreateSignup
   def self.call(params)
-    judge = CreateJudge.(params)
-    Signup.new(judge.authentication.attributes)
+    if (judge = CreateJudge.(params)).authentication.valid?
+      judge.authentication
+    else
+      Signup.new(judge.authentication.attributes)
+    end
   end
 end
