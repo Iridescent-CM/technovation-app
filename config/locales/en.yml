@@ -29,6 +29,7 @@ en:
       actions: "Actions"
       edit: "Edit"
       signin: 'Sign in'
+      signup: 'Sign up'
       signout: 'Logout'
       site_title: "Technovation Challenge"
 
@@ -47,3 +48,10 @@ en:
         signin: "Sign in"
       new:
         title: "Sign in"
+
+    signups:
+      form:
+        confirm_password: 'Confirm password'
+        signup: "Sign up"
+      new:
+        title: "Sign up"

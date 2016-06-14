@@ -1,3 +1,4 @@
 <% unless authenticated? %>
+  <%= link_to t('views.application.signup'), signup_path, class: "sign-up" %>
   <%= link_to t('views.application.signin'), signin_path, class: "sign-in" %>
 <% end %>

@@ -1,0 +1,19 @@
+<h1><%= t('views.signups.new.title') %></h1>
+
+<%= simple_form_for(@signup) do |f| %>
+  <%= f.input :email %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation,
+              label: t('views.signups.form.confirm_password') %>
+
+  <%= collection_check_boxes :signup,
+                             :expertise_ids,
+                             @expertises,
+                             :id, :name do |b| %>
+    <span class="inline-checkbox">
+      <%= b.check_box %><%= b.label { b.text } %>
+    </span>
+  <% end %>
+
+  <%= f.button :submit, t('views.signups.form.signup') %>
+<% end %>
