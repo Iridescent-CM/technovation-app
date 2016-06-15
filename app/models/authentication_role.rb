@@ -11,6 +11,8 @@ class AuthenticationRole < ActiveRecord::Base
 
   validates :role_id, presence: true
 
+  delegate :admin?, to: :role, prefix: false
+
   def submission_ids
     scores.select('submission_id as id')
   end
