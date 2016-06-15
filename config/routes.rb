@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :admin do
     resources :score_categories
+
+    root to: 'dashboards#index'
   end
 
   namespace :judge do

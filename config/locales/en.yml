@@ -29,6 +29,10 @@ en:
       total: "Total"
 
   views:
+    admin:
+      menu:
+        score_categories: "Score Categories"
+
     application:
       actions: "Actions"
       edit: "Edit"

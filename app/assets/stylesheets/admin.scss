@@ -1,0 +1,30 @@
+@import "bourbon/bourbon";
+$visual-grid: false !default;
+@import "neat/neat";
+@import "base/base";
+
+@import "refills/tables-minimal";
+@import "refills/flashes";
+@import "refills/navigation";
+@import "refills/footer-2";
+
+body, html {
+  margin: 0;
+}
+
+.container {
+  @include outer-container;
+}
+
+.inline-radio, .inline-checkbox {
+  display: block;
+  margin: 1rem 0;
+
+  label {
+    display: inline;
+  }
+}
+
+label {
+  cursor: pointer;
+}

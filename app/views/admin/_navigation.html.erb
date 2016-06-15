@@ -1,0 +1,17 @@
+<header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <ul class="navigation-menu">
+      <li class="nav-link">
+        <%= link_to t('views.application.site_title'), root_path %>
+      </li>
+
+      <li class="nav-link">
+        <%= link_to t('views.admin.menu.score_categories'),
+                    admin_score_categories_path %>
+      </li>
+
+      <%= render 'signed_in' %>
+      <%= render 'signed_out' %>
+    </ul>
+  </div>
+</header>
