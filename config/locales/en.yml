@@ -61,6 +61,7 @@ en:
 
     application:
       actions: "Actions"
+      cancel: 'cancel'
       edit: "Edit"
       save: "Save"
       signin: 'Sign in'
