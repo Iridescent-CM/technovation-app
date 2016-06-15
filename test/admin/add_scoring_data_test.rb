@@ -12,4 +12,11 @@ class AddScoringDataTest < Capybara::Rails::TestCase
     visit new_admin_score_category_path
     assert page.current_path == signin_path
   end
+
+  def test_admins_allowed
+    admin = CreateAdmin.(auth_attributes)
+    sign_in(admin)
+    visit new_admin_score_category_path
+    assert page.current_path == new_admin_score_category_path
+  end
 end

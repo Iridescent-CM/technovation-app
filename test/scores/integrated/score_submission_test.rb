@@ -9,9 +9,7 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     )
 
     sign_in(@judge)
-
     visit judge_scores_path
-
     click_link 'Judge submissions'
 
     within('.ideation') { choose 'No' }
