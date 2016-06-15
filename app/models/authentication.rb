@@ -20,7 +20,9 @@ class Authentication < ActiveRecord::Base
 
   def self.authenticate_judge(cookies, callbacks = {})
     default_callbacks = { failure: -> { } }.merge(callbacks)
-    current_judge(cookies).authenticated? || default_callbacks.fetch(:failure).call
+    current_judge(cookies).authenticated? ||
+      current_admin(cookies).authenticated? ||
+        default_callbacks.fetch(:failure).call
   end
 
   def self.authenticate_admin(cookies, callbacks = {})
@@ -31,8 +33,8 @@ class Authentication < ActiveRecord::Base
   def self.current_judge(cookies)
     auth = find_by(auth_token: cookies.fetch(:auth_token) { "" })
 
-    if !!auth
-      auth.judge_role
+    if !!auth && !!auth.judge_role || !!auth && !!auth.admin_role
+      auth.judge_role || auth.admin_role
     else
       NoJudgeFound.new
     end
