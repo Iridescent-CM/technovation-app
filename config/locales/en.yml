@@ -31,11 +31,14 @@ en:
         success: "Welcome to the Technovation Challenge!"
 
   models:
-    scores:
+    score:
       team_name: "Team name"
       total: "Total"
 
-    score_categories:
+    scored_value:
+      comment: "Comment"
+
+    score_category:
       name: "Name"
 
   views:
