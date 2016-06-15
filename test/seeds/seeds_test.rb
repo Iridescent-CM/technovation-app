@@ -1,13 +1,11 @@
+require "rake"
 require "rails_helper"
 
 class SeedsTest < Minitest::Test
   def setup
+    Rake::Task.clear
     Rails.application.load_tasks
     capture_stdout { Rake.application["db:seed"].invoke }
-  end
-
-  def teardown
-    Rake::Task.clear
   end
 
   def test_seed_adds_region
