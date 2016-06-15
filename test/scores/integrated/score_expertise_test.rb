@@ -8,14 +8,11 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
     tech = ScoreCategory.find_or_create_by(name: "Technology")
     biz = ScoreCategory.find_or_create_by(name: "Business")
 
-    judge = CreateJudge.(email: "judge@judging.com",
-                         password: "judge@judging.com",
-                         password_confirmation: "judge@judging.com",
-                         expertise_ids: [tech.id, biz.id])
+    judge = CreateJudge.(auth_attributes.merge(expertise_ids: [tech.id, biz.id]))
 
     sign_in(judge)
 
-    visit judges_scores_path
+    visit judge_scores_path
     click_link 'Judge submissions'
 
     assert page.has_content?('Technology')

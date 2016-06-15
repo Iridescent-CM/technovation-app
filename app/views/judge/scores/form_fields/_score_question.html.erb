@@ -1,5 +1,5 @@
 <h4><%= score_question.label %></h4>
 
-<%= render partial: 'judges/scores/form_fields/score_value',
+<%= render partial: 'judge/scores/form_fields/score_value',
            collection: score_question.score_values,
            locals: { f: f, score_question: score_question } %>

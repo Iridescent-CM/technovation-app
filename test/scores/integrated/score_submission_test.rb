@@ -4,13 +4,13 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
     create_test_scoring_environment
 
-    @judge ||= CreateJudge.(email: "judge@judging.com",
-                            password: "secret1234",
-                            password_confirmation: "secret1234",
-                            expertise_ids: ScoreCategory.pluck(:id))
+    @judge ||= CreateJudge.(
+      auth_attributes.merge(expertise_ids: ScoreCategory.pluck(:id))
+    )
+
     sign_in(@judge)
 
-    visit judges_scores_path
+    visit judge_scores_path
 
     click_link 'Judge submissions'
 

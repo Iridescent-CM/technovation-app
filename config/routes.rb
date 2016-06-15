@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :score_categories
   end
 
-  namespace :judges do
+  namespace :judge do
     resources :scores, only: :index
 
     resources :submissions, only: [] do

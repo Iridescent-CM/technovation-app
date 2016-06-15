@@ -3,7 +3,7 @@ en:
     application:
       unauthenticated: "You need to sign in before you go there!"
 
-    judges:
+    judge:
       scores:
         create:
           success: "Thanks for scoring a submission!"
@@ -37,7 +37,7 @@ en:
       signout: 'Logout'
       site_title: "Technovation Challenge"
 
-    judges:
+    judge:
       scores:
         form:
           save: "Save"

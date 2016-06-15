@@ -1,4 +1,4 @@
-<h1><%= t('views.judges.scores.index.title') %></h1>
+<h1><%= t('views.judge.scores.index.title') %></h1>
 
 <%= render 'judge_submissions_link' %>
 
@@ -19,7 +19,7 @@
         <td>
           <%= link_to(
                 t('views.application.edit'),
-                edit_judges_submission_score_path(score.submission, score)
+                edit_judge_submission_score_path(score.submission, score)
               ) %>
         </td>
       </tr>

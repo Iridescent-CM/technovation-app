@@ -9,16 +9,6 @@ class ApplicationController < ActionController::Base
     Authentication.authenticated?(cookies)
   end
 
-  def authenticate_judge!
-    Authentication.authenticate_judge(cookies, failure: -> {
-      save_redirected_path && go_to_signin
-    })
-  end
-
-  def current_judge
-    @current_judge ||= Authentication.current_judge(cookies)
-  end
-
   def save_redirected_path
     cookies[:redirected_from] = request.fullpath
   end
