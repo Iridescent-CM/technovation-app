@@ -1,0 +1,15 @@
+<div class="score_value">
+  <div class="score_value_value">
+    <%= f.input :value %>
+  </div>
+
+  <div class="score_value_label">
+    <%= f.input :label, as: :string %>
+  </div>
+</div>
+
+<p class="score_value_remove">
+  <%= f.remove_nested_fields_link 'Remove this value', data: {
+        confirm: "You're about to remove the value: '#{f.object.label} - #{f.object.value}'"
+      } %>
+</p>

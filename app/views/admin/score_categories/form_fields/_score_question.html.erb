@@ -1,0 +1,16 @@
+<div class="score_question">
+  <%= f.input :label, as: :string %>
+  <p><%= f.remove_nested_fields_link 'Remove this question', data: { confirm: "You're about to remove the question: '#{f.object.label}'" } %></p>
+
+  <h5 class="score_value_title">
+    <%= t('views.admin.score_categories.form.score_values') %>
+  </h5>
+
+  <%= f.nested_fields_for :score_values do |v| %>
+    <%= render 'admin/score_categories/form_fields/score_value', f: v %>
+  <% end %>
+
+  <p class="score_value_add">
+    <%= f.add_nested_fields_link :score_values %>
+  </p>
+</div>

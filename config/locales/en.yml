@@ -1,5 +1,12 @@
 en:
   controllers:
+    admin:
+      score_categories:
+        create:
+          success: "You added a new scoring category"
+        update:
+          success: "You successfully updated the scoring category"
+
     application:
       unauthenticated: "You need to sign in before you go there!"
 
@@ -28,14 +35,30 @@ en:
       team_name: "Team name"
       total: "Total"
 
+    score_categories:
+      name: "Name"
+
   views:
     admin:
+      dashboards:
+        index:
+          title: "Welcome to your Admin Dashboard"
+
       menu:
         score_categories: "Score Categories"
+
+      score_categories:
+        add: "Add new scoring category"
+        edit:
+          title: "Edit Scoring Category"
+        form:
+          score_questions: "Questions"
+          score_values: "Values"
 
     application:
       actions: "Actions"
       edit: "Edit"
+      save: "Save"
       signin: 'Sign in'
       signup: 'Sign up'
       signout: 'Logout'
@@ -43,8 +66,6 @@ en:
 
     judge:
       scores:
-        form:
-          save: "Save"
         index:
           no_submissions: "There are no more submissions for you to judge. Thank you for your feedback!"
           title: "Scores"

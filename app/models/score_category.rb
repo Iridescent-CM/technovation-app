@@ -1,7 +1,7 @@
 class ScoreCategory < ActiveRecord::Base
   has_many :score_questions, dependent: :destroy
 
-  accepts_nested_attributes_for :score_questions
+  accepts_nested_attributes_for :score_questions, allow_destroy: true
 
   validates :name, presence: true, uniqueness: true
 

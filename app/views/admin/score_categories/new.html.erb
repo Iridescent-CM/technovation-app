@@ -1,0 +1,21 @@
+<h1><%= t('views.admin.score_categories.edit.title') %></h1>
+
+<%= simple_form_for [:admin, @score_category] do |f| %>
+  <%= f.input :name %>
+
+  <h4 class="score_question_title">
+    <%= t('views.admin.score_categories.form.score_questions') %>
+  </h4>
+
+  <%= f.nested_fields_for :score_questions do |q| %>
+    <%= render 'admin/score_categories/form_fields/score_question', f: q %>
+  <% end %>
+
+  <div class="score_question_add">
+    <p><%= f.add_nested_fields_link :score_questions %></p>
+  </div>
+
+  <div class="form_actions">
+    <%= f.button :submit, t('views.application.save') %>
+  </div>
+<% end %>
