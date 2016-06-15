@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613203318) do
+ActiveRecord::Schema.define(version: 20160615213745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   create_table "scored_values", force: :cascade do |t|
     t.integer "score_value_id", null: false
     t.integer "score_id",       null: false
+    t.text    "comment"
   end
 
   add_index "scored_values", ["score_id"], name: "index_scored_values_on_score_id", using: :btree

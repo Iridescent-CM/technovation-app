@@ -1,10 +1,10 @@
 <span class="inline-radio">
-  <%= f.radio_button :score_value_ids,
+  <%= f.radio_button :scored_values_attributes,
                      score_value.id,
-                     name: "score[score_value_ids][#{score_question.id}][]",
+                     name: "score[scored_values_attributes][#{score_question.id}][score_value_id]",
                      checked: f.object.score_value_selected?(score_value) %>
 
-  <%= f.label :score_value_ids,
-              for: "score_score_value_ids_#{score_value.id}",
+  <%= f.label :scored_values_attributes,
+              for: "score_scored_values_attributes_#{score_value.id}",
               label: score_value.label %>
 </span>

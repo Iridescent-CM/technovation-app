@@ -49,8 +49,10 @@ module Judge
 
     def score_params
       begin
-        params.require(:score).permit(:score_value_ids).tap do |list|
-          list[:score_value_ids] = params.fetch(:score).fetch(:score_value_ids).values.flatten
+        params.require(:score).permit(
+          :score_value_ids,
+          scored_values_attributes: [:id, :score_value_id, :comment]
+        ).tap do |list|
           list[:judge_id] = current_judge.id
         end
       rescue ActionController::ParameterMissing

@@ -39,4 +39,28 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     assert_equal 1, submission.scores.count
     assert_equal 3, submission.scores.last.total
   end
+
+  def test_add_comments
+    click_link 'Edit'
+
+    within('.ideation') do
+      fill_in 'Comment', with: 'You did it!'
+    end
+
+    within('.technology') do
+      fill_in 'Comment', with: 'You did not do it...'
+    end
+
+    click_button 'Save'
+
+    click_link 'Edit'
+
+    within('.ideation') do
+      assert page.has_css?('textarea', text: 'You did it!')
+    end
+
+    within('.technology') do
+      assert page.has_css?('textarea', text: 'You did not do it...')
+    end
+  end
 end

@@ -9,6 +9,8 @@ class Score < ActiveRecord::Base
   has_many :scored_values, dependent: :destroy
   has_many :score_values, through: :scored_values
 
+  accepts_nested_attributes_for :scored_values, reject_if: :all_blank
+
   scope :visible_to, ->(authentication_role) {
     joins(:judge).where(judge_id: authentication_role.id)
   }
