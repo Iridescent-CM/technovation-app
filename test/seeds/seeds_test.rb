@@ -56,10 +56,7 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_judge
-    assert User.count == 1
-    assert UserRole.count == 1
-    assert Authentication.count == 1
-    assert User.last.roles.last.judge?
+    assert AuthenticationRole.pluck(:role_id).include?(Role.judge.id)
   end
 
   private

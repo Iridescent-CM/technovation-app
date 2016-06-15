@@ -1,7 +1,7 @@
-class UserRole < ActiveRecord::Base
+class AuthenticationRole < ActiveRecord::Base
   default_scope { includes(:role) }
 
-  belongs_to :user
+  belongs_to :authentication
   belongs_to :role
 
   has_many :scores, foreign_key: :judge_id
@@ -9,7 +9,7 @@ class UserRole < ActiveRecord::Base
   has_many :judge_expertises, dependent: :destroy
   has_many :expertises, through: :judge_expertises
 
-  validates :user_id, :role_id, presence: true
+  validates :role_id, presence: true
 
   def submission_ids
     scores.select('submission_id as id')

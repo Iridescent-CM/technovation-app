@@ -1,7 +1,12 @@
 class Authentication < ActiveRecord::Base
   has_secure_password
-  has_one :user, dependent: :destroy
-  has_many :roles, through: :user
+
+  has_many :authentication_roles
+  has_many :roles, through: :authentication_roles
+
+  has_one :judge_role,
+    -> { where(roles: { name: Role.names[:judge] }) },
+    class_name: "AuthenticationRole"
 
   validates :email, presence: true, uniqueness: true
 
@@ -18,7 +23,7 @@ class Authentication < ActiveRecord::Base
     auth = find_by(auth_token: cookies.fetch(:auth_token) { "" })
 
     if !!auth
-      auth.user.judge_user_role
+      auth.judge_role
     else
       NoJudgeFound.new
     end

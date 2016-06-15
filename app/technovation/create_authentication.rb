@@ -4,8 +4,11 @@ module CreateAuthentication
                               password: attrs.fetch(:password),
                               password_confirmation: attrs.fetch(:password_confirmation))
     GenerateToken.(auth, :auth_token)
-    auth.build_user(roles: attrs.fetch(:roles, []))
-    auth.save
+
+    if auth.save
+      auth.authentication_roles.create(role: attrs.fetch(:role) { Role.no_role })
+    end
+
     auth
   end
 end

@@ -16,6 +16,16 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "authentication_roles", force: :cascade do |t|
+    t.integer  "authentication_id", null: false
+    t.integer  "role_id",           null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "authentication_roles", ["authentication_id"], name: "index_authentication_roles_on_authentication_id", using: :btree
+  add_index "authentication_roles", ["role_id"], name: "index_authentication_roles_on_role_id", using: :btree
+
   create_table "authentications", force: :cascade do |t|
     t.string   "email",           null: false
     t.string   "password_digest", null: false
@@ -47,14 +57,14 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
 
   create_table "judge_expertises", force: :cascade do |t|
-    t.integer  "user_role_id", null: false
-    t.integer  "expertise_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "authentication_role_id", null: false
+    t.integer  "expertise_id",           null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
+  add_index "judge_expertises", ["authentication_role_id"], name: "index_judge_expertises_on_authentication_role_id", using: :btree
   add_index "judge_expertises", ["expertise_id"], name: "index_judge_expertises_on_expertise_id", using: :btree
-  add_index "judge_expertises", ["user_role_id"], name: "index_judge_expertises_on_user_role_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
@@ -169,38 +179,19 @@ ActiveRecord::Schema.define(version: 20160613203318) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
-  create_table "user_roles", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "role_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id", using: :btree
-  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.integer  "authentication_id", null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "users", ["authentication_id"], name: "index_users_on_authentication_id", using: :btree
-
+  add_foreign_key "authentication_roles", "authentications"
+  add_foreign_key "authentication_roles", "roles"
   add_foreign_key "events", "regions"
+  add_foreign_key "judge_expertises", "authentication_roles"
   add_foreign_key "judge_expertises", "score_categories", column: "expertise_id"
-  add_foreign_key "judge_expertises", "user_roles"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"
   add_foreign_key "scored_values", "score_values"
   add_foreign_key "scored_values", "scores"
+  add_foreign_key "scores", "authentication_roles", column: "judge_id"
   add_foreign_key "scores", "submissions"
-  add_foreign_key "scores", "user_roles", column: "judge_id"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"
-  add_foreign_key "user_roles", "roles"
-  add_foreign_key "user_roles", "users"
-  add_foreign_key "users", "authentications"
 end
