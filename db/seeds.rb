@@ -54,3 +54,9 @@ if (judge = CreateJudge.(email: "judge@judging.com",
                          expertise_ids: ScoreCategory.pluck(:id))).valid?
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
+
+if (admin = CreateAdmin.(email: "admin@admin.com",
+                         password: "admin@admin.com",
+                         password_confirmation: "admin@admin.com")).valid?
+  puts "Created Admin: #{admin.email} with password #{admin.password}"
+end

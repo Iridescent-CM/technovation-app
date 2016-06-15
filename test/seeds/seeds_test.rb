@@ -59,6 +59,10 @@ class SeedsTest < Minitest::Test
     assert AuthenticationRole.pluck(:role_id).include?(Role.judge.id)
   end
 
+  def test_seed_adds_admin
+    assert AuthenticationRole.pluck(:role_id).include?(Role.admin.id)
+  end
+
   private
   def capture_stdout
     s = StringIO.new
