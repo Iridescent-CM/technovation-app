@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get 'signups/new'
+  namespace :admin do
+    resources :score_categories
+  end
 
   namespace :judges do
     resources :scores, only: :index
