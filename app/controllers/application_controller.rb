@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticated?
-    Authentication.authenticated?(cookies)
+    FindAuthenticationRole.authenticated?(cookies)
   end
 
   def save_redirected_path

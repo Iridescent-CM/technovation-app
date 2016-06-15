@@ -3,12 +3,12 @@ class JudgeController < ApplicationController
 
   private
   def authenticate_judge!
-    Authentication.authenticate_judge(cookies, failure: -> {
+    FindAuthenticationRole.authenticate(:judge, cookies, failure: -> {
       save_redirected_path && go_to_signin
     })
   end
 
   def current_judge
-    @current_judge ||= Authentication.current_judge(cookies)
+    @current_judge ||= FindAuthenticationRole.current(:judge, cookies)
   end
 end

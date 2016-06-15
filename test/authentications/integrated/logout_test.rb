@@ -5,6 +5,6 @@ class LogoutTest < Capybara::Rails::TestCase
     auth = CreateAuthentication.(auth_attributes)
     sign_in(auth)
     click_link 'Logout'
-    refute Authentication.authenticated?({ })
+    refute FindAuthenticationRole.authenticated?({ })
   end
 end

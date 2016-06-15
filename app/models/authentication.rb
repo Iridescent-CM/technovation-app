@@ -14,43 +14,33 @@ class Authentication < ActiveRecord::Base
 
   validates :email, presence: true, uniqueness: true
 
-  def self.authenticated?(cookies)
-    exists?(auth_token: cookies.fetch(:auth_token) { "" })
+  def self.has_token?(token)
+    exists?(auth_token: token)
   end
 
-  def self.authenticate_judge(cookies, callbacks = {})
-    default_callbacks = { failure: -> { } }.merge(callbacks)
-    current_judge(cookies).authenticated? ||
-      current_admin(cookies).authenticated? ||
-        default_callbacks.fetch(:failure).call
+  def self.find_with_token_and_roles(token, roles)
+    roles.map { |role|
+      find_with_token(token).send("#{role}_role")
+    }.compact.first || NoRoleFound.new(*roles)
   end
 
-  def self.authenticate_admin(cookies, callbacks = {})
-    default_callbacks = { failure: -> { } }.merge(callbacks)
-    current_admin(cookies).authenticated? || default_callbacks.fetch(:failure).call
+  private
+  def self.find_with_token(token)
+    find_by(auth_token: token) || NoAuthFound.new
   end
 
-  def self.current_judge(cookies)
-    auth = find_by(auth_token: cookies.fetch(:auth_token) { "" })
+  class NoAuthFound
+    def judge_role; NoRoleFound.new(:judge); end
+    def admin_role; NoRoleFound.new(:admin); end
+  end
 
-    if !!auth && !!auth.judge_role || !!auth && !!auth.admin_role
-      auth.judge_role || auth.admin_role
-    else
-      NoJudgeFound.new
+  class NoRoleFound
+    def initialize(*attempted_roles)
+      @attempted_roles = attempted_roles
+    end
+
+    def authenticated?
+      false
     end
   end
-
-  def self.current_admin(cookies)
-    auth = find_by(auth_token: cookies.fetch(:auth_token) { "" })
-
-    if !!auth && !!auth.admin_role
-      auth.admin_role
-    else
-      NoAdminFound.new
-    end
-  end
-
-  class NoAuthFound; def authenticated?; false; end; end
-  class NoJudgeFound < NoAuthFound; end
-  class NoAdminFound < NoAuthFound; end
 end

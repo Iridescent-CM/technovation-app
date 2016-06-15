@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   private
   def authenticate_admin!
-    Authentication.authenticate_admin(cookies, failure: -> {
+    FindAuthenticationRole.authenticate(:admin, cookies, failure: -> {
       save_redirected_path && go_to_signin
     })
   end
