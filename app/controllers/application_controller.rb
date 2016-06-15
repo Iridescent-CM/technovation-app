@@ -2,11 +2,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
-  helper_method :authenticated?
+  helper_method :authenticated?, :admin?
 
   private
   def authenticated?
     FindAuthenticationRole.authenticated?(cookies)
+  end
+
+  def admin?
+    FindAuthenticationRole.current(:admin, cookies).authenticated?
   end
 
   def save_redirected_path
