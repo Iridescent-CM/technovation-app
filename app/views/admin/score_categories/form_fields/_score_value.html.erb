@@ -9,7 +9,10 @@
 </div>
 
 <p class="score_value_remove">
-  <%= f.remove_nested_fields_link 'Remove this value', data: {
-        confirm: "You're about to remove the value: '#{f.object.label} - #{f.object.value}'"
-      } %>
+  <%= f.remove_nested_fields_link t('views.admin.score_categories.remove_value'),
+        data: {
+          confirm: t('views.admin.score_categories.confirm_remove_value',
+                     label: f.object.label,
+                     value: f.object.value)
+        } %>
 </p>

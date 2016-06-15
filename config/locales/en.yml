@@ -49,11 +49,15 @@ en:
 
       score_categories:
         add: "Add new scoring category"
+        confirm_remove_question: "You're about to remove the question: '%{label}'"
+        confirm_remove_value: "You're about to remove the value: '%{label} -- %{value}'"
         edit:
           title: "Edit Scoring Category"
         form:
           score_questions: "Questions"
           score_values: "Values"
+        remove_question: 'Remove this question'
+        remove_value: 'Remove this value'
 
     application:
       actions: "Actions"
