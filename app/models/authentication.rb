@@ -6,10 +6,9 @@ class Authentication < ActiveRecord::Base
   has_many :authentication_roles, dependent: :destroy
   has_many :roles, through: :authentication_roles
 
-  Role.names.keys.each do |role_name|
-    has_one "#{role_name}_role".to_sym,
-      -> { where(roles: { name: Role.names[role_name] }) },
-      class_name: "AuthenticationRole"
+  Role.names.each do |role_name, role_value|
+    has_one "#{role_name}_role".to_sym, -> { where(roles: { name: role_value }) },
+            class_name: "AuthenticationRole"
   end
 
   validates :email, presence: true, uniqueness: true
@@ -35,8 +34,11 @@ class Authentication < ActiveRecord::Base
   end
 
   class NoAuthFound
-    def judge_role; NoRolesFound.new(:judge); end
-    def admin_role; NoRolesFound.new(:admin); end
+    Role.names.keys.each do |role_name|
+      define_method "#{role_name}_role" do
+        NoRolesFound.new(role_name)
+      end
+    end
   end
 
   class NoRolesFound
