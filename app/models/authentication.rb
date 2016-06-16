@@ -1,4 +1,6 @@
 class Authentication < ActiveRecord::Base
+  attr_accessor :existing_password
+
   has_secure_password
 
   has_many :authentication_roles
@@ -13,6 +15,8 @@ class Authentication < ActiveRecord::Base
     class_name: "AuthenticationRole"
 
   validates :email, presence: true, uniqueness: true
+  validates :existing_password, presence: true, on: :update
+  validate :existing_password, :require_valid_password, on: :update
 
   def self.has_token?(token)
     exists?(auth_token: token)
@@ -25,6 +29,14 @@ class Authentication < ActiveRecord::Base
   end
 
   private
+  def require_valid_password
+    unless self.class.find_by(email: email_was).authenticate(existing_password)
+      errors.add(:existing_password, I18n.translate(
+        'models.authentication.errors.existing_password.invalid'
+      ))
+    end
+  end
+
   def self.find_with_token(token)
     find_by(auth_token: token) || NoAuthFound.new
   end

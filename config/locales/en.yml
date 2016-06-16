@@ -10,6 +10,10 @@ en:
     application:
       unauthenticated: "You need to sign in before you go there!"
 
+    authentications:
+      update:
+        success: "You updated your account!"
+
     judge:
       scores:
         create:
@@ -31,6 +35,10 @@ en:
         success: "Welcome to the Technovation Challenge!"
 
   models:
+    authentication:
+      errors:
+        existing_password:
+          invalid: "is invalid"
     score:
       team_name: "Team name"
       total: "Total"
@@ -71,6 +79,12 @@ en:
       signup: 'Sign up'
       signout: 'Logout'
       site_title: "Technovation Challenge"
+
+    authentications:
+      edit:
+        confirm_new_password: "Confirm new password"
+        existing_password: "Existing password"
+        new_password: "New password"
 
     judge:
       scores:

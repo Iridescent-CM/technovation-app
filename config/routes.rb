@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :signins, only: :create
   resources :signups, only: :create
+  resource :authentication, only: [:show, :edit, :update]
 
   root to: "static#index"
 end
