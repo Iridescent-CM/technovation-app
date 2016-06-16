@@ -13,7 +13,7 @@ class AuthenticationRole < ActiveRecord::Base
 
   delegate :admin?, to: :role, prefix: false
 
-  def submission_ids
+  def scored_submission_ids
     scores.select('submission_id as id')
   end
 
