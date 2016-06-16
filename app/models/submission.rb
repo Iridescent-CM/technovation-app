@@ -11,4 +11,12 @@ class Submission < ActiveRecord::Base
   def self.random
     order('random()').limit(1).first
   end
+
+  def eligible?
+    missing_fields.empty?
+  end
+
+  def missing_fields
+    attributes.select { |_, v| v.blank? }.keys
+  end
 end
