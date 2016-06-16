@@ -49,6 +49,9 @@ en:
     score_category:
       name: "Name"
 
+    student_profile:
+      parent_guardian_email: "Parent or guardian email"
+
     submission:
       team_name: "Team name"
       description: "Description"
@@ -112,5 +115,6 @@ en:
         choose_expertises: "Choose expertise(s)"
         confirm_password: 'Confirm password'
         signup: "Sign up"
+        student_profile: "Student profile"
       new:
         title: "Sign up"

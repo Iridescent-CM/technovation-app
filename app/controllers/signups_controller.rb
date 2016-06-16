@@ -5,7 +5,7 @@ class SignupsController < ApplicationController
   end
 
   def create
-    if (@signup = CreateJudge.(signup_params)).valid?
+    if (@signup = CreateSignup.(signup_params)).valid?
       sign_in(@signup, t('controllers.signups.create.success'))
     else
       expertises
@@ -22,6 +22,7 @@ class SignupsController < ApplicationController
     params.require(:authentication).permit(:email,
                                            :password,
                                            :password_confirmation,
+                                           :registration_role,
                                            expertise_ids: [])
   end
 

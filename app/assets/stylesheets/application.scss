@@ -1,5 +1,7 @@
 @import 'technovation';
 
+@import 'refills/button-group';
+
 .submission {
   @include span-columns(3);
   dd {
@@ -9,4 +11,9 @@
 
 .new_score, .edit_score {
   @include span-columns(9);
+}
+
+.button-group {
+  @include clearfix;
+  margin-bottom: 1rem;
 }

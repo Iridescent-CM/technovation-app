@@ -1,5 +1,5 @@
 module CreateSignup
   def self.call(params)
-    CreateJudge.(params)
+    "Create#{params.delete(:registration_role).capitalize}".constantize.(params)
   end
 end
