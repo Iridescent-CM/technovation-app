@@ -24,13 +24,16 @@ class Authentication < ActiveRecord::Base
   def self.find_with_token_and_roles(token, roles)
     roles.map { |role|
       find_with_token(token).send("#{role}_role")
-    }.compact.first || NoRoleFound.new(*roles)
+    }.compact.first || NoRolesFound.new(*roles)
+  end
+
+  def self.find_with_token(token)
+    find_by(auth_token: token) || NoAuthFound.new
   end
 
   private
   def changes_require_password?
-    (!!changes[:email] && !!changes[:email][0]) ||
-      (!!changes[:password_digest] && !!changes[:password_digest][0])
+    persisted? && (email_changed? || password_digest_changed?)
   end
 
   def require_valid_password
@@ -49,16 +52,12 @@ class Authentication < ActiveRecord::Base
     end
   end
 
-  def self.find_with_token(token)
-    find_by(auth_token: token) || NoAuthFound.new
-  end
-
   class NoAuthFound
-    def judge_role; NoRoleFound.new(:judge); end
-    def admin_role; NoRoleFound.new(:admin); end
+    def judge_role; NoRolesFound.new(:judge); end
+    def admin_role; NoRolesFound.new(:admin); end
   end
 
-  class NoRoleFound
+  class NoRolesFound
     def initialize(*attempted_roles)
       @attempted_roles = attempted_roles
     end
