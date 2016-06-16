@@ -1,9 +1,9 @@
 class Authentication < ActiveRecord::Base
-  attr_accessor :existing_password
+  attr_accessor :existing_password, :expertise_ids
 
   has_secure_password
 
-  has_many :authentication_roles
+  has_many :authentication_roles, dependent: :destroy
   has_many :roles, through: :authentication_roles
 
   has_one :judge_role,
@@ -15,8 +15,7 @@ class Authentication < ActiveRecord::Base
     class_name: "AuthenticationRole"
 
   validates :email, presence: true, uniqueness: true
-  validates :existing_password, presence: true, on: :update
-  validate :existing_password, :require_valid_password, on: :update
+  validate :existing_password, :require_valid_password, if: :changes_require_password?
 
   def self.has_token?(token)
     exists?(auth_token: token)
@@ -29,6 +28,10 @@ class Authentication < ActiveRecord::Base
   end
 
   private
+  def changes_require_password?
+    (!!changes[:email] && !!changes[:email][0]) || !!changes[:password]
+  end
+
   def require_valid_password
     unless self.class.find_by(email: email_was).authenticate(existing_password)
       errors.add(:existing_password, I18n.translate(

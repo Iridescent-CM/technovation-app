@@ -22,8 +22,8 @@ Rails.application.routes.draw do
   match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
 
   resources :signins, only: :create
-  resources :signups, only: :create
   resource :authentication, only: [:show, :edit, :update]
+  post 'authentications', to: "signups#create"
 
   root to: "static#index"
 end

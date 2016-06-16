@@ -28,17 +28,6 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
     assert page.has_link?("Logout")
   end
 
-  def test_edit_login_info_requires_existing_password
-    fill_in 'Email', with: "something@new.com"
-    fill_in 'Existing password', with: ""
-
-    click_button 'Save'
-
-    within(".authentication_existing_password") do
-      assert page.has_content?("can't be blank")
-    end
-  end
-
   def test_edit_login_info_requires_correct_existing_password
     fill_in 'Email', with: "something@new.com"
     fill_in 'Existing password', with: "definitely wrong"

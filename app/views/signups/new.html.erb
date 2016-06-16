@@ -8,7 +8,7 @@
 
   <h4><%= t('views.signups.form.choose_expertises') %></h4>
 
-  <%= collection_check_boxes :signup,
+  <%= collection_check_boxes :authentication,
                              :expertise_ids,
                              @expertises,
                              :id, :name do |b| %>

@@ -1,13 +1,11 @@
 class SignupsController < ApplicationController
   def new
-    @signup = Signup.new
+    @signup = signup_class.new
     expertises
   end
 
   def create
-    @signup = CreateSignup.(signup_params)
-
-    if @signup.valid?
+    if (@signup = CreateJudge.(signup_params)).valid?
       sign_in(@signup, t('controllers.signups.create.success'))
     else
       expertises
@@ -21,9 +19,13 @@ class SignupsController < ApplicationController
   end
 
   def signup_params
-    params.require(:signup).permit(:email,
-                                   :password,
-                                   :password_confirmation,
-                                   expertise_ids: [])
+    params.require(:authentication).permit(:email,
+                                           :password,
+                                           :password_confirmation,
+                                           expertise_ids: [])
+  end
+
+  def signup_class
+    Authentication
   end
 end
