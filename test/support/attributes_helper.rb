@@ -16,4 +16,11 @@ module AttributesHelper
   def region_attributes(attrs = {})
     { name: "US/Canada" }.merge(attrs)
   end
+
+  def submission_attributes(attrs = {})
+    { code: "submission code",
+      demo: "submission demo",
+      pitch: "submission pitch",
+      description: "submission description" }.merge(attrs)
+  end
 end

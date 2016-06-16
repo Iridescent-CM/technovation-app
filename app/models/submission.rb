@@ -3,7 +3,11 @@ class Submission < ActiveRecord::Base
   has_many :scores
 
   scope :visible_to, ->(judge) {
-    where.not(id: judge.submission_ids)
+    eligible.where.not(id: judge.submission_ids)
+  }
+
+  scope :eligible, -> {
+    where.not(code: nil, pitch: nil, description: nil, demo: nil)
   }
 
   delegate :name, to: :team, prefix: true

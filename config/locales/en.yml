@@ -49,6 +49,13 @@ en:
     score_category:
       name: "Name"
 
+    submission:
+      team_name: "Team name"
+      description: "Description"
+      pitch: "Pitch"
+      code: "Code"
+      demo: "Demo"
+
   views:
     admin:
       dashboards:

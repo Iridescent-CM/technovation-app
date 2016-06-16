@@ -33,7 +33,7 @@ if (team = Team.create(name: "The Techno Girls",
 
   puts "Created Team: #{team.name}"
 
-  team.submissions.create!
+  team.submissions.create!(code: "code", description: "description", pitch: "pitch", demo: "demo")
   puts "Created Submission"
 end
 
@@ -44,7 +44,7 @@ if (team = Team.create(name: "Girl Power",
 
   puts "Created Team: #{team.name}"
 
-  team.submissions.create!
+  team.submissions.create!(code: "code", description: "description", pitch: "pitch", demo: "demo")
   puts "Created Submission"
 end
 

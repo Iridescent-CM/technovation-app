@@ -26,6 +26,6 @@ module ScoringEnvironmentHelper
                         description: "Real creative name",
                         division: Division.high_school,
                         region: Region.find_or_create_by(name: "US/Canada"))
-    @submission = team.submissions.create!
+    @submission = team.submissions.create!(submission_attributes)
   end
 end
