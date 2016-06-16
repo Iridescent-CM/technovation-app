@@ -29,14 +29,23 @@ class Authentication < ActiveRecord::Base
 
   private
   def changes_require_password?
-    (!!changes[:email] && !!changes[:email][0]) || !!changes[:password]
+    (!!changes[:email] && !!changes[:email][0]) ||
+      (!!changes[:password_digest] && !!changes[:password_digest][0])
   end
 
   def require_valid_password
-    unless self.class.find_by(email: email_was).authenticate(existing_password)
+    unless changes_authenticated?
       errors.add(:existing_password, I18n.translate(
         'models.authentication.errors.existing_password.invalid'
       ))
+    end
+  end
+
+  def changes_authenticated?
+    if !!email_was
+      self.class.find_by(email: email_was).authenticate(existing_password)
+    else
+      authenticate(existing_password)
     end
   end
 

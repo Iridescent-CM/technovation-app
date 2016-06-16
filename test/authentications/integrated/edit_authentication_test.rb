@@ -28,7 +28,7 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
     assert page.has_link?("Logout")
   end
 
-  def test_edit_login_info_requires_correct_existing_password
+  def test_edit_email_requires_correct_existing_password
     fill_in 'Email', with: "something@new.com"
     fill_in 'Existing password', with: "definitely wrong"
 
@@ -36,6 +36,21 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
 
     within(".authentication_existing_password") do
       assert page.has_content?("is invalid")
+    end
+  end
+
+  def test_edit_password_requires_correct_existing_password
+    fill_in 'Existing password', with: "definitely wrong"
+    fill_in 'New password', with: "somethingNew"
+
+    click_button 'Save'
+
+    within(".authentication_existing_password") do
+      assert page.has_content?("is invalid")
+    end
+
+    within(".authentication_password_confirmation") do
+      assert page.has_content?("doesn't match Password")
     end
   end
 end
