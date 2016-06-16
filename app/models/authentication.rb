@@ -6,50 +6,32 @@ class Authentication < ActiveRecord::Base
   has_many :authentication_roles, dependent: :destroy
   has_many :roles, through: :authentication_roles
 
-  has_one :judge_role,
-    -> { where(roles: { name: Role.names[:judge] }) },
-    class_name: "AuthenticationRole"
-
-  has_one :admin_role,
-    -> { where(roles: { name: Role.names[:admin] }) },
-    class_name: "AuthenticationRole"
+  Role.names.keys.each do |role_name|
+    has_one "#{role_name}_role".to_sym,
+      -> { where(roles: { name: Role.names[role_name] }) },
+      class_name: "AuthenticationRole"
+  end
 
   validates :email, presence: true, uniqueness: true
-  validate :existing_password, :require_valid_password, if: :changes_require_password?
+  validates :existing_password, valid_password: true, if: :changes_require_password?
 
   def self.has_token?(token)
     exists?(auth_token: token)
-  end
-
-  def self.find_with_token_and_roles(token, roles)
-    roles.map { |role|
-      find_with_token(token).send("#{role}_role")
-    }.compact.first || NoRolesFound.new(*roles)
   end
 
   def self.find_with_token(token)
     find_by(auth_token: token) || NoAuthFound.new
   end
 
+  def self.find_role_with_token(token, roles)
+    roles.map { |role|
+      find_with_token(token).send("#{role}_role")
+    }.compact.first || NoRolesFound.new(*roles)
+  end
+
   private
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
-  end
-
-  def require_valid_password
-    unless changes_authenticated?
-      errors.add(:existing_password, I18n.translate(
-        'models.authentication.errors.existing_password.invalid'
-      ))
-    end
-  end
-
-  def changes_authenticated?
-    if !!email_was
-      self.class.find_by(email: email_was).authenticate(existing_password)
-    else
-      authenticate(existing_password)
-    end
   end
 
   class NoAuthFound

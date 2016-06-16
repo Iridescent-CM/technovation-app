@@ -11,7 +11,7 @@ module FindAuthenticationRole
   end
 
   def self.current(role, cookies)
-    auth_class.find_with_token_and_roles(
+    auth_class.find_role_with_token(
       cookies.fetch(:auth_token) { "" }, [role, :admin].uniq
     )
   end

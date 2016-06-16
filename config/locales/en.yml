@@ -35,10 +35,10 @@ en:
         success: "Welcome to the Technovation Challenge!"
 
   models:
-    authentication:
-      errors:
-        existing_password:
-          invalid: "is invalid"
+    errors:
+      existing_password:
+        invalid: "is invalid"
+
     score:
       team_name: "Team name"
       total: "Total"
