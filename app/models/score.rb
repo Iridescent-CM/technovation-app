@@ -11,10 +11,6 @@ class Score < ActiveRecord::Base
 
   accepts_nested_attributes_for :scored_values, reject_if: :all_blank
 
-  scope :visible_to, ->(authentication_role) {
-    joins(:judge).where(judge_id: authentication_role.id)
-  }
-
   delegate :name, to: :team, prefix: true
 
   def total

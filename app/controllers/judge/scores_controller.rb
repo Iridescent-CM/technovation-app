@@ -1,7 +1,7 @@
 module Judge
   class ScoresController < JudgeController
     def index
-      @scores = Score.visible_to(current_judge)
+      @scores = current_judge.scores
       @submission = Submission.visible_to(current_judge).random
     end
 
