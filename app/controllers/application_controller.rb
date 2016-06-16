@@ -2,15 +2,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
-  helper_method :authenticated?, :admin?
+  helper_method :authenticated?, :admin?, :judge?
 
   private
   def authenticated?
     FindAuthenticationRole.authenticated?(cookies)
   end
 
-  def admin?
-    FindAuthenticationRole.current(:admin, cookies).authenticated?
+  Role.names.keys.each do |role_name|
+    define_method "#{role_name}?" do
+      FindAuthenticationRole.current(role_name, cookies).authenticated?
+    end
   end
 
   def save_redirected_path

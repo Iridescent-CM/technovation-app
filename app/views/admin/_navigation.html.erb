@@ -10,8 +10,9 @@
                     admin_score_categories_path %>
       </li>
 
-      <%= render 'signed_in' %>
-      <%= render 'signed_out' %>
+      <li class="nav-link">
+        <%= link_to t('views.application.signout'), signout_path, method: :delete %>
+      </li>
     </ul>
   </div>
 </header>
