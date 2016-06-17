@@ -1,5 +1,5 @@
 class Authentication < ActiveRecord::Base
-  attr_accessor :existing_password, :expertise_ids, :parent_guardian_email
+  attr_accessor :existing_password, :expertise_ids, :parent_guardian_email, :date_of_birth
 
   has_secure_password
 

@@ -22,6 +22,10 @@
   <div class="toggle-field student-field">
     <h4><%= t('views.signups.form.student_profile') %></h4>
 
+    <%= label_tag :authentication_date_of_birth,
+                  t('models.student_profile.date_of_birth') %>
+    <%= f.date_field :date_of_birth %>
+
     <%= label_tag :authentication_parent_guardian_email,
                   t('models.student_profile.parent_guardian_email') %>
     <%= f.email_field :parent_guardian_email %>

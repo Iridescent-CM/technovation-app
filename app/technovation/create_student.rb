@@ -4,7 +4,8 @@ module CreateStudent
 
     if auth.valid?
       auth.student_role.create_student_profile(
-        parent_guardian_email: attrs.fetch(:parent_guardian_email)
+        parent_guardian_email: attrs.fetch(:parent_guardian_email),
+        date_of_birth: attrs.fetch(:date_of_birth)
       )
     end
 
