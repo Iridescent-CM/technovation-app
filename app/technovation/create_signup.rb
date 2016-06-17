@@ -1,5 +1,6 @@
 module CreateSignup
   def self.call(params)
-    "Create#{params.delete(:registration_role).capitalize}".constantize.(params)
+    role_name = Role.registerable_name(params.delete(:registration_role))
+    "Create#{role_name.capitalize}".constantize.(params)
   end
 end

@@ -6,4 +6,9 @@ class Role < ActiveRecord::Base
       find_or_create_by(name: value)
     end
   end
+
+  def self.registerable_name(value)
+    names.reject { |k, _| k == "admin" }
+         .select { |_, v| v == Integer(value) }.keys.first
+  end
 end
