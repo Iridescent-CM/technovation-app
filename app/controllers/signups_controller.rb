@@ -23,6 +23,7 @@ class SignupsController < ApplicationController
                                            :password,
                                            :password_confirmation,
                                            :registration_role,
+                                           :parent_guardian_email,
                                            expertise_ids: [])
   end
 

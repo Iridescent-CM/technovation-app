@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615213745) do
+ActiveRecord::Schema.define(version: 20160617020648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,16 @@ ActiveRecord::Schema.define(version: 20160615213745) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "student_profiles", force: :cascade do |t|
+    t.integer  "authentication_role_id", null: false
+    t.string   "parent_guardian_email",  null: false
+    t.date     "date_of_birth"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "student_profiles", ["authentication_role_id"], name: "index_student_profiles_on_authentication_role_id", using: :btree
+
   create_table "submissions", force: :cascade do |t|
     t.integer  "team_id",     null: false
     t.text     "description"
@@ -192,6 +202,7 @@ ActiveRecord::Schema.define(version: 20160615213745) do
   add_foreign_key "scores", "authentication_roles", column: "judge_id"
   add_foreign_key "scores", "submissions"
   add_foreign_key "season_registrations", "seasons"
+  add_foreign_key "student_profiles", "authentication_roles"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"

@@ -9,6 +9,8 @@ class AuthenticationRole < ActiveRecord::Base
   has_many :judge_expertises, dependent: :destroy
   has_many :expertises, through: :judge_expertises
 
+  has_one :student_profile, dependent: :destroy
+
   validates :role_id, presence: true
 
   delegate :admin?, to: :role, prefix: false
