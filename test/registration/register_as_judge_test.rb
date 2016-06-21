@@ -16,7 +16,7 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     click_button "Sign up"
 
     assert Authentication.last.email == "judge@judging.com"
-    assert AuthenticationRole.last.role.judge?
-    assert AuthenticationRole.last.expertises.flat_map(&:name) == ["Ideation"]
+    assert JudgeProfile.count == 1
+    assert JudgeProfile.last.expertises.flat_map(&:name) == ["Ideation"]
   end
 end

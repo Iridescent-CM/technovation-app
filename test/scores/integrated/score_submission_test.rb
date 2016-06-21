@@ -4,8 +4,10 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
     create_test_scoring_environment
 
-    @judge ||= CreateJudge.(
-      auth_attributes.merge(expertise_ids: ScoreCategory.pluck(:id))
+    @judge ||= CreateAuthentication.(
+      auth_attributes.merge(judge_profile_attributes: {
+                              expertise_ids: ScoreCategory.pluck(:id)
+                            })
     )
 
     sign_in(@judge)

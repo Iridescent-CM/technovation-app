@@ -1,3 +1,7 @@
 class StudentProfile < ActiveRecord::Base
-  belongs_to :authentication_role
+  include Authenticatable
+
+  validates :date_of_birth, presence: true
+
+  validates :parent_guardian_email, presence: true
 end

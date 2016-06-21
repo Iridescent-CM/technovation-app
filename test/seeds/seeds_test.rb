@@ -54,11 +54,11 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_judge
-    assert AuthenticationRole.pluck(:role_id).include?(Role.judge.id)
+    assert JudgeProfile.count == 1
   end
 
   def test_seed_adds_admin
-    assert AuthenticationRole.pluck(:role_id).include?(Role.admin.id)
+    assert AdminProfile.count == 1
   end
 
   private

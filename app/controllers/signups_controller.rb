@@ -1,13 +1,19 @@
 class SignupsController < ApplicationController
   def new
     @signup = signup_class.new
+    @signup.build_student_profile
+    @signup.build_judge_profile
     expertises
   end
 
   def create
-    if (@signup = CreateSignup.(signup_params)).valid?
+    @signup = CreateSignup.(signup_params)
+
+    if @signup.valid?
       sign_in(@signup, t('controllers.signups.create.success'))
     else
+      @signup.build_student_profile if @signup.student_profile.blank?
+      @signup.build_judge_profile if @signup.judge_profile.blank?
       expertises
       render :new
     end
@@ -23,9 +29,13 @@ class SignupsController < ApplicationController
                                            :password,
                                            :password_confirmation,
                                            :registration_role,
-                                           :parent_guardian_email,
-                                           :date_of_birth,
-                                           expertise_ids: [])
+                                           student_profile_attributes: [
+                                             :parent_guardian_email,
+                                             :date_of_birth,
+                                           ],
+                                           judge_profile_attributes: {
+                                             expertise_ids: [],
+                                           },)
   end
 
   def signup_class

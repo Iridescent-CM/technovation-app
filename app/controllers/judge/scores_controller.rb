@@ -53,7 +53,7 @@ module Judge
           :score_value_ids,
           scored_values_attributes: [:id, :score_value_id, :comment]
         ).tap do |list|
-          list[:judge_id] = current_judge.id
+          list[:judge_profile_id] = current_judge.id
         end
       rescue ActionController::ParameterMissing
         { }

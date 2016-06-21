@@ -48,15 +48,17 @@ if (team = Team.create(name: "Girl Power",
   puts "Created Submission"
 end
 
-if (judge = CreateJudge.(email: "judge@judging.com",
-                         password: "judge@judging.com",
-                         password_confirmation: "judge@judging.com",
-                         expertise_ids: ScoreCategory.pluck(:id))).valid?
+if (judge = CreateAuthentication.(email: "judge@judging.com",
+                                  password: "judge@judging.com",
+                                  password_confirmation: "judge@judging.com",
+                                  judge_profile_attributes: {
+                                    expertise_ids: ScoreCategory.pluck(:id)
+                                  })).save
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
 
 if (admin = CreateAdmin.(email: "admin@admin.com",
                          password: "admin@admin.com",
-                         password_confirmation: "admin@admin.com")).valid?
+                         password_confirmation: "admin@admin.com")).save
   puts "Created Admin: #{admin.email} with password #{admin.password}"
 end

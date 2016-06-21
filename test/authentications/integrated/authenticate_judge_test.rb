@@ -21,7 +21,7 @@ class AuthenticateJudgeTest < Capybara::Rails::TestCase
   end
 
   def test_judge_scores_allows_judges
-    judge = CreateJudge.(auth_attributes)
+    judge = CreateAuthentication.(judge_attributes)
     sign_in(judge)
     visit judge_scores_path
     assert page.current_path == judge_scores_path

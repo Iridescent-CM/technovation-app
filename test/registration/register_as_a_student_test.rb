@@ -9,13 +9,13 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     fill_in "Password", with: "student@school.com"
     fill_in "Confirm password", with: "student@school.com"
 
-    fill_in "Date of Birth", with: Date.today - 15.years
+    select_date Date.today - 15.years, from: "Date of birth"
     fill_in "Parent or guardian email", with: "parent@guardian.com"
 
     click_button "Sign up"
 
-    assert AuthenticationRole.last.role.student?
-    assert AuthenticationRole.last.student_profile.parent_guardian_email == "parent@guardian.com"
-    assert AuthenticationRole.last.student_profile.date_of_birth == Date.today - 15.years
+    assert StudentProfile.count == 1
+    assert StudentProfile.last.parent_guardian_email == "parent@guardian.com"
+    assert StudentProfile.last.date_of_birth == Date.today - 15.years
   end
 end

@@ -1,18 +1,26 @@
 class Authentication < ActiveRecord::Base
-  attr_accessor :existing_password, :expertise_ids, :parent_guardian_email, :date_of_birth
+  PROFILE_TYPES = {
+    student: 0,
+    judge: 1,
+    admin: 2,
+  }
+
+  attr_accessor :existing_password
 
   has_secure_password
 
-  has_many :authentication_roles, dependent: :destroy
-  has_many :roles, through: :authentication_roles
-
-  Role.names.each do |role_name, role_value|
-    has_one "#{role_name}_role".to_sym, -> { where(roles: { name: role_value }) },
-            class_name: "AuthenticationRole"
-  end
+  has_one :admin_profile
+  has_one :student_profile
+  has_one :judge_profile
 
   validates :email, presence: true, uniqueness: true
   validates :existing_password, valid_password: true, if: :changes_require_password?
+
+  validates_associated :student_profile, if: ->(auth) { auth.student_profile.present? }
+  accepts_nested_attributes_for :student_profile, reject_if: :all_blank
+
+  validates_associated :judge_profile, if: ->(auth) { auth.judge_profile.present? }
+  accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
 
   def self.has_token?(token)
     exists?(auth_token: token)
@@ -24,8 +32,15 @@ class Authentication < ActiveRecord::Base
 
   def self.find_role_with_token(token, roles)
     roles.map { |role|
-      find_with_token(token).send("#{role}_role")
+      find_with_token(token).send("#{role}_profile")
     }.compact.first || NoRolesFound.new(*roles)
+  end
+
+  def self.registerable_profile(value)
+    PROFILE_TYPES.reject { |k, _| k == :admin }
+                 .select { |_, v| v == Integer(value) }
+                 .keys
+                 .first
   end
 
   private
@@ -34,9 +49,9 @@ class Authentication < ActiveRecord::Base
   end
 
   class NoAuthFound
-    Role.names.keys.each do |role_name|
-      define_method "#{role_name}_role" do
-        NoRolesFound.new(role_name)
+    PROFILE_TYPES.keys.each do |name|
+      define_method "#{name}_profile" do
+        NoRolesFound.new(name)
       end
     end
   end

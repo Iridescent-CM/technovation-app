@@ -11,20 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617020648) do
+ActiveRecord::Schema.define(version: 20160621194925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "authentication_roles", force: :cascade do |t|
+  create_table "admin_profiles", force: :cascade do |t|
     t.integer  "authentication_id", null: false
-    t.integer  "role_id",           null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
-  add_index "authentication_roles", ["authentication_id"], name: "index_authentication_roles_on_authentication_id", using: :btree
-  add_index "authentication_roles", ["role_id"], name: "index_authentication_roles_on_role_id", using: :btree
+  add_index "admin_profiles", ["authentication_id"], name: "index_admin_profiles_on_authentication_id", using: :btree
 
   create_table "authentications", force: :cascade do |t|
     t.string   "email",           null: false
@@ -57,14 +55,22 @@ ActiveRecord::Schema.define(version: 20160617020648) do
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
 
   create_table "judge_expertises", force: :cascade do |t|
-    t.integer  "authentication_role_id", null: false
-    t.integer  "expertise_id",           null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "judge_profile_id", null: false
+    t.integer  "expertise_id",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "judge_expertises", ["authentication_role_id"], name: "index_judge_expertises_on_authentication_role_id", using: :btree
   add_index "judge_expertises", ["expertise_id"], name: "index_judge_expertises_on_expertise_id", using: :btree
+  add_index "judge_expertises", ["judge_profile_id"], name: "index_judge_expertises_on_judge_profile_id", using: :btree
+
+  create_table "judge_profiles", force: :cascade do |t|
+    t.integer  "authentication_id", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "judge_profiles", ["authentication_id"], name: "index_judge_profiles_on_authentication_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
@@ -84,14 +90,6 @@ ActiveRecord::Schema.define(version: 20160617020648) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "roles", force: :cascade do |t|
-    t.integer  "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "score_categories", force: :cascade do |t|
     t.string   "name",       null: false
@@ -128,13 +126,13 @@ ActiveRecord::Schema.define(version: 20160617020648) do
   add_index "scored_values", ["score_value_id"], name: "index_scored_values_on_score_value_id", using: :btree
 
   create_table "scores", force: :cascade do |t|
-    t.integer  "submission_id", null: false
-    t.integer  "judge_id",      null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "submission_id",    null: false
+    t.integer  "judge_profile_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "scores", ["judge_id"], name: "index_scores_on_judge_id", using: :btree
+  add_index "scores", ["judge_profile_id"], name: "index_scores_on_judge_profile_id", using: :btree
   add_index "scores", ["submission_id"], name: "index_scores_on_submission_id", using: :btree
 
   create_table "season_registrations", force: :cascade do |t|
@@ -157,14 +155,14 @@ ActiveRecord::Schema.define(version: 20160617020648) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "authentication_role_id", null: false
-    t.string   "parent_guardian_email",  null: false
-    t.date     "date_of_birth"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "authentication_id",     null: false
+    t.string   "parent_guardian_email", null: false
+    t.date     "date_of_birth",         null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "student_profiles", ["authentication_role_id"], name: "index_student_profiles_on_authentication_role_id", using: :btree
+  add_index "student_profiles", ["authentication_id"], name: "index_student_profiles_on_authentication_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "team_id",     null: false
@@ -190,19 +188,17 @@ ActiveRecord::Schema.define(version: 20160617020648) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
-  add_foreign_key "authentication_roles", "authentications"
-  add_foreign_key "authentication_roles", "roles"
+  add_foreign_key "admin_profiles", "authentications"
   add_foreign_key "events", "regions"
-  add_foreign_key "judge_expertises", "authentication_roles"
+  add_foreign_key "judge_expertises", "judge_profiles"
   add_foreign_key "judge_expertises", "score_categories", column: "expertise_id"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"
   add_foreign_key "scored_values", "score_values"
   add_foreign_key "scored_values", "scores"
-  add_foreign_key "scores", "authentication_roles", column: "judge_id"
+  add_foreign_key "scores", "judge_profiles"
   add_foreign_key "scores", "submissions"
   add_foreign_key "season_registrations", "seasons"
-  add_foreign_key "student_profiles", "authentication_roles"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "teams", "regions"

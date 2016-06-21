@@ -1,14 +1,14 @@
 <div class="button-group">
   <label class="register-student">
     <%= radio_button_tag "authentication[registration_role]",
-                         Role.names[:student], true,
+                         Authentication::PROFILE_TYPES[:student], true,
                          data: { reveal: ".student-field" } %>
     <span class="button-group-item">Student</span>
   </label>
 
   <label class="register-judge">
     <%= radio_button_tag "authentication[registration_role]",
-                         Role.names[:judge], false,
+                         Authentication::PROFILE_TYPES[:judge], false,
                          data: { reveal: ".judge-field" } %>
     <span class="button-group-item">Judge</span>
   </label>
