@@ -6,6 +6,20 @@ module AttributesHelper
       password_confirmation: pwd }.merge(attrs)
   end
 
+  def judge_attributes(attrs = {})
+    if ScoreCategory.count.zero?
+      ScoreCategory.create!(score_category_attributes)
+    end
+
+    auth_attributes.merge(judge_profile_attributes: {
+      expertise_ids: ScoreCategory.pluck(:id)
+    }).merge(attrs)
+  end
+
+  def score_category_attributes(attrs = {})
+    { name: "Ideation" }.merge(attrs)
+  end
+
   def team_attributes(attrs = {})
     { name: "Team name",
       description: "Team description",
