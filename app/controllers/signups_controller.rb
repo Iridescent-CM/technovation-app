@@ -30,7 +30,6 @@ class SignupsController < ApplicationController
     params.require(:authentication).permit(:email,
                                            :password,
                                            :password_confirmation,
-                                           :registration_role,
                                            basic_profile_attributes: [
                                              :date_of_birth,
                                              :first_name,
