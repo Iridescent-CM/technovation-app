@@ -10,21 +10,21 @@ class Authentication < ActiveRecord::Base
   has_secure_password
 
   has_one :basic_profile
-  has_one :admin_profile
   has_one :student_profile
   has_one :judge_profile
+  has_one :admin_profile
+
+  accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
+  accepts_nested_attributes_for :student_profile, reject_if: :all_blank
+  accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
 
   validates :email, presence: true, uniqueness: true
-  validates :existing_password, valid_password: true, if: :changes_require_password?
+  validates :existing_password, valid_password: true,
+    if: :changes_require_password?
 
-  validates_associated :basic_profile, if: ->(auth) { auth.basic_profile.present? }
-  accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
-
-  validates_associated :student_profile, if: ->(auth) { auth.student_profile.present? }
-  accepts_nested_attributes_for :student_profile, reject_if: :all_blank
-
-  validates_associated :judge_profile, if: ->(auth) { auth.judge_profile.present? }
-  accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
+  validates_associated :basic_profile, unless: :basic_profile_blank?
+  validates_associated :student_profile, unless: :student_profile_blank?
+  validates_associated :judge_profile, unless: :judge_profile_blank?
 
   def self.has_token?(token)
     exists?(auth_token: token)

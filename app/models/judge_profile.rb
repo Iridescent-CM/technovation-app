@@ -6,6 +6,10 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :scores
 
+  validates :company_name,
+            :job_title,
+            presence: true
+
   def scored_submission_ids
     scores.flat_map(&:submission_id)
   end
