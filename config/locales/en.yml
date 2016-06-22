@@ -51,7 +51,8 @@ en:
 
     student_profile:
       date_of_birth: "Date of Birth"
-      parent_guardian_email: "Parent or guardian email"
+      parent_guardian_email: "Parent or guardian's email"
+      parent_guardian_name: "Parent or guardian's name"
 
     submission:
       team_name: "Team name"
@@ -102,12 +103,14 @@ en:
         index:
           no_submissions: "There are no more submissions for you to judge. Thank you for your feedback!"
           title: "Scores"
+
         new:
           title: "Score a Submission"
 
     signins:
       form:
         signin: "Sign in"
+
       new:
         title: "Sign in"
 
