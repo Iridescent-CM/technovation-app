@@ -1,16 +1,18 @@
-<h1><%= t('views.signups.new.title') %></h1>
+<div class="authentication_form">
+  <h1><%= t('views.signups.new.title') %></h1>
 
-<%= simple_form_for(@signup) do |f| %>
-  <%= render 'registration_roles' %>
+  <%= simple_form_for(@signup) do |f| %>
+    <%= render 'registration_roles' %>
 
-  <%= f.input :email, as: :email %>
-  <%= f.input :password %>
-  <%= f.input :password_confirmation,
-              label: t('views.signups.form.confirm_password') %>
+    <%= f.input :email, as: :email %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation,
+                label: t('views.signups.form.confirm_password') %>
 
-  <%= render 'signups/basic_profile_fields', f: f %>
-  <%= render 'signups/judge_profile_fields', f: f %>
-  <%= render 'signups/student_profile_fields', f: f %>
+    <%= render 'signups/basic_profile_fields', f: f %>
+    <%= render 'signups/judge_profile_fields', f: f %>
+    <%= render 'signups/student_profile_fields', f: f %>
 
-  <%= f.button :submit, t('views.signups.form.signup') %>
-<% end %>
+    <%= f.button :submit, t('views.signups.form.signup') %>
+  <% end %>
+</div>

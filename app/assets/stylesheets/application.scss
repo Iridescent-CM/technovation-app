@@ -23,3 +23,8 @@
 select.date {
   display: inline;
 }
+
+.authentication_form {
+  @include span-columns(6);
+  @include shift(3);
+}

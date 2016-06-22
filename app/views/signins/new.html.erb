@@ -1,7 +1,9 @@
-<h1><%= t('views.signins.new.title') %></h1>
+<div class="authentication_form">
+  <h1><%= t('views.signins.new.title') %></h1>
 
-<%= simple_form_for @signin do |f| %>
-  <%= f.input :email %>
-  <%= f.input :password %>
-  <%= f.button :submit, t('views.signins.form.signin') %>
-<% end %>
+  <%= simple_form_for @signin do |f| %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.button :submit, t('views.signins.form.signin') %>
+  <% end %>
+</div>
