@@ -117,5 +117,7 @@ en:
         confirm_password: 'Confirm password'
         signup: "Sign up"
         student_profile: "Student profile"
+
       new:
+        role_choice: "I am a..."
         title: "Sign up"

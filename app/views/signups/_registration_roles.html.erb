@@ -1,15 +1,11 @@
-<div class="button-group">
-  <label class="register-student">
-    <%= radio_button_tag "registration_role",
-                         Authentication::PROFILE_TYPES[:student], true,
-                         data: { reveal: ".student-field" } %>
-    <span class="button-group-item">Student</span>
-  </label>
+<label><%= t('views.signups.new.role_choice') %></label>
 
-  <label class="register-judge">
-    <%= radio_button_tag "registration_role",
-                         Authentication::PROFILE_TYPES[:judge], false,
-                         data: { reveal: ".judge-field" } %>
-    <span class="button-group-item">Judge</span>
-  </label>
+<div class="button-group">
+  <% Authentication.registerable_profiles.each.with_index do |(type, value), i| %>
+    <label class="register-<%= type %>">
+      <%= radio_button_tag "registration_role", value, i.zero?,
+                           data: { reveal: ".#{type}-field" } %>
+      <span class="button-group-item"><%= t("views.signups.new.roles.#{type}") %></span>
+    </label>
+  <% end %>
 </div>

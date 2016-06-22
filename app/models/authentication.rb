@@ -34,17 +34,18 @@ class Authentication < ActiveRecord::Base
     find_by(auth_token: token) || NoAuthFound.new
   end
 
-  def self.find_role_with_token(token, roles)
-    roles.map { |role|
-      find_with_token(token).send("#{role}_profile")
-    }.compact.first || NoRolesFound.new(*roles)
+  def self.find_role_with_token(token, profiles)
+    profiles.map { |profile|
+      find_with_token(token).send("#{profile}_profile")
+    }.compact.first || NoProfilesFound.new(*profiles)
   end
 
   def self.registerable_profile(value)
+    registerable_profiles.select { |_, v| v == Integer(value) }.keys.first
+  end
+
+  def self.registerable_profiles
     PROFILE_TYPES.reject { |k, _| k == :admin }
-                 .select { |_, v| v == Integer(value) }
-                 .keys
-                 .first
   end
 
   private
@@ -52,17 +53,33 @@ class Authentication < ActiveRecord::Base
     persisted? && (email_changed? || password_digest_changed?)
   end
 
+  def basic_profile_blank?
+    all_attributes_blank?(basic_profile)
+  end
+
+  def student_profile_blank?
+    all_attributes_blank?(student_profile)
+  end
+
+  def judge_profile_blank?
+    all_attributes_blank?(judge_profile)
+  end
+
+  def all_attributes_blank?(profile)
+    profile.present? and profile.attributes.values.all?(&:blank?)
+  end
+
   class NoAuthFound
     PROFILE_TYPES.keys.each do |name|
       define_method "#{name}_profile" do
-        NoRolesFound.new(name)
+        NoProfilesFound.new(name)
       end
     end
   end
 
-  class NoRolesFound
-    def initialize(*attempted_roles)
-      @attempted_roles = attempted_roles
+  class NoProfilesFound
+    def initialize(*attempted_profiles)
+      @attempted_profiles = attempted_profiles
     end
 
     def authenticated?
