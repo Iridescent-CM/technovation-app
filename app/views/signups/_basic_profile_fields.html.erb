@@ -1,10 +1,27 @@
 <%= f.fields_for :basic_profile do |b| %>
   <%= b.input :first_name %>
+
   <%= b.input :last_name %>
-  <%= b.input :city %>
-  <%= b.input :region %>
-  <%= b.input :country, as: :string %>
+
   <%= b.input :date_of_birth, as: :date, prompt: true,
                                           start_year: 1920,
                                           end_year: Date.today.year - 12 %>
+
+  <%= b.input :country, collection: CountryStateSelect.countries_collection %>
+
+  <%= b.input :region, CountryStateSelect.state_options(form: b,
+                                                        field_names: {
+                                                          country: :country,
+                                                          state: :region,
+                                                          city: :city,
+                                                          include_blank: true,
+                                                        }) %>
+
+  <%= b.input :city, CountryStateSelect.city_options(form: b,
+                                                     field_names: {
+                                                       country: :country,
+                                                       state: :region,
+                                                       city: :city,
+                                                       include_blank: true,
+                                                     }) %>
 <% end %>

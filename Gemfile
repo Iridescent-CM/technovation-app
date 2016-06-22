@@ -10,12 +10,15 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'chosen-rails'
 gem 'simple_form'
 gem 'nested_form_fields'
+gem 'country_state_select', '~> 3.0.2'
 
 group :development, :test do
   gem 'pry-rails'
