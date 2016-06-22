@@ -11,9 +11,13 @@ module AttributesHelper
       ScoreCategory.create!(score_category_attributes)
     end
 
-    auth_attributes.merge(judge_profile_attributes: {
-      expertise_ids: ScoreCategory.pluck(:id)
-    }).merge(attrs)
+    auth_attributes({
+      judge_profile_attributes: {
+        expertise_ids: ScoreCategory.pluck(:id),
+        company_name: "ACME, Inc.",
+        job_title: "Engineer in Coyote Aerodynamics",
+      }
+    }).deep_merge(attrs)
   end
 
   def score_category_attributes(attrs = {})

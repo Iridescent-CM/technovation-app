@@ -4,11 +4,9 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
     create_test_scoring_environment
 
-    @judge ||= CreateAuthentication.(
-      auth_attributes.merge(judge_profile_attributes: {
-                              expertise_ids: ScoreCategory.pluck(:id)
-                            })
-    )
+    @judge ||= CreateAuthentication.(judge_attributes({
+      judge_profile_attributes: { expertise_ids: ScoreCategory.pluck(:id) }
+    }))
 
     sign_in(@judge)
     visit judge_scores_path
