@@ -1,0 +1,10 @@
+<%= f.fields_for :basic_profile do |b| %>
+  <%= b.input :first_name %>
+  <%= b.input :last_name %>
+  <%= b.input :city %>
+  <%= b.input :region %>
+  <%= b.input :country, as: :string %>
+  <%= b.input :date_of_birth, as: :date, prompt: true,
+                                          start_year: 1920,
+                                          end_year: Date.today.year - 12 %>
+<% end %>

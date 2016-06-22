@@ -1,0 +1,9 @@
+<div class="toggle-field student-field">
+  <h4><%= t('views.signups.form.student_profile') %></h4>
+
+  <%= f.fields_for :student_profile do |s| %>
+    <%= s.input :school_name %>
+    <%= s.input :parent_guardian_name %>
+    <%= s.input :parent_guardian_email, label: t('models.student_profile.parent_guardian_email'), as: :email %>
+  <% end %>
+</div>
