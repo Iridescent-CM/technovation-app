@@ -28,6 +28,9 @@
           <%= b.check_box %><%= b.label { b.text } %>
         </span>
       <% end %>
+
+      <%= j.input :company_name %>
+      <%= j.input :job_title %>
     <% end %>
   </div>
 
@@ -35,9 +38,8 @@
     <h4><%= t('views.signups.form.student_profile') %></h4>
 
     <%= f.fields_for :student_profile do |s| %>
-      <%= s.input :date_of_birth, as: :date, prompt: true,
-                                             start_year: Date.today.year - 19,
-                                             end_year: Date.today.year - 12 %>
+      <%= s.input :school_name %>
+      <%= s.input :parent_guardian_name %>
       <%= s.input :parent_guardian_email, label: t('models.student_profile.parent_guardian_email'), as: :email %>
     <% end %>
   </div>

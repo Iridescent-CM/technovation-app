@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 20160622141228) do
 
   create_table "judge_profiles", force: :cascade do |t|
     t.integer  "authentication_id", null: false
+    t.string   "company_name",      null: false
+    t.string   "job_title",         null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -170,11 +172,13 @@ ActiveRecord::Schema.define(version: 20160622141228) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "authentication_id",     null: false
-    t.string   "parent_guardian_email", null: false
-    t.date     "date_of_birth",         null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "authentication_id",       null: false
+    t.string   "parent_guardian_email",   null: false
+    t.string   "parent_guardian_name",    null: false
+    t.string   "school_name",             null: false
+    t.date     "pre_survey_completed_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "student_profiles", ["authentication_id"], name: "index_student_profiles_on_authentication_id", using: :btree
