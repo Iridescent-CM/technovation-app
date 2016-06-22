@@ -9,12 +9,16 @@ class Authentication < ActiveRecord::Base
 
   has_secure_password
 
+  has_one :basic_profile
   has_one :admin_profile
   has_one :student_profile
   has_one :judge_profile
 
   validates :email, presence: true, uniqueness: true
   validates :existing_password, valid_password: true, if: :changes_require_password?
+
+  validates_associated :basic_profile, if: ->(auth) { auth.basic_profile.present? }
+  accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
 
   validates_associated :student_profile, if: ->(auth) { auth.student_profile.present? }
   accepts_nested_attributes_for :student_profile, reject_if: :all_blank
