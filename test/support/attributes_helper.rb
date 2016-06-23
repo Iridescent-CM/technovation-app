@@ -3,7 +3,15 @@ module AttributesHelper
     pwd = attrs.fetch(:password) { "auth@example.com" }
     { email: pwd,
       password: pwd,
-      password_confirmation: pwd }.merge(attrs)
+      password_confirmation: pwd,
+      basic_profile_attributes: {
+        first_name: "Authy",
+        last_name: "McGee",
+        date_of_birth: Date.today - 33.years,
+        city: "Chicago",
+        region: "IL",
+        country: "US",
+      }, }.deep_merge(attrs)
   end
 
   def judge_attributes(attrs = {})
