@@ -19,28 +19,35 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_score_category
-    assert ScoreCategory.count == 1
-    assert ScoreCategory.last.name == "Ideation"
+    assert ScoreCategory.count == 5
+    names = ScoreCategory.pluck(:name)
+    assert names.include?("Ideation")
+    assert names.include?("Technical")
+    assert names.include?("Entrepreneurship")
+    assert names.include?("Subjective")
+    assert names.include?("Bonus")
   end
 
   def test_seed_adds_score_question
     assert ScoreQuestion.count == 1
-    assert ScoreCategory.last.score_questions.last.label ==(
+    assert ScoreCategory.find_by(name: "Ideation").score_questions.last.label ==(
       "Did the team identify a real problem in their community?"
     )
   end
 
   def test_seed_adds_score_value
     assert ScoreValue.count == 2
-    assert ScoreCategory.last.score_questions.first
-                        .score_values.first.label == "No"
-    assert ScoreCategory.last.score_questions.first
-                        .score_values.first.value.zero?
+    score_category = ScoreCategory.find_by(name: "Ideation")
+    assert score_category.is_expertise?
+    assert score_category.score_questions.first
+                         .score_values.first.label == "No"
+    assert score_category.score_questions.first
+                         .score_values.first.value.zero?
 
-    assert ScoreCategory.last.score_questions.last
-                        .score_values.last.label == "Yes"
-    assert ScoreCategory.last.score_questions.last
-                        .score_values.last.value == 3
+    assert score_category.score_questions.last
+                         .score_values.last.label == "Yes"
+    assert score_category.score_questions.last
+                         .score_values.last.value == 3
   end
 
   def test_seed_adds_teams

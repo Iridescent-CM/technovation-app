@@ -21,7 +21,7 @@ class SignupsController < ApplicationController
 
   private
   def expertises
-    @expertises ||= ScoreCategory.all
+    @expertises ||= ScoreCategory.is_expertise
   end
 
   def build_profiles

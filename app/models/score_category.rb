@@ -5,6 +5,8 @@ class ScoreCategory < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
+  scope :is_expertise, -> { where(is_expertise: true) }
+
   scope :visible_to, ->(profile) {
     if profile.admin?
       all

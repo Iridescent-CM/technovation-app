@@ -2,8 +2,8 @@ require "rails_helper"
 
 class RegisterAsJudgeTest < Capybara::Rails::TestCase
   def test_register
-    ScoreCategory.create(name: "Ideation")
-    ScoreCategory.create(name: "Technology")
+    ScoreCategory.create(name: "Ideation", is_expertise: true)
+    ScoreCategory.create(name: "Technology", is_expertise: true)
 
     visit signup_path
 

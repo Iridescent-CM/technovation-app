@@ -1,16 +1,19 @@
 module ScoringEnvironmentHelper
   def create_test_scoring_environment
     ideation = { category: "Ideation",
+                 expertise: true,
                  questions: [{ label: "Was the idea good?",
                                values: [{ label: "No", value: 0 },
                                         { label: "Yes", value: 3 }] }] }
 
     technology = { category: "Technology",
+                   expertise: true,
                    questions: [{ label: "Was the tech good?",
                                  values: [{ label: "No", value: 0 },
                                           { label: "Yes", value: 7 }] }] }
 
     business = { category: "Business",
+                 expertise: true,
                  questions: [{ label: "Was the biz good?",
                                values: [{ label: "No", value: 0 },
                                         { label: "Yes", value: 5 }] }] }

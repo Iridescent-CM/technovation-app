@@ -6,12 +6,17 @@ if Season.create(year: Time.current.year, starts_at: Time.current).valid?
   puts "Created Season: #{Season.current.year}"
 end
 
-if CreateScoringRubric.({
+if CreateScoringRubric.([{
      category: "Ideation",
      questions: [{ label: "Did the team identify a real problem in their community?",
                    values: [{ value: 0, label: "No" },
                             { value: 3, label: "Yes" }] }]
-   })
+   },
+   { category: "Technical" },
+   { category: "Entrepreneurship" },
+   { category: "Subjective", expertise: false },
+   { category: "Bonus", expertise: false },
+])
 
   ScoreCategory.all.each do |category|
     puts "Created ScoreCategory: #{category.name}"
