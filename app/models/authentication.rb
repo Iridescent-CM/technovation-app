@@ -19,7 +19,7 @@ class Authentication < ActiveRecord::Base
   accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
 
   validates :email, presence: true, uniqueness: true
-  validates :password, :password_confirmation, presence: true
+  validates :password, :password_confirmation, presence: { on: :create }
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
 
