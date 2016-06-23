@@ -7,4 +7,12 @@ class BasicProfile < ActiveRecord::Base
   validates :city, presence: true
   validates :region, presence: true
   validates :country, presence: true
+
+  def address_details
+    [city, region, country].join(', ')
+  end
+
+  def full_name
+    [first_name, last_name].join(' ')
+  end
 end
