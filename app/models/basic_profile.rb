@@ -1,5 +1,5 @@
 class BasicProfile < ActiveRecord::Base
-  belongs_to :authentication
+  include Authenticatable
 
   validates :date_of_birth, presence: true
   validates :first_name, presence: true

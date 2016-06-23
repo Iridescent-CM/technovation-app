@@ -1,6 +1,8 @@
 class AuthenticationsController < ApplicationController
   include AuthenticationController
 
+  before_filter :authenticate_account!
+
   helper_method :current_account
 
   def edit
@@ -23,5 +25,11 @@ class AuthenticationsController < ApplicationController
 
   def current_account
     @current_authentication ||= Authentication.find_with_token(cookies.fetch(:auth_token) { "" })
+  end
+
+  def authenticate_account!
+    FindAuthenticationRole.authenticate(:basic, cookies, failure: -> {
+      save_redirected_path && go_to_signin
+    })
   end
 end
