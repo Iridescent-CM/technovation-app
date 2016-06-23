@@ -4,6 +4,7 @@ module AuthenticationController
   private
   def auth_params
     params.require(:authentication).permit(:email,
+                                           :existing_password,
                                            :password,
                                            :password_confirmation,
                                            basic_profile_attributes: [
