@@ -3,6 +3,7 @@ class Authentication < ActiveRecord::Base
     student: 0,
     judge: 1,
     admin: 2,
+    basic: 3,
   }
 
   attr_accessor :existing_password
