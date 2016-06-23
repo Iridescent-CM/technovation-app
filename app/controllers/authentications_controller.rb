@@ -1,4 +1,6 @@
 class AuthenticationsController < ApplicationController
+  include AuthenticationController
+
   def edit
     authentication
   end
@@ -15,10 +17,5 @@ class AuthenticationsController < ApplicationController
   private
   def authentication
     @authentication ||= Authentication.find_with_token(cookies.fetch(:auth_token) { "" })
-  end
-
-  def auth_params
-    params.require(:authentication).permit(:email, :existing_password,
-                                           :password, :password_confirmation)
   end
 end
