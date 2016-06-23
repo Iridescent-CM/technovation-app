@@ -2,9 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
-  helper_method :authenticated?, :admin?, :judge?
+  helper_method :authenticated?, :admin?, :judge?, :current_authentication
 
   private
+  def current_authentication
+    @current_authentication ||= Authentication.find_by(auth_token: cookies.fetch(:auth_token) { "" })
+  end
+
   def authenticated?
     FindAuthenticationRole.authenticated?(cookies)
   end
