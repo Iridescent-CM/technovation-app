@@ -35,10 +35,12 @@ class Authentication < ActiveRecord::Base
     find_by(auth_token: token) || NoAuthFound.new
   end
 
-  def self.find_role_with_token(token, profiles)
-    profiles.map { |profile|
-      find_with_token(token).send("#{profile}_profile")
-    }.compact.first || NoProfilesFound.new(*profiles)
+  def self.find_profile_with_token(token, profile)
+    auth = find_with_token(token)
+
+    auth.send("#{profile}_profile") or
+      auth.admin_profile or
+        NoProfileFound.new(profile)
   end
 
   def self.registerable_profile(value)
@@ -73,14 +75,14 @@ class Authentication < ActiveRecord::Base
   class NoAuthFound
     PROFILE_TYPES.keys.each do |name|
       define_method "#{name}_profile" do
-        NoProfilesFound.new(name)
+        NoProfileFound.new(name)
       end
     end
   end
 
-  class NoProfilesFound
-    def initialize(*attempted_profiles)
-      @attempted_profiles = attempted_profiles
+  class NoProfileFound
+    def initialize(*attempted_profile)
+      @attempted_profile = attempted_profile
     end
 
     def authenticated?
