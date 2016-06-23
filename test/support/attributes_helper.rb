@@ -21,7 +21,7 @@ module AttributesHelper
 
     auth_attributes({
       judge_profile_attributes: {
-        expertise_ids: ScoreCategory.pluck(:id),
+        scoring_expertise_ids: ScoreCategory.pluck(:id),
         company_name: "ACME, Inc.",
         job_title: "Engineer in Coyote Aerodynamics",
       }

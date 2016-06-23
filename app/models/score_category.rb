@@ -11,8 +11,8 @@ class ScoreCategory < ActiveRecord::Base
     if profile.admin?
       all
     else
-      joins('LEFT JOIN judge_expertises on judge_expertises.expertise_id = score_categories.id')
-      .where('score_categories.is_expertise = false OR judge_expertises.judge_profile_id IN (?)', profile.id)
+      joins('LEFT JOIN judge_scoring_expertises on judge_scoring_expertises.scoring_expertise_id = score_categories.id')
+      .where('score_categories.is_expertise = false OR judge_scoring_expertises.judge_profile_id IN (?)', profile.id)
     end
   }
 end

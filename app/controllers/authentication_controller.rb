@@ -26,7 +26,7 @@ module AuthenticationController
                                              :id,
                                              :company_name,
                                              :job_title,
-                                             { expertise_ids: [] },
+                                             { scoring_expertise_ids: [] },
                                            ],)
   end
 end

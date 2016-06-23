@@ -69,16 +69,6 @@ ActiveRecord::Schema.define(version: 20160622141228) do
   add_index "events", ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
 
-  create_table "judge_expertises", force: :cascade do |t|
-    t.integer  "judge_profile_id", null: false
-    t.integer  "expertise_id",     null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "judge_expertises", ["expertise_id"], name: "index_judge_expertises_on_expertise_id", using: :btree
-  add_index "judge_expertises", ["judge_profile_id"], name: "index_judge_expertises_on_judge_profile_id", using: :btree
-
   create_table "judge_profiles", force: :cascade do |t|
     t.integer  "authentication_id", null: false
     t.string   "company_name",      null: false
@@ -88,6 +78,16 @@ ActiveRecord::Schema.define(version: 20160622141228) do
   end
 
   add_index "judge_profiles", ["authentication_id"], name: "index_judge_profiles_on_authentication_id", using: :btree
+
+  create_table "judge_scoring_expertises", force: :cascade do |t|
+    t.integer  "judge_profile_id",     null: false
+    t.integer  "scoring_expertise_id", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "judge_scoring_expertises", ["judge_profile_id"], name: "index_judge_scoring_expertises_on_judge_profile_id", using: :btree
+  add_index "judge_scoring_expertises", ["scoring_expertise_id"], name: "index_judge_scoring_expertises_on_scoring_expertise_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.datetime "approved_at"
@@ -210,8 +210,8 @@ ActiveRecord::Schema.define(version: 20160622141228) do
 
   add_foreign_key "admin_profiles", "authentications"
   add_foreign_key "events", "regions"
-  add_foreign_key "judge_expertises", "judge_profiles"
-  add_foreign_key "judge_expertises", "score_categories", column: "expertise_id"
+  add_foreign_key "judge_scoring_expertises", "judge_profiles"
+  add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"
   add_foreign_key "scored_values", "score_values"

@@ -20,6 +20,6 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     assert JudgeProfile.count == 1
     auth = Authentication.last
     assert auth.email == "judge@judging.com"
-    assert auth.profile_expertises.flat_map(&:name) == ["Ideation"]
+    assert auth.profile_scoring_expertises.flat_map(&:name) == ["Ideation"]
   end
 end
