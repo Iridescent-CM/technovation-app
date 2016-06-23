@@ -24,7 +24,7 @@ select.date {
   display: inline;
 }
 
-.authentication_form {
+.authentication {
   @include span-columns(6);
   @include shift(3);
 }
@@ -53,4 +53,8 @@ select.date {
 .field_with_errors {
   @extend .flash-error;
   text-align: left;
+}
+
+dd {
+  margin-bottom: 1rem;
 }

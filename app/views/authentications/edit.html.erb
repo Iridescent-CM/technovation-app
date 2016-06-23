@@ -1,14 +1,16 @@
-<%= simple_form_for @authentication, url: authentication_path do |f| %>
-  <%= f.input :email %>
+<div class="authentication">
+  <%= simple_form_for @authentication, url: authentication_path do |f| %>
+    <%= render 'signups/basic_profile_fields', f: f %>
 
-  <%= f.input :existing_password,
-              label: t('views.authentications.edit.existing_password') %>
+    <%= f.input :existing_password,
+                label: t('views.authentications.edit.existing_password') %>
 
-  <%= f.input :password,
-              label: t('views.authentications.edit.new_password') %>
+    <%= f.input :password,
+                label: t('views.authentications.edit.new_password') %>
 
-  <%= f.input :password_confirmation,
-              label: t('views.authentications.edit.confirm_new_password') %>
+    <%= f.input :password_confirmation,
+                label: t('views.authentications.edit.confirm_new_password') %>
 
-  <%= f.button :submit, t('views.application.save') %>
-<% end %>
+    <%= f.button :submit, t('views.application.save') %>
+  <% end %>
+</div>
