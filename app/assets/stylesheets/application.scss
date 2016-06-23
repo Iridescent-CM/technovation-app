@@ -45,3 +45,12 @@ select.date {
 .last {
   @include omega;
 }
+
+.input {
+  clear: both;
+}
+
+.field_with_errors {
+  @extend .flash-error;
+  text-align: left;
+}
