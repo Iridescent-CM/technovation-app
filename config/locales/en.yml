@@ -1,4 +1,11 @@
 en:
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            existing_password:
+              invalid: "is required to change your email address or password"
   controllers:
     admin:
       score_categories:

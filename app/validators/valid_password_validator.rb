@@ -1,9 +1,8 @@
 class ValidPasswordValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless changes_authenticated?(record, value)
-      record.errors.add(attribute, I18n.translate(
-        "models.errors.#{attribute}.invalid"
-      ))
+      record.errors.add(attribute,
+                        I18n.translate(translation_path(record, attribute)))
     end
   end
 
@@ -14,5 +13,15 @@ class ValidPasswordValidator < ActiveModel::EachValidator
     else
       record.authenticate(value)
     end
+  end
+
+  def translation_path(record, attribute)
+    %W(activerecord
+       errors
+       models
+       #{record.class.name.underscore}
+       attributes
+       #{attribute}
+       invalid).join('.')
   end
 end

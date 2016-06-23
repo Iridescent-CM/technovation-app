@@ -35,7 +35,9 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
     click_button 'Save'
 
     within(".authentication_existing_password") do
-      assert page.has_content?("is invalid")
+      assert page.has_content?(
+        translated_error(:authentication, :existing_password, :invalid)
+      )
     end
   end
 
@@ -46,11 +48,15 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
     click_button 'Save'
 
     within(".authentication_existing_password") do
-      assert page.has_content?("is invalid")
+      assert page.has_content?(
+        translated_error(:authentication, :existing_password, :invalid)
+      )
     end
 
     within(".authentication_password_confirmation") do
-      assert page.has_content?("doesn't match Password")
+      assert page.has_content?(
+        I18n.translate('errors.messages.confirmation', attribute: :Password)
+      )
     end
   end
 end

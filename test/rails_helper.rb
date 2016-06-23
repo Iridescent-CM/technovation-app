@@ -21,6 +21,7 @@ class Minitest::Test
   include SigninHelper
   include AttributesHelper
   include DateSelectHelper
+  include TranslationHelper
   include ScoringEnvironmentHelper
 
   def around(&block)
