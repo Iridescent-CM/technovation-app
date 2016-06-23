@@ -74,6 +74,14 @@ end
 
 if (admin = CreateAdmin.(email: "admin@admin.com",
                          password: "admin@admin.com",
-                         password_confirmation: "admin@admin.com")).save
+                         password_confirmation: "admin@admin.com",
+                         basic_profile_attributes: {
+                          first_name: "Test",
+                          last_name: "Admin",
+                          date_of_birth: Date.today,
+                          city: "Chicago",
+                          region: "IL",
+                          country: "US"
+                         })).save
   puts "Created Admin: #{admin.email} with password #{admin.password}"
 end
