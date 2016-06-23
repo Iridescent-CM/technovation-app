@@ -28,3 +28,20 @@ select.date {
   @include span-columns(6);
   @include shift(3);
 }
+
+.signup_page {
+  @include span-columns(10);
+  @include shift(1);
+}
+
+.basic_fields, .specialized_fields {
+  @include span-columns(6);
+}
+
+.name_field, .country_state_field {
+  @include span-columns(6);
+}
+
+.last {
+  @include omega;
+}
