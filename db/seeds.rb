@@ -57,7 +57,7 @@ if (judge = CreateAuthentication.(email: "judge@judging.com",
                                   password: "judge@judging.com",
                                   password_confirmation: "judge@judging.com",
                                   judge_profile_attributes: {
-                                    expertise_ids: ScoreCategory.pluck(:id),
+                                    expertise_ids: ScoreCategory.is_expertise.pluck(:id),
                                     company_name: "ACME, Inc.",
                                     job_title: "Engineer",
                                   },

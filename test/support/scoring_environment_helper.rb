@@ -18,7 +18,9 @@ module ScoringEnvironmentHelper
                                values: [{ label: "No", value: 0 },
                                         { label: "Yes", value: 5 }] }] }
 
-    @rubric ||= CreateScoringRubric.([ideation, technology, business])
+    bonus = { category: "Bonus", expertise: false }
+
+    @rubric ||= CreateScoringRubric.([ideation, technology, business, bonus])
 
     submission
   end

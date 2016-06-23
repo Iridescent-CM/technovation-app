@@ -5,7 +5,7 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     create_test_scoring_environment
 
     @judge ||= CreateAuthentication.(judge_attributes({
-      judge_profile_attributes: { expertise_ids: ScoreCategory.pluck(:id) }
+      judge_profile_attributes: { expertise_ids: ScoreCategory.is_expertise.pluck(:id) }
     }))
 
     sign_in(@judge)
@@ -16,6 +16,11 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
     within('.technology') { choose 'Yes' }
 
     click_button 'Save'
+  end
+
+  def test_judge_sees_non_expertise_categories
+    click_link 'Edit'
+    assert page.has_content?("Bonus")
   end
 
   def test_score_submission
