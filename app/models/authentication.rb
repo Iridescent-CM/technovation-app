@@ -51,7 +51,20 @@ class Authentication < ActiveRecord::Base
     PROFILE_TYPES.reject { |k, _| k == :admin }
   end
 
+  def method_missing(method_name, *args, &block)
+    name = method_name.to_s.sub('profile_', '')
+    if !!(profile = profiles.select { |prof| prof.respond_to?(name) }.first)
+      profile.public_send(name, *args, &block)
+    else
+      super
+    end
+  end
+
   private
+  def profiles
+    [basic_profile, judge_profile, student_profile, admin_profile]
+  end
+
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
   end

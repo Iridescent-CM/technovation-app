@@ -15,8 +15,9 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     click_button "Sign up"
 
     assert StudentProfile.count == 1
-    assert StudentProfile.last.parent_guardian_email == "parent@guardian.com"
-    assert StudentProfile.last.parent_guardian_name == "Parenty McGee"
-    assert StudentProfile.last.school_name == "Schooly McSchool"
+    auth = Authentication.last
+    assert auth.profile_parent_guardian_email == "parent@guardian.com"
+    assert auth.profile_parent_guardian_name == "Parenty McGee"
+    assert auth.profile_school_name == "Schooly McSchool"
   end
 end
