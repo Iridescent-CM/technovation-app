@@ -3,8 +3,8 @@ module FindAuthenticationRole
     auth_class.has_token?(cookies.fetch(:auth_token) { "" })
   end
 
-  def self.authenticate(role, cookies, callbacks = {})
-    current(role, cookies).authenticated? ||
+  def self.authenticate(profile, cookies, callbacks = {})
+    current(profile, cookies).authenticated? ||
       callbacks.fetch(:failure) { -> { } }.call
   end
 
