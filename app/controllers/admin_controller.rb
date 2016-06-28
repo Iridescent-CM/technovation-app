@@ -9,4 +9,8 @@ class AdminController < ApplicationController
       save_redirected_path && go_to_signin
     })
   end
+
+  def profile_type
+    "admin"
+  end
 end

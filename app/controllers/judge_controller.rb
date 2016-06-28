@@ -11,4 +11,8 @@ class JudgeController < ApplicationController
   def current_judge
     @current_judge ||= FindAuthenticationRole.current(:judge, cookies)
   end
+
+  def profile_type
+    "judge"
+  end
 end

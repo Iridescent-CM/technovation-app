@@ -26,7 +26,16 @@ class ApplicationController < ActionController::Base
   def sign_in(signin, success_msg = t('controllers.signins.create.success'))
     cookies[:auth_token] = signin.auth_token
 
-    redirect_to cookies.delete(:redirected_from) || root_path,
-                success: success_msg
+    redirect_to after_signin_path, success: success_msg
+  end
+
+  def after_signin_path
+    cookies.delete(:redirected_from) or
+      send("#{profile_type}_dashboard_path") or
+        root_path
+  end
+
+  def profile_type
+    "application"
   end
 end

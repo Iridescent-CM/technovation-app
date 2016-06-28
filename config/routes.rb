@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
   end
 
+  namespace :application do
+    resource :dashboard, only: :show
+  end
+
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
 
@@ -29,5 +33,5 @@ Rails.application.routes.draw do
   resource :authentication, only: [:show, :edit, :update]
   post 'authentications', to: "signups#create"
 
-  root to: "static#index"
+  root to: "application/dashboards#show"
 end
