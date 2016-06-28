@@ -16,6 +16,12 @@ module AuthenticationController
                                              :region,
                                              :country,
                                            ],
+                                           coach_profile_attributes: [
+                                             :id,
+                                             :school_company_name,
+                                             :job_title,
+                                             { expertise_ids: [] },
+                                           ],
                                            judge_profile_attributes: [
                                              :id,
                                              :company_name,

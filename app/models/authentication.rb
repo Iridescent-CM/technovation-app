@@ -20,6 +20,7 @@ class Authentication < ActiveRecord::Base
   has_one :student_profile
 
   accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
+  accepts_nested_attributes_for :coach_profile, reject_if: :all_blank
   accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
   accepts_nested_attributes_for :mentor_profile, reject_if: :all_blank
   accepts_nested_attributes_for :student_profile, reject_if: :all_blank
@@ -30,6 +31,7 @@ class Authentication < ActiveRecord::Base
     if: :changes_require_password?
 
   validates_associated :basic_profile, unless: :basic_profile_blank?
+  validates_associated :coach_profile, unless: :coach_profile_blank?
   validates_associated :judge_profile, unless: :judge_profile_blank?
   validates_associated :mentor_profile, unless: :mentor_profile_blank?
   validates_associated :student_profile, unless: :student_profile_blank?
@@ -84,6 +86,10 @@ class Authentication < ActiveRecord::Base
 
   def basic_profile_blank?
     all_attributes_blank?(basic_profile)
+  end
+
+  def coach_profile_blank?
+    all_attributes_blank?(coach_profile)
   end
 
   def judge_profile_blank?
