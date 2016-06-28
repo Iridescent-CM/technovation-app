@@ -58,6 +58,12 @@ class Authentication < ActiveRecord::Base
     PROFILE_TYPES.reject { |k, _| k == :admin or k == :basic }
   end
 
+  def build_profiles
+    (self.class.registerable_profiles.keys + [:basic]).each do |name|
+      send("build_#{name}_profile") if send("#{name}_profile").nil?
+    end
+  end
+
   def method_missing(method_name, *args, &block)
     name = method_name.to_s.sub('profile_', '')
     if !!(profile = profiles.select { |prof| prof.respond_to?(name) }.first)
@@ -69,7 +75,7 @@ class Authentication < ActiveRecord::Base
 
   private
   def profiles
-    [basic_profile, judge_profile, student_profile, admin_profile]
+    PROFILE_TYPES.keys.map { |name| send("#{name}_profile") }
   end
 
   def changes_require_password?

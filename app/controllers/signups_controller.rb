@@ -3,7 +3,7 @@ class SignupsController < ApplicationController
 
   def new
     @signup = signup_class.new
-    build_profiles
+    @signup.build_profiles
     expertises
   end
 
@@ -13,7 +13,7 @@ class SignupsController < ApplicationController
     if @signup.valid?
       sign_in(@signup, t('controllers.signups.create.success'))
     else
-      build_profiles
+      @signup.build_profiles
       expertises
       render :new
     end
@@ -21,13 +21,8 @@ class SignupsController < ApplicationController
 
   private
   def expertises
-    @expertises ||= ScoreCategory.is_expertise
-  end
-
-  def build_profiles
-    @signup.build_basic_profile if @signup.basic_profile.nil?
-    @signup.build_student_profile if @signup.student_profile.nil?
-    @signup.build_judge_profile if @signup.judge_profile.nil?
+    @scoring_expertises ||= ScoreCategory.is_expertise
+    @expertises ||= Expertise.all
   end
 
   def signup_class
