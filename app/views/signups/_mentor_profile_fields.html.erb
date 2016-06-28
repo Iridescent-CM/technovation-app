@@ -1,0 +1,15 @@
+<div class="toggle-field mentor-field">
+  <h4><%= t('views.signups.form.choose_expertises') %></h4>
+
+  <%= f.fields_for :mentor_profile do |g| %>
+    <%= g.collection_check_boxes :expertise_ids, @expertises, :id, :name do |b| %>
+      <span class="inline-checkbox">
+        <%= b.check_box %><%= b.label { b.text } %>
+      </span>
+    <% end %>
+
+    <%= g.input :school_company_name,
+                label: t('models.guidance_profile.school_company_name') %>
+    <%= g.input :job_title %>
+  <% end %>
+</div>

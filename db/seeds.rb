@@ -31,6 +31,10 @@ if CreateScoringRubric.([{
   end
 end
 
+if Expertise.create(name: "Science").valid?
+  puts "Created Expertise: #{Expertise.last.name}"
+end
+
 if (team = Team.create(name: "The Techno Girls",
                        description: "A great team of smart and capable girls!",
                        division: Division.high_school,

@@ -11,9 +11,11 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     fill_in 'Password', with: "secret1234"
     fill_in 'Confirm password', with: "secret1234"
 
-    check "Ideation"
-    fill_in "Company name", with: "ACME, Inc."
-    fill_in "Job title", with: "Engineer in Coyote Physics"
+    within('.judge-field') do
+      check "Ideation"
+      fill_in "Company name", with: "ACME, Inc."
+      fill_in "Job title", with: "Engineer in Coyote Physics"
+    end
 
     click_button "Sign up"
 

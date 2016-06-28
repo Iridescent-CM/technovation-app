@@ -16,17 +16,24 @@ module AuthenticationController
                                              :region,
                                              :country,
                                            ],
+                                           judge_profile_attributes: [
+                                             :id,
+                                             :company_name,
+                                             :job_title,
+                                             { scoring_expertise_ids: [] },
+                                           ],
+                                           mentor_profile_attributes: [
+                                             :id,
+                                             :school_company_name,
+                                             :job_title,
+                                             { expertise_ids: [] },
+                                           ],
                                            student_profile_attributes: [
                                              :id,
                                              :parent_guardian_email,
                                              :parent_guardian_name,
                                              :school_name,
                                            ],
-                                           judge_profile_attributes: [
-                                             :id,
-                                             :company_name,
-                                             :job_title,
-                                             { scoring_expertise_ids: [] },
-                                           ],)
+                                          )
   end
 end

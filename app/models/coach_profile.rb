@@ -1,0 +1,2 @@
+class CoachProfile < GuidanceProfile
+end

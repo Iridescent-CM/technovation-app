@@ -4,20 +4,25 @@ class Authentication < ActiveRecord::Base
     judge: 1,
     admin: 2,
     basic: 3,
+    mentor: 4,
+    coach: 5,
   }
 
   attr_accessor :existing_password
 
   has_secure_password
 
-  has_one :basic_profile
-  has_one :student_profile
-  has_one :judge_profile
   has_one :admin_profile
+  has_one :basic_profile
+  has_one :coach_profile
+  has_one :judge_profile
+  has_one :mentor_profile
+  has_one :student_profile
 
   accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
-  accepts_nested_attributes_for :student_profile, reject_if: :all_blank
   accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
+  accepts_nested_attributes_for :mentor_profile, reject_if: :all_blank
+  accepts_nested_attributes_for :student_profile, reject_if: :all_blank
 
   validates :email, presence: true, uniqueness: true
   validates :password, :password_confirmation, presence: { on: :create }
@@ -25,8 +30,9 @@ class Authentication < ActiveRecord::Base
     if: :changes_require_password?
 
   validates_associated :basic_profile, unless: :basic_profile_blank?
-  validates_associated :student_profile, unless: :student_profile_blank?
   validates_associated :judge_profile, unless: :judge_profile_blank?
+  validates_associated :mentor_profile, unless: :mentor_profile_blank?
+  validates_associated :student_profile, unless: :student_profile_blank?
 
   def self.has_token?(token)
     exists?(auth_token: token)
@@ -49,7 +55,7 @@ class Authentication < ActiveRecord::Base
   end
 
   def self.registerable_profiles
-    PROFILE_TYPES.reject { |k, _| k == :admin }
+    PROFILE_TYPES.reject { |k, _| k == :admin or k == :basic }
   end
 
   def method_missing(method_name, *args, &block)
@@ -74,16 +80,21 @@ class Authentication < ActiveRecord::Base
     all_attributes_blank?(basic_profile)
   end
 
-  def student_profile_blank?
-    all_attributes_blank?(student_profile)
-  end
-
   def judge_profile_blank?
     all_attributes_blank?(judge_profile)
   end
 
+  def mentor_profile_blank?
+    all_attributes_blank?(mentor_profile)
+  end
+
+  def student_profile_blank?
+    all_attributes_blank?(student_profile)
+  end
+
   def all_attributes_blank?(profile)
-    profile.present? and profile.attributes.values.all?(&:blank?)
+    !!profile and
+      profile.attributes.select { |k, _| k != 'type' }.values.all?(&:blank?)
   end
 
   class NoAuthFound

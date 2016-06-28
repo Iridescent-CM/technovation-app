@@ -13,6 +13,11 @@ class SeedsTest < Minitest::Test
     assert Region.last.name == "US/Canada"
   end
 
+  def test_seed_adds_expertise
+    assert Expertise.count == 1
+    assert Expertise.last.name == "Science"
+  end
+
   def test_seed_adds_season
     assert Season.count == 1
     assert Season.current.year == Time.current.year

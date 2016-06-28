@@ -1,0 +1,2 @@
+class MentorProfile < GuidanceProfile
+end

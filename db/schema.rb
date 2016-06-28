@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622141228) do
+ActiveRecord::Schema.define(version: 20160628164903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,35 @@ ActiveRecord::Schema.define(version: 20160622141228) do
 
   add_index "events", ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
   add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
+
+  create_table "expertises", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "guidance_profile_expertises", force: :cascade do |t|
+    t.integer  "guidance_profile_id"
+    t.integer  "expertise_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "guidance_profile_expertises", ["expertise_id"], name: "index_guidance_profile_expertises_on_expertise_id", using: :btree
+  add_index "guidance_profile_expertises", ["guidance_profile_id"], name: "index_guidance_profile_expertises_on_guidance_profile_id", using: :btree
+
+  create_table "guidance_profiles", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "authentication_id"
+    t.string   "school_company_name",           null: false
+    t.string   "job_title",                     null: false
+    t.date     "background_check_completed_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "guidance_profiles", ["authentication_id"], name: "index_guidance_profiles_on_authentication_id", using: :btree
+  add_index "guidance_profiles", ["type"], name: "index_guidance_profiles_on_type", using: :btree
 
   create_table "judge_profiles", force: :cascade do |t|
     t.integer  "authentication_id", null: false
@@ -210,6 +239,9 @@ ActiveRecord::Schema.define(version: 20160622141228) do
 
   add_foreign_key "admin_profiles", "authentications"
   add_foreign_key "events", "regions"
+  add_foreign_key "guidance_profile_expertises", "expertises"
+  add_foreign_key "guidance_profile_expertises", "guidance_profiles"
+  add_foreign_key "guidance_profiles", "authentications"
   add_foreign_key "judge_scoring_expertises", "judge_profiles"
   add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
   add_foreign_key "score_questions", "score_categories"

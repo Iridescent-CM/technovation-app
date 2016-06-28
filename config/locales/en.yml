@@ -46,6 +46,9 @@ en:
       existing_password:
         invalid: "is invalid"
 
+    guidance_profile:
+      school_company_name: "School or company name"
+
     score:
       team_name: "Team name"
       total: "Total"
@@ -130,4 +133,9 @@ en:
 
       new:
         role_choice: "I am a..."
+        roles:
+          coach: "Coach"
+          judge: "Judge"
+          mentor: "Mentor"
+          student: "Student"
         title: "Sign up"
