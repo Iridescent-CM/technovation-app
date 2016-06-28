@@ -1,0 +1,3 @@
+<% current_student.profile_completion_requirements.each do |translation_key, url| %>
+  <%= link_to t("views.student.dashboards.show.#{translation_key}"), url %>
+<% end %>

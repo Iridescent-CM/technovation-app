@@ -15,4 +15,8 @@ class BasicProfile < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(' ')
   end
+
+  def sign_consent_form!
+    update_attributes(consent_signed_at: Time.current)
+  end
 end

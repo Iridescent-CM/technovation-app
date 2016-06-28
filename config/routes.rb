@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :student do
+    resource :dashboard, only: :show
+  end
+
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
 
