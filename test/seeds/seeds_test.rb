@@ -73,6 +73,10 @@ class SeedsTest < Minitest::Test
     assert StudentProfile.count == 1
   end
 
+  def test_seed_adds_mentor
+    assert Mentor.count == 1
+  end
+
   def test_seed_adds_admin
     assert AdminProfile.count == 1
   end

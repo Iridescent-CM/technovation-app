@@ -93,6 +93,24 @@ if (student = CreateAccount.(email: "student@student.com",
   puts "Created Student: #{student.email} with password #{student.password}"
 end
 
+if (mentor = CreateAccount.(email: "mentor@mentor.com",
+                            password: "mentor@mentor.com",
+                            password_confirmation: "mentor@mentor.com",
+                            mentor_profile_attributes: {
+                              school_company_name: "Boeing",
+                              job_title: "Aerospace Engineer",
+                              expertise_ids: Expertise.pluck(:id),
+                            },
+                            first_name: "Mentor",
+                            last_name: "McGee",
+                            date_of_birth: Date.today - 34.years,
+                            city: "Boulder",
+                            region: "CO",
+                            country: "USA",
+                           )).save
+  puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
+end
+
 if (admin = CreateAdmin.(email: "admin@admin.com",
                          password: "admin@admin.com",
                          password_confirmation: "admin@admin.com",
