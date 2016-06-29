@@ -14,6 +14,16 @@ module AttributesHelper
     }.deep_merge(attrs)
   end
 
+  def student_attributes(attrs = {})
+    account_attributes({
+      student_profile_attributes: {
+        parent_guardian_email: "parent@parent.com",
+        parent_guardian_name: "Parenty Parent",
+        school_name: "John Hughes High",
+      },
+    }).deep_merge(attrs)
+  end
+
   def judge_attributes(attrs = {})
     if ScoreCategory.count.zero?
       ScoreCategory.create!(score_category_attributes)
@@ -28,8 +38,26 @@ module AttributesHelper
     }).deep_merge(attrs)
   end
 
+  def mentor_attributes(attrs = {})
+    if Expertise.count.zero?
+      Expertise.create!(expertise_attributes)
+    end
+
+    account_attributes({
+      mentor_profile_attributes: {
+        expertise_ids: Expertise.pluck(:id),
+        school_company_name: "Chicago Public Schools",
+        job_title: "Administrator",
+      },
+    }).deep_merge(attrs)
+  end
+
   def score_category_attributes(attrs = {})
     { name: "Ideation" }.merge(attrs)
+  end
+
+  def expertise_attributes(attrs = {})
+    { name: "Science" }.merge(attrs)
   end
 
   def team_attributes(attrs = {})

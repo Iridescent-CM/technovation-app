@@ -15,7 +15,13 @@ Rails.application.routes.draw do
 
   namespace :student do
     resource :dashboard, only: :show
+
+    namespace :mentors do
+      resource :search, only: :show
+    end
   end
+
+  resources :mentors, only: :show
 
   namespace :application do
     resource :dashboard, only: :show

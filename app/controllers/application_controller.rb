@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
-  helper_method :authenticated?, :admin?, :judge?
+  helper_method :authenticated?, :admin?, :judge?, :student?
 
   private
   def authenticated?
