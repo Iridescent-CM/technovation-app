@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     FindAuthenticationRole.authenticated?(cookies)
   end
 
-  Account::PROFILE_TYPES.each do |role_name, _|
+  Account::PROFILE_TYPES.each do |role_name|
     define_method "#{role_name}?" do
       FindAuthenticationRole.current(role_name, cookies).authenticated?
     end

@@ -1,11 +1,5 @@
 class Account < ActiveRecord::Base
-  PROFILE_TYPES = {
-    student: 0,
-    judge: 1,
-    admin: 2,
-    mentor: 4,
-    coach: 5,
-  }
+  PROFILE_TYPES = %i{student judge admin mentor coach}
 
   attr_accessor :existing_password
 
@@ -51,12 +45,8 @@ class Account < ActiveRecord::Base
         NoProfileFound.new(profile)
   end
 
-  def self.registerable_profile(value)
-    registerable_profiles.select { |_, v| v == Integer(value) }.keys.first
-  end
-
   def self.registerable_profiles
-    PROFILE_TYPES.reject { |k, _| k == :admin }
+    PROFILE_TYPES.reject { |t| t == :admin }
   end
 
   def full_name
@@ -72,7 +62,7 @@ class Account < ActiveRecord::Base
   end
 
   def build_profiles
-    self.class.registerable_profiles.keys.each do |name|
+    self.class.registerable_profiles.each do |name|
       send("build_#{name}_profile") if send("#{name}_profile").nil?
     end
   end
@@ -88,7 +78,7 @@ class Account < ActiveRecord::Base
 
   private
   def profiles
-    PROFILE_TYPES.keys.map { |name| send("#{name}_profile") }
+    PROFILE_TYPES.map { |name| send("#{name}_profile") }
   end
 
   def changes_require_password?
@@ -117,7 +107,7 @@ class Account < ActiveRecord::Base
   end
 
   class NoAuthFound
-    PROFILE_TYPES.keys.each do |name|
+    PROFILE_TYPES.each do |name|
       define_method "#{name}_profile" do
         NoProfileFound.new(name)
       end
