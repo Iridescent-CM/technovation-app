@@ -1,9 +1,9 @@
 require "rails_helper"
 
-class AuthenticationsTest < Minitest::Test
+class AccountsTest < Minitest::Test
   def test_creates_auth_token
-    auth = CreateAuthentication.(auth_attributes)
-    refute auth.auth_token.blank?
+    account = CreateAccount.(account_attributes)
+    refute account.auth_token.blank?
   end
 
   def test_doesnt_create_duplicate_auth_token
@@ -11,11 +11,11 @@ class AuthenticationsTest < Minitest::Test
     GenerateToken.stub(:token_generator, secure_random) do
 
       secure_random.expect(:urlsafe_base64, "abc123")
-      CreateAuthentication.(auth_attributes)
+      CreateAccount.(account_attributes)
 
       secure_random.expect(:urlsafe_base64, "abc123")
       secure_random.expect(:urlsafe_base64, "123abc")
-      other = CreateAuthentication.(auth_attributes(email: "other@example.com"))
+      other = CreateAccount.(account_attributes(email: "other@example.com"))
 
       assert_equal "123abc", other.auth_token
     end

@@ -20,9 +20,9 @@ class RegisterAsAMentorTest < Capybara::Rails::TestCase
     click_button "Sign up"
 
     assert MentorProfile.count == 1
-    auth = Authentication.last
-    assert auth.profile_school_company_name == "ACME, Inc."
-    assert auth.profile_job_title == "Engineer in Coyote Physics"
-    assert auth.profile_expertises.flat_map(&:name) == ["Science"]
+    account = Account.last
+    assert account.profile_school_company_name == "ACME, Inc."
+    assert account.profile_job_title == "Engineer in Coyote Physics"
+    assert account.profile_expertises.flat_map(&:name) == ["Science"]
   end
 end

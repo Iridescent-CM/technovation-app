@@ -9,7 +9,7 @@ class CreateBasicProfiles < ActiveRecord::Migration
       t.string :country, null: false
       t.date :consent_signed_at
 
-      t.integer :authentication_id, foreign_key: true, index: true, null: false
+      t.integer :account_id, foreign_key: true, index: true, null: false
 
       t.timestamps null: false
     end

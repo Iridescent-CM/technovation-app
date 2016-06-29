@@ -2,8 +2,8 @@ require "rails_helper"
 
 class LogoutTest < Capybara::Rails::TestCase
   def test_logout
-    auth = CreateAuthentication.(auth_attributes)
-    sign_in(auth)
+    account = CreateAccount.(account_attributes)
+    sign_in(account)
     click_link 'Logout'
     refute FindAuthenticationRole.authenticated?({ })
   end

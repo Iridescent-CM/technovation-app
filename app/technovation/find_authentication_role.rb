@@ -16,6 +16,6 @@ module FindAuthenticationRole
 
   private
   def self.auth_class
-    Authentication
+    Account
   end
 end

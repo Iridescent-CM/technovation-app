@@ -1,5 +1,5 @@
 module AttributesHelper
-  def auth_attributes(attrs = {})
+  def account_attributes(attrs = {})
     pwd = attrs.fetch(:password) { "auth@example.com" }
     {
       email: pwd,
@@ -25,7 +25,7 @@ module AttributesHelper
       ScoreCategory.create!(score_category_attributes)
     end
 
-    auth_attributes({
+    account_attributes({
       judge_profile_attributes: {
         scoring_expertise_ids: ScoreCategory.pluck(:id),
         company_name: "ACME, Inc.",

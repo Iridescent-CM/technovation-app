@@ -30,8 +30,8 @@ Rails.application.routes.draw do
   match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
 
   resources :signins, only: :create
-  resource :authentication, only: [:show, :edit, :update]
-  post 'authentications', to: "signups#create"
+  resource :account, only: [:show, :edit, :update]
+  post 'accounts', to: "signups#create"
 
   root to: "application/dashboards#show"
 end

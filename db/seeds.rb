@@ -57,22 +57,22 @@ if (team = Team.create(name: "Girl Power",
   puts "Created Submission"
 end
 
-if (judge = CreateAuthentication.(email: "judge@judging.com",
-                                  password: "judge@judging.com",
-                                  password_confirmation: "judge@judging.com",
-                                  judge_profile_attributes: {
-                                    scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id),
-                                    company_name: "ACME, Inc.",
-                                    job_title: "Engineer",
-                                  },
-                                  basic_profile_attributes: {
-                                    first_name: "Judgy",
-                                    last_name: "McGee",
-                                    date_of_birth: Date.today - 31.years,
-                                    city: "Chicago",
-                                    region: "IL",
-                                    country: "USA",
-                                  },)).save
+if (judge = CreateAccount.(email: "judge@judging.com",
+                           password: "judge@judging.com",
+                           password_confirmation: "judge@judging.com",
+                           judge_profile_attributes: {
+                             scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id),
+                             company_name: "ACME, Inc.",
+                             job_title: "Engineer",
+                           },
+                           basic_profile_attributes: {
+                             first_name: "Judgy",
+                             last_name: "McGee",
+                             date_of_birth: Date.today - 31.years,
+                             city: "Chicago",
+                             region: "IL",
+                             country: "USA",
+                           },)).save
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
 

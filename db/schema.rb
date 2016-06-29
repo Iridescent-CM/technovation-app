@@ -16,15 +16,7 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admin_profiles", force: :cascade do |t|
-    t.integer  "authentication_id", null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "admin_profiles", ["authentication_id"], name: "index_admin_profiles_on_authentication_id", using: :btree
-
-  create_table "authentications", force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.string   "email",           null: false
     t.string   "password_digest", null: false
     t.string   "auth_token",      null: false
@@ -32,7 +24,15 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "authentications", ["email"], name: "index_authentications_on_email", using: :btree
+  add_index "accounts", ["email"], name: "index_accounts_on_email", using: :btree
+
+  create_table "admin_profiles", force: :cascade do |t|
+    t.integer  "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "admin_profiles", ["account_id"], name: "index_admin_profiles_on_account_id", using: :btree
 
   create_table "basic_profiles", force: :cascade do |t|
     t.string   "first_name",        null: false
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.string   "region",            null: false
     t.string   "country",           null: false
     t.date     "consent_signed_at"
-    t.integer  "authentication_id", null: false
+    t.integer  "account_id",        null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
-  add_index "basic_profiles", ["authentication_id"], name: "index_basic_profiles_on_authentication_id", using: :btree
+  add_index "basic_profiles", ["account_id"], name: "index_basic_profiles_on_account_id", using: :btree
 
   create_table "divisions", force: :cascade do |t|
     t.integer  "name",       null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20160628164903) do
 
   create_table "guidance_profiles", force: :cascade do |t|
     t.string   "type"
-    t.integer  "authentication_id"
+    t.integer  "account_id"
     t.string   "school_company_name",           null: false
     t.string   "job_title",                     null: false
     t.date     "background_check_completed_at"
@@ -95,18 +95,18 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.datetime "updated_at",                    null: false
   end
 
-  add_index "guidance_profiles", ["authentication_id"], name: "index_guidance_profiles_on_authentication_id", using: :btree
+  add_index "guidance_profiles", ["account_id"], name: "index_guidance_profiles_on_account_id", using: :btree
   add_index "guidance_profiles", ["type"], name: "index_guidance_profiles_on_type", using: :btree
 
   create_table "judge_profiles", force: :cascade do |t|
-    t.integer  "authentication_id", null: false
-    t.string   "company_name",      null: false
-    t.string   "job_title",         null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "account_id",   null: false
+    t.string   "company_name", null: false
+    t.string   "job_title",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "judge_profiles", ["authentication_id"], name: "index_judge_profiles_on_authentication_id", using: :btree
+  add_index "judge_profiles", ["account_id"], name: "index_judge_profiles_on_account_id", using: :btree
 
   create_table "judge_scoring_expertises", force: :cascade do |t|
     t.integer  "judge_profile_id",     null: false
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "authentication_id",       null: false
+    t.integer  "account_id",              null: false
     t.string   "parent_guardian_email",   null: false
     t.string   "parent_guardian_name",    null: false
     t.string   "school_name",             null: false
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.datetime "updated_at",              null: false
   end
 
-  add_index "student_profiles", ["authentication_id"], name: "index_student_profiles_on_authentication_id", using: :btree
+  add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "team_id",     null: false
@@ -237,11 +237,11 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
-  add_foreign_key "admin_profiles", "authentications"
+  add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "events", "regions"
   add_foreign_key "guidance_profile_expertises", "expertises"
   add_foreign_key "guidance_profile_expertises", "guidance_profiles"
-  add_foreign_key "guidance_profiles", "authentications"
+  add_foreign_key "guidance_profiles", "accounts"
   add_foreign_key "judge_scoring_expertises", "judge_profiles"
   add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
   add_foreign_key "score_questions", "score_categories"

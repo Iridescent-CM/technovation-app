@@ -8,7 +8,7 @@ class ScoreExpertiseTest < Capybara::Rails::TestCase
     tech = ScoreCategory.find_or_create_by(name: "Technology")
     biz = ScoreCategory.find_or_create_by(name: "Business")
 
-    judge = CreateAuthentication.(judge_attributes({
+    judge = CreateAccount.(judge_attributes({
       judge_profile_attributes: { scoring_expertise_ids: [tech.id, biz.id] }
     }))
 

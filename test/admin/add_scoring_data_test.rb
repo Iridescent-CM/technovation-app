@@ -7,14 +7,14 @@ class AddScoringDataTest < Capybara::Rails::TestCase
   end
 
   def test_non_admins_restricted
-    judge = CreateAuthentication.(auth_attributes)
+    judge = CreateAccount.(account_attributes)
     sign_in(judge)
     visit new_admin_score_category_path
     assert page.current_path == signin_path
   end
 
   def test_admins_allowed
-    admin = CreateAdmin.(auth_attributes)
+    admin = CreateAdmin.(account_attributes)
     sign_in(admin)
     visit new_admin_score_category_path
     assert page.current_path == new_admin_score_category_path

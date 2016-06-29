@@ -4,7 +4,7 @@ module Authenticatable
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :authentication
+    belongs_to :account
   end
 
   def authenticated?

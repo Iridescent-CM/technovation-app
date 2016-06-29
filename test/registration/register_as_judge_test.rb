@@ -20,8 +20,8 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     click_button "Sign up"
 
     assert JudgeProfile.count == 1
-    auth = Authentication.last
-    assert auth.email == "judge@judging.com"
-    assert auth.profile_scoring_expertises.flat_map(&:name) == ["Ideation"]
+    account = Account.last
+    assert account.email == "judge@judging.com"
+    assert account.profile_scoring_expertises.flat_map(&:name) == ["Ideation"]
   end
 end

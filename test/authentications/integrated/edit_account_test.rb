@@ -1,29 +1,29 @@
 require "rails_helper"
 
-class EditAuthenticationTest < Capybara::Rails::TestCase
+class EditAccountTest < Capybara::Rails::TestCase
   def setup
-    auth = CreateAuthentication.(auth_attributes)
+    account = CreateAccount.(account_attributes)
 
-    sign_in(auth)
+    sign_in(account)
     click_link 'My Account'
     click_link 'Edit'
   end
 
   def test_edit_login_info
     fill_in 'Email', with: "something@new.com"
-    fill_in 'Existing password', with: auth_attributes.fetch(:password)
+    fill_in 'Existing password', with: account_attributes.fetch(:password)
     fill_in 'New password', with: "someNewSecret123"
     fill_in 'Confirm new password', with: "someNewSecret123"
     click_button 'Save'
 
     click_link 'Logout'
 
-    auth = Authentication.last
+    account = Account.last
 
-    assert_equal 'something@new.com', auth.email
+    assert_equal 'something@new.com', account.email
 
-    auth.password = "someNewSecret123"
-    sign_in(auth)
+    account.password = "someNewSecret123"
+    sign_in(account)
 
     assert page.has_link?("Logout")
   end
@@ -34,9 +34,9 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
 
     click_button 'Save'
 
-    within(".authentication_existing_password") do
+    within(".account_existing_password") do
       assert page.has_content?(
-        translated_error(:authentication, :existing_password, :invalid)
+        translated_error(:account, :existing_password, :invalid)
       )
     end
   end
@@ -47,13 +47,13 @@ class EditAuthenticationTest < Capybara::Rails::TestCase
 
     click_button 'Save'
 
-    within(".authentication_existing_password") do
+    within(".account_existing_password") do
       assert page.has_content?(
-        translated_error(:authentication, :existing_password, :invalid)
+        translated_error(:account, :existing_password, :invalid)
       )
     end
 
-    within(".authentication_password_confirmation") do
+    within(".account_password_confirmation") do
       assert page.has_content?(
         I18n.translate('errors.messages.confirmation', attribute: :Password)
       )

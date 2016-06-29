@@ -1,5 +1,5 @@
 class SignupsController < ApplicationController
-  include AuthenticationController
+  include AccountController
 
   def new
     @signup = signup_class.new
@@ -8,7 +8,7 @@ class SignupsController < ApplicationController
   end
 
   def create
-    @signup = CreateAuthentication.(auth_params)
+    @signup = CreateAccount.(account_params)
 
     if @signup.valid?
       sign_in(@signup, t('controllers.signups.create.success'))
@@ -26,6 +26,6 @@ class SignupsController < ApplicationController
   end
 
   def signup_class
-    Authentication
+    Account
   end
 end

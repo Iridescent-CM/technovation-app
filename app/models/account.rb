@@ -1,4 +1,4 @@
-class Authentication < ActiveRecord::Base
+class Account < ActiveRecord::Base
   PROFILE_TYPES = {
     student: 0,
     judge: 1,

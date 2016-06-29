@@ -1,2 +1,2 @@
-class Signin < Authentication
+class Signin < Account
 end

@@ -1,10 +1,10 @@
-module CreateAuthentication
+module CreateAccount
   def self.call(attrs)
     sanitize_attrs!(attrs)
-    auth = Authentication.new(attrs)
-    GenerateToken.(auth, :auth_token)
-    auth.save
-    auth
+    account = Account.new(attrs)
+    GenerateToken.(account, :auth_token)
+    account.save
+    account
   end
 
   private

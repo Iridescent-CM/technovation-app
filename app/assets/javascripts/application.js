@@ -35,11 +35,11 @@
   var countrySelectFields = {
     eventList: 'ready page:load',
 
-    countryFieldId: 'authentication_basic_profile_attributes_country',
+    countryFieldId: 'account_basic_profile_attributes_country',
 
-    stateFieldId: 'authentication_basic_profile_attributes_region',
+    stateFieldId: 'account_basic_profile_attributes_region',
 
-    cityFieldId: 'authentication_basic_profile_attributes_city',
+    cityFieldId: 'account_basic_profile_attributes_city',
 
     init: function() {
       return $(document).on(this.eventList, this.initCountrySelect.bind(this));
