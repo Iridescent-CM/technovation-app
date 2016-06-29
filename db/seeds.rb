@@ -75,6 +75,24 @@ if (judge = CreateAccount.(email: "judge@judging.com",
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
 
+if (student = CreateAccount.(email: "student@student.com",
+                             password: "student@student.com",
+                             password_confirmation: "student@student.com",
+                             student_profile_attributes: {
+                               school_name: "John Hughes High",
+                               parent_guardian_email: "parent@parent.com",
+                               parent_guardian_name: "Parent Name",
+                             },
+                             first_name: "Student",
+                             last_name: "McGee",
+                             date_of_birth: Date.today - 14.years,
+                             city: "Chicago",
+                             region: "IL",
+                             country: "USA",
+                            )).save
+  puts "Created Student: #{student.email} with password #{student.password}"
+end
+
 if (admin = CreateAdmin.(email: "admin@admin.com",
                          password: "admin@admin.com",
                          password_confirmation: "admin@admin.com",
