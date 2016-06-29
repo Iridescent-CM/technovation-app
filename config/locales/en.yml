@@ -42,6 +42,9 @@ en:
         success: "Welcome to the Technovation Challenge!"
 
   models:
+    account:
+      region: "State / Province"
+
     errors:
       existing_password:
         invalid: "is invalid"

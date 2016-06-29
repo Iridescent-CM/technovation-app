@@ -18,7 +18,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def sign_parental_consent_form!
-    account.profile_sign_consent_form!
+    account.sign_consent_form!
   end
 
   private
@@ -27,6 +27,6 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def parental_consent_signed?
-    !!account.profile_consent_signed_at # and account.profile_consent_signed_at >= Date.new(2016, 9, 1)
+    !!account.consent_signed_at # and account.consent_signed_at >= Date.new(2016, 9, 1)
   end
 end

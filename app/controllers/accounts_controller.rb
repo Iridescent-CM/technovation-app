@@ -28,8 +28,9 @@ class AccountsController < ApplicationController
   end
 
   def authenticate_account!
-    FindAuthenticationRole.authenticate(:basic, cookies, failure: -> {
-      save_redirected_path && go_to_signin
-    })
+    unless !!current_account
+      save_redirected_path
+      go_to_signin
+    end
   end
 end

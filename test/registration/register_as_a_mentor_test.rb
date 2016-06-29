@@ -11,6 +11,15 @@ class RegisterAsAMentorTest < Capybara::Rails::TestCase
     fill_in "Password", with: "mentor@mentoring.com"
     fill_in "Confirm password", with: "mentor@mentoring.com"
 
+    fill_in "First name", with: "Mentory"
+    fill_in "Last name", with: "McGee"
+
+    select "United States", from: "Country"
+    fill_in "State / Province", with: "Illinois"
+    fill_in "City", with: "Chicago"
+
+    select_date Date.today - 25.years, from: "Date of birth"
+
     within('.mentor-field') do
       check "Science"
       fill_in "School or company name", with: "ACME, Inc."

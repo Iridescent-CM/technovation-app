@@ -12,9 +12,16 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     fill_in "Parent or guardian's name", with: "Parenty McGee"
     fill_in "Parent or guardian's email", with: "parent@guardian.com"
 
-    click_button "Sign up"
+    fill_in "First name", with: "Studenty"
+    fill_in "Last name", with: "McGee"
 
-    Account.last.create_basic_profile(basic_attributes)
+    select "United States", from: "Country"
+    fill_in "State / Province", with: "Illinois"
+    fill_in "City", with: "Chicago"
+
+    select_date Date.today - 15.years, from: "Date of birth"
+
+    click_button "Sign up"
   end
 
   def test_signup_as_student

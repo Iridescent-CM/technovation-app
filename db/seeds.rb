@@ -65,27 +65,25 @@ if (judge = CreateAccount.(email: "judge@judging.com",
                              company_name: "ACME, Inc.",
                              job_title: "Engineer",
                            },
-                           basic_profile_attributes: {
-                             first_name: "Judgy",
-                             last_name: "McGee",
-                             date_of_birth: Date.today - 31.years,
-                             city: "Chicago",
-                             region: "IL",
-                             country: "USA",
-                           },)).save
+                           first_name: "Judgy",
+                           last_name: "McGee",
+                           date_of_birth: Date.today - 31.years,
+                           city: "Chicago",
+                           region: "IL",
+                           country: "USA",
+                          )).save
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
 
 if (admin = CreateAdmin.(email: "admin@admin.com",
                          password: "admin@admin.com",
                          password_confirmation: "admin@admin.com",
-                         basic_profile_attributes: {
-                          first_name: "Test",
-                          last_name: "Admin",
-                          date_of_birth: Date.today,
-                          city: "Chicago",
-                          region: "IL",
-                          country: "US"
-                         })).save
+                         first_name: "Test",
+                         last_name: "Admin",
+                         date_of_birth: Date.today,
+                         city: "Chicago",
+                         region: "IL",
+                         country: "US",
+                        )).save
   puts "Created Admin: #{admin.email} with password #{admin.password}"
 end

@@ -17,11 +17,18 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "email",           null: false
-    t.string   "password_digest", null: false
-    t.string   "auth_token",      null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "email",             null: false
+    t.string   "password_digest",   null: false
+    t.string   "auth_token",        null: false
+    t.string   "first_name",        null: false
+    t.string   "last_name",         null: false
+    t.date     "date_of_birth",     null: false
+    t.string   "city",              null: false
+    t.string   "region",            null: false
+    t.string   "country",           null: false
+    t.date     "consent_signed_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "accounts", ["email"], name: "index_accounts_on_email", using: :btree
@@ -33,21 +40,6 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   end
 
   add_index "admin_profiles", ["account_id"], name: "index_admin_profiles_on_account_id", using: :btree
-
-  create_table "basic_profiles", force: :cascade do |t|
-    t.string   "first_name",        null: false
-    t.string   "last_name",         null: false
-    t.date     "date_of_birth",     null: false
-    t.string   "city",              null: false
-    t.string   "region",            null: false
-    t.string   "country",           null: false
-    t.date     "consent_signed_at"
-    t.integer  "account_id",        null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "basic_profiles", ["account_id"], name: "index_basic_profiles_on_account_id", using: :btree
 
   create_table "divisions", force: :cascade do |t|
     t.integer  "name",       null: false

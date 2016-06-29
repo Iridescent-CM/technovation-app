@@ -35,11 +35,11 @@
   var countrySelectFields = {
     eventList: 'ready page:load',
 
-    countryFieldId: 'account_basic_profile_attributes_country',
+    countryFieldId: 'account_country',
 
-    stateFieldId: 'account_basic_profile_attributes_region',
+    stateFieldId: 'account_region',
 
-    cityFieldId: 'account_basic_profile_attributes_city',
+    cityFieldId: 'account_city',
 
     init: function() {
       return $(document).on(this.eventList, this.initCountrySelect.bind(this));
@@ -52,8 +52,6 @@
           disable_search_threshold: 10,
         },
         country_id: this.countryFieldId,
-        state_id: this.stateFieldId,
-        city_id: this.cityFieldId,
       });
     },
   };

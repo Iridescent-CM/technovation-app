@@ -1,37 +1,25 @@
-<%= f.fields_for :basic_profile do |b| %>
-  <div class="name_field">
-    <%= b.input :first_name %>
-  </div>
+<div class="name_field">
+  <%= f.input :first_name %>
+</div>
 
-  <div class="name_field last">
-    <%= b.input :last_name %>
-  </div>
+<div class="name_field last">
+  <%= f.input :last_name %>
+</div>
 
-  <%= f.input :email, as: :email %>
+<%= f.input :email, as: :email %>
 
-  <%= b.input :date_of_birth, as: :date, prompt: true,
-                                          start_year: Date.today.year - 100,
-                                          end_year: Date.today.year - 12 %>
+<%= f.input :date_of_birth, as: :date, prompt: true,
+                                       start_year: Date.today.year - 100,
+                                       end_year: Date.today.year - 12 %>
 
-  <div class="country_state_field">
-    <%= b.input :country, collection: CountryStateSelect.countries_collection %>
-  </div>
+<div class="address_field">
+  <%= f.input :country, collection: CountryStateSelect.countries_collection %>
+</div>
 
-  <div class="country_state_field last">
-    <%= b.input :region, CountryStateSelect.state_options(form: b,
-                                                          field_names: {
-                                                            country: :country,
-                                                            state: :region,
-                                                            city: :city,
-                                                            include_blank: true,
-                                                          }) %>
-  </div>
+<div class="address_field">
+  <%= f.input :region, label: t('models.account.region') %>
+</div>
 
-  <%= b.input :city, CountryStateSelect.city_options(form: b,
-                                                    field_names: {
-                                                      country: :country,
-                                                      state: :region,
-                                                      city: :city,
-                                                      include_blank: true,
-                                                    }) %>
-<% end %>
+<div class="address_field last">
+  <%= f.input :city %>
+</div>

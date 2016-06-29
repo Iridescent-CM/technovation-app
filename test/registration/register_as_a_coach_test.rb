@@ -11,6 +11,15 @@ class RegisterAsACoachTest < Capybara::Rails::TestCase
     fill_in "Password", with: "coach@coaching.com"
     fill_in "Confirm password", with: "coach@coaching.com"
 
+    fill_in "First name", with: "Coachy"
+    fill_in "Last name", with: "McGee"
+
+    select "United States", from: "Country"
+    fill_in "State / Province", with: "Illinois"
+    fill_in "City", with: "Chicago"
+
+    select_date Date.today - 25.years, from: "Date of birth"
+
     within('.coach-field') do
       check "Science"
       fill_in "School or company name", with: "ACME, Inc."

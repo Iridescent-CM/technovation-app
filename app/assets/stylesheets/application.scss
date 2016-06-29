@@ -38,8 +38,12 @@ select.date {
   @include span-columns(6);
 }
 
-.name_field, .country_state_field {
+.name_field {
   @include span-columns(6);
+}
+
+.address_field {
+  @include span-columns(4);
 }
 
 .last {

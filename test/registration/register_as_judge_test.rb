@@ -11,6 +11,15 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     fill_in 'Password', with: "secret1234"
     fill_in 'Confirm password', with: "secret1234"
 
+    fill_in "First name", with: "Judgey"
+    fill_in "Last name", with: "McGee"
+
+    select "United States", from: "Country"
+    fill_in "State / Province", with: "Illinois"
+    fill_in "City", with: "Chicago"
+
+    select_date Date.today - 25.years, from: "Date of birth"
+
     within('.judge-field') do
       check "Ideation"
       fill_in "Company name", with: "ACME, Inc."

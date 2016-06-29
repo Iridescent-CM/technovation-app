@@ -1,16 +1,16 @@
 <div class="account">
   <dl>
-    <dt><%= t('models.basic_profile.full_name') %></dt>
-    <dd><%= current_account.profile_full_name %></dd>
+    <dt><%= t('models.account.full_name') %></dt>
+    <dd><%= current_account.full_name %></dd>
 
     <dt><%= t('models.account.email') %></dt>
     <dd><%= current_account.email %></dd>
 
-    <dt><%= t('models.basic_profile.date_of_birth') %></dt>
-    <dd><%= current_account.profile_date_of_birth %></dd>
+    <dt><%= t('models.account.date_of_birth') %></dt>
+    <dd><%= current_account.date_of_birth %></dd>
 
-    <dt><%= t('models.basic_profile.address') %></dt>
-    <dd><%= current_account.profile_address_details %></dd>
+    <dt><%= t('models.account.address') %></dt>
+    <dd><%= current_account.address_details %></dd>
   </dl>
 
   <%= link_to t('views.accounts.show.edit'), edit_account_path %>

@@ -3,7 +3,6 @@ class Account < ActiveRecord::Base
     student: 0,
     judge: 1,
     admin: 2,
-    basic: 3,
     mentor: 4,
     coach: 5,
   }
@@ -13,13 +12,11 @@ class Account < ActiveRecord::Base
   has_secure_password
 
   has_one :admin_profile
-  has_one :basic_profile
   has_one :coach_profile
   has_one :judge_profile
   has_one :mentor_profile
   has_one :student_profile
 
-  accepts_nested_attributes_for :basic_profile, reject_if: :all_blank
   accepts_nested_attributes_for :coach_profile, reject_if: :all_blank
   accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
   accepts_nested_attributes_for :mentor_profile, reject_if: :all_blank
@@ -30,7 +27,9 @@ class Account < ActiveRecord::Base
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
 
-  validates_associated :basic_profile, unless: :basic_profile_blank?
+  validates :date_of_birth, :first_name, :last_name, :city, :region, :country,
+    presence: true
+
   validates_associated :coach_profile, unless: :coach_profile_blank?
   validates_associated :judge_profile, unless: :judge_profile_blank?
   validates_associated :mentor_profile, unless: :mentor_profile_blank?
@@ -57,11 +56,23 @@ class Account < ActiveRecord::Base
   end
 
   def self.registerable_profiles
-    PROFILE_TYPES.reject { |k, _| k == :admin or k == :basic }
+    PROFILE_TYPES.reject { |k, _| k == :admin }
+  end
+
+  def full_name
+    [first_name, last_name].join(' ')
+  end
+
+  def address_details
+    [city, region, country].join(', ')
+  end
+
+  def sign_consent_form!
+    update_attributes(consent_signed_at: Time.current)
   end
 
   def build_profiles
-    (self.class.registerable_profiles.keys + [:basic]).each do |name|
+    self.class.registerable_profiles.keys.each do |name|
       send("build_#{name}_profile") if send("#{name}_profile").nil?
     end
   end
@@ -82,10 +93,6 @@ class Account < ActiveRecord::Base
 
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
-  end
-
-  def basic_profile_blank?
-    all_attributes_blank?(basic_profile)
   end
 
   def coach_profile_blank?
