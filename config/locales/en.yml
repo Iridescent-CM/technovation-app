@@ -99,6 +99,7 @@ en:
       actions: "Actions"
       cancel: 'cancel'
       edit: "Edit"
+      filter: "Filter"
       find_a_mentor: "Find a mentor"
       save: "Save"
       signin: 'Sign in'
