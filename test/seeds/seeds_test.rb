@@ -14,9 +14,10 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_expertise
-    assert Expertise.count == 2
+    assert Expertise.count == 3
     assert Expertise.pluck(:name).include?("Science")
-    assert Expertise.pluck(:name).include?("Technology")
+    assert Expertise.pluck(:name).include?("Engineering")
+    assert Expertise.pluck(:name).include?("Project Management")
   end
 
   def test_seed_adds_season

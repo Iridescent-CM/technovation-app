@@ -35,7 +35,11 @@ if Expertise.create(name: "Science").valid?
   puts "Created Expertise: #{Expertise.last.name}"
 end
 
-if Expertise.create(name: "Technology").valid?
+if Expertise.create(name: "Engineering").valid?
+  puts "Created Expertise: #{Expertise.last.name}"
+end
+
+if Expertise.create(name: "Project Management").valid?
   puts "Created Expertise: #{Expertise.last.name}"
 end
 
@@ -103,7 +107,7 @@ if (mentor = CreateAccount.(email: "mentor@mentor.com",
                             mentor_profile_attributes: {
                               school_company_name: "Boeing",
                               job_title: "Aerospace Engineer",
-                              expertise_ids: [Expertise.first.id],
+                              expertise_ids: Expertise.pluck(:id)[0..1],
                             },
                             first_name: "Mentor",
                             last_name: "McGee",
