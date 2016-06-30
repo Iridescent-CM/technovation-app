@@ -26,10 +26,10 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
 
   def test_signup_as_student
     assert StudentProfile.count == 1
-    account = Account.last
-    assert account.profile_parent_guardian_email == "parent@guardian.com"
-    assert account.profile_parent_guardian_name == "Parenty McGee"
-    assert account.profile_school_name == "Schooly McSchool"
+    student = StudentAccount.last
+    assert student.parent_guardian_email == "parent@guardian.com"
+    assert student.parent_guardian_name == "Parenty McGee"
+    assert student.school_name == "Schooly McSchool"
   end
 
   def test_student_must_complete_profile

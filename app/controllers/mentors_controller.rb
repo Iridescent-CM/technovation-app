@@ -1,5 +1,5 @@
 class MentorsController < ApplicationController
   def show
-    @mentor = Mentor.find(params.fetch(:id))
+    @mentor = MentorAccount.find(params.fetch(:id))
   end
 end

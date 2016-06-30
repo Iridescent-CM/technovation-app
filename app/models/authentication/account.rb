@@ -1,8 +1,6 @@
 class Account < ActiveRecord::Base
   PROFILE_TYPES = %i{student judge admin mentor coach}
 
-  default_scope { includes(*PROFILE_TYPES.map { |n| "#{n}_profile" }) }
-
   attr_accessor :existing_password
 
   has_secure_password
@@ -66,15 +64,6 @@ class Account < ActiveRecord::Base
   def build_profiles
     self.class.registerable_profiles.each do |name|
       send("build_#{name}_profile") if send("#{name}_profile").nil?
-    end
-  end
-
-  def method_missing(method_name, *args, &block)
-    name = method_name.to_s.sub('profile_', '')
-    if !!(profile = profiles.select { |prof| prof.respond_to?(name) }.first)
-      profile.public_send(name, *args, &block)
-    else
-      super
     end
   end
 

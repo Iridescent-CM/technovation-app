@@ -68,19 +68,19 @@ class SeedsTest < Minitest::Test
   end
 
   def test_seed_adds_judge
-    assert JudgeProfile.count == 1
+    assert JudgeAccount.count == 1
   end
 
   def test_seed_adds_student
-    assert StudentProfile.count == 1
+    assert StudentAccount.count == 1
   end
 
   def test_seed_adds_mentor
-    assert Mentor.count == 1
+    assert MentorAccount.count == 1
   end
 
   def test_seed_adds_admin
-    assert AdminProfile.count == 1
+    assert AdminAccount.count == 1
   end
 
   private

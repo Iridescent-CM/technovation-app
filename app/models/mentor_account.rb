@@ -1,4 +1,4 @@
-class Mentor < Account
+class MentorAccount < Account
   default_scope { joins(:mentor_profile).includes(mentor_profile: :expertises) }
 
   scope :by_expertise_ids, ->(ids) {
@@ -7,7 +7,10 @@ class Mentor < Account
     .uniq
   }
 
-  def expertise_names
-    mentor_profile.expertises.collect(&:name)
-  end
+  delegate :school_company_name,
+           :expertises,
+           :expertise_names,
+           :job_title,
+    to: :mentor_profile,
+    prefix: false
 end
