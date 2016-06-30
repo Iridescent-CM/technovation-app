@@ -9,6 +9,9 @@
     </span>
   </h1>
 
-  <h2><%= t("models.mentor.expertise_names") %></h2>
-  <%= mentor_preview.expertise_names.to_sentence %>
+  <% mentor_preview.expertises.each do |expertise| %>
+    <span class="badge-<%= @search_filter.badge_css(expertise) %>">
+      <%= expertise.name %>
+    </span>
+  <% end %>
 </div>
