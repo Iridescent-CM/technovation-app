@@ -20,6 +20,7 @@ gem 'simple_form'
 gem 'nested_form_fields'
 gem 'country_state_select', '~> 3.0.2'
 gem 'countries'
+gem 'will_paginate', '~> 3.1.0'
 
 gem 'indefinite_article'
 
