@@ -6,7 +6,7 @@ class StudentController < ApplicationController
   private
   def authenticate_student!
     FindAuthenticationRole.authenticate(:student, cookies, failure: -> {
-      save_redirected_path && go_to_signin
+      save_redirected_path && go_to_signin("student")
     })
   end
 

@@ -4,7 +4,7 @@ class JudgeController < ApplicationController
   private
   def authenticate_judge!
     FindAuthenticationRole.authenticate(:judge, cookies, failure: -> {
-      save_redirected_path && go_to_signin
+      save_redirected_path && go_to_signin("judge")
     })
   end
 

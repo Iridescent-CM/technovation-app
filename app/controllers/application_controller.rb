@@ -19,8 +19,9 @@ class ApplicationController < ActionController::Base
     cookies[:redirected_from] = request.fullpath
   end
 
-  def go_to_signin
-    redirect_to signin_path, notice: t("controllers.application.unauthenticated")
+  def go_to_signin(profile)
+    redirect_to signin_path, notice: t("controllers.application.unauthenticated",
+                                       profile: profile.indefinitize)
   end
 
   def sign_in(signin, success_msg = t('controllers.signins.create.success'))

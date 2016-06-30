@@ -15,7 +15,7 @@ en:
           success: "You successfully updated the scoring category"
 
     application:
-      unauthenticated: "You need to sign in before you go there!"
+      unauthenticated: "You must be signed in as %{profile} to go there!"
 
     accounts:
       update:
