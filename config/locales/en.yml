@@ -52,6 +52,9 @@ en:
     guidance_profile:
       school_company_name: "School or company name"
 
+    mentor:
+      expertise_names: "Expertises"
+
     score:
       team_name: "Team name"
       total: "Total"
@@ -150,3 +153,9 @@ en:
         show:
           complete_pre_program_survey: "Complete the pre-program survey"
           resend_parental_consent: "Re-send the parental consent form"
+      mentors:
+        searches:
+          filter_options: "Filter mentors by expertise"
+          intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
+          none_found: "Sorry... we couldn't find any mentors with your criteria."
+          title: "Find a Mentor"

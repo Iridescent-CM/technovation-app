@@ -1,11 +1,12 @@
 <div class="sidebar">
-  <%= form_tag request.fullpath, method: :get do %>
-    <%= collection_check_boxes :filter, :expertise_ids, @expertises, :id, :name %>
-    <%= button_tag t('views.application.filter') %>
-  <% end %>
+  <%= render 'student/mentors/searches/filter_options' %>
 </div>
 
 <div class="content">
-  <%= render partial: 'student/mentors/searches/mentor_preview',
-             collection: @mentors %>
+  <h1><%= t("views.student.mentors.searches.title") %></h1>
+  <p><%= t("views.student.mentors.searches.intro") %></p>
+
+  <%= render(partial: 'student/mentors/searches/mentor_preview',
+             collection: @mentors) or
+        t("views.student.mentors.searches.none_found") %>
 </div>

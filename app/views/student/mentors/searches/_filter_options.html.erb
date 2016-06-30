@@ -1,0 +1,12 @@
+<h4><%= t("views.student.mentors.searches.filter_options") %></h4>
+
+<%= form_tag request.fullpath, method: :get do %>
+  <%= collection_check_boxes :filter, :expertise_ids, @expertises, :id, :name do |b| %>
+    <%= b.label do %>
+      <%= b.check_box %>
+      <%= b.text %>
+    <% end %>
+  <% end %>
+
+  <%= button_tag t('views.application.filter') %>
+<% end %>
