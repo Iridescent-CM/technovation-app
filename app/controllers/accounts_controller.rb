@@ -28,9 +28,9 @@ class AccountsController < ApplicationController
   end
 
   def authenticate_account!
-    unless !!current_account
+    unless current_account.authenticated?
       save_redirected_path
-      go_to_signin
+      go_to_signin("user")
     end
   end
 end

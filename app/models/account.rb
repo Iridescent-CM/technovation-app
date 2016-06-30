@@ -112,6 +112,10 @@ class Account < ActiveRecord::Base
         NoProfileFound.new(name)
       end
     end
+
+    def authenticated?
+      false
+    end
   end
 
   class NoProfileFound
