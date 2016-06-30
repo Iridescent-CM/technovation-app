@@ -1,6 +1,8 @@
 class Account < ActiveRecord::Base
   PROFILE_TYPES = %i{student judge admin mentor coach}
 
+  default_scope { includes(*PROFILE_TYPES.map { |n| "#{n}_profile" }) }
+
   attr_accessor :existing_password
 
   has_secure_password
