@@ -21,6 +21,8 @@ gem 'nested_form_fields'
 gem 'country_state_select', '~> 3.0.2'
 gem 'countries'
 
+gem 'indefinite_article'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
