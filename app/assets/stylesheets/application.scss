@@ -1,63 +1,21 @@
 @import 'technovation';
 @import "chosen";
+@import "forms";
 
 @import "refills/footer-2";
 @import 'refills/button-group';
 
-.submission {
-  @include span-columns(3);
-  dd {
-    margin-bottom: 1rem;
-  }
-}
-
-.new_score, .edit_score {
-  @include span-columns(9);
-}
-
-.button-group {
-  @include clearfix;
-  margin-bottom: 1rem;
-}
-
-select.date {
-  display: inline;
-}
-
-.account {
-  @include span-columns(6);
-  @include shift(3);
-}
+@import "accounts";
+@import "scores";
+@import "mentor_search";
 
 .signup_page {
   @include span-columns(10);
   @include shift(1);
 }
 
-.basic_fields, .specialized_fields {
-  @include span-columns(6);
-}
-
-.name_field {
-  @include span-columns(6);
-}
-
-.address_field {
-  @include span-columns(4);
-}
-
 .last {
   @include omega;
-}
-
-.input {
-  clear: both;
-  margin-bottom: 1rem;
-}
-
-.field_with_errors {
-  @extend .flash-error;
-  text-align: left;
 }
 
 dd {
