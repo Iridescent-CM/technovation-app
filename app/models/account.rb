@@ -76,6 +76,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def authenticated?
+    true
+  end
+
   private
   def profiles
     PROFILE_TYPES.map { |name| send("#{name}_profile") }
