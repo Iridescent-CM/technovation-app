@@ -35,6 +35,10 @@ if Expertise.create(name: "Science").valid?
   puts "Created Expertise: #{Expertise.last.name}"
 end
 
+if Expertise.create(name: "Technology").valid?
+  puts "Created Expertise: #{Expertise.last.name}"
+end
+
 if (team = Team.create(name: "The Techno Girls",
                        description: "A great team of smart and capable girls!",
                        division: Division.high_school,
@@ -70,7 +74,7 @@ if (judge = CreateAccount.(email: "judge@judging.com",
                            date_of_birth: Date.today - 31.years,
                            city: "Chicago",
                            region: "IL",
-                           country: "USA",
+                           country: "US",
                           )).save
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
@@ -88,7 +92,7 @@ if (student = CreateAccount.(email: "student@student.com",
                              date_of_birth: Date.today - 14.years,
                              city: "Chicago",
                              region: "IL",
-                             country: "USA",
+                             country: "US",
                             )).save
   puts "Created Student: #{student.email} with password #{student.password}"
 end
@@ -99,14 +103,14 @@ if (mentor = CreateAccount.(email: "mentor@mentor.com",
                             mentor_profile_attributes: {
                               school_company_name: "Boeing",
                               job_title: "Aerospace Engineer",
-                              expertise_ids: Expertise.pluck(:id),
+                              expertise_ids: [Expertise.first.id],
                             },
                             first_name: "Mentor",
                             last_name: "McGee",
                             date_of_birth: Date.today - 34.years,
                             city: "Boulder",
                             region: "CO",
-                            country: "USA",
+                            country: "US",
                            )).save
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 end
