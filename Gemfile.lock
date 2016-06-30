@@ -80,12 +80,15 @@ GEM
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 2.13)
+    countries (0.9.3)
+      currencies (~> 0.4.2)
     country_state_select (3.0.2)
       chosen-rails (~> 1.4)
       city-state
       compass-rails (~> 2.0.4)
       rails
       simple_form (~> 3.2)
+    currencies (0.4.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     erubis (2.7.0)
@@ -242,6 +245,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   chosen-rails
   coffee-rails (~> 4.1.0)
+  countries
   country_state_select (~> 3.0.2)
   database_cleaner
   jbuilder (~> 2.0)

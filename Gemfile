@@ -19,6 +19,7 @@ gem 'chosen-rails'
 gem 'simple_form'
 gem 'nested_form_fields'
 gem 'country_state_select', '~> 3.0.2'
+gem 'countries'
 
 group :development, :test do
   gem 'pry-rails'
