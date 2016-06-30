@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   end
 
   def address_details
-    [city, region, country].join(', ')
+    [city, region, Country[country].name].join(', ')
   end
 
   def sign_consent_form!
