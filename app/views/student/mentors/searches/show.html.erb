@@ -4,9 +4,12 @@
 
 <div class="content">
   <h1><%= t("views.student.mentors.searches.title") %></h1>
+
   <p><%= t("views.student.mentors.searches.intro") %></p>
 
   <%= render(partial: 'student/mentors/searches/mentor_preview',
              collection: @mentors) or
         t("views.student.mentors.searches.none_found") %>
+
+  <%= will_paginate @mentors %>
 </div>

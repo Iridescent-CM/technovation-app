@@ -6,6 +6,7 @@ $visual-grid: false !default;
 @import "refills/tables-minimal";
 @import "refills/flashes";
 @import "refills/navigation";
+@import "refills/pagination";
 
 body, html {
   margin: 0;
