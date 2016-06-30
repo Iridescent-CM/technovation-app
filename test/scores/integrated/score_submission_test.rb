@@ -4,11 +4,11 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
     create_test_scoring_environment
 
-    @judge ||= CreateAccount.(judge_attributes({
+    judge = CreateAccount.(judge_attributes({
       judge_profile_attributes: { scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id) }
     }))
 
-    sign_in(@judge)
+    sign_in(judge)
     visit judge_scores_path
     click_link 'Judge submissions'
 

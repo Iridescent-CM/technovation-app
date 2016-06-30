@@ -36,7 +36,7 @@ module Judge
 
     private
     def categories
-      @categories ||= ScoreCategory.visible_to(current_judge)
+      @categories ||= ScoreCategory.visible_to(current_judge.judge_profile)
     end
 
     def score
@@ -53,7 +53,7 @@ module Judge
           :score_value_ids,
           scored_values_attributes: [:id, :score_value_id, :comment]
         ).tap do |list|
-          list[:judge_profile_id] = current_judge.id
+          list[:judge_profile_id] = current_judge.judge_profile.id
         end
       rescue ActionController::ParameterMissing
         { }

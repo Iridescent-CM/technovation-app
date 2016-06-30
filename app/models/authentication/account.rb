@@ -38,11 +38,8 @@ class Account < ActiveRecord::Base
   end
 
   def self.find_profile_with_token(token, profile)
-    auth = find_with_token(token)
-
-    auth.send("#{profile}_profile") or
-      auth.admin_profile or
-        NoProfileFound.new(profile)
+    "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
+      AdminAccount.find_with_token(token)
   end
 
   def self.registerable_profiles
@@ -102,22 +99,6 @@ class Account < ActiveRecord::Base
   end
 
   class NoAuthFound
-    PROFILE_TYPES.each do |name|
-      define_method "#{name}_profile" do
-        NoProfileFound.new(name)
-      end
-    end
-
-    def authenticated?
-      false
-    end
-  end
-
-  class NoProfileFound
-    def initialize(*attempted_profile)
-      @attempted_profile = attempted_profile
-    end
-
     def authenticated?
       false
     end

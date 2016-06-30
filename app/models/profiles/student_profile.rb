@@ -6,7 +6,7 @@ class StudentProfile < ActiveRecord::Base
             :school_name,
             presence: true
 
-  def profile_completion_requirements
+  def completion_requirements
     reqs = {}
     reqs[:complete_pre_program_survey] = '#' unless pre_survey_completed?
     reqs[:resend_parental_consent] = '#' unless parental_consent_signed?

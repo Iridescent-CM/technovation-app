@@ -29,9 +29,9 @@ class RegisterAsACoachTest < Capybara::Rails::TestCase
     click_button "Sign up"
 
     assert CoachProfile.count == 1
-    account = Account.last
-    assert account.profile_school_company_name == "ACME, Inc."
-    assert account.profile_job_title == "Engineer in Coyote Physics"
-    assert account.profile_expertises.flat_map(&:name) == ["Science"]
+    coach = CoachAccount.last
+    assert coach.school_company_name == "ACME, Inc."
+    assert coach.job_title == "Engineer in Coyote Physics"
+    assert coach.expertises.flat_map(&:name) == ["Science"]
   end
 end
