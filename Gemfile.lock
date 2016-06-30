@@ -20,6 +20,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active_record_query_trace (1.5.3)
     activejob (4.2.6)
       activesupport (= 4.2.6)
       globalid (>= 0.3.0)
@@ -91,6 +92,9 @@ GEM
     currencies (0.4.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    dotenv (1.0.2)
+    dotenv-rails (1.0.2)
+      dotenv (= 1.0.2)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.10)
@@ -245,12 +249,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_query_trace
   bcrypt (~> 3.1.7)
   chosen-rails
   coffee-rails (~> 4.1.0)
   countries
   country_state_select (~> 3.0.2)
   database_cleaner
+  dotenv-rails
   indefinite_article
   jbuilder (~> 2.0)
   jquery-rails
