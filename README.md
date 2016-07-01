@@ -9,6 +9,12 @@ bundle install
 ./bin/setup
 ```
 
+## Development server
+
+```
+$ rails server
+```
+
 ## Tests
 
 TechnovationApp uses Minitest
