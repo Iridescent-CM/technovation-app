@@ -9,5 +9,7 @@ class JudgeAccount < Account
     to: :judge_profile,
     prefix: false
 
-  delegate :id, to: :judge_profile, prefix: true
+  def profile_id
+    judge_profile.id
+  end
 end

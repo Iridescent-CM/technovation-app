@@ -9,7 +9,7 @@ class AdminAccount < Account
     true
   end
 
-  def judge_profile_id
+  def profile_id
     admin_profile.id
   end
 end
