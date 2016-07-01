@@ -40,8 +40,4 @@ class ApplicationController < ActionController::Base
   def after_signin_path
     cookies.delete(:redirected_from) or root_path
   end
-
-  def profile_type
-    "application"
-  end
 end
