@@ -9,10 +9,16 @@ class ApplicationController < ActionController::Base
     FindAuthenticationRole.authenticated?(cookies)
   end
 
-  Account::PROFILE_TYPES.each do |role_name|
-    define_method "#{role_name}?" do
-      FindAuthenticationRole.current(role_name, cookies).authenticated?
-    end
+  def admin?
+    FindAuthenticationRole.current(:admin, cookies).authenticated?
+  end
+
+  def judge?
+    FindAuthenticationRole.current(:judge, cookies).authenticated?
+  end
+
+  def student?
+    FindAuthenticationRole.current(:student, cookies).authenticated?
   end
 
   def save_redirected_path

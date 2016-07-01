@@ -1,7 +1,7 @@
 <label><%= t('views.signups.new.role_choice') %></label>
 
 <div class="button-group">
-  <% Account.registerable_profiles.each.with_index do |type, i| %>
+  <% Account::PROFILES.each.with_index do |type, i| %>
     <label class="register-<%= type %>">
       <%= radio_button_tag "registration_role", type, i.zero?,
                            data: { reveal: ".#{type}-field" } %>

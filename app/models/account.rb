@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  PROFILE_TYPES = %i{student judge admin mentor coach}
+  PROFILES = %i{student judge mentor coach}
 
   attr_accessor :existing_password
 
@@ -42,10 +42,6 @@ class Account < ActiveRecord::Base
       AdminAccount.find_with_token(token)
   end
 
-  def self.registerable_profiles
-    PROFILE_TYPES.reject { |t| t == :admin }
-  end
-
   def full_name
     [first_name, last_name].join(' ')
   end
@@ -59,7 +55,7 @@ class Account < ActiveRecord::Base
   end
 
   def build_profiles
-    self.class.registerable_profiles.each do |name|
+    PROFILES.each do |name|
       send("build_#{name}_profile") if send("#{name}_profile").nil?
     end
   end
@@ -73,10 +69,6 @@ class Account < ActiveRecord::Base
   end
 
   private
-  def profiles
-    PROFILE_TYPES.map { |name| send("#{name}_profile") }
-  end
-
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
   end
