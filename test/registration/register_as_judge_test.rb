@@ -5,7 +5,7 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     ScoreCategory.create(name: "Ideation", is_expertise: true)
     ScoreCategory.create(name: "Technology", is_expertise: true)
 
-    visit signup_path
+    visit judge_signup_path
 
     fill_in 'Email', with: "judge@judging.com"
     fill_in 'Password', with: "secret1234"

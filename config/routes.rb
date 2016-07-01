@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   end
 
   namespace :judge do
+    get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
+
+    resource :dashboard, only: :show
+
     resources :scores, only: :index
 
     resources :submissions, only: [] do
