@@ -2,10 +2,11 @@
 
 ## Setup
 
+Set your rbenv, rvm, or chruby to 2.3.1
+
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
-bundle install
 ./bin/setup
 ```
 
