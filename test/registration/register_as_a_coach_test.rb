@@ -5,7 +5,7 @@ class RegisterAsACoachTest < Capybara::Rails::TestCase
     Expertise.create!(name: "Science")
     Expertise.create!(name: "Technology")
 
-    visit signup_path
+    visit coach_signup_path
 
     fill_in "Email", with: "coach@coaching.com"
     fill_in "Password", with: "coach@coaching.com"

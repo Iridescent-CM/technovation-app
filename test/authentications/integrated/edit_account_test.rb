@@ -2,7 +2,7 @@ require "rails_helper"
 
 class EditAccountTest < Capybara::Rails::TestCase
   def setup
-    account = CreateAccount.(account_attributes)
+    account = Account.create(account_attributes)
 
     sign_in(account)
     click_link 'My Account'

@@ -4,7 +4,7 @@ class ScoreSubmissionTest < Capybara::Rails::TestCase
   def setup
     create_test_scoring_environment
 
-    judge = CreateAccount.(judge_attributes({
+    judge = JudgeAccount.create(judge_attributes({
       judge_profile_attributes: { scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id) }
     }))
 

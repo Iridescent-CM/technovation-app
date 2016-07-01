@@ -7,21 +7,21 @@ class AuthenticateJudgeTest < Capybara::Rails::TestCase
   end
 
   def test_judge_scores_restricts_non_judges
-    account = CreateAccount.(account_attributes)
+    account = Account.create(account_attributes)
     sign_in(account)
     visit judge_scores_path
     assert page.current_path == signin_path
   end
 
   def test_judge_scores_allows_admins
-    admin = CreateAdmin.(account_attributes)
+    admin = AdminAccount.create(account_attributes)
     sign_in(admin)
     visit judge_scores_path
     assert page.current_path == judge_scores_path
   end
 
   def test_judge_scores_allows_judges
-    judge = CreateAccount.(judge_attributes)
+    judge = JudgeAccount.create(judge_attributes)
     sign_in(judge)
     visit judge_scores_path
     assert page.current_path == judge_scores_path

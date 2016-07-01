@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
 
   before_filter :authenticate_account!
 
-  helper_method :current_account
+  helper_method :account
 
   def edit
     account
@@ -23,12 +23,8 @@ class AccountsController < ApplicationController
     @account ||= Account.find_with_token(cookies.fetch(:auth_token) { "" })
   end
 
-  def current_account
-    @current_account ||= Account.find_with_token(cookies.fetch(:auth_token) { "" })
-  end
-
   def authenticate_account!
-    unless current_account.authenticated?
+    unless account.authenticated?
       save_redirected_path
       go_to_signin("user")
     end

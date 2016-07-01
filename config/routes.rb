@@ -5,6 +5,13 @@ Rails.application.routes.draw do
     root to: 'dashboards#index'
   end
 
+  namespace :coach do
+    get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
+
+    resource :dashboard, only: :show
+  end
+
   namespace :judge do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"

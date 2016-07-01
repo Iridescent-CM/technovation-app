@@ -65,69 +65,69 @@ if (team = Team.create(name: "Girl Power",
   puts "Created Submission"
 end
 
-if (judge = CreateAccount.(email: "judge@judging.com",
-                           password: "judge@judging.com",
-                           password_confirmation: "judge@judging.com",
-                           judge_profile_attributes: {
-                             scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id),
-                             company_name: "ACME, Inc.",
-                             job_title: "Engineer",
-                           },
-                           first_name: "Judgy",
-                           last_name: "McGee",
-                           date_of_birth: Date.today - 31.years,
-                           city: "Chicago",
-                           region: "IL",
-                           country: "US",
-                          )).save
+if judge = JudgeAccount.create(email: "judge@judging.com",
+                               password: "judge@judging.com",
+                               password_confirmation: "judge@judging.com",
+                               judge_profile_attributes: {
+                                 scoring_expertise_ids: ScoreCategory.is_expertise.pluck(:id),
+                                 company_name: "ACME, Inc.",
+                                 job_title: "Engineer",
+                               },
+                               first_name: "Judgy",
+                               last_name: "McGee",
+                               date_of_birth: Date.today - 31.years,
+                               city: "Chicago",
+                               region: "IL",
+                               country: "US",
+                              )
   puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
 
-if (student = CreateAccount.(email: "student@student.com",
-                             password: "student@student.com",
-                             password_confirmation: "student@student.com",
-                             student_profile_attributes: {
-                               school_name: "John Hughes High",
-                               parent_guardian_email: "parent@parent.com",
-                               parent_guardian_name: "Parent Name",
-                             },
-                             first_name: "Student",
-                             last_name: "McGee",
-                             date_of_birth: Date.today - 14.years,
-                             city: "Chicago",
-                             region: "IL",
-                             country: "US",
-                            )).save
+if student = StudentAccount.create(email: "student@student.com",
+                                   password: "student@student.com",
+                                   password_confirmation: "student@student.com",
+                                   student_profile_attributes: {
+                                     school_name: "John Hughes High",
+                                     parent_guardian_email: "parent@parent.com",
+                                     parent_guardian_name: "Parent Name",
+                                   },
+                                   first_name: "Student",
+                                   last_name: "McGee",
+                                   date_of_birth: Date.today - 14.years,
+                                   city: "Chicago",
+                                   region: "IL",
+                                   country: "US",
+                                  )
   puts "Created Student: #{student.email} with password #{student.password}"
 end
 
-if (mentor = CreateAccount.(email: "mentor@mentor.com",
-                            password: "mentor@mentor.com",
-                            password_confirmation: "mentor@mentor.com",
-                            mentor_profile_attributes: {
-                              school_company_name: "Boeing",
-                              job_title: "Aerospace Engineer",
-                              expertise_ids: Expertise.pluck(:id)[0..1],
-                            },
-                            first_name: "Mentor",
-                            last_name: "McGee",
-                            date_of_birth: Date.today - 34.years,
-                            city: "Boulder",
-                            region: "CO",
-                            country: "US",
-                           )).save
+if mentor = MentorAccount.create(email: "mentor@mentor.com",
+                                 password: "mentor@mentor.com",
+                                 password_confirmation: "mentor@mentor.com",
+                                 mentor_profile_attributes: {
+                                   school_company_name: "Boeing",
+                                   job_title: "Aerospace Engineer",
+                                   expertise_ids: Expertise.pluck(:id)[0..1],
+                                 },
+                                 first_name: "Mentor",
+                                 last_name: "McGee",
+                                 date_of_birth: Date.today - 34.years,
+                                 city: "Boulder",
+                                 region: "CO",
+                                 country: "US",
+                                )
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 end
 
-if (admin = CreateAdmin.(email: "admin@admin.com",
-                         password: "admin@admin.com",
-                         password_confirmation: "admin@admin.com",
-                         first_name: "Test",
-                         last_name: "Admin",
-                         date_of_birth: Date.today,
-                         city: "Chicago",
-                         region: "IL",
-                         country: "US",
-                        )).save
+if admin = AdminAccount.create(email: "admin@admin.com",
+                               password: "admin@admin.com",
+                               password_confirmation: "admin@admin.com",
+                               first_name: "Test",
+                               last_name: "Admin",
+                               date_of_birth: Date.today,
+                               city: "Chicago",
+                               region: "IL",
+                               country: "US",
+                              )
   puts "Created Admin: #{admin.email} with password #{admin.password}"
 end
