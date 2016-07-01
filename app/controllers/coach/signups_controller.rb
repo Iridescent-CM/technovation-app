@@ -1,5 +1,8 @@
 module Coach
-  class SignupsController < Mentor::SignupsController
+  class SignupsController < ApplicationController
+    include Signup
+    include GuidanceProfileSignup
+
     private
     def model_name
       "coach"

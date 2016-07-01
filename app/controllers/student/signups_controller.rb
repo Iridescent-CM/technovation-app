@@ -1,5 +1,7 @@
 module Student
-  class SignupsController < ::SignupsController
+  class SignupsController < ApplicationController
+    include Signup
+
     private
     def model_name
       "student"

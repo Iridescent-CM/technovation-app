@@ -1,5 +1,7 @@
 module Judge
-  class SignupsController < ::SignupsController
+  class SignupsController < ApplicationController
+    include Signup
+
     before_filter :scoring_expertises
 
     private
