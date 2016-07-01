@@ -5,7 +5,7 @@ class RegisterAsAMentorTest < Capybara::Rails::TestCase
     Expertise.create!(name: "Science")
     Expertise.create!(name: "Technology")
 
-    visit signup_path
+    visit mentor_signup_path
 
     fill_in "Email", with: "mentor@mentoring.com"
     fill_in "Password", with: "mentor@mentoring.com"

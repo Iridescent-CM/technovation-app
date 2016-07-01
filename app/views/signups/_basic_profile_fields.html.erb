@@ -6,8 +6,6 @@
   <%= f.input :last_name %>
 </div>
 
-<%= f.input :email, as: :email %>
-
 <%= f.input :date_of_birth, as: :date, prompt: true,
                                        start_year: Date.today.year - 100,
                                        end_year: Date.today.year - 12 %>

@@ -3,17 +3,17 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_password
 
+  before_validation :generate_auth_token
+
   has_secure_password
 
   has_one :admin_profile
   has_one :coach_profile
   has_one :judge_profile
-  has_one :mentor_profile
   has_one :student_profile
 
   accepts_nested_attributes_for :coach_profile, reject_if: :all_blank
   accepts_nested_attributes_for :judge_profile, reject_if: :all_blank
-  accepts_nested_attributes_for :mentor_profile, reject_if: :all_blank
   accepts_nested_attributes_for :student_profile, reject_if: :all_blank
 
   validates :email, presence: true, uniqueness: true
@@ -26,7 +26,6 @@ class Account < ActiveRecord::Base
 
   validates_associated :coach_profile, unless: :coach_profile_blank?
   validates_associated :judge_profile, unless: :judge_profile_blank?
-  validates_associated :mentor_profile, unless: :mentor_profile_blank?
   validates_associated :student_profile, unless: :student_profile_blank?
 
   def self.has_token?(token)
@@ -69,6 +68,10 @@ class Account < ActiveRecord::Base
   end
 
   private
+  def generate_auth_token
+    GenerateToken.(self, :auth_token)
+  end
+
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
   end

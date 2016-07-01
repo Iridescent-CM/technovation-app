@@ -1,6 +1,4 @@
 <div class="toggle-field mentor-field">
-  <h4><%= t('views.signups.form.choose_expertises') %></h4>
-
   <%= f.fields_for :mentor_profile do |m| %>
     <%= render 'signups/guidance_profile_fields', f: m %>
   <% end %>
