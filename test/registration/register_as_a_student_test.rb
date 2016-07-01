@@ -44,4 +44,8 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     refute page.has_link?('Complete the pre-program survey')
     refute page.has_link?('Re-send the parental consent form')
   end
+
+  def test_student_redirect
+    assert current_path == student_dashboard_path
+  end
 end

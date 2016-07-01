@@ -30,16 +30,15 @@ class ApplicationController < ActionController::Base
                                        profile: profile.indefinitize)
   end
 
-  def sign_in(signin, success_msg = t('controllers.signins.create.success'))
+  def sign_in(signin, options = {})
+    signin_options = { message: t('controllers.signins.create.success'),
+                       redirect: after_signin_path }.merge(options)
     cookies[:auth_token] = signin.auth_token
-
-    redirect_to after_signin_path, success: success_msg
+    redirect_to signin_options[:redirect], success: signin_options[:message]
   end
 
   def after_signin_path
-    cookies.delete(:redirected_from) or
-      send("#{profile_type}_dashboard_path") or
-        root_path
+    cookies.delete(:redirected_from) or root_path
   end
 
   def profile_type

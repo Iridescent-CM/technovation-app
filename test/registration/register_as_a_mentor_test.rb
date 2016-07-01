@@ -1,7 +1,7 @@
 require "rails_helper"
 
 class RegisterAsAMentorTest < Capybara::Rails::TestCase
-  def test_signup_as_mentor
+  def setup
     Expertise.create!(name: "Science")
     Expertise.create!(name: "Technology")
 
@@ -27,11 +27,17 @@ class RegisterAsAMentorTest < Capybara::Rails::TestCase
     end
 
     click_button "Sign up"
+  end
 
+  def test_signup_as_mentor
     assert MentorProfile.count == 1
     mentor = MentorAccount.last
     assert mentor.school_company_name == "ACME, Inc."
     assert mentor.job_title == "Engineer in Coyote Physics"
     assert mentor.expertises.flat_map(&:name) == ["Science"]
+  end
+
+  def test_mentor_redirect
+    assert current_path == mentor_dashboard_path
   end
 end

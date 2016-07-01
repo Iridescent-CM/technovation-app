@@ -1,7 +1,7 @@
 require "rails_helper"
 
 class RegisterAsACoachTest < Capybara::Rails::TestCase
-  def test_signup_as_coach
+  def setup
     Expertise.create!(name: "Science")
     Expertise.create!(name: "Technology")
 
@@ -27,11 +27,17 @@ class RegisterAsACoachTest < Capybara::Rails::TestCase
     end
 
     click_button "Sign up"
+  end
 
+  def test_signup_as_coach
     assert CoachProfile.count == 1
     coach = CoachAccount.last
     assert coach.school_company_name == "ACME, Inc."
     assert coach.job_title == "Engineer in Coyote Physics"
     assert coach.expertises.flat_map(&:name) == ["Science"]
+  end
+
+  def test_coach_redirect
+    assert current_path == coach_dashboard_path
   end
 end

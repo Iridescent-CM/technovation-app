@@ -1,8 +1,8 @@
 module Judge
   class ScoresController < JudgeController
     def index
-      @scores = current_judge.scores
-      @submission = Submission.visible_to(current_judge).random
+      @scores = current_account.scores
+      @submission = Submission.visible_to(current_account).random
     end
 
     def new
@@ -36,7 +36,7 @@ module Judge
 
     private
     def categories
-      @categories ||= ScoreCategory.visible_to(current_judge)
+      @categories ||= ScoreCategory.visible_to(current_account)
     end
 
     def score
@@ -53,7 +53,7 @@ module Judge
           :score_value_ids,
           scored_values_attributes: [:id, :score_value_id, :comment]
         ).tap do |list|
-          list[:judge_profile_id] = current_judge.profile_id
+          list[:judge_profile_id] = current_account.profile_id
         end
       rescue ActionController::ParameterMissing
         { }

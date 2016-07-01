@@ -1,7 +1,7 @@
 require "rails_helper"
 
 class RegisterAsJudgeTest < Capybara::Rails::TestCase
-  def test_register
+  def setup
     ScoreCategory.create(name: "Ideation", is_expertise: true)
     ScoreCategory.create(name: "Technology", is_expertise: true)
 
@@ -27,10 +27,16 @@ class RegisterAsJudgeTest < Capybara::Rails::TestCase
     end
 
     click_button "Sign up"
+  end
 
+  def test_register
     assert JudgeProfile.count == 1
     judge = JudgeAccount.last
     assert judge.email == "judge@judging.com"
     assert judge.scoring_expertises.flat_map(&:name) == ["Ideation"]
+  end
+
+  def test_judge_redirect
+    assert current_path == judge_dashboard_path
   end
 end
