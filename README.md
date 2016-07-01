@@ -95,4 +95,4 @@ SearchMentors.(search_filter)
 
 ## Controllers
 
-Wherever the helper `current_<profile_type>` is available, it returns an instance `<profile_type>Account`.
+Wherever the helper method `current_{profile_name}` is available, it returns an instance of `{ProfileName}Account`.
