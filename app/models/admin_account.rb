@@ -4,4 +4,12 @@ class AdminAccount < Account
   delegate :scores,
            :scored_submission_ids,
     to: :admin_profile, prefix: false
+
+  def admin?
+    true
+  end
+
+  def judge_profile_id
+    admin_profile.id
+  end
 end

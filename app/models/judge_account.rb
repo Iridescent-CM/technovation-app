@@ -6,7 +6,8 @@ class JudgeAccount < Account
            :scoring_expertises,
            :scores,
            :scored_submission_ids,
-           :admin?,
     to: :judge_profile,
     prefix: false
+
+  delegate :id, to: :judge_profile, prefix: true
 end

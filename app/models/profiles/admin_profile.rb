@@ -6,8 +6,4 @@ class AdminProfile < ActiveRecord::Base
   def scored_submission_ids
     scores.flat_map(&:submission_id)
   end
-
-  def admin?
-    true
-  end
 end

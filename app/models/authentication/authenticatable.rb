@@ -10,8 +10,4 @@ module Authenticatable
   def authenticated?
     true
   end
-
-  def admin?
-    false
-  end
 end
