@@ -2,7 +2,7 @@ require "rails_helper"
 
 class RegisterAsAStudentTest < Capybara::Rails::TestCase
   def setup
-    visit signup_path
+    visit student_signup_path
 
     fill_in "Email", with: "student@school.com"
     fill_in "Password", with: "student@school.com"

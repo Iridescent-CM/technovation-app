@@ -1,31 +1,41 @@
 class SignupsController < ApplicationController
-  include AccountController
-
   def new
-    @signup = signup_class.new
-    @signup.build_profiles
-    expertises
+    instance_variable_set("@#{model_name}", model.new)
   end
 
   def create
-    @signup = CreateAccount.(account_params)
+    instance_variable_set("@#{model_name}", model.new(account_params))
 
-    if @signup.valid?
-      sign_in(@signup, t('controllers.signups.create.success'))
+    if instance.save
+      sign_in(instance, redirect: student_dashboard_path,
+                        message: t("controllers.student.signups.create.success"))
     else
-      @signup.build_profiles
-      expertises
       render :new
     end
   end
 
   private
-  def expertises
-    @scoring_expertises ||= ScoreCategory.is_expertise
-    @expertises ||= Expertise.all
+  def account_params
+    params.require("#{model_name}_account").permit(
+      :email,
+      :existing_password,
+      :password,
+      :password_confirmation,
+      :date_of_birth,
+      :first_name,
+      :last_name,
+      :city,
+      :region,
+      :country,
+      "#{model_name}_profile_attributes" => %i{id} + profile_params,
+    )
   end
 
-  def signup_class
-    Account
+  def model
+    "#{model_name}_account".camelize.constantize
+  end
+
+  def instance
+    instance_variable_get("@#{model_name}")
   end
 end
