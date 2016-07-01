@@ -1,7 +1,7 @@
 class AdminAccount < Account
   default_scope { joins(:admin_profile) }
 
-  after_initialize :build_admin_profile
+  before_create :build_admin_profile
 
   has_one :admin_profile, foreign_key: :account_id
 
