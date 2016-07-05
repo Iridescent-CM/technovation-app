@@ -2,8 +2,8 @@ module Legacy
   class LegacyModel < ActiveRecord::Base
     self.abstract_class = true
 
-    @@config = connection_config
-    @@config[:database] = "technovation_development"
+    @@config = ENV['LEGACY_DATABASE_URL'] || connection_config
+    @@config[:database] = "technovation_development" unless ENV['LEGACY_DATABASE_URL']
     establish_connection(@@config)
   end
 end
