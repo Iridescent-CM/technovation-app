@@ -18,6 +18,7 @@ class CreateAccounts < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :accounts, :email
+    add_index :accounts, :email, unique: true
+    add_index :accounts, :auth_token, unique: true
   end
 end

@@ -31,7 +31,8 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "accounts", ["email"], name: "index_accounts_on_email", using: :btree
+  add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
+  add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
 
   create_table "admin_profiles", force: :cascade do |t|
     t.integer  "account_id", null: false
