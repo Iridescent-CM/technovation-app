@@ -5,12 +5,8 @@ class AdminController < ApplicationController
 
   private
   def authenticate_admin!
-    FindAuthenticationRole.authenticate(:admin, cookies, failure: -> {
+    FindAccount.authenticate(:admin, cookies, failure: -> {
       save_redirected_path && go_to_signin("admin")
     })
-  end
-
-  def profile_type
-    "admin"
   end
 end

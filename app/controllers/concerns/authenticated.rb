@@ -8,14 +8,14 @@ module Authenticated
 
   private
   def authenticate!
-    FindAuthenticationRole.authenticate(model_name, cookies, failure: -> {
+    FindAccount.authenticate(model_name, cookies, failure: -> {
       save_redirected_path
       go_to_signin(model_name)
     })
   end
 
   def current_account
-    @current_account ||= FindAuthenticationRole.current(model_name, cookies)
+    @current_account ||= FindAccount.current(model_name, cookies)
   end
 
   def model_name

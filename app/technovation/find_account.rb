@@ -1,4 +1,4 @@
-module FindAuthenticationRole
+module FindAccount
   def self.authenticated?(cookies)
     auth_class.has_token?(cookies.fetch(:auth_token) { "" })
   end

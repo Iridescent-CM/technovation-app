@@ -63,12 +63,12 @@ Do not directly access the `{Name}Profile` and `Account` models, they are deep i
 
 ## Rails.root/app/technovation/
 
-### FindAuthenticationRole
+### FindAccount
 
 * Use this module as the API for authenticating based on auth_token in cookies
 
 ```ruby
-FindAuthenticationRole.current(:student, cookies)
+FindAccount.current(:student, cookies)
 ```
 
 ### SearchMentors

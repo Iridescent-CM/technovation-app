@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticated?
-    FindAuthenticationRole.authenticated?(cookies)
+    FindAccount.authenticated?(cookies)
   end
 
   def admin?
-    FindAuthenticationRole.current(:admin, cookies).authenticated?
+    FindAccount.current(:admin, cookies).authenticated?
   end
 
   def save_redirected_path
