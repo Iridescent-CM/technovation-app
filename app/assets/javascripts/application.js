@@ -11,7 +11,7 @@
 
     countryFieldId: 'account_country',
 
-    stateFieldId: 'account_region',
+    stateFieldId: 'account_state_province',
 
     cityFieldId: 'account_city',
 

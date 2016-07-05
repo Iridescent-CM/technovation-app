@@ -9,7 +9,7 @@ module AttributesHelper
       last_name: "McGee",
       date_of_birth: Date.today - 33.years,
       city: "Chicago",
-      region: "IL",
+      state_province: "IL",
       country: "US",
     }.deep_merge(attrs)
   end

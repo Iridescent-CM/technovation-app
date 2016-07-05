@@ -24,7 +24,7 @@ module Signup
       :first_name,
       :last_name,
       :city,
-      :region,
+      :state_province,
       :country,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
     )

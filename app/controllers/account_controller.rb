@@ -11,7 +11,7 @@ module AccountController
                                     :first_name,
                                     :last_name,
                                     :city,
-                                    :region,
+                                    :state_province,
                                     :country,
                                     coach_profile_attributes: [
                                       :id,

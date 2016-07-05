@@ -11,7 +11,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.date :date_of_birth, null: false
 
       t.string :city, null: false
-      t.string :region, null: false
+      t.string :state_province, null: false
       t.string :country, null: false
 
       t.date :consent_signed_at

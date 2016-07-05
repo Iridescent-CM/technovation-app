@@ -43,7 +43,7 @@ en:
 
   models:
     account:
-      region: "State / Province"
+      state_province: "State / Province"
 
     errors:
       existing_password:

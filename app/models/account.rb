@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
 
-  validates :date_of_birth, :first_name, :last_name, :city, :region, :country,
+  validates :date_of_birth, :first_name, :last_name, :city, :state_province, :country,
     presence: true
 
   def self.has_token?(token)
@@ -41,7 +41,7 @@ class Account < ActiveRecord::Base
   end
 
   def address_details
-    [city, region, Country[country].name].join(', ')
+    [city, state_province, Country[country].name].join(', ')
   end
 
   def sign_consent_form!

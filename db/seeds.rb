@@ -77,7 +77,7 @@ if (judge = JudgeAccount.create(email: "judge@judging.com",
                                 last_name: "McGee",
                                 date_of_birth: Date.today - 31.years,
                                 city: "Chicago",
-                                region: "IL",
+                                state_province: "IL",
                                 country: "US",
                                )).valid?
   puts "Created Judge: #{judge.email} with password #{judge.password}"
@@ -95,7 +95,7 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     last_name: "McGee",
                                     date_of_birth: Date.today - 14.years,
                                     city: "Chicago",
-                                    region: "IL",
+                                    state_province: "IL",
                                     country: "US",
                                    )).valid?
   puts "Created Student: #{student.email} with password #{student.password}"
@@ -113,7 +113,7 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   last_name: "McGee",
                                   date_of_birth: Date.today - 34.years,
                                   city: "Boulder",
-                                  region: "CO",
+                                  state_province: "CO",
                                   country: "US",
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
@@ -126,7 +126,7 @@ if (admin = AdminAccount.create(email: "admin@admin.com",
                                 last_name: "Admin",
                                 date_of_birth: Date.today,
                                 city: "Chicago",
-                                region: "IL",
+                                state_province: "IL",
                                 country: "US",
                                )).valid?
   puts "Created Admin: #{admin.email} with password #{admin.password}"
