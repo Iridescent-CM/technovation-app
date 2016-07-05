@@ -2,7 +2,7 @@ require "rails_helper"
 
 class EditAccountTest < Capybara::Rails::TestCase
   def setup
-    account = Account.create(account_attributes)
+    account = JudgeAccount.create(judge_attributes)
 
     sign_in(account)
     click_link 'My Account'
@@ -18,7 +18,7 @@ class EditAccountTest < Capybara::Rails::TestCase
 
     click_link 'Logout'
 
-    account = Account.last
+    account = JudgeAccount.last
 
     assert_equal 'something@new.com', account.email
 

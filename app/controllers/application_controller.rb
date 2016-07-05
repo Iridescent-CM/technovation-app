@@ -2,17 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
 
-  helper_method :authenticated?, :admin?
+  layout :determine_layout
 
   private
-  def authenticated?
-    FindAccount.authenticated?(cookies)
-  end
-
-  def admin?
-    FindAccount.current(:admin, cookies).authenticated?
-  end
-
   def save_redirected_path
     cookies[:redirected_from] = request.fullpath
   end
@@ -31,5 +23,9 @@ class ApplicationController < ActionController::Base
 
   def after_signin_path
     cookies.delete(:redirected_from) or root_path
+  end
+
+  def determine_layout
+    FindAccount.(cookies).profile_name
   end
 end

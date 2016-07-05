@@ -1,6 +1,7 @@
 module FindAccount
-  def self.authenticated?(cookies)
-    auth_class.has_token?(cookies.fetch(:auth_token) { "" })
+  def self.call(cookies)
+    auth = auth_class.find_with_token(cookies.fetch(:auth_token) { "" })
+    auth.retrieve_profile
   end
 
   def self.authenticate(profile, cookies, callbacks = {})

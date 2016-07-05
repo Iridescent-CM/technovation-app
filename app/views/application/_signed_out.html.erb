@@ -1,9 +1,7 @@
-<% unless authenticated? %>
-  <li class="nav-link">
-    <%= link_to t('views.application.signup'), signup_path %>
-  </li>
+<li class="nav-link">
+  <%= link_to t('views.application.signup'), signup_path %>
+</li>
 
-  <li class="nav-link">
-    <%= link_to t('views.application.signin'), signin_path %>
-  </li>
-<% end %>
+<li class="nav-link">
+  <%= link_to t('views.application.signin'), signin_path %>
+</li>

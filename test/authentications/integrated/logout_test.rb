@@ -2,9 +2,10 @@ require "rails_helper"
 
 class LogoutTest < Capybara::Rails::TestCase
   def test_logout
-    account = Account.create(account_attributes)
+    account = JudgeAccount.create(judge_attributes)
     sign_in(account)
     click_link 'Logout'
-    refute FindAccount.authenticated?({ })
+    visit judge_dashboard_path
+    assert current_path == signin_path
   end
 end
