@@ -17,6 +17,7 @@ module AttributesHelper
   def student_attributes(attrs = {})
     account_attributes({
       student_profile_attributes: {
+        is_in_secondary_school: true,
         parent_guardian_email: "parent@parent.com",
         parent_guardian_name: "Parenty Parent",
         school_name: "John Hughes High",

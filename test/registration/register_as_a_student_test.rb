@@ -19,6 +19,8 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     fill_in "State / Province", with: "Illinois"
     fill_in "City", with: "Chicago"
 
+    select "Yes", from: "Are you in Secondary (High) School?"
+
     select_date Date.today - 15.years, from: "Date of birth"
 
     click_button "Sign up"
@@ -30,6 +32,7 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     assert student.parent_guardian_email == "parent@guardian.com"
     assert student.parent_guardian_name == "Parenty McGee"
     assert student.school_name == "Schooly McSchool"
+    assert student.is_in_secondary_school?
   end
 
   def test_student_must_complete_profile

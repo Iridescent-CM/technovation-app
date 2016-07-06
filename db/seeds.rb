@@ -87,6 +87,7 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     password: "student@student.com",
                                     password_confirmation: "student@student.com",
                                     student_profile_attributes: {
+                                      is_in_secondary_school: true,
                                       school_name: "John Hughes High",
                                       parent_guardian_email: "parent@parent.com",
                                       parent_guardian_name: "Parent Name",

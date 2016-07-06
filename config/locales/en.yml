@@ -67,6 +67,7 @@ en:
 
     student_profile:
       date_of_birth: "Date of Birth"
+      is_in_secondary_school: "Are you in Secondary (High) School?"
       parent_guardian_email: "Parent or guardian's email"
       parent_guardian_name: "Parent or guardian's name"
 
@@ -104,11 +105,13 @@ en:
       edit: "Edit"
       filter: "Filter"
       find_a_mentor: "Find a mentor"
+      no: "No"
       save: "Save"
       signin: 'Sign in'
       signup: 'Sign up'
       signout: 'Logout'
       site_title: "Technovation Challenge"
+      yes: "Yes"
 
     accounts:
       edit:

@@ -7,7 +7,9 @@ class StudentAccount < Account
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile
 
-  delegate :parent_guardian_email,
+  delegate :is_in_secondary_school?,
+           :is_in_secondary_school,
+           :parent_guardian_email,
            :parent_guardian_name,
            :school_name,
            :completion_requirements,
