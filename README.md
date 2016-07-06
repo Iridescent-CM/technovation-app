@@ -18,7 +18,7 @@ $ rails server
 
 ## Tests
 
-TechnovationApp uses Minitest
+TechnovationApp uses RSpec
 
 ```
 $ rake
@@ -91,7 +91,7 @@ SearchMentors.(search_filter)
 
 ### CreateScoringRubric
 
-* Used in tests and seeds, ignore for now
+* Used in seeds, ignore for now
 
 ## Controllers
 
