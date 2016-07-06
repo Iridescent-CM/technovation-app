@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     signin_options = { message: t('controllers.signins.create.success'),
                        redirect: after_signin_path }.merge(options)
     cookies[:auth_token] = signin.auth_token
+    SeasonRegistration.register(signin)
     redirect_to signin_options[:redirect], success: signin_options[:message]
   end
 

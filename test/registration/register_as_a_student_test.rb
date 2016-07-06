@@ -35,6 +35,11 @@ class RegisterAsAStudentTest < Capybara::Rails::TestCase
     assert student.is_in_secondary_school?
   end
 
+  def test_student_registers_in_current_season
+    student = StudentAccount.last
+    assert student.seasons.include?(Season.find_by(year: Time.current.year))
+  end
+
   def test_student_must_complete_profile
     visit student_dashboard_path
     assert page.has_link?('Complete the pre-program survey')

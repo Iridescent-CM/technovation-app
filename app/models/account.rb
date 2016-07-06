@@ -2,8 +2,12 @@ class Account < ActiveRecord::Base
   attr_accessor :existing_password
 
   before_validation :generate_auth_token, on: :create
+  after_create :register_current_season
 
   has_secure_password
+
+  has_many :season_registrations, as: :registerable
+  has_many :seasons, through: :season_registrations
 
   validates :email, presence: true, uniqueness: true
   validates :password, :password_confirmation, presence: { on: :create }
@@ -59,6 +63,10 @@ class Account < ActiveRecord::Base
   private
   def generate_auth_token
     GenerateToken.(self, :auth_token)
+  end
+
+  def register_current_season
+    SeasonRegistration.register(self)
   end
 
   def changes_require_password?

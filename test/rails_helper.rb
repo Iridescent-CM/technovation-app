@@ -24,6 +24,11 @@ class Minitest::Test
   include TranslationHelper
   include ScoringEnvironmentHelper
 
+  def setup
+    Season.find_or_create_by(starts_at: Time.current,
+                             year: Time.current.year)
+  end
+
   def around(&block)
     DatabaseCleaner.start
     DatabaseCleaner.cleaning(&block)
