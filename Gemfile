@@ -29,9 +29,9 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
   gem 'quiet_assets'
-  gem "minitest-rails"
-  gem "minitest-rails-capybara"
-  gem "minitest-around"
+  gem 'rspec-rails'
+  gem 'capybara-webkit'
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'launchy'
 end

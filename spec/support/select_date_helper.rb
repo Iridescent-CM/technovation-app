@@ -1,4 +1,4 @@
-module DateSelectHelper
+module SelectDateHelper
   def select_date(date, options = {})
     field = options[:from]
     base_id = find(:xpath, ".//label[contains(.,'#{field}')]")[:for]

@@ -19,4 +19,6 @@ class MentorAccount < Account
            :school_company_name,
     to: :mentor_profile,
     prefix: false
+
+  delegate :id, to: :mentor_profile, prefix: true
 end
