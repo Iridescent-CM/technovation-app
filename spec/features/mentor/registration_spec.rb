@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Register as a mentor" do
   before do
-    Season.create_current
     visit mentor_signup_path
 
     fill_in "First name", with: "Mentor"

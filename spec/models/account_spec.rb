@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Account do
-  before { Season.create_current }
-
   subject(:account) { FactoryGirl.create(:account) }
 
   it "registers itself to the current season on create" do

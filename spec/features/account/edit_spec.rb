@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Edit account spec" do
   before do
-    Season.create_current
     student = FactoryGirl.create(:student, email: "original@email.com",
                                            password: "secret1234")
 

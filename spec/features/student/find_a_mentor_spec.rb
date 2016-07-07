@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Find a mentor" do
   scenario "See the list of mentors" do
-    Season.create_current
     mentor = FactoryGirl.create(:mentor, :with_expertises)
     student = FactoryGirl.create(:student)
 
