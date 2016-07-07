@@ -18,6 +18,7 @@ module SignIn
   end
 
   def self.determine_dashboard_path(signin, context)
-    context.public_send("#{DetermineAccountType.(signin.auth_token)}_dashboard_path")
+    type = DetermineAccountType.(signin.auth_token)
+    context.public_send("#{type}_dashboard_path")
   end
 end
