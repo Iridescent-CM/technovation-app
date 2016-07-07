@@ -1,0 +1,44 @@
+en:
+  controllers:
+    admin:
+      score_categories:
+        create:
+          success: "You added a new scoring category"
+        update:
+          success: "You successfully updated the scoring category"
+
+    application:
+      unauthenticated: "You must be signed in as %{profile} to go there!"
+
+    accounts:
+      update:
+        success: "You updated your account!"
+
+    judge:
+      scores:
+        create:
+          success: "Thanks for scoring a submission!"
+        update:
+          success: "You updated your score. Nice!"
+        new:
+          add: "Judge submissions"
+
+    signins:
+      create:
+        success: "Hey! Welcome back!"
+        error: "Sorry, we didn't recognize that name and password"
+      destroy:
+        success: "You're signed out. See you next time!"
+
+    signups:
+      create:
+        success: "Welcome to the Technovation Challenge!"
+
+    student:
+      teams:
+        create:
+          success: "Your team has been created! Lookin' good!"
+      team_member_invites:
+        create:
+          success: "Your team invite was sent!"
+
