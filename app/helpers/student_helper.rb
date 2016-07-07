@@ -10,15 +10,18 @@ module StudentHelper
     include ActionView::Helpers
 
     def team_link
-      link = if student.is_on_team?
-               link_to(I18n.translate("views.student.navigation.your_team"),
-                       student_team_path(student.team))
-             else
-               link_to(I18n.translate("views.student.navigation.create_a_team"),
-                       new_student_team_path)
-             end
+      content_tag :li, team_link_based_on_membership, class: "nav-link"
+    end
 
-      content_tag :li, link, class: "nav-link"
+    private
+    def team_link_based_on_membership
+      if student.is_on_team?
+        link_to(I18n.translate("views.student.navigation.your_team"),
+                student_team_path(student.team))
+      else
+        link_to(I18n.translate("views.student.navigation.create_a_team"),
+                new_student_team_path)
+      end
     end
   end
 end
