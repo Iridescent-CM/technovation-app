@@ -9,19 +9,22 @@ module Student
     end
 
     def create
-      membership = current_student.memberships.build(joinable: Team.new(team_params.merge(division: Division.for(current_student))))
+      @team = Team.new(team_params)
 
-      if membership.save
-        redirect_to [:student, membership.joinable], success: t("controllers.student.teams.create.success")
+      if @team.save
+        redirect_to [:student, @team],
+                    success: t("controllers.student.teams.create.success")
       else
-        @team = membership.joinable
         render :new
       end
     end
 
     private
     def team_params
-      params.require(:team).permit(:name, :description)
+      params.require(:team).permit(:name, :description).tap do |params|
+        params[:division] = Division.for(current_student)
+        params[:member_ids] = current_student.id
+      end
     end
   end
 end
