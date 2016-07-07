@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
     cookies[key] = value
   end
 
-  def after_signin_path
-    cookies.delete(:redirected_from) or root_path
+  def get_cookie(key)
+    cookies.fetch(key) { false }
   end
 
   private
@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def determine_layout
-    DetermineLayout.(cookies.fetch(:auth_token) { "" })
+    DetermineAccountType.(cookies.fetch(:auth_token) { "" })
   end
 end

@@ -1,4 +1,4 @@
-module DetermineLayout
+module DetermineAccountType
   def self.call(token)
     unless token.blank?
       %w{student mentor coach judge admin}.detect { |name|
