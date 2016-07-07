@@ -9,6 +9,22 @@ class TeamMemberInvite < ActiveRecord::Base
 
   delegate :email, to: :inviter, prefix: true
 
+  def accept!
+    update_attributes(accepted_at: Time.current)
+  end
+
+  def accepted?
+    !!accepted_at
+  end
+
+  def to_param
+    invite_token
+  end
+
+  def self.find_with_token(token)
+    find_by(invite_token: token)
+  end
+
   private
   def generate_invite_token
     GenerateToken.(self, :invite_token)

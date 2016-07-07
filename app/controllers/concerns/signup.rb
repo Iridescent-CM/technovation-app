@@ -1,6 +1,6 @@
 module Signup
   def new
-    instance_variable_set("@#{model_name}", model.new)
+    instance_variable_set("@#{model_name}", model.new(email: params[:email]))
   end
 
   def create

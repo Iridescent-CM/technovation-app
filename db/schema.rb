@@ -222,10 +222,12 @@ ActiveRecord::Schema.define(version: 20160707134124) do
     t.integer  "team_id",       null: false
     t.string   "invitee_email", null: false
     t.string   "invite_token",  null: false
+    t.datetime "accepted_at"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
+  add_index "team_member_invites", ["accepted_at"], name: "index_team_member_invites_on_accepted_at", using: :btree
   add_index "team_member_invites", ["invite_token"], name: "index_team_member_invites_on_invite_token", unique: true, using: :btree
 
   create_table "teams", force: :cascade do |t|
