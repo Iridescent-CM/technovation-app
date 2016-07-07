@@ -7,6 +7,8 @@ class TeamMemberInvite < ActiveRecord::Base
 
   validates :invitee_email, presence: true
 
+  delegate :email, to: :inviter, prefix: true
+
   private
   def generate_invite_token
     GenerateToken.(self, :invite_token)

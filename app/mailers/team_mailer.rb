@@ -7,6 +7,7 @@ class TeamMailer < ApplicationMailer
   #
   def invite_member(team_member_invite)
     @greeting = "Hi"
-    mail to: team_member_invite.invitee_email
+    mail to: team_member_invite.invitee_email,
+         from: team_member_invite.inviter_email
   end
 end
