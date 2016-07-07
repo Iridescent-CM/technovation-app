@@ -1,3 +1,5 @@
-<% current_account.completion_requirements.each do |translation_key, url| %>
-  <%= link_to t("views.student.dashboards.show.#{translation_key}"), url %>
-<% end %>
+<ul class="completion_requirements">
+  <% current_student.completion_requirements.each do |translation_key, url| %>
+    <li><%= link_to t("views.student.dashboards.show.#{translation_key}"), url %></li>
+  <% end %>
+</ul>

@@ -3,7 +3,6 @@ module Authenticated
 
   included do
     before_filter :authenticate!
-    helper_method :current_account
   end
 
   private
@@ -12,10 +11,6 @@ module Authenticated
       save_redirected_path
       go_to_signin(model_name)
     })
-  end
-
-  def current_account
-    @current_account ||= FindAccount.current(model_name, cookies)
   end
 
   def model_name
