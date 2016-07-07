@@ -17,10 +17,6 @@ class Account < ActiveRecord::Base
   validates :date_of_birth, :first_name, :last_name, :city, :state_province, :country,
     presence: true
 
-  def self.has_token?(token)
-    exists?(auth_token: token)
-  end
-
   def self.find_with_token(token)
     find_by(auth_token: token) || NoAuthFound.new
   end
