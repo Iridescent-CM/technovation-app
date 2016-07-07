@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :team_member_invites, except: [:edit, :update, :destroy]
   end
 
+  resources :accept_team_member_invites, only: :show
+
   namespace :admin do
     resources :score_categories
 
