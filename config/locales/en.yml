@@ -45,6 +45,9 @@ en:
       teams:
         create:
           success: "Your team has been created! Lookin' good!"
+      team_member_invites:
+        create:
+          success: "Your team invite was sent!"
 
   models:
     account:
