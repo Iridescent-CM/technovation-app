@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(version: 20160707134124) do
   add_index "judge_scoring_expertises", ["scoring_expertise_id"], name: "index_judge_scoring_expertises_on_scoring_expertise_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
-    t.datetime "approved_at"
     t.integer  "member_id",     null: false
     t.string   "member_type",   null: false
     t.integer  "joinable_id",   null: false
