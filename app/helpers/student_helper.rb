@@ -9,12 +9,16 @@ module StudentHelper
     include Rails.application.routes.url_helpers
     include ActionView::Helpers
 
-    def create_team_link
-      unless student.is_on_team?
-        link = link_to(I18n.translate("views.student.navigation.create_a_team"),
-                      new_student_team_path)
-        content_tag :li, link, class: "nav-link"
-      end
+    def team_link
+      link = if student.is_on_team?
+               link_to(I18n.translate("views.student.navigation.your_team"),
+                       student_team_path(student.team))
+             else
+               link_to(I18n.translate("views.student.navigation.create_a_team"),
+                       new_student_team_path)
+             end
+
+      content_tag :li, link, class: "nav-link"
     end
   end
 end

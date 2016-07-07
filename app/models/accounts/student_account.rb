@@ -22,4 +22,8 @@ class StudentAccount < Account
   def is_on_team?
     teams.any?
   end
+
+  def team
+    teams.first
+  end
 end
