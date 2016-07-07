@@ -164,13 +164,15 @@ en:
         show:
           complete_pre_program_survey: "Complete the pre-program survey"
           resend_parental_consent: "Re-send the parental consent form"
+
       mentors:
         searches:
           filter_options: "Filter mentors by expertise"
           intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
           none_found: "Sorry... we couldn't find any mentors with your criteria."
           title: "Find a Mentor"
+
       navigation:
         create_a_team: "Create a team"
         find_a_mentor: "Find a mentor"
-        your_team: "Your team"
+        my_team: "My team"

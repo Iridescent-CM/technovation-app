@@ -19,8 +19,10 @@ RSpec.feature "Students create a team" do
 
   scenario "a student on a team cannot create a team" do
     student = FactoryGirl.create(:student, :on_team)
+
     sign_in(student)
-    expect(page).to have_link("Your team", href: student_team_path(Team.last))
+
+    expect(page).to have_link("My team", href: student_team_path(student.team))
     expect(page).not_to have_link("Create a team")
     expect(page).not_to have_link("Join a team")
   end

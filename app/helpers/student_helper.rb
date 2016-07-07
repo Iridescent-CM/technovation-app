@@ -16,7 +16,7 @@ module StudentHelper
     private
     def team_link_based_on_membership
       if student.is_on_team?
-        link_to(I18n.translate("views.student.navigation.your_team"),
+        link_to(I18n.translate("views.student.navigation.my_team"),
                 student_team_path(student.team))
       else
         link_to(I18n.translate("views.student.navigation.create_a_team"),
