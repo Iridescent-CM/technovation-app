@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def determine_layout
-    FindAccount.(cookies).profile_name
+    DetermineLayout.(cookies.fetch(:auth_token) { "" })
   end
 end

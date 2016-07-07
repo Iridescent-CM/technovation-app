@@ -30,16 +30,6 @@ class Account < ActiveRecord::Base
       AdminAccount.find_with_token(token)
   end
 
-  def retrieve_profile
-    %i{student mentor coach judge admin}.map { |name|
-      "#{name}_account".camelize.constantize.find_by(id: id)
-    }.detect(&:present?) or NoProfileFound.new
-  end
-
-  def profile_name
-    self.class.name.sub('Account', '').underscore
-  end
-
   def full_name
     [first_name, last_name].join(' ')
   end
@@ -76,16 +66,6 @@ class Account < ActiveRecord::Base
   class NoAuthFound
     def authenticated?
       false
-    end
-
-    def retrieve_profile
-      NoProfileFound.new
-    end
-  end
-
-  class NoProfileFound
-    def profile_name
-      'application'
     end
   end
 end
