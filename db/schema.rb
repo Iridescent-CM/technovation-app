@@ -54,13 +54,11 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.string   "location",     null: false
     t.datetime "starts_at",    null: false
     t.integer  "organizer_id", null: false
-    t.integer  "region_id",    null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
   add_index "events", ["organizer_id"], name: "index_events_on_organizer_id", using: :btree
-  add_index "events", ["region_id"], name: "index_events_on_region_id", using: :btree
 
   create_table "expertises", force: :cascade do |t|
     t.string   "name",       null: false
@@ -224,16 +222,13 @@ ActiveRecord::Schema.define(version: 20160628164903) do
     t.string   "name",        null: false
     t.text     "description", null: false
     t.integer  "division_id", null: false
-    t.integer  "region_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
-  add_index "teams", ["region_id"], name: "index_teams_on_region_id", using: :btree
 
   add_foreign_key "admin_profiles", "accounts"
-  add_foreign_key "events", "regions"
   add_foreign_key "guidance_profile_expertises", "expertises"
   add_foreign_key "guidance_profile_expertises", "guidance_profiles"
   add_foreign_key "guidance_profiles", "accounts"
@@ -248,5 +243,4 @@ ActiveRecord::Schema.define(version: 20160628164903) do
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "divisions"
-  add_foreign_key "teams", "regions"
 end

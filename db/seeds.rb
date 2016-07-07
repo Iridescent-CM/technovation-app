@@ -45,8 +45,7 @@ end
 
 if (team = Team.create(name: "The Techno Girls",
                        description: "A great team of smart and capable girls!",
-                       division: Division.high_school,
-                       region: Region.last)).valid?
+                       division: Division.high_school)).valid?
 
   puts "Created Team: #{team.name}"
 
@@ -56,8 +55,7 @@ end
 
 if (team = Team.create(name: "Girl Power",
                        description: "Another great team of smart and capable girls!",
-                       division: Division.high_school,
-                       region: Region.last)).valid?
+                       division: Division.high_school)).valid?
 
   puts "Created Team: #{team.name}"
 
