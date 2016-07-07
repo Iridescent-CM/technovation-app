@@ -5,6 +5,9 @@
 
   <h2><%= t("views.student.team.show.member_list") %></h2>
 
+  <p><%= link_to t("views.student.teams.show.add_members"),
+                 new_student_team_member_invite_path %></p>
+
   <ul class="team_members">
     <% @team.member_names.each do |name| %>
       <li><%= name %></li>

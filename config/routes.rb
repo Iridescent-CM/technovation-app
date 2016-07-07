@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  namespace :student do
+    get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
+
+    resource :dashboard, only: :show
+
+    namespace :mentors do
+      resource :search, only: :show
+    end
+
+    resources :teams, except: :delete
+    resources :team_member_invites, except: [:edit, :update, :destroy]
+  end
+
   namespace :admin do
     resources :score_categories
 
@@ -30,19 +44,6 @@ Rails.application.routes.draw do
     post :accounts, to: "signups#create"
 
     resource :dashboard, only: :show
-  end
-
-  namespace :student do
-    get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
-
-    resource :dashboard, only: :show
-
-    namespace :mentors do
-      resource :search, only: :show
-    end
-
-    resources :teams, except: :delete
   end
 
   resources :mentors, only: :show

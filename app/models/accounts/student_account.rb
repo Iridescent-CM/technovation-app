@@ -27,6 +27,10 @@ class StudentAccount < Account
     teams.first
   end
 
+  def team_id
+    team.id
+  end
+
   def team_names
     teams.collect(&:name)
   end

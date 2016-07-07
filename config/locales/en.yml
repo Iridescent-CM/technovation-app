@@ -86,6 +86,9 @@ en:
     team:
       class_name: "team"
 
+    team_member_invite:
+      invitee_email: "Email"
+
   views:
     admin:
       dashboards:
@@ -113,6 +116,7 @@ en:
       create: "Create %{thing}"
       edit: "Edit"
       filter: "Filter"
+      invite: "Send invite"
       no: "No"
       save: "Save"
       signin: 'Sign in'
@@ -179,4 +183,5 @@ en:
 
       teams:
         show:
+          add_members: "Add members"
           member_list: "Members"
