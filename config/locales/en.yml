@@ -41,6 +41,11 @@ en:
       create:
         success: "Welcome to the Technovation Challenge!"
 
+    student:
+      teams:
+        create:
+          success: "Your team has been created! Lookin' good!"
+
   models:
     account:
       state_province: "State / Province"
