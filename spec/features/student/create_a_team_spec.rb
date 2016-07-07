@@ -16,4 +16,11 @@ RSpec.feature "Students create a team" do
     expect(page).to have_css('.team_description', text: "We got... Girl Power!!!")
     expect(page).to have_css('.team_members', text: student.full_name)
   end
+
+  scenario "a student on a team cannot create a team" do
+    student = FactoryGirl.create(:student, :on_team)
+    sign_in(student)
+    expect(page).not_to have_link("Create a team")
+    expect(page).not_to have_link("Join a team")
+  end
 end

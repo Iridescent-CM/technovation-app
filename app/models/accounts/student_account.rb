@@ -18,4 +18,8 @@ class StudentAccount < Account
            :completion_requirements,
     to: :student_profile,
     prefix: false
+
+  def is_on_team?
+    teams.any?
+  end
 end

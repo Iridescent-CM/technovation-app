@@ -13,6 +13,17 @@ FactoryGirl.define do
     country { "US" }
   end
 
+  factory :student, parent: :account, class: 'StudentAccount' do
+    student_profile
+
+    trait :on_team do
+      after(:create) do |s|
+        team = FactoryGirl.create(:team)
+        FactoryGirl.create(:team_membership, member: s, joinable: team)
+      end
+    end
+  end
+
   factory :mentor, parent: :account, class: 'MentorAccount' do
     mentor_profile
 
@@ -24,9 +35,5 @@ FactoryGirl.define do
         end
       end
     end
-  end
-
-  factory :student, parent: :account, class: 'StudentAccount' do
-    student_profile
   end
 end
