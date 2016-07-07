@@ -5,11 +5,15 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :memberships, as: :joinable
-  has_many :members, through: :memberships
+  has_many :members, through: :memberships, source_type: "Account"
 
   has_many :submissions
 
   validates :name, uniqueness: true, presence: true
   validates :description, presence: true
   validates :division, presence: true
+
+  def member_names
+    members.collect(&:full_name)
+  end
 end

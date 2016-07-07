@@ -78,6 +78,9 @@ en:
       code: "Code"
       demo: "Demo"
 
+    team:
+      class_name: "team"
+
   views:
     admin:
       dashboards:
@@ -102,9 +105,9 @@ en:
     application:
       actions: "Actions"
       cancel: 'cancel'
+      create: "Create %{thing}"
       edit: "Edit"
       filter: "Filter"
-      find_a_mentor: "Find a mentor"
       no: "No"
       save: "Save"
       signin: 'Sign in'
@@ -162,3 +165,6 @@ en:
           intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
           none_found: "Sorry... we couldn't find any mentors with your criteria."
           title: "Find a Mentor"
+      navigation:
+        create_a_team: "Create a team"
+        find_a_mentor: "Find a mentor"

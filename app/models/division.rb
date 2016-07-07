@@ -12,4 +12,8 @@ class Division < ActiveRecord::Base
   def self.middle_school
     find_or_create_by(name: names[:middle_school])
   end
+
+  def self.for(account)
+    account.is_in_secondary_school? ? high_school : middle_school
+  end
 end

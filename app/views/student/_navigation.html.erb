@@ -6,7 +6,11 @@
       </li>
 
       <li class="nav-link">
-        <%= link_to t('views.application.find_a_mentor'), student_mentors_search_path %>
+        <%= link_to t('views.student.navigation.find_a_mentor'), student_mentors_search_path %>
+      </li>
+
+      <li class="nav-link">
+        <%= link_to t('views.student.navigation.create_a_team'), new_student_team_path %>
       </li>
 
       <%= render 'signed_in' %>

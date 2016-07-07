@@ -3,6 +3,9 @@ class StudentAccount < Account
 
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
 
+  has_many :memberships, as: :member
+  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
+
   has_one :student_profile, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile

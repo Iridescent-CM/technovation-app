@@ -1,0 +1,6 @@
+<%= simple_form_for [:student, @team] do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+
+  <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
+<% end %>

@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     namespace :mentors do
       resource :search, only: :show
     end
+
+    resources :teams, except: :delete
   end
 
   resources :mentors, only: :show
