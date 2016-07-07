@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
 
   layout :determine_layout
 
+  def set_cookie(key, value)
+    cookies[key] = value
+  end
+
+  def after_signin_path
+    cookies.delete(:redirected_from) or root_path
+  end
+
   private
   def save_redirected_path
     cookies[:redirected_from] = request.fullpath
@@ -12,18 +20,6 @@ class ApplicationController < ActionController::Base
   def go_to_signin(profile)
     redirect_to signin_path, notice: t("controllers.application.unauthenticated",
                                        profile: profile.indefinitize)
-  end
-
-  def sign_in(signin, options = {})
-    signin_options = { message: t('controllers.signins.create.success'),
-                       redirect: after_signin_path }.merge(options)
-    cookies[:auth_token] = signin.auth_token
-    SeasonRegistration.register(signin)
-    redirect_to signin_options[:redirect], success: signin_options[:message]
-  end
-
-  def after_signin_path
-    cookies.delete(:redirected_from) or root_path
   end
 
   def determine_layout

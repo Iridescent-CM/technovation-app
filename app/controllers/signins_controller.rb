@@ -7,7 +7,7 @@ class SigninsController < ApplicationController
     @signin = signin_class.find_by(email: signin_params.fetch(:email))
 
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
-      sign_in(@signin)
+      SignIn.(@signin, self)
     else
       @signin = signin_class.new
       flash[:error] = t('controllers.signins.create.error')

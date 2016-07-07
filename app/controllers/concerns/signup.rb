@@ -7,7 +7,7 @@ module Signup
     instance_variable_set("@#{model_name}", model.new(account_params))
 
     if instance.save
-      sign_in(instance, redirect: send("#{model_name}_dashboard_path"))
+      SignIn.(instance, self, redirect: send("#{model_name}_dashboard_path"))
     else
       render :new
     end

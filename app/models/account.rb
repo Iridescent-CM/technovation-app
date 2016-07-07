@@ -66,7 +66,7 @@ class Account < ActiveRecord::Base
   end
 
   def register_current_season
-    SeasonRegistration.register(self)
+    RegisterToCurrentSeasonJob.perform_later(self)
   end
 
   def changes_require_password?
