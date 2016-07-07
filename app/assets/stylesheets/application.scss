@@ -7,8 +7,9 @@
 @import 'refills/badges';
 
 @import "accounts";
-@import "scores";
 @import "mentor_search";
+@import "teams";
+@import "scores";
 
 .signup_page {
   @include span-columns(10);

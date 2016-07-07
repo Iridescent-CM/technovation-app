@@ -1,11 +1,13 @@
-<div class="team_name">
-  <%= @team.name %>
-</div>
+<div class="team">
+  <h1 class="team_name"><%= @team.name %></h1>
 
-<div class="team_description">
-  <%= @team.description %>
-</div>
+  <p class="team_description"><%= @team.description %></p>
 
-<div class="team_members">
-  <%= @team.member_names.to_sentence %>
+  <h2><%= t("views.student.team.show.member_list") %></h2>
+
+  <ul class="team_members">
+    <% @team.member_names.each do |name| %>
+      <li><%= name %></li>
+    <% end %>
+  </ul>
 </div>
