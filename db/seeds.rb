@@ -1,11 +1,3 @@
-if Region.create(name: "US/Canada").valid?
-  puts "Created Region: #{Region.last.name}"
-end
-
-if Season.create(year: Time.current.year, starts_at: Time.current).valid?
-  puts "Created Season: #{Season.current.year}"
-end
-
 if CreateScoringRubric.([{
      category: "Ideation",
      questions: [{ label: "Did the team identify a real problem in their community?",
