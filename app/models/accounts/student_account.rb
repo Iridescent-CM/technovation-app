@@ -3,7 +3,7 @@ class StudentAccount < Account
 
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
 
-  has_many :memberships, as: :member
+  has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
   has_one :student_profile, foreign_key: :account_id

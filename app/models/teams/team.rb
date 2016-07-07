@@ -4,10 +4,10 @@ class Team < ActiveRecord::Base
 
   belongs_to :division
 
-  has_many :memberships, as: :joinable
+  has_many :memberships, as: :joinable, dependent: :destroy
   has_many :members, through: :memberships, source_type: "Account"
 
-  has_many :submissions
+  has_many :submissions, dependent: :destroy
 
   validates :name, uniqueness: true, presence: true
   validates :description, presence: true
