@@ -13,6 +13,14 @@ Rails.application.routes.draw do
     resources :team_member_invites, except: [:edit, :update, :destroy]
   end
 
+  namespace :mentor do
+    get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
+
+    resource :dashboard, only: :show
+    resources :teams, only: [:index, :show]
+  end
+
   resources :accept_team_member_invites, only: :show
 
   namespace :admin do
@@ -39,13 +47,6 @@ Rails.application.routes.draw do
     resources :submissions, only: [] do
       resources :scores
     end
-  end
-
-  namespace :mentor do
-    get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
-
-    resource :dashboard, only: :show
   end
 
   resources :mentors, only: :show
