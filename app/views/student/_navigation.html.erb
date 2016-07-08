@@ -5,9 +5,7 @@
         <%= link_to t('views.application.site_title'), student_dashboard_path %>
       </li>
 
-      <li class="nav-link">
-        <%= link_to t('views.student.navigation.find_a_mentor'), student_mentors_search_path %>
-      </li>
+      <%= student_navigation.mentor_search_link %>
 
       <%= student_navigation.team_link %>
 

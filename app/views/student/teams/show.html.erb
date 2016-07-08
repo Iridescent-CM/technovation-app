@@ -3,7 +3,7 @@
 
   <p class="team_description"><%= @team.description %></p>
 
-  <h2><%= t("views.student.team.show.member_list") %></h2>
+  <h3><%= t("views.student.teams.show.members_subheading") %></h3>
 
   <p><%= link_to t("views.student.teams.show.add_members"),
                  new_student_team_member_invite_path %></p>
@@ -11,6 +11,14 @@
   <ul class="team_members">
     <% @team.member_names.each do |name| %>
       <li><%= name %></li>
+    <% end %>
+  </ul>
+
+  <h3><%= t("views.student.teams.show.pending_invitees_subheading") %></h3>
+
+  <ul class="pending_invitees">
+    <% @team.pending_invitee_emails.each do |email| %>
+      <li><%= email %></li>
     <% end %>
   </ul>
 </div>

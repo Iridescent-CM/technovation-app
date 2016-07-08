@@ -50,6 +50,10 @@ en:
         new:
           title: "Score a Submission"
 
+    mentors:
+      show:
+        invite_to_team: "Invite to team"
+
     signins:
       form:
         signin: "Sign in"
@@ -94,4 +98,5 @@ en:
       teams:
         show:
           add_members: "Add members"
-          member_list: "Members"
+          members_subheading: "Members"
+          pending_invitees_subheading: "Pending Invites"

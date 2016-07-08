@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Find a mentor" do
   scenario "See the list of mentors" do
     mentor = FactoryGirl.create(:mentor, :with_expertises)
-    student = FactoryGirl.create(:student)
+    student = FactoryGirl.create(:student, :on_team)
 
     sign_in(student)
     click_link "Find a mentor"

@@ -13,6 +13,17 @@ module StudentHelper
       content_tag :li, team_link_based_on_membership, class: "nav-link"
     end
 
+    def mentor_search_link
+      if student.is_on_team?
+        content_tag :li,
+                    link_to(
+                      I18n.translate('views.student.navigation.find_a_mentor'),
+                      student_mentors_search_path
+                    ),
+                    class: "nav-link"
+      end
+    end
+
     private
     def team_link_based_on_membership
       if student.is_on_team?
