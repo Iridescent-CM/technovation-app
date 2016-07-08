@@ -17,10 +17,11 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"
 
-    resource :dashboard, only: :show
     resources :teams, only: [:index, :show]
+    resource :dashboard, only: :show
   end
 
+  resources :teams, only: :show
   resources :team_member_invite_acceptances, only: :show
 
   namespace :admin do

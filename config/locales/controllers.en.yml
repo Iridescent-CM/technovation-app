@@ -42,3 +42,6 @@ en:
         create:
           success: "Your team invite was sent!"
 
+    team_member_invite_acceptances:
+      show:
+        success: "Welcome to the team! Make us proud!"

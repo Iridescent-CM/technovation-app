@@ -22,4 +22,9 @@ class Team < ActiveRecord::Base
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
   end
+
+  def add_member(member)
+    members << member
+    save
+  end
 end
