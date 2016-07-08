@@ -1,0 +1,26 @@
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/unicorn-4.8.3/ext/unicorn_http
+/Users/Kenshoo/.rbenv/versions/2.1.5/bin/ruby -r ./siteconf20160314-47466-d3e1i4.rb extconf.rb
+checking for SIZEOF_OFF_T in ruby.h... yes
+checking for SIZEOF_SIZE_T in ruby.h... yes
+checking for SIZEOF_LONG in ruby.h... yes
+checking for rb_str_set_len() in ruby.h... yes
+checking for gmtime_r() in time.h... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/extensions/x86_64-darwin-14/2.1.0-static/unicorn-4.8.3/mkmf.log
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/unicorn-4.8.3/ext/unicorn_http
+make "DESTDIR=" clean
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/unicorn-4.8.3/ext/unicorn_http
+make "DESTDIR="
+compiling httpdate.c
+compiling unicorn_http.c
+linking shared-object unicorn_http.bundle
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/unicorn-4.8.3/ext/unicorn_http
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unicorn_http.bundle ./.gem.20160314-47466-ksdbin
+installing default unicorn_http libraries

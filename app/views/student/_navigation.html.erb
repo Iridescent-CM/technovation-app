@@ -1,17 +1,17 @@
 <header class="navigation" role="banner">
-  <div class="navigation-wrapper">
-    <ul class="navigation-menu">
-      <li class="nav-link">
-        <%= link_to t('views.application.site_title'), student_dashboard_path %>
-      </li>
+  <div class="container">
+    <%= link_to image_tag("tc-logo-white.svg", class: "logo"), student_dashboard_path %>
 
-      <%= student_navigation.mentor_search_link %>
+    <nav>
+      <ul>
 
-      <%= student_navigation.team_link %>
+        <%= student_navigation.mentor_search_link %>
 
-      <%= render 'signed_in' %>
-    </ul>
+        <%= student_navigation.team_link %>
 
-    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+        <%= render 'signed_in' %>
+
+      </ul>
+    </nav>
   </div>
 </header>

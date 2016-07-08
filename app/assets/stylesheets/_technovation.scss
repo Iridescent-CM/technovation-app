@@ -1,15 +1,51 @@
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
 @import "bourbon/bourbon";
-$visual-grid: false !default;
+$visual-grid: true !default;
 @import "neat/neat";
 @import "base/base";
 
 @import "refills/tables-minimal";
 @import "refills/flashes";
-@import "refills/navigation";
 @import "refills/pagination";
 
 body, html {
   margin: 0;
+}
+
+header {
+  background-image: url("header-background.png");
+  background-repeat: repeat-x;
+  background-color: $mulberry;
+  display: block;
+  padding: $base-spacing 0;
+
+  .logo {
+    height: 60px;
+    display: inline-block;
+  }
+
+  nav  {
+    padding: $base-spacing 0;
+    float: right;
+
+    ul {
+      list-style-type: none;
+      text-align: right;
+
+      li {
+        display: inline-block;
+        margin-left: $small-spacing;
+
+        a {
+          color: white;
+          &:hover,
+          &:focus {
+            color: $shamrock;
+          }
+        }
+      }
+    }
+  }
 }
 
 .container {
@@ -28,4 +64,3 @@ body, html {
 label {
   cursor: pointer;
 }
-
