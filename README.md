@@ -1,8 +1,21 @@
 # Technovation Challenge Platform
 
-## Setup
+## Installation and Setup
 
-Set your rbenv, rvm, or chruby to 2.3.1
+### Prerequisites
+
+You must install `qt5` for the gem `capybara-webkit` to install:
+
+```
+brew update
+brew install qt5
+```
+
+Set your Ruby version with your favorite ruby version management tool to:
+
+`Ruby Version: 2.3.1`
+
+### Setup
 
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
