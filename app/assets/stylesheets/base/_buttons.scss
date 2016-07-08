@@ -2,26 +2,35 @@
   appearance: none;
   background-color: $action-color;
   border: 0;
-  border-radius: $base-border-radius;
+  border-radius: 20px;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: $base-font-family;
-  font-size: $base-font-size;
   -webkit-font-smoothing: antialiased;
-  font-weight: 600;
   line-height: 1;
-  padding: $small-spacing $base-spacing;
+  padding: 0 $base-spacing;
   text-decoration: none;
   transition: background-color $base-duration $base-timing;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
 
+  font-family: $heading-font-family;
+  font-size: 0.875em;
+  text-transform: uppercase;
+  min-width: 150px;
+  height: 40px;
+
+
   &:hover,
   &:focus {
-    background-color: shade($action-color, 20%);
+    background-color: $shamrock-mid;
     color: #fff;
+  }
+
+  &:active {
+    background-color: #fff;
+    color: $shamrock-mid;
   }
 
   &:disabled {
@@ -31,5 +40,40 @@
     &:hover {
       background-color: $action-color;
     }
+  }
+}
+
+.secondary-button {
+  background-color: #fff;
+  color: $action-color;
+
+  &:hover,
+  &:focus {
+    background-color: $light-grey;
+  }
+}
+
+.transparent-button {
+  background-color: transparent;
+  border: $base-border;
+  border-color: #fff;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: $light-grey;
+  }
+}
+
+.transparent-accent-button {
+  background-color: transparent;
+  border: $base-border;
+  border-color: $lemon;
+  color: $lemon;
+
+  &:hover,
+  &:focus {
+    background-color: $lemon;
+    color: #fff;
   }
 }
