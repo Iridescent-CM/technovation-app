@@ -9,6 +9,8 @@ class TeamMemberInvite < ActiveRecord::Base
 
   delegate :email, to: :inviter, prefix: true
 
+  scope :pending, -> { where('accepted_at IS NULL') }
+
   def accept!
     update_attributes(accepted_at: Time.current)
   end

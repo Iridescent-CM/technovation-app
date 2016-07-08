@@ -20,6 +20,6 @@ class Team < ActiveRecord::Base
   end
 
   def pending_invitee_emails
-    team_member_invites.flat_map(&:invitee_email)
+    team_member_invites.pending.flat_map(&:invitee_email)
   end
 end
