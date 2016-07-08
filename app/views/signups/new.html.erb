@@ -1,23 +1,11 @@
 <div class="signup_page">
-  <h1><%= t('views.signups.new.title') %></h1>
-
-  <%= simple_form_for(@signup) do |f| %>
-    <div class="basic_fields">
-      <%= render 'signups/basic_profile_fields', f: f %>
-    </div>
-
-    <div class="specialized_fields">
-      <%= render 'registration_roles' %>
-      <%= render 'signups/coach_profile_fields', f: f %>
-      <%= render 'signups/judge_profile_fields', f: f %>
-      <%= render 'signups/mentor_profile_fields', f: f %>
-      <%= render 'signups/student_profile_fields', f: f %>
-
-      <%= f.input :password %>
-      <%= f.input :password_confirmation,
-                  label: t('views.signups.form.confirm_password') %>
-
-      <%= f.button :submit, t('views.signups.form.signup') %>
-    </div>
-  <% end %>
+  <p>Hey! I'm the sign up page! Find me in /app/views/signups/new.html.erb</p>
+  <p>Please make me pretty... here are the sign up links:</p>
+  <ul>
+    <li><%= link_to 'Student sign up', student_signup_path %></li>
+    <li><%= link_to 'Mentor sign up', mentor_signup_path %></li>
+    <li><%= link_to 'Coach sign up', coach_signup_path %></li>
+    <li><%= link_to 'Judge sign up', judge_signup_path %></li>
+    <li><%= link_to 'Regional ambassador sign up COMING SOON', '#' %></li>
+  </ul>
 </div>
