@@ -1,6 +1,6 @@
 class TeamMemberInvite < ActiveRecord::Base
-  before_validation :generate_invite_token
-  before_validation :set_existing_invitee
+  before_create :generate_invite_token
+  before_create :set_existing_invitee
   after_create :send_invite
 
   belongs_to :team
