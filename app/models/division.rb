@@ -14,6 +14,6 @@ class Division < ActiveRecord::Base
   end
 
   def self.for(account)
-    account.is_in_secondary_school? ? high_school : middle_school
+    !!account && account.is_in_secondary_school? ? high_school : middle_school
   end
 end

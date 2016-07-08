@@ -15,6 +15,7 @@ module ProfileAttributes
   module StudentProfileAttributes
     def self.generate(record)
       {
+        is_in_secondary_school: record.is_in_secondary_school?,
         parent_guardian_email: record.parent_email,
         parent_guardian_name: record.parent_name,
         school_name: record.school,
