@@ -21,6 +21,7 @@ Set your Ruby version with your favorite ruby version management tool to:
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
 ./bin/setup
+echo HOST_DOMAIN=localhost:3000 > .env
 ```
 
 ## Development server
