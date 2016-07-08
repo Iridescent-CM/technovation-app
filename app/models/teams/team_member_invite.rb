@@ -13,6 +13,9 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def accept!
     update_attributes(accepted_at: Time.current)
+    if account = Account.find_by(email: invitee_email)
+      team.add_member(account)
+    end
   end
 
   def accepted?
