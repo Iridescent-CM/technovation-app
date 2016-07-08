@@ -220,7 +220,8 @@ ActiveRecord::Schema.define(version: 20160707134124) do
   create_table "team_member_invites", force: :cascade do |t|
     t.integer  "inviter_id",    null: false
     t.integer  "team_id",       null: false
-    t.string   "invitee_email", null: false
+    t.string   "invitee_email"
+    t.integer  "invitee_id"
     t.string   "invite_token",  null: false
     t.datetime "accepted_at"
     t.datetime "created_at",    null: false
@@ -254,6 +255,7 @@ ActiveRecord::Schema.define(version: 20160707134124) do
   add_foreign_key "scores", "submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "submissions", "teams"
+  add_foreign_key "team_member_invites", "accounts", column: "invitee_id"
   add_foreign_key "team_member_invites", "accounts", column: "inviter_id"
   add_foreign_key "teams", "divisions"
 end

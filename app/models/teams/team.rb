@@ -24,7 +24,9 @@ class Team < ActiveRecord::Base
   end
 
   def add_member(member)
-    members << member
-    save
+    if !!member
+      members << member
+      save
+    end
   end
 end

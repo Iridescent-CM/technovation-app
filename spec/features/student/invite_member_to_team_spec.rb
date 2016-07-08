@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.feature "Invite a member to a team" do
   let(:student) { FactoryGirl.create(:student, :on_team) }
 
+  let!(:existing_student) { FactoryGirl.create(:student, email: "some@student.com") }
+
   before do
     sign_in(student)
     click_link "My team"
@@ -16,6 +18,10 @@ RSpec.feature "Invite a member to a team" do
 
   scenario "the invitee email is set by the form" do
     expect(invite.invitee_email).to eq("some@student.com")
+  end
+
+  scenario "the invitee is set to the existing account" do
+    expect(invite.invitee_id).to eq(existing_student.id)
   end
 
   scenario "the inviter is the signed in student" do

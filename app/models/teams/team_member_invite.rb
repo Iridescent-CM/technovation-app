@@ -1,9 +1,11 @@
 class TeamMemberInvite < ActiveRecord::Base
   before_validation :generate_invite_token
+  before_validation :set_existing_invitee
   after_create :send_invite
 
   belongs_to :team
   belongs_to :inviter, class_name: "Account"
+  belongs_to :invitee, class_name: "Account"
 
   validates :invitee_email, presence: true
 
@@ -13,9 +15,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def accept!
     update_attributes(accepted_at: Time.current)
-    if account = Account.find_by(email: invitee_email)
-      team.add_member(account)
-    end
+    team.add_member(invitee)
   end
 
   def accepted?
@@ -37,5 +37,9 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def send_invite
     TeamMailer.invite_member(self).deliver_later
+  end
+
+  def set_existing_invitee
+    self.invitee ||= Account.find_by(email: invitee_email)
   end
 end
