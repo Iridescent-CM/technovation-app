@@ -1,0 +1,5 @@
+<ul class="mentor_teams">
+  <% @teams.each do |team| %>
+    <li><%= link_to team.name, [:mentor, team] %></li>
+  <% end %>
+</ul>
