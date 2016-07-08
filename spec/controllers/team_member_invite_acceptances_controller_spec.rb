@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AcceptTeamMemberInvitesController do
+RSpec.describe TeamMemberInviteAcceptancesController do
   describe "GET #show" do
     let(:invite) { FactoryGirl.create(:team_member_invite) }
 

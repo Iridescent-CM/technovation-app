@@ -1,4 +1,4 @@
-class AcceptTeamMemberInvitesController < ApplicationController
+class TeamMemberInviteAcceptancesController < ApplicationController
   def show
     @team_member_invite = TeamMemberInvite.find_with_token(params.fetch(:id))
     @team_member_invite.accept!

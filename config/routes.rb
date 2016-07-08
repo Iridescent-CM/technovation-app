@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :teams, only: [:index, :show]
   end
 
-  resources :accept_team_member_invites, only: :show
+  resources :team_member_invite_acceptances, only: :show
 
   namespace :admin do
     resources :score_categories
