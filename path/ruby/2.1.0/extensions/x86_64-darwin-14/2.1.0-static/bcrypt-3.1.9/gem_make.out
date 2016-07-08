@@ -1,0 +1,20 @@
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/bcrypt-3.1.9/ext/mri
+/Users/Kenshoo/.rbenv/versions/2.1.5/bin/ruby -r ./siteconf20160314-47466-10oo44.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/bcrypt-3.1.9/ext/mri
+make "DESTDIR=" clean
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/bcrypt-3.1.9/ext/mri
+make "DESTDIR="
+compiling bcrypt_ext.c
+compiling crypt.c
+compiling crypt_blowfish.c
+compiling crypt_gensalt.c
+compiling wrapper.c
+linking shared-object bcrypt_ext.bundle
+
+current directory: /Users/Kenshoo/Dropbox/sites/technovation-app/path/ruby/2.1.0/gems/bcrypt-3.1.9/ext/mri
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bcrypt_ext.bundle ./.gem.20160314-47466-1p0ayba
+installing default bcrypt_ext libraries

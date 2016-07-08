@@ -1,13 +1,48 @@
+//
+// Brand Colors
+//
+$shamrock: #5ABF94;
+$shamrock-mid: #28A880;
+$shamrock-dark: #006540;
+
+$mulberry: #903D54;
+$mulberry-mid: #7C324D;
+$mulberry-dark: #53042D;
+
+$wisteria: #895E86;
+$wisteria-mid: #6F466B;
+$wisteria-dark: #421B41;
+
+$marine: #4BC2C6;
+$marine-mid: #00ABAD;
+$marine-dark: #006667;
+
+$lemon: #EAE46F;
+$lemon-dark: #C1C321;
+
+$light-grey: #ECECEC;
+$mid-grey: #CCCCCC;
+$dark-grey: #878787;
+
+$silver: #666666;
+$granite: #444444;
+$chalkboard: #333333;
+
+// Typography
+$base-font-family: 'Source Sans Pro', sans-serif;
+$heading-font-family: 'Eagle', sans-serif;
+
 // Breakpoints
 $medium-screen: 600px;
 $large-screen: 900px;
 
-// Typography
-$base-font-family: $font-stack-system;
-$heading-font-family: $base-font-family;
-
 // Font Sizes
-$base-font-size: 1em;
+$base-font-size: 1.3em;
+
+// Font Weights
+$light-font-weight: 300;
+$base-font-weight: 400;
+$heavy-font-weight: 700;
 
 // Line height
 $base-line-height: 1.5;
@@ -26,8 +61,8 @@ $medium-gray: #999;
 $light-gray: #ddd;
 
 // Font Colors
-$base-font-color: $dark-gray;
-$action-color: $blue;
+$base-font-color: $chalkboard;
+$action-color: $shamrock;
 
 // Border
 $base-border-color: $light-gray;

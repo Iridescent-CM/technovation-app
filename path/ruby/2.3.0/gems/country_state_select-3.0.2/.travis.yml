@@ -1,0 +1,11 @@
+language: ruby
+
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.2
+script:
+  # ---if you written test cases then write commands here to run
+
+  - bundle install
+  - rspec
