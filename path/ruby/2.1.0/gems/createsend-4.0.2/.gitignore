@@ -1,9 +1,0 @@
-.DS_Store
-.bundle
-coverage
-rdoc
-pkg
-*.gem
-example.rb
-.idea/
-Gemfile.lock

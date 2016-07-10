@@ -1,4 +1,0 @@
-{
-    "error": "invalid_grant",
-    "error_description": "Specified code was invalid or expired"
-}
