@@ -1,4 +1,0 @@
-safe: on
-cascade: false
-browsers:
-  - chrome 25
