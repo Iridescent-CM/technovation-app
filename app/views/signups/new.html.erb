@@ -1,11 +1,63 @@
 <div class="signup_page">
-  <p>Hey! I'm the sign up page! Find me in /app/views/signups/new.html.erb</p>
-  <p>Please make me pretty... here are the sign up links:</p>
-  <ul>
-    <li><%= link_to 'Student sign up', student_signup_path %></li>
-    <li><%= link_to 'Mentor sign up', mentor_signup_path %></li>
-    <li><%= link_to 'Coach sign up', coach_signup_path %></li>
-    <li><%= link_to 'Judge sign up', judge_signup_path %></li>
-    <li><%= link_to 'Regional ambassador sign up COMING SOON', '#' %></li>
-  </ul>
+  <h2>Create an <span class="accent">Account</span></h2>
+
+  <div class="account-type">
+    <div class="account-title">
+      <div class="account-photo student-account">
+        <h5>Student</h5>
+      </div>
+    </div>
+    <div class="account-description">
+      <p>Assemble a team, connect with mentors and coaches and make an app!</p>
+      <%= link_to 'Student sign up', student_signup_path, {class: "primary-button"} %>
+    </div>
+  </div>
+
+  <div class="account-type">
+    <div class="account-title">
+      <div class="account-photo mentor-account">
+        <h5>Mentor</h5>
+      </div>
+    </div>
+    <div class="account-description">
+      <p>Guide teams as they identify a problem in their community make an app to address it.</p>
+      <%= link_to 'Mentor sign up', mentor_signup_path, {class: "primary-button"} %>
+    </div>
+  </div>
+
+  <div class="account-type">
+    <div class="account-title">
+      <div class="account-photo coach-account">
+        <h5>Coach</h5>
+      </div>
+    </div>
+    <div class="account-description">
+      <p>Assemble a team, connect with mentors and coaches and make an app!</p>
+      <%= link_to 'Coach sign up', coach_signup_path, {class: "primary-button"} %>
+    </div>
+  </div>
+
+  <div class="account-type">
+    <div class="account-title">
+      <div class="account-photo judge-account">
+        <h5>Judge</h5>
+      </div>
+    </div>
+    <div class="account-description">
+      <p>Use your expertise to rate Technovation apps and provide feedback to teams.</p>
+      <%= link_to 'Judge sign up', judge_signup_path, {class: "primary-button"} %>
+    </div>
+  </div>
+
+  <div class="account-type">
+    <div class="account-title">
+      <div class="account-photo">
+        <h5>Regional Ambassador</h5>
+      </div>
+    </div>
+    <div class="account-description">
+      <p>Coming soon!</p>
+    </div>
+  </div>
+
 </div>

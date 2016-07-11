@@ -1,13 +1,12 @@
 <header class="navigation" role="banner">
-  <div class="navigation-wrapper">
-    <ul class="navigation-menu">
-      <li class="nav-link">
-        <%= link_to t('views.application.site_title'), root_path %>
-      </li>
+  <div class="container">
+    <%= link_to image_tag("tc-logo-white.svg", class: "logo"), root_path %>
 
-      <%= render 'signed_out' %>
-    </ul>
+    <nav>
+      <ul>
+        <%= render 'signed_out' %>
+      </ul>
+    </nav>
 
-    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
   </div>
 </header>
