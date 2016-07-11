@@ -8,6 +8,7 @@
   display: inline-block;
   -webkit-font-smoothing: antialiased;
   line-height: 1;
+  letter-spacing: normal;
   padding: 0 $base-spacing;
   text-decoration: none;
   transition: background-color $base-duration $base-timing;
@@ -16,7 +17,7 @@
   white-space: nowrap;
 
   font-family: $heading-font-family;
-  font-size: 0.875em;
+  font-size: 0.875rem;
   text-transform: uppercase;
   min-width: 150px;
   height: 40px;
@@ -43,17 +44,36 @@
   }
 }
 
+// the above affects all input buttons, but if you want to style a link as a button, you need to use one of the classes below
+// the alignment of the transparent button is Not Ideal and should be fixed later
+.primary-button {
+  @extend #{$all-buttons};
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing $base-spacing;
+  font-size: 1rem;
+}
+
 .secondary-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  font-size: 1rem;
   background-color: #fff;
-  color: $action-color;
+  color: $shamrock;
 
   &:hover,
   &:focus {
+    color: $shamrock-mid;
     background-color: $light-grey;
   }
 }
 
 .transparent-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  font-size: 1rem;
   background-color: transparent;
   border: $base-border;
   border-color: #fff;
@@ -61,11 +81,18 @@
 
   &:hover,
   &:focus {
-    background-color: $light-grey;
+    color: $shamrock;
+    background-color: #fff;
   }
 }
 
 .transparent-accent-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 1rem;
   background-color: transparent;
   border: $base-border;
   border-color: $lemon;
