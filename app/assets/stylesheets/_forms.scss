@@ -7,9 +7,9 @@ select.date {
   display: inline;
 }
 
-.basic_fields, .specialized_fields {
-  @include span-columns(6);
-}
+// .basic_fields, .specialized_fields {
+//   @include span-columns(6);
+// }
 
 .name_field {
   @include span-columns(6);
@@ -21,10 +21,64 @@ select.date {
 
 .input {
   clear: both;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
 }
 
 .field_with_errors {
-  @extend .flash-error;
-  text-align: left;
+  label {
+    color: darken($error-color, 60%);
+  }
+
+  .error {
+    background-color: darken($error-color, 60%);
+    color: #fff;
+    padding: 5px;
+    display: block;
+    font-size: 1rem;
+    &:before {
+      content: "!";
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      text-align: center;
+      font-weight: $heavy-font-weight;
+      background-color: #fff;
+      color: darken($error-color, 60%);
+      margin-right: 5px;
+    }
+  }
+}
+
+label {
+  font-size: 0.875rem;
+}
+
+.signup-form {
+  @include span-columns(8);
+  @include shift(2);
+
+  input {
+    margin-bottom: $small-spacing / 2;
+  }
+
+  select {
+    min-height: 43px;
+  }
+
+  .half-field {
+    @include span-columns(4 of 8);
+    @include omega(2n);
+    margin-bottom: $base-spacing;
+    min-height: 110px;
+  }
+
+  .third-field {
+    @include span-columns(2 of 8);
+    margin-bottom: $base-spacing;
+  }
+
+  .full-field {
+    @include span-columns(8);
+    margin-bottom: $base-spacing;
+  }
 }
