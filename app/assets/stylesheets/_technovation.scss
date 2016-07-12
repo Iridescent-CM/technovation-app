@@ -96,6 +96,17 @@ header {
   }
 }
 
+.account {
+  margin-top: $base-spacing;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $small-spacing;
+    color: $mulberry;
+    .accent { color: $shamrock; }
+  }
+}
+
 .container {
   @include outer-container;
 }
