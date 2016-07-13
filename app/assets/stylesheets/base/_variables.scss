@@ -33,8 +33,10 @@ $base-font-family: 'Source Sans Pro', sans-serif;
 $heading-font-family: 'Eagle', sans-serif;
 
 // Breakpoints
-$medium-screen: 600px;
-$large-screen: 900px;
+$xlarge-screen: new-breakpoint(max-width 1210px 12);
+$large-screen: new-breakpoint(max-width 980px 12);
+$medium-screen: new-breakpoint(max-width 720px 12);
+$small-screen: new-breakpoint(max-width 420px 12);
 
 // Font Sizes
 $base-font-size: 1.3em;
@@ -50,7 +52,7 @@ $heading-line-height: 1.2;
 
 // Other Sizes
 $base-border-radius: 3px;
-$base-spacing: $base-line-height * 1em;
+$base-spacing: 1em;
 $small-spacing: $base-spacing / 2;
 $large-spacing: $base-spacing * 2;
 $base-z-index: 0;

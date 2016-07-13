@@ -1,29 +1,15 @@
-<div class="half-field">
   <%= f.input :first_name %>
-</div>
 
-<div class="half-field">
   <%= f.input :last_name %>
-</div>
 
-<div class="half-field">
   <%= f.input :email, as: :email %>
-</div>
 
-<div class="half-field">
   <%= f.input :date_of_birth, as: :date, prompt: true,
                                          start_year: Date.today.year - 100,
                                          end_year: Date.today.year - 12 %>
-</div>
 
-<div class="third-field">
   <%= f.input :country, collection: CountryStateSelect.countries_collection %>
-</div>
 
-<div class="third-field">
   <%= f.input :state_province, label: t('models.account.state_province') %>
-</div>
 
-<div class="third-field">
   <%= f.input :city %>
-</div>
