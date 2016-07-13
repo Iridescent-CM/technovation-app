@@ -1,23 +1,15 @@
-<div class="name_field">
   <%= f.input :first_name %>
-</div>
 
-<div class="name_field last">
   <%= f.input :last_name %>
-</div>
 
-<%= f.input :date_of_birth, as: :date, prompt: true,
-                                       start_year: Date.today.year - 100,
-                                       end_year: Date.today.year - 12 %>
+  <%= f.input :email, as: :email %>
 
-<div class="address_field">
+  <%= f.input :date_of_birth, as: :date, prompt: true,
+                                         start_year: Date.today.year - 100,
+                                         end_year: Date.today.year - 12 %>
+
   <%= f.input :country, collection: CountryStateSelect.countries_collection %>
-</div>
 
-<div class="address_field">
   <%= f.input :state_province, label: t('models.account.state_province') %>
-</div>
 
-<div class="address_field last">
   <%= f.input :city %>
-</div>

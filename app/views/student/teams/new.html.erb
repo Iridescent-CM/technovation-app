@@ -1,6 +1,29 @@
-<%= simple_form_for [:student, @team] do |f| %>
-  <%= f.input :name %>
-  <%= f.input :description %>
+<div class="profile-pages student-dashboard">
+  <!-- I should be an include! -->
+  <h2>Dashboard</h2>
+  <nav class="profile">
+    <ul>
+      <li><a href="#">home</a></li>
+      <li><a href="#">my profile</a></li>
+      <li><a href="#">my team</a></li>
+    </ul>
+  </nav>
+  <!-- end include -->
+  <p>You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time.</p>
 
-  <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
-<% end %>
+  <div class="well">
+    <h3>Create a Team</h3>
+    <%= simple_form_for [:student, @team] do |f| %>
+      <%= f.input :name %>
+      <%= f.input :description %>
+
+      <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
+    <% end %>
+  </div>
+
+  <div class="well">
+    <h3>Join a Team</h3>
+    <a href="#" class="primary-button">Browse available teams</a>
+  </div>
+
+</div>

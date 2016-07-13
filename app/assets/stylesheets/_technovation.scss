@@ -1,15 +1,208 @@
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
 @import "bourbon/bourbon";
-$visual-grid: false !default;
 @import "neat/neat";
 @import "base/base";
 
 @import "refills/tables-minimal";
 @import "refills/flashes";
-@import "refills/navigation";
 @import "refills/pagination";
 
 body, html {
   margin: 0;
+  background-color: $light-grey;
+}
+
+header {
+  background-image: url("header-background.png");
+  background-repeat: repeat-x;
+  background-color: $mulberry;
+  display: block;
+  padding: $base-spacing 0;
+
+  @include media($xlarge-screen) {
+    padding: $base-spacing $small-spacing;
+  }
+
+  .logo {
+    img {
+      height: 60px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+  }
+
+  nav  {
+    float: right;
+    margin-top: 10px;
+
+    ul {
+      list-style-type: none;
+      text-align: right;
+      height: 60px;
+      display: table;
+
+      li {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: $base-spacing;
+
+        a {
+          color: white;
+          line-height: 0px;
+          &:hover,
+          &:focus {
+            color: $shamrock;
+          }
+        }
+      }
+    }
+  }
+}
+
+.signup_page {
+  margin-top: $large-spacing;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $small-spacing;
+    color: $mulberry;
+    .accent { color: $shamrock; }
+  }
+
+  .account-type {
+    @include span-columns(8);
+    @include shift(2);
+
+    padding: $base-spacing;
+    margin-bottom: $base-spacing;
+    background-color: #fff;
+
+    .account-title {
+      @include span-columns(3 of 8);
+    }
+
+    .account-description {
+      @include span-columns(5 of 8);
+    }
+
+    .account-photo {
+      width: 260px;
+      height: 260px;
+      background-size: 260px 260px;
+      background-color: #421B41;
+      background-blend-mode: exclusion;
+
+      h5 {
+        color: #fff;
+        text-align: center;
+        padding-top: $large-spacing;
+      }
+    }
+
+    .student-account { background-image: url("signup/student.jpg"); }
+    .mentor-account { background-image: url("signup/mentor.jpg"); }
+    .coach-account { background-image: url("signup/coach.jpg"); }
+    .judge-account { background-image: url("signup/judge.jpg"); }
+  }
+}
+
+nav.profile {
+  border-bottom: 2px solid $mid-grey;
+  margin: $base-spacing 0;
+  ul {
+    li {
+      display: inline-block;
+      margin: 0 $base-spacing $base-spacing 0;
+      a {
+        color: $silver;
+        &:active,
+        &:focus,
+        &:hover {
+          color: $granite;
+        }
+      }
+    }
+  }
+}
+
+.profile-pages {
+  h2 {
+    color: $shamrock;
+    margin: $small-spacing 0;
+  }
+
+  .dashboard-page-info {
+    margin-bottom: $base-spacing;
+
+    h3 {
+      color: $mulberry;
+      margin-bottom: $small-spacing;
+    }
+  }
+
+  .pending-invites {
+    h6 {
+      color: $mulberry;
+      margin-bottom: $small-spacing;
+    }
+  }
+
+  .team-members {
+    @include span-columns(6);
+    @include omega(2n);
+    margin-bottom: $large-spacing;
+
+    ul.team_members li {
+      margin-bottom: $small-spacing;
+
+      .member-image {
+        display: table-cell;
+        padding-right: $small-spacing;
+
+        img {
+          width: 80px;
+          height: auto;
+          border: 3px solid #fff;
+        }
+      }
+
+      .member-info {
+        display: table-cell;
+        vertical-align: top;
+        color: #fff;
+      }
+    }
+  }
+
+  .manage-team {
+    @include span-columns(12);
+    > div {
+      margin-bottom: $base-spacing;
+    }
+  }
+
+  .account-info {
+    @include span-columns(9);
+  }
+}
+
+.student-dashboard {
+  .profile-avatar {
+    @include span-columns(3);
+    text-align: center;
+    img { margin-bottom: $small-spacing; }
+  }
+}
+
+.account {
+  margin-top: $large-spacing;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $small-spacing;
+    color: $mulberry;
+    .accent { color: $shamrock; }
+  }
 }
 
 .container {
@@ -28,4 +221,3 @@ body, html {
 label {
   cursor: pointer;
 }
-

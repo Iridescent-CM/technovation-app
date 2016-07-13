@@ -2,15 +2,13 @@
   appearance: none;
   background-color: $action-color;
   border: 0;
-  border-radius: $base-border-radius;
+  border-radius: 20px;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: $base-font-family;
-  font-size: $base-font-size;
   -webkit-font-smoothing: antialiased;
-  font-weight: 600;
   line-height: 1;
+  letter-spacing: normal;
   padding: $small-spacing $base-spacing;
   text-decoration: none;
   transition: background-color $base-duration $base-timing;
@@ -18,10 +16,21 @@
   vertical-align: middle;
   white-space: nowrap;
 
+  font-family: $heading-font-family;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  min-width: 150px;
+
+
   &:hover,
   &:focus {
-    background-color: shade($action-color, 20%);
+    background-color: $shamrock-mid;
     color: #fff;
+  }
+
+  &:active {
+    background-color: #fff;
+    color: $shamrock-mid;
   }
 
   &:disabled {
@@ -31,5 +40,65 @@
     &:hover {
       background-color: $action-color;
     }
+  }
+}
+
+// the above affects all input buttons, but if you want to style a link as a button, you need to use one of the classes below
+.primary-button {
+  @extend #{$all-buttons};
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing $base-spacing;
+  font-size: 1rem;
+}
+
+.secondary-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  font-size: 1rem;
+  background-color: #fff;
+  color: $shamrock;
+
+  &:hover,
+  &:focus {
+    color: $shamrock-mid;
+    background-color: $light-grey;
+  }
+}
+
+.transparent-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  font-size: 1rem;
+  background-color: transparent;
+  border: $base-border;
+  border-color: #fff;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    color: $shamrock;
+    background-color: #fff;
+  }
+}
+
+.transparent-accent-button {
+  @extend #{$all-buttons};
+  text-align: center;
+  padding: $small-spacing;
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 1rem;
+  background-color: transparent;
+  border: $base-border;
+  border-color: $lemon;
+  color: $lemon;
+
+  &:hover,
+  &:focus {
+    background-color: $lemon;
+    color: #fff;
   }
 }

@@ -12,8 +12,11 @@ legend {
 }
 
 label {
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   display: block;
-  font-weight: 600;
   margin-bottom: $small-spacing / 2;
 }
 
@@ -22,14 +25,14 @@ select,
 textarea {
   display: block;
   font-family: $base-font-family;
-  font-size: $base-font-size;
+  font-size: 1.5rem;
+  font-weight: $light-font-weight;
 }
 
 #{$all-text-inputs},
 select[multiple] {
-  background-color: $base-background-color;
-  border: $base-border;
-  border-radius: $base-border-radius;
+  background-color: #fff;
+  border: 2px solid $mid-grey;
   box-shadow: $form-box-shadow;
   box-sizing: border-box;
   margin-bottom: $small-spacing;
