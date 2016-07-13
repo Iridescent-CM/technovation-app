@@ -9,7 +9,7 @@
   -webkit-font-smoothing: antialiased;
   line-height: 1;
   letter-spacing: normal;
-  padding: 0 $base-spacing;
+  padding: $small-spacing $base-spacing;
   text-decoration: none;
   transition: background-color $base-duration $base-timing;
   user-select: none;
@@ -20,7 +20,6 @@
   font-size: 0.875rem;
   text-transform: uppercase;
   min-width: 150px;
-  height: 40px;
 
 
   &:hover,
@@ -45,7 +44,6 @@
 }
 
 // the above affects all input buttons, but if you want to style a link as a button, you need to use one of the classes below
-// the alignment of the transparent button is Not Ideal and should be fixed later
 .primary-button {
   @extend #{$all-buttons};
   @extend #{$all-buttons};

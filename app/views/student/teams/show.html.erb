@@ -1,24 +1,74 @@
-<div class="team">
-  <h1 class="team_name"><%= @team.name %></h1>
+<div class="profile-pages student-dashboard">
+  <!-- I should be an include! -->
+  <h2>Dashboard</h2>
+  <nav class="profile">
+    <ul>
+      <li><a href="#">home</a></li>
+      <li><a href="#">my profile</a></li>
+      <li><a href="#">my team</a></li>
+    </ul>
+  </nav>
 
-  <p class="team_description"><%= @team.description %></p>
+  <div class="dashboard-page-info">
+    <h3><%= @team.name %></h3>
+    <p><%= @team.description %></p>
+  </div>
+  <!-- end include -->
 
-  <h3><%= t("views.student.teams.show.members_subheading") %></h3>
+  <div class="module team-members">
+    <div class="module-header">
+      <h5>Team <%= t("views.student.teams.show.members_subheading") %></h5>
+    </div>
+    <div class="module-body">
+      <ul class="team_members">
+        <% @team.member_names.each do |name| %>
+          <li>
+            <div class="member-image">
+              <%= image_tag("placeholders/natasha-avatar.jpg") %>
+            </div>
+            <div class="member-info">
+              <h3><%= name %></h3>
+              <p>student@student.com</p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
-  <p><%= link_to t("views.student.teams.show.add_members"),
-                 new_student_team_member_invite_path %></p>
+  <div class="module-lemon team-members">
+    <div class="module-header">
+      <h5>Team Mentors and Coaches</h5>
+    </div>
+    <div class="module-body">
+      list of team mentors and coaches
+    </div>
+  </div>
 
-  <ul class="team_members">
-    <% @team.member_names.each do |name| %>
-      <li><%= name %></li>
-    <% end %>
-  </ul>
+  <div class="well manage-team">
+    <!-- instead of linking to a new page, let's embed the form here -->
+    <div class="invite-members">
+      <h6>Invite members</h6>
+      <%= link_to t("views.student.teams.show.add_members"),
+                     new_student_team_member_invite_path,
+                     {class: "primary-button"} %>
+    </div>
 
-  <h3><%= t("views.student.teams.show.pending_invitees_subheading") %></h3>
+    <!-- this div below shouldn't show up if there aren't any pending invites -->
+    <div class="pending-invites">
+      <h6><%= t("views.student.teams.show.pending_invitees_subheading") %></h6>
 
-  <ul class="pending_invitees">
-    <% @team.pending_invitee_emails.each do |email| %>
-      <li><%= email %></li>
-    <% end %>
-  </ul>
+      <ul class="pending_invitees">
+        <% @team.pending_invitee_emails.each do |email| %>
+          <li><%= email %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div>
+      <h6>Danger Zone</h6>
+      <a href="#" class="primary-button">Leave <%= @team.name %></a>
+    </div>
+  </div>
+
 </div>
