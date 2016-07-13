@@ -24,24 +24,31 @@ header {
   }
 
   .logo {
-    height: 60px;
-    display: inline-block;
+    img {
+      height: 60px;
+      display: inline-block;
+      margin-top: 5px;
+    }
   }
 
   nav  {
-    padding: $base-spacing 0;
     float: right;
+    margin-top: 10px;
 
     ul {
       list-style-type: none;
       text-align: right;
+      height: 60px;
+      display: table;
 
       li {
-        display: inline-block;
-        margin-left: $small-spacing;
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: $base-spacing;
 
         a {
           color: white;
+          line-height: 0px;
           &:hover,
           &:focus {
             color: $shamrock;
