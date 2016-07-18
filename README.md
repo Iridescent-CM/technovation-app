@@ -20,11 +20,11 @@ brew update
 brew install qt
 ```
 
+### Setup
+
 Set your Ruby version with your favorite ruby version management tool to:
 
 `Ruby Version: 2.3.1`
-
-### Setup
 
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
