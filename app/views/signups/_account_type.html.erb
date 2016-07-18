@@ -1,0 +1,15 @@
+<div class="account-type">
+  <div class="account-title">
+    <div class="account-photo <%= role %>-account">
+      <h5><%= t("views.signups.new.roles.#{role}") %></h5>
+    </div>
+  </div>
+
+  <div class="account-description">
+    <p><%= t("views.signups.new.descriptions.#{role}") %></p>
+
+    <%= link_to t("views.signups.new.signup_link", role: role.to_s.titleize),
+                public_send("#{role}_signup_path"),
+                class: "primary-button" %>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 en:
   models:
     account:
+      class_name: "account"
       state_province: "State / Province"
 
     errors:

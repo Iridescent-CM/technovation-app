@@ -69,12 +69,21 @@ en:
         student_profile: "Student profile"
 
       new:
+        create_an: "Create an"
+        descriptions:
+          coach: "Assemble a team, connect with mentors and teams and help make an app!"
+          judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
+          mentor: "Guide teams as they identify a problem in their community make an app to address it."
+          regional_ambassador: "Coming soon!"
+          student: "Assemble a team, connect with mentors and coaches and make an app!"
         role_choice: "I am a..."
         roles:
           coach: "Coach"
           judge: "Judge"
           mentor: "Mentor"
+          regional_ambassador: "Regional Ambassador"
           student: "Student"
+        signup_link: "%{role} sign up"
         title: "Sign up"
 
     student:
