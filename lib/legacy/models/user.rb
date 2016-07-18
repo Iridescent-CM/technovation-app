@@ -8,7 +8,8 @@ module Legacy
     has_many :teams, through: :team_requests
 
     def parent_name
-      [parent_first_name, parent_last_name].join(" ")
+      name = [parent_first_name, parent_last_name].join(" ")
+      name.blank? ? "N/A" : name
     end
 
     def is_in_secondary_school?

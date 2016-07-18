@@ -5,7 +5,7 @@ namespace :legacy_migration do
       require './lib/legacy/helpers/profile_attributes'
       require './lib/legacy/models/user'
 
-      Legacy::User.where(is_registered: true).each do |user|
+      Legacy::User.where(is_registered: true).order('created_at DESC').each do |user|
         account = "#{user.role}_account".camelize.constantize.new(
           email: user.email,
           password_digest: user.encrypted_password,
@@ -18,7 +18,17 @@ namespace :legacy_migration do
           "#{user.role}_profile_attributes" => ProfileAttributes.(user),
         )
         GenerateToken.(account, :auth_token)
-        account.save(validate: false)
+
+        begin
+          account.save!
+        rescue ActiveRecord::RecordInvalid => e
+          if e.message == "Validation failed: Password can't be blank, Password confirmation can't be blank"
+            account.save(validate: false)
+          else
+            raise e
+          end
+        end
+
         puts "Migrated account for: #{account.email}"
       end
 
@@ -32,7 +42,7 @@ namespace :legacy_migration do
         puts "Migrated team for: #{team.name}"
       end
 
-      puts "Migrated #{Team.count} team"
+      puts "Migrated #{Team.count} teams"
     end
   end
 end
