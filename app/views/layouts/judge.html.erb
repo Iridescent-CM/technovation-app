@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+<% provide :root_path, judge_dashboard_path %>
 
-    <title><%= t('views.application.site_title') %></title>
+<% provide :menu do %>
+  <li class="nav-link">
+    <%= link_to t('views.judge.scores.index.title'), judge_scores_path %>
+  </li>
+<% end %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-  </head>
-
-  <body>
-    <div class="main">
-      <%= render 'judge/navigation' %>
-
-      <div class="container">
-        <%= render 'flash_messages' %>
-        <%= yield %>
-      </div>
-    </div>
-
-    <%= render 'footer' %>
-    <%= javascript_include_tag 'application', data: { turbolinks_track: true } %>
-  </body>
-</html>
+<%= render template: "layouts/application" %>

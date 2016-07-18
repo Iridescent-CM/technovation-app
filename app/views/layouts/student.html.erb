@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+<% provide :root_path, student_dashboard_path %>
 
-    <title><%= t('views.application.site_title') %></title>
+<% provide :menu do %>
+  <%= student_navigation.mentor_search_link %>
+  <%= student_navigation.team_link %>
+<% end %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-  </head>
-
-  <body>
-    <div class="main">
-      <%= render 'student/navigation' %>
-
-      <div class="container">
-        <%= render 'flash_messages' %>
-        <%= yield %>
-      </div>
-    </div>
-
-    <%= render 'footer' %>
-    <%= javascript_include_tag 'application', data: { turbolinks_track: true } %>
-  </body>
-</html>
+<%= render template: "layouts/application" %>
