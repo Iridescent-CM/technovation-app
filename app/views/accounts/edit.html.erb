@@ -1,4 +1,6 @@
-<div class="account">
+<div class="profile-pages student-dashboard">
+  <%= render 'student/dashboards/navigation' %>
+
   <%= simple_form_for @account do |f| %>
     <%= render 'signups/basic_profile_fields', f: f %>
 

@@ -1,18 +1,9 @@
 <div class="profile-pages student-dashboard">
-  <!-- I should be an include! -->
-  <h2>Dashboard</h2>
-  <nav class="profile">
-    <ul>
-      <li><a href="#">home</a></li>
-      <li><a href="#">my profile</a></li>
-      <li><a href="#">my team</a></li>
-    </ul>
-  </nav>
+  <%= render 'student/dashboards/navigation' %>
 
   <div class="dashboard-page-info">
     <h3>Account Info</h3>
   </div>
-  <!-- end include -->
 
   <div class="well profile-avatar">
     <%= image_tag("placeholders/natasha-avatar.jpg") %>

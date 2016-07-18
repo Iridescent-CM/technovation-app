@@ -24,6 +24,8 @@ en:
       actions: "Actions"
       cancel: 'cancel'
       create: "Create %{thing}"
+      dashboards:
+        title: "Dashboard"
       edit: "Edit"
       filter: "Filter"
       invite: "Send invite"
