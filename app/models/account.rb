@@ -63,5 +63,9 @@ class Account < ActiveRecord::Base
     def authenticated?
       false
     end
+
+    def is_on_team?
+      false
+    end
   end
 end
