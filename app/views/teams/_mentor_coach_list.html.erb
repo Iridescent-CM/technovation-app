@@ -4,6 +4,9 @@
   </div>
 
   <div class="module-body">
-    list of team mentors and coaches
+    <ul class="team_members">
+      <%= render partial: "teams/member", collection: @team.mentors %>
+      <%= render partial: "teams/member", collection: @team.coaches %>
+    </ul>
   </div>
 </div>
