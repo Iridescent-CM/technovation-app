@@ -5,7 +5,10 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :members, through: :memberships, source_type: "Account"
+  has_many :members, through: :memberships
+  has_many :students, through: :memberships, source: :member, source_type: "StudentAccount"
+  has_many :mentors, through: :memberships, source: :member, source_type: "MentorAccount"
+  has_many :coaches, through: :memberships, source: :member, source_type: "CoachAccount"
 
   has_many :submissions, dependent: :destroy
 
@@ -19,9 +22,16 @@ class Team < ActiveRecord::Base
     team_member_invites.pending.flat_map(&:invitee_email)
   end
 
-  def add_member(member)
-    if !!member and not members.include?(member)
-      members << member
+  def add_mentor(mentor)
+    if !!mentor and not mentors.include?(mentor)
+      mentors << mentor
+      save
+    end
+  end
+
+  def add_student(student)
+    if !!student and not students.include?(student)
+      students << student
       save
     end
   end

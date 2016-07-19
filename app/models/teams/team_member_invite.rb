@@ -5,7 +5,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   belongs_to :team
   belongs_to :inviter, class_name: "Account"
-  belongs_to :invitee, class_name: "Account"
+  belongs_to :invitee, class_name: "StudentAccount"
 
   validates :invitee_email, presence: true
 
@@ -15,7 +15,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def accept!
     update_attributes(accepted_at: Time.current)
-    team.add_member(invitee)
+    after_accept
   end
 
   def accepted?
@@ -40,6 +40,11 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def set_existing_invitee
-    self.invitee ||= Account.find_by(email: invitee_email)
+    self.invitee ||= StudentAccount.find_by(email: invitee_email)
+    true
+  end
+
+  def after_accept
+    team.add_student(invitee)
   end
 end
