@@ -1,6 +1,1 @@
-<%= simple_form_for [:student, @team_member_invite] do |f| %>
-  <%= f.input :invitee_email,
-              label: t("models.team_member_invite.invitee_email") %>
-
-  <%= f.button :submit, t("views.application.invite") %>
-<% end %>
+<%= render "student/team_member_invites/form" %>

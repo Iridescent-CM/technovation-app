@@ -1,0 +1,11 @@
+<div class="module team-members">
+  <div class="module-header">
+    <h5><%= t("views.student.teams.show.members_subheading") %></h5>
+  </div>
+
+  <div class="module-body">
+    <ul class="team_members">
+      <%= render partial: "student/teams/member", collection: @team.members %>
+    </ul>
+  </div>
+</div>

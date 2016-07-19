@@ -1,0 +1,24 @@
+<div class="well manage-team">
+  <div class="invite-members">
+    <h6><%= t("views.student.teams.show.invite") %></h6>
+
+    <%= render "student/team_member_invites/form" %>
+  </div>
+
+  <% if @team.pending_invitee_emails.any? %>
+    <div class="pending-invites">
+      <h6><%= t("views.student.teams.show.pending_invitees_subheading") %></h6>
+
+      <ul class="pending_invitees">
+        <% @team.pending_invitee_emails.each do |email| %>
+          <li><%= email %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <h6>Danger Zone</h6>
+    <a href="#" class="primary-button">Leave <%= @team.name %></a>
+  </div>
+</div>

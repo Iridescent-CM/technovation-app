@@ -113,5 +113,7 @@ en:
           title: "Create a Team"
         show:
           add_members: "Add members"
-          members_subheading: "Members"
+          invite: "Invite team members"
+          members_subheading: "Team members"
+          mentors_coaches_subheading: "Team mentors and coaches"
           pending_invitees_subheading: "Pending Invites"
