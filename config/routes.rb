@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
     resources :teams, only: [:index, :show]
     resource :dashboard, only: :show
+
+    resources :invite_acceptances, only: :show
   end
 
   resources :teams, only: :show
