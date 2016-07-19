@@ -1,6 +1,4 @@
 <div class="profile-pages student-dashboard">
-  <%= render 'student/dashboards/navigation' %>
-
   <ul class="completion_requirements">
     <% current_student.completion_requirements.each do |translation_key, url| %>
       <li><%= link_to t("views.student.dashboards.show.#{translation_key}"), url %></li>

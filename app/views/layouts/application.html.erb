@@ -36,6 +36,7 @@
       <%= render 'application/navigation' %>
 
       <div class="container">
+        <%= yield :dashboard_nav %>
         <%= render 'application/flash_messages' %>
         <%= yield %>
       </div>

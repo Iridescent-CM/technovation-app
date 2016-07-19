@@ -1,6 +1,4 @@
 <div class="profile-pages student-dashboard">
-  <%= render 'student/dashboards/navigation' %>
-
   <div class="dashboard-page-info">
     <h3 class="team_name"><%= @team.name %></h3>
     <p class="team_description"><%= @team.description %></p>
@@ -10,6 +8,7 @@
     <div class="module-header">
       <h5>Team <%= t("views.student.teams.show.members_subheading") %></h5>
     </div>
+
     <div class="module-body">
       <ul class="team_members">
         <% @team.member_names.each do |name| %>
@@ -31,6 +30,7 @@
     <div class="module-header">
       <h5>Team Mentors and Coaches</h5>
     </div>
+
     <div class="module-body">
       list of team mentors and coaches
     </div>

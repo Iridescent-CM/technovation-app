@@ -1,5 +1,5 @@
 <div class="profile-pages student-dashboard">
-  <%= render 'student/dashboards/navigation' %>
+  <%= yield :dashboard_nav %>
 
   <%= simple_form_for @account do |f| %>
     <%= render 'signups/basic_profile_fields', f: f %>
