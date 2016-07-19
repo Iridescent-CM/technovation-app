@@ -1,12 +1,5 @@
 <div class="profile-pages student-dashboard">
   <%= render 'student/dashboards/navigation' %>
-
-  <div class="dashboard-page-info">
-    <h3 class="team_name"><%= @team.name %></h3>
-    <p class="team_description"><%= @team.description %></p>
-  </div>
-
-  <%= render "student/teams/member_list" %>
-  <%= render "student/teams/mentor_coach_list" %>
+  <%= render 'teams/show' %>
   <%= render "student/teams/manage_team" %>
 </div>
