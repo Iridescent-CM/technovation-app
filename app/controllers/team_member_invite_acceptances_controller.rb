@@ -12,6 +12,6 @@ class TeamMemberInviteAcceptancesController < ApplicationController
 
     SignIn.(invite.invitee, self,
             message: t("controllers.team_member_invite_acceptances.show.success"),
-            redirect_to: team_path(invite.team))
+            redirect_to: student_team_path(invite.team))
   end
 end

@@ -18,7 +18,7 @@ RSpec.describe TeamMemberInviteAcceptancesController do
     it "redirects to the team page when the account exists" do
       student = FactoryGirl.create(:student)
       invite = FactoryGirl.create(:team_member_invite, invitee_email: student.email)
-      expect(get :show, id: invite.invite_token).to redirect_to team_path(student.reload.team)
+      expect(get :show, id: invite.invite_token).to redirect_to student_team_path(student.reload.team)
     end
   end
 end
