@@ -1,6 +1,6 @@
 class MentorsController < ApplicationController
   def show
     @mentor = MentorAccount.find(params.fetch(:id))
-    @team_member_invite = TeamMemberInvite.new
+    @mentor_invite = MentorInvite.new
   end
 end
