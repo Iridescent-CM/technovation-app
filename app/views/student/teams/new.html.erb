@@ -1,8 +1,8 @@
 <div class="profile-pages student-dashboard">
-  <p>You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time.</p>
+  <p><%= t("views.student.teams.new.intro") %></p>
 
   <div class="well">
-    <h3>Create a Team</h3>
+    <h3><%= t("views.student.teams.new.title") %></h3>
 
     <%= simple_form_for [:student, @team] do |f| %>
       <%= f.input :name %>
@@ -13,7 +13,7 @@
   </div>
 
   <div class="well">
-    <h3>Join a Team</h3>
-    <a href="#" class="primary-button">Browse available teams</a>
+    <h3><%= t("views.student.teams.new.join") %></h3>
+    <%= link_to t("controllers.teams.index.browse"), '#', class: "primary-button" %>
   </div>
 </div>

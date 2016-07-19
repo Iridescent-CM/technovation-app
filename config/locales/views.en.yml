@@ -107,6 +107,10 @@ en:
         my_team: "My team"
 
       teams:
+        new:
+          join: "Join a Team"
+          intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
+          title: "Create a Team"
         show:
           add_members: "Add members"
           members_subheading: "Members"

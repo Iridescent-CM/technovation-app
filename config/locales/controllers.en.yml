@@ -45,3 +45,7 @@ en:
     team_member_invite_acceptances:
       show:
         success: "Welcome to the team! Make us proud!"
+
+    teams:
+      index:
+        browse: "Browse available teams"
