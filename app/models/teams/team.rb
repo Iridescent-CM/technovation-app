@@ -20,7 +20,7 @@ class Team < ActiveRecord::Base
   end
 
   def add_member(member)
-    if !!member
+    if !!member and not members.include?(member)
       members << member
       save
     end
