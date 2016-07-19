@@ -34,4 +34,8 @@ class StudentAccount < Account
   def team_names
     teams.collect(&:name)
   end
+
+  def find_team(team_id)
+    Team.joins(:memberships).where("memberships.member_id = ?", id).find(team_id)
+  end
 end

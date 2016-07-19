@@ -1,7 +1,7 @@
 module Student
   class TeamsController < StudentController
     def show
-      @team = current_student.teams.find(params.fetch(:id))
+      @team = current_student.find_team(params.fetch(:id))
       @team_member_invite = TeamMemberInvite.new
     end
 
@@ -24,7 +24,7 @@ module Student
     def team_params
       params.require(:team).permit(:name, :description).tap do |params|
         params[:division] = Division.for(current_student)
-        params[:member_ids] = current_student.id
+        params[:student_ids] = current_student.id
       end
     end
   end
