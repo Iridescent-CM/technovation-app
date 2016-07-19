@@ -20,7 +20,7 @@ RSpec.feature "Edit account spec" do
 
     click_button "Save"
 
-    expect(current_path).to eq(account_path)
+    expect(current_path).to eq(student_account_path)
     expect(page).to have_content("something@else.com")
   end
 
@@ -30,7 +30,7 @@ RSpec.feature "Edit account spec" do
 
     fill_in "Existing password", with: "wrong"
     click_button "Save"
-    expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.account.attributes.existing_password.invalid"))
+    expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.student_account.attributes.existing_password.invalid"))
   end
 
   scenario "attempt to edit without existing password" do
@@ -39,6 +39,6 @@ RSpec.feature "Edit account spec" do
 
     fill_in "Existing password", with: ""
     click_button "Save"
-    expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.account.attributes.existing_password.invalid"))
+    expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.student_account.attributes.existing_password.invalid"))
   end
 end

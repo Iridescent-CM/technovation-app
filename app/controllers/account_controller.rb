@@ -3,16 +3,20 @@ module AccountController
 
   private
   def account_params
-    params.require(:account).permit(:email,
-                                    :existing_password,
-                                    :password,
-                                    :password_confirmation,
-                                    :date_of_birth,
-                                    :first_name,
-                                    :last_name,
-                                    :city,
-                                    :state_province,
-                                    :country,
+    params.require(account_param_root).permit(
+      :email,
+      :existing_password,
+      :password,
+      :password_confirmation,
+      :date_of_birth,
+      :first_name,
+      :last_name,
+      :city,
+      :state_province,
+      :country,
+      profile_params,
+    )
+=begin
                                     coach_profile_attributes: [
                                       :id,
                                       :school_company_name,
@@ -31,12 +35,14 @@ module AccountController
                                       :job_title,
                                       { expertise_ids: [] },
                                     ],
-                                    student_profile_attributes: [
-                                      :id,
-                                      :parent_guardian_email,
-                                      :parent_guardian_name,
-                                      :school_name,
-                                    ],
-                                  )
+=end
+  end
+
+  def account_param_root
+    :account
+  end
+
+  def profile_params
+    { }
   end
 end

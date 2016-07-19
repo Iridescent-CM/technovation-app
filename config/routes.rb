@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
     resources :teams, except: :delete
     resources :team_member_invites, except: [:edit, :update, :destroy]
+
+    resource :account, only: [:show, :edit, :update]
   end
 
   namespace :mentor do
@@ -69,7 +71,6 @@ Rails.application.routes.draw do
   match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
 
   resources :signins, only: :create
-  resource :account, only: [:show, :edit, :update]
   post 'accounts', to: "signups#create"
 
   root to: "application/dashboards#show"

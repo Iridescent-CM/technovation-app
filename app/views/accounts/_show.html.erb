@@ -1,0 +1,27 @@
+<div class="dashboard-page-info">
+  <h3><%= t("views.accounts.show.title") %></h3>
+</div>
+
+<div class="well profile-avatar">
+  <%= image_tag("placeholders/natasha-avatar.jpg") %>
+  <%= link_to t("controllers.accounts.update.change_image"), '#',
+              class: "transparent-accent-button" %>
+</div>
+
+<div class="account-info">
+  <dl>
+    <dt><%= t('models.account.full_name') %></dt>
+    <dd><%= account.full_name %></dd>
+
+    <dt><%= t('models.account.email') %></dt>
+    <dd><%= account.email %></dd>
+
+    <dt><%= t('models.account.date_of_birth') %></dt>
+    <dd><%= account.date_of_birth %></dd>
+
+    <dt><%= t('models.account.address') %></dt>
+    <dd><%= account.address_details %></dd>
+  </dl>
+
+  <%= link_to t('views.accounts.show.edit'), edit_account_path %>
+</div>

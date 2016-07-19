@@ -12,6 +12,7 @@ en:
 
     accounts:
       update:
+        change_image: "Change image"
         success: "You updated your account!"
 
     judge:

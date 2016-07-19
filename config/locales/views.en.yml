@@ -42,6 +42,8 @@ en:
         confirm_new_password: "Confirm new password"
         existing_password: "Existing password"
         new_password: "New password"
+      show:
+        title: "Account Info"
 
     judge:
       scores:

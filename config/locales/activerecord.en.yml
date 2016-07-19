@@ -2,7 +2,7 @@ en:
   activerecord:
     errors:
       models:
-        account:
+        student_account:
           attributes:
             existing_password:
               invalid: "is required to change your email address or password"
