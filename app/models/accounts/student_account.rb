@@ -1,5 +1,5 @@
 class StudentAccount < Account
-  default_scope { joins(:student_profile) }
+  default_scope { joins(:student_profile).includes(:teams) }
 
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
 
