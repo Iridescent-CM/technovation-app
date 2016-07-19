@@ -15,10 +15,6 @@ class Team < ActiveRecord::Base
   validates :description, presence: true
   validates :division, presence: true
 
-  def member_names
-    members.collect(&:full_name)
-  end
-
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
   end
