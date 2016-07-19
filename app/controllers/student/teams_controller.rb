@@ -1,7 +1,7 @@
 module Student
   class TeamsController < StudentController
     def show
-      @team = current_student.find_team(params.fetch(:id))
+      @team = current_student.teams.find(params.fetch(:id))
       @team_member_invite = TeamMemberInvite.new
     end
 

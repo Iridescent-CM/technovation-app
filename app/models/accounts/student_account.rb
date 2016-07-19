@@ -1,10 +1,9 @@
 class StudentAccount < Account
-  default_scope { joins(:student_profile).includes(:teams) }
+  default_scope { joins(:student_profile) }
 
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
   has_one :student_profile, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
@@ -35,7 +34,7 @@ class StudentAccount < Account
     teams.collect(&:name)
   end
 
-  def find_team(team_id)
-    Team.joins(:memberships).where("memberships.member_id = ?", id).find(team_id)
+  def teams
+    Team.joins(:memberships).where("memberships.member_id = ?", id)
   end
 end
