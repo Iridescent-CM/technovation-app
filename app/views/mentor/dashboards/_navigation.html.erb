@@ -1,0 +1,9 @@
+<h2><%= t("views.application.dashboards.title") %></h2>
+
+<nav class="profile">
+  <ul>
+    <li><%= link_to t("views.student.dashboard.menu.home"), mentor_dashboard_path %></li>
+    <li><%= link_to t("views.student.dashboard.menu.my_teams"), mentor_teams_path %></li>
+    <li><%= link_to t("views.application.dashboards.menu.my_account"), mentor_account_path %></li>
+  </ul>
+</nav>

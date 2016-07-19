@@ -1,5 +1,9 @@
-<ul class="mentor_teams">
-  <% @teams.each do |team| %>
-    <li><%= link_to team.name, [:mentor, team] %></li>
-  <% end %>
-</ul>
+<div class="profile-pages mentor-dashboard">
+  <%= render 'mentor/dashboards/navigation' %>
+
+  <ul class="mentor_teams">
+    <% @teams.each do |team| %>
+      <li><%= link_to team.name, [:mentor, team] %></li>
+    <% end %>
+  </ul>
+</div>

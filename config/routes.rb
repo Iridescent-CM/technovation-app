@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :invite_acceptances, only: :show
+
+    resource :account, only: [:show, :edit, :update]
   end
 
   resources :teams, only: :show
