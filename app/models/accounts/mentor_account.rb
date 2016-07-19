@@ -8,7 +8,6 @@ class MentorAccount < Account
   validates_associated :mentor_profile
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
   scope :by_expertise_ids, ->(ids) {
     joins(mentor_profile: :guidance_profile_expertises)
@@ -24,4 +23,8 @@ class MentorAccount < Account
     prefix: false
 
   delegate :id, to: :mentor_profile, prefix: true
+
+  def teams
+    Team.joins(:memberships).where('memberships.member_id = ?', id)
+  end
 end
