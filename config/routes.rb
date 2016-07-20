@@ -67,6 +67,9 @@ Rails.application.routes.draw do
 
   namespace :regional_ambassador do
     get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
+
+    resource :dashboard, only: :show
   end
 
   get 'login', to: 'signins#new', as: :login
