@@ -7,6 +7,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:expertise_ids) { [] }.reject(&:blank?).map(&:to_i)
   end
 
+  def nearby
+    filter_options.fetch(:nearby) { "" }
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"

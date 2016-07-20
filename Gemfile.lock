@@ -109,6 +109,7 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.10)
+    geocoder (1.2.6)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hike (1.2.3)
@@ -285,6 +286,7 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   factory_girl_rails
+  geocoder (~> 1.2.6)
   indefinite_article
   jbuilder (~> 2.0)
   jquery-rails

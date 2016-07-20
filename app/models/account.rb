@@ -1,7 +1,10 @@
 class Account < ActiveRecord::Base
   attr_accessor :existing_password
 
+  geocoded_by :address_details
+
   before_validation :generate_auth_token, on: :create
+  after_validation :geocode, if: :address_changed?
   after_create :register_current_season
 
   has_secure_password
@@ -57,6 +60,10 @@ class Account < ActiveRecord::Base
 
   def changes_require_password?
     persisted? && (email_changed? || password_digest_changed?)
+  end
+
+  def address_changed?
+    city_changed? or state_province_changed? or country_changed?
   end
 
   class NoAuthFound

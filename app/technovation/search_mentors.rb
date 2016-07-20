@@ -1,9 +1,15 @@
 module SearchMentors
   def self.call(filter)
-    if filter.expertise_ids.any?
+    mentors = if filter.expertise_ids.any?
       MentorAccount.by_expertise_ids(filter.expertise_ids)
     else
-      MentorAccount.all
+      MentorAccount
+    end
+
+    if filter.nearby.present?
+      mentors.near(filter.nearby)
+    else
+      mentors.all
     end
   end
 end
