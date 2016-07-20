@@ -26,6 +26,7 @@ en:
       create: "Create %{thing}"
       dashboards:
         title: "Dashboard"
+      danger_zone: "Danger Zone"
       edit: "Edit"
       filter: "Filter"
       invite: "Send invite"
@@ -115,7 +116,8 @@ en:
           title: "Create a Team"
         show:
           add_members: "Add members"
-          invite: "Invite team members"
+          confirm_leave: "Are you sure you want to leave the team?"
+          invite: "Invite other students"
           members_subheading: "Team members"
           mentors_coaches_subheading: "Team mentors and coaches"
           pending_invitees_subheading: "Pending Invites"

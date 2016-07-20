@@ -17,8 +17,14 @@
     </div>
   <% end %>
 
-  <div>
-    <h6>Danger Zone</h6>
-    <a href="#" class="primary-button">Leave <%= @team.name %></a>
+  <div class="has-danger">
+    <h6><%= t("views.application.danger_zone") %></h6>
+    <%= link_to t("controllers.student.team_memberships.destroy.link", name: @team.name),
+                [:student, @team, :membership],
+                data: {
+                  method: :delete,
+                  confirm: t("views.student.teams.show.confirm_leave"),
+                },
+                class: "primary-button" %>
   </div>
 </div>

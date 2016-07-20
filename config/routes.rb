@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
 
     resources :teams, except: :delete
+    resources :team_memberships, only: :destroy
+
     resources :team_member_invites, except: [:edit, :update, :destroy]
     resources :mentor_invites, except: [:edit, :update, :destroy]
 
