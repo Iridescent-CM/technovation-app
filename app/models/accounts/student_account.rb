@@ -5,7 +5,7 @@ class StudentAccount < Account
 
   has_many :memberships, as: :member, dependent: :destroy
 
-  has_one :student_profile, foreign_key: :account_id
+  has_one :student_profile, dependent: :destroy, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile
 
