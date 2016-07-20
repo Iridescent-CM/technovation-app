@@ -89,7 +89,7 @@ en:
           regional_ambassador: "Regional Ambassador"
           student: "Student"
         signup_link: "%{role} sign up"
-        title: "Sign up"
+        title: "Sign up as a"
 
     student:
       dashboards:

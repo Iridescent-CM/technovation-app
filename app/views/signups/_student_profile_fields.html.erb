@@ -1,28 +1,15 @@
-<div class="toggle-field student-field">
-  <!-- <h4><%= t('views.signups.form.student_profile') %></h4> -->
+<%= f.fields_for :student_profile do |s| %>
+  <%= s.input :school_name %>
 
-  <%= f.fields_for :student_profile do |s| %>
+  <%= s.input :is_in_secondary_school,
+              label: t("models.student_profile.is_in_secondary_school"),
+              collection: [[t("views.application.yes"), true],
+                            [t("views.application.no"), false]] %>
 
+  <%= s.input :parent_guardian_name,
+              label: t('models.student_profile.parent_guardian_name') %>
 
-      <%= s.input :school_name %>
-
-
-
-      <%= s.input :is_in_secondary_school,
-                  label: t("models.student_profile.is_in_secondary_school"),
-                  collection: [[t("views.application.yes"), true],
-                               [t("views.application.no"), false]] %>
-
-
-
-    <%= s.input :parent_guardian_name,
-                label: t('models.student_profile.parent_guardian_name') %>
-
-
-
-    <%= s.input :parent_guardian_email,
-                label: t('models.student_profile.parent_guardian_email'),
-                as: :email %>
-
-  <% end %>
-</div>
+  <%= s.input :parent_guardian_email,
+              label: t('models.student_profile.parent_guardian_email'),
+              as: :email %>
+<% end %>

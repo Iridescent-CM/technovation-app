@@ -1,15 +1,15 @@
-  <%= f.input :first_name %>
+<%= f.input :first_name %>
 
-  <%= f.input :last_name %>
+<%= f.input :last_name %>
 
-  <%= f.input :email, as: :email %>
+<%= f.input :email, as: :email %>
 
-  <%= f.input :date_of_birth, as: :date, prompt: true,
-                                         start_year: Date.today.year - 100,
-                                         end_year: Date.today.year - 12 %>
+<%= f.input :date_of_birth, as: :date, prompt: true,
+                                       start_year: Date.today.year - 100,
+                                       end_year: Date.today.year - 12 %>
 
-  <%= f.input :country, collection: CountryStateSelect.countries_collection %>
+<%= f.input :country, collection: CountryStateSelect.countries_collection %>
 
-  <%= f.input :state_province, label: t('models.account.state_province') %>
+<%= f.input :state_province, label: t('models.account.state_province') %>
 
-  <%= f.input :city %>
+<%= f.input :city %>
