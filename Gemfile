@@ -38,6 +38,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'timecop'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -45,7 +46,6 @@ group :development do
   gem 'spring'
   gem "refills"
   gem 'active_record_query_trace'
-  gem 'dotenv-rails'
 end
 
 group :qa, :production do
