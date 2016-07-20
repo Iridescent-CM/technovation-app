@@ -11,9 +11,12 @@ FactoryGirl.define do
     city { "Chicago" }
     state_province { "IL" }
     country { "US" }
+    type { "Account" }
   end
 
   factory :student, parent: :account, class: 'StudentAccount' do
+    type { "StudentAccount" }
+
     student_profile
 
     trait :on_team do
@@ -27,6 +30,8 @@ FactoryGirl.define do
   end
 
   factory :mentor, parent: :account, class: 'MentorAccount' do
+    type { "MentorAccount" }
+
     mentor_profile
 
     trait :with_expertises do
