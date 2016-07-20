@@ -7,7 +7,7 @@ module SearchMentors
     end
 
     if filter.nearby.present?
-      mentors.near(filter.nearby)
+      mentors.near(filter.nearby, 50)
     else
       mentors.all
     end
