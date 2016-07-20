@@ -1,15 +1,15 @@
 class SigninsController < ApplicationController
   def new
-    @signin = signin_class.new
+    @signin = Account.new
   end
 
   def create
-    @signin = signin_class.find_by(email: signin_params.fetch(:email))
+    @signin = Account.find_by(email: signin_params.fetch(:email))
 
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
       SignIn.(@signin, self)
     else
-      @signin = signin_class.new
+      @signin = Account.new
       flash[:error] = t('controllers.signins.create.error')
       render :new
     end
@@ -22,10 +22,6 @@ class SigninsController < ApplicationController
 
   private
   def signin_params
-    params.require(:signin).permit(:email, :password)
-  end
-
-  def signin_class
-    Signin
+    params.require(:account).permit(:email, :password)
   end
 end

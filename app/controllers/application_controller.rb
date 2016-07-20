@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def determine_layout
-    DetermineAccountType.(cookies.fetch(:auth_token) { "" })
+    Account.find_with_token(cookies.fetch(:auth_token) { "" }).type_name
   end
 end

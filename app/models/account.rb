@@ -49,6 +49,10 @@ class Account < ActiveRecord::Base
     false
   end
 
+  def type_name
+    type.underscore.sub('_account', '')
+  end
+
   private
   def generate_auth_token
     GenerateToken.(self, :auth_token)
@@ -71,8 +75,8 @@ class Account < ActiveRecord::Base
       false
     end
 
-    def is_on_team?
-      false
+    def type_name
+      'application'
     end
   end
 end

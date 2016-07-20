@@ -16,6 +16,8 @@ class CreateAccounts < ActiveRecord::Migration
 
       t.date :consent_signed_at
 
+      t.string :type, index: true, null: false
+
       t.timestamps null: false
     end
     add_index :accounts, :email, unique: true

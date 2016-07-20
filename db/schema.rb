@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160720030912) do
     t.string   "state_province",    null: false
     t.string   "country",           null: false
     t.date     "consent_signed_at"
+    t.string   "type",              null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.float    "latitude"
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160720030912) do
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["type"], name: "index_accounts_on_type", using: :btree
 
   create_table "admin_profiles", force: :cascade do |t|
     t.integer  "account_id", null: false

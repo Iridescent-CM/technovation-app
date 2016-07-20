@@ -1,7 +1,7 @@
 <div class="account">
   <h2><%= t('views.signins.new.title') %></h2>
 
-  <%= simple_form_for @signin do |f| %>
+  <%= simple_form_for @signin, url: signins_path do |f| %>
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.button :submit, t('views.signins.form.signin') %>
