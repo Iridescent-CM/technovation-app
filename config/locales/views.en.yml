@@ -59,6 +59,11 @@ en:
       show:
         invite_to_team: "Invite to team"
 
+    regional_ambassador:
+      dashboards:
+        show:
+          pending_approval: "Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region."
+
     signins:
       form:
         signin: "Sign in"

@@ -14,6 +14,10 @@ en:
     mentor:
       expertise_names: "Expertises"
 
+    regional_ambassador_profile:
+      ambassador_since_year: "Since what year have you been a regional ambassador?"
+      organization_company_name: "Organization/company name"
+
     score:
       team_name: "Team name"
       total: "Total"
