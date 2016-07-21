@@ -36,4 +36,10 @@ RSpec.feature "Invite a member to a team" do
     expect(mail.to).to eq(["some@student.com"])
     expect(mail.from).to eq(["info@technovationchallenge.org"])
   end
+
+  scenario "student accepts invite" do
+    visit team_member_invite_path(invite)
+    click_button "Accept invitation to #{student.team_name}"
+    expect(current_path).to eq(student_team_path(invite.team))
+  end
 end

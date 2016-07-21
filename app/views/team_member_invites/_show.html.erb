@@ -1,0 +1,7 @@
+<p><%= t("views.team_member_invites.show.greeting", name: @invite.team_name) %></p>
+
+<p>
+  <%= button_to t("controllers.team_member_invites.update.accept",
+                  name: @invite.team_name),
+                { url: url }, { method: :put } %>
+</p>

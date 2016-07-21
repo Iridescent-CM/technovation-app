@@ -10,6 +10,7 @@ class TeamMemberInvite < ActiveRecord::Base
   validates :invitee_email, presence: true
 
   delegate :email, to: :inviter, prefix: true
+  delegate :name, to: :team, prefix: true
 
   scope :pending, -> { where('accepted_at IS NULL') }
 
