@@ -199,7 +199,7 @@ namespace :reports do
       csv << %w{TeamName AppDescription Country TeamUrl PitchUrl DemoUrl}
 
       Team.current.is_submitted.ios.each do |team|
-        url = Rails.application.routes.url_helpers.team_url(team, host: "http://my.technovatiochallenge.org")
+        url = Rails.application.routes.url_helpers.team_url(team, host: "http://my.technovationchallenge.org")
         csv << [team.name, team.description, Country[team.country].name, url, team.pitch, team.demo]
       end
     end
