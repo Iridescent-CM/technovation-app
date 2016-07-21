@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :score_categories
-    resources :pending_regional_ambassadors, except: [:new, :edit, :create]
+    resources :pending_regional_ambassadors, only: [:index, :update]
 
     root to: 'dashboards#index'
   end

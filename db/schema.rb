@@ -126,15 +126,17 @@ ActiveRecord::Schema.define(version: 20160720225156) do
   add_index "memberships", ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id", using: :btree
 
   create_table "regional_ambassador_profiles", force: :cascade do |t|
-    t.string   "organization_company_name", null: false
-    t.integer  "ambassador_since_year",     null: false
-    t.integer  "account_id",                null: false
+    t.string   "organization_company_name",             null: false
+    t.integer  "ambassador_since_year",                 null: false
+    t.integer  "account_id",                            null: false
+    t.integer  "status",                    default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
   add_index "regional_ambassador_profiles", ["ambassador_since_year"], name: "index_regional_ambassador_profiles_on_ambassador_since_year", using: :btree
+  add_index "regional_ambassador_profiles", ["status"], name: "index_regional_ambassador_profiles_on_status", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",       null: false

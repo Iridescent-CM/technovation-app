@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>City, State, Country</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pending_regional_ambassadors.each do |ambassador| %>
+      <tr>
+        <td><%= ambassador.name %></td>
+        <td><%= ambassador.email %></td>
+        <td><%= ambassador.address_details %></td>
+        <td>approve | reject</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -4,6 +4,7 @@ class CreateRegionalAmbassadorProfiles < ActiveRecord::Migration
       t.string :organization_company_name, null: false
       t.integer :ambassador_since_year, index: true, null: false
       t.belongs_to :account, index: true, null: false
+      t.integer :status, null: false, default: 0, index: true
 
       t.timestamps
     end
