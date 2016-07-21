@@ -13,9 +13,14 @@ class TeamMemberInvite < ActiveRecord::Base
 
   scope :pending, -> { where('accepted_at IS NULL') }
 
-  def accept!
-    update_attributes(accepted_at: Time.current)
-    after_accept
+  def self.accept!(token)
+    if invite = find_by(invite_token: token)
+      invite.update_attributes(accepted_at: Time.current)
+      invite.after_accept
+      invite
+    else
+      false
+    end
   end
 
   def accepted?
@@ -26,8 +31,8 @@ class TeamMemberInvite < ActiveRecord::Base
     invite_token
   end
 
-  def self.find_with_token(token)
-    find_by(invite_token: token)
+  def after_accept
+    team.add_student(invitee)
   end
 
   private
@@ -42,9 +47,5 @@ class TeamMemberInvite < ActiveRecord::Base
   def set_existing_invitee
     self.invitee ||= StudentAccount.find_by(email: invitee_email)
     true
-  end
-
-  def after_accept
-    team.add_student(invitee)
   end
 end

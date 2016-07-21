@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_member_invites, except: [:edit, :update, :destroy]
-    resources :mentor_invites, except: [:edit, :update, :destroy]
+    resources :mentor_invites, only: [:create]
 
     resource :account, only: [:show, :edit, :update]
   end
@@ -25,13 +25,13 @@ Rails.application.routes.draw do
     resources :teams, only: [:index, :show]
     resource :dashboard, only: :show
 
-    resources :invite_acceptances, only: :show
+    resources :mentor_invites, only: [:show, :update]
 
     resource :account, only: [:show, :edit, :update]
   end
 
   resources :teams, only: :show
-  resources :team_member_invite_acceptances, only: :show
+  resources :team_member_invites, only: [:show, :update]
 
   namespace :admin do
     resources :score_categories
