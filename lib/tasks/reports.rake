@@ -154,6 +154,34 @@ namespace :reports do
     end
   end
 
+  desc "Generate a CSV of all submitted teams' cities and countries"
+  task submitted_team_city_countries: :environment do
+    teams = Team.includes(team_requests: :user).current.is_submitted
+
+    CSV.open("./public/submitted_team_cities_countries.csv", "wb") do |csv|
+      csv << %w{City Country}
+
+      teams.each do |team|
+        csv << [team.city, team.country_name]
+      end
+    end
+  end
+
+  desc "Generate a CSV of all finalists' parent emails"
+  task finalist_parent_emails: :environment do
+    teams = Team.includes(team_requests: :user).current.is_finalist
+
+    CSV.open("./public/finalist_parent_emails.csv", "wb") do |csv|
+      csv << %w{TeamName ParentEmail}
+
+      teams.each do |team|
+        team.students.map(&:parent_email).uniq.each do |email|
+          csv << [team.name, email]
+        end
+      end
+    end
+  end
+
   desc "Generate a CSV of all current year users with roles and country"
   task users_roles_countries: :environment do
     CSV.open("./public/users_roles_countries.csv", "wb") do |csv|
@@ -161,6 +189,18 @@ namespace :reports do
 
       User.is_registered.each do |user|
         csv << [user.name, user.email, Country[user.home_country].name, user.role]
+      end
+    end
+  end
+
+  desc "Generate a CSV of all current year iOS submissions with country"
+  task ios_submissions: :environment do
+    CSV.open("./public/2016_ios_technovation_submissions.csv", "wb") do |csv|
+      csv << %w{TeamName AppDescription Country TeamUrl PitchUrl DemoUrl}
+
+      Team.current.is_submitted.ios.each do |team|
+        url = Rails.application.routes.url_helpers.team_url(team, host: "http://my.technovatiochallenge.org")
+        csv << [team.name, team.description, Country[team.country].name, url, team.pitch, team.demo]
       end
     end
   end

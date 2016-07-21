@@ -302,11 +302,11 @@ class Team < ActiveRecord::Base
     Team.old.include?(self)
   end
 
-  private
   def students
     members(true).select(&:student?)
   end
 
+  private
   def ineligible_students
     students.select(&:ineligible?)
   end
