@@ -2,6 +2,11 @@ en:
   activerecord:
     errors:
       models:
+        parental_consent:
+          attributes:
+            consent_confirmation:
+              inclusion: "must be confirmed"
+
         student_account:
           attributes:
             existing_password:

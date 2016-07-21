@@ -14,6 +14,9 @@ en:
     mentor:
       expertise_names: "Expertises"
 
+    parental_consent:
+      consent_confirmation: "Check this box to confirm your consent"
+
     regional_ambassador_profile:
       ambassador_since_year: "Since what year have you been a regional ambassador?"
       organization_company_name: "Organization/company name"

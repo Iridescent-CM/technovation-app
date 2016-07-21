@@ -24,6 +24,10 @@ en:
         new:
           add: "Judge submissions"
 
+    parental_consents:
+      new:
+        unauthorized: "Sorry, that consent token was invalid."
+
     signins:
       create:
         success: "Hey! Welcome back!"

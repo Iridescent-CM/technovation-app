@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720225156) do
+ActiveRecord::Schema.define(version: 20160721164717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,11 @@ ActiveRecord::Schema.define(version: 20160720225156) do
     t.datetime "updated_at",        null: false
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "consent_token"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
+  add_index "accounts", ["consent_token"], name: "index_accounts_on_consent_token", unique: true, using: :btree
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
   add_index "accounts", ["type"], name: "index_accounts_on_type", using: :btree
 
@@ -125,13 +127,23 @@ ActiveRecord::Schema.define(version: 20160720225156) do
   add_index "memberships", ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id", using: :btree
   add_index "memberships", ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id", using: :btree
 
+  create_table "parental_consents", force: :cascade do |t|
+    t.integer  "consent_confirmation"
+    t.string   "electronic_signature"
+    t.integer  "account_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "parental_consents", ["account_id"], name: "index_parental_consents_on_account_id", using: :btree
+
   create_table "regional_ambassador_profiles", force: :cascade do |t|
     t.string   "organization_company_name",             null: false
     t.integer  "ambassador_since_year",                 null: false
     t.integer  "account_id",                            null: false
     t.integer  "status",                    default: 0, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
@@ -264,6 +276,7 @@ ActiveRecord::Schema.define(version: 20160720225156) do
   add_foreign_key "guidance_profiles", "accounts"
   add_foreign_key "judge_scoring_expertises", "judge_profiles"
   add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
+  add_foreign_key "parental_consents", "accounts"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"
   add_foreign_key "scored_values", "score_values"

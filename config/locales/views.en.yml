@@ -59,6 +59,12 @@ en:
       show:
         invite_to_team: "Invite to team"
 
+    parental_consents:
+      new:
+        submit: "I agree"
+      show:
+        signed: "%{student_name} has been consented by %{parent_name} on %{date}"
+
     regional_ambassador:
       dashboards:
         show:

@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
 
   geocoded_by :address_details
 
-  before_validation :generate_auth_token, on: :create
+  before_validation :generate_tokens, on: :create
   after_validation :geocode, if: :address_changed?
   after_create :register_current_season
 
@@ -54,8 +54,9 @@ class Account < ActiveRecord::Base
   end
 
   private
-  def generate_auth_token
+  def generate_tokens
     GenerateToken.(self, :auth_token)
+    GenerateToken.(self, :consent_token)
   end
 
   def register_current_season

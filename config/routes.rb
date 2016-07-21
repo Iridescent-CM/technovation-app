@@ -30,17 +30,14 @@ Rails.application.routes.draw do
     resource :account, only: [:show, :edit, :update]
   end
 
-  resources :teams, only: :show
-  resources :team_member_invites, only: [:show, :update]
+  namespace :coach do
+    get :signup, to: 'signups#new'
+    post :accounts, to: "signups#create"
 
-  namespace :admin do
-    resources :score_categories
-    resources :pending_regional_ambassadors, only: [:index, :update]
-
-    root to: 'dashboards#index'
+    resource :dashboard, only: :show
   end
 
-  namespace :coach do
+  namespace :regional_ambassador do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"
 
@@ -60,18 +57,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :mentors, only: :show
+  namespace :admin do
+    resources :score_categories
+    resources :pending_regional_ambassadors, only: [:index, :update]
+
+    root to: 'dashboards#index'
+  end
 
   namespace :application do
     resource :dashboard, only: :show
   end
 
-  namespace :regional_ambassador do
-    get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
+  resources :mentors, only: :show
 
-    resource :dashboard, only: :show
-  end
+  resources :parental_consents, only: [:new, :create, :show]
+
+  resources :teams, only: :show
+  resources :team_member_invites, only: [:show, :update]
 
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
@@ -82,7 +84,6 @@ Rails.application.routes.draw do
   match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
 
   resources :signins, only: :create
-  post 'accounts', to: "signups#create"
 
   root to: "application/dashboards#show"
 end

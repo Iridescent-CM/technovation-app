@@ -5,6 +5,8 @@ class StudentAccount < Account
 
   has_many :memberships, as: :member, dependent: :destroy
 
+  has_one :parental_consent, dependent: :destroy, foreign_key: :account_id
+
   has_one :student_profile, dependent: :destroy, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile
@@ -17,6 +19,11 @@ class StudentAccount < Account
            :completion_requirements,
     to: :student_profile,
     prefix: false
+
+  delegate :electronic_signature,
+           :signed_at,
+    to: :parental_consent,
+    prefix: true
 
   def is_on_team?
     teams.any?
