@@ -1,4 +1,9 @@
 en:
+  ambassador_mailer:
+    approved:
+      greeting: "Hey there, good news! Your Regional Ambassador account has been approved!"
+      next_steps: "For now, there isn't anything for you to do. We are rolling out new RA features soon, and you will get an email when we have updates."
+
   team_mailer:
     invite_member:
       subject: "You're invited to join my Technovation team!"
