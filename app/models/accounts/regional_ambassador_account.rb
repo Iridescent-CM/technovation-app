@@ -13,7 +13,10 @@ class RegionalAmbassadorAccount < Account
   accepts_nested_attributes_for :regional_ambassador_profile
   validates_associated :regional_ambassador_profile
 
-  delegate :organization_company_name,
+  delegate :status,
+           :approved!,
+           :rejected!,
+           :organization_company_name,
            :ambassador_since_year,
     to: :regional_ambassador_profile,
     prefix: false

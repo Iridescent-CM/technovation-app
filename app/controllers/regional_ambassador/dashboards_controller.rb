@@ -1,4 +1,4 @@
 module RegionalAmbassador
-  class DashboardsController < CoachController
+  class DashboardsController < RegionalAmbassadorController
   end
 end

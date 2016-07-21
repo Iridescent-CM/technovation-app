@@ -6,7 +6,7 @@ class CreateRegionalAmbassadorProfiles < ActiveRecord::Migration
       t.belongs_to :account, index: true, null: false
       t.integer :status, null: false, default: 0, index: true
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

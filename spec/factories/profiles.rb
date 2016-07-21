@@ -11,4 +11,10 @@ FactoryGirl.define do
     school_company_name { "FactoryGirl" }
     job_title { "Engineer" }
   end
+
+  factory :regional_ambassador_profile do
+    organization_company_name { "FactoryGirl" }
+    ambassador_since_year { Time.current.year }
+    account
+  end
 end

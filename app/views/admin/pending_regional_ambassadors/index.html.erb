@@ -14,7 +14,16 @@
         <td><%= ambassador.full_name %></td>
         <td><%= ambassador.email %></td>
         <td><%= ambassador.address_details %></td>
-        <td>approve | reject</td>
+        <td>
+          <%= link_to "approve",
+                      admin_pending_regional_ambassador_path(ambassador,
+                                                             status: :approved),
+                      data: { method: :put } %>&nbsp;|
+          <%= link_to "reject",
+                      admin_pending_regional_ambassador_path(ambassador,
+                                                             status: :rejected),
+                      data: { method: :put } %>
+        </td>
       </tr>
     <% end %>
   </tbody>

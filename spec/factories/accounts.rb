@@ -43,4 +43,16 @@ FactoryGirl.define do
       end
     end
   end
+
+  factory :regional_ambassador, parent: :account, class: 'RegionalAmbassadorAccount' do
+    type { "RegionalAmbassadorAccount" }
+
+    regional_ambassador_profile
+
+    trait :approved do
+      after(:create) do |m|
+        m.approved!
+      end
+    end
+  end
 end

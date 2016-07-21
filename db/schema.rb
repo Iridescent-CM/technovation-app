@@ -130,8 +130,8 @@ ActiveRecord::Schema.define(version: 20160720225156) do
     t.integer  "ambassador_since_year",                 null: false
     t.integer  "account_id",                            null: false
     t.integer  "status",                    default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
