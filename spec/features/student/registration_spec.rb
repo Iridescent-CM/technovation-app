@@ -29,4 +29,13 @@ RSpec.feature "Register as a student" do
   scenario "Redirected to student dashboard" do
     expect(current_path).to eq(student_dashboard_path)
   end
+
+  scenario "parent is emailed the consent form link" do
+    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
+
+    mail = ActionMailer::Base.deliveries.last
+
+    expect(mail.to).to eq(["parents@example.com"])
+    expect(mail.body.parts.last.to_s).to include("href=\"#{new_parental_consent_url(token: StudentAccount.last.consent_token)}\"")
+  end
 end

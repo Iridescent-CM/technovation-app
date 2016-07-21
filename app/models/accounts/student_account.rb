@@ -2,6 +2,7 @@ class StudentAccount < Account
   default_scope { joins(:student_profile) }
 
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
+  after_save :send_parental_consent_notice, on: :create
 
   has_many :memberships, as: :member, dependent: :destroy
 
@@ -47,5 +48,10 @@ class StudentAccount < Account
 
   def teams
     Team.joins(:memberships).where("memberships.member_id = ?", id)
+  end
+
+  private
+  def send_parental_consent_notice
+    ParentMailer.consent_notice(self).deliver_later
   end
 end
