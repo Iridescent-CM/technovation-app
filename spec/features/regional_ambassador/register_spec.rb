@@ -31,4 +31,13 @@ RSpec.feature "Regional Ambassadors registration" do
   scenario "displays a pending approval notice" do
     expect(page).to have_content("Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region.")
   end
+
+  scenario "admins receive an email about it" do
+    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
+
+    mail = ActionMailer::Base.deliveries.last
+
+    expect(mail.to).to eq(["info@technovationchallenge.org"])
+    expect(mail.body.parts.last.to_s).to include("href=\"#{admin_pending_regional_ambassadors_url}\"")
+  end
 end
