@@ -14,10 +14,6 @@ module SignIn
   private
   def self.after_signin_path(signin, context)
     context.get_cookie(:redirected_from) or
-      determine_dashboard_path(signin, context)
-  end
-
-  def self.determine_dashboard_path(signin, context)
-    context.public_send("#{signin.type_name}_dashboard_path")
+      context.public_send("#{signin.type_name}_dashboard_path")
   end
 end
