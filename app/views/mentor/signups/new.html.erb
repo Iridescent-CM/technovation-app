@@ -1,18 +1,17 @@
 <div class="signup_page">
-  <h1><%= t('views.signups.new.title') %></h1>
+  <h2>
+    <%= t('views.signups.new.title') %>
+    <span class="accent"><%= t("views.signups.new.roles.mentor") %></span>
+  </h2>
 
-  <%= simple_form_for(@mentor) do |f| %>
-    <div class="basic_fields">
+  <div class="signup-form">
+    <%= simple_form_for(@mentor) do |f| %>
       <%= render 'signups/basic_profile_fields', f: f %>
       <%= render 'signups/mentor_profile_fields', f: f %>
-    </div>
-
-    <div class="specialized_fields">
       <%= f.input :password %>
       <%= f.input :password_confirmation,
                   label: t('views.signups.form.confirm_password') %>
-
       <%= f.button :submit, t('views.signups.form.signup') %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
