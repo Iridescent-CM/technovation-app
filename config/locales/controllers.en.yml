@@ -25,6 +25,8 @@ en:
           add: "Judge submissions"
 
     parental_consents:
+      create:
+        success: "Thank you for signing the parental consent form!"
       new:
         unauthorized: "Sorry, that consent token was invalid."
 
