@@ -127,3 +127,7 @@ en:
           members_subheading: "Team members"
           mentors_coaches_subheading: "Team mentors and coaches"
           pending_invitees_subheading: "Pending Invites"
+
+    team_member_invites:
+      show:
+        greeting: "You've been invited to join %{name}!"

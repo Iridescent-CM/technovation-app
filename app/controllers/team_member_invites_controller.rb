@@ -14,7 +14,7 @@ class TeamMemberInvitesController < ApplicationController
     return false unless !!invite and !!invite.invitee
 
     SignIn.(invite.invitee, self,
-            message: t("controllers.team_member_invite_acceptances.show.success"),
+            message: t("controllers.team_member_invites.update.success"),
             redirect_to: student_team_path(invite.team))
   end
 end

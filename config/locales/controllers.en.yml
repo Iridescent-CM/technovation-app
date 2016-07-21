@@ -47,8 +47,9 @@ en:
           link: "Leave %{name}"
           success: "You have left the team `%{name}`"
 
-    team_member_invite_acceptances:
-      show:
+    team_member_invites:
+      update:
+        accept: "Accept invitation to %{name}"
         success: "Welcome to the team! Make us proud!"
 
     teams:
