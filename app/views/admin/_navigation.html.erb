@@ -1,18 +1,23 @@
 <header class="navigation" role="banner">
-  <div class="navigation-wrapper">
-    <ul class="navigation-menu">
-      <li class="nav-link">
-        <%= link_to t('views.application.site_title'), root_path %>
-      </li>
+  <div class="container">
+    <%= link_to image_tag("tc-logo-white.svg"),
+                application_dashboard_path,
+                class: "logo" %>
 
-      <li class="nav-link">
-        <%= link_to t('views.admin.menu.score_categories'),
-                    admin_score_categories_path %>
-      </li>
+    <nav>
+      <ul>
+        <li class="nav-link">
+          <%= link_to "Pending Regional Ambassadors", admin_pending_regional_ambassadors_path %>
+        </li>
 
-      <li class="nav-link">
-        <%= link_to t('views.application.signout'), signout_path, method: :delete %>
-      </li>
-    </ul>
+        <li class="nav-link">
+          <%= link_to "Scoring Rubric", admin_score_categories_path %>
+        </li>
+
+        <li class="nav-link">
+          <%= link_to t('views.application.signout'), signout_path, method: :delete %>
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
