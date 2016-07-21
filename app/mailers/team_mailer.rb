@@ -1,6 +1,4 @@
 class TeamMailer < ApplicationMailer
-  default from: "info@technovationchallenge.org"
-
   def invite_member(team_member_invite)
     @url = team_member_invite_url(team_member_invite)
 
