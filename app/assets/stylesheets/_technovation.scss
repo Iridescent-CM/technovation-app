@@ -221,3 +221,7 @@ nav.profile {
 label {
   cursor: pointer;
 }
+
+.clearfix {
+  @include clearfix;
+}
