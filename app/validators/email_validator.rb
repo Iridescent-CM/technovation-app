@@ -1,8 +1,7 @@
-class EmailValidator < ApplicationValidator
+class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-      record.errors.add(attribute,
-                        I18n.translate(translation_path(record, attribute)))
+      record.errors.add(attribute, :invalid)
     end
   end
 end

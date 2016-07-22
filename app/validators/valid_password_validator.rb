@@ -1,8 +1,7 @@
-class ValidPasswordValidator < ApplicationValidator
+class ValidPasswordValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless changes_authenticated?(record, value)
-      record.errors.add(attribute,
-                        I18n.translate(translation_path(record, attribute)))
+      record.errors.add(attribute, :invalid)
     end
   end
 
