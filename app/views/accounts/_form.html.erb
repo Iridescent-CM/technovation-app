@@ -1,4 +1,4 @@
-<%= simple_form_for @account do |f| %>
+<%= simple_form_for @account, url: url do |f| %>
   <%= render 'signups/basic_profile_fields', f: f %>
 
   <%= f.input :existing_password,
