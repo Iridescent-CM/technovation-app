@@ -36,6 +36,10 @@
     cssSelector: '.account_dob',
 
     init: function() {
+      return $(document).on(this.eventList, this.enableChosen.bind(this));
+    },
+
+    enableChosen: function(e) {
       return $(this.cssSelector).chosen({
                                    disable_search_threshold: 10,
                                  });
