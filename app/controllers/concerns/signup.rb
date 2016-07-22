@@ -9,7 +9,8 @@ module Signup
     before_save(instance)
 
     if instance.save
-      SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"))
+      SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"),
+                              message: t("controllers.signups.create.success"))
     else
       render :new
     end
