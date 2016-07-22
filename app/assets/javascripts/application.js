@@ -41,7 +41,7 @@
 
     enableChosen: function(e) {
       return $(this.cssSelector).chosen({
-                                   disable_search_threshold: 10,
+                                   disable_search_threshold: 8,
                                  });
     },
   };
