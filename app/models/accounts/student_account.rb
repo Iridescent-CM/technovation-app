@@ -1,7 +1,10 @@
 class StudentAccount < Account
   default_scope { joins(:student_profile) }
 
+  attr_accessor :team_invite_token
+
   after_initialize :build_student_profile, if: -> { student_profile.blank? }
+  after_save :join_invited_team, on: :create
   after_save :send_parental_consent_notice, on: :create
 
   has_many :memberships, as: :member, dependent: :destroy
@@ -53,5 +56,9 @@ class StudentAccount < Account
   private
   def send_parental_consent_notice
     ParentMailer.consent_notice(self).deliver_later
+  end
+
+  def join_invited_team
+    TeamMemberInvite.accept!(team_invite_token, email)
   end
 end

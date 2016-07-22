@@ -2,6 +2,10 @@ module Student
   class SignupsController < ApplicationController
     include Signup
 
+    def before_save(student)
+      student.team_invite_token = cookies.fetch(:team_invite_token) { "" }
+    end
+
     private
     def model_name
       "student"

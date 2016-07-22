@@ -14,9 +14,12 @@ class TeamMemberInvite < ActiveRecord::Base
 
   scope :pending, -> { where('accepted_at IS NULL') }
 
-  def self.accept!(token)
-    if invite = find_by(invite_token: token)
-      invite.update_attributes(accepted_at: Time.current)
+  def self.accept!(token, email = nil)
+    if invite = where("invite_token = ? OR invitee_email = ?", token, email).first
+      invite.update_attributes({
+        accepted_at: Time.current,
+        invitee: Account.find_by(email: email) || invite.invitee,
+      })
       invite.after_accept
       invite
     else

@@ -6,12 +6,16 @@ module Signup
   def create
     instance_variable_set("@#{model_name}", model.new(account_params))
 
+    before_save(instance)
+
     if instance.save
       SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"))
     else
       render :new
     end
   end
+
+  def before_save(*); end
 
   private
   def account_params
