@@ -12,7 +12,7 @@ class Account < ActiveRecord::Base
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, email: true
   validates :password, :password_confirmation, presence: { on: :create }
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
