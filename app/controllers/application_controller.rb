@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     cookies.fetch(key) { false }
   end
 
+  def remove_cookie(key)
+    cookies.delete(key) or false
+  end
+
   private
   def save_redirected_path
     cookies[:redirected_from] = request.fullpath

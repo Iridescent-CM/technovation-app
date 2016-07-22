@@ -13,7 +13,7 @@ module SignIn
 
   private
   def self.after_signin_path(signin, context)
-    context.get_cookie(:redirected_from) or
+    context.remove_cookie(:redirected_from) or
       context.public_send("#{signin.type_name}_dashboard_path")
   end
 end
