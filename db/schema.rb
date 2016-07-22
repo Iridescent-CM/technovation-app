@@ -128,11 +128,11 @@ ActiveRecord::Schema.define(version: 20160721164717) do
   add_index "memberships", ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id", using: :btree
 
   create_table "parental_consents", force: :cascade do |t|
-    t.integer  "consent_confirmation"
-    t.string   "electronic_signature"
-    t.integer  "account_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "consent_confirmation", default: 0, null: false
+    t.string   "electronic_signature",             null: false
+    t.integer  "account_id",                       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "parental_consents", ["account_id"], name: "index_parental_consents_on_account_id", using: :btree
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(version: 20160721164717) do
     t.integer  "ambassador_since_year",                 null: false
     t.integer  "account_id",                            null: false
     t.integer  "status",                    default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree

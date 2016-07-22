@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     post :accounts, to: "signups#create"
 
     resources :teams, only: [:index, :show]
+    resources :team_searches, except: [:index, :destroy]
     resource :dashboard, only: :show
 
     resources :mentor_invites, only: [:show, :update]

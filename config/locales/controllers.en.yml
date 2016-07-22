@@ -24,6 +24,11 @@ en:
         new:
           add: "Judge submissions"
 
+    mentor:
+      team_searches:
+        new:
+          link: "Find a team"
+
     parental_consents:
       create:
         success: "Thank you for signing the parental consent form!"

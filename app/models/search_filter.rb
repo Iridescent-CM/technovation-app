@@ -8,7 +8,11 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   def nearby
-    filter_options.fetch(:nearby) { "" }
+    filter_options.fetch(:nearby) { nil }
+  end
+
+  def has_mentor
+    filter_options.fetch(:has_mentor) { true }
   end
 
   def badge_css(expertise)
