@@ -66,3 +66,28 @@ label {
     margin-bottom: $base-spacing;
   }
 }
+
+.account_dob {
+  width: 30%;
+}
+
+#account_country {
+  width: 100%;
+}
+
+.chosen-container, .chosen-container-single {
+  font-size: 1.5rem;
+
+  .chosen-single {
+    height: 35px;
+
+    span {
+      line-height: 1.3;
+      color: #aaa;
+    }
+  }
+}
+
+.chosen-container .chosen-results li {
+  line-height: 1.5;
+}

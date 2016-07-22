@@ -30,5 +30,18 @@
     },
   };
 
+  var accountDobFields = {
+    eventList: 'ready page:load',
+
+    cssSelector: '.account_dob',
+
+    init: function() {
+      return $(this.cssSelector).chosen({
+                                   disable_search_threshold: 10,
+                                 });
+    },
+  };
+
+  accountDobFields.init();
   countrySelectFields.init();
 }())

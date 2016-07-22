@@ -1,3 +1,6 @@
+<% start_year ||= Date.today.year - 75 %>
+<% end_year ||= Date.today.year - 20 %>
+
 <%= f.input :first_name %>
 
 <%= f.input :last_name %>
@@ -5,10 +8,12 @@
 <%= f.input :email, as: :email %>
 
 <%= f.input :date_of_birth, as: :date, prompt: true,
-                                       start_year: Date.today.year - 100,
-                                       end_year: Date.today.year - 12 %>
+                                       start_year: start_year,
+                                       end_year: end_year,
+                                       input_html: { class: "account_dob" } %>
 
-<%= f.input :country, collection: CountryStateSelect.countries_collection %>
+<%= f.input :country, collection: CountryStateSelect.countries_collection,
+                      input_html: { id: "account_country" } %>
 
 <%= f.input :state_province, label: t('models.account.state_province') %>
 
