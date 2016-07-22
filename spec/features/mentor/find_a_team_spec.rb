@@ -12,7 +12,7 @@ RSpec.feature "Mentors find a team" do
     sign_in(mentor)
 
     click_link "My Teams"
-    click_link "Find a team"
+    click_link "Browse available teams"
 
     expect(page).to have_css(".team_name", text: available_team.name)
     expect(page).not_to have_css(".team_name", text: mentored_team.name)

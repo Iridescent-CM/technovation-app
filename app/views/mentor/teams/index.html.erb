@@ -2,7 +2,8 @@
   <%= render 'mentor/dashboards/navigation' %>
 
   <p><%= link_to t("controllers.mentor.team_searches.new.link"),
-                 new_mentor_team_search_path %></p>
+                 new_mentor_team_search_path,
+                 class: "primary-button" %></p>
 
   <ul class="mentor_teams">
     <% @teams.each do |team| %>

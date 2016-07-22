@@ -27,7 +27,7 @@ en:
     mentor:
       team_searches:
         new:
-          link: "Find a team"
+          link: "Browse available teams"
 
     parental_consents:
       create:

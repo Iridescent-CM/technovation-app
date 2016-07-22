@@ -55,6 +55,11 @@ en:
         new:
           title: "Score a Submission"
 
+    mentor:
+      team_searches:
+        show:
+          no_results: "Sorry, we didn't find any teams without a mentor near you"
+
     mentors:
       show:
         invite_to_team: "Invite to team"

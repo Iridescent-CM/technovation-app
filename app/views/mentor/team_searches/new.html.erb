@@ -1,5 +1,2 @@
-<% @teams.each do |team| %>
-  <div class="team">
-    <h1 class="team_name"><%= team.name %></h1>
-  </div>
-<% end %>
+<%= render(partial: "mentor/team_searches/result", collection: @teams) or
+      t("views.mentor.team_searches.show.no_results") %>
