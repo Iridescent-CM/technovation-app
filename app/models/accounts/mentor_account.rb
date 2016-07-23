@@ -29,4 +29,8 @@ class MentorAccount < Account
   def teams
     Team.joins(:memberships).where('memberships.member_id = ?', id)
   end
+
+  def requested_to_join?(team)
+    join_requests.flat_map(&:joinable).include?(team)
+  end
 end

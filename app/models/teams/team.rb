@@ -5,7 +5,6 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :members, through: :memberships
   has_many :students, through: :memberships, source: :member, source_type: "StudentAccount"
   has_many :mentors, through: :memberships, source: :member, source_type: "MentorAccount"
   has_many :coaches, through: :memberships, source: :member, source_type: "CoachAccount"
@@ -17,6 +16,10 @@ class Team < ActiveRecord::Base
   validates :name, uniqueness: true, presence: true
   validates :description, presence: true
   validates :division, presence: true
+
+  def creator_address_details
+    memberships.first.member_address_details
+  end
 
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)

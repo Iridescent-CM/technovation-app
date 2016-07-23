@@ -1,0 +1,12 @@
+<%= @mentor.full_name %>
+
+<p>
+  <% if current_student.invited_mentor?(@mentor) %>
+    <%= t("views.mentors.show.already_invited") %>
+  <% else %>
+    <%= form_for [:student, @mentor_invite] do |f| %>
+      <%= f.hidden_field :invitee_email, value: @mentor.email %>
+      <%= f.submit t("views.mentors.show.invite_to_team") %>
+    <% end %>
+  <% end %>
+</p>

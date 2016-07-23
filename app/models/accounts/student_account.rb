@@ -8,6 +8,7 @@ class StudentAccount < Account
   after_save :send_parental_consent_notice, on: :create
 
   has_many :memberships, as: :member, dependent: :destroy
+  has_many :mentor_invites, foreign_key: :inviter_id
 
   has_one :parental_consent, dependent: :destroy, foreign_key: :account_id
 
@@ -51,6 +52,10 @@ class StudentAccount < Account
 
   def teams
     Team.joins(:memberships).where("memberships.member_id = ?", id)
+  end
+
+  def invited_mentor?(mentor)
+    mentor_invites.flat_map(&:invitee).include?(mentor)
   end
 
   private

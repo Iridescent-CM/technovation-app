@@ -18,7 +18,7 @@ module StudentHelper
         content_tag :li,
                     link_to(
                       I18n.translate('views.student.navigation.find_a_mentor'),
-                      student_mentors_search_path
+                      student_mentor_search_path
                     ),
                     class: "nav-link"
       end

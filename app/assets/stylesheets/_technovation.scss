@@ -183,9 +183,7 @@ nav.profile {
   .account-info {
     @include span-columns(9);
   }
-}
 
-.student-dashboard {
   .profile-avatar {
     @include span-columns(3);
     text-align: center;

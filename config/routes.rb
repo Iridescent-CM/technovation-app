@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
 
-    namespace :mentors do
-      resource :search, only: :show
-    end
+    resources :mentors, only: :show
+
+    resource :mentor_search, only: :show
 
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
@@ -70,8 +70,6 @@ Rails.application.routes.draw do
   namespace :application do
     resource :dashboard, only: :show
   end
-
-  resources :mentors, only: :show
 
   resources :parental_consents, only: [:new, :create, :show]
 
