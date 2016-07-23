@@ -11,6 +11,10 @@ en:
     guidance_profile:
       school_company_name: "School or company name"
 
+    join_request:
+      joinable_name: "Name"
+      status: "Status"
+
     mentor:
       expertise_names: "Expertises"
 

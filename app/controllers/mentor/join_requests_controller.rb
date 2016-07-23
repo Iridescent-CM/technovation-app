@@ -21,5 +21,6 @@ class Mentor::JoinRequestsController < MentorController
   end
 
   def index
+    @join_requests = current_mentor.join_requests
   end
 end

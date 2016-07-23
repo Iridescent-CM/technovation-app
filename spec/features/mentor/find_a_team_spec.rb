@@ -10,7 +10,7 @@ RSpec.feature "Mentors find a team" do
 
     sign_in(mentor)
 
-    click_link "My Teams"
+    click_link "My teams"
   end
 
   scenario "browse nearby teams that don't have a mentor" do
@@ -32,6 +32,17 @@ RSpec.feature "Mentors find a team" do
     join_request = JoinRequest.last
     expect(current_path).to eq(mentor_join_request_path(join_request))
     expect(page).to have_content(join_request.joinable_name)
+    expect(page).to have_content("Pending review")
+  end
+
+  scenario "browse requests" do
+    click_link "Browse available teams"
+    click_link available_team.name
+    click_button "Request to be a mentor for #{available_team.name}"
+
+    click_link "My requests"
+    join_request = JoinRequest.last
+    expect(page).to have_css('table', text: join_request.joinable_name)
     expect(page).to have_content("Pending review")
   end
 end

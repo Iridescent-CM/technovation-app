@@ -46,6 +46,13 @@ en:
       show:
         title: "Account Info"
 
+    dashboard:
+      menu:
+        home: "Home"
+        my_teams: "My teams"
+        my_requests: "My requests"
+        my_account: "My account"
+
     judge:
       scores:
         index:
@@ -56,6 +63,10 @@ en:
           title: "Score a Submission"
 
     mentor:
+      join_requests:
+        index:
+          title: "My requests"
+
       team_searches:
         show:
           no_results: "Sorry, we didn't find any teams without a mentor near you"
