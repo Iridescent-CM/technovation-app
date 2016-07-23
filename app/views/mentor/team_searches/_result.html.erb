@@ -1,3 +1,5 @@
 <div class="team">
-  <h1 class="team_name"><%= result.name %></h1>
+  <h1 class="team_name">
+    <%= link_to result.name, new_mentor_join_request_path(team_id: result) %>
+  </h1>
 </div>

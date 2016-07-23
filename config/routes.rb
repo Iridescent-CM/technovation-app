@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
     resources :teams, only: [:index, :show]
     resources :team_searches, except: [:index, :destroy]
+    resources :join_requests, except: [:edit, :update]
+
     resource :dashboard, only: :show
 
     resources :mentor_invites, only: [:show, :update]

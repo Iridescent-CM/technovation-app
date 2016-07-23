@@ -25,6 +25,10 @@ en:
           add: "Judge submissions"
 
     mentor:
+      join_requests:
+        create:
+          link: "Request to be a mentor for %{name}"
+          success: "You have requested to be a mentor for %{name}"
       team_searches:
         new:
           link: "Browse available teams"

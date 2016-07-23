@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721164717) do
+ActiveRecord::Schema.define(version: 20160723005420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,22 @@ ActiveRecord::Schema.define(version: 20160721164717) do
 
   add_index "guidance_profiles", ["account_id"], name: "index_guidance_profiles_on_account_id", using: :btree
   add_index "guidance_profiles", ["type"], name: "index_guidance_profiles_on_type", using: :btree
+
+  create_table "join_requests", force: :cascade do |t|
+    t.integer  "requestor_id",   null: false
+    t.string   "requestor_type", null: false
+    t.integer  "joinable_id",    null: false
+    t.string   "joinable_type",  null: false
+    t.datetime "accepted_at"
+    t.datetime "rejected_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "join_requests", ["accepted_at"], name: "index_join_requests_on_accepted_at", using: :btree
+  add_index "join_requests", ["joinable_type", "joinable_id"], name: "index_join_requests_on_joinable_type_and_joinable_id", using: :btree
+  add_index "join_requests", ["rejected_at"], name: "index_join_requests_on_rejected_at", using: :btree
+  add_index "join_requests", ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id", using: :btree
 
   create_table "judge_profiles", force: :cascade do |t|
     t.integer  "account_id",   null: false
@@ -274,6 +290,8 @@ ActiveRecord::Schema.define(version: 20160721164717) do
   add_foreign_key "guidance_profile_expertises", "expertises"
   add_foreign_key "guidance_profile_expertises", "guidance_profiles"
   add_foreign_key "guidance_profiles", "accounts"
+  add_foreign_key "join_requests", "accounts", column: "requestor_id"
+  add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "judge_scoring_expertises", "judge_profiles"
   add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
   add_foreign_key "parental_consents", "accounts"

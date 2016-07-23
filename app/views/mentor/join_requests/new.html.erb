@@ -1,0 +1,3 @@
+<h1><%= @team.name %></h1>
+<p><%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
+                 mentor_join_requests_path(team_id: @team.id) %></p>
