@@ -1,3 +1,4 @@
 <% provide :root_path, student_dashboard_path %>
 <% provide :menu, "&nbsp;".html_safe %>
+<% provide :subnav, render('student/dashboards/navigation') %>
 <%= render template: "layouts/application" %>

@@ -1,12 +1,8 @@
-<div class="profile-pages mentor-dashboard">
-  <%= render 'mentor/dashboards/navigation' %>
+<%= render 'mentor/team_searches/result', result: @team %>
 
-  <%= render 'mentor/team_searches/result', result: @team %>
-
-  <% if current_mentor.requested_to_join?(@team) %>
-    <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
-  <% else %>
-    <p><%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
-                     mentor_join_requests_path(team_id: @team.id) %></p>
-  <% end %>
-</div>
+<% if current_mentor.requested_to_join?(@team) %>
+  <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
+<% else %>
+  <p><%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
+                    mentor_join_requests_path(team_id: @team.id) %></p>
+<% end %>

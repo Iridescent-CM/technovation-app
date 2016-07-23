@@ -1,9 +1,4 @@
 <% provide :root_path, mentor_dashboard_path %>
-
-<% provide :menu do %>
-  <li class="nav-link">
-    <%= link_to t('views.mentor.navigation.teams'), mentor_teams_path %>
-  </li>
-<% end %>
-
+<% provide :menu, "&nbsp;".html_safe %>
+<% provide :subnav, render('mentor/dashboards/navigation') %>
 <%= render template: "layouts/application" %>

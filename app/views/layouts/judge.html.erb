@@ -1,9 +1,3 @@
 <% provide :root_path, judge_dashboard_path %>
-
-<% provide :menu do %>
-  <li class="nav-link">
-    <%= link_to t('views.judge.scores.index.title'), judge_scores_path %>
-  </li>
-<% end %>
-
+<% provide :menu, "&nbsp;".html_safe %>
 <%= render template: "layouts/application" %>

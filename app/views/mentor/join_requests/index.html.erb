@@ -1,27 +1,23 @@
-<div class="profile-pages mentor-dashboard">
-  <%= render 'mentor/dashboards/navigation' %>
+<h1><%= t("views.mentor.join_requests.index.title") %></h1>
 
-  <h1><%= t("views.mentor.join_requests.index.title") %></h1>
+<p><%= link_to t("controllers.mentor.team_searches.new.link"),
+                new_mentor_team_search_path,
+                class: "primary-button" %></p>
 
-  <p><%= link_to t("controllers.mentor.team_searches.new.link"),
-                 new_mentor_team_search_path,
-                 class: "primary-button" %></p>
+<table>
+  <thead>
+    <tr>
+      <th><%= t("models.join_request.joinable_name") %></th>
+      <th><%= t("models.join_request.status") %></th>
+    </tr>
+  </thead>
 
-  <table>
-    <thead>
+  <tbody>
+    <% @join_requests.each do |join_request| %>
       <tr>
-        <th><%= t("models.join_request.joinable_name") %></th>
-        <th><%= t("models.join_request.status") %></th>
+        <td><%= join_request.joinable_name %></td>
+        <td><%= join_request.status %></td>
       </tr>
-    </thead>
-
-    <tbody>
-      <% @join_requests.each do |join_request| %>
-        <tr>
-          <td><%= join_request.joinable_name %></td>
-          <td><%= join_request.status %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+    <% end %>
+  </tbody>
+</table>

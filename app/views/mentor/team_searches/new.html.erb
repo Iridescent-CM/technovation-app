@@ -1,6 +1,2 @@
-<div class="profile-pages mentor-dashboard">
-  <%= render 'mentor/dashboards/navigation' %>
-
-  <%= render(partial: "mentor/team_searches/result", collection: @teams) or
-        t("views.mentor.team_searches.show.no_results") %>
-</div>
+<%= render(partial: "mentor/team_searches/result", collection: @teams) or
+      t("views.mentor.team_searches.show.no_results") %>

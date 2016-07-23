@@ -124,7 +124,9 @@ nav.profile {
   }
 }
 
-.profile-pages {
+.container {
+  @include outer-container;
+
   h2 {
     color: $shamrock;
     margin: $small-spacing 0;
@@ -200,10 +202,6 @@ nav.profile {
     color: $mulberry;
     .accent { color: $shamrock; }
   }
-}
-
-.container {
-  @include outer-container;
 }
 
 .inline-radio, .inline-checkbox {

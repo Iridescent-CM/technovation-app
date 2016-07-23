@@ -9,7 +9,6 @@
     <nav>
       <ul>
         <% if content_for?(:menu) %>
-          <%= yield :menu %>
           <%= render 'signed_in' %>
         <% else %>
           <%= render 'signed_out' %>
