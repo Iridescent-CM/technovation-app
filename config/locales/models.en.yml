@@ -18,6 +18,11 @@ en:
     mentor:
       expertise_names: "Expertises"
 
+    mentor_profile:
+      expertise_names: "Expertise names"
+      job_title: "Job title"
+      school_company_name: "School or company name"
+
     parental_consent:
       consent_confirmation: "Check this box to confirm your consent"
 
@@ -40,6 +45,7 @@ en:
       is_in_secondary_school: "Are you in Secondary (High) School?"
       parent_guardian_email: "Parent or guardian's email"
       parent_guardian_name: "Parent or guardian's name"
+      school_name: "School name"
 
     submission:
       team_name: "Team name"
