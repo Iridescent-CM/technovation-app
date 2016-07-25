@@ -25,6 +25,10 @@ class Team < ActiveRecord::Base
     students.flat_map(&:email)
   end
 
+  def mentor_emails
+    mentors.flat_map(&:email)
+  end
+
   def creator_address_details
     memberships.first.member_address_details
   end

@@ -1,5 +1,6 @@
 class JoinRequest < ActiveRecord::Base
   after_save :notify_requested_joinable, on: :create
+  after_save :notify_requestor, on: :update
 
   scope :pending, -> { where('accepted_at IS NULL and rejected_at IS NULL') }
 
@@ -7,7 +8,7 @@ class JoinRequest < ActiveRecord::Base
   belongs_to :joinable, polymorphic: true
 
   delegate :name, to: :joinable, prefix: true
-  delegate :full_name, :type_name,
+  delegate :full_name, :type_name, :email,
     to: :requestor, prefix: true
 
   def approved!
@@ -32,5 +33,11 @@ class JoinRequest < ActiveRecord::Base
   private
   def notify_requested_joinable
     TeamMailer.join_request(self).deliver_later
+  end
+
+  def notify_requestor
+    if accepted_at_changed? or rejected_at_changed?
+      TeamMailer.public_send("#{requestor_type_name}_join_request_#{status.underscore}", self).deliver_later
+    end
   end
 end

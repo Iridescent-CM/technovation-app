@@ -18,3 +18,17 @@ en:
       intro: "Hey there! %{requestor_name} has requested to join your team as a %{role_name}"
       review_link: "You can review pending requests to join your team here:"
       subject: "A %{role_name} has requested to join your team!"
+
+    mentor_join_request_status:
+      accepted_intro: "Good news! %{name} accepted your request to be a mentor!"
+      accepted_subject: "Your request to mentor %{name} was accepted!"
+      rejected_intro: "%{name} has rejected your request to be a mentor."
+      rejected_subject: "Your request to mentor %{name} was rejected"
+      team_link: "You can see your new team here:"
+
+    student_join_request_status:
+      accepted_intro: "Good news! %{name} accepted your request to be a member!"
+      accepted_subject: "Your request to join %{name} was accepted!"
+      rejected_intro: "%{name} has rejected your request to be a member."
+      rejected_subject: "Your request to join %{name} was rejected"
+      team_link: "You can see your new team here:"

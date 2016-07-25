@@ -1,0 +1,8 @@
+<p><%= @intro %></p>
+
+<% if @url %>
+  <p>
+    <%= t("team_mailer.mentor_join_request_status.team_link") %>
+    <%= link_to @url, @url %>
+  </p>
+<% end %>

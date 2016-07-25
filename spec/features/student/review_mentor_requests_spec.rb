@@ -22,7 +22,9 @@ RSpec.feature "Students review requests from mentors" do
     expect(mail.body.parts.last.to_s).to include("href=\"#{student_team_url(team)}\"")
   end
 
-  scenario "review mentor requests on team page" do
+  scenario "accept mentor requests on team page" do
+    ActionMailer::Base.deliveries.clear
+
     sign_in(team.students.sample)
     click_link "My team"
 
@@ -32,5 +34,32 @@ RSpec.feature "Students review requests from mentors" do
     end
 
     expect(page).to have_css(".team_members", text: mentor.full_name)
+
+    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request approval email was sent"
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail.to).to eq([JoinRequest.last.requestor_email])
+    expect(mail.subject).to eq("Your request to mentor #{team.name} was accepted!")
+    expect(mail.body.parts.last.to_s).to include("#{team.name} accepted your request to be a mentor!")
+    expect(mail.body.parts.last.to_s).to include("href=\"#{mentor_team_url(team)}\"")
+  end
+
+  scenario "reject mentor requests on team page" do
+    ActionMailer::Base.deliveries.clear
+
+    sign_in(team.students.sample)
+    click_link "My team"
+
+    within(".pending_requests.mentors") do
+      expect(page).to have_content(mentor.full_name)
+      click_link "Reject"
+    end
+
+    expect(page).to have_css(".team_members", text: mentor.full_name)
+
+    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request rejection email was sent"
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail.to).to eq([JoinRequest.last.requestor_email])
+    expect(mail.subject).to eq("Your request to mentor #{team.name} was rejected")
+    expect(mail.body.parts.last.to_s).to include("#{team.name} has rejected your request to be a mentor.")
   end
 end

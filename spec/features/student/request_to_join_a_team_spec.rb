@@ -7,19 +7,53 @@ RSpec.feature "Students request to join a team" do
     expect(page).not_to have_link("Join a team")
   end
 
-  scenario "students not on a team request to join an available team" do
-    team = FactoryGirl.create(:team, creator_in: "Chicago, IL, US")
-    student = FactoryGirl.create(:student, city: "Chicago",
-                                           state_province: "IL",
-                                           country: "US")
+  context "a valid student requestor" do
+    let!(:team) { FactoryGirl.create(:team, creator_in: "Chicago, IL, US") }
+    let!(:student) { FactoryGirl.create(:student, city: "Chicago",
+                                                  state_province: "IL",
+                                                  country: "US") }
 
-    sign_in(student)
-    click_link "Join a team"
-    click_link team.name
-    click_button "Request to join #{team.name}"
+    before do
+      ActionMailer::Base.deliveries.clear
+      sign_in(student)
+      click_link "Join a team"
+      click_link team.name
+      click_button "Request to join #{team.name}"
+    end
 
-    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request email was sent"
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("A student has requested to join your team!")
+    scenario "students not on a team request to join an available team" do
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request email was sent"
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq("A student has requested to join your team!")
+    end
+
+    scenario "student accepts the request" do
+      ActionMailer::Base.deliveries.clear
+
+      sign_in(team.students.sample)
+      click_link "My team"
+      click_link "Approve"
+
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request approval email was sent"
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq([JoinRequest.last.requestor_email])
+      expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
+      expect(mail.body.parts.last.to_s).to include("#{team.name} accepted your request to be a member!")
+      expect(mail.body.parts.last.to_s).to include("href=\"#{student_team_url(team)}\"")
+    end
+
+    scenario "student rejects the request" do
+      ActionMailer::Base.deliveries.clear
+
+      sign_in(team.students.sample)
+      click_link "My team"
+      click_link "Reject"
+
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request rejection email was sent"
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq([JoinRequest.last.requestor_email])
+      expect(mail.subject).to eq("Your request to join #{team.name} was rejected")
+      expect(mail.body.parts.last.to_s).to include("#{team.name} has rejected your request to be a member.")
+    end
   end
 end
