@@ -1,0 +1,39 @@
+<% if requests.any? %>
+  <div class="pending-requests">
+    <h6><%= t("views.student.teams.show.pending_requests_subheading") %></h6>
+
+    <table class="table pending_requests mentors">
+      <thead>
+        <tr>
+          <th><%= t("models.join_request.requestor_name") %></th>
+          <th><%= t("views.application.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% requests.each do |join_request| %>
+          <tr>
+            <td><%= join_request.requestor_full_name %></td>
+
+            <td>
+              <%= link_to t("views.application.approve"),
+                          student_join_request_path(join_request, status: :approved),
+                          data: {
+                            method: :put,
+                            confirm: t("views.application.confirm_approve",
+                                      name: join_request.requestor_full_name),
+                          } %>&nbsp;|
+
+              <%= link_to t("views.application.reject"),
+                          student_join_request_path(join_request, status: :rejected),
+                          data: {
+                            method: :put,
+                            confirm: t("views.application.confirm_reject",
+                                      name: join_request.requestor_full_name),
+                          } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

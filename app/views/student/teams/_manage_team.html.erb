@@ -1,30 +1,6 @@
 <div class="well manage-team">
-  <div class="invite-members clearfix">
-    <h6><%= t("views.student.teams.show.invite") %></h6>
-
-    <%= render "student/team_member_invites/form" %>
-  </div>
-
-  <% if @team.pending_invitee_emails.any? %>
-    <div class="pending-invites">
-      <h6><%= t("views.student.teams.show.pending_invitees_subheading") %></h6>
-
-      <ul class="pending_invitees">
-        <% @team.pending_invitee_emails.each do |email| %>
-          <li><%= email %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="has-danger">
-    <h6><%= t("views.application.danger_zone") %></h6>
-    <%= link_to t("controllers.student.team_memberships.destroy.link", name: @team.name),
-                [:student, @team, :membership],
-                data: {
-                  method: :delete,
-                  confirm: t("views.student.teams.show.confirm_leave"),
-                },
-                class: "primary-button" %>
-  </div>
+  <%= render 'student/teams/invite_students' %>
+  <%= render 'student/teams/pending_invites', invites: @team.pending_invites %>
+  <%= render 'student/teams/pending_requests', requests: @team.pending_requests %>
+  <%= render 'student/teams/leave_team' %>
 </div>

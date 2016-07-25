@@ -12,14 +12,18 @@ FactoryGirl.define do
 
     transient do
       creator_in nil
+      members_count 1
     end
 
     after(:create) do |team, evaluator|
       if !!evaluator.creator_in
         city, state, country = evaluator.creator_in.split(', ')
-        team.add_student(FactoryGirl.create(:student, city: city,
-                                                      state_province: state,
-                                                      country: country))
+
+        evaluator.members_count.times do
+          team.add_student(FactoryGirl.create(:student, city: city,
+                                                        state_province: state,
+                                                        country: country))
+        end
       end
     end
   end

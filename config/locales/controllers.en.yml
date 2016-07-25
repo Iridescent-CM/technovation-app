@@ -51,6 +51,9 @@ en:
         success: "Welcome to the Technovation Challenge!"
 
     student:
+      join_requests:
+        update:
+          success: "%{name} was %{status}"
       teams:
         create:
           success: "Your team has been created! Lookin' good!"

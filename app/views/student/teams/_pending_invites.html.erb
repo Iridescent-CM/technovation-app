@@ -1,0 +1,11 @@
+<% if invites.any? %>
+  <div class="pending-invites">
+    <h6><%= t("views.student.teams.show.pending_invitees_subheading") %></h6>
+
+    <ul class="pending_invitees">
+      <% invites.each do |invite| %>
+        <li><%= invite.invitee_email %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

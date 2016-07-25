@@ -22,7 +22,10 @@ en:
 
     application:
       actions: "Actions"
+      approve: "Approve"
       cancel: 'cancel'
+      confirm_approve: "Are you sure you want to approve %{name}?"
+      confirm_reject: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"
       dashboards:
         title: "Dashboard"
@@ -31,6 +34,7 @@ en:
       filter: "Filter"
       invite: "Send invite"
       no: "No"
+      reject: "Reject"
       save: "Save"
       signin: 'Sign in'
       signup: 'Sign up'
@@ -151,6 +155,7 @@ en:
           members_subheading: "Team members"
           mentors_coaches_subheading: "Team mentors and coaches"
           pending_invitees_subheading: "Pending Invites"
+          pending_requests_subheading: "Pending requests to join"
 
     team_member_invites:
       show:

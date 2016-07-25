@@ -12,10 +12,16 @@ class Team < ActiveRecord::Base
   has_many :submissions, dependent: :destroy
 
   has_many :team_member_invites
+  has_many :pending_invites, -> { pending }, class_name: "TeamMemberInvite"
+  has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 
   validates :name, uniqueness: true, presence: true
   validates :description, presence: true
   validates :division, presence: true
+
+  def student_emails
+    students.flat_map(&:email)
+  end
 
   def creator_address_details
     memberships.first.member_address_details

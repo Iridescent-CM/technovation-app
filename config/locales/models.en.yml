@@ -13,6 +13,7 @@ en:
 
     join_request:
       joinable_name: "Name"
+      requestor_name: "Requestor's name"
       status: "Status"
 
     mentor:
