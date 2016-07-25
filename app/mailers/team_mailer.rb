@@ -1,15 +1,10 @@
 class TeamMailer < ApplicationMailer
   def invite_member(team_member_invite)
-    @url = team_member_invite_url(team_member_invite)
-
-    mail to: team_member_invite.invitee_email
+    invite(:team_member, nil, team_member_invite)
   end
 
   def invite_mentor(mentor_invite)
-    @url = mentor_mentor_invite_url(mentor_invite)
-
-    mail to: mentor_invite.invitee_email,
-         template_name: :invite_member
+    invite(:mentor, :mentor_, mentor_invite)
   end
 
   def join_request(join_request)
@@ -39,6 +34,12 @@ class TeamMailer < ApplicationMailer
   end
 
   private
+  def invite(type, prefix, invite)
+    @url = send("#{prefix}#{type}_invite_url", invite)
+    mail to: invite.invitee_email,
+         template_name: :invite_member
+  end
+
   def join_request_status(status, type, join_request)
     @intro = I18n.translate("team_mailer.#{type}_join_request_status.#{status}_intro",
                             name: join_request.joinable_name)
