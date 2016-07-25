@@ -6,7 +6,7 @@ RSpec.feature "Edit account spec" do
                                            password: "secret1234")
 
     sign_in(student)
-    click_link "My Account"
+    click_link "My account"
   end
 
   scenario "my account page shows account info" do

@@ -6,10 +6,15 @@ module SearchTeams
               Team.all
             end
 
-    if filter.has_mentor
+    case filter.has_mentor
+    when true
       teams.select { |t| t.mentors.any? }
-    else
+    when false
       teams.select { |t| t.mentors.empty? }
+    when :any
+      teams
+    else
+      teams
     end
   end
 end

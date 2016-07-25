@@ -12,7 +12,7 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   def has_mentor
-    filter_options.fetch(:has_mentor) { true }
+    filter_options.fetch(:has_mentor) { :any }
   end
 
   def badge_css(expertise)

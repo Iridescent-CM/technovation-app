@@ -52,6 +52,9 @@ en:
 
     student:
       join_requests:
+        create:
+          link: "Request to join %{name}"
+          success: "You have requested to join %{name}"
         update:
           success: "%{name} was %{status}"
       teams:

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 
     resources :team_member_invites, except: [:edit, :update, :destroy]
     resources :mentor_invites, only: [:create]
-    resources :join_requests, only: :update
+    resources :join_requests, only: [:new, :create, :update]
+
+    resources :team_searches, except: [:index, :destroy]
 
     resource :account, only: [:show, :edit, :update]
   end

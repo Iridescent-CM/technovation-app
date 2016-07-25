@@ -11,7 +11,9 @@ class Team < ActiveRecord::Base
 
   has_many :submissions, dependent: :destroy
 
-  has_many :team_member_invites
+  has_many :team_member_invites, dependent: :destroy
+  has_many :join_requests, as: :joinable, dependent: :destroy
+
   has_many :pending_invites, -> { pending }, class_name: "TeamMemberInvite"
   has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 

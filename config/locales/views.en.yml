@@ -28,6 +28,8 @@ en:
       confirm_reject: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"
       dashboards:
+        menu:
+          my_account: "My account"
         title: "Dashboard"
       danger_zone: "Danger Zone"
       edit: "Edit"
@@ -132,6 +134,10 @@ en:
           complete_pre_program_survey: "Complete the pre-program survey"
           resend_parental_consent: "Re-send the parental consent form"
 
+      join_requests:
+        new:
+          already_requested: "You have already requested to join this team."
+
       mentor_searches:
         filter_options: "Filter mentors by expertise"
         intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
@@ -141,6 +147,7 @@ en:
       navigation:
         create_a_team: "Create a team"
         find_a_mentor: "Find a mentor"
+        join_team: "Join a team"
         my_team: "My team"
 
       teams:

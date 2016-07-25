@@ -10,6 +10,8 @@ class StudentAccount < Account
   has_many :memberships, as: :member, dependent: :destroy
   has_many :mentor_invites, foreign_key: :inviter_id
 
+  has_many :join_requests, as: :requestor
+
   has_one :parental_consent, dependent: :destroy, foreign_key: :account_id
 
   has_one :student_profile, dependent: :destroy, foreign_key: :account_id
@@ -32,6 +34,10 @@ class StudentAccount < Account
 
   def is_on_team?
     teams.any?
+  end
+
+  def requested_to_join?(team)
+    join_requests.flat_map(&:joinable).include?(team)
   end
 
   def team
