@@ -1,6 +1,11 @@
 class StudentProfile < ActiveRecord::Base
   include Authenticatable
 
+  attr_accessor :team_invite_token
+
+  after_create :join_invited_team
+  after_create :send_parental_consent_notice
+
   validates :parent_guardian_email,
             :parent_guardian_name,
             :school_name,
@@ -28,5 +33,13 @@ class StudentProfile < ActiveRecord::Base
 
   def parental_consent_signed?
     !!account.consent_signed_at # and account.consent_signed_at >= Date.new(2016, 9, 1)
+  end
+
+  def send_parental_consent_notice
+    ParentMailer.consent_notice(self).deliver_later
+  end
+
+  def join_invited_team
+    TeamMemberInvite.accept!(team_invite_token, account.email)
   end
 end
