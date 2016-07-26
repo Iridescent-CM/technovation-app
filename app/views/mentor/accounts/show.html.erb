@@ -1,1 +1,3 @@
-<%= render 'accounts/show', profile_details: render("mentor/accounts/profile") %>
+<%= render 'accounts/show',
+           url: mentor_account_path,
+           profile_details: render("mentor/accounts/profile") %>

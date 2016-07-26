@@ -32,22 +32,9 @@ module AccountController
       :city,
       :state_province,
       :country,
+      :profile_image,
       profile_params,
     )
-=begin
-                                    coach_profile_attributes: [
-                                      :id,
-                                      :school_company_name,
-                                      :job_title,
-                                      { expertise_ids: [] },
-                                    ],
-                                    judge_profile_attributes: [
-                                      :id,
-                                      :company_name,
-                                      :job_title,
-                                      { scoring_expertise_ids: [] },
-                                    ],
-=end
   end
 
   def account_param_root
