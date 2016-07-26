@@ -17,7 +17,8 @@ class StudentAccount < Account
            :parent_guardian_email,
            :parent_guardian_name,
            :school_name,
-           :completion_requirements,
+           :pre_survey_completed?,
+           :parental_consent_signed?,
     to: :student_profile,
     prefix: false
 
@@ -28,6 +29,10 @@ class StudentAccount < Account
 
   def is_on_team?
     teams.any?
+  end
+
+  def team_has_mentor?
+    !!team and team.mentors.any?
   end
 
   def requested_to_join?(team)

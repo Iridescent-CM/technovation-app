@@ -6,13 +6,6 @@ class StudentProfile < ActiveRecord::Base
             :school_name,
             presence: true
 
-  def completion_requirements
-    reqs = {}
-    reqs[:complete_pre_program_survey] = '#' unless pre_survey_completed?
-    reqs[:resend_parental_consent] = '#' unless parental_consent_signed?
-    reqs
-  end
-
   def complete_pre_program_survey!
     update_attributes(pre_survey_completed_at: Time.current)
   end
@@ -21,7 +14,6 @@ class StudentProfile < ActiveRecord::Base
     account.sign_consent_form!
   end
 
-  private
   def pre_survey_completed?
     !!pre_survey_completed_at # and pre_survey_completed_at >= Date.new(2016, 9, 1)
   end

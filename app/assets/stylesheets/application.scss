@@ -1,4 +1,5 @@
 @import 'technovation';
+@import "font-awesome";
 @import "chosen";
 @import "forms";
 @import "containers";
@@ -26,4 +27,26 @@ dd {
 .content {
   @include span-columns(9);
   @include omega;
+}
+
+.completion-steps {
+  .checkbox {
+    display: block;
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+  }
+
+  .status-ready {
+    .checkbox {
+      border: 1px solid #ccc;
+    }
+  }
+
+  ul {
+    clear: left;
+    margin-left: 6rem;
+    font-size: 1.025rem;
+  }
 }

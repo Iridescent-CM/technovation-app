@@ -90,6 +90,36 @@ en:
       show:
         signed: "%{student_name} has been consented by %{parent_name} on %{date}"
 
+    profile_requirements:
+      create_join_team:
+        label: "Create or join a team"
+        links:
+          create:
+            text: "Create a team"
+          join:
+            text: "Join a team"
+
+      find_mentor:
+        label: "Find a mentor for your team"
+        links:
+          browse:
+            text: "Find an available mentor now"
+
+      parental_consent:
+        label: "Your parent or guardian must sign the consent form that was emailed to them"
+        links:
+          resend:
+            text: "Re-send the link to the consent form"
+
+      pre_program_survey:
+        label: "Complete the pre-program survey"
+        links:
+          mark_complete:
+            post_text: "(honor system!)"
+            text: "Mark this step complete"
+          survey:
+            text: "Take the survey now"
+
     regional_ambassador:
       dashboards:
         show:

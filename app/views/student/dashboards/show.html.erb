@@ -1,5 +1,20 @@
-<ul class="completion_requirements">
-  <% current_student.completion_requirements.each do |translation_key, url| %>
-    <li><%= link_to t("views.student.dashboards.show.#{translation_key}"), url %></li>
+<ul class="completion-steps">
+  <% CompletionSteps.new(current_student).each do |step| %>
+    <li class="status-<%= step.completion_status %>">
+      <span class="checkbox"><%= step.checkmark %></span>
+      <%= step.label %>
+
+      <% if step.links.any? %>
+        <ul>
+          <% step.links.each do |link| %>
+            <li>
+              <%= link.prefix %>
+              <%= link_to link.text, link.url, link.options %>
+              <%= link.postfix %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
   <% end %>
 </ul>

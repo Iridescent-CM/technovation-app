@@ -245,6 +245,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
+    font-awesome-rails (4.6.3.1)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     geocoder (1.2.6)
     globalid (0.3.6)
@@ -438,6 +440,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   fog (~> 1.38.0)
+  font-awesome-rails (~> 4.6.3.1)
   geocoder (~> 1.2.6)
   indefinite_article
   jbuilder (~> 2.0)

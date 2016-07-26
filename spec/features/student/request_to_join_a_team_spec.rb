@@ -4,7 +4,7 @@ RSpec.feature "Students request to join a team" do
   scenario "students already on a team don't see the link" do
     student = FactoryGirl.create(:student, :on_team)
     sign_in(student)
-    expect(page).not_to have_link("Join a team")
+    within("nav.profile") { expect(page).not_to have_link("Join a team") }
   end
 
   context "a valid student requestor" do
@@ -16,7 +16,7 @@ RSpec.feature "Students request to join a team" do
     before do
       ActionMailer::Base.deliveries.clear
       sign_in(student)
-      click_link "Join a team"
+      within("nav.profile") { click_link "Join a team" }
       click_link team.name
       click_button "Request to join #{team.name}"
     end
