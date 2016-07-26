@@ -1,8 +1,6 @@
 class StudentAccount < Account
   default_scope { joins(:student_profile) }
 
-  after_initialize :build_student_profile, if: -> { student_profile.blank? }
-
   has_many :memberships, as: :member, dependent: :destroy
   has_many :mentor_invites, foreign_key: :inviter_id
 

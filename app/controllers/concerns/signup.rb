@@ -1,22 +1,18 @@
 module Signup
   def new
-    instance_variable_set("@#{model_name}", model.new(email: params[:email]))
+    instance_variable_set("@#{model_name}", registration_helper.build(email: params[:email]))
   end
 
   def create
-    instance_variable_set("@#{model_name}", model.new(account_params))
+    instance_variable_set("@#{model_name}", registration_helper.build(account_params))
 
-    before_save(instance)
-
-    if instance.save
+    if registration_helper.(instance, self)
       SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"),
                               message: t("controllers.signups.create.success"))
     else
       render :new
     end
   end
-
-  def before_save(*); end
 
   private
   def account_params
@@ -41,5 +37,9 @@ module Signup
 
   def instance
     instance_variable_get("@#{model_name}")
+  end
+
+  def registration_helper
+    "register_#{model_name}".camelize.constantize
   end
 end

@@ -1,8 +1,6 @@
 class JudgeAccount < Account
   default_scope { joins(:judge_profile) }
 
-  after_initialize :build_judge_profile, if: -> { judge_profile.blank? }
-
   has_one :judge_profile, foreign_key: :account_id
   accepts_nested_attributes_for :judge_profile
   validates_associated :judge_profile

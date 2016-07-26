@@ -1,8 +1,6 @@
 class MentorAccount < Account
   default_scope { joins(:mentor_profile).includes(mentor_profile: :expertises) }
 
-  after_initialize :build_mentor_profile, if: -> { mentor_profile.blank? }
-
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile
   validates_associated :mentor_profile

@@ -1,8 +1,6 @@
 class CoachAccount < Account
   default_scope { joins(:coach_profile).includes(coach_profile: :expertises) }
 
-  after_initialize :build_coach_profile, if: -> { coach_profile.blank? }
-
   has_one :coach_profile, foreign_key: :account_id
   accepts_nested_attributes_for :coach_profile
   validates_associated :coach_profile
