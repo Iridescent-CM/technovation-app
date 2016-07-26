@@ -1,7 +1,5 @@
 # encoding: utf-8
-
 class ImageUploader < CarrierWave::Uploader::Base
-
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
@@ -20,7 +18,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    "https://placekitten.com/g/233/233"
+    "https://placekitten.com/g/#{default_url_endpoint_size}"
   end
 
   # Process files as they are uploaded:
@@ -47,4 +45,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+   private
+   def default_url_endpoint_size
+     case version_name
+     when :thumb
+       "80/80"
+     else
+       "233/233"
+     end
+   end
 end
