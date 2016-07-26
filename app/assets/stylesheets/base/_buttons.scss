@@ -93,12 +93,23 @@
   font-size: 1rem;
   background-color: transparent;
   border: $base-border;
-  border-color: $lemon;
-  color: $lemon;
+  border-color: $marine;
+  color: $marine;
+
+  &.header {
+    color: $lemon;
+    border-color: $lemon;
+
+    &:hover,
+    &:focus {
+      background-color: $lemon;
+      color: #fff;
+    }
+  }
 
   &:hover,
   &:focus {
-    background-color: $lemon;
+    background-color: $marine;
     color: #fff;
   }
 }
