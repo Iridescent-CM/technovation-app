@@ -1,5 +1,5 @@
 class JoinRequest < ActiveRecord::Base
-  after_save :notify_requested_joinable, on: :create
+  after_create :notify_requested_joinable
   after_save :notify_requestor, on: :update
 
   scope :pending, -> { where('accepted_at IS NULL and rejected_at IS NULL') }
