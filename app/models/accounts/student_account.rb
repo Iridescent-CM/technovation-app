@@ -26,7 +26,8 @@ class StudentAccount < Account
     prefix: true
 
   def parental_consent_signed?
-    consent_signed? # and account.consent_signed_at >= Date.new(2016, 9, 1)
+    parental_consent.present?
+    # and account.consent_signed_at >= Date.new(2016, 9, 1)
   end
 
   def is_on_team?
