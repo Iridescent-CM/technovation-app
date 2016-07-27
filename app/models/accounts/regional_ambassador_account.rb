@@ -13,6 +13,7 @@ class RegionalAmbassadorAccount < Account
            :approved!,
            :rejected!,
            :organization_company_name,
+           :job_title,
            :ambassador_since_year,
     to: :regional_ambassador_profile,
     prefix: false
