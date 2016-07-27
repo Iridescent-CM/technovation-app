@@ -24,6 +24,10 @@ class MentorAccount < Account
 
   delegate :id, to: :mentor_profile, prefix: true
 
+  def is_on_team?
+    teams.any?
+  end
+
   def teams
     Team.joins(:memberships).where('memberships.member_id = ?', id)
   end

@@ -1,0 +1,11 @@
+<% if steps.any? %>
+  <ul class="completion-steps">
+    <% steps.each do |step| %>
+      <li class="completion-step status-<%= step.completion_status %>">
+        <span class="checkbox"><%= step.checkmark %></span>
+        <%= step.label %>
+        <%= render 'step_links', step: step %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

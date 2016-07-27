@@ -30,6 +30,11 @@ dd {
 }
 
 .completion-steps {
+  .completion-step {
+    @include clearfix;
+    margin: 0 0 15px;
+  }
+
   .checkbox {
     display: block;
     float: left;
@@ -38,9 +43,23 @@ dd {
     margin-right: 15px;
   }
 
+  .status-complete {
+    .checkbox {
+      color: $marine;
+      border: 2px solid #333;
+    }
+  }
+
   .status-ready {
     .checkbox {
       border: 1px solid #ccc;
+    }
+  }
+
+  .status-future {
+    color: #ccc;
+    .checkbox {
+      border: 1px dashed #ccc;
     }
   }
 

@@ -1,0 +1,11 @@
+<% if step.ready? && step.links.any? %>
+  <ul>
+    <% step.links.each do |link| %>
+      <li>
+        <%= link.prefix %>
+        <%= link_to link.text, link.url, link.options %>
+        <%= link.postfix %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

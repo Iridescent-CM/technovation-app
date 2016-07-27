@@ -1,0 +1,39 @@
+student:
+  pre_program_survey:
+    complete_condition: "pre_survey_completed?"
+    links:
+      survey:
+        url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
+
+      mark_complete:
+        url: <%= ["student_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
+        link_options:
+          postfix_path: "views.profile_requirements.pre_program_survey.links.mark_complete.post_text"
+        tag_options:
+          data:
+            method: "put"
+
+  parental_consent:
+    complete_condition: "parental_consent_signed?"
+    links: 
+      resend:
+        url: '#'
+        tag_options:
+          data:
+            method: "post"
+
+  create_join_team:
+    complete_condition: "is_on_team?"
+    prerequisites: "pre_program_survey, parental_consent"
+    links: 
+      create:
+        url: <%= :new_student_team_path %>
+      join:
+        url: <%= :new_student_team_search_path %>
+
+  find_mentor:
+    complete_condition: "team_has_mentor?"
+    prerequisites: "pre_program_survey, parental_consent, create_join_team"
+    links:
+      browse:
+        url: <%= :student_mentor_search_path %>

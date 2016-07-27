@@ -1,3 +1,6 @@
+require "./app/technovation/profile_completion/step"
+require "./app/technovation/profile_completion/link"
+
 class CompletionSteps
   include Enumerable
 
@@ -6,8 +9,8 @@ class CompletionSteps
   end
 
   def each(&block)
-    ProfileCompletionSteps.registered_steps.each do |step|
-      step.completion_status = @account.send(step.complete_condition) ? "complete" : "ready"
+    ProfileCompletionSteps.registered_steps(@account).each do |step|
+      step.set_account_options(@account)
       block.call(step)
     end
   end
