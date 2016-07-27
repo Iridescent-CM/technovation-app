@@ -14,6 +14,7 @@ FactoryGirl.define do
 
   factory :regional_ambassador_profile do
     organization_company_name { "FactoryGirl" }
+    job_title { "Engineer" }
     ambassador_since_year { Time.current.year }
     account
   end

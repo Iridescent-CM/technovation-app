@@ -15,6 +15,7 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "City", with: "Chicago"
 
     fill_in "Organization/company name", with: "John Hughes Inc."
+    fill_in "Job title", with: "Engineer"
     fill_in "Since what year have you been a regional ambassador?", with: 2016
 
     fill_in "Email", with: "regional@ambassador.com"

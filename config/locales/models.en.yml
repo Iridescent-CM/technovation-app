@@ -29,6 +29,7 @@ en:
 
     regional_ambassador_profile:
       ambassador_since_year: "Since what year have you been a regional ambassador?"
+      job_title: "Job title"
       organization_company_name: "Organization/company name"
 
     score:

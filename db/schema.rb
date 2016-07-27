@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20160727181054) do
   create_table "regional_ambassador_profiles", force: :cascade do |t|
     t.string   "organization_company_name",             null: false
     t.integer  "ambassador_since_year",                 null: false
+    t.string   "job_title",                             null: false
     t.integer  "account_id",                            null: false
     t.integer  "status",                    default: 0, null: false
     t.datetime "created_at",                            null: false

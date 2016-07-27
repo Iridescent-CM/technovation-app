@@ -9,8 +9,9 @@ module RegionalAmbassador
 
     def profile_params
       %i{
-          organization_company_name
           ambassador_since_year
+          organization_company_name
+          job_title
         }
     end
   end
