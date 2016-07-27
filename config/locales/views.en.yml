@@ -24,6 +24,7 @@ en:
       actions: "Actions"
       approve: "Approve"
       cancel: 'cancel'
+      complete_your_profile: "Complete your Technovation profile"
       confirm_approve: "Are you sure you want to approve %{name}?"
       confirm_reject: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"
@@ -91,6 +92,18 @@ en:
         signed: "%{student_name} has been consented by %{parent_name} on %{date}"
 
     profile_requirements:
+      background_check:
+        label: "Complete a background check"
+
+      build_profile:
+        label: "Complete your profile to help students get to know you"
+
+      consent_waiver:
+        label: "Sign the consent waiver"
+        links:
+          view:
+            text: "Sign the waiver now"
+
       create_join_team:
         label: "Create or join a team"
         links:

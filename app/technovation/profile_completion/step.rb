@@ -33,10 +33,6 @@ module ProfileCompletion
       unless prerequisites_met?
         @completion_status = COMPLETION_STATES[:future]
       end
-
-      links.each do |link|
-        link.set_account_options(account)
-      end
     end
 
     def ready?
@@ -63,7 +59,7 @@ module ProfileCompletion
     private
     def prerequisites_met?
       @prerequisites.all? do |prereq|
-        ProfileCompletionSteps.step(prereq).complete?
+        ProfileCompletion.step(prereq).complete?
       end
     end
   end

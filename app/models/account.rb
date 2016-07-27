@@ -55,6 +55,18 @@ class Account < ActiveRecord::Base
     type.underscore.sub('_account', '')
   end
 
+  def consent_signed?
+    !!consent_signed_at
+  end
+
+  def complete_pre_program_survey!
+    update_attributes(pre_survey_completed_at: Time.current)
+  end
+
+  def pre_survey_completed?
+    !!pre_survey_completed_at # and pre_survey_completed_at >= Date.new(2016, 9, 1)
+  end
+
   private
   def generate_tokens
     GenerateToken.(self, :auth_token)

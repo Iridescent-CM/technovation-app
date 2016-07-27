@@ -9,7 +9,7 @@ class CompletionSteps
   end
 
   def each(&block)
-    ProfileCompletionSteps.registered_steps(@account).each do |step|
+    ProfileCompletion.registered_steps(@account).each do |step|
       step.set_account_options(@account)
       block.call(step)
     end

@@ -8,7 +8,7 @@ student:
       mark_complete:
         url: <%= ["student_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
         link_options:
-          postfix_path: "views.profile_requirements.pre_program_survey.links.mark_complete.post_text"
+          postfix_path: true
         tag_options:
           data:
             method: "put"
@@ -37,3 +37,50 @@ student:
     links:
       browse:
         url: <%= :student_mentor_search_path %>
+
+mentor:
+  consent_waiver:
+    complete_condition: "consent_signed?"
+    links:
+      view:
+        url: "#"
+
+  background_check:
+    prerequisites: "consent_waiver"
+    complete_condition: "background_check_complete?"
+    links:
+      resend:
+        url: "#"
+
+  pre_program_survey:
+    prerequisites: "background_check, consent_waiver"
+    complete_condition: "pre_survey_completed?"
+    links:
+      survey:
+        url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
+
+      mark_complete:
+        url: <%= ["mentor_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
+        link_options:
+          postfix_path: true
+        tag_options:
+          data:
+            method: "put"
+
+  build_profile:
+    prerequisites: "pre_program_survey, background_check, consent_waiver"
+    complete_condition: "profile_complete?"
+    links:
+      photo:
+        url: <%= :mentor_account_path %>
+      bio:
+        url: <%= :edit_mentor_account_path %>
+
+  create_join_team:
+    complete_condition: "is_on_team?"
+    prerequisites: "pre_program_survey, background_check, pre_program_survey, build_profile, consent_waiver"
+    links: 
+      create:
+        url: <%= :new_mentor_team_path %>
+      join:
+        url: <%= :new_mentor_team_search_path %>

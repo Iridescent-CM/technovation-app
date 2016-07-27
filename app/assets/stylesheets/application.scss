@@ -30,6 +30,8 @@ dd {
 }
 
 .completion-steps {
+  margin: 15px 0;
+
   .completion-step {
     @include clearfix;
     margin: 0 0 15px;
@@ -64,7 +66,6 @@ dd {
   }
 
   ul {
-    clear: left;
     margin-left: 6rem;
     font-size: 1.025rem;
   }

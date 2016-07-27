@@ -1,9 +1,16 @@
-require "./app/technovation/profile_completion/step"
-require "./app/technovation/profile_completion/link"
+require "./app/technovation/completion_steps"
 
-class ProfileCompletionSteps
+module ProfileCompletion
+  def self.configure(&block)
+    config = Configuration.new
+
+    yield(config)
+
+    steps_config = YAML.load(ERB.new(File.read(config.path)).result)
+    register_steps(steps_config)
+  end
+
   @@steps = {}
-  @@config = YAML.load(ERB.new(File.read("./config/completion_steps.yml.erb")).result)
 
   def self.register_step(account_type, id, config = {})
     links = config.fetch("links") { [] }.map do |link_name, link_config|
@@ -42,5 +49,7 @@ class ProfileCompletionSteps
     @@steps.fetch(account.type_name) { [] }
   end
 
-  register_steps(@@config)
+  class Configuration
+    attr_accessor :path
+  end
 end

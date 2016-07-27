@@ -11,29 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725203115) do
+ActiveRecord::Schema.define(version: 20160727181054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "email",             null: false
-    t.string   "password_digest",   null: false
-    t.string   "auth_token",        null: false
-    t.string   "first_name",        null: false
-    t.string   "last_name",         null: false
-    t.date     "date_of_birth",     null: false
-    t.string   "city",              null: false
-    t.string   "state_province",    null: false
-    t.string   "country",           null: false
+    t.string   "email",                   null: false
+    t.string   "password_digest",         null: false
+    t.string   "auth_token",              null: false
+    t.string   "first_name",              null: false
+    t.string   "last_name",               null: false
+    t.date     "date_of_birth",           null: false
+    t.string   "city",                    null: false
+    t.string   "state_province",          null: false
+    t.string   "country",                 null: false
     t.date     "consent_signed_at"
-    t.string   "type",              null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.string   "type",                    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "consent_token"
     t.string   "profile_image"
+    t.datetime "pre_survey_completed_at"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
@@ -238,14 +239,13 @@ ActiveRecord::Schema.define(version: 20160725203115) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "account_id",              null: false
-    t.string   "parent_guardian_email",   null: false
-    t.string   "parent_guardian_name",    null: false
-    t.string   "school_name",             null: false
-    t.boolean  "is_in_secondary_school",  null: false
-    t.date     "pre_survey_completed_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "account_id",             null: false
+    t.string   "parent_guardian_email",  null: false
+    t.string   "parent_guardian_name",   null: false
+    t.string   "school_name",            null: false
+    t.boolean  "is_in_secondary_school", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree

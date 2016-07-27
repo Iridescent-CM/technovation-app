@@ -1,4 +1,6 @@
 <% if steps.any? %>
+  <h1><%= t("views.application.complete_your_profile") %></h1>
+
   <ul class="completion-steps">
     <% steps.each do |step| %>
       <li class="completion-step status-<%= step.completion_status %>">

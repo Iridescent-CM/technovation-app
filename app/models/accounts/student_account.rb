@@ -17,8 +17,6 @@ class StudentAccount < Account
            :parent_guardian_email,
            :parent_guardian_name,
            :school_name,
-           :pre_survey_completed?,
-           :parental_consent_signed?,
     to: :student_profile,
     prefix: false
 
@@ -26,6 +24,10 @@ class StudentAccount < Account
            :signed_at,
     to: :parental_consent,
     prefix: true
+
+  def parental_consent_signed?
+    consent_signed? # and account.consent_signed_at >= Date.new(2016, 9, 1)
+  end
 
   def is_on_team?
     teams.any?

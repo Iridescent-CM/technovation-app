@@ -5,20 +5,4 @@ class StudentProfile < ActiveRecord::Base
             :parent_guardian_name,
             :school_name,
             presence: true
-
-  def complete_pre_program_survey!
-    update_attributes(pre_survey_completed_at: Time.current)
-  end
-
-  def sign_parental_consent_form!
-    account.sign_consent_form!
-  end
-
-  def pre_survey_completed?
-    !!pre_survey_completed_at # and pre_survey_completed_at >= Date.new(2016, 9, 1)
-  end
-
-  def parental_consent_signed?
-    !!account.consent_signed_at # and account.consent_signed_at >= Date.new(2016, 9, 1)
-  end
 end
