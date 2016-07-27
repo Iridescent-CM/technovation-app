@@ -1,1 +1,7 @@
-<%= render 'completion_steps', steps: CompletionSteps.new(current_mentor) %>
+<%= render 'completion_steps',
+           steps: CompletionSteps.new(current_mentor),
+           urls: {
+             pre_program_survey: mentor_account_path(
+               mentor_account: { pre_survey_completed_at: Time.current }
+             )
+           } %>

@@ -6,26 +6,30 @@ module ProfileCompletion
       I18n.t("views.profile_requirements.#{step_id}.links.#{name}.text")
     end
 
-    def url
-      case url_structure
-      when Array
-        send(url_structure.first, Hash[*url_structure.last])
-      when Symbol
-        send(url_structure)
+    def url(urls)
+      if url = urls.find { |k, _| String(k) == step_id }
+        url[1]
       else
-        url_structure
+        case url_structure
+        when Array
+          send(url_structure.first, Hash[*url_structure.last])
+        when Symbol
+          send(url_structure)
+        else
+          url_structure
+        end
       end
     end
 
     def prefix
-      if path = Hash(link_options)[:prefix_path]
-        I18n.t(path)
+      if !!Hash(link_options)[:prefix_path]
+        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.prefix_text")
       end
     end
 
     def postfix
-      if path = Hash(link_options)[:postfix_path]
-        I18n.t(path)
+      if !!Hash(link_options)[:postfix_path]
+        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.post_text")
       end
     end
 

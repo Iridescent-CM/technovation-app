@@ -1,3 +1,9 @@
 <p><%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %></p>
 
-<%= render 'completion_steps', steps: CompletionSteps.new(current_ambassador) %>
+<%= render 'completion_steps',
+           steps: CompletionSteps.new(current_ambassador),
+           urls: {
+             pre_program_survey: regional_ambassador_account_path(
+               regional_ambassador_account: { pre_survey_completed_at: Time.current }
+             )
+           } %>

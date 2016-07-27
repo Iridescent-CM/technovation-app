@@ -3,7 +3,7 @@
     <% step.links.each do |link| %>
       <li>
         <%= link.prefix %>
-        <%= link_to link.text, link.url, link.options %>
+        <%= link_to link.text, link.url(urls), link.options %>
         <%= link.postfix %>
       </li>
     <% end %>

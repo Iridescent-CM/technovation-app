@@ -1,1 +1,7 @@
-<%= render 'completion_steps', steps: CompletionSteps.new(current_student) %>
+<%= render 'completion_steps',
+           steps: CompletionSteps.new(current_student),
+           urls: {
+             pre_program_survey: student_account_path(
+               student_account: { pre_survey_completed_at: Time.current }
+             )
+           } %>

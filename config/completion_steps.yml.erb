@@ -6,7 +6,6 @@ student:
         url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
 
       mark_complete:
-        url: <%= ["student_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
         link_options:
           postfix_path: true
         tag_options:
@@ -46,21 +45,18 @@ mentor:
         url: "#"
 
   background_check:
-    prerequisites: "consent_waiver"
     complete_condition: "background_check_complete?"
     links:
       resend:
         url: "#"
 
   pre_program_survey:
-    prerequisites: "background_check, consent_waiver"
     complete_condition: "pre_survey_completed?"
     links:
       survey:
         url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
 
       mark_complete:
-        url: <%= ["mentor_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
         link_options:
           postfix_path: true
         tag_options:
@@ -93,21 +89,19 @@ regional_ambassador:
         url: "#"
 
   background_check:
-    prerequisites: "consent_waiver"
     complete_condition: "background_check_complete?"
     links:
       resend:
         url: "#"
 
   pre_program_survey:
-    prerequisites: "background_check, consent_waiver"
     complete_condition: "pre_survey_completed?"
     links:
       survey:
         url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
 
       mark_complete:
-        url: <%= ["regional_ambassador_account_path", ["pre_survey_completed_at", "#{Time.current}"]] %>
+        url: <%= ["regional_ambassador_account_path", ["regional_ambassador", ["pre_survey_completed_at", "#{Time.current}"]]] %>
         link_options:
           postfix_path: true
         tag_options:

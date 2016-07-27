@@ -94,6 +94,9 @@ en:
     profile_requirements:
       background_check:
         label: "Complete a background check"
+        links:
+          resend:
+            text: "Re-send the background check link to my email"
 
       build_profile:
         label: "Complete your profile to help students get to know you"
