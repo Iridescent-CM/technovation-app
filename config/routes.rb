@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     post :accounts, to: "signups#create"
 
     resource :dashboard, only: :show
+    resource :account, only: [:show, :edit, :update]
   end
 
   namespace :judge do
