@@ -16,4 +16,12 @@ class RegionalAmbassadorAccount < Account
            :ambassador_since_year,
     to: :regional_ambassador_profile,
     prefix: false
+
+  def background_check_complete?
+    false
+  end
+
+  def profile_complete?
+    false
+  end
 end

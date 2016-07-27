@@ -1,1 +1,3 @@
 <p><%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %></p>
+
+<%= render 'completion_steps', steps: CompletionSteps.new(current_ambassador) %>
