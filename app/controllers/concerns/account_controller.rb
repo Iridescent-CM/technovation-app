@@ -33,6 +33,7 @@ module AccountController
       :state_province,
       :country,
       :profile_image,
+      :pre_survey_completed_at,
       profile_params,
     )
   end
