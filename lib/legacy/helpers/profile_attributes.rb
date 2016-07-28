@@ -23,15 +23,6 @@ module ProfileAttributes
     end
   end
 
-  module CoachProfileAttributes
-    def self.generate(record)
-      {
-        school_company_name: record.school,
-        job_title: record.grade.blank? ? "Not specified" : record.grade,
-      }
-    end
-  end
-
   module MentorProfileAttributes
     def self.generate(record)
       {

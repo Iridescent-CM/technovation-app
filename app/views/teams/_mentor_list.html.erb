@@ -1,12 +1,11 @@
 <div class="module-marine team-members">
   <div class="module-header">
-    <h5><%= t("views.student.teams.show.mentors_coaches_subheading") %></h5>
+    <h5><%= t("views.student.teams.show.mentors_subheading") %></h5>
   </div>
 
   <div class="module-body">
     <ul class="team_members">
       <%= render partial: "teams/member", collection: @team.mentors %>
-      <%= render partial: "teams/member", collection: @team.coaches %>
     </ul>
   </div>
 </div>

@@ -1,7 +1,0 @@
-<div class="toggle-field coach-field">
-  <h4><%= t('views.signups.form.choose_expertises') %></h4>
-
-  <%= f.fields_for :coach_profile do |c| %>
-    <%= render 'signups/guidance_profile_fields', f: c %>
-  <% end %>
-</div>

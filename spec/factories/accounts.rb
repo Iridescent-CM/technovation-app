@@ -38,7 +38,7 @@ FactoryGirl.define do
       after(:create) do |m|
         2.times do
           FactoryGirl.create(:expertise,
-                             guidance_profile_ids: m.mentor_profile_id)
+                             mentor_profile_ids: m.mentor_profile_id)
         end
       end
     end

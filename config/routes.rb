@@ -36,13 +36,6 @@ Rails.application.routes.draw do
     resource :account, only: [:show, :edit, :update]
   end
 
-  namespace :coach do
-    get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
-
-    resource :dashboard, only: :show
-  end
-
   namespace :regional_ambassador do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"

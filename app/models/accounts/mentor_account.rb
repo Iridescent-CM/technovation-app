@@ -10,8 +10,8 @@ class MentorAccount < Account
   has_many :join_requests, as: :requestor, dependent: :destroy
 
   scope :by_expertise_ids, ->(ids) {
-    joins(mentor_profile: :guidance_profile_expertises)
-    .where("guidance_profile_expertises.expertise_id IN (?)", ids)
+    joins(mentor_profile: :mentor_profile_expertises)
+    .where("mentor_profile_expertises.expertise_id IN (?)", ids)
     .uniq
   }
 

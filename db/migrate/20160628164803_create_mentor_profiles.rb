@@ -1,7 +1,6 @@
-class CreateGuidanceProfiles < ActiveRecord::Migration
+class CreateMentorProfiles < ActiveRecord::Migration
   def change
-    create_table :guidance_profiles do |t|
-      t.string :type, nulL: false
+    create_table :mentor_profiles do |t|
       t.references :account, index: true, foreign_key: true, nulL: false
       t.string :school_company_name, null: false
       t.string :job_title, null: false
@@ -9,6 +8,5 @@ class CreateGuidanceProfiles < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :guidance_profiles, :type
   end
 end

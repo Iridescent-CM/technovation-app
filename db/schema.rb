@@ -83,29 +83,6 @@ ActiveRecord::Schema.define(version: 20160728164653) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "guidance_profile_expertises", force: :cascade do |t|
-    t.integer  "guidance_profile_id"
-    t.integer  "expertise_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
-
-  add_index "guidance_profile_expertises", ["expertise_id"], name: "index_guidance_profile_expertises_on_expertise_id", using: :btree
-  add_index "guidance_profile_expertises", ["guidance_profile_id"], name: "index_guidance_profile_expertises_on_guidance_profile_id", using: :btree
-
-  create_table "guidance_profiles", force: :cascade do |t|
-    t.string   "type"
-    t.integer  "account_id"
-    t.string   "school_company_name",           null: false
-    t.string   "job_title",                     null: false
-    t.date     "background_check_completed_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "guidance_profiles", ["account_id"], name: "index_guidance_profiles_on_account_id", using: :btree
-  add_index "guidance_profiles", ["type"], name: "index_guidance_profiles_on_type", using: :btree
-
   create_table "join_requests", force: :cascade do |t|
     t.integer  "requestor_id",   null: false
     t.string   "requestor_type", null: false
@@ -153,6 +130,27 @@ ActiveRecord::Schema.define(version: 20160728164653) do
 
   add_index "memberships", ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id", using: :btree
   add_index "memberships", ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id", using: :btree
+
+  create_table "mentor_profile_expertises", force: :cascade do |t|
+    t.integer  "mentor_profile_id", null: false
+    t.integer  "expertise_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "mentor_profile_expertises", ["expertise_id"], name: "index_mentor_profile_expertises_on_expertise_id", using: :btree
+  add_index "mentor_profile_expertises", ["mentor_profile_id"], name: "index_mentor_profile_expertises_on_mentor_profile_id", using: :btree
+
+  create_table "mentor_profiles", force: :cascade do |t|
+    t.integer  "account_id"
+    t.string   "school_company_name",           null: false
+    t.string   "job_title",                     null: false
+    t.date     "background_check_completed_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
 
   create_table "parental_consents", force: :cascade do |t|
     t.integer  "consent_confirmation", default: 0, null: false
@@ -299,13 +297,13 @@ ActiveRecord::Schema.define(version: 20160728164653) do
 
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "consent_waivers", "accounts"
-  add_foreign_key "guidance_profile_expertises", "expertises"
-  add_foreign_key "guidance_profile_expertises", "guidance_profiles"
-  add_foreign_key "guidance_profiles", "accounts"
   add_foreign_key "join_requests", "accounts", column: "requestor_id"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "judge_scoring_expertises", "judge_profiles"
   add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
+  add_foreign_key "mentor_profile_expertises", "expertises"
+  add_foreign_key "mentor_profile_expertises", "mentor_profiles"
+  add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "accounts"
   add_foreign_key "score_questions", "score_categories"
   add_foreign_key "score_values", "score_questions"

@@ -7,7 +7,6 @@ class Team < ActiveRecord::Base
   has_many :memberships, as: :joinable, dependent: :destroy
   has_many :students, through: :memberships, source: :member, source_type: "StudentAccount"
   has_many :mentors, through: :memberships, source: :member, source_type: "MentorAccount"
-  has_many :coaches, through: :memberships, source: :member, source_type: "CoachAccount"
 
   has_many :submissions, dependent: :destroy
 

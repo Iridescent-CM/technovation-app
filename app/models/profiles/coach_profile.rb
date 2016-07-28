@@ -1,2 +1,0 @@
-class CoachProfile < GuidanceProfile
-end
