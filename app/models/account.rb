@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations
 
+  has_one :consent_waiver, dependent: :destroy
+
   validates :email, presence: true, uniqueness: true, email: true
   validates :password, :password_confirmation, presence: { on: :create }
   validates :existing_password, valid_password: true,
@@ -21,6 +23,11 @@ class Account < ActiveRecord::Base
 
   validates :date_of_birth, :first_name, :last_name, :city, :state_province, :country,
     presence: true
+
+  delegate :electronic_signature,
+           :signed_at,
+    to: :consent_waiver,
+    prefix: true
 
   def self.find_with_token(token)
     find_by(auth_token: token) || NoAuthFound.new
@@ -39,10 +46,6 @@ class Account < ActiveRecord::Base
     [city, state_province, Country[country].try(:name)].join(', ')
   end
 
-  def sign_consent_form!
-    update_attributes(consent_signed_at: Time.current)
-  end
-
   def authenticated?
     true
   end
@@ -56,7 +59,8 @@ class Account < ActiveRecord::Base
   end
 
   def consent_signed?
-    !!consent_signed_at
+    consent_waiver.present?
+    # and >= Date.new(2016, 9, 1)
   end
 
   def complete_pre_program_survey!

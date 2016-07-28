@@ -53,6 +53,12 @@ en:
       show:
         title: "Account Info"
 
+    consent_waivers:
+      new:
+        submit: "I agree"
+      show:
+        signed: "%{account_name} has signed the consent waiver as %{signed_name} on %{date}"
+
     dashboard:
       menu:
         home: "Home"

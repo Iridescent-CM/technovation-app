@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727181054) do
+ActiveRecord::Schema.define(version: 20160728164653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20160727181054) do
     t.string   "city",                    null: false
     t.string   "state_province",          null: false
     t.string   "country",                 null: false
-    t.date     "consent_signed_at"
     t.string   "type",                    null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -49,6 +48,16 @@ ActiveRecord::Schema.define(version: 20160727181054) do
   end
 
   add_index "admin_profiles", ["account_id"], name: "index_admin_profiles_on_account_id", using: :btree
+
+  create_table "consent_waivers", force: :cascade do |t|
+    t.integer  "consent_confirmation", default: 0, null: false
+    t.string   "electronic_signature",             null: false
+    t.integer  "account_id",                       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "consent_waivers", ["account_id"], name: "index_consent_waivers_on_account_id", using: :btree
 
   create_table "divisions", force: :cascade do |t|
     t.integer  "name",       null: false
@@ -289,6 +298,7 @@ ActiveRecord::Schema.define(version: 20160727181054) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
 
   add_foreign_key "admin_profiles", "accounts"
+  add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "guidance_profile_expertises", "expertises"
   add_foreign_key "guidance_profile_expertises", "guidance_profiles"
   add_foreign_key "guidance_profiles", "accounts"

@@ -1,0 +1,4 @@
+<p><%= t("views.consent_waivers.show.signed",
+         account_name: @consent_waiver.account_full_name,
+         signed_name: @consent_waiver.electronic_signature,
+         date: @consent_waiver.created_at.strftime("%-d %B, %Y")) %></p>

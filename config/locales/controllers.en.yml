@@ -15,6 +15,13 @@ en:
         change_image: "Change image"
         success: "You updated your account!"
 
+    consent_waivers:
+      create:
+        success: "Thank you for signing the consent waiver!"
+      new:
+        unauthorized: "Sorry, that consent token was invalid."
+
+
     judge:
       scores:
         create:

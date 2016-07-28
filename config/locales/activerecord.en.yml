@@ -2,6 +2,11 @@ en:
   activerecord:
     errors:
       models:
+        consent_waiver:
+          attributes:
+            consent_confirmation:
+              inclusion: "must be confirmed"
+
         parental_consent:
           attributes:
             consent_confirmation:

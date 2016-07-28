@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   end
 
   resources :parental_consents, only: [:new, :create, :show]
+  resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
   resources :team_member_invites, only: [:show, :update]

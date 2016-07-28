@@ -5,5 +5,8 @@
            urls: {
              pre_program_survey: regional_ambassador_account_path(
                regional_ambassador_account: { pre_survey_completed_at: Time.current }
-             )
+             ),
+             consent_waiver: new_consent_waiver_path(
+               token: current_ambassador.consent_token
+             ),
            } %>

@@ -1,0 +1,34 @@
+<h5>Volunteer Agreement (US & International)</h5>
+
+<p>THIS VOLUNTEER AGREEMENT (this “Agreement”) is made as of the date set forth on the signature page, by and between Iridescent Learning, a California nonprofit corporation (“Iridescent Learning”) located at 532 West 22nd St., Los Angeles, CA 90007, and the undersigned volunteer named on the signature page (“Volunteer”) (each a “Party” and collectively the “Parties”), to enable Volunteer to implement Iridescent Learning programs and serve as a volunteer for one or more programs provided by Iridescent Learning. The Parties hereby agree:</p>
+
+<p>1. Volunteer’s Responsibilities</p>
+
+<p>Volunteer’s responsibilities are educational in nature and shall include, among others, providing science and engineering programming in connection with one or more of the following Iridescent Learning courses: Family Science, Be an Inventor, Technovation, and Curiosity Machine (the “Volunteer Activities”). Volunteer understands and acknowledges that Volunteer Activities may require Volunteer to interact with adults, children, and scientific equipment and materials; travel to Iridescent Learning studios or other locations; sit for extended periods of time; and stand for extended periods of time. Volunteer further understands and acknowledges that Volunteer will not be compensated for any time spent volunteering or performing the Volunteer Activities, nor will Volunteer be entitled to any employment or other benefits, including without limitation, employment insurance benefits upon the termination of this agreement or as a result of this service.</p>
+
+<p>2. Code of Conduct</p>
+
+<p>In Volunteer’s capacity as a volunteer for Iridescent Learning and in the performance of the Volunteer Activities, Volunteer will adhere to the Code of Conduct attached hereto as Exhibit A.</p>
+
+<p>3. Iridescent Learning Information and Materials</p>
+
+<p>From time to time, Volunteer will receive materials from Iridescent Learning, which may include pamphlets, activity suggestions, books or equipment (the “Materials”). Volunteer shall use the Materials solely in connection with the Volunteer Activities and for no other purposes.</p>
+
+<p>4. Indemnity</p>
+
+<p>To the fullest extent permitted by applicable law, Volunteer shall protect, defend, indemnify and hold harmless Iridescent Learning, its directors, officers, employees, and agents against any and all losses, liabilities, fines, penalties, claims, actual damages, judgments, and costs (including reasonable attorney’s fees) arising from any claim against Iridescent Learning, which relate to or arise out of any acts or omissions of Volunteer taken or not taken within the scope of this Agreement.</p>
+
+<p>5. Liability Release</p>
+
+<p>Volunteer and his or her assignees, heirs, guardians, and legal representatives, will not sue or otherwise make any claim against Iridescent Learning or any of its directors, officers, employees, or agents for injury, damage or other loss resulting from any acts, however caused, by any of its directors, officers, employees or agents as a result of or relating to the Volunteer Activities or Volunteer’s service as a volunteer, other than any such acts caused by or resulting from the willful misconduct of Iridescent Learning or its directors, officers, employees, or agents. To the extent permitted by law, Volunteer hereby releases and discharges Iridescent Learning and its directors, officers, employees, and agents from all actions, claims or demands that Volunteer, or his or her heirs, guardians, and legal representatives now have, or may have in the future, for injury or damage resulting or arising from or related to the Volunteer Activities or Volunteer’s service as a Volunteer, other than any such injury or damage arising from or related to the willful misconduct of Iridescent Learning, its directors, officers, employees, or agents. Volunteer expressly waives the provisions of California Civil Code section 1542, which provides as follows: A general release does not extend to claims which the creditor does not know or suspect to exist in his favor at the time of executing the release, which if known by him, must have materially affected his settlement with the debtor.</p>
+
+<p>6. Use of Likeness Release</p>
+
+<p>Iridescent Learning may produce or participate in the production of video, motion picture, audio recording, web page, or still photograph productions, broadcasting, and/or publication which may involve the use of Volunteer’s name, photo, likenesses, or voices. Such productions will be used for non-commercial educational, exhibition, promotional, advertising, or other purposes by Iridescent Learning and will not be sold to other school systems or educational professionals or for commercial uand correct.</p>
+
+<%= simple_form_for @consent_waiver do |f| %>
+  <%= hidden_field_tag "consent_waiver[account_consent_token]", params.fetch(:token) { "" } %>
+  <%= f.input :consent_confirmation, as: :boolean, label: t("models.consent_waiver.consent_confirmation") %>
+  <%= f.input :electronic_signature %>
+  <%= f.button :submit, t("views.consent_waivers.new.submit") %>
+<% end %>
