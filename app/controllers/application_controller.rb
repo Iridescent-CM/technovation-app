@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def go_to_signin(profile)
     redirect_to signin_path, notice: t("controllers.application.unauthenticated",
-                                       profile: profile.indefinitize)
+                                       profile: profile.indefinitize.humanize.downcase)
   end
 
   def determine_layout
