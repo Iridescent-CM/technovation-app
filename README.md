@@ -47,6 +47,18 @@ TechnovationApp uses RSpec
 $ rake
 ```
 
+## Rake tasks
+
+```
+rake db:seed 
+# Seeds with some expertises, a student, a mentor, and an admin for manual testing
+```
+
+```
+rake bootstrap:expertises
+# Adds the Technovation expertises for mentors to choose for their profile
+```
+
 ## User Accounts
 
 ### Distinguished by profile types (judge, student, mentor...)
