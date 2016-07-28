@@ -3,7 +3,7 @@ student:
     complete_condition: "pre_survey_completed?"
     links:
       survey:
-        url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
+        url: "#"
 
       mark_complete:
         link_options:
@@ -53,7 +53,7 @@ mentor:
     complete_condition: "pre_survey_completed?"
     links:
       survey:
-        url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
+        url: "#"
 
       mark_complete:
         link_options:
@@ -96,10 +96,9 @@ regional_ambassador:
     complete_condition: "pre_survey_completed?"
     links:
       survey:
-        url: <%= ENV.fetch("PRE_PROGRAM_SURVEY") { "#" } %>
+        url: "#"
 
       mark_complete:
-        url: <%= ["regional_ambassador_account_path", ["regional_ambassador", ["pre_survey_completed_at", "#{Time.current}"]]] %>
         link_options:
           postfix_path: true
         tag_options:
@@ -111,6 +110,6 @@ regional_ambassador:
     complete_condition: "profile_complete?"
     links:
       photo:
-        url: <%= :regional_ambassador_account_path %>
+        url: "regional_ambassador_account_path"
       bio:
-        url: <%= :edit_regional_ambassador_account_path %>
+        url: "edit_regional_ambassador_account_path"

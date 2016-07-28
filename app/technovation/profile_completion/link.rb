@@ -13,7 +13,7 @@ module ProfileCompletion
         case url_structure
         when Array
           send(url_structure.first, Hash[*url_structure.last])
-        when Symbol
+        when /_path\z/
           send(url_structure)
         else
           url_structure
