@@ -41,4 +41,13 @@ RSpec.feature "Edit account spec" do
     click_button "Save"
     expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.student_account.attributes.existing_password.invalid"))
   end
+
+  scenario "edit profile info" do
+    click_link "Edit"
+    fill_in "School name", with: "New School"
+
+    click_button "Save"
+    expect(current_path).to eq(student_account_path)
+    expect(page).to have_content("New School")
+  end
 end
