@@ -47,6 +47,25 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 end
 
+if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
+                                  password: "mento+chi@mentor.com",
+                                  password_confirmation: "mento+chi@mentor.com",
+                                  mentor_profile_attributes: {
+                                    school_company_name: "Boeing",
+                                    job_title: "Aerospace Engineer",
+                                    expertise_ids: Expertise.pluck(:id)[0..1],
+                                  },
+                                  first_name: "Mentor",
+                                  last_name: "McGee",
+                                  date_of_birth: Date.today - 34.years,
+                                  city: "Evanston",
+                                  state_province: "IL",
+                                  country: "US",
+                                 )).valid?
+  puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
+end
+
+
 if (admin = AdminAccount.create(email: "admin@admin.com",
                                 password: "admin@admin.com",
                                 password_confirmation: "admin@admin.com",
