@@ -1,4 +1,4 @@
-<%= @mentor.full_name %>
+<%= render 'accounts/show', account: @mentor %>
 
 <p>
   <% if current_student.invited_mentor?(@mentor) %>
