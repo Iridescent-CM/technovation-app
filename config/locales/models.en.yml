@@ -1,7 +1,9 @@
 en:
   models:
     account:
+      address: "Location"
       class_name: "account"
+      full_name: "Name"
       state_province: "State / Province"
 
     consent_waiver:

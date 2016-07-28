@@ -1,4 +1,5 @@
-<%= render 'accounts/show', account: @mentor %>
+<%= render 'accounts/show', title: t("views.student.mentors.show.title"),
+                            account: @mentor %>
 
 <p>
   <% if current_student.invited_mentor?(@mentor) %>
