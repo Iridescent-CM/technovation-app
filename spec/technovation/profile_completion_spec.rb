@@ -7,6 +7,8 @@ RSpec.describe ProfileCompletion do
     mentor.create_consent_waiver!(consent_confirmation: 1,
                                   electronic_signature: "h")
 
+    allow(mentor).to receive(:background_check_complete?) { true }
+
     CompletionSteps.new(mentor).each { }
     step = ProfileCompletion.step("build_profile")
     expect(step.completion_status).to eq("ready")
