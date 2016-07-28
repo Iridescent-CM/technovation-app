@@ -2,9 +2,15 @@ module Mentor
   class AccountsController < MentorController
     include AccountController
 
+    before_filter :expertises
+
     private
     def account
       @account ||= MentorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+    end
+
+    def expertises
+      @expertises ||= Expertise.all
     end
 
     def after_update_redirect_path
