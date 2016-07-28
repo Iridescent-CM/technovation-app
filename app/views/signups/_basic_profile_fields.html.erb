@@ -12,9 +12,10 @@
                                        end_year: end_year,
                                        input_html: { class: "account_dob" } %>
 
-<%= f.input :country, collection: CountryStateSelect.countries_collection,
-                      input_html: { id: "account_country" } %>
+<%= f.input :city %>
 
 <%= f.input :state_province, label: t('models.account.state_province') %>
 
-<%= f.input :city %>
+<%= f.input :country, collection: CountryStateSelect.countries_collection,
+                      input_html: { id: "account_country" } %>
+
