@@ -106,6 +106,12 @@ en:
 
       build_profile:
         label: "Complete your profile to help students get to know you"
+        links:
+          photo:
+            text: "Upload a photo"
+          bio:
+            text: "Add a description of yourself to your profile bio"
+
 
       consent_waiver:
         label: "Sign the consent waiver"

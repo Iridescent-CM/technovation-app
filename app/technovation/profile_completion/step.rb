@@ -30,6 +30,10 @@ module ProfileCompletion
                              COMPLETION_STATES[:complete] :
                              COMPLETION_STATES[:ready]
 
+      @prerequisites.each do |prereq|
+        ProfileCompletion.step(prereq).set_account_options(account)
+      end
+
       unless prerequisites_met?
         @completion_status = COMPLETION_STATES[:future]
       end
