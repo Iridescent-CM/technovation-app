@@ -11,7 +11,7 @@ module AccountController
 
   def update
     if account.update_attributes(account_params)
-      redirect_to :back, success: t('controllers.accounts.update.success')
+      redirect_to after_update_path, success: t('controllers.accounts.update.success')
     else
       render :edit
     end
@@ -43,5 +43,13 @@ module AccountController
 
   def profile_params
     { }
+  end
+
+  def after_update_path
+    if request.referer === /dashboard\z/
+      :back
+    else
+      send("#{account.type_name}_account_path")
+    end
   end
 end
