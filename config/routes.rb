@@ -7,8 +7,6 @@ Rails.application.routes.draw do
 
     resources :mentors, only: :show
 
-    resource :mentor_search, only: :show
-
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
 
@@ -17,6 +15,8 @@ Rails.application.routes.draw do
     resources :join_requests, only: [:new, :create, :update]
 
     resources :team_searches, except: [:index, :destroy]
+    resources :mentor_searches, except: [:index, :destroy]
+
 
     resource :account, only: [:show, :edit, :update]
   end

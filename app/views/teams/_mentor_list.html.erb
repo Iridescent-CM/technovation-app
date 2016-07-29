@@ -5,7 +5,10 @@
 
   <div class="module-body">
     <ul class="team_members">
-      <%= render partial: "teams/member", collection: @team.mentors %>
+      <%= render(partial: "teams/member", collection: @team.mentors) or
+            link_to(t('views.student.navigation.find_a_mentor'),
+                    new_student_mentor_search_path,
+                    class: "transparent-button") %>
     </ul>
   </div>
 </div>

@@ -9,7 +9,7 @@ RSpec.feature "Invite a member to a team" do
     sign_in(student)
     click_link "My team"
 
-    fill_in "Email", with: "some@student.com"
+    fill_in "team_member_invite[invitee_email]", with: "some@student.com"
     click_button "Send invite"
   end
 

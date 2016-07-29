@@ -218,12 +218,14 @@ en:
         show:
           add_members: "Add members"
           confirm_leave: "Are you sure you want to leave the team?"
-          invite: "Invite other students"
+          invite: "Invite more students"
           members_subheading: "Team members"
           mentors_subheading: "Team mentors"
           pending_invitees_subheading: "Pending Invites"
           pending_requests_subheading: "Pending requests to join"
 
     team_member_invites:
+      form:
+        invite_by_email: "Invite more students by email"
       show:
         greeting: "You've been invited to join %{name}!"

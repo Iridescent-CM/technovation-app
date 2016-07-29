@@ -89,6 +89,33 @@ label {
   }
 }
 
+.module-body {
+  .simple_form {
+    @include span-columns(12);
+    @include shift(0);
+
+    @include media($large-screen) {
+      @include span-columns(12);
+      @include shift(0);
+    }
+
+    @include media($small-screen) {
+      @include span-columns(12);
+      @include shift(0);
+    }
+
+    .input {
+      @include span-columns(9);
+    }
+
+    input[type="submit"] {
+      @include span-columns(3);
+      @include omega;
+      min-width: auto;
+    }
+  }
+}
+
 .account_dob {
   width: 30%;
 }

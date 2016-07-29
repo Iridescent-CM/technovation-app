@@ -1,6 +1,8 @@
 <%= simple_form_for [:student, @team_member_invite] do |f| %>
   <%= f.input :invitee_email,
-              label: t("models.team_member_invite.invitee_email") %>
+              label: false,
+              placeholder: t("views.team_member_invites.form.invite_by_email") %>
 
-  <%= f.button :submit, t("views.application.invite") %>
+  <%= f.button :submit, t("views.application.invite"),
+                        class: "transparent-button" %>
 <% end %>
