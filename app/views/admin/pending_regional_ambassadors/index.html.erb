@@ -18,11 +18,17 @@
           <%= link_to "approve",
                       admin_pending_regional_ambassador_path(ambassador,
                                                              status: :approved),
-                      data: { method: :put } %>&nbsp;|
+                                                             data: {
+                                                               method: :put,
+                                                               confirm: "You are approving #{ambassador.full_name}",
+                                                             } %>&nbsp;|
           <%= link_to "reject",
                       admin_pending_regional_ambassador_path(ambassador,
                                                              status: :rejected),
-                      data: { method: :put } %>
+                                                             data: {
+                                                               method: :put,
+                                                               confirm: "You are rejecting #{ambassador.full_name}",
+                                                             } %>
         </td>
       </tr>
     <% end %>
