@@ -11,8 +11,7 @@ module AccountController
 
   def update
     if account.update_attributes(account_params)
-      redirect_to after_update_redirect_path,
-                  success: t('controllers.accounts.update.success')
+      redirect_to :back, success: t('controllers.accounts.update.success')
     else
       render :edit
     end

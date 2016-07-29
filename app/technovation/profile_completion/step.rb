@@ -43,6 +43,10 @@ module ProfileCompletion
       completion_status == COMPLETION_STATES[:ready]
     end
 
+    def future?
+      completion_status == COMPLETION_STATES[:future]
+    end
+
     def incomplete?
       completion_status != COMPLETION_STATES[:complete]
     end

@@ -112,7 +112,6 @@ en:
           bio:
             text: "Add a description of yourself to your profile bio"
 
-
       consent_waiver:
         label: "Sign the consent waiver"
         links:
@@ -132,6 +131,9 @@ en:
         links:
           browse:
             text: "Find an available mentor now"
+
+      links:
+        complete_previous_steps: "Complete steps above to enable this step"
 
       parental_consent:
         label: "Your parent or guardian must sign the consent form that was emailed to them"

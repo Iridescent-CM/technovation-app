@@ -8,4 +8,6 @@
       </li>
     <% end %>
   </ul>
+<% elsif step.future? %>
+  <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
 <% end %>

@@ -2,21 +2,6 @@ module Student
   class AccountsController < StudentController
     include AccountController
 
-    helper_method :account, :edit_account_path
-
-    def edit
-      account
-    end
-
-    def update
-      if account.update_attributes(account_params)
-        redirect_to student_account_path,
-                    success: t('controllers.accounts.update.success')
-      else
-        render :edit
-      end
-    end
-
     private
     def account
       @account ||= StudentAccount.find_with_token(cookies.fetch(:auth_token) { "" })

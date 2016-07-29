@@ -7,10 +7,6 @@ module RegionalAmbassador
       @account ||= RegionalAmbassadorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
     end
 
-    def after_update_redirect_path
-      regional_ambassador_account_path
-    end
-
     def edit_account_path
       edit_regional_ambassador_account_path
     end

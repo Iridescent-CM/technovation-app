@@ -13,10 +13,6 @@ module Mentor
       @expertises ||= Expertise.all
     end
 
-    def after_update_redirect_path
-      mentor_account_path
-    end
-
     def edit_account_path
       edit_mentor_account_path
     end
