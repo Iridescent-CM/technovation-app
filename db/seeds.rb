@@ -48,8 +48,8 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
 end
 
 if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
-                                  password: "mento+chi@mentor.com",
-                                  password_confirmation: "mento+chi@mentor.com",
+                                  password: "mentor+chi@mentor.com",
+                                  password_confirmation: "mentor+chi@mentor.com",
                                   mentor_profile_attributes: {
                                     school_company_name: "Boeing",
                                     job_title: "Aerospace Engineer",
