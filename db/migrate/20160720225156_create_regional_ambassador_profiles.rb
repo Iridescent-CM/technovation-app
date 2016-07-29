@@ -6,6 +6,7 @@ class CreateRegionalAmbassadorProfiles < ActiveRecord::Migration
       t.string :job_title, null: false
       t.belongs_to :account, index: true, null: false
       t.integer :status, null: false, default: 0, index: true
+      t.datetime :background_check_completed_at
 
       t.timestamps null: false
     end

@@ -7,6 +7,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   validates :organization_company_name, :ambassador_since_year, presence: true
 
+  def background_check_complete?
+    !!background_check_completed_at
+  end
+
   private
   def just_approved?
     status_changed? and approved?

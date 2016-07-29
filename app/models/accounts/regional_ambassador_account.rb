@@ -15,12 +15,11 @@ class RegionalAmbassadorAccount < Account
            :organization_company_name,
            :job_title,
            :ambassador_since_year,
+           :background_check_complete?,
     to: :regional_ambassador_profile,
     prefix: false
 
-  def background_check_complete?
-    false
-  end
+  delegate :id, to: :regional_ambassador_profile, prefix: true
 
   def profile_complete?
     false

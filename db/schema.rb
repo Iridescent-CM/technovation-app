@@ -163,13 +163,14 @@ ActiveRecord::Schema.define(version: 20160728164653) do
   add_index "parental_consents", ["account_id"], name: "index_parental_consents_on_account_id", using: :btree
 
   create_table "regional_ambassador_profiles", force: :cascade do |t|
-    t.string   "organization_company_name",             null: false
-    t.integer  "ambassador_since_year",                 null: false
-    t.string   "job_title",                             null: false
-    t.integer  "account_id",                            null: false
-    t.integer  "status",                    default: 0, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "organization_company_name",                 null: false
+    t.integer  "ambassador_since_year",                     null: false
+    t.string   "job_title",                                 null: false
+    t.integer  "account_id",                                null: false
+    t.integer  "status",                        default: 0, null: false
+    t.datetime "background_check_completed_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
