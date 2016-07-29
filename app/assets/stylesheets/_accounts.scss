@@ -1,0 +1,30 @@
+.account-basic {
+  @include span-columns(4);
+}
+
+.account-special {
+  @include span-columns(8);
+  @include omega;
+}
+
+.account-info {
+  @include span-columns(9);
+  @include omega;
+}
+
+.profile-avatar {
+  @include span-columns(3);
+  text-align: center;
+  img { margin-bottom: $small-spacing; }
+}
+
+.account {
+  margin-top: $large-spacing;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $small-spacing;
+    color: $mulberry;
+    .accent { color: $shamrock; }
+  }
+}
