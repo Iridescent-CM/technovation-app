@@ -40,7 +40,7 @@ en:
           success: "Your team has been created! Lookin' good!"
       team_searches:
         new:
-          link: "Browse available teams"
+          link: "browse available teams"
 
     parental_consents:
       create:
@@ -84,4 +84,4 @@ en:
 
     teams:
       index:
-        browse: "Browse available teams"
+        browse: "browse available teams"

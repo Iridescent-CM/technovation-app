@@ -50,16 +50,13 @@ label {
 
 .simple_form {
   @include span-columns(6);
-  @include shift(3);
 
   @include media($large-screen) {
     @include span-columns(8);
-    @include shift(2);
   }
 
   @include media($small-screen) {
     @include span-columns(10);
-    @include shift(1);
   }
 
   .input {
@@ -85,6 +82,20 @@ label {
 
     input, label {
       display: none;
+    }
+  }
+}
+
+.signup-page, .signin-page {
+  .simple_form {
+    @include shift(3);
+
+    @include media($large-screen) {
+      @include shift(2);
+    }
+
+    @include media($small-screen) {
+      @include shift(1);
     }
   }
 }

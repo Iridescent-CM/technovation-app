@@ -8,13 +8,8 @@
     <%= f.input :description %>
 
     <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
+    <%= t("views.application.or") %>
+    <%= link_to t("controllers.teams.index.browse"),
+                new_student_team_search_path %>
   <% end %>
-</div>
-
-<div class="well">
-  <h3><%= t("views.student.teams.new.join") %></h3>
-
-  <%= link_to t("controllers.teams.index.browse"),
-              new_student_team_search_path,
-              class: "primary-button" %>
 </div>
