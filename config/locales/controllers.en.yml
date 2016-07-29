@@ -35,6 +35,9 @@ en:
         create:
           link: "Request to be a mentor for %{name}"
           success: "You have requested to be a mentor for %{name}"
+      teams:
+        create:
+          success: "Your team has been created! Lookin' good!"
       team_searches:
         new:
           link: "Browse available teams"

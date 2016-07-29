@@ -82,6 +82,10 @@ en:
         new:
           already_requested: "Your request to join this team is pending."
 
+      teams:
+        new:
+          join: "Join a Team"
+          title: "Create a Team"
       team_searches:
         show:
           no_results: "Sorry, we didn't find any teams without a mentor near you"

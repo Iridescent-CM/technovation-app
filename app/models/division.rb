@@ -1,5 +1,5 @@
 class Division < ActiveRecord::Base
-  enum name: [:high_school, :middle_school]
+  enum name: [:high_school, :middle_school, :none_assigned]
 
   validates :name, uniqueness: true,
                    presence: true,
@@ -13,7 +13,20 @@ class Division < ActiveRecord::Base
     find_or_create_by(name: names[:middle_school])
   end
 
+  def self.none_assigned
+    find_or_create_by(name: names[:none_assigned])
+  end
+
   def self.for(account)
-    !!account && account.is_in_secondary_school? ? high_school : middle_school
+    if !!account
+      case account.type
+      when "MentorAccount"
+        none_assigned
+      else
+        account.is_in_secondary_school? ? high_school : middle_school
+      end
+    else
+      none_assigned
+    end
   end
 end

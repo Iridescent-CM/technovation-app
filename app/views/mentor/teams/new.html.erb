@@ -1,0 +1,18 @@
+<div class="well clearfix">
+  <h3><%= t("views.mentor.teams.new.title") %></h3>
+
+  <%= simple_form_for [:mentor, @team] do |f| %>
+    <%= f.input :name %>
+    <%= f.input :description %>
+
+    <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
+  <% end %>
+</div>
+
+<div class="well">
+  <h3><%= t("views.mentor.teams.new.join") %></h3>
+
+  <%= link_to t("controllers.teams.index.browse"),
+              new_mentor_team_search_path,
+              class: "primary-button" %>
+</div>
