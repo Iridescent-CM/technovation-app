@@ -9,4 +9,8 @@ class MentorProfile < ActiveRecord::Base
   def expertise_names
     expertises.flat_map(&:name)
   end
+
+  def background_check_complete?
+    !!background_check_completed_at
+  end
 end

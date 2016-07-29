@@ -19,6 +19,7 @@ class MentorAccount < Account
            :expertise_names,
            :job_title,
            :school_company_name,
+           :background_check_complete?,
     to: :mentor_profile,
     prefix: false
 
@@ -34,10 +35,6 @@ class MentorAccount < Account
 
   def requested_to_join?(team)
     join_requests.flat_map(&:joinable).include?(team)
-  end
-
-  def background_check_complete?
-    false
   end
 
   def profile_complete?

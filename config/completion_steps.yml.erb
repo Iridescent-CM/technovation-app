@@ -46,8 +46,12 @@ mentor:
   background_check:
     complete_condition: "background_check_complete?"
     links:
-      resend:
-        url: "#"
+      mark_complete:
+        link_options:
+          postfix: true
+        tag_options:
+          data:
+            method: "put"
 
   pre_program_survey:
     complete_condition: "pre_survey_completed?"
@@ -89,8 +93,12 @@ regional_ambassador:
   background_check:
     complete_condition: "background_check_complete?"
     links:
-      resend:
-        url: "#"
+      mark_complete:
+        link_options:
+          postfix: true
+        tag_options:
+          data:
+            method: "put"
 
   pre_program_survey:
     complete_condition: "pre_survey_completed?"

@@ -101,8 +101,9 @@ en:
       background_check:
         label: "Complete a background check"
         links:
-          resend:
-            text: "Re-send the background check link to my email"
+          mark_complete:
+            text: "Mark this step complete"
+            postfix: "(temporary, for testing only)"
 
       build_profile:
         label: "Complete your profile to help students get to know you"
