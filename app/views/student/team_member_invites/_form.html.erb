@@ -1,4 +1,6 @@
-<%= simple_form_for [:student, @team_member_invite] do |f| %>
+<%= simple_form_for [account.type_name, @team_member_invite] do |f| %>
+  <%= f.hidden_field :team_id, value: @team.id %>
+
   <%= f.input :invitee_email,
               label: false,
               placeholder: t("views.team_member_invites.form.invite_by_email") %>

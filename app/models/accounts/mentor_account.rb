@@ -31,7 +31,11 @@ class MentorAccount < Account
   end
 
   def teams
-    Team.joins(:memberships).where('memberships.member_id = ?', id)
+    @teams ||= Team.joins(:memberships).where('memberships.member_id = ?', id)
+  end
+
+  def team_names
+    teams.collect(&:name)
   end
 
   def requested_to_join?(team)

@@ -43,6 +43,15 @@ FactoryGirl.define do
         end
       end
     end
+
+    trait :on_team do
+      after(:create) do |m|
+        team = FactoryGirl.create(:team)
+        FactoryGirl.create(:team_membership, member_type: "MentorAccount",
+                                             member_id: m.id,
+                                             joinable: team)
+      end
+    end
   end
 
   factory :regional_ambassador, parent: :account, class: 'RegionalAmbassadorAccount' do
