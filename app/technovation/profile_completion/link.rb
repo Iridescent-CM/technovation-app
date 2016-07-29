@@ -1,24 +1,16 @@
+require 'json'
+
 module ProfileCompletion
-  class Link < Struct.new(:step_id, :name, :url_structure, :link_options, :tag_options)
-    include Rails.application.routes.url_helpers
+  class Link < Struct.new(:step_id, :name, :config_url, :link_options, :tag_options)
+    include Rails.application.routes.url_helpers if defined?(Rails)
 
     def text
       I18n.t("views.profile_requirements.#{step_id}.links.#{name}.text")
     end
 
-    def url(urls)
-      if url = urls.find { |k, _| String(k) == step_id }
-        url[1]
-      else
-        case url_structure
-        when Array
-          send(url_structure.first, Hash[*url_structure.last])
-        when /_path\z/
-          send(url_structure)
-        else
-          url_structure
-        end
-      end
+    def url(urls = {})
+      match_from_urls(urls) or
+        use_configuration_url
     end
 
     def prefix
@@ -35,6 +27,26 @@ module ProfileCompletion
 
     def options
       Hash(tag_options)
+    end
+
+    private
+    def match_from_urls(urls)
+      urls = JSON.parse(urls.to_json)
+
+      if url = urls.detect do |id, links|
+                 id === step_id and links.keys.include?(name)
+               end
+        url[1].values_at(name)[0]
+      end
+    end
+
+    def use_configuration_url
+      case config_url
+      when /_path\z/
+        send(config_url)
+      else
+        config_url
+      end
     end
   end
 end

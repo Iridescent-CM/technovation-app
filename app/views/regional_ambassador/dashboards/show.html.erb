@@ -3,10 +3,14 @@
 <%= render 'completion_steps',
            steps: CompletionSteps.new(current_ambassador),
            urls: {
-             pre_program_survey: regional_ambassador_account_path(
-               regional_ambassador_account: { pre_survey_completed_at: Time.current }
-             ),
-             consent_waiver: new_consent_waiver_path(
-               token: current_ambassador.consent_token
-             ),
+             pre_program_survey: {
+               mark_complete: regional_ambassador_account_path(
+                 regional_ambassador_account: { pre_survey_completed_at: Time.current }
+               ),
+             },
+             consent_waiver: {
+               view: new_consent_waiver_path(
+                 token: current_ambassador.consent_token
+               ),
+             },
            } %>

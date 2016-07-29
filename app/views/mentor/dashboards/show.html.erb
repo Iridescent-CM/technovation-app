@@ -1,10 +1,14 @@
 <%= render 'completion_steps',
            steps: CompletionSteps.new(current_mentor),
            urls: {
-             pre_program_survey: mentor_account_path(
-               mentor_account: { pre_survey_completed_at: Time.current }
-             ),
-             consent_waiver: new_consent_waiver_path(
-               token: current_mentor.consent_token
-             ),
+             pre_program_survey: {
+               mark_complete: mentor_account_path(
+                 mentor_account: { pre_survey_completed_at: Time.current }
+               ),
+             },
+             consent_waiver: {
+               view: new_consent_waiver_path(
+                 token: current_mentor.consent_token
+               ),
+             },
            } %>
