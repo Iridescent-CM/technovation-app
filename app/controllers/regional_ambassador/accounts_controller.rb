@@ -25,6 +25,7 @@ module RegionalAmbassador
           :id,
           :organization_company_name,
           :job_title,
+          :ambassador_since_year,
         ],
       }
     end
