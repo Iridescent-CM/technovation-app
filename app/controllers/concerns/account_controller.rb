@@ -46,7 +46,7 @@ module AccountController
   end
 
   def after_update_path
-    if request.referer === /dashboard\z/
+    if /dashboard\z/.match(request.referer)
       :back
     else
       send("#{account.type_name}_account_path")
