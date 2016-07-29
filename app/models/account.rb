@@ -71,6 +71,14 @@ class Account < ActiveRecord::Base
     !!pre_survey_completed_at # and pre_survey_completed_at >= Date.new(2016, 9, 1)
   end
 
+  def oldest_birth_year
+    Date.today.year - 80
+  end
+
+  def youngest_birth_year
+    Date.today.year - 20
+  end
+
   private
   def generate_tokens
     GenerateToken.(self, :auth_token)

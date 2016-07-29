@@ -1,6 +1,3 @@
-<% start_year ||= Date.today.year - 75 %>
-<% end_year ||= Date.today.year - 20 %>
-
 <%= f.input :first_name %>
 
 <%= f.input :last_name %>
@@ -8,8 +5,8 @@
 <%= f.input :email, as: :email %>
 
 <%= f.input :date_of_birth, as: :date, prompt: true,
-                                       start_year: start_year,
-                                       end_year: end_year,
+                                       start_year: f.object.oldest_birth_year,
+                                       end_year: f.object.youngest_birth_year,
                                        input_html: { class: "account_dob" } %>
 
 <%= f.input :city %>

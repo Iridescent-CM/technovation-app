@@ -6,10 +6,7 @@
 
   <div class="signup-form">
     <%= simple_form_for(@student) do |f| %>
-      <%= render 'signups/basic_profile_fields',
-                 f: f,
-                 start_year: Date.today.year - 19,
-                 end_year: Date.today.year - 8 %>
+      <%= render 'signups/basic_profile_fields', f: f %>
       <%= render 'signups/student_profile_fields', f: f %>
 
       <%= f.input :password %>

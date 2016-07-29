@@ -66,6 +66,14 @@ class StudentAccount < Account
     Team.joins(:memberships).where("memberships.member_id = ?", id)
   end
 
+  def oldest_birth_year
+    Date.today.year - 19
+  end
+
+  def youngest_birth_year
+    Date.today.year - 8
+  end
+
   def invited_mentor?(mentor)
     mentor_invites.flat_map(&:invitee).include?(mentor)
   end

@@ -16,6 +16,7 @@ FactoryGirl.define do
 
   factory :student, parent: :account, class: 'StudentAccount' do
     type { "StudentAccount" }
+    date_of_birth { Date.today - 15.years }
 
     student_profile
 
