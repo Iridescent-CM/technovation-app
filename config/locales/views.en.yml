@@ -80,7 +80,7 @@ en:
         index:
           title: "My requests"
         new:
-          already_requested: "You have already requested to mentor this team."
+          already_requested: "Your request to join this team is pending."
 
       team_searches:
         show:
