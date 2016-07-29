@@ -146,7 +146,7 @@ en:
         label: "Complete the pre-program survey"
         links:
           mark_complete:
-            post_text: "(honor system!)"
+            postfix: "(honor system!)"
             text: "Mark this step complete"
           survey:
             text: "Take the survey now"

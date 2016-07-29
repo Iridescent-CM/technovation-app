@@ -14,14 +14,14 @@ module ProfileCompletion
     end
 
     def prefix
-      if !!Hash(link_options)[:prefix_path]
-        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.prefix_text")
+      if !!Hash(link_options)["prefix"]
+        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.prefix")
       end
     end
 
     def postfix
-      if !!Hash(link_options)[:postfix_path]
-        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.post_text")
+      if !!Hash(link_options)["postfix"]
+        I18n.t("views.profile_requirements.#{step_id}.links.#{name}.postfix")
       end
     end
 
