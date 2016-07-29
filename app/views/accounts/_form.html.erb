@@ -1,6 +1,10 @@
 <%= simple_form_for @account, url: url do |f| %>
   <%= render 'signups/basic_profile_fields', f: f %>
 
+  <% if f.object.respond_to?(:bio) %>
+    <%= render "signups/#{@account.type_name}_bio_field", f: f %>
+  <% end %>
+
   <%= render "signups/#{@account.type_name}_profile_fields", f: f %>
 
   <%= f.input :existing_password,

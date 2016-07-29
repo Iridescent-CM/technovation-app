@@ -16,12 +16,13 @@ class RegionalAmbassadorAccount < Account
            :job_title,
            :ambassador_since_year,
            :background_check_complete?,
+           :bio,
     to: :regional_ambassador_profile,
     prefix: false
 
   delegate :id, to: :regional_ambassador_profile, prefix: true
 
   def profile_complete?
-    false
+    profile_image? and not bio.blank?
   end
 end

@@ -28,6 +28,7 @@ module Mentor
           :school_company_name,
           :job_title,
           :background_check_completed_at,
+          :bio,
           { expertise_ids: [] },
         ],
       }

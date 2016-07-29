@@ -20,6 +20,7 @@ class MentorAccount < Account
            :job_title,
            :school_company_name,
            :background_check_complete?,
+           :bio,
     to: :mentor_profile,
     prefix: false
 
@@ -38,6 +39,6 @@ class MentorAccount < Account
   end
 
   def profile_complete?
-    false
+    profile_image? and not bio.blank?
   end
 end

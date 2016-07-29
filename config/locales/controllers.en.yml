@@ -21,7 +21,6 @@ en:
       new:
         unauthorized: "Sorry, that consent token was invalid."
 
-
     judge:
       scores:
         create:

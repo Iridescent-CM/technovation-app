@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"
 
-    resources :teams, only: [:index, :show]
+    resources :teams, except: :destroy
     resources :team_searches, except: [:index, :destroy]
     resources :join_requests, except: [:edit, :update]
 

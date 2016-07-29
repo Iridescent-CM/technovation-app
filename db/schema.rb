@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728164653) do
+ActiveRecord::Schema.define(version: 20160729184829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20160728164653) do
     t.date     "background_check_completed_at"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.text     "bio"
   end
 
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
@@ -171,6 +172,7 @@ ActiveRecord::Schema.define(version: 20160728164653) do
     t.datetime "background_check_completed_at"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.text     "bio"
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
