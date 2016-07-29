@@ -22,11 +22,11 @@ en:
 
     application:
       actions: "Actions"
-      approve: "Approve"
+      approved: "approve"
       cancel: 'cancel'
       complete_your_profile: "Complete your Technovation profile"
-      confirm_approve: "Are you sure you want to approve %{name}?"
-      confirm_reject: "Are you sure you want to reject %{name}?"
+      confirm_approved: "Are you sure you want to approve %{name}?"
+      confirm_rejected: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"
       dashboards:
         menu:
@@ -38,7 +38,7 @@ en:
       invite: "Send invite"
       no: "No"
       or: "or"
-      reject: "Reject"
+      rejected: "reject"
       save: "Save"
       signin: 'Sign in'
       signup: 'Sign up'
@@ -87,6 +87,15 @@ en:
         new:
           join: "Join a Team"
           title: "Create a Team"
+        show:
+          add_members: "Add members"
+          confirm_leave: "Are you sure you want to leave the team?"
+          invite: "Invite more students"
+          members_subheading: "Team members"
+          mentors_subheading: "Team mentors"
+          pending_invitees_subheading: "Pending Invites"
+          pending_requests_subheading: "Pending requests to join"
+
       team_searches:
         show:
           no_results: "Sorry, we didn't find any teams without a mentor near you"

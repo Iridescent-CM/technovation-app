@@ -30,7 +30,7 @@ RSpec.feature "Students review requests from mentors" do
 
     within(".pending_requests.mentors") do
       expect(page).to have_content(mentor.full_name)
-      click_link "Approve"
+      click_link "approve"
     end
 
     expect(page).to have_css(".team_members", text: mentor.full_name)
@@ -51,7 +51,7 @@ RSpec.feature "Students review requests from mentors" do
 
     within(".pending_requests.mentors") do
       expect(page).to have_content(mentor.full_name)
-      click_link "Reject"
+      click_link "reject"
     end
 
     expect(page).to have_css(".team_members", text: mentor.full_name)

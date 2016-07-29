@@ -32,7 +32,7 @@ RSpec.feature "Students request to join a team" do
 
       sign_in(team.students.sample)
       click_link "My team"
-      click_link "Approve"
+      click_link "approve"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request approval email was sent"
       mail = ActionMailer::Base.deliveries.last
@@ -47,7 +47,7 @@ RSpec.feature "Students request to join a team" do
 
       sign_in(team.students.sample)
       click_link "My team"
-      click_link "Reject"
+      click_link "reject"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request rejection email was sent"
       mail = ActionMailer::Base.deliveries.last

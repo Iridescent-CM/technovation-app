@@ -1,9 +1,10 @@
-<p><%= link_to t("controllers.mentor.team_searches.new.link"),
-                new_mentor_team_search_path,
-                class: "primary-button" %></p>
-
-<ul class="mentor_teams">
+<ul class="mentor-teams">
   <% @teams.each do |team| %>
     <li><%= link_to team.name, [:mentor, team] %></li>
   <% end %>
 </ul>
+
+<p><%= link_to t("controllers.mentor.team_searches.new.link"),
+                new_mentor_team_search_path,
+                class: "primary-button" %></p>
+

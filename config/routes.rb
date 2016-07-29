@@ -27,8 +27,9 @@ Rails.application.routes.draw do
 
     resources :teams, except: :destroy
     resources :team_searches, except: [:index, :destroy]
-    resources :join_requests, except: [:edit, :update]
+    resources :join_requests, except: :edit
     resources :team_member_invites, except: [:edit, :update, :destroy]
+    resources :team_memberships, only: :destroy
 
     resource :dashboard, only: :show
 

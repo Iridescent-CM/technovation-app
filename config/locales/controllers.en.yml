@@ -35,9 +35,15 @@ en:
         create:
           link: "Request to be a mentor for %{name}"
           success: "You have requested to be a mentor for %{name}"
+        update:
+          success: "%{name} was %{status}"
       teams:
         create:
           success: "Your team has been created! Lookin' good!"
+      team_memberships:
+        destroy:
+          link: "Leave %{name}"
+          success: "You have left the team `%{name}`"
       team_member_invites:
         create:
           success: "Your team invite was sent!"

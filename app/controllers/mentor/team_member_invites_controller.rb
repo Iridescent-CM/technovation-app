@@ -1,8 +1,6 @@
 module Mentor
   class TeamMemberInvitesController < MentorController
-    def new
-      @team_member_invite = TeamMemberInvite.new
-    end
+    helper_method :account_type
 
     def create
       @team_member_invite = TeamMemberInvite.new(team_member_invite_params)
@@ -20,6 +18,10 @@ module Mentor
       params.require(:team_member_invite).permit(:invitee_email, :team_id).tap do |params|
         params[:inviter_id] = current_mentor.id
       end
+    end
+
+    def account_type
+      "mentor"
     end
   end
 end

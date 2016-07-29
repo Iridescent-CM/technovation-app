@@ -2,3 +2,50 @@
   @include span-columns(6);
   @include shift(3);
 }
+
+.pending-invites {
+  h6 {
+    color: $mulberry;
+    margin-bottom: $small-spacing;
+  }
+}
+
+.team-memberships {
+  .team-members {
+    @include span-columns(6);
+    @include omega(2n);
+    margin-bottom: $large-spacing;
+
+    ul.team_members li {
+      margin-bottom: $small-spacing;
+
+      .member-image {
+        display: table-cell;
+        padding-right: $small-spacing;
+
+        img {
+          width: 80px;
+          height: auto;
+          border: 3px solid #fff;
+        }
+      }
+
+      .member-info {
+        display: table-cell;
+        vertical-align: top;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.manage-team {
+  @include span-columns(12);
+  > div {
+    margin-bottom: $base-spacing;
+  }
+}
+
+.mentor-teams {
+  margin-bottom: 15px;
+}

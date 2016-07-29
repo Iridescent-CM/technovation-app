@@ -1,0 +1,36 @@
+<% if requests.any? %>
+  <div class="pending-requests">
+    <h6><%= t("views.#{account_type}.teams.show.pending_requests_subheading") %></h6>
+
+    <table class="table pending_requests mentors">
+      <thead>
+        <tr>
+          <th><%= t("models.join_request.requestor_name") %></th>
+          <th><%= t("models.join_request.requestor_type") %></th>
+          <th><%= t("views.application.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% requests.each do |join_request| %>
+          <tr>
+            <td><%= join_request.requestor_full_name %></td>
+
+            <td><%= join_request.requestor_type_name %></td>
+
+            <td>
+              <% %i{approved rejected}.each.with_index do |action, i| %>
+                <%= link_to t("views.application.#{action}"),
+                            send("#{account_type}_join_request_path", join_request, status: action),
+                            data: {
+                              method: :put,
+                              confirm: t("views.application.confirm_#{action}",
+                                        name: join_request.requestor_full_name),
+                            } %><% if i == 0 %>&nbsp;|<% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

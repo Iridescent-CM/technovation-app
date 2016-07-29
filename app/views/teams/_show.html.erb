@@ -3,5 +3,7 @@
   <p class="team_description"><%= @team.description %></p>
 </div>
 
-<%= render "teams/member_list", account: account %>
-<%= render "teams/mentor_list" %>
+<div class="team-memberships">
+  <%= render "teams/member_list" %>
+  <%= render "teams/mentor_list" %>
+</div>

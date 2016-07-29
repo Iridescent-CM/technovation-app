@@ -1,8 +1,6 @@
 module Student
   class TeamMemberInvitesController < StudentController
-    def new
-      @team_member_invite = TeamMemberInvite.new
-    end
+    helper_method :account_type
 
     def create
       @team_member_invite = TeamMemberInvite.new(team_member_invite_params)
@@ -21,6 +19,10 @@ module Student
         params[:inviter_id] = current_student.id
         params[:team_id] = current_student.team_id
       end
+    end
+
+    def account_type
+      "student"
     end
   end
 end

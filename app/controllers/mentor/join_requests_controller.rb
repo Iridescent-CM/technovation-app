@@ -23,4 +23,13 @@ class Mentor::JoinRequestsController < MentorController
   def index
     @join_requests = current_mentor.join_requests
   end
+
+  def update
+    join_request = JoinRequest.find(params.fetch(:id))
+    join_request.public_send("#{params.fetch(:status)}!")
+
+    redirect_to :back, success: t("controllers.mentor.join_requests.update.success",
+                                  name: join_request.requestor_full_name,
+                                  status: params.fetch(:status))
+  end
 end

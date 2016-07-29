@@ -16,6 +16,7 @@ en:
     join_request:
       joinable_name: "Name"
       requestor_name: "Requestor's name"
+      requestor_type: "Type of member"
       status: "Status"
 
     mentor:

@@ -1,14 +1,14 @@
 <div class="module-marine team-members">
   <div class="module-header">
-    <h5><%= t("views.student.teams.show.mentors_subheading") %></h5>
+    <h5><%= t("views.#{account_type}.teams.show.mentors_subheading") %></h5>
   </div>
 
   <div class="module-body">
     <ul class="team_members">
       <%= render(partial: "teams/member", collection: @team.mentors) or
-            link_to(t('views.student.navigation.find_a_mentor'),
-                    new_student_mentor_search_path,
-                    class: "transparent-button") %>
+          link_to(t("views.#{account_type}.navigation.find_a_mentor"),
+                  send("new_#{account_type}_mentor_search_path"),
+                  class: "transparent-button") %>
     </ul>
   </div>
 </div>
