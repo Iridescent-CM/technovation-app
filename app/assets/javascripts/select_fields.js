@@ -1,6 +1,6 @@
 (function() {
   var countrySelectFields = {
-    eventList: 'ready page:load',
+    eventList: 'turbolinks:load',
 
     countryFieldId: 'account_country',
 
@@ -24,7 +24,7 @@
   };
 
   var accountDobFields = {
-    eventList: 'ready page:load',
+    eventList: 'turbolinks:load',
 
     cssSelector: '.account_dob',
 
