@@ -29,7 +29,7 @@ RSpec.feature "Consent waivers" do
     fill_in "Electronic signature", with: "Mentor McGee"
     click_button "I agree"
 
-    expect(current_path).to eq(consent_waiver_path(ConsentWaiver.last))
-    expect(page).to have_content("#{mentor.full_name} has signed the consent waiver as #{mentor.consent_waiver_electronic_signature} on #{mentor.consent_waiver_signed_at.strftime("%-d %B, %Y")}")
+    expect(current_path).to eq(mentor_dashboard_path)
+    expect(page).to have_content("Thank you for signing the consent waiver!")
   end
 end
