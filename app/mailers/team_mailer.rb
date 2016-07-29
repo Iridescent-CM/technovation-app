@@ -13,8 +13,8 @@ class TeamMailer < ApplicationMailer
     @role_name = join_request.requestor_type_name
 
     mail to: join_request.joinable.student_emails,
-      subject: I18n.translate("team_mailer.join_request.subject",
-                              role_name: join_request.requestor_type_name)
+         subject: I18n.translate("team_mailer.join_request.subject",
+                                 role_name: join_request.requestor_type_name)
   end
 
   def mentor_join_request_accepted(join_request)
