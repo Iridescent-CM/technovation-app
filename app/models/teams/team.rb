@@ -16,7 +16,7 @@ class Team < ActiveRecord::Base
   has_many :pending_invites, -> { pending }, class_name: "TeamMemberInvite"
   has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 
-  validates :name, uniqueness: true, presence: true
+  validates :name, uniqueness: { case_sensitive: false }, presence: true
   validates :description, presence: true
   validates :division, presence: true
 

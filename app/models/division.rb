@@ -1,7 +1,7 @@
 class Division < ActiveRecord::Base
   enum name: [:high_school, :middle_school, :none_assigned]
 
-  validates :name, uniqueness: true,
+  validates :name, uniqueness: { case_sensitive: false },
                    presence: true,
                    inclusion: { in: names.keys + names.values + names.keys.map(&:to_sym) }
 

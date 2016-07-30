@@ -4,5 +4,6 @@ class ScoreQuestion < ActiveRecord::Base
 
   accepts_nested_attributes_for :score_values, allow_destroy: true
 
-  validates :label, presence: true, uniqueness: { scope: :score_category_id }
+  validates :label, presence: true, uniqueness: { case_sensitive: false,
+                                                  scope: :score_category_id }
 end

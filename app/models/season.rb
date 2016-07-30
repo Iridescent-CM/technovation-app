@@ -1,7 +1,9 @@
 class Season < ActiveRecord::Base
   has_many :registrations
 
-  validates :year, presence: true, numericality: true, uniqueness: true
+  validates :year, presence: true,
+                   numericality: true,
+                   uniqueness: { case_sensitive: false }
   validates :starts_at, presence: true
 
   def self.current

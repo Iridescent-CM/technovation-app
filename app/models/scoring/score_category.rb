@@ -3,7 +3,7 @@ class ScoreCategory < ActiveRecord::Base
 
   accepts_nested_attributes_for :score_questions, allow_destroy: true
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   scope :is_expertise, -> { where(is_expertise: true) }
 

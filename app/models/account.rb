@@ -16,7 +16,7 @@ class Account < ActiveRecord::Base
 
   has_one :consent_waiver, dependent: :destroy
 
-  validates :email, presence: true, uniqueness: true, email: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :password, :password_confirmation, presence: { on: :create }
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
