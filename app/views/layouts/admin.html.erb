@@ -13,10 +13,11 @@
   </head>
 
   <body>
-    <%= render 'admin/navigation' %>
+    <%= render 'admin/header' %>
 
     <div class="container">
       <%= render 'flash_messages' %>
+      <%= render 'admin/navigation' %>
       <%= yield %>
     </div>
   </body>
