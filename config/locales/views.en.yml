@@ -198,6 +198,10 @@ en:
           mentor: "Mentor"
           regional_ambassador: "Regional Ambassador"
           student: "Student"
+        section_headers:
+          account_details: "Account details"
+          location_details: "Location details"
+          profile_details: "Profile details"
         signup_link: "%{role} sign up"
         title: "Sign up as a"
 

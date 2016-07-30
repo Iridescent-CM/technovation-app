@@ -157,3 +157,9 @@ label {
 .clearfix {
   @include clearfix;
 }
+
+.signup-section {
+  color: $mulberry;
+  font-size: 2rem;
+  margin: 15px 0;
+}

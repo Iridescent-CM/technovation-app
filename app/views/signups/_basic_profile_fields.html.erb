@@ -2,12 +2,14 @@
 
 <%= f.input :last_name %>
 
-<%= f.input :email, as: :email %>
-
 <%= f.input :date_of_birth, as: :date, prompt: true,
                                        start_year: f.object.oldest_birth_year,
                                        end_year: f.object.youngest_birth_year,
                                        input_html: { class: "account_dob" } %>
+
+<h6 class="signup-section">
+  <%= t("views.signups.new.section_headers.location_details") %>
+</h6>
 
 <%= f.input :city %>
 
