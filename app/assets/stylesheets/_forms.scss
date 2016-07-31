@@ -151,3 +151,7 @@ label {
 .chosen-container .chosen-results li {
   line-height: 1.5;
 }
+
+.notify-error {
+  @extend .flash-error;
+}

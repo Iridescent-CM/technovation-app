@@ -35,6 +35,7 @@ en:
       danger_zone: "Danger Zone"
       edit: "Edit"
       filter: "Filter"
+      form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
       invite: "Send invite"
       no: "No"
       or: "or"
@@ -49,8 +50,10 @@ en:
     accounts:
       edit:
         confirm_new_password: "Confirm new password"
-        existing_password: "Existing password"
+        existing_password: "Current password"
+        existing_password_required: "Required to update your email or password"
         new_password: "New password"
+        title: "Edit your account"
       show:
         title: "Account Info"
 

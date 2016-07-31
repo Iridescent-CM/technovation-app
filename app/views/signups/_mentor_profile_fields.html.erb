@@ -4,6 +4,8 @@
 
   <%= m.input :job_title %>
 
+  <%= m.input :bio %>
+
   <h4><%= t('views.signups.form.choose_expertises') %></h4>
 
   <%= m.collection_check_boxes :expertise_ids, @expertises, :id, :name do |b| %>

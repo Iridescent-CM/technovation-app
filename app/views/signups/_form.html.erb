@@ -1,19 +1,28 @@
 <% url ||= url_for(signup) %>
+<% title ||= t('views.signups.new.title') %>
 <% editing ||= false %>
 
 <div class="signup-page">
-  <% unless editing %>
-    <h2>
-      <%= t('views.signups.new.title') %>
-      <span class="accent"><%= t("views.signups.new.roles.#{signup.type_name}") %></span>
-    </h2>
-  <% end %>
+  <h2>
+    <%= title %>
+    <% unless editing %>
+      <span class="accent">
+        <%= t("views.signups.new.roles.#{signup.type_name}") %>
+      </span>
+    <% end %>
+  </h2>
 
   <div class="signup-form">
     <%= simple_form_for(signup, url: url) do |f| %>
+      <% if signup.errors.any? %>
+        <div class="notify-error">
+          <%= t("views.application.form_errors") %>
+        </div>
+      <% end %>
+
       <%= render 'signups/basic_profile_fields', f: f %>
 
-      <h6 class="signup-section">
+      <h6 id="account-profile-details" class="signup-section">
         <%= t("views.signups.new.section_headers.profile_details") %>
       </h6>
 

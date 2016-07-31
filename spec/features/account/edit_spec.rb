@@ -16,7 +16,7 @@ RSpec.feature "Edit account spec" do
   scenario "edit login info" do
     click_link "Edit"
     fill_in "Email", with: "something@else.com"
-    fill_in "Existing password", with: "secret1234"
+    fill_in "Current password", with: "secret1234"
 
     click_button "Save"
 
@@ -28,7 +28,7 @@ RSpec.feature "Edit account spec" do
     click_link "Edit"
     fill_in "Email", with: "something@else.com"
 
-    fill_in "Existing password", with: "wrong"
+    fill_in "Current password", with: "wrong"
     click_button "Save"
     expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.student_account.attributes.existing_password.invalid"))
   end
@@ -37,7 +37,7 @@ RSpec.feature "Edit account spec" do
     click_link "Edit"
     fill_in "Email", with: "something@else.com"
 
-    fill_in "Existing password", with: ""
+    fill_in "Current password", with: ""
     click_button "Save"
     expect(page).to have_css(".error", text: I18n.translate("activerecord.errors.models.student_account.attributes.existing_password.invalid"))
   end

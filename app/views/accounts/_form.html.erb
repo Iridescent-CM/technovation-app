@@ -3,13 +3,11 @@
              signup: @account,
              url: send("#{@account.type_name}_account_path"),
              editing: true,
+             title: title,
            } do |f| %>
 
-  <% if f.object.respond_to?(:bio) %>
-    <%= render "signups/#{@account.type_name}_bio_field", f: f %>
-  <% end %>
-
   <%= f.input :existing_password,
+              placeholder: t("views.accounts.edit.existing_password_required"),
               label: t('views.accounts.edit.existing_password') %>
 
   <%= f.button :submit, t('views.application.save') %>
