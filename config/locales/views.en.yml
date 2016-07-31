@@ -114,6 +114,15 @@ en:
       show:
         signed: "%{student_name} has been consented by %{parent_name} on %{date}"
 
+    passwords:
+      new:
+        title: "Reset your password"
+
+    password_resets:
+      new:
+        submit: "Send me a password reset link"
+        title: "Reset your password"
+
     profile_requirements:
       background_check:
         label: "Complete a background check"

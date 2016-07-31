@@ -57,6 +57,20 @@ en:
       new:
         unauthorized: "Sorry, that consent token was invalid."
 
+    passwords:
+      create:
+        success: "You successfully reset your password and you've been logged in"
+      new:
+        expired: "That password request token has expired. You should request a new one."
+        invalid: "That password request token is invalid. You should request a new one."
+
+    password_resets:
+      create:
+        failure: "Sorry, but we couldn't find an account with that email address."
+        success: "We sent password reset instructions to your email"
+      new:
+        link: "I forgot my password"
+
     signins:
       create:
         success: "Hey! Welcome back!"

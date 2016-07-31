@@ -1,4 +1,10 @@
 en:
+  account_mailer:
+    password_reset:
+      message: "Hey, it looks like you asked for instructions to reset your password. Follow the link below."
+      outro: "If you did not ask for password reset instructions, you don't need to do anything. Although your account is safe, you can reply to this email and let us know if you're concerned."
+      subject: "Reset your Technovation password"
+
   ambassador_mailer:
     approved:
       message: "Hey there, good news! Your Regional Ambassador account has been approved!"

@@ -69,6 +69,9 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
   end
 
+  resources :password_resets, only: [:new, :create]
+  resources :passwords, only: [:new, :create]
+
   resources :parental_consents, only: [:new, :create, :show]
   resources :consent_waivers, only: [:new, :create, :show]
 

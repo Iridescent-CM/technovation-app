@@ -11,34 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729184829) do
+ActiveRecord::Schema.define(version: 20160731143159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "email",                   null: false
-    t.string   "password_digest",         null: false
-    t.string   "auth_token",              null: false
-    t.string   "first_name",              null: false
-    t.string   "last_name",               null: false
-    t.date     "date_of_birth",           null: false
-    t.string   "city",                    null: false
-    t.string   "state_province",          null: false
-    t.string   "country",                 null: false
-    t.string   "type",                    null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "email",                        null: false
+    t.string   "password_digest",              null: false
+    t.string   "auth_token",                   null: false
+    t.string   "first_name",                   null: false
+    t.string   "last_name",                    null: false
+    t.date     "date_of_birth",                null: false
+    t.string   "city",                         null: false
+    t.string   "state_province",               null: false
+    t.string   "country",                      null: false
+    t.string   "type",                         null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "consent_token"
     t.string   "profile_image"
     t.datetime "pre_survey_completed_at"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_token_sent_at"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
   add_index "accounts", ["consent_token"], name: "index_accounts_on_consent_token", unique: true, using: :btree
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["password_reset_token"], name: "index_accounts_on_password_reset_token", unique: true, using: :btree
+  add_index "accounts", ["password_reset_token_sent_at"], name: "index_accounts_on_password_reset_token_sent_at", using: :btree
   add_index "accounts", ["type"], name: "index_accounts_on_type", using: :btree
 
   create_table "admin_profiles", force: :cascade do |t|

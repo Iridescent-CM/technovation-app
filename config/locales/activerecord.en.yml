@@ -1,4 +1,21 @@
 en:
+  activemodel:
+    errors:
+      models:
+        password:
+          attributes:
+            email:
+              not_found: "wasn't found in our database"
+            expires_at:
+              expired: "has expired"
+            password_confirmation:
+              doesnt_match: "does not match"
+
+        password_reset:
+          attributes:
+            email:
+              not_found: "wasn't found in our database"
+
   activerecord:
     errors:
       models:

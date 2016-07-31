@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  attr_accessor :existing_password
+  attr_accessor :existing_password, :skip_existing_password
 
   geocoded_by :address_details
 
@@ -79,6 +79,11 @@ class Account < ActiveRecord::Base
     Date.today.year - 20
   end
 
+  def enable_password_reset!
+    GenerateToken.(self, :password_reset_token)
+    update_attributes(password_reset_token_sent_at: Time.current)
+  end
+
   private
   def generate_tokens
     GenerateToken.(self, :auth_token)
@@ -90,7 +95,8 @@ class Account < ActiveRecord::Base
   end
 
   def changes_require_password?
-    persisted? && (email_changed? || password_digest_changed?)
+    !!!skip_existing_password &&
+      (persisted? && (email_changed? || password_digest_changed?))
   end
 
   def address_changed?
