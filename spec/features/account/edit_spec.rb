@@ -50,4 +50,16 @@ RSpec.feature "Edit account spec" do
     expect(current_path).to eq(student_account_path)
     expect(page).to have_content("New School")
   end
+
+  scenario "edit bio" do
+    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample)
+
+    sign_in(account)
+    visit send("edit_#{account.type_name}_account_path")
+
+    fill_in "Bio", with: "Check out my random cool bio!!!!"
+    click_button "Save"
+
+    expect(page).to have_css('dd', text: "Check out my random cool bio!!!!")
+  end
 end
