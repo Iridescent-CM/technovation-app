@@ -13,7 +13,6 @@ RSpec.describe Mentor::JoinRequestsController do
     end
 
     it "emails the team members" do
-      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request email was sent"
       expect(mail.to).to match_array(team.student_emails)
     end
 

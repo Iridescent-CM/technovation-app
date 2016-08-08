@@ -3,8 +3,8 @@ module RegisterMentor
     mentor_account.save
   end
 
-  def self.build(attributes)
-    mentor = MentorAccount.new(attributes)
+  def self.build(model, attributes)
+    mentor = model.new(attributes)
     mentor.build_mentor_profile if mentor.mentor_profile.blank?
     mentor
   end

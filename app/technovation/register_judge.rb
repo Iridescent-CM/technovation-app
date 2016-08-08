@@ -3,8 +3,8 @@ module RegisterJudge
     judge_account.save
   end
 
-  def self.build(attributes)
-    judge = JudgeAccount.new(attributes)
+  def self.build(model, attributes)
+    judge = model.new(attributes)
     judge.build_judge_profile if judge.judge_profile.blank?
     judge
   end

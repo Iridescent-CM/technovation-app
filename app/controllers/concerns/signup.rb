@@ -1,10 +1,10 @@
 module Signup
   def new
-    instance_variable_set("@#{model_name}", registration_helper.build(email: params[:email]))
+    instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
   end
 
   def create
-    instance_variable_set("@#{model_name}", registration_helper.build(account_params))
+    instance_variable_set("@#{model_name}", registration_helper.build(model, account_params))
 
     if registration_helper.(instance, self)
       SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"),
