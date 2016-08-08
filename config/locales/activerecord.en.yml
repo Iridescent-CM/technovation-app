@@ -41,5 +41,7 @@ en:
 
         student_account:
           attributes:
+            email:
+              matches_parent_email: "cannot be the same as your parent/guardian's email"
             existing_password:
               invalid: "is required to change your email address or password"

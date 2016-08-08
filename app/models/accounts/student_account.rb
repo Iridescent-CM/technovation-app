@@ -12,6 +12,8 @@ class StudentAccount < Account
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile
 
+  validate :parent_email_doesnt_match_account_email
+
   delegate :is_in_secondary_school?,
            :is_in_secondary_school,
            :parent_guardian_email,
@@ -76,5 +78,14 @@ class StudentAccount < Account
 
   def invited_mentor?(mentor)
     mentor_invites.flat_map(&:invitee).include?(mentor)
+  end
+
+  private
+  def parent_email_doesnt_match_account_email
+    if parent_guardian_email == email
+      errors.add(:email, :matches_parent_email)
+    else
+      true
+    end
   end
 end
