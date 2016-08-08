@@ -6,7 +6,7 @@ RSpec.describe Student::MentorInvitesController do
     let(:student) { FactoryGirl.create(:student, :on_team) }
 
     before do
-      controller.set_cookie(:auth_token, student.auth_token)
+      sign_in(student)
       post :create, mentor_invite: {
                       team_id: student.team_id,
                       invitee_email: mentor.email,

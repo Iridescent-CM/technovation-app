@@ -12,6 +12,7 @@ Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
   config.include SigninHelper, type: :feature
+  config.include ControllerSigninHelper, type: :controller
   config.include SelectDateHelper, type: :feature
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

@@ -6,7 +6,7 @@ RSpec.describe Student::MentorSearchesController do
       mentor = FactoryGirl.create(:mentor, :with_expertises)
       student = FactoryGirl.create(:student, :on_team)
 
-      controller.set_cookie(:auth_token, student.auth_token)
+      sign_in(student)
 
       get :new
 

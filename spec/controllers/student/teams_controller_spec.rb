@@ -4,7 +4,7 @@ RSpec.describe Student::TeamsController do
   describe 'POST #create' do
     it "creates teams for students not on a team" do
       student = FactoryGirl.create(:student)
-      controller.set_cookie(:auth_token, student.auth_token)
+      sign_in(student)
 
       expect {
         post :create, team: { name: "Girl Power",
@@ -16,7 +16,7 @@ RSpec.describe Student::TeamsController do
 
     it "does not create teams for students already on a team" do
       student = FactoryGirl.create(:student, :on_team)
-      controller.set_cookie(:auth_token, student.auth_token)
+      sign_in(student)
 
       expect {
         post :create, team: { name: "Girl Power",
@@ -30,7 +30,7 @@ RSpec.describe Student::TeamsController do
   describe "GET #new" do
     it "doesn't allow a student on a team to visit" do
       student = FactoryGirl.create(:student, :on_team)
-      controller.set_cookie(:auth_token, student.auth_token)
+      sign_in(student)
 
       get :new
       expect(flash[:alert]).to eq("You cannot create a new team if you are already on a team")
