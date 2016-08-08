@@ -11,6 +11,7 @@ module RegionalAmbassador
       %i{
           ambassador_since_year
           organization_company_name
+          bio
           job_title
         }
     end

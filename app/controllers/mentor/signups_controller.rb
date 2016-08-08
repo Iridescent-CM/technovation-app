@@ -8,6 +8,7 @@ module Mentor
       [
         :school_company_name,
         :job_title,
+        :bio,
         { expertise_ids: [] },
       ]
     end
