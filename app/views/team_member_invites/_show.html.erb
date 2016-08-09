@@ -1,7 +1,36 @@
-<p><%= t("views.team_member_invites.show.greeting", name: @invite.team_name) %></p>
+<h1><%= t("views.team_member_invites.show.greeting", name: @invite.team_name) %></h1>
 
-<p>
-  <%= button_to t("controllers.team_member_invites.update.accept",
-                  name: @invite.team_name),
-                { url: url }, { method: :put } %>
-</p>
+<p><%= t("views.team_member_invites.show.message") %></p>
+
+<div class="update-invite">
+  <div class="accept-invite">
+    <%= button_to t("controllers.team_member_invites.update.accept",
+                    name: @invite.team_name),
+                  url,
+                  {
+                    params: {
+                      "team_member_invite[status]" => :accepted,
+                    },
+                    method: :put,
+                    data: {
+                      confirm: t("views.team_member_invites.form.confirm_accept"),
+                    },
+                  } %>
+  </div>
+
+  <div class="reject-invite">
+    <%= button_to t("controllers.team_member_invites.update.reject",
+                    name: @invite.team_name),
+                  url,
+                  {
+                    class: "secondary-button",
+                    params: {
+                      "team_member_invite[status]" => :rejected,
+                    },
+                    method: :put,
+                    data: {
+                      confirm: t("views.team_member_invites.form.confirm_reject"),
+                    },
+                  } %>
+  </div>
+</div>

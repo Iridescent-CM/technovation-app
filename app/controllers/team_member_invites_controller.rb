@@ -1,10 +1,9 @@
 class TeamMemberInvitesController < ApplicationController
-  def show
-    @invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
-  end
+  include TeamMemberInviteController
 
   def update
-    invite = TeamMemberInvite.accept!(params.fetch(:id))
+    invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
+    invite.update_attributes(invite_params)
     sign_in_existing_invitee(invite) or
       enable_student_signup_for_joining_invited_team(invite)
   end
@@ -21,5 +20,11 @@ class TeamMemberInvitesController < ApplicationController
   def enable_student_signup_for_joining_invited_team(invite)
     cookies[:team_invite_token] = invite.invite_token
     redirect_to student_signup_path(email: invite.invitee_email)
+  end
+
+  def invite_params
+    params.require(:team_member_invite).permit(:status).tap do |p|
+      p[:invitee_id] == FindAccount.(cookies.fetch(:auth_token) { "" })
+    end
   end
 end

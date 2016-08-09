@@ -49,3 +49,15 @@
 .mentor-teams {
   margin-bottom: 15px;
 }
+
+.update-invite {
+  @include clearfix;
+
+  .accept-invite, .reject-invite {
+    @include span-columns(6);
+  }
+
+  .reject-invite {
+    @invite omega;
+  }
+}

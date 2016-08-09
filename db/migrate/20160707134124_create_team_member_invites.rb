@@ -6,7 +6,7 @@ class CreateTeamMemberInvites < ActiveRecord::Migration
       t.string :invitee_email
       t.integer :invitee_id
       t.string :invite_token, null: false
-      t.datetime :accepted_at, index: true
+      t.integer :status, null: false, index: true, default: 0
 
       t.foreign_key :accounts, column: :inviter_id
       t.foreign_key :accounts, column: :invitee_id

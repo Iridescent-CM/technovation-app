@@ -104,6 +104,7 @@ en:
     team_member_invites:
       update:
         accept: "Accept invitation to %{name}"
+        reject: "Reject this invitation"
         success: "Welcome to the team! Make us proud!"
 
     teams:

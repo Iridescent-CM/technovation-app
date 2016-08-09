@@ -281,18 +281,18 @@ ActiveRecord::Schema.define(version: 20160809150629) do
   add_index "submissions", ["team_id"], name: "index_submissions_on_team_id", using: :btree
 
   create_table "team_member_invites", force: :cascade do |t|
-    t.integer  "inviter_id",    null: false
-    t.integer  "team_id",       null: false
+    t.integer  "inviter_id",                null: false
+    t.integer  "team_id",                   null: false
     t.string   "invitee_email"
     t.integer  "invitee_id"
-    t.string   "invite_token",  null: false
-    t.datetime "accepted_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "invite_token",              null: false
+    t.integer  "status",        default: 0, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "team_member_invites", ["accepted_at"], name: "index_team_member_invites_on_accepted_at", using: :btree
   add_index "team_member_invites", ["invite_token"], name: "index_team_member_invites_on_invite_token", unique: true, using: :btree
+  add_index "team_member_invites", ["status"], name: "index_team_member_invites_on_status", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",        null: false

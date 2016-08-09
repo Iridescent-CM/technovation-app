@@ -1,11 +1,7 @@
 module RegisterStudent
-  def self.call(student_account,
-                context,
-                invite = TeamMemberInvite,
-                mailer = ParentMailer)
+  def self.call(student_account, context, mailer = ParentMailer)
     if student_account.save
       mailer.consent_notice(student_account).deliver_later
-      invite.accept!(context.remove_cookie(:team_invite_token), student_account.email)
       true
     else
       false

@@ -5,6 +5,10 @@ module TeamMemberInviteController
     helper_method :account_type
   end
 
+  def show
+    @invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
+  end
+
   def create
     @team_member_invite = TeamMemberInvite.new(team_member_invite_params)
 

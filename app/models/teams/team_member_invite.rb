@@ -1,7 +1,11 @@
 class TeamMemberInvite < ActiveRecord::Base
+  enum status: %i{pending accepted rejected}
+
   before_create :generate_invite_token
   before_create :set_existing_invitee
   after_create :send_invite
+
+  after_save :after_accept, if: -> { status_changed? && accepted? }
 
   belongs_to :team
   belongs_to :inviter, class_name: "Account"
@@ -11,25 +15,6 @@ class TeamMemberInvite < ActiveRecord::Base
 
   delegate :email, to: :inviter, prefix: true
   delegate :name, to: :team, prefix: true
-
-  scope :pending, -> { where('accepted_at IS NULL') }
-
-  def self.accept!(token, email = nil)
-    if invite = where("invite_token = ? OR invitee_email = ?", token, email).first
-      invite.update_attributes({
-        accepted_at: Time.current,
-        invitee: Account.find_by(email: email) || invite.invitee,
-      })
-      invite.after_accept
-      invite
-    else
-      false
-    end
-  end
-
-  def accepted?
-    !!accepted_at
-  end
 
   def to_param
     invite_token
