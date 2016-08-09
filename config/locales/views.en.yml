@@ -180,6 +180,7 @@ en:
       form:
         choose_expertises: "Choose expertise(s)"
         confirm_password: 'Confirm password'
+        required_fields: "Please fill in all of the fields. Thank you!"
         signup: "Sign up"
         student_profile: "Student profile"
 
