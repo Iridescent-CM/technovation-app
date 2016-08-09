@@ -1,10 +1,6 @@
 en:
   views:
     admin:
-      dashboards:
-        index:
-          title: "Welcome to your Admin Dashboard"
-
       menu:
         score_categories: "Score Categories"
 
@@ -28,10 +24,6 @@ en:
       confirm_approved: "Are you sure you want to approve %{name}?"
       confirm_rejected: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"
-      dashboards:
-        menu:
-          my_account: "My account"
-        title: "Dashboard"
       danger_zone: "Danger Zone"
       edit: "Edit"
       filter: "Filter"
@@ -177,12 +169,6 @@ en:
           survey:
             text: "Take the survey now"
 
-    regional_ambassador:
-      dashboards:
-        show:
-          pending_message: "Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region."
-          approved_message: "Welcome! Your account has been reviewed by our staff and approved. For now, just hold tight, new RA features are coming soon."
-
     signins:
       form:
         signin: "Sign in"
@@ -218,11 +204,6 @@ en:
         title: "Sign up as a"
 
     student:
-      dashboards:
-        show:
-          complete_pre_program_survey: "Complete the pre-program survey"
-          resend_parental_consent: "Re-send the parental consent form"
-
       join_requests:
         new:
           already_requested: "You have requested to join this team"
