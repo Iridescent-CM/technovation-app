@@ -1,7 +1,12 @@
-<h4>Welcome to Technovation Challenge!</h4>
+<h4><%= t("views.application.dashboards.show.heading") %></h4>
 
-<h5>We're glad you're here!</h5>
+<p><%= t("views.application.dashboards.show.intro", year: CurrentSeason.year) %></p>
 
-<p>This is placeholder content but we need to get something here soon.</p>
+<p><%= t("views.application.dashboards.show.body",
+         previous_year: CurrentSeason.previous_year,
+         current_year: CurrentSeason.year,
+         signin_link: link_to(t("views.application.signin").downcase, signin_path),
+         signup_link: link_to(t("views.application.signup").downcase, signup_path)).html_safe %></p>
 
-<p>Sign in or sign up now...</p>
+<p><%= t("views.application.dashboards.show.outro", link: mail_to("info@technovationchallenge.org")).html_safe %></p>
+

@@ -1,0 +1,30 @@
+en:
+  views:
+    admin:
+      dashboards:
+        index:
+          title: "Welcome to your Admin Dashboard"
+
+    application:
+      dashboards:
+        menu:
+          my_account: "My account"
+        show:
+          heading: "Welcome to Technovation!"
+          intro: "We're excited to begin registrations for our %{year} season. Through this platform, you will be able to sign up as an individual, create teams, and also filter for nearby mentors."
+          body: "If you participated in Technovation's %{previous_year} season, you can use your existing email and password to %{signin_link} and register for the new %{current_year} season. Otherwise, please %{signup_link} to get started!"
+          outro: "Feel free to email %{link} or check out our FAQ page for more information."
+        title: "Dashboard"
+
+    regional_ambassador:
+      dashboards:
+        show:
+          pending_message: "Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region."
+          approved_message: "Welcome! Your account has been reviewed by our staff and approved. For now, just hold tight, new RA features are coming soon."
+
+    student:
+      dashboards:
+        show:
+          complete_pre_program_survey: "Complete the pre-program survey"
+          resend_parental_consent: "Re-send the parental consent form"
+
