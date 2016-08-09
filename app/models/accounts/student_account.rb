@@ -6,7 +6,7 @@ class StudentAccount < Account
 
   has_many :join_requests, as: :requestor
 
-  has_one :parental_consent, dependent: :destroy, foreign_key: :account_id
+  has_one :parental_consent, -> { nonvoid }, dependent: :destroy, foreign_key: :account_id
 
   has_one :student_profile, dependent: :destroy, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
@@ -78,6 +78,10 @@ class StudentAccount < Account
 
   def invited_mentor?(mentor)
     mentor_invites.flat_map(&:invitee).include?(mentor)
+  end
+
+  def void_parental_consent!
+    !!parental_consent && parental_consent.void!
   end
 
   private

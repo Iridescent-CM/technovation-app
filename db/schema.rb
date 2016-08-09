@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731143159) do
+ActiveRecord::Schema.define(version: 20160809150629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,9 +163,11 @@ ActiveRecord::Schema.define(version: 20160731143159) do
     t.integer  "account_id",                       null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.datetime "voided_at"
   end
 
   add_index "parental_consents", ["account_id"], name: "index_parental_consents_on_account_id", using: :btree
+  add_index "parental_consents", ["voided_at"], name: "index_parental_consents_on_voided_at", using: :btree
 
   create_table "regional_ambassador_profiles", force: :cascade do |t|
     t.string   "organization_company_name",                 null: false

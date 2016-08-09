@@ -1,6 +1,8 @@
 class ParentalConsent < ActiveRecord::Base
   belongs_to :student, class_name: "StudentAccount", foreign_key: :account_id
 
+  scope :nonvoid, -> { where('voided_at IS NULL') }
+
   validates :electronic_signature, presence: true
   validates :consent_confirmation, inclusion: { in: [1] }
 
@@ -13,4 +15,13 @@ class ParentalConsent < ActiveRecord::Base
   def signed_at
     created_at
   end
+
+  def void!
+    update_attributes(voided_at: Time.current)
+  end
+
+  def voided?
+    !!voided_at
+  end
+  alias void? voided?
 end
