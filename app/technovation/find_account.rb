@@ -1,4 +1,8 @@
 module FindAccount
+  def self.call(token)
+    auth_class.find_with_token(token)
+  end
+
   def self.authenticate(profile, cookies, callbacks = {})
     current(profile, cookies).authenticated? ||
       callbacks.fetch(:failure) { -> { } }.call

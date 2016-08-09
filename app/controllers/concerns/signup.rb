@@ -7,7 +7,7 @@ module Signup
     instance_variable_set("@#{model_name}", registration_helper.build(model, account_params))
 
     if registration_helper.(instance, self)
-      SignIn.(instance, self, redirect_to: send("#{model_name}_dashboard_path"),
+      SignIn.(instance, self, redirect_to: after_signup_path,
                               message: t("controllers.signups.create.success"))
     else
       render :new
@@ -41,5 +41,9 @@ module Signup
 
   def registration_helper
     "register_#{model_name}".camelize.constantize
+  end
+
+  def after_signup_path
+    send("#{model_name}_dashboard_path")
   end
 end
