@@ -24,6 +24,13 @@ class TeamMemberInvite < ActiveRecord::Base
     team.add_student(invitee)
   end
 
+  def self.finish_acceptance(account, token)
+    if invite = accepted.find_by(invitee_email: account.email, invite_token: token)
+      invite.update_attributes(invitee_id: account.id)
+      invite.after_accept
+    end
+  end
+
   private
   def generate_invite_token
     GenerateToken.(self, :invite_token)
