@@ -14,11 +14,15 @@ FactoryGirl.define do
     type { "Account" }
   end
 
-  factory :student, parent: :account, class: 'StudentAccount' do
+  factory :student, aliases: [:student_account], parent: :account, class: 'StudentAccount' do
     type { "StudentAccount" }
     date_of_birth { Date.today - 15.years }
 
-    student_profile
+    before(:create) do |s|
+      unless s.student_profile.present?
+        s.build_student_profile(FactoryGirl.attributes_for(:student_profile))
+      end
+    end
 
     trait :on_team do
       after(:create) do |s|

@@ -4,7 +4,7 @@ FactoryGirl.define do
     is_in_secondary_school { true }
     parent_guardian_name { "Thoughtbot" }
     parent_guardian_email { "factorygirl@thoughtbot.com" }
-    account
+    association(:student_account)
   end
 
   factory :mentor_profile do

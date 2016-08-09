@@ -6,4 +6,21 @@ RSpec.describe StudentProfile do
     expect(profile).not_to be_valid
     expect(profile.errors[:is_in_secondary_school]).not_to be_nil
   end
+
+  it "validates the parent/guardian email" do
+    %w{bad bad@ something.bad.org not@okay}.each do |bad_email|
+      profile = FactoryGirl.build(:student_profile, parent_guardian_email: bad_email)
+      expect(profile).not_to be_valid
+      expect(profile.errors[:parent_guardian_email]).not_to be_nil
+    end
+  end
+
+  it "re-sends the parental consent on update of parent email" do
+    FactoryGirl.create(:student_profile)
+               .update_attributes(parent_guardian_email: "something@else.com")
+
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail).to be_present, "no email sent"
+    expect(mail.subject).to eq("Your daughter needs consent to participate in the Technovation Challenge!")
+  end
 end
