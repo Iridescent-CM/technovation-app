@@ -23,4 +23,13 @@ RSpec.describe StudentProfile do
     expect(mail).to be_present, "no email sent"
     expect(mail.subject).to eq("Your daughter needs consent to participate in the Technovation Challenge!")
   end
+
+  it "voids the original parental consent on update of parent email" do
+    profile = FactoryGirl.create(:student_profile)
+    consent = profile.student_account.create_parental_consent(FactoryGirl.attributes_for(:parental_consent))
+
+    profile.update_attributes(parent_guardian_email: "something@else.com")
+
+    expect(consent).to be_voided
+  end
 end
