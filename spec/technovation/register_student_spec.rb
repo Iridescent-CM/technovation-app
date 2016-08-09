@@ -8,7 +8,7 @@ RSpec.describe RegisterStudent do
     invite = double(:invite)
     mailer = double(:mailer).as_null_object
 
-    expect(controller).to receive(:get_cookie).with(:team_invite_token) { "token" }
+    expect(controller).to receive(:remove_cookie).with(:team_invite_token) { "token" }
     expect(invite).to receive(:accept!).with("token", "email@email.com")
     RegisterStudent.(account, controller, invite, mailer)
   end

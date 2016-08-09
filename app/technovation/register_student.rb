@@ -5,7 +5,7 @@ module RegisterStudent
                 mailer = ParentMailer)
     if student_account.save
       mailer.consent_notice(student_account).deliver_later
-      invite.accept!(context.get_cookie(:team_invite_token), student_account.email)
+      invite.accept!(context.remove_cookie(:team_invite_token), student_account.email)
       true
     else
       false
