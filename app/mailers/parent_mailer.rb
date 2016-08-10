@@ -1,6 +1,6 @@
 class ParentMailer < ApplicationMailer
-  def consent_notice(student_account)
-    @url = new_parental_consent_url(token: student_account.consent_token)
-    mail to: student_account.parent_guardian_email
+  def consent_notice(email, token)
+    @url = new_parental_consent_url(token: token)
+    mail to: email
   end
 end

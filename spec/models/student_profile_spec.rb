@@ -21,6 +21,7 @@ RSpec.describe StudentProfile do
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present, "no email sent"
+    expect(mail.to).to eq(["something@else.com"])
     expect(mail.subject).to eq("Your daughter needs consent to participate in the Technovation Challenge!")
   end
 

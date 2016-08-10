@@ -18,7 +18,8 @@ class StudentProfile < ActiveRecord::Base
 
   private
   def resend_parental_consent
-    ParentMailer.consent_notice(student_account).deliver_later
+    ParentMailer.consent_notice(parent_guardian_email,
+                                student_account.consent_token).deliver_later
   end
 
   def void_parental_consent
