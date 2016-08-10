@@ -1,0 +1,21 @@
+.container {
+  @include outer-container;
+
+  h2 {
+    color: $shamrock;
+    margin: $small-spacing 0;
+  }
+
+  .dashboard-page-info {
+    margin-bottom: $base-spacing;
+
+    h3 {
+      color: $mulberry;
+      margin-bottom: $small-spacing;
+    }
+  }
+
+  .main-content {
+    padding: 0 2rem;
+  }
+}

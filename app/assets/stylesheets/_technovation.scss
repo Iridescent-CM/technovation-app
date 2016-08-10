@@ -7,159 +7,16 @@
 @import "refills/flashes";
 @import "refills/pagination";
 
+@import "layout";
+@import "header";
+@import "menus";
+@import "forms";
+
 body, html {
   margin: 0;
   background-color: $light-grey;
 }
 
-header {
-  background-image: image-url("header-background.png");
-  background-repeat: repeat-x;
-  background-color: $mulberry;
-  display: block;
-  padding: $base-spacing 0;
-
-  @include media($xlarge-screen) {
-    padding: $base-spacing $small-spacing;
-  }
-
-  .logo {
-    img {
-      height: 60px;
-      display: inline-block;
-      margin-top: 5px;
-    }
-  }
-
-  nav  {
-    float: right;
-    margin-top: 10px;
-
-    ul {
-      list-style-type: none;
-      text-align: right;
-      height: 60px;
-      display: table;
-
-      li {
-        display: table-cell;
-        vertical-align: middle;
-        padding-left: $base-spacing;
-
-        a {
-          color: white;
-          line-height: 0px;
-          &:hover,
-          &:focus {
-            color: $shamrock;
-          }
-        }
-      }
-    }
-  }
-}
-
-.container .signup-page {
-  margin-top: $large-spacing;
-
-  h2 {
-    text-align: center;
-    margin-bottom: $small-spacing;
-    color: $mulberry;
-    .accent { color: $shamrock; }
-  }
-
-  .account-type {
-    @include span-columns(8);
-    @include shift(2);
-
-    padding: $base-spacing;
-    margin-bottom: $base-spacing;
-    background-color: #fff;
-
-    .account-title {
-      @include span-columns(3 of 8);
-    }
-
-    .account-description {
-      @include span-columns(5 of 8);
-    }
-
-    .account-photo {
-      height: 260px;
-      background-size: 260px 260px;
-      background-color: #421B41;
-      background-blend-mode: exclusion;
-
-      h5 {
-        color: #fff;
-        text-align: center;
-        padding-top: $large-spacing;
-      }
-    }
-
-    .student-account { background-image: image-url("signup/student.jpg"); }
-    .mentor-account { background-image: image-url("signup/mentor.jpg"); }
-    .judge-account { background-image: image-url("signup/judge.jpg"); }
-  }
-}
-
-nav.profile {
-  border-bottom: 2px solid $mid-grey;
-  margin: $base-spacing 0;
-  ul {
-    li {
-      display: inline-block;
-      margin: 0 $base-spacing $base-spacing 0;
-      a {
-        color: $silver;
-        &:active,
-        &:focus,
-        &:hover {
-          color: $granite;
-        }
-      }
-    }
-  }
-}
-
-.container {
-  @include outer-container;
-
-  h2 {
-    color: $shamrock;
-    margin: $small-spacing 0;
-  }
-
-  .dashboard-page-info {
-    margin-bottom: $base-spacing;
-
-    h3 {
-      color: $mulberry;
-      margin-bottom: $small-spacing;
-    }
-  }
-}
-
-.inline-radio, .inline-checkbox {
-  display: block;
-  margin: 1rem 0;
-
-  label {
-    display: inline;
-  }
-}
-
-label {
-  cursor: pointer;
-}
-
 .clearfix {
   @include clearfix;
-}
-
-.signup-section {
-  color: $mulberry;
-  font-size: 2rem;
-  margin: 15px 0;
 }

@@ -159,3 +159,16 @@ label {
 .notify-error {
   @extend .flash-error;
 }
+
+.inline-radio, .inline-checkbox {
+  display: block;
+  margin: 1rem 0;
+
+  label {
+    display: inline;
+  }
+}
+
+label {
+  cursor: pointer;
+}

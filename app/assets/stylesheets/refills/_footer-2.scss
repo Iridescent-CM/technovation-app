@@ -1,21 +1,20 @@
 * {
   margin: 0;
 }
+
 html, body {
   height: 100%;
 }
+
 .main {
   min-height: 100%;
   margin-bottom: -82px; 
-  padding-bottom: 1rem;
 }
-.main:after {
-  content: "";
-  display: block;
-}
+
 .site-footer, .main:after {
   height: 82px; 
 }
+
 .site-footer {
   $base-spacing: 1.5em !default;
   $action-color: #477DCA !default;

@@ -20,7 +20,7 @@ en:
       actions: "Actions"
       approved: "approve"
       cancel: 'cancel'
-      complete_your_profile: "Complete your Technovation profile"
+      complete_your_profile: "Follow these steps to complete your profile"
       confirm_approved: "Are you sure you want to approve %{name}?"
       confirm_rejected: "Are you sure you want to reject %{name}?"
       create: "Create %{thing}"

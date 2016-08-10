@@ -1,0 +1,51 @@
+.signup-section {
+  color: $mulberry;
+  font-size: 2rem;
+  margin: 15px 0;
+}
+
+.container .signup-page {
+  margin-top: $large-spacing;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $small-spacing;
+    color: $mulberry;
+    .accent { color: $shamrock; }
+  }
+
+  .account-type {
+    @include span-columns(8);
+    @include shift(2);
+
+    padding: $base-spacing;
+    margin-bottom: $base-spacing;
+    background-color: #fff;
+
+    .account-title {
+      @include span-columns(3 of 8);
+    }
+
+    .account-description {
+      @include span-columns(5 of 8);
+    }
+
+    .account-photo {
+      height: 260px;
+      background-size: 260px 260px;
+      background-color: #421B41;
+      background-blend-mode: exclusion;
+
+      h5 {
+        color: #fff;
+        text-align: center;
+        padding-top: $large-spacing;
+      }
+    }
+
+    .student-account { background-image: image-url("signup/student.jpg"); }
+    .mentor-account { background-image: image-url("signup/mentor.jpg"); }
+    .judge-account { background-image: image-url("signup/judge.jpg"); }
+  }
+}
+

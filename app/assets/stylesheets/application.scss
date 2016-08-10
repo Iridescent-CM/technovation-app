@@ -1,7 +1,6 @@
 @import 'technovation';
 @import "font-awesome";
 @import "chosen";
-@import "forms";
 @import "containers";
 
 @import "refills/footer-2";
@@ -12,6 +11,7 @@
 @import "teams";
 @import "scores";
 @import "accounts";
+@import "signups";
 
 .last {
   @include omega;
