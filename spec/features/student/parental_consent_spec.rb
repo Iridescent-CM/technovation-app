@@ -11,6 +11,7 @@ RSpec.feature "Parental consent" do
 
   scenario "valid token, invalid signature form" do
     student = FactoryGirl.create(:student)
+    student.parental_consent.destroy
     visit new_parental_consent_path(token: student.consent_token)
     click_button "I agree"
     expect(current_path).to eq(parental_consents_path)
@@ -20,7 +21,8 @@ RSpec.feature "Parental consent" do
 
   scenario "valid token, valid form" do
     student = FactoryGirl.create(:student)
-    visit new_parental_consent_path(token: student.consent_token)
+    ParentalConsent.destroy_all
+    visit new_parental_consent_path(token: student.reload.consent_token)
 
     check "Check this box to confirm your consent"
     fill_in "Electronic signature", with: "Parent M. McGee"

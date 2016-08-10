@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe ProfileCompletion do
   it "completes prerequisites" do
     mentor = FactoryGirl.create(:mentor)
-    mentor.update_attributes(pre_survey_completed_at: Time.current)
+    mentor.reload.update_attributes(pre_survey_completed_at: Time.current)
     mentor.create_consent_waiver!(consent_confirmation: 1,
                                   electronic_signature: "h")
 
-    allow(mentor).to receive(:background_check_complete?) { true }
+    mentor.mentor_profile.update_attributes(bio: nil)
 
     CompletionSteps.new(mentor).each { }
     step = ProfileCompletion.step("build_profile")

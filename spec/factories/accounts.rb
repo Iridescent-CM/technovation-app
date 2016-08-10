@@ -12,6 +12,20 @@ FactoryGirl.define do
     state_province { "IL" }
     country { "US" }
     type { "Account" }
+
+    pre_survey_completed_at Time.current
+
+    profile_image "exists?"
+
+    before(:create) do |a|
+      unless a.type == "StudentAccount"
+        a.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+      end
+    end
+
+    after :create do |a|
+      a.update_column(:profile_image, "foo/bar/baz.png")
+    end
   end
 
   factory :student, aliases: [:student_account], parent: :account, class: 'StudentAccount' do
@@ -21,6 +35,10 @@ FactoryGirl.define do
     before(:create) do |s|
       unless s.student_profile.present?
         s.build_student_profile(FactoryGirl.attributes_for(:student_profile))
+      end
+
+      unless s.parental_consent.present?
+        s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
       end
     end
 

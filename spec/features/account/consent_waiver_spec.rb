@@ -10,7 +10,9 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, invalid signature form" do
-    sign_in(FactoryGirl.create(:regional_ambassador))
+    ambassador = FactoryGirl.create(:regional_ambassador)
+    ambassador.consent_waiver.destroy
+    sign_in(ambassador)
     visit regional_ambassador_dashboard_path
     click_link "Sign the waiver now"
     click_button "I agree"
@@ -21,6 +23,7 @@ RSpec.feature "Consent waivers" do
 
   scenario "valid token, valid form" do
     mentor = FactoryGirl.create(:mentor)
+    mentor.consent_waiver.destroy
     sign_in(mentor)
     visit mentor_dashboard_path
     click_link "Sign the waiver now"
