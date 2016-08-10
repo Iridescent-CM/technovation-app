@@ -25,9 +25,10 @@ module ProfileCompletion
 
     @@steps[account_type] << ProfileCompletion::Step.new(
                                id,
-                               config.fetch("prerequisites") { [] },
+                               config.fetch("prerequisites") { "" },
                                config.fetch("complete_condition"),
-                               links
+                               links,
+                               config.fetch("unlocks") { "" },
                              )
   end
 

@@ -2,6 +2,7 @@ module ProfileCompletion
   class Step
     include ActionView::Helpers::TagHelper
     include FontAwesome::Rails::IconHelper
+    include Rails.application.routes.url_helpers
 
     COMPLETION_STATES = {
       complete: "complete",
@@ -13,12 +14,14 @@ module ProfileCompletion
     attr_reader :links
     attr_reader :complete_condition
     attr_reader :completion_status
+    attr_reader :unlocks
 
-    def initialize(id, prerequisites, complete_condition, links)
+    def initialize(id, prerequisites, complete_condition, links, unlocks)
       @id = id
       @prerequisites = prerequisites.split(", ").flatten.compact
       @complete_condition = complete_condition
       @links = links
+      @unlocks = unlocks.split(", ").flatten.compact
     end
 
     def label
@@ -37,6 +40,10 @@ module ProfileCompletion
       unless prerequisites_met?
         @completion_status = COMPLETION_STATES[:future]
       end
+    end
+
+    def unlocks?(account, path)
+      unlocks.any? { |u| Array(path).include?(compute_path(account, u)) }
     end
 
     def ready?
@@ -68,6 +75,21 @@ module ProfileCompletion
     def prerequisites_met?
       @prerequisites.all? do |prereq|
         ProfileCompletion.step(prereq).complete?
+      end
+    end
+
+    def compute_path(account, unlock_path)
+      case unlock_path
+      when /\[/
+        path_parts = unlock_path.sub(']', '').split('[')
+        path_method = path_parts.first
+        if path_arg = account.public_send(path_parts.last)
+          send(path_method, path_arg)
+        else
+          ""
+        end
+      else
+        send(unlock_path)
       end
     end
   end
