@@ -89,6 +89,9 @@ en:
           success: "You have requested to join %{name}"
         update:
           success: "%{name} was %{status}"
+      parental_consent_notices:
+        create:
+          success: "Okay, we sent another email to your parent/guardian."
       teams:
         create:
           already_on_team: "You cannot create a new team if you are already on a team"
