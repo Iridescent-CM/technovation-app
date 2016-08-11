@@ -62,7 +62,7 @@ Technovation</p>
 <p>This Agreement may be executed by facsimile or electronically (in PDF format) in one or more counterparts, each of which will be deemed an original, but all of which shall constitute one and the same agreement.</p>
 
 <%= simple_form_for @parental_consent do |f| %>
-  <%= hidden_field_tag "parental_consent[student_consent_token]", params.fetch(:token) { "" } %>
+  <%= f.input :student_consent_token, as: :hidden %>
   <%= f.input :consent_confirmation, as: :boolean, label: t("models.parental_consent.consent_confirmation") %>
   <%= f.input :electronic_signature %>
   <%= f.button :submit, t("views.parental_consents.new.submit") %>

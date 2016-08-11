@@ -6,7 +6,7 @@ class ParentalConsent < ActiveRecord::Base
   validates :electronic_signature, presence: true
   validates :consent_confirmation, inclusion: { in: [1] }
 
-  delegate :full_name, to: :student, prefix: true
+  delegate :full_name, :consent_token, to: :student, prefix: true
 
   def student_consent_token=(token)
     self.student = StudentAccount.find_by(consent_token: token)

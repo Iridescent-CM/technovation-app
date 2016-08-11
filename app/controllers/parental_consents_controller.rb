@@ -5,7 +5,7 @@ class ParentalConsentsController < ApplicationController
 
   def new
     if valid_token?
-      @parental_consent = ParentalConsent.new
+      @parental_consent = ParentalConsent.new(student_consent_token: params.fetch(:token))
     else
       redirect_to application_dashboard_path,
                   alert: t("controllers.parental_consents.new.unauthorized")
