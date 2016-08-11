@@ -1,6 +1,10 @@
 class Account < ActiveRecord::Base
   attr_accessor :existing_password, :skip_existing_password
 
+  enum referred_by: %w{Friend Colleague Article Internet Social\ media
+                       Print Web\ search Teacher Parent/family Company\ email
+                       Other}
+
   geocoded_by :address_details
 
   mount_uploader :profile_image, ImageUploader

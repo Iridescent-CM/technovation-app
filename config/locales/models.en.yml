@@ -4,6 +4,7 @@ en:
       address: "Location"
       class_name: "account"
       full_name: "Name"
+      referred_by: "How did you hear about us?"
       state_province: "State / Province"
 
     consent_waiver:

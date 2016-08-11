@@ -16,6 +16,8 @@ class CreateAccounts < ActiveRecord::Migration
 
       t.string :type, index: true, null: false
 
+      t.integer :referred_by, index: true
+
       t.timestamps null: false
     end
     add_index :accounts, :email, unique: true
