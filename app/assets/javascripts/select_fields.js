@@ -52,16 +52,22 @@
     cssSelector: '[data-toggle="true"]',
 
     init: function() {
-      return $(document).on('change', this.selectorCss, this.enableToggleFields.bind(this));
+      return $(document).on('turbolinks:load', this.enableToggleFields.bind(this));
     },
 
     enableToggleFields: function(e) {
+      var $selectField = $(this.cssSelector);
+      this.toggleFields({ target: $selectField });
+      return $selectField.on('change', this.toggleFields);
+    },
+
+    toggleFields: function(e) {
       var $field = $(e.target),
           $toggleField = $($field.data("toggle-reveal")),
-          selectedOptionText = $field.find("option:selected").text(),
+          selectedValue = $field.val(),
           toggleValue = $field.data("toggle-value");
 
-      if (toggleValue === selectedOptionText) {
+      if (toggleValue === selectedValue) {
         return $toggleField.show();
       } else {
         return $toggleField.hide();
