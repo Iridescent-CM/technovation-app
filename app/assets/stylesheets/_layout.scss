@@ -16,6 +16,7 @@
   }
 
   .main-content {
-    padding: 0 2rem;
+    @include clearfix;
+    padding: 0 2rem 2rem 1rem;
   }
 }
