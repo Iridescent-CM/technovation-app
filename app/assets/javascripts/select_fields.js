@@ -45,3 +45,29 @@
 
   accountDobFields.init();
 }());
+
+
+(function() {
+  var toggleFields = {
+    cssSelector: '[data-toggle="true"]',
+
+    init: function() {
+      return $(document).on('change', this.selectorCss, this.enableToggleFields.bind(this));
+    },
+
+    enableToggleFields: function(e) {
+      var $field = $(e.target),
+          $toggleField = $($field.data("toggle-reveal")),
+          selectedOptionText = $field.find("option:selected").text(),
+          toggleValue = $field.data("toggle-value");
+
+      if (toggleValue === selectedOptionText) {
+        return $toggleField.show();
+      } else {
+        return $toggleField.hide();
+      }
+    },
+  };
+
+  toggleFields.init();
+}());

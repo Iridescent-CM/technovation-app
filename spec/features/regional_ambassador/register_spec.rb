@@ -22,6 +22,9 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
+    select "Other", from: "How did you hear about us?"
+    fill_in "regional_ambassador_account[referred_by_other]", with: "Some other value"
+
     click_button "Sign up"
   end
 
@@ -31,6 +34,10 @@ RSpec.feature "Regional Ambassadors registration" do
 
   scenario "displays a pending approval notice" do
     expect(page).to have_content("Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region.")
+  end
+
+  scenario "saves the custom referral response" do
+    expect(RegionalAmbassadorAccount.last.referred_by).to eq("Some other value")
   end
 
   scenario "admins receive an email about it" do

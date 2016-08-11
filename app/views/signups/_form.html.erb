@@ -44,7 +44,21 @@
       <% else %>
         <%= f.input :referred_by,
                     collection: Account.referred_bies,
-                    label: t("models.account.referred_by") %>
+                    label: t("models.account.referred_by"),
+                    input_html: {
+                      data: {
+                        toggle: true,
+                        toggle_value: "Other",
+                        toggle_reveal: ".referred_by_other",
+                      },
+                    } %>
+
+        <div class="referred_by_other">
+          <%= f.input :referred_by_other,
+                      label: false,
+                      placeholder: t("models.account.referred_by_other") %>
+        </div>
+
         <%= f.button :submit, t('views.signups.form.signup') %>
       <% end %>
     <% end %>
