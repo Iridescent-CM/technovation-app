@@ -54,9 +54,13 @@ group :development do
   gem 'spring'
   gem "refills"
   gem 'active_record_query_trace'
-  gem 'flag_shih_tzu'
 end
 
 group :qa, :production do
   gem 'rails_12factor'
 end
+
+# LEGACY MIGRATION
+# Do not use these gems
+#
+gem 'flag_shih_tzu'
