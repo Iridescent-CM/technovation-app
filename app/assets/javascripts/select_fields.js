@@ -23,6 +23,10 @@
     },
   };
 
+  countrySelectFields.init();
+}());
+
+(function() {
   var accountDobFields = {
     eventList: 'turbolinks:load',
 
@@ -40,5 +44,4 @@
   };
 
   accountDobFields.init();
-  countrySelectFields.init();
-}())
+}());
