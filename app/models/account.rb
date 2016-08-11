@@ -50,6 +50,14 @@ class Account < ActiveRecord::Base
     [city, state_province, Country[country].try(:name)].join(', ')
   end
 
+  def referred_by
+    if self[:referred_by] == self.class.referred_bies["Other"]
+      referred_by_other
+    else
+      super
+    end
+  end
+
   def authenticated?
     true
   end
