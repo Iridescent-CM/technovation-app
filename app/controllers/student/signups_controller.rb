@@ -1,6 +1,6 @@
 module Student
   class SignupsController < ApplicationController
-    include Signup
+    include SignupController
 
     private
     def model_name

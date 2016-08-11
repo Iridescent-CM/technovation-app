@@ -1,4 +1,4 @@
-module Signup
+module SignupController
   def new
     instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
   end

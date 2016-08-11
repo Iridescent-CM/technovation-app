@@ -1,6 +1,6 @@
 module Mentor
   class SignupsController < ApplicationController
-    include Signup
+    include SignupController
     before_filter :expertises
 
     private
