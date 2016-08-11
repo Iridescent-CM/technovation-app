@@ -24,8 +24,12 @@ module Legacy
       end
     end
 
-    def migrated_member_ids
-      Account.where('email IN (?)', users.pluck(:email)).pluck(:id)
+    def migrated_student_ids
+      StudentAccount.where('email IN (?)', users.pluck(:email)).pluck(:id)
+    end
+
+    def migrated_mentor_ids
+      MentorAccount.where('email IN (?)', users.pluck(:email)).pluck(:id)
     end
   end
 end

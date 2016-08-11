@@ -28,6 +28,8 @@ module ProfileAttributes
       {
         school_company_name: record.school,
         job_title: record.grade.blank? ? "Not specified" : record.grade,
+        bio: record.about,
+        expertise_ids: Expertise.where("LOWER(name) IN (?)", record.selected_expertise).pluck(:id)
       }
     end
   end
