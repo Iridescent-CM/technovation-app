@@ -29,7 +29,9 @@ module SignupController
       :country,
       :referred_by,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
-    )
+    ).tap do |p|
+      !!p[:referred_by] && p[:referred_by] = p[:referred_by].to_i
+    end
   end
 
   def model
