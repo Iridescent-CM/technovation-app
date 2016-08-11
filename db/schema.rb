@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20160809150629) do
     t.string   "country",                      null: false
     t.string   "type",                         null: false
     t.integer  "referred_by"
+    t.string   "referred_by_other"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "latitude"

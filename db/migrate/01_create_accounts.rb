@@ -17,6 +17,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :type, index: true, null: false
 
       t.integer :referred_by, index: true
+      t.string :referred_by_other
 
       t.timestamps null: false
     end
