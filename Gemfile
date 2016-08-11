@@ -54,6 +54,7 @@ group :development do
   gem 'spring'
   gem "refills"
   gem 'active_record_query_trace'
+  gem 'flag_shih_tzu'
 end
 
 group :qa, :production do

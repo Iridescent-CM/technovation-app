@@ -127,6 +127,7 @@ GEM
     ffi (1.9.14)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
+    flag_shih_tzu (0.3.15)
     fog (1.38.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
@@ -458,6 +459,7 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   factory_girl_rails
+  flag_shih_tzu
   fog (~> 1.38.0)
   font-awesome-rails (~> 4.6.3.1)
   geocoder (~> 1.2.6)
