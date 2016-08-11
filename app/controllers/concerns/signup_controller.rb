@@ -30,9 +30,7 @@ module SignupController
       :referred_by,
       :referred_by_other,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
-    ).tap do |p|
-      !!p[:referred_by] && p[:referred_by] = p[:referred_by].to_i
-    end
+    )
   end
 
   def model

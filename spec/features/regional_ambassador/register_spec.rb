@@ -37,7 +37,7 @@ RSpec.feature "Regional Ambassadors registration" do
   end
 
   scenario "saves the custom referral response" do
-    expect(RegionalAmbassadorAccount.last.referred_by).to eq("Some other value")
+    expect(RegionalAmbassadorAccount.last.referred_by_other).to eq("Some other value")
   end
 
   scenario "admins receive an email about it" do

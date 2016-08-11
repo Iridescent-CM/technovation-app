@@ -43,7 +43,7 @@
         <%= yield(f) %>
       <% else %>
         <%= f.input :referred_by,
-                    collection: Account.referred_bies,
+                    collection: Account.referred_bies.keys,
                     label: t("models.account.referred_by"),
                     input_html: {
                       data: {
