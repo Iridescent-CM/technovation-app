@@ -27,6 +27,7 @@ module SignupController
       :city,
       :state_province,
       :country,
+      :referred_by,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
     )
   end

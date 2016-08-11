@@ -42,6 +42,9 @@
       <% if editing %>
         <%= yield(f) %>
       <% else %>
+        <%= f.input :referred_by,
+                    collection: Account.referred_bies,
+                    label: t("models.account.referred_by") %>
         <%= f.button :submit, t('views.signups.form.signup') %>
       <% end %>
     <% end %>
