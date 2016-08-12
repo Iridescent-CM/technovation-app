@@ -5,7 +5,7 @@ namespace :legacy_migration do
       require './lib/legacy/helpers/profile_attributes'
       require './lib/legacy/models/user'
 
-      Legacy::User.where(is_registered: true).order('created_at DESC').each do |user|
+      Legacy::User.find_each do |user|
         user.role = "mentor" if user.role == "coach"
 
         account = "#{user.role}_account".camelize.constantize.new(
@@ -17,22 +17,14 @@ namespace :legacy_migration do
           city: user.home_city,
           state_province: user.migrated_home_state,
           country: user.home_country,
+          created_at: user.created_at,
           "#{user.role}_profile_attributes" => ProfileAttributes.(user),
         )
 
         GenerateToken.(account, :auth_token)
 
-        begin
-          account.save!
-        rescue ActiveRecord::RecordInvalid => e
-          if e.message == "Validation failed: Password can't be blank, Password confirmation can't be blank" or
-               e.message == "Validation failed: Password can't be blank, Password confirmation can't be blank, Email cannot be the same as your parent/guardian's email" or
-                 e.message == "Validation failed: Email is invalid, Password can't be blank, Password confirmation can't be blank" or
-            account.save(validate: false)
-          else
-            raise e
-          end
-        end
+        account.save(validate: false)
+        RegisterToSeasonJob.perform_later(account)
 
         puts "Migrated #{account.type} for: #{account.email}"
       end
@@ -42,10 +34,11 @@ namespace :legacy_migration do
                         description: legacy_team.migrated_description,
                         division: legacy_team.migrated_division,
                         student_ids: legacy_team.migrated_student_ids,
-                        mentor_ids: legacy_team.migrated_mentor_ids)
+                        mentor_ids: legacy_team.migrated_mentor_ids,
+                        created_at: legacy_team.created_at)
 
         team.save(validate: false)
-
+        RegisterToSeasonJob.perform_later(team)
         puts "Migrated team for: #{team.name}"
       end
 
