@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
 
   before_validation :generate_tokens, on: :create
   after_validation :geocode, if: :address_changed?
-  after_create :register_current_season
+  #after_create :register_current_season
 
   has_secure_password
 
