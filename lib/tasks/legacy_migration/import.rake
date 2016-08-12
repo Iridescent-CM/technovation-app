@@ -37,17 +37,19 @@ namespace :legacy_migration do
         puts "Migrated #{account.type} for: #{account.email}"
       end
 
-      puts "Migrated #{Account.count} accounts"
+      Legacy::Team.where(year: [2015, 2016]).each do |legacy_team|
+        team = Team.new(name: legacy_team.name,
+                        description: legacy_team.migrated_description,
+                        division: legacy_team.migrated_division,
+                        student_ids: legacy_team.migrated_student_ids,
+                        mentor_ids: legacy_team.migrated_mentor_ids)
 
-      Legacy::Team.where(year: 2016).each do |legacy_team|
-        team = Team.create!(name: legacy_team.name,
-                            description: legacy_team.migrated_description,
-                            division: legacy_team.migrated_division,
-                            student_ids: legacy_team.migrated_student_ids,
-                            mentor_ids: legacy_team.migrated_mentor_ids)
+        team.save(validate: false)
+
         puts "Migrated team for: #{team.name}"
       end
 
+      puts "Migrated #{Account.count} accounts"
       puts "Migrated #{Team.count} teams"
     end
   end
