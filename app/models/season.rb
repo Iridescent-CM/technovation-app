@@ -10,4 +10,10 @@ class Season < ActiveRecord::Base
     find_or_create_by(year: CurrentSeasonYear.(),
                       starts_at: DefaultSeasonStartTime.())
   end
+
+  def self.for(record)
+    year = SeasonYear.(record.created_at)
+    find_or_create_by(year: year,
+                      starts_at: DefaultSeasonStartTime.(year))
+  end
 end
