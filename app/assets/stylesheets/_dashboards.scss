@@ -1,0 +1,60 @@
+.completion-steps {
+  list-style-type: decimal;
+  margin: 15px 0;
+
+  .completion-step {
+    @include clearfix;
+    margin: 0 0 15px;
+  }
+
+  .checkbox {
+    display: block;
+    float: left;
+    padding: 5px;
+    min-width: 55px;
+    min-height: 55px;
+    margin-right: 25px;
+  }
+
+  .status-complete {
+    .checkbox {
+      color: $marine;
+      border: 2px solid #333;
+    }
+  }
+
+  .status-ready {
+    .checkbox {
+      border: 1px solid #ccc;
+    }
+  }
+
+  .status-future {
+    color: #999;
+
+    span {
+      display: block;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .checkbox {
+      border: 1px dashed #ccc;
+    }
+  }
+
+  ul {
+    margin-left: 6rem;
+    font-size: 1.025rem;
+
+    li.complete {
+      text-decoration: line-through;
+
+      a {
+        pointer-events: none;
+        cursor: default;
+        color: #999;
+      }
+    }
+  }
+}
