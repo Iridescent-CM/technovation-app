@@ -1,4 +1,5 @@
 <%= render 'completion_steps',
+           account: current_mentor,
            steps: CompletionSteps.new(current_mentor),
            urls: {
              pre_program_survey: {

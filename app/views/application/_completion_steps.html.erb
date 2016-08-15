@@ -8,7 +8,7 @@
       <li class="completion-step status-<%= step.completion_status %>">
         <span class="checkbox"><%= step.checkmark %></span>
         <%= step.label %>
-        <%= render 'step_links', step: step, urls: urls %>
+        <%= render 'step_links', step: step, urls: urls, account: account %>
       </li>
     <% end %>
   </ul>

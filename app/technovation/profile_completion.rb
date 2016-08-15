@@ -18,6 +18,7 @@ module ProfileCompletion
         id,
         link_name,
         link_config.fetch("url") { nil },
+        link_config.fetch("complete_condition") { nil },
         link_config.fetch("link_options") { {} },
         link_config.fetch("tag_options") { {} }
       )

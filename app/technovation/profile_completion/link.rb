@@ -1,7 +1,7 @@
 require 'json'
 
 module ProfileCompletion
-  class Link < Struct.new(:step_id, :name, :config_url, :link_options, :tag_options)
+  class Link < Struct.new(:step_id, :name, :config_url, :complete_condition, :link_options, :tag_options)
     include Rails.application.routes.url_helpers if defined?(Rails)
 
     def text
@@ -27,6 +27,14 @@ module ProfileCompletion
 
     def options
       Hash(tag_options)
+    end
+
+    def completion_state(account)
+      if complete_condition
+        account.public_send(complete_condition) ? "complete" : ""
+      else
+        ""
+      end
     end
 
     private
