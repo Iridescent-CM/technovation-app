@@ -4,7 +4,7 @@ en:
       address: "Location"
       class_name: "account"
       full_name: "Name"
-      referred_by: "How did you hear about us?"
+      referred_by: "How did you hear about Technovation?"
       referred_by_other: "Please specify"
       state_province: "State / Province"
 

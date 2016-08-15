@@ -22,7 +22,7 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
-    select "Other", from: "How did you hear about us?"
+    select "Other", from: "How did you hear about Technovation?"
     fill_in "regional_ambassador_account[referred_by_other]", with: "Some other value"
 
     click_button "Sign up"
