@@ -25,6 +25,20 @@ class StudentAccount < Account
     to: :parental_consent,
     prefix: true
 
+  def age
+    now = Time.current.utc.to_date
+
+    current_month_after_birth_month = now.month > date_of_birth.month
+    current_month_is_birth_month = now.month == date_of_birth.month
+    current_day_is_on_or_after_birthday = now.day >= date_of_birth.day
+
+    extra_year = (current_month_after_birth_month ||
+                    (current_month_is_birth_month &&
+                       current_day_is_on_or_after_birthday)) ? 0 : 1
+
+    now.year - date_of_birth.year - extra_year
+  end
+
   def parental_consent_signed?
     parental_consent.present?
     # and >= Date.new(2016, 9, 1)
