@@ -9,7 +9,6 @@ module Student
 
     def profile_params
       %i{
-          is_in_secondary_school
           parent_guardian_email
           parent_guardian_name
           school_name

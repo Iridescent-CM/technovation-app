@@ -14,10 +14,6 @@ module Legacy
       name.blank? ? "N/A" : name
     end
 
-    def is_in_secondary_school?
-      grade.to_i >= 9
-    end
-
     def migrated_home_state
       home_state.blank? ? "N/A" : home_state
     end

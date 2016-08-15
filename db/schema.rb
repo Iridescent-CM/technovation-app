@@ -259,17 +259,15 @@ ActiveRecord::Schema.define(version: 20160809150629) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "account_id",             null: false
-    t.string   "parent_guardian_email",  null: false
-    t.string   "parent_guardian_name",   null: false
-    t.string   "school_name",            null: false
-    t.boolean  "is_in_secondary_school", null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "account_id",            null: false
+    t.string   "parent_guardian_email", null: false
+    t.string   "parent_guardian_name",  null: false
+    t.string   "school_name",           null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree
-  add_index "student_profiles", ["is_in_secondary_school"], name: "index_student_profiles_on_is_in_secondary_school", using: :btree
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "team_id",     null: false

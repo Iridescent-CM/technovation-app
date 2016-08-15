@@ -14,9 +14,7 @@ class StudentAccount < Account
 
   validate :parent_email_doesnt_match_account_email
 
-  delegate :is_in_secondary_school?,
-           :is_in_secondary_school,
-           :parent_guardian_email,
+  delegate :parent_guardian_email,
            :parent_guardian_name,
            :school_name,
     to: :student_profile,

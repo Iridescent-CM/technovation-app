@@ -13,11 +13,6 @@ class StudentProfile < ActiveRecord::Base
             :school_name,
     presence: true
 
-  validates :is_in_secondary_school, inclusion: {
-    in: [true, false, 'yes', 'no', 0, 1, '0', '1'],
-    case_sensitive: false,
-  }
-
   validates :parent_guardian_email, email: true
 
   private

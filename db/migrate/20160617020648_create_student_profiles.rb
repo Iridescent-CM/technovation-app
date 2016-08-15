@@ -5,7 +5,6 @@ class CreateStudentProfiles < ActiveRecord::Migration
       t.string :parent_guardian_email, null: false
       t.string :parent_guardian_name, null: false
       t.string :school_name, null: false
-      t.boolean :is_in_secondary_school, null: false, index: true
 
       t.timestamps null: false
     end
