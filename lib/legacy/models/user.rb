@@ -23,6 +23,20 @@ module Legacy
       "#{role.capitalize}Account"
     end
 
+    def age
+      now = Time.current.utc.to_date
+
+      current_month_after_birth_month = now.month > birthday.month
+      current_month_is_birth_month = now.month == birthday.month
+      current_day_is_on_or_after_birthday = now.day >= birthday.day
+
+      extra_year = (current_month_after_birth_month ||
+                      (current_month_is_birth_month &&
+                        current_day_is_on_or_after_birthday)) ? 0 : 1
+
+      now.year - birthday.year - extra_year
+    end
+
     EXPERTISES = [
       {sym: :science, abbr: 'Sci'},
       {sym: :engineering, abbr: 'Eng'},
