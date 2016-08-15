@@ -1,16 +1,18 @@
 class Division < ActiveRecord::Base
-  enum name: [:high_school, :middle_school, :none_assigned]
+  DIVISION_A_AGE = 14
+
+  enum name: [:a, :b, :none_assigned]
 
   validates :name, uniqueness: { case_sensitive: false },
                    presence: true,
                    inclusion: { in: names.keys + names.values + names.keys.map(&:to_sym) }
 
-  def self.high_school
-    find_or_create_by(name: names[:high_school])
+  def self.a
+    find_or_create_by(name: names[:a])
   end
 
-  def self.middle_school
-    find_or_create_by(name: names[:middle_school])
+  def self.b
+    find_or_create_by(name: names[:b])
   end
 
   def self.none_assigned
@@ -20,13 +22,17 @@ class Division < ActiveRecord::Base
   def self.for(account)
     if !!account
       case account.type
-      when "MentorAccount"
-        none_assigned
+      when "StudentAccount"
+        division_by_age(account)
       else
-        account.is_in_secondary_school? ? high_school : middle_school
+        none_assigned
       end
     else
       none_assigned
     end
+  end
+
+  def self.division_by_age(account)
+    account.age < DIVISION_A_AGE ? b : a
   end
 end

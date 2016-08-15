@@ -14,9 +14,9 @@ module Legacy
     def migrated_division
       case division
       when 'ms'
-        Division.middle_school
+        Division.b
       when 'hs'
-        Division.high_school
+        Division.a
       when 'x'
         Division.for(users.first)
       else
