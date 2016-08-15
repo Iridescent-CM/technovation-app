@@ -14,11 +14,7 @@
 
   <div class="signup-form">
     <%= simple_form_for(signup, url: url) do |f| %>
-      <% if signup.errors.any? %>
-        <div class="notify-error">
-          <%= t("views.application.form_errors") %>
-        </div>
-      <% end %>
+      <%= render 'errors', record: signup %>
 
       <p><%= t("views.signups.form.required_fields") %></p>
 
