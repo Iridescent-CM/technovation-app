@@ -17,9 +17,9 @@ FactoryGirl.define do
 
     profile_image "exists?"
 
-    before(:create) do |a|
+    after(:create) do |a|
       unless a.type == "StudentAccount"
-        a.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+        a.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
       end
     end
 
@@ -52,10 +52,14 @@ FactoryGirl.define do
     end
   end
 
-  factory :mentor, parent: :account, class: 'MentorAccount' do
+  factory :mentor, aliases: [:mentor_account], parent: :account, class: 'MentorAccount' do
     type { "MentorAccount" }
 
-    mentor_profile
+    before(:create) do |m|
+      unless m.mentor_profile.present?
+        m.build_mentor_profile(FactoryGirl.attributes_for(:mentor_profile))
+      end
+    end
 
     trait :with_expertises do
       after(:create) do |m|

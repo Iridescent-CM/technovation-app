@@ -11,6 +11,7 @@ FactoryGirl.define do
     job_title { "Engineer" }
     bio "A complete bio"
     background_check_completed_at Time.current
+    association(:mentor_account)
   end
 
   factory :regional_ambassador_profile do

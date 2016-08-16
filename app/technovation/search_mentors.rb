@@ -6,10 +6,12 @@ module SearchMentors
       MentorAccount
     end
 
-    if filter.nearby.present?
+    mentors = if filter.nearby.present?
       mentors.near(filter.nearby, 50)
     else
-      mentors.all
+      mentors
     end
+
+    mentors.searchable
   end
 end

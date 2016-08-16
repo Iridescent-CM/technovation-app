@@ -88,6 +88,10 @@ class Account < ActiveRecord::Base
     update_attributes(password_reset_token_sent_at: Time.current)
   end
 
+  def enable_searchability
+    # Noop for most accounts
+  end
+
   private
   def generate_tokens
     GenerateToken.(self, :auth_token)

@@ -15,12 +15,15 @@ class MentorAccount < Account
     .uniq
   }
 
+  scope :searchable, -> { where("mentor_profiles.searchable = ?", true) }
+
   delegate :expertises,
            :expertise_names,
            :job_title,
            :school_company_name,
            :background_check_complete?,
            :bio,
+           :enable_searchability,
     to: :mentor_profile,
     prefix: false
 
