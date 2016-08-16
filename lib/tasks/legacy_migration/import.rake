@@ -22,9 +22,8 @@ namespace :legacy_migration do
         )
 
         GenerateToken.(account, :auth_token)
-
-        GenerateToken.(account, :auth_token)
         GenerateToken.(account, :consent_token)
+        account.geocode
         account.save(validate: false)
         RegisterToSeasonJob.perform_later(account)
 
