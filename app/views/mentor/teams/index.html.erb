@@ -1,10 +1,15 @@
-<ul class="mentor-teams">
-  <% @teams.each do |team| %>
-    <li><%= link_to team.name, [:mentor, team] %></li>
-  <% end %>
-</ul>
+<%= t("views.mentor.teams.index.current_teams") %>
+
+<%= render 'mentor/teams/team_list',
+           type: :current,
+           teams: @current_teams %>
 
 <p><%= link_to t("controllers.mentor.team_searches.new.link"),
                 new_mentor_team_search_path,
                 class: "primary-button" %></p>
 
+<%= t("views.mentor.teams.index.past_teams") %>
+
+<%= render 'mentor/teams/team_list',
+           type: :past,
+           teams: @past_teams %>

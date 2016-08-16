@@ -3,7 +3,8 @@ module Mentor
     include TeamController
 
     def index
-      @teams = current_mentor.teams
+      @current_teams = current_mentor.teams.current
+      @past_teams = current_mentor.teams.past
     end
 
     private

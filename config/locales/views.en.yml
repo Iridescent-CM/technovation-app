@@ -80,6 +80,10 @@ en:
           already_requested: "You have requested to join this team"
 
       teams:
+        index:
+          current_teams: "Current teams"
+          none: "You don't have any %{type} teams"
+          past_teams: "Past teams"
         new:
           join: "Join a Team"
           title: "Create a Team"

@@ -3,7 +3,8 @@
 
 <h4><%= t("views.student.mentors.show.teams") %></h4>
 <ul>
-  <%= render partial: 'student/mentors/team_preview', collection: @mentor.teams %>
+  <%= render partial: 'student/mentors/team_preview',
+             collection: @mentor.teams.current %>
 </ul>
 
 <p>

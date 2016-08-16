@@ -1,0 +1,9 @@
+<% if teams.any? %>
+  <ul class="mentor-teams">
+    <% teams.each do |team| %>
+      <li><%= link_to team.name, [:mentor, team] %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t("views.mentor.teams.index.none", type: type) %></p>
+<% end %>
