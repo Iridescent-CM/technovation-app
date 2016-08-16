@@ -65,7 +65,7 @@ class StudentAccount < Account
   end
 
   def team
-    teams.first
+    teams.current.first
   end
 
   def team_id
@@ -77,7 +77,7 @@ class StudentAccount < Account
   end
 
   def team_names
-    teams.collect(&:name)
+    teams.current.collect(&:name)
   end
 
   def teams
