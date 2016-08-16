@@ -76,6 +76,7 @@ en:
         index:
           title: "My requests"
         new:
+          already_joined: "You are on this team."
           already_requested: "You have requested to join this team"
 
       teams:
@@ -207,6 +208,7 @@ en:
     student:
       join_requests:
         new:
+          already_joined: "You are on this team."
           already_requested: "You have requested to join this team"
 
       mentors:

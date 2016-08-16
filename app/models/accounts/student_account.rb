@@ -57,7 +57,11 @@ class StudentAccount < Account
   end
 
   def requested_to_join?(team)
-    join_requests.flat_map(&:joinable).include?(team)
+    join_requests.pending.flat_map(&:joinable).include?(team)
+  end
+
+  def is_on?(query_team)
+    team == query_team
   end
 
   def team
