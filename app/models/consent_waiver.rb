@@ -4,7 +4,7 @@ class ConsentWaiver < ActiveRecord::Base
   validates :electronic_signature, presence: true
   validates :consent_confirmation, inclusion: { in: [1] }
 
-  delegate :full_name, :type_name, to: :account, prefix: true
+  delegate :full_name, :type_name, :consent_token, to: :account, prefix: true
 
   after_create :enable_searchable_users
 

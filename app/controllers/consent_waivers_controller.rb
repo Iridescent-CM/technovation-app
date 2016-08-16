@@ -5,7 +5,7 @@ class ConsentWaiversController < ApplicationController
 
   def new
     if valid_token?
-      @consent_waiver = ConsentWaiver.new
+      @consent_waiver = ConsentWaiver.new(account_consent_token: params.fetch(:token))
     else
       redirect_to application_dashboard_path,
                   alert: t("controllers.consent_waivers.new.unauthorized")

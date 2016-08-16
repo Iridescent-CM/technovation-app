@@ -29,7 +29,7 @@
 <p>Iridescent Learning may produce or participate in the production of video, motion picture, audio recording, web page, or still photograph productions, broadcasting, and/or publication which may involve the use of Volunteer’s name, photo, likenesses, or voices. Such productions will be used for non-commercial educational, exhibition, promotional, advertising, or other purposes by Iridescent Learning and will not be sold to other school systems or educational professionals or for commercial uand correct.</p>
 
 <%= simple_form_for @consent_waiver do |f| %>
-  <%= hidden_field_tag "consent_waiver[account_consent_token]", params.fetch(:token) { "" } %>
+  <%= f.input :account_consent_token, as: :hidden %>
   <%= f.input :consent_confirmation, as: :boolean, label: t("models.consent_waiver.consent_confirmation") %>
   <%= f.input :electronic_signature %>
   <%= f.button :submit, t("views.consent_waivers.new.submit") %>
