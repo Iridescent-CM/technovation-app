@@ -25,6 +25,8 @@ class Team < ActiveRecord::Base
   validates :description, presence: true
   validates :division, presence: true
 
+  delegate :name, to: :division, prefix: true
+
   def student_emails
     students.flat_map(&:email)
   end
@@ -51,6 +53,7 @@ class Team < ActiveRecord::Base
   def add_student(student)
     if !!student and not students.include?(student)
       students << student
+      self.division = Division.for(self)
       save
     end
   end

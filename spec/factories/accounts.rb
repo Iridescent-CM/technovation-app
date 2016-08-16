@@ -44,7 +44,7 @@ FactoryGirl.define do
 
     trait :on_team do
       after(:create) do |s|
-        team = FactoryGirl.create(:team)
+        team = FactoryGirl.create(:team, members_count: 0)
         FactoryGirl.create(:team_membership, member_type: "StudentAccount",
                                              member_id: s.id,
                                              joinable: team)

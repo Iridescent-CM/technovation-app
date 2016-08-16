@@ -19,14 +19,21 @@ class Division < ActiveRecord::Base
     find_or_create_by(name: names[:none_assigned])
   end
 
-  def self.for(account)
-    if !!account
-      case account.type
-      when "StudentAccount"
-        division_by_age(account)
-      else
-        none_assigned
-      end
+  def self.for(record)
+    if !!record
+      division_for(record)
+    else
+      none_assigned
+    end
+  end
+
+  private
+  def self.division_for(record)
+    case record.class.name
+    when "StudentAccount"
+      division_by_age(record)
+    when "Team"
+      division_by_team_ages(record)
     else
       none_assigned
     end
@@ -34,5 +41,10 @@ class Division < ActiveRecord::Base
 
   def self.division_by_age(account)
     account.age < DIVISION_A_AGE ? b : a
+  end
+
+  def self.division_by_team_ages(team)
+    divisions = team.students.collect { |s| division_by_age(s) }
+    divisions.flat_map(&:name).include?(a.name) ? a : b
   end
 end

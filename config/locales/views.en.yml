@@ -248,6 +248,7 @@ en:
 
     teams:
       show:
+        division_name: "Division %{name}"
         members_subheading: "Team members"
         mentors_subheading: "Team mentors"
 
