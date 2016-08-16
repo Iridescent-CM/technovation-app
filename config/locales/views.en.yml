@@ -240,6 +240,11 @@ en:
           pending_invitees_subheading: "Pending Invites"
           pending_requests_subheading: "Pending requests to join"
 
+    teams:
+      show:
+        members_subheading: "Team members"
+        mentors_subheading: "Team mentors"
+
     team_member_invites:
       form:
         confirm_accept: "You are about to accept the invitation."
