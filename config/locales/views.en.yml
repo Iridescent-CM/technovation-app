@@ -211,6 +211,7 @@ en:
 
       mentors:
         show:
+          teams: "This mentor's teams:"
           title: "Mentor details"
 
       mentor_searches:

@@ -1,6 +1,11 @@
 <%= render 'accounts/show', title: t("views.student.mentors.show.title"),
                             account: @mentor %>
 
+<h4><%= t("views.student.mentors.show.teams") %></h4>
+<ul>
+  <%= render partial: 'student/mentors/team_preview', collection: @mentor.teams %>
+</ul>
+
 <p>
   <% if current_student.invited_mentor?(@mentor) %>
     <%= t("views.mentors.show.already_invited") %>
