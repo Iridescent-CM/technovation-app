@@ -39,7 +39,6 @@ namespace :legacy_migration do
                         created_at: legacy_team.created_at)
 
         team.save(validate: false)
-        RegisterToSeasonJob.perform_later(team)
         puts "Migrated team for: #{team.name}"
       end
 
