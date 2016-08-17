@@ -3,7 +3,7 @@ module SearchTeams
     teams = if filter.nearby.present?
               StudentAccount.near(filter.nearby, 50).collect(&:team).compact.uniq
             else
-              Team.all
+              Team.current
             end
 
     case filter.has_mentor
