@@ -60,6 +60,14 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def remove_student(student)
+    membership = Membership.find_by(joinable: self,
+                                    member_type: "StudentAccount",
+                                    member_id: student.id)
+    membership.destroy
+    reconsider_division
+  end
+
   def reconsider_division
     self.division = Division.for(self)
     save

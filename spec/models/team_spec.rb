@@ -25,6 +25,18 @@ RSpec.describe Team do
     expect(team.reload.division).to eq(Division.b)
   end
 
+  it "reconsiders division when a student leaves the team" do
+    team = FactoryGirl.create(:team, members_count: 0)
+    younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
+    older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+
+    team.add_student(older_student)
+    team.add_student(younger_student)
+    team.remove_student(older_student)
+
+    expect(team.reload.division).to eq(Division.b)
+  end
+
   it "scopes to past seasons" do
     FactoryGirl.create(:team) # current season by default
     past_team = FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)

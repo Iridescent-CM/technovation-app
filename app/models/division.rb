@@ -44,7 +44,7 @@ class Division < ActiveRecord::Base
   end
 
   def self.division_by_team_ages(team)
-    divisions = team.students.collect { |s| division_by_age(s) }
+    divisions = team.reload.students.collect { |s| division_by_age(s) }
     divisions.flat_map(&:name).include?(a.name) ? a : b
   end
 end
