@@ -14,6 +14,9 @@ class StudentAccount < Account
 
   validate :parent_email_doesnt_match_account_email
 
+  after_save -> { !!team && team.reconsider_division },
+    if: :date_of_birth_changed?
+
   delegate :parent_guardian_email,
            :parent_guardian_name,
            :school_name,

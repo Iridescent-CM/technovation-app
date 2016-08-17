@@ -56,9 +56,13 @@ class Team < ActiveRecord::Base
   def add_student(student)
     if !!student and not students.include?(student)
       students << student
-      self.division = Division.for(self)
-      save
+      reconsider_division
     end
+  end
+
+  def reconsider_division
+    self.division = Division.for(self)
+    save
   end
 
   private
