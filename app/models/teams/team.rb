@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
                        .where("seasons.year = ?", Season.current.year) }
 
   scope :past, -> { joins(season_registrations: :season)
-                    .where("seasons.year < ?", Season.current.year) }
+                    .where.not(id: current.select(:id).uniq) }
 
   after_create :register_to_season
 
