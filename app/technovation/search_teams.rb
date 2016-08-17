@@ -6,6 +6,7 @@ module SearchTeams
               Team.current
                   .joins(:memberships)
                   .where("memberships.member_id IN (?)", student_ids)
+                  .uniq
             else
               Team.current
             end
