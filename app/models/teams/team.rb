@@ -1,8 +1,11 @@
 class Team < ActiveRecord::Base
-  scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", CurrentSeasonYear.()) }
-  scope :past, -> { joins(season_registrations: :season).where("seasons.year < ?", CurrentSeasonYear.()) }
+  scope :current, -> { joins(season_registrations: :season)
+                       .where("seasons.year = ?", Season.current.year) }
 
-  after_create :register_to_current_season
+  scope :past, -> { joins(season_registrations: :season)
+                    .where("seasons.year < ?", Season.current.year) }
+
+  after_create :register_to_season
 
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations
@@ -59,7 +62,7 @@ class Team < ActiveRecord::Base
   end
 
   private
-  def register_to_current_season
-    RegisterToCurrentSeasonJob.perform_later(self)
+  def register_to_season
+    RegisterToSeasonJob.perform_later(self)
   end
 end

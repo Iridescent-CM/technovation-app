@@ -7,13 +7,28 @@ class Season < ActiveRecord::Base
   validates :starts_at, presence: true
 
   def self.current
-    find_or_create_by(year: CurrentSeasonYear.(),
-                      starts_at: DefaultSeasonStartTime.())
+    season_year = if Date.today < switch_date
+                    Date.today.year
+                  else
+                    Date.today.year + 1
+                  end
+
+    find_or_create_by(year: season_year,
+                      starts_at: Time.new(season_year, 1, 1, 9, 0, 0, "-08:00"))
   end
 
   def self.for(record)
-    year = SeasonYear.(record.created_at)
-    find_or_create_by(year: year,
-                      starts_at: DefaultSeasonStartTime.(year))
+    season_year = if record.created_at < switch_date
+                    record.created_at.year
+                  else
+                    record.created_at.year + 1
+                  end
+
+    find_or_create_by(year: season_year,
+                      starts_at: Time.new(season_year, 1, 1, 9, 0, 0, "-08:00"))
+  end
+
+  def self.switch_date
+    Date.new(Time.current.year, 8, 1)
   end
 end

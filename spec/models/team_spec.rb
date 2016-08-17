@@ -11,4 +11,16 @@ RSpec.describe Team do
 
     expect(team.division).to eq(Division.a)
   end
+
+  it "scopes to past seasons" do
+    FactoryGirl.create(:team) # current season by default
+    past_team = FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)
+    expect(Team.past).to eq([past_team])
+  end
+
+  it "scopes to past seasons" do
+    current_team = FactoryGirl.create(:team) # current season by default
+    FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)
+    expect(Team.current).to eq([current_team])
+  end
 end
