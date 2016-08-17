@@ -24,7 +24,9 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     city: "Chicago",
                                     state_province: "IL",
                                     country: "US",
+                                    pre_survey_completed_at: Time.current,
                                    )).valid?
+  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts "Created Student: #{student.email} with password #{student.password}"
 end
 
