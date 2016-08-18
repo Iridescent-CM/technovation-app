@@ -1,0 +1,35 @@
+<div class="pending-team-invitations">
+  <h4><%= t("views.application.dashboards.show.pending_team_invitations") %></h4>
+
+  <% if account.pending_team_invitations.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("models.invitation.team_name") %></th>
+          <th><%= t("views.application.actions") %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% account.pending_team_invitations.each do |invitation| %>
+          <tr>
+            <td><%= invitation.team_name %></td>
+            <td>
+              <% %i{approved rejected}.each.with_index do |action, i| %>
+                <%= link_to t("views.application.#{action}"),
+                            send("#{account.type_name}_member_invite_path", invitation, status: action),
+                            data: {
+                              method: :put,
+                              confirm: t("views.application.confirm_#{action}",
+                                        name: invitation.team_name),
+                            } %><% if i == 0 %>&nbsp;|<% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p><%= t("views.application.dashboards.show.no_pending_team_invitations") %></p>
+  <% end %>
+</div>

@@ -5,6 +5,7 @@ class StudentAccount < Account
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor
+  has_many :team_member_invites, foreign_key: :invitee_id
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy, foreign_key: :account_id
 
@@ -42,9 +43,12 @@ class StudentAccount < Account
     now.year - date_of_birth.year - extra_year
   end
 
+  def pending_team_invitations
+    team_member_invites.pending
+  end
+
   def parental_consent_signed?
     parental_consent.present?
-    # and >= Date.new(2016, 9, 1)
   end
 
   def consent_signed?

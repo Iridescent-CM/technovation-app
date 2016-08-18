@@ -1,6 +1,11 @@
 .completion-steps {
+  @include span-columns(9);
   list-style-type: decimal;
-  margin: 15px 0;
+  margin: 0 0 15px;
+
+  h2 {
+    margin: 0 0 15px;
+  }
 
   .completion-step {
     @include clearfix;

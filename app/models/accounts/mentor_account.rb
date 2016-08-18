@@ -8,6 +8,7 @@ class MentorAccount < Account
   has_many :memberships, as: :member, dependent: :destroy
 
   has_many :join_requests, as: :requestor, dependent: :destroy
+  has_many :mentor_invites, foreign_key: :invitee_id
 
   scope :by_expertise_ids, ->(ids) {
     joins(mentor_profile: :mentor_profile_expertises)
@@ -28,6 +29,10 @@ class MentorAccount < Account
     prefix: false
 
   delegate :id, to: :mentor_profile, prefix: true
+
+  def pending_team_invitations
+    mentor_invites.pending
+  end
 
   def is_on_team?
     teams.current.any?

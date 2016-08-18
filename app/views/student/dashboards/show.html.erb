@@ -1,10 +1,5 @@
 <%= render 'completion_steps',
-           account: current_student,
-           steps: CompletionSteps.new(current_student),
-           urls: {
-             pre_program_survey: {
-               mark_complete: student_account_path(
-                 student_account: { pre_survey_completed_at: Time.current }
-               ),
-             },
-           } %>
+            account: current_student,
+            steps: CompletionSteps.new(current_student) %>
+
+<%= render 'team_invitations', account: current_student %>

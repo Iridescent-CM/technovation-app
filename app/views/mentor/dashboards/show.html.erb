@@ -2,11 +2,6 @@
            account: current_mentor,
            steps: CompletionSteps.new(current_mentor),
            urls: {
-             pre_program_survey: {
-               mark_complete: mentor_account_path(
-                 mentor_account: { pre_survey_completed_at: Time.current }
-               ),
-             },
              consent_waiver: {
                view: new_consent_waiver_path(
                  token: current_mentor.consent_token
@@ -26,3 +21,5 @@
                bio: edit_mentor_account_path(anchor: 'account-profile-details')
              },
            } %>
+
+<%= render 'team_invitations', account: current_mentor %>
