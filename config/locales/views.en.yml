@@ -232,6 +232,11 @@ en:
         join_team: "Join a team"
         my_team: "My team"
 
+      signups:
+        new:
+          parent_guardian_email:
+            help_text: "* (we need to send them a link to a consent form)"
+
       teams:
         new:
           join: "Join a Team"
