@@ -2,10 +2,11 @@ module SearchTeams
   def self.call(filter)
     teams = if filter.nearby.present?
               student_ids = StudentAccount.near(filter.nearby, 50).collect(&:id)
+              mentor_ids = MentorAccount.near(filter.nearby, 50).collect(&:id)
 
               Team.current
                   .joins(:memberships)
-                  .where("memberships.member_id IN (?)", student_ids)
+                  .where("memberships.member_id IN (?)", student_ids + mentor_ids)
                   .uniq
             else
               Team.current
