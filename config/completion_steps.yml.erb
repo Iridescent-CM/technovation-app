@@ -1,17 +1,4 @@
 student:
-  pre_program_survey:
-    complete_condition: "pre_survey_completed?"
-    links:
-      survey:
-        url: "#"
-
-      mark_complete:
-        link_options:
-          postfix: true
-        tag_options:
-          data:
-            method: "put"
-
   parental_consent:
     complete_condition: "parental_consent_signed?"
     links: 
@@ -23,7 +10,7 @@ student:
 
   create_join_team:
     complete_condition: "is_on_team?"
-    prerequisites: "pre_program_survey, parental_consent"
+    prerequisites: "parental_consent"
     unlocks: "student_team_path[team], new_student_team_path, new_student_team_search_path"
     links: 
       create:
@@ -33,7 +20,7 @@ student:
 
   find_mentor:
     complete_condition: "team_has_mentor?"
-    prerequisites: "pre_program_survey, parental_consent, create_join_team"
+    prerequisites: "parental_consent, create_join_team"
     unlocks: "new_student_mentor_search_path"
     links:
       browse:
@@ -55,21 +42,8 @@ mentor:
           data:
             method: "put"
 
-  pre_program_survey:
-    complete_condition: "pre_survey_completed?"
-    links:
-      survey:
-        url: "#"
-
-      mark_complete:
-        link_options:
-          postfix: true
-        tag_options:
-          data:
-            method: "put"
-
   build_profile:
-    prerequisites: "pre_program_survey, background_check, consent_waiver"
+    prerequisites: "background_check, consent_waiver"
     complete_condition: "profile_complete?"
     links:
       photo:
@@ -81,7 +55,7 @@ mentor:
 
   create_join_team:
     complete_condition: "is_on_team?"
-    prerequisites: "pre_program_survey, background_check, pre_program_survey, build_profile, consent_waiver"
+    prerequisites: "background_check, build_profile, consent_waiver"
     unlocks: "mentor_teams_path, mentor_join_requests_path, new_mentor_team_search_path, new_mentor_team_path"
     links: 
       create:
@@ -105,21 +79,8 @@ regional_ambassador:
           data:
             method: "put"
 
-  pre_program_survey:
-    complete_condition: "pre_survey_completed?"
-    links:
-      survey:
-        url: "#"
-
-      mark_complete:
-        link_options:
-          postfix: true
-        tag_options:
-          data:
-            method: "put"
-
   build_profile:
-    prerequisites: "pre_program_survey, background_check, consent_waiver"
+    prerequisites: "background_check, consent_waiver"
     complete_condition: "profile_complete?"
     links:
       photo:
