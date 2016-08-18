@@ -235,7 +235,7 @@ en:
       signups:
         new:
           parent_guardian_email:
-            help_text: "* (we need to send them a link to a consent form)"
+            help_text: "(We need this information to send them a link to a consent form.)"
 
       teams:
         new:
