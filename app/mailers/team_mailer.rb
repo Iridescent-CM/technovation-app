@@ -43,7 +43,9 @@ class TeamMailer < ApplicationMailer
   def join_request_status(status, type, join_request)
     @intro = I18n.translate("team_mailer.#{type}_join_request_status.#{status}_intro",
                             name: join_request.joinable_name)
-    @url = send("#{type}_team_url", join_request.joinable)
+    if status == :accepted
+      @url = send("#{type}_team_url", join_request.joinable)
+    end
 
     mail to: join_request.requestor_email,
       subject: I18n.translate("team_mailer.#{type}_join_request_status.#{status}_subject",
