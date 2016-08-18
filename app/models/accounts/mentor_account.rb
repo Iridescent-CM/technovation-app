@@ -30,7 +30,7 @@ class MentorAccount < Account
   delegate :id, to: :mentor_profile, prefix: true
 
   def is_on_team?
-    teams.any?
+    teams.current.any?
   end
 
   def teams

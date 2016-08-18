@@ -52,7 +52,7 @@ class StudentAccount < Account
   end
 
   def is_on_team?
-    teams.any?
+    teams.current.any?
   end
 
   def team_has_mentor?
