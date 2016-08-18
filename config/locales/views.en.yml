@@ -82,7 +82,7 @@ en:
       teams:
         index:
           current_teams: "Current Teams"
-          none: "You don't have any %{type} teams"
+          none: "You don't have any %{type} teams."
           past_teams: "Past Teams"
         new:
           join: "Join a Team"
