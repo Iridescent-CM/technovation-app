@@ -14,8 +14,10 @@ en:
           intro: "We're excited to begin registrations for our %{year} season. Through this platform, you will be able to sign up as an individual, create teams, and also filter for nearby mentors."
           body: "If you participated in Technovation's %{previous_year} season, you can use your existing email and password to %{signin_link} and register for the new %{current_year} season. Otherwise, please %{signup_link} to get started!"
           no_pending_team_invitations: "You don't have any pending invitations to join a team"
+          no_pending_team_requests: "You don't have any pending requests to join a team"
           outro: "Feel free to email %{link} or check out our FAQ page for more information."
           pending_team_invitations: "Pending team invitations"
+          pending_team_requests: "Pending team requests"
         title: "Dashboard"
 
     regional_ambassador:

@@ -47,6 +47,10 @@ class StudentAccount < Account
     team_member_invites.pending
   end
 
+  def pending_team_requests
+    join_requests.pending
+  end
+
   def parental_consent_signed?
     parental_consent.present?
   end

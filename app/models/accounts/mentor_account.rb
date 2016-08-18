@@ -34,6 +34,10 @@ class MentorAccount < Account
     mentor_invites.pending
   end
 
+  def pending_team_requests
+    join_requests.pending
+  end
+
   def is_on_team?
     teams.current.any?
   end
