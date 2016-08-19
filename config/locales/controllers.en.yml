@@ -103,6 +103,9 @@ en:
         destroy:
           link: "Leave %{name}"
           success: "You have left the team `%{name}`"
+      team_searches:
+        new:
+          link: "Browse available teams"
 
     team_member_invites:
       update:
