@@ -259,6 +259,7 @@ en:
     teams:
       show:
         division_name: "Division %{name}"
+        members_full: "Student invites are disabled when the team roster and/or pending invitation queue are full."
         members_subheading: "Team members"
         mentors_subheading: "Team mentors"
 

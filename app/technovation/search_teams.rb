@@ -12,13 +12,18 @@ module SearchTeams
               Team.current
             end
 
+    teams = case filter.spot_available
+            when true
+              teams.select { |t| t.spot_available? }
+            else
+              teams
+            end
+
     case filter.has_mentor
     when true
       teams.select { |t| t.mentors.any? }
     when false
       teams.select { |t| t.mentors.empty? }
-    when :any
-      teams
     else
       teams
     end

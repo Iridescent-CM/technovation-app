@@ -11,6 +11,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:nearby) { nil }
   end
 
+  def spot_available
+    filter_options.fetch(:spot_available) { false }
+  end
+
   def has_mentor
     filter_options.fetch(:has_mentor) { :any }
   end

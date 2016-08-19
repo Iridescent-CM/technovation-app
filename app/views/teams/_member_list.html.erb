@@ -8,7 +8,12 @@
       <%= render partial: "teams/member", collection: team.students %>
     </ul>
 
-    <%= render "teams/invite_students" %>
+    <% if team.spot_available? %>
+      <%= render "teams/invite_students" %>
+    <% else %>
+      <%= t("views.teams.show.members_full") %>
+    <% end %>
+
     <%= render "teams/pending_invites", invites: team.pending_invites %>
   </div>
 </div>

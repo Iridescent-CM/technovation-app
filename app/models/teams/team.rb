@@ -42,6 +42,10 @@ class Team < ActiveRecord::Base
     student_emails + mentor_emails
   end
 
+  def spot_available?
+    (students + team_member_invites.pending).size < 5
+  end
+
   def creator_address_details
     memberships.first.member_address_details
   end
@@ -58,7 +62,7 @@ class Team < ActiveRecord::Base
   end
 
   def add_student(student)
-    if !!student and not students.include?(student)
+    if !!student and not students.include?(student) and spot_available?
       students << student
       reconsider_division
     end
