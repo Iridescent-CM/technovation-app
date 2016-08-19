@@ -33,6 +33,7 @@ en:
       or: "or"
       rejected: "reject"
       review: "review"
+      review_now: "Review now"
       save: "Save"
       signin: 'Sign in'
       signup: 'Sign up'
@@ -217,6 +218,7 @@ en:
     student:
       join_requests:
         new:
+          already_invited: "You have been invited to join this team. %{link}"
           already_joined: "You are on this team."
           already_requested: "You have requested to join this team"
 

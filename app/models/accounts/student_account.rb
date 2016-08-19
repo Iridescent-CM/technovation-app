@@ -67,6 +67,10 @@ class StudentAccount < Account
     join_requests.pending
   end
 
+  def pending_invitation_for(team)
+    pending_team_invitations.detect { |i| i.team == team }
+  end
+
   def parental_consent_signed?
     parental_consent.present?
   end
@@ -85,6 +89,10 @@ class StudentAccount < Account
 
   def requested_to_join?(team)
     join_requests.pending.flat_map(&:joinable).include?(team)
+  end
+
+  def is_invited_to_join?(team)
+    team_member_invites.pending.flat_map(&:team).include?(team)
   end
 
   def is_on?(query_team)
