@@ -1,8 +1,8 @@
 class TeamMemberInvite < ActiveRecord::Base
   enum status: %i{pending accepted rejected}
 
-  before_create :generate_invite_token
-  before_create :set_existing_invitee
+  before_create -> { GenerateToken.(self, :invite_token) }
+  before_create :set_invitee
   after_create :send_invite
 
   after_save :after_accept, if: -> { status_changed? && accepted? }

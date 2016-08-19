@@ -22,9 +22,8 @@ class MentorInvite < TeamMemberInvite
     TeamMailer.invite_mentor(self).deliver_later
   end
 
-  def set_existing_invitee
+  def set_invitee
     self.invitee ||= MentorAccount.find_by(email: invitee_email)
-    true
   end
 
   def correct_invitee_type
