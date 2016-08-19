@@ -204,4 +204,18 @@ namespace :reports do
       end
     end
   end
+
+  desc "Generate a CSV of all current year submissions tools used"
+  task tools_used: :environment do
+    CSV.open("./public/2016_tools_used.csv", "wb") do |csv|
+      csv << %w{ToolMentioned Count}
+
+      tools = Team.current.is_submitted.collect(&:tools)
+      tools = tools.flat_map { |t| t.split(/[,\.;]/).map(&:strip).map(&:downcase).compact }
+
+      tools.uniq.each do |tool|
+        csv << [tool, tools.select { |t| t == tool }.count]
+      end
+    end
+  end
 end
