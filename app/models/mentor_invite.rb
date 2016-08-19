@@ -26,4 +26,10 @@ class MentorInvite < TeamMemberInvite
     self.invitee ||= MentorAccount.find_by(email: invitee_email)
     true
   end
+
+  def correct_invitee_type
+    if Account.where.not(type: "MentorAccount").where(email: invitee_email).any?
+      errors.add(:invitee_email, :is_not_a_mentor)
+    end
+  end
 end

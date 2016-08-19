@@ -12,11 +12,14 @@ class TeamMemberInvite < ActiveRecord::Base
   belongs_to :invitee, class_name: "StudentAccount"
 
   validates :invitee_email, presence: true, uniqueness: { scope: :team_id }
+
   validate -> {
     if StudentAccount.exists_on_team?(email: invitee_email)
       errors.add(:invitee_email, :already_on_team)
     end
   }
+
+  validate :correct_invitee_type
 
   delegate :email, to: :inviter, prefix: true
   delegate :name, to: :team, prefix: true
@@ -42,16 +45,17 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   private
-  def generate_invite_token
-    GenerateToken.(self, :invite_token)
+  def correct_invitee_type
+    if Account.where.not(type: "StudentAccount").where(email: invitee_email).any?
+      errors.add(:invitee_email, :is_not_a_student)
+    end
+  end
+
+  def set_invitee
+    self.invitee ||= StudentAccount.find_by(email: invitee_email)
   end
 
   def send_invite
     TeamMailer.invite_member(self).deliver_later
-  end
-
-  def set_existing_invitee
-    self.invitee ||= StudentAccount.find_by(email: invitee_email)
-    true
   end
 end
