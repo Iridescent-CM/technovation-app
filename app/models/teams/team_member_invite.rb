@@ -19,6 +19,12 @@ class TeamMemberInvite < ActiveRecord::Base
     end
   }
 
+  validate -> {
+    if StudentAccount.has_requested_to_join?(team, invitee_email)
+      errors.add(:invitee_email, :already_requested_to_join)
+    end
+  }
+
   validate :correct_invitee_type
 
   delegate :email, to: :inviter, prefix: true

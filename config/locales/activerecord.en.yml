@@ -49,5 +49,6 @@ en:
           attributes:
             invitee_email:
               already_on_team: "is already on a team."
+              already_requested_to_join: "has already requested to join your team. Review the request on your team page."
               is_not_a_student: "is not a student."
               taken: "has already been invited by your team."

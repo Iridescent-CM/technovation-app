@@ -37,6 +37,14 @@ class StudentAccount < Account
     end
   end
 
+  def self.has_requested_to_join?(team, email)
+    if record = find_by(email: email)
+      record.join_requests.pending.flat_map(&:joinable).include?(team)
+    else
+      false
+    end
+  end
+
   def age
     now = Time.current.utc.to_date
 
