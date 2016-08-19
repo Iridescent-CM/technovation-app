@@ -1,3 +1,8 @@
+.team-activity {
+  @include span-columns(3);
+  @include omega;
+}
+
 .completion-steps {
   @include span-columns(9);
   list-style-type: decimal;

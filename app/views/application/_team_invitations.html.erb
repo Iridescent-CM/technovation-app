@@ -1,37 +1,39 @@
-<%= unlocked_content_tag account, send("new_#{account.type_name}_team_search_path"), :div, class: "team-activity" do %>
-  <div class="pending-team-invitations">
-    <h4><%= t("views.application.dashboards.show.pending_team_invitations") %></h4>
+<div class="team-activity">
+  <%= unlocked_content_tag account, send("new_#{account.type_name}_team_search_path"), :div do %>
+    <div class="pending-team-invitations">
+      <h4><%= t("views.application.dashboards.show.pending_team_invitations") %></h4>
 
-    <% if account.pending_team_invitations.any? %>
-      <ul>
-        <% account.pending_team_invitations.each do |invitation| %>
-          <li>
-            <%= invitation.team_name %>&nbsp;&ndash;
-            <%= link_to t("views.application.review"),
-                        send("#{account.type_name}_team_member_invite_path", invitation) %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p><%= t("views.application.dashboards.show.no_pending_team_invitations") %></p>
-    <% end %>
+      <% if account.pending_team_invitations.any? %>
+        <ul>
+          <% account.pending_team_invitations.each do |invitation| %>
+            <li>
+              <%= invitation.team_name %>&nbsp;&ndash;
+              <%= link_to t("views.application.review"),
+                          send("#{account.type_name}_team_member_invite_path", invitation) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= t("views.application.dashboards.show.no_pending_team_invitations") %></p>
+      <% end %>
 
-    <hr />
+      <hr />
 
-    <h4><%= t("views.application.dashboards.show.pending_team_requests") %></h4>
+      <h4><%= t("views.application.dashboards.show.pending_team_requests") %></h4>
 
-    <% if account.pending_team_requests.any? %>
-      <ul>
-        <% account.pending_team_requests.each do |team_request| %>
-          <li><%= link_to team_request.joinable_name, team_request.joinable %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p><%= t("views.application.dashboards.show.no_pending_team_requests") %></p>
-      <%= unlocked_link_to account,
-                          t("controllers.#{account.type_name}.team_searches.new.link"),
-                          send("new_#{account.type_name}_team_search_path"),
-                          class: "primary-button" %>
-    <% end %>
-  </div>
-<% end %>
+      <% if account.pending_team_requests.any? %>
+        <ul>
+          <% account.pending_team_requests.each do |team_request| %>
+            <li><%= link_to team_request.joinable_name, team_request.joinable %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= t("views.application.dashboards.show.no_pending_team_requests") %></p>
+        <%= unlocked_link_to account,
+                            t("controllers.#{account.type_name}.team_searches.new.link"),
+                            send("new_#{account.type_name}_team_search_path"),
+                            class: "primary-button" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
