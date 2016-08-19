@@ -16,6 +16,7 @@ RSpec.describe Student::JoinRequestsController do
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no join request email sent"
       expect(mail.to).to eq([mentor.email])
+      expect(mail.body.parts.last.to_s).to include("href=\"#{mentor_team_url(team, host: "www.example.com")}\"")
     end
   end
 

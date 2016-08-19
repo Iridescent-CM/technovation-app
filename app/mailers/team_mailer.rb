@@ -7,14 +7,14 @@ class TeamMailer < ApplicationMailer
     invite(:mentor, :mentor_, mentor_invite)
   end
 
-  def join_request(join_request)
-    @url = student_team_url(join_request.joinable)
+  def join_request(recipient, join_request)
     @requestor_name = join_request.requestor_full_name
     @role_name = join_request.requestor_type_name
+    @url = send("#{recipient.type_name}_team_url", join_request.joinable)
 
-    mail to: join_request.joinable.member_emails,
-         subject: I18n.translate("team_mailer.join_request.subject",
-                                 role_name: join_request.requestor_type_name)
+    mail to: recipient.email,
+        subject: I18n.translate("team_mailer.join_request.subject",
+                                role_name: join_request.requestor_type_name)
   end
 
   def mentor_join_request_accepted(join_request)

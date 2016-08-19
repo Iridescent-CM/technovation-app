@@ -33,7 +33,9 @@ class JoinRequest < ActiveRecord::Base
 
   private
   def notify_requested_joinable
-    TeamMailer.join_request(self).deliver_later
+    joinable.members.each do |recipient|
+      TeamMailer.join_request(recipient, self).deliver_later
+    end
   end
 
   def notify_requestor

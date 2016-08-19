@@ -38,8 +38,8 @@ class Team < ActiveRecord::Base
     mentors.flat_map(&:email)
   end
 
-  def member_emails
-    student_emails + mentor_emails
+  def members
+    students + mentors
   end
 
   def spot_available?
