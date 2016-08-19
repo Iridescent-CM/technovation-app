@@ -31,7 +31,7 @@
     <% if account.pending_team_requests.any? %>
       <ul>
         <% account.pending_team_requests.each do |team_request| %>
-          <li><%= link_to team_request.team_name, team_request.team %></li>
+          <li><%= link_to team_request.joinable_name, team_request.joinable %></li>
         <% end %>
       </ul>
     <% else %>
