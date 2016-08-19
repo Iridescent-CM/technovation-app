@@ -43,7 +43,7 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + team_member_invites.pending).size < 5
+    (students + team_member_invites.pending + join_requests.from_students.pending).size < 5
   end
 
   def creator_address_details

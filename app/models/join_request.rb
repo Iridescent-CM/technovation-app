@@ -3,6 +3,7 @@ class JoinRequest < ActiveRecord::Base
   after_save :notify_requestor, on: :update
 
   scope :pending, -> { where('accepted_at IS NULL and rejected_at IS NULL') }
+  scope :from_students, -> { where(requestor_type: "StudentAccount") }
 
   belongs_to :requestor, polymorphic: true
   belongs_to :joinable, polymorphic: true
