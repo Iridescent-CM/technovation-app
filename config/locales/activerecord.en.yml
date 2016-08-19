@@ -48,4 +48,5 @@ en:
         team_member_invite:
           attributes:
             invitee_email:
+              already_on_team: "is already on a team."
               taken: "has already been invited by your team."

@@ -29,6 +29,14 @@ class StudentAccount < Account
     to: :parental_consent,
     prefix: true
 
+  def self.exists_on_team?(attributes)
+    if record = find_by(attributes)
+      record.is_on_team?
+    else
+      false
+    end
+  end
+
   def age
     now = Time.current.utc.to_date
 

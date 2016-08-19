@@ -12,6 +12,11 @@ class TeamMemberInvite < ActiveRecord::Base
   belongs_to :invitee, class_name: "StudentAccount"
 
   validates :invitee_email, presence: true, uniqueness: { scope: :team_id }
+  validate -> {
+    if StudentAccount.exists_on_team?(email: invitee_email)
+      errors.add(:invitee_email, :already_on_team)
+    end
+  }
 
   delegate :email, to: :inviter, prefix: true
   delegate :name, to: :team, prefix: true
