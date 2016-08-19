@@ -12,7 +12,7 @@ class TeamMailer < ApplicationMailer
     @requestor_name = join_request.requestor_full_name
     @role_name = join_request.requestor_type_name
 
-    mail to: join_request.joinable.student_emails,
+    mail to: join_request.joinable.member_emails,
          subject: I18n.translate("team_mailer.join_request.subject",
                                  role_name: join_request.requestor_type_name)
   end

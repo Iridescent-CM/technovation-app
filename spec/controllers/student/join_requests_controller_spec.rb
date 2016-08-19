@@ -1,6 +1,24 @@
 require "rails_helper"
 
 RSpec.describe Student::JoinRequestsController do
+  describe "POST #create" do
+    it "emails all members" do
+      team = FactoryGirl.create(:team, members_count: 0)
+      student = FactoryGirl.create(:student)
+      mentor = FactoryGirl.create(:mentor)
+
+      team.add_mentor(mentor)
+
+      sign_in(student)
+      request.env["HTTP_REFERER"] = "/somewhere"
+      post :create, team_id: team.id
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail).to be_present, "no join request email sent"
+      expect(mail.to).to eq([mentor.email])
+    end
+  end
+
   describe "PUT #update" do
     let(:team) { FactoryGirl.create(:team, members_count: 2) }
     let(:mentor) { FactoryGirl.create(:mentor) }
