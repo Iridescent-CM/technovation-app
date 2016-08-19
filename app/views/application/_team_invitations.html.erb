@@ -1,4 +1,4 @@
-<% if CompletionSteps.new(account).all?(&:complete?) %>
+<%= unlocked_content_tag account, send("new_#{account.type_name}_team_search_path"), :div, class: "team-activity" do %>
   <div class="pending-team-invitations">
     <h4><%= t("views.application.dashboards.show.pending_team_invitations") %></h4>
 
