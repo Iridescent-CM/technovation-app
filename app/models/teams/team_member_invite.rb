@@ -11,7 +11,7 @@ class TeamMemberInvite < ActiveRecord::Base
   belongs_to :inviter, class_name: "Account"
   belongs_to :invitee, class_name: "StudentAccount"
 
-  validates :invitee_email, presence: true
+  validates :invitee_email, presence: true, uniqueness: { scope: :team_id }
 
   delegate :email, to: :inviter, prefix: true
   delegate :name, to: :team, prefix: true

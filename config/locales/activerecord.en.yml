@@ -45,3 +45,7 @@ en:
               matches_parent_email: "cannot be the same as your parent/guardian's email"
             existing_password:
               invalid: "is required to change your email address or password"
+        team_member_invite:
+          attributes:
+            invitee_email:
+              taken: "has already been invited by your team."

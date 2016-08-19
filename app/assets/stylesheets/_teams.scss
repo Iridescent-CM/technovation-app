@@ -36,6 +36,10 @@
         color: #fff;
       }
     }
+
+    input[type="submit"] {
+      @extend .transparent-button;
+    }
   }
 }
 
