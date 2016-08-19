@@ -26,4 +26,8 @@ module TeamMemberInviteController
       params[:inviter_id] = current_account.id
     end
   end
+
+  def account_type
+    "application"
+  end
 end
