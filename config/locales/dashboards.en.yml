@@ -8,7 +8,10 @@ en:
     application:
       dashboards:
         menu:
+          home: "Home"
           my_account: "My account"
+          my_requests: "My requests"
+          my_teams: "My teams"
         show:
           heading: "Welcome to Technovation!"
           intro: "We're excited to begin registrations for our %{year} season. Through this platform, you will be able to sign up as an individual, create teams, and also filter for nearby mentors."
