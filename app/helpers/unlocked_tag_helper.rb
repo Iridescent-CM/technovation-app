@@ -5,9 +5,13 @@ module UnlockedTagHelper
     end
   end
 
-  def unlocked_content_tag(user, path, tag_name, content, tag_options = {})
+  def unlocked_content_tag(user, path, tag_name, content = nil, tag_options = nil, &block)
     if unlocked?(user, path)
-      content_tag(tag_name, content, tag_options)
+      if block_given?
+        content_tag(tag_name, tag_options, &block)
+      else
+        content_tag(tag_name, content, tag_options)
+      end
     end
   end
 
