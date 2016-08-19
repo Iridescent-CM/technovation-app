@@ -37,6 +37,9 @@ en:
       signup: 'Sign up'
       signout: 'Logout'
       site_title: "Technovation Challenge"
+      teams:
+        show:
+          members_subheading: "Members"
       yes: "Yes"
 
     accounts:

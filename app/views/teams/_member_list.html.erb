@@ -5,10 +5,10 @@
 
   <div class="module-body">
     <ul class="team_members">
-      <%= render partial: "teams/member", collection: @team.students %>
+      <%= render partial: "teams/member", collection: team.students %>
     </ul>
 
     <%= render "teams/invite_students" %>
-    <%= render "teams/pending_invites", invites: @team.pending_invites %>
+    <%= render "teams/pending_invites", invites: team.pending_invites %>
   </div>
 </div>

@@ -1,9 +1,1 @@
-<div class="dashboard-page-info">
-  <h3 class="team_name"><%= @team.name %></h3>
-  <p class="team_description"><%= @team.description %></p>
-</div>
-
-<div class="team-memberships">
-  <%= render "teams/public_member_list" %>
-  <%= render "teams/public_mentor_list" %>
-</div>
+<%= render 'teams/public_show', team: @team %>
