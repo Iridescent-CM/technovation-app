@@ -30,6 +30,19 @@ RSpec.describe Student::SignupsController do
 
       expect(StudentAccount.last.team).to eq(invite.team)
     end
+
+    it "assigns the invite to the new account by email" do
+      invite = FactoryGirl.create(:team_member_invite,
+                                  invitee_email: "invited@thanks.com")
+
+      post :create, student_account: FactoryGirl.attributes_for(
+        :student,
+        email: "invited@thanks.com",
+        student_profile_attributes: FactoryGirl.attributes_for(:student_profile),
+      )
+
+      expect(invite.reload.invitee).to eq(StudentAccount.last)
+    end
   end
 
   describe "POST #create" do

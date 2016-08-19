@@ -25,9 +25,14 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def self.finish_acceptance(account, token)
-    if invite = accepted.find_by(invitee_email: account.email, invite_token: token)
+    if invite = find_by(invitee_email: account.email, invite_token: token)
       invite.update_attributes(invitee_id: account.id)
-      invite.after_accept
+
+      if invite.accepted?
+        invite.after_accept
+      end
+    elsif invite = find_by(invitee_email: account.email)
+      invite.update_attributes(invitee_id: account.id)
     end
   end
 
