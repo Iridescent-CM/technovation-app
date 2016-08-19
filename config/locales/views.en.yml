@@ -101,8 +101,9 @@ en:
           pending_requests_subheading: "Pending requests to join"
 
       team_searches:
-        show:
-          no_results: "Sorry, we didn't find any teams without a mentor near you"
+        new:
+          intro: "You are browsing available teams, which are teams within 50 miles of you who do not already have a mentor."
+          no_results: "Hmm, sorry, but we didn't find any teams without a mentor near you. Check again later."
 
     mentors:
       show:
