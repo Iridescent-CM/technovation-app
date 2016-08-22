@@ -11,7 +11,13 @@ class TeamMemberInvite < ActiveRecord::Base
   belongs_to :inviter, class_name: "Account"
   belongs_to :invitee, class_name: "StudentAccount"
 
-  validates :invitee_email, presence: true, uniqueness: { scope: :team_id }
+  validates :invitee_email, presence: true
+
+  validate -> {
+    if self.class.exists?(invitee_email: invitee_email, status: self.class.statuses[:pending])
+      errors.add(:invitee_email, :taken)
+    end
+  }
 
   validate -> {
     if StudentAccount.exists_on_team?(email: invitee_email)
