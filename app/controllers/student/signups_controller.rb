@@ -14,13 +14,5 @@ module Student
           school_name
         }
     end
-
-    def after_signup_path
-      if invite = TeamMemberInvite.pending.find_by(invitee_email: @student.email)
-        student_team_member_invite_path(invite.invite_token)
-      else
-        super
-      end
-    end
   end
 end
