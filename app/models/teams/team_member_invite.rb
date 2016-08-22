@@ -14,7 +14,11 @@ class TeamMemberInvite < ActiveRecord::Base
   validates :invitee_email, presence: true
 
   validate -> {
-    if self.class.exists?(invitee_email: invitee_email, status: self.class.statuses[:pending])
+    return unless new_record?
+
+    if self.class.exists?(invitee_email: invitee_email,
+                          team_id: team_id,
+                          status: self.class.statuses[:pending])
       errors.add(:invitee_email, :taken)
     end
   }
@@ -42,6 +46,9 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def after_accept
     team.add_student(invitee)
+    pending = self.class.where(invitee_email: invitee_email,
+                               status: self.class.statuses[:pending])
+    pending.each(&:rejected!)
   end
 
   def self.finish_acceptance(account, token)

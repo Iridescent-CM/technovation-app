@@ -21,4 +21,12 @@ RSpec.describe TeamMemberInvite do
 
     expect(invite).to be_valid
   end
+
+  it "rejects other pending invites on acceptance" do
+    invite1 = FactoryGirl.create(:team_member_invite)
+    invite2 = FactoryGirl.create(:team_member_invite, invitee_email: invite1.invitee_email)
+
+    invite1.accepted!
+    expect(invite2.reload).to be_rejected
+  end
 end
