@@ -8,6 +8,7 @@ en:
           success: "You successfully updated the scoring category"
 
     application:
+      general_error: "Sorry, but something went wrong. It probably wasn't your fault."
       unauthenticated: "You must be signed in as %{profile} to go there!"
 
     accounts:

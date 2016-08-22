@@ -3,8 +3,11 @@ class TeamMemberInvitesController < ApplicationController
 
   def update
     invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
-    invite.update_attributes(invite_params)
-    sign_in_existing_invitee(invite)
+    if invite.update_attributes(invite_params)
+      sign_in_existing_invitee(invite)
+    else
+      redirect_to :back, alert: t("controllers.application.general_error")
+    end
   end
 
   private

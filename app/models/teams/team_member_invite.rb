@@ -14,26 +14,24 @@ class TeamMemberInvite < ActiveRecord::Base
   validates :invitee_email, presence: true
 
   validate -> {
-    return unless new_record?
-
     if self.class.exists?(invitee_email: invitee_email,
                           team_id: team_id,
                           status: self.class.statuses[:pending])
       errors.add(:invitee_email, :taken)
     end
-  }
+  }, on: :create
 
   validate -> {
     if StudentAccount.exists_on_team?(email: invitee_email)
       errors.add(:invitee_email, :already_on_team)
     end
-  }
+  }, on: :create
 
   validate -> {
     if StudentAccount.has_requested_to_join?(team, invitee_email)
       errors.add(:invitee_email, :already_requested_to_join)
     end
-  }
+  }, on: :create
 
   validate :correct_invitee_type
 
@@ -52,7 +50,7 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def self.match_registrant(account)
-    if invite = find_by(invitee_email: account.email)
+    where(invitee_email: account.email).each do |invite|
       invite.update_attributes(invitee_id: account.id)
     end
   end
