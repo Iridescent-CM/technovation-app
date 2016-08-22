@@ -1,10 +1,33 @@
 class TeamMailer < ApplicationMailer
-  def invite_member(team_member_invite)
-    invite(:team_member, nil, team_member_invite)
+  def invite_member(invite)
+    @greeting = I18n.translate("team_mailer.invite_member.greeting.student", team_name: invite.team_name)
+
+    if invite.invitee && CompletionSteps.new(invite.invitee).all?(&:complete?)
+      @url = team_member_invite_url(invite)
+      @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
+    elsif invite.invitee
+      @url = student_dashboard_url
+      @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
+    else
+      @url = student_signup_url(email: invite.invitee_email)
+      @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+    end
+
+    mail to: invite.invitee_email, template_name: :invite_member
   end
 
-  def invite_mentor(mentor_invite)
-    invite(:mentor, :mentor_, mentor_invite)
+  def invite_mentor(invite)
+    @greeting = I18n.translate("team_mailer.invite_member.greeting.mentor", team_name: invite.team_name)
+
+    if CompletionSteps.new(invite.invitee).all?(&:complete?)
+      @url = mentor_mentor_invite_url(invite)
+      @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
+    else
+      @url = mentor_dashboard_url
+      @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
+    end
+
+    mail to: invite.invitee_email, template_name: :invite_member
   end
 
   def join_request(recipient, join_request)
@@ -34,12 +57,6 @@ class TeamMailer < ApplicationMailer
   end
 
   private
-  def invite(type, prefix, invite)
-    @url = send("#{prefix}#{type}_invite_url", invite)
-    mail to: invite.invitee_email,
-         template_name: :invite_member
-  end
-
   def join_request_status(status, type, join_request)
     @intro = I18n.translate("team_mailer.#{type}_join_request_status.#{status}_intro",
                             name: join_request.joinable_name)

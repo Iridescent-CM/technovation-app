@@ -31,7 +31,7 @@ RSpec.describe Student::TeamMemberInvitesController do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq(["some@student.com"])
       expect(mail.from).to eq(["info@technovationchallenge.org"])
-      expect(mail.subject).to eq("You're invited to join my Technovation team!")
+      expect(mail.subject).to eq("You're invited to join a Technovation team!")
     end
 
     it "sets the invitee to an existing account" do

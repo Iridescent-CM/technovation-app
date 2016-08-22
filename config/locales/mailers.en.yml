@@ -18,7 +18,14 @@ en:
 
   team_mailer:
     invite_member:
-      subject: "You're invited to join my Technovation team!"
+      intro:
+        complete_profile: "You can review your invitation here:"
+        incomplete_profile: "You will need to complete your profile before reviewing this invitation."
+        no_profile: "You need to register an account to review this invitation."
+      greeting:
+        mentor: "Hey! You've been invited to be a mentor for %{team_name}."
+        student: "Hey! You've been invited to be a member of %{team_name}."
+      subject: "You're invited to join a Technovation team!"
 
     join_request:
       intro: "Hey there! %{requestor_name} has requested to join your team as a %{role_name}"
