@@ -271,5 +271,7 @@ en:
         confirm_reject: "You are about to reject the invitation."
         invite_by_email: "Invite more students by email"
       show:
+        accepted: "You have previously accepted this invite."
         greeting: "You've been invited to join %{name}!"
         message: "You can accept this invite and join the team, or reject it and be on your way."
+        rejected: "You have previously rejected this invite. It may been automatic when you accepted an invitation to another team."
