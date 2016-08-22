@@ -274,4 +274,4 @@ en:
         accepted: "You have previously accepted this invite."
         greeting: "You've been invited to join %{name}!"
         message: "You can accept this invite and join the team, or reject it and be on your way."
-        rejected: "You have previously rejected this invite. It may been automatic when you accepted an invitation to another team."
+        rejected: "You previously rejected this invite. If you accepted an invite from another team, then this one was automatically rejected."
