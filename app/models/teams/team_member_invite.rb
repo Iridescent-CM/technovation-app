@@ -51,14 +51,8 @@ class TeamMemberInvite < ActiveRecord::Base
     pending.each(&:rejected!)
   end
 
-  def self.finish_acceptance(account, token)
-    if invite = find_by(invitee_email: account.email, invite_token: token)
-      invite.update_attributes(invitee_id: account.id)
-
-      if invite.accepted?
-        invite.after_accept
-      end
-    elsif invite = find_by(invitee_email: account.email)
+  def self.match_registrant(account)
+    if invite = find_by(invitee_email: account.email)
       invite.update_attributes(invitee_id: account.id)
     end
   end

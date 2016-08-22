@@ -4,8 +4,7 @@ class TeamMemberInvitesController < ApplicationController
   def update
     invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
     invite.update_attributes(invite_params)
-    sign_in_existing_invitee(invite) or
-      enable_student_signup_for_joining_invited_team(invite)
+    sign_in_existing_invitee(invite)
   end
 
   private
@@ -21,11 +20,6 @@ class TeamMemberInvitesController < ApplicationController
     end
 
     SignIn.(invite.invitee, self, message: @msg, redirect_to: @path)
-  end
-
-  def enable_student_signup_for_joining_invited_team(invite)
-    cookies[:team_invite_token] = invite.invite_token
-    redirect_to student_signup_path(email: invite.invitee_email)
   end
 
   def invite_params

@@ -15,22 +15,6 @@ RSpec.describe Student::SignupsController do
       expect(response).to redirect_to(student_team_member_invite_path(invite.invite_token))
     end
 
-    it "adds previously accepted invite to team" do
-      invite = FactoryGirl.create(:team_member_invite,
-                                  status: :accepted,
-                                  invitee_email: "invited@thanks.com")
-
-      controller.set_cookie(:invite_token, invite.invite_token)
-
-      post :create, student_account: FactoryGirl.attributes_for(
-        :student,
-        email: "invited@thanks.com",
-        student_profile_attributes: FactoryGirl.attributes_for(:student_profile),
-      )
-
-      expect(StudentAccount.last.team).to eq(invite.team)
-    end
-
     it "assigns the invite to the new account by email" do
       invite = FactoryGirl.create(:team_member_invite,
                                   invitee_email: "invited@thanks.com")

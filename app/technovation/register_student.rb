@@ -3,7 +3,7 @@ module RegisterStudent
     if student_account.save
       mailer.consent_notice(student_account.parent_guardian_email,
                             student_account.consent_token).deliver_later
-      invite.finish_acceptance(student_account, context.remove_cookie(:invite_token))
+      invite.match_registrant(student_account)
       true
     else
       false

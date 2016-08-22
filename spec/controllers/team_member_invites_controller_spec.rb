@@ -3,16 +3,12 @@ require "rails_helper"
 RSpec.describe TeamMemberInvitesController do
   describe "PUT #update" do
     it "accepts the team member invite" do
-      invite = FactoryGirl.create(:team_member_invite)
+      student = FactoryGirl.create(:student)
+      invite = FactoryGirl.create(:team_member_invite, invitee: student)
+
+      sign_in(student)
       put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
       expect(invite.reload).to be_accepted
-    end
-
-    it "redirects to student signup with the email set" do
-      invite = FactoryGirl.create(:team_member_invite)
-
-      expect(put :update, id: invite.invite_token, team_member_invite: { status: :accepted })
-        .to redirect_to student_signup_path(email: invite.invitee_email)
     end
 
     it "redirects to the student team page when the student account exists" do
