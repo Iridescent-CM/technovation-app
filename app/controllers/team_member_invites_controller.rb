@@ -12,9 +12,15 @@ class TeamMemberInvitesController < ApplicationController
   def sign_in_existing_invitee(invite)
     return false unless !!invite and !!invite.invitee
 
-    SignIn.(invite.invitee, self,
-            message: t("controllers.team_member_invites.update.success"),
-            redirect_to: student_team_path(invite.team))
+    if invite.accepted?
+      @path = student_team_path(invite.team)
+      @msg = t("controllers.team_member_invites.update.success")
+    else
+      @path = student_dashboard_path
+      @msg = t("controllers.team_member_invites.update.not_accepted")
+    end
+
+    SignIn.(invite.invitee, self, message: @msg, redirect_to: @path)
   end
 
   def enable_student_signup_for_joining_invited_team(invite)

@@ -110,6 +110,7 @@ en:
     team_member_invites:
       update:
         accept: "Accept invitation to %{name}"
+        not_accepted: "You declined that invitation. No problem, keep looking!"
         reject: "Reject this invitation"
         success: "Welcome to the team! Make us proud!"
 
