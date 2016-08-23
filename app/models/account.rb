@@ -88,6 +88,20 @@ class Account < ActiveRecord::Base
     update_attributes(password_reset_token_sent_at: Time.current)
   end
 
+  def age
+    now = Time.current.utc.to_date
+
+    current_month_after_birth_month = now.month > date_of_birth.month
+    current_month_is_birth_month = now.month == date_of_birth.month
+    current_day_is_on_or_after_birthday = now.day >= date_of_birth.day
+
+    extra_year = (current_month_after_birth_month ||
+                    (current_month_is_birth_month &&
+                       current_day_is_on_or_after_birthday)) ? 0 : 1
+
+    now.year - date_of_birth.year - extra_year
+  end
+
   def enable_searchability
     # Noop for most accounts
   end

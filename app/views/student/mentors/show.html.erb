@@ -1,7 +1,7 @@
-<%= render 'accounts/show', title: t("views.student.mentors.show.title"),
-                            account: @mentor %>
+<%= render 'accounts/public_show', title: t("views.student.mentors.show.title"), account: @mentor %>
 
-<h4><%= t("views.student.mentors.show.teams") %></h4>
+<h4><%= t("views.student.mentors.show.teams", name: @mentor.first_name) %></h4>
+
 <ul>
   <%= render partial: 'student/mentors/team_preview',
              collection: @mentor.teams.current %>
@@ -9,11 +9,11 @@
 
 <p>
   <% if current_student.invited_mentor?(@mentor) %>
-    <%= t("views.mentors.show.already_invited") %>
+    <%= t("views.mentors.show.already_invited", name: @mentor.first_name) %>
   <% else %>
     <%= form_for [:student, @mentor_invite] do |f| %>
       <%= f.hidden_field :invitee_email, value: @mentor.email %>
-      <%= f.submit t("views.mentors.show.invite_to_team") %>
+      <%= f.submit t("views.mentors.show.invite_to_team", name: @mentor.first_name) %>
     <% end %>
   <% end %>
 </p>

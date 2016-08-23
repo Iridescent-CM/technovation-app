@@ -108,8 +108,8 @@ en:
 
     mentors:
       show:
-        already_invited: "You've invited this mentor to your team"
-        invite_to_team: "Invite to team"
+        already_invited: "You've invited %{name} to mentor your team"
+        invite_to_team: "Invite %{name} to mentor your team"
 
     parental_consents:
       new:
@@ -224,7 +224,7 @@ en:
 
       mentors:
         show:
-          teams: "This mentor's teams:"
+          teams: "%{name}'s teams:"
           title: "Mentor details"
 
       mentor_searches:

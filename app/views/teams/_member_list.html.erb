@@ -14,6 +14,7 @@
       <%= t("views.teams.show.members_full") %>
     <% end %>
 
-    <%= render "teams/pending_invites", invites: team.pending_student_invites %>
+    <%= render "teams/pending_invites", preview_method: :invitee_email,
+                                        invites: team.pending_student_invites %>
   </div>
 </div>

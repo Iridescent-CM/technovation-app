@@ -1,10 +1,12 @@
+<% preview_method ||= :invitee_first_name %>
+
 <% if invites.any? %>
   <div class="pending-invites">
     <h6><%= t("views.#{account_type}.teams.show.pending_invitees_subheading") %></h6>
 
     <ul class="pending_invitees">
       <% invites.each do |invite| %>
-        <li><%= invite.invitee_email %></li>
+        <li><%= invite.public_send(preview_method) %></li>
       <% end %>
     </ul>
   </div>
