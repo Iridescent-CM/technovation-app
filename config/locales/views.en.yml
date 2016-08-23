@@ -264,6 +264,7 @@ en:
         members_full: "Your team can have up to five students. You cannot invite more students while you have a combined total of five members, invitations, and/or join requests."
         members_subheading: "Team members"
         mentors_subheading: "Team mentors"
+        past_team: "Past teams cannot be managed."
 
     team_member_invites:
       form:

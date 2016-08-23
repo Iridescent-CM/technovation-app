@@ -8,8 +8,10 @@
       <%= render partial: "teams/member", collection: team.students %>
     </ul>
 
-    <% if team.spot_available? %>
+    <% if team.current? && team.spot_available? %>
       <%= render "teams/invite_students" %>
+    <% elsif team.spot_available? %>
+      <%= t("views.teams.show.past_team") %>
     <% else %>
       <%= t("views.teams.show.members_full") %>
     <% end %>

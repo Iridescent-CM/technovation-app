@@ -83,6 +83,10 @@ class Team < ActiveRecord::Base
     save
   end
 
+  def current?
+    seasons.include?(Season.current)
+  end
+
   private
   def register_to_season
     RegisterToSeasonJob.perform_later(self)
