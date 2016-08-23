@@ -118,7 +118,7 @@ class StudentAccount < Account
   end
 
   def invited_mentor?(mentor)
-    mentor_invites.flat_map(&:invitee).include?(mentor)
+    mentor_invites.pending.flat_map(&:invitee).include?(mentor)
   end
 
   def void_parental_consent!
