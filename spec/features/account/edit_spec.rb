@@ -57,7 +57,7 @@ RSpec.feature "Edit account spec" do
     sign_in(account)
     visit send("edit_#{account.type_name}_account_path")
 
-    fill_in "Bio", with: "Check out my random cool bio!!!!"
+    fill_in "#{account.type_name}_account[#{account.type_name}_profile_attributes][bio]", with: "Check out my random cool bio!!!!"
     click_button "Save"
 
     expect(page).to have_css('dd', text: "Check out my random cool bio!!!!")

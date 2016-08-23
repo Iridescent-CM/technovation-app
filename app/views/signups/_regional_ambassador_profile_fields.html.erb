@@ -9,5 +9,6 @@
     collection: (2009..Time.current.year),
     label: t("models.regional_ambassador_profile.ambassador_since_year") %>
 
-  <%= r.input :bio %>
+  <%= r.input :bio,
+    label: t("models.regional_ambassador_profile.bio.signup_label") %>
 <% end %>

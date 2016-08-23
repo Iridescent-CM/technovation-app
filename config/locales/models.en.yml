@@ -35,6 +35,9 @@ en:
 
     regional_ambassador_profile:
       ambassador_since_year: "In which year did you become a regional ambassador?"
+      bio:
+        label: "Bio"
+        signup_label: "Tell us about yourself"
       job_title: "Job title"
       organization_company_name: "Organization/company name"
 
