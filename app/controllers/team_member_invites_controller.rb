@@ -3,17 +3,23 @@ class TeamMemberInvitesController < ApplicationController
 
   def update
     invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
-    if invite.update_attributes(invite_params)
-      sign_in_existing_invitee(invite)
+
+    if invite.invitee.is_on_team?
+      reject_invitation(invite)
+    elsif invite.update_attributes(invite_params)
+      redirect_based_on_status(invite)
     else
       redirect_to :back, alert: t("controllers.application.general_error")
     end
   end
 
   private
-  def sign_in_existing_invitee(invite)
-    return false unless !!invite and !!invite.invitee
+  def reject_invitation(invite)
+    invite.rejected!
+    redirect_to student_dashboard_path, alert: t("controllers.team_member_invites.update.already_on_team")
+  end
 
+  def redirect_based_on_status(invite)
     if invite.accepted?
       @path = student_team_path(invite.team)
       @msg = t("controllers.team_member_invites.update.success")
@@ -22,7 +28,7 @@ class TeamMemberInvitesController < ApplicationController
       @msg = t("controllers.team_member_invites.update.not_accepted")
     end
 
-    SignIn.(invite.invitee, self, message: @msg, redirect_to: @path)
+    redirect_to @path, success: @msg
   end
 
   def invite_params
