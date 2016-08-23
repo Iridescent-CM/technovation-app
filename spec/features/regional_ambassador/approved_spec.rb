@@ -5,6 +5,6 @@ RSpec.feature "Approved regional ambassadors" do
     approved_ambassador = FactoryGirl.create(:regional_ambassador, :approved)
     sign_in(approved_ambassador)
     expect(current_path).to eq(regional_ambassador_dashboard_path)
-    expect(page).to have_content("Welcome! Your account has been reviewed by our staff and approved. For now, just hold tight, new RA features are coming soon.")
+    expect(page).to have_content("Welcome! Your account has been reviewed by our staff and approved.")
   end
 end
