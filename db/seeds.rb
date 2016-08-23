@@ -55,6 +55,8 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                     school_company_name: "Boeing",
                                     job_title: "Aerospace Engineer",
                                     expertise_ids: Expertise.pluck(:id)[0..1],
+                                    bio: "Cool chicago mentor",
+                                    background_check_completed_at: Time.current,
                                   },
                                   first_name: "Mentor",
                                   last_name: "McGee",
@@ -63,6 +65,8 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                   state_province: "IL",
                                   country: "US",
                                  )).valid?
+  mentor.update_column(:profile_image, "foo/bar/baz.png")
+  mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 end
 
