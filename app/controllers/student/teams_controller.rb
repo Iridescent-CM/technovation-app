@@ -8,6 +8,7 @@ module Student
 
     after_action -> {
       current_student.team_member_invites.pending.each(&:rejected!)
+      current_student.join_requests.pending.each(&:destroy)
     }, only: :create
 
     private

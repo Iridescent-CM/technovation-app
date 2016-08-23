@@ -1,14 +1,16 @@
 require "rails_helper"
 
 RSpec.describe JoinRequest do
-  it "invalidates other student requests upon acceptance" do
+  it "deletes other student requests upon acceptance" do
     student = FactoryGirl.create(:student)
     approve_me = FactoryGirl.create(:join_request, requestor: student)
-    reject_me = FactoryGirl.create(:join_request, requestor: student)
+    delete_me = FactoryGirl.create(:join_request, requestor: student)
 
     approve_me.approved!
 
-    expect(reject_me.reload).to be_rejected
+    expect {
+      delete_me.reload
+    }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it "does not mess with pending mentor join requests on approval" do

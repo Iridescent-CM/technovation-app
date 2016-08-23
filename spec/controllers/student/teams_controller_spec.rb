@@ -33,6 +33,18 @@ RSpec.describe Student::TeamsController do
 
       expect(invite.reload).to be_rejected
     end
+
+    it "deletes any pending join requests" do
+      student = FactoryGirl.create(:student)
+      join_request = FactoryGirl.create(:join_request, requestor: student)
+
+      sign_in(student)
+      post :create, team: { name: "Girl Power", description: "We are a great team" }
+
+      expect {
+        join_request.reload
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   describe "GET #new" do

@@ -14,7 +14,7 @@ class JoinRequest < ActiveRecord::Base
 
   def approved!
     update_attributes(accepted_at: Time.current)
-    self.class.pending.from_students.select { |j| j.requestor_id == requestor.id }.each(&:rejected!)
+    self.class.pending.from_students.select { |j| j.requestor_id == requestor.id }.each(&:destroy)
     joinable.public_send("add_#{requestor.type_name}", requestor)
   end
 
