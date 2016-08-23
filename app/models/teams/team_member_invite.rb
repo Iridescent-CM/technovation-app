@@ -1,6 +1,8 @@
 class TeamMemberInvite < ActiveRecord::Base
   enum status: %i{pending accepted rejected}
 
+  scope :for_students, -> { where("invitee_id IS NULL OR invitee_id NOT IN (?)", MentorAccount.pluck(:id)) }
+
   before_create -> { GenerateToken.(self, :invite_token) }
   before_create :set_invitee
   after_create :send_invite

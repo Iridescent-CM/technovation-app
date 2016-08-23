@@ -10,5 +10,7 @@
                   send("new_#{account_type}_mentor_search_path"),
                   class: "transparent-button") %>
     </ul>
+
+    <%= render "teams/pending_invites", invites: team.pending_mentor_invites %>
   </div>
 </div>

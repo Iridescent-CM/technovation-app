@@ -19,9 +19,11 @@ class Team < ActiveRecord::Base
   has_many :submissions, dependent: :destroy
 
   has_many :team_member_invites, dependent: :destroy
+  has_many :mentor_invites, dependent: :destroy
   has_many :join_requests, as: :joinable, dependent: :destroy
 
-  has_many :pending_invites, -> { pending }, class_name: "TeamMemberInvite"
+  has_many :pending_student_invites, -> { pending.for_students }, class_name: "TeamMemberInvite"
+  has_many :pending_mentor_invites, -> { pending.for_mentors }, class_name: "MentorInvite"
   has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
@@ -43,7 +45,7 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + team_member_invites.pending + join_requests.from_students.pending).size < 5
+    (students + pending_student_invites + join_requests.from_students.pending).size < 5
   end
 
   def creator_address_details

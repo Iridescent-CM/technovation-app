@@ -1,6 +1,8 @@
 class MentorInvite < TeamMemberInvite
   belongs_to :invitee, class_name: "MentorAccount"
 
+  scope :for_mentors, -> { where(invitee_id: MentorAccount.pluck(:id)) }
+
   def self.accept!(token, email = nil)
     if invite = where("invite_token = ? OR invitee_email = ?", token, email).first
       invite.update_attributes({
