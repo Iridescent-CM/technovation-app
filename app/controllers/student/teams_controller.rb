@@ -6,6 +6,10 @@ module Student
       only: [:create, :new],
       if: -> { current_student.is_on_team? }
 
+    after_action -> {
+      current_student.team_member_invites.pending.each(&:rejected!)
+    }, only: :create
+
     private
     def restrict_team_creation
       redirect_to student_team_path(current_student.team),

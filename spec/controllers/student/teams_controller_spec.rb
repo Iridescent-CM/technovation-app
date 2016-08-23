@@ -7,8 +7,7 @@ RSpec.describe Student::TeamsController do
       sign_in(student)
 
       expect {
-        post :create, team: { name: "Girl Power",
-                              description: "We are a great team" }
+        post :create, team: { name: "Girl Power", description: "We are a great team" }
       }.to change { Team.count }.from(0).to 1
 
       expect(student.team).to eq(Team.last)
@@ -19,11 +18,20 @@ RSpec.describe Student::TeamsController do
       sign_in(student)
 
       expect {
-        post :create, team: { name: "Girl Power",
-                              description: "We are a great team" }
+        post :create, team: { name: "Girl Power", description: "We are a great team" }
       }.not_to change { Team.count }
 
       expect(flash[:alert]).to eq("You cannot create a new team if you are already on a team")
+    end
+
+    it "rejects any pending invites" do
+      student = FactoryGirl.create(:student)
+      invite = FactoryGirl.create(:team_member_invite, invitee_email: student.email)
+
+      sign_in(student)
+      post :create, team: { name: "Girl Power", description: "We are a great team" }
+
+      expect(invite.reload).to be_rejected
     end
   end
 
