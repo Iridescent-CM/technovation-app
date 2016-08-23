@@ -99,6 +99,10 @@ class StudentAccount < Account
     team == query_team
   end
 
+  def can_join_a_team?
+    not is_on_team?
+  end
+
   def team
     teams.current.first
   end
