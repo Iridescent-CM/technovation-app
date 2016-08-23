@@ -1,7 +1,7 @@
 class TeamMemberInvite < ActiveRecord::Base
   enum status: %i{pending accepted rejected}
 
-  scope :for_students, -> { where("invitee_id IS NULL OR invitee_id NOT IN (?)", MentorAccount.pluck(:id)) }
+  scope :for_students, -> { where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount") }
 
   before_create -> { GenerateToken.(self, :invite_token) }
   before_create :set_invitee
@@ -11,7 +11,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   belongs_to :team
   belongs_to :inviter, class_name: "Account"
-  belongs_to :invitee, class_name: "StudentAccount"
+  belongs_to :invitee, polymorphic: true
 
   validates :invitee_email, presence: true
 
@@ -35,7 +35,7 @@ class TeamMemberInvite < ActiveRecord::Base
     end
   }, on: :create
 
-  validate :correct_invitee_type
+  validate :correct_invitee_type, on: :create
 
   delegate :email, to: :inviter, prefix: true
   delegate :name, to: :team, prefix: true
@@ -53,22 +53,26 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def self.match_registrant(account)
     where(invitee_email: account.email).each do |invite|
-      invite.update_attributes(invitee_id: account.id)
+      invite.update_attributes(invitee_id: account.id,
+                               invitee_type: account.type)
     end
   end
 
   private
-  def correct_invitee_type
-    if Account.where.not(type: "StudentAccount").where(email: invitee_email).any?
-      errors.add(:invitee_email, :is_not_a_student)
-    end
-  end
-
   def set_invitee
-    self.invitee ||= StudentAccount.find_by(email: invitee_email)
+    if student = StudentAccount.find_by(email: invitee_email)
+      self.invitee_id ||=  student.id
+      self.invitee_type ||= "StudentAccount"
+    end
   end
 
   def send_invite
     TeamMailer.invite_member(self).deliver_later
+  end
+
+  def correct_invitee_type
+    if Account.where.not(type: "StudentAccount").where(email: invitee_email).any?
+      errors.add(:invitee_email, :is_not_a_student)
+    end
   end
 end

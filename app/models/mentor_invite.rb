@@ -1,21 +1,7 @@
 class MentorInvite < TeamMemberInvite
-  belongs_to :invitee, class_name: "MentorAccount"
-
-  scope :for_mentors, -> { where(invitee_id: MentorAccount.pluck(:id)) }
+  default_scope -> { where(invitee_type: "MentorAccount") }
 
   delegate :first_name, to: :invitee, prefix: true
-
-  def self.accept!(token, email = nil)
-    if invite = where("invite_token = ? OR invitee_email = ?", token, email).first
-      invite.update_attributes({
-        status: :accepted,
-        invitee: Account.find_by(email: email) || invite.invitee,
-      })
-      invite
-    else
-      false
-    end
-  end
 
   def after_accept
     team.add_mentor(invitee)
@@ -27,7 +13,8 @@ class MentorInvite < TeamMemberInvite
   end
 
   def set_invitee
-    self.invitee ||= MentorAccount.find_by(email: invitee_email)
+    self.invitee_id ||= MentorAccount.find_by(email: invitee_email).id
+    self.invitee_type ||= "MentorAccount"
   end
 
   def correct_invitee_type

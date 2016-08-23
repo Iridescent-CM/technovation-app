@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816142124) do
+ActiveRecord::Schema.define(version: 20160823201128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,9 +292,11 @@ ActiveRecord::Schema.define(version: 20160816142124) do
     t.integer  "status",        default: 0, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "invitee_type"
   end
 
   add_index "team_member_invites", ["invite_token"], name: "index_team_member_invites_on_invite_token", unique: true, using: :btree
+  add_index "team_member_invites", ["invitee_type"], name: "index_team_member_invites_on_invitee_type", using: :btree
   add_index "team_member_invites", ["status"], name: "index_team_member_invites_on_status", using: :btree
 
   create_table "teams", force: :cascade do |t|

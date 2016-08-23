@@ -2,4 +2,4 @@
             account: current_student,
             steps: CompletionSteps.new(current_student) %>
 
-<%= render 'team_invitations', account: current_student %>
+<%= render 'team_invitations', invite_type: :team_member, account: current_student %>

@@ -9,7 +9,7 @@
             <li>
               <%= invitation.team_name %>&nbsp;&ndash;
               <%= link_to t("views.application.review"),
-                          send("#{account.type_name}_team_member_invite_path", invitation) %>
+                          send("#{account.type_name}_#{invite_type}_invite_path", invitation) %>
             </li>
           <% end %>
         </ul>
