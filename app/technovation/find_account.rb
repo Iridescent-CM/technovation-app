@@ -4,8 +4,13 @@ module FindAccount
   end
 
   def self.authenticate(profile, cookies, callbacks = {})
-    current(profile, cookies).authenticated? ||
-      callbacks.fetch(:failure) { -> { } }.call
+    if current(profile, cookies).authenticated?
+      true
+    elsif account = call(cookies.fetch(:auth_token) { "" })
+      callbacks.fetch(:unauthorized) { ->(*) { } }.call(account.type_name)
+    else
+      callbacks.fetch(:unauthenticated) { -> { } }.call
+    end
   end
 
   def self.current(profile, cookies)
