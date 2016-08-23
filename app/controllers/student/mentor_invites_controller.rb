@@ -7,7 +7,7 @@ module Student
         redirect_to [:student, @mentor_invite.team],
           success: t("controllers.student.team_member_invites.create.success")
       else
-        render :new
+        redirect_to :back, alert: t("views.application.general_error")
       end
     end
 

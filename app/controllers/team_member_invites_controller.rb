@@ -4,7 +4,7 @@ class TeamMemberInvitesController < ApplicationController
   def update
     invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
 
-    if invite.invitee.is_on_team?
+    if invite_params[:status] == "accepted" and not invite.invitee.can_join_a_team?
       reject_invitation(invite)
     elsif invite.update_attributes(invite_params)
       redirect_based_on_status(invite)
