@@ -112,6 +112,21 @@ namespace :reports do
     end
   end
 
+  desc "Generate a csv with all parents emails"
+  task all_parent_emails: :environment do
+    parents = User.where(role: 'student').map{|u| u.parent_email }.uniq
+
+    headers = ["Parent Email"]
+
+    CSV.open("./public/all_parent_emails.csv", "wb") do |csv|
+      csv << headers
+
+      parents.each do |parent_email|
+        csv << [parent_email]
+      end
+    end
+  end
+
   desc "Generate a CSV with mentors/coaches and their companies"
   task mentor_coach_companies: :environment do
     CSV.open("./public/mentor_coach_companies.csv", "wb") do |csv|
