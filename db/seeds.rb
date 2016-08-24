@@ -1,15 +1,3 @@
-if Expertise.create(name: "Science").valid?
-  puts "Created Expertise: #{Expertise.last.name}"
-end
-
-if Expertise.create(name: "Engineering").valid?
-  puts "Created Expertise: #{Expertise.last.name}"
-end
-
-if Expertise.create(name: "Project Management").valid?
-  puts "Created Expertise: #{Expertise.last.name}"
-end
-
 if (student = StudentAccount.create(email: "student@student.com",
                                     password: "student@student.com",
                                     password_confirmation: "student@student.com",
@@ -68,18 +56,4 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
   mentor.update_column(:profile_image, "foo/bar/baz.png")
   mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
-end
-
-
-if (admin = AdminAccount.create(email: "admin@admin.com",
-                                password: "admin@admin.com",
-                                password_confirmation: "admin@admin.com",
-                                first_name: "Test",
-                                last_name: "Admin",
-                                date_of_birth: Date.today,
-                                city: "Chicago",
-                                state_province: "IL",
-                                country: "US",
-                               )).valid?
-  puts "Created Admin: #{admin.email} with password #{admin.password}"
 end
