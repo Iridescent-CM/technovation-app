@@ -6,7 +6,8 @@
     label: t("models.regional_ambassador_profile.job_title") %>
 
   <%= r.input :ambassador_since_year,
-    collection: (2009..Time.current.year).to_a.reverse,
+    collection: [t("models.regional_ambassador_profile.ambassador_since_year_option_new")] +
+                  (2009..Time.current.year).to_a.reverse,
     label: t("models.regional_ambassador_profile.ambassador_since_year") %>
 
   <%= r.input :bio,

@@ -17,7 +17,7 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Organization/company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Engineer"
     fill_in "Tell us about yourself", with: "I am cool"
-    select 2016, from: "In which year did you become a regional ambassador?"
+    select "I'm new!", from: "In which year did you become a regional ambassador?"
 
     fill_in "Email", with: "regional@ambassador.com"
     fill_in "Password", with: "secret1234"
@@ -48,5 +48,9 @@ RSpec.feature "Regional Ambassadors registration" do
 
     expect(mail.to).to eq(["info@technovationchallenge.org"])
     expect(mail.body.parts.last.to_s).to include("href=\"#{admin_pending_regional_ambassadors_url}\"")
+  end
+
+  scenario "saves profile data" do
+    expect(RegionalAmbassadorAccount.last.ambassador_since_year).to eq("I'm new!")
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824150850) do
+ActiveRecord::Schema.define(version: 20160824191911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20160824150850) do
 
   create_table "regional_ambassador_profiles", force: :cascade do |t|
     t.string   "organization_company_name",                 null: false
-    t.integer  "ambassador_since_year",                     null: false
+    t.string   "ambassador_since_year",                     null: false
     t.string   "job_title",                                 null: false
     t.integer  "account_id",                                null: false
     t.integer  "status",                        default: 0, null: false
