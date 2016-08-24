@@ -85,6 +85,8 @@ en:
           already_requested: "You have requested to join this team"
 
       teams:
+        edit:
+          title: "Edit your team"
         index:
           current_teams: "Current Teams"
           none: "You don't have any %{type} teams."
@@ -245,6 +247,8 @@ en:
             help_text: "(We need this information to send them a link to a consent form.)"
 
       teams:
+        edit:
+          title: "Edit your team"
         new:
           join: "Join a Team"
           intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."

@@ -20,7 +20,7 @@
             <td>
               <% %i{approved rejected}.each.with_index do |action, i| %>
                 <%= link_to t("views.application.#{action}"),
-                            send("#{account_type}_join_request_path", join_request, status: action),
+                            [account_type, join_request, status: action],
                             data: {
                               method: :put,
                               confirm: t("views.application.confirm_#{action}",

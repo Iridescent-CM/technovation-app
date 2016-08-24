@@ -25,11 +25,28 @@ module TeamController
     end
   end
 
+  def edit
+    @team = current_account.teams.find(params.fetch(:id))
+  end
+
+  def update
+    @team = current_account.teams.find(params.fetch(:id))
+
+    if @team.update_attributes(team_params)
+      redirect_to [account_type, @team],
+        success: t("controllers.#{account_type}.teams.update.success")
+    else
+      render :edit
+    end
+  end
+
   private
   def team_params
-    params.require(:team).permit(:name, :description).tap do |params|
-      params[:division] = Division.for(current_account)
-      params["#{account_type}_ids"] = current_account.id
+    params.require(:team).permit(:name, :description).tap do |tapped|
+      unless params.fetch(:id) { false }
+        tapped[:division] = Division.for(current_account)
+        tapped["#{account_type}_ids"] = current_account.id
+      end
     end
   end
 

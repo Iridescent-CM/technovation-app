@@ -1,0 +1,12 @@
+<%= simple_form_for [prefix, @team] do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+
+  <% action = f.object.persisted? ? :save : :create %>
+  <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")) %>
+
+  <% unless f.object.persisted? %>
+    <%= t("views.application.or") %>
+    <%= link_to t("controllers.teams.index.browse"), [:new, prefix, :team_search] %>
+  <% end %>
+<% end %>

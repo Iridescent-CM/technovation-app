@@ -42,6 +42,8 @@ en:
       teams:
         create:
           success: "Your team has been created! Lookin' good!"
+        update:
+          success: "Your team has been updated!"
       team_memberships:
         destroy:
           link: "Leave %{name}"
@@ -98,6 +100,8 @@ en:
         create:
           already_on_team: "You cannot create a new team if you are already on a team"
           success: "Your team has been created! Lookin' good!"
+        update:
+          success: "Your team has been updated!"
       team_member_invites:
         create:
           success: "Your team invite was sent!"
