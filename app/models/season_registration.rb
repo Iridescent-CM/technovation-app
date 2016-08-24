@@ -5,7 +5,10 @@ class SeasonRegistration < ActiveRecord::Base
   def self.register(registerable, season = Season.current)
     if not exists?(registerable: registerable, season: season)
       create(registerable: registerable, season: season)
-      registerable.after_registration
+
+      if season == Season.current
+        registerable.after_registration
+      end
     end
   end
 end
