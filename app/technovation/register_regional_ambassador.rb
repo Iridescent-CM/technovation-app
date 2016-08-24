@@ -6,7 +6,6 @@ module RegisterRegionalAmbassador
     else
       false
     end
-    RegisterToCurrentSeasonJob.perform_later(ambassador_account)
   end
 
   def self.build(model, attributes)

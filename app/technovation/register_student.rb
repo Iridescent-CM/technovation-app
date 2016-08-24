@@ -4,7 +4,6 @@ module RegisterStudent
       mailer.consent_notice(student_account.parent_guardian_email,
                             student_account.consent_token).deliver_later
       invite.match_registrant(student_account)
-      RegisterToCurrentSeasonJob.perform_later(student_account)
       true
     else
       false
