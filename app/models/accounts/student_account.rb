@@ -125,6 +125,10 @@ class StudentAccount < Account
     !!parental_consent && parental_consent.void!
   end
 
+  def after_registration
+    ParentMailer.consent_notice(parent_guardian_email, consent_token).deliver_later
+  end
+
   private
   def parent_email_doesnt_match_account_email
     if parent_guardian_email == email

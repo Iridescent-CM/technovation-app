@@ -102,7 +102,11 @@ class Account < ActiveRecord::Base
   end
 
   def enable_searchability
-    # Noop for most accounts
+    # Implemented by MentorAccount
+  end
+
+  def after_registration
+    # Implemented by StudentAccount
   end
 
   private
