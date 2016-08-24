@@ -1,6 +1,7 @@
 module RegisterMentor
   def self.call(mentor_account, context)
     mentor_account.save
+    RegisterToCurrentSeasonJob.perform_later(mentor_account)
   end
 
   def self.build(model, attributes)

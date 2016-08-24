@@ -38,5 +38,9 @@ RSpec.describe Student::SignupsController do
                                            token: student.consent_token)}\""
       )
     end
+
+    it "registers the student to the current season" do
+      expect(StudentAccount.last.seasons).to eq([Season.current])
+    end
   end
 end

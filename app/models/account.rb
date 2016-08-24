@@ -11,7 +11,6 @@ class Account < ActiveRecord::Base
 
   before_validation :generate_tokens, on: :create
   after_validation :geocode, if: :address_changed?
-  #after_create :register_current_season
 
   has_secure_password
 
@@ -110,10 +109,6 @@ class Account < ActiveRecord::Base
   def generate_tokens
     GenerateToken.(self, :auth_token)
     GenerateToken.(self, :consent_token)
-  end
-
-  def register_current_season
-    RegisterToCurrentSeasonJob.perform_later(self)
   end
 
   def changes_require_password?
