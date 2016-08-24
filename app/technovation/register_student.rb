@@ -1,8 +1,6 @@
 module RegisterStudent
-  def self.call(student_account, context, invite = TeamMemberInvite, mailer = ParentMailer)
+  def self.call(student_account, context, invite = TeamMemberInvite)
     if student_account.save
-      mailer.consent_notice(student_account.parent_guardian_email,
-                            student_account.consent_token).deliver_later
       invite.match_registrant(student_account)
       true
     else
