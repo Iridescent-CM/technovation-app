@@ -180,3 +180,18 @@ label {
 .hint {
   font-size: 1rem;
 }
+
+.form-with-columns {
+  .simple_form {
+    @include span-columns(12);
+  }
+
+  .photo-edit {
+    @include span-columns(3);
+  }
+
+  .fields-edit {
+    @include span-columns(6);
+    @include omega;
+  }
+}

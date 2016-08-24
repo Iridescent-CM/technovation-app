@@ -262,6 +262,11 @@ en:
           pending_invitees_subheading: "Pending Invites"
           pending_requests_subheading: "Pending requests to join"
 
+      team_searches:
+        new:
+          intro: "You are browsing available teams, which are teams within 50 miles of you that are not full."
+          no_results: "Hmm, sorry, but we didn't find any available teams near you. Check again later."
+
     teams:
       show:
         division_name: "Division %{name}"

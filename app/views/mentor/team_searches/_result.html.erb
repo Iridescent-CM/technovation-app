@@ -1,9 +1,15 @@
-<div class="team">
-  <h1 class="team_name">
-    <%= link_to result.name, new_mentor_join_request_path(team_id: result.id) %>
-  </h1>
+<div class="team-result clearfix">
+  <div class="team-photo">
+    <%= image_tag result.team_photo_url(:thumb), width: 80, height: 80 %>
+  </div>
 
-  <p><%= result.description %></p>
+  <div>
+    <h2 class="team_name">
+      <%= link_to result.name, new_mentor_join_request_path(team_id: result.id) %>
+    </h2>
 
-  <p><%= result.creator_address_details %></p>
+    <p><%= result.description %></p>
+
+    <p><%= result.creator_address_details %></p>
+  </div>
 </div>

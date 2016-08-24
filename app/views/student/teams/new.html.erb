@@ -1,15 +1,7 @@
-<p><%= t("views.student.teams.new.intro") %></p>
-
 <div class="well clearfix">
   <h3><%= t("views.student.teams.new.title") %></h3>
 
-  <%= simple_form_for [:student, @team] do |f| %>
-    <%= f.input :name %>
-    <%= f.input :description %>
+  <p><%= t("views.student.teams.new.intro") %></p>
 
-    <%= f.button :submit, t("views.application.create", thing: t("models.team.class_name")) %>
-    <%= t("views.application.or") %>
-    <%= link_to t("controllers.teams.index.browse"),
-                new_student_team_search_path %>
-  <% end %>
+  <%= render 'teams/form', prefix: :student %>
 </div>

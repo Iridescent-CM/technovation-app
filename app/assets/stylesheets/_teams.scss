@@ -1,6 +1,10 @@
-.team {
+.team-result {
   @include span-columns(6);
   @include shift(3);
+
+  h2 {
+    margin: 0;
+  }
 }
 
 .pending-invites {
@@ -68,4 +72,10 @@
   .reject-invite {
     @invite omega;
   }
+}
+
+.team-photo {
+  float: left;
+  display: block;
+  margin: 0 1rem 1rem 0;
 }

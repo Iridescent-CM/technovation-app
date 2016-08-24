@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  mount_uploader :team_photo, TeamPhotoUploader
+
   scope :current, -> { joins(season_registrations: :season)
                        .where("seasons.year = ?", Season.current.year) }
 

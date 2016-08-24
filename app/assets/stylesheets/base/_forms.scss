@@ -27,6 +27,9 @@ textarea {
   font-family: $base-font-family;
   font-size: 1.5rem;
   font-weight: $light-font-weight;
+  &[type=file] {
+    font-size: 1em;
+  }
 }
 
 #{$all-text-inputs},

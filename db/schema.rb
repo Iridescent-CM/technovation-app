@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823201128) do
+ActiveRecord::Schema.define(version: 20160824150850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -305,6 +305,7 @@ ActiveRecord::Schema.define(version: 20160823201128) do
     t.integer  "division_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "team_photo"
   end
 
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
