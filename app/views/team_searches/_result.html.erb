@@ -5,10 +5,10 @@
 
   <div>
     <h2 class="team_name">
-      <%= link_to result.name, new_mentor_join_request_path(team_id: result.id) %>
+      <%= link_to result.name, [:new, account_type, :join_request, { team_id: result.id }] %>
     </h2>
 
-    <p><%= result.description %></p>
+    <p><%= truncate(result.description, length: 50) %></p>
 
     <p><%= result.creator_address_details %></p>
   </div>

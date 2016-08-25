@@ -2,5 +2,5 @@
 
 <hr />
 
-<%= render(partial: "student/team_searches/result", collection: @teams) or
+<%= render(partial: "team_searches/result", collection: @teams, locals: { account_type: :student }) or
       t("views.student.team_searches.new.no_results") %>
