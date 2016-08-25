@@ -9,9 +9,9 @@ en:
     approved:
       message: "Hey there, good news! Your Regional Ambassador account has been approved!"
       next_steps: "For now, there isn't anything for you to do. We are rolling out new RA features soon, and you will get an email when we have updates."
-      subject: "Your Technovation RA account has been approved!"
+      subject: "Regional Ambassador Approved Request Follow-up"
     declined:
-      subject: "Your Regional Ambassador application has been declined."
+      subject: "Regional Ambassador Request Follow-up"
 
   parent_mailer:
     consent_notice:
