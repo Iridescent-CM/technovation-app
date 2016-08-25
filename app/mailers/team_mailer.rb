@@ -31,7 +31,7 @@ class TeamMailer < ApplicationMailer
   end
 
   def join_request(recipient, join_request)
-    @requestor_name = join_request.requestor_full_name
+    @requestor_name = join_request.requestor_first_name
     @role_name = join_request.requestor_type_name
     @url = send("#{recipient.type_name}_team_url", join_request.joinable)
 

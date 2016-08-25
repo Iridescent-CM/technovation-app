@@ -9,7 +9,7 @@ class JoinRequest < ActiveRecord::Base
   belongs_to :joinable, polymorphic: true
 
   delegate :name, to: :joinable, prefix: true
-  delegate :full_name, :type_name, :email,
+  delegate :first_name, :type_name, :email,
     to: :requestor, prefix: true
 
   def approved!

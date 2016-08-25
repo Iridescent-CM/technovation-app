@@ -1,0 +1,8 @@
+<%= render 'accounts/public_show', title: t("views.mentor.mentors.show.title"), account: @mentor %>
+
+<h4><%= t("views.mentor.mentors.show.teams", name: @mentor.first_name) %></h4>
+
+<ul>
+  <%= render partial: 'mentor/mentors/team_preview',
+             collection: @mentor.teams.current %>
+</ul>

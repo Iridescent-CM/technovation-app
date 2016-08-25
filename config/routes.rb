@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :mentors, only: :show
+    resources :students, only: :show
 
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
@@ -31,6 +32,9 @@ Rails.application.routes.draw do
     resources :join_requests, except: :edit
     resources :team_member_invites, except: [:edit, :update, :destroy]
     resources :team_memberships, only: :destroy
+
+    resources :mentors, only: :show
+    resources :students, only: :show
 
     resource :dashboard, only: :show
 

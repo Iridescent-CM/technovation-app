@@ -29,7 +29,7 @@ class Mentor::JoinRequestsController < MentorController
     join_request.public_send("#{params.fetch(:status)}!")
 
     redirect_to :back, success: t("controllers.mentor.join_requests.update.success",
-                                  name: join_request.requestor_full_name,
+                                  name: join_request.requestor_first_name,
                                   status: params.fetch(:status))
   end
 end

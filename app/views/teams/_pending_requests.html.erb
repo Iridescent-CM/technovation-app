@@ -13,7 +13,10 @@
       <tbody>
         <% requests.each do |join_request| %>
           <tr>
-            <td><%= join_request.requestor_full_name %></td>
+            <td>
+              <%= link_to join_request.requestor_first_name,
+                          send("#{account_type}_#{join_request.requestor.type_name}_path", join_request.requestor) %>
+            </td>
 
             <td><%= join_request.requestor_type_name %></td>
 
@@ -24,7 +27,7 @@
                             data: {
                               method: :put,
                               confirm: t("views.application.confirm_#{action}",
-                                        name: join_request.requestor_full_name),
+                                        name: join_request.requestor_first_name),
                             } %><% if i == 0 %>&nbsp;|<% end %>
               <% end %>
             </td>

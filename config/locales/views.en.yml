@@ -84,6 +84,11 @@ en:
           already_joined: "You are on this team."
           already_requested: "You have requested to join this team"
 
+      mentors:
+        show:
+          teams: "%{name}'s teams:"
+          title: "Mentor details"
+
       teams:
         edit:
           title: "Edit your team"
@@ -111,7 +116,9 @@ en:
     mentors:
       show:
         already_invited: "You've invited %{name} to mentor your team"
+        already_requested: "%{name} has requested to mentor your team"
         invite_to_team: "Invite %{name} to mentor your team"
+        manage_team: "Manage your team's join requests"
 
     parental_consents:
       new:
