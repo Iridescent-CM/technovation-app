@@ -5,6 +5,6 @@
               data: { uploader: true },
               class: "transparent-accent-button" %>
 
-  <%= f.input :profile_image %>
+  <%= f.input :profile_image, input_html: { data: { fancy: true } } %>
   <%= f.button :submit, t("views.application.save") %>
 <% end %>

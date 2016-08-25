@@ -4,7 +4,7 @@
 
     parentCssSelector: 'form',
 
-    inputCssSelector: '.fancy-upload input[type="file"]',
+    inputCssSelector: 'input[type="file"][data-fancy=true]',
 
     init: function() {
       return $(document).on('click', this.buttonCssSelector, this.browseFiles.bind(this))
