@@ -20,18 +20,18 @@
                   } %>
   </div>
 
-  <div class="reject-invite">
-    <%= button_to t("controllers.team_member_invites.update.reject",
+  <div class="decline-invite">
+    <%= button_to t("controllers.team_member_invites.update.decline",
                     name: @invite.team_name),
                   url,
                   {
                     class: "secondary-button",
                     params: {
-                      "team_member_invite[status]" => :rejected,
+                      "team_member_invite[status]" => :declined,
                     },
                     method: :put,
                     data: {
-                      confirm: t("views.team_member_invites.form.confirm_reject"),
+                      confirm: t("views.team_member_invites.form.confirm_decline"),
                     },
                   } %>
   </div>

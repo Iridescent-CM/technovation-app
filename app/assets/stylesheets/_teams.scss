@@ -65,11 +65,11 @@
 .update-invite {
   @include clearfix;
 
-  .accept-invite, .reject-invite {
+  .accept-invite, .decline-invite {
     @include span-columns(6);
   }
 
-  .reject-invite {
+  .decline-invite {
     @invite omega;
   }
 }

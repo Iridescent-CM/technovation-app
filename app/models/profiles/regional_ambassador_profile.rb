@@ -3,7 +3,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   after_update :notify_ambassador, if: :just_approved?
 
-  enum status: %i{pending approved rejected}
+  enum status: %i{pending approved declined}
 
   validates :organization_company_name, :ambassador_since_year, :bio, presence: true
 

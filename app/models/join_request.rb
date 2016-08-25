@@ -2,7 +2,7 @@ class JoinRequest < ActiveRecord::Base
   after_create :notify_requested_joinable
   after_save :notify_requestor, on: :update
 
-  scope :pending, -> { where('accepted_at IS NULL and rejected_at IS NULL') }
+  scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
   scope :from_students, -> { where(requestor_id: StudentAccount.pluck(:id)) }
 
   belongs_to :requestor, polymorphic: true
@@ -22,23 +22,23 @@ class JoinRequest < ActiveRecord::Base
     !!accepted_at
   end
 
-  def rejected!
-    update_attributes(rejected_at: Time.current)
+  def declined!
+    update_attributes(declined_at: Time.current)
   end
 
-  def rejected?
-    !!rejected_at
+  def declined?
+    !!declined_at
   end
 
   def pending?
-    not approved? and not rejected?
+    not approved? and not declined?
   end
 
   def status
     if approved?
       "Accepted"
-    elsif rejected?
-      "Rejected"
+    elsif declined?
+      "Declined"
     else
       "Pending review"
     end
@@ -52,7 +52,7 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def notify_requestor
-    if accepted_at_changed? or rejected_at_changed?
+    if accepted_at_changed? or declined_at_changed?
       TeamMailer.public_send("#{requestor_type_name}_join_request_#{status.underscore}", self).deliver_later
     end
   end

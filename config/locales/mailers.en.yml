@@ -35,13 +35,13 @@ en:
     mentor_join_request_status:
       accepted_intro: "Good news! %{name} accepted your request to be a mentor!"
       accepted_subject: "Your request to mentor %{name} was accepted!"
-      rejected_intro: "%{name} has rejected your request to be a mentor."
-      rejected_subject: "Your request to mentor %{name} was rejected"
+      declined_intro: "%{name} has declined your request to be a mentor."
+      declined_subject: "Your request to mentor %{name} was declined"
       team_link: "You can see your new team here:"
 
     student_join_request_status:
       accepted_intro: "Good news! %{name} accepted your request to be a member!"
       accepted_subject: "Your request to join %{name} was accepted!"
-      rejected_intro: "%{name} has rejected your request to be a member."
-      rejected_subject: "Your request to join %{name} was rejected"
+      declined_intro: "%{name} has declined your request to be a member."
+      declined_subject: "Your request to join %{name} was declined"
       team_link: "You can see your new team here:"

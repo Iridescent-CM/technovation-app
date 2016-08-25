@@ -30,7 +30,7 @@ en:
         show:
           approved_message: "Welcome! Your account has been reviewed by our staff and approved. Stay tuned, new RA features will be announced soon."
           pending_message: "Thank you for registering as a Regional Ambassador. Technovation staff will review your account shortly to ensure that your information is correct. Once you are confirmed, you will have access to student data in your region."
-          rejected_message: "Thank you for expressing interest in becoming a Regional Ambassador. Unfortunately, your request has been declined at this time."
+          declined_message: "Thank you for expressing interest in becoming a Regional Ambassador. Unfortunately, your request has been declined at this time."
 
     student:
       dashboards:

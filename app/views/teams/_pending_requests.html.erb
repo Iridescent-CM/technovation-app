@@ -18,7 +18,7 @@
             <td><%= join_request.requestor_type_name %></td>
 
             <td>
-              <% %i{approved rejected}.each.with_index do |action, i| %>
+              <% %i{approved declined}.each.with_index do |action, i| %>
                 <%= link_to t("views.application.#{action}"),
                             [account_type, join_request, status: action],
                             data: {

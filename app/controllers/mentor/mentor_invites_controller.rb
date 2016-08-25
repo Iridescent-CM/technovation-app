@@ -8,7 +8,7 @@ module Mentor
       invite = MentorInvite.find_by(invite_token: params.fetch(:id))
 
       if invite_params[:status] == "accepted" and not invite.invitee.can_join_a_team?
-        reject_invitation(invite)
+        decline_invitation(invite)
       elsif invite.update_attributes(invite_params)
         redirect_based_on_status(invite)
       else
@@ -17,8 +17,8 @@ module Mentor
     end
 
     private
-    def reject_invitation(invite)
-      invite.rejected!
+    def decline_invitation(invite)
+      invite.declined!
       redirect_to mentor_dashboard_path, alert: t("controllers.team_member_invites.update.already_on_team")
     end
 

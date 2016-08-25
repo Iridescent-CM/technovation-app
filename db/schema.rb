@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824191911) do
+ActiveRecord::Schema.define(version: 20160825124657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 20160824191911) do
     t.integer  "joinable_id",    null: false
     t.string   "joinable_type",  null: false
     t.datetime "accepted_at"
-    t.datetime "rejected_at"
+    t.datetime "declined_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
   add_index "join_requests", ["accepted_at"], name: "index_join_requests_on_accepted_at", using: :btree
+  add_index "join_requests", ["declined_at"], name: "index_join_requests_on_declined_at", using: :btree
   add_index "join_requests", ["joinable_type", "joinable_id"], name: "index_join_requests_on_joinable_type_and_joinable_id", using: :btree
-  add_index "join_requests", ["rejected_at"], name: "index_join_requests_on_rejected_at", using: :btree
   add_index "join_requests", ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id", using: :btree
 
   create_table "judge_profiles", force: :cascade do |t|

@@ -24,14 +24,14 @@ RSpec.describe Student::TeamsController do
       expect(flash[:alert]).to eq("You cannot create a new team if you are already on a team")
     end
 
-    it "rejects any pending invites" do
+    it "declines any pending invites" do
       student = FactoryGirl.create(:student)
       invite = FactoryGirl.create(:team_member_invite, invitee_email: student.email)
 
       sign_in(student)
       post :create, team: { name: "Girl Power", description: "We are a great team" }
 
-      expect(invite.reload).to be_rejected
+      expect(invite.reload).to be_declined
     end
 
     it "deletes any pending join requests" do

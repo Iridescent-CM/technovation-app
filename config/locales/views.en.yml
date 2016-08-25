@@ -22,7 +22,7 @@ en:
       cancel: 'cancel'
       complete_your_profile: "Follow these steps to complete your profile"
       confirm_approved: "Are you sure you want to approve %{name}?"
-      confirm_rejected: "Are you sure you want to reject %{name}?"
+      confirm_declined: "Are you sure you want to decline %{name}?"
       create: "Create %{thing}"
       danger_zone: "Danger Zone"
       edit: "Edit"
@@ -31,7 +31,7 @@ en:
       invite: "Send invite"
       no: "No"
       or: "or"
-      rejected: "reject"
+      declined: "decline"
       review: "review"
       review_now: "Review now"
       save: "Save"
@@ -278,10 +278,10 @@ en:
     team_member_invites:
       form:
         confirm_accept: "You are about to accept the invitation."
-        confirm_reject: "You are about to reject the invitation."
+        confirm_decline: "You are about to decline the invitation."
         invite_by_email: "Invite more students by email"
       show:
         accepted: "You have previously accepted this invite."
         greeting: "You've been invited to join %{name}!"
-        message: "You can accept this invite and join the team, or reject it and be on your way."
-        rejected: "You previously rejected this invite. If you accepted an invite from another team, then this one was automatically rejected."
+        message: "You can accept this invite and join the team, or decline it and be on your way."
+        declined: "You previously declined this invite. If you accepted an invite from another team, then this one was automatically declined."

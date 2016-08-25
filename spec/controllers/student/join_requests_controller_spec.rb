@@ -53,21 +53,21 @@ RSpec.describe Student::JoinRequestsController do
       end
     end
 
-    context "rejecting the request" do
+    context "declining the request" do
       before do
-        put :update, id: join_request.id, status: :rejected
+        put :update, id: join_request.id, status: :declined
       end
 
       it "does not add the mentor to the team" do
         expect(mentor.teams).not_to include(team)
       end
 
-      it "emails the mentor rejection email" do
-        expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request rejection email was sent"
+      it "emails the mentor declined email" do
+        expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request decline email was sent"
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
-        expect(mail.subject).to eq("Your request to mentor #{team.name} was rejected")
-        expect(mail.body.parts.last.to_s).to include("#{team.name} has rejected your request to be a mentor.")
+        expect(mail.subject).to eq("Your request to mentor #{team.name} was declined")
+        expect(mail.body.parts.last.to_s).to include("#{team.name} has declined your request to be a mentor.")
       end
     end
   end

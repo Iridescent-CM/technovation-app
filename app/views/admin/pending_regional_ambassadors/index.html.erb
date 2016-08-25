@@ -22,12 +22,12 @@
                                                                method: :put,
                                                                confirm: "You are approving #{ambassador.full_name}",
                                                              } %>&nbsp;|
-          <%= link_to "reject",
+          <%= link_to "decline",
                       admin_pending_regional_ambassador_path(ambassador,
-                                                             status: :rejected),
+                                                             status: :declined),
                                                              data: {
                                                                method: :put,
-                                                               confirm: "You are rejecting #{ambassador.full_name}",
+                                                               confirm: "You are declining #{ambassador.full_name}",
                                                              } %>
         </td>
       </tr>

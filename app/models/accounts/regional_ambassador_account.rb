@@ -3,7 +3,7 @@ class RegionalAmbassadorAccount < Account
 
   scope :pending, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:pending]) }
   scope :approved, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:approved]) }
-  scope :rejected, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:rejected]) }
+  scope :declined, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:declined]) }
 
   has_one :regional_ambassador_profile, foreign_key: :account_id
   accepts_nested_attributes_for :regional_ambassador_profile
@@ -11,7 +11,7 @@ class RegionalAmbassadorAccount < Account
 
   delegate :status,
            :approved!,
-           :rejected!,
+           :declined!,
            :organization_company_name,
            :job_title,
            :ambassador_since_year,

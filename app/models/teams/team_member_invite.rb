@@ -1,5 +1,5 @@
 class TeamMemberInvite < ActiveRecord::Base
-  enum status: %i{pending accepted rejected}
+  enum status: %i{pending accepted declined}
 
   scope :for_students, -> { where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount") }
 
@@ -48,7 +48,7 @@ class TeamMemberInvite < ActiveRecord::Base
     team.add_student(invitee)
     pending = self.class.where(invitee_email: invitee_email,
                                status: self.class.statuses[:pending])
-    pending.each(&:rejected!)
+    pending.each(&:declined!)
   end
 
   def self.match_registrant(account)

@@ -42,18 +42,18 @@ RSpec.feature "Students request to join a team" do
       expect(mail.body.parts.last.to_s).to include("href=\"#{student_team_url(team)}\"")
     end
 
-    scenario "student rejects the request" do
+    scenario "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_in(team.students.sample)
       click_link "My team"
-      click_link "reject"
+      click_link "decline"
 
-      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request rejection email was sent"
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request decline email was sent"
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
-      expect(mail.subject).to eq("Your request to join #{team.name} was rejected")
-      expect(mail.body.parts.last.to_s).to include("#{team.name} has rejected your request to be a member.")
+      expect(mail.subject).to eq("Your request to join #{team.name} was declined")
+      expect(mail.body.parts.last.to_s).to include("#{team.name} has declined your request to be a member.")
     end
   end
 end

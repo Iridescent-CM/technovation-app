@@ -31,7 +31,7 @@ RSpec.describe TeamMemberInvitesController do
 
       expect(response).to redirect_to student_dashboard_path
       expect(flash[:alert]).to eq("You are already on a team, so you cannot accept that invite.")
-      expect(invite.reload).to be_rejected
+      expect(invite.reload).to be_declined
     end
   end
 end

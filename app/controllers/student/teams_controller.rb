@@ -7,7 +7,7 @@ module Student
       if: -> { current_student.is_on_team? }
 
     after_action -> {
-      current_student.team_member_invites.pending.each(&:rejected!)
+      current_student.team_member_invites.pending.each(&:declined!)
       current_student.join_requests.pending.each(&:destroy)
     }, only: :create
 

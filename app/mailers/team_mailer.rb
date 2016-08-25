@@ -44,16 +44,16 @@ class TeamMailer < ApplicationMailer
     join_request_status(:accepted, :mentor, join_request)
   end
 
-  def mentor_join_request_rejected(join_request)
-    join_request_status(:rejected, :mentor, join_request)
+  def mentor_join_request_declined(join_request)
+    join_request_status(:declined, :mentor, join_request)
   end
 
   def student_join_request_accepted(join_request)
     join_request_status(:accepted, :student, join_request)
   end
 
-  def student_join_request_rejected(join_request)
-    join_request_status(:rejected, :student, join_request)
+  def student_join_request_declined(join_request)
+    join_request_status(:declined, :student, join_request)
   end
 
   private
