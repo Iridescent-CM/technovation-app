@@ -1,7 +1,7 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
   include Authenticatable
 
-  after_update :notify_ambassador, if: :just_approved?
+  after_update :notify_ambassador, if: :status_changed?
 
   enum status: %i{pending approved declined}
 
@@ -12,11 +12,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   private
-  def just_approved?
-    status_changed? and approved?
-  end
-
   def notify_ambassador
-    AmbassadorMailer.approved(account).deliver_later
+    AmbassadorMailer.public_send(status, account).deliver_later
   end
 end

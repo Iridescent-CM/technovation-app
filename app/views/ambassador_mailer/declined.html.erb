@@ -1,0 +1,7 @@
+<p>Dear <%= @first_name %>,</p>
+
+<p><%= t("views.regional_ambassador.dashboards.show.#{@status}_message") %></p>
+
+<%= render "regional_ambassador/dashboards/#{@status}_next_steps" %>
+
+<p>Best,<br />The Technovation Team</p>
