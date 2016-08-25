@@ -115,7 +115,7 @@ en:
 
     mentors:
       show:
-        already_invited: "You've invited %{name} to mentor your team"
+        already_invited: "Your team has invited %{name} to mentor your team"
         already_requested: "%{name} has requested to mentor your team"
         invite_to_team: "Invite %{name} to mentor your team"
         manage_team: "Manage your team's join requests"
