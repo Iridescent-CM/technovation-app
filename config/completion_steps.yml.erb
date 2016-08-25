@@ -44,11 +44,8 @@ mentor:
 
   build_profile:
     prerequisites: "background_check, consent_waiver"
-    complete_condition: "profile_complete?"
+    complete_condition: "bio_complete?"
     links:
-      photo:
-        complete_condition: "profile_image?"
-        url: "mentor_account_path"
       bio:
         complete_condition: "bio_complete?"
         url: false

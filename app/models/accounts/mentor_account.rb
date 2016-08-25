@@ -62,10 +62,6 @@ class MentorAccount < Account
     teams.include? team
   end
 
-  def profile_complete?
-    profile_image? and bio_complete?
-  end
-
   def bio_complete?
     not bio.blank?
   end
