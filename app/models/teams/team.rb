@@ -15,8 +15,8 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :students, through: :memberships, source: :member, source_type: "StudentAccount"
-  has_many :mentors, through: :memberships, source: :member, source_type: "MentorAccount"
+  has_many :students, -> { order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
+  has_many :mentors, -> { order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
 
   has_many :submissions, dependent: :destroy
 
