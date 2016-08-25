@@ -51,6 +51,14 @@ class TeamMemberInvite < ActiveRecord::Base
     pending.each(&:declined!)
   end
 
+  def can_be_accepted?
+    invitee.can_join_a_team?
+  end
+
+  def cannot_be_accepted?
+    not can_be_accepted?
+  end
+
   def self.match_registrant(account)
     where(invitee_email: account.email).each do |invite|
       invite.update_attributes(invitee_id: account.id,

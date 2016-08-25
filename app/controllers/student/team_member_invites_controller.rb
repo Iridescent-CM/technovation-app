@@ -5,7 +5,7 @@ module Student
     def update
       invite = current_student.team_member_invites.pending.find_by(invite_token: params.fetch(:id))
 
-      if invite_params[:status] == "accepted" and not invite.invitee.can_join_a_team?
+      if invite_params[:status] == "accepted" and invite.cannot_be_accepted?
         decline_invitation(invite)
       elsif invite.update_attributes(invite_params)
         redirect_based_on_status(invite)
@@ -33,9 +33,7 @@ module Student
     end
 
     def invite_params
-      params.require(:team_member_invite).permit(:status).tap do |p|
-        p[:invitee_id] == FindAccount.(cookies.fetch(:auth_token) { "" })
-      end
+      params.require(:team_member_invite).permit(:status)
     end
 
     def account_type
