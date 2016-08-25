@@ -17,7 +17,7 @@ RSpec.feature "Mentors find a team" do
     mentored_team = FactoryGirl.create(:team, :with_mentor, creator_in: "Chicago, IL, US")
     faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA, US")
 
-    click_link "browse available teams"
+    click_link "Browse available teams"
 
     expect(page).to have_css(".team_name", text: available_team.name)
     expect(page).not_to have_css(".team_name", text: mentored_team.name)
@@ -25,7 +25,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    click_link "browse available teams"
+    click_link "Browse available teams"
     click_link available_team.name
     click_button "Request to be a mentor for #{available_team.name}"
 
@@ -35,8 +35,8 @@ RSpec.feature "Mentors find a team" do
     expect(page).to have_content("Pending review")
   end
 
-  scenario "browse requests" do
-    click_link "browse available teams"
+  scenario "Browse requests" do
+    click_link "Browse available teams"
     click_link available_team.name
     click_button "Request to be a mentor for #{available_team.name}"
 

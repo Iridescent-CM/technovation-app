@@ -42,6 +42,8 @@ en:
       teams:
         create:
           success: "Your team has been created! Lookin' good!"
+        new:
+          link: "Create a new team"
         update:
           success: "Your team has been updated!"
       team_memberships:
@@ -53,7 +55,7 @@ en:
           success: "Your team invite was sent!"
       team_searches:
         new:
-          link: "browse available teams"
+          link: "Browse available teams"
 
     parental_consents:
       create:
