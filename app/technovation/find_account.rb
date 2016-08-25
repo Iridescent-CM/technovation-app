@@ -6,7 +6,7 @@ module FindAccount
   def self.authenticate(profile, cookies, callbacks = {})
     if current(profile, cookies).authenticated?
       true
-    elsif account = call(cookies.fetch(:auth_token) { "" })
+    elsif account = call(cookies.fetch(:auth_token) { "" }).authenticated?
       callbacks.fetch(:unauthorized) { ->(*) { } }.call(account.type_name)
     else
       callbacks.fetch(:unauthenticated) { -> { } }.call
