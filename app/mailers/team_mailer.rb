@@ -3,7 +3,7 @@ class TeamMailer < ApplicationMailer
     @greeting = I18n.translate("team_mailer.invite_member.greeting.student", team_name: invite.team_name)
 
     if invite.invitee && CompletionSteps.new(invite.invitee).unlocked?(new_student_team_search_url)
-      @url = team_member_invite_url(invite)
+      @url = student_team_member_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
     elsif invite.invitee
       @url = student_dashboard_url

@@ -13,6 +13,8 @@
   <% elsif @mentor.requested_to_join?(current_student.team) %>
     <p><%= t("views.mentors.show.already_requested", name: @mentor.first_name) %></p>
     <%= link_to t("views.mentors.show.manage_team"), student_team_path(current_student.team, anchor: 'manage') %>
+  <% elsif @mentor.is_on?(current_student.team) %>
+    <%= t("views.mentors.show.already_on_team", name: @mentor.first_name) %>
   <% else %>
     <%= form_for [:student, @mentor_invite] do |f| %>
       <%= f.hidden_field :invitee_email, value: @mentor.email %>

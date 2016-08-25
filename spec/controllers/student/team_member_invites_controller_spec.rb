@@ -45,4 +45,34 @@ RSpec.describe Student::TeamMemberInvitesController do
       expect(invite.invitee).to eq(existing)
     end
   end
+
+  describe "PUT #update" do
+    let(:student) { FactoryGirl.create(:student) }
+    let!(:invite) { FactoryGirl.create(:team_member_invite, invitee: student) }
+
+    before do
+      sign_in(student)
+    end
+
+    it "accepts the team member invite" do
+      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+      expect(invite.reload).to be_accepted
+    end
+
+    it "redirects to the student team page" do
+      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+      expect(response).to redirect_to student_team_path(invite.team)
+    end
+
+    it "shows a friendly message if they are already on a team and try to accept" do
+      team = FactoryGirl.create(:team)
+      team.add_student(student)
+
+      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+
+      expect(response).to redirect_to student_dashboard_path
+      expect(flash[:alert]).to eq("You are already on a team, so you cannot accept that invite.")
+      expect(invite.reload).to be_declined
+    end
+  end
 end

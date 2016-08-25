@@ -4,14 +4,15 @@ Rails.application.routes.draw do
     post :accounts, to: "signups#create"
 
     resource :dashboard, only: :show
-
-    resources :mentors, only: :show
-    resources :students, only: :show
+    resource :account, only: [:show, :edit, :update]
 
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
 
-    resources :team_member_invites, except: [:edit, :update, :destroy]
+    resources :mentors, only: :show
+    resources :students, only: :show
+
+    resources :team_member_invites, only: [:show, :update, :new, :create]
     resources :mentor_invites, only: [:create]
     resources :join_requests, only: [:new, :create, :update]
 
@@ -19,28 +20,25 @@ Rails.application.routes.draw do
     resources :mentor_searches, except: [:index, :destroy]
 
     resource :parental_consent_notice, only: :create
-
-    resource :account, only: [:show, :edit, :update]
   end
 
   namespace :mentor do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"
 
-    resources :teams, except: :destroy
+    resource :dashboard, only: :show
+    resource :account, only: [:show, :edit, :update]
+
     resources :team_searches, except: [:index, :destroy]
-    resources :join_requests, except: :edit
-    resources :team_member_invites, except: [:edit, :update, :destroy]
+    resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
+
+    resources :team_member_invites, only: [:new, :create]
+    resources :join_requests, except: :edit
+    resources :mentor_invites, only: [:show, :update]
 
     resources :mentors, only: :show
     resources :students, only: :show
-
-    resource :dashboard, only: :show
-
-    resources :mentor_invites, only: [:show, :update]
-
-    resource :account, only: [:show, :edit, :update]
   end
 
   namespace :regional_ambassador do
@@ -81,7 +79,6 @@ Rails.application.routes.draw do
   resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
-  resources :team_member_invites, only: [:show, :update]
 
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin

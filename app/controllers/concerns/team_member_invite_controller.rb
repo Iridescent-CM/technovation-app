@@ -6,7 +6,7 @@ module TeamMemberInviteController
   end
 
   def show
-    @invite = TeamMemberInvite.find_by(invite_token: params.fetch(:id))
+    @invite = current_account.team_member_invites.find_by(invite_token: params.fetch(:id))
   end
 
   def create

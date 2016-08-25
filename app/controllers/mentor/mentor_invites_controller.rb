@@ -1,11 +1,11 @@
 module Mentor
-  class MentorInvitesController < ApplicationController
+  class MentorInvitesController < MentorController
     def show
-      @invite = MentorInvite.find_by(invite_token: params.fetch(:id))
+      @invite = current_mentor.mentor_invites.find_by(invite_token: params.fetch(:id))
     end
 
     def update
-      invite = MentorInvite.find_by(invite_token: params.fetch(:id))
+      invite = current_mentor.mentor_invites.pending.find_by(invite_token: params.fetch(:id))
 
       if invite_params[:status] == "accepted" and not invite.invitee.can_join_a_team?
         decline_invitation(invite)
