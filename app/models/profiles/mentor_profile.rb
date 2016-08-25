@@ -7,8 +7,8 @@ class MentorProfile < ActiveRecord::Base
   has_many :expertises, through: :mentor_profile_expertises
 
   after_validation -> { self.searchable = can_enable_searchable? },
-    if: :background_check_completed_at_changed?,
-    on: :update
+    on: :update,
+    if: :background_check_completed_at_changed?
 
   validates :school_company_name, :job_title, presence: true
 

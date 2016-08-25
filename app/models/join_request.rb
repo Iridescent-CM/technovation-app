@@ -1,6 +1,6 @@
 class JoinRequest < ActiveRecord::Base
   after_create :notify_requested_joinable
-  after_save :notify_requestor, on: :update
+  after_update :notify_requestor
 
   scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
   scope :from_students, -> { where(requestor_id: StudentAccount.pluck(:id)) }

@@ -3,9 +3,7 @@ class StudentProfile < ActiveRecord::Base
 
   belongs_to :student_account, foreign_key: :account_id
 
-  after_validation :resend_parental_consent,
-                   :void_parental_consent,
-    on: :update,
+  after_update :reset_parental_consent,
     if: :parent_guardian_email_changed?
 
   validates :parent_guardian_email,
@@ -16,12 +14,9 @@ class StudentProfile < ActiveRecord::Base
   validates :parent_guardian_email, email: true
 
   private
-  def resend_parental_consent
+  def reset_parental_consent
+    student_account.void_parental_consent!
     ParentMailer.consent_notice(parent_guardian_email,
                                 student_account.consent_token).deliver_later
-  end
-
-  def void_parental_consent
-    student_account.void_parental_consent!
   end
 end
