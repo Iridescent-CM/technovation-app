@@ -30,6 +30,7 @@ RSpec.feature "Students request to join a team" do
     scenario "student accepts the request" do
       ActionMailer::Base.deliveries.clear
 
+      sign_out
       sign_in(team.students.sample)
       click_link "My team"
       click_link "approve"
@@ -45,6 +46,7 @@ RSpec.feature "Students request to join a team" do
     scenario "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
+      sign_out
       sign_in(team.students.sample)
       click_link "My team"
       click_link "decline"

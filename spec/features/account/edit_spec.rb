@@ -52,6 +52,7 @@ RSpec.feature "Edit account spec" do
   end
 
   scenario "edit bio" do
+    sign_out
     account = FactoryGirl.create(%i{mentor regional_ambassador}.sample)
 
     sign_in(account)

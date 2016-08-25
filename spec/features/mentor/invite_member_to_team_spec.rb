@@ -39,6 +39,7 @@ RSpec.feature "Invite a member to a team" do
   end
 
   scenario "student accepts invite" do
+    sign_out
     sign_in(invite.invitee)
     click_link "review"
     click_button "Accept invitation to #{mentor.team_names.first}"

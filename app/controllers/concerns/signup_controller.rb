@@ -1,4 +1,10 @@
 module SignupController
+  extend ActiveSupport::Concern
+
+  included do
+    before_action :require_unauthenticated
+  end
+
   def new
     instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
   end

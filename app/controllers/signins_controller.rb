@@ -1,4 +1,6 @@
 class SigninsController < ApplicationController
+  before_action :require_unauthenticated, except: :destroy
+
   def new
     @signin = Account.new
   end
