@@ -74,7 +74,7 @@ en:
     password_resets:
       create:
         failure: "Sorry, but we couldn't find an account with that email address."
-        success: "We sent password reset instructions to your email"
+        success: "We sent password reset instructions to your email."
       new:
         link: "I forgot my password"
 
