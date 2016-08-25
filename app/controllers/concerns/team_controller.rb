@@ -42,7 +42,7 @@ module TeamController
 
   private
   def team_params
-    params.require(:team).permit(:name, :description, :team_photo).tap do |tapped|
+    params.require(:team).permit(:name, :description, :team_photo, :team_photo_cache).tap do |tapped|
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_account)
         tapped["#{account_type}_ids"] = current_account.id

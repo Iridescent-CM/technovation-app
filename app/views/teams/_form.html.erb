@@ -8,6 +8,7 @@
       <%= f.input :name %>
       <%= f.input :description %>
       <%= f.input :team_photo %>
+      <%= f.input :team_photo_cache, as: :hidden %>
 
       <% action = f.object.persisted? ? :save : :create %>
       <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")) %>
