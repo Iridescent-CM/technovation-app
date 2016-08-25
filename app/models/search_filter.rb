@@ -19,6 +19,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:has_mentor) { :any }
   end
 
+  def page
+    filter_options.fetch(:page) { 1 }
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"
