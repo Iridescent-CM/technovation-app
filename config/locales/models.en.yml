@@ -23,10 +23,10 @@ en:
       status: "Status"
 
     mentor:
-      expertise_names: "Expertises"
+      expertise_names: "Expertise"
 
     mentor_profile:
-      expertise_names: "Expertise names"
+      expertise_names: "Expertise"
       job_title: "Job title"
       school_company_name: "School or company name"
 
