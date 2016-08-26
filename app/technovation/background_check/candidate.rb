@@ -12,9 +12,10 @@ module BackgroundCheck
     end
 
     def submit
-      self.class.api_class.request(:post,
-                                   self.class.request_path,
-                                   candidate.attributes)
+      response = self.class.api_class.request(:post,
+                                              self.class.request_path,
+                                              candidate.attributes)
+      @id = response.fetch(:id)
     end
 
     private

@@ -1,10 +1,11 @@
 require "spec_helper"
 require "./config/initializers/checkr"
 require "./app/technovation/background_check/candidate"
+require "./app/technovation/background_check/report"
 
-RSpec.describe BackgroundCheck::Candidate, :vcr do
-  it "sets the request_path to /v1/candidates" do
-    expect(BackgroundCheck::Candidate.request_path).to eq("/v1/candidates")
+RSpec.describe BackgroundCheck::Report, :vcr do
+  it "sets the request_path to /v1/reports" do
+    expect(BackgroundCheck::Report.request_path).to eq("/v1/reports")
   end
 
   it "submits a valid candidate" do
@@ -23,6 +24,10 @@ RSpec.describe BackgroundCheck::Candidate, :vcr do
 
     candidate.submit
 
-    expect(candidate.id).not_to be_nil
+    report = BackgroundCheck::Report.new(candidate)
+
+    report.submit
+
+    expect(report.id).not_to be_nil
   end
 end
