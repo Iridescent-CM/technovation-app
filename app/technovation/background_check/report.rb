@@ -1,5 +1,9 @@
+require "./app/technovation/background_check"
+
 module BackgroundCheck
   class Report
+    extend BackgroundCheck
+
     attr_accessor :id, :object, :uri, :status, :created_at, :completed_at,
       :upgraded_at, :turnaround_time, :package, :tags, :candidate_id, :ssn_trace_id,
       :sex_offender_search_id, :national_criminal_search_id, :federal_criminal_search_id,
@@ -8,19 +12,19 @@ module BackgroundCheck
       :personal_reference_verification_ids, :professional_reference_verification_ids,
       :terrorist_watchlist_search_id
 
-    def self.request_path
-      "/#{api_version}/reports"
+    def initialize(attributes = {})
+      attributes.each do |key, value|
+        send("#{key}=", value)
+      end
+    end
+
+    def self.resource_name
+      "reports"
     end
 
     def self.retrieve(id)
       resp = api_class.request(:get, "#{request_path}/#{id}")
       new(resp)
-    end
-
-    def initialize(attributes = {})
-      attributes.each do |key, value|
-        send("#{key}=", value)
-      end
     end
 
     def submit
@@ -29,15 +33,6 @@ module BackgroundCheck
                                           { package: "tasker_standard",
                                             candidate_id: candidate_id })
       @id = resp.fetch(:id)
-    end
-
-    private
-    def self.api_version
-      "v1"
-    end
-
-    def self.api_class
-      Checkr
     end
   end
 end
