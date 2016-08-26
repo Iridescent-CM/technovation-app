@@ -1,5 +1,14 @@
 <h2><%= t("views.background_checks.new.title") %></h2>
 
+<p>
+  <strong>We do NOT store any sensitive information.</strong><br />
+  This form is submitted securely to our screening service
+  <%= link_to "Checkr",
+              "https://checkr.com/product/screenings/",
+              rel: "noopener noreferrer",
+              target: "_bank" %>.
+</p>
+
 <%= simple_form_for @candidate, url: url do |f| %>
   <%= render 'errors', record: @candidate %>
 
@@ -14,8 +23,7 @@
 
   <%= f.input :date_of_birth, placeholder: "YYYY-MM-DD" %>
 
-  <%= f.input :ssn, placeholder: '999-99-9999',
-                    hint: "We do NOT store this. It is sent securely to our screening service #{link_to("Checkr", "https://checkr.com/product/screenings/", rel: "noopener noreferrer", target: "_bank")}.".html_safe %>
+  <%= f.input :ssn, placeholder: '999-99-9999' %>
 
   <%= f.input :driver_license_number %>
   <%= f.input :driver_license_state, placeholder: "XX" %>

@@ -1,1 +1,16 @@
-<p>Your background check is <span class="bg_check_status <%= @report.status %>"><%= @report.status %></span>.</p>
+<p>Your background check status is: <span class="bg_check_status <%= @report.status %>"><%= @report.status %></span>.</p>
+
+<hr />
+
+<p>Possible status values:</p>
+
+<dl>
+  <dt>Pending</dt>
+  <dd>Your report hasn't completed yet. Refresh this page later to check again.</dd>
+
+  <dt>Consider</dt>
+  <dd>Your background check has issues. Technovation staff will look into your report, and may be in contact with you to clear things up.</dd>
+
+  <dt>Clear</dt>
+  <dd>Your background check has cleared, and you will gain further access to the site.</dd>
+</dl>
