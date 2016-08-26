@@ -22,6 +22,31 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
+    Geocoder.configure(lookup: :test)
+
+    Geocoder::Lookup::Test.add_stub(
+      "Los Angeles, CA, United States", [{
+        'latitude'     => 34.052363,
+        'longitude'    => -118.256551,
+        'address'      => 'Los Angeles, CA, USA',
+        'state'        => 'California',
+        'state_code'   => 'CA',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "Chicago, IL, United States", [{
+        'latitude'     => 41.50196838,
+        'longitude'    => -87.64051818,
+        'address'      => 'Chicago, IL, USA',
+        'state'        => 'Chicago',
+        'state_code'   => 'IL',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
   end
 
   config.before(:each) do
