@@ -11,16 +11,6 @@
                  token: current_ambassador.consent_token
                ),
              },
-             background_check: {
-               mark_complete: regional_ambassador_account_path(
-                 regional_ambassador_account: {
-                   regional_ambassador_profile_attributes: {
-                     id: current_ambassador.regional_ambassador_profile_id,
-                     background_check_completed_at: Time.current,
-                   },
-                 },
-               ),
-             },
              build_profile: {
                bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
              },

@@ -11,3 +11,18 @@ body, html {
 .clearfix {
   @include clearfix;
 }
+
+.bg_check_status {
+  font-weight: bold;
+
+  &.clear {
+    color: $shamrock;
+  }
+
+  &.pending {
+  }
+
+  &.consider {
+    color: $mulberry;
+  }
+}

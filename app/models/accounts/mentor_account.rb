@@ -25,6 +25,9 @@ class MentorAccount < Account
            :background_check_complete?,
            :bio,
            :enable_searchability,
+           :background_check_candidate_id,
+           :background_check_report_id,
+           :complete_background_check!,
     to: :mentor_profile,
     prefix: false
 

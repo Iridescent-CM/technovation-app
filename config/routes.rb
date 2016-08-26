@@ -39,6 +39,8 @@ Rails.application.routes.draw do
 
     resources :mentors, only: :show
     resources :students, only: :show
+
+    resources :background_checks, only: [:new, :create, :show]
   end
 
   namespace :regional_ambassador do
@@ -47,6 +49,8 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :account, only: [:show, :edit, :update]
+
+    resources :background_checks, only: [:new, :create, :show]
   end
 
   namespace :judge do

@@ -35,12 +35,8 @@ mentor:
   background_check:
     complete_condition: "background_check_complete?"
     links:
-      mark_complete:
-        link_options:
-          postfix: true
-        tag_options:
-          data:
-            method: "put"
+      fill_bg_check_form:
+        url: "new_mentor_background_check_path"
 
   build_profile:
     prerequisites: "background_check, consent_waiver"
@@ -69,12 +65,8 @@ regional_ambassador:
   background_check:
     complete_condition: "background_check_complete?"
     links:
-      mark_complete:
-        link_options:
-          postfix: true
-        tag_options:
-          data:
-            method: "put"
+      fill_bg_check_form:
+        url: "new_regional_ambassador_background_check_path"
 
   build_profile:
     prerequisites: "background_check, consent_waiver"

@@ -6,7 +6,7 @@ module BackgroundCheck
 
     attr_reader :id, :candidate
 
-    def initialize(attributes)
+    def initialize(attributes = {})
       candidate_attributes = default_attributes.merge(attributes)
       @candidate = self.class.candidate_class.new(candidate_attributes)
     end
@@ -20,12 +20,13 @@ module BackgroundCheck
                                           self.class.request_path,
                                           candidate.attributes)
       @id = resp.fetch(:id)
+      resp
     end
 
     private
     def default_attributes
       {
-        no_middle_name: false,
+        no_middle_name: true,
         copy_requested: false,
       }
     end

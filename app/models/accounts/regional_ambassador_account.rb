@@ -17,6 +17,9 @@ class RegionalAmbassadorAccount < Account
            :ambassador_since_year,
            :background_check_complete?,
            :bio,
+           :background_check_candidate_id,
+           :background_check_report_id,
+           :complete_background_check!,
     to: :regional_ambassador_profile,
     prefix: false
 

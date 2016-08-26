@@ -7,16 +7,6 @@
                  token: current_mentor.consent_token
                ),
              },
-             background_check: {
-               mark_complete: mentor_account_path(
-                 mentor_account: {
-                   mentor_profile_attributes: {
-                     id: current_mentor.mentor_profile_id,
-                     background_check_completed_at: Time.current,
-                   },
-                 },
-               ),
-             },
              build_profile: {
                bio: edit_mentor_account_path(anchor: 'account-profile-details')
              },

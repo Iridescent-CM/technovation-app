@@ -60,12 +60,9 @@ en:
       show:
         signed: "%{account_name} has signed the consent waiver as %{signed_name} on %{date}"
 
-    dashboard:
-      menu:
-        home: "Home"
-        my_teams: "My teams"
-        my_requests: "My requests"
-        my_account: "My account"
+    background_checks:
+      new:
+        title: "Pass a background check"
 
     judge:
       scores:
@@ -138,11 +135,10 @@ en:
 
     profile_requirements:
       background_check:
-        label: "Complete a background check"
+        label: "Pass a background check"
         links:
-          mark_complete:
-            text: "Mark this step complete"
-            postfix: "(temporary, for testing only)"
+          fill_bg_check_form:
+            text: "Submit a background check"
 
       build_profile:
         label: "Complete your profile to help students get to know you"

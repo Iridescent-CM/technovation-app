@@ -1,0 +1,24 @@
+<h2><%= t("views.background_checks.new.title") %></h2>
+
+<%= simple_form_for @candidate, url: url do |f| %>
+  <%= render 'errors', record: @candidate %>
+
+  <%= f.input :first_name %>
+  <%= f.input :middle_name %>
+  <%= f.input :last_name %>
+
+  <%= f.input :email, as: :email %>
+  <%= f.input :phone, as: :tel, placeholder: '555-123-1234' %>
+
+  <%= f.input :zipcode, as: :integer %>
+
+  <%= f.input :date_of_birth, placeholder: "YYYY-MM-DD" %>
+
+  <%= f.input :ssn, placeholder: '999-99-9999',
+                    hint: "We do NOT store this. It is sent securely to our screening service #{link_to("Checkr", "https://checkr.com/product/screenings/", rel: "noopener noreferrer", target: "_bank")}.".html_safe %>
+
+  <%= f.input :driver_license_number %>
+  <%= f.input :driver_license_state, placeholder: "XX" %>
+
+  <%= f.button :submit, "Submit your background check" %>
+<% end %>
