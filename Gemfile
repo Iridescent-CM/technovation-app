@@ -56,6 +56,11 @@ group :development do
   gem 'active_record_query_trace'
 end
 
+group :test do
+  gem 'vcr'
+  gem 'webmock'
+end
+
 group :qa, :production do
   gem 'rails_12factor'
 end

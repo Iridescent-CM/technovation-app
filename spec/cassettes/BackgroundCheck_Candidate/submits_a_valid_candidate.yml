@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/candidates
+    body:
+      encoding: UTF-8
+      string: first_name=Test&middle_name=Ing.&no_middle_name=false&last_name=Candidate&email=test%40test.com&phone=5175556975&zipcode=90401&dob=1983-06-01&ssn=111-11-2001&driver_license_number=&driver_license_state=CA&previous_driver_license_number=&previous_driver_license_state=&copy_requested=false&custom_id=&reports=&geos=&adjudication=&documents=%7B%0A%20%20%22object%22%3A%20%22list%22%2C%0A%20%20%22data%22%3A%20%5B%0A%0A%20%20%5D%0A%7D&id=&object=&uri=&created_at=
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.1.1'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.1.1","lang":"ruby","lang_version":"2.3.1 p112 (2016-04-26)","platform":"x86_64-darwin15","publisher":"checkr","uname":"Darwin
+        Josephs-MacBook-Air.local 15.6.0 Darwin Kernel Version 15.6.0: Thu Jun 23
+        18:25:34 PDT 2016; root:xnu-3248.60.10~1/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic YzhmMDg3OWU4M2UzOGY1YTk5ZTM1ZmZhYTM2NWUyMDVmODI5Nzc0Yzo=
+      Content-Length:
+      - '460'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 26 Aug 2016 14:21:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '580'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=dae8d84ef8ccb8513e489bf77a00829de1472221315; expires=Sat, 26-Aug-17
+        14:21:55 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 2d87eed2eb4e251f-ORD
+    body:
+      encoding: UTF-8
+      string: '{"id":"1fb746ce28286746e08c0008","object":"test_candidate","uri":"/v1/candidates/1fb746ce28286746e08c0008","created_at":"2016-08-26T14:21:55Z","first_name":"Test","last_name":"Candidate","middle_name":"Ing.","mother_maiden_name":null,"dob":"1983-06-01","ssn":"XXX-XX-2001","email":"test@test.com","zipcode":"90401","phone":"5175556975","driver_license_state":"CA","driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":false,"report_ids":[],"geo_ids":[]}'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 14:21:56 GMT
+recorded_with: VCR 3.0.3

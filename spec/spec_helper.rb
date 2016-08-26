@@ -1,5 +1,6 @@
 require "dotenv"
 require "pry"
+require "vcr_helper"
 
 Dotenv.load
 
