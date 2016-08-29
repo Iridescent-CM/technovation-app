@@ -20,10 +20,10 @@ class Account < ActiveRecord::Base
   has_one :consent_waiver, dependent: :destroy
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
+
   validates :password, :password_confirmation, presence: { on: :create }
-  validates :password, length: { minimum: 8 }
-  validates :existing_password, valid_password: true,
-    if: :changes_require_password?
+  validates :password, length: { minimum: 8, on: :create }
+  validates :existing_password, valid_password: true, if: :changes_require_password?
 
   validates :date_of_birth, :first_name, :last_name, :city, :state_province, :country,
     presence: true
