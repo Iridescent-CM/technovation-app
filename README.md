@@ -26,9 +26,12 @@ Set your Ruby version with your favorite ruby version management tool to:
 
 `Ruby Version: 2.3.1`
 
+Request sensitive keys from your teammates for the `.env` file.
+
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
+*** GET THE SENSITIVE INFO FOR .env FILE ***
 ./bin/setup
 ```
 
