@@ -51,12 +51,13 @@ $ rake
 
 ```
 rake db:seed 
-# Seeds with some expertises, a student, a mentor, and an admin for manual testing
+# Seeds with a student, a couple of mentors, and an admin for manual testing
 ```
 
 ```
-rake bootstrap:expertises
+rake bootstrap:technovation
 # Adds the Technovation expertises for mentors to choose for their profile
+# Adds the Technovation admin account
 ```
 
 ## User Accounts
