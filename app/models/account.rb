@@ -21,6 +21,7 @@ class Account < ActiveRecord::Base
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :password, :password_confirmation, presence: { on: :create }
+  validates :password, length: { minimum: 8 }
   validates :existing_password, valid_password: true,
     if: :changes_require_password?
 
