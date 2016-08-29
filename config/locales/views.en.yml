@@ -236,6 +236,10 @@ en:
       mentor_searches:
         filter_options: "Filter mentors by expertise"
         intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
+        new:
+          mentor_preview:
+            on_team: "On a team"
+            needs_team: "Needs a team"
         none_found: "Sorry... we couldn't find any mentors with your criteria."
         title: "Find a Mentor"
 

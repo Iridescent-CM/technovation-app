@@ -14,4 +14,10 @@
       <%= expertise.name %>
     </span>
   <% end %>
+
+  <% if mentor_preview.is_on_team? %>
+    <span class="badge-notice on-team"><%= t("views.student.mentor_searches.new.mentor_preview.on_team") %></span>
+  <% else %>
+    <span class="badge-success no-team"><%= t("views.student.mentor_searches.new.mentor_preview.needs_team") %></span>
+  <% end %>
 </div>
