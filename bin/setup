@@ -18,7 +18,7 @@ Dir.chdir APP_ROOT do
   # end
 
   puts "\n== Copying example .env file. REQUEST SENSITIVE INFO FROM YOUR TEAMMATES =="
-  system "cp -n env.example .env"
+  system "cp -n .env.example .env"
 
   puts "\n== Preparing database =="
   system "bin/rake db:setup"
