@@ -6,6 +6,7 @@ class RegistrationMailer < ApplicationMailer
     @contact_email = "[CONTACT EMAIL]"
     @contact_first_name = "[CONTACT FIRST NAME]"
     @edit_account_url = edit_mentor_account_url
+    @upload_photo_url = mentor_account_url
     @edit_bio_url = edit_mentor_account_url(anchor: "account-profile-details")
 
     mail to: mentor.email
