@@ -1,0 +1,62 @@
+<p>Greetings <%= @first_name %>,</p>
+
+<p>Thank you for registering as a Technovation Mentor! We are thrilled to have you join our community of technology and entrepreneurship enthusiasts and want to make sure you are set up for success!</p>
+
+<p>My name is <%= @contact_name %>. I am the <%= @contact_position %> at Technovation. One of my main jobs is ensuring the engagement and success of our mentor community. Please feel free to reach out to me at <%= mail_to @contact_email %> or our general email <%= mail_to "info@technovationchallenge.org" %> with any questions, and someone will get back to you as soon as possible.</p>
+
+<p>You will receive ongoing tips and tricks along with other training and resources as the season progresses. For now, please consider this email your personal “toolkit” of resources to get started with the program.</p>
+
+<p>Below are some immediate next steps. Please complete steps 1-3 within 2 weeks of receiving this email. You will also find many helpful links and resources on the Technovation website here that will support you as you start and progress through the Technovation program.</p>
+
+<p>Yours in innovating,<br />
+<%= @contact_first_name %></p>
+
+<p><strong>Next steps and materials to get you started&hellip;</strong></p>
+
+<ul>
+  <li>
+    <%= link_to "Update your online profile", @edit_account_url %> on <%= link_to "my.technovationchallenge.org", "https://my.technovationchallenge.org" %>.
+    <ul>
+      <li><%= link_to "Upload a picture", @edit_account_url %>.</li>
+      <li><%= link_to "Give yourself a brief description", @edit_bio_url %>. If you are pairing up with another mentor, make sure you mention that in your description.</li>
+    </ul>
+  </li>
+
+  <li>
+    Connect with a co-mentor (if desired)
+    <ul>
+      <li>Though not required, many mentors enjoy pairing up with a co-mentor who complements his/her skillset in order to spread the responsibility of supporting the team. You can recruit a friend or colleague or message another mentor through the online platform!</li>
+    </ul>
+  </li>
+
+  <li>
+    Connect with a Team
+    <ul> 
+      <li>Through Online Platform: The majority of teams start registering in November and December. Once teams register, they can reach out to mentors through the "Find a Mentor" tab at the top of the online platform, or request that Technovation match them with a mentor.</li>
+      <li>When connecting with teams, be sure to discuss the meeting schedule (generally 2-4 hours per week) and location (online or in person) to ensure that it fits for all parties.</li>
+      <li>Recruit a Team: You can also recruit a team in your area. Here are some <%= link_to "recruitment tips", "http://www.technovationchallenge.org/wp-content/uploads/2014/11/RecruitmentTipsAmbassador.pdf" %> to get you started.</li>
+    </ul>
+  </li>
+  <li>
+    Register the Team
+    <ul>
+      <li>Once you are connected with a team, one member of the team will "Create a Team.” Once the team has been created, members of the team can invite others to join or you can search for that team in the "Team Gallery" and request to join. Both you and all the students can join the team in that way. Once you've all joined, you will all be officially registered as a team and ready to go!</li>
+    </ul>
+  </li>
+  <li>
+    Technovation Timeline:
+    <ul>
+      <li><strong>November &ndash; early January:</strong> Start learning App Inventor and brainstorming app ideas!</li>
+      <li>
+        <strong>January &ndash; April:</strong> Official Technovation Season
+        <ul>
+          <li>Walk team through the curriculum and app development each week</li>
+        </ul>
+      </li>
+      <li><strong>Mid&ndash;April:</strong> Submission Deadline</li>
+      <li><strong>Late April &ndash; Early May:</strong> Regional Pitch Competitions &amp; Virtual Judging</li>
+      <li><strong>Mid&ndash;Late May:</strong> Semi-Finalists and Finalists Announced</li>
+      <li><strong>Summer 2017:</strong> Technovation World Pitch Events in San Francisco Bay Area</li>
+    </ul>
+  </li>
+</ul>

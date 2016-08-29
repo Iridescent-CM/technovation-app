@@ -94,6 +94,7 @@ class Account < ActiveRecord::Base
 
   def after_registration
     # Implemented by StudentAccount
+    # Implemented by MentorAccount
   end
 
   private
