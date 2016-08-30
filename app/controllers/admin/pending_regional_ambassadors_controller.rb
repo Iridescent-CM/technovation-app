@@ -7,7 +7,7 @@ module Admin
     def update
       ambassador = RegionalAmbassadorAccount.find(params.fetch(:id))
       ambassador.public_send("#{params.fetch(:status)}!")
-      redirect_to :back, success: "#{ambassador.full_name} was #{params.fetch(:status)}"
+      redirect_to :back, success: "#{ambassador.full_name} was marked as #{params.fetch(:status)}"
     end
   end
 end

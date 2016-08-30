@@ -88,6 +88,10 @@ class Account < ActiveRecord::Base
     update_attributes(password_reset_token_sent_at: Time.current)
   end
 
+  def consent_waiver
+    super || NullConsentWaiver.new
+  end
+
   def enable_searchability
     # Implemented by MentorAccount
   end
@@ -119,6 +123,16 @@ class Account < ActiveRecord::Base
 
     def type_name
       'application'
+    end
+  end
+
+  class NullConsentWaiver
+    def status
+      "Not signed"
+    end
+
+    def present?
+      false
     end
   end
 end

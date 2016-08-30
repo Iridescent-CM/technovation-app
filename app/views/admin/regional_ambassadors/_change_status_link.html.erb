@@ -1,0 +1,5 @@
+<%= link_to text, admin_pending_regional_ambassador_path(ambassador, status: status),
+                  data: {
+                    method: :put,
+                    confirm: "Do you want to mark #{ambassador.full_name} as #{status}?",
+                  } %>

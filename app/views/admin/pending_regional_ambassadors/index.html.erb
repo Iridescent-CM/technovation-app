@@ -4,32 +4,15 @@
       <th>Name</th>
       <th>Email</th>
       <th>City, State, Country</th>
-      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @pending_regional_ambassadors.each do |ambassador| %>
       <tr>
-        <td><%= ambassador.full_name %></td>
+        <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
         <td><%= ambassador.email %></td>
         <td><%= ambassador.address_details %></td>
-        <td>
-          <%= link_to "approve",
-                      admin_pending_regional_ambassador_path(ambassador,
-                                                             status: :approved),
-                                                             data: {
-                                                               method: :put,
-                                                               confirm: "You are approving #{ambassador.full_name}",
-                                                             } %>&nbsp;|
-          <%= link_to "decline",
-                      admin_pending_regional_ambassador_path(ambassador,
-                                                             status: :declined),
-                                                             data: {
-                                                               method: :put,
-                                                               confirm: "You are declining #{ambassador.full_name}",
-                                                             } %>
-        </td>
       </tr>
     <% end %>
   </tbody>

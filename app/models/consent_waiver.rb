@@ -16,6 +16,10 @@ class ConsentWaiver < ActiveRecord::Base
     created_at
   end
 
+  def status
+    "signed"
+  end
+
   private
   def enable_searchable_users
     account.enable_searchability

@@ -1,0 +1,37 @@
+<%= render 'accounts/show', account: @regional_ambassador %>
+
+<dl>
+  <dt>Consent waiver</dt>
+  <dd><%= @consent_waiver.status %></dd>
+
+  <dt>Background check</dt>
+  <dd><%= @report.status %></dd>
+
+  <dt>Actions</dt>
+  <dd>
+    <% if @regional_ambassador.approved? %>
+      <%= @regional_ambassador.first_name %> is approved.
+      <%= render 'admin/regional_ambassadors/change_status_link',
+                 ambassador: @regional_ambassador,
+                 status: :pending,
+                 text: "undo" %>
+
+    <% elsif @regional_ambassador.declined? %>
+      <%= @regional_ambassador.first_name %> has been declined.
+      <%= render 'admin/regional_ambassadors/change_status_link',
+                 ambassador: @regional_ambassador,
+                 status: :pending,
+                 text: "undo" %>
+    <% else %>
+      <%= render 'admin/regional_ambassadors/change_status_link',
+                 ambassador: @regional_ambassador,
+                 status: :approved,
+                 text: "approve" %>&nbsp;|
+
+      <%= render 'admin/regional_ambassadors/change_status_link',
+                 ambassador: @regional_ambassador,
+                 status: :declined,
+                 text: "decline" %>
+    <% end %>
+  </dd>
+</dl>

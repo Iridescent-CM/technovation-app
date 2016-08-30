@@ -23,6 +23,7 @@ module BackgroundCheck
     end
 
     def self.retrieve(id)
+      return NoReport.new if id.blank?
       resp = api_class.request(:get, "#{request_path}/#{id}")
       new(resp)
     end
@@ -33,6 +34,12 @@ module BackgroundCheck
                                           { package: "tasker_standard",
                                             candidate_id: candidate_id })
       @id = resp.fetch(:id)
+    end
+
+    class NoReport
+      def status
+        "Not submitted"
+      end
     end
   end
 end

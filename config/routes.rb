@@ -69,6 +69,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :score_categories
     resources :pending_regional_ambassadors, only: [:index, :update]
+    resources :regional_ambassadors, only: :show
     resource :dashboard, only: :show
   end
 

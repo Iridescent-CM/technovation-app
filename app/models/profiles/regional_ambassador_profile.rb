@@ -14,13 +14,15 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   def complete_background_check!
-    unless background_check_completed_at?
+    unless background_check_complete?
       update_attributes(background_check_completed_at: Time.current)
     end
   end
 
   private
   def notify_ambassador
-    AmbassadorMailer.public_send(status, account).deliver_later
+    unless pending?
+      AmbassadorMailer.public_send(status, account).deliver_later
+    end
   end
 end
