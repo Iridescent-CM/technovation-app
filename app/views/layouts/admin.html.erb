@@ -18,7 +18,9 @@
     <div class="container">
       <%= render 'flash_messages' %>
       <%= render 'admin/navigation' %>
-      <%= yield %>
+      <div class="main-content">
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>
