@@ -55,10 +55,12 @@ class BackgroundCheckCandidate
     field_names.each do |name|
       if name == "State cannot be empty is not a valid US state"
         errors.add(:driver_license_state, :invalid)
+      elsif name.include?("is not a valid US state")
+        errors.add(:driver_license_state, :invalid)
       elsif name.include?("must have SSN")
         errors.add(:ssn, :blank)
       else
-        errors.add(name, :invalid)
+        errors.add(name.downcase, :invalid)
       end
     end
   end
