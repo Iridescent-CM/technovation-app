@@ -1,3 +1,5 @@
+<% editing ||= false %>
+
 <%= f.input :first_name %>
 
 <%= f.input :last_name %>
@@ -6,6 +8,16 @@
                                        start_year: f.object.youngest_birth_year,
                                        end_year: f.object.oldest_birth_year,
                                        input_html: { class: "account_dob" } %>
+
+<% if editing %>
+  <h6 id="account-profile-image" class="signup-section">
+    <%= t("views.signups.new.section_headers.profile_image") %>
+  </h6>
+
+  <%= image_tag f.object.profile_image, with: 233, height: 233 %>
+  <%= f.input :profile_image %>
+  <%= f.input :profile_image_cache, as: :hidden %>
+<% end %>
 
 <h6 class="signup-section">
   <%= t("views.signups.new.section_headers.location_details") %>

@@ -218,6 +218,7 @@ en:
           account_details: "Account details"
           location_details: "Location details"
           profile_details: "Profile details"
+          profile_image: "Profile image"
         signup_link: "%{role} sign up"
         title: "Sign up as a"
 

@@ -5,6 +5,7 @@
 <div class="signup-page">
   <h2>
     <%= title %>
+
     <% unless editing %>
       <span class="accent">
         <%= t("views.signups.new.roles.#{signup.type_name}") %>
@@ -18,7 +19,7 @@
 
       <p><%= t("views.signups.form.required_fields") %></p>
 
-      <%= render 'signups/basic_profile_fields', f: f %>
+      <%= render 'signups/basic_profile_fields', f: f, editing: editing %>
 
       <h6 id="account-profile-details" class="signup-section">
         <%= t("views.signups.new.section_headers.profile_details") %>
