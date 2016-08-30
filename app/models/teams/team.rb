@@ -47,7 +47,7 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + pending_student_invites + join_requests.from_students.pending).size < 5
+    (students + pending_student_invites + join_requests.pending.select { |j| j.requestor.type_name == 'student' }).size < 5
   end
 
   def creator_address_details

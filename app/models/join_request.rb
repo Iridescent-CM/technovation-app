@@ -3,7 +3,6 @@ class JoinRequest < ActiveRecord::Base
   after_update :notify_requestor
 
   scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
-  scope :from_students, -> { where(requestor_id: StudentAccount.pluck(:id)) }
 
   belongs_to :requestor, polymorphic: true
   belongs_to :joinable, polymorphic: true
@@ -14,7 +13,9 @@ class JoinRequest < ActiveRecord::Base
 
   def approved!
     update_attributes(accepted_at: Time.current)
-    self.class.pending.from_students.select { |j| j.requestor_id == requestor.id }.each(&:destroy)
+    if requestor.type_name == 'student'
+      self.class.pending.select { |j| j.requestor_id == requestor.id }.each(&:destroy)
+    end
     joinable.public_send("add_#{requestor.type_name}", requestor)
   end
 
