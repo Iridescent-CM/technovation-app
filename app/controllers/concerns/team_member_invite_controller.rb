@@ -6,7 +6,8 @@ module TeamMemberInviteController
   end
 
   def show
-    @invite = current_account.team_member_invites.find_by(invite_token: params.fetch(:id))
+    @invite = current_account.team_member_invites.find_by(invite_token: params.fetch(:id)) ||
+      NullInvite.new
   end
 
   def create
@@ -20,6 +21,13 @@ module TeamMemberInviteController
     end
   end
 
+  def destroy
+    @invite = TeamMemberInvite.find_by(team_id: current_account.team_ids,
+                                       invite_token: params.fetch(:id))
+    @invite.destroy
+    redirect_to :back, success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+  end
+
   private
   def team_member_invite_params
     params.require(:team_member_invite).permit(:invitee_email, :team_id).tap do |params|
@@ -29,5 +37,11 @@ module TeamMemberInviteController
 
   def account_type
     "application"
+  end
+
+  class NullInvite
+    def status
+      "missing"
+    end
   end
 end

@@ -291,6 +291,7 @@ en:
         invite_by_email: "Invite more students by email"
       show:
         accepted: "You have previously accepted this invite."
+        declined: "You previously declined this invite. If you accepted an invite from another team, then this one was automatically declined."
         greeting: "You've been invited to join %{name}!"
         message: "You can accept this invite and join the team, or decline it and be on your way."
-        declined: "You previously declined this invite. If you accepted an invite from another team, then this one was automatically declined."
+        missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was revoked by the team."

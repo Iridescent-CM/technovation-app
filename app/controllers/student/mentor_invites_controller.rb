@@ -11,6 +11,12 @@ module Student
       end
     end
 
+    def destroy
+      @invite = current_student.team.mentor_invites.find_by(invite_token: params.fetch(:id))
+      @invite.destroy
+      redirect_to :back, success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+    end
+
     private
     def mentor_invite_params
       params.require(:mentor_invite).permit(:invitee_email).tap do |params|

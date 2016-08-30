@@ -8,9 +8,28 @@
 }
 
 .pending-invites {
+  margin: 15px 0 0;
+
+  table {
+    margin: 5px 0;
+    width: auto;
+
+    td {
+      border: none;
+      padding: 0 5px 0 0;
+    }
+  }
+
   h6 {
     color: $mulberry;
     margin-bottom: $small-spacing;
+  }
+
+  a {
+    color: $mulberry-dark;
+    &:hover {
+      color: $mulberry;
+    }
   }
 }
 

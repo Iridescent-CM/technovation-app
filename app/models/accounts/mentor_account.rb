@@ -9,6 +9,7 @@ class MentorAccount < Account
 
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id
+  has_many :team_member_invites, foreign_key: :inviter_id
 
   scope :by_expertise_ids, ->(ids) {
     joins(mentor_profile: :mentor_profile_expertises)
@@ -47,6 +48,10 @@ class MentorAccount < Account
 
   def teams
     @teams ||= Team.joins(:memberships).where('memberships.member_id = ?', id)
+  end
+
+  def team_ids
+    teams.current.collect(&:id)
   end
 
   def can_join_a_team?

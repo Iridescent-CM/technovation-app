@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     resources :mentors, only: :show
     resources :students, only: :show
 
-    resources :team_member_invites, only: [:show, :update, :new, :create]
-    resources :mentor_invites, only: [:create]
+    resources :team_member_invites, except: [:edit, :index]
+    resources :mentor_invites, only: [:create, :destroy]
     resources :join_requests, only: [:new, :create, :update]
 
     resources :team_searches, except: [:index, :destroy]
@@ -33,9 +33,9 @@ Rails.application.routes.draw do
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
 
-    resources :team_member_invites, only: [:new, :create]
+    resources :team_member_invites, except: [:edit, :index]
     resources :join_requests, except: :edit
-    resources :mentor_invites, only: [:show, :update]
+    resources :mentor_invites, only: [:show, :update, :destroy]
 
     resources :mentors, only: :show
     resources :students, only: :show

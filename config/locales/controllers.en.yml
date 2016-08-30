@@ -24,6 +24,12 @@ en:
       new:
         unauthorized: "Sorry, that consent token was invalid."
 
+    invites:
+      destroy:
+        confirm: "Are you sure you want to revoke your invitation to %{name}?"
+        link: "revoke"
+        success: "You revoked the invitation to %{name}"
+
     judge:
       scores:
         create:

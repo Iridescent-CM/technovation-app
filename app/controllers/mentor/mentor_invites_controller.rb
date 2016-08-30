@@ -1,13 +1,21 @@
 module Mentor
   class MentorInvitesController < MentorController
     def show
-      @invite = current_mentor.mentor_invites.find_by(invite_token: params.fetch(:id))
+      @invite = current_mentor.mentor_invites.find_by(invite_token: params.fetch(:id)) ||
+        NullInvite.new
     end
 
     def update
       invite = current_mentor.mentor_invites.pending.find_by(invite_token: params.fetch(:id))
       invite.update_attributes(invite_params)
       redirect_based_on_status(invite)
+    end
+
+    def destroy
+      @invite = MentorInvite.find_by(team_id: current_mentor.team_ids,
+                                     invite_token: params.fetch(:id))
+      @invite.destroy
+      redirect_to :back, success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
     end
 
     private
@@ -25,6 +33,12 @@ module Mentor
 
     def invite_params
       params.require(:team_member_invite).permit(:status)
+    end
+
+    class NullInvite
+      def status
+        "missing"
+      end
     end
   end
 end

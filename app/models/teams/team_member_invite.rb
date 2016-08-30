@@ -44,6 +44,14 @@ class TeamMemberInvite < ActiveRecord::Base
     invite_token
   end
 
+  def invitee_name
+    if !!invitee
+      invitee.first_name
+    else
+      invitee_email
+    end
+  end
+
   def after_accept
     team.add_student(invitee)
     pending = self.class.where(invitee_email: invitee_email,

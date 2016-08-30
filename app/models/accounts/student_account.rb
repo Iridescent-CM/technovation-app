@@ -93,6 +93,10 @@ class StudentAccount < Account
     teams.current.first
   end
 
+  def team_ids
+    [team_id]
+  end
+
   def team_id
     team.id
   end
