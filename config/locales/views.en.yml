@@ -137,6 +137,8 @@ en:
       background_check:
         label: "Pass a background check"
         links:
+          background_check_submitted:
+            text: "Check the status of your submission"
           fill_bg_check_form:
             text: "Submit a background check"
 

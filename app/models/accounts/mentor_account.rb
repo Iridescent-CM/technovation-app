@@ -24,6 +24,7 @@ class MentorAccount < Account
            :job_title,
            :school_company_name,
            :background_check_complete?,
+           :background_check_submitted?,
            :bio,
            :enable_searchability,
            :background_check_candidate_id,
@@ -55,7 +56,7 @@ class MentorAccount < Account
   end
 
   def can_join_a_team?
-    true
+    consent_signed? && background_check_complete? && bio_complete?
   end
 
   def team_names

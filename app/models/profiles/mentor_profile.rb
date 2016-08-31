@@ -16,6 +16,10 @@ class MentorProfile < ActiveRecord::Base
     expertises.flat_map(&:name)
   end
 
+  def background_check_submitted?
+    !!background_check_candidate_id and !!background_check_report_id
+  end
+
   def background_check_complete?
     not mentor_account.country == "US" or !!background_check_completed_at
   end
