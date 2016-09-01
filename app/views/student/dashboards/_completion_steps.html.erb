@@ -1,0 +1,56 @@
+<div class="completion-steps">
+  <h2><%= t("views.application.complete_your_profile") %></h2>
+
+  <ol class="completion-steps">
+    <li class="completion-step status-<%= current_student.parental_consent.present? ? "complete" : "ready" %>">
+      <span class="checkbox"><%= current_student.parental_consent.present? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.parental_consent.label") %>
+
+      <% unless current_student.parental_consent.present? %>
+        <ul>
+          <li>
+            <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
+                        student_parental_consent_notice_path, data: { method: :post } %>
+          </li>
+        </ul>
+      <% end %>
+    </li>
+
+    <li class="completion-step status-<%= current_student.is_on_team? ? "complete" : current_student.can_join_a_team? ? "ready" : "future" %>">
+      <span class="checkbox"><%= current_student.is_on_team? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.create_join_team.label") %>
+
+      <% if current_student.can_join_a_team? and not current_student.is_on_team? %>
+        <ul>
+          <li>
+            <%= link_to t("views.profile_requirements.create_join_team.links.join.text"), new_student_team_search_path %>
+          </li>
+
+          <li>
+            <%= link_to t("views.profile_requirements.create_join_team.links.create.text"), new_student_team_path %>
+          </li>
+        </ul>
+      <% else %>
+        <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
+      <% end %>
+    </li>
+
+    <li class="completion-step status-<%= current_student.team_has_mentor? ? "complete" : current_student.is_on_team? ? "ready" : "future" %>">
+      <span class="checkbox"><%= current_student.team_has_mentor? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.find_mentor.label") %>
+
+      <% if current_student.is_on_team? and not current_student.team_has_mentor? %>
+        <ul>
+          <li>
+            <%= link_to t("views.profile_requirements.find_mentor.links.join.text"), new_student_mentor_search_path %>
+          </li>
+        </ul>
+      <% else %>
+        <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
+      <% end %>
+    </li>
+  </ol>
+</div>

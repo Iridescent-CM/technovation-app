@@ -15,7 +15,7 @@ class StudentAccount < Account
 
   validate :parent_email_doesnt_match_account_email
 
-  after_save -> { !!team && team.reconsider_division },
+  after_save -> { team.present? && team.reconsider_division },
     if: :date_of_birth_changed?
 
   delegate :parent_guardian_email,
@@ -61,16 +61,12 @@ class StudentAccount < Account
     parental_consent.present?
   end
 
-  def consent_signed?
-    parental_consent_signed?
-  end
-
   def is_on_team?
-    teams.current.any?
+    teams.current.any?(&:present?)
   end
 
   def team_has_mentor?
-    !!team and team.mentors.any?
+    team.present? and team.mentors.any?
   end
 
   def requested_to_join?(team)
@@ -86,11 +82,11 @@ class StudentAccount < Account
   end
 
   def can_join_a_team?
-    not is_on_team?
+    parental_consent.present? and not is_on_team?
   end
 
   def team
-    teams.current.first
+    teams.current.first or NullTeam.new
   end
 
   def team_ids
@@ -153,6 +149,16 @@ class StudentAccount < Account
       errors.add(:email, :matches_parent_email)
     else
       true
+    end
+  end
+
+  class NullTeam
+    def has_mentor?
+      false
+    end
+
+    def present?
+      false
     end
   end
 end
