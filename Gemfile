@@ -12,6 +12,7 @@ gem 'rails-i18n', '~> 4.0.0'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq', '~> 4.1.1'
+gem 'airbrake'
 
 gem 'geocoder', '~> 1.2.6'
 gem 'carrierwave', '~> 0.11.2'
