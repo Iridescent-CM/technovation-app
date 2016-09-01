@@ -11,16 +11,14 @@ module ProfileCompletion
     }
 
     attr_reader :id
-    attr_reader :links
     attr_reader :complete_condition
     attr_reader :completion_status
     attr_reader :unlocks
 
-    def initialize(id, prerequisites, complete_condition, links, unlocks)
+    def initialize(id, prerequisites, complete_condition, unlocks)
       @id = id
       @prerequisites = prerequisites.split(", ").flatten.compact
       @complete_condition = complete_condition
-      @links = links
       @unlocks = unlocks.split(", ").flatten.compact
     end
 

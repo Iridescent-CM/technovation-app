@@ -13,22 +13,10 @@ module ProfileCompletion
   @@steps = {}
 
   def self.register_step(account_type, id, config = {})
-    links = config.fetch("links") { [] }.map do |link_name, link_config|
-      ProfileCompletion::Link.new(
-        id,
-        link_name,
-        link_config.fetch("url") { nil },
-        link_config.fetch("complete_condition") { nil },
-        link_config.fetch("link_options") { {} },
-        link_config.fetch("tag_options") { {} }
-      )
-    end
-
     @@steps[account_type] << ProfileCompletion::Step.new(
                                id,
                                config.fetch("prerequisites") { "" },
                                config.fetch("complete_condition"),
-                               links,
                                config.fetch("unlocks") { "" },
                              )
   end

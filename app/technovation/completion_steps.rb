@@ -1,5 +1,4 @@
 require "./app/technovation/profile_completion/step"
-require "./app/technovation/profile_completion/link"
 
 class CompletionSteps
   include Enumerable

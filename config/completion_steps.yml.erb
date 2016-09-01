@@ -1,80 +1,40 @@
 student:
   parental_consent:
     complete_condition: "parental_consent_signed?"
-    links: 
-      resend:
-        url: 'student_parental_consent_notice_path'
-        tag_options:
-          data:
-            method: "post"
 
   create_join_team:
     complete_condition: "is_on_team?"
     prerequisites: "parental_consent"
     unlocks: "student_team_path[team], new_student_team_path, new_student_team_search_path"
-    links: 
-      create:
-        url: "new_student_team_path"
-      join:
-        url: "new_student_team_search_path"
 
   find_mentor:
     complete_condition: "team_has_mentor?"
     prerequisites: "parental_consent, create_join_team"
     unlocks: "new_student_mentor_search_path"
-    links:
-      browse:
-        url: "new_student_mentor_search_path"
 
 mentor:
   consent_waiver:
     complete_condition: "consent_signed?"
-    links:
-      view: {}
 
   background_check:
     complete_condition: "background_check_complete?"
-    links:
-      fill_bg_check_form:
-        url: "new_mentor_background_check_path"
 
   build_profile:
     prerequisites: "background_check, consent_waiver"
     complete_condition: "bio_complete?"
-    links:
-      bio:
-        complete_condition: "bio_complete?"
-        url: false
 
   create_join_team:
     complete_condition: "is_on_team?"
     prerequisites: "background_check, build_profile, consent_waiver"
     unlocks: "mentor_teams_path, mentor_join_requests_path, new_mentor_team_search_path, new_mentor_team_path"
-    links: 
-      create:
-        url: "new_mentor_team_path"
-      join:
-        url: "new_mentor_team_search_path"
 
 regional_ambassador:
   consent_waiver:
     complete_condition: "consent_signed?"
-    links:
-      view: {}
 
   background_check:
     complete_condition: "background_check_complete?"
-    links:
-      fill_bg_check_form:
-        url: "new_regional_ambassador_background_check_path"
 
   build_profile:
     prerequisites: "background_check, consent_waiver"
     complete_condition: "profile_complete?"
-    links:
-      photo:
-        complete_condition: "profile_image?"
-        url: "regional_ambassador_account_path"
-      bio:
-        complete_condition: "bio_complete?"
-        url: false
