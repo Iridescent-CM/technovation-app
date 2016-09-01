@@ -37,26 +37,27 @@ class BackgroundCheckCandidate
 
   private
   def attributes
-    {
-      "first_name" => @first_name,
-      "middle_name" => @middle_name,
-      "last_name" => @last_name,
-      "email" => @email,
-      "phone" => @phone,
-      "zipcode" => @zipcode,
-      "dob" => @date_of_birth,
-      "ssn" => @ssn,
-      "driver_license_state" => @driver_license_state,
-      "driver_license_number" => @driver_license_number,
-    }
+    Hash[{
+           "first_name" => @first_name,
+           "middle_name" => @middle_name,
+           "last_name" => @last_name,
+           "email" => @email,
+           "phone" => @phone,
+           "zipcode" => @zipcode,
+           "dob" => @date_of_birth,
+           "ssn" => @ssn,
+           "driver_license_state" => @driver_license_state,
+           "driver_license_number" => @driver_license_number,
+         }.map { |k, v| [k, (v || "").strip] }]
   end
 
   def apply_errors(field_names)
     field_names.each do |name|
-      if name == "State cannot be empty is not a valid US state"
+      if name == "State cannot be empty is not a valid US state" or
+          name.include?("is not a valid US state")
         errors.add(:driver_license_state, :invalid)
-      elsif name.include?("is not a valid US state")
-        errors.add(:driver_license_state, :invalid)
+      elsif name.downcase.include?("driver's license number must only contain")
+        errors.add(:driver_license_number, :invalid)
       elsif name.include?("must have SSN")
         errors.add(:ssn, :blank)
       else
