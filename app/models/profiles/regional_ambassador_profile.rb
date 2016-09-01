@@ -13,6 +13,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     not regional_ambassador_account.country == "US" or !!background_check_completed_at
   end
 
+  def background_check_submitted?
+    !!background_check_candidate_id and !!background_check_report_id
+  end
+
   def complete_background_check!
     unless background_check_complete?
       update_attributes(background_check_completed_at: Time.current)

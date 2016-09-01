@@ -24,6 +24,7 @@ class RegionalAmbassadorAccount < Account
            :background_check_candidate_id,
            :background_check_report_id,
            :complete_background_check!,
+           :background_check_submitted?,
     to: :regional_ambassador_profile,
     prefix: false
 

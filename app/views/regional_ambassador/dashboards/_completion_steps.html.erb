@@ -1,0 +1,59 @@
+<div class="completion-steps">
+  <h2><%= t("views.application.complete_your_profile") %></h2>
+
+  <ol class="completion-steps">
+    <li class="completion-step status-<%= current_ambassador.consent_waiver.present? ? "complete" : "ready" %>">
+      <span class="checkbox"><%= current_ambassador.consent_waiver.present? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.consent_waiver.label") %>
+
+      <% unless current_ambassador.consent_waiver.present? %>
+        <ul>
+          <li>
+            <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
+                        new_consent_waiver_path(token: current_ambassador.consent_token) %>
+          </li>
+        </ul>
+      <% end %>
+    </li>
+
+    <li class="completion-step status-<%= current_ambassador.background_check_complete? ? "complete" : "ready" %>">
+      <span class="checkbox"><%= current_ambassador.background_check_complete? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.background_check.label") %>
+
+      <% unless current_ambassador.background_check_complete? %>
+        <ul>
+          <li>
+            <% if current_ambassador.background_check_submitted? %>
+              <span class="crossed-off">
+                <%= t("views.profile_requirements.background_check.links.fill_bg_check_form.text") %>
+              </span>
+
+              <%= link_to t("views.profile_requirements.background_check.links.background_check_submitted.text"),
+                          regional_ambassador_background_check_path(current_ambassador.background_check_report_id) %>
+            <% else %>
+              <%= link_to t("views.profile_requirements.background_check.links.fill_bg_check_form.text"),
+                          new_regional_ambassador_background_check_path %>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
+    </li>
+
+    <li class="completion-step status-<%= current_ambassador.bio_complete? ? "complete" : "ready" %>">
+      <span class="checkbox"><%= current_ambassador.bio_complete? ? fa_icon("check 2x") : nil %></span>
+
+      <%= t("views.profile_requirements.build_profile.label") %>
+
+      <% unless current_ambassador.bio_complete? %>
+        <ul>
+          <li>
+            <%= link_to t("views.profile_requirements.build_profile.links.bio.text"),
+                        edit_regional_ambassador_account_path(anchor: 'account-profile-details') %>
+          </li>
+        </ul>
+      <% end %>
+    </li>
+  </ol>
+</div>
