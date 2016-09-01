@@ -48,7 +48,9 @@ Airbrake.configure do |c|
   # Airbrake. By default, all "password" attributes will have their contents
   # replaced.
   # https://github.com/airbrake/airbrake-ruby#blacklist_keys
-  c.blacklist_keys = [/password/i]
+  c.blacklist_keys = [/password/i, :ssn, :drivers_license_number, :email,
+                      :last_name, :parent_guardian_name, :parent_guardian_email,
+                      /date_of_birth/i]
 end
 
 # If Airbrake doesn't send any expected exceptions, we suggest to uncomment the
