@@ -31,7 +31,7 @@ class RegionalAmbassadorAccount < Account
   delegate :id, to: :regional_ambassador_profile, prefix: true
 
   def profile_complete?
-    profile_image? and bio_complete?
+    bio_complete?
   end
 
   def bio_complete?
