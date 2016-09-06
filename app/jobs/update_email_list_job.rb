@@ -5,8 +5,16 @@ class UpdateEmailListJob < ActiveJob::Base
     return if Rails.env.development? or Rails.env.test?
 
     auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
-    subscriber = CreateSend::Subscriber.new(auth, list_id, email_was)
 
-    subscriber.update(email, name, [], true)
+    begin
+      subscriber = CreateSend::Subscriber.new(auth, list_id, email_was)
+      subscriber.update(email, name, [], true)
+    rescue CreateSend::BadRequest => br
+      if br.message.include?("Subscriber not in list")
+        SubscribeEmailListJob.perform_later(email, name, list_id)
+      else
+        raise br
+      end
+    end
   end
 end
