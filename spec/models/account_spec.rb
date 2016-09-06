@@ -12,4 +12,14 @@ RSpec.describe Account do
     expect(account).not_to be_valid
     expect(account.errors[:password]).to eq(["is too short (minimum is 8 characters)"])
   end
+
+  it "re-subscribes new email addresses" do
+    ENV['ACCOUNT_LIST_ID'] = "some-id"
+    account = FactoryGirl.create(:account)
+
+    expect(UpdateEmailListJob).to receive(:perform_later)
+      .with(account.email, "new@email.com", account.full_name, "some-id")
+
+    account.update_attributes(email: "new@email.com")
+  end
 end

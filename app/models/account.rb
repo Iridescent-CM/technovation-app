@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
 
   before_validation :generate_tokens, on: :create
   after_validation :geocode, if: :address_changed?
+  after_validation :subscribe_new_email, if: :email_changed?, on: :update
 
   has_secure_password
 
@@ -64,7 +65,6 @@ class Account < ActiveRecord::Base
 
   def consent_signed?
     consent_waiver.present?
-    # and >= Date.new(2016, 9, 1)
   end
 
   def complete_pre_program_survey!
@@ -72,7 +72,7 @@ class Account < ActiveRecord::Base
   end
 
   def pre_survey_completed?
-    !!pre_survey_completed_at # and pre_survey_completed_at >= Date.new(2016, 9, 1)
+    !!pre_survey_completed_at
   end
 
   def oldest_birth_year
@@ -97,13 +97,19 @@ class Account < ActiveRecord::Base
   end
 
   def after_registration
-    # Implemented by StudentAccount
-    # Implemented by MentorAccount
-    list_id = ENV.fetch("#{type_name.upcase}_LIST_ID")
+    # Customized by StudentAccount, MentorAccount
     SubscribeEmailListJob.perform_later(email, full_name, list_id)
   end
 
   private
+  def subscribe_new_email
+    UpdateEmailListJob.perform_later(email_was, email, full_name, list_id)
+  end
+
+  def list_id
+    ENV.fetch("#{type_name.upcase}_LIST_ID")
+  end
+
   def generate_tokens
     GenerateToken.(self, :auth_token)
     GenerateToken.(self, :consent_token)
