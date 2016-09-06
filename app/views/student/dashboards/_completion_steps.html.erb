@@ -17,25 +17,7 @@
       <% end %>
     </li>
 
-    <li class="completion-step status-<%= current_student.is_on_team? ? "complete" : current_student.can_join_a_team? ? "ready" : "future" %>">
-      <span class="checkbox"><%= current_student.is_on_team? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.create_join_team.label") %>
-
-      <% if current_student.can_join_a_team? and not current_student.is_on_team? %>
-        <ul>
-          <li>
-            <%= link_to t("views.profile_requirements.create_join_team.links.join.text"), new_student_team_search_path %>
-          </li>
-
-          <li>
-            <%= link_to t("views.profile_requirements.create_join_team.links.create.text"), new_student_team_path %>
-          </li>
-        </ul>
-      <% else %>
-        <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
-      <% end %>
-    </li>
+    <%= render 'completion_steps/create_join_team', account: current_student %>
 
     <li class="completion-step status-<%= current_student.team_has_mentor? ? "complete" : current_student.is_on_team? ? "ready" : "future" %>">
       <span class="checkbox"><%= current_student.team_has_mentor? ? fa_icon("check 2x") : nil %></span>
@@ -45,7 +27,7 @@
       <% if current_student.is_on_team? and not current_student.team_has_mentor? %>
         <ul>
           <li>
-            <%= link_to t("views.profile_requirements.find_mentor.links.join.text"), new_student_mentor_search_path %>
+            <%= link_to t("views.profile_requirements.find_mentor.links.browse.text"), new_student_mentor_search_path %>
           </li>
         </ul>
       <% else %>
