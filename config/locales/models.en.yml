@@ -9,9 +9,6 @@ en:
       referred_by_other: "Please specify"
       state_province: "State / Province"
 
-    consent_waiver:
-      consent_confirmation: "I ACKNOWLEDGE THAT I HAVE READ AND UNDERSTOOD ALL OF THE TERMS OF THIS AGREEMENT AND THAT I AM VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE COMPANY."
-
     errors:
       existing_password:
         invalid: "is invalid"

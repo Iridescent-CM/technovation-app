@@ -19,11 +19,6 @@ en:
   activerecord:
     errors:
       models:
-        consent_waiver:
-          attributes:
-            consent_confirmation:
-              inclusion: "must be confirmed"
-
         mentor_account:
           attributes:
             existing_password:

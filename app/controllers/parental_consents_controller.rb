@@ -30,7 +30,6 @@ class ParentalConsentsController < ApplicationController
 
   def parental_consent_params
     params.require(:parental_consent).permit(:student_consent_token,
-                                             :consent_confirmation,
                                              :electronic_signature)
   end
 end

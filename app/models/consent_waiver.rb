@@ -2,7 +2,6 @@ class ConsentWaiver < ActiveRecord::Base
   belongs_to :account
 
   validates :electronic_signature, presence: true
-  validates :consent_confirmation, inclusion: { in: [1] }
 
   delegate :full_name, :type_name, :consent_token, to: :account, prefix: true
 

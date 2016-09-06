@@ -17,7 +17,6 @@ RSpec.feature "Consent waivers" do
     click_link "Sign the waiver now"
     click_button "I agree"
     expect(current_path).to eq(consent_waivers_path)
-    expect(page).to have_css('.consent_waiver_consent_confirmation .error', text: 'must be confirmed')
     expect(page).to have_css('.consent_waiver_electronic_signature .error', text: "can't be blank")
   end
 
@@ -28,7 +27,6 @@ RSpec.feature "Consent waivers" do
     visit mentor_dashboard_path
     click_link "Sign the waiver now"
 
-    check "consent_waiver[consent_confirmation]"
     fill_in "Electronic signature", with: "Mentor McGee"
     click_button "I agree"
 

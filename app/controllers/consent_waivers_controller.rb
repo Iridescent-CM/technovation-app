@@ -30,7 +30,6 @@ class ConsentWaiversController < ApplicationController
 
   def consent_waiver_params
     params.require(:consent_waiver).permit(:account_consent_token,
-                                           :consent_confirmation,
                                            :electronic_signature)
   end
 end
