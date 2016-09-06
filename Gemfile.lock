@@ -111,6 +111,10 @@ GEM
       simple_form (~> 3.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    createsend (4.0.2)
+      hashie (~> 3.0)
+      httparty (~> 0.10)
+      json (~> 1.0)
     currencies (0.4.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
@@ -266,9 +270,13 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     hashdiff (0.3.0)
+    hashie (3.4.0)
     hike (1.2.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     i18n_data (0.7.0)
     indefinite_article (0.2.4)
@@ -299,6 +307,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
+    multi_xml (0.5.5)
     nested_form_fields (0.7.8)
       coffee-rails (>= 3.2.1)
       jquery-rails
@@ -460,7 +469,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_query_trace
-  airbrake
+  airbrake (~> 5.2.1)
   bcrypt (~> 3.1.7)
   capybara-webkit
   carrierwave (~> 0.11.2)
@@ -469,6 +478,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   countries (~> 1.2.5)
   country_state_select (~> 3.0.2)
+  createsend (~> 4.0.2)
   database_cleaner
   dotenv-rails
   factory_girl_rails
