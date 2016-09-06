@@ -66,6 +66,7 @@ end
 
 group :qa, :production do
   gem 'rails_12factor'
+  gem "hirefire-resource"
 end
 
 # LEGACY MIGRATION

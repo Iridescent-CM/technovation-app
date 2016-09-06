@@ -272,6 +272,7 @@ GEM
     hashdiff (0.3.0)
     hashie (3.4.0)
     hike (1.2.3)
+    hirefire-resource (0.3.11)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httparty (0.13.3)
@@ -487,6 +488,7 @@ DEPENDENCIES
   fog (~> 1.38.0)
   font-awesome-rails (~> 4.6.3.1)
   geocoder (~> 1.2.6)
+  hirefire-resource
   indefinite_article
   jbuilder (~> 2.0)
   jquery-rails
