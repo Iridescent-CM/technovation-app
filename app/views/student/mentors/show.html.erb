@@ -4,7 +4,8 @@
 
 <ul>
   <%= render partial: 'student/mentors/team_preview',
-             collection: @mentor.teams.current %>
+             collection: @mentor.teams.current,
+             cached: true %>
 </ul>
 
 <p>

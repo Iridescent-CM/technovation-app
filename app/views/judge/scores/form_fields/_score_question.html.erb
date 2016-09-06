@@ -2,6 +2,7 @@
 
 <%= render partial: 'judge/scores/form_fields/score_value',
            collection: score_question.score_values,
+           cached: true,
            locals: { f: f, score_question: score_question } %>
 
 <p>

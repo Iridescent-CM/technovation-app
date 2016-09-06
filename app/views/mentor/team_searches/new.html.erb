@@ -2,7 +2,7 @@
 
 <hr />
 
-<%= render(partial: "team_searches/result", collection: @teams, locals: { account_type: :mentor }) or
+<%= render(partial: "team_searches/result", collection: @teams, cached: true, locals: { account_type: :mentor }) or
       t("views.mentor.team_searches.new.no_results") %>
 
 <%= will_paginate @teams %>

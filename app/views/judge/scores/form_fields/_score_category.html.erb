@@ -3,5 +3,6 @@
 
   <%= render partial: 'judge/scores/form_fields/score_question',
              collection: score_category.score_questions,
+             cached: true,
              locals: { f: f } %>
 </div>

@@ -8,7 +8,8 @@
   <p><%= t("views.student.mentor_searches.intro") %></p>
 
   <%= render(partial: 'student/mentor_searches/mentor_preview',
-             collection: @mentors) or
+             collection: @mentors,
+             cached: true) or
         t("views.student.mentor_searches.none_found") %>
 
   <%= will_paginate @mentors %>

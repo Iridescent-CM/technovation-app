@@ -5,6 +5,7 @@
 <%= simple_form_for [:judge, @submission, @score] do |f| %>
   <%= render partial: 'judge/scores/form_fields/score_category',
              collection: @categories,
+             cached: true,
              locals: { f: f } %>
 
   <%= f.button :submit, t('views.application.save') %>
