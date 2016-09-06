@@ -66,6 +66,8 @@ Technovation</p>
 <%= simple_form_for @parental_consent do |f| %>
   <%= f.input :student_consent_token, as: :hidden %>
   <%= f.input :consent_confirmation, as: :boolean, label: t("models.parental_consent.consent_confirmation") %>
+  <%= label_tag t("models.parental_consent.student_name") %>
+  <%= text_field_tag :student_name, f.object.student.full_name, disabled: true %>
   <%= f.input :electronic_signature %>
   <%= f.button :submit, t("views.parental_consents.new.submit") %>
 <% end %>

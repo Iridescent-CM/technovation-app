@@ -32,6 +32,7 @@ en:
 
     parental_consent:
       consent_confirmation: "Check this box to confirm your consent"
+      student_name: "Student's Name"
 
     regional_ambassador_profile:
       ambassador_since_year: "In which year did you become a regional ambassador?"
