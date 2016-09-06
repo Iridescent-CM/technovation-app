@@ -2,80 +2,9 @@
   <h2><%= t("views.application.complete_your_profile") %></h2>
 
   <ol class="completion-steps">
-    <li class="completion-step status-<%= current_mentor.consent_waiver.present? ? "complete" : "ready" %>">
-      <span class="checkbox"><%= current_mentor.consent_waiver.present? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.consent_waiver.label") %>
-
-      <% unless current_mentor.consent_waiver.present? %>
-        <ul>
-          <li>
-            <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
-                        new_consent_waiver_path(token: current_mentor.consent_token) %>
-          </li>
-        </ul>
-      <% end %>
-    </li>
-
-    <li class="completion-step status-<%= current_mentor.background_check_complete? ? "complete" : "ready" %>">
-      <span class="checkbox"><%= current_mentor.background_check_complete? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.background_check.label") %>
-
-      <% unless current_mentor.background_check_complete? %>
-        <ul>
-          <li>
-            <% if current_mentor.background_check_submitted? %>
-              <span class="crossed-off">
-                <%= t("views.profile_requirements.background_check.links.fill_bg_check_form.text") %>
-              </span>
-
-              <%= link_to t("views.profile_requirements.background_check.links.background_check_submitted.text"),
-                          mentor_background_check_path(current_mentor.background_check_report_id) %>
-            <% else %>
-              <%= link_to t("views.profile_requirements.background_check.links.fill_bg_check_form.text"),
-                          new_mentor_background_check_path %>
-            <% end %>
-          </li>
-        </ul>
-      <% end %>
-    </li>
-
-    <li class="completion-step status-<%= current_mentor.bio_complete? ? "complete" : "ready" %>">
-      <span class="checkbox"><%= current_mentor.bio_complete? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.build_profile.label") %>
-
-      <% unless current_mentor.bio_complete? %>
-        <ul>
-          <li>
-            <%= link_to t("views.profile_requirements.build_profile.links.bio.text"),
-                        edit_mentor_account_path(anchor: 'account-profile-details') %>
-          </li>
-        </ul>
-      <% end %>
-    </li>
-
-    <li class="completion-step status-<%= current_mentor.is_on_team? ? "complete" : current_mentor.can_join_a_team? ? "ready" : "future" %>">
-      <span class="checkbox"><%= current_mentor.is_on_team? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.create_join_team.label") %>
-
-      <% if current_mentor.can_join_a_team? and not current_mentor.is_on_team? %>
-        <ul>
-          <li>
-            <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
-                        new_mentor_team_search_path %>
-          </li>
-
-          <li>
-            <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
-                        new_mentor_team_path %>
-          </li>
-        </ul>
-      <% else %>
-        <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
-      <% end %>
-    </li>
+    <%= render 'completion_steps/consent_waiver', account: current_mentor %>
+    <%= render 'completion_steps/background_check', account: current_mentor %>
+    <%= render 'completion_steps/complete_profile', account: current_mentor %>
+    <%= render 'completion_steps/create_join_team', account: current_mentor %>
   </ol>
 </div>

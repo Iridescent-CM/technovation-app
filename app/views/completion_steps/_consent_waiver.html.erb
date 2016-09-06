@@ -1,0 +1,14 @@
+<li class="completion-step status-<%= account.consent_waiver.present? ? "complete" : "ready" %>">
+  <span class="checkbox"><%= account.consent_waiver.present? ? fa_icon("check 2x") : nil %></span>
+
+  <%= t("views.profile_requirements.consent_waiver.label") %>
+
+  <% unless account.consent_waiver.present? %>
+    <ul>
+      <li>
+        <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
+                    new_consent_waiver_path(token: account.consent_token) %>
+      </li>
+    </ul>
+  <% end %>
+</li>

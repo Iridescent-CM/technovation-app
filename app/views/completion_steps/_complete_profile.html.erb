@@ -1,0 +1,14 @@
+<li class="completion-step status-<%= account.bio_complete? ? "complete" : "ready" %>">
+  <span class="checkbox"><%= account.bio_complete? ? fa_icon("check 2x") : nil %></span>
+
+  <%= t("views.profile_requirements.build_profile.label") %>
+
+  <% unless account.bio_complete? %>
+    <ul>
+      <li>
+        <%= link_to t("views.profile_requirements.build_profile.links.bio.text"),
+                    send("edit_#{account.type_name}_account_path", anchor: 'account-profile-details') %>
+      </li>
+    </ul>
+  <% end %>
+</li>
