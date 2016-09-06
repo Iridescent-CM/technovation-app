@@ -4,7 +4,6 @@ class ParentalConsent < ActiveRecord::Base
   scope :nonvoid, -> { where('voided_at IS NULL') }
 
   validates :electronic_signature, presence: true
-  validates :consent_confirmation, inclusion: { in: [1] }
 
   delegate :full_name, :consent_token, to: :student, prefix: true
 

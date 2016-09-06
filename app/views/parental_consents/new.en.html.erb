@@ -1,6 +1,6 @@
 <%= render 'errors', record: @parental_consent %>
 
-<h5>Dear Parents,</h5>
+<h5>Dear Parent/Guardian(s),</h5>
 
 <p>Thank you for supporting your daughter to participate in Technovation, the technology entrepreneurship program and competition for young women.</p>
 
@@ -8,32 +8,28 @@
 
 <p>Completing the Technovation curriculum is a huge accomplishment for every participant. When she is done, she will have completed the early stages of founding a true mobile app startup.</p>
 
-<p>Most Technovation participants find that their team is critical to their success in the program. A typical Technovation team is composed of up to five girls, one volunteer Technovation Teacher, and one volunteer Technovation Mentor. Teams work together to complete the Technovation curriculum, which is accessible online at <http://technovationchallenge.org>. The submission deadline for the 2016 program is current set for mid-April 2016.</p>
+<p>Most Technovation participants find that their team is critical to their success in the program. A typical Technovation team is composed of up to five girls and at least one volunteer Technovation Mentor. Teams work together to complete the Technovation curriculum, which is accessible online at <%= link_to "http://www.technovationchallenge.org/", "http://www.technovationchallenge.org/" %>. The submission deadline for the 2017 Technovation program is Wednesday, April 26, 2017 at 5pm PT.</p>
 
-<p>After your daughter’s team submits her Pitch Package, technology professionals will review the team’s entry and provide feedback on their work. If your daughter is selected as a program finalist or winner, she and her team will be invited to attend the World Pitch event in the San Francisco Bay Area and present their pitch to prospective investors, in competition for part of the $20,000 in awards provided by Technovation.</p>
+<p>After your daughter’s team submits her Pitch Package, technology professionals will review the team’s entry and provide feedback on their work. If your daughter is selected as a program finalist or winner, she and her team will be invited to attend the World Pitch Summit in the San Francisco Bay Area and present their pitch live to a panel of judges, in competition for part of the $20,000 in awards provided by Technovation.</p>
 
-<p>If you have any questions at any time, please don’t hesitate to contact us at <%= mail_to "info@technovationchallenge.org" %></p>
+<p>We are delighted to help foster your daughter’s interest and development in technology and entrepreneurship and honored to work with young women everywhere as they develop new skills and confidence.</p>
 
-<p>We are delighted to help foster your daughter’s interest and development in technology entrepreneurship and honored to work with young women everywhere as they grow their skills and confidence in technology and entrepreneurship.</p>
+<p>If you have any questions at any time, please don’t hesitate to contact us at <%= mail_to "info@technovationchallenge.org" %>.</p>
 
-<p>Warm Regards,</p>
-
-<p>Madhavi Bhasin, Program Director<br/>
-Technovation</p>
+<p>Warm Regards,</br>
+The Technovation Staff</p>
 
 <hr />
-
-<h5>Program Participant Release of Liability And Consent Agreement (Technovation)</h5>
 
 <p>THIS RELEASE OF LIABILITY AND CONSENT AGREEMENT (this “Agreement”) is made as of the date set forth on the signature page, by and between Iridescent Learning, a California nonprofit corporation (“Iridescent Learning”) located at 532 West 22nd St., Los Angeles, CA 90007, and the undersigned program participant named on the signature page (“Program Participant”). In order to participate in the Technovation program provided by Iridescent Learning, the Program Participant agrees to all terms and conditions set forth in this Agreement.</p>
 
 <h6>1. Program Activities</h6>
 
-<p>Technovation Program Participants participate in activities including: working with Technovation teachers, mentors, and team members; participating in computer programming courses (curriculum available at <http://technovationchallenge.org>); developing of a mobile application business plan and prototype; pitching to investors at Regional Pitch Events; and, if selected, attending the World Pitch event in the San Francisco Bay Area (including traveling to and from the World Pitch location).</p>
+<p>Technovation Program Participants participate in activities including: working with Technovation teachers, mentors, and team members; participating in computer programming courses (curriculum available at http://technovationchallenge.org); developing of a mobile application business plan and prototype; pitching to investors at Regional Pitch Events; and, if selected, attending the World Pitch event in the San Francisco Bay Area (including traveling to and from the World Pitch location).</p>
 
 <h6>2. Media Release</h6>
 
-<p>Iridescent Learning may produce or participate in the production of video, motion picture, audio recording, web page, or still photograph productions, broadcasting, and/or publication which may involve the use of Program Participants’ name, photo, likenesses, or voices. Such productions will be used for non- commercial educational, exhibition, promotional, advertising, or other purposes by Iridescent Learning and will not be sold to other school systems or educational professionals or for commercial use by any person. Such productions may be copied, edited and distributed by Iridescent Learning in the manner described above. The undersigned Program Participant understands and consents that his/her or his/her child’s name, photo, likeness, or voice may be used in the manner described above, and grants Iridescent Learning full rights to use and reuse the video, motion picture, audio recording, web page, or still photograph. The undersigned Program Participant hereby grants this consent without limitation. This release and consent shall inure to the benefits of assigns, licenses and legal representatives of Iridescent Learning as well as the party(ies) for whom Iridescent Learning took the video, motion picture, audio recording, web page or photograph, and the heirs and assigns of Program Participant.</p>
+<p>Iridescent Learning may produce or participate in the production of video, motion picture, audio recording, web page, or still photograph productions, broadcasting, and/or publication which may involve the use of Program Participants’ name, photo, likenesses, or voices. Such productions will be used for non-commercial educational, exhibition, promotional, advertising, or other purposes by Iridescent Learning and will not be sold to other school systems or educational professionals or for commercial use by any person. Such productions may be copied, edited and distributed by Iridescent Learning in the manner described above. The undersigned Program Participant understands and consents that his/her or his/her child’s name, photo, likeness, or voice may be used in the manner described above, and grants Iridescent Learning full rights to use and reuse the video, motion picture, audio recording, web page, or still photograph. The undersigned Program Participant hereby grants this consent without limitation. This release and consent shall inure to the benefits of assigns, licenses and legal representatives of Iridescent Learning as well as the party(ies) for whom Iridescent Learning took the video, motion picture, audio recording, web page or photograph, and the heirs and assigns of Program Participant.</p>
 
 <h6>3. Liability Release</h6>
 
@@ -63,9 +59,10 @@ Technovation</p>
 
 <p>This Agreement may be executed by facsimile or electronically (in PDF format) in one or more counterparts, each of which will be deemed an original, but all of which shall constitute one and the same agreement.</p>
 
+<p>BY SIGNING, I ACKNOWLEDGE THAT I HAVE READ AND UNDERSTOOD ALL OF THE TERMS OF THIS AGREEMENT AND THAT I AM VOLUNTARILY GIVING UP SUBSTANTIAL LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE THE COMPANY.</p>
+
 <%= simple_form_for @parental_consent do |f| %>
   <%= f.input :student_consent_token, as: :hidden %>
-  <%= f.input :consent_confirmation, as: :boolean, label: t("models.parental_consent.consent_confirmation") %>
   <%= label_tag t("models.parental_consent.student_name") %>
   <%= text_field_tag :student_name, f.object.student.full_name, disabled: true %>
   <%= f.input :electronic_signature %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826195512) do
+ActiveRecord::Schema.define(version: 20160906191720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,11 +165,10 @@ ActiveRecord::Schema.define(version: 20160826195512) do
   add_index "mentor_profiles", ["searchable"], name: "index_mentor_profiles_on_searchable", using: :btree
 
   create_table "parental_consents", force: :cascade do |t|
-    t.integer  "consent_confirmation", default: 0, null: false
-    t.string   "electronic_signature",             null: false
-    t.integer  "account_id",                       null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.string   "electronic_signature", null: false
+    t.integer  "account_id",           null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.datetime "voided_at"
   end
 

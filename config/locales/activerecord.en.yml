@@ -29,11 +29,6 @@ en:
             existing_password:
               invalid: "is required to change your email address or password"
 
-        parental_consent:
-          attributes:
-            consent_confirmation:
-              inclusion: "must be confirmed"
-
         regional_ambassador_account:
           attributes:
             existing_password:

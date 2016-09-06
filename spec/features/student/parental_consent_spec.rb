@@ -15,7 +15,6 @@ RSpec.feature "Parental consent" do
     visit new_parental_consent_path(token: student.consent_token)
     click_button "I agree"
     expect(current_path).to eq(parental_consents_path)
-    expect(page).to have_css('.parental_consent_consent_confirmation .error', text: 'must be confirmed')
     expect(page).to have_css('.parental_consent_electronic_signature .error', text: "can't be blank")
   end
 
@@ -24,7 +23,6 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
     visit new_parental_consent_path(token: student.reload.consent_token)
 
-    check "Check this box to confirm your consent"
     fill_in "Electronic signature", with: "Parent M. McGee"
     click_button "I agree"
 
