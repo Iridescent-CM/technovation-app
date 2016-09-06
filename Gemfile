@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq', '~> 4.1.1'
 gem 'airbrake', '~> 5.2.1'
 gem 'createsend', '~> 4.0.2'
+gem 'newrelic_rpm', '~> 3.14.2.312'
 
 gem 'geocoder', '~> 1.2.6'
 gem 'carrierwave', '~> 0.11.2'
