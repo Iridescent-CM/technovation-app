@@ -4,8 +4,8 @@ class StudentAccount < Account
   has_many :memberships, as: :member, dependent: :destroy
   has_many :mentor_invites, foreign_key: :inviter_id
 
-  has_many :join_requests, as: :requestor
-  has_many :team_member_invites, foreign_key: :invitee_id
+  has_many :join_requests, as: :requestor, dependent: :destroy
+  has_many :team_member_invites, foreign_key: :invitee_id, dependent: :destroy
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy, foreign_key: :account_id
 
