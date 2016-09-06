@@ -126,7 +126,9 @@ class StudentAccount < Account
   end
 
   def after_registration
+    super
     ParentMailer.consent_notice(parent_guardian_email, consent_token).deliver_later
+    SubscribeEmailListJob.perform_later(parent_guardian_email, parent_guardian_name, ENV.fetch("PARENT_LIST_ID"))
   end
 
   def age

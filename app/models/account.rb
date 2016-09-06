@@ -99,6 +99,8 @@ class Account < ActiveRecord::Base
   def after_registration
     # Implemented by StudentAccount
     # Implemented by MentorAccount
+    list_id = ENV.fetch("#{type_name.upcase}_LIST_ID")
+    SubscribeEmailListJob.perform_later(email, full_name, list_id)
   end
 
   private

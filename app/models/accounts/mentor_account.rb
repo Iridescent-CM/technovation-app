@@ -76,6 +76,7 @@ class MentorAccount < Account
   end
 
   def after_registration
+    super
     RegistrationMailer.welcome_mentor(self).deliver_later
   end
 end
