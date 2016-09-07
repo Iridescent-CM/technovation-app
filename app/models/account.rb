@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
 
   before_validation :generate_tokens, on: :create
   after_validation :geocode, if: :address_changed?
-  after_validation :subscribe_new_email, if: :email_changed?, on: :update
+  after_validation :update_email_list, on: :update
 
   has_secure_password
 
@@ -102,8 +102,10 @@ class Account < ActiveRecord::Base
   end
 
   private
-  def subscribe_new_email
-    UpdateEmailListJob.perform_later(email_was, email, full_name, list_id)
+  def update_email_list
+    if first_name_changed? or last_name_changed? or email_changed?
+      UpdateEmailListJob.perform_later(email_was, email, full_name, list_id)
+    end
   end
 
   def list_id
