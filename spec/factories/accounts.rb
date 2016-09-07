@@ -36,9 +36,11 @@ FactoryGirl.define do
       unless s.student_profile.present?
         s.build_student_profile(FactoryGirl.attributes_for(:student_profile))
       end
+    end
 
+    after(:create) do |s|
       unless s.parental_consent.present?
-        s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
+        s.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
       end
     end
 
