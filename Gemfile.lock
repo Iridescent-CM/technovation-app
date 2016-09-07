@@ -513,6 +513,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   sidekiq (~> 4.1.1)
   simple_form
+  sinatra
   spring
   timecop
   turbolinks
