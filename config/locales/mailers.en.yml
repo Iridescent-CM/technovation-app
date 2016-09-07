@@ -13,8 +13,7 @@ en:
 
   parent_mailer:
     consent_notice:
-      intro: "Hey there! We're emailing you to let you know your daughter has enrolled in the Technovation Challenge, and she needs your consent to participate. Please review and sign the consent form at the link below. Thank you!"
-      subject: "Your daughter needs consent to participate in the Technovation Challenge!"
+      subject: "Your daughter needs permission to participate in Technovation!"
 
   registration_mailer:
     welcome_mentor:
