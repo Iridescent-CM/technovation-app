@@ -1,0 +1,14 @@
+Hi <%= @first_name %>,
+
+Unfortunately, <%= @team_name %> has declined your request to be <%= @role_name %>.
+
+<%= @extra %>
+
+<% unless @extra_url.blank? %>
+  View team recruitment tips: <%= @extra_url %>
+<% end %>
+
+Browse available teams: <%= @url %>
+
+Best,
+The Technovation Team

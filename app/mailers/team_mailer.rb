@@ -62,15 +62,25 @@ class TeamMailer < ApplicationMailer
 
   private
   def join_request_status(status, type, join_request)
-    @intro = I18n.translate("team_mailer.#{type}_join_request_status.#{status}_intro",
-                            name: join_request.joinable_name)
+    @team_name = join_request.joinable_name
+    @role_name = I18n.translate("team_mailer.#{type}_join_request_status.role_name")
+
     if status == :accepted
       @url = send("#{type}_team_url", join_request.joinable)
+    end
+
+    if status == :declined
+      @extra = I18n.translate("team_mailer.#{type}_join_request_status.declined_extra")
+      @url = send("new_#{type}_team_search_url")
+
+      if type == :student
+        @extra_url = "http://www.technovationchallenge.org/wp-content/uploads/2014/11/RecruitmentTipsAmbassador.pdf"
+      end
     end
 
     mail to: join_request.requestor_email,
       subject: I18n.translate("team_mailer.#{type}_join_request_status.#{status}_subject",
                               name: join_request.joinable_name),
-      template_name: :join_request_status
+      template_name: "join_request_#{status}"
   end
 end

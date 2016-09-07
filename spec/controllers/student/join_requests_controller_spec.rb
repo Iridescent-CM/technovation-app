@@ -48,7 +48,7 @@ RSpec.describe Student::JoinRequestsController do
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
         expect(mail.subject).to eq("Your request to mentor #{team.name} was accepted!")
-        expect(mail.body.parts.last.to_s).to include("#{team.name} accepted your request to be a mentor!")
+        expect(mail.body.parts.last.to_s).to include("#{team.name} accepted your request to be their mentor!")
         expect(mail.body.parts.last.to_s).to include("href=\"#{mentor_team_url(team, host: "www.example.com")}\"")
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Student::JoinRequestsController do
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
         expect(mail.subject).to eq("Your request to mentor #{team.name} was declined")
-        expect(mail.body.parts.last.to_s).to include("#{team.name} has declined your request to be a mentor.")
+        expect(mail.body.parts.last.to_s).to include("#{team.name} has declined your request to be their mentor.")
       end
     end
   end

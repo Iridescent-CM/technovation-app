@@ -1,0 +1,15 @@
+<p>Hi <%= @first_name %>,</p>
+
+<p>Unfortunately, <%= @team_name %> has declined your request to be <%= @role_name %>.</p>
+
+<p><%= @extra %></p>
+
+<% unless @extra_url.blank? %>
+  <p><%= link_to "View team recruitment tips", @extra_url %></p>
+<% end %>
+
+<p><%= link_to "Browse available teams", @url %></p>
+
+<p>Best,<br />
+The Technovation Team</p>
+

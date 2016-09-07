@@ -37,15 +37,13 @@ en:
       subject: "A %{role_name} has requested to join your team!"
 
     mentor_join_request_status:
-      accepted_intro: "Good news! %{name} accepted your request to be a mentor!"
       accepted_subject: "Your request to mentor %{name} was accepted!"
-      declined_intro: "%{name} has declined your request to be a mentor."
+      declined_extra: "Do not worry, there are plenty of other teams out there looking for mentors! Use the link below to browse teams in your area still looking for a mentor, or consider becoming a virtual mentor for teams farther away!"
       declined_subject: "Your request to mentor %{name} was declined"
-      team_link: "You can see your new team here:"
+      role_name: "their mentor"
 
     student_join_request_status:
-      accepted_intro: "Good news! %{name} accepted your request to be a member!"
       accepted_subject: "Your request to join %{name} was accepted!"
-      declined_intro: "%{name} has declined your request to be a member."
+      declined_extra: "Do not worry, there are plenty of other teams out there looking for members! Use the link below to browse available teams or try out these tips to recruit a team of your own!"
       declined_subject: "Your request to join %{name} was declined"
-      team_link: "You can see your new team here:"
+      role_name: "a member"
