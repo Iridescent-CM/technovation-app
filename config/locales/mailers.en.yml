@@ -31,8 +31,9 @@ en:
       subject: "You're invited to join a Technovation team!"
 
     join_request:
-      intro: "Hey there! %{requestor_name} has requested to join your team as a %{role_name}"
-      review_link: "You can review pending requests to join your team here:"
+      extra:
+        mentor: "Please take a minute to approve or decline the mentor request within the next week so that %{name} can reach out to another team if needed."
+        student: ""
       subject: "A %{role_name} has requested to join your team!"
 
     mentor_join_request_status:

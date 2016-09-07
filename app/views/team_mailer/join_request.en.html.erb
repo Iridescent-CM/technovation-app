@@ -1,0 +1,14 @@
+<p>Hi <%= @team_name %>!</p>
+
+<p><%= @first_name %> has requested to join your Technovation team as a <%= @role_name %>.</p>
+
+<% unless @extra.blank? %>
+  <p><%= @extra %></p>
+<% end %>
+
+<p>You can review pending requests to join your team here:</p>
+
+<p><%= link_to @url, @url %></p>
+
+<p>Thanks!<br />
+The Technovation Team</p>

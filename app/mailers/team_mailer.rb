@@ -33,13 +33,15 @@ class TeamMailer < ApplicationMailer
   end
 
   def join_request(recipient, join_request)
-    @requestor_name = join_request.requestor_first_name
+    @first_name = join_request.requestor_first_name
     @role_name = join_request.requestor_type_name
+    @team_name = join_request.joinable_name
+    @extra = I18n.translate("team_mailer.join_request.extra.#{join_request.requestor_type_name}", name: @first_name)
     @url = send("#{recipient.type_name}_team_url", join_request.joinable)
 
     mail to: recipient.email,
-        subject: I18n.translate("team_mailer.join_request.subject",
-                                role_name: join_request.requestor_type_name)
+         subject: I18n.translate("team_mailer.join_request.subject",
+                                 role_name: join_request.requestor_type_name)
   end
 
   def mentor_join_request_accepted(join_request)
