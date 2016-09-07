@@ -3,7 +3,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   belongs_to :regional_ambassador_account, foreign_key: :account_id
 
-  after_update :notify_ambassador, if: :status_changed?
+  after_update :after_status_changed, if: :status_changed?
 
   enum status: %i{pending approved declined}
 
@@ -24,9 +24,15 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   private
-  def notify_ambassador
+  def after_status_changed
     unless pending?
       AmbassadorMailer.public_send(status, account).deliver_later
+    end
+
+    if approved?
+      SubscribeEmailListJob.perform_later(regional_ambassador_account.email,
+                                          regional_ambassador_account.full_name,
+                                          ENV.fetch("REGIONAL_AMBASSADOR_LIST_ID"))
     end
   end
 end
