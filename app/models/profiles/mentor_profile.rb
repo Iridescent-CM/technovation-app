@@ -26,11 +26,17 @@ class MentorProfile < ActiveRecord::Base
 
   def enable_searchability
     update_attributes(searchable: can_enable_searchable?)
+    if can_enable_searchable?
+      SubscribeEmailListJob.perform_later(mentor_account.email,
+                                          mentor_account.full_name,
+                                          ENV.fetch("MENTOR_LIST_ID"))
+    end
   end
 
   def complete_background_check!
     unless background_check_complete?
       update_attributes(background_check_completed_at: Time.current)
+      enable_searchability
     end
   end
 
