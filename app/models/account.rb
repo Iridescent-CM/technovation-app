@@ -97,8 +97,7 @@ class Account < ActiveRecord::Base
   end
 
   def after_registration
-    # Customized by StudentAccount, MentorAccount
-    SubscribeEmailListJob.perform_later(email, full_name, list_id)
+    # Implemented by StudentAccount, MentorAccount
   end
 
   private

@@ -7,6 +7,15 @@ class ParentalConsent < ActiveRecord::Base
 
   delegate :full_name, :consent_token, to: :student, prefix: true
 
+  after_create -> {
+    SubscribeEmailListJob.perform_later(student.email,
+                                        student.full_name,
+                                        ENV.fetch("STUDENT_LIST_ID"))
+    SubscribeEmailListJob.perform_later(student.parent_guardian_email,
+                                        student.parent_guardian_name,
+                                        ENV.fetch("PARENT_LIST_ID"))
+  }
+
   def student_consent_token=(token)
     self.student = StudentAccount.find_by(consent_token: token)
   end
