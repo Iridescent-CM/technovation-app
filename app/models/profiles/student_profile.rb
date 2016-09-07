@@ -17,6 +17,7 @@ class StudentProfile < ActiveRecord::Base
     if parent_guardian_email_changed?
       student_account.void_parental_consent!
       ParentMailer.consent_notice(parent_guardian_email,
+                                  parent_guardian_name,
                                   student_account.consent_token).deliver_later
     end
 
