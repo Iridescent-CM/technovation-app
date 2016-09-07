@@ -22,10 +22,10 @@ en:
   team_mailer:
     invite_member:
       greeting:
-        mentor: "You've been invited to be a mentor for %{name}."
+        mentor: "You are invited to be a mentor for a Technovation team &mdash; %{name}."
         student: "You've been invited join Technovation as a member of %{name}."
       intro:
-        complete_profile: "You can review your invitation here:"
+        complete_profile: "You can review and accept or decline your invitation here:"
         incomplete_profile: "You will need to complete your profile before reviewing this invitation."
         no_profile: "Before you can join the team, you'll need to register for Technovation &mdash; it's free and it won't take long. You can register at the link below:"
       subject: "You're invited to join a Technovation team!"
