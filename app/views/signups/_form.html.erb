@@ -1,5 +1,5 @@
 <% url ||= url_for(signup) %>
-<% title ||= t('views.signups.new.title') %>
+<% title ||= t("views.signups.new.title.#{signup.type_name}") %>
 <% editing ||= false %>
 
 <div class="signup-page">

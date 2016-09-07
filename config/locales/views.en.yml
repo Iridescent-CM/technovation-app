@@ -208,7 +208,7 @@ en:
         descriptions:
           judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
           mentor: "Guide teams as they identify a problem in their community make an app to address it."
-          regional_ambassador: "Coming soon!"
+          regional_ambassador: "Apply now for the opportunity to build and coordinate the Technovation program in your area."
           student: "Assemble a team, connect with mentors and make an app!"
         role_choice: "I am a..."
         roles:
@@ -221,8 +221,16 @@ en:
           location_details: "Location details"
           profile_details: "Profile details"
           profile_image: "Profile image"
-        signup_link: "%{role} sign up"
-        title: "Sign up as a"
+        signup_link:
+          judge: "Judge sign up"
+          mentor: "Mentor sign up"
+          regional_ambassador: "Apply to become a Regional Ambassador"
+          student: "Student sign up"
+        title:
+          judge: "Sign up as a"
+          mentor: "Sign up as a"
+          regional_ambassador: "Apply to become a"
+          student: "Sign up as a"
 
     student:
       join_requests:

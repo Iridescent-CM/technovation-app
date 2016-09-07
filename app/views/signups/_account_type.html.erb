@@ -8,7 +8,7 @@
   <div class="account-description">
     <p><%= t("views.signups.new.descriptions.#{role}") %></p>
 
-    <%= link_to t("views.signups.new.signup_link", role: role.to_s.titleize),
+    <%= link_to t("views.signups.new.signup_link.#{role}"),
                 public_send("#{role}_signup_path"),
                 class: "primary-button" %>
   </div>

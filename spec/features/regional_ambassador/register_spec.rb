@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Regional Ambassadors registration" do
   before do
     visit signup_path
-    click_link "Regional Ambassador sign up"
+    click_link "Apply to become a Regional Ambassador"
 
     fill_in "First name", with: "Regional"
     fill_in "Last name", with: "McGee"
