@@ -1,10 +1,15 @@
 class BackgroundCheckCandidate
   include ActiveModel::Model
+  include ActiveModel::Validations
 
   attr_accessor :first_name, :middle_name, :last_name,
-    :email, :phone, :zipcode, :date_of_birth, :ssn,
-    :driver_license_state, :driver_license_number,
-    :id, :report_id
+    :email, :zipcode, :date_of_birth, :ssn, :driver_license_state,
+    :id, :report_id, :candidate
+
+  validates :first_name, :last_name, :email, :zipcode, :date_of_birth, :ssn,
+    :driver_license_state, presence: true
+
+  validates :driver_license_state, length: { minimum: 2, maximum: 2 }, format: { with: /\A[a-zA-Z]{2}\z/ }
 
   def initialize(attributes = {})
     account = attributes.delete(:account)
@@ -20,18 +25,20 @@ class BackgroundCheckCandidate
   end
 
   def submit
-    candidate = BackgroundCheck::Candidate.new(attributes)
-    begin
-      candidate.submit
-      report = BackgroundCheck::Report.new(candidate_id: candidate.id)
-      report.submit
-      @id = candidate.id
-      @report_id = report.id
-      true
-    rescue Checkr::InvalidRequestError => e
-      invalid_fields = e.message.split(' is invalid').map { |s| s.gsub(', ', '') }
-      apply_errors(invalid_fields)
-      false
+    @candidate = BackgroundCheck::Candidate.new(attributes)
+    if valid?
+      begin
+        candidate.submit
+        report = BackgroundCheck::Report.new(candidate_id: candidate.id)
+        report.submit
+        @id = candidate.id
+        @report_id = report.id
+        true
+      rescue Checkr::InvalidRequestError => e
+        invalid_fields = e.message.split(' is invalid').map { |s| s.gsub(', ', '') }
+        apply_errors(invalid_fields)
+        false
+      end
     end
   end
 
@@ -42,12 +49,10 @@ class BackgroundCheckCandidate
            "middle_name" => @middle_name,
            "last_name" => @last_name,
            "email" => @email,
-           "phone" => @phone,
            "zipcode" => @zipcode,
            "dob" => @date_of_birth,
            "ssn" => @ssn,
            "driver_license_state" => @driver_license_state,
-           "driver_license_number" => @driver_license_number,
          }.map { |k, v| [k, (v || "").strip] }]
   end
 
@@ -56,8 +61,6 @@ class BackgroundCheckCandidate
       if name == "State cannot be empty is not a valid US state" or
           name.include?("is not a valid US state")
         errors.add(:driver_license_state, :invalid)
-      elsif name.downcase.include?("driver's license number must only contain")
-        errors.add(:driver_license_number, :invalid)
       elsif name.include?("must have SSN")
         errors.add(:ssn, :blank)
       else

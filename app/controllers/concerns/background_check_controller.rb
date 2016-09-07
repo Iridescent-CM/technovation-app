@@ -33,8 +33,7 @@ module BackgroundCheckController
   private
   def candidate_params
     params.require(:background_check_candidate)
-          .permit(:first_name, :middle_name, :last_name, :email, :phone,
-                  :zipcode, :date_of_birth, :ssn, :driver_license_state,
-                  :driver_license_number)
+          .permit(:first_name, :middle_name, :last_name, :email, :zipcode,
+                  :date_of_birth, :ssn, :driver_license_state)
   end
 end

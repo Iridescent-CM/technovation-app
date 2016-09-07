@@ -7,7 +7,6 @@
   <%= f.input :last_name %>
 
   <%= f.input :email, as: :email %>
-  <%= f.input :phone, as: :tel, placeholder: '555-123-1234' %>
 
   <%= f.input :zipcode, as: :integer %>
 
@@ -15,16 +14,14 @@
 
   <%= f.input :ssn, placeholder: '999-99-9999' %>
 
-  <%= f.input :driver_license_number %>
   <%= f.input :driver_license_state, placeholder: "XX" %>
 
   <p>
     <strong>We do NOT store any sensitive information.</strong><br />
     This form is submitted directly &amp; securely to our screening service
-    <%= link_to "Checkr",
-                "https://checkr.com/product/screenings/",
-                rel: "noopener noreferrer",
-                target: "_bank" %>.
+    <%= link_to "Checkr", "https://checkr.com/product/screenings/",
+                          rel: "noopener noreferrer",
+                          target: "_bank" %>.
   </p>
 
   <%= f.button :submit, "Submit your background check" %>
