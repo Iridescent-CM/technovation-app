@@ -7,6 +7,10 @@ class Team < ActiveRecord::Base
   scope :past, -> { joins(season_registrations: :season)
                     .where.not(id: current.select(:id).uniq) }
 
+  scope :without_mentor, -> {
+    where.not(id: Membership.where(member_type: "MentorAccount").pluck(:joinable_id))
+  }
+
   after_create :register_to_season
 
   has_many :season_registrations, as: :registerable

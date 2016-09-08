@@ -57,4 +57,10 @@ RSpec.describe Team do
 
     expect(Team.past).not_to include(current_team)
   end
+
+  it "has a no mentor scope" do
+    team = FactoryGirl.create(:team)
+    FactoryGirl.create(:team, :with_mentor)
+    expect(Team.without_mentor).to eq([team])
+  end
 end
