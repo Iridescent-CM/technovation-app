@@ -7,7 +7,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   enum status: %i{pending approved declined}
 
-  validates :organization_company_name, :ambassador_since_year, :bio, presence: true
+  validates :organization_company_name, :ambassador_since_year, :job_title, :bio, presence: true
 
   def background_check_complete?
     not regional_ambassador_account.country == "US" or !!background_check_completed_at
