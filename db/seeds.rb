@@ -57,3 +57,25 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
   mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 end
+
+if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
+                                          password: "ra@ra.com",
+                                          password_confirmation: "ra@ra.com",
+                                          regional_ambassador_profile_attributes: {
+                                            organization_company_name: "Iridescent",
+                                            ambassador_since_year: "I'm new!",
+                                            job_title: "Software Engineer",
+                                            bio: "I am passionate about tech and empowering girls",
+                                            background_check_completed_at: Time.current,
+                                          },
+                                          first_name: "RA",
+                                          last_name: "Ambassador",
+                                          date_of_birth: Date.today - 34.years,
+                                          city: "Chicago",
+                                          state_province: "IL",
+                                          country: "US",
+                                          pre_survey_completed_at: Time.current,
+                                         )).valid?
+  ra.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
+  puts "Created RA: #{ra.email} with password #{ra.password}"
+end
