@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resource :account, only: [:show, :edit, :update]
 
     resources :background_checks, only: [:new, :create, :show]
+    resources :teams, only: [:index]
   end
 
   namespace :judge do

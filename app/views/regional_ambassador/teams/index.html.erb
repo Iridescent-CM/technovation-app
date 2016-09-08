@@ -1,0 +1,15 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= t("models.team.name") %></th>
+    </tr>
+  </head>
+
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
