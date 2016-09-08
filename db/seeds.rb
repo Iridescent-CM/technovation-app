@@ -16,6 +16,13 @@ if (student = StudentAccount.create(email: "student@student.com",
                                    )).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts "Created Student: #{student.email} with password #{student.password}"
+
+  if (team = Team.create(name: "All Star Team",
+                        description: "We are allstars",
+                        division: Division.none_assigned)).valid?
+    team.add_student(student)
+    puts "Added student to Team: #{team.name}"
+  end
 end
 
 if (mentor = MentorAccount.create(email: "mentor@mentor.com",
@@ -34,6 +41,13 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   country: "US",
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
+
+  if (team = Team.create(name: "Fun Times Team",
+                        description: "We are fun times havers",
+                        division: Division.none_assigned)).valid?
+    team.add_mentor(mentor)
+    puts "Added mentor to Team: #{team.name}"
+  end
 end
 
 if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
