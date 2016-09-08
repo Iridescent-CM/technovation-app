@@ -68,7 +68,6 @@ end
 
 group :qa, :production do
   gem 'rails_12factor'
-  gem "hirefire-resource"
   gem 'hiredis'
 end
 
