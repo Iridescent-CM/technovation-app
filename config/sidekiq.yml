@@ -2,10 +2,10 @@ development:
   :concurrency: 5
 
 production:
-  :concurrency: 20
+  :concurrency: 22
 
 qa:
-  :concurrency: 20
+  :concurrency: 22
 
 :queues:
   - default
