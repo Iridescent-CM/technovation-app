@@ -1,6 +1,6 @@
 if Rails.env.production? or Rails.env.qa?
   Sidekiq.configure_client do |config|
-    config.redis = { size: 3, url: ENV["REDIS_URL"] }
+    config.redis = { size: ENV["SIDEKIQ_CLIENT_SIZE"], url: ENV["REDIS_URL"] }
   end
 
   Sidekiq.configure_server do |config|
