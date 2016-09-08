@@ -2,10 +2,10 @@ development:
   concurrency: 5
 
 production:
-  concurrency: 17
+  concurrency: 16
 
 qa:
-  concurrency: 17
+  concurrency: 16
 
 queues:
   - default
