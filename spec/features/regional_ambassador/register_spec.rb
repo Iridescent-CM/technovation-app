@@ -10,9 +10,7 @@ RSpec.feature "Regional Ambassadors registration" do
 
     select_date Date.today - 31.years, from: "Date of birth"
 
-    select "United States", from: "Country"
-    fill_in "State / Province", with: "IL"
-    fill_in "City", with: "Chicago"
+    fill_in "Postal code -OR- City & State/Province", with: 60647
 
     fill_in "Organization/company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Engineer"

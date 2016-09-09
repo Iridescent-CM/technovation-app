@@ -11,17 +11,13 @@ FactoryGirl.define do
     end
 
     transient do
-      creator_in "Chicago, IL, US"
+      creator_in "Chicago, IL"
       members_count 1
     end
 
     after(:create) do |team, evaluator|
-      city, state, country = evaluator.creator_in.split(', ')
-
       evaluator.members_count.times do
-        team.add_student(FactoryGirl.create(:student, city: city,
-                                                      state_province: state,
-                                                      country: country))
+        team.add_student(FactoryGirl.create(:student, geocoded: evaluator.creator_in))
       end
     end
   end

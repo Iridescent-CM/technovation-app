@@ -13,6 +13,12 @@ RSpec.feature "Edit account spec" do
     expect(page).to have_content("original@email.com")
   end
 
+  scenario "edit geocoded info" do
+    click_link "Edit"
+    expect(page).to have_css('input[value="Chicago, IL, United States"]')
+    fill_in "Postal code -OR- City & State/Province", with: 60647
+  end
+
   scenario "edit login info" do
     click_link "Edit"
     fill_in "Email", with: "something@else.com"

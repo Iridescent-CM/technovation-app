@@ -9,9 +9,7 @@ RSpec.feature "Register as a judge" do
 
     select_date Date.today - 31.years, from: "Date of birth"
 
-    select "United States", from: "Country"
-    fill_in "State / Province", with: "IL"
-    fill_in "City", with: "Chicago"
+    fill_in "Postal code -OR- City & State/Province", with: 60647
 
     fill_in "Company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Coming of age Storywriter"
@@ -31,5 +29,9 @@ RSpec.feature "Register as a judge" do
 
   scenario "How did you hear is saved" do
     expect(JudgeAccount.last.referred_by).to eq("Company email")
+  end
+
+  scenario "Address info is figured out" do
+    expect(JudgeAccount.last.address_details).to eq("Chicago, IL, United States")
   end
 end

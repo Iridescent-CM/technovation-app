@@ -9,9 +9,7 @@ RSpec.feature "Register as a mentor" do
 
     select_date Date.today - 31.years, from: "Date of birth"
 
-    select "United States", from: "Country"
-    fill_in "State / Province", with: "IL"
-    fill_in "City", with: "Chicago"
+    fill_in "Postal code -OR- City & State/Province", with: "Chicago, IL"
 
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
@@ -25,5 +23,9 @@ RSpec.feature "Register as a mentor" do
 
   scenario "Redirected to mentor dashboard" do
     expect(current_path).to eq(mentor_dashboard_path)
+  end
+
+  scenario "Address details saved" do
+    expect(MentorAccount.last.address_details).to eq("Chicago, IL, United States")
   end
 end

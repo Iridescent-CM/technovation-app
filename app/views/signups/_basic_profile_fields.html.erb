@@ -9,6 +9,11 @@
                                        end_year: f.object.oldest_birth_year,
                                        input_html: { class: "account_dob" } %>
 
+<%= f.input :geocoded, input_html: {
+                         value: (f.object.address_details unless f.object.city.blank?),
+                       },
+                       label: t("models.account.geocoded") %>
+
 <% if editing %>
   <h6 id="account-profile-image" class="signup-section">
     <%= t("views.signups.new.section_headers.profile_image") %>
@@ -18,15 +23,3 @@
   <%= f.input :profile_image %>
   <%= f.input :profile_image_cache, as: :hidden %>
 <% end %>
-
-<h6 class="signup-section">
-  <%= t("views.signups.new.section_headers.location_details") %>
-</h6>
-
-<%= f.input :city %>
-
-<%= f.input :state_province, label: t('models.account.state_province') %>
-
-<%= f.input :country, collection: CountryStateSelect.countries_collection,
-                      input_html: { id: "account_country" } %>
-

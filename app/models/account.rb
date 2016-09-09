@@ -1,17 +1,25 @@
 class Account < ActiveRecord::Base
-  attr_accessor :existing_password, :skip_existing_password
+  attr_accessor :existing_password, :skip_existing_password, :geocoded
 
   enum referred_by: %w{Friend Colleague Article Internet Social\ media
                        Print Web\ search Teacher Parent/family Company\ email
                        Made\ With\ Code Other}
 
-  geocoded_by :address_details
+  geocoded_by :geocoded
+  reverse_geocoded_by :latitude, :longitude do |account, results|
+    if geo = results.first
+      account.city = geo.city
+      account.state_province = geo.state_code
+      account.country = geo.country_code
+    end
+  end
 
   mount_uploader :profile_image, ImageUploader
 
   before_validation :generate_tokens, on: :create
-  after_validation :geocode, if: :address_changed?
   after_validation :update_email_list, on: :update
+  before_validation :geocode, :reverse_geocode,
+    unless: -> { geocoded.blank?  or geocoded == address_details }
 
   has_secure_password
 

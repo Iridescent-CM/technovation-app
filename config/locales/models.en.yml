@@ -5,6 +5,7 @@ en:
       class_name: "account"
       first_name: "First name"
       full_name: "Name"
+      geocoded: "Postal code -OR- City & State/Province"
       referred_by: "How did you hear about Technovation?"
       referred_by_other: "Please specify"
       state_province: "State / Province"

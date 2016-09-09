@@ -1,12 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  let!(:available_team) { FactoryGirl.create(:team, creator_in: "Chicago, IL, US") }
+  let!(:available_team) { FactoryGirl.create(:team, creator_in: "Chicago, IL") }
 
   before do
-    mentor = FactoryGirl.create(:mentor, city: "Chicago",
-                                         state_province: "IL",
-                                         country: "US")
+    mentor = FactoryGirl.create(:mentor, geocoded: "Chicago, IL")
 
     sign_in(mentor)
 
@@ -14,8 +12,8 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "browse nearby teams that don't have a mentor" do
-    mentored_team = FactoryGirl.create(:team, :with_mentor, creator_in: "Chicago, IL, US")
-    faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA, US")
+    mentored_team = FactoryGirl.create(:team, :with_mentor, creator_in: "Chicago, IL")
+    faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA, United States")
 
     click_link "Browse available teams"
 

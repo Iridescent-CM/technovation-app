@@ -8,10 +8,8 @@ RSpec.feature "Students request to join a team" do
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team, creator_in: "Chicago, IL, US") }
-    let!(:student) { FactoryGirl.create(:student, city: "Chicago",
-                                                  state_province: "IL",
-                                                  country: "US") }
+    let!(:team) { FactoryGirl.create(:team, creator_in: "Chicago, IL") }
+    let!(:student) { FactoryGirl.create(:student, geocoded: "60647") }
 
     before do
       ActionMailer::Base.deliveries.clear

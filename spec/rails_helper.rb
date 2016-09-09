@@ -30,6 +30,7 @@ RSpec.configure do |config|
         'longitude'    => -118.256551,
         'address'      => 'Los Angeles, CA, USA',
         'state'        => 'California',
+        'city'         => 'Los Angeles',
         'state_code'   => 'CA',
         'country'      => 'United States',
         'country_code' => 'US',
@@ -41,7 +42,60 @@ RSpec.configure do |config|
         'latitude'     => 41.50196838,
         'longitude'    => -87.64051818,
         'address'      => 'Chicago, IL, USA',
-        'state'        => 'Chicago',
+        'state'        => 'Illinois',
+        'city'         => 'Chicago',
+        'state_code'   => 'IL',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "60647", [{
+        'latitude'     => 41.50196838,
+        'longitude'    => -87.64051818,
+        'address'      => 'Chicago, IL, USA',
+        'state'        => 'Illinois',
+        'city'         => 'Chicago',
+        'state_code'   => 'IL',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "Chicago, IL", [{
+        'latitude'     => 41.50196838,
+        'longitude'    => -87.64051818,
+        'address'      => 'Chicago, IL, USA',
+        'state'        => 'Illinois',
+        'city'         => 'Chicago',
+        'state_code'   => 'IL',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      [41.50196838, -87.64051818], [{
+        'latitude'     => 41.50196838,
+        'longitude'    => -87.64051818,
+        'address'      => 'Chicago, IL, USA',
+        'state'        => 'Illinois',
+        'city'         => 'Chicago',
+        'state_code'   => 'IL',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      [34.052363, -118.256551], [{
+        'latitude'     => 41.50196838,
+        'longitude'    => -87.64051818,
+        'address'      => 'Chicago, IL, USA',
+        'state'        => 'Illinois',
+        'city'         => 'Chicago',
         'state_code'   => 'IL',
         'country'      => 'United States',
         'country_code' => 'US',

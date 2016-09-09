@@ -8,9 +8,7 @@ FactoryGirl.define do
     first_name { "Factory" }
     last_name { "Account" }
 
-    city { "Chicago" }
-    state_province { "IL" }
-    country { "US" }
+    geocoded "60647"
     type { "Account" }
 
     pre_survey_completed_at Time.current
