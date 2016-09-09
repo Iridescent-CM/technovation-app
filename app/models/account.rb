@@ -10,7 +10,10 @@ class Account < ActiveRecord::Base
     if geo = results.first
       account.city = geo.city
       account.state_province = geo.state_code
-      account.country = geo.country_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      account.country = country.alpha2
     end
   end
 
