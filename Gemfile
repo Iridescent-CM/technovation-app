@@ -65,7 +65,7 @@ group :test do
   gem 'webmock'
 end
 
-group :qa, :production do
+group :qa, :staging, :production do
   gem 'rails_12factor'
   gem 'hiredis'
 end
