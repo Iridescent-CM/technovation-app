@@ -1,6 +1,33 @@
-//
-// Brand Colors
-//
+/*
+ * Device Sizes
+ */
+$device-xs: 540px;
+$device-sm: 768px;
+$device-md: 992px;
+$device-lg: 1200px;
+$max-width: $device-lg;
+
+/*
+ * Font Sizes
+ */
+$font-size-base: 14px;
+$h1: 2rem;
+$h2: 1.8rem;
+$h3: 1.5rem;
+$h4: 1.25rem;
+$h5: 1.125rem;
+$h6: 1.1rem;
+
+/*
+ * Measurements
+ */
+$nav-height: 80px;
+
+// Previously existing variables below:
+
+/*
+ * Colors
+ */
 $shamrock: #5ABF94;
 $shamrock-mid: #28A880;
 $shamrock-dark: #006540;

@@ -1,25 +1,27 @@
-#{$all-buttons} {
+.primary-button,
+.secondary-button,
+.transparent-button,
+.transparent-accent-button, {
+  -webkit-font-smoothing: antialiased;
   appearance: none;
   background-color: $action-color;
-  border: 0;
   border-radius: 20px;
+  border: 0;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1;
+  font-family: $heading-font-family;
+  font-size: 1rem;
   letter-spacing: normal;
+  line-height: 1;
+  min-width: 150px;
   padding: $small-spacing $base-spacing;
   text-decoration: none;
+  text-transform: uppercase;
   transition: background-color $base-duration $base-timing;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-
-  font-family: $heading-font-family;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  min-width: 150px;
 
 
   &:hover,
@@ -43,20 +45,14 @@
   }
 }
 
-// the above affects all input buttons, but if you want to style a link as a button, you need to use one of the classes below
 .primary-button {
-  @extend #{$all-buttons};
-  @extend #{$all-buttons};
   text-align: center;
   padding: $small-spacing $base-spacing;
-  font-size: 1rem;
 }
 
 .secondary-button {
-  @extend #{$all-buttons};
   text-align: center;
   padding: $small-spacing;
-  font-size: 1rem;
   background-color: #fff;
   color: $shamrock;
 
@@ -68,10 +64,8 @@
 }
 
 .transparent-button {
-  @extend #{$all-buttons};
   text-align: center;
   padding: $small-spacing;
-  font-size: 1rem;
   background-color: transparent;
   border: $base-border;
   border-color: #fff;
@@ -85,12 +79,10 @@
 }
 
 .transparent-accent-button {
-  @extend #{$all-buttons};
   text-align: center;
   padding: $small-spacing;
   line-height: 1;
   vertical-align: middle;
-  font-size: 1rem;
   background-color: transparent;
   border: $base-border;
   border-color: $marine;

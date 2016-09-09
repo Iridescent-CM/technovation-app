@@ -1,0 +1,77 @@
+.flex-container {
+  box-sizing: border-box;
+  margin: 0 auto;
+
+  @media (min-width: $device-sm) {
+    max-width: $device-sm;
+  }
+
+  @media (min-width: $device-md) {
+    max-width: $device-md;
+  }
+
+  @media (min-width: $device-lg) {
+    max-width: $device-lg;
+  }
+}
+
+.flex-row {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-row--align-v-center {
+  align-items: center;
+}
+
+.flex-row--align-v-bottom {
+  align-items: flex-end;
+}
+
+.flex-row--align-h-center {
+  justify-content: center;
+}
+
+.flex-row--align-h-right {
+  justify-content: flex-end;
+}
+
+.flex-row--reverse {
+  flex-direction: row-reverse;
+}
+
+@for $i from 1 through 12 {
+  .flex-col-xs-#{$i},
+  .flex-col-sm-#{$i},
+  .flex-col-md-#{$i},
+  .flex-col-lg-#{$i} {
+    box-sizing: border-box;
+    padding: 1em;
+    width: 100%;
+  }
+
+  .flex-col-xs-#{$i} {
+    @media (min-width: $device-xs) {
+      width: calc(100% * (#{$i} / 12));
+    }
+  }
+
+  .flex-col-sm-#{$i} {
+    @media (min-width: $device-sm) {
+      width: calc(100% * (#{$i} / 12));
+    }
+  }
+
+  .flex-col-md-#{$i} {
+    @media (min-width: $device-md) {
+      width: calc(100% * (#{$i} / 12));
+    }
+  }
+
+  .flex-col-lg-#{$i} {
+    @media (min-width: $device-lg) {
+      width: calc(100% * (#{$i} / 12));
+    }
+  }
+}

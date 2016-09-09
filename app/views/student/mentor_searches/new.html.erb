@@ -1,16 +1,18 @@
-<div class="sidebar">
-  <%= render 'student/mentor_searches/filter_options' %>
-</div>
+<div class="flex-row student-mentor-searches">
+  <div class="flex-col-4-md">
+    <%= render 'student/mentor_searches/filter_options' %>
+  </div>
 
-<div class="content">
-  <h1><%= t("views.student.mentor_searches.title") %></h1>
+  <div class="flex-col-8-md">
+    <h1><%= t("views.student.mentor_searches.title") %></h1>
 
-  <p><%= t("views.student.mentor_searches.intro") %></p>
+    <p><%= t("views.student.mentor_searches.intro") %></p>
 
-  <%= render(partial: 'student/mentor_searches/mentor_preview',
-             collection: @mentors,
-             cached: true) or
-        t("views.student.mentor_searches.none_found") %>
+    <%= render(partial: 'student/mentor_searches/mentor_preview',
+               collection: @mentors,
+               cached: true) or
+          t("views.student.mentor_searches.none_found") %>
 
-  <%= will_paginate @mentors %>
+    <%= will_paginate @mentors %>
+  </div>
 </div>

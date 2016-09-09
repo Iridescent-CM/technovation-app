@@ -1,34 +1,31 @@
-@import "base";
+// 3rd Party Libs
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "refills/tables-minimal";
+@import "refills/flashes";
+@import "refills/pagination";
+@import "refills/footer-2";
+@import "refills/button-group";
+@import "refills/badges";
 @import "font-awesome";
 @import "chosen";
-@import "containers";
 
-@import "refills/footer-2";
-@import 'refills/button-group';
-@import 'refills/badges';
+// Technovation
 
-@import 'technovation';
+// Dan's Styles Below
+@import "partials/variables";
+@import "base/base";
+@import "vendor/normalize";
+@import "partials/variables";
+@import "layout/grid-flex";
+// Dan's Styles Above
+
+@import "technovation";
 @import "mentor_search";
 @import "teams";
 @import "scores";
 @import "accounts";
 @import "signups";
 @import "dashboards";
-
-.last {
-  @include omega;
-}
-
-dd {
-  margin-bottom: 1rem;
-}
-
-.sidebar {
-  @include span-columns(3);
-}
-
-.content {
-  @include span-columns(9);
-  @include omega;
-}
-
+@import "containers";
