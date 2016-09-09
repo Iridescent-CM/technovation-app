@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
       country = Country.find_country_by_name(geo.country_code) ||
                   Country.find_country_by_alpha3(geo.country_code) ||
                     Country.find_country_by_alpha2(geo.country_code)
-      account.country = country.alpha2
+      account.country = country.try(:alpha2)
     end
   end
 
