@@ -1,0 +1,128 @@
+{
+  "name": "technovation-app",
+  "scripts": {
+  },
+  "env": {
+    "ACTIVE_JOB_BACKEND": {
+      "required": true
+    },
+    "ADMIN_PASSWORD": {
+      "required": true
+    },
+    "AIRBRAKE_PROJECT_KEY": {
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_BUCKET_NAME": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "BING_GEOCODER_KEY": {
+      "required": true
+    },
+    "CAMPAIGN_MONITOR_API_KEY": {
+      "required": true
+    },
+    "CHECKR_API_KEY": {
+      "required": true
+    },
+    "DEPLOY_TASKS": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_GOLD_URL": {
+      "required": true
+    },
+    "HIREFIRE_TOKEN": {
+      "required": true
+    },
+    "HOST_DOMAIN": {
+      "required": true
+    },
+    "JUDGE_LIST_ID": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LEGACY_DATABASE_URL": {
+      "required": true
+    },
+    "MAIL_ADDRESS": {
+      "required": true
+    },
+    "MAIL_DOMAIN": {
+      "required": true
+    },
+    "MAIL_PASSWORD": {
+      "required": true
+    },
+    "MAIL_PORT": {
+      "required": true
+    },
+    "MAIL_USER": {
+      "required": true
+    },
+    "MAX_THREADS": {
+      "required": true
+    },
+    "MENTOR_LIST_ID": {
+      "required": true
+    },
+    "PARENT_LIST_ID": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "REGIONAL_AMBASSADOR_LIST_ID": {
+      "required": true
+    },
+    "S3_BUCKET_NAME": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SIDEKIQ_CLIENT_SIZE": {
+      "required": true
+    },
+    "STUDENT_LIST_ID": {
+      "required": true
+    },
+    "WEB_CONCURRENCY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1
+    },
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "airbrake",
+    "loaderio",
+    "newrelic",
+    "heroku-postgresql",
+    "heroku-postgresql",
+    "heroku-redis",
+    "sendgrid"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "https://github.com/gunpowderlabs/buildpack-ruby-rake-deploy-tasks"
+    }
+  ]
+}
