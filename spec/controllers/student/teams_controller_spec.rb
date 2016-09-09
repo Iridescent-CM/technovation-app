@@ -11,6 +11,7 @@ RSpec.describe Student::TeamsController do
       }.to change { Team.count }.from(0).to 1
 
       expect(student.team).to eq(Team.last)
+      expect(student.team.seasons).to eq([Season.current])
     end
 
     it "does not create teams for students already on a team" do

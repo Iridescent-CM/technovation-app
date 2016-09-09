@@ -98,6 +98,8 @@ class Team < ActiveRecord::Base
 
   private
   def register_to_season
-    RegisterToSeasonJob.perform_later(self)
+    if season_ids.empty?
+      RegisterToSeasonJob.perform_later(self)
+    end
   end
 end

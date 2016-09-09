@@ -18,7 +18,7 @@ class Season < ActiveRecord::Base
   end
 
   def self.for(record)
-    season_year = if record.created_at < switch_date
+    season_year = if record.created_at < switch_date(record.created_at.year)
                     record.created_at.year
                   else
                     record.created_at.year + 1
@@ -28,7 +28,7 @@ class Season < ActiveRecord::Base
                       starts_at: Time.new(season_year, 1, 1, 9, 0, 0, "-08:00"))
   end
 
-  def self.switch_date
-    Date.new(Time.current.year, 8, 1)
+  def self.switch_date(year = Time.current.year)
+    Date.new(year, 8, 1)
   end
 end

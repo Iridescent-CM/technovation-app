@@ -46,6 +46,7 @@ module TeamController
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_account)
         tapped["#{account_type}_ids"] = current_account.id
+        tapped[:season_ids] = [Season.current.id]
       end
     end
   end

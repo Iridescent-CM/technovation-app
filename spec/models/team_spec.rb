@@ -63,4 +63,9 @@ RSpec.describe Team do
     FactoryGirl.create(:team, :with_mentor)
     expect(Team.without_mentor).to eq([team])
   end
+
+  it "registers to past seasons" do
+    team = FactoryGirl.create(:team, created_at: Time.new(2015, 8, 1, 0, 0, 0, "-08:00"))
+    expect(team.seasons.map(&:year)).to eq([2016])
+  end
 end
