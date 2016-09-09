@@ -2,6 +2,8 @@
   <thead>
     <tr>
       <th><%= t("models.team.name") %></th>
+      <th><%= t("models.team.students") %></th>
+      <th><%= t("views.application.actions") %></th>
     </tr>
   </head>
 
@@ -9,6 +11,8 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.name %></td>
+        <td><%= team.students.collect(&:full_name).to_sentence %></td>
+        <td><%= link_to t("views.application.view"), team %></td>
       </tr>
     <% end %>
   </tbody>
