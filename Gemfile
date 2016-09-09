@@ -35,7 +35,6 @@ gem 'font-awesome-rails', '~> 4.6.3.1'
 gem 'chosen-rails'
 gem 'simple_form'
 gem 'nested_form_fields'
-gem 'country_state_select', '~> 3.0.2'
 gem 'countries', '~> 1.2.5', require: "countries/global"
 gem 'will_paginate', '~> 3.1.0'
 

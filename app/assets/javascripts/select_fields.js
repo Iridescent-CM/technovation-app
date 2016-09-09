@@ -1,32 +1,4 @@
 (function() {
-  var countrySelectFields = {
-    eventList: 'turbolinks:load',
-
-    countryFieldId: 'account_country',
-
-    stateFieldId: 'account_state_province',
-
-    cityFieldId: 'account_city',
-
-    init: function() {
-      return $(document).on(this.eventList, this.initCountrySelect.bind(this));
-    },
-
-    initCountrySelect: function(e) {
-      return CountryStateSelect({
-        chosen_ui: true,
-        chosen_options: {
-          disable_search_threshold: 10,
-        },
-        country_id: this.countryFieldId,
-      });
-    },
-  };
-
-  countrySelectFields.init();
-}());
-
-(function() {
   var accountDobFields = {
     eventList: 'turbolinks:load',
 
