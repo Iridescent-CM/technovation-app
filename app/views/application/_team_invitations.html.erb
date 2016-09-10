@@ -7,7 +7,7 @@
         <ul>
           <% account.pending_team_invitations.each do |invitation| %>
             <li>
-              <%= invitation.team_name %>&nbsp;&ndash;
+              <%= invitation.team_name %>&nbsp;&mdash;
               <%= link_to t("views.application.review"),
                           send("#{account.type_name}_#{invite_type}_invite_path", invitation) %>
             </li>
