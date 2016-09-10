@@ -1,7 +1,6 @@
 class TeamMailer < ApplicationMailer
   def invite_member(invite)
     @greeting = I18n.translate("team_mailer.invite_member.greeting.student", name: invite.team_name)
-    @team_url = team_url(invite.team)
 
     if invite.invitee && invite.invitee.can_join_a_team?
       @url = student_team_member_invite_url(invite)
@@ -19,7 +18,6 @@ class TeamMailer < ApplicationMailer
 
   def invite_mentor(invite)
     @greeting = I18n.translate("team_mailer.invite_member.greeting.mentor", name: invite.team_name)
-    @team_url = team_url(invite.team)
 
     if CompletionSteps.new(invite.invitee).unlocked?(new_mentor_team_search_url)
       @url = mentor_mentor_invite_url(invite)
