@@ -60,6 +60,7 @@ class TeamMailer < ApplicationMailer
 
   private
   def join_request_status(status, type, join_request)
+    @first_name = join_request.requestor_first_name
     @team_name = join_request.joinable_name
     @role_name = I18n.translate("team_mailer.#{type}_join_request_status.role_name")
 
