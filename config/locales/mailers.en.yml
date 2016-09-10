@@ -18,6 +18,8 @@ en:
   registration_mailer:
     welcome_mentor:
       subject: "Welcome to the Technovation Mentor Community!"
+    welcome_student:
+      subject: "Welcome to Technovation %{season_year}!"
 
   team_mailer:
     invite_member:

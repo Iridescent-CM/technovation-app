@@ -127,6 +127,7 @@ class StudentAccount < Account
 
   def after_registration
     super
+    RegistrationMailer.welcome_student(self).deliver_later
     ParentMailer.consent_notice(parent_guardian_email, parent_guardian_name, consent_token).deliver_later
   end
 

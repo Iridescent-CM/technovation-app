@@ -28,6 +28,13 @@ RSpec.describe Student::SignupsController do
       expect(response).to redirect_to(student_dashboard_path)
     end
 
+    it "emails the welcome email to the student" do
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
+      mail = ActionMailer::Base.deliveries
+      expect(mail.map(&:to)).to include([StudentAccount.last.email])
+      expect(mail.map(&:subject)).to include("Welcome to Technovation #{Season.current.year}!")
+    end
+
     it "emails the consent form to the parent" do
       expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
       mail = ActionMailer::Base.deliveries.last
