@@ -29,6 +29,8 @@ en:
         incomplete_profile: "You will need to complete your profile before reviewing this invitation."
         no_profile: "Before you can join the team, you'll need to register for Technovation — it's free and it won't take long. You can register at the link below:"
       subject: "You're invited to join a Technovation team!"
+    invite_mentor:
+      subject: "You're invited to be a mentor for a Technovation team!"
 
     join_request:
       extra:
