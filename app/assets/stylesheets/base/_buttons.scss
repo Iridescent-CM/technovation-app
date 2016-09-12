@@ -1,7 +1,4 @@
-.primary-button,
-.secondary-button,
-.transparent-button,
-.transparent-accent-button, {
+#{$all-buttons} {
   -webkit-font-smoothing: antialiased;
   appearance: none;
   background-color: $action-color;
@@ -11,7 +8,7 @@
   cursor: pointer;
   display: inline-block;
   font-family: $heading-font-family;
-  font-size: 1rem;
+  font-size: 0.875rem;
   letter-spacing: normal;
   line-height: 1;
   min-width: 150px;
@@ -45,52 +42,61 @@
   }
 }
 
+// the above affects all input buttons, but if you want to style a link as a button, you need to use one of the classes below
 .primary-button {
-  text-align: center;
+  @extend #{$all-buttons};
+  font-size: 1rem;
   padding: $small-spacing $base-spacing;
+  text-align: center;
 }
 
 .secondary-button {
-  text-align: center;
-  padding: $small-spacing;
+  @extend #{$all-buttons};
   background-color: #fff;
   color: $shamrock;
+  font-size: 1rem;
+  padding: $small-spacing;
+  text-align: center;
 
   &:hover,
   &:focus {
-    color: $shamrock-mid;
     background-color: $light-grey;
+    color: $shamrock-mid;
   }
 }
 
 .transparent-button {
-  text-align: center;
-  padding: $small-spacing;
+  @extend #{$all-buttons};
   background-color: transparent;
-  border: $base-border;
   border-color: #fff;
+  border: $base-border;
   color: #fff;
+  font-size: 1rem;
+  padding: $small-spacing;
+  text-align: center;
 
   &:hover,
   &:focus {
-    color: $shamrock;
     background-color: #fff;
+    color: $shamrock;
   }
 }
 
 .transparent-accent-button {
-  text-align: center;
-  padding: $small-spacing;
-  line-height: 1;
-  vertical-align: middle;
+  @extend #{$all-buttons};
   background-color: transparent;
-  border: $base-border;
   border-color: $marine;
+  border: $base-border;
   color: $marine;
+  font-size: 1rem;
+  line-height: 1;
+  padding: $small-spacing;
+  text-align: center;
+  vertical-align: middle;
 
   &.header {
-    color: $lemon;
     border-color: $lemon;
+    color: $lemon;
 
     &:hover,
     &:focus {
