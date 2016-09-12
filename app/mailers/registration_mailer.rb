@@ -28,6 +28,6 @@ class RegistrationMailer < ApplicationMailer
     @root_url = root_url
 
     mail to: student.email,
-         subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+         subject: t("registration_mailer.welcome_student.subject", season_year: Season.current.year)
   end
 end
