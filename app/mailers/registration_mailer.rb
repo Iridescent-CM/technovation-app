@@ -1,15 +1,13 @@
 class RegistrationMailer < ApplicationMailer
   def welcome_mentor(mentor)
     @first_name = mentor.first_name
-    @contact_name = "Allie Glotfelty"
-    @contact_position = "Events and Engagement Director"
-    @contact_email = "allie@technovationchallenge.org"
-    @contact_first_name = "Allie"
+    @infographic_url = "https://infograph.venngage.com/infograph/publish/02844b99-420b-4016-8c13-1426fc29fbe7"
     @edit_account_url = edit_mentor_account_url
-    @upload_photo_url = mentor_account_url
-    @edit_bio_url = edit_mentor_account_url(anchor: "account-profile-details")
+    @training_url = "http://www.iridescentuniversity.org/lms/"
+    @slack_url = "https://technovationmentors.slack.com/signup"
+    @root_url = root_url
 
-    mail to: mentor.email, from: @contact_email
+    mail to: mentor.email, from: "<Monica Gregg> monica@technovationchallenge.org"
   end
 
   def welcome_student(student)
