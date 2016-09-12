@@ -20,4 +20,14 @@ class RegistrationMailer < ApplicationMailer
     mail to: student.email,
          subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
   end
+
+  def welcome_made_with_code_student(student)
+    @dashboard_url = student_dashboard_url
+    @safety_url = ""
+    @activities_url = ""
+    @root_url = root_url
+
+    mail to: student.email,
+         subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+  end
 end
