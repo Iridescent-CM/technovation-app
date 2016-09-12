@@ -1,5 +1,8 @@
 class AmbassadorMailer < ApplicationMailer
   def approved(ambassador)
+    @season_year = Season.current.year
+    @root_url = root_url
+    @training_url = "http://iridescentlearning.org/internet-safety/"
     mail to: ambassador.email
   end
 
