@@ -6,6 +6,8 @@ class RegistrationMailer < ApplicationMailer
     @training_url = "http://www.iridescentuniversity.org/lms/"
     @slack_url = "https://technovationmentors.slack.com/signup"
     @root_url = root_url
+    @example_profile_image_url = image_url("silhouette-male.png")
+    @monica_image_url = image_url("monica.jpg")
 
     mail to: mentor.email,
          from: "Monica Gregg <monica@technovationchallenge.org>",
