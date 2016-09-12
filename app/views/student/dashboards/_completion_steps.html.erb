@@ -16,12 +16,22 @@
                 <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %>
               </span>
 
+              <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
+              <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
+                          edit_student_account_path(anchor: "account-profile-details") %><br />
+              <%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %><br />
+
               <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
                           student_parental_consent_notice_path, data: { method: :post } %>
             <% else %>
               <%= link_to t("views.profile_requirements.parental_consent.links.send_link.text"),
                           new_student_parental_consent_notice_path %>
-              <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %>
+              <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %><br />
+
+              <%= mail_to "info@technovationchallenge.org",
+                          t("views.profile_requirements.parental_consent.links.contact_us.text"),
+                          subject: "Parental consent form help" %>
+              <%= t("views.profile_requirements.parental_consent.links.contact_us.postfix") %>
             <% end %>
           </li>
         </ul>

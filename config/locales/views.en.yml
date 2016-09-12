@@ -176,11 +176,18 @@ en:
       parental_consent:
         label: "Your parent or guardian must sign the consent form that was emailed to them"
         links:
+          contact_us:
+            postfix: "if your parent or guardian does not have an email address."
+            text: "Contact us for help"
           resend:
             text: "Re-send the link to the consent form"
           send_link:
             text: "Email a link"
             postfix: "to the electronic consent form to my parent or guardian."
+          trouble:
+            postfix: "A new email will be sent if you update the address.<br />Also have them check their spam folder. If the email is there, they should add 'info@technovationchallenge.org' to their contacts."
+            prefix: "Trouble receiving the email?"
+            text: "Double check the email address."
 
       pre_program_survey:
         label: "Complete the pre-program survey"
