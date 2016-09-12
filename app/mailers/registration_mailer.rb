@@ -8,7 +8,7 @@ class RegistrationMailer < ApplicationMailer
     @root_url = root_url
 
     mail to: mentor.email,
-         from: "<Monica Gregg> monica@technovationchallenge.org",
+         from: "Monica Gregg <monica@technovationchallenge.org>",
          subject: t("registration_mailer.welcome_mentor.subject", season_year: Season.current.year)
   end
 
