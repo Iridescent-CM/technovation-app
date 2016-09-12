@@ -178,6 +178,9 @@ en:
         links:
           resend:
             text: "Re-send the link to the consent form"
+          send_link:
+            text: "Email a link"
+            postfix: "to the electronic consent form to my parent or guardian."
 
       pre_program_survey:
         label: "Complete the pre-program survey"
@@ -259,6 +262,12 @@ en:
         find_a_mentor: "Find a mentor"
         join_team: "Join a team"
         my_team: "My team"
+
+      parental_consent_notices:
+        form:
+          submit: "Send the link"
+        new:
+          title: "Send an electronic consent form to your parent or guardian"
 
       signups:
         new:

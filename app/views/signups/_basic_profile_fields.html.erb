@@ -1,5 +1,3 @@
-<% editing ||= false %>
-
 <%= f.input :first_name %>
 
 <%= f.input :last_name %>
@@ -14,7 +12,7 @@
                        },
                        label: t("models.account.geocoded") %>
 
-<% if editing %>
+<% if f.object.persisted? %>
   <h6 id="account-profile-image" class="signup-section">
     <%= t("views.signups.new.section_headers.profile_image") %>
   </h6>

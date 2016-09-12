@@ -10,8 +10,19 @@
       <% unless current_student.parental_consent.present? %>
         <ul>
           <li>
-            <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
-                        student_parental_consent_notice_path, data: { method: :post } %>
+            <% if current_student.student_profile.parent_guardian_email.present? %>
+              <span class="crossed-off">
+                <%= t("views.profile_requirements.parental_consent.links.send_link.text") %>
+                <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %>
+              </span>
+
+              <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
+                          student_parental_consent_notice_path, data: { method: :post } %>
+            <% else %>
+              <%= link_to t("views.profile_requirements.parental_consent.links.send_link.text"),
+                          new_student_parental_consent_notice_path %>
+              <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %>
+            <% end %>
           </li>
         </ul>
       <% end %>

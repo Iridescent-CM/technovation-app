@@ -13,8 +13,6 @@ class StudentAccount < Account
   accepts_nested_attributes_for :student_profile
   validates_associated :student_profile
 
-  validate :parent_email_doesnt_match_account_email
-
   after_save -> { team.present? && team.reconsider_division },
     if: :date_of_birth_changed?
 
@@ -128,7 +126,10 @@ class StudentAccount < Account
   def after_registration
     super
     RegistrationMailer.welcome_student(self).deliver_later
-    ParentMailer.consent_notice(parent_guardian_email, parent_guardian_name, consent_token).deliver_later
+
+    if parent_guardian_email.present?
+      ParentMailer.consent_notice(parent_guardian_email, parent_guardian_name, consent_token).deliver_later
+    end
   end
 
   def age
@@ -146,14 +147,6 @@ class StudentAccount < Account
   end
 
   private
-  def parent_email_doesnt_match_account_email
-    if parent_guardian_email == email
-      errors.add(:email, :matches_parent_email)
-    else
-      true
-    end
-  end
-
   class NullTeam
     def has_mentor?
       false

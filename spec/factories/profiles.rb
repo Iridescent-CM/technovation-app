@@ -1,8 +1,6 @@
 FactoryGirl.define do
   factory :student_profile do
     school_name { "FactoryGirl High" }
-    parent_guardian_name { "Thoughtbot" }
-    parent_guardian_email { "factorygirl@thoughtbot.com" }
     association(:student_account)
   end
 

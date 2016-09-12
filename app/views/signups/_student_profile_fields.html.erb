@@ -1,11 +1,6 @@
 <%= f.fields_for :student_profile do |s| %>
   <%= s.input :school_name %>
-
-  <%= s.input :parent_guardian_name,
-              label: t('models.student_profile.parent_guardian_name') %>
-
-  <%= s.input :parent_guardian_email,
-              label: t('models.student_profile.parent_guardian_email'),
-              hint: t("views.student.signups.new.parent_guardian_email.help_text"),
-              as: :email %>
+  <% if s.object.persisted? %>
+    <%= render 'signups/student_profile_parental_fields', f: s %>
+  <% end %>
 <% end %>

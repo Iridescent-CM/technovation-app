@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
 
-    resource :parental_consent_notice, only: :create
+    resource :parental_consent_notice, only: [:new, :create]
   end
 
   namespace :mentor do

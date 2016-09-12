@@ -1,12 +1,11 @@
 <% url ||= url_for(signup) %>
 <% title ||= t("views.signups.new.title.#{signup.type_name}") %>
-<% editing ||= false %>
 
 <div class="signup-page">
   <h2>
     <%= title %>
 
-    <% unless editing %>
+    <% unless signup.persisted? %>
       <span class="accent">
         <%= t("views.signups.new.roles.#{signup.type_name}") %>
       </span>
@@ -19,7 +18,7 @@
 
       <p><%= t("views.signups.form.required_fields") %></p>
 
-      <%= render 'signups/basic_profile_fields', f: f, editing: editing %>
+      <%= render 'signups/basic_profile_fields', f: f %>
 
       <h6 id="account-profile-details" class="signup-section">
         <%= t("views.signups.new.section_headers.profile_details") %>
@@ -36,7 +35,7 @@
       <%= f.input :password_confirmation,
                   label: t('views.signups.form.confirm_password') %>
 
-      <% if editing %>
+      <% if f.object.persisted? %>
         <%= yield(f) %>
       <% else %>
         <%= f.input :referred_by,

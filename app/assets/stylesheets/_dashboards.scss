@@ -61,6 +61,11 @@
       display: block;
       text-decoration: line-through;
       color: #999;
+
+      a {
+        pointer-events: none;
+        cursor: default;
+      }
     }
   }
 }

@@ -1,0 +1,7 @@
+<h2><%= t("views.student.parental_consent_notices.new.title") %></h2>
+
+<%= simple_form_for current_student.student_profile, url: [:student, :parental_consent_notice], method: :post do |f| %>
+  <%= render 'signups/student_profile_parental_fields', f: f %>
+
+  <%= f.button :submit, t("views.student.parental_consent_notices.form.submit") %>
+<% end %>
