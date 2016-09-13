@@ -1,5 +1,9 @@
 .account-info {
   padding: 0 0 0 1em;
+
+  dd {
+    word-wrap: break-word;
+  }
 }
 
 .account-basic,
