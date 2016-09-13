@@ -1,11 +1,11 @@
 class Team < ActiveRecord::Base
   mount_uploader :team_photo, TeamPhotoUploader
 
-  scope :current, -> { joins(season_registrations: :season)
+  scope :current, -> { eager_load(season_registrations: :season)
                        .where("seasons.year = ?", Season.current.year) }
 
-  scope :past, -> { joins(season_registrations: :season)
-                    .where.not(id: current.select(:id).uniq) }
+  scope :past, -> { eager_load(season_registrations: :season)
+                    .where.not(id: current.pluck(:id).uniq) }
 
   scope :without_mentor, -> {
     where.not(id: Membership.where(member_type: "MentorAccount").pluck(:joinable_id))
@@ -19,8 +19,8 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :students, -> { order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
-  has_many :mentors, -> { order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
+  has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
+  has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
 
   has_many :submissions, dependent: :destroy
 

@@ -1,5 +1,5 @@
 class MentorAccount < Account
-  default_scope { joins(:mentor_profile).includes(mentor_profile: :expertises) }
+  default_scope { eager_load(:mentor_profile) }
 
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile
@@ -12,7 +12,7 @@ class MentorAccount < Account
   has_many :team_member_invites, foreign_key: :inviter_id
 
   scope :by_expertise_ids, ->(ids) {
-    joins(mentor_profile: :mentor_profile_expertises)
+    eager_load(mentor_profile: :mentor_profile_expertises)
     .where("mentor_profile_expertises.expertise_id IN (?)", ids)
     .uniq
   }
@@ -48,7 +48,7 @@ class MentorAccount < Account
   end
 
   def teams
-    @teams ||= Team.joins(:memberships).where('memberships.member_id = ?', id)
+    @teams ||= Team.eager_load(:memberships).where('memberships.member_id = ?', id)
   end
 
   def team_ids

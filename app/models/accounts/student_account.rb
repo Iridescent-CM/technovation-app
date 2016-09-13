@@ -104,7 +104,7 @@ class StudentAccount < Account
   end
 
   def teams
-    Team.joins(:memberships).where("memberships.member_id = ?", id)
+    Team.eager_load(:memberships).where("memberships.member_id = ?", id)
   end
 
   def oldest_birth_year
@@ -116,7 +116,7 @@ class StudentAccount < Account
   end
 
   def invited_mentor?(mentor)
-    MentorInvite.pending.where(team: team).flat_map(&:invitee).include?(mentor)
+    MentorInvite.pending.where(team: team, invitee: mentor).any?
   end
 
   def void_parental_consent!

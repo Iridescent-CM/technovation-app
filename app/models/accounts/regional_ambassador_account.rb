@@ -1,5 +1,5 @@
 class RegionalAmbassadorAccount < Account
-  default_scope { joins(:regional_ambassador_profile) }
+  default_scope { eager_load(:regional_ambassador_profile) }
 
   scope :pending, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:pending]) }
   scope :approved, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:approved]) }
