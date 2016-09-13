@@ -43,6 +43,11 @@ GEM
       airbrake-ruby (~> 1.2)
     airbrake-ruby (1.2.1)
     arel (6.0.3)
+    asset_sync (1.2.1)
+      activemodel
+      fog (>= 1.8.0)
+      mime-types
+      unf
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -443,6 +448,7 @@ PLATFORMS
 DEPENDENCIES
   active_record_query_trace
   airbrake (~> 5.2.1)
+  asset_sync
   bcrypt (~> 3.1.7)
   capybara-webkit
   carrierwave (~> 0.11.2)

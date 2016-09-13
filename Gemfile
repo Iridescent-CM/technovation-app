@@ -18,6 +18,7 @@ gem 'newrelic_rpm', '~> 3.14.2.312'
 
 gem 'sinatra'
 gem "rack-timeout"
+gem 'asset_sync'
 
 gem 'geocoder', '~> 1.2.6'
 gem 'carrierwave', '~> 0.11.2'
