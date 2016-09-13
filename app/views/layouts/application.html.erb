@@ -29,6 +29,13 @@
       <div class="main-content">
         <%= yield %>
       </div>
+
+      <footer id="site-footer">
+        <p>
+          <%= link_to t("views.application.terms_of_use"), "http://iridescentlearning.org/terms-of-use/" %>&nbsp;|
+          <%= link_to t("views.application.privacy_policy"), "http://iridescentlearning.org/privacy-policy/" %>
+        </p>
+      </footer>
     </div>
 
     <%= javascript_include_tag 'application', data: { turbolinks_eval: false } %>

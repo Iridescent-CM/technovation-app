@@ -25,13 +25,14 @@ en:
       confirm_declined: "Are you sure you want to decline %{name}?"
       create: "Create %{thing}"
       danger_zone: "Danger Zone"
+      declined: "decline"
       edit: "Edit"
       filter: "Filter"
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
       invite: "Send invite"
       no: "No"
       or: "or"
-      declined: "decline"
+      privacy_policy: "Privacy policy"
       review: "review"
       review_now: "Review now"
       save: "Save"
@@ -42,6 +43,7 @@ en:
       teams:
         show:
           members_subheading: "Members"
+      terms_of_use: "Terms of Use"
       yes: "Yes"
 
     accounts:
