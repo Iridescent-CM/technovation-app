@@ -17,7 +17,7 @@ if (student = StudentAccount.create(email: "student@student.com",
 
   if (team = Team.create(name: "All Star Team",
                         description: "We are allstars",
-                        division: Division.none_assigned)).valid?
+                        division: Division.none_assigned_yet)).valid?
     team.add_student(student)
     puts "Added student to Team: #{team.name}"
   end
@@ -40,7 +40,7 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
 
   if (team = Team.create(name: "Fun Times Team",
                         description: "We are fun times havers",
-                        division: Division.none_assigned)).valid?
+                        division: Division.none_assigned_yet)).valid?
     team.add_mentor(mentor)
     puts "Added mentor to Team: #{team.name}"
   end
