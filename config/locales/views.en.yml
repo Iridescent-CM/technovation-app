@@ -176,7 +176,7 @@ en:
         complete_previous_steps: "Complete steps above to enable this step"
 
       parental_consent:
-        label: "Your parent or guardian must sign the consent form that was emailed to them"
+        label: "You need permission from your parent or guardian to participate in Technovation."
         links:
           contact_us:
             postfix: "if your parent or guardian does not have an email address."
