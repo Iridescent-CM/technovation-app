@@ -1,29 +1,29 @@
 class Division < ActiveRecord::Base
-  DIVISION_A_AGE = 14
+  SENIOR_DIVISION_AGE = 15
 
-  enum name: [:a, :b, :none_assigned]
+  enum name: [:senior, :junior, :none_assigned_yet]
 
   validates :name, uniqueness: { case_sensitive: false },
                    presence: true,
                    inclusion: { in: names.keys + names.values + names.keys.map(&:to_sym) }
 
-  def self.a
-    find_or_create_by(name: names[:a])
+  def self.senior
+    find_or_create_by(name: names[:senior])
   end
 
-  def self.b
-    find_or_create_by(name: names[:b])
+  def self.junior
+    find_or_create_by(name: names[:junior])
   end
 
-  def self.none_assigned
-    find_or_create_by(name: names[:none_assigned])
+  def self.none_assigned_yet
+    find_or_create_by(name: names[:none_assigned_yet])
   end
 
   def self.for(record)
     if !!record
       division_for(record)
     else
-      none_assigned
+      none_assigned_yet
     end
   end
 
@@ -35,20 +35,20 @@ class Division < ActiveRecord::Base
     when "Team"
       division_by_team_ages(record)
     else
-      none_assigned
+      none_assigned_yet
     end
   end
 
   def self.division_by_age(account)
-    account.age < DIVISION_A_AGE ? b : a
+    account.age < SENIOR_DIVISION_AGE ? junior : senior
   end
 
   def self.division_by_team_ages(team)
     divisions = team.reload.students.collect { |s| division_by_age(s) }
     if divisions.any?
-      divisions.flat_map(&:name).include?(a.name) ? a : b
+      divisions.flat_map(&:name).include?(senior.name) ? senior : junior
     else
-      none_assigned
+      none_assigned_yet
     end
   end
 end

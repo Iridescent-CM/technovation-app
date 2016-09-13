@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :team do
     sequence(:name) { |n| "Go Team Factory Girl #{n}!" }
     description { "Made with <3 by FactoryGirl" }
-    division { Division.a }
+    division { Division.senior }
 
     trait :with_mentor do
       after(:create) do |team, _|

@@ -9,7 +9,7 @@ RSpec.describe Team do
     team.add_student(older_student)
     team.add_student(younger_student)
 
-    expect(team.division).to eq(Division.a)
+    expect(team.division).to eq(Division.senior)
   end
 
   it "assigns to the correct division if a student updates their birthdate" do
@@ -22,7 +22,7 @@ RSpec.describe Team do
 
     older_student.update_attributes(date_of_birth: 13.years.ago)
 
-    expect(team.reload.division).to eq(Division.b)
+    expect(team.reload.division).to eq(Division.junior)
   end
 
   it "reconsiders division when a student leaves the team" do
@@ -34,7 +34,7 @@ RSpec.describe Team do
     team.add_student(younger_student)
     team.remove_student(older_student)
 
-    expect(team.reload.division).to eq(Division.b)
+    expect(team.reload.division).to eq(Division.junior)
   end
 
   it "scopes to past seasons" do
