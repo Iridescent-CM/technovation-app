@@ -58,8 +58,8 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_mailer.asset_host = "//#{ENV['ASSET_BUCKET']}.s3.amazonaws.com"
-  config.action_controller.asset_host = "#{ENV['ASSET_BUCKET']}.s3.amazonaws.com"
+  config.action_mailer.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
 
   # Ignore bad email addresses and do not raise email delivery errors.
