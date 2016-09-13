@@ -1,21 +1,34 @@
-.account-basic {
-  @include span-columns(4);
-}
-
-.account-special {
-  @include span-columns(8);
-  @include omega;
-}
-
 .account-info {
-  @include span-columns(9);
-  @include omega;
+  padding: 0 0 0 1em;
+}
+
+.account-basic,
+.account-special {
+  padding-top: 0;
+}
+
+@media screen and (max-width: $device-sm) {
+  .account-info,
+  .account-basic,
+  .account-special {
+    padding: 0;
+  }
 }
 
 .profile-avatar {
-  @include span-columns(3);
+  align-self: flex-start;
+  margin-bottom: $large-spacing / 2;
   text-align: center;
-  img { margin-bottom: $small-spacing; }
+
+  img {
+    height: auto;
+    margin-bottom: $small-spacing;
+
+    &::after {
+      content: '';
+      display: block;
+    }
+  }
 }
 
 .account {
@@ -25,6 +38,9 @@
     text-align: center;
     margin-bottom: $small-spacing;
     color: $mulberry;
-    .accent { color: $shamrock; }
+
+    .accent {
+      color: $shamrock;
+    }
   }
 }

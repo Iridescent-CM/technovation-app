@@ -6,36 +6,38 @@
   <h3><%= title %></h3>
 </div>
 
-<div class="well profile-avatar">
-  <% if url %>
-    <%= render 'accounts/profile_image_upload', url: url %>
-  <% else %>
-    <%= image_tag account.profile_image_url %>
-  <% end %>
-</div>
+<div class="flex-row">
+  <div class="flex-col-sm-3 well profile-avatar">
+    <% if url %>
+      <%= render 'accounts/profile_image_upload', url: url %>
+    <% else %>
+      <%= image_tag account.profile_image_url %>
+    <% end %>
+  </div>
 
-<div class="account-info">
-  <dl class="account-basic">
-    <dt><%= t('models.account.full_name') %></dt>
-    <dd><%= account.full_name %></dd>
+  <div class="flex-row flex-col-sm-9 account-info">
+    <dl class="flex-col-sm-6 account-basic">
+      <dt><%= t('models.account.full_name') %></dt>
+      <dd><%= account.full_name %></dd>
 
-    <dt><%= t('models.account.email') %></dt>
-    <dd><%= account.email %></dd>
+      <dt><%= t('models.account.email') %></dt>
+      <dd><%= account.email %></dd>
 
-    <dt><%= t('models.account.date_of_birth') %></dt>
-    <dd><%= account.date_of_birth %></dd>
+      <dt><%= t('models.account.date_of_birth') %></dt>
+      <dd><%= account.date_of_birth %></dd>
 
-    <dt><%= t('models.account.address') %></dt>
-    <dd><%= account.address_details %></dd>
-  </dl>
-
-  <div class="account-special">
-    <dl>
-      <%= render "#{account.type_name}/accounts/profile", account: account %>
+      <dt><%= t('models.account.address') %></dt>
+      <dd><%= account.address_details %></dd>
     </dl>
 
-    <% if edit %>
-      <%= link_to t('views.accounts.show.edit'), edit_account_path %>
-    <% end %>
+    <div class="flex-col-sm-6 account-special">
+      <dl>
+        <%= render "#{account.type_name}/accounts/profile", account: account %>
+      </dl>
+
+      <% if edit %>
+        <%= link_to t('views.accounts.show.edit'), edit_account_path %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -4,22 +4,24 @@
   <h3><%= title %></h3>
 </div>
 
-<div class="well profile-avatar">
-  <%= image_tag account.profile_image_url %>
-</div>
+<div class="flex-row">
+  <div class="flex-col-sm-3 well profile-avatar">
+    <%= image_tag account.profile_image_url %>
+  </div>
 
-<div class="account-info">
-  <dl class="account-basic">
-    <dt><%= t('models.account.first_name') %></dt>
-    <dd><%= account.first_name %></dd>
+  <div class="flex-row flex-col-sm-9 account-info">
+    <dl class="flex-col-sm-6 account-basic">
+      <dt><%= t('models.account.first_name') %></dt>
+      <dd><%= account.first_name %></dd>
 
-    <dt><%= t('models.account.address') %></dt>
-    <dd><%= account.address_details %></dd>
-  </dl>
-
-  <div class="account-special">
-    <dl>
-      <%= render "#{account.type_name}/accounts/public_profile", account: account %>
+      <dt><%= t('models.account.address') %></dt>
+      <dd><%= account.address_details %></dd>
     </dl>
+
+    <div class="flex-col-sm-6 account-special">
+      <dl>
+        <%= render "#{account.type_name}/accounts/public_profile", account: account %>
+      </dl>
+    </div>
   </div>
 </div>
