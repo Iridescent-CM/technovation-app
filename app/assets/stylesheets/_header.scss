@@ -1,46 +1,46 @@
-header {
+$nav-content-height: 60px;
+
+.navigation {
   background-image: image-url("header-background.png");
   background-repeat: repeat-x;
   background-color: $mulberry;
   display: block;
-  padding: $base-spacing 0;
+  padding: $base-spacing 0 calc(#{$base-spacing} + 3px);
 
   @include media($xlarge-screen) {
-    padding: $base-spacing $small-spacing;
+    padding: $base-spacing $small-spacing calc(#{$base-spacing} + 3px);
   }
 
   .logo {
+    height: $nav-content-height;
+
     img {
-      height: 60px;
+      height: $nav-content-height;
       display: inline-block;
-      margin-top: 5px;
     }
   }
 
-  nav  {
-    float: right;
-    margin-top: 10px;
+  ul {
+    list-style-type: none;
+    text-align: right;
+  }
 
-    ul {
-      list-style-type: none;
-      text-align: right;
-      height: 60px;
-      display: table;
+  .nav-link a {
+    align-items: center;
+    color: white;
+    display: flex;
+    height: $nav-content-height;
+    line-height: 0;
+    padding-left: $base-spacing;
 
-      li {
-        display: table-cell;
-        vertical-align: middle;
-        padding-left: $base-spacing;
-
-        a {
-          color: white;
-          line-height: 0px;
-          &:hover,
-          &:focus {
-            color: $shamrock;
-          }
-        }
-      }
+    &:hover,
+    &:focus {
+      color: $shamrock;
     }
   }
+}
+
+
+.navigation__content-wrapper {
+  justify-content: space-between;
 }
