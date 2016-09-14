@@ -9,11 +9,13 @@
 
   <tbody>
     <% @teams.each do |team| %>
-      <tr>
-        <td><%= team.name %></td>
-        <td><%= team.students.collect(&:full_name).to_sentence %></td>
-        <td><%= link_to t("views.application.view"), team %></td>
-      </tr>
+      <% cache(team) do %>
+        <tr>
+          <td><%= team.name %></td>
+          <td><%= team.students.collect(&:full_name).to_sentence %></td>
+          <td><%= link_to t("views.application.view"), team %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

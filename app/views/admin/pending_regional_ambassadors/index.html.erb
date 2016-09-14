@@ -9,11 +9,13 @@
 
   <tbody>
     <% @pending_regional_ambassadors.each do |ambassador| %>
-      <tr>
-        <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
-        <td><%= ambassador.email %></td>
-        <td><%= ambassador.address_details %></td>
-      </tr>
+      <% cache(ambassador) do %>
+        <tr>
+          <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
+          <td><%= ambassador.email %></td>
+          <td><%= ambassador.address_details %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

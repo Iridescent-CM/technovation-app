@@ -1,7 +1,9 @@
 <% if teams.any? %>
   <ul class="mentor-teams">
     <% teams.each do |team| %>
-      <li><%= link_to team.name, [:mentor, team] %></li>
+      <% cache(team) do %>
+        <li><%= link_to team.name, [:mentor, team] %></li>
+      <% end %>
     <% end %>
   </ul>
 <% else %>

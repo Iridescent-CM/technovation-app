@@ -6,18 +6,20 @@
 
     <table class="pending_invitees">
       <% invites.each do |invite| %>
-        <tr>
-          <td><%= invite.public_send(preview_method) %></td>
-          <td>
-            <%= link_to t("controllers.invites.destroy.link"),
-                        [account_type, invite],
-                        data: {
-                          method: :delete,
-                          confirm: t("controllers.invites.destroy.confirm",
-                                    name: invite.invitee_name),
-                        } %>
-          </td>
-        </tr>
+        <% cache(invite) do %>
+          <tr>
+            <td><%= invite.public_send(preview_method) %></td>
+            <td>
+              <%= link_to t("controllers.invites.destroy.link"),
+                          [account_type, invite],
+                          data: {
+                            method: :delete,
+                            confirm: t("controllers.invites.destroy.confirm",
+                                      name: invite.invitee_name),
+                          } %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
   </div>

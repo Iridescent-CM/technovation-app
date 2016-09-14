@@ -12,26 +12,28 @@
       </thead>
       <tbody>
         <% requests.each do |join_request| %>
-          <tr>
-            <td>
-              <%= link_to join_request.requestor_first_name,
-                          send("#{account_type}_#{join_request.requestor.type_name}_path", join_request.requestor) %>
-            </td>
+          <% cache(join_request) do %>
+            <tr>
+              <td>
+                <%= link_to join_request.requestor_first_name,
+                            send("#{account_type}_#{join_request.requestor.type_name}_path", join_request.requestor) %>
+              </td>
 
-            <td><%= join_request.requestor_type_name %></td>
+              <td><%= join_request.requestor_type_name %></td>
 
-            <td>
-              <% %i{approved declined}.each.with_index do |action, i| %>
-                <%= link_to t("views.application.#{action}"),
-                            [account_type, join_request, status: action],
-                            data: {
-                              method: :put,
-                              confirm: t("views.application.confirm_#{action}",
-                                        name: join_request.requestor_first_name),
-                            } %><% if i == 0 %>&nbsp;|<% end %>
-              <% end %>
-            </td>
-          </tr>
+              <td>
+                <% %i{approved declined}.each.with_index do |action, i| %>
+                  <%= link_to t("views.application.#{action}"),
+                              [account_type, join_request, status: action],
+                              data: {
+                                method: :put,
+                                confirm: t("views.application.confirm_#{action}",
+                                          name: join_request.requestor_first_name),
+                              } %><% if i == 0 %>&nbsp;|<% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

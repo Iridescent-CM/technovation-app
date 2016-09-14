@@ -13,16 +13,18 @@
 
   <tbody>
     <% @scores.each do |score| %>
-      <tr>
-        <td><%= score.team_name %></td>
-        <td><%= score.total %></td>
-        <td>
-          <%= link_to(
-                t('views.application.edit'),
-                edit_judge_submission_score_path(score.submission, score)
-              ) %>
-        </td>
-      </tr>
+      <% cache(score) do %>
+        <tr>
+          <td><%= score.team_name %></td>
+          <td><%= score.total %></td>
+          <td>
+            <%= link_to(
+                  t('views.application.edit'),
+                  edit_judge_submission_score_path(score.submission, score)
+                ) %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

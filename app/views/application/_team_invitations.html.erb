@@ -6,11 +6,13 @@
       <% if account.pending_team_invitations.any? %>
         <ul>
           <% account.pending_team_invitations.each do |invitation| %>
-            <li>
-              <%= invitation.team_name %>&nbsp;&mdash;
-              <%= link_to t("views.application.review"),
-                          send("#{account.type_name}_#{invite_type}_invite_path", invitation) %>
-            </li>
+            <% cache(invitation) do %>
+              <li>
+                <%= invitation.team_name %>&nbsp;&mdash;
+                <%= link_to t("views.application.review"),
+                            send("#{account.type_name}_#{invite_type}_invite_path", invitation) %>
+              </li>
+            <% end %>
           <% end %>
         </ul>
       <% elsif account.can_join_a_team? %>
@@ -26,7 +28,9 @@
       <% if account.pending_team_requests.any? %>
         <ul>
           <% account.pending_team_requests.each do |team_request| %>
-            <li><%= link_to team_request.joinable_name, team_request.joinable %></li>
+            <% cache(team_request) do %>
+              <li><%= link_to team_request.joinable_name, team_request.joinable %></li>
+            <% end %>
           <% end %>
         </ul>
       <% elsif account.can_join_a_team? %>

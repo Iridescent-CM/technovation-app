@@ -10,9 +10,11 @@
   </h1>
 
   <% mentor_preview.expertises.each do |expertise| %>
-    <span class="mentor_expertise badge-<%= @search_filter.badge_css(expertise) %>">
-      <%= expertise.name %>
-    </span>
+    <% cache(expertise) do %>
+      <span class="mentor_expertise badge-<%= @search_filter.badge_css(expertise) %>">
+        <%= expertise.name %>
+      </span>
+    <% end %>
   <% end %>
 
   <% if mentor_preview.is_on_team? %>

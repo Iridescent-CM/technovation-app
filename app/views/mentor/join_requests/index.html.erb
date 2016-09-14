@@ -14,10 +14,12 @@
 
   <tbody>
     <% @join_requests.each do |join_request| %>
-      <tr>
-        <td><%= join_request.joinable_name %></td>
-        <td><%= join_request.status %></td>
-      </tr>
+      <% cache(join_request) do %>
+        <tr>
+          <td><%= join_request.joinable_name %></td>
+          <td><%= join_request.status %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
