@@ -9,7 +9,9 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     first_name: "Student",
                                     last_name: "McGee",
                                     date_of_birth: Date.today - 14.years,
-                                    geocoded: "60622",
+                                    city: "Chicago",
+                                    state_province: "IL",
+                                    country: "US",
                                     pre_survey_completed_at: Time.current,
                                    )).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
@@ -34,7 +36,9 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   first_name: "Mentor",
                                   last_name: "McGee",
                                   date_of_birth: Date.today - 34.years,
-                                  geocoded: "Boulder, CO",
+                                  city: "Boulder",
+                                  state_province: "CO",
+                                  country: "US",
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 
@@ -59,7 +63,9 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                   first_name: "Mentor",
                                   last_name: "McGee",
                                   date_of_birth: Date.today - 34.years,
-                                  geocoded: "Evanston, IL",
+                                  city: "Evanston",
+                                  state_province: "IL",
+                                  country: "US",
                                  )).valid?
   mentor.update_column(:profile_image, "foo/bar/baz.png")
   mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
@@ -79,7 +85,9 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                           first_name: "RA",
                                           last_name: "Ambassador",
                                           date_of_birth: Date.today - 34.years,
-                                          geocoded: "60647",
+                                          city: "Chicago",
+                                          state_province: "IL",
+                                          country: "US",
                                           pre_survey_completed_at: Time.current,
                                          )).valid?
   ra.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))

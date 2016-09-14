@@ -8,7 +8,12 @@ FactoryGirl.define do
     first_name { "Factory" }
     last_name { "Account" }
 
-    geocoded "60647"
+    city "Chicago"
+    state_province "IL"
+    country "US"
+    latitude 41.50196838
+    longitude { -87.64051818 }
+
     type { "Account" }
 
     pre_survey_completed_at Time.current
