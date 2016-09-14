@@ -38,10 +38,30 @@
 }
 
 .team-memberships {
+  align-items: flex-start;
+  display: flex;
+  width: 100%;
+
+  @media screen and (max-width: $device-sm) {
+    flex-wrap: wrap;
+  }
+
   .team-members {
-    @include span-columns(6);
-    @include omega(2n);
-    margin-bottom: $large-spacing;
+    width: 50%;
+    margin: 0 $small-spacing $base-spacing;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    @media screen and (max-width: $device-sm) {
+      margin: 0 0 $base-spacing;
+      width: 100%;
+    }
 
     ul.team_members li {
       margin-bottom: $small-spacing;
@@ -94,7 +114,7 @@
 }
 
 .team-photo {
-  float: left;
   display: block;
+  float: left;
   margin: 0 1rem 1rem 0;
 }
