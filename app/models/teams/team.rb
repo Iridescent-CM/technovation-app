@@ -5,10 +5,10 @@ class Team < ActiveRecord::Base
                        .where("seasons.year = ?", Season.current.year) }
 
   scope :past, -> { eager_load(season_registrations: :season)
-                    .where.not(id: current.pluck(:id).uniq) }
+                    .where.not(id: current.map(&:id).uniq) }
 
   scope :without_mentor, -> {
-    where.not(id: Membership.where(member_type: "MentorAccount").pluck(:joinable_id))
+    where.not(id: Membership.where(member_type: "MentorAccount").map(&:joinable_id))
   }
 
   after_create :register_to_season
