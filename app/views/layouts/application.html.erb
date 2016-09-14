@@ -7,7 +7,7 @@
 
     <title><%= t('views.application.site_title') %></title>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
 
     <%= stylesheet_link_tag '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css', media: :all %>
 
@@ -39,11 +39,11 @@
       </footer>
     </div>
 
-    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?v=3.exp&key=#{ENV.fetch("GOOGLE_MAPS_API_KEY")}&libraries=places", data: { turbolinks_eval: false } %>
-    <%= javascript_include_tag 'application', data: { turbolinks_eval: false } %>
-    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js", data: { turbolinks_eval: false } %>
-    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js", data: { turbolinks_eval: false } %>
-    <%= javascript_include_tag 'technovation-typeahead', data: { turbolinks_eval: false } %>
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?v=3.exp&key=#{ENV.fetch("GOOGLE_MAPS_API_KEY")}&libraries=places" %>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js" %>
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js" %>
+    <%= javascript_include_tag 'technovation-typeahead' %>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

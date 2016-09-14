@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('DOMContentLoaded', function() {
   var addressPicker = new AddressPicker();
 
   $('#geocoded').typeahead(null, {

@@ -1,17 +1,17 @@
 (function() {
   var accountDobFields = {
-    eventList: 'turbolinks:load',
+    eventList: 'DOMContentLoaded',
 
     cssSelector: '.account_dob',
 
     init: function() {
-      return $(document).on(this.eventList, this.enableChosen.bind(this));
+      $(document).on(this.eventList, this.enableChosen.bind(this));
     },
 
     enableChosen: function(e) {
-      return $(this.cssSelector).chosen({
-                                   disable_search_threshold: 8,
-                                 });
+      $(this.cssSelector).chosen({
+        disable_search_threshold: 8,
+      });
     },
   };
 
@@ -24,13 +24,13 @@
     cssSelector: '[data-toggle="true"]',
 
     init: function() {
-      return $(document).on('turbolinks:load', this.enableToggleFields.bind(this));
+      $(document).on('DOMContentLoaded', this.enableToggleFields.bind(this));
     },
 
     enableToggleFields: function(e) {
       var $selectField = $(this.cssSelector);
       this.toggleFields({ target: $selectField });
-      return $selectField.on('change', this.toggleFields);
+      $selectField.on('change', this.toggleFields);
     },
 
     toggleFields: function(e) {
@@ -40,9 +40,9 @@
           toggleValue = $field.data("toggle-value");
 
       if (toggleValue === selectedValue) {
-        return $toggleField.show();
+        $toggleField.show();
       } else {
-        return $toggleField.hide();
+        $toggleField.hide();
       }
     },
   };
