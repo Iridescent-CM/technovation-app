@@ -31,7 +31,7 @@ $nav-content-height: 60px;
     display: flex;
     height: $nav-content-height;
     line-height: 0;
-    padding-left: $base-spacing;
+    padding: 3px 0 0 $base-spacing;
 
     &:hover,
     &:focus {
