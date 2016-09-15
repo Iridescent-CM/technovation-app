@@ -18,10 +18,13 @@ $(document).on('DOMContentLoaded', function() {
     $('#country').val(result.nameForType('country', true));
 
     $('.location-hidden').map(function() {
-      if ($(this).val() === "") {
+      var $input = $(this).find("label").next();
+
+      console.log($input);
+
+      if ($input.val() === "" || $input.val() === null) {
         error = true;
-        var $label = $("<label />").text(this.id);
-        $(this).prop({ type: "text" }).before($label);
+        $(this).fadeIn();
       }
     });
 

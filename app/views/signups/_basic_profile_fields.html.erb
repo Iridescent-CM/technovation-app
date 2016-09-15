@@ -14,9 +14,25 @@
 
 <%= f.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
 <%= f.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
-<%= f.input :city, as: hidden_or_string(f.object.city), input_html: { id: "city", class: "location-hidden" } %>
-<%= f.input :state_province, as: hidden_or_string(f.object.state_province), input_html: { id: "state", class: "location-hidden" } %>
-<%= f.input :country, as: hidden_or_string(f.object.country), input_html: { id: "country", class: "location-hidden" } %>
+
+<%= f.input :city, label: t("models.account.city"),
+                   input_html: { id: "city" },
+                   wrapper_html: {
+                     class: "location-#{extra_location_field(f.object, :city)}"
+                   } %>
+
+ <%= f.input :state_province, label: t("models.account.state_province"),
+                              input_html: { id: "state" },
+                              wrapper_html: {
+                                class: "location-#{extra_location_field(f.object, :state_province)}"
+                              } %>
+
+<%= f.input :country, label: t("models.account.country"),
+                      collection: CountryStateSelect.countries_collection,
+                      input_html: { id: "country" },
+                      wrapper_html: {
+                        class: "location-#{extra_location_field(f.object, :country)}"
+                      } %>
 
 <% if f.object.persisted? %>
   <h6 id="account-profile-image" class="signup-section">

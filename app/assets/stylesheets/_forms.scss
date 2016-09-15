@@ -181,3 +181,11 @@ label {
   background: $alert-color;
   padding: 1rem;
 }
+
+.location-hidden {
+  display: none;
+
+  .chosen-container {
+    width: 100% !important;
+  }
+}

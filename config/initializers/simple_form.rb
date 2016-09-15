@@ -139,7 +139,7 @@ SimpleForm.setup do |config|
   # config.time_zone_priority = nil
 
   # Default priority for country inputs.
-  # config.country_priority = nil
+  config.country_priority = ["Brazil", "Canada", "Mexico", "Moldova", "United States"]
 
   # When false, do not use translations for labels.
   # config.translate_labels = true
