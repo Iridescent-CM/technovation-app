@@ -1,12 +1,13 @@
 <p>Welcome to Technovation <%= @season_year %>!</p>
 
-<p>We're thrilled to have you join the Technovation community for the <%= @season_year %> season! We can't wait to hear more from you about what problems you want to solve using technology, and see the amazing ideas you bring to life.</p>
+<p>We're thrilled to have you join the Technovation community for the <%= @season_year %> season! We can't wait to hear more from you about the types of problems you want to solve using technology, and see the amazing ideas you bring to life.</p>
 
 <p>First things first:</p>
 
-<p>Make sure that your parent or guardian has given you permission to participate! They received an email with a consent form when you registered. Once the consent form is signed, you'll be ready to participate in Technovation.</p>
-
-<p>Please take some time right now to learn about internet safety and digital literacy. We want you to be safe and well-informed as your participate in online programs! Technovation will connect you with an adult mentor to support you as you develop your app. We trust our mentors. They have been pre-approved to support your team, but we still recommend that you {take a few minutes to learn how to keep yourself safe when collaborating online}.</p>
+<ol>
+  <li>Make sure that your parent or guardian has given you permission to participate! There are instructions on how to send a permission form on <%= link_to "your dashboard", @dashboard_url %>. Once the consent form is signed, you'll be ready to participate in Technovation.</li>
+  <li>Please take some time right now to learn about <strong>internet safety and digital literacy</strong>. We want you to be safe and well-informed as your participate in online programs! Technovation will connect you with an adult mentor to support you as you develop your app. We trust our mentors. They have been pre-approved to support your team, but we still recommend that you <%= link_to "take a few minutes to learn", @safety_url %> how to keep yourself safe when collaborating online.</li>
+</ol>
 
 <p>When you're ready, you can get started on the Technovation curriculum by <%= link_to 'logging back into your account', @signin_url %> on <%= link_to @host, @root_url %></p>
 
