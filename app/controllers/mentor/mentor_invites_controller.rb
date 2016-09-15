@@ -6,9 +6,12 @@ module Mentor
     end
 
     def update
-      invite = current_mentor.mentor_invites.pending.find_by(invite_token: params.fetch(:id))
-      invite.update_attributes(invite_params)
-      redirect_based_on_status(invite)
+      if invite = current_mentor.mentor_invites.pending.find_by(invite_token: params.fetch(:id))
+        invite.update_attributes(invite_params)
+        redirect_based_on_status(invite)
+      else
+        redirect_to mentor_dashboard_path, alert: t("controllers.invites.update.failure")
+      end
     end
 
     def destroy
