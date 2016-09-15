@@ -25,13 +25,17 @@ $nav-content-height: 60px;
     text-align: right;
   }
 
+  li {
+    display: inline-block;
+  }
+
   .nav-link a {
     align-items: center;
     color: white;
     display: flex;
     height: $nav-content-height;
     line-height: 0;
-    padding: 3px 0 0 $base-spacing;
+    padding: 3px $base-spacing 0 $base-spacing;
 
     &:hover,
     &:focus {
