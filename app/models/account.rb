@@ -47,7 +47,7 @@ class Account < ActiveRecord::Base
   end
 
   def address_details
-    [city, state_province, Country[country].try(:name)].join(', ')
+    [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
   end
 
   def authenticated?

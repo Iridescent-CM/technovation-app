@@ -171,3 +171,13 @@ label {
     @include omega;
   }
 }
+
+.notice {
+  background: $notice-color;
+  padding: 1rem;
+}
+
+.alert {
+  background: $alert-color;
+  padding: 1rem;
+}
