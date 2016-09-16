@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_member_invites, except: [:edit, :index]
-    resources :join_requests, except: :edit
+    resources :join_requests, except: [:index, :edit]
     resources :mentor_invites, only: [:show, :update, :destroy]
 
     resources :mentors, only: :show

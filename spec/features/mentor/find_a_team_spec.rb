@@ -34,15 +34,4 @@ RSpec.feature "Mentors find a team" do
     expect(page).to have_content(join_request.joinable_name)
     expect(page).to have_content("Pending review")
   end
-
-  scenario "Browse requests" do
-    click_link "Browse available teams"
-    click_link available_team.name
-    click_button "Request to be a mentor for #{available_team.name}"
-
-    click_link "My requests"
-    join_request = JoinRequest.last
-    expect(page).to have_css('table', text: join_request.joinable_name)
-    expect(page).to have_content("Pending review")
-  end
 end
