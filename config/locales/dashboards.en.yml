@@ -13,8 +13,8 @@ en:
           my_requests: "My requests"
           my_teams: "My teams"
         show:
-          no_more_invites: "You cannot receive anymore invitations while you are on a team."
-          no_more_requests: "You cannot send anymore requests while you are on a team."
+          no_more_invites: "You cannot receive any more invitations while you are on a team."
+          no_more_requests: "You cannot send any more requests while you are on a team."
           no_pending_team_invitations: "You don't have any pending invitations to join a team"
           no_pending_team_requests: "You don't have any pending requests to join a team"
           pending_team_invitations: "Incoming team invitations"
