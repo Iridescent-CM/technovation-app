@@ -12,7 +12,8 @@ class MentorAccount < Account
   has_many :team_member_invites, foreign_key: :inviter_id
 
   scope :by_expertise_ids, ->(ids) {
-    eager_load(mentor_profile: :mentor_profile_expertises)
+    joins(mentor_profile: :mentor_profile_expertises)
+    .preload(mentor_profile: :mentor_profile_expertises)
     .where("mentor_profile_expertises.expertise_id IN (?)", ids)
     .uniq
   }
