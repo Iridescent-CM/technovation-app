@@ -2,16 +2,32 @@
 
 <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_next_steps" %>
 
-<%= render 'completion_steps',
-           account: current_ambassador,
-           steps: CompletionSteps.new(current_ambassador),
-           urls: {
-             consent_waiver: {
-               view: new_consent_waiver_path(
-                 token: current_ambassador.consent_token
-               ),
-             },
-             build_profile: {
-               bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
-             },
-           } %>
+<div class="dashboard flex-row">
+
+  <div class="dashboard__main flex-col-sm-8">
+    <%= render 'completion_steps',
+               account: current_ambassador,
+               steps: CompletionSteps.new(current_ambassador),
+               urls: {
+                 consent_waiver: {
+                   view: new_consent_waiver_path(
+                     token: current_ambassador.consent_token
+                   ),
+                 },
+                 build_profile: {
+                   bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
+                 },
+               } %>
+  </div>
+
+  <div class="dashboard__sidebar flex-col-sm-4">
+    <% if current_ambassador.background_check_complete? %>
+      <%# TODO: Localize the followings strings. Find a better place to put this. %>
+      <h4>Curriculum</h4>
+      <p>
+        <a href="http://www.technovationchallenge.org/curriculum" target="_blank">Click here</a> to see the 2017 Technovation Curriculum.
+      </p>
+    <% end %>
+  </div>
+
+</div>

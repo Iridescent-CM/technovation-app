@@ -1,5 +1,20 @@
-<%= render 'completion_steps',
-            account: current_student,
-            steps: CompletionSteps.new(current_student) %>
+<div class="flex-row dashboard">
+  <div class="flex-col-sm-8 dashboard__main">
+    <%= render 'completion_steps',
+                account: current_student,
+                steps: CompletionSteps.new(current_student) %>
+  </div>
 
-<%= render 'team_invitations', invite_type: :team_member, account: current_student %>
+  <div class="flex-col-sm-4 dashboard__sidebar">
+    <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
+    <% if current_student.parental_consent.present? %>
+      <hr />
+
+      <%# TODO: Localize the followings strings. Find a better place to put this.%>
+      <h4>Curriculum</h4>
+      <p>
+        <a href="http://www.technovationchallenge.org/curriculum" target="_blank">Click here</a> to see the 2017 Technovation Curriculum.
+      </p>
+    <% end %>
+  </div>
+</div>

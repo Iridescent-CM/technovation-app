@@ -1,10 +1,12 @@
-.team-activity {
-  @include span-columns(3);
-  @include omega;
+.dashboard__main {
+  padding: 0 1em 0 0;
+}
+
+.dashboard__sidebar {
+  padding: 3rem 0 0;
 }
 
 .completion-steps {
-  @include span-columns(9);
   list-style-type: decimal;
   margin: 0 0 15px;
 
