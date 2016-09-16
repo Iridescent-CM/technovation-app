@@ -1,8 +1,7 @@
 <p><%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %></p>
 
-<%= render "regional_ambassador/dashboards/#{current_ambassador.status}_next_steps" %>
-
 <div class="dashboard flex-row">
+  <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_next_steps" %>
 
   <div class="dashboard__main flex-col-sm-8">
     <%= render 'completion_steps',
@@ -19,15 +18,4 @@
                  },
                } %>
   </div>
-
-  <div class="dashboard__sidebar flex-col-sm-4">
-    <% if current_ambassador.background_check_complete? %>
-      <%# TODO: Localize the followings strings. Find a better place to put this. %>
-      <h4>Curriculum</h4>
-      <p>
-        <a href="http://www.technovationchallenge.org/curriculum" target="_blank">Click here</a> to see the 2017 Technovation Curriculum.
-      </p>
-    <% end %>
-  </div>
-
 </div>

@@ -4,15 +4,17 @@
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
-    <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
-
-    <% unless current_mentor.background_check_complete? %>
+    <% if current_mentor.consent_waiver.present? and current_mentor.bio_complete? and current_mentor.background_check_complete? %>
       <%# TODO: Localize the followings strings. Find a better place to put this. %>
       <h4>Curriculum</h4>
+
       <p>
-        <a href="http://www.technovationchallenge.org/curriculum" target="_blank">Click here</a> to see the 2017 Technovation Curriculum.
+        <%= link_to "Go to the #{Season.current.year} Technovation Curriculum", "http://www.technovationchallenge.org/curriculum", target: "_blank" %>.
       </p>
+
+      <hr />
     <% end %>
 
+    <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
   </div>
 </div>
