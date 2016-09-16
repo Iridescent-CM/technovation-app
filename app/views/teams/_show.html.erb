@@ -11,7 +11,9 @@
 
   <p class="team_description"><%= team.description %></p>
 
-  <p><%= link_to t("controllers.teams.edit"), [:edit, account.type_name, team] %></p>
+  <% if team.current? %>
+    <p><%= link_to t("controllers.teams.edit"), [:edit, account.type_name, team] %></p>
+  <% end %>
 </div>
 
 <div class="team-memberships">
