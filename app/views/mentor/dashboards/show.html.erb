@@ -1,3 +1,18 @@
-<%= render 'mentor/dashboards/completion_steps' %>
+<div class="dashboard flex-row">
+  <div class="flex-col-sm-8 dashboard__main">
+    <%= render 'mentor/dashboards/completion_steps' %>
+  </div>
 
-<%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
+  <div class="flex-col-sm-4 dashboard__sidebar">
+    <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
+
+    <% unless current_mentor.background_check_complete? %>
+      <%# TODO: Localize the followings strings. Find a better place to put this. %>
+      <h4>Curriculum</h4>
+      <p>
+        <a href="http://www.technovationchallenge.org/curriculum" target="_blank">Click here</a> to see the 2017 Technovation Curriculum.
+      </p>
+    <% end %>
+
+  </div>
+</div>
