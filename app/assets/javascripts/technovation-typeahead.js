@@ -20,8 +20,6 @@ $(document).on('DOMContentLoaded', function() {
     $('.location-hidden').map(function() {
       var $input = $(this).find("label").next();
 
-      console.log($input);
-
       if ($input.val() === "" || $input.val() === null) {
         error = true;
         $(this).fadeIn();
