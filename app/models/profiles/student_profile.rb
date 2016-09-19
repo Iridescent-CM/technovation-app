@@ -10,8 +10,8 @@ class StudentProfile < ActiveRecord::Base
   validates :parent_guardian_email, email: true, allow_blank: true
 
   def validate_parent_email
-    required_email_attributes.select { |a| send(a).blank? }.each do |a|
-      errors.add(a, :blank)
+    attributes.select { |_, v| v.blank? }.each do |k, v|
+      errors.add(k, :blank)
     end
 
     if parent_guardian_email == student_account.email
@@ -36,12 +36,5 @@ class StudentProfile < ActiveRecord::Base
                                        parent_guardian_name,
                                        ENV.fetch("PARENT_LIST_ID"))
     end
-  end
-
-  def required_email_attributes
-    %i{
-      parent_guardian_name
-      parent_guardian_email
-    }
   end
 end

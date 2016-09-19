@@ -7,6 +7,7 @@ class Student::ParentalConsentNoticesController < StudentController
     if profile_params
       @student_profile = current_student.student_profile
       @student_profile.assign_attributes(profile_params)
+      @student_profile.validate_parent_email
 
       unless @student_profile.validate_parent_email && @student_profile.save
         render :new and return
