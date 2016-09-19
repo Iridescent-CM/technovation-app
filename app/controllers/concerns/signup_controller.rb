@@ -30,6 +30,7 @@ module SignupController
       :date_of_birth,
       :first_name,
       :last_name,
+      :gender,
       :geocoded,
       :city,
       :state_province,

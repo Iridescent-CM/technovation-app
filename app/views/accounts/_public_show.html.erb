@@ -14,6 +14,11 @@
       <dt><%= t('models.account.first_name') %></dt>
       <dd><%= account.first_name %></dd>
 
+      <% if account.type != "StudentAccount" %>
+        <dt><%= t('models.account.gender') %></dt>
+        <dd><%= account.gender %></dd>
+      <% end %>
+
       <dt><%= t('models.account.address') %></dt>
       <dd><%= account.address_details %></dd>
     </dl>
