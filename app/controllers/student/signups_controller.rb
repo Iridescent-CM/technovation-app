@@ -9,8 +9,8 @@ module Student
 
     def profile_params
       %i{
-          school_name
-        }
+        school_name
+      }
     end
   end
 end

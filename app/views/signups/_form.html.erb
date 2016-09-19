@@ -39,6 +39,7 @@
         <%= yield(f) %>
       <% else %>
         <%= f.input :referred_by,
+                    value: f.object.referred_by || ("Made With Code" if cookies[:made_with_code]),
                     collection: Account.referred_bies.keys,
                     label: t("models.account.referred_by"),
                     input_html: {

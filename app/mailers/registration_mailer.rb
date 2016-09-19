@@ -12,6 +12,11 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def welcome_student(student)
+    if student.made_with_code?
+      welcome_made_with_code_student(student)
+      return
+    end
+
     @season_year = Season.current.year
     @signin_url = signin_url
     @root_url = root_url

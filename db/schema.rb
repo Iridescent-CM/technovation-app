@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919164442) do
+ActiveRecord::Schema.define(version: 20160919171055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,15 +265,17 @@ ActiveRecord::Schema.define(version: 20160919164442) do
   end
 
   create_table "student_profiles", force: :cascade do |t|
-    t.integer  "account_id",            null: false
+    t.integer  "account_id",                            null: false
     t.string   "parent_guardian_email"
     t.string   "parent_guardian_name"
-    t.string   "school_name",           null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "school_name",                           null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "made_with_code",        default: false, null: false
   end
 
   add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree
+  add_index "student_profiles", ["made_with_code"], name: "index_student_profiles_on_made_with_code", using: :btree
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "team_id",     null: false
