@@ -42,8 +42,7 @@ class Account < ActiveRecord::Base
   validates :password, length: { minimum: 8, on: :create }
   validates :existing_password, valid_password: true, if: :changes_require_password?
 
-  validates :date_of_birth, :first_name, :last_name, :city, :state_province, :country,
-    presence: true
+  validates :date_of_birth, :first_name, :last_name, :city, :country, presence: true
 
   delegate :electronic_signature,
            :signed_at,
