@@ -1,3 +1,5 @@
+<% disabled ||= false %>
+
 <div class="account-type">
   <div class="account-title">
     <div class="account-photo <%= role %>-account">
@@ -6,10 +8,15 @@
   </div>
 
   <div class="account-description">
-    <p><%= t("views.signups.new.descriptions.#{role}") %></p>
+    <% if disabled %>
+      <p><%= t("views.signups.new.descriptions.disabled.#{role}") %></p>
+    <% else %>
+      <p><%= t("views.signups.new.descriptions.#{role}") %></p>
+    <% end %>
 
     <%= link_to t("views.signups.new.signup_link.#{role}"),
                 public_send("#{role}_signup_path"),
-                class: "primary-button" %>
+                class: "primary-button",
+                disabled: disabled %>
   </div>
 </div>

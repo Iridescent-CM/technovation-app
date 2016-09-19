@@ -218,6 +218,8 @@ en:
       new:
         create_an: "Create an"
         descriptions:
+          disabled:
+            judge: "Judge registration will open in March 2017"
           judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
           mentor: "Guide teams as they identify a problem in their community make an app to address it."
           regional_ambassador: "Apply now for the opportunity to build and coordinate the Technovation program in your area."
