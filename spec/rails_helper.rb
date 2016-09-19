@@ -38,6 +38,19 @@ RSpec.configure do |config|
     )
 
     Geocoder::Lookup::Test.add_stub(
+      "Los Angeles, CA", [{
+        'latitude'     => 34.052363,
+        'longitude'    => -118.256551,
+        'address'      => 'Los Angeles, CA, USA',
+        'state'        => 'California',
+        'city'         => 'Los Angeles',
+        'state_code'   => 'CA',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
       "Chicago, IL, United States", [{
         'latitude'     => 41.50196838,
         'longitude'    => -87.64051818,

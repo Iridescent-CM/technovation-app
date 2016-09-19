@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  attr_accessor :existing_password, :skip_existing_password
+  attr_accessor :existing_password, :skip_existing_password, :geocoded
 
   enum referred_by: %w{Friend Colleague Article Internet Social\ media
                        Print Web\ search Teacher Parent/family Company\ email
@@ -7,9 +7,24 @@ class Account < ActiveRecord::Base
 
   mount_uploader :profile_image, ImageUploader
 
-  geocoded_by :address_details
+  geocoded_by :geocoded
+  reverse_geocoded_by :latitude, :longitude do |account, results|
+    if geo = results.first
+      account.city = geo.city
+      account.state_province = geo.state_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      account.country = country.alpha2
+    end
+  end
 
   before_validation :generate_tokens, on: :create
+
+  # Fallback incase Typeahead doesn't work or isn't used
+  before_validation :geocode, if: ->(a) { !a.geocoded.blank? and a.geocoded != address_details }
+  before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
+
   after_validation :update_email_list, on: :update
 
   has_secure_password

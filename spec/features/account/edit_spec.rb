@@ -18,7 +18,7 @@ RSpec.feature "Edit account spec" do
 
     expect(page).to have_css('input[value="Chicago, IL, United States"]')
 
-    fill_in "Postal code -OR- City & State/Province", with: "Los Angeles, CA, United States"
+    fill_in "Postal code -OR- City & State/Province", with: "Los Angeles, CA"
     click_button "Save"
 
     expect(StudentAccount.last.city).to eq("Los Angeles")

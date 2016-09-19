@@ -7,10 +7,11 @@
                                        end_year: f.object.oldest_birth_year,
                                        input_html: { class: "account_dob" } %>
 
-<label>
-  <%= t("models.account.geocoded") %>
-  <%= text_field_tag "geocoded", (f.object.address_details unless f.object.city.blank?) %>
-</label>
+<%= f.input :geocoded, input_html: {
+                         id: "geocoded",
+                         value: f.object.address_details,
+                       },
+                       label: t("models.account.geocoded") %>
 
 <%= f.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
 <%= f.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
@@ -21,11 +22,11 @@
                      class: "location-#{extra_location_field(f.object, :city)}"
                    } %>
 
- <%= f.input :state_province, label: t("models.account.state_province"),
-                              input_html: { id: "state" },
-                              wrapper_html: {
-                                class: "location-#{extra_location_field(f.object, :state_province)}"
-                              } %>
+<%= f.input :state_province, label: t("models.account.state_province"),
+                             input_html: { id: "state" },
+                             wrapper_html: {
+                               class: "location-#{extra_location_field(f.object, :state_province)}"
+                             } %>
 
 <%= f.input :country, label: t("models.account.country"),
                       collection: CountryStateSelect.countries_collection,

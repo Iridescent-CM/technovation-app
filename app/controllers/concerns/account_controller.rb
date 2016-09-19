@@ -28,6 +28,7 @@ module AccountController
       :date_of_birth,
       :first_name,
       :last_name,
+      :geocoded,
       :city,
       :state_province,
       :country,
