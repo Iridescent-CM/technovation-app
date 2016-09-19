@@ -40,7 +40,9 @@ class Division < ActiveRecord::Base
   end
 
   def self.division_by_age(account)
-    account.age < SENIOR_DIVISION_AGE ? junior : senior
+    Timecop.freeze(Date.new(Season.current.year, 8, 1)) do
+      return account.age < SENIOR_DIVISION_AGE ? junior : senior
+    end
   end
 
   def self.division_by_team_ages(team)

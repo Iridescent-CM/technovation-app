@@ -42,6 +42,8 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'indefinite_article'
 
+gem 'timecop'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
@@ -51,7 +53,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'timecop'
   gem 'dotenv-rails'
 end
 
