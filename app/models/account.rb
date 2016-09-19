@@ -5,6 +5,8 @@ class Account < ActiveRecord::Base
                        Print Web\ search Teacher Parent/family Company\ email
                        Made\ With\ Code Other}
 
+  enum gender: %w{Female Male Non-binary Prefer\ not\ to\ say}
+
   mount_uploader :profile_image, ImageUploader
 
   geocoded_by :geocoded

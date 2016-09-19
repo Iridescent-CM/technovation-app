@@ -1,3 +1,6 @@
+<%= f.input :gender, label: t("models.account.gender"),
+                     collection: Account.genders.keys %>
+
 <%= f.fields_for :regional_ambassador_profile do |r| %>
   <%= r.input :organization_company_name,
     label: t("models.regional_ambassador_profile.organization_company_name") %>

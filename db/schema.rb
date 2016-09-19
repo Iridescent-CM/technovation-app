@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911225430) do
+ActiveRecord::Schema.define(version: 20160919164442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,11 +38,13 @@ ActiveRecord::Schema.define(version: 20160911225430) do
     t.datetime "pre_survey_completed_at"
     t.string   "password_reset_token"
     t.datetime "password_reset_token_sent_at"
+    t.integer  "gender"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
   add_index "accounts", ["consent_token"], name: "index_accounts_on_consent_token", unique: true, using: :btree
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["gender"], name: "index_accounts_on_gender", using: :btree
   add_index "accounts", ["password_reset_token"], name: "index_accounts_on_password_reset_token", unique: true, using: :btree
   add_index "accounts", ["password_reset_token_sent_at"], name: "index_accounts_on_password_reset_token_sent_at", using: :btree
   add_index "accounts", ["referred_by"], name: "index_accounts_on_referred_by", using: :btree

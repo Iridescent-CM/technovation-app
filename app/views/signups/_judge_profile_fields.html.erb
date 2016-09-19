@@ -1,3 +1,6 @@
+<%= f.input :gender, label: t("models.account.gender"),
+                     collection: Account.genders.keys %>
+
 <% if @scoring_expertises.any? %>
   <h4><%= t('views.signups.form.choose_expertises') %></h4>
 <% end %>
