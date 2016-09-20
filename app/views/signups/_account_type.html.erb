@@ -1,13 +1,21 @@
 <% disabled ||= false %>
 
 <div class="account-type">
-  <div class="account-title">
-    <div class="account-photo <%= role %>-account">
-      <h5><%= t("views.signups.new.roles.#{role}") %></h5>
-    </div>
-  </div>
 
-  <div class="account-description">
+  <% if disabled %>
+    <div class="account-type__img account-type__img--disabled account-type__img--<%= role %>">
+      <span>
+        <%= t("views.signups.new.roles.#{role}") %>
+      </span>
+    </div>
+  <% else %>
+    <%= link_to raw("<span>" + t("views.signups.new.roles.#{role}") + "</span>"),
+                public_send("#{role}_signup_path"),
+                class: "account-type__img account-type__img--#{role}"
+                %>
+  <% end %>
+
+  <div class="account-type__description">
     <% if disabled %>
       <p><%= t("views.signups.new.descriptions.disabled.#{role}") %></p>
     <% else %>
@@ -20,3 +28,4 @@
                 disabled: disabled %>
   </div>
 </div>
+
