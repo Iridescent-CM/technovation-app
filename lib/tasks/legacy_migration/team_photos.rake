@@ -10,7 +10,7 @@ namespace :legacy_migration do
       Legacy::Team.find_each do |legacy_team|
         url = "http:#{legacy_team.avatar.url(:original)}"
 
-        unless url.include?("missing")
+        unless url.nil? or url.include?("missing")
           team_photo = open(url)
           team = Team.find_by(name: legacy_team.name)
           team.update_attributes(team_photo: team_photo)
