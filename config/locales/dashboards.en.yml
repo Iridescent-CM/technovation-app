@@ -8,6 +8,7 @@ en:
     application:
       dashboards:
         menu:
+          accounts: "User report"
           home: "Home"
           my_account: "My account"
           my_requests: "My requests"

@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :account, only: [:show, :edit, :update]
+    resources :accounts, only: :index
 
     resources :background_checks, only: [:new, :create, :show]
     resources :teams, only: [:index]

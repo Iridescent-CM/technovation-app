@@ -20,6 +20,8 @@ FactoryGirl.define do
 
     profile_image "exists?"
 
+    season_ids { [Season.current.id] }
+
     after(:create) do |a|
       unless a.type == "StudentAccount"
         a.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))

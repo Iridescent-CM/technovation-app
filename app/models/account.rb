@@ -115,6 +115,22 @@ class Account < ActiveRecord::Base
     # Implemented by StudentAccount, MentorAccount
   end
 
+  def get_school_company_name
+    if respond_to?(:school_name)
+      school_name
+    elsif respond_to?(:company_name)
+      company_name
+    elsif respond_to?(:school_company_name)
+      school_company_name
+    elsif respond_to?(:organization_company_name)
+      organization_company_name
+    end
+  end
+
+  def division
+    Division.for(self).name.humanize
+  end
+
   private
   def update_email_list
     if first_name_changed? or last_name_changed? or email_changed?
