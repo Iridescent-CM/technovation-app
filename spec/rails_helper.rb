@@ -4,6 +4,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 
+require "geocoder_helper"
+
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -22,98 +24,6 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    Geocoder.configure(lookup: :test)
-
-    Geocoder::Lookup::Test.add_stub(
-      "Los Angeles, CA, United States", [{
-        'latitude'     => 34.052363,
-        'longitude'    => -118.256551,
-        'address'      => 'Los Angeles, CA, USA',
-        'state'        => 'California',
-        'city'         => 'Los Angeles',
-        'state_code'   => 'CA',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Los Angeles, CA", [{
-        'latitude'     => 34.052363,
-        'longitude'    => -118.256551,
-        'address'      => 'Los Angeles, CA, USA',
-        'state'        => 'California',
-        'city'         => 'Los Angeles',
-        'state_code'   => 'CA',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Chicago, IL, United States", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "60647", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Chicago, IL", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      [41.50196838, -87.64051818], [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      [34.052363, -118.256551], [{
-        'latitude'     => 34.052363,
-        'longitude'    => -118.256551,
-        'address'      => 'Los Angeles, CA, USA',
-        'state'        => 'California',
-        'city'         => 'Los Angeles',
-        'state_code'   => 'CA',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
   end
 
   config.before(:each) do
