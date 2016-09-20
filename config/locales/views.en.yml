@@ -29,6 +29,7 @@ en:
       edit: "Edit"
       filter: "Filter"
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
+      instead: "instead"
       invite: "Send invite"
       no: "No"
       or: "or"
@@ -216,6 +217,7 @@ en:
         student_profile: "Student profile"
 
       new:
+        already_signed_up: "Already have an account from a previous year?"
         create_an: "Create an"
         descriptions:
           disabled:

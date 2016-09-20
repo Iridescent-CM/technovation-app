@@ -4,6 +4,11 @@
     <span class="accent"><%= t("models.account.class_name").capitalize %></span>
   </h2>
 
+  <p class="center">
+    <%= t("views.signups.new.already_signed_up") %>
+    <%= link_to t("views.application.signin"), signin_path %>
+    <%= t("views.application.instead") %>.
+  </p>
   <%= render 'signups/account_type', role: :student %>
   <%= render 'signups/account_type', role: :mentor %>
   <%= render 'signups/account_type', role: :judge, disabled: true %>
