@@ -1,5 +1,5 @@
 desc "Bootstrap the db"
-task :bootstrap do
+task bootstrap: :environment do
   %w{science coding engineering project_management finance marketing design}.each do |name|
     if Expertise.exists?(name: name.titleize)
       puts "Found Expertise: #{name.titleize}"
