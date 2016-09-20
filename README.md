@@ -57,7 +57,7 @@ rake db:seed
 ```
 
 ```
-rake bootstrap:technovation
+rake bootstrap
 # Adds the Technovation expertises for mentors to choose for their profile
 # Adds the Technovation admin account
 ```

@@ -24,7 +24,7 @@ Dir.chdir APP_ROOT do
   system "bin/rake db:setup"
 
   puts "\n== Bootstrapping Technovation =="
-  system "bin/rake bootstrap:technovation"
+  system "bin/rake bootstrap"
 
   puts "\n== Removing old logs and tempfiles =="
   system "rm -f log/*"
