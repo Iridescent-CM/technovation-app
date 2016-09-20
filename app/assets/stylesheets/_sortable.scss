@@ -1,0 +1,9 @@
+table.sortable {
+  th {
+    cursor: pointer;
+
+    &:first-child {
+      content: " \25B4"
+    }
+  }
+}
