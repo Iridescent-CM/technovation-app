@@ -3,15 +3,7 @@ module RegionalAmbassador
     include AccountController
 
     def index
-      @accounts = Account.includes(:seasons).references(:seasons).where("seasons.year = ?", Season.current.year)
-
-      @accounts = if current_ambassador.country == "US"
-        @accounts.where(state_province: current_ambassador.state_province)
-      else
-        @accounts.where(country: current_ambassador.country)
-      end
-
-      @accounts = @accounts.paginate(per_page: 25, page: params[:page])
+      @accounts = RegionalAccount.(current_ambassador).paginate(per_page: 25, page: params[:page])
     end
 
     private
