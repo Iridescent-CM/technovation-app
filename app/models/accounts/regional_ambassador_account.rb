@@ -5,6 +5,8 @@ class RegionalAmbassadorAccount < Account
   scope :approved, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:approved]) }
   scope :declined, -> { where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[:declined]) }
 
+  has_many :account_exports, dependent: :destroy
+
   has_one :regional_ambassador_profile, foreign_key: :account_id
   accepts_nested_attributes_for :regional_ambassador_profile
   validates_associated :regional_ambassador_profile

@@ -1,7 +1,6 @@
 class FilesMailer < ApplicationMailer
-  def export_ready(account, filename)
-    filename = filename.sub("./public/", "")
-    @url = "https://#{ENV.fetch("HOST_DOMAIN")}/#{filename}"
+  def export_ready(account, export)
+    @url = export.file_url
     mail to: account.email
   end
 end

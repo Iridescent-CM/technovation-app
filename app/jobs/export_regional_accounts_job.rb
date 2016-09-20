@@ -3,9 +3,10 @@ class ExportRegionalAccountsJob < ActiveJob::Base
 
   def perform(ambassador)
     accounts = RegionalAccount.(ambassador)
-    filename = "./public/#{Season.current.year}-regional-accounts-#{ambassador.full_name.gsub(' ', '-')}-#{ambassador.consent_token}.csv"
+    token = SecureRandom.urlsafe_base64
+    filepath = "./tmp/#{Season.current.year}-regional-accounts-#{ambassador.full_name.gsub(' ', '-')}-#{token}.csv"
 
-    CSV.open(filename, 'wb') do |csv|
+    CSV.open(filepath, 'wb') do |csv|
       csv << %w{ID User\ type First\ name Last\ name Email Team\ name(s) School\ /\ company\ name Division}
 
       accounts.each do |account|
@@ -15,6 +16,9 @@ class ExportRegionalAccountsJob < ActiveJob::Base
       end
     end
 
-    FilesMailer.export_ready(ambassador, filename).deliver_later
+    file = File.open(filepath)
+    export = ambassador.account_exports.create!(file: file)
+
+    FilesMailer.export_ready(ambassador, export).deliver_later
   end
 end
