@@ -13,6 +13,7 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     state_province: "IL",
                                     country: "US",
                                     pre_survey_completed_at: Time.current,
+                                    season_ids: [Season.current.id],
                                    )).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts "Created Student: #{student.email} with password #{student.password}"
@@ -39,12 +40,14 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   city: "Boulder",
                                   state_province: "CO",
                                   country: "US",
+                                  season_ids: [Season.current.id],
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
 
   if (team = Team.create(name: "Fun Times Team",
-                        description: "We are fun times havers",
-                        division: Division.none_assigned_yet)).valid?
+                         description: "We are fun times havers",
+                         season_ids: [Season.current.id],
+                         division: Division.none_assigned_yet)).valid?
     team.add_mentor(mentor)
     puts "Added mentor to Team: #{team.name}"
   end
@@ -66,6 +69,7 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                   city: "Evanston",
                                   state_province: "IL",
                                   country: "US",
+                                  season_ids: [Season.current.id],
                                  )).valid?
   mentor.update_column(:profile_image, "foo/bar/baz.png")
   mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
@@ -89,6 +93,7 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                           state_province: "IL",
                                           country: "US",
                                           pre_survey_completed_at: Time.current,
+                                          season_ids: [Season.current.id],
                                          )).valid?
   ra.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created RA: #{ra.email} with password #{ra.password}"
