@@ -22,26 +22,30 @@
   countrySelectFields.init();
 }());
 
+/*
+ * Account sign-up date of birth <select> inputs
+ */
 (function() {
-  var accountDobFields = {
-    eventList: 'DOMContentLoaded',
+  $(document).on('DOMContentLoaded', initChosenDOB);
 
-    cssSelector: '.account_dob',
-
-    init: function() {
-      $(document).on(this.eventList, this.enableChosen.bind(this));
-    },
-
-    enableChosen: function(e) {
-      $(this.cssSelector).chosen({
-        disable_search_threshold: 8,
+  function initChosenDOB() {
+    $('.account_dob')
+      .chosen({
+        disable_search_threshold: 8
+      })
+      .change(function() {
+        setHasVal(this);
       });
-    },
-  };
+  }
 
-  accountDobFields.init();
-}());
-
+  function setHasVal(select) {
+    if (select.value === "") {
+      select.classList.remove('has-val');
+    } else {
+      select.classList.add('has-val');
+    }
+  }
+})();
 
 (function() {
   var toggleFields = {
