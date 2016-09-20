@@ -2,7 +2,7 @@
   <ul>
     <li><%= link_to t("views.application.dashboards.menu.home"), regional_ambassador_dashboard_path %></li>
 
-    <% if current_account.consent_signed? and current_account.background_check_complete? %>
+    <% if current_account.approved? and current_account.consent_signed? and current_account.background_check_complete? %>
       <li><%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_accounts_path %></li>
 
       <% #<li><%= link_to t("views.application.dashboards.menu.teams"), regional_ambassador_teams_path </li> %>
