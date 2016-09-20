@@ -1,5 +1,10 @@
 <%= will_paginate(@accounts) %>
 
+<p>
+  You're seeing all users in your region for the <%= Season.current.year %> season.
+  In the U.S., your region is your state. For everyone else, it's your country.
+</p>
+
 <table class="table__regional_ambassador_accounts sortable">
   <thead>
     <tr>
