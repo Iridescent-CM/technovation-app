@@ -1,8 +1,14 @@
 require './lib/legacy/models/team_request'
+require 'aws-sdk'
 
 module Legacy
   class User < LegacyModel
     include FlagShihTzu
+
+    has_attached_file :avatar,
+                      storage: :s3,
+                      url: ":s3_domain_url",
+                      s3_credentials: ->(a) { a.instance.s3_credentials }
 
     enum role: [:student, :mentor, :coach, :judge]
 

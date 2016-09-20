@@ -7,7 +7,7 @@ class TeamPhotoUploader < CarrierWave::Uploader::Base
   # storage :file
   storage :fog
 
-  process resize_to_fill: [233, 233]
+  process resize_to_fill: [450, 300]
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -24,7 +24,7 @@ class TeamPhotoUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
    version :thumb do
-     process :resize_to_fill => [80, 80]
+     process :resize_to_fill => [80, 60]
    end
 
   # Add a white list of extensions which are allowed to be uploaded.

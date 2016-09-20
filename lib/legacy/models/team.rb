@@ -1,4 +1,5 @@
 require './lib/legacy/models/legacy_model'
+require 'aws-sdk'
 
 module Legacy
   class Team < LegacyModel
@@ -6,6 +7,11 @@ module Legacy
 
     has_many :team_requests, -> { where(approved: true) }
     has_many :users, through: :team_requests
+
+    has_attached_file :avatar,
+                      storage: :s3,
+                      url: ":s3_domain_url",
+                      s3_credentials: ->(a) { a.instance.s3_credentials }
 
     def migrated_description
       description.blank? ? "No description" : description

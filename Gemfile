@@ -36,7 +36,7 @@ gem 'chosen-rails'
 gem 'simple_form'
 gem 'nested_form_fields'
 gem 'countries', '~> 1.2.5', require: "countries/global"
-gem 'country_state_select'
+gem 'country_state_select', '~> 3.0.2'
 
 gem 'will_paginate', '~> 3.1.0'
 
@@ -77,3 +77,5 @@ end
 # Do not use these gems
 #
 gem 'flag_shih_tzu'
+gem 'paperclip'
+gem 'aws-sdk'
