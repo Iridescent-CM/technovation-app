@@ -55,6 +55,8 @@ Rails.application.routes.draw do
     resource :account, only: [:show, :edit, :update]
     resources :accounts, only: :index
 
+    resources :account_exports, only: :create
+
     resources :background_checks, only: [:new, :create, :show]
     resources :teams, only: [:index]
   end

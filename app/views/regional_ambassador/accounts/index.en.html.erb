@@ -12,6 +12,12 @@
       <th>School / Company name</th>
       <th>Division</th>
     </tr>
+
+    <tr>
+      <td colspan="8">
+        <%= link_to "Export to CSV", regional_ambassador_account_exports_path, data: { method: :post } %>
+      </td>
+    </tr>
   </thead>
 
   <tbody>

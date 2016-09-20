@@ -11,6 +11,10 @@ en:
     declined:
       subject: "Regional Ambassador Request Follow-up"
 
+  files_mailer:
+    export_ready:
+      subject: "Your file is ready to download"
+
   parent_mailer:
     consent_notice:
       subject: "Your daughter needs permission to participate in Technovation!"

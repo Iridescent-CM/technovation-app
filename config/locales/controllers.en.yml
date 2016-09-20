@@ -86,6 +86,10 @@ en:
       new:
         link: "I forgot my password"
 
+    regional_ambassador:
+      account_exports:
+        create:
+          success: "We are exporting a CSV file now. You will be emailed with a link to download it when it's ready."
     signins:
       create:
         success: "Hey! Welcome back!"
