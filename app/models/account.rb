@@ -131,6 +131,10 @@ class Account < ActiveRecord::Base
     Division.for(self).name.humanize
   end
 
+  def teams
+    []
+  end
+
   private
   def update_email_list
     if first_name_changed? or last_name_changed? or email_changed?

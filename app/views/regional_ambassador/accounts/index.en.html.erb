@@ -1,12 +1,14 @@
 <%= will_paginate(@accounts) %>
 
-<table class="sortable">
+<table class="table__regional_ambassador_accounts sortable">
   <thead>
     <tr>
       <th>ID</th>
+      <th>User type</th>
       <th>First name</th>
       <th>Last name</th>
       <th>Email</th>
+      <th>Team name(s)</th>
       <th>School / Company name</th>
       <th>Division</th>
     </tr>
@@ -14,14 +16,18 @@
 
   <tbody>
     <% @accounts.each do |account| %>
-      <tr>
-        <td><%= account.id %></td>
-        <td><%= account.first_name %></td>
-        <td><%= account.last_name %></td>
-        <td><%= account.email %></td>
-        <td><%= account.get_school_company_name %></td>
-        <td><%= account.division %></td>
-      </tr>
+      <% cache(account) do %>
+        <tr>
+          <td><%= account.id %></td>
+          <td><%= account.type_name %></td>
+          <td><%= account.first_name %></td>
+          <td><%= account.last_name %></td>
+          <td><%= account.email %></td>
+          <td><%= account.teams.flat_map(&:name).to_sentence %></td>
+          <td><%= account.get_school_company_name %></td>
+          <td><%= account.division %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
