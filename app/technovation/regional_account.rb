@@ -1,6 +1,9 @@
 module RegionalAccount
   def self.call(ambassador)
-    accounts = Account.includes(:seasons).references(:seasons).where("seasons.year = ?", Season.current.year)
+    accounts = Account.includes(:seasons)
+                      .references(:seasons)
+                      .where("seasons.year = ?", Season.current.year)
+                      .where.not(type: "AdminAccount")
 
     if ambassador.country == "US"
       accounts.where(state_province: ambassador.state_province)
