@@ -11,7 +11,6 @@ namespace :legacy_migration do
         url = "https:#{user.avatar.url(:original)}"
 
         unless url.include?("missing")
-          binding.pry
           profile_image = open(url)
           account = Account.find_by(email: user.email)
           account.update_attributes(profile_image: profile_image)
