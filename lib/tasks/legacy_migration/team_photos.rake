@@ -8,7 +8,7 @@ namespace :legacy_migration do
       Paperclip::Attachment.default_options[:path] = "/teams/:attachment/:id_partition/:style/:filename"
 
       Legacy::Team.find_each do |legacy_team|
-        url = "http:#{ApplicationController.helpers.asset_url(legacy_team.avatar.url(:original))}"
+        url = "http:#{legacy_team.avatar.url(:original)}"
 
         unless url.include?("missing")
           team_photo = open(url)
