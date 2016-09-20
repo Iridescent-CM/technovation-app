@@ -1,3 +1,88 @@
+.account-type {
+  background-color: white;
+  box-shadow: 0 4px 4px rgba(black, 0.1);
+  display: flex;
+  margin: 0 auto 1rem;
+  max-width: 800px;
+
+  @media screen and (max-width: $device-xs) {
+    display: block;
+  }
+}
+
+.account-type__img {
+  $size: 250px;
+  $size-md: 200px;
+  background-blend-mode: exclusion;
+  background-color: $wisteria-dark;
+  background-position: 50% 35%;
+  background-size: cover;
+  color: white;
+  display: block;
+  min-height: $size;
+  min-width: $size;
+  position: relative;
+
+  @media screen and (max-width: $device-md) {
+    min-height: $size-md;
+    min-width: $size-md;
+  }
+
+  span {
+    background-color: rgba($chalkboard, 0.5);
+    bottom: 0;
+    font-weight: 400;
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    transition: background-color 0.25s;
+    right: 0;
+  }
+
+  &:not(.account-type__img--disabled):hover span {
+    background-color: rgba(white, 0.85);
+  }
+}
+
+.account-type__img--student {
+  background-image: image-url("signup/student.jpg");
+  background-position: 50% 20%;
+}
+
+.account-type__img--mentor {
+  background-image: image-url("signup/mentor.jpg");
+}
+
+.account-type__img--judge {
+  background-image: image-url("signup/judge.jpg");
+}
+
+.account-type__img--regional_ambassador {
+  background-image: image-url("signup/regional_ambassador.jpg");
+}
+
+.account-type__description {
+  flex-grow: 1;
+  padding: 1rem;
+  position: relative;
+
+  .primary-button {
+    white-space: normal;
+
+    @media screen and (max-width: $device-xs) {
+      width: 100%;
+    }
+  }
+}
+
+.account-type [disabled="disabled"] {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.3;
+}
+
+// Previously existing code below
+
 .signup-section {
   color: $mulberry;
   font-size: 2rem;
@@ -9,49 +94,8 @@
 
   h2 {
     text-align: center;
-    margin-bottom: $small-spacing;
+    margin-bottom: 2rem;
     color: $mulberry;
     .accent { color: $shamrock; }
   }
-
-  .account-type {
-    @include span-columns(8);
-    @include shift(2);
-
-    padding: $base-spacing;
-    margin-bottom: $base-spacing;
-    background-color: #fff;
-
-    .account-title {
-      @include span-columns(3 of 8);
-    }
-
-    .account-description {
-      @include span-columns(5 of 8);
-    }
-
-    .account-photo {
-      height: 260px;
-      background-size: 260px 260px;
-      background-color: #421B41;
-      background-blend-mode: exclusion;
-
-      h5 {
-        color: #fff;
-        text-align: center;
-        padding-top: $large-spacing;
-      }
-    }
-
-    .student-account { background-image: image-url("signup/student.jpg"); }
-    .mentor-account { background-image: image-url("signup/mentor.jpg"); }
-    .judge-account { background-image: image-url("signup/judge.jpg"); }
-    .regional_ambassador-account { background-image: image-url("signup/regional_ambassador.jpg"); }
-  }
-}
-
-[disabled="disabled"] {
-  pointer-events: none;
-  cursor: default;
-  opacity: 0.3;
 }
