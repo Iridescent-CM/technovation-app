@@ -8,9 +8,10 @@ namespace :legacy_migration do
       Paperclip::Attachment.default_options[:path] = "/users/:attachment/:id_partition/:style/:filename"
 
       Legacy::User.find_each do |user|
-        url = "http:#{ApplicationController.helpers.asset_url(user.avatar.url(:original))}"
+        url = "https:#{user.avatar.url(:original)}"
 
         unless url.include?("missing")
+          binding.pry
           profile_image = open(url)
           account = Account.find_by(email: user.email)
           account.update_attributes(profile_image: profile_image)
