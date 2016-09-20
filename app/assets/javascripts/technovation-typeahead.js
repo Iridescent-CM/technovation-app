@@ -1,9 +1,12 @@
 $(document).on('DOMContentLoaded', function() {
   var addressPicker = new AddressPicker();
 
-  $('#geocoded').typeahead(null, {
+  $('#geocoded').typeahead({
+    minLength: 3,
+    highlight: true,
+  }, {
     displayKey: 'description',
-    source: addressPicker.ttAdapter()
+    source: addressPicker.ttAdapter(),
   });
 
   addressPicker.bindDefaultTypeaheadEvent($('#geocoded'))
