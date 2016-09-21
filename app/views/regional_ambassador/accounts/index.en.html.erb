@@ -5,6 +5,14 @@
   In the U.S., your region is your state. For everyone else, it's your country.
 </p>
 
+<label>
+  View per page:
+  <%= select_tag :per_page,
+                 options_for_select(%w{10 25 50 100 250}, params[:per_page]),
+                 class: "inline",
+                 data: { reload: true } %>
+</label>
+
 <table class="table__regional_ambassador_accounts sortable">
   <thead>
     <tr>

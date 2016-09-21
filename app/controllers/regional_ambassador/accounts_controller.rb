@@ -3,7 +3,8 @@ module RegionalAmbassador
     include AccountController
 
     def index
-      @accounts = RegionalAccount.(current_ambassador).paginate(per_page: 25, page: params[:page])
+      params[:per_page] ||= 25
+      @accounts = RegionalAccount.(current_ambassador).paginate(per_page: params[:per_page], page: params[:page])
     end
 
     private
