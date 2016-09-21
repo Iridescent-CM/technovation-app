@@ -11,10 +11,14 @@ namespace :legacy_migration do
         url = "https:#{user.avatar.url(:original)}"
 
         unless url.include?("missing")
-          profile_image = open(url)
-          account = Account.find_by(email: user.email)
-          account.update_attributes(profile_image: profile_image)
-          puts "Added profile image for: #{user.email}"
+          begin
+            profile_image = open(url)
+            account = Account.find_by(email: user.email)
+            account.update_attributes(profile_image: profile_image)
+            puts "Added profile image for: #{user.email}"
+          rescue
+            puts "Failed profile image for #{user.email}"
+          end
         end
       end
     end

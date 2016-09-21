@@ -11,10 +11,14 @@ namespace :legacy_migration do
         url = "http:#{legacy_team.avatar.url(:original)}"
 
         unless url.nil? or url.include?("missing")
-          team_photo = open(url)
-          team = Team.find_by(name: legacy_team.name)
-          team.update_attributes(team_photo: team_photo)
-          puts "Added photo for: #{team.name}"
+          begin
+            team_photo = open(url)
+            team = Team.find_by(name: legacy_team.name)
+            team.update_attributes(team_photo: team_photo)
+            puts "Added photo for: #{team.name}"
+          rescue
+            puts "Failed photo for #{team.name}"
+          end
         end
       end
     end
