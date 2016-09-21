@@ -16,6 +16,8 @@ class ParentalConsent < ActiveRecord::Base
                                         student.parent_guardian_name,
                                         ENV.fetch("PARENT_LIST_ID"))
 
+    AccountMailer.confirm_next_steps(self).deliver_later
+
     ParentMailer.confirm_consent_finished(self).deliver_later
   }
 

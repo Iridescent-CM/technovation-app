@@ -1,5 +1,7 @@
 en:
   account_mailer:
+    confirm_next_steps:
+      subject: "Technovation next steps: Your parent/guardian signed your permission form!"
     password_reset:
       subject: "Reset your Technovation password"
 
