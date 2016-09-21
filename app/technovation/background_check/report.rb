@@ -24,8 +24,12 @@ module BackgroundCheck
 
     def self.retrieve(id)
       return NoReport.new if id.blank?
-      resp = api_class.request(:get, "#{request_path}/#{id}")
-      new(resp)
+      begin
+        resp = api_class.request(:get, "#{request_path}/#{id}")
+        new(resp)
+      rescue
+        NoReport.new
+      end
     end
 
     def submit

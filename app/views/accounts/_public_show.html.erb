@@ -28,5 +28,16 @@
         <%= render "#{account.type_name}/accounts/public_profile", account: account %>
       </dl>
     </div>
+
+    <% if account.respond_to?(:bio) %>
+      <div class="flex-row">
+        <div class="flex-col-sm-12">
+          <dl>
+            <dt><%= t('models.regional_ambassador_profile.bio.label') %></dt>
+            <dd><%= simple_format account.bio %></dd>
+          </dl>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
