@@ -55,7 +55,7 @@ class Account < ActiveRecord::Base
 
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
-      AdminAccount.find_with_token(token)
+      NoAuthFound.new
   end
 
   def full_name
