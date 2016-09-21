@@ -17,7 +17,7 @@ namespace :legacy_migration do
             account.update_attributes(profile_image: profile_image)
             puts "Added profile image for: #{user.email}"
           rescue
-            puts "Failed profile image for #{user.email}"
+            puts "Failed profile image upload."
           end
         end
       end

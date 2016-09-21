@@ -17,7 +17,7 @@ namespace :legacy_migration do
             team.update_attributes(team_photo: team_photo)
             puts "Added photo for: #{team.name}"
           rescue
-            puts "Failed photo for #{team.name}"
+            puts "Failed photo upload."
           end
         end
       end
