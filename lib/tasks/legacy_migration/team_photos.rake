@@ -4,16 +4,14 @@ namespace :legacy_migration do
     require './lib/legacy/models/team'
     require 'open-uri'
 
-    Paperclip::Attachment.default_options[:path] = "/teams/:attachment/:id_partition/:style/:filename"
-
     Legacy::Team.find_each do |legacy_team|
       url = "http:#{legacy_team.avatar.url(:original)}"
 
       unless url.nil? or url.include?("missing")
         begin
-          team_photo = open(url)
           team = Team.find_by(name: legacy_team.name)
-          team.update_attributes(team_photo: team_photo)
+          team.remote_team_photo_url = url
+          team.save
           puts "Added photo for: #{team.name}"
         rescue
           puts "Failed photo upload."

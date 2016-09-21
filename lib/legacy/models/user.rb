@@ -7,8 +7,10 @@ module Legacy
 
     has_attached_file :avatar,
                       storage: :s3,
-                      url: ":s3_domain_url",
-                      s3_credentials: ->(a) { a.instance.s3_credentials }
+                      url: ':s3_domain_url',
+                      s3_credentials: ->(a) { a.instance.s3_credentials },
+                      path: "/users/:attachment/:id_partition/:style/:filename"
+
 
     enum role: [:student, :mentor, :coach, :judge]
 

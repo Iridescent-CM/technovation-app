@@ -11,7 +11,8 @@ module Legacy
     has_attached_file :avatar,
                       storage: :s3,
                       url: ":s3_domain_url",
-                      s3_credentials: ->(a) { a.instance.s3_credentials }
+                      s3_credentials: ->(a) { a.instance.s3_credentials },
+                      path: "/teams/:attachment/:id_partition/:style/:filename"
 
     def migrated_description
       description.blank? ? "No description" : description
