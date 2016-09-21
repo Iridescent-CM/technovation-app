@@ -7,10 +7,8 @@ unless Rails.env.development? or Rails.env.test?
       port: ENV.fetch("MAIL_PORT"),
       user_name: ENV.fetch("MAIL_USER"),
       password: ENV.fetch("MAIL_PASSWORD"),
-      domain: 'technovationchallenge.org',
-      authentication: :login,
+      authentication: :plain,
       enable_starttls_auto: true,
-      tls: true,
     }
   end
 end
