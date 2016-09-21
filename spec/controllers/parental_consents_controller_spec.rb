@@ -14,7 +14,7 @@ RSpec.describe ParentalConsentsController do
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no copy of parental consent was sent"
       expect(mail.to).to eq([student.reload.parent_guardian_email])
-      expect(mail.subject).to eq("Technovation — Copy of signed parental consent")
+      expect(mail.subject).to eq("Technovation — Copy of signed consent form")
     end
 
     it "notifies the student that they can move on" do
