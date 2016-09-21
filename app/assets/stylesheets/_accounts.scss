@@ -51,24 +51,30 @@
   }
 }
 
-.table__regional_ambassador_accounts {
-  table-layout: auto;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 0.9rem;
+.wrapper__regional_ambassador_accounts {
+  .pagination {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+  }
 
-  tbody {
-    tr {
-      td {
-        width: auto;
-        max-width: 100%;
-        word-wrap: break-word;
-      }
+  .table__regional_ambassador_accounts {
+    table-layout: auto;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
 
-      &:hover {
+    tbody {
+      tr {
         td {
-          background-color: #ddd;
+          width: auto;
+          max-width: 100%;
+          word-wrap: break-word;
+        }
+
+        &:hover {
+          td {
+            background-color: #ddd;
+          }
         }
       }
     }
   }
-}
