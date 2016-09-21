@@ -1,0 +1,13 @@
+For <%= @name %>:
+
+Here is a copy of your parental consent for Technovation <%= Season.current.year %>.
+
+Thanks,
+The Technovation Team
+
+<%= render 'parental_consents/consent', consent: @parental_consent %>
+
+Student name: <%= @student_name %>
+
+Electronic signature
+<%= @signature %> signed on <%= @signed_date %>

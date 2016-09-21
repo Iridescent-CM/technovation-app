@@ -57,6 +57,16 @@ FactoryGirl.define do
                                              joinable: team)
       end
     end
+
+    trait :full_profile do
+      before(:create) do |s|
+        s.student_profile_attributes = {
+          parent_guardian_email: "example@example.com",
+          parent_guardian_name: "Parenty McGee",
+          school_name: "My school",
+        }
+      end
+    end
   end
 
   factory :mentor, aliases: [:mentor_account], parent: :account, class: 'MentorAccount' do

@@ -3,15 +3,24 @@ require "rails_helper"
 RSpec.describe ParentalConsentsController do
   describe "POST #create" do
     it "preserves the token on a validation error" do
-      student = FactoryGirl.create(:student)
+      student = FactoryGirl.create(:student, :full_profile)
       post :create, parental_consent: { student_consent_token: student.consent_token }
       expect(assigns[:parental_consent].student_consent_token).to eq(student.consent_token)
+    end
+
+    it "emails a copy to the parent" do
+      student = FactoryGirl.create(:student, :full_profile)
+      post :create, parental_consent: FactoryGirl.attributes_for(:parental_consent, student_consent_token: student.consent_token)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail).to be_present, "no copy of parental consent was sent"
+      expect(mail.to).to eq([student.reload.parent_guardian_email])
+      expect(mail.subject).to eq("Technovation — Copy of signed parental consent")
     end
   end
 
   describe "GET #new" do
     it "assigns the student to the consent" do
-      student = FactoryGirl.create(:student)
+      student = FactoryGirl.create(:student, :full_profile)
       get :new, token: student.consent_token
       expect(assigns[:parental_consent].student_consent_token).to eq(student.consent_token)
     end

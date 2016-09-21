@@ -1,0 +1,13 @@
+<p>For <%= @name %>:</p>
+
+<p>Here is a copy of your parental consent for Technovation <%= Season.current.year %>.</p>
+
+<p>Thanks,<br />
+The Technovation Team</p>
+
+<%= render 'parental_consents/consent', consent: @parental_consent %>
+
+<p>Student name: <%= @student_name %></p>
+
+<p>Electronic signature<br />
+<%= @signature %> signed on <%= @signed_date %></p>

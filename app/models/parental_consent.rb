@@ -11,9 +11,12 @@ class ParentalConsent < ActiveRecord::Base
     SubscribeEmailListJob.perform_later(student.email,
                                         student.full_name,
                                         ENV.fetch("STUDENT_LIST_ID"))
+
     SubscribeEmailListJob.perform_later(student.parent_guardian_email,
                                         student.parent_guardian_name,
                                         ENV.fetch("PARENT_LIST_ID"))
+
+    ParentMailer.confirm_consent_finished(self).deliver_later
   }
 
   def student_consent_token=(token)
