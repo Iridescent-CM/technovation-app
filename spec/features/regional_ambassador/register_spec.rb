@@ -45,7 +45,7 @@ RSpec.feature "Regional Ambassadors registration" do
     mail = ActionMailer::Base.deliveries.last
 
     expect(mail.to).to eq(["info@technovationchallenge.org"])
-    expect(mail.body.parts.last.to_s).to include("href=\"#{admin_pending_regional_ambassadors_url}\"")
+    expect(mail.body.parts.last.to_s).to include("href=\"#{admin_regional_ambassadors_url(status: :pending)}\"")
   end
 
   scenario "saves profile data" do

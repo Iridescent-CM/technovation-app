@@ -1,3 +1,14 @@
+<label class="no-text-transform">
+  See RAs by status:
+  <%= select_tag :status,
+                 options_for_select([:pending, :approved, :declined], params[:status]),
+                 class: "inline",
+                 data: {
+                   reload: true,
+                   param: :status,
+                 } %>
+</label>
+
 <table class="table">
   <thead>
     <tr>
@@ -8,7 +19,7 @@
   </thead>
 
   <tbody>
-    <% @pending_regional_ambassadors.each do |ambassador| %>
+    <% @regional_ambassadors.each do |ambassador| %>
       <% cache(ambassador) do %>
         <tr>
           <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
