@@ -18,6 +18,7 @@ class RegionalAmbassadorAccount < Account
            :declined?,
            :pending!,
            :pending?,
+           :spam!,
            :organization_company_name,
            :job_title,
            :ambassador_since_year,

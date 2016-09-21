@@ -11,4 +11,10 @@ class AmbassadorMailer < ApplicationMailer
     @status = ambassador.status
     mail to: ambassador.email
   end
+
+  def spam(*)
+  end
+
+  def pending(*)
+  end
 end

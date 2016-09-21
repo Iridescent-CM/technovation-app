@@ -5,7 +5,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   after_update :after_status_changed, if: :status_changed?
 
-  enum status: %i{pending approved declined}
+  enum status: %i{pending approved declined spam}
 
   validates :organization_company_name, :ambassador_since_year, :job_title, :bio, presence: true
 
@@ -25,9 +25,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   private
   def after_status_changed
-    unless pending?
-      AmbassadorMailer.public_send(status, account).deliver_later
-    end
+    AmbassadorMailer.public_send(status, account).deliver_later
 
     if approved?
       SubscribeEmailListJob.perform_later(regional_ambassador_account.email,

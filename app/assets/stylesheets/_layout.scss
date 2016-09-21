@@ -40,3 +40,12 @@
 .no-text-transform {
   text-transform: none !important;
 }
+ td.danger {
+   @extend .notify-error;
+   display: table-cell;
+
+   a {
+     height: 100%;
+     display: block;
+   }
+ }

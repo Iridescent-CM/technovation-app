@@ -12,9 +12,13 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Photo</th>
       <th>Name</th>
       <th>Email</th>
       <th>City, State, Country</th>
+      <% if "declined" == params[:status] %>
+        <th>Spam</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -22,9 +26,15 @@
     <% @regional_ambassadors.each do |ambassador| %>
       <% cache(ambassador) do %>
         <tr>
+          <td><%= image_tag ambassador.profile_image_url(:thumb) %></td>
           <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
           <td><%= ambassador.email %></td>
           <td><%= ambassador.address_details %></td>
+          <% if "declined" == params[:status] %>
+            <td class="danger">
+              <%= link_to 'Mark spam', admin_regional_ambassador_path(ambassador, status: :spam), data: { method: :put, confirm: "Mark #{ambassador.full_name} as spam?" } %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     <% end %>
