@@ -4,6 +4,7 @@ class UpdateEmailListJob < ActiveJob::Base
   def perform(email_was, email, name, list_id)
     return if Rails.env.development? or Rails.env.test?
 
+    email_was ||= email
     auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
 
     begin
