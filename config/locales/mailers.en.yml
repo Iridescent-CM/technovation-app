@@ -19,7 +19,7 @@ en:
 
   parent_mailer:
     confirm_consent_finished:
-      subject: "Technovation — Copy of signed parental consent"
+      subject: "Technovation — Copy of signed consent form"
     consent_notice:
       subject: "Your daughter needs permission to participate in Technovation!"
 
