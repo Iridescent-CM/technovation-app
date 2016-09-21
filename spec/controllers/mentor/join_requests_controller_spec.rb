@@ -2,11 +2,14 @@ require "rails_helper"
 
 RSpec.describe Mentor::JoinRequestsController do
   describe "POST #create" do
-    let(:team) { FactoryGirl.create(:team, members_count: 2) }
+    # TODO: Creating students with parental consents is requiring this eager let
+    let!(:team) { FactoryGirl.create(:team, members_count: 2) }
     let(:mentor) { FactoryGirl.create(:mentor) }
 
     before do
       sign_in(mentor)
+    # TODO: Creating students with parental consents is requiring this deliveries purge
+      ActionMailer::Base.deliveries.clear
       post :create, team_id: team.id
     end
 
