@@ -224,9 +224,9 @@ en:
           disabled:
             judge: "Judge registration will open in March 2017"
           judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
-          mentor: "Guide teams as they identify a problem in their community make an app to address it."
+          mentor: "Guide teams as they identify a problem in their community and help them build a real smartphone app to address it."
           regional_ambassador: "Apply now for the opportunity to build and coordinate the Technovation program in your area."
-          student: "Assemble a team, connect with mentors and make an app!"
+          student: "Assemble a team, connect with mentors, and build a real smartphone app!"
         role_choice: "I am a..."
         roles:
           judge: "Judge"
