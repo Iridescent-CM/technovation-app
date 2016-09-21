@@ -32,6 +32,7 @@ en:
       instead: "instead"
       invite: "Send invite"
       no: "No"
+      only_one_email: "Enter only one email"
       or: "or"
       privacy_policy: "Privacy Policy"
       review: "review"
@@ -320,7 +321,7 @@ en:
       form:
         confirm_accept: "You are about to accept the invitation."
         confirm_decline: "You are about to decline the invitation."
-        invite_by_email: "Invite more students by email"
+        invite_by_email: "Invite another student by email (one at a time)"
       show:
         accepted: "You have previously accepted this invite."
         declined: "You previously declined this invite. If you accepted an invite from another team, then this one was automatically declined."
