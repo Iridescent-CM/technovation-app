@@ -8,7 +8,7 @@
   <%= select_tag :per_page,
                  options_for_select(%w{10 25 50 100 250}, params[:per_page]),
                  class: "inline",
-                 data: { reload: true } %>
+                 data: { reload: true, param: :per_page } %>
 </label>
 
 <div class="wrapper__regional_ambassador_accounts">
