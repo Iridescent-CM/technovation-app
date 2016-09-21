@@ -7,8 +7,6 @@ class StudentProfile < ActiveRecord::Base
 
   validates :school_name, presence: true
 
-  validates :parent_guardian_email, email: true, allow_blank: true
-
   def validate_parent_email
     required_email_attributes.select { |a| send(a).blank? }.each do |a|
       errors.add(a, :blank)
