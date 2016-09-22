@@ -8,18 +8,13 @@ module SearchTeams
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-      team_members = Account.joins(:seasons)
-                            .references(:seasons)
-                            .where("seasons.year = ?", Season.current.year)
-                            .where("type = ? OR type = ?", "MentorAccount", "StudentAccount")
-                            .near(nearby, miles)
-                            .order('distance')
-
-      ids = team_members.collect(&:id)
+      account_ids = Account.where(type: %w{MentorAccount StudentAccount})
+                           .near(nearby, miles)
+                           .collect(&:id)
 
       teams = teams.joins(:memberships)
                    .references(:memberships)
-                   .where("memberships.member_id IN (?)", ids)
+                   .where("memberships.member_id IN (?)", account_ids)
     end
 
     teams = case filter.spot_available
