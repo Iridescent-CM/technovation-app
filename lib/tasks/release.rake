@@ -9,7 +9,7 @@ task :release do
   puts ""
 
   sh "git tag #{ENV.fetch('VM')}.#{ENV.fetch('P')}"
-  sh "git tag #{ENV.fetch('VM')}-stable"
+  sh "git tag -f #{ENV.fetch('VM')}-stable"
   puts "-------------------------"
   puts ""
 
@@ -17,6 +17,7 @@ task :release do
   puts "-------------------------"
   puts ""
 
+  sh "git push origin :refs/tags/#{ENV.fetch("VM")}-stable"
   sh "git push --tags"
   exit
 end
