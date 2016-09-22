@@ -23,6 +23,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:page) { 1 }
   end
 
+  def user
+    filter_options.fetch(:user) { NoUser.new }
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"
@@ -30,4 +34,6 @@ class SearchFilter < Struct.new(:filter_options)
       "notice"
     end
   end
+
+  class NoUser; end
 end

@@ -7,7 +7,10 @@ module SearchMentors
     end
 
     if filter.nearby.present?
-      mentors = mentors.near(filter.nearby, 50)
+      miles = filter.nearby == "anywhere" ? 40_000 : 50
+      nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+
+      mentors = mentors.near(nearby, miles).order("distance")
     end
 
     mentors.searchable
