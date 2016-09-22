@@ -31,6 +31,7 @@ en:
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
       instead: "instead"
       invite: "Send invite"
+      me: "Me"
       no: "No"
       only_one_email: "Enter only one email"
       or: "or"
@@ -38,6 +39,7 @@ en:
       review: "review"
       review_now: "Review now"
       save: "Save"
+      search_near: "Search near"
       signin: 'Sign in'
       signup: 'Sign up'
       signout: 'Logout'

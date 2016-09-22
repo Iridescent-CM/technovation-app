@@ -8,3 +8,4 @@
 //= require select_fields
 //= require fancy_uploads
 //= require fancy_select
+//= require search_options
