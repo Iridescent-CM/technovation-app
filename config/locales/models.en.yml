@@ -66,8 +66,8 @@ en:
 
     team:
       class_name: "team"
-      accepting_student_requests: "Students can request to join our team."
-      accepting_mentor_requests: "Mentors can request to mentor our team."
+      accepting_student_requests: "Other students can request to join this team."
+      accepting_mentor_requests: "Other mentors can request to become mentors of this team."
 
     team_member_invite:
       invitee_email: "Email"
