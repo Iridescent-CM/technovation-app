@@ -16,6 +16,13 @@
   <% end %>
 </div>
 
+<div>
+  <%= simple_form_for [account.type_name, @team], data: { remote: true } do |f| %>
+    <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
+    <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
+  <% end %>
+</div>
+
 <div class="team-memberships">
   <%= render "teams/member_list", team: team %>
   <%= render "teams/mentor_list", team: team %>
