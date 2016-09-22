@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921170728) do
+ActiveRecord::Schema.define(version: 20160922185030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -315,13 +315,15 @@ ActiveRecord::Schema.define(version: 20160921170728) do
   add_index "team_member_invites", ["status"], name: "index_team_member_invites_on_status", using: :btree
 
   create_table "teams", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.text     "description", null: false
-    t.integer  "division_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name",                                      null: false
+    t.text     "description",                               null: false
+    t.integer  "division_id",                               null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "team_photo"
     t.string   "friendly_id"
+    t.boolean  "accepting_student_requests", default: true, null: false
+    t.boolean  "accepting_mentor_requests",  default: true, null: false
   end
 
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
