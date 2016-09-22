@@ -33,6 +33,15 @@ module SearchTeams
               teams
             end
 
+    teams = case filter.user.type
+            when "StudentAccount"
+              teams.select(&:accepting_student_requests?)
+            when "MentorAccount"
+              teams.select(&:accepting_mentor_requests?)
+            else
+              teams
+            end
+
     teams.paginate(page: filter.page)
   end
 end

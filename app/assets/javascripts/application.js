@@ -5,6 +5,7 @@
 //= require sortable
 //= require jquery.query
 
+//= require remote_forms
 //= require select_fields
 //= require fancy_uploads
 //= require fancy_select
