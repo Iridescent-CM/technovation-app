@@ -1,18 +1,21 @@
-<div class="flex-row student-mentor-searches">
-  <div class="flex-col-md-3">
-    <%= render 'student/mentor_searches/filter_options' %>
-  </div>
+<div class="mentor-search">
+  <h1 class="mentor-search__heading"><%= t("views.student.mentor_searches.title") %></h1>
+  <p class="mentor-search__subheading"><%= t("views.student.mentor_searches.intro") %></p>
 
-  <div class="flex-col-md-9">
-    <h1><%= t("views.student.mentor_searches.title") %></h1>
+  <div class="mentor-search__feature-wrapper">
+    <div class="mentor-search__filters search-filters">
+      <%= render 'student/mentor_searches/filter_options' %>
+    </div>
 
-    <p><%= t("views.student.mentor_searches.intro") %></p>
-
-    <%= render(partial: 'student/mentor_searches/mentor_preview',
-               collection: @mentors,
-               cached: true) or
-          t("views.student.mentor_searches.none_found") %>
-
-    <%= will_paginate @mentors %>
+    <div class="mentor-search__results">
+      <h2 class="mentor-search__results-heading">Available Mentors</h2>
+      <div class="mentor-search__mentors-wrapper">
+        <%= render(partial: 'student/mentor_searches/mentor_preview',
+                   collection: @mentors,
+                   cached: true) or
+              t("views.student.mentor_searches.none_found") %>
+      </div>
+      <%= will_paginate @mentors %>
+    </div>
   </div>
 </div>

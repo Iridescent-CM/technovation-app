@@ -1,14 +1,20 @@
-<h4><%= t("views.student.mentors.searches.filter_options") %></h4>
+<div class="search-filters__heading">
+  <h4><%= t("views.student.mentors.searches.filter_options") %></h4>
+</div>
 
-<%= form_tag request.fullpath, method: :get do %>
-  <%= render 'searches/location_options', account: current_student %>
+<div class="search-filters__form-wrapper">
+  <%= form_tag request.fullpath, method: :get do %>
+  	<%= render 'searches/location_options', account: current_student %>
 
-  <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
-    <%= b.label do %>
-      <%= b.check_box %>
-      <%= b.text %>
+    <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
+      <%= b.label do %>
+        <%= b.check_box %>
+        <span class="pseudo-checkbox fa fa-check"><!--Fontawesome Checkmark--></span>
+        <%= b.text %>
+      <% end %>
     <% end %>
+    <div class="search-filters__button-wrapper">
+      <%= button_tag t('views.application.filter') %>
+    </div>
   <% end %>
-
-  <%= button_tag t('views.application.filter') %>
-<% end %>
+</div>

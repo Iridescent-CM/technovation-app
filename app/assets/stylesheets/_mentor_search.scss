@@ -1,20 +1,239 @@
-.mentor {
-  border: 1px solid #ccc;
-  padding: 1rem;
+.mentor-search__heading {
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0 0.5rem 0.5rem 0;
+  position: relative;
+
+  &::after {
+    background-color: $shamrock;
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 0.25rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+}
+
+.mentor-search__subheading {
+  font-size: 1.2rem;
+  font-weight: normal;
   margin-bottom: 1rem;
+}
 
-  h1 {
-    margin: 0;
+.mentor-search__feature-wrapper {
+  display: flex;
 
-    span {
-      font-weight: normal;
-      color: #777;
-      font-size: 0.8rem;
+  @media screen and (max-width: $device-md) {
+    flex-wrap: wrap;
+  }
+}
+
+.mentor-search__filters {
+  margin: 0 2rem 1rem 0;
+  min-width: 250px;
+
+  @media screen and (max-width: $device-md) {
+    margin: 0 0 1rem;
+    min-width: 100%;
+  }
+}
+
+.mentor-search__results {
+  flex-grow: 1;
+  padding: 0;
+}
+
+.mentor-search__results h2.mentor-search__results-heading { // TODO: Figure out how to make this less specific
+  color: $chalkboard;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0 0 0.75rem;
+}
+
+.mentor-search__mentors-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mentor {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 2px rgba(black, 0.1);
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 1.25rem;
+  position: relative;
+  width: calc((100% / 3) - (2rem / 3));
+
+  &:not(:nth-child(3n)) {
+    margin-right: 1rem;
+  }
+
+  @media screen and (max-width: $device-lg) {
+    width: calc(50% - 0.5rem);
+
+    &:not(:nth-child(3n)) {
+      margin-right: 0;
+    }
+
+    &:not(:nth-child(2n)) {
+      margin-right: 1rem;
     }
   }
 
-  h2 {
-    font-size: 0.8rem;
-    margin: 0;
+  @media screen and (max-width: $device-md) {
+    width: 100%;
+
+    &:not(:nth-child(3n)),
+    &:not(:nth-child(2n)) {
+      margin-right: 0;
+    }
   }
 }
+
+.mentor__avatar {
+  $size: 120px;
+  $size-md: 80px;
+  background-color: $mid-grey;
+  border-radius: 50%;
+  height: $size;
+  margin: 0 auto 0.5rem;
+  overflow: hidden;
+  width: $size;
+
+  object,
+  img {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  @media screen and (max-width: $device-md) {
+    height: $size-md;
+    width: $size-md;
+  }
+}
+
+.mentor__name,
+.mentor__location,
+.mentor__company {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.mentor__name {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.mentor__profile-link-btn {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 1.25rem;
+  padding: 0.5rem;
+  text-transform: none;
+  width: 100%;
+}
+
+.mentor__availability-badge {
+  border-radius: 0.25em 0 0 0.25em;
+  padding: 0.5em 0.75em;
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+}
+
+/*
+ * TODO: MOVE THIS OUT OF HERE AND INTO A COMPONENT OR UTILS FILE
+ */
+
+.search-filters {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 2px rgba(black, 0.1); // TODO: Make this a variable or mixin
+  overflow: hidden;
+  padding: 0;
+}
+
+.search-filters__heading {
+  background-color: $mulberry;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.search-filters__form-wrapper {
+
+  label {
+    align-items: center;
+    border-bottom: 1px solid rgba(black, 0.1);
+    display: flex;
+    font-size: 1rem;
+    letter-spacing: normal;
+    margin: 0;
+    padding: 1rem;
+    text-transform: none;
+  }
+
+  input[type='checkbox']:focus:not(:checked) + .pseudo-checkbox,
+  label:hover input[type='checkbox']:not(:checked) + .pseudo-checkbox {
+    background-color: darken($mid-grey, 10);
+  }
+
+  input[type='checkbox'] {
+    display: hidden;
+    width: 0;
+    height: 0;
+    position:absolute;
+    opacity: 0;
+  }
+
+  .pseudo-checkbox {
+    $size: 1.25rem;
+    $transition-speed: 0.25s;
+    background-color: $mid-grey;
+    border-radius: 0.25rem;
+    height: $size;
+    margin-right: 0.75rem;
+    position: relative;
+    transition: background-color $transition-speed;
+    width: $size;
+
+    &::before {
+      color: white;
+      left: 50%;
+      font-size: 1rem;
+      opacity: 0;
+      position: absolute;
+      transition: opacity $transition-speed;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
+  input[type='checkbox']:checked + .pseudo-checkbox {
+    background-color: $shamrock;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.search-filters__button-wrapper {
+  padding: 0.75rem;
+
+  button {
+    display: block;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    text-transform: none;
+    width: 100%;
+  }
+}
+
+/*
+ * END TODO
+ */
