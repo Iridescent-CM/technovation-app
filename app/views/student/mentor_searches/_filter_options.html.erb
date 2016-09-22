@@ -4,7 +4,8 @@
 
 <div class="search-filters__form-wrapper">
   <%= form_tag request.fullpath, method: :get do %>
-  	<%= render 'searches/location_options', account: current_student %>
+
+    <%= render 'searches/location_options', account: current_student %>
 
     <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>
