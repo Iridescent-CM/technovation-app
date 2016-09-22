@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20160921170728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "account_exports", force: :cascade do |t|
     t.integer  "regional_ambassador_account_id", null: false
