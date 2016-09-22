@@ -18,6 +18,7 @@ en:
 
     application:
       actions: "Actions"
+      anywhere: "Anywhere"
       approved: "approve"
       cancel: 'cancel'
       complete_your_profile: "Follow these steps to complete your profile"

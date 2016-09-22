@@ -1,5 +1,10 @@
 <%= t("views.team_searches.new.intro") %>
 
+<%= form_tag request.fullpath, method: :get do %>
+  <%= render 'searches/location_options', account: current_mentor %>
+  <%= button_tag t("views.application.filter") %>
+<% end %>
+
 <hr />
 
 <%= render(partial: "team_searches/result", collection: @teams, cached: true, locals: { account_type: :mentor }) or

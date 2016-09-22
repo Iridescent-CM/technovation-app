@@ -2,17 +2,25 @@ require 'will_paginate/array'
 
 module SearchTeams
   def self.call(filter)
-    teams = if filter.nearby.present?
-              student_ids = StudentAccount.near(filter.nearby, 50).collect(&:id)
-              mentor_ids = MentorAccount.near(filter.nearby, 50).collect(&:id)
+    teams = Team.current
 
-              Team.current
-                  .joins(:memberships)
-                  .where("memberships.member_id IN (?)", student_ids + mentor_ids)
-                  .uniq
-            else
-              Team.current
-            end
+    if filter.nearby.present?
+      miles = filter.nearby == "anywhere" ? 40_000 : 50
+      nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+
+      team_members = Account.joins(:seasons)
+                            .references(:seasons)
+                            .where("seasons.year = ?", Season.current.year)
+                            .where("type = ? OR type = ?", "MentorAccount", "StudentAccount")
+                            .near(nearby, miles)
+                            .order('distance')
+
+      ids = team_members.collect(&:id)
+
+      teams = teams.joins(:memberships)
+                   .references(:memberships)
+                   .where("memberships.member_id IN (?)", ids)
+    end
 
     teams = case filter.spot_available
             when true
