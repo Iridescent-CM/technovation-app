@@ -8,7 +8,8 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git tag #{ENV.fetch('V')}"
+  sh "git tag #{ENV.fetch('VM')}.#{ENV.fetch('P')}"
+  sh "git tag #{ENV.fetch('VM')}-stable"
   puts "-------------------------"
   puts ""
 
