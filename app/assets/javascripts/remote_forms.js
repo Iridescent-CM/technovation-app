@@ -9,10 +9,10 @@
     });
 
     $(document).on('ajax:success', function() {
-      $('#currentAjaxMsg').addClass('alert alert-success')
-                          .text('Your setting was updated.')
+      $('#currentAjaxMsg').addClass('alert alert-info')
+                          .text('Saved!')
                           .fadeIn('easein')
-                          .delay(3000)
+                          .delay(500)
                           .fadeOut('easein', function() { $(this).remove(); });
     });
   }
