@@ -34,5 +34,8 @@ class PumaOOBGC
 end
 
 require ::File.expand_path('../config/environment', __FILE__)
-use PumaOOBGC, 10, Rails.logger
+unless Rails.env.development? or Rails.env.test?
+  use PumaOOBGC, 10, Rails.logger
+end
+
 run Rails.application
