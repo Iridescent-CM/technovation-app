@@ -1,11 +1,7 @@
 <h4><%= t("views.student.mentors.searches.filter_options") %></h4>
 
 <%= form_tag request.fullpath, method: :get do %>
-  <%= label_tag :nearby, t("views.application.search_near") %>
-  <%= text_field_tag :nearby, params[:nearby], id: "geocoded", data: { location_field: true } %>
-
-  <%= button_tag t('views.application.anywhere'), data: { update_location: "anywhere" } %>
-  <%= button_tag t('views.application.me'), data: { update_location: current_student.address_details } %>
+  <%= render 'searches/location_options', account: current_student %>
 
   <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
     <%= b.label do %>

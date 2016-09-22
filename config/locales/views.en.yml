@@ -18,6 +18,7 @@ en:
 
     application:
       actions: "Actions"
+      anywhere: "Anywhere"
       approved: "approve"
       cancel: 'cancel'
       complete_your_profile: "Follow these steps to complete your profile"
@@ -113,8 +114,8 @@ en:
 
       team_searches:
         new:
-          intro: "You are browsing available teams, which are teams within 50 miles of you who do not already have a mentor."
-          no_results: "Hmm, sorry, but we didn't find any teams without a mentor near you. Check again later."
+          intro: "You are browsing available teams, which are teams within 50 miles of your search location who do not already have a mentor."
+          no_results: "Hmm, sorry, but we didn't find any teams without a mentor. Please try again later."
 
     mentors:
       show:
@@ -308,8 +309,8 @@ en:
 
       team_searches:
         new:
-          intro: "You are browsing available teams, which are teams within 50 miles of you that are not full."
-          no_results: "Hmm, sorry, but we didn't find any available teams near you. Check again later."
+          intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
+          no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
 
     teams:
       show:
