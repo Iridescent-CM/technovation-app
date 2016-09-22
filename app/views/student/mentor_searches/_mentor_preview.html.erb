@@ -1,25 +1,45 @@
 <div class="mentor">
-  <h1>
-    <%= link_to mentor_preview.full_name, student_mentor_path(mentor_preview) %>
 
-    <span>
-      <%= mentor_preview.school_company_name %>
-      &mdash;
-      <%= mentor_preview.address_details %>
-    </span>
-  </h1>
+  <div class="mentor__avatar">
+    <object data=" <%= asset_path 'placeholders/placeholder-avatar.svg' %>" type="image/png">
+      <%= image_tag mentor_preview.profile_image_url %>
+    </object>
+  </div>
+
+  <div class="mentor__name">
+    <%= mentor_preview.full_name %>
+  </div>
+
+  <div class="mentor__location">
+    <%= mentor_preview.address_details %>
+  </div>
+
+  <div class="mentor__company">
+    <%= mentor_preview.school_company_name %>
+  </div>
 
   <% mentor_preview.expertises.each do |expertise| %>
     <% cache(expertise) do %>
-      <span class="mentor_expertise badge-<%= @search_filter.badge_css(expertise) %>">
+      <span class="badge-<%= @search_filter.badge_css(expertise) %>">
         <%= expertise.name %>
       </span>
     <% end %>
   <% end %>
 
+  <%= link_to student_mentor_path(mentor_preview) do %>
+    <button class="mentor__profile-link-btn" type="button">
+      View Full Profile
+    </button>
+  <% end %>
+  <%# TODO: Localize the above string %>
+
   <% if mentor_preview.is_on_team? %>
-    <span class="badge-notice on-team"><%= t("views.student.mentor_searches.new.mentor_preview.on_team") %></span>
+    <span class="mentor__availability-badge badge-notice">
+      <%= t("views.student.mentor_searches.new.mentor_preview.on_team") %>
+    </span>
   <% else %>
-    <span class="badge-success no-team"><%= t("views.student.mentor_searches.new.mentor_preview.needs_team") %></span>
+    <span class="mentor__availability-badge badge-success">
+      <%= t("views.student.mentor_searches.new.mentor_preview.needs_team") %>
+    </span>
   <% end %>
 </div>

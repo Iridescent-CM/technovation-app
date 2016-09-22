@@ -49,7 +49,7 @@ group :development, :test do
   gem 'pry-nav'
   gem 'quiet_assets'
   gem 'rspec-rails'
-  gem 'capybara-webkit'
+  #gem 'capybara-webkit'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'launchy'
