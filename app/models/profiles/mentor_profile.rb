@@ -8,7 +8,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
-    if: :background_check_completed_at_changed?
+    if: -> (profile) { profile.background_check_completed_at_changed? or profile.mentor_account.country_changed? }
 
   validates :school_company_name, :job_title, presence: true
 
@@ -21,7 +21,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def background_check_complete?
-    not mentor_account.country == "US" or !!background_check_completed_at
+    mentor_account.country != "US" or !!background_check_completed_at
   end
 
   def enable_searchability
