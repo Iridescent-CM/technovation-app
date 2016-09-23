@@ -44,7 +44,11 @@ $nav-content-height: 60px;
   }
 }
 
-
 .navigation__content-wrapper {
   justify-content: space-between;
+}
+
+.navigation__links-list {
+  align-items: center;
+  display: flex;
 }

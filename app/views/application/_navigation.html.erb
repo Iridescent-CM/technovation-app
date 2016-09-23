@@ -1,12 +1,14 @@
 <header class="navigation" role="banner">
   <div class="container">
     <div class="flex-row navigation__content-wrapper">
-      <%= link_to image_tag("tc-logo-white.svg"),
-                  content_for?(:root_path) ? yield(:root_path) : application_dashboard_path,
+      <%= link_to image_tag("tc-logo-white-tm.png"),
+                  content_for?(:root_path) ?
+                    yield(:root_path) :
+                    application_dashboard_path,
                   class: "logo" %>
 
       <nav>
-        <ul>
+        <ul class="navigation__links-list">
           <% if content_for?(:menu) %>
             <%= render 'signed_in' %>
           <% else %>
