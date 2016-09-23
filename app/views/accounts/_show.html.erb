@@ -48,6 +48,14 @@
     <% if account.respond_to?(:bio) %>
       <div class="flex-row">
         <div class="flex-col-sm-12">
+          <% if edit and account.type == "MentorAccount" %>
+            <%= simple_form_for account, html: { class: "full-size" }, remote: true do |f| %>
+              <%= f.fields_for :mentor_profile do |m| %>
+                <%= m.input :accepting_team_invites, as: :boolean, label: t("models.mentor_profile.accepting_team_invites") %>
+              <% end %>
+            <% end %>
+          <% end %>
+
           <dl>
             <dt><%= t('models.regional_ambassador_profile.bio.label') %></dt>
             <dd><%= simple_format account.bio %></dd>

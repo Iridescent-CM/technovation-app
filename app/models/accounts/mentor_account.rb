@@ -18,7 +18,7 @@ class MentorAccount < Account
     .uniq
   }
 
-  scope :searchable, -> { where("mentor_profiles.searchable = ?", true) }
+  scope :searchable, -> { where("mentor_profiles.accepting_team_invites = ? AND mentor_profiles.searchable = ?", true, true) }
 
   delegate :expertises,
            :expertise_names,

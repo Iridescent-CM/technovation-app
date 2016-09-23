@@ -25,6 +25,7 @@ en:
       expertise_names: "Expertise"
 
     mentor_profile:
+      accepting_team_invites: "Allow teams to invite me to be their mentor."
       expertise_names: "Expertise"
       job_title: "Job title"
       school_company_name: "School or company name"

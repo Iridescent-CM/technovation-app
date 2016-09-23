@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20160926153416) do
     t.boolean  "searchable",                    default: false, null: false
     t.string   "background_check_candidate_id"
     t.string   "background_check_report_id"
+    t.boolean  "accepting_team_invites",        default: true,  null: false
   end
 
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
