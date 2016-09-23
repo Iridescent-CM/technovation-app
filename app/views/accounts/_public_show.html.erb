@@ -1,19 +1,14 @@
-<% title ||= t("views.accounts.show.title") %>
-
-<div class="dashboard-page-info">
-  <h3><%= title %></h3>
-</div>
+<% title ||= account.type_name.titleize %>
 
 <div class="flex-row">
   <div class="flex-col-sm-3 well profile-avatar">
-    <%= image_tag account.profile_image_url %>
+    <%= image_tag account.profile_image_url, width: 175 %>
+    <h3><%= account.first_name %></h3>
+    <h5><%= title %></h5>
   </div>
 
   <div class="flex-row flex-col-sm-9 account-info">
     <dl class="flex-col-sm-6 account-basic">
-      <dt><%= t('models.account.first_name') %></dt>
-      <dd><%= account.first_name %></dd>
-
       <% if account.type != "StudentAccount" %>
         <dt><%= t('models.account.gender') %></dt>
         <dd><%= account.gender %></dd>

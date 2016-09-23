@@ -1,10 +1,9 @@
 <%= simple_form_for account, url: url, html: { class: "fancy-upload" } do |f| %>
-  <%= image_tag account.profile_image_url, width: 233, height: 233 %>
-  <br>
+  <%= f.input :profile_image, input_html: { data: { fancy: true } } %>
+
+  <%= image_tag account.profile_image_url, width: 175 %>
+
   <%= link_to t("controllers.accounts.update.change_image"), '#',
               data: { uploader: true },
-              class: "transparent-accent-button" %>
-
-  <%= f.input :profile_image, input_html: { data: { fancy: true } } %>
-  <%= f.button :submit, t("views.application.save") %>
+              class: "action-link secondary" %>
 <% end %>

@@ -1,25 +1,26 @@
 <% url ||= false %>
 <% edit ||= false %>
-<% title ||= t("views.accounts.show.title") %>
-
-<div class="dashboard-page-info">
-  <h3><%= title %></h3>
-</div>
+<% title ||= account.type_name.titleize %>
 
 <div class="flex-row">
   <div class="flex-col-sm-3 well profile-avatar">
     <% if url %>
-      <%= render 'accounts/profile_image_upload', url: url %>
+      <%= render 'accounts/profile_image_upload', edit: edit, url: url %>
     <% else %>
-      <%= image_tag account.profile_image_url %>
+      <%= image_tag account.profile_image_url, width: 175 %>
     <% end %>
-  </div>
+
+    <h3><%= account.full_name %></h3>
+
+    <h5><%= title %></h5>
+
+    <% if edit %>
+      <%= link_to t('views.accounts.show.edit'), edit_account_path, class: "action-link" %>
+    <% end %>
+    </div>
 
   <div class="flex-row flex-col-sm-9 account-info">
     <dl class="flex-col-sm-6 account-basic">
-      <dt><%= t('models.account.full_name') %></dt>
-      <dd><%= account.full_name %></dd>
-
       <dt><%= t('models.account.email') %></dt>
       <dd><%= account.email %></dd>
 
@@ -39,10 +40,6 @@
       <dl>
         <%= render "#{account.type_name}/accounts/profile", account: account %>
       </dl>
-
-      <% if edit %>
-        <%= link_to t('views.accounts.show.edit'), edit_account_path %>
-      <% end %>
     </div>
 
     <% if account.respond_to?(:bio) %>

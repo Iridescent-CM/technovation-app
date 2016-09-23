@@ -1,5 +1,68 @@
 @import "typeaheadjs";
 
+@media only screen and (min-width: 800px) and (min-device-width: 1200px) {
+  html, body { height: 100% }
+
+  .profile-avatar {
+    position: fixed;
+    left: 0;
+    top: 150px;
+    bottom: 0;
+    width: 190px;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    overflow-y: scroll;
+    min-height: 0 !important;
+    margin-bottom: 0 !important;
+    -webkit-box-shadow: -8px 4px 32px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -8px 4px 32px 5px rgba(0,0,0,0.75);
+    box-shadow: -8px 4px 32px 5px rgba(0,0,0,0.75);
+
+    img {
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    h3, h4, h5 {
+      text-align: left;
+    }
+
+    h5 {
+      font-size: 0.6em;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+
+    .action-link {
+      display: block;
+      text-transform: uppercase;
+      font-family: $heading-font-family;
+      padding: 0.5rem;
+      padding-left: 0;
+      text-align: left;
+      margin: 0;
+      font-size: 1rem;
+      &.secondary {
+        color: $marine;
+        &:hover {
+          color: $marine-dark;
+        }
+      }
+      &:hover {
+        background: 0;
+        color: $shamrock-dark;
+      }
+    }
+  }
+
+  .account-info {
+    margin-left: 175px;
+  }
+}
+
 .account-info {
   padding: 0 0 0 1em;
 
@@ -28,7 +91,6 @@
 
   img {
     height: auto;
-    margin-bottom: $small-spacing;
 
     &::after {
       content: '';

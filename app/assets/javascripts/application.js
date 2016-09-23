@@ -10,3 +10,4 @@
 //= require fancy_uploads
 //= require fancy_select
 //= require search_options
+//=require fancy_info
