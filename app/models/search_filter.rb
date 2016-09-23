@@ -27,6 +27,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:user) { NoUser.new }
   end
 
+  def needs_team
+    filter_options.fetch(:needs_team) { false } == "1"
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"

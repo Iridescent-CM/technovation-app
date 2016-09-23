@@ -9,6 +9,10 @@
       <%= render 'searches/location_options', account: current_student %>
     </div>
 
+    <div class="search-filters__toggle_needs_team">
+      <%= render 'searches/toggle_mentor_needs_team', account: current_student %>
+    </div>
+
     <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>
         <%= b.check_box %>
