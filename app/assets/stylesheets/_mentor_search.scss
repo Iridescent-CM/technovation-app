@@ -35,10 +35,12 @@
 .mentor-search__filters {
   align-self: flex-start;
   margin: 0 2rem 1rem 0;
+  max-width: 250px;
   min-width: 250px;
 
   @media screen and (max-width: $device-md) {
     margin: 0 0 1rem;
+    max-width: auto;
     min-width: 100%;
   }
 }
@@ -166,6 +168,38 @@
 }
 
 .search-filters__form-wrapper {
+
+  .search-filters__location { // TODO: This nesting is getting v ugly. Figure out how to reduce it.
+    border-bottom: 1px solid rgba(black, 0.1);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+
+    .tt-dropdown-menu {
+      width: 100%;
+    }
+
+    input {
+      font-size: 1.2rem;
+      margin-bottom: 0;
+    }
+
+    label {
+      padding: 0 0 0.25rem;
+    }
+
+    button {
+      margin: 0.5rem 0 0;
+      width: 100%;
+
+      @media screen and (max-width: $device-md) {
+        width: calc(50% - 0.25rem);
+
+        &:last-child {
+          float: right;
+        }
+      }
+    }
+  }
 
   label {
     align-items: center;
