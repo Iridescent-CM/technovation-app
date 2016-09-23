@@ -59,6 +59,10 @@ label {
     @include span-columns(10);
   }
 
+  &.full-size {
+    @include span-columns(12);
+  }
+
   p {
     margin: 15px 0;
   }
