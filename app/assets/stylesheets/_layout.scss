@@ -1,4 +1,30 @@
 // TODO: Put this somewhere else because layout is misleading
+@media only screen and (min-width: 500px) and (min-device-width: 1200px) {
+  body {
+    .navigation {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+    }
+
+    > .container {
+      @include outer-container;
+      padding-top: 91px;
+
+      > .profile {
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        padding-top: 1rem;
+        background: #ECECEC;
+      }
+
+      > .main-content {
+        margin-top: 75px;
+      }
+    }
+  }
+}
 
 .container {
   @include outer-container;
