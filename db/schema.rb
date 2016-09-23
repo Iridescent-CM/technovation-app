@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922185030) do
+ActiveRecord::Schema.define(version: 20160923153258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20160922185030) do
     t.boolean  "searchable",                    default: false, null: false
     t.string   "background_check_candidate_id"
     t.string   "background_check_report_id"
+    t.boolean  "accepting_team_invites",        default: true,  null: false
   end
 
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
