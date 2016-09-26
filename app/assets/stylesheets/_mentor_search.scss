@@ -58,7 +58,6 @@
 }
 
 .mentor-search__mentors-wrapper {
-  @include clearfix;
   display: flex;
   flex-wrap: wrap;
 }
