@@ -30,7 +30,7 @@
       <h2 class="appy-heading-lg">
         <%= t("views.student.team_searches.new.results_heading") %>
       </h2>
-      <div class="mentor-search__mentors-wrapper">
+      <div class="team-search__teams-wrapper">
         <%= render(partial: "team_searches/result", collection: @teams, cached: true, locals: { account_type: :student }) or
               t("views.student.team_searches.new.no_results") %>
       </div>

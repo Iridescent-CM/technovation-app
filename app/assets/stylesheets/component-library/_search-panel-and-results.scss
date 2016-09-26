@@ -22,4 +22,12 @@
 .search-panel-and-results__results {
   padding: 0;
   width: 100%;
+
+  .pagination {
+    text-align: center;
+
+    a {
+      display: inline-block;
+    }
+  }
 }
