@@ -1,13 +1,40 @@
-<%= t("views.team_searches.new.intro") %>
+<div class="team-search">
+  <h1 class="appy-title">
+    <%= t("views.team_searches.new.title") %>
+  </h1>
+  <p class="appy-subtitle">
+    <%= t("views.team_searches.new.intro") %>
+  </p>
 
-<%= form_tag request.fullpath, method: :get do %>
-  <%= render 'searches/location_options', account: current_student %>
-  <%= button_tag t("views.application.filter") %>
-<% end %>
+  <div class="search-panel-and-results">
+    <div class="search-panel-and-results__search search-filters">
+      <div class="search-filters__heading">
+        <h4><%= t("views.team_searches.new.filter_heading") %></h4>
+      </div>
 
-<hr />
+      <div class="search-filters__form-wrapper">
+        <%= form_tag request.fullpath, method: :get do %>
+          <div class="search-filters__location">
+            <%= render 'searches/location_options', account: current_student %>
+          </div>
+          <div class="search-filters__button-wrapper">
+            <%= button_tag t('views.application.filter') %>
+          </div>
+        <% end %>
+      </div>
 
-<%= render(partial: "team_searches/result", collection: @teams, cached: true, locals: { account_type: :student }) or
-      t("views.team_searches.new.no_results") %>
 
-<%= will_paginate @teams %>
+    </div>
+
+    <div class="search-panel-and-results__results">
+      <h2 class="appy-heading-lg">
+        <%= t("views.team_searches.new.results_heading") %>
+      </h2>
+      <div class="mentor-search__mentors-wrapper">
+        <%= render(partial: "team_searches/result", collection: @teams, cached: true, locals: { account_type: :student }) or
+              t("views.team_searches.new.no_results") %>
+      </div>
+      <%= will_paginate @teams %>
+    </div>
+  </div>
+</div>
