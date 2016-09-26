@@ -1,0 +1,33 @@
+.appy-title {
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0 0.5rem 0.5rem 0;
+  position: relative;
+
+  &::after {
+    background-color: $shamrock;
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 0.25rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.appy-subtitle {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 { // TODO: Make this less specific
+  &.appy-heading-lg.appy-heading-lg {
+    color: $chalkboard;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin: 0 0 0.75rem;
+  }
+}
