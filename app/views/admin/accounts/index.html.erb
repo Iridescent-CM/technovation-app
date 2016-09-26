@@ -1,3 +1,5 @@
+<h1>Accounts</h1>
+
 <label class="no-text-transform">
   Per page:
   <%= select_tag :per_page,
@@ -24,6 +26,11 @@
                  class: "inline",
                  data: { reload: true, param: :season } %>
 </label>
+
+
+<div class="pagination_info">
+  <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
+</div>
 
 <%= will_paginate @accounts %>
 
