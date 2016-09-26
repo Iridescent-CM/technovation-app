@@ -71,6 +71,10 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    carrierwave_direct (0.0.15)
+      carrierwave
+      fog
+      uuidtools
     checkr-official (1.1.1)
       json (~> 1.8.1)
       mime-types (>= 1.25, < 3.0)
@@ -464,6 +468,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    uuidtools (2.1.5)
     vcr (3.0.3)
     web-console (2.3.0)
       activemodel (>= 4.0)
@@ -490,6 +495,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   capybara-webkit
   carrierwave (~> 0.11.2)
+  carrierwave_direct
   checkr-official (~> 1.1.1)
   chosen-rails
   coffee-rails (~> 4.1.0)

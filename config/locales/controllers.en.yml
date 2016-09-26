@@ -14,6 +14,8 @@ en:
       unauthorized: "You don't have permission to go there!"
 
     accounts:
+      show:
+        image_processing: "Your profile photo was uploaded. It is being processed and will update shortly."
       update:
         change_image: "Change image"
         success: "You updated your account!"
