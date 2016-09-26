@@ -1,15 +1,30 @@
 <div class="team-search-result">
-  <div class="team-search-result__photo">
-    <%= image_tag result.team_photo_url(:thumb), width: 80, height: 80 %>
-  </div>
+  <div class="team-search-result__card">
 
-  <div class="team-search-result__info-wrapper">
+    <div class="team-search-result__photo">
+      <%= image_tag result.team_photo_url(:thumb), width: 120, height: 120 %>
+    </div>
+
     <p class="team-search-result__name">
-      <%= link_to result.name, [:new, account_type, :join_request, { team_id: result.id }] %>
+      <%= result.name %>
     </p>
 
-    <p><%= truncate(result.description, length: 50) %></p>
+    <p class="team-search-result__location">
+      <%= result.creator_address_details %>
+    </p>
 
-    <p><%= result.creator_address_details %></p>
+    <p class="team-search-result__blurb">
+      <%= truncate(result.description, length: 80) %>
+    </p>
+
+    <%= link_to [:new, account_type, :join_request, { team_id: result.id }], {:class => 'team-search-result__link-wrapper'} do %>
+      <button type="button">
+        <%= t("views.student.team_searches.new.results_link_label") %>
+      </button>
+    <% end %>
+
   </div>
 </div>
+
+
+
