@@ -43,6 +43,8 @@ GEM
       airbrake-ruby (~> 1.2)
     airbrake-ruby (1.5.0)
     arel (6.0.3)
+    autoprefixer-rails (6.4.1.1)
+      execjs
     aws-sdk (2.6.1)
       aws-sdk-resources (= 2.6.1)
     aws-sdk-core (2.6.1)
@@ -483,6 +485,7 @@ PLATFORMS
 DEPENDENCIES
   active_record_query_trace
   airbrake (~> 5.2.1)
+  autoprefixer-rails
   aws-sdk
   bcrypt (~> 3.1.7)
   capybara-webkit
