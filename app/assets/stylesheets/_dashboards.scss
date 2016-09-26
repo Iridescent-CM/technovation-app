@@ -6,6 +6,31 @@
   padding: 3rem 0 0;
 }
 
+@media only screen and (min-width: 800px) and (min-device-width: 1200px) {
+  html, body { height: 100% }
+
+  .main-content {
+    .dashboard__sidebar {
+      position: fixed;
+      right: 0;
+      top: 150px;
+      bottom: 0;
+      width: 300px;
+      padding-left: 1rem;
+      padding-top: 1rem;
+      overflow-y: scroll;
+      min-height: 0 !important;
+      -webkit-box-shadow: 5px 2px 53px 0px rgba(51,51,51,1);
+      -moz-box-shadow: 5px 2px 53px 0px rgba(51,51,51,1);
+      box-shadow: 5px 2px 53px 0px rgba(51,51,51,1);
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
 .completion-steps {
   list-style-type: decimal;
   margin: 0 0 15px;
