@@ -4,6 +4,7 @@ class AdminAccount < Account
   before_create :build_admin_profile
 
   has_one :admin_profile, foreign_key: :account_id, dependent: :destroy
+  has_many :account_exports, foreign_key: :account_id, dependent: :destroy
 
   delegate :scores,
            :scored_submission_ids,

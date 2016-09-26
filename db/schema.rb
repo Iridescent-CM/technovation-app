@@ -11,21 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921170728) do
+ActiveRecord::Schema.define(version: 20160926153416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "account_exports", force: :cascade do |t|
-    t.integer  "regional_ambassador_account_id", null: false
-    t.string   "file",                           null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "account_id", null: false
+    t.string   "file",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
+  add_index "account_exports", ["account_id"], name: "index_account_exports_on_account_id", using: :btree
   add_index "account_exports", ["file"], name: "index_account_exports_on_file", using: :btree
-  add_index "account_exports", ["regional_ambassador_account_id"], name: "index_account_exports_on_regional_ambassador_account_id", using: :btree
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                        null: false
@@ -328,7 +327,8 @@ ActiveRecord::Schema.define(version: 20160921170728) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["friendly_id"], name: "index_teams_on_friendly_id", using: :btree
 
-  add_foreign_key "account_exports", "accounts", column: "regional_ambassador_account_id"
+  add_foreign_key "account_exports", "accounts"
+  add_foreign_key "account_exports", "accounts"
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "join_requests", "accounts", column: "requestor_id"
