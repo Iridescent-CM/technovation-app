@@ -1,37 +1,66 @@
-.team-search {
-
+.team-search__teams-wrapper {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .team-search-result {
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+  width: calc(100% / 3);
+
+  @media screen and (max-width: $device-lg) {
+    width: 50%;
+  }
+
+  @media screen and (max-width: $device-md) {
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.team-search-result__card {
+  align-items: center;
   background-color: white;
   border-radius: 0.25em;
   box-shadow: 0 2px 2px rgba(black, 0.15);
   display: flex;
-  margin-bottom: 1rem;
+  height: 100%;
+  flex-direction: column;
   padding: 1rem;
+
+  * {
+    max-width: 100%;
+  }
 }
 
-.team-search-result__photo {
-
+.team-search-result__photo img {
+  border-radius: 50%;
 }
 
-.team-search-result__info-wrapper {
-
+.team-search-result__name,
+.team-search-result__location,
+.team-search-result__blurb {
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 .team-search-result__name {
-
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
-// OLD CODE BELOW
+.team-search-result__link-wrapper {
+  display: block;
+  margin-top: auto;
+  width: 100%;
 
-.team-result {
-  // @include span-columns(6);
-  // @include shift(3);
-
-  // h2 {
-  //   margin: 0;
-  // }
+  button {
+    font-size: 1.2rem;
+    margin-top: 1.25rem;
+    padding: 0.5rem;
+    text-transform: none;
+    width: 100%;
+  }
 }
 
 .pending-invites {

@@ -314,6 +314,7 @@ en:
           no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
           title: "Find a Team"
           results_heading: "Available Teams:"
+          results_link_label: "View Team"
 
     teams:
       show:
