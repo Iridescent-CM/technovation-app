@@ -1,0 +1,56 @@
+<label class="no-text-transform">
+  Per page:
+  <%= select_tag :per_page,
+                 options_for_select([10, 25, 50, 100], params[:per_page]),
+                 class: "inline",
+                 data: {
+                   reload: true,
+                   param: :per_page,
+                 } %>
+</label>
+
+<label class="no-text-transform">
+  Account type:
+  <%= select_tag :type,
+                 options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
+                 class: "inline",
+                 data: { reload: true, param: :type } %>
+</label>
+
+<label class="no-text-transform">
+  Season:
+  <%= select_tag :season,
+                 options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+                 class: "inline",
+                 data: { reload: true, param: :season } %>
+</label>
+
+<%= will_paginate @accounts %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>City, State, Country</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <% cache(account) do %>
+        <tr>
+          <td><%= account.id %></td>
+          <td><%= account.type_name %></td>
+          <td><%= link_to account.full_name, admin_account_path(account) %></td>
+          <td><%= account.email %></td>
+          <td><%= account.address_details %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @accounts %>
