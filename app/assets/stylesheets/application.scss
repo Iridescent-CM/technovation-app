@@ -18,6 +18,11 @@
 @import "base/base";
 @import "base/buttons";
 
+// Component Library
+@import "component-library/search-panel-and-results";
+@import "component-library/search-filter-card";
+@import "component-library/text-helpers";
+
 @import "accounts";
 @import "admin";
 @import "containers";

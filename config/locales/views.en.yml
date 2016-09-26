@@ -309,8 +309,11 @@ en:
 
       team_searches:
         new:
+          filter_heading: "Filter Locations"
           intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
           no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
+          title: "Find a Team"
+          results_heading: "Available Teams:"
 
     teams:
       show:

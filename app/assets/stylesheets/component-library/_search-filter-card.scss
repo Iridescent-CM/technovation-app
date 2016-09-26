@@ -1,0 +1,115 @@
+.search-filters {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 2px rgba(black, 0.1); // TODO: Make this a variable or mixin
+  overflow: hidden;
+  padding: 0;
+}
+
+.search-filters__heading {
+  background-color: $mulberry;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.search-filters__form-wrapper {
+
+  .search-filters__location { // TODO: This nesting is getting v ugly. Figure out how to reduce it.
+    border-bottom: 1px solid rgba(black, 0.1);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+
+    .tt-dropdown-menu {
+      width: 100%;
+    }
+
+    input {
+      font-size: 1.2rem;
+      margin-bottom: 0;
+    }
+
+    label {
+      padding: 0 0 0.25rem;
+    }
+
+    button {
+      margin: 0.5rem 0 0;
+      width: 100%;
+
+      @media screen and (max-width: $device-md) {
+        width: calc(50% - 0.25rem);
+
+        &:last-child {
+          float: right;
+        }
+      }
+    }
+  }
+
+  label {
+    align-items: center;
+    border-bottom: 1px solid rgba(black, 0.1);
+    display: flex;
+    font-size: 1rem;
+    letter-spacing: normal;
+    margin: 0;
+    padding: 1rem;
+    text-transform: none;
+  }
+
+  input[type='checkbox']:focus:not(:checked) + .pseudo-checkbox,
+  label:hover input[type='checkbox']:not(:checked) + .pseudo-checkbox {
+    background-color: darken($mid-grey, 10);
+  }
+
+  input[type='checkbox'] {
+    display: hidden;
+    width: 0;
+    height: 0;
+    position:absolute;
+    opacity: 0;
+  }
+
+  .pseudo-checkbox {
+    $size: 1.25rem;
+    $transition-speed: 0.25s;
+    background-color: $mid-grey;
+    border-radius: 0.25rem;
+    height: $size;
+    margin-right: 0.75rem;
+    position: relative;
+    transition: background-color $transition-speed;
+    width: $size;
+
+    &::before {
+      color: white;
+      left: 50%;
+      font-size: 1rem;
+      opacity: 0;
+      position: absolute;
+      transition: opacity $transition-speed;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
+  input[type='checkbox']:checked + .pseudo-checkbox {
+    background-color: $shamrock;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.search-filters__button-wrapper {
+  padding: 0.75rem;
+
+  button {
+    display: block;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    text-transform: none;
+    width: 100%;
+  }
+}
