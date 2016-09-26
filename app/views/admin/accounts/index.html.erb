@@ -39,9 +39,19 @@
     <tr>
       <th>ID</th>
       <th>Type</th>
-      <th>Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
       <th>Email</th>
-      <th>City, State, Country</th>
+      <th>Team name(s)</th>
+      <th>Division</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Country</th>
+    </tr>
+    <tr>
+      <td colspan="10">
+        <%= link_to "Export these results", admin_account_exports_path(params), data: { method: :post } %>
+      </td>
     </tr>
   </thead>
 
@@ -51,9 +61,14 @@
         <tr>
           <td><%= account.id %></td>
           <td><%= account.type_name %></td>
-          <td><%= link_to account.full_name, admin_account_path(account) %></td>
+          <td><%= link_to account.first_name, admin_account_path(account) %></td>
+          <td><%= account.last_name %></td>
           <td><%= account.email %></td>
-          <td><%= account.address_details %></td>
+          <td><%= account.teams.flat_map(&:name).to_sentence %></td>
+          <td><%= account.division %></td>
+          <td><%= account.city %></td>
+          <td><%= account.state_province %></td>
+          <td><%= account.country %></td>
         </tr>
       <% end %>
     <% end %>
