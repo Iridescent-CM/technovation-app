@@ -1,14 +1,8 @@
 <div class="form-with-columns">
   <%= simple_form_for [prefix, @team] do |f| %>
-    <div class="photo-edit">
-      <%= image_tag @team.team_photo_url, width: 450, height: 300 %>
-    </div>
-
     <div class="fields-edit">
       <%= f.input :name %>
       <%= f.input :description %>
-      <%= f.input :team_photo %>
-      <%= f.input :team_photo_cache, as: :hidden %>
 
       <% action = f.object.persisted? ? :save : :create %>
       <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")) %>

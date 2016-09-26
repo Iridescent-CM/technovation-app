@@ -1,6 +1,6 @@
 <div class="dashboard-page-info">
   <div class="team-photo">
-    <%= image_tag team.team_photo, width: 450, height: 300 %>
+    <%= image_tag @team.team_photo_url, width: 450, height: 300 %>
   </div>
 
   <h3 class="team_name"><%= team.name %></h3>
@@ -13,6 +13,17 @@
 
   <% if team.current? %>
     <p><%= link_to t("controllers.teams.edit"), [:edit, account.type_name, team] %></p>
+
+    <%= direct_upload_form_for @uploader, html: { class: 'fancy-upload' } do |f| %>
+      <p>
+        <%= link_to t("controllers.teams.update.change_image"), '#',
+                    data: { uploader: true },
+                    class: "transparent-accent-button" %>
+      </p>
+
+      <%= f.file_field :team_photo, data: { fancy: true } %>
+      <%= f.submit t("views.application.save") %>
+    <% end %>
   <% end %>
 </div>
 

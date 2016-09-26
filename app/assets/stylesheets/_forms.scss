@@ -74,8 +74,6 @@ label {
 
 form {
   &.fancy-upload {
-    @include span-columns(12);
-
     margin: 0;
     padding: 0;
 
