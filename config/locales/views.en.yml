@@ -112,11 +112,6 @@ en:
           pending_invitees_subheading: "Pending Invites"
           pending_requests_subheading: "Pending requests to join"
 
-      team_searches:
-        new:
-          intro: "You are browsing available teams, which are teams within 50 miles of your search location who do not already have a mentor."
-          no_results: "Hmm, sorry, but we didn't find any teams without a mentor. Please try again later."
-
     mentors:
       show:
         already_invited: "Your team has invited %{name} to be a mentor."
@@ -307,15 +302,6 @@ en:
           pending_invitees_subheading: "Pending Invites"
           pending_requests_subheading: "Pending requests to join"
 
-      team_searches:
-        new:
-          filter_heading: "Filter Locations"
-          intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
-          no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
-          title: "Find a Team"
-          results_heading: "Available Teams:"
-          results_link_label: "View Team"
-
     teams:
       show:
         division_name: "Division: %{name}"
@@ -335,3 +321,12 @@ en:
         greeting: "You've been invited to join %{name}!"
         message: "You can accept this invite and join the team, or decline it and be on your way."
         missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was revoked by the team."
+
+    team_searches:
+      new:
+        filter_heading: "Filter Locations"
+        intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
+        no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
+        title: "Find a Team"
+        results_heading: "Available Teams:"
+        results_link_label: "View Team"
