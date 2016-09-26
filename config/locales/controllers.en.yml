@@ -139,5 +139,10 @@ en:
         success: "Welcome to the team! Make us proud!"
 
     teams:
+      edit: "Edit team details"
       index:
         browse: "browse available teams"
+      show:
+        image_processing: "Your team photo was uploaded and it is now being processed. It should update shortly."
+      update:
+        change_image: "Change image"

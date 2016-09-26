@@ -8,10 +8,9 @@
 
 <div class="flex-row">
   <div class="flex-col-sm-3 well profile-avatar">
+    <%= image_tag account.profile_image_url %>
     <% if url %>
       <%= render 'accounts/profile_image_upload', url: url %>
-    <% else %>
-      <%= image_tag account.profile_image_url %>
     <% end %>
   </div>
 
