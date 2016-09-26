@@ -70,7 +70,9 @@ label {
   .input {
     margin-bottom: $base-spacing;
   }
+}
 
+form {
   &.fancy-upload {
     @include span-columns(12);
 

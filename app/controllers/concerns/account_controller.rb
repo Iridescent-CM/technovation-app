@@ -3,6 +3,16 @@ module AccountController
 
   included do
     helper_method :account, :edit_account_path
+
+    before_action -> {
+      if key = params.delete(:key)
+        ProcessUploadJob.perform_later(account, "profile_image", key)
+        flash[:success] = t("controllers.accounts.show.image_processing")
+      end
+
+      @uploader = account.profile_image
+      @uploader.success_action_redirect = send("#{account.type_name}_account_url")
+    }, only: :show
   end
 
   def edit
