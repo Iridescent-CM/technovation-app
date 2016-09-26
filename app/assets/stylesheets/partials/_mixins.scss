@@ -1,0 +1,8 @@
+@mixin disable-highlight {
+  user-selct: none;
+
+  &::selection {
+    background-color: transparent;
+  }
+}
+
