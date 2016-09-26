@@ -133,7 +133,9 @@ class Account < ActiveRecord::Base
   end
 
   def teams
-    []
+    teams = Struct.new(:current)
+    def teams.current; []; end
+    teams
   end
 
   private

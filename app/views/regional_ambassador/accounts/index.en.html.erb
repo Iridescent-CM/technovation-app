@@ -43,7 +43,7 @@
             <td><%= account.first_name %></td>
             <td><%= account.last_name %></td>
             <td><%= account.email %></td>
-            <td><%= account.teams.flat_map(&:name).to_sentence %></td>
+            <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
             <td><%= account.get_school_company_name %></td>
             <td><%= account.division %></td>
           </tr>
