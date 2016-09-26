@@ -15,7 +15,7 @@ RSpec.feature "Students request to join a team" do
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       within("nav.profile") { click_link "Join a team" }
-      click_link team.name
+      click_link "View Team"
       click_button "Request to join #{team.name}"
     end
 
