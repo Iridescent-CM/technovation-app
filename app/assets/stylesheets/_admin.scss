@@ -31,3 +31,32 @@
 .pagination_info {
   padding: 1rem 0;
 }
+
+.wrapper__admin_accounts {
+  .pagination {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+  }
+
+  .table__admin_accounts {
+    table-layout: auto;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+
+    tbody {
+      tr {
+        td {
+          width: auto;
+          max-width: 100%;
+          word-wrap: break-word;
+        }
+
+        &:hover {
+          td {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+}

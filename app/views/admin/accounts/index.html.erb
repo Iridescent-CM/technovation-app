@@ -1,78 +1,80 @@
 <h1>Accounts</h1>
 
-<label class="no-text-transform">
-  Per page:
-  <%= select_tag :per_page,
-                 options_for_select([10, 25, 50, 100], params[:per_page]),
-                 class: "inline",
-                 data: {
-                   reload: true,
-                   param: :per_page,
-                 } %>
-</label>
+<div class="wrapper__admin_accounts">
+  <label class="no-text-transform">
+    Per page:
+    <%= select_tag :per_page,
+                  options_for_select([10, 25, 50, 100], params[:per_page]),
+                  class: "inline",
+                  data: {
+                    reload: true,
+                    param: :per_page,
+                  } %>
+  </label>
 
-<label class="no-text-transform">
-  Account type:
-  <%= select_tag :type,
-                 options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
-                 class: "inline",
-                 data: { reload: true, param: :type } %>
-</label>
+  <label class="no-text-transform">
+    Account type:
+    <%= select_tag :type,
+                  options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
+                  class: "inline",
+                  data: { reload: true, param: :type } %>
+  </label>
 
-<label class="no-text-transform">
-  Season:
-  <%= select_tag :season,
-                 options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
-                 class: "inline",
-                 data: { reload: true, param: :season } %>
-</label>
+  <label class="no-text-transform">
+    Season:
+    <%= select_tag :season,
+                  options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+                  class: "inline",
+                  data: { reload: true, param: :season } %>
+  </label>
 
 
-<div class="pagination_info">
-  <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
-</div>
+  <div class="pagination_info">
+    <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
+  </div>
 
-<%= will_paginate @accounts %>
+  <%= will_paginate @accounts %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Type</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Team name(s)</th>
-      <th>Division</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Country</th>
-    </tr>
-    <tr>
-      <td colspan="10">
-        <%= link_to "Export these results", admin_account_exports_path(params), data: { method: :post } %>
-      </td>
-    </tr>
-  </thead>
+  <table class="table__admin_accounts">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Team name(s)</th>
+        <th>Division</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+      </tr>
+      <tr>
+        <td colspan="10">
+          <%= link_to "Export these results", admin_account_exports_path(params), data: { method: :post } %>
+        </td>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% @accounts.each do |account| %>
-      <% cache(account) do %>
-        <tr>
-          <td><%= account.id %></td>
-          <td><%= account.type_name %></td>
-          <td><%= link_to account.first_name, admin_account_path(account) %></td>
-          <td><%= account.last_name %></td>
-          <td><%= account.email %></td>
-          <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
-          <td><%= account.division %></td>
-          <td><%= account.city %></td>
-          <td><%= account.state_province %></td>
-          <td><%= account.country %></td>
-        </tr>
+    <tbody>
+      <% @accounts.each do |account| %>
+        <% cache(account) do %>
+          <tr>
+            <td><%= account.id %></td>
+            <td><%= account.type_name %></td>
+            <td><%= link_to account.first_name, admin_account_path(account) %></td>
+            <td><%= account.last_name %></td>
+            <td><%= account.email %></td>
+            <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
+            <td><%= account.division %></td>
+            <td><%= account.city %></td>
+            <td><%= account.state_province %></td>
+            <td><%= account.country %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<%= will_paginate @accounts %>
+  <%= will_paginate @accounts %>
+</div>
