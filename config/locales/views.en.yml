@@ -42,9 +42,6 @@ en:
       signup: 'Sign up'
       signout: 'Logout'
       site_title: "Technovation Challenge"
-      teams:
-        show:
-          members_subheading: "Members"
       terms_of_use: "Terms of Use"
       yes: "Yes"
 
@@ -89,30 +86,6 @@ en:
         show:
           teams: "%{name}'s teams:"
           title: "Mentor details"
-
-      teams:
-        edit:
-          title: "Edit your team"
-        index:
-          current_teams: "Current Teams"
-          none: "You don't have any %{type} teams."
-          past_teams: "Past Teams"
-        new:
-          join: "Join a Team"
-          title: "Create a Team"
-        show:
-          add_members: "Add members"
-          confirm_leave: "Are you sure you want to leave the team?"
-          invite: "Invite more students"
-          members_subheading: "Team members"
-          mentors_subheading: "Team mentors"
-          pending_invitees_subheading: "Pending Invites"
-          pending_requests_subheading: "Pending requests to join"
-
-      team_searches:
-        new:
-          intro: "You are browsing available teams, which are teams within 50 miles of you who do not already have a mentor."
-          no_results: "Hmm, sorry, but we didn't find any teams without a mentor near you. Check again later."
 
     mentors:
       show:
@@ -288,34 +261,28 @@ en:
           parent_guardian_email:
             help_text: "(We need this information to send them a link to a consent form.)"
 
-      teams:
-        edit:
-          title: "Edit your team"
-        new:
-          join: "Join a Team"
-          intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
-          title: "Create a Team"
-        show:
-          add_members: "Add members"
-          confirm_leave: "Are you sure you want to leave the team?"
-          invite: "Invite more students"
-          members_subheading: "Team members"
-          mentors_subheading: "Team mentors"
-          pending_invitees_subheading: "Pending Invites"
-          pending_requests_subheading: "Pending requests to join"
-
-      team_searches:
-        new:
-          intro: "You are browsing available teams, which are teams within 50 miles of you that are not full."
-          no_results: "Hmm, sorry, but we didn't find any available teams near you. Check again later."
-
     teams:
+      edit:
+        title: "Edit your team"
+      index:
+        current_teams: "Current Teams"
+        none: "You don't have any %{type} teams."
+        past_teams: "Past Teams"
+      new:
+        intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
+        join: "Join a Team"
+        title: "Create a Team"
       show:
+        add_members: "Add members"
+        confirm_leave: "Are you sure you want to leave the team?"
         division_name: "Division: %{name}"
+        invite: "Invite more students"
         members_full: "Your team can have up to five students. You cannot invite more students while you have a combined total of five members, invitations, and/or join requests."
         members_subheading: "Team members"
         mentors_subheading: "Team mentors"
         past_team: "Past teams cannot be managed."
+        pending_invitees_subheading: "Pending Invites"
+        pending_requests_subheading: "Pending requests to join"
 
     team_member_invites:
       form:
@@ -328,3 +295,12 @@ en:
         greeting: "You've been invited to join %{name}!"
         message: "You can accept this invite and join the team, or decline it and be on your way."
         missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was revoked by the team."
+
+    team_searches:
+      new:
+        filter_heading: "Filter Locations"
+        intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
+        no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
+        title: "Find a Team"
+        results_heading: "Available Teams:"
+        results_link_label: "View Team"
