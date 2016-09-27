@@ -32,7 +32,7 @@ en:
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
       instead: "instead"
       invite: "Send invite"
-      me: "Me"
+      near_me: "Near me"
       no: "No"
       only_one_email: "Enter only one email"
       or: "or"
@@ -302,7 +302,7 @@ en:
     team_searches:
       new:
         filter_heading: "Filter Locations"
-        intro: "You are browsing available teams, which are teams within 50 miles of your search location that are not full."
+        intro: "You are browsing available teams, who are still looking for members / mentors."
         no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
         title: "Find a Team"
         results_heading: "Available Teams:"

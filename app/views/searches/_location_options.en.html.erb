@@ -2,4 +2,4 @@
 <%= text_field_tag :nearby, params[:nearby], id: "geocoded", data: { location_field: true } %>
 
 <%= button_tag t('views.application.anywhere'), data: { update_location: "anywhere" } %>
-<%= button_tag t('views.application.me'), data: { update_location: account.address_details } %>
+<%= button_tag t('views.application.near_me'), data: { update_location: account.address_details } %>
