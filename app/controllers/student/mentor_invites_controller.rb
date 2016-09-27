@@ -5,7 +5,7 @@ module Student
 
       if @mentor_invite.save
         redirect_to [:student, @mentor_invite.team],
-          success: t("controllers.student.team_member_invites.create.success")
+          success: t("controllers.team_member_invites.create.success")
       else
         redirect_to :back, alert: t("views.application.general_error")
       end

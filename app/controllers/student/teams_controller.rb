@@ -14,7 +14,7 @@ module Student
     private
     def restrict_team_creation
       redirect_to student_team_path(current_student.team),
-        alert: t("controllers.student.teams.create.already_on_team")
+        alert: t("controllers.teams.create.already_on_team")
     end
 
     def current_account

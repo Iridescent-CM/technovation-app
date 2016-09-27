@@ -1,6 +1,6 @@
 <div class="has-danger">
   <h6><%= t("views.application.danger_zone") %></h6>
-  <%= link_to t("controllers.#{account_type}.team_memberships.destroy.link", name: @team.name),
+  <%= link_to t("controllers.team_memberships.destroy.link", name: @team.name),
               [account_type, @team, :membership],
               data: {
                 method: :delete,

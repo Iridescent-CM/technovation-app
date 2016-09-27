@@ -9,7 +9,7 @@ module Mentor
       membership.destroy
 
       redirect_to mentor_dashboard_path,
-        success: t("controllers.mentor.team_memberships.destroy.success",
+        success: t("controllers.team_memberships.destroy.success",
                    name: team.name)
     end
   end

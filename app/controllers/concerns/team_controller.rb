@@ -19,7 +19,7 @@ module TeamController
 
     if @team.save
       redirect_to [account_type, @team],
-        success: t("controllers.#{account_type}.teams.create.success")
+        success: t("controllers.teams.create.success")
     else
       render :new
     end
@@ -34,7 +34,7 @@ module TeamController
 
     if @team.update_attributes(team_params)
       redirect_to [account_type, @team],
-        success: t("controllers.#{account_type}.teams.update.success")
+        success: t("controllers.teams.update.success")
     else
       render :edit
     end

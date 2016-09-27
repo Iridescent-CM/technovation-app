@@ -36,7 +36,7 @@
     <% elsif account.can_join_a_team? %>
       <p><%= t("views.application.dashboards.show.no_pending_team_requests") %></p>
       <%= unlocked_link_to account,
-                          t("controllers.#{account.type_name}.team_searches.new.link"),
+                          t("controllers.team_searches.new.link"),
                           send("new_#{account.type_name}_team_search_path"),
                           class: "primary-button" %>
     <% else %>

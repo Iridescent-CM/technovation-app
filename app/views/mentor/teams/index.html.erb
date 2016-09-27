@@ -1,17 +1,17 @@
-<%= t("views.mentor.teams.index.current_teams") %>
+<%= t("views.teams.index.current_teams") %>
 
 <%= render 'mentor/teams/team_list',
            type: :current,
            teams: @current_teams %>
 
 <p>
-  <%= link_to t("controllers.mentor.team_searches.new.link"), new_mentor_team_search_path %>
+  <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>
   <%= t("views.application.or") %>
-  <%= link_to t("controllers.mentor.teams.new.link"), new_mentor_team_path %>
+  <%= link_to t("controllers.teams.new.link"), new_mentor_team_path %>
 </p>
 
 
-<%= t("views.mentor.teams.index.past_teams") %>
+<%= t("views.teams.index.past_teams") %>
 
 <%= render 'mentor/teams/team_list',
            type: :past,

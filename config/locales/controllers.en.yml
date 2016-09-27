@@ -52,23 +52,6 @@ en:
           success: "You have requested to be a mentor for %{name}"
         update:
           success: "%{name} was %{status}"
-      teams:
-        create:
-          success: "Your team has been created! Lookin' good!"
-        new:
-          link: "Create a new team"
-        update:
-          success: "Your team has been updated!"
-      team_memberships:
-        destroy:
-          link: "Leave %{name}"
-          success: "You have left the team `%{name}`"
-      team_member_invites:
-        create:
-          success: "Your team invite was sent!"
-      team_searches:
-        new:
-          link: "Browse available teams"
 
     parental_consents:
       create:
@@ -111,24 +94,26 @@ en:
       parental_consent_notices:
         create:
           success: "Okay, we sent an email to your parent/guardian."
-      teams:
-        create:
-          already_on_team: "You cannot create a new team if you are already on a team"
-          success: "Your team has been created! Lookin' good!"
-        update:
-          success: "Your team has been updated!"
-      team_member_invites:
-        create:
-          success: "Your team invite was sent!"
-      team_memberships:
-        destroy:
-          link: "Leave %{name}"
-          success: "You have left the team `%{name}`"
-      team_searches:
-        new:
-          link: "Browse available teams"
+
+    teams:
+      create:
+        already_on_team: "You cannot create a new team if you are already on a team"
+        success: "Your team has been created! Lookin' good!"
+      index:
+        browse: "browse available teams"
+      new:
+        link: "Create a new team"
+      update:
+        success: "Your team has been updated!"
+
+    team_memberships:
+      destroy:
+        link: "Leave %{name}"
+        success: "You have left the team `%{name}`"
 
     team_member_invites:
+      create:
+        success: "Your team invite was sent!"
       update:
         accept: "Accept invitation to %{name}"
         already_on_team: "You are already on a team, so you cannot accept that invite."
@@ -136,6 +121,6 @@ en:
         decline: "Decline this invitation"
         success: "Welcome to the team! Make us proud!"
 
-    teams:
-      index:
-        browse: "browse available teams"
+    team_searches:
+      new:
+        link: "Browse available teams"

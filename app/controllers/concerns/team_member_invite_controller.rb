@@ -15,7 +15,7 @@ module TeamMemberInviteController
 
     if @team_member_invite.save
       redirect_to [account_type, @team_member_invite.team],
-        success: t("controllers.#{account_type}.team_member_invites.create.success")
+        success: t("controllers.team_member_invites.create.success")
     else
       render :new
     end
