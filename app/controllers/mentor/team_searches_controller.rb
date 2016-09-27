@@ -6,7 +6,7 @@ module Mentor
       @search_filter = SearchFilter.new({
         nearby: params.fetch(:nearby),
         user: current_mentor,
-        has_mentor: false,
+        has_mentor: :any,
         page: params[:page],
       })
       @teams = SearchTeams.(@search_filter)

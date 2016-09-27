@@ -11,7 +11,7 @@ RSpec.feature "Mentors find a team" do
     click_link "My teams"
   end
 
-  scenario "browse nearby teams that don't have a mentor" do
+  scenario "browse nearby teams" do
     mentored_team = FactoryGirl.create(:team, :with_mentor) # Creator is in Chicago
     faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA, US",
                                              latitude: 34.052363,
@@ -20,7 +20,7 @@ RSpec.feature "Mentors find a team" do
     click_link "Browse available teams"
 
     expect(page).to have_css(".team-search-result__name", text: available_team.name)
-    expect(page).not_to have_css(".team-search-result__name", text: mentored_team.name)
+    expect(page).to have_css(".team-search-result__name", text: mentored_team.name)
     expect(page).not_to have_css(".team-search-result__name", text: faraway_team.name)
   end
 
