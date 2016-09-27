@@ -9,7 +9,7 @@ namespace :legacy_migration do
 
       unless url.include?("missing")
         begin
-          account = Account.find_by(email: user.email)
+          account = Account.where("lower(email) = ?", user.email.downcase).first
           account.remote_profile_image_url = url
           account.save
           puts "Added profile image for: #{user.email}"

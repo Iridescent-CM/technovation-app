@@ -6,7 +6,7 @@ class PasswordReset
   validates :email, exists: true
 
   def perform
-    account = Account.find_by(email: email)
+    account = Account.where("lower(email) = ?", email.downcase).first
     account.enable_password_reset!
     AccountMailer.password_reset(account).deliver_later
   end

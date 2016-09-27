@@ -76,7 +76,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   private
   def set_invitee
-    if student = StudentAccount.find_by(email: invitee_email)
+    if student = StudentAccount.where("lower(email) = ?", invitee_email.downcase).first
       self.invitee_id ||=  student.id
       self.invitee_type ||= "StudentAccount"
     end
@@ -87,7 +87,7 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def correct_invitee_type
-    if Account.where.not(type: "StudentAccount").where(email: invitee_email).any?
+    if Account.where.not(type: "StudentAccount").where("lower(email) = ?", invitee_email.downcase).any?
       errors.add(:invitee_email, :is_not_a_student)
     end
   end

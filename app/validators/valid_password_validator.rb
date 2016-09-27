@@ -8,7 +8,7 @@ class ValidPasswordValidator < ActiveModel::EachValidator
   private
   def changes_authenticated?(record, value)
     if !!record.email_was
-      record.class.find_by(email: record.email_was).authenticate(value)
+      record.class.where("lower(email) = ?", record.email_was.downcase).first.authenticate(value)
     else
       record.authenticate(value)
     end

@@ -36,7 +36,7 @@ class StudentAccount < Account
   end
 
   def self.has_requested_to_join?(team, email)
-    if record = find_by(email: email)
+    if record = where("lower(email) = ?", email.downcase).first
       record.join_requests.pending.flat_map(&:joinable).include?(team)
     else
       false

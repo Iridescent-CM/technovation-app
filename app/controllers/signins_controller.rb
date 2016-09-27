@@ -6,14 +6,14 @@ class SigninsController < ApplicationController
   end
 
   def create
-    @signin = Account.find_by(email: signin_params.fetch(:email))
+    @signin = Account.where("lower(email) = ?", signin_params.fetch(:email).downcase).first
 
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
       SignIn.(@signin, self)
     else
       @signin = Account.new
       flash[:error] = t('controllers.signins.create.error')
-      render :new
+      render :new, status: 403
     end
   end
 
