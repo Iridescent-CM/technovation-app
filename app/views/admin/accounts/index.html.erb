@@ -69,7 +69,7 @@
             <td><%= account.division %></td>
             <td><%= account.city %></td>
             <td><%= account.state_province %></td>
-            <td><%= account.country %></td>
+            <td><%= Country[account.country].name %></td>
           </tr>
         <% end %>
       <% end %>

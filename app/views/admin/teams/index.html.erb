@@ -1,0 +1,69 @@
+<h1>Teams</h1>
+
+<div class="wrapper__report_table">
+  <label class="no-text-transform">
+    Per page:
+    <%= select_tag :per_page,
+                  options_for_select([10, 25, 50, 100], params[:per_page]),
+                  class: "inline",
+                  data: { reload: true, param: :per_page } %>
+  </label>
+
+  <label class="no-text-transform">
+    Division:
+    <%= select_tag :division,
+                  options_for_select(%w{All Senior Junior}, params[:division]),
+                  class: "inline",
+                  data: { reload: true, param: :division } %>
+  </label>
+
+  <label class="no-text-transform">
+    Season:
+    <%= select_tag :season,
+                  options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+                  class: "inline",
+                  data: { reload: true, param: :season } %>
+  </label>
+
+
+  <div class="pagination_info">
+    <%= page_entries_info @teams, model: params[:division] == "All" ? "Team" : params[:division] %>
+  </div>
+
+  <%= will_paginate @teams %>
+
+  <table class="table__report_table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Division</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+      </tr>
+      <tr>
+        <td colspan="10">
+          <%= link_to "Export these results", admin_exports_path(params.merge(class: "team")), data: { method: :post } %>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @teams.each do |team| %>
+        <% cache(team) do %>
+          <tr>
+            <td><%= team.id %></td>
+            <td><%= team.division_name %></td>
+            <td><%= link_to team.name, admin_team_path(team) %></td>
+            <td><%= team.city %></td>
+            <td><%= team.state_province %></td>
+            <td><%= team.country %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @teams %>
+</div>
