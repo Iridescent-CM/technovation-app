@@ -11,13 +11,13 @@ class ExportRegionalAccountsJob < ActiveJob::Base
 
       accounts.each do |account|
         csv << [account.id, account.type_name, account.first_name, account.last_name,
-                account.email, account.teams.flat_map(&:name).to_sentence,
+                account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.get_school_company_name, account.division]
       end
     end
 
     file = File.open(filepath)
-    export = ambassador.account_exports.create!(file: file)
+    export = ambassador.exports.create!(file: file)
 
     FilesMailer.export_ready(ambassador, export).deliver_later
   end

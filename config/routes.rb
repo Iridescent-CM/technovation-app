@@ -75,11 +75,14 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :accounts, only: [:index, :show]
-    resources :account_exports, only: :create
-    resources :score_categories
-    resources :regional_ambassadors, only: [:index, :show, :update]
     resource :dashboard, only: :show
+
+    resources :accounts, only: [:index, :show]
+    resources :regional_ambassadors, only: [:index, :show, :update]
+    resources :teams, except: :destroy
+    resources :score_categories
+
+    resources :exports, only: :create
   end
 
   namespace :application do
