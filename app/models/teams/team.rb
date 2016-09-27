@@ -59,6 +59,19 @@ class Team < ActiveRecord::Base
     memberships.first.member_address_details
   end
 
+  def city
+    memberships.first && memberships.first.member_city
+  end
+
+  def state_province
+    memberships.first && memberships.first.member_state_province
+  end
+
+  def country
+    memberships.first &&
+      Country[memberships.first.member_country].name
+  end
+
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
   end
