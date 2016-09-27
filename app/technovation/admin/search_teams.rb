@@ -13,7 +13,8 @@ module Admin
       when "All"
         teams
       else
-        teams.joins(:division).where("divisions.name = ?", Division.names[params[:division]])
+        teams.joins(:division).where("divisions.name = ?",
+                                     Division.names[params[:division].downcase])
       end
     end
   end
