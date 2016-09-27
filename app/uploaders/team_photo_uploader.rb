@@ -42,6 +42,6 @@ class TeamPhotoUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    ActionController::Base.helpers.asset_path("placeholders/team-missing.png")
+    ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
   end
 end
