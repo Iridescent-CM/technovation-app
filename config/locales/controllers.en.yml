@@ -105,6 +105,8 @@ en:
         browse: "browse available teams"
       new:
         link: "Create a new team"
+      show:
+        image_processing: "Your team photo was uploaded. It is being processed and will update shortly."
       update:
         success: "Your team has been updated!"
 
