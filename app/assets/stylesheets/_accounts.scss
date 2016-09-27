@@ -26,12 +26,9 @@
   margin-bottom: $large-spacing / 2;
   text-align: center;
 
-  object,
   img {
-    display: block;
-    width: 100%;
+    height: auto;
     margin-bottom: $small-spacing;
-    background: $mid-grey;
 
     &::after {
       content: '';
