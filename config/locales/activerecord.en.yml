@@ -37,6 +37,7 @@ en:
         student_profile:
           attributes:
             parent_guardian_email:
+              found_in_student_accounts: "cannot match another student's email"
               matches_student_email: "cannot be the same as your email"
 
         team_member_invite:

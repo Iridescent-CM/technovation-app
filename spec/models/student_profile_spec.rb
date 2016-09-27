@@ -2,12 +2,18 @@ require "rails_helper"
 
 RSpec.describe StudentProfile do
   it "validates the parent/guardian email" do
-    skip "Going to switch to confirming the email"
     %w{bad bad@ something.bad.org not@okay}.each do |bad_email|
       profile = FactoryGirl.build(:student_profile, parent_guardian_email: bad_email)
       expect(profile).not_to be_valid
       expect(profile.errors[:parent_guardian_email]).not_to be_nil
     end
+  end
+
+  it "doesn't allow a student email to be used as parent email" do
+    FactoryGirl.create(:student, email: "noway@jose.com")
+    profile = FactoryGirl.build(:student_profile, parent_guardian_email: "noway@jose.com")
+    expect(profile).not_to be_valid
+    expect(profile.errors[:parent_guardian_email]).to include("cannot match another student's email")
   end
 
   it "re-sends the parental consent on update of parent email" do
