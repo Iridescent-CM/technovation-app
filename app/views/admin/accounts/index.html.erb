@@ -1,6 +1,6 @@
 <h1>Accounts</h1>
 
-<div class="wrapper__admin_accounts">
+<div class="wrapper__report_table">
   <label class="no-text-transform">
     Per page:
     <%= select_tag :per_page,
@@ -35,7 +35,7 @@
 
   <%= will_paginate @accounts %>
 
-  <table class="table__admin_accounts">
+  <table class="table__report_table">
     <thead>
       <tr>
         <th>ID</th>
