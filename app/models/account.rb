@@ -41,6 +41,7 @@ class Account < ActiveRecord::Base
   has_one :consent_waiver, dependent: :destroy
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :geocoded, presence: true, if: ->(a) { a.latitude.blank? }
   validates :profile_image, verify_cached_file: true
 
   validates :password, :password_confirmation, presence: { on: :create }

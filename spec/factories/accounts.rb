@@ -13,6 +13,7 @@ FactoryGirl.define do
     country "US"
     latitude 41.50196838
     longitude { -87.64051818 }
+    geocoded { [city, state_province, Country[country].name].compact.join(', ') }
 
     type { "Account" }
 
