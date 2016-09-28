@@ -28,7 +28,7 @@
     <% @regional_ambassadors.each do |ambassador| %>
       <% cache(ambassador) do %>
         <tr>
-          <td><%= image_tag ambassador.profile_image_url(:thumb) %></td>
+          <td><%= image_tag ambassador.profile_image_url(:thumb).sub(/\/(\d+)\/(.+)_thumb(.+)/, '/\1/thumb_\2\3') %></td>
           <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
           <td><%= ambassador.email %></td>
           <td><%= ambassador.address_details %></td>
