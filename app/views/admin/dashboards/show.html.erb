@@ -1,3 +1,34 @@
-<h1><%= t('views.admin.dashboards.index.title') %></h1>
+<p>Recent registration report:</p>
 
-<p>There's not much here yet...</p>
+<label class="no-text-transform">
+  Show signups in the past
+  <%= select_tag :days,
+                 options_for_select(
+                   {
+                     "Day" => 1,
+                     "Week" => 7,
+                     "Month" => 30,
+                     "3 months" => 90,
+                     "6 months" => 180,
+                     "9 months" => 270,
+                   },
+                   params[:days]
+                 ),
+                 class: "inline",
+                 data: { reload: true, param: :days } %>
+</label>
+
+
+<dl>
+  <dt><%= link_to "Students", admin_accounts_path(type: "Student") %></dt>
+  <dd><%= @students.count %></dd>
+
+  <dt><%= link_to "Mentors", admin_accounts_path(type: "Mentor") %></dt>
+  <dd><%= @mentors.count %></dd>
+
+  <dt><%= link_to "RAs", admin_accounts_path(type: "RegionalAmbassador") %></dt>
+  <dd><%= @ambassadors.count %></dd>
+
+  <dt><%= link_to "Judges", admin_accounts_path(type: "Judge") %></dt>
+  <dd><%= @judges.count %></dd>
+</dl>

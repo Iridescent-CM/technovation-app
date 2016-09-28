@@ -7,6 +7,10 @@ class Account < ActiveRecord::Base
 
   enum gender: %w{Female Male Non-binary Prefer\ not\ to\ say}
 
+  scope :current, -> {
+    joins(season_registrations: :season).where("seasons.year = ?", Season.current.year)
+  }
+
   mount_uploader :profile_image, ImageUploader
 
   geocoded_by :geocoded
