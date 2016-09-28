@@ -46,13 +46,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-   private
-   def default_url_endpoint_size
-     case version_name
-     when :thumb
-       "80/80"
-     else
-       "233/233"
-     end
-   end
+  private
+  def default_url_endpoint_size
+    case version_name
+    when :thumb
+      "80/80"
+    else
+      "233/233"
+    end
+  end
 end
