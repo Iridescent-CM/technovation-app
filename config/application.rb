@@ -46,5 +46,8 @@ module TechnovationApp
       g.factory_girl false
       g.factory_girl dir: 'spec/factories'
     end
+
+    require "#{Rails.root}/lib/cloud_flare_middleware"
+    config.middleware.insert_before(0, Rack::CloudFlareMiddleware)
   end
 end
