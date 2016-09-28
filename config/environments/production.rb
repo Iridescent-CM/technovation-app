@@ -56,7 +56,13 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  config.cache_store = :dalli_store, nil, { namespace: "Technovation", expires_in: 1.day, compress: true }
+  config.cache_store = :dalli_store, ENV.fetch("MEMCACHEDCLOUD_SERVERS").split(','), {
+    username: ENV.fetch("MEMCACHEDCLOUD_USERNAME"),
+    password: ENV.fetch("MEMCACHEDCLOUD_PASSWORD"),
+    namespace: "Technovation",
+    expires_in: 1.day,
+    compress: true,
+  }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.action_mailer.asset_host = "https://#{ENV.fetch("HOST_DOMAIN")}"
