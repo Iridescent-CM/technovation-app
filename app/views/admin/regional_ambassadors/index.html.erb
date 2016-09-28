@@ -28,7 +28,11 @@
     <% @regional_ambassadors.each do |ambassador| %>
       <% cache(ambassador) do %>
         <tr>
-          <td><%= image_tag ambassador.profile_image_url(:thumb).sub(/\/(\d+)\/(.+)_thumb(.+)/, '/\1/thumb_\2\3') %></td>
+          <% if (open(ambassador.profile_image_url(:thumb)) rescue false) %>
+            <td><%= image_tag ambassador.profile_image_url(:thumb), width: 80, height: 80 %></td>
+          <% else %>
+            <td><%= image_tag ambassador.profile_image_url(:thumb).sub(/\/(\d+)\/(.+)_thumb(.+)/, '/\1/thumb_\2\3'), width: 80, height: 80 %></td>
+          <% end %>
           <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
           <td><%= ambassador.email %></td>
           <td><%= ambassador.address_details %></td>
