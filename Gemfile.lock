@@ -352,6 +352,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
+    rack-block (0.1.1)
+      rack (>= 1.3)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -526,6 +528,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.0)
   quiet_assets
+  rack-block (~> 0.1.1)
   rack-timeout
   rails (= 4.2.6)
   rails-i18n (~> 4.0.0)
