@@ -20,13 +20,16 @@
 
 
 <dl>
+  <dt><%= link_to "Accounts", admin_accounts_path %></dt>
+  <dd><%= @accounts.count %></dd>
+
   <dt><%= link_to "Students", admin_accounts_path(type: "Student") %></dt>
   <dd><%= @students.count %></dd>
 
   <dt><%= link_to "Mentors", admin_accounts_path(type: "Mentor") %></dt>
   <dd><%= @mentors.count %></dd>
 
-  <dt><%= link_to "RAs", admin_accounts_path(type: "RegionalAmbassador") %></dt>
+  <dt><%= link_to "RAs", admin_regional_ambassadors_path %></dt>
   <dd><%= @ambassadors.count %></dd>
 
   <dt><%= link_to "Judges", admin_accounts_path(type: "Judge") %></dt>
