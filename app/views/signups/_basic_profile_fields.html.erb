@@ -11,6 +11,7 @@
                         id: "geocoded",
                         value: f.object.address_details,
                         disabled: (f.object.persisted? and f.object.type == "RegionalAmbassadorAccount" and f.object.approved?),
+                        onblur: "ga('send', 'event', 'search', 'geocoded=' + this.value);",
                       },
                       label: t("models.account.geocoded") %>
 
