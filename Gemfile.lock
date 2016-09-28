@@ -331,6 +331,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    obscenity (1.0.2)
     paperclip (5.1.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -518,6 +519,7 @@ DEPENDENCIES
   mini_magick (~> 4.5.1)
   nested_form_fields
   newrelic_rpm (~> 3.14.2.312)
+  obscenity (~> 1.0.2)
   paperclip
   pg (~> 0.18)
   pry-nav

@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem "autoprefixer-rails"
 
 gem 'rails-i18n', '~> 4.0.0'
+gem 'obscenity', '~> 1.0.2'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq', '~> 4.1.1'

@@ -1,3 +1,5 @@
+require 'obscenity/active_model'
+
 class Team < ActiveRecord::Base
   mount_uploader :team_photo, TeamPhotoUploader
 
@@ -36,6 +38,7 @@ class Team < ActiveRecord::Base
   validates :description, presence: true
   validates :division, presence: true
   validates :team_photo, verify_cached_file: true
+  validates :name, :description,  obscenity: { sanitize: true, replacement: "[censored]" }
 
   delegate :name, to: :division, prefix: true
 
