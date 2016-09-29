@@ -1,9 +1,9 @@
 module SearchMentors
   def self.call(filter)
-    mentors = if filter.expertise_ids.any?
-      MentorAccount.by_expertise_ids(filter.expertise_ids)
-    else
-      MentorAccount
+    mentors = MentorAccount.where.not(id: filter.user.id)
+
+    if filter.expertise_ids.any?
+      mentors = mentors.by_expertise_ids(filter.expertise_ids)
     end
 
     if filter.nearby.present?
