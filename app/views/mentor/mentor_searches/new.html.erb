@@ -4,13 +4,13 @@
 
   <div class="mentor-search__feature-wrapper">
     <div class="mentor-search__filters search-filters">
-      <%= render 'student/mentor_searches/filter_options' %>
+      <%= render 'mentor/mentor_searches/filter_options' %>
     </div>
 
     <div class="mentor-search__results">
       <h2 class="mentor-search__results-heading">Available Mentors</h2>
       <div class="mentor-search__mentors-wrapper">
-        <%= render(partial: 'student/mentor_searches/mentor_preview',
+        <%= render(partial: 'mentor/mentor_searches/mentor_preview',
                    collection: @mentors,
                    cached: true) or
               t("views.mentor_searches.none_found") %>

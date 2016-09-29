@@ -6,10 +6,10 @@
   <%= form_tag request.fullpath, method: :get do %>
 
     <div class="search-filters__location">
-      <%= render 'searches/location_options', account: current_student %>
+      <%= render 'searches/location_options', account: current_mentor %>
     </div>
 
-    <%= render 'searches/toggle_mentor_needs_team', account: current_student %>
+    <%= render 'searches/toggle_mentor_needs_team', account: current_mentor %>
 
     <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>

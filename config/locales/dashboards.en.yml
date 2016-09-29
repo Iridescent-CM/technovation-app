@@ -9,6 +9,7 @@ en:
       dashboards:
         menu:
           accounts: "User report"
+          connect_mentors: "Connect with mentors"
           home: "Home"
           my_account: "My account"
           my_requests: "My requests"

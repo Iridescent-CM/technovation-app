@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     resource :account, only: [:show, :edit, :update]
 
     resources :team_searches, except: [:index, :destroy]
+    resources :mentor_searches, except: [:index, :destroy]
+
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
 

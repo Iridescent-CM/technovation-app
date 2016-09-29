@@ -98,6 +98,16 @@ en:
         invite_to_team: "Invite %{name} to mentor your team"
         manage_team: "Manage your team's join requests"
 
+    mentor_searches:
+      filter_options: "Filter mentors by expertise"
+      intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
+      new:
+        mentor_preview:
+          on_team: "On a team"
+          needs_team: "Needs a team"
+      none_found: "Sorry... we couldn't find any mentors with your criteria."
+      title: "Find a Mentor"
+
     parental_consents:
       new:
         submit: "I agree"
@@ -236,16 +246,6 @@ en:
         show:
           teams: "%{name}'s teams:"
           title: "Mentor details"
-
-      mentor_searches:
-        filter_options: "Filter mentors by expertise"
-        intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
-        new:
-          mentor_preview:
-            on_team: "On a team"
-            needs_team: "Needs a team"
-        none_found: "Sorry... we couldn't find any mentors with your criteria."
-        title: "Find a Mentor"
 
       navigation:
         create_a_team: "Create a team"
