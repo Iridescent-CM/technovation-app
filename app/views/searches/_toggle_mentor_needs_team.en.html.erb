@@ -1,5 +1,5 @@
 <%= label_tag :needs_team do %>
-  <%= check_box_tag :needs_team, 1, params[:needs_team] %>
+  <%= check_box_tag :needs_team, 1, params[:needs_team] == "1" %>
   <span class="pseudo-checkbox fa fa-check"><!--Fontawesome Checkmark--></span>
   Only "needs a team"
 <% end %>
