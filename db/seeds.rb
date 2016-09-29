@@ -12,6 +12,7 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     city: "Chicago",
                                     state_province: "IL",
                                     country: "US",
+                                    geocoded: "Chicago, IL, US",
                                     pre_survey_completed_at: Time.current,
                                     season_ids: [Season.current.id],
                                    )).valid?
@@ -40,6 +41,7 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   city: "Boulder",
                                   state_province: "CO",
                                   country: "US",
+                                  geocoded: "Boulder, CO, US",
                                   season_ids: [Season.current.id],
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
@@ -69,6 +71,7 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                   city: "Evanston",
                                   state_province: "IL",
                                   country: "US",
+                                  geocoded: "Evanston, IL, US",
                                   season_ids: [Season.current.id],
                                  )).valid?
   mentor.update_column(:profile_image, "foo/bar/baz.png")
@@ -92,6 +95,7 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                           city: "Chicago",
                                           state_province: "IL",
                                           country: "US",
+                                          geocoded: "Chicago, IL, US",
                                           pre_survey_completed_at: Time.current,
                                           season_ids: [Season.current.id],
                                          )).valid?
