@@ -1,0 +1,49 @@
+<% title ||= t("views.accounts.show.title") %>
+
+<div class="dashboard-page-info">
+  <h3><%= title %></h3>
+</div>
+
+<div class="flex-row">
+  <div class="flex-col-sm-3 well profile-avatar">
+    <%= image_tag account.profile_image_url %>
+  </div>
+
+  <div class="flex-row flex-col-sm-9 account-info">
+    <dl class="flex-col-sm-6 account-basic">
+      <dt><%= t('models.account.full_name') %></dt>
+      <dd><%= account.full_name %></dd>
+
+      <dt><%= t('models.account.email') %></dt>
+      <dd><%= mail_to account.email %></dd>
+
+      <dt><%= t('models.account.age') %></dt>
+      <dd><%= account.age %></dd>
+
+      <% if account.type != "StudentAccount" %>
+        <dt><%= t('models.account.gender') %></dt>
+        <dd><%= account.gender %></dd>
+      <% end %>
+
+      <dt><%= t('models.account.address') %></dt>
+      <dd><%= account.address_details %></dd>
+    </dl>
+
+    <div class="flex-col-sm-6 account-special">
+      <dl>
+        <%= render "#{account.type_name}/accounts/profile", account: account %>
+      </dl>
+    </div>
+
+    <% if account.respond_to?(:bio) %>
+      <div class="flex-row">
+        <div class="flex-col-sm-12">
+          <dl>
+            <dt><%= t('models.regional_ambassador_profile.bio.label') %></dt>
+            <dd><%= simple_format account.bio %></dd>
+          </dl>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
