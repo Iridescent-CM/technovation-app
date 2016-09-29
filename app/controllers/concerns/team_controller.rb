@@ -14,7 +14,7 @@ module TeamController
       flash[:success] = t("controllers.teams.show.image_processing")
     end
 
-    @uploader = @team.team_photo
+    @uploader = ImageUploader.new
     @uploader.success_action_redirect = send("#{current_account.type_name}_team_url", @team)
   end
 

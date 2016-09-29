@@ -1,7 +1,7 @@
 require 'obscenity/active_model'
 
 class Team < ActiveRecord::Base
-  mount_uploader :team_photo, TeamPhotoUploader
+  mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> { eager_load(season_registrations: :season)
                        .where("seasons.year = ?", Season.current.year) }
@@ -14,7 +14,6 @@ class Team < ActiveRecord::Base
   }
 
   after_create :register_to_season
-  after_save -> { update_column(:team_photo, self[:team_photo] && self[:team_photo].sub(/^\d+\//, '')) }
 
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations

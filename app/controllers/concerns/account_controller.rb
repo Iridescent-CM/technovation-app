@@ -10,7 +10,7 @@ module AccountController
         flash[:success] = t("controllers.accounts.show.image_processing")
       end
 
-      @uploader = account.profile_image
+      @uploader = ImageUploader.new
       @uploader.success_action_redirect = send("#{account.type_name}_account_url")
     }, only: :show
   end

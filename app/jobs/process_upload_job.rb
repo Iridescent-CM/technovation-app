@@ -2,8 +2,7 @@ class ProcessUploadJob < ActiveJob::Base
   queue_as :default
 
   def perform(record, method_name, key)
-    record.key = key
-    url = "#{record.send(method_name).direct_fog_url}#{record.key}"
+    url = "http://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/#{key}"
     record.send("remote_#{method_name}_url=", url)
     record.save!
   end

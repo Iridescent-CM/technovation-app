@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
     joins(season_registrations: :season).where("seasons.year = ?", Season.current.year)
   }
 
-  mount_uploader :profile_image, ImageUploader
+  mount_uploader :profile_image, ImageProcessor
 
   geocoded_by :geocoded
   reverse_geocoded_by :latitude, :longitude do |account, results|
