@@ -7,12 +7,13 @@ class ExportRegionalAccountsJob < ActiveJob::Base
     filepath = "./tmp/#{Season.current.year}-regional-accounts-#{ambassador.full_name.gsub(' ', '-')}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
-      csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) School\ /\ company\ name Division}
+      csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) School\ /\ company\ name Division City State\ /\ Province Country}
 
       accounts.each do |account|
         csv << [account.id, account.type_name, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
-                account.get_school_company_name, account.division]
+                account.get_school_company_name, account.division, account.city,
+                account.state_province, Country[account.country].name]
       end
     end
 

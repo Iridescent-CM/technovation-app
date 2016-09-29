@@ -25,10 +25,13 @@
         <th>Team name(s)</th>
         <th>School / Company name</th>
         <th>Division</th>
+        <th>City</th>
+        <th>State / Province</th>
+        <th>Country</th>
       </tr>
 
       <tr>
-        <td colspan="8">
+        <td colspan="11">
           <%= link_to "Export to CSV", regional_ambassador_account_exports_path, data: { method: :post } %>
         </td>
       </tr>
@@ -46,6 +49,9 @@
             <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
             <td><%= account.get_school_company_name %></td>
             <td><%= account.division %></td>
+            <td><%= account.city %></td>
+            <td><%= account.state_province %></td>
+            <td><%= Country[account.country].name %></td>
           </tr>
         <% end %>
       <% end %>
