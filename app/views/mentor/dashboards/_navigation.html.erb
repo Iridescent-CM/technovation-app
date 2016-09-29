@@ -1,12 +1,15 @@
+<% mentor = FindAccount.current(:mentor, cookies) %>
+
 <nav class="profile">
   <ul>
     <li><%= link_to t("views.application.dashboards.menu.home"), mentor_dashboard_path %></li>
-    <%= unlocked_content_tag(
-          FindAccount.current(:mentor, cookies),
-          mentor_teams_path,
-          :li,
-          link_to(t("views.application.dashboards.menu.my_teams"), mentor_teams_path)
-        ) %>
+
+    <%= unlocked_content_tag(mentor, new_mentor_mentor_search_path, :li,
+          link_to(t("views.application.dashboards.menu.connect_mentors"), new_mentor_mentor_search_path)) %>
+
+    <%= unlocked_content_tag(mentor, mentor_teams_path, :li,
+          link_to(t("views.application.dashboards.menu.my_teams"), mentor_teams_path)) %>
+
     <li><%= link_to t("views.application.dashboards.menu.my_account"), mentor_account_path %></li>
   </ul>
 </nav>
