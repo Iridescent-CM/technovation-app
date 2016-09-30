@@ -4,11 +4,10 @@
   <ul>
     <li><%= link_to t("views.application.dashboards.menu.home"), mentor_dashboard_path %></li>
 
-    <%= unlocked_content_tag(mentor, new_mentor_mentor_search_path, :li,
-          link_to(t("views.application.dashboards.menu.connect_mentors"), new_mentor_mentor_search_path)) %>
-
-    <%= unlocked_content_tag(mentor, mentor_teams_path, :li,
-          link_to(t("views.application.dashboards.menu.my_teams"), mentor_teams_path)) %>
+    <% if mentor.consent_signed? and mentor.background_check_complete? and not mentor.bio.blank? %>
+      <li><%= link_to t("views.application.dashboards.menu.connect_mentors"), new_mentor_mentor_search_path %></li>
+      <li><%= link_to t("views.application.dashboards.menu.my_teams"), mentor_teams_path %></li>
+    <% end %>
 
     <li><%= link_to t("views.application.dashboards.menu.my_account"), mentor_account_path %></li>
   </ul>
