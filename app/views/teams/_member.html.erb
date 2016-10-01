@@ -1,10 +1,6 @@
 <li>
   <div class="member-image">
-    <% if (open(member.profile_image_url(:thumb)) rescue false) %>
-      <%= image_tag member.profile_image_url(:thumb), width: 80, height: 80 %>
-    <% else %>
-      <%= image_tag member.profile_image_url(:thumb).sub(/\/(\d+)\/(.+)_thumb(.+)/, '/\1/thumb_\2\3'), width: 80, height: 80 %>
-    <% end %>
+    <%= image_tag member.profile_image_url, width: 80, height: 80 %>
   </div>
 
   <div class="member-info">
