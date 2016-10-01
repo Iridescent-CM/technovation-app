@@ -1,3 +1,21 @@
+<%
+  method = case params[:days]
+           when 1;  :group_by_hour
+           when 7;  :group_by_day
+           when 30; :group_by_week
+           else;    :group_by_month
+           end
+
+  range = case params[:days]
+          when 1; 24
+          when 7; 7
+          when 30; 4
+          when 90; 3
+          when 180; 6
+          when 270; 9
+          end
+%>
+
 <p>Recent registration report:</p>
 
 <label class="no-text-transform">
@@ -20,18 +38,43 @@
 
 
 <dl>
-  <dt><%= link_to "Accounts", admin_accounts_path %></dt>
-  <dd><%= @accounts.count %></dd>
+  <dt>
+    <%= link_to "Accounts", admin_accounts_path %> &mdash; <%= @accounts.count %>
+  </dt>
 
-  <dt><%= link_to "Students", admin_accounts_path(type: "Student") %></dt>
-  <dd><%= @students.count %></dd>
+  <dd>
+    <%= line_chart @accounts.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
 
-  <dt><%= link_to "Mentors", admin_accounts_path(type: "Mentor") %></dt>
-  <dd><%= @mentors.count %></dd>
+  <dt>
+    <%= link_to "Students", admin_accounts_path(type: "Student") %> &mdash; <%= @students.count %>
+  </dt>
 
-  <dt><%= link_to "RAs", admin_regional_ambassadors_path %></dt>
-  <dd><%= @ambassadors.count %></dd>
+  <dd>
+    <%= line_chart @students.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
 
-  <dt><%= link_to "Judges", admin_accounts_path(type: "Judge") %></dt>
-  <dd><%= @judges.count %></dd>
+  <dt>
+    <%= link_to "Mentors", admin_accounts_path(type: "Mentor") %> &mdash; <%= @mentors.count %>
+  </dt>
+
+  <dd>
+    <%= line_chart @mentors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
+
+  <dt>
+    <%= link_to "RAs", admin_regional_ambassadors_path %> &mdash; <%= @ambassadors.count %>
+  </dt>
+
+  <dd>
+    <%= line_chart @ambassadors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
+
+  <dt>
+    <%= link_to "Judges", admin_accounts_path(type: "Judge") %> &mdash; <%= @judges.count %>
+  </dt>
+
+  <dd>
+    <%= line_chart @judges.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
 </dl>

@@ -41,6 +41,9 @@ gem 'nested_form_fields'
 gem 'countries', '~> 1.2.5', require: "countries/global"
 gem 'country_state_select', '~> 3.0.2'
 
+gem "chartkick"
+gem 'groupdate'
+
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'indefinite_article'
