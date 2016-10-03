@@ -8,7 +8,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
-    if: -> (profile) { profile.background_check_completed_at_changed? or profile.mentor_account.country_changed? }
+    if: -> { mentor_account.country_changed? }
 
   validates :school_company_name, :job_title, presence: true
 
@@ -26,6 +26,7 @@ class MentorProfile < ActiveRecord::Base
 
   def enable_searchability
     update_attributes(searchable: can_enable_searchable?)
+
     if can_enable_searchable?
       SubscribeEmailListJob.perform_later(mentor_account.email,
                                           mentor_account.full_name,
@@ -33,15 +34,12 @@ class MentorProfile < ActiveRecord::Base
     end
   end
 
-  def complete_background_check!
-    unless background_check_complete?
-      update_attributes(background_check_completed_at: Time.current)
-      enable_searchability
-    end
+  def disable_searchability
+    update_column(:searchable, false)
   end
 
   private
   def can_enable_searchable?
-    mentor_account.consent_waiver.present? && background_check_complete?
+    mentor_account.consent_waiver.present? && !!mentor_account.background_check_complete?
   end
 end

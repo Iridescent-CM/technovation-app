@@ -5,6 +5,9 @@ class MentorAccount < Account
   accepts_nested_attributes_for :mentor_profile
   validates_associated :mentor_profile
 
+  has_one :background_check, foreign_key: :account_id, dependent: :destroy
+  accepts_nested_attributes_for :background_check
+
   has_many :memberships, as: :member, dependent: :destroy
 
   has_many :join_requests, as: :requestor, dependent: :destroy
@@ -24,17 +27,32 @@ class MentorAccount < Account
            :expertise_names,
            :job_title,
            :school_company_name,
-           :background_check_complete?,
-           :background_check_submitted?,
            :bio,
            :enable_searchability,
-           :background_check_candidate_id,
-           :background_check_report_id,
-           :complete_background_check!,
     to: :mentor_profile,
     prefix: false
 
   delegate :id, to: :mentor_profile, prefix: true
+
+  delegate :complete?,
+           :submitted?,
+           :candidate_id,
+           :report_id,
+    to: :background_check,
+    prefix: true,
+    allow_nil: true
+
+  def complete_background_check!
+    background_check.clear!
+  end
+
+  def after_background_check_clear
+    mentor_profile.enable_searchability
+  end
+
+  def after_background_check_deleted
+    mentor_profile.disable_searchability
+  end
 
   def pending_team_invitations
     mentor_invites.pending

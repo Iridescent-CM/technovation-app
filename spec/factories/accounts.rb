@@ -72,6 +72,7 @@ FactoryGirl.define do
 
   factory :mentor, aliases: [:mentor_account], parent: :account, class: 'MentorAccount' do
     type { "MentorAccount" }
+    association(:background_check)
 
     before(:create) do |m|
       unless m.mentor_profile.present?
@@ -102,6 +103,7 @@ FactoryGirl.define do
     type { "RegionalAmbassadorAccount" }
 
     regional_ambassador_profile
+    association(:background_check)
 
     trait :approved do
       after(:create) do |m|

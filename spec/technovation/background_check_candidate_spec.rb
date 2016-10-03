@@ -1,12 +1,6 @@
-require "spec_helper"
-require "./config/initializers/checkr"
-require "./app/technovation/background_check/candidate"
+require "rails_helper"
 
 RSpec.describe BackgroundCheck::Candidate, :vcr do
-  it "sets the request_path to /v1/candidates" do
-    expect(BackgroundCheck::Candidate.request_path).to eq("/v1/candidates")
-  end
-
   it "submits a valid candidate" do
     candidate = BackgroundCheck::Candidate.new({
       first_name: "Test",

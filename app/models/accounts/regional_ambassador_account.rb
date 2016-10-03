@@ -11,6 +11,9 @@ class RegionalAmbassadorAccount < Account
   accepts_nested_attributes_for :regional_ambassador_profile
   validates_associated :regional_ambassador_profile
 
+  has_one :background_check, foreign_key: :account_id, dependent: :destroy
+  accepts_nested_attributes_for :background_check
+
   delegate :status,
            :approved!,
            :declined!,
@@ -22,16 +25,23 @@ class RegionalAmbassadorAccount < Account
            :organization_company_name,
            :job_title,
            :ambassador_since_year,
-           :background_check_complete?,
            :bio,
-           :background_check_candidate_id,
-           :background_check_report_id,
-           :complete_background_check!,
-           :background_check_submitted?,
     to: :regional_ambassador_profile,
     prefix: false
 
   delegate :id, to: :regional_ambassador_profile, prefix: true
+
+  delegate :complete?,
+           :submitted?,
+           :candidate_id,
+           :report_id,
+    to: :background_check,
+    prefix: true,
+    allow_nil: true
+
+  def complete_background_check!
+    background_check.clear!
+  end
 
   def profile_complete?
     bio_complete?

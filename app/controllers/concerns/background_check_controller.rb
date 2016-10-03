@@ -10,8 +10,8 @@ module BackgroundCheckController
   def show
     @report = BackgroundCheck::Report.retrieve(current_account.background_check_report_id)
 
-    if @report.status == "clear"
-      current_account.complete_background_check!
+    if @report.present?
+      current_account.background_check.send("#{@report.status}!")
     end
   end
 
@@ -19,10 +19,10 @@ module BackgroundCheckController
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
     if @candidate.submit
-      current_profile.update_attributes(
-        background_check_candidate_id: @candidate.id,
-        background_check_report_id: @candidate.report_id
-      )
+      current_account.update_attributes(background_check_attributes: {
+        candidate_id: @candidate.id,
+        report_id: @candidate.report_id
+      })
       redirect_to [current_account.type_name, :dashboard],
         success: "Thank you for submitting your background check."
     else

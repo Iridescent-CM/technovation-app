@@ -17,7 +17,7 @@ RSpec.describe Student::MentorSearchesController do
       mentor = FactoryGirl.create(:mentor, :with_expertises)
       student = FactoryGirl.create(:student, :on_team)
 
-      mentor.mentor_profile.update_attributes(background_check_completed_at: nil)
+      mentor.background_check.destroy
 
       sign_in(student)
 

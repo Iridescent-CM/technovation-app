@@ -1,7 +1,4 @@
-require "spec_helper"
-require "./config/initializers/checkr"
-require "./app/technovation/background_check/candidate"
-require "./app/technovation/background_check/report"
+require "rails_helper"
 
 RSpec.describe BackgroundCheck::Report, :vcr do
   let(:candidate) do
@@ -20,10 +17,6 @@ RSpec.describe BackgroundCheck::Report, :vcr do
   end
 
   before { candidate.submit }
-
-  it "sets the request_path to /v1/reports" do
-    expect(BackgroundCheck::Report.request_path).to eq("/v1/reports")
-  end
 
   it "gets an id from submitting" do
     report = BackgroundCheck::Report.new(candidate_id: candidate.id)
