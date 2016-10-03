@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003145404) do
+ActiveRecord::Schema.define(version: 20161003163304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,16 +175,13 @@ ActiveRecord::Schema.define(version: 20161003145404) do
 
   create_table "mentor_profiles", force: :cascade do |t|
     t.integer  "account_id"
-    t.string   "school_company_name",                           null: false
-    t.string   "job_title",                                     null: false
-    t.date     "background_check_completed_at"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.string   "school_company_name",                    null: false
+    t.string   "job_title",                              null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.text     "bio"
-    t.boolean  "searchable",                    default: false, null: false
-    t.string   "background_check_candidate_id"
-    t.string   "background_check_report_id"
-    t.boolean  "accepting_team_invites",        default: true,  null: false
+    t.boolean  "searchable",             default: false, null: false
+    t.boolean  "accepting_team_invites", default: true,  null: false
   end
 
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
@@ -202,17 +199,14 @@ ActiveRecord::Schema.define(version: 20161003145404) do
   add_index "parental_consents", ["voided_at"], name: "index_parental_consents_on_voided_at", using: :btree
 
   create_table "regional_ambassador_profiles", force: :cascade do |t|
-    t.string   "organization_company_name",                 null: false
-    t.string   "ambassador_since_year",                     null: false
-    t.string   "job_title",                                 null: false
-    t.integer  "account_id",                                null: false
-    t.integer  "status",                        default: 0, null: false
-    t.datetime "background_check_completed_at"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.string   "organization_company_name",             null: false
+    t.string   "ambassador_since_year",                 null: false
+    t.string   "job_title",                             null: false
+    t.integer  "account_id",                            null: false
+    t.integer  "status",                    default: 0, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.text     "bio"
-    t.string   "background_check_candidate_id"
-    t.string   "background_check_report_id"
   end
 
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree

@@ -16,8 +16,7 @@ class JudgeAccount < Account
     to: :judge_profile,
     prefix: false
 
-  delegate :complete?,
-           :submitted?,
+  delegate :submitted?,
            :candidate_id,
            :report_id,
     to: :background_check,
@@ -30,5 +29,9 @@ class JudgeAccount < Account
 
   def complete_background_check!
     background_check.clear!
+  end
+
+  def background_check_complete?
+    country != "US" or !!background_check && background_check.clear?
   end
 end

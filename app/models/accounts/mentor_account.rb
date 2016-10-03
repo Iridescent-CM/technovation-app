@@ -34,8 +34,7 @@ class MentorAccount < Account
 
   delegate :id, to: :mentor_profile, prefix: true
 
-  delegate :complete?,
-           :submitted?,
+  delegate :submitted?,
            :candidate_id,
            :report_id,
     to: :background_check,
@@ -52,6 +51,10 @@ class MentorAccount < Account
 
   def after_background_check_deleted
     mentor_profile.disable_searchability
+  end
+
+  def background_check_complete?
+    country != "US" or !!background_check && background_check.clear?
   end
 
   def pending_team_invitations

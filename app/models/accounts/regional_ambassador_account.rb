@@ -31,8 +31,7 @@ class RegionalAmbassadorAccount < Account
 
   delegate :id, to: :regional_ambassador_profile, prefix: true
 
-  delegate :complete?,
-           :submitted?,
+  delegate :submitted?,
            :candidate_id,
            :report_id,
     to: :background_check,
@@ -41,6 +40,10 @@ class RegionalAmbassadorAccount < Account
 
   def complete_background_check!
     background_check.clear!
+  end
+
+  def background_check_complete?
+    country != "US" or !!background_check && background_check.clear?
   end
 
   def profile_complete?
