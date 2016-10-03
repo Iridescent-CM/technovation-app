@@ -26,6 +26,7 @@ en:
       confirm_declined: "Are you sure you want to decline %{name}?"
       create: "Create %{thing}"
       danger_zone: "Danger Zone"
+      dashboard: "My Dashboard"
       declined: "decline"
       edit: "Edit"
       filter: "Filter"
