@@ -9,6 +9,8 @@ module Admin
       @mentors = @accounts.where(type: "MentorAccount")
       @ambassadors = @accounts.where(type: "RegionalAmbassadorAccount")
       @judges = @accounts.where(type: "JudgeAccount")
+
+      @teams = Team.current.where("season_registrations.created_at > ?", params[:days].days.ago)
     end
   end
 end

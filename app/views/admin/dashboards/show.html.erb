@@ -47,6 +47,14 @@
   </dd>
 
   <dt>
+    <%= link_to "Teams", admin_teams_path %> &mdash; <%= @teams.count %>
+  </dt>
+
+  <dd>
+    <%= line_chart @teams.public_send(method, "teams.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+  </dd>
+
+  <dt>
     <%= link_to "Students", admin_accounts_path(type: "Student") %> &mdash; <%= @students.count %>
   </dt>
 
