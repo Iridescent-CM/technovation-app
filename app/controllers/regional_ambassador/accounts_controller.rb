@@ -27,7 +27,6 @@ module RegionalAmbassador
           :organization_company_name,
           :job_title,
           :ambassador_since_year,
-          :background_check_completed_at,
           :bio,
         ],
       }

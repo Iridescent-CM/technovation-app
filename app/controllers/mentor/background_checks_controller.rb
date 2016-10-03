@@ -6,9 +6,5 @@ module Mentor
     def current_account
       current_mentor
     end
-
-    def current_profile
-      current_mentor.mentor_profile
-    end
   end
 end
