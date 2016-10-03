@@ -159,8 +159,8 @@ en:
         label: "Technovation is a more educational, inspirational, and all-around fun experience if approached as a group.<br />Your team can be made up of up to five amazing girls. Join or create a team to get started."
         links:
           pre_unit:
-            text: "Click here"
-            postfix: "to learn more about building a team."
+            text: "This Build a Team Unit"
+            postfix: "can help you get started."
           create:
             text: "Create a team"
           join:
@@ -171,8 +171,8 @@ en:
         label: "Mentors can help your team succeed by providing guidance and support, and helping you solve problems throughout the Technovation season."
         links:
           pre_unit:
-            text: "Click here"
-            postfix: "to learn more about finding a mentor."
+            text: "This Find a Mentor Unit"
+            postfix: "can help you get started."
           browse:
             text: "Find an Available Mentor"
 
