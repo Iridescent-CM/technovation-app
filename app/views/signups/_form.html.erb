@@ -31,6 +31,11 @@
       </h6>
 
       <%= f.input :email, as: :email %>
+
+      <p class="signup-form__email-explanation">
+        Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.
+      </p>
+
       <%= f.input :password %>
       <%= f.input :password_confirmation,
                   label: t('views.signups.form.confirm_password') %>
