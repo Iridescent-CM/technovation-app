@@ -1,38 +1,22 @@
-require "./app/technovation/background_check"
+class BackgroundCheck::Candidate
+  attr_reader :id, :candidate
 
-module BackgroundCheck
-  class Candidate
-    extend BackgroundCheck
+  def initialize(attributes = {})
+    candidate_attributes = default_attributes.merge(attributes)
+    @candidate = Checkr::Candidate.new(candidate_attributes)
+  end
 
-    attr_reader :id, :candidate
+  def submit
+    resp = BackgroundCheck.post(:candidates, candidate.attributes)
+    @id = resp.fetch(:id)
+    resp
+  end
 
-    def initialize(attributes = {})
-      candidate_attributes = default_attributes.merge(attributes)
-      @candidate = self.class.candidate_class.new(candidate_attributes)
-    end
-
-    def self.resource_name
-      "candidates"
-    end
-
-    def submit
-      resp = self.class.api_class.request(:post,
-                                          self.class.request_path,
-                                          candidate.attributes)
-      @id = resp.fetch(:id)
-      resp
-    end
-
-    private
-    def default_attributes
-      {
-        no_middle_name: true,
-        copy_requested: false,
-      }
-    end
-
-    def self.candidate_class
-      Checkr::Candidate
-    end
+  private
+  def default_attributes
+    {
+      no_middle_name: true,
+      copy_requested: false,
+    }
   end
 end

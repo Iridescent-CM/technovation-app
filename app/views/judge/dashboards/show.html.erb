@@ -1,1 +1,10 @@
-You're signed in as a judge! This is placeholder content.
+<div class="dashboard flex-row">
+  <div class="flex-col-sm-8 dashboard__main">
+    <h2><%= t("views.application.complete_your_profile") %></h2>
+
+    <ol class="completion-steps">
+      <%= render 'completion_steps/consent_waiver', account: current_judge %>
+      <%= render 'completion_steps/background_check', account: current_judge %>
+    </ol>
+  </div>
+</div>

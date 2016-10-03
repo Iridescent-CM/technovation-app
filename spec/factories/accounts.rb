@@ -109,4 +109,16 @@ FactoryGirl.define do
       end
     end
   end
+
+  factory :judge, aliases: [:judge_account], parent: :account, class: 'JudgeAccount' do
+    type { "JudgeAccount" }
+
+    association(:background_check)
+
+    before(:create) do |j|
+      unless j.judge_profile.present?
+        j.build_judge_profile(FactoryGirl.attributes_for(:judge_profile))
+      end
+    end
+  end
 end

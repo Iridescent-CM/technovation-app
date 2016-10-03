@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927145316) do
+ActiveRecord::Schema.define(version: 20161003145404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                        null: false
@@ -59,6 +58,19 @@ ActiveRecord::Schema.define(version: 20160927145316) do
   end
 
   add_index "admin_profiles", ["account_id"], name: "index_admin_profiles_on_account_id", using: :btree
+
+  create_table "background_checks", force: :cascade do |t|
+    t.string   "candidate_id",             null: false
+    t.string   "report_id",                null: false
+    t.integer  "account_id",               null: false
+    t.integer  "status",       default: 0, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "background_checks", ["account_id"], name: "index_background_checks_on_account_id", using: :btree
+  add_index "background_checks", ["candidate_id"], name: "index_background_checks_on_candidate_id", using: :btree
+  add_index "background_checks", ["report_id"], name: "index_background_checks_on_report_id", using: :btree
 
   create_table "consent_waivers", force: :cascade do |t|
     t.string   "electronic_signature", null: false
@@ -332,6 +344,7 @@ ActiveRecord::Schema.define(version: 20160927145316) do
   add_index "teams", ["friendly_id"], name: "index_teams_on_friendly_id", using: :btree
 
   add_foreign_key "admin_profiles", "accounts"
+  add_foreign_key "background_checks", "accounts"
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"

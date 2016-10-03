@@ -157,6 +157,12 @@ class Account < ActiveRecord::Base
     now.year - date_of_birth.year - extra_year
   end
 
+  def after_background_check_deleted
+  end
+
+  def after_background_check_clear
+  end
+
   private
   def update_email_list
     if first_name_changed? or last_name_changed? or email_changed?

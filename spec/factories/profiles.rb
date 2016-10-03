@@ -20,4 +20,10 @@ FactoryGirl.define do
     background_check_completed_at Time.current
     account
   end
+
+  factory :judge_profile do
+    company_name { "FactoryGirl" }
+    job_title { "Engineer" }
+    association(:judge_account)
+  end
 end

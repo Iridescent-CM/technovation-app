@@ -74,6 +74,8 @@ Rails.application.routes.draw do
     resources :submissions, only: [] do
       resources :scores
     end
+
+    resources :background_checks, only: [:new, :create, :show]
   end
 
   namespace :admin do
