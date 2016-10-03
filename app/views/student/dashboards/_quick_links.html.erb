@@ -1,0 +1,50 @@
+<div class="my-stuff">
+  <h2 class="my-stuff__heading appy-heading-lg">
+    My Stuff
+  </h2>
+  <ul class="my-stuff__list">
+    <li class="my-stuff__item-wrapper">
+      <div class="card">
+        <div class="card__body">
+          <div class="my-stuff__img">
+            <%= image_tag account.profile_image_url, width: 100, height: 100 %>
+          </div>
+          <div class="my-stuff__name">
+            <%= account.full_name %>
+          </div>
+          <div class="my-stuff__blurb">
+            <%= account.email %>
+          </div>
+          <div class="card__actions-row--pos-fill">
+            <%= link_to t("views.quick_links.my_account"),
+              student_account_path,
+              class: "appy-button"
+            %>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="my-stuff__item-wrapper">
+      <div class="card">
+        <div class="card__body">
+          <div class="my-stuff__img">
+            <%= image_tag account.team.team_photo, width: 100, height: 100 %>
+          </div>
+          <div class="my-stuff__name">
+            <%= account.team_name %>
+          </div>
+          <div class="my-stuff__blurb">
+            <%= truncate(account.team.description) %>
+          </div>
+          <div class="card__actions-row--pos-fill">
+            <%= link_to t("views.quick_links.my_team"),
+              student_team_path(account.team),
+              class: "appy-button"
+            %>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+

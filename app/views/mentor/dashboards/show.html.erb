@@ -6,14 +6,14 @@
   <div class="flex-col-sm-4 dashboard__sidebar">
     <% if current_mentor.consent_waiver.present? and current_mentor.bio_complete? and current_mentor.background_check_complete? %>
       <%# TODO: Localize the followings strings. Find a better place to put this. %>
-      <h4>Curriculum</h4>
+      <h4 class="appy-heading-lg">
+        Curriculum
+      </h4>
 
       <p>
         <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
         <br />(if you came from Made With Code)
       </p>
-
-      <hr />
     <% end %>
 
     <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>

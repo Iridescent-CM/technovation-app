@@ -1,9 +1,122 @@
+.dashboard__heading {
+  margin-bottom: 2rem;
+}
+
+/*
+ * To-Do
+ */
+
+.to-do {
+  margin-bottom: 2rem;
+}
+
+.to-do__list .card {
+  margin-bottom: 1rem;
+  max-width: 650px;
+
+  @media screen and (max-width: $device-sm) {
+    max-width: 100%;
+  }
+}
+
+/*
+ * My Stuff / Resources
+ */
+
+.my-stuff {
+  margin-bottom: 1rem;
+}
+
+.resources {
+  margin-bottom: 1rem;
+}
+
+.resources__list,
+.my-stuff__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resources__item-wrapper,
+.my-stuff__item-wrapper {
+  margin-bottom: 1rem;
+  width: 50%;
+
+  &:first-child {
+    padding-right: 0.5rem;
+  }
+
+  &:last-child {
+    padding-left: 0.5rem;
+  }
+
+  &:only-child {
+    padding-left: 0;
+  }
+
+  .card {
+    height: 100%;
+  }
+
+  .card__body {
+    height: 100%;
+  }
+
+  @media screen and (max-width: $device-sm) {
+    width: 100%;
+
+    &:first-child,
+    &:last-child {
+      padding: 0;
+    }
+  }
+}
+
+.my-stuff__item-wrapper {
+  .card__body {
+    display: flex;
+    flex-direction: column;
+  }
+  .card__actions-row--pos-fill {
+    margin-top: auto;
+  }
+}
+
+.my-stuff__img {
+  text-align: center;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.my-stuff__name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.my-stuff__blurb {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+// Preexisting code below
+
 .dashboard__main {
-  padding: 0 1em 0 0;
+  padding: 0 1rem 0 0;
+
+  @media screen and (max-width: $device-sm) {
+    padding: 0;
+  }
 }
 
 .dashboard__sidebar {
-  padding: 3rem 0 0;
+  padding: 0 0 0 1rem;
+
+  @media screen and (max-width: $device-sm) {
+    padding: 0;
+  }
 }
 
 .completion-steps {

@@ -1,0 +1,75 @@
+// <div class="card">
+//   <div class="card__heading">
+//     Heading Goes Here
+//     <span class="card-heading__flair fa fa-exclamation-circle"></span>
+//   </div>
+//   <div class="card__body">
+//     Body content goes here
+//   </div>
+// </div>
+
+.card {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 2px rgba(black, 0.1); // TODO: Make this a variable or mixin
+  overflow: hidden;
+  padding: 0;
+}
+
+.card__heading {
+  align-items: center;
+  background-color: $wisteria-mid;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+  padding: 0.5rem 1rem;
+}
+
+.card-heading__flair {
+  color: $lemon;
+  font-size: 1.2em;
+}
+
+.card__body {
+  padding: 1rem;
+}
+
+.card__actions-row {
+  margin-top: 0.75rem;
+}
+
+.card__actions-row--pos-start {
+  display: flex;
+  justify-content: flex-end;
+
+  > :first-child {
+    margin-right: 0;
+  }
+}
+
+.card__actions-row--pos-end {
+  display: flex;
+  justify-content: flex-end;
+
+  > :last-child {
+    margin-right: 0;
+  }
+}
+
+.card__actions-row--pos-fill {
+  display: flex;
+  justify-content: flex-end;
+
+  > * {
+    flex-grow: 1;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -37,6 +37,7 @@ en:
       only_one_email: "Enter only one email"
       or: "or"
       privacy_policy: "Privacy Policy"
+      resources: "Resources"
       review: "review"
       review_now: "Review now"
       save: "Save"
@@ -46,6 +47,8 @@ en:
       signout: 'Logout'
       site_title: "Technovation Challenge"
       terms_of_use: "Terms of Use"
+      to_do: "To-Do"
+      view_team: "View Team"
       yes: "Yes"
 
     accounts:
@@ -57,6 +60,10 @@ en:
         title: "Edit your account"
       show:
         title: "Account Info"
+
+    quick_links:
+        my_account: "My Account"
+        my_team: "My Team"
 
     consent_waivers:
       new:
@@ -147,24 +154,33 @@ en:
             text: "Sign the waiver now"
 
       create_join_team:
-        label: "Create or join a team"
+        heading: "Create or Join a Team"
+        label: "Technovation is a more educational, inspirational, and all-around fun experience if approached as a group.<br />Your team can be made up of up to five amazing girls. Join or create a team to get started."
         links:
+          pre_unit:
+            text: "Click here"
+            postfix: "to learn more about building a team."
           create:
             text: "Create a team"
           join:
             text: "Join a team"
 
       find_mentor:
-        label: "Find a mentor for your team"
+        heading: "Find a Mentor"
+        label: "Mentors can help your team succeed by providing guidance and support, and helping you solve problems throughout the Technovation season."
         links:
+          pre_unit:
+            text: "Click here"
+            postfix: "to learn more about finding a mentor."
           browse:
-            text: "Find an available mentor now"
+            text: "Find an Available Mentor"
 
       links:
         complete_previous_steps: "Complete steps above to enable this step"
 
       parental_consent:
-        label: "You need permission from your parent or guardian to participate in Technovation."
+        heading: "Consent Form"
+        label: "In order to participate in Technovation, we need your parent or guardian's permission."
         links:
           contact_us:
             postfix: "if your parent or guardian does not have an email address."
@@ -172,8 +188,7 @@ en:
           resend:
             text: "Re-send the link to the consent form"
           send_link:
-            text: "Email a link"
-            postfix: "to the electronic consent form to my parent or guardian."
+            text: "Send Email Consent Form"
           trouble:
             postfix: "A new email will be sent if you update the address.<br />Also have them check their spam folder. If the email is there, they should add 'info@technovationchallenge.org' to their contacts."
             prefix: "Trouble receiving the email?"
@@ -252,6 +267,7 @@ en:
         find_a_mentor: "Find a mentor"
         join_team: "Join a team"
         my_team: "My team"
+
 
       parental_consent_notices:
         form:

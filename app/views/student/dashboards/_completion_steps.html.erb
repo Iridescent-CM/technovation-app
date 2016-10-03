@@ -1,59 +1,105 @@
-<div class="completion-steps">
-  <h2><%= t("views.application.complete_your_profile") %></h2>
+<div class="to-do">
+  <h2 class="to-do__heading appy-heading-lg">
+    <%= t("views.application.to_do") %>
+  </h2>
+  <ul class="to-do__list">
+    <% # Consent Form %>
+    <% unless current_student.parental_consent.present? %>
+      <li class="card">
+        <div class="card__heading">
+          <%= t("views.profile_requirements.parental_consent.heading") %>
+          <span class="card-heading__flair fa fa-exclamation-circle"><!--Fontawesome--></span>
+        </div>
+        <div class="card__body">
+          <%= t("views.profile_requirements.parental_consent.label") %>
+          <br>
+          <% if current_student.student_profile.parent_guardian_email.present? %>
+            <% # Has Parent Email %>
+            <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
+            <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
+                        edit_student_account_path(anchor: "account-profile-details") %>
 
-  <ol class="completion-steps">
-    <li class="completion-step status-<%= current_student.parental_consent.present? ? "complete" : "ready" %>">
-      <span class="checkbox"><%= current_student.parental_consent.present? ? fa_icon("check 2x") : nil %></span>
+            <%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %>
 
-      <%= t("views.profile_requirements.parental_consent.label") %>
-
-      <% unless current_student.parental_consent.present? %>
-        <ul>
-          <li>
-            <% if current_student.student_profile.parent_guardian_email.present? %>
-              <span class="crossed-off">
-                <%= t("views.profile_requirements.parental_consent.links.send_link.text") %>
-                <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %>
-              </span>
-
-              <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
-              <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
-                          edit_student_account_path(anchor: "account-profile-details") %><br />
-              <%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %><br />
-
+            <div class="card__actions-row card__actions-row--pos-end">
               <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
-                          student_parental_consent_notice_path, data: { method: :post } %>
-            <% else %>
+                student_parental_consent_notice_path,
+                data: { method: :post },
+                class: "appy-button"
+              %>
+            </div>
+          <% else %>
+            <% # Needs Parent Email %>
+            <%= mail_to "info@technovationchallenge.org",
+              t("views.profile_requirements.parental_consent.links.contact_us.text"),
+              subject: "Parental consent form help"
+            %>
+            <%= t("views.profile_requirements.parental_consent.links.contact_us.postfix") %>
+            <div class="card__actions-row card__actions-row--pos-end">
               <%= link_to t("views.profile_requirements.parental_consent.links.send_link.text"),
-                          new_student_parental_consent_notice_path %>
-              <%= t("views.profile_requirements.parental_consent.links.send_link.postfix") %><br />
+                new_student_parental_consent_notice_path,
+                {:class => "appy-button" }
+              %>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
 
-              <%= mail_to "info@technovationchallenge.org",
-                          t("views.profile_requirements.parental_consent.links.contact_us.text"),
-                          subject: "Parental consent form help" %>
-              <%= t("views.profile_requirements.parental_consent.links.contact_us.postfix") %>
-            <% end %>
-          </li>
-        </ul>
-      <% end %>
-    </li>
+    <% if current_student.parental_consent.present? and not current_student.is_on_team? %>
+      <li class="card">
+        <div class="card__heading">
+          <%= t("views.profile_requirements.create_join_team.heading") %>
+          <span class="card-heading__flair fa fa-group"><!--Fontawesome--></span>
+        </div>
+        <div class="card__body">
+          <%= t("views.profile_requirements.create_join_team.label").html_safe %>
+          <br>
+          <%= link_to t("views.profile_requirements.create_join_team.links.pre_unit.text"),
+            "//www.technovationchallenge.org/curriculum/buildateam/",
+            target: "_blank"
+          %>
+          <%= t("views.profile_requirements.create_join_team.links.pre_unit.postfix") %>
+          <div class="card__actions-row card__actions-row--pos-fill">
+            <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
+              [:new, account.type_name, :team_search],
+              class: "appy-button"
+            %>
+            <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
+              [:new, account.type_name, :team],
+              class: "appy-button"
+            %>
+          </div>
+        </div>
+      </li>
+    <% end %>
 
-    <%= render 'completion_steps/create_join_team', account: current_student %>
+    <% if current_student.is_on_team? and not current_student.team_has_mentor? %>
+      <li class="card">
+        <div class="card__heading">
+          <%= t("views.profile_requirements.find_mentor.heading") %>
+          <span class="card-heading__flair fa fa-user"><!--Fontawesome--></span>
+        </div>
+        <div class="card__body">
+          <%= t("views.profile_requirements.find_mentor.label") %>
+          <br>
+          <%= link_to t("views.profile_requirements.find_mentor.links.pre_unit.text"),
+            "//www.technovationchallenge.org/curriculum/buildateam/",
+            target: "_blank"
+          %>
+          <%= t("views.profile_requirements.find_mentor.links.pre_unit.postfix") %>
+          <div class="card__actions-row card__actions-row--pos-end">
+            <%= link_to t("views.profile_requirements.find_mentor.links.browse.text"),
+              new_student_mentor_search_path,
+              class: "appy-button"
+            %>
+          </div>
+        </div>
+      </li>
+    <% end %>
 
-    <li class="completion-step status-<%= current_student.team_has_mentor? ? "complete" : current_student.is_on_team? ? "ready" : "future" %>">
-      <span class="checkbox"><%= current_student.team_has_mentor? ? fa_icon("check 2x") : nil %></span>
-
-      <%= t("views.profile_requirements.find_mentor.label") %>
-
-      <% if current_student.is_on_team? and not current_student.team_has_mentor? %>
-        <ul>
-          <li>
-            <%= link_to t("views.profile_requirements.find_mentor.links.browse.text"), new_student_mentor_search_path %>
-          </li>
-        </ul>
-      <% else %>
-        <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
-      <% end %>
-    </li>
-  </ol>
+  </ul>
 </div>
+
+
+

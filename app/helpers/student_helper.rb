@@ -18,6 +18,14 @@ module StudentHelper
                            class: "nav-link"
     end
 
+    def team_link_a
+      unlocked_content_tag student,
+                           team_links,
+                           :a,
+                           team_link_based_on_membership,
+                           class: "nav-link"
+    end
+
     def find_team_link
       unless student.is_on_team?
         unlocked_content_tag student,

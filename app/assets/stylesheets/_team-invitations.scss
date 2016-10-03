@@ -1,0 +1,84 @@
+$no-action-color: rgba(black, 0.35);
+$invitations-team-photo-width: 100px;
+
+.team-invitations__incoming {
+  margin-bottom: 1.5rem;
+}
+
+.team-invitations__no-action {
+  border: 4px solid $no-action-color;
+  border-radius: 0.5rem;
+  color: $no-action-color;
+  font-weight: bold;
+  padding: 1rem;
+  text-align: center;
+}
+
+.team-invitations__browse-teams-btn {
+  display: block;
+  margin: 0;
+}
+
+.team-invitations__list {
+
+}
+
+.team-invitations__invitation {
+  position: relative;
+}
+
+.team-invitations__team-photo {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: $invitations-team-photo-width;
+
+  img {
+    height: 100%;
+    left: 50%;
+    max-height: none;
+    max-width: none;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: auto;
+  }
+
+  @media screen and (min-width: $device-sm) and (max-width: $device-md) {
+    display: none;
+  }
+}
+
+.team-invitations__team-info {
+  margin-left: $invitations-team-photo-width;
+  padding: 1rem;
+  width: calc(100% - #{$invitations-team-photo-width});
+
+  @media screen and (min-width: $device-sm) and (max-width: $device-md) {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.team-invitations__team-info--no-photo {
+  margin-left: 0;
+  width: 100%;
+}
+
+.team-invitations__team-name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.team-invitations__team-description {
+  font-size: 1.1rem;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

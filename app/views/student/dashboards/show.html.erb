@@ -1,23 +1,44 @@
+<h1 class="appy-title dashboard__heading">
+  My Dashboard<!--TODO: LOCALIZE-->
+</h1>
+
 <div class="flex-row dashboard">
+
   <div class="flex-col-sm-8 dashboard__main">
-    <%= render 'completion_steps',
-                account: current_student,
-                steps: CompletionSteps.new(current_student) %>
+    <% if current_student.parental_consent.present? and current_student.is_on_team? and current_student.team_has_mentor? %>
+      <%= render 'quick_links',
+        account: current_student
+      %>
+    <% else %>
+      <%= render 'completion_steps',
+        account: current_student,
+        steps: CompletionSteps.new(current_student)
+      %>
+    <% end %>
+
+    <% if current_student.parental_consent.present? %>
+      <div class="resources">
+        <h2 class="resources__heading appy-heading-lg">
+          <%= t("views.application.resources") %>
+        </h2>
+        <ul class="resources__list">
+          <li class="resources__item-wrapper">
+            <div class="card">
+              <div class="card__heading">
+                Curriculum
+                <span class="card-heading__flair fa fa-group"><!--Fontawesome--></span>
+              </div>
+              <div class="card__body">
+                <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %> (if you came from Made With Code)
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
-    <% if current_student.parental_consent.present? %>
-      <%# TODO: Localize the followings strings. Find a better place to put this.%>
-      <h4>Curriculum</h4>
-
-      <p>
-        <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
-        <br />(if you came from Made With Code)
-      </p>
-
-      <hr />
-    <% end %>
-
     <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
   </div>
 </div>

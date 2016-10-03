@@ -26,6 +26,7 @@
 h1, h2, h3, h4, h5, h6 { // TODO: Make this less specific
   &.appy-heading-lg.appy-heading-lg {
     color: $chalkboard;
+    font-family: $heading-font-family;
     font-size: 1.5rem;
     font-weight: normal;
     margin: 0 0 0.75rem;

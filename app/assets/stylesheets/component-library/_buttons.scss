@@ -1,0 +1,32 @@
+.appy-button {
+  background-color: $shamrock-mid;
+  border-radius: 0.15rem;
+  box-shadow: 0 2px 0 darken($shamrock-mid, 10);
+  color: white;
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  transform: translateY(0);
+  transition: background-color 0.1s,
+    box-shadow 0.1s,
+    transform 0.1s;
+
+  &:active,
+  &:hover,
+  &:focus {
+    background-color: darken($shamrock-mid, 5);
+    color: white;
+  }
+
+  &:active {
+    box-shadow: 0 0 0 darken($shamrock-mid, 10);
+    transform: translateY(2px);
+  }
+}
+
+.appy-button--full-width {
+  width: 100%;
+}
