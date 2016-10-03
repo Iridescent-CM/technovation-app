@@ -41,7 +41,7 @@ RSpec.feature "Invite a member to a team" do
   scenario "student accepts invite" do
     sign_out
     sign_in(invite.invitee)
-    click_link "review"
+    click_link "View Team"
     click_button "Accept invitation to #{mentor.team_names.first}"
     expect(current_path).to eq(student_team_path(invite.team))
   end

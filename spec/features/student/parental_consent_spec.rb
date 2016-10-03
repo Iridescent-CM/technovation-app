@@ -35,7 +35,7 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
 
     sign_in(student)
-    click_link "Email a link"
+    click_link "Send Email Consent Form"
 
     fill_in "Parent or guardian's name", with: "Parent name"
     fill_in "Parent or guardian's email", with: "parent@parent.com"
@@ -52,7 +52,7 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
 
     sign_in(student)
-    click_link "Email a link"
+    click_link "Send Email Consent Form"
 
     fill_in "Parent or guardian's name", with: ""
     fill_in "Parent or guardian's email", with: ""
