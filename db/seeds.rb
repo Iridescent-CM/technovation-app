@@ -35,6 +35,11 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                     job_title: "Aerospace Engineer",
                                     expertise_ids: Expertise.pluck(:id)[0..1],
                                   },
+                                  background_check_attributes: {
+                                    candidate_id: "SEEDED!",
+                                    report_id: "SEEDED!",
+                                    status: "clear"
+                                  },
                                   first_name: "Mentor",
                                   last_name: "McGee",
                                   date_of_birth: Date.today - 34.years,
@@ -63,7 +68,11 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
                                     job_title: "Aerospace Engineer",
                                     expertise_ids: Expertise.pluck(:id)[0..1],
                                     bio: "Cool chicago mentor",
-                                    background_check_completed_at: Time.current,
+                                  },
+                                  background_check_attributes: {
+                                    candidate_id: "SEEDED!",
+                                    report_id: "SEEDED!",
+                                    status: "clear"
                                   },
                                   first_name: "Mentor",
                                   last_name: "McGee",
@@ -87,7 +96,11 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                             ambassador_since_year: "I'm new!",
                                             job_title: "Software Engineer",
                                             bio: "I am passionate about tech and empowering girls",
-                                            background_check_completed_at: Time.current,
+                                          },
+                                          background_check_attributes: {
+                                            candidate_id: "SEEDED!",
+                                            report_id: "SEEDED!",
+                                            status: "clear"
                                           },
                                           first_name: "RA",
                                           last_name: "Ambassador",
@@ -101,4 +114,30 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                          )).valid?
   ra.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created RA: #{ra.email} with password #{ra.password}"
+end
+
+if (judge = JudgeAccount.create(email: "judge@judge.com",
+                                password: "judge@judge.com",
+                                password_confirmation: "judge@judge.com",
+                                judge_profile_attributes: {
+                                  company_name: "Boeing",
+                                  job_title: "Aerospace Engineer",
+                                },
+                                background_check_attributes: {
+                                  candidate_id: "SEEDED!",
+                                  report_id: "SEEDED!",
+                                  status: "clear"
+                                },
+                                first_name: "Judgey",
+                                last_name: "McGee",
+                                date_of_birth: Date.today - 34.years,
+                                city: "Evanston",
+                                state_province: "IL",
+                                country: "US",
+                                geocoded: "Evanston, IL, US",
+                                season_ids: [Season.current.id],
+                               )).valid?
+  judge.update_column(:profile_image, "foo/bar/baz.png")
+  judge.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
+  puts "Created Judge: #{judge.email} with password #{judge.password}"
 end
