@@ -6,14 +6,9 @@
 
   <div class="flex-col-sm-8 dashboard__main">
     <% if current_student.parental_consent.present? and current_student.is_on_team? and current_student.team_has_mentor? %>
-      <%= render 'quick_links',
-        account: current_student
-      %>
+      <%= render 'quick_links', account: current_student %>
     <% else %>
-      <%= render 'completion_steps',
-        account: current_student,
-        steps: CompletionSteps.new(current_student)
-      %>
+      <%= render 'completion_steps', account: current_student, steps: CompletionSteps.new(current_student) %>
     <% end %>
 
     <% if current_student.parental_consent.present? %>
