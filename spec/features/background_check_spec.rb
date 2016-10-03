@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "background checks" do
-  %i{judge mentor regional_ambassador}.each do |account|
+  %i{mentor regional_ambassador}.each do |account|
     scenario "Complete a #{account} background check", :vcr do
       a = FactoryGirl.create(account, background_check: nil)
       sign_in(a)

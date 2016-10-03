@@ -24,7 +24,7 @@ RSpec.describe Account do
   end
 
   it "doesn't need a BG check outside of the US" do
-    account = FactoryGirl.create(%i{judge mentor regional_ambassador}.sample, country: "BR")
+    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample, country: "BR")
     expect(account).to be_background_check_complete
   end
 end

@@ -38,10 +38,6 @@ class RegionalAmbassadorAccount < Account
     prefix: true,
     allow_nil: true
 
-  def complete_background_check!
-    background_check.clear!
-  end
-
   def background_check_complete?
     country != "US" or !!background_check && background_check.clear?
   end

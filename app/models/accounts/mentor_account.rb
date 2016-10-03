@@ -41,10 +41,6 @@ class MentorAccount < Account
     prefix: true,
     allow_nil: true
 
-  def complete_background_check!
-    background_check.clear!
-  end
-
   def after_background_check_clear
     mentor_profile.enable_searchability
   end
