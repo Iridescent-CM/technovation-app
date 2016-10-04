@@ -5,5 +5,5 @@
                    data: { location_field: true },
                    onblur: "ga('send', 'event', 'search', 'geocoded=' + this.value);" %>
 
-<%= button_tag t('views.application.anywhere'), data: { update_location: "anywhere" } %>
-<%= button_tag t('views.application.near_me'), data: { update_location: account.address_details } %>
+<%= link_to t('views.application.anywhere'), '#', class: "primary-button", data: { update_location: "anywhere" } %>
+<%= link_to t('views.application.near_me'), '#', class: "primary-button", data: { update_location: account.address_details } %>
