@@ -35,14 +35,16 @@
     <% end %>
     <%# TODO: Localize the above string %>
 
-    <% if mentor_preview.is_on_team? %>
-      <span class="mentor__availability-badge badge-notice">
-        <%= t("views.mentor_searches.new.mentor_preview.on_team") %>
-      </span>
-    <% else %>
-      <span class="mentor__availability-badge badge-success">
-        <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
-      </span>
-    <% end %>
+    <div class="mentor__availability-badges">
+      <% if mentor_preview.is_on_team? %>
+        <span class="mentor__availability-badge badge-notice">
+          <%= t("views.mentor_searches.new.mentor_preview.on_team") %>
+        </span>
+      <% else %>
+        <span class="mentor__availability-badge badge-success">
+          <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
+        </span>
+      <% end %>
+    </div>
   </div>
 </div>
