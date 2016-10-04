@@ -107,12 +107,14 @@ en:
         manage_team: "Manage your team's join requests"
 
     mentor_searches:
-      filter_options: "Filter mentors by expertise"
+      filter_options: "Search options"
       intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
       new:
         mentor_preview:
+          in_person_only: "In-person only"
           on_team: "On a team"
           needs_team: "Needs a team"
+          virtual: "Virtual mentoring"
       none_found: "Sorry... we couldn't find any mentors with your criteria."
       title: "Find a Mentor"
 
