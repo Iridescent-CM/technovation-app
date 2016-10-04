@@ -114,7 +114,7 @@ en:
           in_person_only: "In-person only"
           on_team: "On a team"
           needs_team: "Needs a team"
-          virtual: "Virtual mentoring"
+          virtual: "Virtual"
       none_found: "Sorry... we couldn't find any mentors with your criteria."
       title: "Find a Mentor"
 
