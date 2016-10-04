@@ -27,6 +27,10 @@ module SearchMentors
                                               AND season_registrations.season_id = ?)))", Season.current.id)
     end
 
+    if filter.virtual_only
+      mentors = mentors.virtual
+    end
+
     mentors.searchable
   end
 end

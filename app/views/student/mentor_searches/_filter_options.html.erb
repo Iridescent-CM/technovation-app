@@ -10,6 +10,7 @@
     </div>
 
     <%= render 'searches/toggle_mentor_needs_team', account: current_student %>
+    <%= render 'searches/toggle_mentor_virtual', account: current_student %>
 
     <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>

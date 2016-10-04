@@ -3,6 +3,7 @@ module Student
     def new
       params[:nearby] = current_student.address_details if params[:nearby].blank?
       params[:needs_team] = false if params[:needs_team].blank?
+      params[:virtual_only] = false if params[:virtual_only].blank?
 
       @search_filter = SearchFilter.new(search_filter_params)
       @expertises = Expertise.all
@@ -15,6 +16,7 @@ module Student
         nearby: params.fetch(:nearby),
         user: current_student,
         needs_team: params.fetch(:needs_team),
+        virtual_only: params.fetch(:virtual_only),
       })
     end
   end
