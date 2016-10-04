@@ -22,6 +22,7 @@ class MentorAccount < Account
   }
 
   scope :searchable, -> { where("mentor_profiles.accepting_team_invites = ? AND mentor_profiles.searchable = ?", true, true) }
+  scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }
 
   delegate :expertises,
            :expertise_names,
@@ -29,6 +30,7 @@ class MentorAccount < Account
            :school_company_name,
            :bio,
            :enable_searchability,
+           :virtual?,
     to: :mentor_profile,
     prefix: false
 
