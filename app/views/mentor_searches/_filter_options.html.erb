@@ -5,12 +5,19 @@
 <div class="search-filters__form-wrapper">
   <%= form_tag request.fullpath, method: :get do %>
 
-    <div class="search-filters__location">
-      <%= render 'searches/location_options', account: current_student %>
+    <div class="search-filters__text">
+      <label>Search by name</label>
+      <%= text_field_tag :text, params[:text], placeholder: "Press enter after typing" %>
     </div>
 
-    <%= render 'searches/toggle_mentor_needs_team', account: current_student %>
-    <%= render 'searches/toggle_mentor_virtual' %>
+    <div class="search-filters__location">
+      <%= render 'searches/location_options', account: account %>
+    </div>
+
+    <% if account.type_name == "student" %>
+      <%= render 'searches/toggle_mentor_needs_team', account: account %>
+      <%= render 'searches/toggle_mentor_virtual' %>
+    <% end %>
 
     <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>

@@ -14,7 +14,7 @@
 
 .search-filters__form-wrapper {
 
-  .search-filters__location { // TODO: This nesting is getting v ugly. Figure out how to reduce it.
+  .search-filters__location, .search-filters__text { // TODO: This nesting is getting v ugly. Figure out how to reduce it.
     border-bottom: 1px solid rgba(black, 0.1);
     font-size: 1rem;
     padding: 0.5rem 1rem;

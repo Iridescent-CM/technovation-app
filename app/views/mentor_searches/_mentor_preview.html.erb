@@ -1,0 +1,61 @@
+<div class="mentor">
+  <div class="mentor__card">
+    <div class="mentor__avatar">
+      <object data="<%= mentor_preview.profile_image_url %>" type="image/png">
+        <%= image_tag mentor_preview.profile_image_url %>
+      </object>
+    </div>
+
+    <div class="mentor__name">
+      <%= mentor_preview.full_name %>
+    </div>
+
+    <div class="mentor__location">
+      <%= mentor_preview.address_details %>
+    </div>
+
+    <div class="mentor__company">
+      <%= mentor_preview.school_company_name %>
+    </div>
+
+    <div class="mentor__expertise">
+      <% mentor_preview.expertises.each do |expertise| %>
+        <% cache(expertise) do %>
+          <span class="badge-<%= @search_filter.badge_css(expertise) %>">
+            <%= expertise.name %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= link_to send("#{account.type_name}_mentor_path", mentor_preview), class: 'mentor__profile-link' do %>
+      <button class="mentor__profile-link-btn" type="button">
+        View Full Profile
+      </button>
+    <% end #TODO: Localize the above string %>
+
+    <% if account.type_name == "student" %>
+      <div class="mentor__availability-badges">
+        <% if mentor_preview.is_on_team? %>
+          <span class="mentor__availability-badge badge-notice">
+            <%= t("views.mentor_searches.new.mentor_preview.on_team") %>
+          </span>
+        <% else %>
+          <span class="mentor__availability-badge badge-success">
+            <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
+          </span>
+        <% end %>
+
+        <% if mentor_preview.virtual? %>
+          <span class="mentor__availability-badge badge-success">
+            <%= t("views.mentor_searches.new.mentor_preview.virtual") %>
+          </span>
+        <% else %>
+          <span class="mentor__availability-badge badge-notice">
+            <%= t("views.mentor_searches.new.mentor_preview.in_person_only") %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
