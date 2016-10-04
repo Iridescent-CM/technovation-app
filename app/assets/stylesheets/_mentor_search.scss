@@ -136,10 +136,15 @@
   width: 100%;
 }
 
-.mentor__availability-badge {
-  border-radius: 0.25em 0 0 0.25em;
-  padding: 0.5em 0.75em;
+.mentor__availability-badges {
   position: absolute;
   right: 0;
   top: 0.5rem;
+}
+
+.mentor__availability-badge {
+  display: block;
+  border-radius: 0.25em 0 0 0.25em;
+  padding: 0.5em 0.75em;
+  margin-bottom: 0.5em;
 }
