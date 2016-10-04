@@ -30,7 +30,7 @@ class MentorProfile < ActiveRecord::Base
     if can_enable_searchable?
       SubscribeEmailListJob.perform_later(mentor_account.email,
                                           mentor_account.full_name,
-                                          ENV.fetch("MENTOR_LIST_ID"))
+                                          "MENTOR_LIST_ID")
     end
   end
 

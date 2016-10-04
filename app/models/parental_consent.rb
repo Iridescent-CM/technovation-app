@@ -10,11 +10,11 @@ class ParentalConsent < ActiveRecord::Base
   after_create -> {
     SubscribeEmailListJob.perform_later(student.email,
                                         student.full_name,
-                                        ENV.fetch("STUDENT_LIST_ID"))
+                                        "STUDENT_LIST_ID")
 
     SubscribeEmailListJob.perform_later(student.parent_guardian_email,
                                         student.parent_guardian_name,
-                                        ENV.fetch("PARENT_LIST_ID"))
+                                        "PARENT_LIST_ID")
 
     AccountMailer.confirm_next_steps(self).deliver_later
 

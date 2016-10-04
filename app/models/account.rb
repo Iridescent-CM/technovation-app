@@ -166,12 +166,8 @@ class Account < ActiveRecord::Base
   private
   def update_email_list
     if first_name_changed? or last_name_changed? or email_changed?
-      UpdateEmailListJob.perform_later(email_was, email, full_name, list_id)
+      UpdateEmailListJob.perform_later(email_was, email, full_name, "#{type_name.upcase}_LIST_ID")
     end
-  end
-
-  def list_id
-    ENV.fetch("#{type_name.upcase}_LIST_ID")
   end
 
   def generate_tokens

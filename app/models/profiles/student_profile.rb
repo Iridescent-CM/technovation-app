@@ -41,7 +41,7 @@ class StudentProfile < ActiveRecord::Base
       UpdateEmailListJob.perform_later(parent_guardian_email_was,
                                        parent_guardian_email,
                                        parent_guardian_name,
-                                       ENV.fetch("PARENT_LIST_ID"))
+                                       "PARENT_LIST_ID")
     end
   end
 

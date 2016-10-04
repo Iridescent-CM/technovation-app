@@ -18,7 +18,7 @@ RSpec.describe Account do
     account = FactoryGirl.create(:account)
 
     expect(UpdateEmailListJob).to receive(:perform_later)
-      .with(account.email, "new@email.com", account.full_name, "some-id")
+      .with(account.email, "new@email.com", account.full_name, "ACCOUNT_LIST_ID")
 
     account.update_attributes(email: "new@email.com")
   end

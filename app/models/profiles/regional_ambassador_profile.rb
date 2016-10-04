@@ -16,7 +16,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     if approved?
       SubscribeEmailListJob.perform_later(regional_ambassador_account.email,
                                           regional_ambassador_account.full_name,
-                                          ENV.fetch("REGIONAL_AMBASSADOR_LIST_ID"))
+                                          "REGIONAL_AMBASSADOR_LIST_ID")
     end
   end
 end

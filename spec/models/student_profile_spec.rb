@@ -40,7 +40,7 @@ RSpec.describe StudentProfile do
 
     expect(UpdateEmailListJob).to receive(:perform_later)
       .with(profile.parent_guardian_email, "new@parent-email.com",
-            profile.parent_guardian_name, ENV["PARENT_LIST_ID"])
+            profile.parent_guardian_name, "PARENT_LIST_ID")
 
     profile.update_attributes(parent_guardian_email: "new@parent-email.com")
   end
