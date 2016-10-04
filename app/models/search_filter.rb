@@ -31,6 +31,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:needs_team) { false } == "1"
   end
 
+  def virtual_only
+    filter_options.fetch(:virtual_only) { false } == "1"
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"

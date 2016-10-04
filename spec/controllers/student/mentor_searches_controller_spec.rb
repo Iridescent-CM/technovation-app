@@ -25,5 +25,20 @@ RSpec.describe Student::MentorSearchesController do
 
       expect(assigns[:mentors]).to be_empty
     end
+
+    it "filters mentors who are in-person only" do
+      FactoryGirl.create(
+        :mentor,
+        geocoded: "Los Angeles, CA",
+        mentor_profile_attributes: FactoryGirl.attributes_for(:mentor_profile)
+                                              .merge(virtual: false)
+      )
+
+      sign_in(FactoryGirl.create(:student, :on_team, geocoded: "Chicago, IL"))
+
+      get :new, nearby: "anywhere", virtual_only: 1
+
+      expect(assigns[:mentors]).to be_empty
+    end
   end
 end
