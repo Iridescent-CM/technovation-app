@@ -2,7 +2,7 @@
   $(document).ready(enableSearchOptions);
 
   function enableSearchOptions() {
-    $('button[data-update-location]').on('click', function(e) {
+    $('[data-update-location]').on('click', function(e) {
       e.preventDefault();
 
       var $target = $(e.target),
