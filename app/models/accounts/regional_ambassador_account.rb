@@ -49,4 +49,8 @@ class RegionalAmbassadorAccount < Account
   def bio_complete?
     not bio.blank?
   end
+
+  def after_background_check_clear
+    AccountMailer.background_check_clear(self).deliver_later
+  end
 end

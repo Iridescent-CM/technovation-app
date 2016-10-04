@@ -1,9 +1,11 @@
 class BackgroundCheck < ActiveRecord::Base
-  enum status: %i{ pending clear consider suspended }
+  enum status: %i{ pending clear consider suspended engage }
 
   belongs_to :account
 
-  after_save -> { account.after_background_check_clear }, if: :clear?
+  after_save -> { account.after_background_check_clear },
+    if: -> { status_changed? and clear? }
+
   after_destroy -> { account.after_background_check_deleted }
 
   def submitted?

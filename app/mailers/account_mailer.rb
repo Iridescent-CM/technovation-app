@@ -10,4 +10,10 @@ class AccountMailer < ApplicationMailer
     @url = student_dashboard_url
     mail to: consent.student.email
   end
+
+  def background_check_clear(account)
+    @name = account.first_name
+    @url = send("#{account.type_name}_dashboard_url")
+    mail to: account.email
+  end
 end

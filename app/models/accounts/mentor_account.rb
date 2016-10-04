@@ -42,6 +42,7 @@ class MentorAccount < Account
     allow_nil: true
 
   def after_background_check_clear
+    AccountMailer.background_check_clear(self).deliver_later
     mentor_profile.enable_searchability
   end
 
