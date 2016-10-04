@@ -12,11 +12,8 @@ task search_index: :environment do
 
   MentorAccount.searchable.find_in_batches(batch_size: 100) do |mentors|
     documents = mentors.map do |mentor|
-      url = Rails.application.routes.url_helpers.mentor_url(mentor)
       {:external_id => mentor.id,
        :fields => [{:name => 'title', :value => mentor.search_name, :type => 'string'},
-                   {:name => 'body', :value => mentor.search_body, :type => 'text'},
-                   {:name => 'url', :value => url, :type => 'enum'},
                    {:name => 'created_at', :value => mentor.created_at.iso8601, :type => 'date'}]}
     end
 
