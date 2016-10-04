@@ -123,11 +123,6 @@ if (judge = JudgeAccount.create(email: "judge@judge.com",
                                   company_name: "Boeing",
                                   job_title: "Aerospace Engineer",
                                 },
-                                background_check_attributes: {
-                                  candidate_id: "SEEDED!",
-                                  report_id: "SEEDED!",
-                                  status: "clear"
-                                },
                                 first_name: "Judgey",
                                 last_name: "McGee",
                                 date_of_birth: Date.today - 34.years,

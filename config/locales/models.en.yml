@@ -27,6 +27,7 @@ en:
     mentor_profile:
       accepting_team_invites: "Allow teams to invite me to be their mentor."
       expertise_names: "Expertise"
+      virtual: "I am available for virtually mentoring teams from anywhere."
       job_title: "Job title"
       school_company_name: "School or company name"
 

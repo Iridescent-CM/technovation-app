@@ -29,6 +29,7 @@ module Mentor
           :job_title,
           :bio,
           :accepting_team_invites,
+          :virtual,
           { expertise_ids: [] },
         ],
       }

@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003163304) do
+ActiveRecord::Schema.define(version: 20161004134225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                        null: false
@@ -183,10 +182,12 @@ ActiveRecord::Schema.define(version: 20161003163304) do
     t.text     "bio"
     t.boolean  "searchable",             default: false, null: false
     t.boolean  "accepting_team_invites", default: true,  null: false
+    t.boolean  "virtual",                default: true,  null: false
   end
 
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
   add_index "mentor_profiles", ["searchable"], name: "index_mentor_profiles_on_searchable", using: :btree
+  add_index "mentor_profiles", ["virtual"], name: "index_mentor_profiles_on_virtual", using: :btree
 
   create_table "parental_consents", force: :cascade do |t|
     t.string   "electronic_signature", null: false
