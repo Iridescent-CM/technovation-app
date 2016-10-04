@@ -1,6 +1,8 @@
 class MentorAccount < Account
   default_scope { eager_load(:mentor_profile) }
 
+  after_save -> { CreateOrUpdateSwiftypeDocumentJob.perform_later(self) }
+
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile
   validates_associated :mentor_profile
@@ -42,6 +44,10 @@ class MentorAccount < Account
     to: :background_check,
     prefix: true,
     allow_nil: true
+
+  def search_name
+    full_name
+  end
 
   def after_background_check_clear
     AccountMailer.background_check_clear(self).deliver_later
