@@ -1,5 +1,5 @@
 class BackgroundCheck < ActiveRecord::Base
-  enum status: %i{ pending clear consider suspended engage }
+  enum status: %i{ pending clear consider suspended }
 
   belongs_to :account
 
@@ -10,10 +10,6 @@ class BackgroundCheck < ActiveRecord::Base
 
   def submitted?
     pending?
-  end
-
-  def engage!
-    clear!
   end
 
   class << self
