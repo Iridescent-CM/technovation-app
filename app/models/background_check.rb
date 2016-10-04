@@ -12,6 +12,10 @@ class BackgroundCheck < ActiveRecord::Base
     pending?
   end
 
+  def engage!
+    clear!
+  end
+
   class << self
     def get(resource, id)
       Checkr.request(:get, "/v1/#{resource}/#{id}")

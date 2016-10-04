@@ -13,4 +13,12 @@ RSpec.describe BackgroundCheck do
       expect(email.to).to eq([account.email])
     end
   end
+
+  describe "#engage!" do
+    it "marks as clear" do
+      bg_check = FactoryGirl.create(:background_check)
+      bg_check.engage!
+      expect(bg_check).to be_clear
+    end
+  end
 end
