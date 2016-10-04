@@ -12,5 +12,13 @@
       $locationField.val(updateValue);
       $target.closest('form').submit();
     });
+
+    $('.search-filters__form-wrapper > form input').on('change', function(e) {
+      $(e.target).closest('form').submit();
+    });
+
+    $('.search-filters__form-wrapper #geocoded').on('typeahead:selected', function(e) {
+      $(e.target).closest('form').submit();
+    });
   }
 })();
