@@ -84,6 +84,9 @@ Rails.application.routes.draw do
     resources :teams, except: :destroy
     resources :score_categories
 
+    resources :background_checks, only: :index
+    resources :background_check_sweeps, only: :create
+
     resources :exports, only: :create
   end
 

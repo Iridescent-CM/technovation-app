@@ -1,0 +1,54 @@
+<h1>Background Checks</h1>
+
+<div class="wrapper__report_table">
+  <p>
+    <%= button_to "Sync with checkr", [:admin, :background_check_sweeps] %>
+  </p>
+
+  <label class="no-text-transform">
+    Per page:
+    <%= select_tag :per_page,
+                   options_for_select([10, 25, 50, 100], params[:per_page]),
+                   class: "inline",
+                   data: { reload: true, param: :per_page } %>
+  </label>
+
+  <label class="no-text-transform">
+    Status:
+    <%= select_tag :status,
+                   options_for_select(BackgroundCheck.statuses.keys, params[:status]),
+                   class: "inline",
+                   data: { reload: true, param: :status } %>
+  </label>
+
+
+  <div class="pagination_info">
+    <%= page_entries_info @background_checks, model: "#{params[:status]} background check" %>
+  </div>
+
+  <%= will_paginate @background_checks %>
+
+  <table class="table__report_table">
+    <thead>
+      <tr>
+        <th>Account ID</th>
+        <th>Email</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @background_checks.each do |bg_check| %>
+        <% cache(bg_check) do %>
+          <tr>
+            <td><%= bg_check.account_id %></td>
+            <td><%= bg_check.account.email %></td>
+            <td><%= bg_check.status %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @background_checks %>
+</div>
