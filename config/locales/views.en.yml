@@ -42,7 +42,7 @@ en:
       review: "review"
       review_now: "Review now"
       save: "Save"
-      search_near: "Search near"
+      search_near: "Search by location"
       signin: 'Sign in'
       signup: 'Sign up'
       signout: 'Logout'
