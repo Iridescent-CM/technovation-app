@@ -2,6 +2,14 @@ module SearchMentors
   def self.call(filter)
     mentors = MentorAccount.where.not(id: filter.user.id)
 
+    unless filter.text.blank?
+      client = Swiftype::Client.new
+      results = client.search(ENV.fetch('SWIFTYPE_ENGINE_SLUG'),
+                              filter.text,
+                              { per_page: filter.per_page, page: filter.page })
+      mentors = mentors.where(id: results['mentoraccount'].collect { |h| h['external_id'] })
+    end
+
     if filter.expertise_ids.any?
       mentors = mentors.by_expertise_ids(filter.expertise_ids)
     end
