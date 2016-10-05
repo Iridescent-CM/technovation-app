@@ -9,7 +9,12 @@ namespace :cm do
                   .where("seasons.year = ?", Season.current.year)
                   .where("parental_consents.id IS NULL")
                   .pluck(:email).each do |email|
-      CreateSend::Subscriber.get(auth, ENV.fetch("STUDENT_LIST_ID"), email).delete
+      begin
+        CreateSend::Subscriber.new(auth, ENV.fetch("STUDENT_LIST_ID"), email).delete
+        puts "Removed #{email}"
+      rescue
+        puts "PROBLEM REMOVING #{email}"
+      end
     end
   end
 
@@ -23,7 +28,12 @@ namespace :cm do
                  .where("seasons.year = ?", Season.current.year)
                  .where("consent_waivers.id IS NULL OR (accounts.country = ? AND background_checks.id IS NULL)", "US")
                  .pluck(:email).each do |email|
-      CreateSend::Subscriber.get(auth, ENV.fetch("MENTOR_LIST_ID"), email).delete
+      begin
+        CreateSend::Subscriber.new(auth, ENV.fetch("MENTOR_LIST_ID"), email).delete
+        puts "Removed #{email}"
+      rescue
+        puts "PROBLEM REMOVING #{email}"
+      end
     end
   end
 end
