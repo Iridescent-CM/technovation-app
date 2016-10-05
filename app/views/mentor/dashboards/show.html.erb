@@ -1,6 +1,14 @@
+<h1 class="appy-title dashboard__heading">
+  <%= t("views.application.dashboard") %>
+</h1>
+
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
-    <%= render 'mentor/dashboards/completion_steps' %>
+    <% if current_mentor.can_join_a_team? and current_mentor.is_on_team?  %>
+      <%= render 'quick_links', account: current_mentor %>
+    <% else %>
+      <%= render 'mentor/dashboards/completion_steps' %>
+    <% end %>
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">

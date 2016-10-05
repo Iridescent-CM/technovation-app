@@ -1,21 +1,21 @@
-<li class="completion-step status-<%= account.is_on_team? ? "complete" : account.can_join_a_team? ? "ready" : "future" %>">
-  <span class="checkbox"><%= account.is_on_team? ? fa_icon("check 2x") : nil %></span>
-
-  <%= t("views.profile_requirements.create_join_team.heading") %>
-
-  <% if account.can_join_a_team? and not account.is_on_team? %>
-    <ul>
-      <li>
+<% if account.can_join_a_team? and not account.is_on_team? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= t("views.profile_requirements.create_join_team.heading") %>
+      <span class="card-heading__flair fa fa-group"><!--Fontawesome--></span>
+    </div>
+    <div class="card__body">
+      <%= t("views.profile_requirements.create_join_team.heading") %>
+      <div class="card__actions-row card__actions-row--pos-fill">
         <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
-                    [:new, account.type_name, :team_search] %>
-      </li>
-
-      <li>
+          [:new, account.type_name, :team_search],
+          class: "appy-button"
+        %>
         <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
-                    [:new, account.type_name, :team] %>
-      </li>
-    </ul>
-  <% elsif not account.is_on_team? %>
-    <span><%= t("views.profile_requirements.links.complete_previous_steps") %></span>
-  <% end %>
-</li>
+          [:new, account.type_name, :team],
+          class: "appy-button"
+        %>
+      </div>
+    </div>
+  </li>
+<% end %>
