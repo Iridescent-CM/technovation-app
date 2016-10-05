@@ -101,7 +101,6 @@ Rails.application.routes.draw do
   resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
-  resources :mentors, only: :show
 
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
