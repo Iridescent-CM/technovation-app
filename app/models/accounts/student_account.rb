@@ -115,10 +115,6 @@ class StudentAccount < Account
     Date.today.year - 8
   end
 
-  def invited_mentor?(mentor)
-    MentorInvite.pending.where(team: team, invitee: mentor).any?
-  end
-
   def void_parental_consent!
     !!parental_consent && parental_consent.void!
   end

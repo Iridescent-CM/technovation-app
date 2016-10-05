@@ -1,0 +1,18 @@
+<div class="flex-row">
+  <div class="flex-col-sm-12">
+    <% if edit %>
+
+      <%= simple_form_for account, html: { class: "full-size" }, remote: true do |f| %>
+        <%= f.fields_for :mentor_profile do |m| %>
+          <%= m.input :accepting_team_invites, as: :boolean, label: t("models.mentor_profile.accepting_team_invites") %>
+          <%= m.input :virtual, as: :boolean, label: t("models.mentor_profile.virtual") %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+    <dl>
+      <dt><%= t('models.profile.bio') %></dt>
+      <dd><%= simple_format account.bio %></dd>
+    </dl>
+  </div>
+</div>

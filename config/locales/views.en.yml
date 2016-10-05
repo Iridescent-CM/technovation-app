@@ -20,6 +20,7 @@ en:
       actions: "Actions"
       anywhere: "Anywhere"
       approved: "approve"
+      availability: "Availability"
       cancel: 'cancel'
       complete_your_profile: "Follow these steps to complete your profile"
       confirm_approved: "Are you sure you want to approve %{name}?"
@@ -262,8 +263,11 @@ en:
 
       mentors:
         show:
+          in_person: "%{name} is only available to mentor teams in person, near %{location}."
+          no_teams: "%{name} isn't on any teams yet!"
           teams: "%{name}'s teams:"
           title: "Mentor details"
+          virtual: "%{name} is open to guiding teams virtually (online) from anywhere."
 
       navigation:
         create_a_team: "Create a team"

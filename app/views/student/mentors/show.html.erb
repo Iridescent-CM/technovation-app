@@ -2,24 +2,19 @@
 
 <h4><%= t("views.student.mentors.show.teams", name: @mentor.first_name) %></h4>
 
-<ul>
-  <%= render partial: 'student/mentors/team_preview',
-             collection: @mentor.teams.current,
-             cached: true %>
-</ul>
+<% if @mentor.teams.current.any? %>
+  <ul>
+    <%= render partial: 'student/mentors/team_preview',
+              collection: @mentor.teams.current,
+              cached: true %>
+  </ul>
+<% else %>
+  <p><%= t("views.student.mentors.show.no_teams", name: @mentor.first_name) %></p>
+<% end %>
 
-<p>
-  <% if current_student.invited_mentor?(@mentor) %>
-    <%= t("views.mentors.show.already_invited", name: @mentor.first_name) %>
-  <% elsif @mentor.requested_to_join?(current_student.team) %>
-    <p><%= t("views.mentors.show.already_requested", name: @mentor.first_name) %></p>
-    <%= link_to t("views.mentors.show.manage_team"), student_team_path(current_student.team, anchor: 'manage') %>
-  <% elsif @mentor.is_on?(current_student.team) %>
-    <%= t("views.mentors.show.already_on_team", name: @mentor.first_name) %>
-  <% else %>
-    <%= form_for [:student, @mentor_invite] do |f| %>
-      <%= f.hidden_field :invitee_email, value: @mentor.email %>
-      <%= f.submit t("views.mentors.show.invite_to_team", name: @mentor.first_name) %>
-    <% end %>
-  <% end %>
-</p>
+<%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
+           mentor_invite: @mentor_invite,
+           mentor: @mentor,
+           team: current_student.team %>
+
+<% # See app/helpers/student_helper.rb %>

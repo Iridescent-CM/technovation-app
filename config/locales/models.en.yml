@@ -27,18 +27,20 @@ en:
     mentor_profile:
       accepting_team_invites: "Allow teams to invite me to be their mentor."
       expertise_names: "Expertise"
-      virtual: "I am available for virtually mentoring teams from anywhere."
+      virtual: "I am available to mentor teams virtually (online) from anywhere."
       job_title: "Job title"
       school_company_name: "School or company name"
 
     parental_consent:
       student_name: "Student's Name"
 
+    profile:
+      bio: "Bio"
+
     regional_ambassador_profile:
       ambassador_since_year: "In which year did you become a regional ambassador?"
       ambassador_since_year_option_new: "I'm new!"
       bio:
-        label: "Bio"
         signup_label: "Tell us about yourself"
       job_title: "Job title"
       organization_company_name: "Organization/company name"
