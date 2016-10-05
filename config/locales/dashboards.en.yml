@@ -14,6 +14,7 @@ en:
           my_account: "My account"
           my_requests: "My requests"
           my_teams: "My teams"
+          team_submission: "My team's submission"
         show:
           no_more_invites: "You cannot receive any more invitations while you are on a team."
           no_more_requests: "You cannot send any more requests while you are on a team."

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
 
+    resources :team_submissions
+
     resources :mentors, only: :show
     resources :students, only: :show
 

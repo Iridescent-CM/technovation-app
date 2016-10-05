@@ -1,0 +1,7 @@
+<h1><%= t("views.team_submissions.show.title") %></h1>
+
+<p>Your team submission exists! There's nothing here yet because Joe is still building the workflow!</p>
+
+<p>You <strong>have<%= @team_submission.integrity_affirmed? ? nil : " not" %></strong> promised that your submission will be worked on solely by students on your team.</p>
+
+<%= link_to "Edit your submission", [:edit, :student, @team_submission] %>

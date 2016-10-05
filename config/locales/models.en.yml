@@ -58,3 +58,6 @@ en:
 
     team_member_invite:
       invitee_email: "Email"
+
+    team_submission:
+      integrity_affirmed: "This submission and all deliverables included were created solely by the students on this team."

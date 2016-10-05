@@ -9,6 +9,7 @@ en:
       complete_your_profile: "Follow these steps to complete your profile"
       confirm_approved: "Are you sure you want to approve %{name}?"
       confirm_declined: "Are you sure you want to decline %{name}?"
+      continue: "Continue"
       create: "Create %{thing}"
       danger_zone: "Danger Zone"
       dashboard: "My Dashboard"
@@ -305,3 +306,7 @@ en:
         title: "Find a Team"
         results_heading: "Available Teams:"
         results_link_label: "View Team"
+
+    team_submissions:
+      show:
+        title: "My team's submission"

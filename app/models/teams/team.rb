@@ -20,6 +20,8 @@ class Team < ActiveRecord::Base
 
   belongs_to :division
 
+  has_many :team_submissions, dependent: :destroy
+
   has_many :memberships, as: :joinable, dependent: :destroy
   has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
   has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
@@ -110,6 +112,10 @@ class Team < ActiveRecord::Base
 
   def invited_mentor?(mentor)
     mentor_invites.pending.where(invitee_id: mentor.id, invitee_type: "MentorAccount").any?
+  end
+
+  def submission
+    team_submissions.current.last
   end
 
   def after_registration

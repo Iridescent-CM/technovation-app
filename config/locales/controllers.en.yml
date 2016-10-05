@@ -112,3 +112,9 @@ en:
     team_searches:
       new:
         link: "Browse available teams"
+
+    team_submissions:
+      create:
+        success: "You started your team submission!"
+      update:
+        success: "Your progress has been saved. Keep up the good work!"

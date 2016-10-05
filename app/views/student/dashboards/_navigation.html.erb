@@ -4,6 +4,19 @@
     <%= student_navigation.mentor_search_link %>
     <%= student_navigation.team_link %>
     <%= student_navigation.find_team_link %>
+
+    <% if current_student.is_on_team? and current_team.submission.present? %>
+
+      <li><%= link_to t("views.application.dashboards.menu.team_submission"),
+                      student_team_submission_path(current_team.submission) %></li>
+
+    <% elsif current_student.is_on_team? %>
+
+      <li><%= link_to t("views.application.dashboards.menu.team_submission"),
+                      new_student_team_submission_path %></li>
+
+    <% end %>
+
     <li><%= link_to t("views.application.dashboards.menu.my_account"), student_account_path %></li>
   </ul>
 </nav>
