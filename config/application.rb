@@ -27,7 +27,7 @@ module TechnovationApp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Pacific Time (US & Canada)'
 
-    %w{accounts profiles scoring expertise authentication teams}.each do |dir|
+    %w{accounts profiles expertise authentication teams}.each do |dir|
       config.autoload_paths << Rails.root.join('app', 'models', dir)
     end
 

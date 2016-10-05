@@ -68,12 +68,6 @@ Rails.application.routes.draw do
     post :accounts, to: "signups#create"
 
     resource :dashboard, only: :show
-
-    resources :scores, only: :index
-
-    resources :submissions, only: [] do
-      resources :scores
-    end
   end
 
   namespace :admin do
@@ -82,7 +76,6 @@ Rails.application.routes.draw do
     resources :accounts, only: [:index, :show]
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
-    resources :score_categories
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create

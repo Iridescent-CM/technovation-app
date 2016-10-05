@@ -1,12 +1,5 @@
 en:
   controllers:
-    admin:
-      score_categories:
-        create:
-          success: "You added a new scoring category"
-        update:
-          success: "You successfully updated the scoring category"
-
     application:
       already_authenticated: "You are already signed in."
       general_error: "Sorry, but something went wrong. It probably wasn't your fault."
@@ -37,15 +30,6 @@ en:
         success: "You revoked the invitation to %{name}"
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
-
-    judge:
-      scores:
-        create:
-          success: "Thanks for scoring a submission!"
-        update:
-          success: "You updated your score. Nice!"
-        new:
-          add: "Judge submissions"
 
     mentor:
       join_requests:

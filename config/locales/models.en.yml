@@ -45,28 +45,11 @@ en:
       job_title: "Job title"
       organization_company_name: "Organization/company name"
 
-    score:
-      team_name: "Team name"
-      total: "Total"
-
-    scored_value:
-      comment: "Comment"
-
-    score_category:
-      name: "Name"
-
     student_profile:
       date_of_birth: "Date of Birth"
       parent_guardian_email: "Parent or guardian's email"
       parent_guardian_name: "Parent or guardian's name"
       school_name: "School name"
-
-    submission:
-      team_name: "Team name"
-      description: "Description"
-      pitch: "Pitch"
-      code: "Code"
-      demo: "Demo"
 
     team:
       class_name: "team"
@@ -75,4 +58,3 @@ en:
 
     team_member_invite:
       invitee_email: "Email"
-

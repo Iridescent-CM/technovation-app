@@ -24,8 +24,6 @@ class Team < ActiveRecord::Base
   has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
   has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
 
-  has_many :submissions, dependent: :destroy
-
   has_many :team_member_invites, dependent: :destroy
   has_many :mentor_invites, dependent: :destroy
   has_many :join_requests, as: :joinable, dependent: :destroy

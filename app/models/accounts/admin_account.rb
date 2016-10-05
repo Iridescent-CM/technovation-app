@@ -6,10 +6,6 @@ class AdminAccount < Account
   has_one :admin_profile, foreign_key: :account_id, dependent: :destroy
   has_many :exports, foreign_key: :account_id, dependent: :destroy
 
-  delegate :scores,
-           :scored_submission_ids,
-    to: :admin_profile, prefix: false
-
   def admin?
     true
   end

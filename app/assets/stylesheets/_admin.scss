@@ -1,27 +1,3 @@
-.score_question_title, .score_value_title,
-.score_question_add, .score_value_remove,
-.score_value_add {
-  @include shift(1);
-}
-
-.score_question {
-  @include row;
-  @include shift(1);
-}
-
-.score_value {
-  @include row;
-  @include shift(1);
-}
-
-.score_value_value {
-  @include span-columns(1);
-}
-
-.score_value_label {
-  @include span-columns(11);
-}
-
 .form_actions {
   @include span-columns(12);
   padding: 1rem 0 0;

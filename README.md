@@ -126,10 +126,6 @@ search_filter = SearchFilter.new({ expertise_ids: ["1", "2"] })
 SearchMentors.(search_filter)
 ```
 
-### CreateScoringRubric
-
-* Used in seeds, ignore for now
-
 ## Controllers
 
 Wherever the helper method `current_{profile_name}` is available, it returns an instance of `{ProfileName}Account`.
