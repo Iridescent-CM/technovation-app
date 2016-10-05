@@ -6,10 +6,10 @@
     <%= student_navigation.find_team_link %>
 
     <% unless Rails.env.production? or Rails.env.staging? %>
-      <% if current_student.is_on_team? and current_team.submission.present? %>
+      <% if current_account.is_on_team? and current_team.submission.present? %>
         <li><%= link_to t("views.application.dashboards.menu.team_submission"),
                         student_team_submission_path(current_team.submission) %></li>
-      <% elsif current_student.is_on_team? %>
+      <% elsif current_account.is_on_team? %>
         <li><%= link_to t("views.application.dashboards.menu.team_submission"),
                         new_student_team_submission_path %></li>
       <% end %>
