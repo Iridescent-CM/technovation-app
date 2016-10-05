@@ -1,6 +1,6 @@
 desc "Perform a release"
 task :release do
-  sh "git co #{ENV.fetch('VM').sub('.', '-')}-stable"
+  sh "git checkout #{ENV.fetch('VM').sub('.', '-')}-stable"
   puts "-------------------------"
   puts ""
 
@@ -8,7 +8,7 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git co production"
+  sh "git checkout production"
   puts "-------------------------"
   puts ""
 
@@ -25,5 +25,9 @@ task :release do
   puts ""
 
   sh "git push --tags"
+  puts "-------------------------"
+  puts ""
+
+  sh "git checkout master"
   exit
 end
