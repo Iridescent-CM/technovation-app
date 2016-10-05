@@ -20,10 +20,6 @@ class MentorProfile < ActiveRecord::Base
     !!background_check_candidate_id and !!background_check_report_id
   end
 
-  def background_check_complete?
-    mentor_account.country != "US" or !!background_check_completed_at
-  end
-
   def enable_searchability
     update_attributes(searchable: can_enable_searchable?)
 
@@ -40,6 +36,6 @@ class MentorProfile < ActiveRecord::Base
 
   private
   def can_enable_searchable?
-    mentor_account.consent_waiver.present? && !!mentor_account.background_check_complete?
+    mentor_account.consent_waiver.present? and mentor_account.background_check_complete?
   end
 end

@@ -59,7 +59,7 @@ class MentorAccount < Account
   end
 
   def background_check_complete?
-    country != "US" or !!background_check && background_check.clear?
+    country != "US" or !!background_check and background_check.clear?
   end
 
   def pending_team_invitations
