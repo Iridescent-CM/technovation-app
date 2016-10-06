@@ -1,0 +1,12 @@
+.team-submission__step-cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .team-submission__step-card {
+    margin-right: 1%;
+    margin-bottom: 15px;
+    display: flexbox;
+    width: 30%;
+  }
+}
