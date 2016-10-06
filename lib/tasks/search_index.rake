@@ -1,5 +1,5 @@
-desc "Index searchable Mentors"
-task index_mentors: :environment do
+desc "Index searchable records, Mentors and Teams"
+task search_index: :environment do
   if ENV['SWIFTYPE_API_KEY'].blank?
     abort("SWIFTYPE_API_KEY not set")
   end
@@ -24,6 +24,7 @@ task index_mentors: :environment do
     end
   end
 end
+<<<<<<< HEAD
 
 desc "Index Accounts for Admins"
 task index_accounts: :environment do
@@ -57,3 +58,5 @@ task index_accounts: :environment do
     end
   end
 end
+=======
+>>>>>>> fd86124d7317f8a7ee8cc5d6be90b09bb646040f
