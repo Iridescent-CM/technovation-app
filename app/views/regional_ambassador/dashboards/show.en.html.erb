@@ -1,21 +1,56 @@
-<p><%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %></p>
+<h1 class="appy-title dashboard__heading">
+  <%= t("views.application.dashboard") %>
+</h1>
 
-<div class="dashboard flex-row">
-  <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_next_steps" %>
+<p class="appy-subtitle">
+  <%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %>
+</p>
 
-  <div class="dashboard__main flex-col-sm-8">
-    <%= render 'completion_steps',
-               account: current_ambassador,
-               steps: CompletionSteps.new(current_ambassador),
-               urls: {
-                 consent_waiver: {
-                   view: new_consent_waiver_path(
-                     token: current_ambassador.consent_token
-                   ),
-                 },
-                 build_profile: {
-                   bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
-                 },
-               } %>
+<% if current_ambassador.declined? %>
+  <%= render "regional_ambassador/dashboards/declined_next_steps" %>
+<% else %>
+  <p class="appy-subtitle">
+    <%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %>
+  </p>
+
+  <div class="dashboard flex-row">
+    <div class="flex-col-sm-8 dashboard__main">
+      <%= render 'completion_steps',
+                 account: current_ambassador,
+                 steps: CompletionSteps.new(current_ambassador),
+                 urls: {
+                   consent_waiver: {
+                     view: new_consent_waiver_path(
+                       token: current_ambassador.consent_token
+                     ),
+                   },
+                   build_profile: {
+                     bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
+                   },
+                 } %>
+
+    <% if current_ambassador.approved? and current_ambassador.background_check_complete? %>
+      <div class="resources">
+        <h2 class="resources__heading appy-heading-lg">
+          <%= t("views.application.resources") %>
+        </h2>
+        <ul class="resources__list">
+          <li class="resources__item-wrapper">
+            <div class="card">
+              <div class="card__heading">
+                Curriculum
+                <span class="card-heading__flair fa fa-graduation-cap"><!--Fontawesome--></span>
+              </div>
+              <div class="card__body">
+                <p>
+                  <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum", target: "_blank" %>.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

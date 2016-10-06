@@ -1,14 +1,16 @@
-<li class="completion-step status-<%= account.consent_waiver.present? ? "complete" : "ready" %>">
-  <span class="checkbox"><%= account.consent_waiver.present? ? fa_icon("check 2x") : nil %></span>
-
-  <%= t("views.profile_requirements.consent_waiver.label") %>
-
-  <% unless account.consent_waiver.present? %>
-    <ul>
-      <li>
+<% unless account.consent_waiver.present? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= t("views.profile_requirements.consent_waiver.heading") %>
+      <span class="card-heading__flair fa fa-pencil"><!--Fontawesome--></span>
+    </div>
+    <div class="card__body">
+      <%= t("views.profile_requirements.consent_waiver.label") %>
+      <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
-                    new_consent_waiver_path(token: account.consent_token) %>
-      </li>
-    </ul>
-  <% end %>
-</li>
+          new_consent_waiver_path(token: account.consent_token),
+          class: "appy-button" %>
+      </div>
+    </div>
+  </li>
+<% end %>
