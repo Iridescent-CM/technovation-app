@@ -1,7 +1,7 @@
 class MentorAccount < Account
   default_scope { eager_load(:mentor_profile) }
 
-  after_save -> { CreateOrUpdateSwiftypeDocumentJob.perform_later(self) }
+  after_save -> { IndexMentorJob.perform_later(self) }
 
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile

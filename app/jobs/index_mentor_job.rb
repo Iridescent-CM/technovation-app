@@ -1,4 +1,4 @@
-class CreateOrUpdateSwiftypeDocumentJob < ActiveJob::Base
+class IndexMentorJob < ActiveJob::Base
   queue_as :default
 
   def perform(record)
