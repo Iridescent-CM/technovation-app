@@ -8,7 +8,12 @@
   padding: 1rem 0;
 }
 
-.wrapper__report_table {
+.wrapper__report-table {
+  label.inline {
+    display: inline-block;
+    margin-right: 35px;
+  }
+
   .pagination {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 0.75rem;

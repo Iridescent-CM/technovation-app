@@ -1,3 +1,5 @@
+require 'uri'
+
 class ExportJob < ActiveJob::Base
   queue_as :default
 
@@ -8,8 +10,10 @@ class ExportJob < ActiveJob::Base
 
   private
   def export_accounts(admin, token, params)
+    params[:text] = "none" if params[:text].blank?
     accounts = Admin::SearchAccounts.(params)
-    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{token}.csv"
+    search_text = URI.escape("search-query-#{params[:text]}")
+    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{search_text}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) Division City State Country}

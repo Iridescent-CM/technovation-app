@@ -7,3 +7,4 @@
 //= require chartkick
 //
 //= require fancy_select
+//= require fancy_input
