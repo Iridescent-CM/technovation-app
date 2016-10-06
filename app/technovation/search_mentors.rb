@@ -6,7 +6,8 @@ module SearchMentors
       client = Swiftype::Client.new
       results = client.search(ENV.fetch('SWIFTYPE_ENGINE_SLUG'),
                               filter.text,
-                              { per_page: filter.per_page, page: filter.page })
+                              document_types: ["mentoraccount"],
+                              per_page: 100)
       mentors = mentors.where(id: results['mentoraccount'].collect { |h| h['external_id'] })
     end
 
