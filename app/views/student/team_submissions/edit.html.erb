@@ -1,1 +1,2 @@
-<%= render 'student/team_submissions/form', team_submission: @team_submission %>
+<p class="flash-notice">THIS IS A WORK IN PROGRESS ACCESSIBLE ON QA ONLY - NOT READY FOR TESTING - FEEL FREE TO PLAY AROUND WITH IT THOUGH</p>
+<%= render "student/team_submissions/#{params[:step]}_form", team_submission: @team_submission %>

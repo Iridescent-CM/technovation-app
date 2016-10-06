@@ -1,6 +1,7 @@
 module Student
   class TeamSubmissionsController < StudentController
     def new
+      params[:step] = :affirm_integrity if params[:step].blank?
       @team_submission = current_team.team_submissions.build
     end
 

@@ -1,7 +1,0 @@
-<%= simple_form_for [:student, @team_submission] do |f| %>
-  <%= render 'errors', record: @team_submission %>
-
-  <%= f.input :integrity_affirmed, as: :boolean, label: t("models.team_submission.integrity_affirmed") %>
-
-  <%= f.button :submit, t("views.application.continue") %>
-<% end %>

@@ -1,0 +1,12 @@
+<%= simple_form_for [:student, @team_submission] do |f| %>
+  <%= render 'errors', record: @team_submission %>
+
+  <%= f.input :source_code_external_url, label: t("models.team_submission.source_code_external_url") %>
+
+  <p class="signup-form__email-explanation">
+    <% # TODO: Provide a generic form help text component %>
+    <%= t("views.team_submissions.form.source_code_external_url_help") %>
+  </p>
+
+  <%= f.button :submit, t("views.application.continue") %>
+<% end %>
