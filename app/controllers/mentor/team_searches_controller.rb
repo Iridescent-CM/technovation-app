@@ -7,9 +7,9 @@ module Mentor
         nearby: params.fetch(:nearby),
         user: current_mentor,
         has_mentor: :any,
-        page: params[:page],
       })
-      @teams = SearchTeams.(@search_filter)
+
+      @teams = SearchTeams.(@search_filter).paginate(page: params[:page])
     end
   end
 end

@@ -19,8 +19,6 @@ module MentorSearchesController
       needs_team: params.fetch(:needs_team),
       virtual_only: params.fetch(:virtual_only),
       text: params.fetch(:text) { "" },
-      page: params[:page],
-      per_page: 15,
     })
   end
 

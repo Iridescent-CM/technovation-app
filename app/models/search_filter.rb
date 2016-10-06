@@ -19,10 +19,6 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:has_mentor) { :any }
   end
 
-  def page
-    filter_options.fetch(:page) { 1 }
-  end
-
   def user
     filter_options.fetch(:user) { NoUser.new }
   end
@@ -37,14 +33,6 @@ class SearchFilter < Struct.new(:filter_options)
 
   def text
     filter_options.fetch(:text) { "" }
-  end
-
-  def page
-    filter_options.fetch(:page) { 0 }
-  end
-
-  def per_page
-    filter_options.fetch(:per_page) { 15 }
   end
 
   def badge_css(expertise)

@@ -42,6 +42,6 @@ module SearchTeams
               teams
             end
 
-    teams.paginate(page: filter.page)
+    teams
   end
 end
