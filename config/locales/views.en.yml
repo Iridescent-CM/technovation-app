@@ -112,26 +112,31 @@ en:
 
     profile_requirements:
       background_check:
+        heading: "Background Check"
         label: "Pass a background check"
         links:
           background_check_submitted:
-            text: "Check the status of your submission"
+            prefix: "Your background check is being processed. Click the button below to check the status of your submission."
+            text: "Check Submission Status"
           fill_bg_check_form:
-            text: "Submit a background check"
+            prefix: "You must submit a background check before you can join a team."
+            text: "Submit Background Check"
 
       build_profile:
-        label: "Complete your profile to help students get to know you"
+        heading: "Complete Your Profile"
+        label: "Add a description of yourself to your profile to help students get to know you."
         links:
           photo:
             text: "Upload a photo"
           bio:
-            text: "Add a description of yourself to your profile bio"
+            text: "Add a Bio"
 
       consent_waiver:
-        label: "Sign the consent waiver"
+        heading: "Consent Waiver"
+        label: "Please sign the consent waiver in order to participate in Technovation."
         links:
           view:
-            text: "Sign the waiver now"
+            text: "Sign Consent Waiver"
 
       create_join_team:
         heading: "Create or Join a Team"
