@@ -32,6 +32,7 @@
     <thead>
       <tr>
         <th>Account ID</th>
+        <th>Account type</th>
         <th>Email</th>
         <th>Status</th>
       </tr>
@@ -42,6 +43,7 @@
         <% cache(bg_check) do %>
           <tr>
             <td><%= bg_check.account_id %></td>
+            <td><%= bg_check.account.type_name %></td>
             <td><%= bg_check.account.email %></td>
             <td><%= bg_check.status %></td>
           </tr>
