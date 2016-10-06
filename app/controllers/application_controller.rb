@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :success
 
   layout :determine_layout
-  helper_method :current_account
+  helper_method :current_account, :current_team
 
   def set_cookie(key, value)
     cookies[key] = value
@@ -44,5 +44,9 @@ class ApplicationController < ActionController::Base
 
   def current_account
     @current_account ||= FindAccount.(cookies.fetch(:auth_token) { "" })
+  end
+
+  def current_team
+    current_account.team
   end
 end
