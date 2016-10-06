@@ -1,6 +1,8 @@
 class TeamSubmission < ActiveRecord::Base
   after_commit -> { SeasonRegistration.register(self) }, on: :create
 
+  mount_uploader :source_code, FileProcessor
+
   scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", Season.current.year) }
 
   belongs_to :team
