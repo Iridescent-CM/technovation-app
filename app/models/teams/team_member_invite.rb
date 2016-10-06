@@ -5,7 +5,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   before_create -> { GenerateToken.(self, :invite_token) }
   before_create :set_invitee
-  after_create :send_invite
+  after_commit :send_invite, on: :create
 
   after_save :after_accept, if: -> { status_changed? && accepted? }
 

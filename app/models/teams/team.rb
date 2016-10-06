@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
     where.not(id: Membership.where(member_type: "MentorAccount").map(&:joinable_id))
   }
 
-  after_create :register_to_season
+  after_commit :register_to_season, on: :create
 
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations

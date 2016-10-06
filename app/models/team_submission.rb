@@ -1,5 +1,5 @@
 class TeamSubmission < ActiveRecord::Base
-  after_create -> { SeasonRegistration.register(self) }
+  after_commit -> { SeasonRegistration.register(self) }, on: :create
 
   scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", Season.current.year) }
 

@@ -5,7 +5,7 @@ class ConsentWaiver < ActiveRecord::Base
 
   delegate :full_name, :type_name, :consent_token, to: :account, prefix: true
 
-  after_create :enable_searchable_users
+  after_commit :enable_searchable_users, on: :create
 
   def account_consent_token=(token)
     self.account = Account.find_by(consent_token: token)

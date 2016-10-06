@@ -7,7 +7,7 @@ class MentorAccount < Account
            "US", BackgroundCheck.statuses[:clear], "US")
   }
 
-  after_save -> { IndexMentorJob.perform_later(self) }
+  after_commit -> { IndexMentorJob.perform_later(self) }
 
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile
