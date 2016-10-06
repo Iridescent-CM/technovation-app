@@ -6,9 +6,9 @@
     </div>
     <div class="card__body">
       <% if account.background_check_submitted? %>
-        Thanks, dogg for doing that I need copy to go in here
+        <%= t("views.profile_requirements.background_check.links.background_check_submitted.prefix") %>
       <% else %>
-        <%= t("views.profile_requirements.background_check.label") %>
+        <%= t("views.profile_requirements.background_check.links.fill_bg_check_form.prefix") %>
       <% end %>
       <div class="card__actions-row card__actions-row--pos-end">
         <% if account.background_check_submitted? %>
