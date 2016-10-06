@@ -117,10 +117,10 @@ en:
         label: "Pass a background check"
         links:
           background_check_submitted:
-            prefix: "Your background check is being processed. Click the button below to check the status of your submission."
+            prefix: "Your background check is being processed. You will get an email in 4-7 business days if it clears."
             text: "Check Submission Status"
           fill_bg_check_form:
-            prefix: "You must submit a background check before you can join a team."
+            prefix: "You must submit and clear a background check."
             text: "Submit Background Check"
 
       build_profile:

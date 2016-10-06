@@ -5,7 +5,7 @@ RSpec.feature "background checks" do
     scenario "Complete a #{account} background check", :vcr do
       a = FactoryGirl.create(account, background_check: nil)
       sign_in(a)
-      click_link "Submit a background check"
+      click_link "Submit Background Check"
 
       fill_in "Zipcode", with: 60622
       fill_in "Ssn", with: "111-11-2001"

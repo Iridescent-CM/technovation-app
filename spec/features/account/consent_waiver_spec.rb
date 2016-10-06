@@ -14,7 +14,7 @@ RSpec.feature "Consent waivers" do
     ambassador.consent_waiver.destroy
     sign_in(ambassador)
     visit regional_ambassador_dashboard_path
-    click_link "Sign the waiver now"
+    click_link "Sign Consent Waiver"
     click_button "I agree"
     expect(current_path).to eq(consent_waivers_path)
     expect(page).to have_css('.consent_waiver_electronic_signature .error', text: "can't be blank")
@@ -25,7 +25,7 @@ RSpec.feature "Consent waivers" do
     mentor.consent_waiver.destroy
     sign_in(mentor)
     visit mentor_dashboard_path
-    click_link "Sign the waiver now"
+    click_link "Sign Consent Waiver"
 
     fill_in "Electronic signature", with: "Mentor McGee"
     click_button "I agree"
