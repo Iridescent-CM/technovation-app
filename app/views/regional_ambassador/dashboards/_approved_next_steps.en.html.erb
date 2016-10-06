@@ -1,9 +1,0 @@
-<div class="dashboard__sidebar flex-col-sm-4">
-  <% if current_ambassador.background_check_complete? %>
-    <h4>Curriculum</h4>
-
-    <p>
-      <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum", target: "_blank" %>.
-    </p>
-  <% end %>
-</div>

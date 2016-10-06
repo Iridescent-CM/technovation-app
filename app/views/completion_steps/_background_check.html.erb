@@ -1,25 +1,26 @@
-<% if account.country == "US" %>
-  <li class="completion-step status-<%= account.background_check_complete? ? "complete" : "ready" %>">
-    <span class="checkbox"><%= account.background_check_complete? ? fa_icon("check 2x") : nil %></span>
-
-    <%= t("views.profile_requirements.background_check.label") %>
-
-    <% unless account.background_check_complete? %>
-      <ul>
-        <li>
-          <% if account.background_check_submitted? %>
-            <span class="crossed-off">
-              <%= t("views.profile_requirements.background_check.links.fill_bg_check_form.text") %>
-            </span>
-
-            <%= link_to t("views.profile_requirements.background_check.links.background_check_submitted.text"),
-                        send("#{account.type_name}_background_check_path", account.background_check_report_id) %>
-          <% else %>
-            <%= link_to t("views.profile_requirements.background_check.links.fill_bg_check_form.text"),
-                        [:new, account.type_name, :background_check] %>
-          <% end %>
-        </li>
-      </ul>
-    <% end %>
+<% if account.country == "US" and not account.background_check_complete? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= t("views.profile_requirements.background_check.label") %>
+      <span class="card-heading__flair fa fa-exclamation-circle"><!--Fontawesome--></span>
+    </div>
+    <div class="card__body">
+      <% if account.background_check_submitted? %>
+        <%= t("views.profile_requirements.background_check.links.background_check_submitted.prefix") %>
+      <% else %>
+        <%= t("views.profile_requirements.background_check.links.fill_bg_check_form.prefix") %>
+      <% end %>
+      <div class="card__actions-row card__actions-row--pos-end">
+        <% if account.background_check_submitted? %>
+          <%= link_to t("views.profile_requirements.background_check.links.background_check_submitted.text"),
+            send("#{account.type_name}_background_check_path", account.background_check_report_id),
+            class: "appy-button" %>
+        <% else %>
+          <%= link_to t("views.profile_requirements.background_check.links.fill_bg_check_form.text"),
+            [:new, account.type_name, :background_check],
+            class: "appy-button" %>
+        <% end %>
+      </div>
+    </div>
   </li>
 <% end %>
