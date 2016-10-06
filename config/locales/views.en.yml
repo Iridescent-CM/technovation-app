@@ -316,5 +316,7 @@ en:
         results_link_label: "View Team"
 
     team_submissions:
+      form:
+        source_code_external_url_help: "Please ensure that your URL is publicly available"
       show:
         title: "My team's submission"

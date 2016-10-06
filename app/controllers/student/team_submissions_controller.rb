@@ -36,7 +36,7 @@ module Student
 
     private
     def team_submission_params
-      params.require(:team_submission).permit(:integrity_affirmed)
+      params.require(:team_submission).permit(:integrity_affirmed, :source_code_external_url)
     end
   end
 end

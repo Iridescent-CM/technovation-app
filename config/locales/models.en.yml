@@ -61,3 +61,4 @@ en:
 
     team_submission:
       integrity_affirmed: "This submission and all deliverables included were created solely by the students on this team."
+      source_code_external_url: "Source Code URL (Google Drive, GitHub)"
