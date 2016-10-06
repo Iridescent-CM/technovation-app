@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005195256) do
+ActiveRecord::Schema.define(version: 20161006173939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,16 +212,18 @@ ActiveRecord::Schema.define(version: 20161005195256) do
   end
 
   create_table "season_registrations", force: :cascade do |t|
-    t.integer  "season_id",         null: false
-    t.integer  "registerable_id",   null: false
-    t.string   "registerable_type", null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "season_id",                     null: false
+    t.integer  "registerable_id",               null: false
+    t.string   "registerable_type",             null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "status",            default: 1, null: false
   end
 
   add_index "season_registrations", ["registerable_id"], name: "season_registerable_ids", using: :btree
   add_index "season_registrations", ["registerable_type"], name: "season_registerable_types", using: :btree
   add_index "season_registrations", ["season_id"], name: "index_season_registrations_on_season_id", using: :btree
+  add_index "season_registrations", ["status"], name: "index_season_registrations_on_status", using: :btree
 
   create_table "seasons", force: :cascade do |t|
     t.integer  "year",       null: false

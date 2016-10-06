@@ -1,4 +1,6 @@
 class SeasonRegistration < ActiveRecord::Base
+  enum status: %i{pending active dropped_out}
+
   belongs_to :season
   belongs_to :registerable, polymorphic: true
 
