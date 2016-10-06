@@ -36,7 +36,7 @@ class Account < ActiveRecord::Base
 
   has_secure_password
 
-  has_many :season_registrations, as: :registerable
+  has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
 
   has_one :consent_waiver, dependent: :destroy
