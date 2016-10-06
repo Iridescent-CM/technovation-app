@@ -43,6 +43,20 @@
 }
 
 .admin-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .admin-dashboard__column {
+    display: flexbox;
+    width: 70%;
+  }
+
+  .admin-dashboard__sidebar {
+    display: flexbox;
+    width: 30%;
+  }
+
   .admin-dashboard__quickviews-wrapper {
     display: flex;
     flex-wrap: wrap;

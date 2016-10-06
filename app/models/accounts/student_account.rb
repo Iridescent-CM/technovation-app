@@ -1,6 +1,8 @@
 class StudentAccount < Account
   default_scope { joins(:student_profile) }
 
+  scope :full_access, -> { joins(:parental_consent) }
+
   has_many :memberships, as: :member, dependent: :destroy
   has_many :mentor_invites, foreign_key: :inviter_id
 

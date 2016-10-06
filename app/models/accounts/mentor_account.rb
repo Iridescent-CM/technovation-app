@@ -1,6 +1,12 @@
 class MentorAccount < Account
   default_scope { eager_load(:mentor_profile) }
 
+  scope :full_access, -> {
+    joins(:consent_waiver).includes(:background_check).references(:background_checks)
+    .where("(accounts.country = ? AND background_checks.status = ?) OR accounts.country != ?",
+           "US", BackgroundCheck.statuses[:clear], "US")
+  }
+
   after_save -> { IndexMentorJob.perform_later(self) }
 
   has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy

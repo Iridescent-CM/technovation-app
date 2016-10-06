@@ -1,6 +1,21 @@
 module Admin
   class DashboardsController < AdminController
     def show
+      execute_search
+      execute_snapshot
+    end
+
+    private
+    def execute_snapshot
+      @snapshot_accounts = Account.current
+      @snapshot_teams = Team.current
+      @snapshot_students = StudentAccount.current
+      @snapshot_mentors = MentorAccount.current
+      @snapshot_ambassadors = RegionalAmbassadorAccount.current
+      @snapshot_judges = JudgeAccount.current
+    end
+
+    def execute_search
       params[:days] = 7 if params[:days].blank?
       params[:days] = params[:days].to_i
 
