@@ -2,58 +2,51 @@
   <%= t("views.application.dashboard") %>
 </h1>
 
-<p class="appy-subtitle">
-  <%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %>
-</p>
+<% if current_ambassador.declined? %>
+  <%= render "regional_ambassador/dashboards/declined_next_steps" %>
+<% else %>
+  <p class="appy-subtitle">
+    <%= t("views.regional_ambassador.dashboards.show.#{current_ambassador.status}_message") %>
+  </p>
 
-<div class="dashboard flex-row">
-  <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_next_steps" %>
+  <div class="dashboard flex-row">
+    <div class="flex-col-sm-8 dashboard__main">
+      <%= render 'completion_steps',
+                 account: current_ambassador,
+                 steps: CompletionSteps.new(current_ambassador),
+                 urls: {
+                   consent_waiver: {
+                     view: new_consent_waiver_path(
+                       token: current_ambassador.consent_token
+                     ),
+                   },
+                   build_profile: {
+                     bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
+                   },
+                 } %>
 
-  <div class="dashboard__main flex-col-sm-8">
-    <%= render 'completion_steps',
-               account: current_ambassador,
-               steps: CompletionSteps.new(current_ambassador),
-               urls: {
-                 consent_waiver: {
-                   view: new_consent_waiver_path(
-                     token: current_ambassador.consent_token
-                   ),
-                 },
-                 build_profile: {
-                   bio: edit_regional_ambassador_account_path(anchor: 'account-profile-details')
-                 },
-               } %>
-  </div>
-</div>
-
-
-
-<div class="dashboard flex-row">
-  <div class="flex-col-sm-8 dashboard__main">
-    <% if current_mentor.can_join_a_team? and current_mentor.is_on_team?  %>
-      <%= render 'quick_links', account: current_mentor %>
-    <% else %>
-      <%= render 'mentor/dashboards/completion_steps' %>
+    <% if current_ambassador.approved? and current_ambassador.background_check_complete? %>
+      <div class="resources">
+        <h2 class="resources__heading appy-heading-lg">
+          <%= t("views.application.resources") %>
+        </h2>
+        <ul class="resources__list">
+          <li class="resources__item-wrapper">
+            <div class="card">
+              <div class="card__heading">
+                Curriculum
+                <span class="card-heading__flair fa fa-graduation-cap"><!--Fontawesome--></span>
+              </div>
+              <div class="card__body">
+                <p>
+                  <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum", target: "_blank" %>.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     <% end %>
+    </div>
   </div>
-
-  <div class="flex-col-sm-4 dashboard__sidebar">
-    <% if current_mentor.consent_waiver.present? and current_mentor.bio_complete? and current_mentor.background_check_complete? %>
-      <%# TODO: Localize the followings strings. Find a better place to put this. %>
-      <h4 class="appy-heading-lg">
-        Curriculum
-      </h4>
-
-      <p>
-        <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
-      </p>
-
-      <p>
-        <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
-        <br />(if you came from Made With Code)
-      </p>
-    <% end %>
-
-    <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
-  </div>
-</div>
+<% end %>
