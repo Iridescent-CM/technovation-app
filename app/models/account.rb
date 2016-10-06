@@ -158,6 +158,10 @@ class Account < ActiveRecord::Base
     now.year - date_of_birth.year - extra_year
   end
 
+  def current_season_registration
+    season_registrations.joins(:season).where("seasons.year = ?", Season.current.year).last
+  end
+
   def after_background_check_deleted
   end
 
