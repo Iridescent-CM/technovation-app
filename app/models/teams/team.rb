@@ -3,11 +3,15 @@ require 'obscenity/active_model'
 class Team < ActiveRecord::Base
   mount_uploader :team_photo, TeamPhotoProcessor
 
-  scope :current, -> { eager_load(season_registrations: :season)
-                       .where("seasons.year = ?", Season.current.year) }
+  scope :current, -> {
+    eager_load(season_registrations: :season)
+    .where("seasons.year = ?", Season.current.year)
+  }
 
-  scope :past, -> { eager_load(season_registrations: :season)
-                    .where.not(id: current.map(&:id).uniq) }
+  scope :past, -> {
+    eager_load(season_registrations: :season)
+    .where.not(id: current.map(&:id).uniq)
+  }
 
   scope :without_mentor, -> {
     where.not(id: Membership.where(member_type: "MentorAccount").map(&:joinable_id))
