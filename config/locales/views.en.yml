@@ -120,7 +120,7 @@ en:
             prefix: "Your background check is being processed. You will get an email in 4-7 business days if it clears."
             text: "Check Submission Status"
           fill_bg_check_form:
-            prefix: "You must submit and clear a background check."
+            prefix: "You must submit and clear a background check to gain access to the platform."
             text: "Submit Background Check"
 
       build_profile:
