@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
+
     resource :team_photo_upload_confirmation, only: :show
+    resource :profile_image_upload_confirmation, only: :show
 
     resources :mentors, only: :show
     resources :students, only: :show
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resource :team_photo_upload_confirmation, only: :show
+    resource :profile_image_upload_confirmation, only: :show
 
     resources :team_member_invites, except: [:edit, :index]
     resources :join_requests, except: [:index, :edit]
@@ -64,6 +67,8 @@ Rails.application.routes.draw do
 
     resources :account_exports, only: :create
 
+    resource :profile_image_upload_confirmation, only: :show
+
     resources :background_checks, only: [:new, :create, :show]
     resources :teams, only: [:index]
   end
@@ -71,6 +76,10 @@ Rails.application.routes.draw do
   namespace :judge do
     get :signup, to: 'signups#new'
     post :accounts, to: "signups#create"
+
+    resource :account, only: [:show, :edit, :update]
+
+    resource :profile_image_upload_confirmation, only: :show
 
     resource :dashboard, only: :show
   end
