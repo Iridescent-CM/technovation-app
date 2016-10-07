@@ -5,7 +5,11 @@ class SignupAttempt < ActiveRecord::Base
   validates :email, presence: true
 
   before_create -> { GenerateToken.(self, :activation_token) }
-  after_save -> { RegistrationMailer.confirm_email(self).deliver_later }
+  after_save -> {
+    unless email_exists? or active?
+      RegistrationMailer.confirm_email(self).deliver_later
+    end
+  }
 
   def email_exists?
     Account.where("lower(email) = ?", email.strip.downcase).any?
