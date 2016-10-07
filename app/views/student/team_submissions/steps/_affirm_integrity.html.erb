@@ -1,0 +1,19 @@
+<div class="card team-submission__step-card">
+  <div class="card__heading">
+    Submission Step: Integrity
+    <span class="card-heading__flair fa fa-check-circle"></span>
+  </div>
+
+  <div class="card__body">
+    <% if submission.integrity_affirmed? %>
+      <p>This step is complete</p>
+      <p>You have promised that your submission will be worked on solely by students on your team.</p>
+    <% else %>
+      <p>This step is not complete</p>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Affirm Submission Integrity", [:edit, :student, submission, step: :integrity_affirmed], class: "appy-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
