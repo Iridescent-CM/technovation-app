@@ -42,8 +42,6 @@ RSpec.feature "Activate your email to sign up" do
     expect(current_path).to eq(signup_attempt_path(signup_attempt))
     expect(page).to have_content("You have already confirmed your email!")
     expect(page).to have_link("Continue signing up")
-    expect(page).to have_link("sign in")
-    expect(page).to have_link("reset your password")
   end
 
   scenario "Use a new email" do
