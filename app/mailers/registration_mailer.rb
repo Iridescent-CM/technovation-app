@@ -1,4 +1,11 @@
 class RegistrationMailer < ApplicationMailer
+  def confirm_email(signup_attempt)
+    @url = new_signup_attempt_confirmation_url(token: signup_attempt.activation_token)
+
+    mail to: signup_attempt.email,
+         subject: t("registration_mailer.confirm_email.subject", season_year: Season.current.year)
+  end
+
   def welcome_mentor(mentor)
     @first_name = mentor.first_name
     @infographic_url = "https://infograph.venngage.com/infograph/publish/02844b99-420b-4016-8c13-1426fc29fbe7"

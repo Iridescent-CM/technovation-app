@@ -36,3 +36,13 @@ h1, h2, h3, h4, h5, h6 { // TODO: Make this less specific
 .appy-hint {
   font-size: 1rem;
 }
+
+.appy-bulleted-list {
+  list-style-type: disc;
+  margin: 0 0 1rem;
+
+  li {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+  }
+}

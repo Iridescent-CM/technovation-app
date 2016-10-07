@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Register as a judge" do
   before do
+    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "judge@judge.com").activation_token}")
+
     visit judge_signup_path
 
     fill_in "First name", with: "Judge"
@@ -14,7 +16,6 @@ RSpec.feature "Register as a judge" do
     fill_in "Company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Coming of age Storywriter"
 
-    fill_in "Email", with: "judge@judge.com"
     fill_in "Password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 

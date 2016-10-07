@@ -1,0 +1,13 @@
+<% submit ||= t("views.application.get_started") %>
+
+<%= simple_form_for attempt do |f| %>
+  <%= render 'errors', record: attempt %>
+
+  <%= f.input :email, as: :email, placeholder: "Example: janie.doe@gmail.com", label: t("models.signup_attempt.email") %>
+
+  <p class="appy-hint">
+    Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.
+  </p>
+
+  <p><%= f.button :submit, submit %></p>
+<% end %>

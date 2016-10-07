@@ -24,20 +24,9 @@ RSpec.feature "Edit account spec" do
     expect(StudentAccount.last.city).to eq("Los Angeles")
   end
 
-  scenario "edit login info" do
-    click_link "Edit"
-    fill_in "Email", with: "something@else.com"
-    fill_in "Current password", with: "secret1234"
-
-    click_button "Save"
-
-    expect(current_path).to eq(student_account_path)
-    expect(page).to have_content("something@else.com")
-  end
-
   scenario "attempt to edit with wrong existing password" do
     click_link "Edit"
-    fill_in "Email", with: "something@else.com"
+    fill_in "Password", with: "something@else.com"
 
     fill_in "Current password", with: "wrong"
     click_button "Save"
@@ -46,7 +35,7 @@ RSpec.feature "Edit account spec" do
 
   scenario "attempt to edit without existing password" do
     click_link "Edit"
-    fill_in "Email", with: "something@else.com"
+    fill_in "Password", with: "something@else.com"
 
     fill_in "Current password", with: ""
     click_button "Save"

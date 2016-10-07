@@ -18,6 +18,7 @@ en:
       edit: "Edit"
       filter: "Filter"
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
+      get_started: "Get started"
       instead: "instead"
       invite: "Send invite"
       near_me: "Near me"
@@ -43,7 +44,7 @@ en:
       edit:
         confirm_new_password: "Confirm new password"
         existing_password: "Current password"
-        existing_password_required: "Required to update your email or password"
+        existing_password_required: "Required only if you want to change your password"
         new_password: "New password"
         title: "Edit your account"
       show:

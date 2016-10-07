@@ -1,6 +1,6 @@
 class PasswordResetsController < ApplicationController
   def new
-    @password_reset = PasswordReset.new
+    @password_reset = PasswordReset.new(email: params[:email])
   end
 
   def create

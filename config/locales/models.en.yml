@@ -45,6 +45,9 @@ en:
       job_title: "Job title"
       organization_company_name: "Organization/company name"
 
+    signup_attempt:
+      email: "Email address"
+
     student_profile:
       date_of_birth: "Date of Birth"
       parent_guardian_email: "Parent or guardian's email"

@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe RegionalAmbassador::SignupsController do
   describe "POST #create" do
     it "saves the bio" do
+      controller.set_cookie(:signup_token, SignupAttempt.create!(email: "blah").activation_token)
+
       post :create,
         regional_ambassador_account: FactoryGirl.attributes_for(
           :regional_ambassador,
