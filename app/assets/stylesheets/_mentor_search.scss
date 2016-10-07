@@ -97,27 +97,26 @@
   font-weight: bold;
 }
 
-.mentor__profile-link {
-  display: block;
-  margin-top: auto;
+.mentor__expertise {
+  margin-bottom: 1rem;
 }
 
-.mentor__profile-link-btn {
-  font-size: 1.2rem;
-  margin-top: 1.25rem;
-  padding: 0.5rem;
-  text-transform: none;
-  width: 100%;
+.mentor__profile-link {
+  display: block;
+  margin: auto 0 0;
+
 }
 
 .mentor__availability-badges {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   right: 0;
   top: 0.5rem;
 }
 
 .mentor__availability-badge {
-  display: block;
   border-radius: 0.25em 0 0 0.25em;
   padding: 0.5em 0.75em;
   margin-bottom: 0.5em;

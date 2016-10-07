@@ -28,11 +28,9 @@
       <% end %>
     </div>
 
-    <%= link_to send("#{account.type_name}_mentor_path", mentor_preview), class: 'mentor__profile-link' do %>
-      <button class="mentor__profile-link-btn" type="button">
-        View Full Profile
-      </button>
-    <% end #TODO: Localize the above string %>
+    <%= link_to "View Full Profile",
+      send("#{account.type_name}_mentor_path", mentor_preview),
+      class: 'mentor__profile-link appy-button' %>
 
     <% if account.type_name == "student" %>
       <div class="mentor__availability-badges">
@@ -45,14 +43,13 @@
             <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
           </span>
         <% end %>
-
         <% if mentor_preview.virtual? %>
           <span class="mentor__availability-badge badge-success">
             <%= t("views.mentor_searches.new.mentor_preview.virtual") %>
           </span>
         <% else %>
           <span class="mentor__availability-badge badge-notice">
-            <%= t("views.mentor_searches.new.mentor_preview.in_person_only") %>
+            <%= t("views.mentor_searches.new.mentor_preview.in_person") %>
           </span>
         <% end %>
       </div>

@@ -91,7 +91,7 @@ en:
       intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."
       new:
         mentor_preview:
-          in_person_only: "In-person only"
+          in_person_only: "In-person"
           on_team: "On a team"
           needs_team: "Needs a team"
           virtual: "Virtual"

@@ -5,5 +5,11 @@
                    data: { location_field: true },
                    onblur: "ga('send', 'event', 'search', 'geocoded=' + this.value);" %>
 
-<%= link_to t('views.application.anywhere'), '#', class: "primary-button", data: { update_location: "anywhere" } %>
-<%= link_to t('views.application.near_me'), '#', class: "primary-button", data: { update_location: account.address_details } %>
+<%= link_to t('views.application.anywhere'),
+  '#',
+  class: "appy-button appy-button--sm",
+  data: { update_location: "anywhere" } %>
+<%= link_to t('views.application.near_me'),
+  '#',
+  class: "appy-button appy-button--sm",
+  data: { update_location: account.address_details } %>
