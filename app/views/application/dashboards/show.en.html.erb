@@ -1,24 +1,35 @@
-<h2>Welcome to Technovation!</h2>
+<div class="home-page">
+  <div class="home-page__column home-page__introduction-content">
+    <h1 class="appy-title">Welcome to Technovation <%= Season.current.year %>!</h1>
 
-<p>
-  We're excited to begin registration for our <%= Season.current.year %> Technovation season.
-  Through this website, you will be able to <%= link_to "sign up as a student", student_signup_path %>,
-  a <%= link_to "mentor", mentor_signup_path %>, a judge,
-  or you can <%= link_to "apply to become a regional ambassador", regional_ambassador_signup_path %>.
-  After you complete your profile, you can create a team, join another team, invite students to join your team and also find virtual or in-person mentors in your area.
-  You will also have access to the full Technovation curriculum, which will walk you through identifying a problem in your community, developing a mobile app, and building a business plan and pitch.
-</p>
+    <p>
+      We're excited to begin registration for our <%= Season.current.year %> Technovation season.
+      Through this website, you will be able to sign up as a student, as a mentor, as a judge, or you can apply to become a regional ambassador.
+    </p>
 
-<p>
-  If you participated in the <%= Season.current.year - 1 %> Technovation season, you can use the same email and password to <%= link_to "sign in", signin_path %> and register for the new <%= Season.current.year %> season.
-  Otherwise, please <%= link_to "sign up", signup_path %> to get started!
-</p>
+    <p>
+      After you complete your profile, you can create a team, join another team, invite students to join your team and also find virtual or in-person mentors in your area.
+      You will also have access to the full Technovation curriculum, which will walk you through identifying a problem in your community, developing a mobile app, and building a business plan and pitch.
+    </p>
 
-<p>
-  Feel free to email <%= mail_to "info@technovationchallenge.org" %>
-  or check out our <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
-  for more information.
-</p>
+    <p>
+      If you participated in the <%= Season.current.year - 1 %> Technovation season, you can use the same email and password to sign in and register for the new <%= Season.current.year %> season.
+      Otherwise, please sign up to get started!
+    </p>
 
-<p>Happy coding!<br />
-The Technovation Team</p>
+    <p>
+      Feel free to email <%= mail_to "info@technovationchallenge.org" %>
+      or check out our <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
+      for more information.
+    </p>
+
+    <p>Happy coding!<br />
+    The Technovation Team</p>
+  </div>
+
+  <div class="home-page__column home-page__get-started">
+    <h1 class="appy-title">Get Started Today!</h1>
+    <%= render 'signup_attempts/form', attempt: @signup_attempt %>
+    <p>If you have an existing account, you can <%= link_to "sign in now", signin_path %> instead.</p>
+  </div>
+</div>

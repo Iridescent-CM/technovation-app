@@ -35,7 +35,10 @@ class Account < ActiveRecord::Base
   before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
 
   after_validation :update_email_list, on: :update
-  after_commit -> { IndexAccountJob.perform_later(self) }
+  after_commit -> {
+    IndexAccountJob.perform_later(self)
+    AttachSignupAttemptJob.perform_later(self)
+  }
 
   has_secure_password
 

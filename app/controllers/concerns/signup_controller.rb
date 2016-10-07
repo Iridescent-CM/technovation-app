@@ -6,13 +6,19 @@ module SignupController
   end
 
   def new
-    instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
+    if token = cookies[:signup_token]
+      params[:email] ||= SignupAttempt.find_by!(activation_token: token).email
+      instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
+    else
+      redirect_to root_path(email: params[:email])
+    end
   end
 
   def create
     instance_variable_set("@#{model_name}", registration_helper.build(model, account_params))
 
     if registration_helper.(instance, self)
+      cookies.delete(:signup_token)
       SignIn.(instance, self, redirect_to: after_signup_path,
                               message: t("controllers.signups.create.success"))
     else
@@ -40,7 +46,9 @@ module SignupController
       :referred_by,
       :referred_by_other,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
-    )
+    ).tap do |tapped|
+      tapped[:email] = SignupAttempt.find_by!(activation_token: cookies[:signup_token]).email
+    end
   end
 
   def model

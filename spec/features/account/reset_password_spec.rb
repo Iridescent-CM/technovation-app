@@ -6,7 +6,7 @@ RSpec.feature "Reset your forgotten password" do
     FactoryGirl.create(roles.sample, email: "Find@me.com", password: "oldforgotten")
     visit root_path
 
-    click_link "Sign in"
+    click_link "sign in now"
     click_link "I forgot my password"
   end
 
@@ -84,7 +84,7 @@ RSpec.feature "Reset your forgotten password" do
     click_button "Save"
 
     click_link "Logout"
-    click_link "Sign in"
+    click_link "sign in now"
 
     fill_in "Email", with: account.email
     fill_in "Password", with: "greatnewsecret"

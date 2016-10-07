@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Student::SignupsController do
+  before do
+    controller.set_cookie(:signup_token, SignupAttempt.create!(email: "invited@thanks.com").activation_token)
+  end
+
   describe "POST #create for invited students" do
     it "assigns the invite to the new account by email" do
       invite = FactoryGirl.create(:team_member_invite,

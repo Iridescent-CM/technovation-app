@@ -109,6 +109,9 @@ Rails.application.routes.draw do
 
   resources :teams, only: :show
 
+  resources :signup_attempts, only: [:create, :show, :update]
+  resources :signup_attempt_confirmations, only: :new
+
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
 

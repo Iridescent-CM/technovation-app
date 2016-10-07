@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006204759) do
+ActiveRecord::Schema.define(version: 20161007190415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -232,6 +232,20 @@ ActiveRecord::Schema.define(version: 20161006204759) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "signup_attempts", force: :cascade do |t|
+    t.string   "email",                        null: false
+    t.string   "activation_token",             null: false
+    t.integer  "account_id"
+    t.integer  "status",           default: 0, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "signup_attempts", ["account_id"], name: "index_signup_attempts_on_account_id", using: :btree
+  add_index "signup_attempts", ["activation_token"], name: "index_signup_attempts_on_activation_token", using: :btree
+  add_index "signup_attempts", ["email"], name: "index_signup_attempts_on_email", using: :btree
+  add_index "signup_attempts", ["status"], name: "index_signup_attempts_on_status", using: :btree
+
   create_table "student_profiles", force: :cascade do |t|
     t.integer  "account_id",            null: false
     t.string   "parent_guardian_email"
@@ -295,6 +309,7 @@ ActiveRecord::Schema.define(version: 20161006204759) do
   add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "accounts"
   add_foreign_key "season_registrations", "seasons"
+  add_foreign_key "signup_attempts", "accounts"
   add_foreign_key "team_member_invites", "accounts", column: "invitee_id"
   add_foreign_key "team_member_invites", "accounts", column: "inviter_id"
   add_foreign_key "team_submissions", "teams"
