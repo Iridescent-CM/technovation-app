@@ -51,6 +51,8 @@ gem 'indefinite_article'
 
 gem 'timecop'
 
+gem 'rack-rewrite', '~> 1.5.0', require: 'rack/rewrite'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
