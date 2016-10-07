@@ -2,12 +2,15 @@ require "rails_helper"
 
 RSpec.feature "Activate your email to sign up" do
   scenario "Use an email that exists" do
+    ActionMailer::Base.deliveries.clear
+
     FactoryGirl.create(:judge, email: "joe@joesak.com")
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"
     click_button "Get started"
 
+    expect(ActionMailer::Base.deliveries).to be_empty
     expect(page).to have_content("That email is already being used on Technovation.")
     expect(page).to have_link("sign in")
     expect(page).to have_link("reset your password")
@@ -29,10 +32,13 @@ RSpec.feature "Activate your email to sign up" do
     signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
     signup_attempt.active!
 
+    ActionMailer::Base.deliveries.clear
+
     visit root_path
     fill_in "Email address", with: "joe@joesak.com"
     click_button "Get started"
 
+    expect(ActionMailer::Base.deliveries).to be_empty
     expect(current_path).to eq(signup_attempt_path(signup_attempt))
     expect(page).to have_content("You have already confirmed your email!")
     expect(page).to have_link("Continue signing up")
@@ -54,8 +60,10 @@ RSpec.feature "Activate your email to sign up" do
 
   scenario "Activate your email for signing up" do
     signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
+    ActionMailer::Base.deliveries.clear
 
     visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
+    expect(ActionMailer::Base.deliveries).to be_empty
 
     expect(current_path).to eq(signup_path)
     expect(page).to have_content("Thank you! Your email is confirmed and you are ready to sign up!")
