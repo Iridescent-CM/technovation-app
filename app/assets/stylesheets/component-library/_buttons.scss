@@ -6,9 +6,11 @@
   display: inline-block;
   font-size: 1.1rem;
   font-weight: bold;
+  line-height: inherit;
   margin: 0 0.5rem;
   padding: 0.5rem 1rem;
   text-align: center;
+  text-transform: none;
   transform: translateY(0);
   transition: background-color 0.1s,
     box-shadow 0.1s,
@@ -27,6 +29,6 @@
   }
 }
 
-.appy-button--full-width {
-  width: 100%;
+.appy-button--sm {
+  padding: 0.25rem 1rem;
 }
