@@ -8,14 +8,8 @@ module TeamController
   def show
     @team = current_account.teams.find(params.fetch(:id))
     @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
-
-    if key = params.delete(:key)
-      ProcessUploadJob.perform_later(@team, "team_photo", key)
-      flash[:success] = t("controllers.teams.show.image_processing")
-    end
-
     @uploader = ImageUploader.new
-    @uploader.success_action_redirect = send("#{current_account.type_name}_team_url", @team)
+    @uploader.success_action_redirect = send("#{current_account.type_name}_team_photo_upload_confirmation_url", team_id: @team.id, back: request.fullpath)
   end
 
   def new

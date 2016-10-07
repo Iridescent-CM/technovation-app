@@ -1,0 +1,17 @@
+<div class="card team-submission__step-card">
+  <div class="card__heading">
+    Submission Step: Team Photo
+    <span class="card-heading__flair fa fa-check-circle"></span>
+  </div>
+
+  <div class="card__body">
+    <% if team.team_photo.present? %>
+      <p>This step is complete</p>
+      <%= image_tag team.team_photo_url, width: "100%" %>
+    <% else %>
+      <p>This step is not complete</p>
+    <% end %>
+
+    <%= render 'teams/upload_team_photo', uploader: uploader %>
+  </div>
+</div>

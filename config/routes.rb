@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
+    resource :team_photo_upload_confirmation, only: :show
 
     resources :mentors, only: :show
     resources :students, only: :show
@@ -40,6 +41,8 @@ Rails.application.routes.draw do
 
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
+
+    resource :team_photo_upload_confirmation, only: :show
 
     resources :team_member_invites, except: [:edit, :index]
     resources :join_requests, except: [:index, :edit]

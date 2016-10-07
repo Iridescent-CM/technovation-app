@@ -11,6 +11,7 @@ en:
         image_processing: "Your profile photo was uploaded. It is being processed and will update shortly."
       update:
         change_image: "Change image"
+        change_image_hint: "300x300px, only .jpg, .jpeg, .gif, .png"
         success: "You updated your account!"
 
     consent_waivers:
@@ -92,6 +93,8 @@ en:
       show:
         image_processing: "Your team photo was uploaded. It is being processed and will update shortly."
       update:
+        change_image: "Upload photo"
+        change_image_hint: "450x300px, only .jpg, .jpeg, .gif, .png"
         success: "Your team has been updated!"
 
     team_memberships:

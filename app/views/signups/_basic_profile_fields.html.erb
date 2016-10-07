@@ -41,4 +41,5 @@
   <%= image_tag f.object.profile_image, with: 233, height: 233 %>
   <%= f.input :profile_image %>
   <%= f.input :profile_image_cache, as: :hidden %>
+  <p class="appy-hint"><%= t("controllers.accounts.update.change_image_hint") %></p>
 <% end %>

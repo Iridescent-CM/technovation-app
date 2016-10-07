@@ -13,17 +13,7 @@
 
   <% if team.current? %>
     <p><%= link_to t("controllers.teams.edit"), [:edit, account.type_name, team] %></p>
-
-    <%= direct_upload_form_for @uploader, html: { class: 'fancy-upload' } do |f| %>
-      <p>
-        <%= link_to t("controllers.teams.update.change_image"), '#',
-                    data: { uploader: true },
-                    class: "transparent-accent-button" %>
-      </p>
-
-      <%= f.file_field :team_photo, data: { fancy: true } %>
-      <%= f.submit t("views.application.save") %>
-    <% end %>
+    <%= render 'teams/upload_team_photo', uploader: @uploader, namespace: account.type_name, team: team %>
   <% end %>
 </div>
 

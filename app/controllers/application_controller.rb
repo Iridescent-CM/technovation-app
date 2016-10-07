@@ -47,6 +47,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_team
-    current_account.team
+    case current_account.type
+    when "StudentAccount"; current_account.team
+    when "MentorAccount"; current_account.teams.find(params.fetch(:team_id))
+    end
   end
 end

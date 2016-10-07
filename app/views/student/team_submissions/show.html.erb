@@ -4,5 +4,9 @@
 
 <div class="team-submission__step-cards">
   <%= render 'student/team_submissions/steps/affirm_integrity', submission: @team_submission %>
+
   <%= render 'student/team_submissions/steps/source_code', submission: @team_submission %>
+
+  <%= render 'student/team_submissions/steps/team_photo', team: @team_submission.team,
+                                                          uploader: @team_photo_uploader %>
 </div>
