@@ -25,5 +25,6 @@
     <li>Check that you entered your email correctly. For example: <em>janie.doe@gmail.com</em></li>
   </ul>
 
-  <%= render 'signup_attempts/form', submit: t("views.application.save"), attempt: @signup_attempt %>
+  <p><strong>Double-check the email that you entered here:</strong></p>
+  <%= render 'signup_attempts/form', submit: t("views.application.try_again"), attempt: @signup_attempt %>
 <% end %>
