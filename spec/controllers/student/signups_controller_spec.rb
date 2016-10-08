@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Student::SignupsController do
   before do
-    controller.set_cookie(:signup_token, SignupAttempt.create!(email: "invited@thanks.com").activation_token)
+    controller.set_cookie(:signup_token, SignupAttempt.create!(email: "invited@thanks.com", status: SignupAttempt.statuses[:active]).signup_token)
   end
 
   describe "POST #create for invited students" do

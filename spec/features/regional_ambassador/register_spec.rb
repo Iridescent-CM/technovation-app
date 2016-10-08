@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassadors registration" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com").activation_token}")
+    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com", status: SignupAttempt.statuses[:active]).signup_token}")
 
     visit signup_path
     click_link "Apply to become a Regional Ambassador"
