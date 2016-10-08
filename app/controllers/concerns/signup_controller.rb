@@ -7,10 +7,10 @@ module SignupController
 
   def new
     if token = cookies[:signup_token]
-      params[:email] ||= SignupAttempt.find_by!(signup_token: token).email
-      instance_variable_set("@#{model_name}", registration_helper.build(model, email: params[:email]))
+      email = SignupAttempt.find_by!(signup_token: token).email
+      instance_variable_set("@#{model_name}", registration_helper.build(model, email: email))
     else
-      redirect_to root_path(email: params[:email])
+      redirect_to root_path
     end
   end
 
