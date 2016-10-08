@@ -6,6 +6,7 @@ module SignIn
     }.merge(options)
 
     context.set_cookie(:auth_token, signin.auth_token)
+    context.remove_cookie(:signup_token)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
 
