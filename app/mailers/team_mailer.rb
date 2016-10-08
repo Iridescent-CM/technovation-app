@@ -9,7 +9,8 @@ class TeamMailer < ApplicationMailer
       @url = student_dashboard_url
       @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
     else
-      @url = student_signup_url(email: invite.invitee_email)
+      attempt = SignupAttempt.create!(email: invite.invitee_email)
+      @url = student_signup_url(token: attempt.activation_token)
       @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
     end
 
