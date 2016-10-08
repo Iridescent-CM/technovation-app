@@ -1,9 +1,17 @@
+<h1 class="appy-title dashboard__heading">
+  <%= t("views.application.dashboard") %>
+</h1>
+
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
-    <h2><%= t("views.application.to_do") %></h2>
+    <div class="to-do">
+      <h2 class="to-do__heading appy-heading-lg">
+        <%= t("views.application.to_do") %>
+      </h2>
 
-    <ol class="completion-steps">
-      <%= render 'completion_steps/consent_waiver', account: current_judge %>
-    </ol>
+      <ul class="to-do__list">
+        <%= render 'completion_steps/consent_waiver', account: current_judge %>
+      </ul>
+    </div>
   </div>
 </div>
