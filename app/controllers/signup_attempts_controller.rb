@@ -19,7 +19,7 @@ class SignupAttemptsController < ApplicationController
 
   def show
     @signup_attempt = SignupAttempt.find(params[:id])
-    cookies[:signup_token] = @signup_attempt.activation_token if @signup_attempt.active?
+    cookies[:signup_token] = @signup_attempt.signup_token if @signup_attempt.active?
   end
 
   def update
