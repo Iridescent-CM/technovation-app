@@ -22,3 +22,21 @@
     }
   }
 }
+@media screen and (max-width: $device-sm) {
+  .home-page {
+    flex-direction: column;
+
+    .home-page__introduction-content, .home-page__get-started {
+      width: 100%;
+      margin: 0 0 1rem;
+    }
+
+    .home-page__get-started {
+      order: 0;
+    }
+
+    .home-page__introduction-content {
+      order: 1;
+    }
+  }
+}
