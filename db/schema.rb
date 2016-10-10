@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20161008142738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                        null: false
@@ -141,6 +142,16 @@ ActiveRecord::Schema.define(version: 20161008142738) do
 
   add_index "judge_profiles", ["account_id"], name: "index_judge_profiles_on_account_id", using: :btree
 
+  create_table "judge_scoring_expertises", force: :cascade do |t|
+    t.integer  "judge_profile_id",     null: false
+    t.integer  "scoring_expertise_id", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "judge_scoring_expertises", ["judge_profile_id"], name: "index_judge_scoring_expertises_on_judge_profile_id", using: :btree
+  add_index "judge_scoring_expertises", ["scoring_expertise_id"], name: "index_judge_scoring_expertises_on_scoring_expertise_id", using: :btree
+
   create_table "memberships", force: :cascade do |t|
     t.integer  "member_id",     null: false
     t.string   "member_type",   null: false
@@ -211,6 +222,51 @@ ActiveRecord::Schema.define(version: 20161008142738) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "score_categories", force: :cascade do |t|
+    t.string   "name",                         null: false
+    t.boolean  "is_expertise", default: false, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "score_questions", force: :cascade do |t|
+    t.integer  "score_category_id", null: false
+    t.text     "label",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "score_questions", ["score_category_id"], name: "index_score_questions_on_score_category_id", using: :btree
+
+  create_table "score_values", force: :cascade do |t|
+    t.integer  "score_question_id", null: false
+    t.integer  "value",             null: false
+    t.text     "label",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "score_values", ["score_question_id"], name: "index_score_values_on_score_question_id", using: :btree
+
+  create_table "scored_values", force: :cascade do |t|
+    t.integer "score_value_id", null: false
+    t.integer "score_id",       null: false
+    t.text    "comment"
+  end
+
+  add_index "scored_values", ["score_id"], name: "index_scored_values_on_score_id", using: :btree
+  add_index "scored_values", ["score_value_id"], name: "index_scored_values_on_score_value_id", using: :btree
+
+  create_table "scores", force: :cascade do |t|
+    t.integer  "submission_id",    null: false
+    t.integer  "judge_profile_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "scores", ["judge_profile_id"], name: "index_scores_on_judge_profile_id", using: :btree
+  add_index "scores", ["submission_id"], name: "index_scores_on_submission_id", using: :btree
+
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",                     null: false
     t.integer  "registerable_id",               null: false
@@ -259,6 +315,18 @@ ActiveRecord::Schema.define(version: 20161008142738) do
 
   add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree
 
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "team_id",     null: false
+    t.text     "description"
+    t.string   "code"
+    t.string   "pitch"
+    t.string   "demo"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "submissions", ["team_id"], name: "index_submissions_on_team_id", using: :btree
+
   create_table "team_member_invites", force: :cascade do |t|
     t.integer  "inviter_id",                null: false
     t.integer  "team_id",                   null: false
@@ -306,12 +374,21 @@ ActiveRecord::Schema.define(version: 20161008142738) do
   add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "accounts", column: "requestor_id"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
+  add_foreign_key "judge_scoring_expertises", "judge_profiles"
+  add_foreign_key "judge_scoring_expertises", "score_categories", column: "scoring_expertise_id"
   add_foreign_key "mentor_profile_expertises", "expertises"
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "accounts"
+  add_foreign_key "score_questions", "score_categories"
+  add_foreign_key "score_values", "score_questions"
+  add_foreign_key "scored_values", "score_values"
+  add_foreign_key "scored_values", "scores"
+  add_foreign_key "scores", "judge_profiles"
+  add_foreign_key "scores", "submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
+  add_foreign_key "submissions", "teams"
   add_foreign_key "team_member_invites", "accounts", column: "invitee_id"
   add_foreign_key "team_member_invites", "accounts", column: "inviter_id"
   add_foreign_key "team_submissions", "teams"
