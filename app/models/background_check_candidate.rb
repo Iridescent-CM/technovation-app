@@ -65,6 +65,8 @@ class BackgroundCheckCandidate
         errors.add(:ssn, :blank)
       elsif name.include?("must be at least 18 year old")
         errors.add(:date_of_birth, "You must be at least 18 years old")
+      elsif name.include?("is not a valid email address")
+        errors.add(:email, :invalid)
       else
         errors.add(name.downcase, :invalid)
       end
