@@ -17,6 +17,8 @@
         <%= link_to "Edit", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
       </div>
     <% else %>
+      <p>In 100 to 200 words, give us a description of your application.</p>
+
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Add Description", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
       </div>
