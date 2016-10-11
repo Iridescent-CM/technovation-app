@@ -13,7 +13,7 @@ class TeamMemberInvite < ActiveRecord::Base
   belongs_to :inviter, class_name: "Account"
   belongs_to :invitee, polymorphic: true
 
-  validates :invitee_email, presence: true
+  validates :invitee_email, presence: true, email: true
 
   validate -> {
     if self.class.exists?(invitee_email: invitee_email,
