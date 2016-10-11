@@ -1,4 +1,6 @@
 class SignupAttempt < ActiveRecord::Base
+  attr_accessor :prevent_email
+
   enum status: %i{pending active registered}
   belongs_to :account
 
@@ -13,12 +15,12 @@ class SignupAttempt < ActiveRecord::Base
   }
 
   after_commit -> {
-    unless email_exists? or active?
+    unless prevent_email or email_exists? or active?
       RegistrationMailer.confirm_email(self).deliver_later
     end
   }, on: [:create, :update]
 
   def email_exists?
-    Account.where("lower(email) = ?", email.strip.downcase).any?
+    Account.where("lower(email) = ?", (email || "").strip.downcase).any?
   end
 end
