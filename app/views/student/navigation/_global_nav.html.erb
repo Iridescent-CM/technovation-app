@@ -1,4 +1,20 @@
-<%= student_navigation.team_link %>
+<% if current_student.is_on_team? %>
+  <li class="nav-link">
+    <%= link_to t('views.student.navigation.find_a_mentor'), new_student_mentor_search_path %>
+  </li>
+
+  <li class="nav-link">
+    <%= link_to t("views.student.navigation.my_team"), student_team_path(current_team) %>
+  </li>
+<% elsif current_student.can_join_a_team? %>
+  <li class="nav-link">
+    <%= link_to t("views.student.navigation.create_a_team"), new_student_team_path %>
+  </li>
+
+  <li class="nav-link">
+    <%= link_to t("views.student.navigation.join_team"), new_student_team_search_path %>
+  </li>
+<% end %>
 
 <% unless Rails.env.production? or Rails.env.staging? %>
   <% if current_account.is_on_team? and current_team.submission.present? %>
