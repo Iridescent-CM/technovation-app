@@ -6,7 +6,7 @@ RSpec.feature "Students invite mentors to join their team" do
 
   before do
     sign_in(student)
-    within("nav.profile") { click_link "Find a mentor" }
+    click_link "Find an Available Mentor"
   end
 
   scenario "Invite an available mentor" do
