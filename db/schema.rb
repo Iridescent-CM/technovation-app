@@ -211,6 +211,15 @@ ActiveRecord::Schema.define(version: 20161012190920) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "screenshots", force: :cascade do |t|
+    t.integer  "team_submission_id"
+    t.string   "image"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "screenshots", ["team_submission_id"], name: "index_screenshots_on_team_submission_id", using: :btree
+
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",                     null: false
     t.integer  "registerable_id",               null: false
@@ -313,6 +322,7 @@ ActiveRecord::Schema.define(version: 20161012190920) do
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "accounts"
+  add_foreign_key "screenshots", "team_submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
   add_foreign_key "team_member_invites", "accounts", column: "invitee_id"

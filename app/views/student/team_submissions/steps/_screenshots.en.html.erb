@@ -1,0 +1,26 @@
+<div class="card team-submission__step-card">
+  <div class="card__heading">
+    Submission Step: Screenshots
+    <span class="card-heading__flair fa fa-check-circle"></span>
+  </div>
+
+  <div class="card__body">
+    <% if submission.screenshots.any? %>
+      <p>This step is complete</p>
+
+      <ul>
+        <%= render submission.screenshots, cached: true %>
+      </ul>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Add more screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+      </div>
+    <% else %>
+      <p>This step is not complete</p>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Upload Screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

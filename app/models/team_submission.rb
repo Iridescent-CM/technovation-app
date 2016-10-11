@@ -8,6 +8,7 @@ class TeamSubmission < ActiveRecord::Base
   scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", Season.current.year) }
 
   belongs_to :team
+  has_many :screenshots
 
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations

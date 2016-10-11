@@ -1,0 +1,5 @@
+<%= direct_upload_form_for @screenshots_uploader, html: { id: "team_submission_screenshots" } do |f| %>
+  <%= f.label :screenshots, t("models.team_submission.screenshots") %>
+  <%= f.file_field :screenshots, multiple: true %>
+  <%= f.submit t("views.application.continue") %>
+<% end %>

@@ -25,6 +25,9 @@ module Student
     def edit
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
       @team_submission.step = params[:step]
+
+      @screenshots_uploader = ImageUploader.new
+      @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
     end
 
     def update
