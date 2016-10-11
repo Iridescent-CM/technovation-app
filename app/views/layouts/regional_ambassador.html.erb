@@ -1,4 +1,3 @@
 <% provide :root_path, regional_ambassador_dashboard_path %>
-<% provide :menu, "&nbsp;".html_safe %>
-<% provide :subnav, render('regional_ambassador/dashboards/navigation') %>
+<% provide :menu, render('regional_ambassador/navigation/global_nav') %>
 <%= render template: "layouts/application" %>

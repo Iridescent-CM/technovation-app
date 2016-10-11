@@ -10,12 +10,14 @@
           <ul class="navigation__links-list">
             <%= yield :menu %>
           </ul>
-          <a href="#" class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
+          <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
             <!--FontAwesome-->
           </a>
         <% else %>
-          <ul class="navigation__links-list navigation__links-list--signed-out">
-            <%= render 'signed_out' %>
+          <ul class="navigation__links-list navigation__links-list--no-mobile-menu">
+            <li class="nav-link">
+              <%= link_to t('views.application.signin'), signin_path %>
+            </li>
           </ul>
         <% end %>
       </nav>

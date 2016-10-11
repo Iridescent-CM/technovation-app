@@ -10,10 +10,6 @@ $logo-size-mobile: 36px;
   padding: $base-spacing 0 calc(#{$base-spacing} + 3px);
   padding: 0;
 
-  // @include media($xlarge-screen) {
-  //   padding: $base-spacing $small-spacing calc(#{$base-spacing} + 3px);
-  // }
-
   .logo {
     align-items: center;
     display: flex;
@@ -34,12 +30,12 @@ $logo-size-mobile: 36px;
 
     &::after {
       background-color: $shamrock;
+      bottom: 0;
       content: '';
       height: 0;
+      left: 0;
       position: absolute;
       transition: height 0.15s;
-      left: 0;
-      top: 0;
       width: 100%;
     }
 
@@ -98,7 +94,7 @@ $mobile-nav-height: 60px;
     margin-top: calc(#{$mobile-nav-height} + 1rem);
   }
 
-  .navigation__links-list:not(.navigation__links-list--signed-out) {
+  .navigation__links-list:not(.navigation__links-list--no-mobile-menu) {
     background-color: rgba($mulberry, 0.95);
     display: none;
     flex-direction: column;
@@ -135,7 +131,7 @@ $mobile-nav-height: 60px;
     padding: 0;
   }
 
-  .navigation__mobile-toggle {
+  a.navigation__mobile-toggle {
     color: white;
     display: block;
     font-size: 1.8rem;
