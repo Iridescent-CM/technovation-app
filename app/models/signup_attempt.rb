@@ -12,11 +12,11 @@ class SignupAttempt < ActiveRecord::Base
     end
   }
 
-  after_save -> {
+  after_commit -> {
     unless email_exists? or active?
       RegistrationMailer.confirm_email(self).deliver_later
     end
-  }
+  }, on: [:create, :update]
 
   def email_exists?
     Account.where("lower(email) = ?", email.strip.downcase).any?
