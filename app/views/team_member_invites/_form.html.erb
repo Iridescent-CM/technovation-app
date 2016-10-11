@@ -1,4 +1,4 @@
-<%= simple_form_for [account_type, @team_member_invite] do |f| %>
+<%= simple_form_for [account_type, @team_member_invite], html: { class: "full-size" } do |f| %>
   <%= f.hidden_field :team_id %>
 
   <%= f.input :invitee_email,
