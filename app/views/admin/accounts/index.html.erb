@@ -17,6 +17,16 @@
                   data: { reload: true, param: :type } %>
   </label>
 
+  <% if params[:type] == "Student" %>
+    <label class="no-text-transform inline">
+      Parental Consent Status:
+      <%= select_tag :parental_consent_status,
+                    options_for_select(%w{All Signed Sent Not\ Configured}, params[:parental_consent_status]),
+                    class: "inline",
+                    data: { reload: true, param: :parental_consent_status } %>
+    </label>
+  <% end %>
+
 
   <label class="no-text-transform inline">
     Per page:
