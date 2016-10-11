@@ -11,7 +11,7 @@
 
   <div class="card__body">
     <% if submission.integrity_affirmed? %>
-      <p><%= submission.team.name %> has promised that this submission has only been worked on by its own students.</p>
+      <p><strong><%= submission.team.name %></strong> has promised that this submission has only been worked on by its own students.</p>
     <% else %>
       <p>You need to affirm the integrity of your submission.</p>
       <div class="card__actions-row card__actions-row--pos-end">
