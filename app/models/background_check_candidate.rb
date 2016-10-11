@@ -63,6 +63,8 @@ class BackgroundCheckCandidate
         errors.add(:driver_license_state, :invalid)
       elsif name.include?("must have SSN")
         errors.add(:ssn, :blank)
+      elsif name.include?("must be at least 18 year old")
+        errors.add(:date_of_birth, "You must be at least 18 years old")
       else
         errors.add(name.downcase, :invalid)
       end
