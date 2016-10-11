@@ -8,5 +8,9 @@
     margin-bottom: 15px;
     display: flexbox;
     width: 30%;
+
+    &.team-submission__app-description-card {
+      width: 61%;
+    }
   }
 }
