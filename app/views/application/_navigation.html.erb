@@ -1,18 +1,23 @@
 <header class="navigation" role="banner">
   <div class="container">
-    <div class="flex-row navigation__content-wrapper">
+    <div class="navigation__content-wrapper">
       <%= link_to image_tag("tc-logo-white-tm.png"),
                   content_for?(:root_path) ? yield(:root_path) : application_dashboard_path,
                   class: "logo" %>
 
       <nav>
-        <ul class="navigation__links-list">
-          <% if content_for?(:menu) %>
-            <%= render 'signed_in' %>
-          <% else %>
+        <% if content_for?(:menu) %>
+          <ul class="navigation__links-list">
+            <%= yield :menu %>
+          </ul>
+          <a href="#" class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
+            <!--FontAwesome-->
+          </a>
+        <% else %>
+          <ul class="navigation__links-list navigation__links-list--signed-out">
             <%= render 'signed_out' %>
-          <% end %>
-        </ul>
+          </ul>
+        <% end %>
       </nav>
     </div>
   </div>

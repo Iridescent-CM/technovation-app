@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+body, html {
+  margin: 0;
+  background-color: $light-grey;
+}
+
 /*
  * Typography
  */

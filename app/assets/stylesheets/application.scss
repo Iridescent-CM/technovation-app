@@ -12,6 +12,8 @@
 @import "chosen";
 
 // Technovation
+@import "partials/animations";
+@import "partials/helpers";
 @import "partials/variables";
 @import "partials/mixins";
 @import "layout/grid-flex";
@@ -29,10 +31,14 @@
 @import "admin";
 @import "containers";
 @import "dashboards";
+@import "forms";
+@import "global-nav";
+@import "home-page";
+@import "layout";
 @import "mentor_search";
+@import "menus";
 @import "signups";
-@import "teams";
+@import "sortable";
 @import "team-invitations";
 @import "team-submissions";
-@import "technovation";
-@import "home-page";
+@import "teams";

@@ -101,8 +101,6 @@
   text-align: center;
 }
 
-// Preexisting code below
-
 .dashboard__main {
   padding: 0 1rem 0 0;
 
@@ -116,5 +114,17 @@
 
   @media screen and (max-width: $device-sm) {
     padding: 0;
+  }
+}
+
+.bg_check_status {
+  font-weight: bold;
+
+  &.clear {
+    color: $shamrock;
+  }
+
+  &.consider {
+    color: $mulberry;
   }
 }

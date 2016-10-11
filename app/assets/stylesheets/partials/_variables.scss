@@ -23,6 +23,18 @@ $h6: 1.1rem;
  */
 $nav-height: 80px;
 
+/*
+ * Z-index helpers
+ */
+
+$z-neg: -1;
+$z-normal: 1;
+$z-low: 9;
+$z-mid: 99;
+$z-high: 999;
+$z-nuclear: 9999;
+$z-modal: 99999;
+
 // Previously existing variables below:
 
 /*

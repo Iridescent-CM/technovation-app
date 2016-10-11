@@ -5,8 +5,9 @@
 //= require sortable
 //= require jquery.query
 
-//= require remote_forms
-//= require select_fields
-//= require fancy_uploads
 //= require fancy_select
+//= require fancy_uploads
+//= require global_nav
+//= require remote_forms
 //= require search_options
+//= require select_fields

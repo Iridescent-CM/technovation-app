@@ -1,0 +1,14 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@mixin animation-fade-in {
+  animation-name: fade-in;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
