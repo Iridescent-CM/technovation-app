@@ -1,15 +1,6 @@
 require "rails_helper"
 
 RSpec.describe StudentProfile do
-  it "validates the parent/guardian email" do
-    skip "Skipping again"
-    %w{bad bad@ something.bad.org not@okay}.each do |bad_email|
-      profile = FactoryGirl.build(:student_profile, parent_guardian_email: bad_email)
-      expect(profile).not_to be_valid
-      expect(profile.errors[:parent_guardian_email]).not_to be_nil
-    end
-  end
-
   it "doesn't allow a student email to be used as parent email" do
     FactoryGirl.create(:student, email: "noway@jose.com")
     profile = FactoryGirl.build(:student_profile, parent_guardian_email: "noway@jose.com")
