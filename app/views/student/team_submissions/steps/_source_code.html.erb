@@ -1,27 +1,28 @@
 <div class="card team-submission__step-card">
   <div class="card__heading">
-    Submission Step: Source Code
-    <span class="card-heading__flair fa fa-check-circle"></span>
+    Source Code
+
+    <% if submission.source_code.present? or submission.source_code_external_url.present? %>
+      <%= fa_icon("check-circle", class: "card-heading__flair") %>
+    <% else %>
+      <%= fa_icon("circle-o", class: "card-heading__flair") %>
+    <% end %>
   </div>
 
   <div class="card__body">
     <% if submission.source_code.present? %>
-      <p>This step is complete</p>
       <p><%= link_to submission.source_code_url, submission.source_code_url, target: "_blank" %></p>
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Edit", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
       </div>
     <% elsif submission.source_code_external_url.present? %>
-      <p>This step is complete</p>
       <p><%= link_to submission.source_code_external_url, submission.source_code_external_url, target: "_blank" %></p>
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Edit", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
       </div>
     <% else %>
-      <p>This step is not complete</p>
-
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Attach Source Code", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
       </div>
