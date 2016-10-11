@@ -1,1 +1,10 @@
 <%= render 'accounts/show', account: @account %>
+
+<% if @account.type == "MentorAccount" %>
+  <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
+              admin_mentor_drop_out_path(id: @account.id),
+              data: {
+                method: :post,
+                confirm: "Are you sure you want to DROP #{@account.first_name} OUT from Season #{Season.current.year}?"
+              } %>
+<% end %>
