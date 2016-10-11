@@ -2,6 +2,8 @@ class RegistrationMailer < ApplicationMailer
   def confirm_email(signup_attempt)
     @url = new_signup_attempt_confirmation_url(token: signup_attempt.activation_token)
 
+    headers['X-Mailgun-Campaign-Id'] = 'tqylf'
+
     mail to: signup_attempt.email,
          subject: t("registration_mailer.confirm_email.subject", season_year: Season.current.year)
   end
