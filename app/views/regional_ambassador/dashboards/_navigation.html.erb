@@ -1,9 +1,0 @@
-<li class="nav-link"><%= link_to t("views.application.dashboards.menu.home"), regional_ambassador_dashboard_path %></li>
-
-<% if current_account.approved? and current_account.consent_signed? and current_account.background_check_complete? %>
-  <li class="nav-link"><%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_accounts_path %></li>
-
-  <% #<li class="nav-link"><%= link_to t("views.application.dashboards.menu.teams"), regional_ambassador_teams_path </li> %>
-<% end %>
-
-<li class="nav-link"><%= link_to t("views.application.dashboards.menu.my_account"), regional_ambassador_account_path %></li>
