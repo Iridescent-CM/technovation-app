@@ -2,7 +2,7 @@ class SignupAttempt < ActiveRecord::Base
   enum status: %i{pending active registered}
   belongs_to :account
 
-  validates :email, presence: true
+  validates :email, presence: true, email: true
 
   before_create -> { GenerateToken.(self, :activation_token) }
 

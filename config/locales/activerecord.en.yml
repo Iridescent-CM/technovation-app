@@ -29,6 +29,11 @@ en:
             existing_password:
               invalid: "is required to change your email address or password"
 
+        signup_attempt:
+          attributes:
+            email:
+              invalid: "doesn't appear to be an email address"
+
         student_account:
           attributes:
             existing_password:
