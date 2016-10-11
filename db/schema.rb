@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(version: 20161012190920) do
     t.datetime "updated_at",                               null: false
     t.string   "source_code"
     t.string   "source_code_external_url"
+    t.text     "app_description"
   end
 
   create_table "teams", force: :cascade do |t|

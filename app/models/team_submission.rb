@@ -12,6 +12,12 @@ class TeamSubmission < ActiveRecord::Base
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
 
+  validates :app_description, length: {
+    minimum: 100,
+    tokenizer: ->(d) { d.scan(/\S+/) },
+    too_short: "must have at least %{count} words",
+  }, if: -> { step == "app_description" }
+
   def after_registration
   end
 end

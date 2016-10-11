@@ -1,0 +1,24 @@
+<div class="card team-submission__step-card">
+  <div class="card__heading">
+    Submission Step: App Description
+    <span class="card-heading__flair fa fa-check-circle"></span>
+  </div>
+
+  <div class="card__body">
+    <% if submission.app_description.present? %>
+      <p>This step is complete</p>
+
+      <%= simple_format submission.app_description %>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Edit", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
+      </div>
+    <% else %>
+      <p>This step is not complete</p>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Add Description", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

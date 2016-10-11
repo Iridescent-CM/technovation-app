@@ -1,0 +1,23 @@
+<%= simple_form_for [:student, @team_submission] do |f| %>
+  <%= hidden_field_tag :submission_step, params[:step] %>
+
+  <%= render 'errors', record: @team_submission %>
+
+  <%= f.input :app_description,
+              input_html: {
+                data: {
+                  count_words: true,
+                },
+              },
+              label: t("models.team_submission.app_description") %>
+
+  <span data-word-count-show='true'>
+    Words: <%= (@team_submission.app_description || "").scan(/\S+/).count %>
+  </span>
+
+  <p class="appy-hint">
+    <%= t("views.team_submissions.form.app_description_help") %>
+  </p>
+
+  <%= f.button :submit, t("views.application.continue") %>
+<% end %>
