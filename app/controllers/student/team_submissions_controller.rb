@@ -2,7 +2,7 @@ module Student
   class TeamSubmissionsController < StudentController
     def new
       params[:step] = :affirm_integrity if params[:step].blank?
-      @team_submission = current_team.team_submissions.build
+      @team_submission = current_team.team_submissions.build(step: params[:step])
     end
 
     def create
@@ -24,6 +24,7 @@ module Student
 
     def edit
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
+      @team_submission.step = params[:step]
     end
 
     def update
@@ -39,7 +40,13 @@ module Student
 
     private
     def team_submission_params
-      params.require(:team_submission).permit(:integrity_affirmed, :source_code_external_url)
+      params.require(:team_submission).permit(
+        :app_description,
+        :integrity_affirmed,
+        :source_code_external_url
+      ).tap do |tapped|
+        tapped[:step] = params[:submission_step]
+      end
     end
   end
 end

@@ -1,4 +1,6 @@
 class TeamSubmission < ActiveRecord::Base
+  attr_accessor :step
+
   after_commit -> { SeasonRegistration.register(self) }, on: :create
 
   mount_uploader :source_code, FileProcessor
