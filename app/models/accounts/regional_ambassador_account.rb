@@ -55,4 +55,12 @@ class RegionalAmbassadorAccount < Account
   def after_background_check_clear
     AccountMailer.background_check_clear(self).deliver_later
   end
+
+  def region_name
+    if country == "US"
+      Country[country].states[state_province]['name']
+    else
+      Country[country].name
+    end
+  end
 end
