@@ -114,6 +114,27 @@
   </div>
 
   <div class="admin-dashboard__sidebar">
+    <h2 class="resources__heading appy-heading-lg">
+      <%= t("views.application.resources") %>
+    </h2>
+
+    <ul class="resources__list">
+      <li class="resources__item-wrapper">
+        <div class="card">
+          <div class="card__heading">
+            Curriculum
+            <%= fa_icon("graduation-cap", class: "card-heading__flair") %>
+          </div>
+
+          <div class="card__body">
+            <p>
+              <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>.
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+
     <h1 class="appy-title"><%= Season.current.year %> <%= current_ambassador.region_name %> Snapshot</h1>
 
     <p><%= Time.current.strftime("%A, %b %e, %-I:%M %P %Z") %></p>
@@ -147,27 +168,6 @@
         <strong><%= @snapshot_judges.full_access.count %></strong> consent waiver on file
       </dd>
     </dl>
-
-    <h2 class="resources__heading appy-heading-lg">
-      <%= t("views.application.resources") %>
-    </h2>
-
-    <ul class="resources__list">
-      <li class="resources__item-wrapper">
-        <div class="card">
-          <div class="card__heading">
-            Curriculum
-            <%= fa_icon("graduation-cap", class: "card-heading__flair") %>
-          </div>
-
-          <div class="card__body">
-            <p>
-              <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>.
-            </p>
-          </div>
-        </div>
-      </li>
-    </ul>
   </div>
 </div>
 
