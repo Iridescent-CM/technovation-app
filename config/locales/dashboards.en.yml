@@ -8,7 +8,7 @@ en:
     application:
       dashboards:
         menu:
-          accounts: "User report"
+          accounts: "Users"
           connect_mentors: "Connect with mentors"
           home: "Home"
           my_account: "My account"

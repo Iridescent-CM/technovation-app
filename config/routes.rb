@@ -64,14 +64,15 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :account, only: [:show, :edit, :update]
-    resources :accounts, only: :index
 
-    resources :account_exports, only: :create
+    resources :accounts, only: :index
+    resources :teams, only: [:show, :index]
+
+    resources :exports, only: :create
 
     resource :profile_image_upload_confirmation, only: :show
 
     resources :background_checks, only: [:new, :create, :show]
-    resources :teams, only: [:index]
   end
 
   namespace :judge do

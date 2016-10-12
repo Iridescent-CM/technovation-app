@@ -1,9 +1,30 @@
 module RegionalAccount
-  def self.call(ambassador)
-    accounts = Account.includes(:seasons)
-                      .references(:seasons)
-                      .where("seasons.year = ?", Season.current.year)
-                      .where.not(type: "AdminAccount")
+  def self.call(ambassador, params = {})
+    klass = if params[:type] == "All"
+              Account
+            else
+              "#{params[:type]}Account".constantize
+            end
+
+    accounts = klass.includes(:seasons)
+                    .references(:seasons)
+                    .where("seasons.year = ?", Season.current.year)
+                    .where.not(type: "AdminAccount")
+
+    if params[:type] == "Student"
+      accounts = case params[:parental_consent_status]
+                 when "Signed"
+                   accounts.joins(:parental_consent)
+                 when "Sent"
+                   accounts.includes(:parental_consent)
+                           .references(:parental_consents)
+                           .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NOT NULL")
+                 when "No Info Entered"
+                   accounts.where("student_profiles.parent_guardian_email IS NULL")
+                 else
+                   accounts
+                 end
+    end
 
     if ambassador.country == "US"
       accounts.where(state_province: ambassador.state_province)

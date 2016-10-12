@@ -1,62 +1,94 @@
-<p>
-  You're seeing all users in your region for the <%= Season.current.year %> season.
-  In the U.S., your region is your state. For everyone else, it's your country.
+<h1 class="appy-title">Accounts</h1>
+
+<p class="appy-subtitle">
+  You're browsing users in <%= current_ambassador.region_name %> for the <%= Season.current.year %> season.
 </p>
 
-<label>
-  View per page:
-  <%= select_tag :per_page,
-                 options_for_select(%w{10 25 50 100 250}, params[:per_page]),
-                 class: "inline",
-                 data: { reload: true, param: :per_page } %>
-</label>
+<div class="wrapper__report-table">
+  <label class="no-text-transform inline">
+    Account type:
+    <%= select_tag :type,
+                   options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
+                   class: "inline",
+                   data: { reload: true, param: :type } %>
+  </label>
 
-<div class="wrapper__regional_ambassador_accounts">
-  <%= will_paginate(@accounts) %>
+  <% if params[:type] == "Student" %>
+    <label class="no-text-transform inline">
+      Parental Consent Status:
+      <%= select_tag :parental_consent_status,
+                     options_for_select(%w{All Signed Sent No\ Info\ Entered}, params[:parental_consent_status]),
+                     class: "inline",
+                     data: { reload: true, param: :parental_consent_status } %>
+    </label>
+  <% end %>
 
-  <table class="table__regional_ambassador_accounts sortable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>User type</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
-        <th>Team name(s)</th>
-        <th>School / Company name</th>
-        <th>Division</th>
-        <th>City</th>
-        <th>State / Province</th>
-        <th>Country</th>
-      </tr>
 
-      <tr>
-        <td colspan="11">
-          <%= link_to "Export to CSV", regional_ambassador_account_exports_path, data: { method: :post } %>
-        </td>
-      </tr>
-    </thead>
+  <label class="no-text-transform inline">
+    Per page:
+    <%= select_tag :per_page,
+                    options_for_select([10, 25, 50, 100], params[:per_page]),
+                    class: "inline",
+                    data: {
+                      reload: true,
+                      param: :per_page,
+                    } %>
+  </label>
 
-    <tbody>
-      <% @accounts.each do |account| %>
-        <% cache(account) do %>
+
+  <div class="wrapper__regional_ambassador_accounts">
+    <div class="pagination_info">
+      <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
+    </div>
+
+    <% if @accounts.any? %>
+      <%= will_paginate @accounts %>
+
+      <table class="table__regional_ambassador_accounts sortable">
+        <thead>
           <tr>
-            <td><%= account.id %></td>
-            <td><%= account.type_name %></td>
-            <td><%= account.first_name %></td>
-            <td><%= account.last_name %></td>
-            <td><%= account.email %></td>
-            <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
-            <td><%= account.get_school_company_name %></td>
-            <td><%= account.division %></td>
-            <td><%= account.city %></td>
-            <td><%= account.state_province %></td>
-            <td><%= Country[account.country].name %></td>
+            <th>ID</th>
+            <th>User type</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Team name(s)</th>
+            <th>School / Company name</th>
+            <th>Division</th>
+            <th>City</th>
+            <th>State / Province</th>
+            <th>Country</th>
           </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
 
-  <%= will_paginate(@accounts) %>
+          <tr>
+            <td colspan="11">
+              <%= link_to "Export to CSV", regional_ambassador_exports_path(params.merge(class: "accounts")), data: { method: :post } %>
+            </td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @accounts.each do |account| %>
+            <% cache(account) do %>
+              <tr>
+                <td><%= account.id %></td>
+                <td><%= account.type_name %></td>
+                <td><%= account.first_name %></td>
+                <td><%= account.last_name %></td>
+                <td><%= account.email %></td>
+                <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
+                <td><%= account.get_school_company_name %></td>
+                <td><%= account.division %></td>
+                <td><%= account.city %></td>
+                <td><%= account.state_province %></td>
+                <td><%= Country[account.country].name %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= will_paginate(@accounts) %>
+    <% end %>
+  </div>
 </div>

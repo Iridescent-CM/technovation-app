@@ -1,21 +1,75 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t("models.team.name") %></th>
-      <th><%= t("models.team.students") %></th>
-      <th><%= t("views.application.actions") %></th>
-    </tr>
-  </head>
+<h1 class="appy-title">Teams</h1>
 
-  <tbody>
-    <% @teams.each do |team| %>
-      <% cache(team) do %>
+<p class="appy-subtitle">
+  You're browsing teams in <%= current_ambassador.region_name %> for the <%= Season.current.year %> season.
+</p>
+
+<div class="wrapper__report_table">
+  <label class="no-text-transform inline">
+    Division:
+    <%= select_tag :division,
+                  options_for_select(%w{All Senior Junior}, params[:division]),
+                  class: "inline",
+                  data: { reload: true, param: :division } %>
+  </label>
+
+  <label class="no-text-transform inline">
+    Mentor status:
+    <%= select_tag :mentor_status,
+                   options_for_select(%w{All With\ Mentor(s) Without\ Mentor}, params[:mentor_status]),
+                   class: "inline",
+                   data: { reload: true, param: :mentor_status } %>
+  </label>
+
+  <label class="no-text-transform inline">
+    Per page:
+    <%= select_tag :per_page,
+                  options_for_select([10, 25, 50, 100], params[:per_page]),
+                  class: "inline",
+                  data: { reload: true, param: :per_page } %>
+  </label>
+
+  <div class="pagination_info">
+    <%= page_entries_info @teams, model: params[:division] == "All" ? "Team" : "#{params[:division]} team" %>
+  </div>
+
+  <% if @teams.any? %>
+    <%= will_paginate @teams %>
+
+    <table class="table__report_table">
+      <thead>
         <tr>
-          <td><%= team.name %></td>
-          <td><%= team.students.collect(&:full_name).to_sentence %></td>
-          <td><%= link_to t("views.application.view"), team %></td>
+          <th>ID</th>
+          <th>Division</th>
+          <th>Name</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Country</th>
         </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+
+        <tr>
+          <td colspan="6">
+            <%= link_to "Export these results", regional_ambassador_exports_path(params.merge(class: "teams")), data: { method: :post } %>
+          </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @teams.each do |team| %>
+          <% cache(team) do %>
+            <tr>
+              <td><%= team.id %></td>
+              <td><%= team.division_name %></td>
+              <td><%= link_to team.name, regional_ambassador_team_path(team) %></td>
+              <td><%= team.city %></td>
+              <td><%= team.state_province %></td>
+              <td><%= team.country %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @teams %>
+  <% end %>
+</div>

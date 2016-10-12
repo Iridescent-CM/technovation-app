@@ -1,13 +1,42 @@
 module RegionalTeam
-  def self.call(ambassador)
-    teams = Team.includes(:seasons)
+  def self.call(ambassador, params = {})
+    teams = Team.includes(:seasons, :memberships)
                 .references(:seasons)
                 .where("seasons.year = ?", Season.current.year)
 
     if ambassador.country == "US"
-      teams.select { |t| t.state_province == ambassador.state_province }
+      teams = teams.where("teams.id IN (
+        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_id IN (
+          SELECT accounts.id FROM accounts WHERE accounts.state_province = ?
+        )
+      )", ambassador.state_province).uniq
     else
-      teams.select { |t| t.country == ambassador.country }
+      teams = teams.where("teams.id IN (
+        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_id IN (
+          SELECT accounts.id FROM accounts WHERE accounts.country = ?
+        )
+      )", ambassador.country).uniq
+    end
+
+    if !!params[:division] and params[:division] != "All"
+      division = Division.names[params[:division].downcase]
+
+      teams = teams.includes(:division)
+                   .references(:divisions)
+                   .where("divisions.name = ?", division)
+    end
+
+    case params[:mentor_status]
+    when "With Mentor(s)"
+      teams.where("teams.id IN (
+        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
+      )", "MentorAccount").uniq
+    when "Without Mentor"
+      teams.where("teams.id NOT IN (
+        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
+      )", "MentorAccount").uniq
+    else
+      teams
     end
   end
 end
