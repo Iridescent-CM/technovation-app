@@ -4,7 +4,7 @@ class BackgroundCheckCandidate
 
   attr_accessor :first_name, :middle_name, :last_name,
     :email, :zipcode, :date_of_birth, :ssn, :driver_license_state,
-    :id, :report_id, :candidate
+    :id, :report_id, :candidate, :copy_requested
 
   validates :first_name, :last_name, :email, :zipcode, :date_of_birth, :ssn,
     :driver_license_state, presence: true
@@ -53,6 +53,7 @@ class BackgroundCheckCandidate
            "dob" => @date_of_birth,
            "ssn" => @ssn,
            "driver_license_state" => @driver_license_state,
+           "copy_requested" => @copy_requested,
          }.map { |k, v| [k, (v || "").strip] }]
   end
 

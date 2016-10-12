@@ -2,6 +2,7 @@ class BackgroundCheck::Candidate
   attr_reader :id, :candidate
 
   def initialize(attributes = {})
+    attributes["copy_requested"] = attributes["copy_requested"] == "1"
     candidate_attributes = default_attributes.merge(attributes)
     @candidate = Checkr::Candidate.new(candidate_attributes)
   end
@@ -16,7 +17,6 @@ class BackgroundCheck::Candidate
   def default_attributes
     {
       no_middle_name: true,
-      copy_requested: false,
     }
   end
 end

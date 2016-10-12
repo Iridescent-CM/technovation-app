@@ -21,8 +21,10 @@
     This form is submitted directly &amp; securely to our screening service
     <%= link_to "Checkr", "https://checkr.com/product/screenings/",
                           rel: "noopener noreferrer",
-                          target: "_bank" %>.
+                          target: "_blank" %>.
   </p>
+
+  <%= f.input :copy_requested, as: :boolean, label: "I want a copy of my report from Checkr when it's completed" %>
 
   <%= f.button :submit, "Submit your background check" %>
 <% end %>
