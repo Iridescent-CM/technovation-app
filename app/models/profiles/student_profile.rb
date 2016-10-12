@@ -7,12 +7,14 @@ class StudentProfile < ActiveRecord::Base
 
   validates :school_name, presence: true
 
-  validates :parent_guardian_email, email: true, allow_blank: true
-
   validate :parent_guardian_email, -> {
-    if !parent_guardian_email.blank? and
+    if not parent_guardian_email.blank? and
          StudentAccount.where("lower(email) = ?", parent_guardian_email.downcase).any?
       errors.add(:parent_guardian_email, :found_in_student_accounts)
+    end
+
+    if not parent_guardian_email.blank? and not parent_guardian_email.match(/@/)
+      errors.add(:parent_guardian_email, :invalid)
     end
   }, allow_blank: true
 

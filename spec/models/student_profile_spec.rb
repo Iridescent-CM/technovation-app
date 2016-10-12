@@ -1,6 +1,16 @@
 require "rails_helper"
 
 RSpec.describe StudentProfile do
+  it "at least wants parent/guardian email to look like an email" do
+    FactoryGirl.create(:student, email: "noway@jose.com")
+    profile = FactoryGirl.build(:student_profile, parent_guardian_email: "nowayjose.com")
+    expect(profile).not_to be_valid
+    expect(profile.errors[:parent_guardian_email]).to include("does not appear to be an email address")
+
+    profile.parent_guardian_email = "okeay@jose.com"
+    expect(profile).to be_valid
+  end
+
   it "doesn't allow a student email to be used as parent email" do
     FactoryGirl.create(:student, email: "noway@jose.com")
     profile = FactoryGirl.build(:student_profile, parent_guardian_email: "noway@jose.com")

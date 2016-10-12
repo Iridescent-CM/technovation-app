@@ -43,6 +43,7 @@ en:
           attributes:
             parent_guardian_email:
               found_in_student_accounts: "cannot match another student's email"
+              invalid: "does not appear to be an email address"
               matches_student_email: "cannot be the same as your email"
 
         team_member_invite:
