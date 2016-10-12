@@ -32,7 +32,7 @@ module Admin
           accounts = accounts.includes(:parental_consent)
                              .references(:parental_consents)
                              .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NOT NULL")
-        when "Not Configured"
+        when "No Info Entered"
           accounts = accounts.includes(:parental_consent)
                              .references(:parental_consents)
                              .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NULL")

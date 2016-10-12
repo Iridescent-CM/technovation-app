@@ -21,7 +21,7 @@
     <label class="no-text-transform inline">
       Parental Consent Status:
       <%= select_tag :parental_consent_status,
-                    options_for_select(%w{All Signed Sent Not\ Configured}, params[:parental_consent_status]),
+                    options_for_select(%w{All Signed Sent No\ Info\ Entered}, params[:parental_consent_status]),
                     class: "inline",
                     data: { reload: true, param: :parental_consent_status } %>
     </label>
