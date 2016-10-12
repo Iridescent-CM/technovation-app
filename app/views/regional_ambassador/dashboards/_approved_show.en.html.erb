@@ -131,39 +131,7 @@
       </li>
     </ul>
 
-    <h1 class="appy-title"><%= Season.current.year %> <%= current_ambassador.region_name %> Snapshot</h1>
-
-    <p><%= Time.current.strftime("%A, %b %e, %-I:%M %P %Z") %></p>
-
-    <p><strong><%= @snapshot_accounts.count %></strong> total Accounts</p>
-
-    <p><strong><%= @snapshot_teams.count %></strong> total Teams</p>
-
-    <dl>
-      <dt>Students:</dt>
-      <dd>
-        <strong><%= @snapshot_students.count %></strong> total<br />
-        <strong><%= @snapshot_students.full_access.count %></strong> with parental consent on file
-      </dd>
-
-      <dt>Mentors:</dt>
-      <dd>
-        <strong><%= @snapshot_mentors.count %></strong> total<br />
-        <strong><%= @snapshot_mentors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
-      </dd>
-
-      <dt>RAs:</dt>
-      <dd>
-        <strong><%= @snapshot_ambassadors.count %></strong> total<br />
-        <strong><%= @snapshot_ambassadors.full_access.count %></strong> consent waiver, cleared background check (US only) on file
-      </dd>
-
-      <dt>Judges:</dt>
-      <dd>
-        <strong><%= @snapshot_judges.count %></strong> total<br />
-        <strong><%= @snapshot_judges.full_access.count %></strong> consent waiver on file
-      </dd>
-    </dl>
+    <%= render 'account_snapshots', title: "#{Season.current.year} #{current_ambassador.region_name} Snapshot" %>
   </div>
 </div>
 
