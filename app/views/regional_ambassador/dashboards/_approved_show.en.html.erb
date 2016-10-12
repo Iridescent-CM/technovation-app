@@ -129,24 +129,28 @@
       <dd>
         Total: <%= @snapshot_students.count %><br />
         Full access: <%= @snapshot_students.full_access.count %>
+        <p class="appy-hint">(parental consent form on file)</p>
       </dd>
 
       <dt>Mentors:</dt>
       <dd>
         Total: <%= @snapshot_mentors.count %><br />
         Full access: <%= @snapshot_mentors.full_access.count %>
+        <p class="appy-hint">(consent waiver, cleared background check if in the US, on file)</p>
       </dd>
 
       <dt>RAs:</dt>
       <dd>
         Total: <%= @snapshot_ambassadors.count %><br />
         Full access: <%= @snapshot_ambassadors.full_access.count %>
+        <p class="appy-hint">(consent waiver, cleared background check if in the US, on file)</p>
       </dd>
 
       <dt>Judges:</dt>
       <dd>
         Total: <%= @snapshot_judges.count %><br />
         Full access: <%= @snapshot_judges.full_access.count %>
+        <p class="appy-hint">(consent waiver on file)</p>
       </dd>
     </dl>
 
