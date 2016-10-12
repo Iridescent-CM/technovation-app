@@ -2,7 +2,7 @@ class SigninsController < ApplicationController
   before_action :require_unauthenticated, except: :destroy
 
   def new
-    @signin = Account.new
+    @signin = Account.new(email: params[:email])
   end
 
   def create
