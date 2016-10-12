@@ -1,8 +1,7 @@
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
 //= require nested_form_fields
 //= require jquery.query
-//
 //= require Chart.bundle
 //= require chartkick
 //
