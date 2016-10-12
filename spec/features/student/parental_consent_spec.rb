@@ -1,6 +1,19 @@
 require "rails_helper"
 
 RSpec.feature "Parental consent" do
+  scenario "sort of invalid email" do
+    student = FactoryGirl.create(:student)
+    student.parental_consent.destroy
+
+    sign_in(student)
+    click_link "Send Email Consent Form"
+    fill_in "Parent or guardian's email", with: "no-work"
+
+    click_button "Send the link"
+
+    expect(page).to have_css('.error', text: "does not appear to be an email address")
+  end
+
   scenario "invalid token" do
     [{ }, { token: "bad" }].each do |bad_token_params|
       visit new_parental_consent_path(bad_token_params)

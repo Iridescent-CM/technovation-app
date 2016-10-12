@@ -7,19 +7,10 @@ class StudentProfile < ActiveRecord::Base
 
   validates :school_name, presence: true
 
-  validate :parent_guardian_email, -> {
-    if not parent_guardian_email.blank? and
-         StudentAccount.where("lower(email) = ?", parent_guardian_email.downcase).any?
-      errors.add(:parent_guardian_email, :found_in_student_accounts)
-    end
-
-    if not parent_guardian_email.blank? and not parent_guardian_email.match(/@/)
-      errors.add(:parent_guardian_email, :invalid)
-    end
-  }, allow_blank: true
+  validate :parent_guardian_email, -> { validate_valid_parent_email }
 
   def validate_parent_email
-    required_email_attributes.select { |a| send(a).blank? }.each do |a|
+    %i{parent_guardian_name parent_guardian_email}.select { |a| send(a).blank? }.each do |a|
       errors.add(a, :blank)
     end
 
@@ -27,10 +18,24 @@ class StudentProfile < ActiveRecord::Base
       errors.add(:parent_guardian_email, :matches_student_email)
     end
 
+    validate_valid_parent_email
+
     errors.empty?
   end
 
   private
+  def validate_valid_parent_email
+    return if parent_guardian_email.blank?
+
+    if StudentAccount.where("lower(email) = ?", parent_guardian_email.downcase).any?
+      errors.add(:parent_guardian_email, :found_in_student_accounts)
+    end
+
+    if not parent_guardian_email.match(/@/)
+      errors.add(:parent_guardian_email, :invalid)
+    end
+  end
+
   def reset_parent
     if parent_guardian_email_changed? and parent_guardian_email.present?
       student_account.void_parental_consent!
@@ -45,12 +50,5 @@ class StudentProfile < ActiveRecord::Base
                                        parent_guardian_name,
                                        "PARENT_LIST_ID")
     end
-  end
-
-  def required_email_attributes
-    %i{
-      parent_guardian_name
-      parent_guardian_email
-    }
   end
 end
