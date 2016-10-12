@@ -12,6 +12,7 @@ gem "autoprefixer-rails"
 gem 'rails-i18n', '~> 4.0.0'
 gem 'obscenity', '~> 1.0.2'
 
+gem 'has_secure_token'
 gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq', '~> 4.1.1'
 gem 'airbrake', '~> 5.2.1'

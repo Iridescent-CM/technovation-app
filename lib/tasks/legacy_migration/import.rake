@@ -21,8 +21,6 @@ namespace :legacy_migration do
           "#{user.role}_profile_attributes" => ProfileAttributes.(user),
         )
 
-        GenerateToken.(account, :auth_token)
-        GenerateToken.(account, :consent_token)
         account.geocode
         account.save(validate: false)
         RegisterToSeasonJob.perform_later(account)

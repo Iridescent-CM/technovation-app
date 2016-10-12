@@ -6,13 +6,14 @@ class SignupAttempt < ActiveRecord::Base
 
   validates :email, presence: true, email: true
 
-  before_create -> { GenerateToken.(self, :activation_token) }
+  has_secure_token :activation_token
+  has_secure_token :signup_token
 
-  before_save -> {
+  after_commit -> {
     if status_changed? and active?
-      GenerateToken.(self, :signup_token)
+      regenerate_signup_token
     end
-  }
+  }, on: :update
 
   after_commit -> {
     unless prevent_email or email_exists? or active?

@@ -28,7 +28,9 @@ class Account < ActiveRecord::Base
     end
   end
 
-  before_validation :generate_tokens, on: :create
+  has_secure_token :auth_token
+  has_secure_token :consent_token
+  has_secure_token :password_reset_token
 
   # Fallback incase Typeahead doesn't work or isn't used
   before_validation :geocode, if: ->(a) { !a.geocoded.blank? and a.geocoded != address_details }
@@ -110,8 +112,8 @@ class Account < ActiveRecord::Base
   end
 
   def enable_password_reset!
-    GenerateToken.(self, :password_reset_token)
-    update_attributes(password_reset_token_sent_at: Time.current)
+    regenerate_password_reset_token
+    update_column(:password_reset_token_sent_at, Time.current)
   end
 
   def consent_waiver
@@ -177,11 +179,6 @@ class Account < ActiveRecord::Base
     if first_name_changed? or last_name_changed? or email_changed?
       UpdateEmailListJob.perform_later(email_was, email, full_name, "#{type_name.upcase}_LIST_ID")
     end
-  end
-
-  def generate_tokens
-    GenerateToken.(self, :auth_token)
-    GenerateToken.(self, :consent_token)
   end
 
   def changes_require_password?

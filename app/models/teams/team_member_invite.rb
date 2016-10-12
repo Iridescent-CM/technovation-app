@@ -3,7 +3,8 @@ class TeamMemberInvite < ActiveRecord::Base
 
   scope :for_students, -> { where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount") }
 
-  before_create -> { GenerateToken.(self, :invite_token) }
+  has_secure_token :invite_token
+
   before_create :set_invitee
   after_commit :send_invite, on: :create
 
