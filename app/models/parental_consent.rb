@@ -8,17 +8,8 @@ class ParentalConsent < ActiveRecord::Base
   delegate :full_name, :consent_token, to: :student, prefix: true
 
   after_commit -> {
-    SubscribeEmailListJob.perform_later(student.email,
-                                        student.full_name,
-                                        "STUDENT_LIST_ID")
-
-    SubscribeEmailListJob.perform_later(student.parent_guardian_email,
-                                        student.parent_guardian_name,
-                                        "PARENT_LIST_ID")
-
-    AccountMailer.confirm_next_steps(self).deliver_later
-
-    ParentMailer.confirm_consent_finished(self).deliver_later
+    after_create_student_actions
+    after_create_parent_actions
   }, on: :create
 
   def student_consent_token=(token)
@@ -37,4 +28,20 @@ class ParentalConsent < ActiveRecord::Base
     !!voided_at
   end
   alias void? voided?
+
+  def after_create_student_actions
+    SubscribeEmailListJob.perform_later(student.email,
+                                        student.full_name,
+                                        "STUDENT_LIST_ID")
+
+    AccountMailer.confirm_next_steps(self).deliver_later
+  end
+
+  def after_create_parent_actions
+    SubscribeEmailListJob.perform_later(student.parent_guardian_email,
+                                        student.parent_guardian_name,
+                                        "PARENT_LIST_ID")
+
+    ParentMailer.confirm_consent_finished(self).deliver_later
+  end
 end

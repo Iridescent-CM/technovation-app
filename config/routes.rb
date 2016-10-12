@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     resources :signup_attempts, only: :index
 
     resource :mentor_drop_out, only: :create
+    resource :paper_parental_consent, only: :create
 
     resources :exports, only: :create
   end

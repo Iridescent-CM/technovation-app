@@ -3,8 +3,19 @@
 <% if @account.type == "MentorAccount" %>
   <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
               admin_mentor_drop_out_path(id: @account.id),
+              class: "appy-button",
               data: {
                 method: :post,
                 confirm: "Are you sure you want to DROP #{@account.first_name} OUT from Season #{Season.current.year}?"
+              } %>
+<% end %>
+
+<% if @account.type == "StudentAccount" and @account.parental_consent.nil? %>
+  <%= link_to "Paper parental consent on file",
+              admin_paper_parental_consent_path(id: @account.id),
+              class: "appy-button",
+              data: {
+                method: :post,
+                confirm: "You are marking #{@account.full_name} as having a paper parental consent on file."
               } %>
 <% end %>
