@@ -75,7 +75,7 @@ en:
       create:
         success: "Thank you for getting started on Technovation!"
       update:
-        success: "We sent another email to your updated address"
+        success: "Okay! We are trying again with the updated email address"
 
     signup_attempt_confirmations:
       new:

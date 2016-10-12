@@ -6,6 +6,7 @@ class SignupAttempt < ActiveRecord::Base
 
   validates :email, presence: true, email: true
 
+  has_secure_token :pending_token
   has_secure_token :activation_token
   has_secure_token :signup_token
 

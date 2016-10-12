@@ -23,7 +23,7 @@ RSpec.feature "Activate your email to sign up" do
     fill_in "Email address", with: "joe@joesak.com"
     click_button "Get started"
 
-    expect(current_path).to eq(signup_attempt_path(signup_attempt))
+    expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
     expect(page).to have_content("Check your spam folder")
     expect(find_field("Email address").value).to eq("joe@joesak.com")
   end
@@ -39,7 +39,7 @@ RSpec.feature "Activate your email to sign up" do
     click_button "Get started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
-    expect(current_path).to eq(signup_attempt_path(signup_attempt))
+    expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
     expect(page).to have_content("You have already confirmed your email!")
     expect(page).to have_link("Continue signing up")
   end

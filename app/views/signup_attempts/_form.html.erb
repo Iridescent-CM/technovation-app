@@ -1,6 +1,9 @@
-<% submit ||= t("views.application.get_started") %>
+<%
+    submit ||= t("views.application.get_started")
+    url ||= signup_attempts_url
+%>
 
-<%= simple_form_for attempt do |f| %>
+<%= simple_form_for attempt, url: url do |f| %>
   <%= render 'errors', record: attempt %>
 
   <%= f.input :email, as: :email, placeholder: "Example: janie.doe@gmail.com", label: t("models.signup_attempt.email") %>

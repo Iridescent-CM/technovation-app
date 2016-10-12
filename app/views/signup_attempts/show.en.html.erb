@@ -16,16 +16,19 @@
 <% else %>
   <h1 class="appy-title">Check your email inbox!</h1>
 
-  <p>We sent an email to confirm that your address is real and that you typed it correctly.</p>
+  <p>We have attempted to send you an email to confirm that your address is real, that you typed it correctly, and that you have access to it.</p>
 
   <p><strong>If you don't get an email from us within a few minutes:</strong></p>
 
   <ul class="appy-bulleted-list">
     <li>Check your spam folder</li>
-    <li>Add "info@technovationchallenge.org" to your contacts</li>
-    <li>Check that you entered your email correctly. For example: <em>janie.doe@gmail.com</em></li>
+    <li>Add <strong>info@technovationchallenge.org</strong> to your contacts</li>
+    <li>Try again below! Check that you entered your email correctly. For example: <em>janie.doe@gmail.com</em></li>
   </ul>
 
-  <p><strong>Double-check the email that you entered here:</strong></p>
-  <%= render 'signup_attempts/form', submit: t("views.application.try_again"), attempt: @signup_attempt %>
+  <p><strong>Double-check your email here, correct any mistakes, and try again:</strong></p>
+  <%= render 'signup_attempts/form',
+             submit: t("views.application.try_again"),
+             url: signup_attempt_path(@signup_attempt.pending_token),
+             attempt: @signup_attempt %>
 <% end %>
