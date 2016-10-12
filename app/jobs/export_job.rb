@@ -45,6 +45,21 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin)
   end
 
+  def export_signup_attempts(admin, token, params)
+    attempts = SignupAttempt.send(params[:status])
+    filepath = "./tmp/#{Season.current.year}-signup-attempts-#{params[:status]}-#{token}.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{email status}
+
+      attempts.each do |attempt|
+        csv << [attempt.email, attempt.status]
+      end
+    end
+
+    export(filepath, admin)
+  end
+
   def export(filepath, admin)
     file = File.open(filepath)
     export = admin.exports.create!(file: file)

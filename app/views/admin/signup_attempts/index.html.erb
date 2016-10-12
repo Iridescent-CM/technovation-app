@@ -30,6 +30,11 @@
         <th>Email</th>
         <th>Status</th>
       </tr>
+      <tr>
+        <td colspan="2">
+          <%= link_to "Export these results", admin_exports_path(params.merge(class: "signup_attempt")), data: { method: :post } %>
+        </td>
+      </tr>
     </thead>
 
     <tbody>
