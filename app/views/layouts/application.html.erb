@@ -24,6 +24,8 @@
     <meta property="og:image" content="<%= asset_url "social-sharing-preview-image.png" %>" />
 
     <%= csrf_meta_tags %>
+
+    <%= yield :head_js %>
   </head>
 
   <body>

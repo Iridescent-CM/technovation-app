@@ -128,3 +128,9 @@
     color: $mulberry;
   }
 }
+
+.admin-dashboard__sidebar {
+  .resources__item-wrapper {
+    width: 100%;
+  }
+}

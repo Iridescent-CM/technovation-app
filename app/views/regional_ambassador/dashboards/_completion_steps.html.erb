@@ -1,13 +1,13 @@
-<div class="to-do">
-  <% unless current_ambassador.consent_waiver.present? and current_ambassador.background_check_complete? %>
+<% unless current_ambassador.consent_waiver.present? and current_ambassador.background_check_complete? %>
+  <div class="to-do">
     <h2 class="to-do__heading appy-heading-lg">
       <%= t("views.application.complete_your_profile") %>
     </h2>
-  <% end %>
 
-  <ul class="to-do__list">
-    <%= render 'completion_steps/consent_waiver', account: current_ambassador %>
-    <%= render 'completion_steps/background_check', account: current_ambassador %>
-    <%= render 'completion_steps/complete_profile', account: current_ambassador %>
-  </ul>
-</div>
+    <ul class="to-do__list">
+      <%= render 'completion_steps/consent_waiver', account: current_ambassador %>
+      <%= render 'completion_steps/background_check', account: current_ambassador %>
+      <%= render 'completion_steps/complete_profile', account: current_ambassador %>
+    </ul>
+  </div>
+<% end %>

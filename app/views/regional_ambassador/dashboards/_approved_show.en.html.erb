@@ -1,0 +1,178 @@
+<%
+  method = case params[:days]
+           when 1;  :group_by_hour
+           when 7;  :group_by_day
+           when 30; :group_by_week
+           else;    :group_by_month
+           end
+
+  range = case params[:days]
+          when 1; 24
+          when 7; 7
+          when 30; 4
+          when 90; 3
+          when 180; 6
+          when 270; 9
+          end
+%>
+
+<div class="admin-dashboard">
+  <div class="admin-dashboard__column">
+    <div class="admin-dashboard__header">
+      <h1 class="appy-title">Recent activity</h1>
+
+      <label class="no-text-transform">
+        Show signups in the past
+        <%= select_tag :days,
+          options_for_select(
+            {
+              "Day" => 1,
+              "Week" => 7,
+              "Month" => 30,
+              "3 months" => 90,
+              "6 months" => 180,
+              "9 months" => 270,
+            },
+            params[:days]
+        ),
+        class: "inline",
+        data: { reload: true, param: :days } %>
+    </label>
+    </div>
+
+    <div class="admin-dashboard__quickviews-wrapper">
+      <div class="quickview card">
+        <div class="card__heading">
+          Teams
+        </div>
+
+        <div class="card__body">
+          <%= line_chart @teams.public_send(method, "teams.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <%= link_to "Students", regional_ambassador_accounts_path(type: "Student") %> <%= @students.count %>
+        </div>
+
+        <div class="card__body">
+          <%= line_chart @students.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <span>Permitted Students</span> <%= @permitted_students.count %>
+      </div>
+
+      <div class="card__body">
+        <%= line_chart @permitted_students.public_send(method, "parental_consents.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+      </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <%= link_to "Mentors", regional_ambassador_accounts_path(type: "Mentor") %> <%= @mentors.count %>
+        </div>
+
+        <div class="card__body">
+          <%= line_chart @mentors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <span>Cleared mentors</span> <%= @cleared_mentors.count %>
+      </div>
+
+      <div class="card__body">
+        <%= line_chart @cleared_mentors.public_send(method, "consent_waivers.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+      </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <%= link_to "RAs", regional_ambassador_accounts_path(type: "RegionalAmbassador") %> <%= @ambassadors.count %>
+        </div>
+
+        <div class="card__body">
+          <%= line_chart @ambassadors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        </div>
+      </div>
+
+      <div class="quickview card">
+        <div class="card__heading">
+          <%= link_to "Judges", regional_ambassador_accounts_path(type: "Judge") %> <%= @judges.count %>
+        </div>
+
+        <div class="card__body">
+          <%= line_chart @judges.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-dashboard__sidebar">
+    <h1 class="appy-title"><%= Season.current.year %> Snapshot</h1>
+
+    <p><%= Time.current.strftime("%A, %b %e, %-I:%M %P %Z") %></p>
+
+    <dl>
+      <dt>Total Accounts:</dt>
+      <dd><%= @snapshot_accounts.count %></dd>
+
+      <dt>Teams:</dt>
+      <dd>Total: <%= @snapshot_teams.count %></dd>
+
+      <dt>Students:</dt>
+      <dd>
+        Total: <%= @snapshot_students.count %><br />
+        Full access: <%= @snapshot_students.full_access.count %>
+      </dd>
+
+      <dt>Mentors:</dt>
+      <dd>
+        Total: <%= @snapshot_mentors.count %><br />
+        Full access: <%= @snapshot_mentors.full_access.count %>
+      </dd>
+
+      <dt>RAs:</dt>
+      <dd>
+        Total: <%= @snapshot_ambassadors.count %><br />
+        Full access: <%= @snapshot_ambassadors.full_access.count %>
+      </dd>
+
+      <dt>Judges:</dt>
+      <dd>
+        Total: <%= @snapshot_judges.count %><br />
+        Full access: <%= @snapshot_judges.full_access.count %>
+      </dd>
+    </dl>
+
+    <h2 class="resources__heading appy-heading-lg">
+      <%= t("views.application.resources") %>
+    </h2>
+
+    <ul class="resources__list">
+      <li class="resources__item-wrapper">
+        <div class="card">
+          <div class="card__heading">
+            Curriculum
+            <%= fa_icon("graduation-cap", class: "card-heading__flair") %>
+          </div>
+
+          <div class="card__body">
+            <p>
+              <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>.
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<% provide(:head_js) do %>
+  <%= javascript_include_tag "Chart.bundle", "chartkick" %>
+<% end %>
