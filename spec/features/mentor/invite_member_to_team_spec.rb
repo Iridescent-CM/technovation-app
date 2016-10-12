@@ -42,6 +42,7 @@ RSpec.feature "Invite a member to a team" do
     sign_out
     sign_in(invite.invitee)
     click_link "View Team"
+    expect(page).to have_content("Primary location: Chicago, IL, United States")
     click_button "Accept invitation to #{mentor.team_names.first}"
     expect(current_path).to eq(student_team_path(invite.team))
   end

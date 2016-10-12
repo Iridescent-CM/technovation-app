@@ -289,6 +289,7 @@ en:
         confirm_leave: "Are you sure you want to leave the team?"
         division_name: "Division: %{name}"
         invite: "Invite more students"
+        location: "Primary location: %{name}"
         members_full: "Your team can have up to five students. You cannot invite more students while you have a combined total of five members, invitations, and/or join requests."
         members_subheading: "Team members"
         mentors_subheading: "Team mentors"
