@@ -1,10 +1,6 @@
-<h1 class="appy-title">Background Checks</h1>
+<h1 class="appy-title">Signup Attempts</h1>
 
 <div class="wrapper__report_table">
-  <p>
-    <%= button_to "Sync with checkr", [:admin, :background_check_sweeps] %>
-  </p>
-
   <label class="no-text-transform">
     Per page:
     <%= select_tag :per_page,
@@ -16,41 +12,37 @@
   <label class="no-text-transform">
     Status:
     <%= select_tag :status,
-                   options_for_select(BackgroundCheck.statuses.keys, params[:status]),
+                   options_for_select(SignupAttempt.statuses.keys, params[:status]),
                    class: "inline",
                    data: { reload: true, param: :status } %>
   </label>
 
 
   <div class="pagination_info">
-    <%= page_entries_info @background_checks, model: "#{params[:status]} background check" %>
+    <%= page_entries_info @signup_attempts, model: "#{params[:status]} signup attempt" %>
   </div>
 
-  <%= will_paginate @background_checks %>
+  <%= will_paginate @signup_attempts %>
 
   <table class="table__report_table">
     <thead>
       <tr>
-        <th>Account ID</th>
-        <th>Account type</th>
         <th>Email</th>
         <th>Status</th>
       </tr>
     </thead>
 
     <tbody>
-      <% @background_checks.each do |bg_check| %>
-        <% cache(bg_check) do %>
+      <% @signup_attempts.each do |attempt| %>
+        <% cache(attempt) do %>
           <tr>
-            <td><%= bg_check.account_id %></td>
-            <td><%= bg_check.account.type_name %></td>
-            <td><%= bg_check.account.email %></td>
-            <td><%= bg_check.status %></td>
+            <td><%= attempt.email %></td>
+            <td><%= attempt.status %></td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
 
-  <%= will_paginate @background_checks %>
+  <%= will_paginate @signup_attempts %>
 </div>

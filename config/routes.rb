@@ -94,6 +94,8 @@ Rails.application.routes.draw do
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
 
+    resources :signup_attempts, only: :index
+
     resource :mentor_drop_out, only: :create
 
     resources :exports, only: :create
