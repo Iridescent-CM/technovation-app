@@ -1,14 +1,43 @@
-<p>Welcome to Technovation <%= @season_year %>!</p>
+<table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction">
+  <tr>
+    <td class="content-wrap">
+      <meta itemprop="name" content="Welcome Students"/>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="content-block">
+            Welcome to Technovation <%= @season_year %>!
+          </td>
+        </tr>
 
-<p>We're thrilled to have you join the Technovation community for the <%= @season_year %> season! We can't wait to hear more from you about the types of problems you want to solve using technology, and see the amazing ideas you bring to life.</p>
+        <tr>
+          <td class="content-block">
+            We're thrilled to have you join the Technovation community for the <%= @season_year %> season! We can't wait to hear more from you about the types of problems you want to solve using technology, and see the amazing ideas you bring to life.
+          </td>
+        </tr>
 
-<p>First things first:</p>
+        <tr>
+          <td class="content-block">
+            First things first:
 
-<ol>
-  <li>Make sure that your parent or guardian has given you permission to participate! There are instructions on how to send a permission form on <%= link_to "your dashboard", @dashboard_url %>. Once the consent form is signed, you'll be ready to participate in Technovation.</li>
-  <li>Please take some time right now to learn about <strong>internet safety and digital literacy</strong>. We want you to be safe and well-informed as you participate in online programs! Technovation will connect you with an adult mentor to support you as you develop your app. We trust our mentors. They have been pre-approved to support your team, but we still recommend that you <%= link_to "take a few minutes to learn", @safety_url %> how to keep yourself safe when collaborating online.</li>
-</ol>
+            <ol>
+              <li>Make sure that your parent or guardian has given you permission to participate! There are instructions on how to send a permission form on <%= link_to "your dashboard", @dashboard_url %>. Once the consent form is signed, you'll be ready to participate in Technovation.</li>
+              <li>Please take some time right now to learn about <strong>internet safety and digital literacy</strong>. We want you to be safe and well-informed as you participate in online programs! Technovation will connect you with an adult mentor to support you as you develop your app. We trust our mentors. They have been pre-approved to support your team, but we still recommend that you <%= link_to "take a few minutes to learn", @safety_url %> how to keep yourself safe when collaborating online.</li>
+            </ol>
+          </td>
+        </tr>
 
-<p>When you're ready, you can get started on the Technovation curriculum by <%= link_to 'logging back into your account', @signin_url %> on <%= link_to @host, @root_url %></p>
+        <tr>
+          <td class="content-block">
+            When you're ready, you can get started on the Technovation curriculum by <%= link_to 'logging back into your account', @signin_url %> on <%= link_to @host, @root_url %>
+          </td>
+        </tr>
 
-<p>The Technovation Team</p>
+        <tr>
+          <td class="content-block">
+            &mdash; The Technovation Team
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
