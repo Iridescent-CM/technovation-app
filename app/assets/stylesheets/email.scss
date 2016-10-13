@@ -123,13 +123,18 @@ h4 {
   font-weight: 600;
 }
 
-p, ul, ol {
+p {
   margin-bottom: 10px;
   font-weight: normal;
 }
-p li, ul li, ol li {
+
+ul, ol {
+  font-weight: normal;
+}
+
+ul li, ol li {
   margin-left: 5px;
-  list-style-position: inside;
+  margin-bottom: 15px;
 }
 
 /* -------------------------------------
