@@ -18,12 +18,6 @@
 <%= f.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
 <%= f.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
 
-<%= f.input :city, label: t("models.account.city"),
-                  input_html: { id: "city" },
-                  wrapper_html: {
-                    class: "location-#{extra_location_field(f.object, :city)}"
-                  } %>
-
 <%= f.input :country, label: t("models.account.country"),
                       collection: CountryStateSelect.countries_collection,
                       input_html: { id: "country" },
