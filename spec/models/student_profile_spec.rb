@@ -11,6 +11,18 @@ RSpec.describe StudentProfile do
     expect(profile).to be_valid
   end
 
+  it "allows ON FILE as the email ONLY by admin action" do
+    profile = FactoryGirl.build(:student_profile, parent_guardian_email: "ON FILE")
+    expect(profile).not_to be_valid
+
+    profile.parent_guardian_email = nil
+    profile.save!
+    profile.update_column(:parent_guardian_email, "ON FILE")
+
+    expect(profile.reload).to be_valid
+    expect(profile.parent_guardian_email).to eq("ON FILE")
+  end
+
   it "doesn't allow a student email to be used as parent email" do
     FactoryGirl.create(:student, email: "noway@jose.com")
     profile = FactoryGirl.build(:student_profile, parent_guardian_email: "noway@jose.com")

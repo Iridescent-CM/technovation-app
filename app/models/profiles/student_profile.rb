@@ -25,7 +25,7 @@ class StudentProfile < ActiveRecord::Base
 
   private
   def validate_valid_parent_email
-    return if parent_guardian_email.blank?
+    return if parent_guardian_email.blank? || (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE")
 
     if StudentAccount.where("lower(email) = ?", parent_guardian_email.downcase).any?
       errors.add(:parent_guardian_email, :found_in_student_accounts)
