@@ -7,7 +7,10 @@ gem 'pg', '~> 0.18'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
+
 gem "autoprefixer-rails"
+gem 'nokogiri'
+gem 'premailer-rails'
 
 gem 'rails-i18n', '~> 4.0.0'
 gem 'obscenity', '~> 1.0.2'
