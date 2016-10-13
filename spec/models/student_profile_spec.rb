@@ -21,8 +21,7 @@ RSpec.describe StudentProfile do
 
     expect(profile.reload).to be_valid
     expect(profile.parent_guardian_email).to eq("ON FILE")
-
-    expect(profile.update_attributes(school_name: "Test school name change works")).to be true
+    expect(profile.update_attributes(school_name: "some other change works")).to be true
   end
 
   it "doesn't allow a student email to be used as parent email" do
