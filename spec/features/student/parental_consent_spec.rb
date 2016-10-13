@@ -12,6 +12,12 @@ RSpec.feature "Parental consent" do
     click_button "Send the link"
 
     expect(page).to have_css('.error', text: "does not appear to be an email address")
+
+    fill_in "Parent or guardian's email", with: "no-work@gmail.com."
+
+    click_button "Send the link"
+
+    expect(page).to have_css('.error', text: "does not appear to be an email address")
   end
 
   scenario "invalid token" do

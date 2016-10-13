@@ -1,6 +1,20 @@
 require "rails_helper"
 
 RSpec.feature "Activate your email to sign up" do
+  scenario "input doesn't look like an email" do
+    visit root_path
+
+    fill_in "Email address", with: "joejoesak.com"
+    click_button "Get started"
+
+    expect(page).to have_content("doesn't appear to be an email address")
+
+    fill_in "Email address", with: "joe@joesak.com."
+    click_button "Get started"
+
+    expect(page).to have_content("doesn't appear to be an email address")
+  end
+
   scenario "Use an email that exists" do
     ActionMailer::Base.deliveries.clear
 

@@ -31,7 +31,7 @@ class StudentProfile < ActiveRecord::Base
       errors.add(:parent_guardian_email, :found_in_student_accounts)
     end
 
-    if not parent_guardian_email.match(/@/)
+    if not parent_guardian_email.match(/@/) or parent_guardian_email.match(/\.$/)
       errors.add(:parent_guardian_email, :invalid)
     end
   end
