@@ -63,7 +63,7 @@ class Team < ActiveRecord::Base
   end
 
   def creator_address_details
-    memberships.first.member_address_details
+    memberships.first && memberships.first.member_address_details
   end
 
   def city
