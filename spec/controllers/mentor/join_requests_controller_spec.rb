@@ -20,9 +20,9 @@ RSpec.describe Mentor::JoinRequestsController do
     it "sends the correct email" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq("A mentor has requested to join your team!")
-      expect(mail.body.parts.last.to_s).to include("#{mentor.first_name} has requested to join your Technovation team as a mentor")
-      expect(mail.body.parts.last.to_s).to include("You can review pending requests to join your team here:")
-      expect(mail.body.parts.last.to_s).to include("href=\"#{student_team_url(team, host: "www.example.com")}\"")
+      expect(mail.body).to include("#{mentor.first_name} has requested to join your Technovation team as a mentor")
+      expect(mail.body).to include("You can review pending requests to join your team here:")
+      expect(mail.body).to include("href=\"#{student_team_url(team, host: "www.example.com")}\"")
     end
   end
 end
