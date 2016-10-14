@@ -87,7 +87,7 @@ RSpec.feature "Reset your forgotten password" do
     click_link "sign in now"
 
     fill_in "Email", with: account.email
-    fill_in "Create a password", with: "greatnewsecret"
+    fill_in "Password", with: "greatnewsecret"
     click_button "Sign in"
     expect(current_path).to eq(send("#{account.type_name}_dashboard_path"))
     expect(account.reload.password_reset_token).to be_blank
