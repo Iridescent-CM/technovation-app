@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20161013141809) do
     t.string   "first_name",                   null: false
     t.string   "last_name",                    null: false
     t.date     "date_of_birth",                null: false
-    t.string   "city",                         null: false
+    t.string   "city"
     t.string   "state_province"
     t.string   "country",                      null: false
     t.string   "type",                         null: false
