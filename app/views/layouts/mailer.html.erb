@@ -8,24 +8,30 @@
   </head>
 
   <body itemscope itemtype="http://schema.org/EmailMessage">
-
     <table class="body-wrap">
       <tr>
         <td></td>
         <td class="container" width="600">
           <div class="content">
-            <%= yield %>
+            <table class="main" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="header-block"><span>&nbsp;</span></td>
+              </tr>
+              <%= yield %>
+              </table>
+            </div>
+
             <div class="footer">
               <table width="100%">
                 <tr>
                   <td class="aligncenter content-block">Follow <a href="http://twitter.com/technovation">@technovation</a> on Twitter.</td>
                 </tr>
               </table>
-            </div></div>
+            </div>
+          </div>
         </td>
         <td></td>
       </tr>
     </table>
-
   </body>
 </html>

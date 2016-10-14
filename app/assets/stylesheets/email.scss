@@ -193,7 +193,7 @@ a {
     ALERTS
     Change the class depending on warning email, good email or bad email
 ------------------------------------- */
-.alert {
+.alert, .header-block {
   font-size: 16px;
   color: #fff;
   font-weight: 500;
@@ -215,6 +215,17 @@ a {
 }
 .alert.alert-good {
   background-color: #68B90F;
+}
+.header-block {
+  background-image: image-url("header-background.png");
+  background-color: #903D54;
+
+  span {
+    display: block;
+    height: 36px;
+    width: 158px;
+    background-image: image-url("tc-logo-white-tm.png");
+  }
 }
 
 /* -------------------------------------

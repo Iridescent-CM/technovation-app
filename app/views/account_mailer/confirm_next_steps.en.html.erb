@@ -1,33 +1,31 @@
-<table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction">
-  <tr>
-    <td class="content-wrap">
-      <meta itemprop="name" content="Student notification that parent signed consent"/>
-      <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-          <td class="content-block">
-            Hey, <%= @name %>!
-          </td>
-        </tr>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Student notification that parent signed consent"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hey, <%= @name %>!
+        </td>
+      </tr>
 
-        <tr>
-          <td class="content-block">
-            Good news! Your parent / guardian gave you permission to participate in Technovation <%= Season.current.year %>!
-          </td>
-        </tr>
+      <tr>
+        <td class="content-block">
+          Good news! Your parent / guardian gave you permission to participate in Technovation <%= Season.current.year %>!
+        </td>
+      </tr>
 
-        <tr>
-          <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-            <%= link_to "Start Building Your Team", @url, class: "btn-primary", itemprop: "url" %>
-          </td>
-        </tr>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Start Building Your Team", @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
 
-        <tr>
-          <td class="content-block">
-            Good luck!<br />
-            Technovation Challenge Staff
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+      <tr>
+        <td class="content-block">
+          Good luck!<br />
+          Technovation Challenge Staff
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
