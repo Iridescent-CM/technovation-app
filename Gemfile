@@ -73,7 +73,10 @@ group :development do
   gem 'spring'
   gem "refills"
   gem 'active_record_query_trace'
+  gem "letter_opener"
 end
+
+gem 'premailer-rails', group: [:qa, :staging, :production, :development]
 
 group :test do
   gem 'vcr'
@@ -84,7 +87,6 @@ end
 group :qa, :staging, :production do
   gem 'rails_12factor'
   gem 'hiredis'
-  gem 'premailer-rails'
 end
 
 # LEGACY MIGRATION
