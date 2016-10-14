@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Register as a judge" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "judge@judge.com", status: SignupAttempt.statuses[:active]).signup_token}")
+    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "judge@judge.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
 
     visit judge_signup_path
 
@@ -15,9 +15,6 @@ RSpec.feature "Register as a judge" do
 
     fill_in "Company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Coming of age Storywriter"
-
-    fill_in "Create a password", with: "secret1234"
-    fill_in "Confirm password", with: "secret1234"
 
     select "Company email", from: "How did you hear about Technovation?"
 

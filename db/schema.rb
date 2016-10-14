@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013141809) do
+ActiveRecord::Schema.define(version: 20161014174440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20161013141809) do
     t.string   "first_name",                   null: false
     t.string   "last_name",                    null: false
     t.date     "date_of_birth",                null: false
-    t.string   "city"
+    t.string   "city",                         null: false
     t.string   "state_province"
     t.string   "country",                      null: false
     t.string   "type",                         null: false
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(version: 20161013141809) do
     t.datetime "updated_at",                   null: false
     t.string   "signup_token"
     t.string   "pending_token"
+    t.string   "password_digest"
   end
 
   add_index "signup_attempts", ["account_id"], name: "index_signup_attempts_on_account_id", using: :btree

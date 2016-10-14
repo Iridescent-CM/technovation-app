@@ -3,10 +3,20 @@ module Student
     include SignupController
 
     before_action -> {
-      if attempt = SignupAttempt.pending.find_by(activation_token: params[:token])
+      attempt = (SignupAttempt.pending | SignupAttempt.invited).detect do |a|
+        a.activation_token == params[:token]
+      end
+
+      if !!attempt and attempt.pending?
         attempt.active!
+      elsif !!attempt and attempt.invited?
+        attempt.regenerate_signup_token
+      end
+
+      if !!attempt
         cookies[:signup_token] = attempt.signup_token
       end
+
     }, only: :new
 
     private

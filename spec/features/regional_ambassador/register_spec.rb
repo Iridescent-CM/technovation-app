@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassadors registration" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com", status: SignupAttempt.statuses[:active]).signup_token}")
+    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
 
     visit signup_path
     click_link "Apply to become a Regional Ambassador"
@@ -18,9 +18,6 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Job title", with: "Engineer"
     fill_in "Tell us about yourself", with: "I am cool"
     select "I'm new!", from: "In which year did you become a regional ambassador?"
-
-    fill_in "Create a password", with: "secret1234"
-    fill_in "Confirm password", with: "secret1234"
 
     select "Other", from: "How did you hear about Technovation?"
     fill_in "regional_ambassador_account[referred_by_other]", with: "Some other value"

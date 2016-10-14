@@ -11,7 +11,12 @@ class TeamMailer < ApplicationMailer
       @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
       @link_text = "Complete your profile to join this team"
     else
-      attempt = SignupAttempt.create!(email: invite.invitee_email, prevent_email: true)
+      attempt = SignupAttempt.create!(
+        email: invite.invitee_email,
+        password: SecureRandom.hex(17),
+        status: SignupAttempt.statuses[:invited],
+      )
+
       @url = student_signup_url(token: attempt.activation_token)
       @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
       @link_text = "Signup to join this team"
