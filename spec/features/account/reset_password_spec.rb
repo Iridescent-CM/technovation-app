@@ -59,14 +59,14 @@ RSpec.feature "Reset your forgotten password" do
     account.enable_password_reset!
 
     visit new_password_path(token: account.password_reset_token)
-    fill_in "Password", with: "a"
+    fill_in "Create a password", with: "a"
     fill_in "Confirm password", with: "a"
     click_button "Save"
 
     expect(current_path).to eq(passwords_path)
     expect(page).to have_css(".error", text: "too short")
 
-    fill_in "Password", with: "abcdefghij"
+    fill_in "Create a password", with: "abcdefghij"
     fill_in "Confirm password", with: "zyxwvutsrqp"
     click_button "Save"
 
@@ -79,7 +79,7 @@ RSpec.feature "Reset your forgotten password" do
     account.enable_password_reset!
 
     visit new_password_path(token: account.password_reset_token)
-    fill_in "Password", with: "greatnewsecret"
+    fill_in "Create a password", with: "greatnewsecret"
     fill_in "Confirm password", with: "greatnewsecret"
     click_button "Save"
 
@@ -87,7 +87,7 @@ RSpec.feature "Reset your forgotten password" do
     click_link "sign in now"
 
     fill_in "Email", with: account.email
-    fill_in "Password", with: "greatnewsecret"
+    fill_in "Create a password", with: "greatnewsecret"
     click_button "Sign in"
     expect(current_path).to eq(send("#{account.type_name}_dashboard_path"))
     expect(account.reload.password_reset_token).to be_blank

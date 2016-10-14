@@ -19,7 +19,7 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Tell us about yourself", with: "I am cool"
     select "I'm new!", from: "In which year did you become a regional ambassador?"
 
-    fill_in "Password", with: "secret1234"
+    fill_in "Create a password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
     select "Other", from: "How did you hear about Technovation?"

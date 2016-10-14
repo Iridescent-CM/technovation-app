@@ -100,7 +100,7 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "School name", with: "John Hughes High."
 
-    fill_in "Password", with: "secret1234"
+    fill_in "Create a password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
     click_button "Sign up"

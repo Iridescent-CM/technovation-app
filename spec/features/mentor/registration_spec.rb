@@ -16,7 +16,7 @@ RSpec.feature "Register as a mentor" do
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
 
-    fill_in "Password", with: "secret1234"
+    fill_in "Create a password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
     click_button "Sign up"

@@ -16,7 +16,7 @@ RSpec.feature "Register as a judge" do
     fill_in "Company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Coming of age Storywriter"
 
-    fill_in "Password", with: "secret1234"
+    fill_in "Create a password", with: "secret1234"
     fill_in "Confirm password", with: "secret1234"
 
     select "Company email", from: "How did you hear about Technovation?"
