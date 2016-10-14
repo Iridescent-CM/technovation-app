@@ -29,7 +29,7 @@
 
       <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
 
-      <% if editing or signup.invited? %>
+      <% if editing or signup.temporary_password? %>
          <h6 class="signup-section">
           <%= password_label %>
         </h6>

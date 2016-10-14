@@ -48,7 +48,7 @@ module SignupController
       attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
       tapped[:email] = attempt.email
 
-      unless attempt.invited?
+      unless attempt.temporary_password?
         tapped[:password_digest] = attempt.password_digest
       end
     end

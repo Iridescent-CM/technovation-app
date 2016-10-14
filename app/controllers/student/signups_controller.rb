@@ -3,13 +3,13 @@ module Student
     include SignupController
 
     before_action -> {
-      attempt = (SignupAttempt.pending | SignupAttempt.invited).detect do |a|
+      attempt = (SignupAttempt.pending | SignupAttempt.temporary_password).detect do |a|
         a.activation_token == params[:token]
       end
 
       if !!attempt and attempt.pending?
         attempt.active!
-      elsif !!attempt and attempt.invited?
+      elsif !!attempt and attempt.temporary_password?
         attempt.regenerate_signup_token
       end
 

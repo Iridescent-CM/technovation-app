@@ -1,7 +1,7 @@
 class SignupAttempt < ActiveRecord::Base
   has_secure_password
 
-  enum status: %i{pending active registered invited}
+  enum status: %i{pending active registered temporary_password}
   belongs_to :account
 
   validates :email, presence: true, email: true

@@ -51,7 +51,7 @@ class Account < ActiveRecord::Base
   validates :profile_image, verify_cached_file: true
 
   validates :existing_password, valid_password: true, if: :changes_require_password?
-  validates :password, length: { minimum: 8, on: :create, if: :invited? }
+  validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
 
   validates :date_of_birth, :first_name, :last_name, :country, presence: true
 
@@ -168,8 +168,8 @@ class Account < ActiveRecord::Base
       .last
   end
 
-  def invited?
-    new_record? and SignupAttempt.invited.where("lower(email) = ?", email.downcase).any?
+  def temporary_password?
+    new_record? and SignupAttempt.temporary_password.where("lower(email) = ?", email.downcase).any?
   end
 
   def after_background_check_deleted

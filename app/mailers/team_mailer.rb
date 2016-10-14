@@ -14,7 +14,7 @@ class TeamMailer < ApplicationMailer
       attempt = SignupAttempt.create!(
         email: invite.invitee_email,
         password: SecureRandom.hex(17),
-        status: SignupAttempt.statuses[:invited],
+        status: SignupAttempt.statuses[:temporary_password],
       )
 
       @url = student_signup_url(token: attempt.activation_token)
