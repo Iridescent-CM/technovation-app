@@ -5,13 +5,16 @@ class TeamMailer < ApplicationMailer
     if invite.invitee && invite.invitee.can_join_a_team?
       @url = student_team_member_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
+      @link_text = "Review your invitation to this team"
     elsif invite.invitee
       @url = student_dashboard_url
       @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
+      @link_text = "Complete your profile to join this team"
     else
       attempt = SignupAttempt.create!(email: invite.invitee_email, prevent_email: true)
       @url = student_signup_url(token: attempt.activation_token)
       @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+      @link_text = "Signup to join this team"
     end
 
     mail to: invite.invitee_email, template_name: :invite_member
