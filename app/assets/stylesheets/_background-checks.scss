@@ -1,0 +1,29 @@
+.background-check__columns {
+  display: flex;
+  position: relative;
+
+  .background-check__column-form, .background-check__column-security-info {
+    display: flexbox;
+    .simple_form {
+      @include span-columns(12);
+    }
+  }
+
+  .background-check__column-form {
+    width: 40%;
+  }
+
+  .background-check__column-security-info {
+    width: 40%;
+    position: fixed;
+    right: 10%;
+
+    ul {
+      margin-left: 1.5rem;
+
+      li {
+        list-style: disc;
+      }
+    }
+  }
+}
