@@ -217,14 +217,15 @@ a {
   background-color: #68B90F;
 }
 .header-block {
-  background-image: image-url("header-background.png");
   background-color: #903D54;
+  background-image: image-url("header-background.png");
+  background-repeat: no-repeat;
 
   span {
     display: block;
     height: 36px;
     width: 158px;
-    background-image: image-url("tc-logo-white-tm.png");
+    background: image-url("tc-logo-white-tm.png") no-repeat top / 158px 36px;
   }
 }
 
