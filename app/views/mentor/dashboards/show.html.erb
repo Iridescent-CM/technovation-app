@@ -13,18 +13,22 @@
 
   <div class="flex-col-sm-4 dashboard__sidebar">
     <% if current_mentor.consent_waiver.present? and current_mentor.bio_complete? and current_mentor.background_check_complete? %>
-      <h4 class="appy-heading-lg">
-        <%= t("views.application.curriculum") %>
-      </h4>
+      <div class="card">
+        <div class="card__heading">
+          <%= t("views.application.curriculum") %>
+          <span class="card-heading__flair fa fa-graduation-cap"><!--Fontawesome--></span>
+        </div>
+        <div class="card__body">
+          <p>
+            <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
+          </p>
 
-      <p>
-        <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
-      </p>
-
-      <p>
-        <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
-        <br />(if you came from Made With Code)
-      </p>
+          <p>
+            <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
+            <br />(if you came from Made With Code)
+          </p>
+        </div>
+      </div>
     <% end %>
 
     <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>

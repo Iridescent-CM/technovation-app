@@ -1,8 +1,28 @@
-<p>Hey <%= @first_name %>,</p>
-
-<p>The file you requested is ready for download here:</p>
-
-<p><%= link_to @url, @url %></p>
-
-<p>Enjoy,<br />
-The Technovation Team</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hey <%= @first_name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          The file you requested is ready to download!
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Download Your File", @url %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Enjoy,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

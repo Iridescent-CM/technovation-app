@@ -22,19 +22,19 @@ RSpec.feature "Activate your email to sign up" do
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Create a password", with: "secret1234"
     click_button "Get started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
-    expect(page).to have_content("That email is already being used on Technovation.")
-    expect(page).to have_link("sign in")
-    expect(page).to have_link("reset your password")
+    expect(current_path).to eq(judge_dashboard_path)
   end
 
   scenario "Use an email that is awaiting activation" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
+    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Create a password", with: "secret1234"
     click_button "Get started"
 
     expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
@@ -43,13 +43,14 @@ RSpec.feature "Activate your email to sign up" do
   end
 
   scenario "Use an email that has already activated" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
+    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
     signup_attempt.active!
 
     ActionMailer::Base.deliveries.clear
 
     visit root_path
     fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Create a password", with: "secret1234"
     click_button "Get started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
@@ -62,16 +63,17 @@ RSpec.feature "Activate your email to sign up" do
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Create a password", with: "secret1234"
     click_button "Get started"
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present, "no confirmation email sent"
     expect(mail.to).to eq(["joe@joesak.com"])
-    expect(mail.body.parts.last).to have_link(new_signup_attempt_confirmation_url(token: SignupAttempt.last.activation_token))
+    expect(mail.body).to have_link("Confirm Email Address", href: new_signup_attempt_confirmation_url(token: SignupAttempt.last.activation_token))
   end
 
   scenario "Activate your email for signing up" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
+    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
     ActionMailer::Base.deliveries.clear
 
     visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
@@ -83,13 +85,11 @@ RSpec.feature "Activate your email to sign up" do
   end
 
   scenario "Register the signup attempt on sign up" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com")
+    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
 
     visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
 
     click_link "Student sign up"
-
-    expect(page).to have_xpath("//input[@value='joe@joesak.com'][@disabled='disabled']")
 
     fill_in "First name", with: "Student"
     fill_in "Last name", with: "Test"
@@ -100,12 +100,29 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "School name", with: "John Hughes High."
 
-    fill_in "Password", with: "secret1234"
-    fill_in "Confirm password", with: "secret1234"
-
     click_button "Sign up"
 
     expect(signup_attempt.reload).to be_registered
     expect(signup_attempt.account.email).to eq("joe@joesak.com")
+  end
+
+  scenario "Register after team invite" do
+    team = FactoryGirl.create(:team)
+    email = "Student@test.com"
+
+    team.team_member_invites.create!(
+      inviter: team.students.first,
+      invitee_email: email,
+    )
+
+    visit student_signup_path(
+      token: SignupAttempt.find_by(email: email).activation_token
+    )
+
+    click_button "Sign up"
+
+    within(".student_account_password") {
+      expect(page).to have_css('.error', text: "can't be blank")
+    }
   end
 end

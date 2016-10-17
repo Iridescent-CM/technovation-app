@@ -29,7 +29,6 @@ module AccountController
       :email,
       :existing_password,
       :password,
-      :password_confirmation,
       :date_of_birth,
       :first_name,
       :last_name,

@@ -33,7 +33,8 @@ h1, h2, h3, h4, h5, h6 { // TODO: Make this less specific
   }
 }
 
-.appy-hint {
+.simple_form .appy-hint, .appy-hint {
+  margin: -1rem 0 1rem;
   font-size: 1rem;
 }
 

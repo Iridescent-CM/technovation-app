@@ -80,6 +80,10 @@ form {
     input, label {
       display: none;
     }
+
+    .appy-hint {
+      margin-top: 0;;
+    }
   }
 }
 
@@ -138,10 +142,6 @@ select.has-val + .chosen-container span {
 
 .chosen-container .chosen-results li {
   line-height: 1.5;
-}
-
-.notify-error {
-  @extend .flash-error;
 }
 
 .inline-radio, .inline-checkbox {

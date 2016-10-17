@@ -1,8 +1,28 @@
-<p>Hi Technovation Team,</p>
-
-<p>A new RA application for <%= @name %> has been completed and is ready for your approval. Please login to review the application and approve/decline this RA's account.</p>
-
-<p><%= link_to @url, @url %></p>
-
-<p>Best,<br />
-Joe &amp; Allie</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Pending RA Notice to Admin"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hi Technovation Team,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          A new RA application for <%= @name %> has been completed and is ready for your approval. Please login to review the application and approve/decline this RA's account.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Review Pending Ambassadords", @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Best,<br />
+          Joe &amp; Allie
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

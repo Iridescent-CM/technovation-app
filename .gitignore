@@ -18,3 +18,4 @@ output.txt
 .DS_Store
 path
 public/uploads
+.heroku-configs

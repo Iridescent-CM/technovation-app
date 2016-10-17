@@ -1,5 +1,6 @@
 <% flash.each do |type, msg| %>
-  <div class="flash-<%= type %>">
+  <div class="flash flash--<%= type %>">
     <span><%= msg %></span>
+    <span class="fa"></span>
   </div>
 <% end %>

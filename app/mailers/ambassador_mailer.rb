@@ -3,13 +3,19 @@ class AmbassadorMailer < ApplicationMailer
     @season_year = Season.current.year
     @root_url = root_url
     @training_url = "http://iridescentlearning.org/internet-safety/"
-    mail to: ambassador.email
+
+    I18n.with_locale(ambassador.locale) do
+      mail to: ambassador.email
+    end
   end
 
   def declined(ambassador)
     @first_name = ambassador.first_name
     @status = ambassador.status
-    mail to: ambassador.email
+
+    I18n.with_locale(ambassador.locale) do
+      mail to: ambassador.email
+    end
   end
 
   def spam(*)

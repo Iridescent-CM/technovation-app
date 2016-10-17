@@ -11,3 +11,4 @@
 //= require remote_forms
 //= require search_options
 //= require select_fields
+//= require toast_flashes

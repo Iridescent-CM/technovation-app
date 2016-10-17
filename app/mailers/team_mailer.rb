@@ -5,16 +5,26 @@ class TeamMailer < ApplicationMailer
     if invite.invitee && invite.invitee.can_join_a_team?
       @url = student_team_member_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
+      @link_text = "Review this invitation"
     elsif invite.invitee
       @url = student_dashboard_url
       @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
+      @link_text = "Complete your profile"
     else
-      attempt = SignupAttempt.create!(email: invite.invitee_email, prevent_email: true)
+      attempt = SignupAttempt.create!(
+        email: invite.invitee_email,
+        password: SecureRandom.hex(17),
+        status: SignupAttempt.statuses[:temporary_password],
+      )
+
       @url = student_signup_url(token: attempt.activation_token)
       @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+      @link_text = "Signup to join this team"
     end
 
-    mail to: invite.invitee_email, template_name: :invite_member
+    I18n.with_locale(invite.inviter.locale) do
+      mail to: invite.invitee_email, template_name: :invite_member
+    end
   end
 
   def invite_mentor(invite)
@@ -23,12 +33,16 @@ class TeamMailer < ApplicationMailer
     if CompletionSteps.new(invite.invitee).unlocked?(new_mentor_team_search_url)
       @url = mentor_mentor_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
+      @link_text = "Review this invitation"
     else
       @url = mentor_dashboard_url
       @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
+      @link_text = "Complete your profile"
     end
 
-    mail to: invite.invitee_email, template_name: :invite_member
+    I18n.with_locale(invite.inviter.locale) do
+      mail to: invite.invitee_email, template_name: :invite_member
+    end
   end
 
   def join_request(recipient, join_request)
@@ -38,9 +52,11 @@ class TeamMailer < ApplicationMailer
     @extra = I18n.translate("team_mailer.join_request.extra.#{join_request.requestor_type_name}", name: @first_name)
     @url = send("#{recipient.type_name}_team_url", join_request.joinable)
 
-    mail to: recipient.email,
-         subject: I18n.translate("team_mailer.join_request.subject",
-                                 role_name: join_request.requestor_type_name)
+    I18n.with_locale(recipient.locale) do
+      mail to: recipient.email,
+          subject: I18n.translate("team_mailer.join_request.subject",
+                                  role_name: join_request.requestor_type_name)
+    end
   end
 
   def mentor_join_request_accepted(join_request)
@@ -78,9 +94,11 @@ class TeamMailer < ApplicationMailer
       end
     end
 
-    mail to: join_request.requestor_email,
-      subject: I18n.translate("team_mailer.#{type}_join_request_status.#{status}_subject",
-                              name: join_request.joinable_name),
-      template_name: "join_request_#{status}"
+    I18n.with_locale(join_request.requestor.locale) do
+      mail to: join_request.requestor_email,
+        subject: I18n.translate("team_mailer.#{type}_join_request_status.#{status}_subject",
+                                name: join_request.joinable_name),
+        template_name: "join_request_#{status}"
+    end
   end
 end

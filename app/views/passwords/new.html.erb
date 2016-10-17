@@ -4,7 +4,10 @@
 
     <%= f.hidden_field :token %>
 
-    <%= f.input :password %>
+    <%= f.input :password, label: t("models.account.password") %>
+
+    <p class="appy-hint"><%= t("models.account.password_hint") %>
+
     <%= f.input :password_confirmation,
                 label: t('views.signups.form.confirm_password') %>
 

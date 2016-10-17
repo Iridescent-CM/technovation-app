@@ -2,23 +2,11 @@
 
 ## Installation and Setup
 
-### Prerequisites OS X 10.11+
+### Prerequisites
 
-You must install `qt5` for the gem `capybara-webkit` to install:
+You **must** install `qt5` for the gem `capybara-webkit` to install:
 
-```
-brew update
-brew install qt5
-```
-
-### Prerequisites OS X 10.9, 10.10
-
-You must install `qt` for the gem `capybara-webkit` to install:
-
-```
-brew update
-brew install qt
-```
+https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
 
 ### Setup
 

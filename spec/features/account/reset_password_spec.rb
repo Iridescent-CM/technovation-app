@@ -15,7 +15,7 @@ RSpec.feature "Reset your forgotten password" do
     click_button "Send me a password reset link"
 
     expect(current_path).to eq(password_resets_path)
-    expect(page).to have_css(".flash-alert", text: "Sorry, but we couldn't find an account with that email address.")
+    expect(page).to have_css(".flash--alert", text: "Sorry, but we couldn't find an account with that email address.")
   end
 
   scenario "Email found" do
@@ -23,7 +23,7 @@ RSpec.feature "Reset your forgotten password" do
     click_button "Send me a password reset link"
 
     expect(current_path).to eq(signin_path)
-    expect(page).to have_css(".flash-success", text: "We sent password reset instructions to your email")
+    expect(page).to have_css(".flash--success", text: "We sent password reset instructions to your email")
 
     account = Account.last
     email = ActionMailer::Base.deliveries.last
@@ -31,7 +31,7 @@ RSpec.feature "Reset your forgotten password" do
     expect(account.password_reset_token_sent_at).not_to be_blank
     expect(email.to).to eq(["Find@me.com"])
     expect(email.subject).to eq("Reset your Technovation password")
-    expect(email.body.parts.last.to_s).to include("href=\"http://www.example.com/passwords/new?token=#{account.password_reset_token}\"")
+    expect(email.body).to include("href=\"http://www.example.com/passwords/new?token=#{account.password_reset_token}\"")
   end
 
   scenario "Attempt a password reset too late" do
@@ -41,7 +41,7 @@ RSpec.feature "Reset your forgotten password" do
     Timecop.travel(2.hours.from_now + 1.minute) do
       visit new_password_path(token: account.password_reset_token)
       expect(current_path).to eq(new_password_reset_path)
-      expect(page).to have_css(".flash-alert", text: "That password request token has expired. You should request a new one.")
+      expect(page).to have_css(".flash--alert", text: "That password request token has expired. You should request a new one.")
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.feature "Reset your forgotten password" do
 
     visit new_password_path(token: "bad")
     expect(current_path).to eq(new_password_reset_path)
-    expect(page).to have_css(".flash-alert", text: "That password request token is invalid. You should request a new one.")
+    expect(page).to have_css(".flash--alert", text: "That password request token is invalid. You should request a new one.")
   end
 
   scenario "Attempt a bad password" do
@@ -59,14 +59,14 @@ RSpec.feature "Reset your forgotten password" do
     account.enable_password_reset!
 
     visit new_password_path(token: account.password_reset_token)
-    fill_in "Password", with: "a"
+    fill_in "Create a password", with: "a"
     fill_in "Confirm password", with: "a"
     click_button "Save"
 
     expect(current_path).to eq(passwords_path)
     expect(page).to have_css(".error", text: "too short")
 
-    fill_in "Password", with: "abcdefghij"
+    fill_in "Create a password", with: "abcdefghij"
     fill_in "Confirm password", with: "zyxwvutsrqp"
     click_button "Save"
 
@@ -79,7 +79,7 @@ RSpec.feature "Reset your forgotten password" do
     account.enable_password_reset!
 
     visit new_password_path(token: account.password_reset_token)
-    fill_in "Password", with: "greatnewsecret"
+    fill_in "Create a password", with: "greatnewsecret"
     fill_in "Confirm password", with: "greatnewsecret"
     click_button "Save"
 

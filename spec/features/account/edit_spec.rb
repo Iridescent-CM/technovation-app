@@ -26,7 +26,7 @@ RSpec.feature "Edit account spec" do
 
   scenario "attempt to edit with wrong existing password" do
     click_link "Edit"
-    fill_in "Password", with: "something@else.com"
+    fill_in "Change your password", with: "something@else.com"
 
     fill_in "Current password", with: "wrong"
     click_button "Save"
@@ -35,7 +35,7 @@ RSpec.feature "Edit account spec" do
 
   scenario "attempt to edit without existing password" do
     click_link "Edit"
-    fill_in "Password", with: "something@else.com"
+    fill_in "Change your password", with: "something@else.com"
 
     fill_in "Current password", with: ""
     click_button "Save"

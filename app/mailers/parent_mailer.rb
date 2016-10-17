@@ -1,8 +1,11 @@
 class ParentMailer < ApplicationMailer
-  def consent_notice(email, name, token)
-    @name = name
-    @url = new_parental_consent_url(token: token)
-    mail to: email
+  def consent_notice(profile)
+    @name = profile.parent_guardian_name
+    @url = new_parental_consent_url(token: profile.account.consent_token)
+
+    I18n.with_locale(profile.account.locale) do
+      mail to: profile.parent_guardian_email
+    end
   end
 
   def confirm_consent_finished(consent)
@@ -12,6 +15,8 @@ class ParentMailer < ApplicationMailer
     @signature = consent.electronic_signature
     @signed_date = consent.created_at.strftime("%B %e, %Y")
 
-    mail to: consent.student.parent_guardian_email
+    I18n.with_locale(consent.student.locale) do
+      mail to: consent.student.parent_guardian_email
+    end
   end
 end

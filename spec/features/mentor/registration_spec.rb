@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Register as a mentor" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "mentor@mentor.com", status: SignupAttempt.statuses[:active]).signup_token}")
+    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "mentor@mentor.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
 
     visit mentor_signup_path
 
@@ -15,9 +15,6 @@ RSpec.feature "Register as a mentor" do
 
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
-
-    fill_in "Password", with: "secret1234"
-    fill_in "Confirm password", with: "secret1234"
 
     click_button "Sign up"
   end

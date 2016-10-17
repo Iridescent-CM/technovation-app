@@ -3,7 +3,6 @@
 @import "bourbon/bourbon";
 @import "neat/neat";
 @import "refills/tables-minimal";
-@import "refills/flashes";
 @import "refills/pagination";
 @import "refills/footer-2";
 @import "refills/button-group";
@@ -23,6 +22,8 @@
 // Component Library
 @import "component-library/buttons";
 @import "component-library/card";
+@import "component-library/flashes";
+@import "component-library/notify-banners";
 @import "component-library/search-panel-and-results";
 @import "component-library/search-filter-card";
 @import "component-library/text-helpers";
@@ -42,3 +43,4 @@
 @import "team-invitations";
 @import "team-submissions";
 @import "teams";
+@import "background-checks";

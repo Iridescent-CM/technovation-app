@@ -7,12 +7,18 @@ class SignupAttemptsController < ApplicationController
 
     @signup_attempt = SignupAttempt.new(signup_attempt_params)
 
-    if !!existing_attempt
-      redirect_to signup_attempt_path(existing_attempt.pending_token), notice: t("controllers.signup_attempts.create.success")
+    if !!existing_account and existing_account.authenticate(signup_attempt_params.fetch(:password))
+      SignIn.(existing_account, self)
+
     elsif !!existing_account
-      render :show
+      redirect_to signin_path(email: existing_account.email), error: t("controllers.signins.create.error")
+
+    elsif !!existing_attempt
+      redirect_to signup_attempt_path(existing_attempt.pending_token), notice: t("controllers.signup_attempts.create.success")
+
     elsif @signup_attempt.save
       redirect_to signup_attempt_path(@signup_attempt.pending_token), success: t("controllers.signup_attempts.create.success")
+
     else
       render "application/dashboards/show"
     end
@@ -35,6 +41,6 @@ class SignupAttemptsController < ApplicationController
 
   private
   def signup_attempt_params
-    params.require(:signup_attempt).permit(:email)
+    params.require(:signup_attempt).permit(:email, :password)
   end
 end

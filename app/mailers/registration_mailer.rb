@@ -14,9 +14,11 @@ class RegistrationMailer < ApplicationMailer
     @edit_account_url = edit_mentor_account_url
     @root_url = root_url
 
-    mail to: mentor.email,
-         from: "Monica Gregg <monica@technovationchallenge.org>",
-         subject: t("registration_mailer.welcome_mentor.subject", season_year: Season.current.year)
+    I18n.with_locale(mentor.locale) do
+      mail to: mentor.email,
+          from: "Monica Gragg <monica@technovationchallenge.org>",
+          subject: t("registration_mailer.welcome_mentor.subject", season_year: Season.current.year)
+    end
   end
 
   def welcome_student(student)
@@ -26,8 +28,10 @@ class RegistrationMailer < ApplicationMailer
     @dashboard_url = student_dashboard_url
     @safety_url = "http://iridescentlearning.org/internet-safety/"
 
-    mail to: student.email,
-         subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+    I18n.with_locale(student.locale) do
+      mail to: student.email,
+          subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+    end
   end
 
   def welcome_made_with_code_student(student)
