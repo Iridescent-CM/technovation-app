@@ -17,6 +17,7 @@ class SignupAttemptsController < ApplicationController
       redirect_to signup_attempt_path(existing_attempt.pending_token), notice: t("controllers.signup_attempts.create.success")
 
     elsif @signup_attempt.save
+      RegistrationMailer.confirm_email(@signup_attempt).deliver_later if @signup_attempt.temporary_password?
       redirect_to signup_attempt_path(@signup_attempt.pending_token), success: t("controllers.signup_attempts.create.success")
 
     else
