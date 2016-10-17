@@ -20,6 +20,7 @@
 
   <div class="pagination_info">
     <%= page_entries_info @signup_attempts, model: "#{params[:status]} signup attempt" %>
+    (<%= number_to_percentage @signup_attempts.count / SignupAttempt.count.to_f * 100, precision: 0 %>)
   </div>
 
   <%= will_paginate @signup_attempts %>
