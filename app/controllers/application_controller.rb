@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   add_flash_types :success
+  force_ssl if: :ssl_configured?
 
   layout :determine_layout
   helper_method :current_account, :current_team
@@ -51,5 +52,9 @@ class ApplicationController < ActionController::Base
     when "StudentAccount"; current_account.team
     when "MentorAccount"; current_account.teams.find(params.fetch(:team_id))
     end
+  end
+
+  def ssl_configured?
+    !Rails.env.development? && !Rails.env.test?
   end
 end
