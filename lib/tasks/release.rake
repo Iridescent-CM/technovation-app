@@ -29,5 +29,4 @@ task :release do
   puts ""
 
   sh "git checkout master"
-  exit
 end
