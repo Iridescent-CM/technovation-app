@@ -25,31 +25,38 @@
   </div>
 
   <div class="background-check__column-security-info">
-    <h1 class="appy-title"><%= fa_icon "lock", text: "Security Information" %></h1>
+    <div class="card">
+      <div class="card__heading">
+        Security Information
+        <%= fa_icon "lock", class: "card-heading__flair" %>
+      </div>
 
-    <p><strong>NO sensitive information is kept on our servers.</strong></p>
+      <div class="card__body">
+        <p><strong>NO sensitive information is kept on our servers.</strong></p>
 
-    <p>
-      Technovation uses a secure, encrypted connection.
-    </p>
+        <p>
+        Technovation uses a secure, encrypted connection.
+        </p>
 
-    <p>
-      <strong>How can I be sure?</strong>
-      <ul>
-        <li>Check that the URL starts with: <strong>https://my.technovationchallenge.org</strong></li>
-        <li>Look for a green lock icon</li>
-        <li>Click on the icon to verify our security certificate</li>
-        <li><%= link_to "Google Chrome security", "https://support.google.com/chrome/answer/95617?hl=en", target: "_blank" %></li>
-        <li><%= link_to "Firefox security", "https://support.mozilla.org/en-US/kb/how-do-i-tell-if-my-connection-is-secure", target: "_blank" %></li>
-        <li><%= link_to "Microsoft IE/Edge security", "https://www.microsoft.com/en-us/safety/online-privacy/trusted-sites.aspx", target: "_blank" %></li>
-      </ul>
-    </p>
+        <p>
+        <strong>How can I be sure?</strong>
+        <ul>
+          <li>Check that the URL starts with: <strong>https://my.technovationchallenge.org</strong></li>
+          <li>Look for a green lock icon</li>
+          <li>Click on the icon to verify our security certificate</li>
+          <li><%= link_to "Google Chrome security", "https://support.google.com/chrome/answer/95617?hl=en", target: "_blank" %></li>
+          <li><%= link_to "Firefox security", "https://support.mozilla.org/en-US/kb/how-do-i-tell-if-my-connection-is-secure", target: "_blank" %></li>
+          <li><%= link_to "Microsoft IE/Edge security", "https://www.microsoft.com/en-us/safety/online-privacy/trusted-sites.aspx", target: "_blank" %></li>
+        </ul>
+        </p>
 
-    <p>
-      This form is submitted directly and securely to our third-party screening service
-      <%= link_to "Checkr", "https://checkr.com/product/screenings/",
-                            rel: "noopener noreferrer",
-                            target: "_blank" %>.
-    </p>
+        <p>
+        This form is submitted directly and securely to our third-party screening service
+        <%= link_to "Checkr", "https://checkr.com/product/screenings/",
+          rel: "noopener noreferrer",
+          target: "_blank" %>.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
