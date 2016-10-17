@@ -4,7 +4,7 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git merge master --no-ff"
+  sh "git merge master"
   puts "-------------------------"
   puts ""
 
@@ -12,7 +12,7 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git merge #{ENV.fetch('VM').sub('.', '-')}-stable --no-ff"
+  sh "git merge #{ENV.fetch('VM').sub('.', '-')}-stable"
   puts "-------------------------"
   puts ""
 
