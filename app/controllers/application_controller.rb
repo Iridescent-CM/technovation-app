@@ -1,12 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
   add_flash_types :success
   add_flash_types :error
-  add_flash_types :error
+
   force_ssl if: :ssl_configured?
 
   layout :determine_layout
   helper_method :current_account, :current_team
+
+  before_action -> {
+    I18n.locale = current_account.locale
+  }
 
   def set_cookie(key, value)
     cookies[key] = value

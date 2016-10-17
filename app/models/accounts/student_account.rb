@@ -126,7 +126,7 @@ class StudentAccount < Account
     RegistrationMailer.welcome_student(self).deliver_later
 
     if parent_guardian_email.present?
-      ParentMailer.consent_notice(parent_guardian_email, parent_guardian_name, consent_token).deliver_later
+      ParentMailer.consent_notice(student_profile).deliver_later
     end
   end
 

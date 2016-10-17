@@ -39,9 +39,7 @@ class StudentProfile < ActiveRecord::Base
   def reset_parent
     if parent_guardian_email_changed? and parent_guardian_email.present?
       student_account.void_parental_consent!
-      ParentMailer.consent_notice(parent_guardian_email,
-                                  parent_guardian_name,
-                                  student_account.consent_token).deliver_later
+      ParentMailer.consent_notice(self).deliver_later
     end
 
     if parent_guardian_name_changed? or parent_guardian_email_changed? and parent_guardian_email.present?

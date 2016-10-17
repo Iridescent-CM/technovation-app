@@ -17,20 +17,20 @@ ActiveRecord::Schema.define(version: 20161017145954) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "email",                                          null: false
-    t.string   "password_digest",                                null: false
-    t.string   "auth_token",                                     null: false
-    t.string   "first_name",                                     null: false
-    t.string   "last_name",                                      null: false
-    t.date     "date_of_birth",                                  null: false
+    t.string   "email",                                       null: false
+    t.string   "password_digest",                             null: false
+    t.string   "auth_token",                                  null: false
+    t.string   "first_name",                                  null: false
+    t.string   "last_name",                                   null: false
+    t.date     "date_of_birth",                               null: false
     t.string   "city"
     t.string   "state_province"
-    t.string   "country",                                        null: false
-    t.string   "type",                                           null: false
+    t.string   "country",                                     null: false
+    t.string   "type",                                        null: false
     t.integer  "referred_by"
     t.string   "referred_by_other"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "consent_token"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20161017145954) do
     t.datetime "password_reset_token_sent_at"
     t.integer  "gender"
     t.string   "last_login_ip"
-    t.string   "locale",                       default: "en-US", null: false
+    t.string   "locale",                       default: "en", null: false
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree

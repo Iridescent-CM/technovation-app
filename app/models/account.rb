@@ -202,6 +202,10 @@ class Account < ActiveRecord::Base
     def type_name
       'application'
     end
+
+    def locale
+      I18n.default_locale
+    end
   end
 
   class NullConsentWaiver
