@@ -1,14 +1,37 @@
-<p>Hi <%= @team_name %>!</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Review request to join your team"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hi <%= @team_name %>!
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <%= @first_name %> has requested to join your Technovation team as a <%= @role_name %>.
+        </td>
+      </tr>
 
-<p><%= @first_name %> has requested to join your Technovation team as a <%= @role_name %>.</p>
+      <% unless @extra.blank? %>
+        <tr>
+          <td class="content-block">
+            <%= @extra %>
+          </td>
+        </tr>
+      <% end %>
 
-<% unless @extra.blank? %>
-  <p><%= @extra %></p>
-<% end %>
-
-<p>You can review pending requests to join your team here:</p>
-
-<p><%= link_to @url, @url %></p>
-
-<p>Thanks!<br />
-The Technovation Team</p>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Review This Request", @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Thanks!<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

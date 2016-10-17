@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: technovation-app_production
-  username: technovation-app
-  password: <%= ENV['TECHNOVATION-APP_DATABASE_PASSWORD'] %>

@@ -13,9 +13,7 @@ class Student::ParentalConsentNoticesController < StudentController
         render :new and return
       end
     else
-      ParentMailer.consent_notice(current_student.parent_guardian_email,
-                                  current_student.parent_guardian_name,
-                                  current_student.consent_token).deliver_later
+      ParentMailer.consent_notice(current_student.student_profile).deliver_later
     end
 
     flash[:success] = t("controllers.student.parental_consent_notices.create.success")

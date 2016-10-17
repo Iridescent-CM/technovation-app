@@ -33,7 +33,7 @@
           <td><%= ambassador.email %></td>
           <td><%= ambassador.address_details %></td>
           <% if "declined" == params[:status] %>
-            <td class="danger">
+            <td class="danger notify-banner notify-banner--error">
               <%= link_to 'Mark spam', admin_regional_ambassador_path(ambassador, status: :spam), data: { method: :put, confirm: "Mark #{ambassador.full_name} as spam?" } %>
             </td>
           <% end %>

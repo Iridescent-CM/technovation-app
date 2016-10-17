@@ -7,8 +7,9 @@ RSpec.describe Account do
     expect(account.auth_token).not_to be_blank
   end
 
-  it "requires a secure password" do
-    account = FactoryGirl.build(:account, password: "short")
+  it "requires a secure password when invited" do
+    FactoryGirl.create(:team_member_invite, invitee_email: "test@account.com")
+    account = FactoryGirl.build(:account, email: "test@account.com", password: "short")
     expect(account).not_to be_valid
     expect(account.errors[:password]).to eq(["is too short (minimum is 8 characters)"])
   end

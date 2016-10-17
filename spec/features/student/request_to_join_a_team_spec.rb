@@ -37,9 +37,9 @@ RSpec.feature "Students request to join a team" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
-      expect(mail.body.parts.last.to_s).to include("Hi #{JoinRequest.last.requestor_first_name}!")
-      expect(mail.body.parts.last.to_s).to include("#{team.name} accepted your request to be a member!")
-      expect(mail.body.parts.last.to_s).to include("href=\"#{student_team_url(team)}\"")
+      expect(mail.body).to include("Hi #{JoinRequest.last.requestor_first_name}!")
+      expect(mail.body).to include("#{team.name} accepted your request to be a member!")
+      expect(mail.body).to include("href=\"#{student_team_url(team)}\"")
     end
 
     scenario "student declines the request" do
@@ -54,8 +54,8 @@ RSpec.feature "Students request to join a team" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was declined")
-      expect(mail.body.parts.last.to_s).to include("Hi #{JoinRequest.last.requestor_first_name},")
-      expect(mail.body.parts.last.to_s).to include("#{team.name} has declined your request to be a member.")
+      expect(mail.body).to include("Hi #{JoinRequest.last.requestor_first_name},")
+      expect(mail.body).to include("#{team.name} has declined your request to be a member.")
     end
   end
 end

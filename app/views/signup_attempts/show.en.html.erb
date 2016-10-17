@@ -1,13 +1,4 @@
-<% if @signup_attempt.email_exists? %>
-  <h1 class="appy-title">We found your email!</h1>
-
-  <p>That email is already being used on Technovation.</p>
-
-  <p>
-    Please try to <%= link_to "sign in", signin_path(email: @signup_attempt.email) %>
-    or <%= link_to "reset your password", new_password_reset_path(email: @signup_attempt.email) %>.
-  </p>
-<% elsif @signup_attempt.active? %>
+<% if @signup_attempt.active? %>
   <h1 class="appy-title">You're good to go!</h1>
 
   <p>You have already confirmed your email!</p>

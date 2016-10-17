@@ -31,6 +31,7 @@ class Account < ActiveRecord::Base
   has_secure_token :auth_token
   has_secure_token :consent_token
   has_secure_token :password_reset_token
+  has_secure_password
 
   # Fallback incase Typeahead doesn't work or isn't used
   before_validation :geocode, if: ->(a) { !a.geocoded.blank? and a.geocoded != address_details }
@@ -39,8 +40,6 @@ class Account < ActiveRecord::Base
   after_validation :update_email_list, on: :update
   after_commit -> { IndexAccountJob.perform_later(self) }, on: [:create, :update]
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
-
-  has_secure_password
 
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
@@ -51,9 +50,8 @@ class Account < ActiveRecord::Base
   validates :geocoded, presence: true, if: ->(a) { a.latitude.blank? }
   validates :profile_image, verify_cached_file: true
 
-  validates :password, :password_confirmation, presence: { on: :create }
-  validates :password, length: { minimum: 8, on: :create }
   validates :existing_password, valid_password: true, if: :changes_require_password?
+  validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
 
   validates :date_of_birth, :first_name, :last_name, :country, presence: true
 
@@ -165,7 +163,13 @@ class Account < ActiveRecord::Base
   end
 
   def current_season_registration
-    season_registrations.joins(:season).where("seasons.year = ?", Season.current.year).last
+    season_registrations.joins(:season)
+      .where("seasons.year = ?", Season.current.year)
+      .last
+  end
+
+  def temporary_password?
+    new_record? and SignupAttempt.temporary_password.where("lower(email) = ?", email.downcase).any?
   end
 
   def after_background_check_deleted
@@ -197,6 +201,10 @@ class Account < ActiveRecord::Base
 
     def type_name
       'application'
+    end
+
+    def locale
+      I18n.default_locale
     end
   end
 

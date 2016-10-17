@@ -1,5 +1,8 @@
 <% url ||= url_for(signup) %>
 <% title ||= t("views.signups.new.title.#{signup.type_name}") %>
+<% editing ||= false %>
+<% password_label = editing ? t("models.account.change_password") :
+                              t("models.account.password") %>
 
 <div class="signup-page">
   <h2>
@@ -24,17 +27,19 @@
         <%= t("views.signups.new.section_headers.profile_details") %>
       </h6>
 
+      <p><strong><%= t("views.signups.form.signing_up_email", email: signup.email) %></strong></p>
+
       <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
 
-      <h6 class="signup-section">
-        <%= t("views.signups.new.section_headers.account_details") %>
-      </h6>
+      <% if editing or signup.temporary_password? %>
+         <h6 class="signup-section">
+          <%= password_label %>
+        </h6>
 
-      <%= f.input :email, as: :email, disabled: true %>
+        <%= f.input :password, label: password_label %>
 
-      <%= f.input :password %>
-      <%= f.input :password_confirmation,
-                  label: t('views.signups.form.confirm_password') %>
+        <p class="appy-hint"><%= t("models.account.password_hint") %></p>
+      <% end %>
 
       <% if f.object.persisted? %>
         <%= yield(f) %>

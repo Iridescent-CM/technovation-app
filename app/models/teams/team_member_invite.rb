@@ -1,7 +1,9 @@
 class TeamMemberInvite < ActiveRecord::Base
   enum status: %i{pending accepted declined}
 
-  scope :for_students, -> { where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount") }
+  scope :for_students, -> {
+    where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount")
+  }
 
   has_secure_token :invite_token
 

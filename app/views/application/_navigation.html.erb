@@ -15,12 +15,6 @@
           </a>
         <% else %>
           <ul class="navigation__links-list navigation__links-list--no-mobile-menu">
-            <% if Rails.env.development? %>
-              <li class="nav-link">
-                <%= link_to t('views.application.signup'), signup_path %>
-              </li>
-            <% end %>
-
             <li class="nav-link">
               <%= link_to t('views.application.signin'), signin_path %>
             </li>

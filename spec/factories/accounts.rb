@@ -2,7 +2,6 @@ FactoryGirl.define do
   factory :account do
     sequence(:email) { |n| "account#{n}@example.com" }
     password { "secret1234" }
-    password_confirmation { password }
 
     date_of_birth { Date.today - 31.years }
     first_name { "Factory" }

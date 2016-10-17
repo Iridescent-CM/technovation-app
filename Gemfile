@@ -7,7 +7,9 @@ gem 'pg', '~> 0.18'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
+
 gem "autoprefixer-rails"
+gem 'nokogiri'
 
 gem 'rails-i18n', '~> 4.0.0'
 gem 'obscenity', '~> 1.0.2'
@@ -71,7 +73,10 @@ group :development do
   gem 'spring'
   gem "refills"
   gem 'active_record_query_trace'
+  gem "letter_opener"
 end
+
+gem 'premailer-rails', group: [:qa, :staging, :production, :development]
 
 group :test do
   gem 'vcr'

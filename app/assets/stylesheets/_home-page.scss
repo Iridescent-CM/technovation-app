@@ -19,6 +19,10 @@
     .simple_form {
       width: 100%;
       float: none;
+
+      label {
+        font-weight: bold;
+      }
     }
   }
 }

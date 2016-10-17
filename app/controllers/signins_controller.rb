@@ -12,8 +12,7 @@ class SigninsController < ApplicationController
       SignIn.(@signin, self)
     else
       @signin = Account.new
-      flash[:error] = t('controllers.signins.create.error')
-      render :new, status: 403
+      render :new, error: t('controllers.signins.create.error'), status: 403
     end
   end
 

@@ -9,8 +9,6 @@ module SignupController
     if token = cookies[:signup_token]
       email = SignupAttempt.find_by!(signup_token: token).email
       instance_variable_set("@#{model_name}", registration_helper.build(model, email: email))
-    elsif Rails.env.development?
-      instance_variable_set("@#{model_name}", registration_helper.build(model, {}))
     else
       redirect_to root_path
     end
@@ -32,9 +30,7 @@ module SignupController
   def account_params
     params.require("#{model_name}_account").permit(
       :email,
-      :existing_password,
       :password,
-      :password_confirmation,
       :date_of_birth,
       :first_name,
       :last_name,
@@ -49,8 +45,11 @@ module SignupController
       :referred_by_other,
       "#{model_name}_profile_attributes" => %i{id} + profile_params,
     ).tap do |tapped|
-      unless Rails.env.development?
-        tapped[:email] = SignupAttempt.find_by!(signup_token: cookies[:signup_token]).email
+      attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
+      tapped[:email] = attempt.email
+
+      unless attempt.temporary_password?
+        tapped[:password_digest] = attempt.password_digest
       end
     end
   end
