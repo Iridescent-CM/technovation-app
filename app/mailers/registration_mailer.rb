@@ -16,7 +16,7 @@ class RegistrationMailer < ApplicationMailer
 
     I18n.with_locale(mentor.locale) do
       mail to: mentor.email,
-          from: "Monica Gregg <monica@technovationchallenge.org>",
+          from: "Monica Gragg <monica@technovationchallenge.org>",
           subject: t("registration_mailer.welcome_mentor.subject", season_year: Season.current.year)
     end
   end
