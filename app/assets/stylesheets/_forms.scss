@@ -145,7 +145,7 @@ select.has-val + .chosen-container span {
 }
 
 .notify-error {
-  @extend .flash-error;
+  // @extend .flash-error;
 }
 
 .inline-radio, .inline-checkbox {

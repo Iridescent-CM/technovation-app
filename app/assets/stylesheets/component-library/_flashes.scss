@@ -1,0 +1,69 @@
+$alert-color: #ffc107;
+$error-color: #f44336;
+$notice-color: #2196f3;
+$success-color: $shamrock;
+
+.flash {
+  background-color: white;
+  border-top: 3px solid $silver;
+  bottom: 1.5rem;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.25);
+  cursor: default;
+  left: 1rem;
+  max-width: 300px;
+  min-height: 100px;
+  opacity: 0;
+  padding: 1rem 2rem 1.5rem 1rem;
+  position: fixed;
+  transition: all 0.25s;
+  transform: translateY(1rem);
+  width: calc(100% - 2rem);
+
+  &::before {
+    font-family: FontAwesome;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
+
+.flash--alert {
+  border-color: $alert-color;
+
+  &::before {
+    color: $alert-color;
+    content: '\f071';
+  }
+}
+
+.flash--error {
+  border-color: $error-color;
+
+  &::before {
+    color: $error-color;
+    content: '\f06a';
+  }
+}
+
+.flash--notice {
+  border-color: $notice-color;
+
+  &::before {
+    color: $notice-color;
+    content: '\f0f3';
+  }
+}
+
+.flash--success {
+  border-color: $success-color;
+
+  &::before {
+    color: $success-color;
+    content: '\f058';
+  }
+}
+
+.flash.flash--show {
+  opacity: 1;
+  transform: translateY(0);
+}

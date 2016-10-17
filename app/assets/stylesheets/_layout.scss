@@ -41,7 +41,6 @@
   text-transform: none !important;
 }
  td.danger {
-   @extend .notify-error;
    display: table-cell;
 
    a {
