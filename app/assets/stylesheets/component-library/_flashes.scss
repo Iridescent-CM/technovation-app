@@ -18,6 +18,7 @@ $success-color: $shamrock;
   transition: all 0.25s;
   transform: translateY(1rem);
   width: calc(100% - 2rem);
+  z-index: $z-modal;
 
   &::before {
     font-family: FontAwesome;
