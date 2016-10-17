@@ -1,39 +1,68 @@
-<p>Congrats, <%= @first_name %>!</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Confirm Email"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Congrats, <%= @first_name %>!
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          You are officially a Technovation Mentor. What does that mean? Well, you are joining a community of 1,000+ parents, educators, and professionals that are also mentors for the world's largest technology entrepreneurship program for girls. Last year, more than 6,000 girls from 78 different countries participated.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          I hope you are excited! If you are nervous, that's ok. I am here to help.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          My name is Monica, and I am the Mentor Community Manager. My role is to support you as you mentor a team of girls. I'm here to answer your questions, provide training and celebrate your success.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong>What's Next? There are only 3 things you need to do right now.</strong>
 
-<p>You are officially a Technovation Mentor. What does that mean? Well, you are joining a community of 1,000+ parents, educators, and professionals that are also mentors for the world's largest technology entrepreneurship program for girls. Last year, more than 6,000 girls from 78 different countries participated.</p>
+          <ol>
+            <li>Please <%= link_to "look at the orientation infographic", @infographic_url %>. It provides an overview of the program, mentor requirements, and timeline.</li>
+            <li>
+              <%= link_to "Update your profile", @edit_account_url %> so you can find a team. Please add a photo to create a good first impression.
 
-<p>I hope you are excited! If you are nervous, that's ok. I am here to help.</p>
+              <strong>Sidenote:</strong> You will be able to create and join teams once you sign your consent form. <strong>For mentors in the U.S., you will also have to complete your background check.</strong>
 
-<p>My name is Monica, and I am the Mentor Community Manager. My role is to support you as you mentor a team of girls. I'm here to answer your questions, provide training and celebrate your success.</p>
+            </li>
 
-<p><strong>What's Next? There are only 3 things you need to do right now.</strong></p>
+            <li><strong>Start learning</strong>. We created a separate training site (managed by our parent nonprofit, Iridescent) to teach you how to mentor with Technovation, and it covers other exciting topics from managing millennials to facilitating youth entrepreneurship. We also partnered with experts in the field to deliver professional development courses exclusively for Technovation mentors. <strong>Once you sign your consent form, you will be enrolled in the training.</strong></li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong>A quick message for returning coaches and mentors</strong>
 
-<ol>
-  <li>Please <%= link_to "look at the orientation infographic", @infographic_url %>. It provides an overview of the program, mentor requirements, and timeline.</li>
-  <li>
-    <%= link_to "Update your profile", @edit_account_url %> so you can find a team. Please add a photo to create a good first impression.
-    <p>
-    <strong>Sidenote:</strong> You will be able to create and join teams once you sign your consent form. <strong>For mentors in the U.S., you will also have to complete your background check.</strong>
-    </p>
-  </li>
+          <ul>
+            <li>Welcome Back! And thank you for all that you do.</li>
+            <li>We combined the role of mentors and coaches this year to provide better support to you and the teams.</li>
+            <li>We upgraded the training to make it more meaningful and interactive. Enjoy!</li>
+            <li>We have new curriculum for the girls! Please take the time to browse through. We also organized it by 20 weeks and 12 weeks to make it easier for your team, depending on when they're starting the program.</li>
+            <li>The links to curriculum units will be available by logging into your account on <%= link_to @root_url, @root_url %>.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <p>See you in the training!</p>
 
-  <li><strong>Start learning</strong>. We created a separate training site (managed by our parent nonprofit, Iridescent) to teach you how to mentor with Technovation, and it covers other exciting topics from managing millennials to facilitating youth entrepreneurship. We also partnered with experts in the field to deliver professional development courses exclusively for Technovation mentors. <strong>Once you sign your consent form, you will be enrolled in the training.</strong></li>
-</ol>
+          <%= image_tag "monica.jpg", widh: 100 %>
 
-<p><strong>A quick message for returning coaches and mentors</strong></p>
-
-<ul>
-  <li>Welcome Back! And thank you for all that you do.</li>
-  <li>We combined the role of mentors and coaches this year to provide better support to you and the teams.</li>
-  <li>We upgraded the training to make it more meaningful and interactive. Enjoy!</li>
-  <li>We have new curriculum for the girls! Please take the time to browse through. We also organized it by 20 weeks and 12 weeks to make it easier for your team, depending on when they're starting the program.</li>
-  <li>The links to curriculum units will be available by logging into your account on <%= link_to @root_url, @root_url %>.</li>
-</ul>
-
-<p>See you in the training!</p>
-
-<%= image_tag "monica.jpg", widh: 100 %>
-
-<p>Monica<br />
-Mentor Community Manager<br />
-<%= mail_to "monica@technovationchallenge.org" %></p>
+          <p>Monica<br />
+          Mentor Community Manager<br />
+          <%= mail_to "monica@technovationchallenge.org" %></p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
