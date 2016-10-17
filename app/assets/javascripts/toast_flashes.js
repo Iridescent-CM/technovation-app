@@ -39,7 +39,7 @@
         hideFlash(flash);
       });
 
-      var timeout = flash.dataset.timeout ? flash.dataset.timeout : 5000;
+      var timeout = flash.dataset.timeout ? flash.dataset.timeout : 4000;
       setTimeout(function() {
         hideFlash(flash);
       }, timeout);
