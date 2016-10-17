@@ -16,13 +16,13 @@ class ExportJob < ActiveJob::Base
     filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{search_text}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
-      csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) Division City State Country}
+      csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) Division Referred\ by City State Country}
 
       accounts.each do |account|
         csv << [account.id, account.type_name, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
-                account.division, account.city, account.state_province,
-                Country[account.country].name]
+                account.division, "#{account.referred_by} #{account.reffered_by_other}",
+                account.city, account.state_province, Country[account.country].name]
       end
     end
 

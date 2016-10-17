@@ -27,16 +27,15 @@
     </label>
   <% end %>
 
-
   <label class="no-text-transform inline">
-    Per page:
-    <%= select_tag :per_page,
-                  options_for_select([10, 25, 50, 100], params[:per_page]),
-                  class: "inline",
-                  data: {
-                    reload: true,
-                    param: :per_page,
-                  } %>
+    How did you hear about us?
+    <%= select_tag :how_heard,
+                   options_for_select(["All"] + Account.referred_bies.keys, params[:how_heard]),
+                   class: "inline",
+                   data: {
+                     reload: true,
+                     param: :how_heard,
+                   } %>
   </label>
 
   <label class="no-text-transform">
@@ -45,6 +44,16 @@
                                              data: { param: :text } %>
   </label>
 
+  <label class="no-text-transform inline">
+    Per page:
+    <%= select_tag :per_page,
+                   options_for_select([10, 25, 50, 100], params[:per_page]),
+                   class: "inline",
+                   data: {
+                     reload: true,
+                     param: :per_page,
+                   } %>
+  </label>
 
   <div class="pagination_info">
     <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
@@ -62,6 +71,7 @@
         <th>Email</th>
         <th>Team name(s)</th>
         <th>Division</th>
+        <th>Referred by</th>
         <th>City</th>
         <th>State</th>
         <th>Country</th>
@@ -84,6 +94,7 @@
             <td><%= account.email %></td>
             <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
             <td><%= account.division %></td>
+            <td><%= account.referred_by %> <%= account.referred_by_other %></td>
             <td><%= account.city %></td>
             <td><%= account.state_province %></td>
             <td><%= Country[account.country].name %></td>

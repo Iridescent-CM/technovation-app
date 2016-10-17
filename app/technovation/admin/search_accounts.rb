@@ -2,6 +2,7 @@ module Admin
   class SearchAccounts
     def self.call(params)
       params[:type] = "All" if params[:type].blank?
+      params[:how_heard] = "All" if params[:how_heard].blank?
       params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
 
@@ -22,6 +23,10 @@ module Admin
                                 document_types: ["adminaccounts"],
                                 per_page: 100)
         accounts = accounts.where(id: results['adminaccounts'].collect { |h| h['external_id'] })
+      end
+
+      unless params[:how_heard] == "All"
+        accounts = accounts.where(referred_by: Account.referred_bies[params[:how_heard]])
       end
 
       if params[:type] == "Student"
