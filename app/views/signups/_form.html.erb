@@ -27,6 +27,8 @@
         <%= t("views.signups.new.section_headers.profile_details") %>
       </h6>
 
+      <p><strong><%= t("views.signups.form.signing_up_email", email: signup.email) %></strong></p>
+
       <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
 
       <% if editing or signup.temporary_password? %>
