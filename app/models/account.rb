@@ -1,6 +1,8 @@
 class Account < ActiveRecord::Base
   include Elasticsearch::Model
 
+  index_name "#{Rails.env}_accounts"
+
   def self.inherited(child)
     super
 
