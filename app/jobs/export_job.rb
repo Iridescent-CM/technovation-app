@@ -10,7 +10,6 @@ class ExportJob < ActiveJob::Base
 
   private
   def export_accounts(admin, token, params)
-    params[:text] = "none" if params[:text].blank?
     accounts = Admin::SearchAccounts.(params)
     search_text = URI.escape("search-query-#{params[:text]}")
     filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{search_text}-#{token}.csv"
@@ -21,7 +20,7 @@ class ExportJob < ActiveJob::Base
       accounts.each do |account|
         csv << [account.id, account.type_name, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
-                account.division, "#{account.referred_by} #{account.reffered_by_other}",
+                account.division, "#{account.referred_by} #{account.referred_by_other}",
                 account.city, account.state_province, Country[account.country].name]
       end
     end
