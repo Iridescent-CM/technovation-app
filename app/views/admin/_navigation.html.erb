@@ -1,10 +1,23 @@
-<nav class="profile">
-  <ul>
-    <li><%= link_to "Admin", admin_dashboard_path %></li>
-    <li><%= link_to "Accounts", admin_accounts_path %></li>
-    <li><%= link_to "Regional Ambassadors", admin_regional_ambassadors_path %></li>
-    <li><%= link_to "Teams", admin_teams_path %></li>
-    <li><%= link_to "Background Checks", admin_background_checks_path %></li>
-    <li><%= link_to "Signup Attempts", admin_signup_attempts_path %></li>
-  </ul>
-</nav>
+<header class="navigation" role="banner">
+  <div class="container">
+    <div class="navigation__content-wrapper">
+      <%= link_to image_tag("tc-logo-white-tm.png"),
+                  content_for?(:root_path) ? yield(:root_path) : application_dashboard_path,
+                  class: "logo" %>
+
+      <nav>
+        <ul class="navigation__links-list">
+          <li class="nav-link"><%= link_to "Accounts", admin_accounts_path %></li>
+          <li class="nav-link"><%= link_to "Regional Ambassadors", admin_regional_ambassadors_path %></li>
+          <li class="nav-link"><%= link_to "Teams", admin_teams_path %></li>
+          <li class="nav-link"><%= link_to "Background Checks", admin_background_checks_path %></li>
+          <li class="nav-link"><%= link_to "Signup Attempts", admin_signup_attempts_path %></li>
+          <li class="nav-link"><%= link_to "Logout", logout_path, data: { method: :delete } %></li>
+        </ul>
+        <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
+          <!--FontAwesome-->
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,6 +1,9 @@
-<% url ||= false %>
-<% edit ||= false %>
-<% title ||= t("views.accounts.show.title") %>
+<%
+  url ||= false
+  edit ||= false
+  title ||= t("views.accounts.show.title")
+  path ||= edit_account_path
+%>
 
 <div class="dashboard-page-info">
   <h3><%= title %></h3>
@@ -40,7 +43,7 @@
       </dl>
 
       <% if edit %>
-        <%= link_to t('views.accounts.show.edit'), edit_account_path %>
+        <%= link_to t('views.accounts.show.edit'), path %>
       <% end %>
     </div>
 

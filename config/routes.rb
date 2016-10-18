@@ -89,7 +89,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :show
 
-    resources :accounts, only: [:index, :show]
+    resources :accounts
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
 
