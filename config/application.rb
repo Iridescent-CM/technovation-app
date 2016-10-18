@@ -13,6 +13,12 @@ require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
+
+if Rails.env.development? or Rails.env.test?
+  require 'dotenv'
+  Dotenv.load
+end
+
 Bundler.require(*Rails.groups)
 
 module TechnovationApp
@@ -27,9 +33,7 @@ module TechnovationApp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Pacific Time (US & Canada)'
 
-    %w{accounts profiles expertise authentication teams}.each do |dir|
-      config.autoload_paths << Rails.root.join('app', 'models', dir)
-    end
+    config.autoload_paths << Rails.root.join('app', 'models', '**/')
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
