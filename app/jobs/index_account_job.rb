@@ -11,9 +11,9 @@ class IndexAccountJob < ActiveJob::Base
       when /index/
         record = Account.find(id)
 
-        Client.index index: "accounts", type: "account", id: record.id, body: record.as_indexed_json
+        Client.index index: "#{Rails.env}_accounts", type: "account", id: record.id, body: record.as_indexed_json
       when /delete/
-        Client.delete index: "accounts", type: "account", id: id
+        Client.delete index: "#{Rails.env}_accounts", type: "account", id: id
       else raise ArgumentError, "Unknown operation '#{operation}'"
     end
   end

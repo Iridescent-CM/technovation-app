@@ -15,7 +15,7 @@ class Account < ActiveRecord::Base
         as_json(only: %w{id email first_name last_name})
       end
 
-      index_name 'accounts'
+      index_name "#{Rails.env}_accounts"
       document_type 'account'
       settings index: { number_of_shards: 1, number_of_replicas: 1 }
     end
