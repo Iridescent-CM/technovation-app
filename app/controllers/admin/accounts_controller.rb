@@ -11,6 +11,7 @@ module Admin
 
     def edit
       @account = Account.find(params[:id])
+      @expertises ||= Expertise.all
     end
 
     def update
@@ -20,6 +21,7 @@ module Admin
         redirect_to admin_account_path(@account),
           success: "Account information saved"
       else
+        @expertises ||= Expertise.all
         render :edit
       end
     end
