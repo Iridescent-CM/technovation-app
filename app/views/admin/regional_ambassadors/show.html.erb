@@ -1,4 +1,7 @@
-<%= render 'accounts/show', account: @regional_ambassador %>
+<%= render 'accounts/show',
+  edit: true,
+  path: edit_admin_account_path(@regional_ambassador),
+  account: @regional_ambassador %>
 
 <dl>
   <dt>Consent waiver</dt>
