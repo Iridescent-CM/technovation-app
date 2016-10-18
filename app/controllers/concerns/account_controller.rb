@@ -26,7 +26,6 @@ module AccountController
   private
   def account_params
     params.require(account_param_root).permit(
-      :email,
       :existing_password,
       :password,
       :date_of_birth,
@@ -41,7 +40,6 @@ module AccountController
       :longitude,
       :profile_image,
       :profile_image_cache,
-      :pre_survey_completed_at,
       profile_params,
     )
   end
