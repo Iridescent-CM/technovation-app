@@ -7,6 +7,7 @@ module Student
         nearby: params.fetch(:nearby),
         user: current_student,
         spot_available: true,
+        text: params[:text],
       })
 
       @teams = SearchTeams.(@search_filter).paginate(page: params[:page])

@@ -17,6 +17,19 @@ module SearchTeams
                    .where("memberships.member_id IN (?)", account_ids)
     end
 
+    unless filter.text.blank?
+      results = teams.search({
+        query: {
+          query_string: {
+            query: "*#{filter.text}*"
+          },
+        },
+        from: 0,
+        size: 10_000
+      }).results
+      teams = teams.where(id: results.flat_map { |r| r._source.id })
+    end
+
     teams = case filter.spot_available
             when true
               teams.select { |t| t.spot_available? }

@@ -1,6 +1,19 @@
 require 'obscenity/active_model'
 
 class Team < ActiveRecord::Base
+  include Elasticsearch::Model
+
+  index_name "#{Rails.env}_teams"
+  document_type 'team'
+  settings index: { number_of_shards: 1, number_of_replicas: 1 }
+
+  after_save    { IndexTeamJob.perform_later("index", id) }
+  after_destroy { IndexTeamJob.perform_later("delete", id) }
+
+  def as_indexed_json(options = {})
+    as_json(only: %w{id name description})
+  end
+
   mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> {
