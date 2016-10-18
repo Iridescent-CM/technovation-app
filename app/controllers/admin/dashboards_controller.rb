@@ -13,6 +13,7 @@ module Admin
       @snapshot_mentors = MentorAccount.current
       @snapshot_ambassadors = RegionalAmbassadorAccount.current
       @snapshot_judges = JudgeAccount.current
+      @snapshot_signups = SignupAttempt.all
     end
 
     def execute_search

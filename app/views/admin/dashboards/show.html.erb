@@ -114,7 +114,28 @@
   </div>
 
   <div class="admin-dashboard__sidebar">
-    <%= render 'account_snapshots', title: "#{Season.current.year} Snapshot" %>
+    <%= render layout: 'account_snapshots',
+      locals: { title: "#{Season.current.year} Snapshot" } do %>
+      <div class="card">
+        <div class="card__heading">
+          Signup Attempts
+          <%= fa_icon "group", class: "card-heading__flair" %>
+        </div>
+        <div class="card__body">
+          <strong><%= @snapshot_signups.count %></strong> total<br />
+
+          <strong><%= (@snapshot_signups.temporary_password | @snapshot_signups.pending).count %></strong>
+          pending confirmation (<%= number_to_percentage (@snapshot_signups.temporary_password | @snapshot_signups.pending).count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
+
+          <strong><%= @snapshot_signups.active.count %></strong>
+          confirmed, but not signed up (<%= number_to_percentage @snapshot_signups.active.count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
+
+          <strong><%= @snapshot_signups.registered.count %></strong>
+          signed up (<%= number_to_percentage @snapshot_signups.registered.count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
+        </div>
+      </div>
+
+    <% end %>
   </div>
 </div>
 

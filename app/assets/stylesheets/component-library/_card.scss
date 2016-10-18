@@ -1,7 +1,7 @@
 // <div class="card">
 //   <div class="card__heading">
 //     Heading Goes Here
-//     <span class="card-heading__flair fa fa-exclamation-circle"></span>
+//     <%= fa_icon "exclamation-circle" class: "card-heading__flair" %>
 //   </div>
 //   <div class="card__body">
 //     Body content goes here

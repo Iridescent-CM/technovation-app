@@ -6,28 +6,50 @@
 
 <p><strong><%= @snapshot_teams.count %></strong> total Teams</p>
 
-<dl>
-  <dt>Students:</dt>
-  <dd>
-    <strong><%= @snapshot_students.count %></strong> total<br />
-    <strong><%= @snapshot_students.full_access.count %></strong> with parental consent on file
-  </dd>
+<div class="snapshot__cards">
+  <%= yield %>
 
-  <dt>Mentors:</dt>
-  <dd>
-    <strong><%= @snapshot_mentors.count %></strong> total<br />
-    <strong><%= @snapshot_mentors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
-  </dd>
+  <div class="card">
+    <div class="card__heading">
+      Students
+      <%= fa_icon "graduation-cap", class: "card-heading__flair" %>
+    </div>
+    <div class="card__body">
+      <strong><%= @snapshot_students.count %></strong> total<br />
+      <strong><%= @snapshot_students.full_access.count %></strong> with parental consent on file
+    </div>
+  </div>
 
-  <dt>RAs:</dt>
-  <dd>
-    <strong><%= @snapshot_ambassadors.count %></strong> total<br />
-    <strong><%= @snapshot_ambassadors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
-  </dd>
+  <div class="card">
+    <div class="card__heading">
+      Mentors
+      <%= fa_icon "compass", class: "card-heading__flair" %>
+    </div>
+    <div class="card__body">
+      <strong><%= @snapshot_mentors.count %></strong> total<br />
+      <strong><%= @snapshot_mentors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
+    </div>
+  </div>
 
-  <dt>Judges:</dt>
-  <dd>
-    <strong><%= @snapshot_judges.count %></strong> total<br />
-    <strong><%= @snapshot_judges.full_access.count %></strong> with consent waiver on file
-  </dd>
-</dl>
+  <div class="card">
+    <div class="card__heading">
+      RAs
+      <%= fa_icon "globe", class: "card-heading__flair" %>
+    </div>
+    <div class="card__body">
+      <strong><%= @snapshot_ambassadors.count %></strong> total<br />
+      <strong><%= @snapshot_ambassadors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__heading">
+      Judges
+      <%= fa_icon "legal", class: "card-heading__flair" %>
+    </div>
+    <div class="card__body">
+      <strong><%= @snapshot_judges.count %></strong> total<br />
+      <strong><%= @snapshot_judges.full_access.count %></strong> with consent waiver on file
+    </div>
+  </div>
+</div>
