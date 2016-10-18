@@ -7,8 +7,6 @@
 <p><strong><%= @snapshot_teams.count %></strong> total Teams</p>
 
 <div class="snapshot__cards">
-  <%= yield %>
-
   <div class="card">
     <div class="card__heading">
       Students
@@ -52,4 +50,6 @@
       <strong><%= @snapshot_judges.full_access.count %></strong> with consent waiver on file
     </div>
   </div>
+
+  <%= yield %>
 </div>
