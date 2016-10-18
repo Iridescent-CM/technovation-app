@@ -1,20 +1,24 @@
-<%
-    submit ||= t("views.application.get_started")
-    url ||= signup_attempts_url
-%>
+<div class="home-page-sign-up-form">
+  <%
+      url ||= signup_attempts_url
+  %>
 
-<%= simple_form_for attempt, url: url do |f| %>
-  <%= render 'errors', record: attempt %>
+  <%= simple_form_for attempt, url: url do |f| %>
+    <%= render 'errors', record: attempt %>
 
-  <%= f.input :email, as: :email, placeholder: "Example: janie.doe@gmail.com", label: t("models.signup_attempt.email") %>
+    <%= f.input :email, as: :email, placeholder: "Example: janie.doe@gmail.com", label: t("models.signup_attempt.email") %>
 
-  <p class="appy-hint">
-    Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.
-  </p>
+    <p class="appy-hint">
+      Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.
+    </p>
 
-  <% if attempt.new_record? %>
-    <%= f.input :password, placeholder: "Use 8 characters or more", label: t("models.account.password") %>
+    <% if attempt.new_record? %>
+      <%= f.input :password, placeholder: "Use 8 characters or more", label: t("models.account.password") %>
+    <% end %>
+
+    <div class="home-page-sign-up-form__submit-wrapper">
+      <p>If you have an existing account, you can <%= link_to "sign in now", signin_path %> instead.</p>
+      <%= f.button :submit, t("views.application.get_started"), :class => 'appy-button' %>
+    </div>
   <% end %>
-
-  <p><%= f.button :submit, submit %></p>
-<% end %>
+</div>

@@ -1,46 +1,94 @@
+/*
+ * Home page
+ */
+
 .home-page {
+
+}
+
+.home-page__form-wrapper {
+  margin: 0 auto 2rem;
+  max-width: 65ch;
+}
+
+/*
+ * Sign up form
+ */
+
+.home-page-sign-up-form {
+  opacity: 1;
+
+  .simple_form {
+    display: block;
+    float: none;
+    margin-right: auto;
+    width: auto;
+  }
+
+  input:not([type='submit']) {
+    font-size: 20px; // change font size
+    opacity: 1;
+  }
+
+  .appy-button {
+    margin: 0;
+  }
+}
+
+.home-page-sign-up-form__submit-wrapper {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding-top: 1rem;
-}
+  justify-content: space-between;
 
-.home-page__column {
-  display: flexbox;
-
-  &.home-page__introduction-content {
-    width: 45%;
-    margin-right: 5%;
-  }
-
-  &.home-page__get-started {
-    width: 50%;
-
-    .simple_form {
-      width: 100%;
-      float: none;
-
-      label {
-        font-weight: bold;
-      }
-    }
+  p {
+    margin: 0 2rem 0 0;
   }
 }
-@media screen and (max-width: $device-sm) {
-  .home-page {
-    flex-direction: column;
 
-    .home-page__introduction-content, .home-page__get-started {
-      width: 100%;
-      margin: 0 0 1rem;
-    }
+// .home-page {
+//   display: flex;
+//   flex-wrap: wrap;
+//   flex-direction: row;
+//   padding-top: 1rem;
+// }
 
-    .home-page__get-started {
-      order: 0;
-    }
+// .home-page__column {
+//   display: flexbox;
 
-    .home-page__introduction-content {
-      order: 1;
-    }
-  }
-}
+//   &.home-page__introduction-content {
+//     width: 45%;
+//     margin-right: 5%;
+//   }
+
+//   &.home-page__get-started {
+//     width: 50%;
+
+//     .simple_form {
+//       width: 100%;
+//       float: none;
+
+//       label {
+//         font-weight: bold;
+//       }
+//     }
+//   }
+// }
+
+// @media screen and (max-width: $device-sm) {
+//   .home-page {
+//     flex-direction: column;
+
+//     .home-page__introduction-content, .home-page__get-started {
+//       width: 100%;
+//       margin: 0 0 1rem;
+//     }
+
+//     .home-page__get-started {
+//       order: 0;
+//     }
+
+//     .home-page__introduction-content {
+//       order: 1;
+//     }
+//   }
+// }
