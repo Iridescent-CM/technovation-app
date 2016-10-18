@@ -1,4 +1,26 @@
 class Account < ActiveRecord::Base
+  include Elasticsearch::Model
+
+  def self.inherited(child)
+    super
+
+    child.instance_eval do
+      include Elasticsearch::Model
+      include Elasticsearch::Model::Callbacks
+
+      after_save    { IndexAccountJob.perform_later("index", id) }
+      after_destroy { IndexAccountJob.perform_later("delete", id) }
+
+      define_method(:as_indexed_json) do |options = {}|
+        as_json(only: %w{id email first_name last_name})
+      end
+
+      index_name 'accounts'
+      document_type 'account'
+      settings index: { number_of_shards: 1, number_of_replicas: 1 }
+    end
+  end
+
   attr_accessor :existing_password, :skip_existing_password, :geocoded
 
   enum referred_by: %w{Friend Colleague Article Internet Social\ media
@@ -38,7 +60,6 @@ class Account < ActiveRecord::Base
   before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
 
   after_validation :update_email_list, on: :update
-  after_commit -> { IndexAccountJob.perform_later(self) }, on: [:create, :update]
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
 
   has_many :season_registrations, -> { active }, as: :registerable

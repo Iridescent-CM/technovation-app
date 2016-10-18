@@ -17,7 +17,6 @@ RSpec.configure do |config|
   config.include SigninHelper, type: :feature
   config.include ControllerSigninHelper, type: :controller
   config.include SelectDateHelper, type: :feature
-  config.include WebMock::API
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
@@ -30,7 +29,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    stub_request(:any, /api.swiftype.com/).to_rack(FakeSwiftype)
   end
 
   config.before(:each, js: true) do

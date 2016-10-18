@@ -17,12 +17,16 @@ module Admin
                              Season.find_by(year: params[:season]))
 
       unless params[:text].blank?
-        client = Swiftype::Client.new
-        results = client.search(ENV.fetch('SWIFTYPE_ENGINE_SLUG'),
-                                params[:text],
-                                document_types: ["adminaccounts"],
-                                per_page: 100)
-        accounts = accounts.where(id: results['adminaccounts'].collect { |h| h['external_id'] })
+        results = accounts.search(
+          query: {
+            query_string: {
+              query: "*#{params[:text]}*"
+            }
+          },
+          from: 0,
+          size: 10_000,
+        ).results
+        accounts = accounts.where(id: results.flat_map { |r| r._source.id })
       end
 
       unless params[:how_heard] == "All"

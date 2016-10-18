@@ -1,14 +1,20 @@
 class IndexAccountJob < ActiveJob::Base
-  queue_as :default
+  queue_as :elasticsearch
 
-  def perform(record)
-    client = Swiftype::Client.new
-    client.create_or_update_document(ENV.fetch('SWIFTYPE_ENGINE_SLUG'),
-                                     "adminaccounts",
-                                     { external_id: record.id,
-                                       fields: [{ name: 'name', value: record.full_name, type: 'string' },
-                                                { name: 'email', value: record.email, type: 'string' },
-                                                { name: 'id', value: record.id, type: 'integer' },
-                                                { name: 'created_at', value: record.created_at.iso8601, type: 'date' }] })
+  Logger = Sidekiq.logger.level == Logger::DEBUG ? Sidekiq.logger : nil
+  Client = Elasticsearch::Client.new host: ENV.fetch("BONSAI_URL"), logger: Logger
+
+  def perform(operation, id)
+    logger.debug [operation, "ID: #{id}"]
+
+    case operation.to_s
+      when /index/
+        record = Account.find(id)
+
+        Client.index index: "accounts", type: "account", id: record.id, body: record.as_indexed_json
+      when /delete/
+        Client.delete index: "accounts", type: "account", id: id
+      else raise ArgumentError, "Unknown operation '#{operation}'"
+    end
   end
 end

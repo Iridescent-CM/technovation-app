@@ -3,12 +3,16 @@ module SearchMentors
     mentors = MentorAccount.where.not(id: filter.user.id)
 
     unless filter.text.blank?
-      client = Swiftype::Client.new
-      results = client.search(ENV.fetch('SWIFTYPE_ENGINE_SLUG'),
-                              filter.text,
-                              document_types: ["mentoraccount"],
-                              per_page: 100)
-      mentors = mentors.where(id: results['mentoraccount'].collect { |h| h['external_id'] })
+      results = Account.search(
+        query: {
+          query_string: {
+            query: "*#{filter.text}*"
+          }
+        },
+        from: 0,
+        size: 10_000,
+      ).results
+      mentors = mentors.where(id: results.flat_map { |r| r._source.id })
     end
 
     if filter.expertise_ids.any?
