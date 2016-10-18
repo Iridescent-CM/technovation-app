@@ -117,3 +117,7 @@
     <%= render 'account_snapshots', title: "#{Season.current.year} Snapshot" %>
   </div>
 </div>
+
+<% provide(:head_js) do %>
+  <%= javascript_include_tag "Chart.bundle", "chartkick" %>
+<% end %>

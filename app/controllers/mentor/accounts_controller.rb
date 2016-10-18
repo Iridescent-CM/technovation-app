@@ -4,6 +4,20 @@ module Mentor
 
     before_filter :expertises
 
+    def profile_params
+      {
+        mentor_profile_attributes: [
+          :id,
+          :school_company_name,
+          :job_title,
+          :bio,
+          :accepting_team_invites,
+          :virtual,
+          { expertise_ids: [] },
+        ],
+      }
+    end
+
     private
     def account
       @account ||= MentorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
@@ -19,20 +33,6 @@ module Mentor
 
     def account_param_root
       :mentor_account
-    end
-
-    def profile_params
-      {
-        mentor_profile_attributes: [
-          :id,
-          :school_company_name,
-          :job_title,
-          :bio,
-          :accepting_team_invites,
-          :virtual,
-          { expertise_ids: [] },
-        ],
-      }
     end
   end
 end

@@ -8,6 +8,18 @@ module RegionalAmbassador
       @accounts = RegionalAccount.(current_ambassador, params).paginate(per_page: params[:per_page], page: params[:page])
     end
 
+    def profile_params
+      {
+        regional_ambassador_profile_attributes: [
+          :id,
+          :organization_company_name,
+          :job_title,
+          :ambassador_since_year,
+          :bio,
+        ],
+      }
+    end
+
     private
     def account
       @account ||= RegionalAmbassadorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
@@ -19,18 +31,6 @@ module RegionalAmbassador
 
     def account_param_root
       :regional_ambassador_account
-    end
-
-    def profile_params
-      {
-        regional_ambassador_profile_attributes: [
-          :id,
-          :organization_company_name,
-          :job_title,
-          :ambassador_since_year,
-          :bio,
-        ],
-      }
     end
   end
 end

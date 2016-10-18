@@ -2,6 +2,16 @@ module Judge
   class AccountsController < JudgeController
     include AccountController
 
+    def profile_params
+      {
+        judge_profile_attributes: [
+          :id,
+          :company_name,
+          :job_title,
+        ],
+      }
+    end
+
     private
     def account
       @account ||= JudgeAccount.find_with_token(cookies.fetch(:auth_token) { "" })
@@ -13,16 +23,6 @@ module Judge
 
     def account_param_root
       :judge_account
-    end
-
-    def profile_params
-      {
-        judge_profile_attributes: [
-          :id,
-          :company_name,
-          :job_title,
-        ],
-      }
     end
   end
 end
