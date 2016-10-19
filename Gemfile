@@ -28,7 +28,6 @@ gem 'newrelic_rpm', '~> 3.14.2.312'
 
 gem "rack-timeout"
 gem 'dalli'
-gem 'tunemygc'
 
 gem 'geocoder', '~> 1.2.6'
 gem 'carrierwave', '~> 0.11.2'
@@ -87,6 +86,7 @@ gem 'premailer-rails', group: [:qa, :staging, :production, :development]
 group :qa, :staging, :production do
   gem 'rails_12factor'
   gem 'hiredis'
+  gem 'tunemygc'
 end
 
 # LEGACY MIGRATION

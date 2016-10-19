@@ -1,3 +1,4 @@
+ActionMailer::Base.perform_deliveries = false
 if (student = StudentAccount.create(email: "student@student.com",
                                     password: "student@student.com",
                                     password_confirmation: "student@student.com",
@@ -17,13 +18,22 @@ if (student = StudentAccount.create(email: "student@student.com",
                                     season_ids: [Season.current.id],
                                    )).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+  puts ""
+  puts "============================================================="
+  puts ""
   puts "Created Student: #{student.email} with password #{student.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
 
   if (team = Team.create(name: "All Star Team",
                         description: "We are allstars",
                         division: Division.none_assigned_yet)).valid?
     team.add_student(student)
     puts "Added student to Team: #{team.name}"
+    puts ""
+    puts "============================================================="
+    puts ""
   end
 end
 
@@ -50,6 +60,9 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                                   season_ids: [Season.current.id],
                                  )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
 
   if (team = Team.create(name: "Fun Times Team",
                          description: "We are fun times havers",
@@ -57,6 +70,9 @@ if (mentor = MentorAccount.create(email: "mentor@mentor.com",
                          division: Division.none_assigned_yet)).valid?
     team.add_mentor(mentor)
     puts "Added mentor to Team: #{team.name}"
+    puts ""
+    puts "============================================================="
+    puts ""
   end
 end
 
@@ -86,6 +102,9 @@ if (mentor = MentorAccount.create(email: "mentor+chi@mentor.com",
   mentor.update_column(:profile_image, "foo/bar/baz.png")
   mentor.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
 end
 
 if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
@@ -114,6 +133,9 @@ if (ra = RegionalAmbassadorAccount.create(email: "ra@ra.com",
                                          )).valid?
   ra.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created RA: #{ra.email} with password #{ra.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
 end
 
 if (judge = JudgeAccount.create(email: "judge@judge.com",
@@ -135,4 +157,7 @@ if (judge = JudgeAccount.create(email: "judge@judge.com",
   judge.update_column(:profile_image, "foo/bar/baz.png")
   judge.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Judge: #{judge.email} with password #{judge.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
 end
