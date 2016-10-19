@@ -11,7 +11,7 @@ module AccountController
   end
 
   def edit
-    account
+    account.valid?
   end
 
   def update

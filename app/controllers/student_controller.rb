@@ -3,6 +3,12 @@ class StudentController < ApplicationController
 
   helper_method :current_student, :current_team
 
+  before_action -> {
+    unless current_student.valid?
+      redirect_to student_errors_path
+    end
+  }, unless: -> { %w{errors accounts}.include?(controller_name) }
+
   private
   def current_student
     @current_student ||= StudentAccount.find_with_token(cookies.fetch(:auth_token) { "" })
