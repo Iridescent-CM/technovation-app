@@ -1,15 +1,15 @@
 <% mentor = FindAccount.current(:mentor, cookies) %>
 
 <% if mentor.consent_signed? and mentor.background_check_complete? and not mentor.bio.blank? %>
-  <li class="nav-link">
+  <li class="nav-link <%= al(new_mentor_mentor_search_path) %>">
     <%= link_to t("views.application.dashboards.menu.connect_mentors"), new_mentor_mentor_search_path %>
   </li>
-  <li class="nav-link">
+  <li class="nav-link <%= al(mentor_teams_path) %>">
     <%= link_to t("views.application.dashboards.menu.my_teams"), mentor_teams_path %>
   </li>
 <% end %>
 
-<li class="nav-link">
+<li class="nav-link <%= al(mentor_account_path) %>">
   <%= link_to t("views.application.dashboards.menu.my_account"), mentor_account_path %>
 </li>
 

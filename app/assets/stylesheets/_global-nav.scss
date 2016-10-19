@@ -44,6 +44,10 @@ $logo-size-mobile: 36px;
       height: 6px;
     }
   }
+
+  .nav-link.active a::after {
+    height: 6px;
+  }
 }
 
 .navigation__content-wrapper {

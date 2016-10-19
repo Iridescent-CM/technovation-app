@@ -15,7 +15,7 @@
           </a>
         <% else %>
           <ul class="navigation__links-list navigation__links-list--no-mobile-menu">
-            <li class="nav-link">
+            <li class="nav-link <%= al(signin_path) %>">
               <%= link_to t('views.application.signin'), signin_path %>
             </li>
           </ul>

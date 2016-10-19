@@ -1,7 +1,7 @@
 module Admin
   class TeamsController < AdminController
     def index
-      teams = SearchTeams.(params)
+      teams = Admin::SearchTeams.(params)
       @teams = teams.paginate(per_page: params[:per_page], page: params[:page])
     end
 
