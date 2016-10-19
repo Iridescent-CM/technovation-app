@@ -8,6 +8,14 @@ You **must** install `qt5` for the gem `capybara-webkit` to install:
 
 https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
 
+You **must** install `elasticsearch`
+
+```
+$ brew update
+  brew install elasticsearch
+  brew services start elasticsearch
+```
+
 ### Setup
 
 Set your Ruby version with your favorite ruby version management tool to:
