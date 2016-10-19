@@ -42,6 +42,19 @@
   margin-bottom: 1rem;
   width: 50%;
 
+  &.full-width {
+    width: 100%;
+    max-width: 650px;
+
+    &:first-child {
+      padding: 0;
+    }
+
+    + .resources__item-wrapper {
+      padding-left: 0;
+    }
+  }
+
   &:first-child {
     padding-right: 0.5rem;
   }

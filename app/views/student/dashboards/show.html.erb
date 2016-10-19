@@ -11,12 +11,32 @@
       <%= render 'completion_steps' %>
     <% end %>
 
-    <% if current_student.parental_consent.present? %>
-      <div class="resources">
-        <h2 class="resources__heading appy-heading-lg">
-          <%= t("views.application.resources") %>
-        </h2>
-        <ul class="resources__list">
+    <div class="resources">
+      <h2 class="resources__heading appy-heading-lg">
+        <%= t("views.application.resources") %>
+      </h2>
+
+      <ul class="resources__list">
+        <li class="resources__item-wrapper full-width">
+          <div class="card">
+            <div class="card__heading">
+              Internet Safety
+              <%= fa_icon("lock", class: "card-heading__flair") %>
+            </div>
+
+            <div class="card__body">
+              <p>
+                Please take some time right now to learn about internet safety and digital literacy. We want you to be safe and well-informed as you participate in online programs! Technovation will connect you with an adult mentor to support you as you develop your app. We trust our mentors. They have been pre-approved to support your team, but we still recommend that you take a few minutes to learn how to keep yourself safe when collaborating online.
+              </p>
+
+              <p>
+                <%= link_to "Read internet safety tips", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <% if current_student.parental_consent.present? %>
           <li class="resources__item-wrapper">
             <div class="card">
               <div class="card__heading">
@@ -25,20 +45,20 @@
               </div>
               <div class="card__body">
                 <p>
-                  <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
+                <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
                 </p>
 
                 <p>
-                  <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
-                  (if you came from Made With Code)
+                <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
+                (if you came from Made With Code)
                 </p>
 
               </div>
             </div>
           </li>
-        </ul>
-      </div>
-    <% end %>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
