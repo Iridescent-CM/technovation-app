@@ -5,7 +5,7 @@ class StudentController < ApplicationController
 
   before_action -> {
     unless current_student.valid?
-      redirect_to student_errors_path
+      redirect_to student_interruptions_path
     end
   }, unless: -> { %w{errors accounts}.include?(controller_name) }
 

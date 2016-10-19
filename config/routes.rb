@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     resources :mentor_searches, except: [:index, :destroy]
 
     resource :parental_consent_notice, only: [:new, :create]
-    resources :errors, only: :index
+    resources :interruptions, only: :index
   end
 
   namespace :mentor do
