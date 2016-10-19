@@ -13,7 +13,7 @@ class StudentController < ApplicationController
       redirect_to student_interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
-    %w{interruptions accounts honor_code_agreements dashboards}.include?(controller_name)
+    %w{interruptions accounts honor_code_agreements dashboards parental_consent_notices}.include?(controller_name)
   }
 
   private
