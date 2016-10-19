@@ -6,15 +6,16 @@
     </div>
 
     <div class="card__body">
-      <%= t("views.profile_requirements.parental_consent.label") %><br>
+      <p><%= t("views.profile_requirements.parental_consent.label") %></p>
 
       <% if current_student.student_profile.parent_guardian_email.present? %>
-        <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
+        <p>
+          <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
+          <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
+            edit_student_account_path(anchor: "account-profile-details") %>
+        </p>
 
-        <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
-          edit_student_account_path(anchor: "account-profile-details") %>
-
-        <%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %>
+        <p><%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %></p>
 
         <div class="card__actions-row card__actions-row--pos-end">
           <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
