@@ -11,9 +11,9 @@ https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-c
 You **must** install `elasticsearch`
 
 ```
-$ brew update
-  brew install elasticsearch
-  brew services start elasticsearch
+brew update
+brew install elasticsearch
+brew services start elasticsearch
 ```
 
 ### Setup
