@@ -90,7 +90,7 @@ class TeamMailer < ApplicationMailer
       @url = send("new_#{type}_team_search_url")
 
       if type == :student
-        @extra_url = "http://www.technovationchallenge.org/wp-content/uploads/2014/11/RecruitmentTipsAmbassador.pdf"
+        @extra_url = "http://www.technovationchallenge.org/curriculum/buildateam/"
       end
     end
 
