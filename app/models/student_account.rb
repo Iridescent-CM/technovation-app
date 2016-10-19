@@ -87,7 +87,7 @@ class StudentAccount < Account
   end
 
   def can_join_a_team?
-    parental_consent.present? and not is_on_team?
+    honor_code_signed? and parental_consent.present? and not is_on_team?
   end
 
   def team

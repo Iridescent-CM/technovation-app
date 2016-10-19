@@ -6,7 +6,7 @@ RSpec.feature "Students sign the honor code" do
     student.void_honor_code_agreement!
 
     sign_in(student)
-    within('.navigation__links-list') { click_link "Create a team" }
+    visit new_student_team_path
     click_link "Sign the Technovation Honor Code"
 
     expect(page).to have_content("you promise that all elements of your #{Season.current.year} Technovation submission")
@@ -24,7 +24,7 @@ RSpec.feature "Students sign the honor code" do
     student.void_honor_code_agreement!
 
     sign_in(student)
-    within('.navigation__links-list') { click_link "Create a team" }
+    visit new_student_team_path
     click_link "Sign the Technovation Honor Code"
 
     fill_in "Electronic signature", with: "Agreement Duck"
