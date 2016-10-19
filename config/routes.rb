@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
     resource :parental_consent_notice, only: [:new, :create]
     resources :interruptions, only: :index
+    resources :honor_code_agreements, only: [:new, :create]
   end
 
   namespace :mentor do

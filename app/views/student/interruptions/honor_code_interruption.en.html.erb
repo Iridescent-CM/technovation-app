@@ -1,0 +1,24 @@
+<% if not current_student.honor_code_signed? %>
+  <div class="notify-banner notify-banner--notice">
+    <p>
+      Hey there!
+      Sorry to interrupt you, but we need you to sign the Technovation Honor Code.
+    </p>
+  </div>
+
+  <p class="center">
+    <%= link_to "Sign the Technovation Honor Code",
+      new_student_honor_code_agreement_path,
+      class: "appy-button"%>
+  </p>
+<% else %>
+  <div class="notify-banner notify-banner--success">
+    <p>
+      Everything's okay, move along!
+    </p>
+  </div>
+
+  <p class="center">
+    <%= link_to "Okay", student_dashboard_path, class: "appy-button"%>
+  </p>
+<% end %>

@@ -5,9 +5,15 @@ class StudentController < ApplicationController
 
   before_action -> {
     unless current_student.valid?
-      redirect_to student_interruptions_path
+      redirect_to student_interruptions_path(issue: :invalid_profile)
     end
-  }, unless: -> { %w{errors accounts}.include?(controller_name) }
+
+    unless current_student.honor_code_signed?
+      redirect_to student_interruptions_path(issue: :honor_code)
+    end
+  }, unless: -> {
+    %w{interruptions accounts honor_code_agreements dashboards}.include?(controller_name)
+  }
 
   private
   def current_student

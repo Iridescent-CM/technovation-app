@@ -10,6 +10,7 @@ class StudentAccount < Account
   has_many :team_member_invites, foreign_key: :invitee_id, dependent: :destroy
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy, foreign_key: :account_id
+  has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy, foreign_key: :account_id
 
   has_one :student_profile, dependent: :destroy, foreign_key: :account_id
   accepts_nested_attributes_for :student_profile
@@ -43,6 +44,10 @@ class StudentAccount < Account
     else
       false
     end
+  end
+
+  def honor_code_signed?
+    honor_code_agreement.present?
   end
 
   def pending_team_invitations
@@ -119,6 +124,10 @@ class StudentAccount < Account
 
   def void_parental_consent!
     !!parental_consent && parental_consent.void!
+  end
+
+  def void_honor_code_agreement!
+    !!honor_code_agreement && honor_code_agreement.void!
   end
 
   def after_registration

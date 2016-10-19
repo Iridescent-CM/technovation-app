@@ -49,6 +49,15 @@ FactoryGirl.define do
       end
     end
 
+    after(:create) do |s|
+      unless s.honor_code_signed?
+        s.create_honor_code_agreement!(
+          agreement_confirmed: true,
+          electronic_signature: "Agreement Poodle"
+        )
+      end
+    end
+
     trait :on_team do
       after(:create) do |s|
         team = FactoryGirl.create(:team, members_count: 0)

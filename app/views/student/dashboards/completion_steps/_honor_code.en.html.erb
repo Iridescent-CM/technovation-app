@@ -1,0 +1,18 @@
+<% unless current_student.honor_code_signed? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= Season.current.year %> Technovation Honor Code
+      <%= fa_icon("check-square-o", class: "card-heading__flair") %>
+    </div>
+
+    <div class="card__body">
+      You must agree to the <%= Season.current.year %> Technovation Honor Code<br />
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Sign the agreement",
+          new_student_honor_code_agreement_path,
+          class: "appy-button" %>
+      </div>
+    </div>
+  </li>
+<% end %>

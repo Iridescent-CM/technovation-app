@@ -19,6 +19,11 @@ en:
   activerecord:
     errors:
       models:
+        honor_code_agreement:
+          attributes:
+            agreement_confirmed:
+              accepted: "must be checked"
+
         mentor_account:
           attributes:
             existing_password:

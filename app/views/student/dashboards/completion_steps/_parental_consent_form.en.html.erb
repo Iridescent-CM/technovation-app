@@ -1,0 +1,40 @@
+<% unless current_student.parental_consent.present? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= t("views.profile_requirements.parental_consent.heading") %>
+      <span class="card-heading__flair fa fa-exclamation-circle"><!--Fontawesome--></span>
+    </div>
+
+    <div class="card__body">
+      <%= t("views.profile_requirements.parental_consent.label") %><br>
+
+      <% if current_student.student_profile.parent_guardian_email.present? %>
+        <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
+
+        <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
+          edit_student_account_path(anchor: "account-profile-details") %>
+
+        <%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %>
+
+        <div class="card__actions-row card__actions-row--pos-end">
+          <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
+            student_parental_consent_notice_path,
+            data: { method: :post },
+            class: "appy-button" %>
+        </div>
+      <% else %>
+        <%= mail_to "info@technovationchallenge.org",
+          t("views.profile_requirements.parental_consent.links.contact_us.text"),
+          subject: "Parental consent form help" %>
+
+        <%= t("views.profile_requirements.parental_consent.links.contact_us.postfix") %>
+
+        <div class="card__actions-row card__actions-row--pos-end">
+          <%= link_to t("views.profile_requirements.parental_consent.links.send_link.text"),
+            new_student_parental_consent_notice_path,
+            class: "appy-button" %>
+        </div>
+      <% end %>
+    </div>
+  </li>
+<% end %>

@@ -1,0 +1,28 @@
+<% if current_student.parental_consent.present? and not current_student.is_on_team? %>
+  <li class="card">
+    <div class="card__heading">
+      <%= t("views.profile_requirements.create_join_team.heading") %>
+      <span class="card-heading__flair fa fa-group"><!--Fontawesome--></span>
+    </div>
+
+    <div class="card__body">
+      <%= t("views.profile_requirements.create_join_team.labels.student").html_safe %><br>
+
+      <%= link_to t("views.profile_requirements.create_join_team.links.pre_unit.text"),
+        "http://www.technovationchallenge.org/curriculum/buildateam/",
+        target: "_blank" %>
+
+      <%= t("views.profile_requirements.create_join_team.links.pre_unit.postfix") %>
+
+      <div class="card__actions-row card__actions-row--pos-fill">
+        <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
+          [:new, :student, :team_search],
+          class: "appy-button" %>
+
+        <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
+          [:new, :student, :team],
+          class: "appy-button" %>
+      </div>
+    </div>
+  </li>
+<% end %>
