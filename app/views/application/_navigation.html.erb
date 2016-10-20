@@ -7,9 +7,21 @@
 
       <nav>
         <% if content_for?(:menu) %>
+          <% unless Rails.env.staging? or Rails.env.production? %>
+            <div class="navigation__locale-switcher">
+              <%= form_tag locale_switch_url, data: { fancy: true } do %>
+                <%= label_tag :locale, t("views.application.language") %>
+
+                <%= select_tag :locale,
+                  options_for_select(locale_names, current_account.locale) %>
+              <% end %>
+            </div>
+          <% end %>
+
           <ul class="navigation__links-list">
             <%= yield :menu %>
           </ul>
+
           <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
             <!--FontAwesome-->
           </a>

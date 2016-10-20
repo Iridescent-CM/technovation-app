@@ -1,0 +1,39 @@
+es-MX:
+  language: "Esppañol (México)"
+  views:
+    admin:
+      dashboards:
+        index:
+          title: "Bienvenido a tu panel de configuración"
+
+    application:
+      dashboards:
+        menu:
+          accounts: "Usuarios"
+          connect_mentors: "Contactar mentores"
+          home: "Inicio"
+          my_account: "Mi cuenta"
+          my_requests: "Mis solicitudes"
+          my_teams: "Mis equipos"
+          team_submission: "Mis entregas en equipo"
+        show:
+          no_more_invites: "Una vez que seleccionas un equipo, ya no es posible recibir más invitaciones."
+          no_more_requests: "Una vez que formas parte de un equipo, ya no es posible enviar más invitaciones."
+          no_pending_team_invitations: "No tienes ninguna invitación pendiente para unirte a un equipo"
+          no_pending_team_requests: "No tienes ninguna solicitud pendiente para unirte a un equipo"
+          pending_team_invitations: "Invitaciones de equipo recibidas"
+          pending_team_requests: "Solicitudes de equipo enviadas"
+        title: "Panel de configuración"
+
+    regional_ambassador:
+      dashboards:
+        show:
+          approved_message: "¡Bienvenido! Tu cuenta ha sido revisada por nuestros colaboradores y ha sido aprobada. Próximamente recibirás noticias sobre las novedades que tendremos para ti."
+          pending_message: "Gracias por registrarte como Embasador Regional. Los colaboradores de Technovation van a revisar tu cuenta para asegurarse de que tu información ha sido ingresada correctamente. Una vez que haya sido confirmada, tendrás acceso a los datos de los estudiantes dentro de tu región."
+          declined_message: "Gracias por tu interés en registrarte como Embasador Regional. Desafortunadamente tu solicitud ha sido rechazada en esta ocasión."
+
+    student:
+      dashboards:
+        show:
+          complete_pre_program_survey: "Terminar la encuestra incial del programa"
+          resend_parental_consent: "Reenviar el formato de consentimiento para padres de familia"

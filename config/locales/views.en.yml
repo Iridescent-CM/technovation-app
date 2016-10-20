@@ -1,4 +1,6 @@
 en:
+  language: "English"
+
   views:
     application:
       actions: "Actions"

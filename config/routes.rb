@@ -123,6 +123,8 @@ Rails.application.routes.draw do
   resources :signup_attempts, only: [:create, :show, :update]
   resources :signup_attempt_confirmations, only: :new
 
+  resource :locale_switch, only: :create
+
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
 
