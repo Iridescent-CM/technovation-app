@@ -14,6 +14,8 @@ class MentorAccount < Account
   has_one :background_check, foreign_key: :account_id, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
+  has_one :honor_code_agreement, -> { nonvoid }, foreign_key: :account_id, dependent: :destroy
+
   has_many :memberships, as: :member, dependent: :destroy
 
   has_many :join_requests, as: :requestor, dependent: :destroy
@@ -48,6 +50,14 @@ class MentorAccount < Account
     to: :background_check,
     prefix: true,
     allow_nil: true
+
+  def void_honor_code_agreement!
+    honor_code_agreement.void!
+  end
+
+  def honor_code_signed?
+    honor_code_agreement.present?
+  end
 
   def search_name
     full_name
@@ -87,7 +97,7 @@ class MentorAccount < Account
   end
 
   def can_join_a_team?
-    consent_signed? && background_check_complete? && bio_complete?
+    honor_code_signed? && consent_signed? && background_check_complete? && bio_complete?
   end
 
   def team_names

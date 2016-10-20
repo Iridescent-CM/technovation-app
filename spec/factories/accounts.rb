@@ -88,6 +88,15 @@ FactoryGirl.define do
       end
     end
 
+    after(:create) do |m|
+      unless m.honor_code_signed?
+        m.create_honor_code_agreement!(
+          agreement_confirmed: true,
+          electronic_signature: "Agreement Hippo"
+        )
+      end
+    end
+
     trait :with_expertises do
       after(:create) do |m|
         2.times do

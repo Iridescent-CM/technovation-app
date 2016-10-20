@@ -1,4 +1,4 @@
-<% unless current_student.honor_code_signed? %>
+<% unless account.honor_code_signed? %>
   <li class="card">
     <div class="card__heading">
       <%= Season.current.year %> Technovation Honor Code
@@ -10,7 +10,7 @@
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Sign the agreement",
-          new_student_honor_code_agreement_path,
+          [:new, account.type_name, :honor_code_agreement],
           class: "appy-button" %>
       </div>
     </div>

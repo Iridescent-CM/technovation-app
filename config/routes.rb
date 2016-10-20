@@ -58,6 +58,8 @@ Rails.application.routes.draw do
     resources :students, only: :show
 
     resources :background_checks, only: [:new, :create, :show]
+    resources :honor_code_agreements, only: [:new, :create]
+    resources :interruptions, only: :index
   end
 
   namespace :regional_ambassador do

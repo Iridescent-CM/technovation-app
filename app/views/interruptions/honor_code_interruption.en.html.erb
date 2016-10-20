@@ -1,4 +1,4 @@
-<% if not current_student.honor_code_signed? %>
+<% if not current_account.honor_code_signed? %>
   <div class="notify-banner notify-banner--notice">
     <p>
       Hey there!
@@ -8,7 +8,7 @@
 
   <p class="center">
     <%= link_to "Sign the Technovation Honor Code",
-      new_student_honor_code_agreement_path,
+      [:new, current_account.type_name, :honor_code_agreement],
       class: "appy-button"%>
   </p>
 <% else %>
@@ -19,6 +19,6 @@
   </div>
 
   <p class="center">
-    <%= link_to "Okay", student_dashboard_path, class: "appy-button"%>
+  <%= link_to "Okay", send("#{current_account.type_name}_dashboard_path"), class: "appy-button"%>
   </p>
 <% end %>
