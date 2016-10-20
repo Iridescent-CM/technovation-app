@@ -32,3 +32,18 @@
 .appy-button--sm {
   padding: 0.25rem 1rem;
 }
+
+.unbutton,
+.unbutton:hover,
+.unbutton:active,
+.unbutton:focus {
+  background-color: transparent;
+  border: 0;
+  color: currentColor;
+  display: inline;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}

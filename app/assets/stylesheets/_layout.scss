@@ -19,6 +19,7 @@
 
   .main-content {
     @include clearfix;
+    min-height: 80vh;
     padding: 0 1rem 2rem;
   }
 }
