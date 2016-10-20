@@ -26,7 +26,6 @@ gem 'airbrake', '~> 5.2.1'
 gem 'createsend', '~> 4.0.2'
 gem 'newrelic_rpm', '~> 3.14.2.312'
 
-gem "rack-timeout"
 gem 'dalli'
 
 gem 'geocoder', '~> 1.2.6'
@@ -81,12 +80,15 @@ group :test do
   gem 'sinatra'
 end
 
-gem 'premailer-rails', group: [:qa, :staging, :production, :development]
+group :qa, :staging, :production, :development do
+  gem 'premailer-rails'
+end
 
 group :qa, :staging, :production do
   gem 'rails_12factor'
   gem 'hiredis'
   gem 'tunemygc'
+  gem "rack-timeout"
 end
 
 # LEGACY MIGRATION
