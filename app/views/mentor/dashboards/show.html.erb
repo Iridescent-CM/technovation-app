@@ -12,6 +12,8 @@
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
+    <%= render 'locale_switcher' %>
+
     <% if current_mentor.consent_waiver.present? and current_mentor.bio_complete? and current_mentor.background_check_complete? %>
       <div class="card">
         <div class="card__heading">

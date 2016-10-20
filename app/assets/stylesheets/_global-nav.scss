@@ -9,6 +9,7 @@ $logo-size-mobile: 36px;
   margin-bottom: 1.5rem;
   padding: $base-spacing 0 calc(#{$base-spacing} + 3px);
   padding: 0;
+  position: relative;
 
   .logo {
     align-items: center;

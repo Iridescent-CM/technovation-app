@@ -147,3 +147,10 @@
     width: 100%;
   }
 }
+
+.settings__locale-switcher {
+  label, select {
+    text-transform: none;
+    display: inline
+  }
+}
