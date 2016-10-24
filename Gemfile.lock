@@ -55,6 +55,16 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    capybara (2.7.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
+      json
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -496,6 +506,8 @@ GEM
       hashdiff
     will_paginate (3.1.1)
     xml-simple (1.1.5)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -506,6 +518,7 @@ DEPENDENCIES
   autoprefixer-rails
   aws-sdk
   bcrypt (~> 3.1.7)
+  capybara-webkit
   carrierwave (~> 0.11.2)
   carrierwave_direct
   chartkick
