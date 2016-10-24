@@ -22,7 +22,7 @@ RSpec.feature "Regional Ambassadors registration" do
     select "Other", from: "How did you hear about Technovation?"
     fill_in "regional_ambassador_account[referred_by_other]", with: "Some other value"
 
-    click_button "Sign up"
+    click_button "Create Your Account"
   end
 
   scenario "redirects to dashboard" do

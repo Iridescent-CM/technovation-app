@@ -16,7 +16,7 @@ RSpec.feature "Register as a mentor" do
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
 
-    click_button "Sign up"
+    click_button "Create Your Account"
   end
 
   scenario "Redirected to mentor dashboard" do

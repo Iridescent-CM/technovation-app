@@ -18,7 +18,7 @@ RSpec.feature "Register as a judge" do
 
     select "Company email", from: "How did you hear about Technovation?"
 
-    click_button "Sign up"
+    click_button "Create Your Account"
   end
 
   scenario "Redirected to judge dashboard" do

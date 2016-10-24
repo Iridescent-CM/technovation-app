@@ -100,7 +100,7 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "School name", with: "John Hughes High."
 
-    click_button "Sign up"
+    click_button "Create Your Account"
 
     expect(signup_attempt.reload).to be_registered
     expect(signup_attempt.account.email).to eq("joe@joesak.com")
@@ -119,7 +119,7 @@ RSpec.feature "Activate your email to sign up" do
       token: SignupAttempt.find_by(email: email).activation_token
     )
 
-    click_button "Sign up"
+    click_button "Create Your Account"
 
     within(".student_account_password") {
       expect(page).to have_css('.error', text: "can't be blank")
