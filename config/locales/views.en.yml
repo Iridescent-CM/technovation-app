@@ -34,9 +34,9 @@ en:
       review_now: "Review now"
       save: "Save"
       search_near: "Search by city"
-      signin: 'Sign in'
-      signup: 'Sign up'
-      signout: 'Logout'
+      signin: "Sign in"
+      signup: "Sign up"
+      signout: "Logout"
       site_title: "Technovation Challenge"
       terms_of_use: "Terms of Use"
       to_do: "To-Do"
@@ -205,6 +205,7 @@ en:
 
     signups:
       form:
+        create_account: "Create Your Account"
         choose_expertises: "Choose expertise(s)"
         confirm_password: 'Confirm password'
         required_fields: "Please fill in all of the fields. Thank you!"
@@ -214,6 +215,7 @@ en:
 
       new:
         already_signed_up: "Already have an account from a previous year?"
+        select_account_type: "Select your account type"
         create_an: "Create an"
         descriptions:
           disabled:

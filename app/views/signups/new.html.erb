@@ -1,10 +1,9 @@
 <div class="signup-page">
-  <h2>
-    <%= t("views.signups.new.create_an") %>
-    <span class="accent"><%= t("models.account.class_name").capitalize %></span>
-  </h2>
+  <h1 class="appy-title">
+    <%= t("views.signups.new.select_account_type") %>
+  </h1>
 
-  <p class="center">
+  <p>
     <%= t("views.signups.new.already_signed_up") %>
     <%= link_to t("views.application.signin"), signin_path %>
     <%= t("views.application.instead") %>.

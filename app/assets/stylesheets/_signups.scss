@@ -1,12 +1,31 @@
+.signup-page {
+  max-width: 800px;
+  margin: $large-spacing auto 5rem;
+
+  > p {
+    margin-bottom: 1rem;
+  }
+
+  .signup-form__email-explanation {
+    font-size: smaller;
+    margin-top: 0;
+  }
+}
+
 .account-type {
   background-color: white;
+  border-radius: 0.25rem;
   box-shadow: 0 4px 4px rgba(black, 0.1);
   display: flex;
-  margin: 0 auto 1rem;
-  max-width: 800px;
+  margin-bottom: 1rem;
+  overflow: hidden;
 
   @media screen and (max-width: $device-xs) {
     display: block;
+  }
+
+  .appy-button {
+    margin: 0;
   }
 }
 
@@ -62,11 +81,15 @@
 }
 
 .account-type__description {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   padding: 1rem;
   position: relative;
 
-  .primary-button {
+  .appy-button {
+    margin-top: auto;
+    text-transform: capitalize;
     white-space: normal;
 
     @media screen and (max-width: $device-xs) {
@@ -81,26 +104,24 @@
   opacity: 0.3;
 }
 
+// Sign up form
+
+.signup-form {
+  div.date,
+  [class*="referred_by"] {
+    margin-bottom: 1rem;
+  }
+
+  .appy-button {
+    margin: 0;
+    min-width: 40%;
+  }
+}
+
 // Previously existing code below
 
 .signup-section {
   color: $mulberry;
   font-size: 2rem;
   margin: 15px 0;
-}
-
-.container .signup-page {
-  margin-top: $large-spacing;
-
-  h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: $mulberry;
-    .accent { color: $shamrock; }
-  }
-
-  .signup-form__email-explanation {
-    font-size: smaller;
-    margin-top: 0;
-  }
 }

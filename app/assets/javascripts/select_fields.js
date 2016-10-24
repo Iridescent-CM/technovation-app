@@ -23,7 +23,7 @@
 }());
 
 /*
- * Account sign-up date of birth <select> inputs
+ * Account sign-up date of birth and how did you hear about us <select> inputs
  */
 (function() {
   $(document).on('DOMContentLoaded', initChosenDOB);
@@ -32,6 +32,15 @@
     $('.account_dob')
       .chosen({
         disable_search_threshold: 8
+      })
+      .change(function() {
+        setHasVal(this);
+      });
+
+    $('.sign-up-referred-by')
+      .chosen({
+        disable_search_threshold: 20,
+        width: '50%'
       })
       .change(function() {
         setHasVal(this);

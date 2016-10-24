@@ -8,18 +8,15 @@
 %>
 
 <div class="signup-page">
-  <h2>
-    <%= title %>
-
-    <% unless signup.persisted? %>
-      <span class="accent">
+  <div class="signup-form simple-card">
+    <h1 class="appy-title">
+      <%= title %>
+      <% unless signup.persisted? %>
         <%= t("views.signups.new.roles.#{signup.type_name}") %>
-      </span>
-    <% end %>
-  </h2>
+      <% end %>
+    </h1>
 
-  <div class="signup-form">
-    <%= simple_form_for(signup, url: url) do |f| %>
+    <%= simple_form_for(signup, url: url, html: { class: "no-simple-form-style" }) do |f| %>
       <%= render 'errors', record: signup %>
 
       <p><%= t("views.signups.form.required_fields") %></p>
@@ -56,6 +53,7 @@
                         toggle_value: "Other",
                         toggle_reveal: ".referred_by_other",
                       },
+                      class: 'sign-up-referred-by'
                     } %>
 
         <div class="referred_by_other">
@@ -64,7 +62,7 @@
                       placeholder: t("models.account.referred_by_other") %>
         </div>
 
-        <%= f.button :submit, t('views.signups.form.signup') %>
+        <%= f.button :submit, t('views.signups.form.create_account'), :class => 'appy-button' %>
       <% end %>
     <% end %>
   </div>

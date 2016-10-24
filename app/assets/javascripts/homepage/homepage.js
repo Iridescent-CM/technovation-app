@@ -12,5 +12,18 @@
 
   toggleButton.addEventListener('click', function() {
     welcomeMessageArea.classList.toggle('home-page__welcome-message--open');
+    toggleMessageHeight();
   });
+
+  var isOpen = false;
+  var messageOverflowContainer = document.querySelector('.home-page__welcome-message-overflow-container');
+  var messageWrapper = messageOverflowContainer.querySelector('.home-page__welcome-message-wrapper');
+  function toggleMessageHeight() {
+    if (!isOpen) {
+      messageOverflowContainer.style.height = messageWrapper.clientHeight + 'px';
+    } else {
+      messageOverflowContainer.style.height = 0;
+    }
+    isOpen = !isOpen;
+  }
 })();

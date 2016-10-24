@@ -44,11 +44,7 @@ select.date {
   }
 }
 
-label {
-  font-size: 0.875rem;
-}
-
-.simple_form {
+.simple_form:not(.no-simple-form-style) {
   @include span-columns(6);
 
   @include media($large-screen) {
@@ -87,7 +83,7 @@ form {
   }
 }
 
-.signup-page, .signin-page {
+.signin-page {
   .simple_form {
     @include shift(3);
 
@@ -151,10 +147,6 @@ select.has-val + .chosen-container span {
   label {
     display: inline;
   }
-}
-
-label {
-  cursor: pointer;
 }
 
 .referred_by_other {

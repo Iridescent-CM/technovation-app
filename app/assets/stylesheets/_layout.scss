@@ -1,5 +1,3 @@
-// TODO: Put this somewhere else because layout is misleading
-
 .container {
   @include outer-container;
 
@@ -19,7 +17,7 @@
 
   .main-content {
     @include clearfix;
-    min-height: 80vh;
+    min-height: 90vh;
     padding: 0 1rem 2rem;
   }
 }
@@ -41,6 +39,7 @@
 .no-text-transform {
   text-transform: none !important;
 }
+
  td.danger {
    display: table-cell;
 

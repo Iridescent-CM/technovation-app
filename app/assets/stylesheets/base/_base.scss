@@ -112,12 +112,13 @@ legend {
 }
 
 label {
-  font-family: $base-font-family;
-  font-weight: $base-font-weight;
-  letter-spacing: 2px;
-  text-transform: uppercase;
   display: block;
+  font-family: $base-font-family;
+  font-size: 0.9em;
+  font-weight: 400;
+  letter-spacing: 1px;
   margin-bottom: $small-spacing / 2;
+  text-transform: uppercase;
 }
 
 input,

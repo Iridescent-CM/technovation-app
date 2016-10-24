@@ -2,17 +2,9 @@
  * Home page
  */
 
-.home-page {
-
-}
-
 .home-page__form-wrapper {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
   margin: 2rem auto 4rem;
   max-width: 65ch;
-  padding: 1.25rem 1.5rem;
 }
 
 /*
@@ -39,15 +31,12 @@
   }
 }
 
-.home-page-sign-up-form__submit-wrapper {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-
-  p {
-    margin: 0 2rem 0 0;
-  }
+.home-page-sign-up-form__submit-wrapper .appy-button {
+  text-transform: capitalize;
+  width: 100%;
 }
+
+$expand-message-speed: 0.5s;
 
 .home-page__expand-welcome-message,
 .home-page__expand-welcome-message:hover,
@@ -61,6 +50,8 @@
   padding: 1rem 3rem;
   position: relative;
   text-shadow: 0 1px 0 #ececec;
+  transition: border-radius 0s;
+  transition-delay: $expand-message-speed;
   width: 100%;
 
   .fa {
@@ -73,25 +64,28 @@
   }
 }
 
+.home-page__welcome-message-overflow-container {
+  height: 0;
+  overflow: hidden;
+  transition: height $expand-message-speed;
+}
+
 .home-page__welcome-message-wrapper {
-  display: none;
+  background-color: white;
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 2rem;
 }
 
 .home-page__welcome-message--open {
+
   .home-page__expand-welcome-message {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    transition-delay: 0s;
 
     .fa::before {
       content: '\f077';
     }
-  }
-
-  .home-page__welcome-message-wrapper {
-    background-color: white;
-    border-radius: 0 0 0.5rem 0.5rem;
-    display: block;
-    padding: 2rem;
   }
 }
 
