@@ -107,8 +107,20 @@
 // Sign up form
 
 .signup-form {
-  div.date,
-  [class*="referred_by"] {
+
+  [class*="referred_by"],
+  [class*="account_gender"],
+  [class*="ambassador_since_year"] {
+    .chosen-container {
+      width: 50% !important;
+
+      @media screen and (max-width: $device-xs) {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .chosen-container {
     margin-bottom: 1rem;
   }
 
