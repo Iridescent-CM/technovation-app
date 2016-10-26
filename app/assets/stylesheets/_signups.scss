@@ -108,6 +108,23 @@
 
 .signup-form {
 
+  .signup-form-name-fields {
+    display: flex;
+    justify-content: space-between;
+
+    .input {
+      width: calc(50% - 0.5em);
+    }
+
+    @media screen and (max-width: $device-xs) {
+      display: block ;
+
+      .input {
+        width: auto;
+      }
+    }
+  }
+
   [class*="referred_by"],
   [class*="account_gender"],
   [class*="ambassador_since_year"] {
@@ -128,6 +145,13 @@
     margin: 0;
     min-width: 40%;
   }
+}
+
+// Screen after sign up attempt
+
+.signup-post-attempt-wrapper {
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 // Previously existing code below

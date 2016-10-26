@@ -19,15 +19,9 @@
     <%= simple_form_for(signup, url: url, html: { class: "no-simple-form-style" }) do |f| %>
       <%= render 'errors', record: signup %>
 
-      <p><%= t("views.signups.form.required_fields") %></p>
+      <p><strong><%= t("views.signups.form.signing_up_email", email: signup.email) %></strong></p>
 
       <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
-
-      <h6 id="account-profile-details" class="signup-section">
-        <%= t("views.signups.new.section_headers.profile_details") %>
-      </h6>
-
-      <p><strong><%= t("views.signups.form.signing_up_email", email: signup.email) %></strong></p>
 
       <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
 

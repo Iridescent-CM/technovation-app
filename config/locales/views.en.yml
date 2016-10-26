@@ -208,7 +208,6 @@ en:
         create_account: "Create Your Account"
         choose_expertises: "Choose expertise(s)"
         confirm_password: 'Confirm password'
-        required_fields: "Please fill in all of the fields. Thank you!"
         resend_email: "Re-Send Email"
         signing_up_email: "Your email address: %{email}"
         signup: "Sign up"

@@ -1,6 +1,7 @@
-<%= f.input :first_name %>
-
-<%= f.input :last_name %>
+<div class="signup-form-name-fields">
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+</div>
 
 <%= f.input :date_of_birth, as: :date, prompt: true,
                                        start_year: f.object.youngest_birth_year,
