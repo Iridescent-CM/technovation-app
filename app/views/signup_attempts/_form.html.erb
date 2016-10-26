@@ -1,7 +1,6 @@
 <div class="home-page-sign-up-form">
   <%
       url ||= signup_attempts_url
-      buttonText = attempt.new_record? ? "Foo" : "Bar"
   %>
 
   <%= simple_form_for attempt, url: url do |f| %>
