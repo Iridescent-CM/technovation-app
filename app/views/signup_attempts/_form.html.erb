@@ -1,6 +1,7 @@
 <div class="home-page-sign-up-form">
   <%
       url ||= signup_attempts_url
+      buttonText = attempt.new_record? ? "Foo" : "Bar"
   %>
 
   <%= simple_form_for attempt, url: url do |f| %>
@@ -18,7 +19,13 @@
 
     <div class="home-page-sign-up-form__submit-wrapper">
       <p>If you have an existing account, you can <%= link_to "sign in now", signin_path %> instead.</p>
-      <%= f.button :submit, t("views.application.get_started"), :class => 'appy-button' %>
+
+      <% if attempt.new_record? %>
+        <%= f.button :submit, t("views.application.get_started"), :class => 'appy-button' %>
+      <% else %>
+        <%= f.button :submit, t("views.signups.form.resend_email"), :class => 'appy-button' %>
+      <% end %>
+
     </div>
   <% end %>
 </div>
