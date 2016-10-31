@@ -114,6 +114,8 @@
   </div>
 
   <div class="admin-dashboard__sidebar">
+    <%= render 'account_snapshots', title: "#{Season.current.year} #{current_ambassador.region_name} Snapshot" %>
+
     <ul class="resources__list">
       <li class="resources__item-wrapper">
         <div class="card">
@@ -129,9 +131,26 @@
           </div>
         </div>
       </li>
-    </ul>
 
-    <%= render 'account_snapshots', title: "#{Season.current.year} #{current_ambassador.region_name} Snapshot" %>
+      <li class="resources__item-wrapper">
+        <div class="card">
+          <div class="card__heading">
+            Resources
+            <%= fa_icon("globe", class: "card-heading__flair") %>
+          </div>
+
+          <div class="card__body">
+            <p>
+              Use this link to access RA Resources to support events and recruitment throughout the season.
+            </p>
+
+            <p>
+              <%= link_to "RA Resources", "http://www.technovationchallenge.org/ra-resources/", target: "_blank" %>
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 
