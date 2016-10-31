@@ -40,7 +40,7 @@
       <% else %>
         <%= f.input :referred_by,
                     collection: Account.referred_bies.keys,
-                    label: t("models.account.referred_by"),
+                    label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
                     input_html: {
                       data: {
                         toggle: true,

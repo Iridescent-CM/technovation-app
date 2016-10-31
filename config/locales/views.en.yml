@@ -27,6 +27,7 @@ en:
       near_me: "Near me"
       no: "No"
       only_one_email: "Enter only one email"
+      optional: "(optional)"
       or: "or"
       privacy_policy: "Privacy Policy"
       resources: "Resources"

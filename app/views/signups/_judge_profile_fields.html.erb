@@ -1,5 +1,6 @@
-<%= f.input :gender, label: t("models.account.gender"),
-                     collection: Account.genders.keys %>
+<%= f.input :gender,
+  label: "#{t('models.account.gender')} #{t('views.application.optional')}",
+  collection: Account.genders.keys %>
 
 <%= f.fields_for :judge_profile do |j| %>
   <%= j.input :company_name %>

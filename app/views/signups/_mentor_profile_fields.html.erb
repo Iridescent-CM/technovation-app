@@ -1,5 +1,6 @@
-<%= f.input :gender, label: t("models.account.gender"),
-                     collection: Account.genders.keys %>
+<%= f.input :gender,
+  label: "#{t('models.account.gender')} #{t('views.application.optional')}",
+  collection: Account.genders.keys %>
 
 <%= f.fields_for :mentor_profile do |m| %>
   <%= m.input :school_company_name,
@@ -7,7 +8,8 @@
 
   <%= m.input :job_title %>
 
-  <%= m.input :bio %>
+  <%= m.input :bio,
+    label: "#{t('models.regional_ambassador_profile.bio.signup_label')} #{t('views.application.optional')}" %>
 
   <h4><%= t('views.signups.form.choose_expertises') %></h4>
 
