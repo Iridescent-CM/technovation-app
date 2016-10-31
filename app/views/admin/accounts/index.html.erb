@@ -64,8 +64,8 @@
   <table class="table__report_table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Type</th>
+        <th>Signed up</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
@@ -87,8 +87,8 @@
       <% @accounts.each do |account| %>
         <% cache(account) do %>
           <tr>
-            <td><%= account.id %></td>
             <td><%= account.type_name %></td>
+            <td><%= account.created_at.strftime("%m/%d/%Y") %></td>
             <td><%= link_to account.first_name, admin_account_path(account) %></td>
             <td><%= account.last_name %></td>
             <td><%= account.email %></td>
