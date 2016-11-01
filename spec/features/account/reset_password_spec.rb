@@ -7,7 +7,7 @@ RSpec.feature "Reset your forgotten password" do
     visit root_path
 
     click_link "sign in now"
-    click_link "I forgot my password"
+    click_link "Reset your password"
   end
 
   scenario "Email not found" do
