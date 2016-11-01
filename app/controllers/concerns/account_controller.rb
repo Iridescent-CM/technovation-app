@@ -11,7 +11,12 @@ module AccountController
   end
 
   def edit
-    account.valid?
+    if not account.valid? and account.errors.keys.include?(:geocoded)
+      account.geocoded = nil
+      account.city = nil
+      account.state_province = nil
+      account.country = nil
+    end
   end
 
   def update

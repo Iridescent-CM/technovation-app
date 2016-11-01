@@ -3,6 +3,14 @@ module Authenticated
 
   included do
     before_filter :authenticate!
+
+    before_action -> {
+      unless current_account.valid?
+        redirect_to interruptions_path(issue: :invalid_profile) and return
+      end
+    }, unless: -> {
+      %w{interruptions accounts}.include?(controller_name)
+    }
   end
 
   private
