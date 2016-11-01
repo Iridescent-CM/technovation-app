@@ -14,13 +14,17 @@
 
       <%= f.input :date_of_birth, placeholder: "YYYY-MM-DD" %>
 
-      <%= f.input :ssn, placeholder: '999-99-9999' %>
+      <%= f.input :ssn, as: :password, placeholder: '123-45-6789' %>
+
+      <p class="appy-hint" id="show-ssn">
+        <%= link_to 'Show SSN', '#', class: "appy-button" %>
+      </p>
 
       <%= f.input :driver_license_state, placeholder: "XX" %>
 
       <%= f.input :copy_requested, as: :boolean, label: "I want a copy of my report from Checkr when it's completed" %>
 
-      <%= f.button :submit, "Submit your background check" %>
+      <%= f.button :submit, "Submit your background check", class: "appy-button" %>
     <% end %>
   </div>
 

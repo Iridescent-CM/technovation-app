@@ -27,3 +27,21 @@
     }
   }
 }
+
+.simple_form {
+  .background_check_candidate_ssn {
+    width: 75%;
+    float: left;
+
+    + .appy-hint {
+      display: none;
+      margin: 54px 0 0;
+      text-align: right;
+
+      .appy-button {
+        margin: 0;
+        font-size: 1rem;
+      }
+    }
+  }
+}

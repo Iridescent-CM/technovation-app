@@ -9,6 +9,7 @@
 //= require fancy_uploads
 //= require global_nav
 //= require remote_forms
+//= require background_checks
 //= require search_options
 //= require select_fields
 //= require toast_flashes
