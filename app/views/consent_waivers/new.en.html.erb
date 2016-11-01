@@ -65,5 +65,5 @@
 <%= simple_form_for @consent_waiver do |f| %>
   <%= f.input :account_consent_token, as: :hidden %>
   <%= f.input :electronic_signature %>
-  <%= f.button :submit, t("views.consent_waivers.new.submit") %>
+  <%= f.button :submit, t("views.consent_waivers.new.submit"), class: "appy-button" %>
 <% end %>

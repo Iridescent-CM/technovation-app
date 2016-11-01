@@ -1,10 +1,9 @@
-<div class="has-danger">
-  <h6><%= t("views.application.danger_zone") %></h6>
+<div class="has-danger leave-team">
   <%= link_to t("controllers.team_memberships.destroy.link", name: @team.name),
               [account_type, @team, :membership],
               data: {
                 method: :delete,
                 confirm: t("views.teams.show.confirm_leave"),
               },
-              class: "primary-button" %>
+              class: "appy-button" %>
 </div>

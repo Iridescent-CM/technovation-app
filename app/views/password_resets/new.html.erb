@@ -2,6 +2,6 @@
   <%= simple_form_for @password_reset do |f| %>
     <h2><%= t("views.password_resets.new.title") %></h2>
     <%= f.input :email, as: :email %>
-    <%= f.button :submit, t("views.password_resets.new.submit") %>
+    <%= f.button :submit, t("views.password_resets.new.submit"), class: "appy-button" %>
   <% end %>
 </div>

@@ -5,7 +5,7 @@
       <%= f.input :description %>
 
       <% action = f.object.persisted? ? :save : :create %>
-      <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")) %>
+      <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")), class: "appy-button" %>
 
       <% unless f.object.persisted? %>
         <%= t("views.application.or") %>

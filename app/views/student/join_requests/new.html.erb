@@ -7,8 +7,9 @@
                           link: link_to(t("views.application.review_now"),
                                         student_team_member_invite_path(current_student.pending_invitation_for(@team)))).html_safe %></p>
 <% else %>
-  <p><%= button_to t("controllers.student.join_requests.create.link", name: @team.name),
-                    student_join_requests_path(team_id: @team.id) %></p>
+  <%= button_to t("controllers.student.join_requests.create.link", name: @team.name),
+    student_join_requests_path(team_id: @team.id),
+    form_class: "form-with-appy-button" %>
 <% end %>
 
 <%= render "teams/public_show", team: @team %>

@@ -6,5 +6,5 @@
   <p class="appy-hint"><%= t("controllers.accounts.update.change_image_hint") %></p>
 
   <%= f.file_field :profile_image, data: { fancy: true } %>
-  <%= f.submit t("views.application.save") %>
+  <%= f.submit t("views.application.save"), class: "appy-button" %>
 <% end %>

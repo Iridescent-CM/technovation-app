@@ -16,10 +16,8 @@
       <%= truncate(result.description, length: 80) %>
     </p>
 
-    <%= link_to [:new, account_type, :join_request, { team_id: result.id }], {:class => 'team-search-result__link-wrapper'} do %>
-      <button type="button">
-        <%= t("views.team_searches.new.results_link_label") %>
-      </button>
-    <% end %>
+    <%= link_to t("views.team_searches.new.results_link_label"),
+      [:new, account_type, :join_request, { team_id: result.id }],
+      class: 'appy-button team-search-result__link-wrapper' %>
   </div>
 </div>

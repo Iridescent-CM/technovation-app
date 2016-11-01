@@ -137,24 +137,21 @@
         display: table-cell;
         vertical-align: top;
         color: #fff;
+
+        h3 {
+          color: #fff;
+          margin: 0;
+          font-weight: normal;
+        }
+
+        a {
+          color: #fff;
+          text-decoration: underline;
+          &:hover { color: #ddd; }
+        }
       }
     }
-
-    input[type="submit"] {
-      @extend .transparent-button;
-    }
   }
-}
-
-.manage-team {
-  @include span-columns(12);
-  > div {
-    margin-bottom: $base-spacing;
-  }
-}
-
-.mentor-teams {
-  margin-bottom: 15px;
 }
 
 .update-invite {
@@ -173,4 +170,26 @@
   display: block;
   float: left;
   margin: 0 1rem 1rem 0;
+}
+
+.simple_form {
+  .input {
+    &.team_member_invite_invitee_email {
+      width: 50%;
+      margin: 0;
+      padding: 0;
+
+      input {
+        margin: 0 0 0.5rem;
+      }
+
+      + .appy-button {
+        margin: 0 0 1rem;
+      }
+    }
+  }
+}
+
+.leave-team {
+  margin-top: 5rem;
 }

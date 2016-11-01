@@ -8,5 +8,5 @@
   <p class="appy-hint"><%= t("controllers.teams.update.change_image_hint") %></p>
 
   <%= f.file_field :team_photo, data: { fancy: true } %>
-  <%= f.submit t("views.application.save") %>
+  <%= f.submit t("views.application.save"), class: "appy-button" %>
 <% end %>

@@ -198,3 +198,28 @@ select.has-val + .chosen-container span {
   text-align: center;
   z-index: $z-modal;
 }
+
+.form-with-appy-button {
+  input[type="submit"] {
+    @extend .appy-button;
+    margin: 0;
+    font-weight: normal;
+
+    &.secondary-button {
+      color: $shamrock;
+      background-color: white;
+      box-shadow: 0 2px 0 #999;
+    }
+  }
+
+  margin-bottom: 1rem;
+}
+
+.has-danger {
+  .appy-button {
+    margin: 0;
+    font-size: 0.8rem;
+    background-color: #ed5249;
+    box-shadow: 0 2px 0 #bb321f;
+  }
+}
