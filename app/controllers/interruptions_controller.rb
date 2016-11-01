@@ -1,6 +1,4 @@
-module InterruptionController
-  extend ActiveSupport::Concern
-
+class InterruptionsController < ApplicationController
   def index
     render template: "interruptions/#{params[:issue]}_interruption"
   end

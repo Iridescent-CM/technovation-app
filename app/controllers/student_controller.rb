@@ -4,13 +4,9 @@ class StudentController < ApplicationController
   helper_method :current_student, :current_team
 
   before_action -> {
-    unless current_student.valid?
-      redirect_to student_interruptions_path(issue: :invalid_profile) and return
-    end
-
     unless current_student.honor_code_signed?
       save_redirected_path
-      redirect_to student_interruptions_path(issue: :honor_code) and return
+      redirect_to interruptions_path(issue: :honor_code) and return
     end
   }, unless: -> {
     %w{interruptions accounts honor_code_agreements dashboards parental_consent_notices}.include?(controller_name)

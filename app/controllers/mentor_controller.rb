@@ -6,7 +6,7 @@ class MentorController < ApplicationController
   before_action -> {
     unless current_mentor.honor_code_signed?
       save_redirected_path
-      redirect_to mentor_interruptions_path(issue: :honor_code)
+      redirect_to interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
     %w{interruptions accounts honor_code_agreements dashboards background_checks}.include?(controller_name)

@@ -30,7 +30,6 @@ Rails.application.routes.draw do
     resources :mentor_searches, except: [:index, :destroy]
 
     resource :parental_consent_notice, only: [:new, :create]
-    resources :interruptions, only: :index
     resources :honor_code_agreements, only: [:new, :create]
   end
 
@@ -59,7 +58,6 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: [:new, :create, :show]
     resources :honor_code_agreements, only: [:new, :create]
-    resources :interruptions, only: :index
   end
 
   namespace :regional_ambassador do
@@ -111,6 +109,8 @@ Rails.application.routes.draw do
   namespace :application do
     resource :dashboard, only: :show
   end
+
+  resources :interruptions, only: :index
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]

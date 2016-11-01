@@ -1,9 +1,9 @@
 <%
     # call #valid? to load errors
-  current_student.valid?
+  current_account.valid?
 %>
 
-<% if current_student.student_profile.errors.keys.include?(:parent_guardian_email) %>
+<% if current_account.respond_to?(:student_profile) and current_account.student_profile.errors.keys.include?(:parent_guardian_email) %>
   <div class="notify-banner notify-banner--alert">
     <p>
       Hey, wait a moment!
@@ -18,7 +18,7 @@
       edit_student_account_path(anchor: "account-profile-details"),
       class: "appy-button"%>
   </p>
-<% elsif current_student.errors.any? %>
+<% elsif current_account.errors.any? %>
   <div class="notify-banner notify-banner--alert">
     <p>
       Hey, wait a moment!
@@ -27,7 +27,7 @@
   </div>
 
   <p class="center">
-    <%= link_to "Update your account", edit_student_account_path, class: "appy-button"%>
+    <%= link_to "Fix my profile now", [:edit, current_account.type_name, :account], class: "appy-button"%>
   </p>
 <% else %>
   <div class="notify-banner notify-banner--success">
@@ -37,6 +37,6 @@
   </div>
 
   <p class="center">
-    <%= link_to "Okay", student_dashboard_path, class: "appy-button"%>
+    <%= link_to "Okay", [current_account.type_name, :dashboard], class: "appy-button"%>
   </p>
 <% end %>
