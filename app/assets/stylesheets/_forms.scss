@@ -57,6 +57,7 @@ select.date {
 
   &.full-size {
     @include span-columns(12);
+    float: none;
   }
 
   p {
