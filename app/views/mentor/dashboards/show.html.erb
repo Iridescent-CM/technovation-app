@@ -33,6 +33,10 @@
       </div>
     <% end %>
 
+    <% if current_mentor.honor_code_signed? %>
+      <%= render 'honor_code_signed', account: current_mentor %>
+    <% end %>
+
     <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
   </div>
 </div>

@@ -21,6 +21,7 @@ en:
       filter: "Filter"
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
       get_started: "Get started"
+      honor_code: "Honor Code"
       instead: "instead"
       invite: "Send invite"
       language: "Choose language:"

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
     resource :parental_consent_notice, only: [:new, :create]
     resources :honor_code_agreements, only: [:new, :create]
+    resource :honor_code_agreement, only: :show
   end
 
   namespace :mentor do
@@ -58,6 +59,7 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: [:new, :create, :show]
     resources :honor_code_agreements, only: [:new, :create]
+    resource :honor_code_agreement, only: :show
   end
 
   namespace :regional_ambassador do

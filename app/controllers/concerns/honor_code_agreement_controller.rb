@@ -17,6 +17,11 @@ module HonorCodeAgreementController
     end
   end
 
+  def show
+    @honor_code_agreement = current_account.honor_code_agreement
+    render template: 'honor_code_agreements/show'
+  end
+
   private
   def honor_code_agreement_params
     params.require(:honor_code_agreement).permit(:agreement_confirmed, :electronic_signature)
