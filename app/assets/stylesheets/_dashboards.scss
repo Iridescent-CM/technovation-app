@@ -159,3 +159,37 @@
     display: inline
   }
 }
+
+.admin-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .admin-dashboard__column {
+    display: flexbox;
+    width: 70%;
+  }
+
+  .admin-dashboard__sidebar {
+    display: flexbox;
+    width: 30%;
+  }
+
+  .admin-dashboard__quickviews-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    .quickview {
+      margin-right: 15px;
+      margin-bottom: 15px;
+      display: flexbox;
+    }
+  }
+}
+
+.snapshot__cards {
+  .card {
+    margin-bottom: 1rem;
+  }
+}
