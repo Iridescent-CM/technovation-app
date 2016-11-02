@@ -52,14 +52,11 @@
         <tr>
           <th>Type</th>
           <th>Signed up</th>
-          <th>First Name</th>
-          <th>Last Name</th>
+          <th>Name</th>
           <th>Email</th>
           <th>Division</th>
           <th>Referred by</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Country</th>
+          <th>Location</th>
         </tr>
       </thead>
 
@@ -69,14 +66,11 @@
             <tr>
               <td><%= account.type_name %></td>
               <td><%= account.created_at.strftime("%m/%d/%Y") %></td>
-              <td><%= link_to account.first_name, admin_account_path(account) %></td>
-              <td><%= account.last_name %></td>
+              <td><%= link_to account.full_name, admin_account_path(account) %></td>
               <td><%= account.email %></td>
               <td><%= account.division %></td>
               <td><%= account.referred_by %> <%= account.referred_by_other %></td>
-              <td><%= account.city %></td>
-              <td><%= account.state_province %></td>
-              <td><%= Country[account.country].name %></td>
+              <td><%= account.address_details %></td>
             </tr>
           <% end %>
         <% end %>
