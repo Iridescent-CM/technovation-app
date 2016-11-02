@@ -1,3 +1,5 @@
+@import "application";
+
 .form_actions {
   @include span-columns(12);
   padding: 1rem 0 0;
@@ -5,10 +7,20 @@
 }
 
 .pagination_info {
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  margin: 0;
 }
 
-.wrapper__report-table {
+.wrapper__report-column {
+  float: left;
+  width: 65%;
+
+  .wrapper__report-window {
+    border: 2px solid #999;
+    overflow-x: scroll;
+  }
+
   label.inline {
     display: inline-block;
     margin-right: 35px;
@@ -17,19 +29,37 @@
   .pagination {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
+    padding: 0.5rem 0;
   }
 
-  .table__report_table {
+  .table__report-table {
     table-layout: auto;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 0.9rem;
+    padding: 1rem;
+    margin: 0;
+
+    thead {
+      display: block;
+
+      th {
+        padding: 0.5rem 1rem;
+        background: $mulberry-mid;
+        color: white;
+      }
+    }
 
     tbody {
+      display: block;
+      height: 250px;
+      overflow-y: scroll;
+
       tr {
         td {
           width: auto;
           max-width: 100%;
           word-wrap: break-word;
+          padding: 0.5rem 1rem;
         }
 
         &:hover {
@@ -73,5 +103,39 @@
 .snapshot__cards {
   .card {
     margin-bottom: 1rem;
+  }
+}
+
+.admin-search__filter-options {
+  float: left;
+  width: 30%;
+  padding: 1rem;
+  border: 2px solid #666;
+  margin-right: 5%;
+
+  input[type="text"] {
+    border: 2px solid #999;
+  }
+}
+
+.admin-search__export-options {
+  .appy-button {
+    margin: 0 1rem 0 0;
+    float: left;
+  }
+
+  .export-to-email {
+    width: 65%;
+  }
+}
+
+.per_page {
+  margin: 0.5rem 0 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+
+  select {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1rem;
   }
 }
