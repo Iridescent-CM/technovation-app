@@ -25,7 +25,7 @@ class ExportJob < ActiveJob::Base
       end
     end
 
-    export(filepath, admin)
+    export(filepath, admin, params[:export_email])
   end
 
   def export_teams(admin, token, params)
@@ -41,7 +41,7 @@ class ExportJob < ActiveJob::Base
       end
     end
 
-    export(filepath, admin)
+    export(filepath, admin, params[:export_email])
   end
 
   def export_signup_attempts(admin, token, params)
@@ -56,12 +56,12 @@ class ExportJob < ActiveJob::Base
       end
     end
 
-    export(filepath, admin)
+    export(filepath, admin, params[:export_email])
   end
 
-  def export(filepath, admin)
+  def export(filepath, admin, email)
     file = File.open(filepath)
     export = admin.exports.create!(file: file)
-    FilesMailer.export_ready(admin, export).deliver_later
+    FilesMailer.export_ready(admin, export, email).deliver_later
   end
 end
