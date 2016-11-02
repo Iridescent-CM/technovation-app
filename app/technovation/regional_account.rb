@@ -11,6 +11,20 @@ module RegionalAccount
                     .where("seasons.year = ?", Season.current.year)
                     .where.not(type: "AdminAccount")
 
+    unless params[:text].blank?
+      results = accounts.search(
+        query: {
+          query_string: {
+            query: "*#{params[:text]}*"
+          }
+        },
+        from: 0,
+        size: 10_000,
+      ).results
+
+      accounts = accounts.where(id: results.flat_map { |r| r._source.id })
+    end
+
     if params[:type] == "Student"
       accounts = case params[:parental_consent_status]
                  when "Signed"
