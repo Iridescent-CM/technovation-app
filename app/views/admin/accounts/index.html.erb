@@ -55,7 +55,6 @@
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
-          <th>Team name(s)</th>
           <th>Division</th>
           <th>Referred by</th>
           <th>City</th>
@@ -73,7 +72,6 @@
               <td><%= link_to account.first_name, admin_account_path(account) %></td>
               <td><%= account.last_name %></td>
               <td><%= account.email %></td>
-              <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
               <td><%= account.division %></td>
               <td><%= account.referred_by %> <%= account.referred_by_other %></td>
               <td><%= account.city %></td>
