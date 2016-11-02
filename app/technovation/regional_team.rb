@@ -18,6 +18,20 @@ module RegionalTeam
       )", ambassador.country).uniq
     end
 
+    unless params[:text].blank?
+      results = teams.search({
+        query: {
+          query_string: {
+            query: "*#{params[:text]}*"
+          },
+        },
+        from: 0,
+        size: 10_000
+      }).results
+
+      teams = teams.where(id: results.flat_map { |r| r._source.id })
+    end
+
     if !!params[:division] and params[:division] != "All"
       division = Division.names[params[:division].downcase]
 

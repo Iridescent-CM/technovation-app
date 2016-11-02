@@ -29,6 +29,13 @@
                   data: { reload: true, param: :per_page } %>
   </label>
 
+  <label class="no-text-transform">
+    Search by team name:
+    <%= text_field_tag :text, params[:text], class: "submit-on-enter",
+                                             placeholder: "Press enter after typing",
+                                             data: { param: :text } %>
+  </label>
+
   <div class="pagination_info">
     <%= page_entries_info @teams, model: params[:division] == "All" ? "Team" : "#{params[:division]} team" %>
   </div>
