@@ -1,15 +1,15 @@
 <%= label_tag :nearby, t("views.application.search_near") %>
+
 <%= text_field_tag :nearby,
                    params[:nearby],
                    id: "geocoded",
                    data: { location_field: true },
                    onblur: "ga('send', 'event', 'search', 'geocoded=' + this.value);" %>
 
-<%= link_to t('views.application.anywhere'),
-  '#',
+<%= link_to t('views.application.anywhere'), '#',
   class: "appy-button appy-button--sm",
   data: { update_location: "anywhere" } %>
-<%= link_to t('views.application.near_me'),
-  '#',
+
+<%= link_to t('views.application.near_me'), '#',
   class: "appy-button appy-button--sm",
   data: { update_location: account.address_details } %>

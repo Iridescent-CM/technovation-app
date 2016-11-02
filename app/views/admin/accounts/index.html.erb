@@ -40,7 +40,8 @@
 
   <label class="no-text-transform">
     Search by name or email:
-    <%= text_field_tag :text, params[:text], placeholder: "Press enter after typing",
+    <%= text_field_tag :text, params[:text], class: "submit-on-enter",
+                                             placeholder: "Press enter after typing",
                                              data: { param: :text } %>
   </label>
 

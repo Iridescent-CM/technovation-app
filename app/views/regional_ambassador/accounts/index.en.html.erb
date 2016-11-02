@@ -35,6 +35,12 @@
                     } %>
   </label>
 
+  <label class="no-text-transform">
+    Search by name or email:
+    <%= text_field_tag :text, params[:text], class: "submit-on-enter",
+                                             placeholder: "Press enter after typing",
+                                             data: { param: :text } %>
+  </label>
 
   <div class="wrapper__regional_ambassador_accounts">
     <div class="pagination_info">
