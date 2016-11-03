@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
   def require_unauthenticated
     if current_account.authenticated?
-      redirect_to send("#{account.type_name}_dashboard_path"),
+      redirect_to send("#{current_account.type_name}_dashboard_path"),
         notice: t("controllers.application.already_authenticated")
     else
       true
