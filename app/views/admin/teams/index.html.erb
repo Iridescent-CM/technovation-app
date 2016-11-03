@@ -1,88 +1,95 @@
-<div class="admin-search__filter-options">
-  <label class="no-text-transform">
-    Search by name:
+<div class="flex-row">
 
-    <%= text_field_tag :text,
-      params[:text],
-      class: "submit-on-enter",
-      placeholder: "Press enter after typing",
-      data: { param: :text } %>
-  </label>
+  <div class="flex-col-md-4">
+    <div class="admin-search__filter-options">
+      <label class="no-text-transform">
+        Search by name:
 
-  <label class="no-text-transform">
-    Division:
-    <%= select_tag :division,
-                  options_for_select(%w{All Senior Junior}, params[:division]),
-                  class: "inline",
-                  data: { reload: true, param: :division } %>
-  </label>
+        <%= text_field_tag :text,
+          params[:text],
+          class: "submit-on-enter",
+          placeholder: "Press enter after typing",
+          data: { param: :text } %>
+      </label>
 
-  <label class="no-text-transform">
-    Season:
-    <%= select_tag :season,
-                  options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
-                  class: "inline",
-                  data: { reload: true, param: :season } %>
-  </label>
-</div>
+      <label class="no-text-transform">
+        Division:
+        <%= select_tag :division,
+                      options_for_select(%w{All Senior Junior}, params[:division]),
+                      class: "inline",
+                      data: { reload: true, param: :division } %>
+      </label>
 
-<div class="wrapper__report-column">
-  <div class="wrapper__report-window">
-    <table class="table__report-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Division</th>
-          <th>Name</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Country</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @teams.each do |team| %>
-          <% cache(team) do %>
-            <tr>
-              <td><%= team.id %></td>
-              <td><%= team.division_name %></td>
-              <td><%= link_to team.name, admin_team_path(team) %></td>
-              <td><%= team.city %></td>
-              <td><%= team.state_province %></td>
-              <td><%= team.country %></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
+      <label class="no-text-transform">
+        Season:
+        <%= select_tag :season,
+                      options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+                      class: "inline",
+                      data: { reload: true, param: :season } %>
+      </label>
+    </div>
   </div>
 
-  <div class="wrapper__report-footer">
-    <div class="pagination_info">
-      <%= page_entries_info @teams,
-        model: params[:type] == "All" ? "Team" : params[:type] %>
+  <div class="flex-col-md-8 wrapper__report-column">
+    <div class="scrolly-table">
+      <div class="scrolly-table__overflow-handler">
+        <table class="table__report-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Division</th>
+              <th>Name</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @teams.each do |team| %>
+              <% cache(team) do %>
+                <tr>
+                  <td><%= team.id %></td>
+                  <td><%= team.division_name %></td>
+                  <td><%= link_to team.name, admin_team_path(team) %></td>
+                  <td><%= team.city %></td>
+                  <td><%= team.state_province %></td>
+                  <td><%= team.country %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>div
     </div>
 
-    <%= will_paginate @teams %>
+    <div class="wrapper__report-footer">
+      <div class="pagination_info">
+        <%= page_entries_info @teams,
+          model: params[:type] == "All" ? "Team" : params[:type] %>
+      </div>
 
-    <label class="no-text-transform per_page">
-      Per page:
-      <%= select_tag :per_page,
-        options_for_select([10, 25, 50, 100], params[:per_page]),
-        class: "inline",
-        data: {
-          reload: true,
-          param: :per_page,
-        } %>
-    </label>
+      <%= will_paginate @teams %>
 
-    <div class="clearfix admin-search__export-options">
-      <hr />
+      <label class="no-text-transform per_page">
+        Per page:
+        <%= select_tag :per_page,
+          options_for_select([10, 25, 50, 100], params[:per_page]),
+          class: "inline",
+          data: {
+            reload: true,
+            param: :per_page,
+          } %>
+      </label>
 
-      <%= form_tag admin_exports_path(params.merge(class: "team")) do %>
-        <%= button_tag "Email CSV Report to:", class: "appy-button" %>
-        <%= text_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
-      <% end %>
+      <div class="clearfix admin-search__export-options">
+        <hr />
+
+        <%= form_tag admin_exports_path(params.merge(class: "team")) do %>
+          <%= button_tag "Email CSV Report to:", class: "appy-button" %>
+          <%= text_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
