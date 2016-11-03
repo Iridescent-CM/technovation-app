@@ -1,5 +1,8 @@
 (function scrollyTable() {
   var tableWrappers = document.getElementsByClassName('scrolly-table');
+  if (tableWrappers.length === 0) {
+    return;
+  }
 
   Array.prototype.forEach.call(tableWrappers, function(wrapper) {
     if (!wrapper.querySelector('.scrolly-table__overflow-handler')) {
