@@ -33,6 +33,10 @@
       <dl>
         <%= render "#{account.type_name}/accounts/profile", account: account %>
       </dl>
+
+      <% if edit %>
+        <%= link_to 'Edit', edit_admin_account_path(account) %>
+      <% end %>
     </div>
 
     <% if account.respond_to?(:bio) %>
