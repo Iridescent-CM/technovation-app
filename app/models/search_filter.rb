@@ -35,6 +35,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:text) { "" }
   end
 
+  def division_enums
+    filter_options.fetch(:division_enums) { [] }.reject(&:blank?).map(&:to_i)
+  end
+
   def badge_css(expertise)
     if expertise_ids.include?(expertise.id)
       "success"

@@ -19,5 +19,11 @@
     <%= link_to t("views.team_searches.new.results_link_label"),
       [:new, account_type, :join_request, { team_id: result.id }],
       class: 'appy-button team-search-result__link-wrapper' %>
+
+    <div class="mentor__availability-badges">
+      <span class="mentor__availability-badge badge-success">
+        <%= t("views.application.division") %>: <%= result.division.name.humanize %>
+      </span>
+    </div>
   </div>
 </div>

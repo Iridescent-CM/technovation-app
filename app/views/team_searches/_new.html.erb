@@ -2,6 +2,7 @@
   <h1 class="appy-title">
     <%= t("views.team_searches.new.title") %>
   </h1>
+
   <p class="appy-subtitle">
     <%= t("views.team_searches.new.intro") %>
   </p>
@@ -15,13 +16,27 @@
       <div class="search-filters__form-wrapper">
         <%= form_tag request.fullpath, method: :get do %>
           <div class="search-filters__text">
-            <label>Search by name</label>
-            <%= text_field_tag :text, params[:text], placeholder: "Press enter after typing" %>
+            <%= label_tag :text, "Search by name" %>
+
+            <%= text_field_tag :text,
+              params[:text],
+              placeholder: "Press enter after typing" %>
           </div>
 
           <div class="search-filters__location">
             <%= render 'searches/location_options', account: account %>
           </div>
+
+          <%= label_tag nil, t("views.application.division") %>
+
+          <% Division.names.each do |name, id| %>
+            <%= label_tag do %>
+              <%= check_box_tag "division_enums[]", id,
+                params[:division_enums].map(&:to_i).include?(id) %>
+              <%= fa_icon "check", class: "pseudo-checkbox" %>
+              <%= name.humanize %>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     </div>

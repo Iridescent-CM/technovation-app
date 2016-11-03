@@ -30,6 +30,9 @@ module SearchTeams
       teams = teams.where(id: results.flat_map { |r| r._source.id })
     end
 
+    divisions = Division.where(name: filter.division_enums)
+    teams = teams.where(division: divisions)
+
     teams = case filter.spot_available
             when true
               teams.select { |t| t.spot_available? }
@@ -46,15 +49,13 @@ module SearchTeams
               teams
             end
 
-    teams = case filter.user.type
-            when "StudentAccount"
-              teams.select(&:accepting_student_requests?)
-            when "MentorAccount"
-              teams.select(&:accepting_mentor_requests?)
-            else
-              teams
-            end
-
-    teams
+    case filter.user.type
+    when "StudentAccount"
+      teams.select(&:accepting_student_requests?)
+    when "MentorAccount"
+      teams.select(&:accepting_mentor_requests?)
+    else
+      teams
+    end
   end
 end

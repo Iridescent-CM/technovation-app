@@ -17,6 +17,7 @@ en:
       danger_zone: "Danger Zone"
       dashboard: "My Dashboard"
       declined: "decline"
+      division: "Division"
       edit: "Edit"
       filter: "Filter"
       form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below"
@@ -320,7 +321,7 @@ en:
 
     team_searches:
       new:
-        filter_heading: "Filter Locations"
+        filter_heading: "Team search options"
         intro: "You are browsing available teams, who are still looking for members / mentors."
         no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
         title: "Find a Team"

@@ -19,10 +19,11 @@
       <%= render 'searches/toggle_mentor_virtual' %>
     <% end %>
 
-    <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |b| %>
+    <%= collection_check_boxes :search_filter,
+      :expertise_ids, @expertises, :id, :name do |b| %>
       <%= b.label do %>
         <%= b.check_box %>
-        <span class="pseudo-checkbox fa fa-check"><!--Fontawesome Checkmark--></span>
+        <%= fa_icon "check", class: "pseudo-checkbox" %>
         <%= b.text %>
       <% end %>
     <% end %>
