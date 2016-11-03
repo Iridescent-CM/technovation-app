@@ -15,7 +15,7 @@ module Student
 
     private
     def account
-      @account ||= StudentAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+      @account ||= Account.joins(:student_profile).find_by(auth_token: cookies.fetch(:auth_token))
     end
 
     def edit_account_path

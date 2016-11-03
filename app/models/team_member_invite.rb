@@ -2,7 +2,7 @@ class TeamMemberInvite < ActiveRecord::Base
   enum status: %i{pending accepted declined}
 
   scope :for_students, -> {
-    where("invitee_id IS NULL OR invitee_type = ?", "StudentAccount")
+    where("invitee_id IS NULL OR invitee_type = ?", "StudentProfile")
   }
 
   has_secure_token :invite_token
@@ -27,13 +27,13 @@ class TeamMemberInvite < ActiveRecord::Base
   }, on: :create
 
   validate -> {
-    if StudentAccount.exists_on_team?(email: invitee_email)
+    if StudentProfile.exists_on_team?(email: invitee_email)
       errors.add(:invitee_email, :already_on_team)
     end
   }, on: :create
 
   validate -> {
-    if StudentAccount.has_requested_to_join?(team, invitee_email)
+    if StudentProfile.has_requested_to_join?(team, invitee_email)
       errors.add(:invitee_email, :already_requested_to_join)
     end
   }, on: :create
@@ -79,9 +79,9 @@ class TeamMemberInvite < ActiveRecord::Base
 
   private
   def set_invitee
-    if student = StudentAccount.where("lower(email) = ?", invitee_email.downcase).first
+    if student = Account.joins(:student_profile).where("lower(email) = ?", invitee_email.downcase).first
       self.invitee_id ||=  student.id
-      self.invitee_type ||= "StudentAccount"
+      self.invitee_type ||= "StudentProfile"
     end
   end
 
@@ -90,7 +90,7 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def correct_invitee_type
-    if Account.where.not(type: "StudentAccount").where("lower(email) = ?", invitee_email.downcase).any?
+    if Account.where("lower(email) = ?", invitee_email.downcase).any? { |a| not a.student_profile.present? }
       errors.add(:invitee_email, :is_not_a_student)
     end
   end

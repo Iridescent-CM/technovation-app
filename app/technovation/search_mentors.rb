@@ -1,6 +1,6 @@
 module SearchMentors
   def self.call(filter)
-    mentors = MentorAccount.where.not(id: filter.user.id)
+    mentors = MentorProfile.where.not(id: filter.user.id)
 
     unless filter.text.blank?
       results = Account.search(
@@ -29,7 +29,7 @@ module SearchMentors
     if filter.needs_team
       mentors = mentors.where("accounts.id NOT IN
         (SELECT DISTINCT(member_id) FROM memberships
-                                    WHERE memberships.member_type = 'MentorAccount'
+                                    WHERE memberships.member_type = 'MentorProfile'
                                     AND memberships.joinable_type = 'Team'
                                     AND memberships.joinable_id IN
 

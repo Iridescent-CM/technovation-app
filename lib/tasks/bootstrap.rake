@@ -12,10 +12,10 @@ task bootstrap: :environment do
 
   email = "info@technovationchallenge.org"
 
-  if AdminAccount.exists?(email: email)
+  if AdminProfile.exists?(email: email)
     puts "Found Admin: #{email}"
   else
-    AdminAccount.create!(first_name: "Technovation",
+    AdminProfile.create!(first_name: "Technovation",
                           last_name: "Staff",
                           email: email,
                           password: ENV.fetch("ADMIN_PASSWORD"),

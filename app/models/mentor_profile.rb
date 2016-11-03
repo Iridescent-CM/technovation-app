@@ -48,15 +48,15 @@ class MentorProfile < ActiveRecord::Base
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id
 
+  has_one :consent_waiver, foreign_key: :account_id, dependent: :destroy
+
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
     if: -> { account.country_changed? }
 
   validates :school_company_name, :job_title, presence: true
 
-  delegate :consent_waiver,
-           :country,
-    to: :account
+  delegate :country, to: :account
 
   delegate :submitted?,
            :candidate_id,
@@ -118,19 +118,6 @@ class MentorProfile < ActiveRecord::Base
 
   def void_honor_code_agreement!
     honor_code_agreement.void!
-  end
-
-  def search_name
-    full_name
-  end
-
-  def after_background_check_clear
-    AccountMailer.background_check_clear(account).deliver_later
-    mentor_profile.enable_searchability
-  end
-
-  def after_background_check_deleted
-    mentor_profile.disable_searchability
   end
 
   def pending_team_invitations

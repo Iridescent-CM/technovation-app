@@ -11,10 +11,10 @@ module RegionalAmbassador
     def execute_snapshot
       @snapshot_accounts = RegionalAccount.(current_ambassador)
       @snapshot_teams = RegionalTeam.(current_ambassador)
-      @snapshot_students = StudentAccount.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_mentors = MentorAccount.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_ambassadors = RegionalAmbassadorAccount.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_judges = JudgeAccount.where(id: @snapshot_accounts.pluck(:id))
+      @snapshot_students = StudentProfile.where(id: @snapshot_accounts.pluck(:id))
+      @snapshot_mentors = MentorProfile.where(id: @snapshot_accounts.pluck(:id))
+      @snapshot_ambassadors = RegionalAmbassadorProfile.where(id: @snapshot_accounts.pluck(:id))
+      @snapshot_judges = JudgeProfile.where(id: @snapshot_accounts.pluck(:id))
     end
 
     def execute_search
@@ -23,13 +23,13 @@ module RegionalAmbassador
 
       accounts = RegionalAccount.(current_ambassador).where("season_registrations.created_at > ?", params[:days].days.ago)
 
-      @students = accounts.where(type: "StudentAccount")
-      @permitted_students = StudentAccount.current
+      @students = accounts.joins(:student_profile)
+      @permitted_students = StudentProfile.current
         .joins(:parental_consent)
         .where("parental_consents.created_at > ?", params[:days].days.ago)
 
-      @mentors = accounts.where(type: "MentorAccount")
-      @cleared_mentors = MentorAccount.current
+      @mentors = accounts.joins(:mentor_profile)
+      @cleared_mentors = MentorProfile.current
         .joins(:consent_waiver)
         .includes(:background_check)
         .where(
@@ -43,9 +43,9 @@ module RegionalAmbassador
           params[:days].days.ago
         )
 
-      @ambassadors = accounts.where(type: "RegionalAmbassadorAccount")
+      @ambassadors = accounts.joins(:regional_ambassador_profile)
 
-      @judges = accounts.where(type: "JudgeAccount")
+      @judges = accounts.joins(:judge_profile)
 
       @teams = Team.current.where("season_registrations.created_at > ?", params[:days].days.ago)
     end

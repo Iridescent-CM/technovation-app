@@ -14,7 +14,7 @@ class StudentController < ApplicationController
 
   private
   def current_student
-    @current_student ||= StudentAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+    @current_student ||= Account.joins(:student_profile).find_by(auth_token: cookies.fetch(:auth_token))
   end
 
   def current_team

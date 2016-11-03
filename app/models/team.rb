@@ -27,7 +27,7 @@ class Team < ActiveRecord::Base
   }
 
   scope :without_mentor, -> {
-    where.not(id: Membership.where(member_type: "MentorAccount").map(&:joinable_id))
+    where.not(id: Membership.where(member_type: "MentorProfile").map(&:joinable_id))
   }
 
   after_commit :register_to_season, on: :create
@@ -40,8 +40,8 @@ class Team < ActiveRecord::Base
   has_many :team_submissions, dependent: :destroy
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentAccount"
-  has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorAccount"
+  has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentProfile"
+  has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorProfile"
 
   has_many :team_member_invites, dependent: :destroy
   has_many :mentor_invites, dependent: :destroy
@@ -113,7 +113,7 @@ class Team < ActiveRecord::Base
 
   def remove_student(student)
     membership = Membership.find_by(joinable: self,
-                                    member_type: "StudentAccount",
+                                    member_type: "StudentProfile",
                                     member_id: student.id)
     membership.destroy
     reconsider_division
@@ -129,7 +129,7 @@ class Team < ActiveRecord::Base
   end
 
   def invited_mentor?(mentor)
-    mentor_invites.pending.where(invitee_id: mentor.id, invitee_type: "MentorAccount").any?
+    mentor_invites.pending.where(invitee_id: mentor.id, invitee_type: "MentorProfile").any?
   end
 
   def submission

@@ -14,7 +14,7 @@ module Judge
 
     private
     def account
-      @account ||= JudgeAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+      @account ||= Account.joins(:judge_profile).find_by(auth_token: cookies.fetch(:auth_token))
     end
 
     def edit_account_path

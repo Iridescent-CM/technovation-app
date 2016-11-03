@@ -1,6 +1,6 @@
 <%= render 'accounts/privileged_show', edit: true, account: @account, path: edit_admin_account_path(@account) %>
 
-<% if @account.type == "MentorAccount" %>
+<% if @account.mentor_profile.present? %>
   <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
               admin_mentor_drop_out_path(id: @account.id),
               class: "appy-button",
@@ -10,7 +10,7 @@
               } %>
 <% end %>
 
-<% if @account.type == "StudentAccount" and @account.parental_consent.nil? %>
+<% if @account.student_profile.present? and @account.parental_consent.nil? %>
   <%= link_to "Paper parental consent on file",
               admin_paper_parental_consent_path(id: @account.id),
               class: "appy-button",

@@ -11,7 +11,7 @@
 <%= f.input :geocoded, input_html: {
                         id: "geocoded",
                         value: f.object.address_details,
-                        disabled: (not admin and f.object.persisted? and f.object.type == "RegionalAmbassadorAccount" and f.object.approved?),
+                        disabled: (not admin and f.object.persisted? and f.object.regional_ambassador_profile.present? and f.object.approved?),
                         onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
                       },
                       label: t("models.account.geocoded") %>

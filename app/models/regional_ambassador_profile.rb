@@ -1,22 +1,65 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
-  include Authenticatable
+  scope :full_access, -> { approved }
 
-  belongs_to :regional_ambassador_account, foreign_key: :account_id
+  belongs_to :account
 
   after_update :after_status_changed, if: :status_changed?
 
   enum status: %i{pending approved declined spam}
 
-  validates :organization_company_name, :ambassador_since_year, :job_title, :bio, presence: true
+  validates :organization_company_name, :ambassador_since_year, :job_title, :bio,
+    presence: true
+
+  has_many :exports, foreign_key: :account_id, dependent: :destroy
+
+  has_one :background_check, foreign_key: :account_id, dependent: :destroy
+  accepts_nested_attributes_for :background_check
+
+  has_one :consent_waiver, foreign_key: :account_id, dependent: :destroy
+
+  delegate :submitted?,
+           :candidate_id,
+           :report_id,
+    to: :background_check,
+    prefix: true,
+    allow_nil: true
+
+  def background_check_complete?
+    country != "US" or !!background_check && background_check.clear?
+  end
+
+  def profile_complete?
+    bio_complete?
+  end
+
+  def bio_complete?
+    not bio.blank?
+  end
+
+  def region_name
+    if country == "US"
+      Country[country].states[state_province]['name']
+    else
+      Country[country].name
+    end
+  end
+
+  def authenticated?
+    true
+  end
+
+  def admin?
+    false
+  end
 
   private
   def after_status_changed
     AmbassadorMailer.public_send(status, account).deliver_later
 
     if approved?
-      SubscribeEmailListJob.perform_later(regional_ambassador_account.email,
-                                          regional_ambassador_account.full_name,
-                                          "REGIONAL_AMBASSADOR_LIST_ID")
+      SubscribeEmailListJob.perform_later(
+        account.email, account.full_name, "REGIONAL_AMBASSADOR_LIST_ID"
+      )
     end
   end
 end

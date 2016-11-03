@@ -44,11 +44,11 @@ module RegionalTeam
     when "With Mentor(s)"
       teams.where("teams.id IN (
         SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
-      )", "MentorAccount").uniq
+      )", "MentorProfile").uniq
     when "Without Mentor"
       teams.where("teams.id NOT IN (
         SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
-      )", "MentorAccount").uniq
+      )", "MentorProfile").uniq
     else
       teams
     end

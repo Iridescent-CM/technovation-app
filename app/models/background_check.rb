@@ -3,10 +3,17 @@ class BackgroundCheck < ActiveRecord::Base
 
   belongs_to :account
 
-  after_save -> { account.after_background_check_clear },
-    if: -> { status_changed? and clear? }
+  after_save -> {
+    AccountMailer.background_check_clear(account).deliver_later
 
-  after_destroy -> { account.after_background_check_deleted }
+    if account.mentor_profile.present?
+      account.mentor_proifle.enable_searchability
+    end
+  }, if: -> { status_changed? and clear? }
+
+  after_destroy -> {
+    account.mentor_profile.disable_searchability
+  }, if: -> { account.mentor_profile.present? }
 
   def submitted?
     pending?

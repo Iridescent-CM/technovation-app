@@ -22,7 +22,7 @@ module RegionalAmbassador
 
     private
     def account
-      @account ||= RegionalAmbassadorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+      @account ||= Account.joins(:regional_ambassador_profile).find_by(auth_token: cookies.fetch(:auth_token))
     end
 
     def edit_account_path

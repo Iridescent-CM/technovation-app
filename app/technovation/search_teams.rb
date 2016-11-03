@@ -8,7 +8,7 @@ module SearchTeams
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-      account_ids = Account.where(type: %w{MentorAccount StudentAccount})
+      account_ids = Account.joins(:mentor_profile, :student_profile)
                            .near(nearby, miles)
                            .collect(&:id)
 
@@ -50,9 +50,9 @@ module SearchTeams
             end
 
     case filter.user.type
-    when "StudentAccount"
+    when "StudentProfile"
       teams.select(&:accepting_student_requests?)
-    when "MentorAccount"
+    when "MentorProfile"
       teams.select(&:accepting_mentor_requests?)
     else
       teams

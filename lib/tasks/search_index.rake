@@ -13,7 +13,7 @@ task index_mentors: :environment do
   MentorAccount.searchable.find_in_batches(batch_size: 100) do |mentors|
     documents = mentors.map do |mentor|
       {:external_id => mentor.id,
-       :fields => [{:name => 'title', :value => mentor.search_name, :type => 'string'},
+       :fields => [{:name => 'title', :value => mentor.full_name, :type => 'string'},
                    {:name => 'created_at', :value => mentor.created_at.iso8601, :type => 'date'}]}
     end
 

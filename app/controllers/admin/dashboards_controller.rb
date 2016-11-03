@@ -9,10 +9,10 @@ module Admin
     def execute_snapshot
       @snapshot_accounts = Account.current
       @snapshot_teams = Team.current
-      @snapshot_students = StudentAccount.current
-      @snapshot_mentors = MentorAccount.current
-      @snapshot_ambassadors = RegionalAmbassadorAccount.current
-      @snapshot_judges = JudgeAccount.current
+      @snapshot_students = StudentProfile.current
+      @snapshot_mentors = MentorProfile.current
+      @snapshot_ambassadors = RegionalAmbassadorProfile.current
+      @snapshot_judges = JudgeProfile.current
       @snapshot_signups = SignupAttempt.all
     end
 
@@ -22,13 +22,13 @@ module Admin
 
       accounts = Account.current.where("season_registrations.created_at > ?", params[:days].days.ago)
 
-      @students = accounts.where(type: "StudentAccount")
-      @permitted_students = StudentAccount.current
+      @students = accounts.joins(:student_profile)
+      @permitted_students = StudentProfile.current
         .joins(:parental_consent)
         .where("parental_consents.created_at > ?", params[:days].days.ago)
 
-      @mentors = accounts.where(type: "MentorAccount")
-      @cleared_mentors = MentorAccount.current
+      @mentors = accounts.joins(:mentor_profile)
+      @cleared_mentors = MentorProfile.current
         .joins(:consent_waiver)
         .includes(:background_check)
         .where(
@@ -42,9 +42,9 @@ module Admin
           params[:days].days.ago
         )
 
-      @ambassadors = accounts.where(type: "RegionalAmbassadorAccount")
+      @ambassadors = accounts.joins(:regional_ambassador_profile)
 
-      @judges = accounts.where(type: "JudgeAccount")
+      @judges = accounts.joins(:judge_profile)
 
       @teams = Team.current.where("season_registrations.created_at > ?", params[:days].days.ago)
     end

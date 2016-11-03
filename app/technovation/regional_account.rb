@@ -9,7 +9,7 @@ module RegionalAccount
     accounts = klass.includes(:seasons)
                     .references(:seasons)
                     .where("seasons.year = ?", Season.current.year)
-                    .where.not(type: "AdminAccount")
+                    .where.not(email: "info@technovationchallenge.org")
 
     unless params[:text].blank?
       results = accounts.search(

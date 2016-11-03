@@ -1,2 +1,0 @@
-class MentorAccount < Account
-end

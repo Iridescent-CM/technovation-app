@@ -1,5 +1,5 @@
 class ParentalConsent < ActiveRecord::Base
-  belongs_to :student, class_name: "StudentAccount", foreign_key: :account_id
+  belongs_to :student, foreign_key: :account_id
 
   scope :nonvoid, -> { where('voided_at IS NULL') }
 
@@ -13,7 +13,7 @@ class ParentalConsent < ActiveRecord::Base
   }, on: :create
 
   def student_consent_token=(token)
-    self.student = StudentAccount.find_by(consent_token: token)
+    self.student = Account.find_by(consent_token: token)
   end
 
   def signed_at

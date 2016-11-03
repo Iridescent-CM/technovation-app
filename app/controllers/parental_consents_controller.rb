@@ -25,7 +25,7 @@ class ParentalConsentsController < ApplicationController
 
   private
   def valid_token?
-    StudentAccount.exists?(consent_token: params.fetch(:token) { "" })
+    StudentProfile.exists?(consent_token: params.fetch(:token) { "" })
   end
 
   def parental_consent_params

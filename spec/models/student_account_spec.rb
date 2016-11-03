@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe StudentAccount do
+RSpec.describe StudentProfile do
   describe "#age" do
     it "calculates the student's age" do
       student = FactoryGirl.create(:student, date_of_birth: "Feb 29, 2008")

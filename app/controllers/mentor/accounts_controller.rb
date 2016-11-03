@@ -20,7 +20,7 @@ module Mentor
 
     private
     def account
-      @account ||= MentorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+      @account ||= Account.joins(:mentor_profile).find_by(auth_token: cookies.fetch(:auth_token))
     end
 
     def expertises

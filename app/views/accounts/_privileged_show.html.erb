@@ -23,7 +23,7 @@
       <dt><%= t('models.account.age') %></dt>
       <dd><%= account.age %></dd>
 
-      <% if account.type != "StudentAccount" %>
+      <% unless account.student_profile.present? %>
         <dt><%= t('models.account.gender') %></dt>
         <dd><%= account.gender %></dd>
       <% end %>

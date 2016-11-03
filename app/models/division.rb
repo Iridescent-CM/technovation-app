@@ -30,7 +30,7 @@ class Division < ActiveRecord::Base
   private
   def self.division_for(record)
     case record.class.name
-    when "StudentAccount"
+    when "StudentProfile"
       division_by_age(record)
     when "Team"
       division_by_team_ages(record)
