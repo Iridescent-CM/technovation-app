@@ -12,72 +12,10 @@
   margin: 0;
 }
 
-.wrapper__report-column {
-  float: left;
-  width: 65%;
-
-  .wrapper__report-window {
-    border: 2px solid #999;
-    overflow-x: scroll;
-  }
-
-  label.inline {
-    display: inline-block;
-    margin-right: 35px;
-  }
-
-  .pagination {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 0.75rem;
-    padding: 0.5rem 0;
-  }
-
-  .table__report-table {
-    table-layout: auto;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 0.9rem;
-    padding: 1rem;
-    margin: 0;
-
-    thead {
-      display: block;
-
-      th {
-        padding: 0.5rem 1rem;
-        background: $mulberry-mid;
-        color: white;
-      }
-    }
-
-    tbody {
-      display: block;
-      height: 250px;
-      overflow-y: scroll;
-
-      tr {
-        td {
-          width: auto;
-          max-width: 100%;
-          word-wrap: break-word;
-          padding: 0.5rem 1rem;
-        }
-
-        &:hover {
-          td {
-            background-color: #ddd;
-          }
-        }
-      }
-    }
-  }
-}
-
 .admin-search__filter-options {
-  float: left;
-  width: 30%;
-  padding: 1rem;
+  align-self: flex-start;
   border: 2px solid #666;
-  margin-right: 5%;
+  padding: 1rem;
 
   input[type="text"] {
     border: 2px solid #999;
@@ -105,3 +43,71 @@
     font-size: 1rem;
   }
 }
+
+.wrapper__report-column {
+
+  label.inline {
+    display: inline-block;
+    margin-right: 35px;
+  }
+
+  .pagination {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+  }
+}
+
+// TABLES BE CRAZY
+
+.scrolly-table {
+  border: 2px solid #999;
+  position: relative;
+
+  .scrolly-table__dummy-table {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+  }
+
+  .scrolly-table__overflow-handler {
+    max-height: 400px;
+    overflow: auto;
+  }
+
+  table {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+    margin: 0;
+    max-height: 400px;
+    overflow: auto;
+  }
+
+  thead {
+    //display: block;
+  }
+
+  th {
+    background: $mulberry-mid;
+    color: white;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  tbody {
+    max-height: 250px;
+  }
+
+  tr:hover td {
+    background-color: #ddd;
+  }
+
+  td {
+    width: auto;
+    max-width: 100%;
+    word-wrap: break-word;
+    padding: 0.5rem 1rem;
+  }
+}
+

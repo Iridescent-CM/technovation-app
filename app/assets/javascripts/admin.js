@@ -6,3 +6,4 @@
 //= require fancy_input
 //= require global_nav
 //= require toast_flashes
+//= require scrolly_table
