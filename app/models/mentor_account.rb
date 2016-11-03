@@ -115,9 +115,4 @@ class MentorAccount < Account
   def bio_complete?
     not bio.blank?
   end
-
-  def after_registration
-    super
-    RegistrationMailer.welcome_mentor(self).deliver_later
-  end
 end

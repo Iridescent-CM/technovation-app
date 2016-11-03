@@ -24,6 +24,7 @@ class MentorProfile < ActiveRecord::Base
     update_attributes(searchable: can_enable_searchable?)
 
     if can_enable_searchable?
+      RegistrationMailer.welcome_mentor(mentor_account).deliver_later
       SubscribeEmailListJob.perform_later(mentor_account.email,
                                           mentor_account.full_name,
                                           "MENTOR_LIST_ID")
