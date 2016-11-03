@@ -1,6 +1,6 @@
 module FindAccount
   def self.call(token)
-    auth_class.find_with_token(token)
+    Account.find_with_token(token)
   end
 
   def self.authenticate(profile, cookies, callbacks = {})
@@ -18,13 +18,8 @@ module FindAccount
   end
 
   def self.current(profile, cookies)
-    auth_class.find_profile_with_token(
-      cookies.fetch(:auth_token) { "" }, profile
-    )
-  end
-
-  private
-  def self.auth_class
-    Account
+    Account.joins("#{profile}_profile")
+      .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
+      .first or Account::NoAuthFound.new
   end
 end

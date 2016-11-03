@@ -1,7 +1,31 @@
-<li class="nav-link <%= al(judge_account_path) %>">
-  <%= link_to t("views.application.dashboards.menu.my_account"), judge_account_path %>
-</li>
+<%
+  judge = JudgeProfile.joins(:account)
+    .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
+    .first or Account::NoAuthFound.new
 
-<li class="nav-link">
-  <%= link_to t('views.application.signout'), signout_path, method: :delete %>
+  mentor_mode_url = judge.mentor_profile.present? ?
+    mentor_dashboard_path :
+    new_judge_mentor_profile_path
+%>
+
+<li class="nav-link nav-link-menu">
+  <%= image_tag judge.profile_image_url, width: 45 %>
+
+  <ul class="nav-link-submenu">
+    <li class="nav-link">
+      <%= link_to t('views.application.my_profile'), judge_account_path %>
+    </li>
+
+    <% if judge.full_access_enabled? %>
+      <li class="nav-link">
+        <%= link_to t('views.application.mentor_mode'), mentor_mode_url %>
+      </li>
+    <% end %>
+
+    <li class="nav-link">
+      <%= link_to t('views.application.signout'),
+        signout_path,
+        data: { method: :delete } %>
+    </li>
+  </ul>
 </li>

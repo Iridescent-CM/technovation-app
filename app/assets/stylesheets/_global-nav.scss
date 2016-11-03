@@ -49,6 +49,36 @@ $logo-size-mobile: 36px;
   .nav-link.active a::after {
     height: 6px;
   }
+
+  .nav-link-menu {
+    position: relative;
+    padding: 0.5rem 0.5rem 0;
+
+    ul {
+      z-index: $z-modal;
+      display: none;
+      position: absolute;
+      right: 0;
+      min-width: 200px;
+      background: lighten($mulberry-mid, 10%);
+
+      li {
+        border-bottom: 1px solid $shamrock;
+      }
+
+      a {
+        font-size: 0.75rem;
+        text-transform: none;
+        padding: 1rem 0.5rem;
+      }
+    }
+
+    &:hover {
+      ul {
+        display: block;
+      }
+    }
+  }
 }
 
 .navigation__content-wrapper {

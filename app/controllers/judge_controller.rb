@@ -5,6 +5,8 @@ class JudgeController < ApplicationController
 
   private
   def current_judge
-    @current_judge ||= FindAccount.current(:judge, cookies)
+    @current_judge ||= JudgeProfile.joins(:account)
+      .where("accounts.auth_token = ?", cookies.fetch(:auth_token))
+      .first or Account::NoAuthFound.new
   end
 end

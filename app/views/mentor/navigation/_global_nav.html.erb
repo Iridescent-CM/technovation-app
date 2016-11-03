@@ -1,18 +1,34 @@
 <% mentor = FindAccount.current(:mentor, cookies) %>
 
-<% if mentor.consent_signed? and mentor.background_check_complete? and not mentor.bio.blank? %>
+<% if mentor.full_access_enabled? %>
   <li class="nav-link <%= al(new_mentor_mentor_search_path) %>">
-    <%= link_to t("views.application.dashboards.menu.connect_mentors"), new_mentor_mentor_search_path %>
+    <%= link_to t("views.application.dashboards.menu.connect_mentors"),
+      new_mentor_mentor_search_path %>
   </li>
+
   <li class="nav-link <%= al(mentor_teams_path) %>">
     <%= link_to t("views.application.dashboards.menu.my_teams"), mentor_teams_path %>
   </li>
 <% end %>
 
-<li class="nav-link <%= al(mentor_account_path) %>">
-  <%= link_to t("views.application.dashboards.menu.my_account"), mentor_account_path %>
-</li>
+<li class="nav-link nav-link-menu">
+  <%= image_tag mentor.profile_image_url, width: 45 %>
 
-<li class="nav-link">
-  <%= link_to t('views.application.signout'), signout_path, method: :delete %>
+  <ul class="nav-link-submenu">
+    <li class="nav-link">
+      <%= link_to t('views.application.my_profile'), mentor_account_path %>
+    </li>
+
+    <% if mentor.full_access_enabled? %>
+      <li class="nav-link">
+        <%= link_to t('views.application.judge_mode'), '#' %>
+      </li>
+    <% end %>
+
+    <li class="nav-link">
+      <%= link_to t('views.application.signout'),
+        signout_path,
+        data: { method: :delete } %>
+    </li>
+  </ul>
 </li>

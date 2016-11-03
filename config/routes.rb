@@ -88,6 +88,8 @@ Rails.application.routes.draw do
     resource :profile_image_upload_confirmation, only: :show
 
     resource :dashboard, only: :show
+
+    resource :mentor_profile
   end
 
   namespace :admin do

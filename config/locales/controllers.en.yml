@@ -32,6 +32,11 @@ en:
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
 
+    judge:
+      mentor_profiles:
+        create:
+          success: "You added a mentor profile to your account!"
+
     mentor:
       join_requests:
         create:

@@ -14,6 +14,8 @@ class MentorController < ApplicationController
 
   private
   def current_mentor
-    @current_mentor ||= MentorAccount.find_with_token(cookies.fetch(:auth_token) { "" })
+    @current_mentor ||= MentorProfile.joins(:account)
+      .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
+      .first or Account::NoAuthFound.new
   end
 end

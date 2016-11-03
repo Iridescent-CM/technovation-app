@@ -7,6 +7,10 @@ class JudgeAccount < Account
   accepts_nested_attributes_for :judge_profile
   validates_associated :judge_profile
 
+  has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
+  accepts_nested_attributes_for :mentor_profile
+  validates_associated :mentor_profile
+
   delegate :company_name,
            :job_title,
     to: :judge_profile,
@@ -14,5 +18,9 @@ class JudgeAccount < Account
 
   def profile_id
     judge_profile.id
+  end
+
+  def full_access_enabled?
+    true
   end
 end

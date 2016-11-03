@@ -15,19 +15,16 @@ module Authenticated
 
   private
   def authenticate!
-    FindAccount.authenticate(model_name, cookies,
-      unauthenticated: -> {
-        save_redirected_path
-        go_to_signin(model_name)
-      },
-      unauthorized: ->(type_name) {
-        redirect_to send("#{type_name}_dashboard_path"),
-                    alert: t("controllers.application.unauthorized")
-      }
-    )
-  end
+    model_name = self.class.name.deconstantize.split('::')[0].underscore
 
-  def model_name
-    self.class.name.deconstantize.split('::')[0].underscore
+    account = "#{model_name}_profile".camelize.constantize.joins(:account)
+      .references(:accounts)
+      .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
+      .first
+
+    unless account.authenticated?
+      save_redirected_path
+      go_to_signin(model_name)
+    end
   end
 end
