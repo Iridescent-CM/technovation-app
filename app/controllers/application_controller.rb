@@ -36,13 +36,11 @@ class ApplicationController < ActionController::Base
   end
 
   def determine_layout
-    FindAccount.(cookies.fetch(:auth_token) { "" }).type_name
+    current_account.type_name
   end
 
   def require_unauthenticated
-    account = FindAccount.(cookies.fetch(:auth_token) { "" })
-
-    if account.authenticated?
+    if current_account.authenticated?
       redirect_to send("#{account.type_name}_dashboard_path"),
         notice: t("controllers.application.already_authenticated")
     else
