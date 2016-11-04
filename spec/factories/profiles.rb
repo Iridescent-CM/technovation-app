@@ -6,6 +6,7 @@ FactoryGirl.define do
 
     transient do
       geocoded "Chicago, IL"
+      date_of_birth Date.today - 15.years
     end
 
     after(:create) do |s, e|
@@ -15,7 +16,7 @@ FactoryGirl.define do
 
       s.account.update_attributes(
         geocoded: e.geocoded,
-        date_of_birth: Date.today - 15.years,
+        date_of_birth: e.date_of_birth,
       )
     end
 
