@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104180051) do
+ActiveRecord::Schema.define(version: 20161104194255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 20161104180051) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.string   "invitee_type"
+    t.string   "inviter_type"
   end
 
   add_index "team_member_invites", ["invite_token"], name: "index_team_member_invites_on_invite_token", unique: true, using: :btree
@@ -328,7 +329,6 @@ ActiveRecord::Schema.define(version: 20161104180051) do
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"
-  add_foreign_key "join_requests", "accounts", column: "requestor_id"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "mentor_profile_expertises", "expertises"
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"

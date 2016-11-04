@@ -27,8 +27,6 @@ RSpec.describe Student::JoinRequestsController do
                                             joinable: team,
                                             requestor: mentor) }
 
-    let(:mail) { ActionMailer::Base.deliveries.last }
-
     before do
       sign_in(team.students.sample)
       request.env["HTTP_REFERER"] = "/somewhere"
@@ -36,6 +34,7 @@ RSpec.describe Student::JoinRequestsController do
 
     context "accepting the request" do
       before do
+        ActionMailer::Base.deliveries.clear
         put :update, id: join_request.id, status: :approved
       end
 
@@ -55,6 +54,7 @@ RSpec.describe Student::JoinRequestsController do
 
     context "declining the request" do
       before do
+        ActionMailer::Base.deliveries.clear
         put :update, id: join_request.id, status: :declined
       end
 

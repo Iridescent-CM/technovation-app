@@ -5,7 +5,7 @@ class StudentProfile < ActiveRecord::Base
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor, dependent: :destroy
-  has_many :team_member_invites, foreign_key: :invitee_id, dependent: :destroy
+  has_many :team_member_invites, as: :inviter, dependent: :destroy
 
   belongs_to :account
   accepts_nested_attributes_for :account
@@ -34,8 +34,8 @@ class StudentProfile < ActiveRecord::Base
     to: :parental_consent,
     prefix: true
 
-  def self.exists_on_team?(attributes)
-    if record = find_by(attributes)
+  def self.exists_on_team?(email)
+    if record = joins(:account).find_by("accounts.email = ?", email)
       record.is_on_team?
     else
       false
@@ -43,7 +43,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def self.has_requested_to_join?(team, email)
-    if record = where("lower(email) = ?", email.downcase).first
+    if record = joins(:account).where("lower(accounts.email) = ?", email.downcase).first
       record.join_requests.pending.flat_map(&:joinable).include?(team)
     else
       false

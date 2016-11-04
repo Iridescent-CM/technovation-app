@@ -7,16 +7,24 @@ class JoinRequest < ActiveRecord::Base
   belongs_to :requestor, polymorphic: true
   belongs_to :joinable, polymorphic: true
 
-  delegate :name, to: :joinable, prefix: true
-  delegate :first_name, :type_name, :email,
-    to: :requestor, prefix: true
+  delegate :name,
+    to: :joinable,
+    prefix: true
+
+  delegate :first_name,
+           :type_name,
+           :email,
+    to: :requestor,
+    prefix: true
 
   def approved!
     update_attributes(accepted_at: Time.current)
-    if requestor.type_name == 'student'
-      self.class.pending.select { |j| j.requestor_id == requestor.id }.each(&:destroy)
+
+    if requestor_type_name == 'student'
+      self.class.pending.select { |j| j.requestor_id == requestor_id }.each(&:destroy)
     end
-    joinable.public_send("add_#{requestor.type_name}", requestor)
+
+    joinable.public_send("add_#{requestor_type_name}", requestor)
   end
 
   def approved?

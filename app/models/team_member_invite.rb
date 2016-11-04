@@ -13,7 +13,7 @@ class TeamMemberInvite < ActiveRecord::Base
   after_save :after_accept, if: -> { status_changed? && accepted? }
 
   belongs_to :team
-  belongs_to :inviter, class_name: "Account"
+  belongs_to :inviter, polymorphic: true
   belongs_to :invitee, polymorphic: true
 
   validates :invitee_email, presence: true, email: true
@@ -27,7 +27,7 @@ class TeamMemberInvite < ActiveRecord::Base
   }, on: :create
 
   validate -> {
-    if StudentProfile.exists_on_team?(email: invitee_email)
+    if StudentProfile.exists_on_team?(invitee_email)
       errors.add(:invitee_email, :already_on_team)
     end
   }, on: :create

@@ -54,6 +54,8 @@ class MentorProfile < ActiveRecord::Base
            :consent_waiver,
            :consent_signed?,
            :honor_code_signed?,
+           :locale,
+           :first_name,
     to: :account
 
   delegate :submitted?,
