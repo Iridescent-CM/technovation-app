@@ -2,10 +2,12 @@
   <li class="card">
     <div class="card__heading">
       <%= t("views.profile_requirements.consent_waiver.heading") %>
-      <span class="card-heading__flair fa fa-pencil"><!--Fontawesome--></span>
+      <%= fa_icon "pencil", class: "card-heading__flair" %>
     </div>
+
     <div class="card__body">
       <%= t("views.profile_requirements.consent_waiver.label") %>
+
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
           new_consent_waiver_path(token: account.consent_token),

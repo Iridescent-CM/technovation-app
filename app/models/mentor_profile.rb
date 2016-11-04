@@ -56,6 +56,8 @@ class MentorProfile < ActiveRecord::Base
            :honor_code_signed?,
            :locale,
            :first_name,
+           :consent_token,
+           :background_check,
     to: :account
 
   delegate :submitted?,
