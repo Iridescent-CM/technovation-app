@@ -7,18 +7,13 @@ class StudentProfile < ActiveRecord::Base
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :team_member_invites, foreign_key: :invitee_id, dependent: :destroy
 
-  has_one :parental_consent, -> { nonvoid },
-    dependent: :destroy,
-    foreign_key: :account_id
-
-  has_one :honor_code_agreement, -> { nonvoid },
-    dependent: :destroy,
-    foreign_key: :account_id
-
   belongs_to :account
+  accepts_nested_attributes_for :account
+
+  has_one :parental_consent, -> { nonvoid }, dependent: :destroy
 
   after_save -> { team.present? && team.reconsider_division },
-    if: :date_of_birth_changed?
+    if: -> { account.date_of_birth_changed? }
 
   after_update :reset_parent
 
@@ -26,21 +21,13 @@ class StudentProfile < ActiveRecord::Base
 
   validate :parent_guardian_email, -> { validate_valid_parent_email }
 
-  def validate_parent_email
-    %i{parent_guardian_name parent_guardian_email}.select {
-      |a| send(a).blank?
-    }.each do |a|
-      errors.add(a, :blank)
-    end
-
-    if parent_guardian_email == account.email
-      errors.add(:parent_guardian_email, :matches_student_email)
-    end
-
-    validate_valid_parent_email
-
-    errors.empty?
-  end
+  delegate :email,
+           :full_name,
+           :first_name,
+           :locale,
+           :age,
+           :honor_code_signed?,
+    to: :account
 
   delegate :electronic_signature,
            :signed_at,
@@ -63,8 +50,20 @@ class StudentProfile < ActiveRecord::Base
     end
   end
 
-  def honor_code_signed?
-    honor_code_agreement.present?
+  def validate_parent_email
+    %i{parent_guardian_name parent_guardian_email}.select {
+      |a| send(a).blank?
+    }.each do |a|
+      errors.add(a, :blank)
+    end
+
+    if parent_guardian_email == account.email
+      errors.add(:parent_guardian_email, :matches_student_email)
+    end
+
+    validate_valid_parent_email
+
+    errors.empty?
   end
 
   def pending_team_invitations
@@ -104,7 +103,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def can_join_a_team?
-    honor_code_signed? and parental_consent.present? and not is_on_team?
+    honor_code_signed? and parental_consent_signed? and not is_on_team?
   end
 
   def team
@@ -148,11 +147,15 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def after_registration
-    RegistrationMailer.welcome_student(self).deliver_later
+    RegistrationMailer.welcome_student(account).deliver_later
 
     if parent_guardian_email.present?
-      ParentMailer.consent_notice(student_profile).deliver_later
+      ParentMailer.consent_notice(self).deliver_later
     end
+  end
+
+  def authenticated?
+    true
   end
 
   def admin?
@@ -161,6 +164,10 @@ class StudentProfile < ActiveRecord::Base
 
   def consent_signed?
     parental_consent_signed?
+  end
+
+  def type_name
+    "student"
   end
 
   private

@@ -1,5 +1,5 @@
 module ControllerSigninHelper
-  def sign_in(account)
-    controller.set_cookie(:auth_token, account.auth_token)
+  def sign_in(profile)
+    controller.set_cookie(:auth_token, profile.account.auth_token)
   end
 end

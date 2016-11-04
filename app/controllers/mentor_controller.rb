@@ -1,6 +1,7 @@
 class MentorController < ApplicationController
   include Authenticated
 
+  layout "mentor"
   helper_method :current_mentor
 
   before_action -> {

@@ -11,7 +11,7 @@ RSpec.describe RegionalAmbassador::AccountsController do
 
       sign_in(illinois_ra)
       get :index
-      expect(assigns[:accounts].map(&:id)).not_to include(wisconsin_ra.id)
+      expect(assigns[:accounts].map(&:id)).not_to include(wisconsin_ra.account_id)
     end
 
     it "shows users in the country region for Intn'l RAs" do
@@ -22,9 +22,9 @@ RSpec.describe RegionalAmbassador::AccountsController do
       sign_in(riyadh_ra)
       get :index
 
-      expect(assigns[:accounts].map(&:id)).not_to include(us_student.id)
-      expect(assigns[:accounts].map(&:id)).to include(riyadh_ra.id)
-      expect(assigns[:accounts].map(&:id)).to include(najran_student.id)
+      expect(assigns[:accounts].map(&:id)).not_to include(us_student.account_id)
+      expect(assigns[:accounts].map(&:id)).to include(riyadh_ra.account_id)
+      expect(assigns[:accounts].map(&:id)).to include(najran_student.account_id)
     end
   end
 end

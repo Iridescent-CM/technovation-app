@@ -8,7 +8,7 @@
     <div class="card__body">
       <p><%= t("views.profile_requirements.parental_consent.label") %></p>
 
-      <% if current_student.student_profile.parent_guardian_email.present? %>
+      <% if current_student.parent_guardian_email.present? %>
         <p>
           <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
           <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),

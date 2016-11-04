@@ -3,11 +3,9 @@ require "rails_helper"
 RSpec.describe Student::ParentalConsentNoticesController do
   describe "POST #create" do
     it "sends a parental consent notice on behalf of the student" do
-      student = FactoryGirl.create(:student, student_profile_attributes: {
-                                               school_name: "Hello school",
-                                               parent_guardian_email: "email@email.com",
-                                               parent_guardian_name: "Parent parent"
-                                             })
+      student = FactoryGirl.create(:student, school_name: "Hello school",
+                                             parent_guardian_email: "email@email.com",
+                                             parent_guardian_name: "Parent parent")
       sign_in(student)
 
       post :create

@@ -2,14 +2,14 @@ class JudgeProfile < ActiveRecord::Base
   scope :full_access, -> { joins(:consent_waiver) }
 
   belongs_to :account
-
-  has_one :consent_waiver, foreign_key: :account_id, dependent: :destroy
+  accepts_nested_attributes_for :account
 
   validates :company_name, :job_title,
     presence: true
 
   delegate :mentor_profile,
            :profile_image_url,
+           :email,
     to: :account
 
   def authenticated?

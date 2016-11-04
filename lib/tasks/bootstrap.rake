@@ -12,19 +12,22 @@ task bootstrap: :environment do
 
   email = "info@technovationchallenge.org"
 
-  if AdminProfile.exists?(email: email)
+  if AdminProfile.joins(:account).where("accounts.email = ?", email).any?
     puts "Found Admin: #{email}"
   else
-    AdminProfile.create!(first_name: "Technovation",
-                          last_name: "Staff",
-                          email: email,
-                          password: ENV.fetch("ADMIN_PASSWORD"),
-                          password_confirmation: ENV.fetch("ADMIN_PASSWORD"),
-                          city: "San Francisco",
-                          state_province: "CA",
-                          country: "US",
-                          geocoded: "San Francisco, CA, US",
-                          date_of_birth: 100.years.ago)
+    AdminProfile.create!(
+      account_attributes: {
+        first_name: "Technovation",
+        last_name: "Staff",
+        email: email,
+        password: ENV.fetch("ADMIN_PASSWORD"),
+        city: "San Francisco",
+        state_province: "CA",
+        country: "US",
+        geocoded: "San Francisco, CA, US",
+        date_of_birth: 100.years.ago,
+      }
+    )
     puts "Created Admin: #{email}"
   end
 end

@@ -9,11 +9,11 @@ class AccountMailer < ApplicationMailer
   end
 
   def confirm_next_steps(consent)
-    @name = consent.student.first_name
+    @name = consent.student_profile_first_name
     @url = student_dashboard_url
 
-    I18n.with_locale(consent.student.locale) do
-      mail to: consent.student.email
+    I18n.with_locale(consent.student_profile_locale) do
+      mail to: consent.student_profile_email
     end
   end
 

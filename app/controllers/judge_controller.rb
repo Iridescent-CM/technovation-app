@@ -1,6 +1,7 @@
 class JudgeController < ApplicationController
   include Authenticated
 
+  layout "judge"
   helper_method :current_judge
 
   private

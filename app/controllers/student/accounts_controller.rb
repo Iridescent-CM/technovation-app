@@ -3,14 +3,11 @@ module Student
     include AccountController
 
     def profile_params
-      {
-        student_profile_attributes: [
-          :id,
-          :parent_guardian_email,
-          :parent_guardian_name,
-          :school_name,
-        ],
-      }
+      [
+        :parent_guardian_email,
+        :parent_guardian_name,
+        :school_name,
+      ]
     end
 
     private

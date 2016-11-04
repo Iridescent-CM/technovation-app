@@ -26,6 +26,7 @@ class MentorProfile < ActiveRecord::Base
   scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }
 
   belongs_to :account
+  accepts_nested_attributes_for :account
 
   has_many :mentor_profile_expertises, dependent: :destroy
   has_many :expertises, through: :mentor_profile_expertises
@@ -35,20 +36,11 @@ class MentorProfile < ActiveRecord::Base
     foreign_key: :account_id,
     dependent: :destroy
 
-  has_one :background_check, foreign_key: :account_id, dependent: :destroy
-  accepts_nested_attributes_for :background_check
-
-  has_one :mentor_profile, foreign_key: :account_id, dependent: :destroy
-  accepts_nested_attributes_for :mentor_profile
-  validates_associated :mentor_profile
-
   has_many :memberships, as: :member, dependent: :destroy
 
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id
-
-  has_one :consent_waiver, foreign_key: :account_id, dependent: :destroy
 
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
@@ -56,7 +48,13 @@ class MentorProfile < ActiveRecord::Base
 
   validates :school_company_name, :job_title, presence: true
 
-  delegate :country, to: :account
+  delegate :email,
+           :country,
+           :age,
+           :consent_waiver,
+           :consent_signed?,
+           :honor_code_signed?,
+    to: :account
 
   delegate :submitted?,
            :candidate_id,
@@ -96,10 +94,6 @@ class MentorProfile < ActiveRecord::Base
     country != "US" or (background_check.present? and background_check.clear?)
   end
 
-  def honor_code_signed?
-    honor_code_agreement.present?
-  end
-
   def bio_complete?
     not bio.blank?
   end
@@ -110,10 +104,6 @@ class MentorProfile < ActiveRecord::Base
 
   def type_name
     "mentor"
-  end
-
-  def consent_signed?
-    consent_waiver.present?
   end
 
   def void_honor_code_agreement!

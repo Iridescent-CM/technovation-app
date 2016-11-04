@@ -6,13 +6,7 @@ RSpec.describe Mentor::AccountsController do
       mentor = FactoryGirl.create(:mentor)
       sign_in(mentor)
 
-      put :update, id: mentor.id,
-                   mentor_account: {
-                     mentor_profile_attributes: {
-                       id: mentor.mentor_profile.id,
-                       virtual: false
-                     }
-                   }
+      put :update, id: mentor.id, mentor_profile: { virtual: false }
 
       expect(mentor.reload).not_to be_virtual
     end

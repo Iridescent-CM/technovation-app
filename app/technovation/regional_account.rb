@@ -1,15 +1,15 @@
 module RegionalAccount
   def self.call(ambassador, params = {})
-    klass = if params[:type] == "All"
-              Account
-            else
-              "#{params[:type]}Account".constantize
-            end
+    account = if params[:type] == "All"
+                Account
+              else
+                Account.joins("#{params[:type]}_profile")
+              end
 
-    accounts = klass.includes(:seasons)
-                    .references(:seasons)
-                    .where("seasons.year = ?", Season.current.year)
-                    .where.not(email: "info@technovationchallenge.org")
+    accounts = account.includes(:seasons)
+      .references(:seasons)
+      .where("seasons.year = ?", Season.current.year)
+      .where.not(email: "info@technovationchallenge.org")
 
     unless params[:text].blank?
       results = accounts.search(

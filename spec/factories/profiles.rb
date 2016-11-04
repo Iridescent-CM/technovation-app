@@ -1,21 +1,22 @@
 FactoryGirl.define do
   factory :student_profile, aliases: [:student, :student_account] do
-    school_name { "FactoryGirl High" }
-    association(:account, date_of_birth: Date.today - 15.years)
+    account
 
-    after(:create) do |s|
+    school_name { "FactoryGirl High" }
+
+    transient do
+      geocoded "Chicago, IL"
+    end
+
+    after(:create) do |s, e|
       unless s.parental_consent.present?
         s.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
       end
-    end
 
-    after(:create) do |s|
-      unless s.honor_code_signed?
-        s.create_honor_code_agreement!(
-          agreement_confirmed: true,
-          electronic_signature: "Agreement Poodle"
-        )
-      end
+      s.account.update_attributes(
+        geocoded: e.geocoded,
+        date_of_birth: Date.today - 15.years,
+      )
     end
 
     trait :on_team do
@@ -39,20 +40,16 @@ FactoryGirl.define do
     job_title { "Engineer" }
     bio "A complete bio"
 
-    association(:account)
-    association(:background_check)
+    account
 
-    after(:create) do |m|
-      unless m.honor_code_signed?
-        m.create_honor_code_agreement!(
-          agreement_confirmed: true,
-          electronic_signature: "Agreement Hippo"
-        )
-      end
+    transient do
+      geocoded "Chicago, IL"
+    end
 
-      unless m.consent_signed?
-        m.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
-      end
+    after(:create) do |m, e|
+      m.account.update_attributes(
+        geocoded: e.geocoded,
+      )
     end
 
     trait :with_expertises do
@@ -79,13 +76,16 @@ FactoryGirl.define do
     ambassador_since_year { Time.current.year }
     bio "A complete bio"
 
-    association(:account)
-    association(:background_check)
+    account
 
-    after(:create) do |r|
-      unless r.consent_signed?
-        r.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
-      end
+    transient do
+      geocoded "Chicago, IL"
+    end
+
+    after(:create) do |r, e|
+      r.account.update_attributes(
+        geocoded: e.geocoded,
+      )
     end
 
     trait :approved do
@@ -99,11 +99,5 @@ FactoryGirl.define do
     company_name { "FactoryGirl" }
     job_title { "Engineer" }
     association(:account)
-
-    after(:create) do |j|
-      unless j.consent_signed?
-        j.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
-      end
-    end
   end
 end

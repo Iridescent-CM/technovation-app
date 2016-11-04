@@ -15,6 +15,16 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_password, :skip_existing_password, :geocoded
 
+  has_one :student_profile
+  has_one :mentor_profile
+  has_one :regional_ambassador_profile
+
+  has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
+  has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
+
+  has_one :background_check, dependent: :destroy
+  accepts_nested_attributes_for :background_check
+
   enum referred_by: %w{Friend Colleague Article Internet Social\ media
                        Print Web\ search Teacher Parent/family Company\ email
                        Made\ With\ Code Other}
@@ -144,6 +154,26 @@ class Account < ActiveRecord::Base
   def temporary_password?
     new_record? and
       SignupAttempt.temporary_password.where("lower(email) = ?", email.downcase).any?
+  end
+
+  def type_name
+    if mentor_profile.present?
+      "mentor"
+    elsif regional_ambassador_profile.present?
+      "regional_ambassador"
+    elsif student_profile.present?
+      "student"
+    else
+      "judge"
+    end
+  end
+
+  def honor_code_signed?
+    honor_code_agreement.present?
+  end
+
+  def consent_signed?
+    consent_waiver.present?
   end
 
   private

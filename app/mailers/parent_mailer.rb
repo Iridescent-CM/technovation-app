@@ -9,14 +9,14 @@ class ParentMailer < ApplicationMailer
   end
 
   def confirm_consent_finished(consent)
-    return unless consent.student.parent_guardian_email
-    @name = consent.student.parent_guardian_name
-    @student_name = consent.student.full_name
+    return unless consent.student_profile.parent_guardian_email
+    @name = consent.student_profile.parent_guardian_name
+    @student_name = consent.student_profile_full_name
     @signature = consent.electronic_signature
     @signed_date = consent.created_at.strftime("%B %e, %Y")
 
-    I18n.with_locale(consent.student.locale) do
-      mail to: consent.student.parent_guardian_email
+    I18n.with_locale(consent.student_profile_locale) do
+      mail to: consent.student_profile.parent_guardian_email
     end
   end
 end

@@ -1,11 +1,17 @@
 class ConsentWaiver < ActiveRecord::Base
+  scope :nonvoid, -> { where("voided_at IS NOT NULL") }
+
   belongs_to :account
 
   validates :electronic_signature, presence: true
 
   delegate :full_name, :type_name, :consent_token, to: :account, prefix: true
 
-  after_commit :enable_searchable_users, on: :create
+  after_commit -> {
+    if account.mentor_profile.present?
+      account.mentor_profile.enable_searchability
+    end
+  }, on: :create
 
   def account_consent_token=(token)
     self.account = Account.find_by(consent_token: token)
@@ -17,10 +23,5 @@ class ConsentWaiver < ActiveRecord::Base
 
   def status
     "signed"
-  end
-
-  private
-  def enable_searchable_users
-    account.enable_searchability
   end
 end

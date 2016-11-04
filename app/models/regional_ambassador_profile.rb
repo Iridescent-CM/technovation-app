@@ -2,6 +2,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   scope :full_access, -> { approved }
 
   belongs_to :account
+  accepts_nested_attributes_for :account
 
   after_update :after_status_changed, if: :status_changed?
 
@@ -12,17 +13,19 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   has_many :exports, foreign_key: :account_id, dependent: :destroy
 
-  has_one :background_check, foreign_key: :account_id, dependent: :destroy
-  accepts_nested_attributes_for :background_check
-
-  has_one :consent_waiver, foreign_key: :account_id, dependent: :destroy
-
   delegate :submitted?,
            :candidate_id,
            :report_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
+
+  delegate :consent_waiver,
+           :background_check,
+           :email,
+           :honor_code_signed?,
+           :consent_signed?,
+    to: :account
 
   def background_check_complete?
     country != "US" or !!background_check && background_check.clear?

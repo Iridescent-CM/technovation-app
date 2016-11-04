@@ -10,11 +10,8 @@ RSpec.describe Student::SignupsController do
       invite = FactoryGirl.create(:team_member_invite,
                                   invitee_email: "invited@thanks.com")
 
-      post :create, student_account: FactoryGirl.attributes_for(
-        :student,
-        email: "invited@thanks.com",
-        student_profile_attributes: FactoryGirl.attributes_for(:student_profile),
-      )
+      post :create, student_profile: FactoryGirl.attributes_for(:student)
+        .merge(account_attributes: { email: "invited@thanks.com" })
 
       expect(invite.reload.invitee).to eq(StudentAccount.last)
     end
@@ -24,7 +21,6 @@ RSpec.describe Student::SignupsController do
     before do
       post :create, student_account: FactoryGirl.attributes_for(
         :student,
-        student_profile_attributes: FactoryGirl.attributes_for(:student_profile),
       )
     end
 

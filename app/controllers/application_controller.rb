@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   force_ssl if: :ssl_configured?
 
-  layout :determine_layout
   helper_method :current_account, :current_team
 
   before_action -> {
@@ -33,10 +32,6 @@ class ApplicationController < ActionController::Base
   def go_to_signin(profile)
     redirect_to signin_path, notice: t("controllers.application.unauthenticated",
                                        profile: profile.indefinitize.humanize.downcase)
-  end
-
-  def determine_layout
-    current_account.type_name
   end
 
   def require_unauthenticated

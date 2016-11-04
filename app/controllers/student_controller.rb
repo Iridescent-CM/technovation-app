@@ -1,6 +1,7 @@
 class StudentController < ApplicationController
   include Authenticated
 
+  layout "student"
   helper_method :current_student, :current_team
 
   before_action -> {
@@ -14,7 +15,7 @@ class StudentController < ApplicationController
 
   private
   def current_student
-    @current_student ||= Account.joins(:student_profile).find_by(auth_token: cookies.fetch(:auth_token))
+    @current_student ||= StudentProfile.joins(:account).find_by("accounts.auth_token = ?", cookies.fetch(:auth_token))
   end
 
   def current_team
