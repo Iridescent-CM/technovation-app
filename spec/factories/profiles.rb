@@ -45,11 +45,13 @@ FactoryGirl.define do
 
     transient do
       geocoded "Chicago, IL"
+      country nil
     end
 
     after(:create) do |m, e|
       m.account.update_attributes(
         geocoded: e.geocoded,
+        country: e.country || m.account.country,
       )
     end
 
@@ -81,11 +83,13 @@ FactoryGirl.define do
 
     transient do
       geocoded "Chicago, IL"
+      country nil
     end
 
     after(:create) do |r, e|
       r.account.update_attributes(
         geocoded: e.geocoded,
+        country: e.country || r.account.country,
       )
     end
 

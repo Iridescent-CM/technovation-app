@@ -17,6 +17,7 @@ class Account < ActiveRecord::Base
 
   has_one :student_profile
   has_one :mentor_profile
+  has_one :judge_profile
   has_one :regional_ambassador_profile
 
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
@@ -163,8 +164,10 @@ class Account < ActiveRecord::Base
       "regional_ambassador"
     elsif student_profile.present?
       "student"
-    else
+    elsif judge_profile.present?
       "judge"
+    else
+      "application"
     end
   end
 
