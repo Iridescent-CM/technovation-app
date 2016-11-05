@@ -11,7 +11,7 @@ class AmbassadorMailer < ApplicationMailer
 
   def declined(ambassador)
     @first_name = ambassador.first_name
-    @status = ambassador.status
+    @status = "declined"
 
     I18n.with_locale(ambassador.locale) do
       mail to: ambassador.email
