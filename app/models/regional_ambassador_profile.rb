@@ -29,6 +29,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
            :email,
            :honor_code_signed?,
            :consent_signed?,
+           :background_check_complete?,
+           :country,
     to: :account
 
   def background_check_complete?
@@ -49,6 +51,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     else
       Country[country].name
     end
+  end
+
+  def full_access_enabled?
+    approved? and consent_signed? and background_check_complete?
   end
 
   def authenticated?

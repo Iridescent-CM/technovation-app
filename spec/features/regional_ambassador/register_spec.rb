@@ -20,7 +20,7 @@ RSpec.feature "Regional Ambassadors registration" do
     select "I'm new!", from: "In which year did you become a regional ambassador?"
 
     select "Other", from: "How did you hear about Technovation?"
-    fill_in "regional_ambassador_account[referred_by_other]", with: "Some other value"
+    fill_in "regional_ambassador_profile[account_attributes][referred_by_other]", with: "Some other value"
 
     click_button "Create Your Account"
   end
@@ -34,7 +34,7 @@ RSpec.feature "Regional Ambassadors registration" do
   end
 
   scenario "saves the custom referral response" do
-    expect(RegionalAmbassadorAccount.last.referred_by_other).to eq("Some other value")
+    expect(Account.last.referred_by_other).to eq("Some other value")
   end
 
   scenario "admins receive an email about it" do
@@ -47,6 +47,6 @@ RSpec.feature "Regional Ambassadors registration" do
   end
 
   scenario "saves profile data" do
-    expect(RegionalAmbassadorAccount.last.ambassador_since_year).to eq("I'm new!")
+    expect(RegionalAmbassadorProfile.last.ambassador_since_year).to eq("I'm new!")
   end
 end
