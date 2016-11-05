@@ -13,7 +13,16 @@ class MentorInvite < TeamMemberInvite
   end
 
   def set_invitee
-    self.invitee_id ||= Account.where("lower(email) = ?", invitee_email.downcase).first.id
-    self.invitee_type ||= "MentorProfile"
+    self.invitee ||= MentorProfile
+      .joins(:account)
+      .where("lower(accounts.email) = ?", invitee_email.downcase)
+      .first
+  end
+
+  # Overwriting parent validation
+  def correct_invitee_type
+    if Account.joins(:mentor_profile).where("lower(email) = ?", invitee_email.downcase).empty?
+      errors.add(:invitee_email, :is_not_a_mentor)
+    end
   end
 end

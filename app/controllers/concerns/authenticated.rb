@@ -15,14 +15,7 @@ module Authenticated
 
   private
   def authenticate!
-    model_name = self.class.name.deconstantize.split('::')[0].underscore
-
-    account = "#{model_name}_profile".camelize.constantize.joins(:account)
-      .references(:accounts)
-      .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
-      .first
-
-    unless account.authenticated?
+    unless current_account.authenticated?
       save_redirected_path
       go_to_signin(model_name)
     end

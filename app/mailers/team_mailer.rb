@@ -30,7 +30,7 @@ class TeamMailer < ApplicationMailer
   def invite_mentor(invite)
     @greeting = I18n.translate("team_mailer.invite_member.greeting.mentor", name: invite.team_name)
 
-    if CompletionSteps.new(invite.invitee).unlocked?(new_mentor_team_search_url)
+    if invite.invitee.full_access_enabled?
       @url = mentor_mentor_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
       @link_text = "Review this invitation"

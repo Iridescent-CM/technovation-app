@@ -337,7 +337,6 @@ ActiveRecord::Schema.define(version: 20161104194255) do
   add_foreign_key "screenshots", "team_submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
-  add_foreign_key "team_member_invites", "accounts", column: "invitee_id"
   add_foreign_key "team_submissions", "teams"
   add_foreign_key "teams", "divisions"
 end

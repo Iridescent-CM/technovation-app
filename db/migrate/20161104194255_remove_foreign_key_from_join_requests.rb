@@ -4,6 +4,6 @@ class RemoveForeignKeyFromJoinRequests < ActiveRecord::Migration
   end
 
   def down
-    add_foreign_key :team_member_invites, :accounts, column: :requestor_id
+    add_foreign_key :join_requests, :accounts, column: :requestor_id
   end
 end

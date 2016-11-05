@@ -48,13 +48,13 @@ FactoryGirl.define do
       country nil
     end
 
-    after(:create) do |m, e|
-      m.create_account!(FactoryGirl.attributes_for(:account))
+    before(:create) do |m, e|
+      attrs = FactoryGirl.attributes_for(:account)
 
-      m.account.update_attributes(
+      m.build_account(attrs.merge(
         geocoded: e.geocoded,
-        country: e.country || m.account.country,
-      )
+        country: e.country || attrs[:country],
+      ))
     end
 
     trait :with_expertises do

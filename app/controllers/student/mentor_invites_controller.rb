@@ -20,7 +20,7 @@ module Student
     private
     def mentor_invite_params
       params.require(:mentor_invite).permit(:invitee_email).tap do |params|
-        params[:inviter_id] = current_student.id
+        params[:inviter] = current_student
         params[:team_id] = current_student.team_id
       end
     end
