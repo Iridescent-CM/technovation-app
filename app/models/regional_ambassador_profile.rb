@@ -4,10 +4,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   belongs_to :account
   accepts_nested_attributes_for :account
 
-  after_commit -> {
-    AdminMailer.pending_regional_ambassador(account).deliver_later
-  }, on: :create
-
   after_update :after_status_changed, if: :status_changed?
 
   enum status: %i{pending approved declined spam}

@@ -19,7 +19,10 @@ module RegionalAmbassador
       )
 
       if @regional_ambassador_profile.save
+        AdminMailer.pending_regional_ambassador(@regional_ambassador_profile.account).deliver_later
+
         cookies.delete(:signup_token)
+
         SignIn.(@regional_ambassador_profile.account,
                 self,
                 redirect_to: regional_ambassador_dashboard_path,

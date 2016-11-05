@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.feature "Regional Ambassadors registration" do
   before do
     page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
+    ActionMailer::Base.deliveries.clear
 
     visit signup_path
     click_link "Apply to become a Regional Ambassador"
@@ -39,11 +40,8 @@ RSpec.feature "Regional Ambassadors registration" do
 
   scenario "admins receive an email about it" do
     expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
-
-    mail = ActionMailer::Base.deliveries.last
-
-    expect(mail.to).to eq(["info@technovationchallenge.org"])
-    expect(mail.body).to include("href=\"#{admin_regional_ambassadors_url(status: :pending)}\"")
+    emails = ActionMailer::Base.deliveries
+    expect(emails.collect(&:to)).to include(["info@technovationchallenge.org"])
   end
 
   scenario "saves profile data" do
