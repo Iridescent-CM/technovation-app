@@ -20,7 +20,7 @@ module RegionalAmbassador
 
       if @regional_ambassador_profile.save
         cookies.delete(:signup_token)
-        SignIn.(@regional_ambassador_profile,
+        SignIn.(@regional_ambassador_profile.account,
                 self,
                 redirect_to: regional_ambassador_dashboard_path,
                 message: t("controllers.signups.create.success"))

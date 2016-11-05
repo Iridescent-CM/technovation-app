@@ -179,6 +179,10 @@ class Account < ActiveRecord::Base
     consent_waiver.present?
   end
 
+  def authenticated?
+    true
+  end
+
   private
   def update_email_list
     if first_name_changed? or last_name_changed? or email_changed?

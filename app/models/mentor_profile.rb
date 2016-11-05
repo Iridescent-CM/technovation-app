@@ -58,6 +58,7 @@ class MentorProfile < ActiveRecord::Base
            :first_name,
            :consent_token,
            :background_check,
+           :profile_image_url,
     to: :account
 
   delegate :submitted?,

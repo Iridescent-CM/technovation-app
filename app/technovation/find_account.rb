@@ -17,9 +17,11 @@ module FindAccount
     end
   end
 
-  def self.current(profile, cookies)
-    Account.joins("#{profile}_profile")
-      .where("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
-      .first or Account::NoAuthFound.new
+  def self.current(type, cookies)
+    a = Account.joins("#{type}_profile".to_sym)
+      .where(auth_token: cookies.fetch(:auth_token) { "" })
+      .first
+
+    a && a.send("#{type}_profile") || Account::NoAuthFound.new
   end
 end

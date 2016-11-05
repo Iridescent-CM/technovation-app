@@ -1,4 +1,4 @@
-<% unless account.consent_waiver.present? %>
+<% unless account.consent_signed? %>
   <li class="card">
     <div class="card__heading">
       <%= t("views.profile_requirements.consent_waiver.heading") %>
@@ -10,7 +10,7 @@
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
-          new_consent_waiver_path(token: account.consent_token),
+          new_consent_waiver_path(token: account.account.consent_token),
           class: "appy-button" %>
       </div>
     </div>

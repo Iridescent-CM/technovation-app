@@ -41,14 +41,14 @@ FactoryGirl.define do
     job_title { "Engineer" }
     bio "A complete bio"
 
-    account
-
     transient do
       geocoded "Chicago, IL"
       country nil
     end
 
     after(:create) do |m, e|
+      m.create_account!(FactoryGirl.attributes_for(:account))
+
       m.account.update_attributes(
         geocoded: e.geocoded,
         country: e.country || m.account.country,

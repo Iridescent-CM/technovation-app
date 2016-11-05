@@ -10,6 +10,7 @@ class JudgeProfile < ActiveRecord::Base
   delegate :mentor_profile,
            :profile_image_url,
            :email,
+           :consent_signed?,
     to: :account
 
   def authenticated?
@@ -21,6 +22,6 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    consent_waiver.present?
+    consent_signed?
   end
 end
