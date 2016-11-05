@@ -16,19 +16,24 @@
       <% end %>
     </h1>
 
-    <%= simple_form_for(signup, url: url, html: { class: "no-simple-form-style" }) do |f| %>
+    <%= simple_form_for(signup,
+                        url: url,
+                        html: { class: "no-simple-form-style" }) do |f| %>
+
       <%= render 'errors', record: signup %>
 
-      <p><strong><%= t("views.signups.form.signing_up_email", email: signup.email) %></strong></p>
+      <p>
+        <strong>
+          <%= t("views.signups.form.signing_up_email", email: signup.email) %>
+        </strong>
+      </p>
 
       <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
 
       <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
 
-      <% if editing or signup.temporary_password? %>
-         <h6 class="signup-section">
-          <%= password_label %>
-        </h6>
+      <% if editing or signup.account.temporary_password? %>
+        <h6 class="signup-section"><%= password_label %></h6>
 
         <%= f.input :password, label: password_label %>
 
@@ -38,25 +43,29 @@
       <% if f.object.persisted? %>
         <%= yield(f) %>
       <% else %>
-        <%= f.input :referred_by,
-                    collection: Account.referred_bies.keys,
-                    label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
-                    input_html: {
-                      data: {
-                        toggle: true,
-                        toggle_value: "Other",
-                        toggle_reveal: ".referred_by_other",
-                      },
-                      class: 'sign-up-referred-by'
-                    } %>
+        <%= f.fields_for :account do |a| %>
+          <%= a.input :referred_by,
+            collection: Account.referred_bies.keys,
+            label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
+            input_html: {
+              data: {
+                toggle: true,
+                toggle_value: "Other",
+                toggle_reveal: ".referred_by_other",
+              },
+              class: 'sign-up-referred-by'
+            } %>
 
-        <div class="referred_by_other">
-          <%= f.input :referred_by_other,
-                      label: false,
-                      placeholder: t("models.account.referred_by_other") %>
-        </div>
+          <div class="referred_by_other">
+            <%= a.input :referred_by_other,
+              label: false,
+              placeholder: t("models.account.referred_by_other") %>
+          </div>
+        <% end %>
 
-        <%= f.button :submit, t('views.signups.form.create_account'), class: 'appy-button' %>
+        <%= f.button :submit,
+          t('views.signups.form.create_account'),
+          class: 'appy-button' %>
       <% end %>
     <% end %>
   </div>

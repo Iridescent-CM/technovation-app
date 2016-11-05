@@ -1,40 +1,52 @@
-<div class="signup-form-name-fields">
-  <%= f.input :first_name %>
-  <%= f.input :last_name %>
-</div>
+<%= f.fields_for :account do |a| %>
+  <div class="signup-form-name-fields">
+    <%= a.input :first_name %>
+    <%= a.input :last_name %>
+  </div>
 
-<%= f.input :date_of_birth, as: :date, prompt: true,
-                                       start_year: f.object.youngest_birth_year,
-                                       end_year: f.object.oldest_birth_year,
-                                       input_html: { class: "account_dob" } %>
+  <%= a.input :date_of_birth,
+    as: :date,
+    prompt: true,
+    start_year: a.object.youngest_birth_year,
+    end_year: a.object.oldest_birth_year,
+    input_html: { class: "account_dob" } %>
 
-<%= f.input :geocoded, input_html: {
-                        id: "geocoded",
-                        value: f.object.address_details,
-                        disabled: (not admin and f.object.persisted? and f.object.regional_ambassador_profile.present? and f.object.approved?),
-                        onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
-                      },
-                      label: t("models.account.geocoded") %>
+  <%= a.input :geocoded,
+    input_html: {
+      id: "geocoded",
+      value: a.object.address_details,
+      disabled: (not admin and
+                  a.object.persisted? and
+                    a.object.regional_ambassador_profile.present? and
+                      a.object.approved?),
+      onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
+    },
+  label: t("models.account.geocoded") %>
 
-<%= f.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
-<%= f.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
+  <%= a.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
+  <%= a.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
 
-<%= f.input :country, label: t("models.account.country"),
-                      collection: CountryStateSelect.countries_collection,
-                      input_html: { id: "country" },
-                      wrapper_html: {
-                        class: "location-#{extra_location_field(f.object, :country)}"
-                      } %>
+  <%= a.input :country,
+    label: t("models.account.country"),
+    collection: CountryStateSelect.countries_collection,
+    input_html: { id: "country" },
+    wrapper_html: {
+      class: "location-#{extra_location_field(a.object, :country)}"
+    } %>
 
-<%= f.input :state_province, as: :hidden, input_html: { id: "state" } %>
+  <%= a.input :state_province, as: :hidden, input_html: { id: "state" } %>
 
-<% if f.object.persisted? %>
-  <h6 id="account-profile-image" class="signup-section">
-    <%= t("views.signups.new.section_headers.profile_image") %>
-  </h6>
+  <% if a.object.persisted? %>
+    <h6 id="account-profile-image" class="signup-section">
+      <%= t("views.signups.new.section_headers.profile_image") %>
+    </h6>
 
-  <%= image_tag f.object.profile_image, with: 233, height: 233 %>
-  <%= f.input :profile_image %>
-  <%= f.input :profile_image_cache, as: :hidden %>
-  <p class="appy-hint"><%= t("controllers.accounts.update.change_image_hint") %></p>
+    <%= image_tag a.object.profile_image, with: 233, height: 233 %>
+    <%= a.input :profile_image %>
+    <%= a.input :profile_image_cache, as: :hidden %>
+
+    <p class="appy-hint">
+      <%= t("controllers.accounts.update.change_image_hint") %>
+    </p>
+  <% end %>
 <% end %>

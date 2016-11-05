@@ -1,18 +1,18 @@
-<%= f.input :gender,
-  label: "#{t('models.account.gender')} #{t('views.application.optional')}",
-  collection: Account.genders.keys %>
-
-<%= f.fields_for :regional_ambassador_profile do |r| %>
-  <%= r.input :organization_company_name,
-    label: t("models.regional_ambassador_profile.organization_company_name") %>
-
-  <%= r.input :job_title,
-    label: t("models.regional_ambassador_profile.job_title") %>
-
-  <%= r.input :ambassador_since_year,
-    collection: [t("models.regional_ambassador_profile.ambassador_since_year_option_new")] +
-                  (2009..Time.current.year).to_a.reverse,
-    label: t("models.regional_ambassador_profile.ambassador_since_year") %>
-
-  <%= r.input :bio, label: t("models.regional_ambassador_profile.bio.signup_label") %>
+<%= f.fields_for :account do |a| %>
+  <%= a.input :gender,
+    label: "#{t('models.account.gender')} #{t('views.application.optional')}",
+    collection: Account.genders.keys %>
 <% end %>
+
+<%= f.input :organization_company_name,
+  label: t("models.regional_ambassador_profile.organization_company_name") %>
+
+<%= f.input :job_title,
+  label: t("models.regional_ambassador_profile.job_title") %>
+
+<%= f.input :ambassador_since_year,
+  collection: [t("models.regional_ambassador_profile.ambassador_since_year_option_new")] +
+                (2009..Time.current.year).to_a.reverse,
+  label: t("models.regional_ambassador_profile.ambassador_since_year") %>
+
+<%= f.input :bio, label: t("models.regional_ambassador_profile.bio.signup_label") %>

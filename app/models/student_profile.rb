@@ -146,14 +146,6 @@ class StudentProfile < ActiveRecord::Base
     !!honor_code_agreement && honor_code_agreement.void!
   end
 
-  def after_registration
-    RegistrationMailer.welcome_student(account).deliver_later
-
-    if parent_guardian_email.present?
-      ParentMailer.consent_notice(self).deliver_later
-    end
-  end
-
   def authenticated?
     true
   end

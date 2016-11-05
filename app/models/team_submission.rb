@@ -18,7 +18,4 @@ class TeamSubmission < ActiveRecord::Base
     tokenizer: ->(d) { d.scan(/\S+/) },
     too_short: "must have at least %{count} words",
   }, if: -> { step == "app_description" }
-
-  def after_registration
-  end
 end

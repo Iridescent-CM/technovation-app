@@ -8,8 +8,12 @@ class SeasonRegistration < ActiveRecord::Base
     if not exists?(registerable: registerable, season: season)
       create(registerable: registerable, season: season)
 
-      if season == Season.current
-        registerable.after_registration
+      if season == Season.current and registerable.respond_to?(:parent_guardian_email)
+        RegistrationMailer.welcome_student(registerable).deliver_later
+
+        if registerable.parent_guardian_email.present?
+          ParentMailer.consent_notice(registerable).deliver_later
+        end
       end
     end
   end

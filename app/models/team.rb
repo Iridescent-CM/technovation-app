@@ -136,9 +136,6 @@ class Team < ActiveRecord::Base
     team_submissions.current.last
   end
 
-  def after_registration
-  end
-
   private
   def register_to_season
     if season_ids.empty?

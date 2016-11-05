@@ -5,13 +5,13 @@ module SignIn
       redirect_to: after_signin_path(signin, context),
     }.merge(options)
 
-    context.set_cookie(:auth_token, signin.auth_token)
+    context.set_cookie(:auth_token, signin.account.auth_token)
     context.remove_cookie(:signup_token)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
 
-    if context.request.remote_ip != signin.last_login_ip
-      signin.update_attributes(last_login_ip: context.request.remote_ip)
+    if context.request.remote_ip != signin.account.last_login_ip
+      signin.account.update_attributes(last_login_ip: context.request.remote_ip)
     end
 
     context.redirect_to signin_options[:redirect_to],

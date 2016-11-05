@@ -8,14 +8,16 @@ module SignupController
   def new
     if token = cookies[:signup_token]
       email = SignupAttempt.find_by!(signup_token: token).email
-      instance_variable_set("@#{model_name}", registration_helper.build(model, email: email))
+      instance_variable_set("@#{model_name}",
+                            registration_helper.build(model, email: email))
     else
       redirect_to root_path
     end
   end
 
   def create
-    instance_variable_set("@#{model_name}", registration_helper.build(model, account_params))
+    instance_variable_set("@#{model_name}",
+                          registration_helper.build(model, account_params))
 
     if registration_helper.(instance, self)
       cookies.delete(:signup_token)
@@ -28,34 +30,37 @@ module SignupController
 
   private
   def account_params
-    params.require("#{model_name}_account").permit(
-      :email,
-      :password,
-      :date_of_birth,
-      :first_name,
-      :last_name,
-      :gender,
-      :geocoded,
-      :city,
-      :state_province,
-      :country,
-      :latitude,
-      :longitude,
-      :referred_by,
-      :referred_by_other,
-      "#{model_name}_profile_attributes" => %i{id} + profile_params,
+    params.require("#{model_name}_profile").permit(
+      profile_params,
+      account_attributes: [
+        :id,
+        :email,
+        :password,
+        :date_of_birth,
+        :first_name,
+        :last_name,
+        :gender,
+        :geocoded,
+        :city,
+        :state_province,
+        :country,
+        :latitude,
+        :longitude,
+        :referred_by,
+        :referred_by_other,
+      ],
     ).tap do |tapped|
       attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
-      tapped[:email] = attempt.email
+      tapped[:account_attributes][:email] = attempt.email
 
       unless attempt.temporary_password?
-        tapped[:password_digest] = attempt.password_digest
+        tapped[:account_attributes][:password_digest] = attempt.password_digest
       end
     end
   end
 
   def model
-    "#{model_name}_account".camelize.constantize
+    "#{model_name}_profile".camelize.constantize
   end
 
   def instance
