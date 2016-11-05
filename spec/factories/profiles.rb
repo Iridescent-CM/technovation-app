@@ -55,6 +55,10 @@ FactoryGirl.define do
         geocoded: e.geocoded,
         country: e.country || attrs[:country],
       ))
+
+      unless m.background_check.present?
+        m.account.build_background_check(FactoryGirl.attributes_for(:background_check))
+      end
     end
 
     trait :with_expertises do
@@ -93,6 +97,10 @@ FactoryGirl.define do
         geocoded: e.geocoded,
         country: e.country || r.account.country,
       )
+
+      unless r.background_check.present?
+        r.account.create_background_check!(FactoryGirl.attributes_for(:background_check))
+      end
     end
 
     trait :approved do
