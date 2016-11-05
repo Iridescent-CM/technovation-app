@@ -29,9 +29,8 @@ RSpec.describe Student::MentorSearchesController do
     it "filters mentors who are in-person only" do
       FactoryGirl.create(
         :mentor,
+        virtual: false,
         geocoded: "Los Angeles, CA",
-        mentor_profile_attributes: FactoryGirl.attributes_for(:mentor_profile)
-                                              .merge(virtual: false)
       )
 
       sign_in(FactoryGirl.create(:student, :on_team, geocoded: "Chicago, IL"))

@@ -28,6 +28,7 @@ class StudentProfile < ActiveRecord::Base
            :age,
            :honor_code_signed?,
            :profile_image_url,
+           :address_details,
     to: :account
 
   delegate :electronic_signature,

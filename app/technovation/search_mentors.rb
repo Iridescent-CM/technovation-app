@@ -1,9 +1,9 @@
 module SearchMentors
   def self.call(filter)
-    mentors = MentorProfile.where.not(id: filter.user.id)
+    mentors = Account.joins(:mentor_profile).where.not(id: filter.user.id)
 
     unless filter.text.blank?
-      results = Account.search(
+      results = Account.joins(:mentor_profile).search(
         query: {
           query_string: {
             query: "*#{filter.text}*"

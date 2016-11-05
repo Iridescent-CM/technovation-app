@@ -16,13 +16,6 @@ class MentorProfile < ActiveRecord::Base
     .uniq
   }
 
-  scope :searchable, -> {
-    where(
-      "mentor_profiles.accepting_team_invites = ? AND mentor_profiles.searchable = ?",
-      true, true
-    )
-  }
-
   scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }
 
   belongs_to :account

@@ -5,10 +5,6 @@ class Account < ActiveRecord::Base
   after_save    { IndexAccountJob.perform_later("index", id) }
   after_destroy { IndexAccountJob.perform_later("delete", id) }
 
-  define_method(:as_indexed_json) do |options = {}|
-    as_json(only: %w{id email first_name last_name})
-  end
-
   index_name "#{Rails.env}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
@@ -37,6 +33,15 @@ class Account < ActiveRecord::Base
     .where("season_registrations.status = ? AND seasons.year = ?",
            SeasonRegistration.statuses[:active],
            Season.current.year)
+  }
+
+  scope :searchable, -> {
+    joins(:mentor_profile).where(
+      "mentor_profiles.accepting_team_invites = ? AND
+        mentor_profiles.searchable = ?",
+      true,
+      true
+    )
   }
 
   mount_uploader :profile_image, ImageProcessor
@@ -87,6 +92,10 @@ class Account < ActiveRecord::Base
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
       NoAuthFound.new
+  end
+
+  def as_indexed_json(options = {})
+    as_json(only: %w{id email first_name last_name})
   end
 
   def full_name
