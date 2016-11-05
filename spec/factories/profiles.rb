@@ -44,6 +44,7 @@ FactoryGirl.define do
     bio "A complete bio"
 
     transient do
+      first_name nil
       geocoded "Chicago, IL"
       country nil
     end
@@ -54,6 +55,7 @@ FactoryGirl.define do
       m.build_account(attrs.merge(
         geocoded: e.geocoded,
         country: e.country || attrs[:country],
+        first_name: e.first_name || attrs[:first_name],
       ))
 
       unless m.background_check.present?
