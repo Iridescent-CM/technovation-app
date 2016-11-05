@@ -70,10 +70,9 @@ class TeamMemberInvite < ActiveRecord::Base
     not can_be_accepted?
   end
 
-  def self.match_registrant(account)
-    where(invitee_email: account.email).each do |invite|
-      invite.update_attributes(invitee_id: account.id,
-                               invitee_type: account.type)
+  def self.match_registrant(profile)
+    where(invitee_email: profile.email).each do |invite|
+      invite.update_attributes(invitee: profile)
     end
   end
 

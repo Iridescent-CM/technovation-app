@@ -10,17 +10,18 @@ RSpec.describe Student::SignupsController do
       invite = FactoryGirl.create(:team_member_invite,
                                   invitee_email: "invited@thanks.com")
 
-      post :create, student_profile: FactoryGirl.attributes_for(:student)
-        .merge(account_attributes: { email: "invited@thanks.com" })
+      post :create, student_profile: FactoryGirl.attributes_for(:student).merge(
+        account_attributes: FactoryGirl.attributes_for(:account, email: "invited@thanks.com")
+      )
 
-      expect(invite.reload.invitee).to eq(StudentAccount.last)
+      expect(invite.reload.invitee).to eq(StudentProfile.last)
     end
   end
 
   describe "POST #create" do
     before do
-      post :create, student_account: FactoryGirl.attributes_for(
-        :student,
+      post :create, student_profile: FactoryGirl.attributes_for(:student).merge(
+        account_attributes: FactoryGirl.attributes_for(:account)
       )
     end
 
@@ -31,12 +32,12 @@ RSpec.describe Student::SignupsController do
     it "emails the welcome email to the student" do
       expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
       mail = ActionMailer::Base.deliveries
-      expect(mail.map(&:to)).to include([StudentAccount.last.email])
+      expect(mail.map(&:to)).to include([Account.last.email])
       expect(mail.map(&:subject)).to include("Welcome to Technovation #{Season.current.year}!")
     end
 
     it "registers the student to the current season" do
-      expect(StudentAccount.last.seasons).to eq([Season.current])
+      expect(Account.last.seasons).to eq([Season.current])
     end
   end
 end
