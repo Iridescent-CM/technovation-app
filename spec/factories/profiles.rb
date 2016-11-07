@@ -127,6 +127,10 @@ FactoryGirl.define do
       unless r.background_check.present?
         r.account.build_background_check(FactoryGirl.attributes_for(:background_check))
       end
+
+      unless r.consent_signed?
+        r.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+      end
     end
 
     trait :approved do
