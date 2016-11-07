@@ -47,7 +47,6 @@ RSpec.feature "Edit account spec" do
     fill_in "School name", with: "New School"
 
     click_button "Save"
-    save_and_open_page
     expect(current_path).to eq(student_profile_path)
     expect(page).to have_content("New School")
   end

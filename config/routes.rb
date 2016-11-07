@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
 
-    resources :accounts, only: :index
+    resources :profiles, only: :index
     resources :teams, only: [:show, :index]
 
     resources :exports, only: :create
@@ -95,7 +95,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :show
 
-    resources :accounts
+    resources :profiles
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
 
