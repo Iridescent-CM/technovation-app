@@ -26,10 +26,10 @@ RSpec.feature "Register as a judge" do
   end
 
   scenario "How did you hear is saved" do
-    expect(JudgeAccount.last.referred_by).to eq("Company email")
+    expect(JudgeProfile.last.referred_by).to eq("Company email")
   end
 
   scenario "Address info is figured out" do
-    expect(JudgeAccount.last.address_details).to eq("Chicago, IL, United States")
+    expect(JudgeProfile.last.address_details).to eq("Chicago, IL, United States")
   end
 end

@@ -7,11 +7,13 @@ class JudgeProfile < ActiveRecord::Base
   validates :company_name, :job_title,
     presence: true
 
-  delegate :mentor_profile,
-           :profile_image_url,
-           :email,
-           :consent_signed?,
-    to: :account
+  def method_missing(method_name, *args)
+    begin
+      account.public_send(method_name, *args)
+    rescue
+      raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+    end
+  end
 
   def authenticated?
     true
@@ -23,5 +25,9 @@ class JudgeProfile < ActiveRecord::Base
 
   def full_access_enabled?
     consent_signed?
+  end
+
+  def type_name
+    "judge"
   end
 end
