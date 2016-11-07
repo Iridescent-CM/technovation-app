@@ -61,6 +61,14 @@ FactoryGirl.define do
       unless m.background_check.present?
         m.account.build_background_check(FactoryGirl.attributes_for(:background_check))
       end
+
+      unless m.consent_signed?
+        m.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+      end
+
+      unless m.honor_code_signed?
+        m.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
+      end
     end
 
     trait :with_expertises do
