@@ -78,9 +78,8 @@ class TeamMemberInvite < ActiveRecord::Base
 
   private
   def set_invitee
-    if student = Account.joins(:student_profile).where("lower(email) = ?", invitee_email.downcase).first
-      self.invitee_id ||=  student.id
-      self.invitee_type ||= "StudentProfile"
+    if student = StudentProfile.joins(:account).where("lower(accounts.email) = ?", invitee_email.downcase).first
+      self.invitee = student
     end
   end
 

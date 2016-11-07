@@ -6,7 +6,7 @@ class StudentProfile < ActiveRecord::Base
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor, dependent: :destroy
-  has_many :team_member_invites, as: :inviter, dependent: :destroy
+  has_many :team_member_invites, as: :invitee, dependent: :destroy
 
   belongs_to :account
   accepts_nested_attributes_for :account

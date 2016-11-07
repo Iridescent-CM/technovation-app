@@ -24,6 +24,8 @@ FactoryGirl.define do
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
       ))
+
+      s.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
     end
 
     trait :on_team do
