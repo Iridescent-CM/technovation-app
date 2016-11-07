@@ -31,7 +31,7 @@ module TeamMemberInviteController
   private
   def team_member_invite_params
     params.require(:team_member_invite).permit(:invitee_email, :team_id).tap do |params|
-      params[:inviter_id] = current_account.id
+      params[:inviter] = current_account
     end
   end
 
