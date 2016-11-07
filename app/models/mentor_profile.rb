@@ -30,6 +30,7 @@ class MentorProfile < ActiveRecord::Base
     dependent: :destroy
 
   has_many :memberships, as: :member, dependent: :destroy
+  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
@@ -53,6 +54,7 @@ class MentorProfile < ActiveRecord::Base
            :background_check,
            :profile_image_url,
            :address_details,
+           :full_name,
     to: :account
 
   delegate :submitted?,
@@ -119,10 +121,6 @@ class MentorProfile < ActiveRecord::Base
 
   def is_on_team?
     teams.current.any?
-  end
-
-  def teams
-    @teams ||= Team.eager_load(:memberships).where('memberships.member_id = ?', id)
   end
 
   def team_ids
