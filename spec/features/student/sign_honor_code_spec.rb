@@ -15,8 +15,8 @@ RSpec.feature "Students sign the honor code" do
     fill_in "Electronic signature", with: "Agreement Duck"
     click_button "Agree"
 
-    expect(student.reload).to be_honor_code_signed
-    expect(HonorCodeAgreement.last.account_id).to eq(student.id)
+    expect(student.reload.honor_code_signed?).to be true
+    expect(HonorCodeAgreement.last.account_id).to eq(student.account_id)
   end
 
   scenario "existing student doesn't sign it correctly" do
