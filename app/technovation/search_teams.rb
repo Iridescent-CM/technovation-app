@@ -49,7 +49,7 @@ module SearchTeams
               teams
             end
 
-    case filter.user.type
+    case filter.user.class.name
     when "StudentProfile"
       teams.select(&:accepting_student_requests?)
     when "MentorProfile"
