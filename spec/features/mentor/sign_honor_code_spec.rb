@@ -15,7 +15,7 @@ RSpec.feature "Mentors sign the honor code" do
     fill_in "Electronic signature", with: "Agreement Duck"
     click_button "Agree"
 
-    expect(mentor.reload).to be_honor_code_signed
+    expect(mentor.reload.honor_code_signed?).to be true
     expect(HonorCodeAgreement.last.account_id).to eq(mentor.id)
   end
 
