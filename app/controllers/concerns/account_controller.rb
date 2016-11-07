@@ -31,21 +31,24 @@ module AccountController
   private
   def account_params
     params.require(account_param_root).permit(
-      :existing_password,
-      :password,
-      :date_of_birth,
-      :first_name,
-      :last_name,
-      :gender,
-      :geocoded,
-      :city,
-      :state_province,
-      :country,
-      :latitude,
-      :longitude,
-      :profile_image,
-      :profile_image_cache,
       profile_params,
+      account_attributes: [
+        :id,
+        :existing_password,
+        :password,
+        :date_of_birth,
+        :first_name,
+        :last_name,
+        :gender,
+        :geocoded,
+        :city,
+        :state_province,
+        :country,
+        :latitude,
+        :longitude,
+        :profile_image,
+        :profile_image_cache,
+      ],
     )
   end
 
