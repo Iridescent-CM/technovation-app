@@ -85,6 +85,18 @@ class Account < ActiveRecord::Base
       NoAuthFound.new
   end
 
+  def profile_valid?
+    if student_profile
+      student_profile.valid?
+    elsif mentor_profile
+      mentor_profile.valid?
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.valid?
+    elsif judge_profile
+      judge_profile.valid?
+    end
+  end
+
   def as_indexed_json(options = {})
     as_json(only: %w{id email first_name last_name})
   end

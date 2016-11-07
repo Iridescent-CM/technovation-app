@@ -1,9 +1,5 @@
-<%
-    # call #valid? to load errors
-  current_account.valid?
-%>
-
-<% if current_account.respond_to?(:student_profile) and current_account.student_profile.errors.keys.include?(:parent_guardian_email) %>
+<% if current_account.student_profile and
+    current_account.student_profile.errors.keys.include?(:parent_guardian_email) %>
   <div class="notify-banner notify-banner--alert">
     <p>
       Hey, wait a moment!
@@ -27,13 +23,13 @@
   </div>
 
   <p class="center">
-    <%= link_to "Fix my profile now", [:edit, current_account.type_name, :account], class: "appy-button"%>
+    <%= link_to "Fix my profile now",
+      [:edit, current_account.type_name, :account],
+      class: "appy-button"%>
   </p>
 <% else %>
   <div class="notify-banner notify-banner--success">
-    <p>
-      Everything's okay, move along!
-    </p>
+    <p>Everything's okay, move along!</p>
   </div>
 
   <p class="center">
