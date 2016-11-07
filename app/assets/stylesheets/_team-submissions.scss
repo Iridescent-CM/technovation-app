@@ -1,16 +1,26 @@
-.team-submission__step-cards {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+.team-submissions {
+  .flex-col-md-7,
+  .flex-col-md-5 {
+    padding: 0;
+  }
 
-  .team-submission__step-card {
-    margin-right: 1%;
-    margin-bottom: 15px;
-    display: flexbox;
-    width: 30%;
+  .flex-col-md-7 {
+    padding-right: 0.5em;
+  }
 
-    &.team-submission__app-description-card {
-      width: 61%;
+  .flex-col-md-5 {
+    padding-left: 0.5em;
+  }
+
+  .card {
+    margin-bottom: 1em;
+  }
+
+  @media screen and (max-width: $device-md) {
+    .flex-col-md-7,
+    .flex-col-md-5 {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

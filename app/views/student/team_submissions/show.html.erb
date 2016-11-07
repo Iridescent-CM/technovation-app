@@ -1,16 +1,19 @@
-<p class="notify-banner notify-banner--notice">THIS IS A WORK IN PROGRESS ACCESSIBLE ON QA ONLY - NOT READY FOR TESTING - FEEL FREE TO PLAY AROUND WITH IT THOUGH</p>
+<div class="team-submissions">
+  <p class="notify-banner notify-banner--notice">THIS IS A WORK IN PROGRESS ACCESSIBLE ON QA ONLY - NOT READY FOR TESTING - FEEL FREE TO PLAY AROUND WITH IT THOUGH</p>
 
-<h1 class="appy-title"><%= t("views.team_submissions.show.title") %></h1>
+  <h1 class="appy-title"><%= t("views.team_submissions.show.title") %></h1>
 
-<div class="team-submission__step-cards">
-  <%= render 'student/team_submissions/steps/app_description', submission: @team_submission %>
+  <div class="flex-row">
+    <div class="flex-col-md-7">
+      <%= render 'student/team_submissions/steps/app_description', submission: @team_submission %>
+      <%= render 'student/team_submissions/steps/screenshots', submission: @team_submission %>
+    </div>
 
-  <%= render 'student/team_submissions/steps/team_photo', team: @team_submission.team,
-                                                          uploader: @team_photo_uploader %>
-
-  <%= render 'student/team_submissions/steps/source_code', submission: @team_submission %>
-
-  <%= render 'student/team_submissions/steps/screenshots', submission: @team_submission %>
-
-  <%= render 'student/team_submissions/steps/affirm_integrity', submission: @team_submission %>
+    <div class="flex-col-md-5">
+      <%= render 'student/team_submissions/steps/team_photo', team: @team_submission.team,
+                                                            uploader: @team_photo_uploader %>
+      <%= render 'student/team_submissions/steps/source_code', submission: @team_submission %>
+      <%= render 'student/team_submissions/steps/affirm_integrity', submission: @team_submission %>
+    </div>
+  </div>
 </div>

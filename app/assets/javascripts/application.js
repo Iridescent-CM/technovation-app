@@ -8,6 +8,7 @@
 //= require fancy_select
 //= require fancy_uploads
 //= require fancy_input
+//= require gallerify
 //= require global_nav
 //= require remote_forms
 //= require background_checks

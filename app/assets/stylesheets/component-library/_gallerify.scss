@@ -1,0 +1,40 @@
+.gallerify__main {
+  background-image: linear-gradient(to right bottom, $granite, $silver);
+  position: relative;
+  text-align: center;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 65%;
+  }
+
+  img {
+    //display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-height: 100%;
+    max-width: 100%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.gallerify__thumbs {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.gallerify__thumb-img-wrapper {
+  $size: 150px;
+  display: inline-block;
+  height: $size;
+  overflow: hidden;
+  text-align: center;
+  width: $size;
+}
+
+.gallerify__thumb-img {
+  min-height: 100%;
+  min-width: 100%;
+}

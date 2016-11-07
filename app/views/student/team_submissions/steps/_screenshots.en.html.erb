@@ -1,4 +1,4 @@
-<div class="card team-submission__step-card">
+<div class="card">
   <div class="card__heading">
     Screenshots
 
@@ -11,7 +11,7 @@
 
   <div class="card__body">
     <% if submission.screenshots.any? %>
-      <ul>
+      <ul class="gallerify">
         <%= render submission.screenshots, cached: true %>
       </ul>
 
