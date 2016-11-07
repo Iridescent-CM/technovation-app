@@ -19,30 +19,20 @@ en:
   activerecord:
     errors:
       models:
+        account:
+          attributes:
+            existing_password:
+              invalid: "is required to change your email address or password"
+
         honor_code_agreement:
           attributes:
             agreement_confirmed:
               accepted: "must be checked"
 
-        mentor_account:
-          attributes:
-            existing_password:
-              invalid: "is required to change your email address or password"
-
-        regional_ambassador_account:
-          attributes:
-            existing_password:
-              invalid: "is required to change your email address or password"
-
         signup_attempt:
           attributes:
             email:
               invalid: "doesn't appear to be an email address"
-
-        student_account:
-          attributes:
-            existing_password:
-              invalid: "is required to change your email address or password"
 
         student_profile:
           attributes:

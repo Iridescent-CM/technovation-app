@@ -35,7 +35,9 @@
       <% if editing or signup.account.temporary_password? %>
         <h6 class="signup-section"><%= password_label %></h6>
 
-        <%= f.input :password, label: password_label %>
+        <%= f.fields_for :account do |a| %>
+          <%= a.input :password, label: password_label %>
+        <% end %>
 
         <p class="appy-hint"><%= t("models.account.password_hint") %></p>
       <% end %>

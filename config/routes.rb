@@ -5,10 +5,10 @@ Rails.application.routes.draw do
 
   namespace :student do
     get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
+    post :profiles, to: "signups#create"
 
     resource :dashboard, only: :show
-    resource :account, only: [:show, :edit, :update]
+    resource :profile, only: [:show, :edit, :update]
 
     resources :teams, except: :delete
     resources :team_memberships, only: :destroy
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     post :profiles, to: "signups#create"
 
     resource :dashboard, only: :show
-    resource :account, only: [:show, :edit, :update]
+    resource :profile, only: [:show, :edit, :update]
 
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
     post :profiles, to: "signups#create"
 
     resource :dashboard, only: :show
-    resource :account, only: [:show, :edit, :update]
+    resource :profile, only: [:show, :edit, :update]
 
     resources :accounts, only: :index
     resources :teams, only: [:show, :index]
@@ -83,7 +83,7 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
-    resource :account, only: [:show, :edit, :update]
+    resource :profile, only: [:show, :edit, :update]
 
     resource :profile_image_upload_confirmation, only: :show
 

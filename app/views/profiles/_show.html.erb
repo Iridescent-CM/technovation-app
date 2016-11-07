@@ -2,7 +2,7 @@
   url ||= false
   edit ||= false
   title ||= t("views.accounts.show.title")
-  path ||= edit_account_path
+  path ||= edit_profile_path
 %>
 
 <div class="dashboard-page-info">
@@ -13,7 +13,7 @@
   <div class="flex-col-sm-3 well profile-avatar">
     <%= image_tag account.profile_image_url %>
     <% if url %>
-      <%= render 'accounts/profile_image_upload', url: url %>
+      <%= render 'profiles/profile_image_upload', url: url %>
     <% end %>
   </div>
 
@@ -39,7 +39,7 @@
 
     <div class="flex-col-sm-6 account-special">
       <dl>
-        <%= render "#{account.type_name}/accounts/profile", account: account %>
+        <%= render "#{account.type_name}/profiles/profile", account: account %>
       </dl>
 
       <% if edit %>
@@ -47,6 +47,6 @@
       <% end %>
     </div>
 
-    <%= render "#{account.type_name}/accounts/bio", edit: edit, account: account %>
+    <%= render "#{account.type_name}/profiles/bio", edit: edit, account: account %>
   </div>
 </div>

@@ -15,7 +15,7 @@
 
   <p class="center">
     <%= link_to "Update your parent/guardian email address",
-      edit_student_account_path(anchor: "account-profile-details"),
+      edit_student_profile_path(anchor: "account-profile-details"),
       class: "appy-button"%>
   </p>
 <% elsif current_account.errors.any? %>

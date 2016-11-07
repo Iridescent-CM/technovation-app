@@ -1,6 +1,6 @@
 module Mentor
-  class AccountsController < MentorController
-    include AccountController
+  class ProfilesController < MentorController
+    include ProfileController
 
     before_filter :expertises
 
@@ -17,15 +17,15 @@ module Mentor
 
     private
     def account
-      @account ||= MentorProfile.joins(:account).find_by("accounts.auth_token = ?", cookies.fetch(:auth_token))
+      current_mentor
     end
 
     def expertises
       @expertises ||= Expertise.all
     end
 
-    def edit_account_path
-      edit_mentor_account_path
+    def edit_profile_path
+      edit_mentor_profile_path
     end
 
     def account_param_root

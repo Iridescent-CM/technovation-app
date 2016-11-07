@@ -1,7 +1,4 @@
-<%
-  title ||= t("views.accounts.show.title")
-  edit ||= false
-%>
+<% title ||= t("views.accounts.show.title") %>
 
 <div class="dashboard-page-info">
   <h3><%= title %></h3>
@@ -14,14 +11,8 @@
 
   <div class="flex-row flex-col-sm-9 account-info">
     <dl class="flex-col-sm-6 account-basic">
-      <dt><%= t('models.account.full_name') %></dt>
-      <dd><%= account.full_name %></dd>
-
-      <dt><%= t('models.account.email') %></dt>
-      <dd><%= mail_to account.email %></dd>
-
-      <dt><%= t('models.account.age') %></dt>
-      <dd><%= account.age %></dd>
+      <dt><%= t('models.account.first_name') %></dt>
+      <dd><%= account.first_name %></dd>
 
       <% unless account.student_profile.present? %>
         <dt><%= t('models.account.gender') %></dt>
@@ -34,12 +25,8 @@
 
     <div class="flex-col-sm-6 account-special">
       <dl>
-        <%= render "#{account.type_name}/accounts/profile", account: account %>
+        <%= render "#{account.type_name}/profiles/public_profile", account: account %>
       </dl>
-
-      <% if edit %>
-        <%= link_to 'Edit', edit_admin_account_path(account) %>
-      <% end %>
     </div>
 
     <% if account.respond_to?(:bio) %>

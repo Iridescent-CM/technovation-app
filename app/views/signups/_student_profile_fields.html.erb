@@ -1,6 +1,5 @@
-<%= f.fields_for :student_profile do |s| %>
-  <%= s.input :school_name %>
-  <% if s.object.persisted? %>
-    <%= render 'signups/student_profile_parental_fields', f: s %>
-  <% end %>
+<%= f.input :school_name %>
+
+<% if f.object.persisted? %>
+  <%= render 'signups/student_profile_parental_fields', f: f %>
 <% end %>

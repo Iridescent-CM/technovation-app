@@ -1,8 +1,8 @@
-module AccountController
+module ProfileController
   extend ActiveSupport::Concern
 
   included do
-    helper_method :account, :edit_account_path
+    helper_method :account, :edit_profile_path
 
     before_action -> {
       @uploader = ImageUploader.new
@@ -64,7 +64,7 @@ module AccountController
     if /dashboard\z/.match(request.referer)
       :back
     else
-      send("#{account.type_name}_account_path")
+      send("#{account.type_name}_profile_path")
     end
   end
 end

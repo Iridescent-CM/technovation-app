@@ -10,6 +10,7 @@ class StudentProfile < ActiveRecord::Base
 
   belongs_to :account
   accepts_nested_attributes_for :account
+  validates_associated :account
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy
 

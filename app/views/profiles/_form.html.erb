@@ -1,11 +1,11 @@
 <%
-  url ||= send("#{@account.type_name}_account_path")
+  url ||= send("#{account.type_name}_profile_path")
   admin ||= false
 %>
 
 <%= render layout: 'signups/form',
            locals: {
-             signup: @account,
+             signup: account,
              url: url,
              editing: true,
              title: title,
@@ -13,9 +13,11 @@
            } do |f| %>
 
   <% unless admin %>
-    <%= f.input :existing_password,
-                placeholder: t("views.accounts.edit.existing_password_required"),
-                label: t('views.accounts.edit.existing_password') %>
+    <%= f.fields_for :account do |a| %>
+      <%= a.input :existing_password,
+        placeholder: t("views.accounts.edit.existing_password_required"),
+        label: t('views.accounts.edit.existing_password') %>
+    <% end %>
   <% end %>
 
   <%= f.button :submit, t('views.application.save'), class: "appy-button" %>

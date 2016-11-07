@@ -18,10 +18,10 @@
       disabled: (not admin and
                   a.object.persisted? and
                     a.object.regional_ambassador_profile.present? and
-                      a.object.approved?),
-      onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
+                      a.object.regional_ambassador_profile.approved?),
+                onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
     },
-  label: t("models.account.geocoded") %>
+    label: t("models.account.geocoded") %>
 
   <%= a.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
   <%= a.input :longitude, as: :hidden, input_html: { id: "longitude" } %>

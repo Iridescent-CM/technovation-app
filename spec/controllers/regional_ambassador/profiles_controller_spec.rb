@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RegionalAmbassador::AccountsController do
+RSpec.describe RegionalAmbassador::ProfilesController do
   describe "GET #index" do
     it "shows users in the state region for US RAs" do
       FactoryGirl.create(:student, geocoded: "Chicago, IL")
