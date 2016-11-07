@@ -7,8 +7,8 @@
   <%= a.input :date_of_birth,
     as: :date,
     prompt: true,
-    start_year: a.object.youngest_birth_year,
-    end_year: a.object.oldest_birth_year,
+    start_year: f.object.youngest_birth_year,
+    end_year: f.object.oldest_birth_year,
     input_html: { class: "account_dob" } %>
 
   <%= a.input :geocoded,

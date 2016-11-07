@@ -143,6 +143,17 @@ FactoryGirl.define do
   factory :judge_profile, aliases: [:judge, :judge_account] do
     company_name { "FactoryGirl" }
     job_title { "Engineer" }
-    association(:account)
+
+    transient do
+      email nil
+    end
+
+    before(:create) do |j, e|
+      attrs = FactoryGirl.attributes_for(:account)
+
+      j.build_account(attrs.merge(
+        email: e.email || attrs[:email],
+      ))
+    end
   end
 end

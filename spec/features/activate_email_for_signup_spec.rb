@@ -121,7 +121,7 @@ RSpec.feature "Activate your email to sign up" do
 
     click_button "Create Your Account"
 
-    within(".student_account_password") {
+    within(".student_profile_account_password") {
       expect(page).to have_css('.error', text: "can't be blank")
     }
   end

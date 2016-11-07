@@ -3,6 +3,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   belongs_to :account
   accepts_nested_attributes_for :account
+  validates_associated :account
 
   after_update :after_status_changed, if: :status_changed?
 
