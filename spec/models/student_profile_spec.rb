@@ -43,7 +43,7 @@ RSpec.describe StudentProfile do
 
   it "voids the original parental consent on update of parent email" do
     profile = FactoryGirl.create(:student_profile)
-    consent = profile.reload.student_account.create_parental_consent(FactoryGirl.attributes_for(:parental_consent))
+    consent = profile.reload.create_parental_consent(FactoryGirl.attributes_for(:parental_consent))
 
     profile.update_attributes(parent_guardian_email: "something@else.com")
 
