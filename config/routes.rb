@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   namespace :mentor do
     get :signup, to: 'signups#new'
-    post :accounts, to: "signups#create"
+    post :profiles, to: "signups#create"
 
     resource :dashboard, only: :show
     resource :account, only: [:show, :edit, :update]

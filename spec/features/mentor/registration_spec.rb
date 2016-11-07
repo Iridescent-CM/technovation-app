@@ -24,6 +24,6 @@ RSpec.feature "Register as a mentor" do
   end
 
   scenario "Address details saved" do
-    expect(MentorAccount.last.address_details).to eq("Chicago, IL, United States")
+    expect(MentorProfile.last.address_details).to eq("Chicago, IL, United States")
   end
 end

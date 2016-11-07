@@ -1,21 +1,21 @@
-<%= f.input :gender,
-  label: "#{t('models.account.gender')} #{t('views.application.optional')}",
-  collection: Account.genders.keys %>
+<%= f.fields_for :account do |a| %>
+  <%= a.input :gender,
+    label: "#{t('models.account.gender')} #{t('views.application.optional')}",
+    collection: Account.genders.keys %>
+<% end %>
 
-<%= f.fields_for :mentor_profile do |m| %>
-  <%= m.input :school_company_name,
-              label: t('models.mentor_profile.school_company_name') %>
+<%= f.input :school_company_name,
+  label: t('models.mentor_profile.school_company_name') %>
 
-  <%= m.input :job_title %>
+<%= f.input :job_title %>
 
-  <%= m.input :bio,
-    label: "#{t('models.regional_ambassador_profile.bio.signup_label')} #{t('views.application.optional')}" %>
+<%= f.input :bio,
+  label: "#{t('models.regional_ambassador_profile.bio.signup_label')} #{t('views.application.optional')}" %>
 
-  <h4><%= t('views.signups.form.choose_expertises') %></h4>
+<h4><%= t('views.signups.form.choose_expertises') %></h4>
 
-  <%= m.collection_check_boxes :expertise_ids, @expertises, :id, :name do |b| %>
-    <span class="inline-checkbox">
-      <%= b.check_box %><%= b.label { b.text } %>
-    </span>
-  <% end %>
+<%= f.collection_check_boxes :expertise_ids, @expertises, :id, :name do |b| %>
+  <span class="inline-checkbox">
+    <%= b.check_box %><%= b.label { b.text } %>
+  </span>
 <% end %>
