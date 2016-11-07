@@ -71,7 +71,7 @@
                 <tr>
                   <td><%= account.type_name %></td>
                   <td><%= account.created_at.strftime("%m/%d/%Y") %></td>
-                  <td><%= link_to account.full_name, admin_account_path(account) %></td>
+                  <td><%= link_to account.full_name, admin_profile_path(account) %></td>
                   <td><%= mail_to account.email %></td>
                   <td><%= account.division %></td>
                   <td><%= account.referred_by %> <%= account.referred_by_other %></td>

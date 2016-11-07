@@ -53,7 +53,7 @@
 
       <div class="quickview card">
         <div class="card__heading">
-          <%= link_to "Students", admin_accounts_path(type: "Student") %> <%= @students.count %>
+          <%= link_to "Students", admin_profiles_path(type: "Student") %> <%= @students.count %>
         </div>
 
         <div class="card__body">
@@ -73,7 +73,7 @@
 
       <div class="quickview card">
         <div class="card__heading">
-          <%= link_to "Mentors", admin_accounts_path(type: "Mentor") %> <%= @mentors.count %>
+          <%= link_to "Mentors", admin_profiles_path(type: "Mentor") %> <%= @mentors.count %>
         </div>
 
         <div class="card__body">
@@ -103,7 +103,7 @@
 
       <div class="quickview card">
         <div class="card__heading">
-          <%= link_to "Judges", admin_accounts_path(type: "Judge") %> <%= @judges.count %>
+          <%= link_to "Judges", admin_profiles_path(type: "Judge") %> <%= @judges.count %>
         </div>
 
         <div class="card__body">

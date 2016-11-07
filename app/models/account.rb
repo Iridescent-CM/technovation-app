@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_password, :skip_existing_password, :geocoded
 
+  has_one :admin_profile
   has_one :student_profile
   has_one :mentor_profile
   has_one :judge_profile
@@ -178,6 +179,8 @@ class Account < ActiveRecord::Base
       "student"
     elsif judge_profile.present?
       "judge"
+    elsif admin_profile.present?
+      "admin"
     else
       "application"
     end
@@ -193,6 +196,10 @@ class Account < ActiveRecord::Base
 
   def authenticated?
     true
+  end
+
+  def admin?
+    admin_profile.present?
   end
 
   private

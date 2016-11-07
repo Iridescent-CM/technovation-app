@@ -1,4 +1,4 @@
-<%= render 'profiles/privileged_show', edit: true, account: @account, path: edit_admin_account_path(@account) %>
+<%= render 'profiles/privileged_show', edit: true, account: @account, path: edit_admin_profile_path(@account) %>
 
 <% if @account.mentor_profile.present? %>
   <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",

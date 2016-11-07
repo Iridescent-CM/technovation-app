@@ -1,6 +1,6 @@
 <% if current_account.authenticated? and current_account.regional_ambassador_profile and current_account.regional_ambassador_profile.full_access_enabled? %>
-  <li class="nav-link <%= al(regional_ambassador_accounts_path) %>">
-    <%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_accounts_path %>
+  <li class="nav-link <%= al(regional_ambassador_profiles_path) %>">
+    <%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_profiles_path %>
   </li>
 
   <li class="nav-link <%= al(regional_ambassador_teams_path) %>">

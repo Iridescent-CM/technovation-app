@@ -148,10 +148,6 @@ class StudentProfile < ActiveRecord::Base
     true
   end
 
-  def admin?
-    false
-  end
-
   def consent_signed?
     parental_consent_signed?
   end

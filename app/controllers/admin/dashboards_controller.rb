@@ -9,10 +9,12 @@ module Admin
     def execute_snapshot
       @snapshot_accounts = Account.current
       @snapshot_teams = Team.current
-      @snapshot_students = StudentProfile.current
-      @snapshot_mentors = MentorProfile.current
-      @snapshot_ambassadors = RegionalAmbassadorProfile.current
-      @snapshot_judges = JudgeProfile.current
+
+      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id))
+
       @snapshot_signups = SignupAttempt.all
     end
 
@@ -23,14 +25,15 @@ module Admin
       accounts = Account.current.where("season_registrations.created_at > ?", params[:days].days.ago)
 
       @students = accounts.joins(:student_profile)
-      @permitted_students = StudentProfile.current
-        .joins(:parental_consent)
+      @permitted_students = Account.current
+        .joins(student_profile: :parental_consent)
         .where("parental_consents.created_at > ?", params[:days].days.ago)
 
       @mentors = accounts.joins(:mentor_profile)
-      @cleared_mentors = MentorProfile.current
-        .joins(:consent_waiver)
+      @cleared_mentors = Account.current
+        .joins(:mentor_profile, :consent_waiver)
         .includes(:background_check)
+        .references(:background_checks)
         .where(
           "(accounts.country = ? AND background_checks.status = ? AND background_checks.created_at > ?)
           OR

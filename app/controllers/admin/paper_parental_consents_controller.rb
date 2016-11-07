@@ -12,7 +12,7 @@ module Admin
 
       ParentalConsent.last.after_create_student_actions
 
-      redirect_to admin_account_path(student),
+      redirect_to admin_profile_path(student),
         success: "#{student.full_name} has their paper parental consent on file."
     end
   end

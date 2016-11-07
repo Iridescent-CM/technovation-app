@@ -5,11 +5,12 @@ module Authenticated
     before_filter :authenticate!
 
     before_action -> {
-      unless current_account.valid? and current_account.profile_valid?
-        redirect_to interruptions_path(issue: :invalid_profile) and return
-      end
+      redirect_to interruptions_path(issue: :invalid_profile) and return
     }, unless: -> {
-      %w{interruptions profiles}.include?(controller_name)
+      current_account.admin? or
+      (%w{interruptions profiles}.include?(controller_name) or
+        (current_account.valid? and
+          current_account.profile_valid?))
     }
   end
 

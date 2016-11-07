@@ -20,10 +20,6 @@ class JudgeProfile < ActiveRecord::Base
     true
   end
 
-  def admin?
-    false
-  end
-
   def full_access_enabled?
     consent_signed?
   end

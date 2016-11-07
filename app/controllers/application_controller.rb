@@ -30,8 +30,9 @@ class ApplicationController < ActionController::Base
   end
 
   def go_to_signin(profile)
-    redirect_to signin_path, notice: t("controllers.application.unauthenticated",
-                                       profile: profile.indefinitize.humanize.downcase)
+    redirect_to signin_path,
+      notice: t("controllers.application.unauthenticated",
+                profile: profile.indefinitize.humanize.downcase)
   end
 
   def require_unauthenticated
@@ -48,9 +49,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_team
-    case current_account.type
-    when "StudentAccount"; current_account.team
-    when "MentorAccount"; current_account.teams.find(params.fetch(:team_id))
+    case current_account.type_name
+    when "student"; current_account.team
+    when "mentor"; current_account.teams.find(params.fetch(:team_id))
     end
   end
 

@@ -1,24 +1,26 @@
 module Admin
-  class AccountsController < AdminController
+  class ProfilesController < AdminController
+    helper_method :account
+
     def index
       accounts = SearchAccounts.(params)
       @accounts = accounts.paginate(per_page: params[:per_page], page: params[:page])
     end
 
     def show
-      @account = Account.find(params[:id])
+      account
     end
 
     def edit
-      @account = Account.find(params[:id])
+      account
       @expertises ||= Expertise.all
     end
 
     def update
-      @account = Account.find(params[:id])
+      account
 
       if @account.update_attributes(account_params)
-        redirect_to admin_account_path(@account),
+        redirect_to admin_profile_path(@account),
           success: "Account information saved"
       else
         @expertises ||= Expertise.all
@@ -50,6 +52,10 @@ module Admin
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
       end
+    end
+
+    def account
+      @account ||= Account.find(params[:id])
     end
   end
 end

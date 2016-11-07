@@ -57,10 +57,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     true
   end
 
-  def admin?
-    false
-  end
-
   def type_name
     "regional_ambassador"
   end
