@@ -42,27 +42,20 @@ class MentorProfile < ActiveRecord::Base
 
   validates :school_company_name, :job_title, presence: true
 
-  delegate :email,
-           :country,
-           :age,
-           :consent_waiver,
-           :consent_signed?,
-           :honor_code_signed?,
-           :locale,
-           :first_name,
-           :consent_token,
-           :background_check,
-           :profile_image_url,
-           :address_details,
-           :full_name,
-    to: :account
-
   delegate :submitted?,
            :candidate_id,
            :report_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
+
+  def method_missing(method_name, *args)
+    begin
+      account.public_send(method_name, *args)
+    rescue
+      raise NoMethodError, "#{method_name} not found for #{self.class.name}"
+    end
+  end
 
   def expertise_names
     expertises.flat_map(&:name)

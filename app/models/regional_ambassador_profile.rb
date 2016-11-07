@@ -20,14 +20,13 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     prefix: true,
     allow_nil: true
 
-  delegate :consent_waiver,
-           :background_check,
-           :email,
-           :honor_code_signed?,
-           :consent_signed?,
-           :background_check_complete?,
-           :country,
-    to: :account
+  def method_missing(method_name, *args)
+    begin
+      account.public_send(method_name, *args)
+    rescue
+      raise NoMethodError, "#{method_name} not found for #{self.class.name}"
+    end
+  end
 
   def background_check_complete?
     country != "US" or !!background_check && background_check.clear?

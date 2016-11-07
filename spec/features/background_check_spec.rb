@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.feature "background checks" do
   %i{mentor regional_ambassador}.each do |account|
     scenario "Complete a #{account} background check", :vcr do
-      a = FactoryGirl.create(account, background_check: nil)
+      a = FactoryGirl.create(account)
+      a.background_check.destroy
       sign_in(a)
       click_link "Submit Background Check"
 
