@@ -5,7 +5,7 @@ class ParentalConsentsController < ApplicationController
 
   def new
     if valid_token?
-      @parental_consent = ParentalConsent.new(student_consent_token: params.fetch(:token))
+      @parental_consent = ParentalConsent.new(student_profile_consent_token: params.fetch(:token))
     else
       redirect_to application_dashboard_path,
                   alert: t("controllers.parental_consents.new.unauthorized")
@@ -25,11 +25,11 @@ class ParentalConsentsController < ApplicationController
 
   private
   def valid_token?
-    StudentProfile.exists?(consent_token: params.fetch(:token) { "" })
+    Account.joins(:student_profile).exists?(consent_token: params.fetch(:token) { "" })
   end
 
   def parental_consent_params
-    params.require(:parental_consent).permit(:student_consent_token,
+    params.require(:parental_consent).permit(:student_profile_consent_token,
                                              :electronic_signature)
   end
 end

@@ -22,21 +22,18 @@ class StudentProfile < ActiveRecord::Base
 
   validate :parent_guardian_email, -> { validate_valid_parent_email }
 
-  delegate :email,
-           :full_name,
-           :first_name,
-           :locale,
-           :age,
-           :honor_code_signed?,
-           :profile_image_url,
-           :address_details,
-           :date_of_birth,
-    to: :account
-
   delegate :electronic_signature,
            :signed_at,
     to: :parental_consent,
     prefix: true
+
+  def method_missing(method_name, *args)
+    begin
+      account.public_send(method_name, *args)
+    rescue
+      raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+    end
+  end
 
   def self.exists_on_team?(email)
     if record = joins(:account).find_by("accounts.email = ?", email)
@@ -191,7 +188,7 @@ class StudentProfile < ActiveRecord::Base
 
   def reset_parent
     if parent_guardian_email_changed? and parent_guardian_email.present?
-      account.void_parental_consent!
+      void_parental_consent!
       ParentMailer.consent_notice(self).deliver_later
     end
 

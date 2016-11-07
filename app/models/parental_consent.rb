@@ -18,7 +18,7 @@ class ParentalConsent < ActiveRecord::Base
     after_create_parent_actions
   }, on: :create
 
-  def student_consent_token=(token)
+  def student_profile_consent_token=(token)
     self.student_profile = StudentProfile.joins(:account)
       .find_by("accounts.consent_token = ?", token)
   end

@@ -3,9 +3,9 @@
 <%= render 'parental_consents/consent', consent: @parental_consent %>
 
 <%= simple_form_for @parental_consent do |f| %>
-  <%= f.input :student_consent_token, as: :hidden %>
+  <%= f.input :student_profile_consent_token, as: :hidden %>
   <%= label_tag t("models.parental_consent.student_name") %>
-  <%= text_field_tag :student_name, f.object.student.full_name, disabled: true %>
+  <%= text_field_tag :student_name, f.object.student_profile.full_name, disabled: true %>
   <%= f.input :electronic_signature %>
   <%= f.button :submit, t("views.parental_consents.new.submit"), class: "appy-button" %>
 <% end %>
