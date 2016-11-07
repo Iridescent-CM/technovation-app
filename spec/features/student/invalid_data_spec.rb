@@ -7,19 +7,6 @@ RSpec.feature "Students with invalid data" do
 
     sign_in(student)
 
-    within('.navigation__links-list') { click_link "Join a team" }
-    expect(page).to have_content "Hey, wait a moment! We detected a problem with your profile. Your parent/guardian email appears to be invalid."
-    expect(page).to have_link "Update your parent/guardian email address", href: edit_student_profile_path(anchor: "account-profile-details")
-
-    visit student_dashboard_path
-
-    within('.navigation__links-list') { click_link "Create a team" }
-    expect(page).to have_content "Hey, wait a moment! We detected a problem with your profile. Your parent/guardian email appears to be invalid."
-    expect(page).to have_link "Update your parent/guardian email address", href: edit_student_profile_path(anchor: "account-profile-details")
-
-    visit student_dashboard_path
-
-    within('.navigation__links-list') { click_link "Join a team" }
     expect(page).to have_content "Hey, wait a moment! We detected a problem with your profile. Your parent/guardian email appears to be invalid."
     expect(page).to have_link "Update your parent/guardian email address", href: edit_student_profile_path(anchor: "account-profile-details")
   end

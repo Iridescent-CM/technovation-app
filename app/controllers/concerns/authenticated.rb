@@ -9,7 +9,7 @@ module Authenticated
         redirect_to interruptions_path(issue: :invalid_profile) and return
       end
     }, unless: -> {
-      %w{interruptions accounts dashboards}.include?(controller_name)
+      %w{interruptions profiles}.include?(controller_name)
     }
   end
 

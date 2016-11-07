@@ -29,11 +29,6 @@ class MentorProfile < ActiveRecord::Base
   has_many :mentor_profile_expertises, dependent: :destroy
   has_many :expertises, through: :mentor_profile_expertises
 
-  has_one :honor_code_agreement,
-    -> { nonvoid },
-    foreign_key: :account_id,
-    dependent: :destroy
-
   has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
