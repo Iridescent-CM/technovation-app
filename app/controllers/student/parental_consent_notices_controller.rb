@@ -1,19 +1,14 @@
 class Student::ParentalConsentNoticesController < StudentController
-  def new
-    @student_profile = current_student.student_profile
-  end
-
   def create
     if profile_params
-      @student_profile = current_student.student_profile
-      @student_profile.assign_attributes(profile_params)
-      @student_profile.validate_parent_email
+      current_student.assign_attributes(profile_params)
+      current_student.validate_parent_email
 
-      unless @student_profile.validate_parent_email && @student_profile.save
+      unless current_student.validate_parent_email && current_student.save
         render :new and return
       end
     else
-      ParentMailer.consent_notice(current_student.student_profile).deliver_later
+      ParentMailer.consent_notice(current_student).deliver_later
     end
 
     flash[:success] = t("controllers.student.parental_consent_notices.create.success")
