@@ -1,8 +1,8 @@
 class MentorProfile < ActiveRecord::Base
   scope :full_access, -> {
-    joins(:consent_waiver)
-    .includes(:background_check)
-    .references(:background_checks)
+    joins(account: :consent_waiver)
+    .includes(account: :background_check)
+    .references(:accounts, :background_checks)
     .where(
       "(accounts.country = ? AND background_checks.status = ?) OR accounts.country != ?",
       "US", BackgroundCheck.statuses[:clear], "US"

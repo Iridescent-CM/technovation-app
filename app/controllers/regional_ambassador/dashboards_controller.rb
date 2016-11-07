@@ -1,6 +1,8 @@
 module RegionalAmbassador
   class DashboardsController < RegionalAmbassadorController
     def show
+      params[:type] ||= "All"
+
       if current_ambassador.approved?
         execute_search
         execute_snapshot
@@ -9,29 +11,31 @@ module RegionalAmbassador
 
     private
     def execute_snapshot
-      @snapshot_accounts = RegionalAccount.(current_ambassador)
-      @snapshot_teams = RegionalTeam.(current_ambassador)
-      @snapshot_students = StudentProfile.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_mentors = MentorProfile.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_ambassadors = RegionalAmbassadorProfile.where(id: @snapshot_accounts.pluck(:id))
-      @snapshot_judges = JudgeProfile.where(id: @snapshot_accounts.pluck(:id))
+      @snapshot_accounts = RegionalAccount.(current_ambassador, params)
+      @snapshot_teams = RegionalTeam.(current_ambassador, params)
+
+      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id))
     end
 
     def execute_search
       params[:days] = 7 if params[:days].blank?
       params[:days] = params[:days].to_i
 
-      accounts = RegionalAccount.(current_ambassador).where("season_registrations.created_at > ?", params[:days].days.ago)
+      accounts = RegionalAccount.(current_ambassador, params).where("season_registrations.created_at > ?", params[:days].days.ago)
 
       @students = accounts.joins(:student_profile)
-      @permitted_students = StudentProfile.current
-        .joins(:parental_consent)
+      @permitted_students = Account.current
+        .joins(student_profile: :parental_consent)
         .where("parental_consents.created_at > ?", params[:days].days.ago)
 
       @mentors = accounts.joins(:mentor_profile)
-      @cleared_mentors = MentorProfile.current
-        .joins(:consent_waiver)
+      @cleared_mentors = Account.current
+        .joins(:mentor_profile, :consent_waiver)
         .includes(:background_check)
+        .references(:background_checks)
         .where(
           "(accounts.country = ? AND background_checks.status = ? AND background_checks.created_at > ?)
           OR

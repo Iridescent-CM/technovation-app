@@ -1,5 +1,5 @@
 class JudgeProfile < ActiveRecord::Base
-  scope :full_access, -> { joins(:consent_waiver) }
+  scope :full_access, -> { joins(account: :consent_waiver) }
 
   belongs_to :account
   accepts_nested_attributes_for :account
