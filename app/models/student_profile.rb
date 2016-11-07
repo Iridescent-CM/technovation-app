@@ -30,6 +30,7 @@ class StudentProfile < ActiveRecord::Base
            :honor_code_signed?,
            :profile_image_url,
            :address_details,
+           :date_of_birth,
     to: :account
 
   delegate :electronic_signature,

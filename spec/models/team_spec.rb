@@ -27,7 +27,7 @@ RSpec.describe Team do
     team.add_student(older_student)
     team.add_student(younger_student)
 
-    older_student.update_attributes(date_of_birth: 13.years.ago)
+    older_student.account.update_attributes(date_of_birth: 13.years.ago)
 
     expect(team.reload.division).to eq(Division.junior)
   end
