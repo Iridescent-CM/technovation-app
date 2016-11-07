@@ -2,6 +2,7 @@ class StudentProfile < ActiveRecord::Base
   scope :full_access, -> { joins(:parental_consent) }
 
   has_many :memberships, as: :member, dependent: :destroy
+  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor, dependent: :destroy
@@ -126,10 +127,6 @@ class StudentProfile < ActiveRecord::Base
 
   def team_names
     teams.current.collect(&:name)
-  end
-
-  def teams
-    Team.eager_load(:memberships).where("memberships.member_id = ?", id)
   end
 
   def oldest_birth_year
