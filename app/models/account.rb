@@ -35,15 +35,6 @@ class Account < ActiveRecord::Base
            Season.current.year)
   }
 
-  scope :searchable, -> {
-    joins(:mentor_profile).where(
-      "mentor_profiles.accepting_team_invites = ? AND
-        mentor_profiles.searchable = ?",
-      true,
-      true
-    )
-  }
-
   mount_uploader :profile_image, ImageProcessor
 
   geocoded_by :geocoded

@@ -1,6 +1,6 @@
 module SearchMentors
   def self.call(filter)
-    mentors = Account.joins(:mentor_profile).where.not(id: filter.user.id)
+    mentors = MentorProfile.where.not(id: filter.user.id)
 
     unless filter.text.blank?
       results = Account.joins(:mentor_profile).search(
@@ -12,7 +12,8 @@ module SearchMentors
         from: 0,
         size: 10_000,
       ).results
-      mentors = mentors.where(id: results.flat_map { |r| r._source.id })
+
+      mentors = mentors.where(account_id: results.flat_map { |r| r._source.id })
     end
 
     if filter.expertise_ids.any?
@@ -23,7 +24,8 @@ module SearchMentors
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-      mentors = mentors.near(nearby, miles).order("distance")
+      accounts = Account.joins(:mentor_profile).near(nearby, miles).order("distance")
+      mentors = mentors.where(account_id: accounts.map(&:id))
     end
 
     if filter.needs_team
