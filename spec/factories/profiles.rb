@@ -8,18 +8,22 @@ FactoryGirl.define do
       geocoded "Chicago, IL"
       date_of_birth Date.today - 15.years
       email nil
+      password nil
     end
 
-    after(:create) do |s, e|
+    before(:create) do |s, e|
       unless s.parental_consent.present?
-        s.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+        s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
       end
 
-      s.account.update_attributes(
+      attrs = FactoryGirl.attributes_for(:account)
+
+      s.build_account(attrs.merge(
         geocoded: e.geocoded,
         date_of_birth: e.date_of_birth,
-        email: e.email || s.email,
-      )
+        email: e.email || attrs[:email],
+        password: e.password || attrs[:password],
+      ))
     end
 
     trait :on_team do
@@ -47,6 +51,8 @@ FactoryGirl.define do
       first_name nil
       geocoded "Chicago, IL"
       country nil
+      email nil
+      password nil
     end
 
     before(:create) do |m, e|
@@ -56,6 +62,8 @@ FactoryGirl.define do
         geocoded: e.geocoded,
         country: e.country || attrs[:country],
         first_name: e.first_name || attrs[:first_name],
+        email: e.email || attrs[:email],
+        password: e.password || attrs[:password],
       ))
 
       unless m.background_check.present?
@@ -100,16 +108,22 @@ FactoryGirl.define do
     transient do
       geocoded "Chicago, IL"
       country nil
+      email nil
+      password nil
     end
 
-    after(:create) do |r, e|
-      r.account.update_attributes(
+    before(:create) do |r, e|
+      attrs = FactoryGirl.attributes_for(:account)
+
+      r.build_account(attrs.merge(
         geocoded: e.geocoded,
-        country: e.country || r.account.country,
-      )
+        country: e.country || attrs[:country],
+        email: e.email || attrs[:email],
+        password: e.password || attrs[:password],
+      ))
 
       unless r.background_check.present?
-        r.account.create_background_check!(FactoryGirl.attributes_for(:background_check))
+        r.account.build_background_check(FactoryGirl.attributes_for(:background_check))
       end
     end
 

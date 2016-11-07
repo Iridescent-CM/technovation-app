@@ -1,4 +1,4 @@
-<%= unlocked_content_tag account, send("new_#{account.type_name}_team_search_path"), :div do %>
+<% if account.full_access_enabled? %>
   <div class="team-invitations">
     <div class="team-invitations__incoming">
       <h4 class="appy-heading-lg">
@@ -13,18 +13,20 @@
                 <div class="team-invitations__team-photo">
                   <%= image_tag invitation.team.team_photo, width: 100, height: 100 %>
                 </div>
+
                 <div class="team-invitations__team-info">
                   <div class="team-invitations__team-name">
                     <%= invitation.team_name %>
                   </div>
+
                   <div class="team-invitations__team-description">
                     <%= invitation.team.description %>
                   </div>
+
                   <div class="card__actions-row card__actions-row--pos-fill">
                     <%= link_to t("views.application.view_team"),
                       send("#{account.type_name}_#{invite_type}_invite_path", invitation),
-                      class: "appy-button"
-                    %>
+                      class: "appy-button" %>
                   </div>
                 </div>
               </li>
@@ -56,6 +58,7 @@
                   <div class="team-invitations__team-name">
                     <%= team_request.joinable_name %>
                   </div>
+
                   <div class="card__actions-row card__actions-row--pos-fill">
                     <%= link_to t("views.application.view_team"),
                       team_request.joinable,

@@ -162,6 +162,10 @@ class StudentProfile < ActiveRecord::Base
     "student"
   end
 
+  def full_access_enabled?
+    parental_consent_signed?
+  end
+
   private
   class NullTeam
     def has_mentor?
