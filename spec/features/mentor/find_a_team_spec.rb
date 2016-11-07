@@ -13,7 +13,7 @@ RSpec.feature "Mentors find a team" do
 
   scenario "browse nearby teams" do
     mentored_team = FactoryGirl.create(:team, :with_mentor) # Creator is in Chicago
-    faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA, US")
+    faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles, CA")
 
     click_link "Browse available teams"
 
