@@ -16,7 +16,7 @@ RSpec.feature "Mentors sign the honor code" do
     click_button "Agree"
 
     expect(mentor.reload.honor_code_signed?).to be true
-    expect(HonorCodeAgreement.last.account_id).to eq(mentor.id)
+    expect(HonorCodeAgreement.last.account_id).to eq(mentor.account_id)
   end
 
   scenario "existing mentor doesn't sign it correctly" do
