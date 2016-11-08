@@ -15,10 +15,16 @@ class StudentController < ApplicationController
 
   private
   def current_student
-    @current_student ||= StudentProfile.joins(:account).find_by("accounts.auth_token = ?", cookies.fetch(:auth_token))
+    @current_student ||= StudentProfile.joins(:account)
+      .find_by("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" }) ||
+    Account::NoAuthFound.new
   end
 
   def current_team
     current_student.team
+  end
+
+  def model_name
+    "student"
   end
 end
