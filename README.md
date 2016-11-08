@@ -57,25 +57,3 @@ rake bootstrap
 # Adds the Technovation expertises for mentors to choose for their profile
 # Adds the Technovation admin account
 ```
-
-### SearchMentors
-
-* Call with a `SearchFilter` instance
-* Filter options:
-  * :expertise_ids
-    * can be a single ID, or a collection of IDs
-
-```ruby
-search_filter = SearchFilter.new({ expertise_ids: 1 })
-SearchMentors.(search_filter)
-
-search_filter = SearchFilter.new({ expertise_ids: [1, 2] })
-SearchMentors.(search_filter)
-
-search_filter = SearchFilter.new({ expertise_ids: ["1", "2"] })
-SearchMentors.(search_filter)
-```
-
-## Controllers
-
-Wherever the helper method `current_{profile_name}` is available, it returns an instance of `{ProfileName}Account`.
