@@ -7,7 +7,7 @@ class BackgroundCheck < ActiveRecord::Base
     AccountMailer.background_check_clear(account).deliver_later
 
     if account.mentor_profile.present?
-      account.mentor_proifle.enable_searchability
+      account.mentor_profile.enable_searchability
     end
   }, if: -> { status_changed? and clear? }
 
