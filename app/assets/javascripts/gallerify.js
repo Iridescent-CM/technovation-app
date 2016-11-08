@@ -31,8 +31,24 @@
     activeImage.alt = defaultImage.alt;
     activeImageWrapper.appendChild(activeImage);
 
+    if (images.length > 1) {
+      var prevButton = document.createElement('div');
+      prevButton.classList.add('gallerify__control', 'gallerify__control--prev');
+      activeImageWrapper.appendChild(prevButton);
+      prevButton.addEventListener('click', function() {
+        handleControlButtonClick('prev');
+      });
 
-    images.forEach(function(img) {
+      var nextButton = document.createElement('div');
+      nextButton.classList.add('gallerify__control', 'gallerify__control--next');
+      activeImageWrapper.appendChild(nextButton);
+      nextButton.addEventListener('click', function() {
+        handleControlButtonClick('next');
+      });
+    }
+
+    images.forEach(function(img, i) {
+      console.log('I IS ', i);
       var thumbImageWrapper = document.createElement('div');
       thumbImageWrapper.classList.add('gallerify__thumb-img-wrapper');
       var thumbImage = document.createElement('img');
@@ -42,16 +58,29 @@
       thumbImageWrapper.appendChild(thumbImage);
       thumbs.appendChild(thumbImageWrapper);
       thumbImageWrapper.addEventListener('click', function() {
-        setActiveImage(img);
+        setActiveImage(i);
       });
     });
 
-    function setActiveImage(img) {
-      activeImage.src = img.src;
-      activeImage.alt = img.alt;
+    var activeIndex = 0;
+    function setActiveImage(index) {
+      activeIndex = index;
+      activeImage.src = images[activeIndex].src;
+      activeImage.alt = images[activeIndex].alt;
     }
 
-
+    function handleControlButtonClick(direction) {
+      var imageCount = images.length;
+      var newIndex;
+      if (direction === 'next') {
+        newIndex = activeIndex >= (imageCount - 1) ? 0 : (activeIndex + 1);
+      } else if (direction === 'prev') {
+        newIndex = activeIndex <= 0 ? (imageCount - 1) : activeIndex - 1;
+      } else {
+        console.error('You must pass "next" or "prev" as direction to handleControlButtonClick');
+      }
+      setActiveImage(newIndex);
+    }
 
     gallery.parentElement.insertBefore(galleryWrapper, gallery);
     gallery.remove();
