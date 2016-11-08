@@ -34,7 +34,8 @@
 
     <div class="flex-col-sm-6 account-special">
       <dl>
-        <%= render "#{account.type_name}/profiles/profile", account: account %>
+        <%= render "#{account.type_name}/profiles/profile",
+          account: account.public_send("#{account.type_name}_profile") %>
       </dl>
 
       <% if edit %>

@@ -17,10 +17,8 @@ module Admin
     end
 
     def update
-      account
-
-      if @account.update_attributes(account_params)
-        redirect_to admin_profile_path(@account),
+      if account.update_attributes(account_params)
+        redirect_to admin_profile_path(account),
           success: "Account information saved"
       else
         @expertises ||= Expertise.all
@@ -30,7 +28,7 @@ module Admin
 
     private
     def account_params
-      params.require("#{@account.type_name}_account").permit(
+      params.require("#{account.type_name}_account").permit(
         :first_name,
         :last_name,
         :date_of_birth,
@@ -44,7 +42,7 @@ module Admin
         :profile_image,
         :profile_image_cache,
         :password,
-        "#{@account.type_name}/accounts_controller"
+        "#{account.type_name}/accounts_controller"
         .camelize
         .constantize
         .new
@@ -56,6 +54,7 @@ module Admin
 
     def account
       @account ||= Account.find(params[:id])
+      @profile ||= @account.send("#{@account.type_name}_profile")
     end
   end
 end
