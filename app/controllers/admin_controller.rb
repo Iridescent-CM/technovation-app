@@ -13,4 +13,8 @@ class AdminController < ApplicationController
   def current_admin
     @current_admin ||= AdminProfile.joins(:account).find_by("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" })
   end
+
+  def model_name
+    "admin"
+  end
 end
