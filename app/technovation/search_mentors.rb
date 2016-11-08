@@ -1,6 +1,6 @@
 module SearchMentors
   def self.call(filter)
-    mentors = MentorProfile.where.not(id: filter.user.id)
+    mentors = MentorProfile.where.not(account_id: filter.user.account_id)
 
     unless filter.text.blank?
       results = Account.joins(:mentor_profile).search(
@@ -24,12 +24,17 @@ module SearchMentors
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-      accounts = Account.joins(:mentor_profile).near(nearby, miles).order("distance")
-      mentors = mentors.where(account_id: accounts.map(&:id))
+      account_ids = Account.joins(:mentor_profile)
+        .near(nearby, miles)
+        .order("distance")
+        .select(:id)
+        .map(&:id)
+
+      mentors = mentors.where(account_id: account_ids)
     end
 
     if filter.needs_team
-      mentors = mentors.where("accounts.id NOT IN
+      mentors = mentors.where("mentor_profiles.id NOT IN
         (SELECT DISTINCT(member_id) FROM memberships
                                     WHERE memberships.member_type = 'MentorProfile'
                                     AND memberships.joinable_type = 'Team'
