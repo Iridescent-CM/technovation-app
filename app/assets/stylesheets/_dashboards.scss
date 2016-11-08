@@ -68,6 +68,8 @@
   @media screen and (max-width: $device-sm) {
     width: 100%;
 
+    &:nth-child(2n),
+    &:nth-child(2n + 3),
     &:first-child,
     &:last-child {
       padding: 0;
