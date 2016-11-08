@@ -7,15 +7,6 @@
   for (var i = 0; i < galleries.length; i++) {
     var gallery = galleries[i];
 
-    var galleryWrapper = document.createElement('div');
-    galleryWrapper.classList.add('gallerify__wrapper');
-    var activeImageWrapper = document.createElement('div');
-    activeImageWrapper.classList.add('gallerify__main');
-    var thumbs = document.createElement('div')
-    thumbs.classList.add('gallerify__thumbs');
-    galleryWrapper.appendChild(activeImageWrapper);
-    galleryWrapper.appendChild(thumbs);
-
     var imageTags = gallery.getElementsByTagName('img');
     var images = Array.prototype.reduce.call(imageTags, function(r, img) {
       r.push({
@@ -24,6 +15,19 @@
       })
       return r;
     }, []);
+
+    if (images.length === 0) {
+      return;
+    }
+
+    var galleryWrapper = document.createElement('div');
+    galleryWrapper.classList.add('gallerify__wrapper');
+    var activeImageWrapper = document.createElement('div');
+    activeImageWrapper.classList.add('gallerify__main');
+    var thumbs = document.createElement('div')
+    thumbs.classList.add('gallerify__thumbs');
+    galleryWrapper.appendChild(activeImageWrapper);
+    galleryWrapper.appendChild(thumbs);
 
     var activeImage = document.createElement('img');
     var defaultImage = images[0];
