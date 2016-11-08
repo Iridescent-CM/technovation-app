@@ -11,24 +11,12 @@
   </li>
 <% end %>
 
-<li class="nav-link nav-link-menu">
-  <%= image_tag mentor.profile_image_url, width: 45 %>
+<li class="nav-link">
+  <%= link_to t('views.application.my_profile'), mentor_profile_path %>
+</li>
 
-  <ul class="nav-link-submenu">
-    <li class="nav-link">
-      <%= link_to t('views.application.my_profile'), mentor_profile_path %>
-    </li>
-
-    <% if mentor.full_access_enabled? %>
-      <li class="nav-link">
-        <%= link_to t('views.application.judge_mode'), '#' %>
-      </li>
-    <% end %>
-
-    <li class="nav-link">
-      <%= link_to t('views.application.signout'),
-        signout_path,
-        data: { method: :delete } %>
-    </li>
-  </ul>
+<li class="nav-link">
+  <%= link_to t('views.application.signout'),
+    signout_path,
+    data: { method: :delete } %>
 </li>
