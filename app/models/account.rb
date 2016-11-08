@@ -74,6 +74,7 @@ class Account < ActiveRecord::Base
 
   validates :existing_password, valid_password: true, if: :changes_require_password?
   validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
+  validates :password, length: { minimum: 8, on: :update, if: :changes_require_password? }
 
   validates :date_of_birth, :first_name, :last_name, :country, presence: true
 
