@@ -125,25 +125,19 @@ class Account < ActiveRecord::Base
   end
 
   def get_school_company_name
-    if respond_to?(:school_name)
-      school_name
-    elsif respond_to?(:company_name)
-      company_name
-    elsif respond_to?(:school_company_name)
-      school_company_name
-    elsif respond_to?(:organization_company_name)
-      organization_company_name
+    if student_profile
+      student_profile.school_name
+    elsif judge_profile
+      judge_profile.company_name
+    elsif mentor_profile
+      mentor_profile.school_company_name
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.organization_company_name
     end
   end
 
   def division
-    Division.for(self).name.humanize
-  end
-
-  def teams
-    teams = Struct.new(:current)
-    def teams.current; []; end
-    teams
+    Division.for(student_profile).name.humanize
   end
 
   def age
@@ -201,6 +195,18 @@ class Account < ActiveRecord::Base
 
   def admin?
     admin_profile.present?
+  end
+
+  def teams
+    if student_profile
+      student_profile.teams
+    elsif mentor_profile
+      mentor_profile.teams
+    else
+      t = Struct.new(:current)
+      def t.current; []; end
+      t
+    end
   end
 
   private

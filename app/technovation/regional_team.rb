@@ -1,21 +1,23 @@
 module RegionalTeam
   def self.call(ambassador, params = {})
     teams = Team.includes(:seasons, :memberships)
-                .references(:seasons)
+                .references(:seasons, :accounts)
                 .where("seasons.year = ?", Season.current.year)
 
     if ambassador.country == "US"
-      teams = teams.where("teams.id IN (
-        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_id IN (
-          SELECT accounts.id FROM accounts WHERE accounts.state_province = ?
-        )
-      )", ambassador.state_province).uniq
+      students = StudentProfile.joins(:account)
+        .where("accounts.state_province = ?", ambassador.state_province)
+      mentors = MentorProfile.joins(:account)
+        .where("accounts.state_province = ?", ambassador.state_province)
+
+      teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
     else
-      teams = teams.where("teams.id IN (
-        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_id IN (
-          SELECT accounts.id FROM accounts WHERE accounts.country = ?
-        )
-      )", ambassador.country).uniq
+      students = StudentProfile.joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+      mentors = MentorProfile.joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+
+      teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
     end
 
     unless params[:text].blank?
