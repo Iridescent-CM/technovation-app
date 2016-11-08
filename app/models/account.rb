@@ -136,6 +136,12 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def parental_consent
+    if student_profile
+      student_profile.parental_consent
+    end
+  end
+
   def division
     Division.for(student_profile).name.humanize
   end
