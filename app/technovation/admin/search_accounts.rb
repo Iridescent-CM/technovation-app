@@ -9,12 +9,12 @@ module Admin
       klass = if params[:type] == "All"
                 Account
               else
-                "#{params[:type]}Account".constantize
+                Account.joins("#{params[:type].underscore}_profile".to_sym)
               end
 
       accounts = klass.joins(season_registrations: :season)
-                      .where("season_registrations.season_id = ?",
-                             Season.find_by(year: params[:season]))
+        .where("season_registrations.season_id = ?", Season.find_by(year: params[:season]))
+        .where.not(email: "info@technovationchallenge.org")
 
       unless params[:text].blank?
         results = accounts.search(
