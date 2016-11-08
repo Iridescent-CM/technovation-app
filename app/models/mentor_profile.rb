@@ -29,6 +29,7 @@ class MentorProfile < ActiveRecord::Base
   has_many :mentor_profile_expertises, dependent: :destroy
   has_many :expertises, through: :mentor_profile_expertises
 
+  has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
 
   has_many :join_requests, as: :requestor, dependent: :destroy
