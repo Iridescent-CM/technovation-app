@@ -10,9 +10,17 @@ module SearchTeams
 
       account_ids = Account.near(nearby, miles).select(:id).map(&:id)
 
-      student_teams = StudentProfile.where(account_id: account_ids).flat_map(&:teams)
-      mentor_teams = MentorProfile.where(account_id: account_ids).flat_map(&:teams)
-      teams = mentor_teams + student_teams
+      student_profile_ids = StudentProfile.where(account_id: account_ids).pluck(:id)
+      mentor_profile_ids = MentorProfile.where(account_id: account_ids).pluck(:id)
+
+      teams = Team.joins(:memberships)
+        .where("(memberships.member_id IN (?) AND memberships.member_type = ?)
+                OR
+                (memberships.member_id IN (?) AND memberships.member_type = ?)",
+                student_profile_ids,
+                "StudentProfile",
+                mentor_profile_ids,
+                "MentorProfile")
     end
 
     unless filter.text.blank?
