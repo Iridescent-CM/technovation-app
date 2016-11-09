@@ -3,7 +3,7 @@ module RegionalAccount
     account = if params[:type] == "All"
                 Account
               else
-                Account.joins("#{params[:type]}_profile".to_sym)
+                Account.joins("#{params[:type].underscore}_profile".to_sym)
               end
 
     accounts = account.includes(:seasons)
