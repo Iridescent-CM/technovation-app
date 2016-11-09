@@ -217,9 +217,23 @@ class Account < ActiveRecord::Base
 
   private
   def update_email_list
-    if first_name_changed? or last_name_changed? or email_changed?
+    if first_name_changed? or
+        last_name_changed? or
+          email_changed? or
+            city_changed? or
+              state_province_changed? or
+                country_changed?
+
+      custom_fields = if mentor_profile.present?
+                        [{ Key: 'City', Value: city },
+                         { Key: 'State/Province', Value: state_province },
+                         { Key: 'Country', Value: country }]
+                      else
+                        []
+                      end
+
       UpdateEmailListJob.perform_later(
-        email_was, email, full_name, "#{type_name.upcase}_LIST_ID"
+        email_was, email, full_name, "#{type_name.upcase}_LIST_ID", custom_fields
       )
     end
   end

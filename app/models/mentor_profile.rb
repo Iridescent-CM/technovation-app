@@ -70,9 +70,14 @@ class MentorProfile < ActiveRecord::Base
 
     if can_enable_searchable?
       RegistrationMailer.welcome_mentor(account).deliver_later
-      SubscribeEmailListJob.perform_later(account.email,
-                                          account.full_name,
-                                          "MENTOR_LIST_ID")
+      SubscribeEmailListJob.perform_later(
+        account.email,
+        account.full_name,
+        "MENTOR_LIST_ID",
+        [{ Key: 'City', Value: city },
+         { Key: 'State/Province', Value: state_province },
+         { Key: 'Country', Value: country }]
+      )
     end
   end
 
