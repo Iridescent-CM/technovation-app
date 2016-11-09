@@ -227,7 +227,7 @@ class Account < ActiveRecord::Base
       custom_fields = if mentor_profile.present?
                         [{ Key: 'City', Value: city },
                          { Key: 'State/Province', Value: state_province },
-                         { Key: 'Country', Value: country }]
+                         { Key: 'Country', Value: Country[country].name }]
                       else
                         []
                       end

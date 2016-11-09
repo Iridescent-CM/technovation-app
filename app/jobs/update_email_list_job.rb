@@ -9,7 +9,7 @@ class UpdateEmailListJob < ActiveJob::Base
 
     begin
       subscriber = CreateSend::Subscriber.new(auth, ENV.fetch(list_env_key), email_was)
-      subscriber.update(email.strip, name, custom_fields, true)
+      subscriber.update(email.strip, name, custom_fields, false)
     rescue CreateSend::BadRequest => br
       if br.message.include?("Subscriber not in list") or
            br.message.include?("provide a valid email address") or

@@ -22,6 +22,13 @@ class MentorProfile < ActiveRecord::Base
 
   scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }
 
+  scope :current, -> {
+    joins(account: { season_registrations: :season })
+    .where("season_registrations.status = ? AND seasons.year = ?",
+           SeasonRegistration.statuses[:active],
+           Season.current.year)
+  }
+
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
@@ -76,7 +83,7 @@ class MentorProfile < ActiveRecord::Base
         "MENTOR_LIST_ID",
         [{ Key: 'City', Value: city },
          { Key: 'State/Province', Value: state_province },
-         { Key: 'Country', Value: country }]
+         { Key: 'Country', Value: Country[country].name }]
       )
     end
   end
