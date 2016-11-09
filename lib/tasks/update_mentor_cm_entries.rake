@@ -9,7 +9,11 @@ task update_mentor_cm_info: :environment do
       fields = [{ Key: 'City', Value: mentor.city },
                 { Key: 'State/Province', Value: mentor.state_province },
                 { Key: 'Country', Value: Country[mentor.country].name }]
-      subscriber.update(mentor.email.strip, mentor.full_name, fields, false)
+      begin
+        subscriber.update(mentor.email.strip, mentor.full_name, fields, false)
+      rescue => e
+        puts e.message
+      end
     end
 
     puts "Sleeping for 5 seconds..."
