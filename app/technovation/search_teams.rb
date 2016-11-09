@@ -20,7 +20,7 @@ module SearchTeams
                 student_profile_ids,
                 "StudentProfile",
                 mentor_profile_ids,
-                "MentorProfile")
+                "MentorProfile").uniq
     end
 
     unless filter.text.blank?
