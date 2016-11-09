@@ -242,6 +242,10 @@ class Account < ActiveRecord::Base
       'application'
     end
 
+    def admin?
+      false
+    end
+
     def locale
       I18n.default_locale
     end
