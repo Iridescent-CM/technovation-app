@@ -29,12 +29,6 @@ class ApplicationController < ActionController::Base
     cookies[:redirected_from] = request.fullpath
   end
 
-  def go_to_signin(profile)
-    redirect_to signin_path,
-      notice: t("controllers.application.unauthenticated",
-                profile: profile.indefinitize.humanize.downcase) && return
-  end
-
   def require_unauthenticated
     if current_account.authenticated?
       redirect_to send("#{current_account.type_name}_dashboard_path"),

@@ -5,6 +5,8 @@ require "vcr_helper"
 Dotenv.load
 
 RSpec.configure do |config|
+  config.fail_fast = true
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
