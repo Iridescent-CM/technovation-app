@@ -22,7 +22,7 @@ module Authenticated
     if account && account.send("#{model_name}_profile")
       true
     elsif account
-      redirect_to send("#{type_name}_dashboard_path"),
+      redirect_to send("#{model_name}_dashboard_path"),
         alert: t("controllers.application.unauthorized")
     else
       save_redirected_path
