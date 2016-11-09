@@ -23,7 +23,7 @@ module Authenticated
       true
     elsif account
       redirect_to send("#{model_name}_dashboard_path"),
-        alert: t("controllers.application.unauthorized")
+        alert: t("controllers.application.unauthorized") && return
     else
       save_redirected_path
       go_to_signin(model_name)

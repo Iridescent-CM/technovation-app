@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def go_to_signin(profile)
     redirect_to signin_path,
       notice: t("controllers.application.unauthenticated",
-                profile: profile.indefinitize.humanize.downcase)
+                profile: profile.indefinitize.humanize.downcase) && return
   end
 
   def require_unauthenticated
