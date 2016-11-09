@@ -45,7 +45,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
-    @current_account ||= FindAccount.(cookies.fetch(:auth_token) { "" })
+    @current_account ||= Account.find_by(auth_token: cookies.fetch(:auth_token) { "" }) ||
+      Account::NoAuthFound.new
   end
 
   def current_team
@@ -58,4 +59,6 @@ class ApplicationController < ActionController::Base
   def ssl_configured?
     !Rails.env.development? && !Rails.env.test?
   end
+
+  def model_name; end
 end

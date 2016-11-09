@@ -1,4 +1,8 @@
-<% mentor = FindAccount.current(:mentor, cookies) %>
+<%
+  mentor = MentorProfile.joins(:account).find_by(
+    "accounts.auth_token = ?", cookies.fetch(:auth_token) { "" }
+  )
+%>
 
 <% if mentor.full_access_enabled? %>
   <li class="nav-link <%= al(new_mentor_mentor_search_path) %>">

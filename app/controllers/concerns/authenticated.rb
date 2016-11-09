@@ -16,7 +16,15 @@ module Authenticated
 
   private
   def authenticate!
-    unless current_account.authenticated?
+    token = cookies.fetch(:auth_token) { "" }
+    account = Account.find_by(auth_token: token)
+
+    if account && account.send("#{model_name}_profile")
+      true
+    elsif account
+      redirect_to send("#{type_name}_dashboard_path"),
+        alert: t("controllers.application.unauthorized")
+    else
       save_redirected_path
       go_to_signin(model_name)
     end
