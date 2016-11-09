@@ -10,8 +10,8 @@ class MentorProfile < ActiveRecord::Base
   }
 
   scope :by_expertise_ids, ->(ids) {
-    joins(mentor_profile: :mentor_profile_expertises)
-    .preload(mentor_profile: :mentor_profile_expertises)
+    joins(:mentor_profile_expertises)
+    .preload(:mentor_profile_expertises)
     .where("mentor_profile_expertises.expertise_id IN (?)", ids)
     .uniq
   }
