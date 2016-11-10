@@ -14,14 +14,18 @@
   </head>
 
   <body>
-    <%= render 'admin/navigation' %>
+    <div class="admin-container">
+      <%= render 'admin/navigation' %>
 
-    <div class="container">
-      <%= render 'flash_messages' %>
-      <div class="main-content">
-        <%= yield %>
+      <div class="admin-body">
+        <%= render 'flash_messages' %>
+
+        <div class="main-content">
+          <%= yield %>
+        </div>
       </div>
     </div>
+
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?v=3.exp&key=#{ENV.fetch("GOOGLE_MAPS_API_KEY")}&libraries=places" %>
     <%= javascript_include_tag 'admin' %>
     <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js" %>
