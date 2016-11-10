@@ -16,8 +16,12 @@ class MentorProfile < ActiveRecord::Base
     .uniq
   }
 
-  scope :searchable, -> {
-    where("accepting_team_invites = ? AND searchable = ?", true, true)
+  scope :searchable, ->(user = nil) {
+    if user and user.type_name == "mentor"
+      where(searchable: true)
+    else
+      where(accepting_team_invites: true, searchable: true)
+    end
   }
 
   scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }

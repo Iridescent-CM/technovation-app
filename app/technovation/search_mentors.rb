@@ -55,6 +55,6 @@ module SearchMentors
       mentors = mentors.virtual
     end
 
-    mentors.searchable
+    mentors.searchable(filter.user)
   end
 end
