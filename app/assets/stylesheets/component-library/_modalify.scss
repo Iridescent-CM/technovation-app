@@ -1,0 +1,54 @@
+$modal-width: 600px;
+
+.modalify {
+  display: none;
+}
+
+.modalify--active {
+  @include animation-fade-in;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  padding: 2em;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: $z-modal;
+}
+
+.modalify__shade {
+  background-color: rgba($chalkboard, 0.85);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.modalify__body {
+  max-width: $modal-width;
+  width: 100%;
+  z-index: $z-low;
+}
+
+.modalify__top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.modalify h2.modalify__heading {
+  color: $chalkboard;
+  font-size: 1.25em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.modalify__close {
+  color: $dark-grey;
+  cursor: pointer;
+}

@@ -16,12 +16,26 @@
       </ul>
 
       <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Add more screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+        <%#= link_to "Add more screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+        <div role="button" class="appy-button">Add more screenshots</div>
+        <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">TRIGGER MODAL</div>
       </div>
     <% else %>
       <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Upload Screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+        <%#= link_to "Upload Screenshots", [:edit, :student, submission, step: :screenshots], class: "appy-button" %>
+        <div role="button" class="appy-button">Upload Screenshots</div>
+        <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">TRIGGER MODAL</div>
       </div>
     <% end %>
   </div>
+</div>
+
+<div
+  class="modalify"
+  id="screenshots-modal"
+  data-heading="Screenshots">
+  <form id="team_submission_screenshots" class="new_image_uploader" enctype="multipart/form-data" action="https://s3.amazonaws.com/technovation-uploads-dev/" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+    <input multiple="multiple" name="file" type="file" id="image_uploader_screenshots">
+    <input type="submit" name="commit" value="Continue" class="appy-button">
+  </form>
 </div>

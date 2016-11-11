@@ -1,8 +1,10 @@
 .appy-button {
+  @include disable-highlight;
   background-color: $shamrock-mid;
   border-radius: 0.15rem;
   box-shadow: 0 2px 0 darken($shamrock-mid, 10);
   color: white;
+  cursor: pointer;
   display: inline-block;
   font-size: 1.1rem;
   font-weight: bold;

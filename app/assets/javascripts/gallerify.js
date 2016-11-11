@@ -1,5 +1,4 @@
 (function gallerify() {
-  console.log('gallerify');
   var galleries = document.getElementsByClassName('gallerify');
   if (galleries.length === 0) {
     return;
@@ -52,7 +51,6 @@
     }
 
     images.forEach(function(img, i) {
-      console.log('I IS ', i);
       var thumbImageWrapper = document.createElement('div');
       thumbImageWrapper.classList.add('gallerify__thumb-img-wrapper');
       var thumbImage = document.createElement('img');
