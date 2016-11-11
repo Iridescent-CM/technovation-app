@@ -8,12 +8,12 @@ module SearchTeams
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-      account_ids = Account.near(nearby, miles).select(:id).map(&:id)
+      account_ids = Account.current.near(nearby, miles).select(:id).map(&:id)
 
       student_profile_ids = StudentProfile.where(account_id: account_ids).pluck(:id)
       mentor_profile_ids = MentorProfile.where(account_id: account_ids).pluck(:id)
 
-      teams = Team.joins(:memberships)
+      teams = teams.joins(:memberships)
         .where("(memberships.member_id IN (?) AND memberships.member_type = ?)
                 OR
                 (memberships.member_id IN (?) AND memberships.member_type = ?)",
