@@ -30,12 +30,6 @@
   </div>
 </div>
 
-<div
-  class="modalify"
-  id="screenshots-modal"
-  data-heading="Screenshots">
-  <form id="team_submission_screenshots" class="new_image_uploader" enctype="multipart/form-data" action="https://s3.amazonaws.com/technovation-uploads-dev/" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
-    <input multiple="multiple" name="file" type="file" id="image_uploader_screenshots">
-    <input type="submit" name="commit" value="Continue" class="appy-button">
-  </form>
+<div class="modalify" id="screenshots-modal" data-heading="Screenshots">
+  <%= render 'student/team_submissions/screenshots_form' %>
 </div>

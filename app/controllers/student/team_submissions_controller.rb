@@ -18,8 +18,12 @@ module Student
 
     def show
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
+
       @team_photo_uploader = ImageUploader.new
       @team_photo_uploader.success_action_redirect = student_team_photo_upload_confirmation_url(back: request.fullpath)
+
+      @screenshots_uploader = ImageUploader.new
+      @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
     end
 
     def edit
