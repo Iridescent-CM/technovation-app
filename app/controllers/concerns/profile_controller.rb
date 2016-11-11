@@ -6,12 +6,14 @@ module ProfileController
 
     before_action -> {
       @uploader = ImageUploader.new
-      @uploader.success_action_redirect = send("#{account.type_name}_profile_image_upload_confirmation_url")
+      @uploader.success_action_redirect = send(
+        "#{account.type_name}_profile_image_upload_confirmation_url"
+      )
     }, only: :show
   end
 
   def edit
-    if not account.valid? and account.errors.keys.include?(:geocoded)
+    if not account.valid? and account.account.errors.keys.include?(:geocoded)
       account.geocoded = nil
       account.city = nil
       account.state_province = nil
