@@ -1,4 +1,13 @@
 class TeamSubmission < ActiveRecord::Base
+  enum stated_goal: %w{
+    Poverty
+    Environment
+    Peace
+    Equality
+    Education
+    Health
+  }
+
   attr_accessor :step
 
   after_commit -> { SeasonRegistration.register(self) }, on: :create
