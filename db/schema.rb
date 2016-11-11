@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111200358) do
+ActiveRecord::Schema.define(version: 20161111203450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,8 @@ ActiveRecord::Schema.define(version: 20161111200358) do
     t.text     "app_description"
     t.integer  "stated_goal"
     t.text     "stated_goal_explanation"
+    t.string   "app_name"
+    t.string   "demo_video_link"
   end
 
   add_index "team_submissions", ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree

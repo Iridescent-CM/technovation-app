@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   subject { TeamSubmission.new }
 
+  it { should respond_to(:app_name) }
+  it { should respond_to(:demo_video_link) }
   it { should respond_to(:stated_goal) }
   it { should respond_to(:stated_goal_explanation) }
 
