@@ -11,10 +11,10 @@ module Authenticated
     }
 
     before_action :interrupt!, unless: -> {
-      current_account.admin? or
-      (%w{interruptions profiles}.include?(controller_name) or
-        (current_account.valid? and
-          current_account.profile_valid?))
+        current_account.admin? or
+        (%w{interruptions profiles}.include?(controller_name) or
+          (current_account.valid? and
+            current_account.profile_valid?))
     }
   end
 

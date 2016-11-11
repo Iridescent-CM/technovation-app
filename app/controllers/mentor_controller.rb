@@ -10,7 +10,7 @@ class MentorController < ApplicationController
       redirect_to interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
-    %w{interruptions accounts honor_code_agreements dashboards background_checks}.include?(controller_name)
+    %w{interruptions profiles honor_code_agreements dashboards background_checks}.include?(controller_name)
   }
 
   private
