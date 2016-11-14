@@ -40,6 +40,13 @@ module RegionalAccount
                  end
     end
 
+    accounts = accounts
+      .includes(:regional_ambassador_profile)
+      .references(:regional_ambassador_profiles)
+      .where("regional_ambassador_profiles.id IS NULL OR
+                regional_ambassador_profiles.status = ?",
+             RegionalAmbassadorProfile.statuses[:approved])
+
     if ambassador.country == "US"
       accounts.where(state_province: ambassador.state_province)
     else

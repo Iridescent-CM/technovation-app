@@ -112,6 +112,7 @@ FactoryGirl.define do
       country nil
       email nil
       password nil
+      first_name nil
     end
 
     before(:create) do |r, e|
@@ -122,6 +123,7 @@ FactoryGirl.define do
         country: e.country || attrs[:country],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
+        first_name: e.first_name || attrs[:first_name],
       ))
 
       unless r.background_check.present?
@@ -146,6 +148,7 @@ FactoryGirl.define do
 
     transient do
       email nil
+      first_name nil
     end
 
     before(:create) do |j, e|
@@ -153,6 +156,7 @@ FactoryGirl.define do
 
       j.build_account(attrs.merge(
         email: e.email || attrs[:email],
+        first_name: e.first_name || attrs[:first_name],
       ))
     end
   end

@@ -67,7 +67,9 @@
 
           <tr>
             <td colspan="11">
-              <%= link_to "Export to CSV", regional_ambassador_exports_path(params.merge(class: "accounts")), data: { method: :post } %>
+              <%= link_to "Export to CSV",
+                regional_ambassador_exports_path(params.merge(class: "accounts")),
+                data: { method: :post } %>
             </td>
           </tr>
         </thead>
