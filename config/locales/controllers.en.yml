@@ -94,6 +94,10 @@ en:
           success: "You have requested to join %{name}"
         update:
           success: "%{name} was %{status}"
+      mentors:
+        show:
+          no_team: "You need a team before you can search for mentors"
+
       parental_consent_notices:
         create:
           success: "Okay, we sent an email to your parent/guardian."
