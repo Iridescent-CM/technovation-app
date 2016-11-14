@@ -1,0 +1,330 @@
+es-MX:
+  language: "Español (México)"
+
+  views:
+    application:
+      actions: "Acciones"
+      anywhere: "En cualquier lugar"
+      approved: "aprobar"
+      availability: "Disponibilidad"
+      cancel: 'cancelar'
+      complete_your_profile: "Sigue estos pasos para completar tu perfil"
+      confirm_approved: "¿Estás segura que quieres aprobar a %{name}?"
+      confirm_declined: "¿Estás segura que quieres rechazar a %{name}?"
+      continue: "Continuar"
+      create: "Crear %{thing}"
+      curriculum: "Curriculum"
+      danger_zone: "Zona de peligro"
+      dashboard: "Mi panel de configuración"
+      declined: "declinar"
+      edit: "Editar"
+      filter: "Filtrar"
+      form_errors: "¡Ups! Algo no está bien. No hay problema. Revisa los errores marcados en los campos siguientes."
+      get_started: "Comenzar"
+      instead: "en lugar de"
+      invite: "Enviar invitación"
+      language: "Elegir idioma:"
+      near_me: "Cerca de mí"
+      no: "No"
+      only_one_email: "Escribe sólo un email"
+      or: "ó"
+      privacy_policy: "Política de privacidad"
+      resources: "Recursos"
+      review: "revisión"
+      review_now: "Revisar ahora"
+      save: "Guardar"
+      search_near: "Buscar por ciudad"
+      signin: 'Ingresar'
+      signup: 'Registrarse'
+      signout: 'Salir'
+      site_title: "Technovation Challenge"
+      terms_of_use: "Términos y condiciones de uso"
+      to_do: "Por terminar"
+      try_again: "Intenta de nuevo"
+      view_team: "Revisar equipo"
+      yes: "Sí"
+
+    accounts:
+      edit:
+        confirm_new_password: "Confirmar nueva contraseña"
+        existing_password: "Contraseña actual"
+        existing_password_required: "Campo necesario sólo si deseas cambiar tu contraseña"
+        new_password: "Nueva contraseña"
+        title: "Editar tu cuenta"
+      show:
+        title: "Información de tu cuenta"
+
+    quick_links:
+        my_account: "Mi cuenta"
+        my_team: "Mi equipo"
+
+    consent_waivers:
+      new:
+        submit: "Estoy de acuerdo"
+      show:
+        signed: "%{account_name} ha firmado el formato de consentimiento bajo el nombre de  %{signed_name} en la fecha %{date}"
+
+    background_checks:
+      new:
+        title: "Aprobar revisión de cuenta"
+
+    mentor:
+      join_requests:
+        index:
+          title: "Mis solicitudes"
+        new:
+          already_joined: "Tu perteneces a este equipo."
+          already_requested: "Tu has solicitado unirte a este equipo"
+
+      mentors:
+        show:
+          teams: "Equipos de %{name}:"
+          title: "Detalles del mentor"
+
+    mentors:
+      show:
+        already_invited: "Tu equipo a invitado a %{name} para ser su mentor."
+        already_on_team: "%{name} es uno de los mentores en tu equipo."
+        already_requested: "%{name} ha solicitado ser mentor para tu equipo."
+        invite_to_team: "Invitar a %{name} para ser mentor de tu equipo"
+        manage_team: "Administrar las solicitudes para unirse a tu equipo"
+
+    mentor_searches:
+      filter_options: "Opciones de búsqueda"
+      intro: "Encontrar y contactar a mentores cercanos. Los mentores están ordenados con base en la experiencia y ubicación."
+      new:
+        mentor_preview:
+          in_person: "En persona"
+          on_team: "Dentro del equipo"
+          needs_team: "Necesita un equipo"
+          virtual: "Virtual"
+      none_found: "Lo sentimos, no fue posible encontrar ningún mentor con los criterios seleccionados."
+      title: "Encontrar un mentor"
+
+    parental_consents:
+      new:
+        submit: "Estoy de acuerdo"
+      show:
+        signed: "%{student_name} ha recibido el concentimiento de %{parent_name} en la fecha %{date}"
+
+    passwords:
+      new:
+        title: "Modificar tu contraseña"
+
+    password_resets:
+      new:
+        submit: "Recibir un enlace para modificar la contraseña"
+        title: "Modificar tu contraseña"
+
+    profile_requirements:
+      background_check:
+        heading: "Revisión de documentos"
+        label: "Pasar por una revisión de documentos"
+        links:
+          background_check_submitted:
+            prefix: "Tu revisión de documentos está siendo procesada. Recibirás un correo electrónico dentro de 4 a 7 días hábiles con los resultados."
+            text: "Revisar el estado de la solicitud"
+          fill_bg_check_form:
+            prefix: "Para tener acceso a la plataforma, es necesario enviar y aprobar una revisión de documentos."
+            text: "Enviar a revisión de documentos"
+
+      build_profile:
+        heading: "Completar tu perfil"
+        label: "Agrega una descripción de ti mismo a tu perfil para ayudar a los estudiantes a conocerte mejor."
+        links:
+          photo:
+            text: "Subir fotografía"
+          bio:
+            text: "Agregar biografía"
+
+      consent_waiver:
+        heading: "Formato de consentimiento"
+        label: "Favor de firmar el formato de consentimiento para participar en Technovation."
+        links:
+          view:
+            text: "Firmar formato de consentimiento"
+
+      create_join_team:
+        heading: "Crear o unirte a un equipo"
+        labels:
+          mentor: "Crea o unete a un equipo para empezar."
+          student: "Technovation es una experiencia más educativa, inspiracional y completa si se realiza en equipo.<br />Tu equipo puede estar compuesto de hasta 5 chicas maravillosas. Busca un equipo o crea uno nuevo para comenzar."
+        links:
+          pre_unit:
+            text: "Esta unidad construye un equipo"
+            postfix: "puede ayudarte a comenzar."
+          create:
+            text: "Crear un equipo"
+          join:
+            text: "Unirse a un equipo"
+
+      find_mentor:
+        heading: "Encontrar un mentor"
+        label: "Los mentores pueden ayudar a tu equipo a tener éxito otorgandoles soporte y guía, y ayudando a resolver problemas durante la temporada de Technovation."
+        links:
+          pre_unit:
+            text: "Esta unidad encuentra un mentor"
+            postfix: "puede ayudarte a comenzar."
+          browse:
+            text: "Encontrar un mentor disponible"
+
+      links:
+        complete_previous_steps: "Termina los pasos anteriores para habilitar el siguiente paso"
+
+      parental_consent:
+        heading: "Formato de consentimiento"
+        label: "Para poder participar en Technovation es necesario el permiso de tus padres o tutores."
+        links:
+          contact_us:
+            postfix: "si tus padres o tutores no tienen una cuenta de correo eléctronico"
+            text: "Contáctanos para ayudarte"
+          resend:
+            text: "Re enviar el enlace del formato de consentimiento"
+          send_link:
+            text: "Envíar el formato de consentimiento por correo electrónico"
+          trouble:
+            postfix: "Un nuevo correo electrónico será enviado si actualizas la dirección.<br /><br />Favor de revisar la carpeta de spam o correo no deseado, si el correo electrónico ha sido enviado ahí, puede agregar a 'info@technovationchallenge.org' a su lista de contactos para prevenir futuros incidentes."
+            prefix: "¿Problemas recibiendo el correo electrónico?"
+            text: "Revisar la dirección de correo electrónico."
+
+      pre_program_survey:
+        label: "Terminar la encuesta inicial del programa"
+        links:
+          mark_complete:
+            postfix: "(sistema de honor)"
+            text: "Marcar este paso como terminado"
+          survey:
+            text: "Contestar la encuesta ahora"
+
+    signins:
+      form:
+        signin: "Ingresar"
+
+      new:
+        title: "Ingresar"
+
+    signups:
+      form:
+        choose_expertises: "Elegir campo(s) en los que se tiene experiencia"
+        confirm_password: 'Confirmar contraseña'
+        required_fields: "Favor de contestar todos los campos. ¡Gracias! "
+        signing_up_email: "Tu correo electrónico: %{email}"
+        signup: "Registrar"
+        student_profile: "Perfil de estudiante"
+
+      new:
+        already_signed_up: "¿Ya tienes una cuenta de años pasados?"
+        create_an: "Crear "
+        descriptions:
+          disabled:
+            judge: "El registro del jurado estará abierto en marzo 2017"
+          judge: "Utiliza tu experiencia para calificar las apps de Technovation y dar retroalimentación a los equipos."
+          mentor: "Ayuda a los equipos mientras identifican problemas en su comunidad y ayudalos a construir una app para resolverlo."
+          regional_ambassador: "Registrate ahora para tener la oportunidad de construir y coordinar el programa de Technovation en tu localidad."
+          student: "Arma tu equipo, conecta con tus mentores y construyan una app!"
+        role_choice: "Yo soy ..."
+        roles:
+          judge: "Jurado"
+          mentor: "Mentor"
+          regional_ambassador: "Embasador Regional"
+          student: "Estudiante"
+        section_headers:
+          account_details: "Detalles de la cuenta"
+          location_details: "Detalles del lugar"
+          profile_details: "Detalles del perfil"
+          profile_image: "Imagen de perfil"
+        signup_link:
+          judge: "Registarme como juez"
+          mentor: "Registrarme como mentor"
+          regional_ambassador: "Registrarme como embasador regional"
+          student: "Registrarme como estudiante"
+        title:
+          judge: "Registrarme como"
+          mentor: "Registrarme como"
+          regional_ambassador: "Registrarme como"
+          student: "Registrarme como"
+
+    student:
+      join_requests:
+        new:
+          already_invited: "Has sido invitado a unirte al equipo. %{link}"
+          already_joined: "Estás en este equipo."
+          already_requested: "Has solicitado unirte a este equipo"
+
+      mentors:
+        show:
+          in_person: "%{name} sólo esta disponible para ser un mentor de equipos en persona, cerca de %{location}."
+          no_teams: "¡%{name} todavía no esta en ningún equipo!"
+          teams: "Equipos de %{name}:"
+          title: "Detalles del mentor"
+          virtual: "%{name} está disponible a guiar equipos virtualmente (online) de cualquier lugar."
+
+      navigation:
+        create_a_team: "Crear un equipo"
+        find_a_mentor: "Encontrar un mentor"
+        join_team: "Unirte a un equipo"
+        my_team: "Mi equipo"
+
+
+      parental_consent_notices:
+        form:
+          submit: "Enviar el enlace con el formato"
+        new:
+          title: "Enviar el formato de consentimiento por correo electrónico a tus padres o tutores"
+
+      signups:
+        new:
+          parent_guardian_email:
+            help_text: "(Esta información es necesaria para enviar el formato de consentimiento para participar.)"
+
+    teams:
+      edit:
+        title: "Modificar tu equipo"
+      index:
+        current_teams: "Equipos actuales"
+        none: "No tienes ningún equipo %{type}."
+        past_teams: "Equipos anteriores"
+      new:
+        intro: "¡Todavía no eres parte de ningún equipo! Puedes crear tu propio equipo, o unirte a los equipos que ya existen. Únicamente puedes pertenecer a un equipo a la vez."
+        join: "Unirte a un equipo"
+        title: "Crear un equipo"
+      show:
+        add_members: "Agregar miembros"
+        confirm_leave: "¿Seguro que quieres dejar a este equipo?"
+        division_name: "Categoría: %{name}"
+        invite: "Invitar a más estudiantes"
+        location: "Ubicación principal: %{name}"
+        members_full: "Tu equipo puede estar formado hasta por 5 estudiantes. No es posible invitar a más estudiantes mientras se tenga un total de 5 incluyendo miembros, invitaciones y/o solicitudes para unirse al equipo."
+        members_subheading: "Miembros del equipo"
+        mentors_subheading: "Mentores del equipo"
+        past_team: "Equipos anteriores ya no pueden ser administrados."
+        pending_invitees_subheading: "Invitaciones al equipo pendientes"
+        pending_requests_subheading: "Solicitudes para unirse al equipo pendientes"
+
+    team_member_invites:
+      form:
+        confirm_accept: "Estás a punto de aceptar la invitación."
+        confirm_decline: "Estás a punto de rechazar la invitación."
+        invite_by_email: "Invitar a otro estudiante por correo (uno a la vez)"
+      show:
+        accepted: "Ya has aceptado esta invitación anteriormente."
+        declined: "Has rechazado anteriormente esta invitación. Si eres un estudiante y has aceptado la invitación de otro equipo, el resto de las invitaciones, incluyendo ésta, han sido automáticamente rechazadas."
+        greeting: "Has sido invitada a unirte a %{name}!"
+        message: "Puedes aceptar esta invitación y unirte al equipo, o rechazarla y buscar algún otro."
+        missing: "Lo sentimos, esta invitación ya no se encuentra disponible. Puede ser que el identificador sea incorrecto, o que la invitación haya sido eliminada por el equipo."
+
+    team_searches:
+      new:
+        filter_heading: "Filtrar por ubicación"
+        intro: "Se muestran los equipos disponibles, quienes todavia estan buscando a miembros o mentores."
+        no_results: "Lo sentimos, pero no pudimos encontrar a ningún equipo disponible. Por favor intenta de nuevo más tarde."
+        title: "Encontrar un equipo"
+        results_heading: "Equipos disponibles:"
+        results_link_label: "Ver equipo"
+
+    team_submissions:
+      form:
+        app_description_help: "Tu descripción debe de ser de al menos 100 palabras."
+        source_code_external_url_help: "Por favor asegúrate de que la dirección URL está diponible públicamente"
+      show:
+        title: "La entrega de mi equipo"

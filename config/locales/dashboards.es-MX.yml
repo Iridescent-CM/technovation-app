@@ -1,5 +1,6 @@
 es-MX:
   language: "Español (México)"
+
   views:
     admin:
       dashboards:
