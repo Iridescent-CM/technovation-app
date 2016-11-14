@@ -9,4 +9,5 @@ class LocaleSwitchesController < ApplicationController
   private
   def model_name; end
   def save_redirected_path; end
+  def unauthorized!; end
 end
