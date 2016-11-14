@@ -53,7 +53,6 @@
       <table class="table__regional_ambassador_accounts sortable">
         <thead>
           <tr>
-            <th>ID</th>
             <th>User type</th>
             <th>First name</th>
             <th>Last name</th>
@@ -77,7 +76,6 @@
           <% @accounts.each do |account| %>
             <% cache(account) do %>
               <tr>
-                <td><%= account.id %></td>
                 <td><%= account.type_name %></td>
                 <td><%= account.first_name %></td>
                 <td><%= account.last_name %></td>
