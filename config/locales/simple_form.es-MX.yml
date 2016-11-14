@@ -1,0 +1,9 @@
+es-MX:
+  simple_form:
+    "yes": 'Sí'
+    "no": 'No'
+    required:
+      text: 'obligatorio'
+      mark: ''
+    error_notification:
+      default_message: "Por favor revisa los siguientes errores:"

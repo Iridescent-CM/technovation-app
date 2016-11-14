@@ -1,0 +1,63 @@
+es-MX:
+  account_mailer:
+    confirm_next_steps:
+      subject: "Próximos pasos de Technovation: ¡Tu padre/tutor firmó tu formulario de permiso!"
+    password_reset:
+      subject: "Restablecer tu contraseña de Technovation"
+
+  ambassador_mailer:
+    approved:
+      message: "Hola, ¡Buenas noticias! ¡Tu cuenta de Embajador Regional ha sido aprobada!"
+      next_steps: "Por ahora, no hay nada que tengas que hacer. Estamos lanzando nuevas características para Embajadores Regionales y recibirás un correo electrónico cuando tengamos actualizaciones."
+      subject: "Seguimiento de solicitud aprobada para ser Embajador Regional"
+    declined:
+      subject: "Seguimiento de solicitud para ser Embajador Regional"
+
+  files_mailer:
+    export_ready:
+      subject: "Tu archivo está listo para descargar"
+
+  parent_mailer:
+    confirm_consent_finished:
+      subject: "Technovation — Copia del formulario de consentimiento firmado"
+    consent_notice:
+      subject: "¡Su hija necesita permiso para participar en Technovation!"
+
+  registration_mailer:
+    confirm_email:
+      subject: "Confirma tu correo electrónico para Technovation %{season_year}"
+    welcome_mentor:
+      subject: "Bienvenido a Technovation %{season_year}!"
+    welcome_student:
+      subject: "Bienvenido a Technovation %{season_year}!"
+
+  team_mailer:
+    invite_member:
+      greeting:
+        mentor: "Estás invitado a ser un mentor para un equipo de Technovation — %{name}."
+        student: "Te invitaron a participar en Technovation como miembro de %{name}."
+      intro:
+        complete_profile: "Puedes revisar y aceptar o rechazar tu invitación aquí:"
+        incomplete_profile: "Deberás completar tu perfil antes de revisar esta invitación."
+        no_profile: "Antes de que puedas unirte al equipo, deberás registrarte en Technovation, es gratis y no tomará mucho tiempo. Puedes registrarte en el siguiente enlace:"
+      subject: "¡Estás invitado a unirte a un equipo de Technovation!"
+    invite_mentor:
+      subject: "¡Estás invitado a ser mentor para un equipo de Technovation!"
+
+    join_request:
+      extra:
+        mentor: "Tomate un minuto para aprobar o rechazar la solicitud de ser mentor dentro de la próxima semana para que %{name} pueda comunicarse con otro equipo si es necesario."
+        student: ""
+      subject: "¡Un %{role_name} ha solicitado unirse a tu equipo!"
+
+    mentor_join_request_status:
+      accepted_subject: "¡Tu solicitud para ser mentor de %{name} fue aceptada!"
+      declined_extra: "No te preocupes, ¡Hay un montón de otros equipos por ahí buscando mentores! Utiliza el siguiente enlace para buscar equipos en tu área que aún buscan un mentor, ó ¡Considera convertirte en un mentor virtual para equipos más alejados!"
+      declined_subject: "Tu solicitud para ser mentor de %{name} fue rechazada"
+      role_name: "su mentor"
+
+    student_join_request_status:
+      accepted_subject: "¡Tu solicitud para unirte a %{name} fue aceptada!"
+      declined_extra: "No te preocupes, ¡Hay un montón de otros equipos por ahí buscando miembros! Utiliza el siguiente enlace para navegar por los equipos disponibles ó probar estos consejos para reclutar a tu equipo."
+      declined_subject: "Tu solicitud para unirte a %{name} fue rechazada"
+      role_name: "un miembro"

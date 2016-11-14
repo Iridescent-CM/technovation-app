@@ -1,0 +1,61 @@
+es-MX:
+  activemodel:
+    errors:
+      models:
+        password:
+          attributes:
+            email:
+              not_found: "no se encontró en la base de datos"
+            expires_at:
+              expired: "ha expirado"
+            password_confirmation:
+              doesnt_match: "no corresponde"
+
+        password_reset:
+          attributes:
+            email:
+              not_found: "no se encontró en la base de datos"
+
+  activerecord:
+    errors:
+      models:
+        honor_code_agreement:
+          attributes:
+            agreement_confirmed:
+              accepted: "debe estar seleccionado"
+
+        mentor_account:
+          attributes:
+            existing_password:
+              invalid: "es necesario cambiar tu correo electrónico o tu contraseña"
+
+        regional_ambassador_account:
+          attributes:
+            existing_password:
+              invalid: "es necesario para cambiar tu correo electrónico o tu contraseña"
+
+        signup_attempt:
+          attributes:
+            email:
+              invalid: "parece no ser una dirección de correo válida"
+
+        student_account:
+          attributes:
+            existing_password:
+              invalid: "es necesario para cambiar tu correo electrónico o tu contraseña"
+
+        student_profile:
+          attributes:
+            parent_guardian_email:
+              found_in_student_accounts: "no puede ser igual al correo electrónico de otro estudiante"
+              invalid: "parece no ser una dirección de correo válida"
+              matches_student_email: "no puede ser el mismo que tu correo electrónico"
+
+        team_member_invite:
+          attributes:
+            invitee_email:
+              already_on_team: "ya pertenece a un equipo."
+              already_requested_to_join: "ya ha solicitado unirse al equipo. Revisa las solicitudes en la página de tu equipo."
+              invalid: "parece no ser una dirección de correo válida"
+              is_not_a_student: "no es un estudiante."
+              taken: "ya ha sido invitado por tu equipo."

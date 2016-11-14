@@ -1,0 +1,71 @@
+es-MX:
+  models:
+    account:
+      address: "Ubicación"
+      class_name: "cuenta"
+      change_password: "Cambiar tu contraseña"
+      first_name: "Nombre"
+      full_name: "Nombre completo"
+      geocoded: "Código postal ó ciudad y estado/provincia"
+      gender: "Género"
+      password: "Crear una contraseña"
+      password_hint: "Utiliza al menos 8 caracteres"
+      referred_by: "¿Cómo te enteraste de Technovation?"
+      referred_by_other: "Por favor indica cómo"
+      state_province: "Estado / Provincia"
+
+    errors:
+      existing_password:
+        invalid: "no es válido"
+
+    join_request:
+      joinable_name: "Nombre"
+      requestor_name: "Nombre de quien solicita"
+      requestor_type: "Tipo de miembro"
+      status: "Estado de la solicitud"
+
+    mentor:
+      expertise_names: "Experiencia"
+
+    mentor_profile:
+      accepting_team_invites: "Permitir a los equipos invitarme para ser su mentor."
+      expertise_names: "Experiencia"
+      virtual: "Estoy disponible para guiar a equipos virtualmente (online) desde cualquier lugar."
+      job_title: "Profesión"
+      school_company_name: "Escuela o nombre de la empresa"
+
+    parental_consent:
+      student_name: "Nombre del estudiante"
+
+    profile:
+      bio: "Biografía"
+
+    regional_ambassador_profile:
+      ambassador_since_year: "¿En qué año te convertiste en embajador regional?"
+      ambassador_since_year_option_new: "¡Soy nuevo!"
+      bio:
+        signup_label: "Cuéntanos más sobre ti"
+      job_title: "Profesión"
+      organization_company_name: "Nombre de la organización o empresa"
+
+    signup_attempt:
+      email: "Dirección de correo electrónico"
+
+    student_profile:
+      date_of_birth: "Fecha de nacimiento"
+      parent_guardian_email: "Correo electrónico de tus padres o tutores"
+      parent_guardian_name: "Nombre del padre o tutor"
+      school_name: "Nombre de la escuela"
+
+    team:
+      class_name: "equipo"
+      accepting_student_requests: "Otros estudiantes puedes solicitar unirse a este equipo."
+      accepting_mentor_requests: "Otros mentores pueden solicitar ser mentores de este equipo."
+
+    team_member_invite:
+      invitee_email: "Correo electrónico"
+
+    team_submission:
+      app_description: "Descripción"
+      integrity_affirmed: "La entrega y todo el material incluido fue creado únicamente por los estudantes del equipo."
+      source_code_external_url: "URL del código fuente (Google Drive, GitHub)"

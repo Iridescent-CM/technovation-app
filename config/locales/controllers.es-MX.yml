@@ -1,0 +1,133 @@
+es-MX:
+  controllers:
+    application:
+      already_authenticated: "Ya has iniciado sesión."
+      general_error: "Lo siento, pero algo salió mal. Probablemente no fue tu culpa."
+      unauthenticated: "¡Debes iniciar sesion como %{profile} para ir ahí!"
+      unauthorized: "¡No tienes permiso para ir allí!"
+
+    accounts:
+      show:
+        image_processing: "Se ha cargado la foto de tu perfil. Se está procesando y se actualizará en breve."
+      update:
+        change_image: "Cambiar imagen"
+        change_image_hint: "300x300px, only .jpg, .jpeg, .gif, .png"
+        success: "¡Actualizaste tu cuenta!"
+
+    consent_waivers:
+      create:
+        success: "¡Gracias por firmar la exención de consentimiento!"
+      new:
+        unauthorized: "Lo sentimos, este token de consentimiento no es válido."
+
+    exports:
+      create:
+        success: "Estamos exportando un archivo CSV ahora. Se te enviará un correo electrónico con un enlace para descargarlo cuando esté listo."
+
+    invites:
+      destroy:
+        confirm: "¿Estás seguro de que desea revocar tu invitación a %{name}?"
+        link: "revocar"
+        success: "Usted revocó la invitación a %{name}"
+      update:
+        failure: "Lo sentimos, pero no pudimos encontrar una invitación para ser mentora pendiente con ese token para esta cuenta."
+
+    mentor:
+      join_requests:
+        create:
+          link: "Solicitar ser mentor de %{name}"
+          success: "Usted ha solicitado ser un mentor de %{name}"
+        update:
+          success: "%{name} estaba %{status}"
+
+    parental_consents:
+      create:
+        success: "¡Gracias por firmar el formulario de consentimiento de los padres!"
+      new:
+        unauthorized: "Lo sentimos, este símbolo de consentimiento no es válido."
+
+    passwords:
+      create:
+        success: "Has restablecido correctamente tu contraseña y has iniciado sesión."
+      new:
+        expired: "El token de solicitud de contraseña ha caducado. Debes solicitar uno nuevo."
+        invalid: "El token de solicitud de contraseña no es válido. Debes solicitar uno nuevo."
+
+    password_resets:
+      create:
+        failure: "Lo sentimos, pero no hemos podido encontrar una cuenta con esa dirección de correo electrónico."
+        success: "Enviamos instrucciones de restablecimiento de contraseña a tu correo electrónico."
+      new:
+        link: "Olvidé mi contraseña"
+
+    signins:
+      create:
+        success: "¡Hola! ¡Bienvenido!"
+        error: "Lo sentimos, no reconocemos ese nombre y contraseña."
+      destroy:
+        success: "Has cerrado sesión. ¡Nos vemos la próxima vez!"
+
+    signups:
+      create:
+        success: "¡Bienvenido a Technovation Challenge!"
+
+    signup_attempts:
+      create:
+        success: "¡Gracias por empezar en Technovation!"
+      update:
+        success: "¡Bueno! Estamos intentando de nuevo con la dirección de correo electrónico actualizada"
+
+    signup_attempt_confirmations:
+      new:
+        success: "¡Gracias! ¡Tu correo electrónico está confirmado y está listo para registrarse!"
+
+    student:
+      join_requests:
+        create:
+          link: "Solicitar unirse a %{name}"
+          success: "Solicitaste unirte a %{name}"
+        update:
+          success: "%{name} estaba %{status}"
+      parental_consent_notices:
+        create:
+          success: "Bien, enviamos un correo electrónico a tu padre/tutor."
+
+    teams:
+      create:
+        already_on_team: "No puedes crear un nuevo equipo si ya perteneces un equipo"
+        success: "¡Tu equipo ha sido creado! ¡Luce bien!"
+      index:
+        browse: "navegar por los equipos disponibles"
+      new:
+        link: "Crear un nuevo equipo"
+      show:
+        image_processing: "Se ha cargado la foto de tu equipo. Se está procesando y se actualizará en breve."
+      update:
+        change_image: "Subir foto"
+        change_image_hint: "450x300px, only .jpg, .jpeg, .gif, .png"
+        success: "¡Su equipo ha sido actualizado!"
+
+    team_memberships:
+      destroy:
+        link: "Dejar %{name}"
+        success: "Has dejado el equipo `%{name}`"
+
+    team_member_invites:
+      create:
+        success: "¡La invitación de tu equipo se envió!"
+      update:
+        accept: "Aceptar invitación a %{name}"
+        already_on_team: "Ya estás en un equipo, así que no puedes aceptar esa invitación."
+        not_accepted: "Rechazaste esa invitación. No hay problema, ¡Sigue buscando!"
+        decline: "Rechazar esta invitación"
+        success: "¡Bienvenido al equipo! ¡Haznos sentir orgullosos!"
+
+    team_searches:
+      new:
+        link: "Navegar por los equipos disponibles"
+
+    team_submissions:
+      create:
+        success: "¡Comenzaste la entrega del equipo!"
+      update:
+        success: "Su progreso se ha guardado. ¡Mantengan el buen trabajo!"
