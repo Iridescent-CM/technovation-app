@@ -20,7 +20,6 @@
     closeButton.classList.add('fa', 'fa-times', 'modalify__close');
     modalTopBar.appendChild(closeButton);
     closeButton.addEventListener('click', function() {
-      console.log('clicking');
       hideModal(currentModal);
     });
 
@@ -31,6 +30,10 @@
     modalBody.insertBefore(modalTopBar, modalBody.firstChild);
     currentModal.appendChild(modalBody);
     currentModal.insertBefore(modalShade, modalBody);
+
+    modalShade.addEventListener('click', function() {
+      hideModal(currentModal);
+    });
   }
 
   var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
