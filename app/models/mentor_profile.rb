@@ -16,6 +16,12 @@ class MentorProfile < ActiveRecord::Base
     .uniq
   }
 
+  scope :by_gender_identities, ->(ids) {
+    joins(:account)
+    .where("accounts.gender IN (?)", ids)
+    .uniq
+  }
+
   scope :searchable, ->(user = nil) {
     if user and user.type_name == "mentor"
       where(connect_with_mentors: true, searchable: true)

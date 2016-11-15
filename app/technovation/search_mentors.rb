@@ -22,6 +22,10 @@ module SearchMentors
       mentors = mentors.by_expertise_ids(filter.expertise_ids)
     end
 
+    if filter.gender_identities.any?
+      mentors = mentors.by_gender_identities(filter.gender_identities)
+    end
+
     if filter.nearby.present?
       miles = filter.nearby == "anywhere" ? 40_000 : 50
       nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
