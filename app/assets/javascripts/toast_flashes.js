@@ -1,3 +1,10 @@
+function createFlashNotification(type, message) {
+  var flashWrapper = document.createElement('div');
+  flashWrapper.classList.add('flash', 'flash--show','flash--' + type);
+  flashWrapper.innerHTML = message;
+  document.body.appendChild(flashWrapper);
+}
+
 (function toastFlashes() {
 
   runFlashes();
