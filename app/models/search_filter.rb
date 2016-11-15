@@ -7,6 +7,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:expertise_ids) { [] }.reject(&:blank?).map(&:to_i)
   end
 
+  def gender_identities
+    filter_options.fetch(:gender_identities) { [] }.reject(&:blank?).map(&:to_i)
+  end
+
   def nearby
     filter_options.fetch(:nearby) { nil }
   end
