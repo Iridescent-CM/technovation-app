@@ -36,6 +36,16 @@
         </label>
       <% end %>
 
+      <% if params[:type] == "Mentor" %>
+        <label class="no-text-transform">
+          On a team:<br />
+          <%= select_tag :team_status,
+            options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]),
+            class: "inline",
+            data: { reload: true, param: :team_status } %>
+        </label>
+      <% end %>
+
       <label class="no-text-transform">
         How did you hear about us?<br />
         <%= select_tag :how_heard,

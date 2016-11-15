@@ -4,6 +4,7 @@ module Admin
       params[:type] = "All" if params[:type].blank?
       params[:how_heard] = "All" if params[:how_heard].blank?
       params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
+      params[:team_status] = "All" if params[:team_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
 
       klass = if params[:type] == "All"
@@ -45,6 +46,35 @@ module Admin
           accounts = accounts.includes(:parental_consent)
                              .references(:parental_consents)
                              .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NULL")
+        end
+      end
+
+      if params[:type] == "Mentor"
+        case params[:team_status]
+        when "On a team"
+          accounts = accounts.where("mentor_profiles.id IN
+            (SELECT DISTINCT(member_id) FROM memberships
+                                        WHERE memberships.member_type = 'MentorProfile'
+                                        AND memberships.joinable_type = 'Team'
+                                        AND memberships.joinable_id IN
+
+              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
+
+                (SELECT DISTINCT(registerable_id) FROM season_registrations
+                                                  WHERE season_registrations.registerable_type = 'Team'
+                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+        when "No team"
+          accounts = accounts.where("mentor_profiles.id NOT IN
+            (SELECT DISTINCT(member_id) FROM memberships
+                                        WHERE memberships.member_type = 'MentorProfile'
+                                        AND memberships.joinable_type = 'Team'
+                                        AND memberships.joinable_id IN
+
+              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
+
+                (SELECT DISTINCT(registerable_id) FROM season_registrations
+                                                  WHERE season_registrations.registerable_type = 'Team'
+                                                  AND season_registrations.season_id = ?)))", Season.current.id)
         end
       end
 
