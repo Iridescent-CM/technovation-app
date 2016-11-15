@@ -27,7 +27,6 @@ function fancyImageUpload() {
     dropZone.classList.add(dropZoneClass);
 
     var submitButton = currentForm.querySelector('input[type="submit"]');
-
     currentForm.insertBefore(dropZone, submitButton);
 
     makeEmptyDropZone(dropZone);
