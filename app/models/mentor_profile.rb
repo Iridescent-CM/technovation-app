@@ -18,7 +18,7 @@ class MentorProfile < ActiveRecord::Base
 
   scope :searchable, ->(user = nil) {
     if user and user.type_name == "mentor"
-      where(searchable: true)
+      where(connect_with_mentors: true, searchable: true)
     else
       where(accepting_team_invites: true, searchable: true)
     end

@@ -11,6 +11,7 @@ module Mentor
         :bio,
         :accepting_team_invites,
         :virtual,
+        :connect_with_mentors,
         { expertise_ids: [] },
       ]
     end
