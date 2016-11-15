@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115161800) do
+ActiveRecord::Schema.define(version: 20161115220147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,16 @@ ActiveRecord::Schema.define(version: 20161115161800) do
   add_index "background_checks", ["account_id"], name: "index_background_checks_on_account_id", using: :btree
   add_index "background_checks", ["candidate_id"], name: "index_background_checks_on_candidate_id", using: :btree
   add_index "background_checks", ["report_id"], name: "index_background_checks_on_report_id", using: :btree
+
+  create_table "business_plans", force: :cascade do |t|
+    t.string   "uploaded_file"
+    t.string   "remote_file_url"
+    t.integer  "team_submission_id", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "business_plans", ["team_submission_id"], name: "index_business_plans_on_team_submission_id", using: :btree
 
   create_table "consent_waivers", force: :cascade do |t|
     t.string   "electronic_signature", null: false
@@ -334,6 +344,7 @@ ActiveRecord::Schema.define(version: 20161115161800) do
 
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
+  add_foreign_key "business_plans", "team_submissions"
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"

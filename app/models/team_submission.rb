@@ -18,6 +18,7 @@ class TeamSubmission < ActiveRecord::Base
 
   belongs_to :team
   has_many :screenshots
+  has_one :business_plan
 
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
