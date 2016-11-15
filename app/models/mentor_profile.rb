@@ -17,9 +17,11 @@ class MentorProfile < ActiveRecord::Base
   }
 
   scope :by_gender_identities, ->(ids) {
-    joins(:account)
-    .where("accounts.gender IN (?)", ids)
-    .uniq
+    if ids.map(&:to_i).compact.sort != Account.genders.values.sort
+      joins(:account).where("accounts.gender IN (?)", ids)
+    else
+      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
+    end
   }
 
   scope :searchable, ->(user = nil) {
