@@ -31,6 +31,15 @@
     </label>
   <% end %>
 
+  <% if params[:type] == "Mentor" %>
+    <label class="no-text-transform inline">
+      On a team:
+      <%= select_tag :team_status,
+        options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]),
+        class: "inline",
+        data: { reload: true, param: :team_status } %>
+    </label>
+  <% end %>
 
   <label class="no-text-transform inline">
     Per page:
