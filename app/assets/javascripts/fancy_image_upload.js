@@ -19,12 +19,17 @@ function fancyImageUpload() {
     return;
   }
   var spanLabelClass = 'fancy-image-upload__label';
+  var dropZoneClass = 'fancy-image-upload__drop-zone';
   var bottomLabelText = 'Drop files here or click to browse';
   for (var i = 0; i < imageUploads.length; i++) {
     var currentForm = imageUploads[i];
     var dropZone = document.createElement('label');
-    dropZone.classList.add('fancy-image-upload__drop-zone');
-    currentForm.insertBefore(dropZone, currentForm.firstChild);
+    dropZone.classList.add(dropZoneClass);
+
+    var submitButton = currentForm.querySelector('input[type="submit"]');
+
+    currentForm.insertBefore(dropZone, submitButton);
+
     makeEmptyDropZone(dropZone);
 
     var fileInput = currentForm.querySelector('input[type="file"]');
@@ -74,7 +79,7 @@ function fancyImageUpload() {
   function makeEmptyDropZone(dropZone) {
     var form = dropZone.parentElement;
     // Selects a label that is NOT the drop zone
-    var label = form.querySelectorAll('label')[1];
+    var label = form.querySelector('label:not(.' + dropZoneClass + ')');
     if (label) {
       var labelText = label.innerHTML;
       var topLabel = document.createElement('span');
