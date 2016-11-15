@@ -3,9 +3,12 @@ module RegionalAmbassador
     include ProfileController
 
     def index
+      params[:season] ||= Season.current.year
       params[:type] ||= "All"
       params[:per_page] ||= 25
-      @accounts = RegionalAccount.(current_ambassador, params).paginate(per_page: params[:per_page], page: params[:page])
+
+      @accounts = RegionalAccount.(current_ambassador, params)
+        .paginate(per_page: params[:per_page], page: params[:page])
     end
 
     def profile_params

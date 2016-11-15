@@ -8,7 +8,7 @@ module RegionalAccount
 
     accounts = account.includes(:seasons)
       .references(:seasons)
-      .where("seasons.year = ?", Season.current.year)
+      .where("seasons.year = ?", params[:season])
       .where.not(email: "info@technovationchallenge.org")
 
     unless params[:text].blank?

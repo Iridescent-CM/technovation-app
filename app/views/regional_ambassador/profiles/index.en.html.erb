@@ -6,6 +6,14 @@
 
 <div class="wrapper__report-table">
   <label class="no-text-transform inline">
+    Season:
+    <%= select_tag :season,
+      options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+      class: "inline",
+      data: { reload: true, param: :season } %>
+  </label>
+
+  <label class="no-text-transform inline">
     Account type:
     <%= select_tag :type,
                    options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
