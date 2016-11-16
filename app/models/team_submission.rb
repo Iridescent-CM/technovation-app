@@ -20,6 +20,9 @@ class TeamSubmission < ActiveRecord::Base
   has_many :screenshots, -> { order(:sort_position) }
   has_one :business_plan
 
+  has_one :technical_checklist
+  accepts_nested_attributes_for :technical_checklist
+
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
 

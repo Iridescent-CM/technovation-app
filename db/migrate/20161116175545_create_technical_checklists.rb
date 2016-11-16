@@ -58,7 +58,7 @@ class CreateTechnicalChecklists < ActiveRecord::Migration
       t.boolean :used_sound_verified
 
       t.boolean :used_screen_orientation
-      t.string :used_screen_oreientation_explanation
+      t.string :used_screen_orientation_explanation
       t.boolean :used_screen_orientation_verified
 
       t.string :paper_prototype

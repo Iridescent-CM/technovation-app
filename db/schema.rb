@@ -388,12 +388,12 @@ ActiveRecord::Schema.define(version: 20161116175545) do
     t.string   "used_sound_explanation"
     t.boolean  "used_sound_verified"
     t.boolean  "used_screen_orientation"
-    t.string   "used_screen_oreientation_explanation"
+    t.string   "used_screen_orientation_explanation"
     t.boolean  "used_screen_orientation_verified"
     t.string   "paper_prototype"
     t.integer  "team_submission_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "technical_checklists", ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id", using: :btree
