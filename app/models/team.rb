@@ -59,6 +59,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def current_team_submission
+    team_submissions.current.first
+  end
+
   def student_emails
     students.flat_map(&:email)
   end

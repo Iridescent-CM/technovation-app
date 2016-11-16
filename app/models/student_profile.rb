@@ -169,6 +169,16 @@ class StudentProfile < ActiveRecord::Base
     def present?
       false
     end
+
+    def current_team_submission
+      NullTeamSubmission.new
+    end
+
+    class NullTeamSubmission
+      def screenshots
+        []
+      end
+    end
   end
 
   def validate_valid_parent_email
