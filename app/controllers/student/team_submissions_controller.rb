@@ -37,7 +37,14 @@ module Student
     def update
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
 
-      if @team_submission.update_attributes(team_submission_params)
+      if params[:screenshot]
+        params[:screenshot].each_with_index do |id, index|
+          screenshot = @team_submission.screenshots.find(id)
+          screenshot.update_attributes(sort_position: index)
+        end
+
+        head 200
+      elsif @team_submission.update_attributes(team_submission_params)
         redirect_to [:student, @team_submission],
           success: t("controllers.team_submissions.update.success")
       else
