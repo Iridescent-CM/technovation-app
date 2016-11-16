@@ -30,6 +30,10 @@ module Student
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
       @team_submission.step = params[:step]
 
+      if @team_submission.technical_checklist.blank?
+        @team_submission.build_technical_checklist
+      end
+
       @screenshots_uploader = ImageUploader.new
       @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
     end
@@ -57,7 +61,40 @@ module Student
       params.require(:team_submission).permit(
         :app_description,
         :integrity_affirmed,
-        :source_code_external_url
+        :source_code_external_url,
+        technical_checklist_attributes: [
+          :id,
+          :used_strings,
+          :used_strings_explanation,
+          :used_numbers,
+          :used_numbers_explanation,
+          :used_variables,
+          :used_variables_explanation,
+          :used_lists,
+          :used_lists_explanation,
+          :used_booleans,
+          :used_booleans_explanation,
+          :used_loops,
+          :used_loops_explanation,
+          :used_conditionals,
+          :used_conditionals_explanation,
+          :used_local_db,
+          :used_local_db_explanation,
+          :used_external_db,
+          :used_external_db_explanation,
+          :used_location_sensor,
+          :used_location_sensor_explanation,
+          :used_camera,
+          :used_camera_explanation,
+          :used_accelerometer,
+          :used_accelerometer_explanation,
+          :used_sms_phone,
+          :used_sms_phone_explanation,
+          :used_sound,
+          :used_sound_explanation,
+          :used_screen_orientation,
+          :used_screen_oreientation_explanation,
+        ],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]
       end

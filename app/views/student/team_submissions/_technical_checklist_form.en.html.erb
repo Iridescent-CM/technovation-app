@@ -1,0 +1,50 @@
+<%= simple_form_for [:student, team_submission] do |f| %>
+  <%= f.fields_for :technical_checklist do |t| %>
+    <%= t.input :used_strings, as: :boolean %>
+    <%= t.input :used_strings_explanation %>
+
+    <%= t.input :used_numbers, as: :boolean %>
+    <%= t.input :used_numbers_explanation %>
+
+    <%= t.input :used_variables, as: :boolean %>
+    <%= t.input :used_variables_explanation %>
+
+    <%= t.input :used_lists, as: :boolean %>
+    <%= t.input :used_lists_explanation %>
+
+    <%= t.input :used_booleans, as: :boolean %>
+    <%= t.input :used_booleans_explanation %>
+
+    <%= t.input :used_loops, as: :boolean %>
+    <%= t.input :used_loops_explanation %>
+
+    <%= t.input :used_conditionals, as: :boolean %>
+    <%= t.input :used_conditionals_explanation %>
+
+    <%= t.input :used_local_db, as: :boolean %>
+    <%= t.input :used_local_db_explanation %>
+
+    <%= t.input :used_external_db, as: :boolean %>
+    <%= t.input :used_external_db_explanation %>
+
+    <%= t.input :used_location_sensor, as: :boolean %>
+    <%= t.input :used_location_sensor_explanation %>
+
+    <%= t.input :used_camera, as: :boolean %>
+    <%= t.input :used_camera_explanation %>
+
+    <%= t.input :used_accelerometer, as: :boolean %>
+    <%= t.input :used_accelerometer_explanation %>
+
+    <%= t.input :used_sms_phone, as: :boolean %>
+    <%= t.input :used_sms_phone_explanation %>
+
+    <%= t.input :used_sound, as: :boolean %>
+    <%= t.input :used_sound_explanation %>
+
+    <%= t.input :used_screen_orientation, as: :boolean %>
+    <%= t.input :used_screen_orientation_explanation %>
+  <% end %>
+
+  <%= f.button :submit, class: "appy-button" %>
+<% end %>
