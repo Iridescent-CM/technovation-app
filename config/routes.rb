@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
+    resources :screenshots, only: [:update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show
