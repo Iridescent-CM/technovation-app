@@ -34,6 +34,56 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   end
 end
 
+if (student = StudentProfile.create(school_name: "John Hughes High",
+                                    parent_guardian_email: "parent@parent.com",
+                                    parent_guardian_name: "Parent Name",
+                                    account_attributes: {
+                                      email: "past@student.com",
+                                      password: "past@student.com",
+                                      first_name: "Past",
+                                      last_name: "Student",
+                                      date_of_birth: Date.today - 14.years,
+                                      city: "Chicago",
+                                      state_province: "IL",
+                                      country: "US",
+                                      geocoded: "Chicago, IL, US",
+                                      season_ids: [Season.find_or_create_by(year: Season.current.year - 1).id],
+                                    })).valid?
+  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+  puts ""
+  puts "============================================================="
+  puts ""
+  puts "Created #{Season.current.year - 1} Student: #{student.email} with password #{student.account.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
+end
+
+if (student = StudentProfile.create(school_name: "John Hughes High",
+                                    parent_guardian_email: "parent@parent.com",
+                                    parent_guardian_name: "Parent Name",
+                                    account_attributes: {
+                                      email: "distantpast@student.com",
+                                      password: "distantpast@student.com",
+                                      first_name: "Distant Past",
+                                      last_name: "Student",
+                                      date_of_birth: Date.today - 14.years,
+                                      city: "Chicago",
+                                      state_province: "IL",
+                                      country: "US",
+                                      geocoded: "Chicago, IL, US",
+                                      season_ids: [Season.find_or_create_by(year: Season.current.year - 2).id],
+                                    })).valid?
+  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+  puts ""
+  puts "============================================================="
+  puts ""
+  puts "Created #{Season.current.year - 2} Student: #{student.email} with password #{student.account.password}"
+  puts ""
+  puts "============================================================="
+  puts ""
+end
+
 if (mentor = MentorProfile.create(
     account_attributes: {
       email: "mentor@mentor.com",
