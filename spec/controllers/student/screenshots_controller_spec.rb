@@ -11,7 +11,7 @@ RSpec.describe Student::ScreenshotsController do
 
       expect {
         delete :destroy, id: screenshot.id
-      }.to change { Screenshot.count }.by -1
+      }.to change { Screenshot.count }.by(-1)
     end
 
     it "does not destroy screenshots that don't belong to the student" do
