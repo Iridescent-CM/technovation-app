@@ -34,6 +34,8 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   end
 end
 
+past = Season.current.year - 1
+
 if (student = StudentProfile.create(school_name: "John Hughes High",
                                     parent_guardian_email: "parent@parent.com",
                                     parent_guardian_name: "Parent Name",
@@ -47,7 +49,8 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       geocoded: "Chicago, IL, US",
-                                      season_ids: [Season.find_or_create_by(year: Season.current.year - 1).id],
+                                      season_ids: [Season.find_or_create_by(year: past,
+                                                                            starts_at: Time.new(past, 1, 1, 9, 0, 0, "-08:00")).id],
                                     })).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
@@ -58,6 +61,8 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   puts "============================================================="
   puts ""
 end
+
+distant_past = Season.current.year - 2
 
 if (student = StudentProfile.create(school_name: "John Hughes High",
                                     parent_guardian_email: "parent@parent.com",
@@ -72,7 +77,8 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       geocoded: "Chicago, IL, US",
-                                      season_ids: [Season.find_or_create_by(year: Season.current.year - 2).id],
+                                      season_ids: [Season.find_or_create_by(year: distant_past,
+                                                                            starts_at: Time.new(distant_past, 1, 1, 9, 0, 0, "-08:00")).id],
                                     })).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
