@@ -59,7 +59,6 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'rspec-rails'
   gem 'capybara-webkit'
-  gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'dotenv-rails'
@@ -89,6 +88,10 @@ group :qa, :staging, :production do
   gem 'hiredis'
   gem 'tunemygc'
   gem "rack-timeout"
+end
+
+group :qa, :test, :development do
+  gem 'factory_girl_rails'
 end
 
 # LEGACY MIGRATION
