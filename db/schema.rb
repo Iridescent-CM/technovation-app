@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116162954) do
+ActiveRecord::Schema.define(version: 20161116175545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,6 +344,60 @@ ActiveRecord::Schema.define(version: 20161116162954) do
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["friendly_id"], name: "index_teams_on_friendly_id", using: :btree
 
+  create_table "technical_checklists", force: :cascade do |t|
+    t.boolean  "used_strings"
+    t.string   "used_strings_explanation"
+    t.boolean  "used_strings_verified"
+    t.boolean  "used_numbers"
+    t.string   "used_numbers_explanation"
+    t.boolean  "used_numbers_verified"
+    t.boolean  "used_variables"
+    t.string   "used_variables_explanation"
+    t.boolean  "used_variables_verified"
+    t.boolean  "used_lists"
+    t.string   "used_lists_explanation"
+    t.boolean  "used_lists_verified"
+    t.boolean  "used_booleans"
+    t.string   "used_booleans_explanation"
+    t.boolean  "used_booleans_verified"
+    t.boolean  "used_loops"
+    t.string   "used_loops_explanation"
+    t.boolean  "used_loops_verified"
+    t.boolean  "used_conditionals"
+    t.string   "used_conditionals_explanation"
+    t.boolean  "used_conditionals_verified"
+    t.boolean  "used_local_db"
+    t.string   "used_local_db_explanation"
+    t.boolean  "used_local_db_verified"
+    t.boolean  "used_external_db"
+    t.string   "used_external_db_explanation"
+    t.boolean  "used_external_db_verified"
+    t.boolean  "used_location_sensor"
+    t.string   "used_location_sensor_explanation"
+    t.boolean  "used_location_sensor_verified"
+    t.boolean  "used_camera"
+    t.string   "used_camera_explanation"
+    t.boolean  "used_camera_verified"
+    t.boolean  "used_accelerometer"
+    t.string   "used_accelerometer_explanation"
+    t.boolean  "used_accelerometer_verified"
+    t.boolean  "used_sms_phone"
+    t.string   "used_sms_phone_explanation"
+    t.boolean  "used_sms_phone_verified"
+    t.boolean  "used_sound"
+    t.string   "used_sound_explanation"
+    t.boolean  "used_sound_verified"
+    t.boolean  "used_screen_orientation"
+    t.string   "used_screen_oreientation_explanation"
+    t.boolean  "used_screen_orientation_verified"
+    t.string   "paper_prototype"
+    t.integer  "team_submission_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "technical_checklists", ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id", using: :btree
+
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
   add_foreign_key "business_plans", "team_submissions"
@@ -360,4 +414,5 @@ ActiveRecord::Schema.define(version: 20161116162954) do
   add_foreign_key "signup_attempts", "accounts"
   add_foreign_key "team_submissions", "teams"
   add_foreign_key "teams", "divisions"
+  add_foreign_key "technical_checklists", "team_submissions"
 end
