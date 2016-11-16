@@ -17,7 +17,7 @@ class TeamSubmission < ActiveRecord::Base
   scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", Season.current.year) }
 
   belongs_to :team
-  has_many :screenshots
+  has_many :screenshots, -> { order(:sort_position) }
   has_one :business_plan
 
   has_many :season_registrations, dependent: :destroy, as: :registerable
