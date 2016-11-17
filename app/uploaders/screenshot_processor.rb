@@ -3,6 +3,7 @@ class ScreenshotProcessor < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::MimeTypes
   process :set_content_type
+  process :fix_exif_rotation
 
   # Choose what kind of storage to use for this uploader:
   storage :fog
@@ -39,4 +40,13 @@ class ScreenshotProcessor < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  private
+  def fix_exif_rotation
+    manipulate! do |img|
+      img.auto_orient
+      img = yield(img) if block_given?
+      img
+    end
+  end
 end
