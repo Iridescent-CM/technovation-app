@@ -36,7 +36,7 @@ module Admin
       if params[:type] == "Student"
         case params[:parental_consent_status]
         when "Signed"
-          accounts = accounts.joins(:parental_consent)
+          accounts = accounts.joins(student_profile: :parental_consent)
         when "Sent"
           accounts = accounts.includes(:parental_consent)
                              .references(:parental_consents)
