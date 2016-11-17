@@ -94,6 +94,8 @@ module Student
           :used_sound_explanation,
           :used_screen_orientation,
           :used_screen_oreientation_explanation,
+          :paper_prototype,
+          :paper_prototype_cache,
         ],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]
