@@ -1,5 +1,29 @@
+<h1 class="appy-title">
+  Technical Checklist
+</h1>
+
+<p>
+  You can earn up to <strong>10 points</strong> in this section.
+  All of the coding concepts on this checklist are available to learn for free in the curriculum.
+</p>
+
+<p>
+  Check off and explain the components you used in your app with a simple sentence. You only need to explain one instance where you used it.
+</p>
+
+<p>
+  For example:<br>
+  <strong>Strings</strong><br>
+  "<em>We used a string to display the user’s name at the top of the screen.</em>"
+</p>
+
 <%= simple_form_for [:student, team_submission] do |f| %>
   <%= f.fields_for :technical_checklist do |t| %>
+    <h3>Technical Components - Seven Points</h3>
+    <h4>Coding Operations - Use at least 4 for full points.</h4>
+    <h4>(1 point each, 4 points max)</h4>
+    <p><%= link_to "Learn in Code 2", "http://www.technovationchallenge.org/curriculum/coding-unit-2", target: :_blank %></p>
+
     <%= t.input :used_strings, as: :boolean %>
     <%= t.input :used_strings_explanation %>
 
@@ -21,12 +45,21 @@
     <%= t.input :used_conditionals, as: :boolean %>
     <%= t.input :used_conditionals_explanation %>
 
+    <h3>Databases and Connectivity</h3>
+    <h4>Use at least 1 for full points.</h4>
+    <h4>(1 point each, 1 point max)</h4>
+    <p><%= link_to "Learn in Code 2", "http://www.technovationchallenge.org/curriculum/coding-unit-2", target: :_blank %></p>
     <%= t.input :used_local_db, as: :boolean %>
     <%= t.input :used_local_db_explanation %>
 
+    <p><%= link_to "Learn in Code 4", "http://www.technovationchallenge.org/curriculum/coding-unit-4", target: :_blank %></p>
     <%= t.input :used_external_db, as: :boolean %>
     <%= t.input :used_external_db_explanation %>
 
+    <h3>Mobile Features</h3>
+    <h4>Use at least 1 for full points.</h4>
+    <h4>(1 points each, 2 points max)</h4>
+    <p><%= link_to "Learn in Code 4", "http://www.technovationchallenge.org/curriculum/coding-unit-4", target: :_blank %></p>
     <%= t.input :used_location_sensor, as: :boolean %>
     <%= t.input :used_location_sensor_explanation %>
 
@@ -44,6 +77,19 @@
 
     <%= t.input :used_screen_orientation, as: :boolean %>
     <%= t.input :used_screen_orientation_explanation %>
+
+    <h3>Pictures of your process - Three Points</h3>
+    <h4>Use all 3 for full points.</h4>
+    <p><%= link_to "Learn in Code 5", "http://www.technovationchallenge.org/curriculum/coding-unit-5", target: :_blank %></p>
+
+    <%= t.input :paper_prototype %>
+    <%= t.input :paper_prototype_cache, as: :hidden %>
+    <%= link_to('Uploaded paper prototype', t.object.paper_prototype_url, target: :_blank) if t.object.paper_prototype.present? %>
+
+    <p>
+      At least <strong>two</strong> app screenshots.<br>
+      Your team has uploaded <%= pluralize f.object.screenshots.count, "screenshot" %>.
+    </p>
   <% end %>
 
   <%= f.button :submit, class: "appy-button" %>
