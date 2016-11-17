@@ -84,7 +84,7 @@
 
     <%= t.input :paper_prototype %>
     <%= t.input :paper_prototype_cache, as: :hidden %>
-    <%= link_to('Uploaded paper prototype', t.object.paper_prototype_url, target: :_blank) if t.object.paper_prototype.present? %>
+    <%= image_tag(t.object.paper_prototype_url, width: 200) if t.object.paper_prototype.present? %>
 
     <p>
       At least <strong>two</strong> app screenshots.<br>
