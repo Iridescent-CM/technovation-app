@@ -4,11 +4,13 @@
       <%= t("views.profile_requirements.build_profile.heading") %>
       <span class="card-heading__flair fa fa-user"><!--Fontawesome--></span>
     </div>
+
     <div class="card__body">
       <%= t("views.profile_requirements.build_profile.label") %>
+
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to t("views.profile_requirements.build_profile.links.bio.text"),
-          send("edit_#{account.type_name}_profile_path", anchor: 'account-profile-details'),
+          send("edit_#{account.type_name}_profile_path", anchor: "#{account.type_name}_profile_bio"),
           class: "appy-button" %>
       </div>
     </div>

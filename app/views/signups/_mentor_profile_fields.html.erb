@@ -9,7 +9,9 @@
 
 <%= f.input :job_title %>
 
-<%= f.input :bio, label: "#{t('models.regional_ambassador_profile.bio.signup_label')}" %>
+<% if f.object.persisted? %>
+  <%= f.input :bio, label: "#{t('models.regional_ambassador_profile.bio.signup_label')}" %>
+<% end %>
 
 <h4><%= t('views.signups.form.choose_expertises') %></h4>
 
