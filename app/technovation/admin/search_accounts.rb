@@ -51,6 +51,12 @@ module Admin
 
       if params[:type] == "Mentor"
         case params[:team_status]
+        when "Needs BG check/Consent waiver"
+          accounts = accounts.includes(:background_check, :consent_waiver)
+            .references(:background_check, :consent_waivers)
+            .where("background_checks.id IS NULL OR
+                    consent_waivers.id IS NULL OR
+                    consent_waivers.voided_at IS NOT NULL")
         when "On a team"
           accounts = accounts.where("mentor_profiles.id IN
             (SELECT DISTINCT(member_id) FROM memberships
