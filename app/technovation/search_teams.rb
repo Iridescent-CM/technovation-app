@@ -70,7 +70,7 @@ module SearchTeams
   def self.sanitize_string_for_elasticsearch_string_query(str)
     # Escape special characters
     # http://lucene.apache.org/core/old_versioned_docs/versions/2_9_1/queryparsersyntax.html#Escaping Special Characters
-    escaped_characters = Regexp.escape('\\+-&|!(){}[]^~*?:')
+    escaped_characters = Regexp.escape('\\+-&|!(){}[]^~*?:\/')
     str = str.gsub(/([#{escaped_characters}])/, '\\\\\1')
 
     # AND, OR and NOT are used by lucene as logical operators. We need
