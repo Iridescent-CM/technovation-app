@@ -1,5 +1,23 @@
 <%= render 'profiles/privileged_show', edit: true, account: @account, path: edit_admin_profile_path(@account) %>
 
+<% if account.mentor_profile %>
+  <div class="flex-row">
+    <div class="flex-col-sm-12">
+      <h3><%= t("views.student.mentors.show.teams", name: account.first_name) %></h3>
+
+      <% if account.mentor_profile.teams.current.any? %>
+        <ul>
+          <%= render partial: 'student/mentors/team_preview',
+            collection: account.mentor_profile.teams.current,
+            cached: true %>
+        </ul>
+      <% else %>
+        <p><%= t("views.student.mentors.show.no_teams", name: account.first_name) %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <% if @account.mentor_profile.present? %>
   <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
               admin_mentor_drop_out_path(id: @account.id),
