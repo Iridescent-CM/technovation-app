@@ -17,8 +17,9 @@ class MentorProfile < ActiveRecord::Base
   }
 
   scope :by_gender_identities, ->(ids) {
-    if ids.compact.map(&:to_i).sort != Account.genders.values.sort
-      joins(:account).where("accounts.gender IN (?)", ids)
+    if ids.compact.map(&:to_i).sort != [Account.genders['Male'], Account.genders['Female']].sort and ids.compact.map(&:to_i).sort != Account.genders.values.sort
+      ids = ids + [Account.genders["Prefer not to say"], Account.genders["Non-binary"]]
+      joins(:account).where("accounts.gender IN (?)", ids.uniq)
     else
       joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
     end

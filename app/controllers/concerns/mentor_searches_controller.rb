@@ -9,7 +9,7 @@ module MentorSearchesController
 
     @search_filter = SearchFilter.new(search_filter_params)
     @expertises = Expertise.all
-    @gender_identities = Account.genders
+    @gender_identities = { "Female" => Account.genders['Female'], "Male" => Account.genders['Male'] }
     @mentors = SearchMentors.(@search_filter).paginate(page: params[:page])
   end
 
