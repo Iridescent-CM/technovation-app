@@ -1,7 +1,9 @@
 require 'sidekiq/web'
+require 'admin_constraint'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
+  get '/sidekiq' => 'signins#new'
 
   namespace :student do
     get :signup, to: 'signups#new'
