@@ -7,3 +7,8 @@ desc "Sweep consider background checks"
 task sweep_consider_bg_checks: :environment do
   SweepBackgroundChecks.call(:consider)
 end
+
+desc "Sweep suspended background checks"
+task sweep_consider_bg_checks: :environment do
+  SweepBackgroundChecks.call(:suspended)
+end
