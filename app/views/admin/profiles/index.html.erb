@@ -40,7 +40,7 @@
         <label class="no-text-transform">
           On a team:<br />
           <%= select_tag :team_status,
-            options_for_select(%w{All Needs\ BG\ check/Consent\ waiver On\ a\ team No\ team}, params[:team_status]),
+            options_for_select(%w{All Needs\ background\ check Needs\ consent\ waiver On\ a\ team No\ team}, params[:team_status]),
             class: "inline",
             data: { reload: true, param: :team_status } %>
         </label>
