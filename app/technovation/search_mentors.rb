@@ -1,19 +1,20 @@
 module SearchMentors
   def self.call(filter)
-    mentors = MentorProfile.where.not(account_id: filter.user.account_id)
+    mentors = MentorProfile.searchable(filter.user)
 
     unless filter.text.blank?
       sanitized_text = sanitize_string_for_elasticsearch_string_query(filter.text)
 
-      results = Account.joins(:mentor_profile).search(
-        query: {
-          query_string: {
-            query: "*#{sanitized_text}*"
-          }
-        },
-        from: 0,
-        size: 10_000,
-      ).results
+      results = Account.joins(:mentor_profile)
+        .search(
+          query: {
+            query_string: {
+              query: "*#{sanitized_text}*"
+            }
+          },
+          from: 0,
+          size: 10_000,
+        ).results
 
       mentors = mentors.where(account_id: results.flat_map { |r| r._source.id })
     end
@@ -24,19 +25,6 @@ module SearchMentors
 
     if filter.gender_identities.any?
       mentors = mentors.by_gender_identities(filter.gender_identities)
-    end
-
-    if filter.nearby.present?
-      miles = filter.nearby == "anywhere" ? 40_000 : 50
-      nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
-
-      account_ids = Account.joins(:mentor_profile)
-        .near(nearby, miles)
-        .order("distance")
-        .select(:id)
-        .map(&:id)
-
-      mentors = mentors.where(account_id: account_ids)
     end
 
     if filter.needs_team
@@ -61,7 +49,10 @@ module SearchMentors
       mentors = mentors.virtual
     end
 
-    mentors.searchable(filter.user)
+    miles = filter.nearby == "anywhere" ? 40_000 : 50
+    nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+
+    mentors.joins(:account).near(nearby, miles)
   end
 
   def self.sanitize_string_for_elasticsearch_string_query(str)

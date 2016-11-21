@@ -28,6 +28,7 @@ class MentorProfile < ActiveRecord::Base
   scope :searchable, ->(user = nil) {
     if user and user.type_name == "mentor"
       where(connect_with_mentors: true, searchable: true)
+      .where.not(account_id: user.account_id)
     else
       where(accepting_team_invites: true, searchable: true)
     end
@@ -55,6 +56,8 @@ class MentorProfile < ActiveRecord::Base
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id
+
+  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
