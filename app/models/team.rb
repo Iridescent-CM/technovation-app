@@ -17,7 +17,7 @@ class Team < ActiveRecord::Base
   mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> {
-    eager_load(season_registrations: :season)
+    joins(season_registrations: :season)
     .where("seasons.year = ?", Season.current.year)
   }
 
@@ -30,6 +30,10 @@ class Team < ActiveRecord::Base
     where.not(id: Membership.where(member_type: "MentorProfile").map(&:joinable_id))
   }
 
+  scope :accepting_mentor_requests, -> { where(accepting_mentor_requests: true) }
+
+  scope :accepting_student_requests, -> { where(accepting_student_requests: true) }
+
   after_commit :register_to_season, on: :create
 
   has_many :season_registrations, as: :registerable
@@ -40,8 +44,16 @@ class Team < ActiveRecord::Base
   has_many :team_submissions, dependent: :destroy
 
   has_many :memberships, as: :joinable, dependent: :destroy
-  has_many :students, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "StudentProfile"
-  has_many :mentors, -> { eager_load(:memberships).order("memberships.created_at") }, through: :memberships, source: :member, source_type: "MentorProfile"
+
+  has_many :students, -> { joins(:memberships).order("memberships.created_at") },
+    through: :memberships,
+    source: :member,
+    source_type: "StudentProfile"
+
+  has_many :mentors, -> { joins(:memberships).order("memberships.created_at") },
+    through: :memberships,
+    source: :member,
+    source_type: "MentorProfile"
 
   has_many :team_member_invites, dependent: :destroy
   has_many :mentor_invites, dependent: :destroy
@@ -58,6 +70,8 @@ class Team < ActiveRecord::Base
   validates :name, :description,  obscenity: { sanitize: true, replacement: "[censored]" }
 
   delegate :name, to: :division, prefix: true
+
+  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   def current_team_submission
     team_submissions.current.first

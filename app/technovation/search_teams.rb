@@ -4,25 +4,6 @@ module SearchTeams
   def self.call(filter)
     teams = Team.current
 
-    if filter.nearby.present?
-      miles = filter.nearby == "anywhere" ? 40_000 : 50
-      nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
-
-      account_ids = Account.current.near(nearby, miles).select(:id).map(&:id)
-
-      student_profile_ids = StudentProfile.where(account_id: account_ids).pluck(:id)
-      mentor_profile_ids = MentorProfile.where(account_id: account_ids).pluck(:id)
-
-      teams = teams.joins(:memberships)
-        .where("(memberships.member_id IN (?) AND memberships.member_type = ?)
-                OR
-                (memberships.member_id IN (?) AND memberships.member_type = ?)",
-                student_profile_ids,
-                "StudentProfile",
-                mentor_profile_ids,
-                "MentorProfile").uniq
-    end
-
     unless filter.text.blank?
       sanitized_text = sanitize_string_for_elasticsearch_string_query(filter.text)
 
@@ -57,14 +38,19 @@ module SearchTeams
               teams
             end
 
-    case filter.user.class.name
-    when "StudentProfile"
-      teams.select(&:accepting_student_requests?)
-    when "MentorProfile"
-      teams.select(&:accepting_mentor_requests?)
-    else
-      teams
-    end
+    teams = case filter.user.class.name
+            when "StudentProfile"
+              teams.accepting_student_requests
+            when "MentorProfile"
+              teams.accepting_mentor_requests
+            else
+              teams
+            end
+
+    miles = filter.nearby == "anywhere" ? 40_000 : 50
+    nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+
+    teams.joins(students: :account, mentors: :account).near(nearby, miles).uniq
   end
 
   def self.sanitize_string_for_elasticsearch_string_query(str)
