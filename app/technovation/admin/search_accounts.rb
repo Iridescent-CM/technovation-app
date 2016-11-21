@@ -54,7 +54,7 @@ module Admin
         when "Needs BG check/Consent waiver"
           accounts = accounts.includes(:background_check, :consent_waiver)
             .references(:background_check, :consent_waivers)
-            .where("background_checks.id IS NULL OR
+            .where("(country = 'US' AND background_checks.id IS NULL) OR
                     consent_waivers.id IS NULL OR
                     consent_waivers.voided_at IS NOT NULL")
         when "On a team"
