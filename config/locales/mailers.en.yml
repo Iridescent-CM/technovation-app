@@ -21,7 +21,7 @@ en:
     confirm_consent_finished:
       subject: "Technovation — Copy of signed consent form"
     consent_notice:
-      subject: "Reminder: Your daughter needs permission to participate in Technovation!"
+      subject: "Your daughter needs permission to participate in Technovation!"
 
   registration_mailer:
     confirm_email:
