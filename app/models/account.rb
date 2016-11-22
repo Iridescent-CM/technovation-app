@@ -116,7 +116,7 @@ class Account < ActiveRecord::Base
   end
 
   def youngest_birth_year
-    Date.today.year - 20
+    Date.today.year - 18
   end
 
   def enable_password_reset!
