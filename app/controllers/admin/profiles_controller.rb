@@ -17,8 +17,13 @@ module Admin
     end
 
     def update
-      if account.update_attributes(account_params)
-        redirect_to admin_profile_path(account),
+      type = params.keys.detect { |k| k =~ /_profile/ }
+
+      @profile = type.camelize.constantize.find(params[:id])
+      @account = @profile.account
+
+      if @profile.update_attributes(profile_params)
+        redirect_to admin_profile_path(@account),
           success: "Account information saved"
       else
         @expertises ||= Expertise.all
@@ -27,26 +32,29 @@ module Admin
     end
 
     private
-    def account_params
-      params.require("#{account.type_name}_account").permit(
-        :first_name,
-        :last_name,
-        :date_of_birth,
-        :gender,
-        :geocoded,
-        :city,
-        :state_province,
-        :country,
-        :latitude,
-        :longitude,
-        :profile_image,
-        :profile_image_cache,
-        :password,
-        "#{account.type_name}/accounts_controller"
+    def profile_params
+      params.require("#{account.type_name}_profile").permit(
+        "#{account.type_name}/profiles_controller"
         .camelize
         .constantize
         .new
-        .profile_params
+        .profile_params,
+        account_attributes: [
+          :id,
+          :first_name,
+          :last_name,
+          :date_of_birth,
+          :gender,
+          :geocoded,
+          :city,
+          :state_province,
+          :country,
+          :latitude,
+          :longitude,
+          :profile_image,
+          :profile_image_cache,
+          :password,
+        ],
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
       end
