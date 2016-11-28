@@ -45,12 +45,12 @@ class Team < ActiveRecord::Base
 
   has_many :memberships, as: :joinable, dependent: :destroy
 
-  has_many :students, -> { joins(:memberships).order("memberships.created_at") },
+  has_many :students, -> { order("memberships.created_at") },
     through: :memberships,
     source: :member,
     source_type: "StudentProfile"
 
-  has_many :mentors, -> { joins(:memberships).order("memberships.created_at") },
+  has_many :mentors, -> { order("memberships.created_at") },
     through: :memberships,
     source: :member,
     source_type: "MentorProfile"
