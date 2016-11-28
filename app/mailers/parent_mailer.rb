@@ -10,6 +10,7 @@ class ParentMailer < ApplicationMailer
 
   def confirm_consent_finished(consent)
     return unless consent.student_profile.parent_guardian_email
+
     @name = consent.student_profile.parent_guardian_name
     @student_name = consent.student_profile_full_name
     @signature = consent.electronic_signature

@@ -1,6 +1,6 @@
 <%= render 'errors', record: @parental_consent %>
 
-<%= render 'parental_consents/consent', consent: @parental_consent %>
+<%= render 'parental_consents/consent' %>
 
 <%= simple_form_for @parental_consent do |f| %>
   <%= f.input :student_profile_consent_token, as: :hidden %>
