@@ -196,7 +196,7 @@ class Account < ActiveRecord::Base
   end
 
   def consent_waiver
-    super || NoConsentWaiver.new
+    super || NullConsentWaiver.new
   end
 
   def authenticated?
@@ -269,7 +269,7 @@ class Account < ActiveRecord::Base
     end
   end
 
-  class NoConsentWaiver
+  class NullConsentWaiver
     def status
       "none"
     end
