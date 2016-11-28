@@ -195,6 +195,10 @@ class Account < ActiveRecord::Base
     consent_waiver.present?
   end
 
+  def consent_waiver
+    super || NoConsentWaiver.new
+  end
+
   def authenticated?
     true
   end
@@ -262,6 +266,12 @@ class Account < ActiveRecord::Base
 
     def locale
       I18n.default_locale
+    end
+  end
+
+  class NoConsentWaiver
+    def status
+      "none"
     end
   end
 end
