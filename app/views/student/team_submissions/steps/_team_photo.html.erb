@@ -1,19 +1,46 @@
-<div class="card">
-  <div class="card__heading">
-    Team Photo
+<!--This is now maybe broader than just 'team_photo' so maybe we should rename it-->
+
+<div class="ts-about-team simple-card">
+  <%= direct_upload_form_for uploader, html: { class: 'fancy-upload' } do |f| %>
 
     <% if team.team_photo.present? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
+      <a
+        data-uploader="true"
+        class="ts-about-team__photo"
+        style="background-image: url(<%= team.team_photo_url %>)">
+        <div class="ts-about-team__edit-photo-text">
+          Edit Team Photo
+          <span class="fa fa-camera"><!--FontAwesome--></span>
+        </div>
+      </a>
     <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
+      <a
+        data-uploader="true"
+        class="ts-about-team__photo ts-about-team__photo--no-photo">
+        <div class="ts-about-team__edit-photo-text">
+          Add Team Photo
+          <span class="fa fa-camera"><!--FontAwesome--></span>
+        </div>
+      </a>
     <% end %>
+
+    <!--
+    <p class="appy-hint"><%#= t("controllers.teams.update.change_image_hint") %></p>
+    -->
+
+    <%= f.file_field :team_photo, data: { fancy: true } %>
+    <%= f.submit t("views.application.save"), class: "appy-button" %>
+  <% end %>
+
+  <div class="ts-about-team__name">
+    <%= team.name %>
   </div>
 
-  <div class="card__body">
-    <% if team.team_photo.present? %>
-      <%= image_tag team.team_photo_url, width: "100%" %>
-    <% end %>
-
-    <%= render 'teams/upload_team_photo', uploader: uploader %>
+  <div class="ts-about-team__description">
+    <%= team.description %>
   </div>
+
+  <a href="#" class="ts-about-team__team-quick-link">
+    Go To Your Team Page
+  </a>
 </div>
