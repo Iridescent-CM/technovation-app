@@ -12,3 +12,37 @@
   animation-duration: 0.25s;
   animation-fill-mode: forwards;
 }
+
+@keyframes fade-in-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+}
+
+@mixin animation-fade-in-up {
+  animation-name: fade-in-up;
+  animation-duration: 0.5s; // CHANGE THIS
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-out-down {
+  from {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+  to {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+
+@mixin animation-fade-out-down {
+  animation-name: fade-out-down;
+  animation-duration: 0.5s; // CHANGE THIS
+  animation-fill-mode: forwards;
+}

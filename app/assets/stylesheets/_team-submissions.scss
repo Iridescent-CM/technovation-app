@@ -1,26 +1,175 @@
+// General layout
+
 .team-submissions {
-  .flex-col-md-7,
-  .flex-col-md-5 {
-    padding: 0;
-  }
+  display: flex;
 
-  .flex-col-md-7 {
-    padding-right: 0.5em;
-  }
-
-  .flex-col-md-5 {
-    padding-left: 0.5em;
-  }
-
-  .card {
+  .card,
+  .simple-card {
     margin-bottom: 1em;
   }
+}
 
-  @media screen and (max-width: $device-md) {
-    .flex-col-md-7,
-    .flex-col-md-5 {
-      padding-left: 0;
-      padding-right: 0;
+.team-submissions__row-left,
+.team-submissions__row-right {
+  width: 25%;
+}
+
+.team-submissions__row-center {
+  margin: 0 1em;
+  width: 50%;
+}
+
+// Team photo/name area
+
+.ts-about-team {
+
+  #new_image_uploaderzzz {
+    position: absolute;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+  }
+}
+
+.ts-about-team__photo {
+  background-image: image-url("placeholders/placeholder-pattern.jpg");
+  background-size: cover;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin: 0 auto 1em;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% - 2em);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+    transition: background-color 0.25s;
+  }
+
+  &:hover {
+    color: white;
+
+    &::before {
+      background-color: rgba(black, 0.25);
     }
+
+    .ts-about-team__edit-photo-text {
+      opacity: 1;
+    }
+  }
+}
+
+.ts-about-team__edit-photo-text {
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.25s;
+  width: 100%;
+}
+
+.ts-about-team__photo--no-photo .ts-about-team__edit-photo-text {
+  opacity: 1;
+}
+
+.ts-about-team__name {
+  font-size: $h3;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ts-about-team__description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.ts-about-team__team-quick-link {
+  background-color: white;
+  border: 3px solid $shamrock;
+  border-radius: 0.25em;
+  display: block;
+  padding: 0.25em;
+  text-align: center;
+  transition: background-color 0.25s, color 0.25s;
+
+  &:hover {
+    background-color: $shamrock;
+    color: white;
+  }
+}
+
+// Onboarding
+
+.submissions-onboarding-step {
+  display: none;
+  margin: 0 auto;
+  max-width: 680px;
+}
+
+.submissions-onboarding-step--show {
+  @include animation-fade-in-up;
+  display: block;
+}
+
+.submissions-onboarding-step--hide {
+  @include animation-fade-out-down;
+  display: block;
+}
+
+.submissions-onboarding-step__img {
+  $size: 150px;
+  background-color: $light-grey;
+  height: $size;
+  margin: 0.75em auto 1.75em;
+  width: $size;
+}
+
+h2.submissions-onboarding-step__heading {
+  color: $silver;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.submissions-onboarding-step__explanation {
+  margin: 0 auto 1.5em;
+  max-width: 50ch;
+  text-align: center;
+}
+
+.submissions-onboarding-step__footer {
+  display: flex;
+  justify-content: flex-end;
+
+  button .fa {
+    margin-left: 0.5em;
+    transform: translateY(1px);
+  }
+}
+
+.submissions-onboarding-step__integrity-clause {
+  @include disable-highlight;
+  background-color: $light-grey;
+  border-radius: 0.5em;
+  margin: 0 auto 1.5em;
+  max-width: 50ch;
+
+  label {
+    align-items: center;
+    display: flex;
+    padding: 0.75rem;
+    text-transform: none;
+  }
+
+  input {
+    width: 2em;
   }
 }

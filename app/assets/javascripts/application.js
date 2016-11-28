@@ -17,4 +17,6 @@
 //= require remote_forms
 //= require search_options
 //= require select_fields
+//= require submissions_onboarding
+//= require submissions_page
 //= require toast_flashes
