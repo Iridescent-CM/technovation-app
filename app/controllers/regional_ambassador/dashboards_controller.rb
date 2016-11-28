@@ -2,6 +2,7 @@ module RegionalAmbassador
   class DashboardsController < RegionalAmbassadorController
     def show
       params[:type] ||= "All"
+      params[:season] ||= Season.current.year
 
       if current_ambassador.approved?
         execute_search
