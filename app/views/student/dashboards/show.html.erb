@@ -60,6 +60,25 @@
               </div>
             </div>
           </li>
+
+          <li class="resources__item-wrapper">
+            <div class="card">
+              <div class="card__heading">
+                <%= t("views.application.submission_deliverables") %>
+                <%= fa_icon "file-text-o", class: "card-heading__flair" %>
+              </div>
+
+              <div class="card__body">
+                <p>
+                  Make sure you have everything ready to submit your app to Technovation!<br>
+
+                  <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
+                    "http://www.technovationchallenge.org/submission-guidelines/",
+                    target: "_blank" %>
+                </p>
+              </div>
+            </div>
+          </li>
         <% end %>
 
         <% if current_student.honor_code_signed? %>
