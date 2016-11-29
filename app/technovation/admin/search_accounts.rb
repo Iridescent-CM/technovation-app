@@ -5,6 +5,7 @@ module Admin
       params[:how_heard] = "All" if params[:how_heard].blank?
       params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
       params[:team_status] = "All" if params[:team_status].blank?
+      params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
 
       klass = if params[:type] == "All"
@@ -51,14 +52,6 @@ module Admin
 
       if params[:type] == "Mentor"
         case params[:team_status]
-        when "Needs background check"
-          accounts = accounts.includes(:background_check)
-            .references(:background_checks)
-            .where("country = 'US' AND background_checks.id IS NULL")
-        when "Needs consent waiver"
-          accounts = accounts.includes(:consent_waiver)
-            .references(:consent_waivers)
-            .where("consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL")
         when "On a team"
           accounts = accounts.where("mentor_profiles.id IN
             (SELECT DISTINCT(member_id) FROM memberships
@@ -83,6 +76,26 @@ module Admin
                 (SELECT DISTINCT(registerable_id) FROM season_registrations
                                                   WHERE season_registrations.registerable_type = 'Team'
                                                   AND season_registrations.season_id = ?)))", Season.current.id)
+        end
+
+        case params[:cleared_status]
+        when "Clear"
+          accounts = accounts.joins(:consent_waiver)
+            .includes(:background_check)
+            .references(:background_checks)
+            .where("country != 'US' OR
+                    background_checks.status = ?",
+                   BackgroundCheck.statuses[:clear])
+        when "Needs background check"
+          accounts = accounts.includes(:background_check)
+            .references(:background_checks)
+            .where("country = 'US' AND
+                    background_checks.id IS NULL")
+        when "Needs consent waiver"
+          accounts = accounts.includes(:consent_waiver)
+            .references(:consent_waivers)
+            .where("consent_waivers.id IS NULL OR
+                    consent_waivers.voided_at IS NOT NULL")
         end
       end
 
