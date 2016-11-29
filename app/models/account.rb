@@ -11,11 +11,11 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_password, :skip_existing_password, :geocoded
 
-  has_one :admin_profile
-  has_one :student_profile
-  has_one :mentor_profile
-  has_one :judge_profile
-  has_one :regional_ambassador_profile
+  has_one :admin_profile, dependent: :destroy
+  has_one :student_profile, dependent: :destroy
+  has_one :mentor_profile, dependent: :destroy
+  has_one :judge_profile, dependent: :destroy
+  has_one :regional_ambassador_profile, dependent: :destroy
 
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
