@@ -6,10 +6,12 @@
   color: white;
   cursor: pointer;
   display: inline-block;
+  font-family: $base-font-family;
   font-size: 1.1rem;
   font-weight: bold;
   line-height: inherit;
   margin: 0 0.5rem;
+  min-width: 0;
   padding: 0.5rem 1rem;
   text-align: center;
   text-transform: none;
@@ -43,9 +45,12 @@
   border: 0;
   color: currentColor;
   display: inline;
+  font-family: $base-font-family;
   font-size: 1em;
   font-weight: normal;
   margin: 0;
+  min-width: 0;
   outline: none;
   padding: 0;
+  text-transform: none;
 }
