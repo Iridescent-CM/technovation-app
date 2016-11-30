@@ -7,7 +7,9 @@ fog_credentials = {
   endpoint: 'https://s3.amazonaws.com',
 }
 
-Fog::Storage.new(fog_credentials).sync_clock
+unless Rails.env.test?
+  Fog::Storage.new(fog_credentials).sync_clock
+end
 
 CarrierWave.configure do |config|
   config.fog_credentials = fog_credentials
