@@ -1,27 +1,50 @@
-<div class="card">
-  <div class="card__heading">
-    App Description
+<div
+  id="ts-app-description-wrapper"
+  class="simple-card ts-app-description">
 
-    <% if submission.app_description.present? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
-    <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
-    <% end %>
+  <div class="ts-app-description__top-wrapper">
+    <div class="ts-app-description__label">
+      App Name
+    </div>
+    <div
+      id="ts-app-description-buttons-wrapper"
+      class="ts-app-description__buttons-wrapper">
+
+      <button
+        id="ts-cancel-editable-btn"
+        class="appy-button ts-app-description__cancel-btn">
+        Cancel
+      </button>
+
+      <button
+        id="ts-primary-editable-btn"
+        class="appy-button ts-app-description__primary-btn"
+      >
+        Edit App Info
+      </button>
+    </div>
   </div>
 
-  <div class="card__body">
+  <p
+    data-editable
+    data-name="name"
+    class="ts-app-description__name">
+    - No Name Given -
+  </p>
+
+  <div class="ts-app-description__label">
+    App Description
+  </div>
+  <p
+    data-editable
+    data-name="description"
+    class="ts-app-description__description">
     <% if submission.app_description.present? %>
       <%= simple_format submission.app_description %>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Edit", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
-      </div>
     <% else %>
-      <p>In 100 to 200 words, give us a description of your application.</p>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Add Description", [:edit, :student, submission, step: :app_description], class: "appy-button" %>
-      </div>
+      In 100 to 200 words, give us a description of your application.
     <% end %>
-  </div>
+  </p>
+
 </div>
+<div class="ts-app-description__edit-shade"><!--Shade for when the content is editable--></div>
