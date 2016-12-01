@@ -13,6 +13,10 @@ class StudentProfile < ActiveRecord::Base
   validates_associated :account
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy
+  has_many :void_parental_consents,
+    -> { void },
+    class_name: "ParentalConsent",
+    dependent: :destroy
 
   after_save -> { team.present? && team.reconsider_division },
     if: -> { account.date_of_birth_changed? }

@@ -1,5 +1,6 @@
 class ConsentWaiver < ActiveRecord::Base
   scope :nonvoid, -> { where("voided_at IS NULL") }
+  scope :void, -> { where("voided_at IS NOT NULL") }
 
   belongs_to :account
 

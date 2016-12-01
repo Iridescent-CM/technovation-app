@@ -94,21 +94,19 @@ class Team < ActiveRecord::Base
   end
 
   def creator_address_details
-    memberships.first && memberships.first.member && memberships.first.member_address_details
+    members.first && members.first.address_details
   end
 
   def city
-    memberships.first && memberships.first.member && memberships.first.member_city
+    members.first && members.first.city
   end
 
   def state_province
-    memberships.first && memberships.first.member && memberships.first.member_state_province
+    members.first && members.first.state_province
   end
 
   def country
-    memberships.first &&
-      memberships.first.member &&
-        Country[memberships.first.member_country].name
+    members.first && Country[members.first.country].name
   end
 
   def pending_invitee_emails

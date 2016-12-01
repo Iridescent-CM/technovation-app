@@ -2,6 +2,7 @@ class ParentalConsent < ActiveRecord::Base
   belongs_to :student_profile
 
   scope :nonvoid, -> { where('voided_at IS NULL') }
+  scope :void, -> { where('voided_at IS NOT NULL') }
 
   validates :electronic_signature, presence: true
 

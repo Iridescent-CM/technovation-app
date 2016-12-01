@@ -20,6 +20,15 @@ class Account < ActiveRecord::Base
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
+  has_many :void_honor_code_agreements,
+    -> { void },
+    class_name: "HonorCodeAgreement",
+    dependent: :destroy
+  has_many :void_consent_waivers,
+    -> { void },
+    class_name: "ConsentWaiver",
+    dependent: :destroy
+
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
