@@ -7,9 +7,9 @@ class Team < ActiveRecord::Base
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  before_create do
-    self.latitude = creator_latitude
-    self.longitude = creator_longitude
+  after_commit do
+    update_columns(latitude: creator_latitude,
+                   longitude: creator_longitude)
   end
 
   reverse_geocoded_by :latitude, :longitude
@@ -77,8 +77,6 @@ class Team < ActiveRecord::Base
   validates :name, :description,  obscenity: { sanitize: true, replacement: "[censored]" }
 
   delegate :name, to: :division, prefix: true
-
-  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   def current_team_submission
     team_submissions.current.first
