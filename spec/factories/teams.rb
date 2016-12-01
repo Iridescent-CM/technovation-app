@@ -15,10 +15,11 @@ FactoryGirl.define do
       members_count 1
     end
 
-    after(:create) do |team, evaluator|
-      evaluator.members_count.times do
-        team.add_student(FactoryGirl.create(:student, geocoded: evaluator.creator_in))
-      end
+    before(:create) do |team, evaluator|
+      members = evaluator.members_count.times.collect {
+        FactoryGirl.create(:student, geocoded: evaluator.creator_in)
+      }
+      team.student_ids = members.map(&:id)
     end
   end
 

@@ -18,7 +18,7 @@ class StudentProfile < ActiveRecord::Base
     class_name: "ParentalConsent",
     dependent: :destroy
 
-  after_save -> { team.present? && team.reconsider_division },
+  after_save -> { team.present? && team.reconsider_division_with_save },
     if: -> { account.date_of_birth_changed? }
 
   after_update :reset_parent

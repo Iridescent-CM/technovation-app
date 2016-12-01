@@ -7,11 +7,7 @@ class Team < ActiveRecord::Base
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  after_commit do
-    update_columns(latitude: creator_latitude,
-                   longitude: creator_longitude)
-  end
-
+  before_create :update_geocoding
   reverse_geocoded_by :latitude, :longitude
 
   after_save    { IndexTeamJob.perform_later("index", id) }
@@ -99,27 +95,23 @@ class Team < ActiveRecord::Base
   end
 
   def creator_address_details
-    members.first && members.first.address_details
-  end
-
-  def creator_latitude
-    members.first && members.first.latitude
-  end
-
-  def creator_longitude
-    members.first && members.first.longitude
+    creator.address_details
   end
 
   def city
-    members.first && members.first.city
+    creator.city
   end
 
   def state_province
-    members.first && members.first.state_province
+     creator.state_province
   end
 
   def country
-    members.first && Country[members.first.country].name
+    Country[creator.country].name
+  end
+
+  def creator
+    members.first || NullCreator.new
   end
 
   def pending_invitee_emails
@@ -129,6 +121,7 @@ class Team < ActiveRecord::Base
   def add_mentor(mentor)
     if !!mentor and not mentors.include?(mentor)
       mentors << mentor
+      update_geocoding if mentor == creator
       save
     end
   end
@@ -136,7 +129,9 @@ class Team < ActiveRecord::Base
   def add_student(student)
     if !!student and not students.include?(student) and spot_available?
       students << student
+      update_geocoding if student == creator
       reconsider_division
+      save
     end
   end
 
@@ -146,11 +141,16 @@ class Team < ActiveRecord::Base
                                     member_id: student.id)
     membership.destroy
     reconsider_division
+    save
+  end
+
+  def reconsider_division_with_save
+    reconsider_division
+    save
   end
 
   def reconsider_division
     self.division = Division.for(self)
-    save
   end
 
   def current?
@@ -165,7 +165,25 @@ class Team < ActiveRecord::Base
     team_submissions.current.last
   end
 
+  class NullCreator
+    def address_details; end
+    def latitude; end
+    def longitude; end
+    def city; end
+    def state_province; end
+    def country; end
+
+    def present?
+      false
+    end
+  end
+
   private
+  def update_geocoding
+    self.latitude = creator.latitude
+    self.longitude = creator.longitude
+  end
+
   def register_to_season
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)
