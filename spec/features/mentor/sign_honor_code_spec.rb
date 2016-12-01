@@ -39,8 +39,8 @@ RSpec.feature "Mentors sign the honor code" do
     expect(page).to have_content("can't be blank")
   end
 
-  scenario "an invalid profile without an honor code agreement is interrupted" do
-    %w{student mentor}.each do |type|
+  %w{student mentor}.each do |type|
+    scenario "an invalid #{type} profile without an honor code agreement is interrupted" do
       profile = FactoryGirl.create(type)
 
       profile.account.update_columns(latitude: nil, longitude: nil, city: nil, state_province: nil)

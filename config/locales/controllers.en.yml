@@ -3,6 +3,7 @@ en:
     application:
       already_authenticated: "You are already signed in."
       general_error: "Sorry, but something went wrong. It probably wasn't your fault."
+      generic_unauthenticated: "You must be signed in to go there!"
       unauthenticated: "You must be signed in as %{profile} to go there!"
       unauthorized: "You don't have permission to go there!"
 
