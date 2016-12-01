@@ -1,8 +1,8 @@
 class UpdatePrimaryLocationOnTeams < ActiveRecord::Migration
   def up
     Team.where(latitude: nil, longitude: nil).find_each do |team|
-      team.update_columns(latitude: team.creator_latitude,
-                          longitude: team.creator_longitude)
+      team.update_geocoding
+      team.save
     end
   end
 end
