@@ -27,6 +27,8 @@ class TeamSubmission < ActiveRecord::Base
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
 
+  validates :app_name, presence: true
+
   validates :app_description, length: {
     minimum: 100,
     tokenizer: ->(d) { d.scan(/\S+/) },

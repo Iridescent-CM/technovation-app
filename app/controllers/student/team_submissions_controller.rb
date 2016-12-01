@@ -49,16 +49,25 @@ module Student
 
         head 200
       elsif @team_submission.update_attributes(team_submission_params)
-        redirect_to [:student, @team_submission],
-          success: t("controllers.team_submissions.update.success")
+        if request.xhr?
+          head 200
+        else
+          redirect_to [:student, @team_submission],
+            success: t("controllers.team_submissions.update.success")
+        end
       else
-        render :new
+        if request.xhr?
+          render json: @team_submission.errors.messages, status: 422
+        else
+          render :new
+        end
       end
     end
 
     private
     def team_submission_params
       params.require(:team_submission).permit(
+        :app_name,
         :app_description,
         :integrity_affirmed,
         :source_code_external_url,
