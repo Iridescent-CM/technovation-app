@@ -7,6 +7,13 @@ class Team < ActiveRecord::Base
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
+  before_create do
+    self.latitude = creator_latitude
+    self.longitude = creator_longitude
+  end
+
+  reverse_geocoded_by :latitude, :longitude
+
   after_save    { IndexTeamJob.perform_later("index", id) }
   after_destroy { IndexTeamJob.perform_later("delete", id) }
 
@@ -95,6 +102,14 @@ class Team < ActiveRecord::Base
 
   def creator_address_details
     members.first && members.first.address_details
+  end
+
+  def creator_latitude
+    members.first && members.first.latitude
+  end
+
+  def creator_longitude
+    members.first && members.first.longitude
   end
 
   def city

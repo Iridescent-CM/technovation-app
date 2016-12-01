@@ -44,17 +44,13 @@ module SearchTeams
     miles = filter.nearby == "anywhere" ? 40_000 : 50
     nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
-    teams = teams.joins(:memberships)
-      .joins("LEFT JOIN student_profiles ON student_profiles.id = memberships.member_id")
-      .joins("LEFT JOIN mentor_profiles ON mentor_profiles.id = memberships.member_id")
-      .joins("INNER JOIN accounts ON accounts.id = mentor_profiles.account_id OR accounts.id = student_profiles.account_id")
-      .near(nearby, miles)
+    teams = teams.near(nearby, miles)
 
     if filter.spot_available
-      teams = teams.select(&:spot_available?)
+      teams.select(&:spot_available?)
+    else
+      teams
     end
-
-    teams.uniq
   end
 
   def self.sanitize_string_for_elasticsearch_string_query(str)
