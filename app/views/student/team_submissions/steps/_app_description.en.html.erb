@@ -1,6 +1,9 @@
-<div
-  id="ts-app-description-wrapper"
-  class="simple-card ts-app-description">
+<%= content_tag :div, id: "ts-app-description-wrapper",
+                      class: "simple-card ts-app-description",
+                      data: {
+                        object_name: "team_submission",
+                        update_url: student_team_submission_path(@team_submission),
+                      } do %>
 
   <div class="ts-app-description__top-wrapper">
     <div class="ts-app-description__label">
@@ -27,9 +30,9 @@
 
   <p
     data-editable
-    data-name="name"
+    data-name="app_name"
     class="ts-app-description__name">
-    - No Name Given -
+    <%= @team_submission.app_name %>
   </p>
 
   <div class="ts-app-description__label">
@@ -37,7 +40,7 @@
   </div>
   <p
     data-editable
-    data-name="description"
+    data-name="app_description"
     class="ts-app-description__description">
     <% if submission.app_description.present? %>
       <%= simple_format submission.app_description %>
@@ -45,6 +48,6 @@
       In 100 to 200 words, give us a description of your application.
     <% end %>
   </p>
+<% end %>
 
-</div>
 <div class="ts-app-description__edit-shade"><!--Shade for when the content is editable--></div>
