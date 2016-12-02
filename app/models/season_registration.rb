@@ -11,7 +11,14 @@ class SeasonRegistration < ActiveRecord::Base
       if season == Season.current and
           registerable.respond_to?(:student_profile) and
             registerable.student_profile.present?
+
         RegistrationMailer.welcome_student(registerable).deliver_later
+
+        profile = registerable.student_profile
+
+        if profile.parent_guardian_email and profile.parental_consent.nil?
+          ParentMailer.consent_notice(profile).deliver_later
+        end
       end
     end
   end
