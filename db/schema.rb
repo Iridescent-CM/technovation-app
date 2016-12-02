@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201145445) do
+ActiveRecord::Schema.define(version: 20161202203657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -326,6 +325,8 @@ ActiveRecord::Schema.define(version: 20161201145445) do
     t.string   "app_name"
     t.string   "demo_video_link"
     t.string   "pitch_video_link"
+    t.string   "pitch_presentation"
+    t.string   "development_platform"
   end
 
   add_index "team_submissions", ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
