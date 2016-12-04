@@ -66,8 +66,6 @@
       [wrapper.dataset.objectName]: tempObject
     }
 
-    // Todo: Show success toast if success and error if error.
-    // If success, update content in contentObj to match tempObject
     $.ajax(path, {
       method: 'PUT',
       data: payload,
