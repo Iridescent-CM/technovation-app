@@ -16,7 +16,8 @@
     <% else %>
       <a
         data-uploader="true"
-        class="ts-about-team__photo ts-about-team__photo--no-photo">
+        class="ts-about-team__photo ts-about-team__photo--no-photo"
+        style="background-image: url(<%= team.team_photo_url %>)">
         <div class="ts-about-team__edit-photo-text">
           Add Team Photo
           <span class="fa fa-camera"><!--FontAwesome--></span>
@@ -40,7 +41,7 @@
     <%= team.description %>
   </div>
 
-  <a href="#" class="ts-about-team__team-quick-link">
+  <a href="/student/teams/<%= team.id %>" class="ts-about-team__team-quick-link">
     Go To Your Team Page
   </a>
 </div>
