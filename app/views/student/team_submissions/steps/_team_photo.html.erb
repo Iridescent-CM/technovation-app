@@ -1,5 +1,4 @@
 <!--This is now maybe broader than just 'team_photo' so maybe we should rename it-->
-
 <div class="ts-about-team simple-card">
   <%= direct_upload_form_for uploader, html: { class: 'fancy-upload' } do |f| %>
 
@@ -24,10 +23,6 @@
         </div>
       </a>
     <% end %>
-
-    <!--
-    <p class="appy-hint"><%#= t("controllers.teams.update.change_image_hint") %></p>
-    -->
 
     <%= f.file_field :team_photo, data: { fancy: true } %>
     <%= f.submit t("views.application.save"), class: "appy-button" %>
