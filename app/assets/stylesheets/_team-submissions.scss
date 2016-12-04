@@ -229,10 +229,17 @@ h2.submissions-onboarding-step__heading {
 .ts-app-description__name {
   font-size: 1.2em;
   font-weight: bold;
+  outline: none;
+
+  &:empty::before {
+    content: 'App Name';
+    color: $mid-grey;
+  }
 }
 
 .ts-app-description__description {
   opacity: 1;
+  outline: none;
 }
 
 .ts-app-description--editable {

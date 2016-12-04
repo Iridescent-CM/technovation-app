@@ -64,13 +64,20 @@
     $.ajax(path, {
       method: 'PUT',
       data: payload,
+      success: function(res, status) {
+        console.log('success', arguments[0]);
+        createFlashNotification('success', 'Your app description has been updated!');
+        removeContentEditable();
+      },
       error: function(res, status) {
-        if (res.status === 422) {
-          console.log({ res: res });
+        var responseText = JSON.parse(res.responseText);
+        var errorKeys = Object.keys(responseText);
+        for (var i = 0; i < errorKeys.length; i++) {
+          var currentError = errorKeys[i] + ' ' + responseText[errorKeys[i]];
+          createFlashNotification('error', currentError);
         }
+        cancelChanges();
       }
-    }).done(function(res) {
-      removeContentEditable();
     });
 
   }
