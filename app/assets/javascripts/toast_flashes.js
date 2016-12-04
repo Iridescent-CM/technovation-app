@@ -1,3 +1,4 @@
+// Available flash types: 'alert', 'error', 'notice', 'success'
 function createFlashNotification(type, message) {
   var flashWrapper = document.createElement('div');
   flashWrapper.classList.add('flash', 'flash--show','flash--' + type);
