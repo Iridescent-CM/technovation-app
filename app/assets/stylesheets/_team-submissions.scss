@@ -66,8 +66,14 @@
   width: 100%;
 }
 
-.ts-about-team__photo--no-photo .ts-about-team__edit-photo-text {
-  opacity: 1;
+.ts-about-team__photo--no-photo {
+  &::before {
+    background-color: rgba(black, 0.25);
+  }
+
+  .ts-about-team__edit-photo-text {
+    opacity: 1;
+  }
 }
 
 .ts-about-team__name {
