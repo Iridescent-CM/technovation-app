@@ -9,6 +9,13 @@
   var cancelEditableButton = document.getElementById("ts-cancel-editable-btn");
   var editableContent = wrapper.querySelectorAll('[data-editable]');
 
+  var nameField = Array.prototype.find.call(editableContent, function(node) {
+    return node.dataset.name === 'app_name';
+  });
+  var descriptionField = Array.prototype.find.call(editableContent, function(node) {
+    return node.dataset.name === 'app_description';
+  });
+
   var editableWrapperClass = 'ts-app-description--editable';
   var visibleCancelButtonClass = 'ts-app-description__cancel-btn--show';
 
@@ -65,7 +72,6 @@
       method: 'PUT',
       data: payload,
       success: function(res, status) {
-        console.log('success', arguments[0]);
         createFlashNotification('success', 'Your app description has been updated!');
         removeContentEditable();
       },
