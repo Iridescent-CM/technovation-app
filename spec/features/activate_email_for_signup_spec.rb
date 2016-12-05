@@ -5,12 +5,12 @@ RSpec.feature "Activate your email to sign up" do
     visit root_path
 
     fill_in "Email address", with: "joejoesak.com"
-    click_button "Get started"
+    click_button "Get Started"
 
     expect(page).to have_content("doesn't appear to be an email address")
 
     fill_in "Email address", with: "joe@joesak.com."
-    click_button "Get started"
+    click_button "Get Started"
 
     expect(page).to have_content("doesn't appear to be an email address")
   end
@@ -23,7 +23,7 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "Email address", with: "joe@joesak.com"
     fill_in "Create a password", with: "secret1234"
-    click_button "Get started"
+    click_button "Get Started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
     expect(current_path).to eq(judge_dashboard_path)
@@ -35,7 +35,7 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "Email address", with: "joe@joesak.com"
     fill_in "Create a password", with: "secret1234"
-    click_button "Get started"
+    click_button "Get Started"
 
     expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
     expect(page).to have_content("Check your spam folder")
@@ -51,7 +51,7 @@ RSpec.feature "Activate your email to sign up" do
     visit root_path
     fill_in "Email address", with: "joe@joesak.com"
     fill_in "Create a password", with: "secret1234"
-    click_button "Get started"
+    click_button "Get Started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
     expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
@@ -64,7 +64,7 @@ RSpec.feature "Activate your email to sign up" do
 
     fill_in "Email address", with: "joe@joesak.com"
     fill_in "Create a password", with: "secret1234"
-    click_button "Get started"
+    click_button "Get Started"
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present, "no confirmation email sent"
