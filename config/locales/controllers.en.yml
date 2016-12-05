@@ -107,6 +107,8 @@ en:
       create:
         already_on_team: "You cannot create a new team if you are already on a team"
         success: "Your team has been created! Lookin' good!"
+      edit:
+        link: "Edit name & description"
       index:
         browse: "browse available teams"
       new:
