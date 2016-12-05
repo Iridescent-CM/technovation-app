@@ -26,7 +26,7 @@
 
 @mixin animation-fade-in-up {
   animation-name: fade-in-up;
-  animation-duration: 0.5s; // CHANGE THIS
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
@@ -43,6 +43,6 @@
 
 @mixin animation-fade-out-down {
   animation-name: fade-out-down;
-  animation-duration: 0.5s; // CHANGE THIS
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
