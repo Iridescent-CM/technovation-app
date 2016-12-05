@@ -37,7 +37,7 @@ end
 past = Season.current.year - 1
 
 if (student = StudentProfile.create(school_name: "John Hughes High",
-                                    parent_guardian_email: "parent@parent.com",
+                                    parent_guardian_email: "joe+parent@joesak.com",
                                     parent_guardian_name: "Parent Name",
                                     account_attributes: {
                                       email: "past@student.com",
