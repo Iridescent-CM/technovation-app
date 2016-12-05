@@ -56,11 +56,7 @@ module Student
             success: t("controllers.team_submissions.update.success")
         end
       else
-        if request.xhr?
-          render json: @team_submission.errors.messages, status: 422
-        else
-          render :new
-        end
+        render :new
       end
     end
 

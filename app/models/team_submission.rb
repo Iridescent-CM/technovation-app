@@ -26,13 +26,4 @@ class TeamSubmission < ActiveRecord::Base
 
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
-
-  # Line below breaks things when on the Team Submission 'Integrity' step
-  # validates :app_name, presence: true
-
-  validates :app_description, length: {
-    minimum: 100,
-    tokenizer: ->(d) { d.scan(/\S+/) },
-    too_short: "must have at least %{count} words",
-  }, if: -> { step == "app_description" }
 end
