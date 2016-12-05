@@ -29,7 +29,7 @@ RSpec.feature "Student team submissions" do
   scenario "Add a URL to the app source code" do
     student = FactoryGirl.create(:student, :on_team)
 
-    student.team.team_submissions.create
+    student.team.team_submissions.create(integrity_affirmed: true)
     sign_in(student)
     click_link "My team's submission"
     click_link "Attach Source Code"

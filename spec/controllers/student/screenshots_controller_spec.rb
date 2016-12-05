@@ -4,7 +4,7 @@ RSpec.describe Student::ScreenshotsController do
   describe "DELETE #destroy" do
     it "destroys screenshots by id" do
       student = FactoryGirl.create(:student, :on_team)
-      team_submission = student.team.team_submissions.create!
+      team_submission = student.team.team_submissions.create!(integrity_affirmed: true)
       screenshot = team_submission.screenshots.create!
 
       sign_in(student)
@@ -16,7 +16,7 @@ RSpec.describe Student::ScreenshotsController do
 
     it "does not destroy screenshots that don't belong to the student" do
       student = FactoryGirl.create(:student, :on_team)
-      team_submission = student.team.team_submissions.create!
+      team_submission = student.team.team_submissions.create!(integrity_affirmed: true)
       team_submission.screenshots.create!
 
       other = Screenshot.create!

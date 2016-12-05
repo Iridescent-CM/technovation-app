@@ -4,7 +4,7 @@ RSpec.describe Student::TeamSubmissionsController do
   describe "PATCH #update" do
     it "can handle sorting" do
       student = FactoryGirl.create(:student, :on_team)
-      team_submission = student.team.team_submissions.create!
+      team_submission = student.team.team_submissions.create!(integrity_affirmed: true)
 
       screenshot1 = team_submission.screenshots.create!
       screenshot2 = team_submission.screenshots.create!
