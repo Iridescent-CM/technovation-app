@@ -52,7 +52,6 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       season_ids: [Season.find_or_create_by(year: past,
                                                                             starts_at: Time.new(past, 1, 1, 9, 0, 0, "-08:00")).id],
                                     })).valid?
-  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="
   puts ""
