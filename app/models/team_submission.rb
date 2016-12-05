@@ -26,4 +26,10 @@ class TeamSubmission < ActiveRecord::Base
 
   has_many :season_registrations, dependent: :destroy, as: :registerable
   has_many :seasons, through: :season_registrations
+
+  validate -> {
+    unless integrity_affirmed?
+      errors.add(:integrity_affirmed, :accepted)
+    end
+  }
 end
