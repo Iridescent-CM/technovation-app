@@ -25,6 +25,41 @@ RSpec.describe ParentalConsentsController do
       expect(mail.to).to eq([student.email])
       expect(mail.subject).to eq("Technovation next steps: Your parent/guardian signed your permission form!")
     end
+
+    it "allows parents to opt out of the newsletter" do
+      student = FactoryGirl.create(:student, :full_profile)
+
+      allow(SubscribeEmailListJob).to receive(:perform_later)
+
+      post :create,
+        parental_consent: FactoryGirl.attributes_for(
+          :parental_consent,
+          student_profile_consent_token: student.consent_token
+        ).merge(newsletter_opt_in: "0")
+
+      expect(SubscribeEmailListJob).not_to have_received(:perform_later)
+        .with(student.parent_guardian_email,
+              student.parent_guardian_name,
+              "PARENT_LIST_ID")
+    end
+
+    it "allows parents to opt in to the newsletter" do
+      student = FactoryGirl.create(:student, :full_profile)
+
+      allow(SubscribeEmailListJob).to receive(:perform_later)
+
+      post :create,
+        parental_consent: FactoryGirl.attributes_for(
+          :parental_consent,
+          student_profile_consent_token: student.consent_token
+        ).merge(newsletter_opt_in: "1")
+
+      expect(SubscribeEmailListJob).to have_received(:perform_later)
+        .at_least(:once)
+        .with(student.parent_guardian_email,
+              student.parent_guardian_name,
+              "PARENT_LIST_ID")
+    end
   end
 
   describe "GET #new" do

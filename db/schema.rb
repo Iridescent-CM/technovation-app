@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202203657) do
+ActiveRecord::Schema.define(version: 20161205173607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 20161202203657) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "voided_at"
+    t.boolean  "newsletter_opt_in"
   end
 
   add_index "parental_consents", ["student_profile_id"], name: "index_parental_consents_on_student_profile_id", using: :btree

@@ -5,7 +5,10 @@ class ParentalConsentsController < ApplicationController
 
   def new
     if valid_token?
-      @parental_consent = ParentalConsent.new(student_profile_consent_token: params.fetch(:token))
+      @parental_consent = ParentalConsent.new(
+        student_profile_consent_token: params.fetch(:token),
+        newsletter_opt_in: true,
+      )
     else
       redirect_to application_dashboard_path,
                   alert: t("controllers.parental_consents.new.unauthorized")
@@ -29,7 +32,10 @@ class ParentalConsentsController < ApplicationController
   end
 
   def parental_consent_params
-    params.require(:parental_consent).permit(:student_profile_consent_token,
-                                             :electronic_signature)
+    params.require(:parental_consent).permit(
+      :student_profile_consent_token,
+      :electronic_signature,
+      :newsletter_opt_in,
+    )
   end
 end
