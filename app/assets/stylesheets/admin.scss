@@ -1,5 +1,67 @@
 @import "application";
 
+.admin-container {
+  height: 100%;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+
+  -ms-flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+}
+
+.admin-body {
+  -ms-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
+  padding: 1rem;
+  flex-direction: column;
+}
+
+.admin-navigation {
+  -ms-flex: 0 100px;
+  -webkit-box-flex:  0;
+  -moz-box-flex:  0;
+  -ms-box-flex:  0;
+  box-flex:  0;
+  flex-direction: column;
+  flex-grow: 1;
+
+  height: 100%;
+  max-width: 300px;
+  background: #36454F;
+
+  .logo {
+    padding: 1rem;
+    margin: 0 0 2rem;
+    display: block;
+  }
+
+  .nav-link {
+    a {
+      display: block;
+      padding: 1rem 2rem;
+      &:hover {
+        background-color: #5ABF94;
+        color: #36454F;
+      }
+    }
+
+    &.active a {
+      background-color: darken(#5ABF94, 10);
+      color: #36454F;
+      font-weight: bold;
+    }
+  }
+}
+
 .form_actions {
   @include span-columns(12);
   padding: 1rem 0 0;
@@ -57,4 +119,3 @@
     padding: 0.5rem 0;
   }
 }
-
