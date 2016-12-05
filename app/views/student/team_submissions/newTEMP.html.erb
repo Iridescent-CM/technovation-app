@@ -1,0 +1,48 @@
+<p class="notify-banner notify-banner--notice">THIS IS A WORK IN PROGRESS ACCESSIBLE ON QA ONLY - NOT READY FOR TESTING - FEEL FREE TO PLAY AROUND WITH IT THOUGH</p>
+
+<div class="submissions-onboarding" id="submissions-onboarding">
+
+  <div class="submissions-onboarding-step simple-card">
+    <div class="submissions-onboarding-step__img">
+      <!--An image would go here-->
+    </div>
+    <h2 class="submissions-onboarding-step__heading">Your Team's Submission</h2>
+    <p class="submissions-onboarding-step__explanation">Praeterea iter est quasdam res quas ex communi. Quis aute iure reprehenderit in voluptate velit esse. A communi observantia non est recedendum. Morbi fringilla convallis sapien.</p>
+    <div class="submissions-onboarding-step__footer">
+      <button data-next-step class="appy-button">
+        Continue <span class="fa fa-chevron-right"><!--FontAwesome--></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="submissions-onboarding-step simple-card">
+    <div class="submissions-onboarding-step__img">
+      <!--An image would go here-->
+    </div>
+    <h2 class="submissions-onboarding-step__heading">Placeholder Step Two</h2>
+    <p class="submissions-onboarding-step__explanation">Ullamco laboris nisi ut aliquid ex ea commodi consequat. Curabitur blandit tempus ardua ridiculus sed magna. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh.</p>
+    <div class="submissions-onboarding-step__footer">
+      <button data-next-step class="appy-button">
+        Continue <span class="fa fa-chevron-right"><!--FontAwesome--></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="submissions-onboarding-step simple-card">
+    <div class="submissions-onboarding-step__img">
+      <!--An image would go here-->
+    </div>
+    <h2 class="submissions-onboarding-step__heading">Before we get started,<br>please agree to the Integrity Clause</h2>
+    <%= simple_form_for [:student, @team_submission], html: { class: "no-simple-form-style" } do |f| %>
+      <%= render 'errors', record: @team_submission %>
+
+      <div class="submissions-onboarding-step__integrity-clause">
+        <%= f.input :integrity_affirmed, as: :boolean, label: t("models.team_submission.integrity_affirmed") %>
+      </div>
+      <div class="submissions-onboarding-step__footer">
+        <%= f.button :submit, t("views.application.get_started"), class: "appy-button" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
