@@ -19,7 +19,6 @@
   var editableWrapperClass = 'ts-app-description--editable';
   var visibleCancelButtonClass = 'ts-app-description__cancel-btn--show';
 
-  // actual object
   var contentObj = Array.prototype.reduce.call(editableContent, function(obj, node) {
     obj[node.dataset.name] = node.innerText;
     return obj;
@@ -42,6 +41,21 @@
       node.addEventListener('input', editTempObject);
     });
 
+    setTimeout(function() {
+      // If app has no name, place cursor in the app name field
+      if (!nameField.innerText) {
+        nameField.focus();
+      } else {
+        // Otherwise place cursor at the end of the description field
+        var range = document.createRange();
+        range.selectNodeContents(descriptionField);
+        range.collapse(false);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }, 0);
+
     primaryEditableButton.addEventListener('click', saveChanges);
     cancelEditableButton.addEventListener('click', cancelChanges);
   }
@@ -52,7 +66,7 @@
   }
 
   function cloneContentObjToTempObj() {
-    Object.keys(contentObj).forEach((key) => {
+    Object.keys(contentObj).forEach(function(key) {
       tempObject[key] = contentObj[key];
     });
   }
@@ -62,9 +76,8 @@
     primaryEditableButton.removeEventListener('click', saveChanges);
 
     var path = wrapper.dataset.updateUrl;
-    var payload = {
-      [wrapper.dataset.objectName]: tempObject
-    }
+    var payload = {};
+    payload[wrapper.dataset.objectName] = tempObject;
 
     $.ajax(path, {
       method: 'PUT',
@@ -87,6 +100,7 @@
   }
 
   function cancelChanges() {
+    primaryEditableButton.removeEventListener('click', saveChanges);
     cancelEditableButton.removeEventListener('click', cancelChanges);
 
     cloneContentObjToTempObj();

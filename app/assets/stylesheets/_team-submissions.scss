@@ -7,6 +7,10 @@
   .simple-card {
     margin-bottom: 1em;
   }
+
+  @media (max-width: $device-sm) {
+    flex-direction: column;
+  }
 }
 
 .team-submissions__row-left,
@@ -17,6 +21,15 @@
 .team-submissions__row-center {
   margin: 0 1em;
   width: 50%;
+}
+
+@media (max-width: $device-sm) {
+  .team-submissions__row-left,
+  .team-submissions__row-right,
+  .team-submissions__row-center {
+    margin: 0;
+    width: 100%;
+  }
 }
 
 // Team photo/name area
@@ -30,6 +43,7 @@
   display: block;
   font-weight: bold;
   margin: 0 auto 1em;
+  max-width: 300px;
   overflow: hidden;
   position: relative;
   width: calc(100% - 2em);
