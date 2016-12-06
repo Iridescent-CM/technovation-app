@@ -9,9 +9,7 @@
 <div class="flex-row dashboard">
 
   <div class="flex-col-sm-8 dashboard__main">
-    <% if current_student.parental_consent.present? and current_student.is_on_team? and current_student.team_has_mentor? %>
-      <%= render 'quick_links', account: current_student %>
-    <% else %>
+    <% unless current_student.parental_consent.present? and current_student.is_on_team? and current_student.team_has_mentor? %>
       <%= render 'completion_steps' %>
     <% end %>
 
@@ -21,25 +19,6 @@
       </h2>
 
       <ul class="resources__list">
-        <li class="resources__item-wrapper">
-          <div class="card">
-            <div class="card__heading">
-              Internet Safety
-              <%= fa_icon("lock", class: "card-heading__flair") %>
-            </div>
-
-            <div class="card__body">
-              <p>
-                Please take some time right now to learn about internet safety and digital literacy. We want you to be safe and well-informed as you participate in online programs!
-              </p>
-
-              <p>
-                <%= link_to "Take the Internet Safety Training", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
-              </p>
-            </div>
-          </div>
-        </li>
-
         <% if current_student.parental_consent.present? %>
           <li class="resources__item-wrapper">
             <div class="card">
@@ -81,6 +60,25 @@
           </li>
         <% end %>
 
+        <li class="resources__item-wrapper">
+          <div class="card">
+            <div class="card__heading">
+              Internet Safety
+              <%= fa_icon("lock", class: "card-heading__flair") %>
+            </div>
+
+            <div class="card__body">
+              <p>
+                Please take some time right now to learn about internet safety and digital literacy. We want you to be safe and well-informed as you participate in online programs!
+              </p>
+
+              <p>
+                <%= link_to "Take the Internet Safety Training", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
+              </p>
+            </div>
+          </div>
+        </li>
+
         <% if current_student.honor_code_signed? %>
           <li class="resources__item-wrapper">
             <%= render 'honor_code_signed', account: current_student %>
@@ -91,6 +89,10 @@
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
-    <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
+    <% if current_student.is_on_team? %>
+      <%= render 'quick_links' %>
+    <% else %>
+      <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
+    <% end %>
   </div>
 </div>
