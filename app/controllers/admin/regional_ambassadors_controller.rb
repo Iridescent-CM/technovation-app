@@ -2,7 +2,26 @@ module Admin
   class RegionalAmbassadorsController < AdminController
     def index
       params[:status] ||= :pending
-      @regional_ambassadors = RegionalAmbassadorProfile.public_send(params.fetch(:status))
+
+      regional_ambassadors = Account.joins(:regional_ambassador_profile)
+        .where("regional_ambassador_profiles.status = ?",
+               RegionalAmbassadorProfile.statuses[params.fetch(:status)])
+
+      unless params[:text].blank?
+        results = regional_ambassadors.search({
+          query: {
+            query_string: {
+              query: "*#{params[:text]}*"
+            },
+          },
+          from: 0,
+          size: 10_000
+        }).results
+
+        regional_ambassadors = regional_ambassadors.where(id: results.flat_map { |r| r._source.id })
+      end
+
+      @regional_ambassadors = regional_ambassadors.paginate(per_page: params[:per_page], page: params[:page])
     end
 
     def show

@@ -28,6 +28,27 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
+  def export_regional_ambassadors(admin, token, params)
+    params[:type] = "RegionalAmbassador"
+    params[:season] = Season.current.year
+    params[:status] ||= "pending"
+
+    ambassadors = Account.current.joins(:regional_ambassador_profile).where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[params[:status]])
+    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{params[:status]}-#{token}.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{Status Signed\ up First\ name Last\ name Email City State Country}
+
+      ambassadors.each do |ambassador|
+        csv << [ambassador.regional_ambassador_profile.status, ambassador.created_at,
+                ambassador.first_name, ambassador.last_name, ambassador.email,
+                ambassador.city, ambassador.state_province, Country[ambassador.country].name]
+      end
+    end
+
+    export(filepath, admin, params[:export_email])
+  end
+
   def export_teams(admin, token, params)
     teams = Admin::SearchTeams.(params)
     filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams-#{token}.csv"
