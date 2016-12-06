@@ -48,12 +48,23 @@ Airbrake.configure do |c|
   # Airbrake. By default, all "password" attributes will have their contents
   # replaced.
   # https://github.com/airbrake/airbrake-ruby#blacklist_keys
-  c.blacklist_keys = [/password/i, :ssn, :drivers_license_number, :email,
-                      :last_name, :parent_guardian_name, :parent_guardian_email,
-                      /date_of_birth/i]
+  c.blacklist_keys = Rails.application.config.filter_parameters
 end
 
 # If Airbrake doesn't send any expected exceptions, we suggest to uncomment the
 # line below. It might simplify debugging of background Airbrake workers, which
 # can silently die.
 # Thread.abort_on_exception = ['test', 'development'].include?(Rails.env)
+
+Airbrake.add_filter do |notice|
+ ignored = %w{
+   ActiveRecord::RecordNotFound
+   ActiveJob::DeserializationError
+   Net::SMTPFatalError
+   ActionController::InvalidAuthenticityToken
+ }
+
+  if notice[:errors].any? { |error| ignored.include?(error[:type]) }
+    notice.ignore!
+  end
+end
