@@ -107,7 +107,7 @@ class Team < ActiveRecord::Base
   end
 
   def country
-    Country[creator.country].name
+    Country[creator.country].name if creator.present?
   end
 
   def creator
