@@ -1,4 +1,5 @@
-  languagr: "English"
+en:
+  language: "English"
 
   views:
     application:
