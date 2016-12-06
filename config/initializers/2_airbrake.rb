@@ -63,6 +63,7 @@ Airbrake.add_filter do |notice|
    Net::SMTPFatalError
    ActionController::InvalidAuthenticityToken
    ActiveRecord::RecordInvalid
+   CreateSend::BadRequest
  }
 
   if notice[:errors].any? { |error| ignored.include?(error[:type]) }
