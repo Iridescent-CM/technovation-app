@@ -62,6 +62,7 @@ Airbrake.add_filter do |notice|
    ActiveJob::DeserializationError
    Net::SMTPFatalError
    ActionController::InvalidAuthenticityToken
+   ActiveRecord::RecordInvalid
  }
 
   if notice[:errors].any? { |error| ignored.include?(error[:type]) }
