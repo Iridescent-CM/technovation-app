@@ -273,3 +273,26 @@ h2.submissions-onboarding-step__heading {
     z-index: $z-high;
   }
 }
+
+// Screenshots upload
+
+.ts-screenshots .card__body {
+  padding: 0;
+}
+
+.ts-screenshots__no-screenshots-body {
+  align-items: center;
+  background-image: linear-gradient(to right bottom, $granite, $silver);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 300px;
+  padding: 2em;
+}
+
+.ts-screenshots__no-screenshots-text {
+  color: white;
+  font-family: $heading-font-family;
+  font-weight: bold;
+  margin-bottom: 2em;
+}
