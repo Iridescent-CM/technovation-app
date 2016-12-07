@@ -1,11 +1,9 @@
-<div class="card">
+<div class="card ts-screenshots">
   <div class="card__heading">
     Screenshots
 
     <% if submission.screenshots.any? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
-    <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
+      <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">Add Screenshots</div>
     <% end %>
   </div>
 
@@ -14,13 +12,10 @@
       <ul class="gallerify">
         <%= render submission.screenshots, cached: true %>
       </ul>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">Add more screenshots</div>
-      </div>
     <% else %>
-      <div class="card__actions-row card__actions-row--pos-end">
-        <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">Upload Screenshots</div>
+      <div class="ts-screenshots__no-screenshots-body">
+        <div class="ts-screenshots__no-screenshots-text">- no screenshots added -</div>
+        <div data-modal-trigger="screenshots-modal" role="button" class="appy-button">Add Screenshots</div>
       </div>
     <% end %>
   </div>
