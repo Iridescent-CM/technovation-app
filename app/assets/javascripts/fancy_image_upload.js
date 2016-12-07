@@ -9,7 +9,7 @@
 //     <span  class="fancy-image-upload__label">Drop files here or click to browse</span>
 //     <input type="file">
 //   </label>
-// </div>
+// </form>
 
 (function() {
   setTimeout(fancyImageUpload, 0);
@@ -26,7 +26,7 @@
       var dropZone = document.createElement('label');
       dropZone.classList.add(dropZoneClass);
 
-      var submitButton = currentForm.querySelector('input[type="submit"]');
+      var submitButton = currentForm.querySelector('[type="submit"]');
       currentForm.insertBefore(dropZone, submitButton);
 
       makeEmptyDropZone(dropZone);

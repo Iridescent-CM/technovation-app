@@ -11,6 +11,16 @@
   currentStep.classList.add('submissions-onboarding-step--show');
   currentStep.addEventListener('click', goToNextStep);
 
+  var integrityCheckbox = document.querySelector('.submissions-onboarding-step--integrity [type="checkbox"]');
+  var integritySubmit = document.querySelector('.submissions-onboarding-step--integrity [type="submit"]');
+  console.log(integrityCheckbox, integritySubmit);
+  if (!integrityCheckbox.checked) {
+    integritySubmit.disabled = true;
+  }
+  integrityCheckbox.addEventListener('change', function(e) {
+    integritySubmit.disabled = !e.target.checked;
+  });
+
   function goToNextStep(e) {
     if (!e.target.dataset.hasOwnProperty('nextStep')) {
       return;
