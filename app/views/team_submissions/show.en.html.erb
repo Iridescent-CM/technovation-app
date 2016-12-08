@@ -1,0 +1,15 @@
+<div data-team-submissions class="team-submissions">
+  <div class="team-submissions__row-left">
+    <%= render 'team_photo' %>
+  </div>
+
+  <div class="team-submissions__row-center">
+    <%= render 'app_description', submission: @team_submission %>
+    <%= render 'screenshots', submission: @team_submission %>
+  </div>
+
+  <div class="team-submissions__row-right">
+    <%= render 'source_code', submission: @team_submission %>
+    <%= render 'technical_checklist', submission: @team_submission %>
+  </div>
+</div>

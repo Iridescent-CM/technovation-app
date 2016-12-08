@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card__heading">
+    Screenshots
+  </div>
+
+  <div class="card__body">
+    <% if submission.screenshots.any? %>
+      <ul class="gallerify">
+        <%= render partial: 'student/screenshots/screenshot',
+          collection: submission.screenshots,
+          cached: true %>
+      </ul>
+    <% end %>
+  </div>
+</div>
