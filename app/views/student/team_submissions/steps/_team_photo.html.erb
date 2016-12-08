@@ -1,26 +1,30 @@
 <div class="ts-about-team simple-card">
   <%= direct_upload_form_for uploader, html: { class: 'fancy-upload' } do |f| %>
 
-    <% if team.team_photo.present? %>
-      <a
-        data-uploader="true"
-        class="ts-about-team__photo"
-        style="background-image: url(<%= team.team_photo_url %>)">
+    <% if current_team.team_photo.present? %>
+      <%= link_to nil,
+        class: "ts-about-team__photo",
+        data: { uploader: true },
+        style: "background-image: url(#{current_team.team_photo_url})" do %>
+
         <div class="ts-about-team__edit-photo-text">
           Edit Team Photo
-          <span class="fa fa-camera"><!--FontAwesome--></span>
+          <%= fa_icon("camera") %>
         </div>
-      </a>
+
+      <% end %>
     <% else %>
-      <a
-        data-uploader="true"
-        class="ts-about-team__photo ts-about-team__photo--no-photo"
-        style="background-image: url(<%= team.team_photo_url %>)">
+      <%= link_to nil,
+        class: "ts-about-team__photo ts-about-team__photo--no-photo",
+        data: { uploader: true },
+        style: "background-image: url(#{current_team.team_photo_url})" do %>
+
         <div class="ts-about-team__edit-photo-text">
           Add Team Photo
-          <span class="fa fa-camera"><!--FontAwesome--></span>
+          <%= fa_icon("camera") %>
         </div>
-      </a>
+
+      <% end %>
     <% end %>
 
     <%= f.file_field :team_photo, data: { fancy: true } %>
@@ -28,14 +32,14 @@
   <% end %>
 
   <div class="ts-about-team__name">
-    <%= team.name %>
+    <%= current_team.name %>
   </div>
 
   <div class="ts-about-team__description">
-    <%= team.description %>
+    <%= current_team.description %>
   </div>
 
-  <a href="/student/teams/<%= team.id %>" class="ts-about-team__team-quick-link">
-    Go To Your Team Page
-  </a>
+  <%= link_to "Go To Your Team Page",
+    student_team_path(current_team),
+    class: "ts-about-team__team-quick-link" %>
 </div>
