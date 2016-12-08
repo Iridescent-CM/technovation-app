@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card__heading">
+    Source Code
+  </div>
+
+  <div class="card__body">
+    <% if submission.source_code.present? %>
+      <p>
+        <%= link_to submission.source_code_url,
+          submission.source_code_url,
+          target: "_blank" %>
+      </p>
+    <% elsif submission.source_code_external_url.present? %>
+      <p>
+        <%= link_to submission.source_code_external_url,
+          submission.source_code_external_url,
+          target: "_blank" %>
+      </p>
+    <% end %>
+  </div>
+</div>
