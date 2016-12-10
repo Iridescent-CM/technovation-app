@@ -74,6 +74,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def junior?
+    division.junior?
+  end
+
   def current_team_submission
     team_submissions.current.first
   end
