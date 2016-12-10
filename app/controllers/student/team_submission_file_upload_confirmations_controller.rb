@@ -7,8 +7,8 @@ module Student
                                              params.fetch(:key))
       else
         ProcessUploadJob.perform_later(current_team.submission,
-                                      params.fetch(:file_attribute),
-                                      params.fetch(:key))
+                                       params.fetch(:file_attribute),
+                                       params.fetch(:key))
       end
       flash.now[:success] = t("controllers.teams.show.file_processing")
       @unprocessed_file_url = "//s3.amazonaws.com/#{params[:bucket]}/#{params[:key]}"
