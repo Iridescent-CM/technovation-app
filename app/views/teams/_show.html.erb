@@ -1,7 +1,66 @@
-<div class="dashboard-page-info">
-  <div class="team-photo">
-    <%= image_tag @team.team_photo_url, width: 450, height: 300 %>
+<!-- Students My Team page
+  Todo: Localize the text
+-->
+
+<h1 class="appy-title">
+  My Team
+</h1>
+
+<div class="team-submissions">
+
+  <div class="team-submissions__row-left">
+    <div class="ts-about-team simple-card">
+      <a
+        data-uploader="true"
+        class="ts-about-team__photo"
+        style="background-image: url(<%= team.team_photo_url %>)">
+      </a>
+      <%= render 'teams/upload_team_photo',
+                  uploader: @uploader,
+                  namespace: account.type_name,
+                  team: team %>
+    </div>
   </div>
+
+  <div class="team-submissions__row-center">
+    <div class="ts-about-team simple-card">
+      <div class="ts-about-team__name">
+        <%= team.name %>
+      </div>
+
+      <div class="ts-about-team__description">
+        <%= team.description %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+<div class="dashboard-page-info">
+
 
   <h3 class="team_name"><%= team.name %></h3>
 
@@ -29,13 +88,6 @@
         as: :boolean,
         label: t("models.team.accepting_mentor_requests") %>
     <% end %>
-
-    <p>
-      <%= render 'teams/upload_team_photo',
-        uploader: @uploader,
-        namespace: account.type_name,
-        team: team %>
-    </p>
   <% end %>
 
   <div class="team-memberships">
