@@ -41,7 +41,7 @@
     data-name="app_description"
     class="ts-app-description__description">
     <% if submission.app_description.present? %>
-      <%= simple_format submission.app_description %>
+      <%= submission.app_description %>
     <% else %>
       In 100 to 200 words, give us a description of your application.
     <% end %>
