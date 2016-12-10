@@ -32,9 +32,7 @@
         prompt: "Select one" %>
     </div>
 
-  <%= select_tag :team_submission_stated_goal,
-    options_for_select(TeamSubmission.stated_goals, submission.stated_goal),
-    prompt: "Select one" %>
+    <%= label_tag :stated_goal_explanation, "Explanation" %>
 
     <div class="ajax-form__static-input ajax-form-helper__static-mode"
          data-display-for="stated_goal_explanation">
