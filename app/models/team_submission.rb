@@ -15,7 +15,9 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :source_code, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
 
-  scope :current, -> { joins(season_registrations: :season).where("seasons.year = ?", Season.current.year) }
+  scope :current, -> {
+    joins(season_registrations: :season).where("seasons.year = ?", Season.current.year)
+  }
 
   belongs_to :team
   has_many :screenshots, -> { order(:sort_position) }
