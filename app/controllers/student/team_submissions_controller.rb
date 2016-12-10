@@ -67,6 +67,11 @@ module Student
         :app_description,
         :integrity_affirmed,
         :source_code_external_url,
+        :stated_goal,
+        :stated_goal_explanation,
+        :demo_video_link,
+        :pitch_video_link,
+        :development_platform,
         technical_checklist_attributes: [
           :id,
           :used_strings,
