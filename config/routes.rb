@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show
     resource :team_submission_screenshot_upload_confirmation, only: :show
+    resource :team_submission_file_upload_confirmation, only: :show
 
     resources :mentors, only: :show
     resources :students, only: :show

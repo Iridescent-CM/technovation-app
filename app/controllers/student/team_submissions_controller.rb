@@ -34,8 +34,11 @@ module Student
         @team_submission.build_technical_checklist
       end
 
-      @screenshots_uploader = ImageUploader.new
-      @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
+      @file_uploader = FileUploader.new
+      @file_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
+        file_attribute: :source_code,
+        back: student_team_submission_path(@team_submission)
+      )
     end
 
     def update
