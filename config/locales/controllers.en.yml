@@ -114,6 +114,7 @@ en:
       new:
         link: "Create a new team"
       show:
+        file_processing: "Your file was uploaded. It is being processed and will update shortly."
         image_processing: "Your team photo was uploaded. It is being processed and will update shortly."
       update:
         change_image: "Upload photo"

@@ -1,0 +1,18 @@
+<% if current_team.junior? %>
+  Business Report (optional)
+<% else %>
+  Business Plan
+<% end %>
+
+(URL or PDF file)
+
+<% if submission.business_plan %>
+  <p>
+    <%= link_to "Your business plan", submission.business_plan.file_url %>
+  </p>
+<% end %>
+
+<%= direct_upload_form_for @business_plan_uploader do |f| %>
+  <%= f.file_field :business_plan %>
+  <%= f.submit t("views.application.upload"), class: "appy-button" %>
+<% end %>
