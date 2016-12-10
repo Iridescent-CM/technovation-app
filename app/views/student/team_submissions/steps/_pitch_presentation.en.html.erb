@@ -1,0 +1,12 @@
+Pitch Presentation (URL or Powerpoint file)
+
+<% if submission.pitch_presentation_url %>
+  <p>
+    <%= link_to "Your pitch presentation", submission.pitch_presentation_url %>
+  </p>
+<% end %>
+
+<%= direct_upload_form_for @pitch_presentation_uploader do |f| %>
+  <%= f.file_field :pitch_presentation %>
+  <%= f.submit t("views.application.upload"), class: "appy-button" %>
+<% end %>
