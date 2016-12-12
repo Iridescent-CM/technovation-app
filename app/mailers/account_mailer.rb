@@ -1,5 +1,6 @@
 class AccountMailer < ApplicationMailer
-  def password_reset(account)
+  def password_reset(account_id)
+    account = Account.find(account_id)
     @first_name = account.first_name
     @url = new_password_url(token: account.password_reset_token)
 
