@@ -1,15 +1,20 @@
+<%
+  if current_team.junior?
+    type = "report"
+    optional_text = "(optional)"
+  else
+    type = "plan"
+    optional_text = ""
+  end
+%>
+
 <div class="card">
   <div class="card__heading">
-    <% if current_team.junior? %>
-      Business Report (optional)
-    <% else %>
-      Business Plan
-    <% end %>
-    <div
-      data-modal-trigger="business-plan-upload-modal"
-      role="button"
-      class="appy-button"
-    >
+    Business <%= type.titleize %> <%= optional_text %>
+
+    <div data-modal-trigger="business-plan-upload-modal"
+         role="button"
+         class="appy-button">
       <% if submission.business_plan %>
         Edit
       <% else %>
@@ -20,23 +25,30 @@
   <div class="card__body">
     <% if submission.business_plan %>
       <p>
-        <%= link_to "Your business plan", submission.business_plan.file_url %>
+        <%= link_to "Your business #{type}", submission.business_plan.file_url %>
+
+        <br />
+
+        <small>
+          <em>
+            updated <%= time_ago_in_words(submission.business_plan.updated_at) %> ago
+          </em>
+        </small>
       </p>
     <% else %>
-      <% if current_team.junior? %>
-        Add your business report (optional)
-      <% else %>
-        Please add your business plan (URL or PDF)
-      <% end %>
+      Please add your business <%= type %> (.pdf) <%= optional_text %>
     <% end %>
   </div>
 </div>
 
-<div class="modalify" id="business-plan-upload-modal" data-heading="Business Plan">
+<%= content_tag :div,
+  class: "modalify",
+  id: "business-plan-upload-modal",
+  data: { heading: "Business #{type.titleize} (.pdf) #{optional_text}" } do %>
   <%= direct_upload_form_for @business_plan_uploader,
-                             html: {class: 'fancy-file-upload'},
-                             :data => {:type => 'application/pdf'} do |f| %>
+                             html: { class: 'fancy-file-upload' },
+                             data: { type: 'application/pdf' } do |f| %>
     <%= f.file_field :business_plan %>
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
-</div>
+<% end %>
