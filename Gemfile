@@ -58,7 +58,7 @@ group :development, :test do
   gem 'pry-nav'
   gem 'quiet_assets'
   gem 'rspec-rails'
-  # gem 'capybara-webkit'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'dotenv-rails'
