@@ -6,6 +6,7 @@
 //= require jquery.query
 
 //= require background_checks
+//= require fancy_generic_upload
 //= require fancy_image_upload
 //= require fancy_input
 //= require fancy_select

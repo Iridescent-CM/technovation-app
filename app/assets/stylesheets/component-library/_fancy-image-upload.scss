@@ -1,3 +1,4 @@
+.fancy-file-upload,
 .fancy-image-upload {
   input[type='submit'] {
     float: right;
@@ -5,6 +6,7 @@
   }
 }
 
+.fancy-file-upload__drop-zone,
 .fancy-image-upload__drop-zone {
   background-color: $light-grey;
   border-radius: 0.5rem;
@@ -47,10 +49,12 @@
   }
 }
 
+.fancy-file-upload__label,
 .fancy-image-upload__label {
   display: block;
 }
 
+.fancy-file-upload__files-list,
 .fancy-image-upload__files-list {
   font-weight: normal;
 }
