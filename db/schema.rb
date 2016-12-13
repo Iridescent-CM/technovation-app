@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205173607) do
+ActiveRecord::Schema.define(version: 20161213221509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -262,7 +261,6 @@ ActiveRecord::Schema.define(version: 20161205173607) do
 
   create_table "seasons", force: :cascade do |t|
     t.integer  "year",       null: false
-    t.datetime "starts_at",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
