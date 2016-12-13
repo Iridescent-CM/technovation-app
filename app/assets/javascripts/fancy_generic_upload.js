@@ -1,25 +1,23 @@
-// Fancy Image Upload
-// Add class "fancy-image-upload" to form containing file upload input,
-// submit button, and optional label.
-//
-// <%= direct_upload_form_for @screenshots_uploader, html: { id: "team_submission_screenshots", class: "fancy-image-upload" } do |f| %>
-//   <%= f.label :screenshots, t("models.team_submission.screenshots") %>
-//   <%= f.file_field :screenshots, multiple: true %>
-//   <%= f.submit t("views.application.continue"), class: "appy-button" %>
+// Add 'fancy-file-upload' class to form wrapper
+// <%= direct_upload_form_for @pitch_presentation_uploader,
+//                            html: {class: 'fancy-file-upload'} do |f| %>
+//   <%= f.file_field :pitch_presentation %>
+//   <%= f.submit t("views.application.upload"), class: "appy-button" %>
 // <% end %>
 
 (function() {
-  setTimeout(fancyImageUpload, 0);
-  function fancyImageUpload() {
-    var imageUploads = document.getElementsByClassName('fancy-image-upload');
-    if (imageUploads.length === 0) {
+  setTimeout(fancyFileUplodad, 0);
+
+  function fancyFileUplodad() {
+    var fileUploads = document.getElementsByClassName('fancy-file-upload');
+    if (fileUploads.length === 0) {
       return;
     }
-    var spanLabelClass = 'fancy-image-upload__label';
-    var dropZoneClass = 'fancy-image-upload__drop-zone';
+    var spanLabelClass = 'fancy-file-upload__label';
+    var dropZoneClass = 'fancy-file-upload__drop-zone';
     var bottomLabelText = 'Drop files here or click to browse';
-    for (var i = 0; i < imageUploads.length; i++) {
-      var currentForm = imageUploads[i];
+    for (var i = 0; i < fileUploads.length; i++) {
+      var currentForm = fileUploads[i];
       var dropZone = document.createElement('label');
       dropZone.classList.add(dropZoneClass);
 
@@ -56,13 +54,13 @@
       var firstLabel = labels[0];
       firstLabel.innerHTML = 'Files to upload:'
 
-      var filesListClass = 'fancy-image-upload__files-list';
+      var filesListClass = 'fancy-file-upload__files-list';
       var existingFilesList = dropZone.querySelector('.' + filesListClass);
       if (existingFilesList) {
         existingFilesList.remove();
       }
       var filesList = document.createElement('ul');
-      filesList.classList.add('fancy-image-upload__files-list');
+      filesList.classList.add('fancy-file-upload__files-list');
       for (var i = 0; i < files.length; i++) {
         var file = files[i];
         var fileListItem = document.createElement('li');
@@ -84,9 +82,9 @@
         dropZone.appendChild(topLabel);
         label.style.display = 'none';
       }
-      var faPictureIcon = document.createElement('span');
-      faPictureIcon.classList.add('fa', 'fa-picture-o');
-      dropZone.appendChild(faPictureIcon);
+      var faFileIcon = document.createElement('span');
+      faFileIcon.classList.add('fa', 'fa-file-o');
+      dropZone.appendChild(faFileIcon);
       var bottomLabel = document.createElement('span');
       bottomLabel.classList.add(spanLabelClass);
       bottomLabel.innerHTML = bottomLabelText;
@@ -96,5 +94,5 @@
         dropZone.appendChild(fileInput);
       }
     }
-  };
+  }
 })();
