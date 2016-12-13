@@ -6,36 +6,38 @@
     object_name: "team_submission",
     update_url: student_team_submission_path(submission)
   } do %>
+
   <div class="card__heading">
     Development Platform
 
+    <% if submission.development_platform.present? %>
+      <%= fa_icon("check-circle", class: "card-heading__flair") %>
+    <% else %>
+      <%= fa_icon("circle-o", class: "card-heading__flair") %>
+    <% end %>
   </div>
-  <div class="card__body">
-    <%= label_tag :development_platform, "Platform" %>
 
-    <div
-      class="ajax-form__static-input ajax-form-helper__static-mode"
-      data-display-for="development_platform"
-    >
+  <div class="card__body">
+    <div class="ajax-form__static-input ajax-form-helper__static-mode"
+         data-display-for="development_platform">
       <% if submission.development_platform %>
         <%= submission.development_platform %>
       <% else %>
-        Lorem ispsum dolor sit
+        Tell us what you used to develop your app!
       <% end %>
     </div>
+
     <div class="ajax-form-helper__edit-mode">
       <%= text_field_tag :development_platform,
-                        submission.development_platform,
-                        { placeholder: "E.g. App Inventor"} %>
+        submission.development_platform,
+        placeholder: "Example: App Inventor" %>
     </div>
 
     <div class="card__actions-row card__actions-row--pos-end">
-      <button
-        type="button"
-        data-action="edit"
-        class="appy-button">
+      <button type="button" data-action="edit" class="appy-button">
         Edit
       </button>
     </div>
   </div>
+
 <% end %>

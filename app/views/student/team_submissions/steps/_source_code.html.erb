@@ -11,7 +11,7 @@
 
   <div class="card__body">
     <% if submission.source_code.present? %>
-      <p><%= link_to submission.source_code_url, submission.source_code_url, target: "_blank" %></p>
+      <p><%= link_to "Your source code", submission.source_code_url, target: "_blank" %></p>
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to "Edit", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
