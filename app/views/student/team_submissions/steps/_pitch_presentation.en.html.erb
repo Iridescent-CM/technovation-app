@@ -1,11 +1,10 @@
 <div class="card">
   <div class="card__heading">
     Pitch Presentation
-    <div
-      data-modal-trigger="pitch-presentation-upload-modal"
-      role="button"
-      class="appy-button"
-    >
+
+    <div data-modal-trigger="pitch-presentation-upload-modal"
+         role="button"
+         class="appy-button">
       <% if submission.pitch_presentation_url %>
         Edit
       <% else %>
@@ -13,21 +12,24 @@
       <% end %>
     </div>
   </div>
+
   <div class="card__body">
-    <% if submission.pitch_presentation_url %>
-      <p>
+    <p>
+      <% if submission.pitch_presentation_url %>
         <%= link_to "Your pitch presentation", submission.pitch_presentation_url %>
-      </p>
-    <% else %>
-      <p>Please add your pitch presentation (URL or Powerpoint file)</p>
-    <% end %>
+      <% else %>
+        Please add your pitch presentation (.ppt or .pdf)
+      <% end %>
+    </p>
   </div>
 </div>
 
-<div class="modalify" id="pitch-presentation-upload-modal" data-heading="Pitch Presentation">
+<div class="modalify"
+     id="pitch-presentation-upload-modal"
+     data-heading="Pitch Presentation">
   <%= direct_upload_form_for @pitch_presentation_uploader,
-                             html: {class: 'fancy-file-upload'},
-                             :data => {:type => 'application/pdf'} do |f| %>
+                             html: { class: 'fancy-file-upload' },
+                             data: { type: 'application/pdf,application/ppt' } do |f| %>
     <%= f.file_field :pitch_presentation %>
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>

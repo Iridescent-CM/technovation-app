@@ -10,11 +10,9 @@
   <div class="card__heading">
     Development Platform
 
-    <% if submission.development_platform.present? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
-    <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
-    <% end %>
+    <button type="button" data-action="edit" class="appy-button">
+      Edit
+    </button>
   </div>
 
   <div class="card__body">
@@ -32,12 +30,5 @@
         submission.development_platform,
         placeholder: "Example: App Inventor" %>
     </div>
-
-    <div class="card__actions-row card__actions-row--pos-end">
-      <button type="button" data-action="edit" class="appy-button">
-        Edit
-      </button>
-    </div>
   </div>
-
 <% end %>
