@@ -1,18 +1,42 @@
-<% if current_team.junior? %>
-  Business Report (optional)
-<% else %>
-  Business Plan
-<% end %>
+<div class="card">
+  <div class="card__heading">
+    <% if current_team.junior? %>
+      Business Report (optional)
+    <% else %>
+      Business Plan
+    <% end %>
+    <div
+      data-modal-trigger="business-plan-upload-modal"
+      role="button"
+      class="appy-button"
+    >
+      <% if submission.business_plan %>
+        Edit
+      <% else %>
+        Upload
+      <% end %>
+    </div>
+  </div>
+  <div class="card__body">
+    <% if submission.business_plan %>
+      <p>
+        <%= link_to "Your business plan", submission.business_plan.file_url %>
+      </p>
+    <% else %>
+      <% if current_team.junior? %>
+        Add your business report (optional)
+      <% else %>
+        Please add your business plan (URL or PDF)
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
-(URL or PDF file)
-
-<% if submission.business_plan %>
-  <p>
-    <%= link_to "Your business plan", submission.business_plan.file_url %>
-  </p>
-<% end %>
-
-<%= direct_upload_form_for @business_plan_uploader do |f| %>
-  <%= f.file_field :business_plan %>
-  <%= f.submit t("views.application.upload"), class: "appy-button" %>
-<% end %>
+<div class="modalify" id="business-plan-upload-modal" data-heading="Business Plan">
+  <%= direct_upload_form_for @business_plan_uploader,
+                             html: {class: 'fancy-file-upload'},
+                             :data => {:type => 'application/pdf'} do |f| %>
+    <%= f.file_field :business_plan %>
+    <%= f.submit t("views.application.upload"), class: "appy-button" %>
+  <% end %>
+</div>

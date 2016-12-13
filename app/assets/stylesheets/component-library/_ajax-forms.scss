@@ -1,0 +1,24 @@
+// Ajax form classes
+// .ajax-form
+// .ajax-form--edit-mode
+
+.ajax-form__static-input {
+  margin-bottom: 0.5em;
+}
+
+.ajax-form-helper__static-mode {
+  display: block;
+
+  .ajax-form.ajax-form--edit-mode & {
+    display: none;
+  }
+}
+
+.ajax-form-helper__edit-mode {
+  display: block;
+
+  .ajax-form:not(.ajax-form--edit-mode) & {
+    display: none;
+  }
+}
+

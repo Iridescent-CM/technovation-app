@@ -1,3 +1,21 @@
+// Wrap your modal content with a div of class "modalyify" and a unique id
+// Add optional data-heading attribute to wrapper to specify heading
+// Add a button to your page with data-modal-trigger that matches the id
+// <button
+//   type="button"
+//   data-modal-trigger="some-id-here"
+// >
+//   Open Modal
+// </button>
+//
+// <div
+//   class="modalify"
+//   data-heading="Some cool title"
+//   id="some-id-here"
+// >
+//   Wow, I am in a modal. Fancy that.
+// </div>
+
 (function modalify() {
   var modals = document.getElementsByClassName('modalify');
   for (var i = 0; i < modals.length; i++) {
@@ -39,8 +57,8 @@
   var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
   for (var i = 0; i < modalTriggers.length; i++) {
     var currentTrigger = modalTriggers[i];
-    currentTrigger.addEventListener('click', function() {
-      showModal(currentTrigger.dataset.modalTrigger);
+    currentTrigger.addEventListener('click', function(e) {
+      showModal(e);
     });
   }
 
@@ -48,7 +66,8 @@
     modal.classList.remove('modalify--active');
   }
 
-  function showModal(modalId) {
+  function showModal(e) {
+    var modalId = e.target.dataset.modalTrigger;
     var modalToShow = document.getElementById(modalId);
     if (!modalToShow) {
       console.error('Could not find modal with id of ' + modalId);

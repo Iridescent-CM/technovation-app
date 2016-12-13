@@ -5,7 +5,9 @@
 //= require sortable
 //= require jquery.query
 
+//= require ajax_form_handler
 //= require background_checks
+//= require fancy_file_upload
 //= require fancy_image_upload
 //= require fancy_input
 //= require fancy_select
