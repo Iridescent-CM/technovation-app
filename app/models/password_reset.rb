@@ -8,6 +8,6 @@ class PasswordReset
   def perform
     account = Account.where("lower(email) = ?", email.downcase).first
     account.enable_password_reset!
-    AccountMailer.password_reset(account).deliver_later
+    AccountMailer.password_reset(account.id).deliver_later
   end
 end

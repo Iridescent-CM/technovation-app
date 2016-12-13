@@ -24,6 +24,18 @@ module Student
 
       @screenshots_uploader = ImageUploader.new
       @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
+
+      @business_plan_uploader = FileUploader.new
+      @business_plan_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
+        file_attribute: :business_plan,
+        back: student_team_submission_path(@team_submission)
+      )
+
+      @pitch_presentation_uploader = FileUploader.new
+      @pitch_presentation_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
+        file_attribute: :pitch_presentation,
+        back: student_team_submission_path(@team_submission)
+      )
     end
 
     def edit
@@ -34,8 +46,11 @@ module Student
         @team_submission.build_technical_checklist
       end
 
-      @screenshots_uploader = ImageUploader.new
-      @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
+      @file_uploader = FileUploader.new
+      @file_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
+        file_attribute: :source_code,
+        back: student_team_submission_path(@team_submission)
+      )
     end
 
     def update
@@ -67,6 +82,11 @@ module Student
         :app_description,
         :integrity_affirmed,
         :source_code_external_url,
+        :stated_goal,
+        :stated_goal_explanation,
+        :demo_video_link,
+        :pitch_video_link,
+        :development_platform,
         technical_checklist_attributes: [
           :id,
           :used_strings,

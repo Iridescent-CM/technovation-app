@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show
     resource :team_submission_screenshot_upload_confirmation, only: :show
+    resource :team_submission_file_upload_confirmation, only: :show
 
     resources :mentors, only: :show
     resources :students, only: :show
@@ -126,6 +127,8 @@ Rails.application.routes.draw do
   resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
+  resources :team_submissions, only: :show
+  resources :technical_checklists, only: :show
 
   resources :signup_attempts, only: [:create, :show, :update]
   resources :signup_attempt_confirmations, only: :new

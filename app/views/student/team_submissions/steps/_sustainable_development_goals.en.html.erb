@@ -1,0 +1,11 @@
+<%= content_tag :div,
+  data: {
+    update_url: student_team_submission_path(submission)
+  } do %>
+
+  <%= label_tag :team_submission_stated_goal, "Sustainable Development Goal" %>
+
+  <%= select_tag :team_submission_stated_goal,
+    options_for_select(TeamSubmission.stated_goals, submission.stated_goal),
+    prompt: "Select one" %>
+<% end %>

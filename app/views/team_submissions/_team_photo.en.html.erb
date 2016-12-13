@@ -1,0 +1,17 @@
+<div class="ts-about-team simple-card">
+  <div class="ts-about-team__photo"
+       style="background-image: url(<%= current_team.team_photo_url %>);">
+  </div>
+
+  <div class="ts-about-team__name">
+    <%= current_team.name %>
+  </div>
+
+  <div class="ts-about-team__description">
+    <%= current_team.description %>
+  </div>
+
+  <%= link_to "View the Team Page",
+    current_team,
+    class: "ts-about-team__team-quick-link" %>
+</div>

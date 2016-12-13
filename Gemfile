@@ -65,9 +65,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
-  gem "refills"
   gem 'active_record_query_trace'
   gem "letter_opener"
 end
