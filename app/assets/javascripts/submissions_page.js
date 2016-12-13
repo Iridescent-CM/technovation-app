@@ -61,8 +61,6 @@
             latestData[input.name] = input.value;
           });
 
-          console.log('THE DATA IS ', latestData);
-
           var payload = {};
           payload[objectName] = latestData;
 
@@ -99,8 +97,6 @@
           editButton.removeEventListener('click', saveChanges);
           editButton.addEventListener('click', editMode);
 
-          console.log(JSON.stringify(currentData));
-
           // Parse the inputs and update the content of the static placeholders
           Object.keys(currentData).forEach(function(name) {
             var staticEl = wrapper.querySelector('[data-display-for="' + name +'"]');
@@ -109,7 +105,6 @@
             }
             var currentInput = wrapper.querySelector('[name="' + name + '"]');
             var value = currentData[name];
-            // debugger;
             if (!value) {
               return;
             }
@@ -119,6 +114,7 @@
             } else {
               valueText = value;
             }
+            currentInput.value = value;
             staticEl.innerText = valueText;
             console.log(value, valueText);
           });
