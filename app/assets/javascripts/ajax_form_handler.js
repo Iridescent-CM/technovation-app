@@ -108,7 +108,6 @@
           }
           currentInput.value = value;
           staticEl.innerText = valueText;
-          console.log(value, valueText);
         });
       }
     })();
