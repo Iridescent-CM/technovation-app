@@ -14,8 +14,7 @@ RSpec.describe SigninsController do
       student.parental_consent.void!
       student.season_registrations.destroy_all
 
-      season = Season.create!(year: Season.current.year - 1,
-                              starts_at: Date.new(Season.current.year - 1, 8, 1))
+      season = Season.create!(year: Season.current.year - 1)
       SeasonRegistration.register(student.account, season)
 
       ActionMailer::Base.deliveries.clear

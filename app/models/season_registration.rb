@@ -5,6 +5,8 @@ class SeasonRegistration < ActiveRecord::Base
   belongs_to :registerable, polymorphic: true
 
   def self.register(registerable, season = Season.current)
+    raise InvalidSeason if season.year > Season.current.year
+
     if not exists?(registerable: registerable, season: season)
       create(registerable: registerable, season: season)
 
@@ -22,4 +24,6 @@ class SeasonRegistration < ActiveRecord::Base
       end
     end
   end
+
+  class InvalidSeason < StandardError; end
 end
