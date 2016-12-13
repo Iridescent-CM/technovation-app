@@ -97,3 +97,4 @@ end
 gem 'flag_shih_tzu'
 gem 'paperclip'
 gem 'aws-sdk'
+
