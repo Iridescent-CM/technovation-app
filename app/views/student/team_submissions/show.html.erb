@@ -6,23 +6,23 @@
   <div class="team-submissions__row-left">
     <%= render 'student/team_submissions/steps/team_photo',
       uploader: @team_photo_uploader %>
+
+    <%= render 'student/team_submissions/steps/affirm_integrity',
+      submission: @team_submission %>
+
+    <%= render 'student/team_submissions/steps/technical_checklist',
+      submission: @team_submission %>
   </div>
 
   <div class="team-submissions__row-center">
     <%= render 'student/team_submissions/steps/app_description',
       submission: @team_submission %>
 
-    <%= render 'student/team_submissions/steps/screenshots',
-      submission: @team_submission %>
-
     <%= render 'student/team_submissions/steps/sustainable_development_goals',
       submission: @team_submission %>
 
-    <%= render 'student/team_submissions/steps/pitch_presentation',
+    <%= render 'student/team_submissions/steps/screenshots',
       submission: @team_submission %>
-
-    <%= render 'student/team_submissions/steps/business_plan',
-      submission: @team_submission%>
   </div>
 
   <div class="team-submissions__row-right">
@@ -32,10 +32,10 @@
     <%= render 'student/team_submissions/steps/development_platform',
       submission: @team_submission %>
 
-    <%= render 'student/team_submissions/steps/technical_checklist',
+    <%= render 'student/team_submissions/steps/pitch_presentation',
       submission: @team_submission %>
 
-    <%= render 'student/team_submissions/steps/affirm_integrity',
-      submission: @team_submission %>
+    <%= render 'student/team_submissions/steps/business_plan',
+      submission: @team_submission%>
   </div>
 </div>
