@@ -20,7 +20,7 @@
 
 <% if @account.mentor_profile.present? %>
   <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
-              admin_mentor_drop_out_path(id: @account.id),
+              admin_mentor_drop_out_path(id: @account.mentor_profile.id),
               class: "appy-button",
               data: {
                 method: :post,
