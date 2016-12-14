@@ -6,6 +6,17 @@
     object_name: "team_submission",
     update_url: student_team_submission_path(submission)
   } do %>
+  <div class="card__heading">
+    Sustainable Development Goal
+    <button
+      type="button"
+      data-action="edit"
+      class="appy-button">
+      Edit
+    </button>
+  </div>
+  <div class="card__body">
+    <%= label_tag :stated_goal, "Sustainable Development Goal" %>
 
   <div class="card__heading">
     Sustainable Development Goal
