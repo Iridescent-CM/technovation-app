@@ -16,6 +16,7 @@
     var spanLabelClass = 'fancy-file-upload__label';
     var dropZoneClass = 'fancy-file-upload__drop-zone';
     var bottomLabelText = 'Drop files here or click to browse';
+
     for (var i = 0; i < fileUploads.length; i++) {
       var currentForm = fileUploads[i];
       var dropZone = document.createElement('label');
@@ -39,6 +40,7 @@
         showFilesToUpload(dropZone, files);
       } else {
         makeEmptyDropZone(dropZone);
+        removeUploadFilesList(dropZone);
       }
     }
 
@@ -82,17 +84,25 @@
         dropZone.appendChild(topLabel);
         label.style.display = 'none';
       }
+
       var faFileIcon = document.createElement('span');
       faFileIcon.classList.add('fa', 'fa-file-o');
       dropZone.appendChild(faFileIcon);
+
       var bottomLabel = document.createElement('span');
       bottomLabel.classList.add(spanLabelClass);
       bottomLabel.innerHTML = bottomLabelText;
       dropZone.appendChild(bottomLabel);
+
       if (!dropZone.querySelector('input[type="file"]')) {
         var fileInput = form.querySelector('input[type="file"]');
         dropZone.appendChild(fileInput);
       }
+    }
+
+    function removeUploadFilesList(dropZone) {
+      dropZone.getElementsByClassName('fancy-file-upload__label')[0].remove();
+      dropZone.getElementsByClassName('fancy-file-upload__files-list')[0].remove();
     }
   }
 })();

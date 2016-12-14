@@ -44,6 +44,7 @@
     modalTopBar.appendChild(closeButton);
     closeButton.addEventListener('click', function() {
       hideModal(this);
+      cancelFileUploads(this);
     }.bind(currentModal));
 
 
@@ -56,6 +57,7 @@
 
     modalShade.addEventListener('click', function() {
       hideModal(this);
+      cancelFileUploads(this);
     }.bind(currentModal));
   }
 
@@ -79,6 +81,18 @@
       return;
     }
     modalToShow.classList.add('modalify--active');
+  }
+
+  function cancelFileUploads(modal) {
+    var inputs = modal.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].type === 'file') {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        inputs[i].value = null;
+        inputs[i].dispatchEvent(evt);
+      }
+    }
   }
 })();
 
