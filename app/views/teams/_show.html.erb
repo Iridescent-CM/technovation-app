@@ -41,24 +41,25 @@
 
         <% if team.current? %>
           <p><%= link_to t("controllers.teams.edit.link"), [:edit, account.type_name, team], class: "appy-button" %></p>
-
         <% end %>
       </div>
 
-      <div class="card">
-        <div class="card__heading">
-          Team Settings
-          <span class="fa fa-cog card-heading__flair"></span>
+      <% if team.current? %>
+        <div class="card">
+          <div class="card__heading">
+            Team Settings
+            <span class="fa fa-cog card-heading__flair"></span>
+          </div>
+          <div class="card__body">
+            <%= simple_form_for [account.type_name, @team],
+                                html: { class: "no-simple-form-style" },
+                                remote: true do |f| %>
+              <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
+              <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
+            <% end %>
+          </div>
         </div>
-        <div class="card__body">
-          <%= simple_form_for [account.type_name, @team],
-                              html: { class: "no-simple-form-style" },
-                              remote: true do |f| %>
-            <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
-            <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
-          <% end %>
-        </div>
-      </div>
+      <% end %>
     </div>
 
     <div class="my-teams__col-half">

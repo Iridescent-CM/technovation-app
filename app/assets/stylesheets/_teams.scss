@@ -43,6 +43,10 @@
     width: calc((100% * 2/3) - 1em);
   }
 
+  > :first-child:only-child {
+    width: 100%;
+  }
+
   > :last-child {
     width: calc(100% * 1/3);
   }
