@@ -18,16 +18,25 @@
   <div class="card__body">
     <%= label_tag :stated_goal, "Sustainable Development Goal" %>
 
-    <div
-      class="ajax-form__static-input ajax-form-helper__static-mode"
-      data-display-for="stated_goal"
-    >
+  <div class="card__heading">
+    Sustainable Development Goal
+    <button type="button" data-action="edit" class="appy-button">
+      Edit
+    </button>
+  </div>
+
+  <div class="card__body">
+    <%= label_tag :stated_goal, "Sustainable Development Goal" %>
+
+    <div class="ajax-form__static-input ajax-form-helper__static-mode"
+         data-display-for="stated_goal">
       <% if submission.stated_goal %>
         <%= submission.stated_goal %>
       <% else %>
         No goal selected
       <% end %>
     </div>
+
     <div class="ajax-form-helper__edit-mode">
       <%= select_tag :stated_goal,
         options_for_select(TeamSubmission.stated_goals.keys, submission.stated_goal),
@@ -36,20 +45,19 @@
 
     <%= label_tag :stated_goal_explanation, "Explanation" %>
 
-    <div
-      class="ajax-form__static-input ajax-form-helper__static-mode"
-      data-display-for="stated_goal_explanation"
-    >
+    <div class="ajax-form__static-input ajax-form-helper__static-mode"
+         data-display-for="stated_goal_explanation">
       <% if submission.stated_goal_explanation %>
         <%= submission.stated_goal_explanation %>
       <% else %>
-        Some placeholder text goes here
+        In one or two sentences, explain your choice.
       <% end %>
     </div>
+
     <div class="ajax-form-helper__edit-mode">
       <%= text_area_tag :stated_goal_explanation,
-                        submission.stated_goal_explanation,
-                        { placeholder: "Some placeholder text goes here"} %>
+        submission.stated_goal_explanation,
+        placeholder: "In one or two sentences, explain your choice." %>
     </div>
   </div>
 <% end %>

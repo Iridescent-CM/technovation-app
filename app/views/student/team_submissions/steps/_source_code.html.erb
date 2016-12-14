@@ -2,30 +2,37 @@
   <div class="card__heading">
     Source Code
 
-    <% if submission.source_code.present? or submission.source_code_external_url.present? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
-    <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
-    <% end %>
+    <div data-modal-trigger="source-code-upload-modal"
+         role="button"
+         class="appy-button">
+      <% if submission.source_code_url %>
+        Edit
+      <% else %>
+        Upload
+      <% end %>
+    </div>
   </div>
-
   <div class="card__body">
-    <% if submission.source_code.present? %>
-      <p><%= link_to submission.source_code_url, submission.source_code_url, target: "_blank" %></p>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Edit", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
-      </div>
-    <% elsif submission.source_code_external_url.present? %>
-      <p><%= link_to submission.source_code_external_url, submission.source_code_external_url, target: "_blank" %></p>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Edit", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
-      </div>
-    <% else %>
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Attach Source Code", [:edit, :student, submission, step: :source_code], class: "appy-button" %>
-      </div>
-    <% end %>
+    <p>
+      <% if submission.source_code.present? ||
+              submission.source_code_external_url.present? %>
+        <%= link_to "Your source code",
+          submission.source_code_url || submission.source_code_external_url,
+          target: "_blank" %>
+      <% else %>
+        Upload, your source code (.aia or .zip file)
+      <% end %>
+    </p>
   </div>
+</div>
+
+<div class="modalify"
+     id="source-code-upload-modal"
+     data-heading="Source Code (.aia or .zip)">
+  <%= direct_upload_form_for @source_code_uploader,
+    html: { class: 'fancy-file-upload' },
+    data: { type: 'application/zip,application/aia' } do |f| %>
+    <%= f.file_field :source_code %>
+    <%= f.submit t("views.application.upload"), class: "appy-button" %>
+  <% end %>
 </div>

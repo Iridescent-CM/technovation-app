@@ -36,18 +36,9 @@ module Student
         file_attribute: :pitch_presentation,
         back: student_team_submission_path(@team_submission)
       )
-    end
 
-    def edit
-      @team_submission = current_team.team_submissions.find(params.fetch(:id))
-      @team_submission.step = params[:step]
-
-      if @team_submission.technical_checklist.blank?
-        @team_submission.build_technical_checklist
-      end
-
-      @file_uploader = FileUploader.new
-      @file_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
+      @source_code_uploader = FileUploader.new
+      @source_code_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
         file_attribute: :source_code,
         back: student_team_submission_path(@team_submission)
       )
