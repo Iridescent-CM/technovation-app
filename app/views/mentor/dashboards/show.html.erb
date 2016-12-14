@@ -10,6 +10,7 @@
   <div class="flex-col-sm-8 dashboard__main">
     <% if current_mentor.can_join_a_team? and current_mentor.is_on_team?  %>
       <%= render 'quick_links', account: current_mentor %>
+      <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
     <% else %>
       <%= render 'mentor/dashboards/completion_steps' %>
     <% end %>
@@ -21,6 +22,7 @@
         <%= t("views.application.curriculum") %>
         <span class="card-heading__flair fa fa-graduation-cap"><!--Fontawesome--></span>
       </div>
+
       <div class="card__body">
         <% if current_mentor.full_access_enabled? %>
           <p>
@@ -45,7 +47,7 @@
 
       <div class="card__body">
         <p>
-          Make sure you have everything ready to submit your app to Technovation!<br>
+          Make sure your team has everything ready to submit their app to Technovation!<br>
 
           <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
             "http://www.technovationchallenge.org/submission-guidelines/",
@@ -57,7 +59,5 @@
     <% if current_mentor.honor_code_signed? %>
       <%= render 'honor_code_signed', account: current_mentor %>
     <% end %>
-
-    <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
   </div>
 </div>

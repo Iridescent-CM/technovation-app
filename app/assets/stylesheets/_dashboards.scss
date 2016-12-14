@@ -75,11 +75,50 @@
   }
 }
 
+.dashboard__main {
+  .my-stuff__item-wrapper {
+    width: 50%;
+
+    &:first-child {
+      padding-right: 1rem;
+    }
+  }
+}
+
+.my-stuff__img-teams {
+  position: relative;
+  height: 175px;
+
+  .my-stuff__team-name {
+    display: none;
+  }
+}
+
 .my-stuff__img {
   text-align: center;
 
   img {
     border-radius: 50%;
+  }
+
+  &.my-stuff__img-team {
+    display: block;
+    position: absolute;
+    top: 2.5rem;
+
+    &:hover {
+      z-index: $z-modal;
+
+      + .my-stuff__team-name {
+        display: block;
+      }
+    }
+
+    img {
+      -webkit-box-shadow: -2px 0px 18px -1px rgba(0,0,0,0.75);
+      -moz-box-shadow: -2px 0px 18px -1px rgba(0,0,0,0.75);
+      box-shadow: -2px 0px 18px -1px rgba(0,0,0,0.75);
+    }
   }
 }
 
