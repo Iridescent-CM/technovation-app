@@ -1,4 +1,104 @@
+// General layout
 
+.my-teams {
+  display: flex;
+  margin-bottom: 200px;
+
+  .card,
+  .simple-card {
+    margin-bottom: 1em;
+  }
+
+  @media (max-width: $device-sm) {
+    flex-direction: column;
+  }
+}
+
+.my-teams__row-left,
+.my-teams__row-right {
+  width: 25%;
+}
+
+.my-teams__row-center {
+  margin: 0 1em;
+  width: 50%;
+}
+
+@media (max-width: $device-sm) {
+  .my-teams__row-left,
+  .my-teams__row-right,
+  .my-teams__row-center {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+// Team photo/name area
+
+.mt-team-photo {
+
+  form {
+    text-align: center;
+  }
+
+  .appy-button {
+    margin: 0 0 0.5rem;
+    width: 100%;
+  }
+
+  .appy-hint {
+    font-size: 0.75em;
+  }
+}
+
+.mt-team-photo__photo {
+  background-image: image-url("placeholders/placeholder-pattern.jpg");
+  background-size: cover;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin: 0 auto 1em;
+  max-width: 300px;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% - 2em);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+// Team photo/description
+
+.mt-about-team .appy-button {
+  margin: 0;
+}
+
+.mt-about-team__header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mt-about-team__name {
+  font-size: $h3;
+  font-weight: bold;
+}
+
+.mt-about-team__description {
+  margin-bottom: 1rem;
+}
+
+.mt-about-team__division {
+  color: $mulberry;
+  font-style: italic;
+  font-size: smaller;
+  font-weight: bold;
+}
 
 
 // Old code below. Figure out what's needed and what's not.

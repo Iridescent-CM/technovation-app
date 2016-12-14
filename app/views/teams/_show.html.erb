@@ -6,13 +6,13 @@
   My Team
 </h1>
 
-<div class="team-submissions">
+<div class="my-teams">
 
-  <div class="team-submissions__row-left">
-    <div class="ts-about-team simple-card">
+  <div class="my-teams__row-left">
+    <div class="mt-team-photo simple-card">
       <a
         data-uploader="true"
-        class="ts-about-team__photo"
+        class="mt-team-photo__photo"
         style="background-image: url(<%= team.team_photo_url %>)">
       </a>
       <%= render 'teams/upload_team_photo',
@@ -22,36 +22,63 @@
     </div>
   </div>
 
-  <div class="team-submissions__row-center">
-    <div class="ts-about-team simple-card">
-      <div class="ts-about-team__name">
-        <%= team.name %>
+  <div class="my-teams__row-center">
+
+    <div class="mt-about-team simple-card">
+      <div class="mt-about-team__header">
+        <div class="mt-about-team__name">
+          <%= team.name %>
+        </div>
+        <div class="mt-about-team__division">
+          <%= t("views.teams.show.division_name", name: team.division_name.humanize) %>
+        </div>
       </div>
 
-      <div class="ts-about-team__description">
+      <div class="mt-about-team__description">
         <%= team.description %>
+      </div>
+
+      <% if team.current? %>
+        <p><%= link_to t("controllers.teams.edit.link"), [:edit, account.type_name, team], class: "appy-button" %></p>
+
+      <% end %>
+    </div>
+
+    <div class="team-memberships">
+      <%= render "teams/member_list", team: team %>
+      <%= render "teams/mentor_list", team: team %>
+    </div>
+
+    <div>
+      <% if team.current? && team.spot_available? %>
+        <%= render "teams/invite_students" %>
+      <% elsif team.spot_available? %>
+        <%= t("views.teams.show.past_team") %>
+      <% else %>
+        <%= t("views.teams.show.members_full") %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="my-teams__row-right">
+    <div class="card">
+      <div class="card__heading">
+        Team Settings
+        <span class="fa fa-cog card-heading__flair"></span>
+      </div>
+      <div class="card__body">
+        <%= simple_form_for [account.type_name, @team],
+                            html: { class: "no-simple-form-style" },
+                            remote: true do |f| %>
+          <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
+          <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
+        <% end %>
       </div>
     </div>
   </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
