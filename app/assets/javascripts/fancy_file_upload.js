@@ -29,6 +29,15 @@
 
       var fileInput = currentForm.querySelector('input[type="file"]');
       fileInput.addEventListener('change', setContent);
+
+      handleModalClose(i);
+    }
+
+    function handleModalClose(i) {
+      var currentForm = fileUploads[i];
+      document.addEventListener('modalclose', function(e) {
+        wipeSelfOnModalClose(e, currentForm);
+      });
     }
 
     function setContent(e) {
@@ -40,7 +49,6 @@
         showFilesToUpload(dropZone, files);
       } else {
         makeEmptyDropZone(dropZone);
-        removeUploadFilesList(dropZone);
       }
     }
 
@@ -73,7 +81,30 @@
     }
 
     function makeEmptyDropZone(dropZone) {
+
+      function makeIcon() {
+        var faFileIcon = document.createElement('span');
+        faFileIcon.classList.add('fa', 'fa-file-o');
+        dropZone.appendChild(faFileIcon);
+      }
+
+      function makeBottomLabel() {
+        var bottomLabel = document.createElement('span');
+        bottomLabel.classList.add(spanLabelClass);
+        bottomLabel.innerHTML = bottomLabelText;
+        dropZone.appendChild(bottomLabel);
+      }
+
+      if (dropZone.hasChildNodes()) {
+        // If the user has opened a form in a modal, added files,
+        // then closed the modal, we only need to make some cosmetic changes
+        makeIcon();
+        makeBottomLabel();
+        return;
+      }
+
       var form = dropZone.parentElement;
+
       // Selects a label that is NOT the drop zone
       var label = form.querySelector('label:not(.' + dropZoneClass + ')');
       if (label) {
@@ -85,14 +116,8 @@
         label.style.display = 'none';
       }
 
-      var faFileIcon = document.createElement('span');
-      faFileIcon.classList.add('fa', 'fa-file-o');
-      dropZone.appendChild(faFileIcon);
-
-      var bottomLabel = document.createElement('span');
-      bottomLabel.classList.add(spanLabelClass);
-      bottomLabel.innerHTML = bottomLabelText;
-      dropZone.appendChild(bottomLabel);
+      makeIcon();
+      makeBottomLabel();
 
       if (!dropZone.querySelector('input[type="file"]')) {
         var fileInput = form.querySelector('input[type="file"]');
@@ -100,9 +125,20 @@
       }
     }
 
-    function removeUploadFilesList(dropZone) {
-      dropZone.getElementsByClassName('fancy-file-upload__label')[0].remove();
-      dropZone.getElementsByClassName('fancy-file-upload__files-list')[0].remove();
+    function wipeSelfOnModalClose(e, form) {
+      var wrapperModal = e.target;
+      if (wrapperModal.contains(form)) {
+        form.querySelector('[type="file"]').value = '';
+        var dropZone = form.getElementsByClassName(dropZoneClass)[0];
+        var filesList = dropZone.querySelector('.fancy-file-upload__files-list');
+        if (filesList) {
+          var filesToUploadLabel = dropZone.querySelector('.fancy-file-upload__label');
+          filesToUploadLabel.remove();
+          filesList.remove();
+          makeEmptyDropZone(dropZone);
+        }
+      }
     }
+
   }
 })();
