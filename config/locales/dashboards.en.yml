@@ -24,6 +24,16 @@ en:
           pending_team_requests: "Outgoing team requests"
         title: "Dashboard"
 
+    judge:
+      dashboards:
+        show:
+          switch_to_mentor_mode: "Judges can be mentors! To keep things fair, you won't score submissions from teams in the same region or division as your teams."
+
+    mentor:
+      dashboards:
+        show:
+          switch_to_judge_mode: "Mentors can be judges! To keep things fair, you won't score submissions from teams in the same region or division as your teams."
+
     regional_ambassador:
       dashboards:
         show:

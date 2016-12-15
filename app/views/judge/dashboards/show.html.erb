@@ -14,4 +14,18 @@
       </ul>
     </div>
   </div>
+
+  <div class="flex-col-sm-4 dashboard__sidebar">
+    <div class="card">
+      <div class="card__heading">
+        <%= t("views.application.mentor_mode") %>
+        <%= fa_icon("refresh", class: "card-heading__flair") %>
+      </div>
+
+      <div class="card__body">
+        <p><%= t("views.judge.dashboards.show.switch_to_mentor_mode") %></p>
+        <p><%= link_to t("views.application.switch_now"), mentor_dashboard_path %></p>
+      </div>
+    </div>
+  </div>
 </div>

@@ -3,7 +3,7 @@ module Authenticated
 
   included do
     before_action :unauthorized!, if: -> {
-      current_account.authenticated? and model_name != current_account.type_name
+      current_account.authenticated? and current_account.send("#{model_name}_profile").nil?
     }
 
     before_action :unauthenticated!, if: -> {

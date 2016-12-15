@@ -1,4 +1,5 @@
 class JudgeController < ApplicationController
+  before_action :create_mentor_judge_on_dashboard
   include Authenticated
 
   layout "judge"
@@ -6,12 +7,14 @@ class JudgeController < ApplicationController
 
   private
   def current_judge
-    @current_judge ||= JudgeProfile.joins(:account)
-      .find_by("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" }) ||
-    Account::NoAuthFound.new
+    @current_judge ||= current_account.judge_profile || Account::NoAuthFound.new
   end
 
   def model_name
     "judge"
+  end
+
+  def create_mentor_judge_on_dashboard
+    # Implemented in Judge::DashboardsController
   end
 end

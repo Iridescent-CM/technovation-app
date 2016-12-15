@@ -39,8 +39,12 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
-    @current_account ||= Account.find_by(auth_token: cookies.fetch(:auth_token) { "" }) ||
-      Account::NoAuthFound.new
+    @current_account ||= Account.eager_load(
+      :student_profile,
+      :judge_profile,
+      :mentor_profile,
+      :regional_ambassador_profile
+    ).find_by(auth_token: cookies.fetch(:auth_token) { "" }) || Account::NoAuthFound.new
   end
 
   def current_team

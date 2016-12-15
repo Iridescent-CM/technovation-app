@@ -1,4 +1,5 @@
 class MentorController < ApplicationController
+  before_action :create_judge_mentor_on_dashboard
   include Authenticated
 
   layout "mentor"
@@ -22,5 +23,8 @@ class MentorController < ApplicationController
 
   def model_name
     "mentor"
+  end
+
+  def create_judge_mentor_on_dashboard
   end
 end
