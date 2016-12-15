@@ -88,9 +88,12 @@
 .my-stuff__img-teams {
   position: relative;
   height: 175px;
+  margin: 0 auto;
 
   .my-stuff__team-name {
+    text-align: center;
     display: none;
+    white-space: nowrap;
   }
 }
 
@@ -105,9 +108,10 @@
     display: block;
     position: absolute;
     top: 2.5rem;
+    width: 100px;
 
     &:hover {
-      z-index: $z-modal;
+      z-index: $z-modal !important;
 
       + .my-stuff__team-name {
         display: block;

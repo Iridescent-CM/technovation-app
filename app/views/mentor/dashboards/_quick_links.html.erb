@@ -32,19 +32,26 @@
     <li class="my-stuff__item-wrapper">
       <div class="card">
         <div class="card__body">
-          <div class="my-stuff__img-teams">
+          <% total_width = (30 * (account.teams.count - 1)) + 100 %>
+
+          <div class="my-stuff__img-teams" style="width: <%= total_width %>px;">
             <% account.teams.current.shuffle.each.with_index do |team, i| %>
               <%= link_to mentor_team_path(team),
                 class: "my-stuff__img my-stuff__img-team",
-                style: "left: #{i * 8}%;" do %>
+                style: "left: #{30 * i}px;" do %>
                 <%= image_tag team.team_photo,
                   title: team.name,
                   width: 100,
                   height: 100 %>
               <% end %>
 
-              <div class="my-stuff__team-name">
-                <%= team.name %>
+              <% if account.teams.count > 1 %>
+                <div class="my-stuff__team-name">
+              <% else %>
+                <div class="my-stuff__team-name"
+                     style="width: 100px; display: block; margin-left: -15px;">
+              <% end %>
+                <strong><%= team.name %></strong>
               </div>
             <% end %>
           </div>
