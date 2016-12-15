@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Authentication" do
-  { judge: %i{mentor regional_ambassador student admin},
+  { judge: %i{regional_ambassador student admin},
     student: %i{mentor regional_ambassador judge admin},
-    mentor: %i{judge regional_ambassador student admin},
+    mentor: %i{regional_ambassador student admin},
     regional_ambassador: %i{mentor judge student admin} }.each do |type, not_types|
       not_types.each do |not_type|
         scenario "A #{type} tries to visit a #{not_type} path" do

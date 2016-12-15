@@ -40,7 +40,7 @@ module Student
       "student"
     end
 
-    def current_account
+    def current_profile
       current_student
     end
   end

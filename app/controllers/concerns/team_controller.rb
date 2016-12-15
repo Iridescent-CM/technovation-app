@@ -6,7 +6,7 @@ module TeamController
   end
 
   def show
-    @team = current_account.teams.find(params.fetch(:id))
+    @team = current_profile.teams.find(params.fetch(:id))
     @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
     @uploader = ImageUploader.new
     @uploader.success_action_redirect = send("#{current_account.type_name}_team_photo_upload_confirmation_url", team_id: @team.id, back: request.fullpath)
@@ -28,11 +28,11 @@ module TeamController
   end
 
   def edit
-    @team = current_account.teams.find(params.fetch(:id))
+    @team = current_profile.teams.find(params.fetch(:id))
   end
 
   def update
-    @team = current_account.teams.find(params.fetch(:id))
+    @team = current_profile.teams.find(params.fetch(:id))
 
     if @team.update_attributes(team_params)
       redirect_to [account_type, @team],
@@ -53,14 +53,10 @@ module TeamController
       :accepting_mentor_requests,
     ).tap do |tapped|
       unless params.fetch(:id) { false }
-        tapped[:division] = Division.for(current_account)
-        tapped["#{account_type}_ids"] = current_account.id
+        tapped[:division] = Division.for(current_profile)
+        tapped["#{account_type}_ids"] = current_profile.id
         tapped[:season_ids] = [Season.current.id]
       end
     end
-  end
-
-  def account_type
-    current_account.type_name
   end
 end

@@ -17,8 +17,12 @@ module Student
     }, only: :create
 
     private
-    def current_account
+    def current_profile
       current_student
+    end
+
+    def account_type
+      "student"
     end
   end
 end

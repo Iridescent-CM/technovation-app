@@ -1,17 +1,17 @@
 module BackgroundCheckController
   def new
-    if current_account.background_check_candidate_id.present?
-      redirect_to [current_account.type_name, :background_check, id: current_account.background_check_candidate_id]
+    if current_profile.background_check_candidate_id.present?
+      redirect_to [current_account.type_name, :background_check, id: current_profile.background_check_candidate_id]
     else
       @candidate = BackgroundCheckCandidate.new(account: current_account)
     end
   end
 
   def show
-    @report = BackgroundCheck::Report.retrieve(current_account.background_check_report_id)
+    @report = BackgroundCheck::Report.retrieve(current_profile.background_check_report_id)
 
     if @report.present?
-      current_account.background_check.send("#{@report.status}!")
+      current_profile.background_check.send("#{@report.status}!")
     end
   end
 
@@ -19,7 +19,7 @@ module BackgroundCheckController
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
     if @candidate.submit
-      current_account.update_attributes(background_check_attributes: {
+      current_profile.update_attributes(background_check_attributes: {
         candidate_id: @candidate.id,
         report_id: @candidate.report_id
       })

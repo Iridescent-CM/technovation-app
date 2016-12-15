@@ -7,7 +7,7 @@ class JudgeController < ApplicationController
 
   private
   def current_judge
-    @current_judge ||= current_account.judge_profile || Account::NoAuthFound.new
+    @current_judge ||= current_account.judge_profile
   end
 
   def model_name

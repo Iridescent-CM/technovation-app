@@ -261,32 +261,31 @@ class Account < ActiveRecord::Base
   end
 
   class NoAuthFound
-    def authenticated?
-      false
-    end
+    def authenticated?; false; end
+    def admin?; false; end
+    def present?; false; end
 
-    def type_name
-      'application'
-    end
+    def type_name; 'application'; end
+    def team; nil; end
+    def teams; []; end
 
-    def admin?
-      false
-    end
+    def locale; I18n.default_locale; end
 
-    def locale
-      I18n.default_locale
+    def admin_profile; NullProfile.new; end
+    def judge_profile; NullProfile.new; end
+    def mentor_profile; NullProfile.new; end
+    def regional_ambassador_profile; NullProfile.new; end
+    def student_profile; NullProfile.new; end
+
+    class NullProfile
+      def authenticated?; false; end
+      def present?; false; end
     end
   end
 
   class NullConsentWaiver
-    def status
-      "none"
-    end
-
-    def present?
-      false
-    end
-
+    def status; "none"; end
+    def present?; false; end
     def destroy; end
   end
 end

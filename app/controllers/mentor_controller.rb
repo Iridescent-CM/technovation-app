@@ -16,9 +16,7 @@ class MentorController < ApplicationController
 
   private
   def current_mentor
-    @current_mentor ||= MentorProfile.joins(:account)
-      .find_by("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" }) ||
-    Account::NoAuthFound.new
+    @current_mentor ||= current_account.mentor_profile
   end
 
   def model_name

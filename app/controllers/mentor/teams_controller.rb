@@ -8,8 +8,12 @@ module Mentor
     end
 
     private
-    def current_account
+    def current_profile
       current_mentor
+    end
+
+    def account_type
+      "mentor"
     end
   end
 end

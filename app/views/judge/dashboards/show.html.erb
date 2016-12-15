@@ -1,18 +1,25 @@
-<h1 class="appy-title dashboard__heading">
+<h1 class="appy-title">
   <%= t("views.application.dashboard") %>
 </h1>
 
+<h2 class="appy-subtitle">
+  Judging will open on Monday, May 1, 2017
+</h2>
+
+
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
-    <div class="to-do">
-      <h2 class="to-do__heading appy-heading-lg">
-        <%= t("views.application.to_do") %>
-      </h2>
+    <% unless current_judge.full_access_enabled? %>
+      <div class="to-do">
+        <h2 class="to-do__heading appy-heading-lg">
+          <%= t("views.application.to_do") %>
+        </h2>
 
-      <ul class="to-do__list">
-        <%= render 'completion_steps/consent_waiver', account: current_judge %>
-      </ul>
-    </div>
+        <ul class="to-do__list">
+          <%= render 'completion_steps/consent_waiver', account: current_judge %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">

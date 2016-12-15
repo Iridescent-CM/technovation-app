@@ -6,9 +6,7 @@ class RegionalAmbassadorController < ApplicationController
 
   private
   def current_ambassador
-    @current_ambassador ||= RegionalAmbassadorProfile.joins(:account)
-      .find_by("accounts.auth_token = ?", cookies.fetch(:auth_token) { "" }) ||
-    Account::NoAuthFound.new
+    @current_ambassador ||= current_account.regional_ambassador_profile
   end
 
   def model_name
