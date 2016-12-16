@@ -16,6 +16,15 @@ module Student
       end
     end
 
+    def edit
+      @team_submission = current_team.team_submissions.find(params.fetch(:id))
+      @team_submission.step = params[:step]
+
+      if @team_submission.technical_checklist.nil?
+        @team_submission.build_technical_checklist
+      end
+    end
+
     def show
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
 
