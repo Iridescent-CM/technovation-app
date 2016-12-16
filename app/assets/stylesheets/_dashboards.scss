@@ -101,14 +101,18 @@
 
 .my-stuff__img-teams {
   position: relative;
-  height: 175px;
   margin: 0 auto;
 
   .my-stuff__team-name {
-    text-align: center;
     display: none;
-    white-space: nowrap;
+    padding-top: 0;
   }
+}
+
+.my-stuff__team-name {
+  padding-top: 1rem;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .my-stuff__img {
@@ -131,6 +135,10 @@
       + .my-stuff__team-name {
         display: block;
       }
+    }
+
+    &:only-child {
+      top: 0;
     }
 
     img {
