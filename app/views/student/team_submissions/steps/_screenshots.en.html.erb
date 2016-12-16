@@ -1,13 +1,12 @@
 <div class="card ts-screenshots">
-  <div class="card__heading">
+  <div class="card__heading submission-steps__market">
     Screenshots
 
     <% if submission.screenshots.any? %>
-      <button
-        data-modal-trigger="screenshots-modal"
-        type="button"
-        class="appy-button">
-        Add Screenshots
+      <button data-modal-trigger="screenshots-modal"
+              role="button"
+              class="unbutton">
+        <%= fa_icon("picture-o", text: "Add Screenshots") %>
       </button>
     <% end %>
   </div>

@@ -1,15 +1,11 @@
 <div class="card">
-  <div class="card__heading">
+  <div class="card__heading submission-step__pitch">
     Pitch Presentation
 
     <div data-modal-trigger="pitch-presentation-upload-modal"
          role="button"
-         class="appy-button">
-      <% if submission.pitch_presentation_url %>
-        Edit
-      <% else %>
-        Upload
-      <% end %>
+         class="unbutton">
+      <% submission.pitch_presentation_url ? "edit" : "upload" %>
     </div>
   </div>
 

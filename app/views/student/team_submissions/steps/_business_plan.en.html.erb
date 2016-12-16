@@ -9,18 +9,14 @@
 %>
 
 <div class="card">
-  <div class="card__heading">
+  <div class="card__heading submission-step__business">
     Business <%= type.titleize %> <%= optional_text %>
 
-    <div data-modal-trigger="business-plan-upload-modal"
-         role="button"
-         class="appy-button">
-      <% if submission.business_plan %>
-        Edit
-      <% else %>
-        Upload
-      <% end %>
-    </div>
+    <button data-modal-trigger="business-plan-upload-modal"
+            role="button"
+            class="unbutton">
+      <%= fa_icon("wrench") %>
+    </button>
   </div>
   <div class="card__body">
     <% if submission.business_plan %>
@@ -30,9 +26,7 @@
         <br />
 
         <small>
-          <em>
-            updated <%= time_ago_in_words(submission.business_plan.updated_at) %> ago
-          </em>
+          <em>updated <%= time_ago_in_words(submission.business_plan.updated_at) %> ago</em>
         </small>
       </p>
     <% else %>

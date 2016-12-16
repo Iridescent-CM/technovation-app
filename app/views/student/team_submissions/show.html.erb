@@ -9,9 +9,6 @@
 
     <%= render 'student/team_submissions/steps/affirm_integrity',
       submission: @team_submission %>
-
-    <%= render 'student/team_submissions/steps/technical_checklist',
-      submission: @team_submission %>
   </div>
 
   <div class="team-submissions__row-center">
@@ -26,6 +23,9 @@
   </div>
 
   <div class="team-submissions__row-right">
+    <%= render 'student/team_submissions/steps/technical_checklist',
+      submission: @team_submission %>
+
     <%= render 'student/team_submissions/steps/source_code',
       submission: @team_submission %>
 
