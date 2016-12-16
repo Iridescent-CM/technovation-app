@@ -85,6 +85,15 @@
   }
 }
 
+@media screen and (max-width: $device-sm) {
+  .dashboard__main {
+    .my-stuff__item-wrapper {
+      width: 100%;
+      padding-right: 0 !important;
+    }
+  }
+}
+
 .my-stuff__img-teams {
   position: relative;
   height: 175px;
@@ -102,6 +111,7 @@
 
   img {
     border-radius: 50%;
+    border: 3px solid white;
   }
 
   &.my-stuff__img-team {
