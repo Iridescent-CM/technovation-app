@@ -19,16 +19,29 @@
     <div class="ajax-form__static-input ajax-form-helper__static-mode"
          data-display-for="development_platform">
       <% if submission.development_platform %>
-        <%= submission.development_platform %>
+        <%= submission.development_platform %>&nbsp;
+        <%= submission.development_platform_other %>
       <% else %>
         Tell us what you used to develop your app!
       <% end %>
     </div>
 
     <div class="ajax-form-helper__edit-mode">
-      <%= text_field_tag :development_platform,
-        submission.development_platform,
-        placeholder: "Example: App Inventor" %>
+      <%= select_tag :development_platform,
+        options_for_select(TeamSubmission.development_platforms.keys,
+                           submission.development_platform),
+        data: {
+          toggle: true,
+          toggle_value: "Other",
+          toggle_reveal: ".development_platform_other",
+        },
+        prompt: "Select one" %>
+
+      <div class="development_platform_other">
+        <%= text_field_tag :development_platform_other,
+          submission.development_platform_other,
+          placeholder: "Tell us what it was!" %>
+      </div>
     </div>
   </div>
 <% end %>

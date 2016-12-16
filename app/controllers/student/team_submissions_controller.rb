@@ -87,6 +87,7 @@ module Student
         :demo_video_link,
         :pitch_video_link,
         :development_platform,
+        :development_platform_other,
         technical_checklist_attributes: [
           :id,
           :used_strings,

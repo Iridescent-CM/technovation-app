@@ -8,6 +8,10 @@ class TeamSubmission < ActiveRecord::Base
     Health
   }
 
+  enum development_platform: %w{
+    Other
+  }
+
   attr_accessor :step
 
   after_commit -> { SeasonRegistration.register(self) }, on: :create
