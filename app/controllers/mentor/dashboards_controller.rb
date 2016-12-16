@@ -7,6 +7,8 @@ module Mentor
           school_company_name: current_account.judge_profile.company_name,
           job_title: current_account.judge_profile.job_title,
         })
+
+        flash.now[:success] = t("controllers.mentor.dashboards.show.mentor_profile_created")
       end
     end
   end

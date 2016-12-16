@@ -34,11 +34,19 @@ en:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
 
     judge:
+      dashboards:
+        show:
+          judge_profile_created: "Nice! You now have a judge profile!"
+
       mentor_profiles:
         create:
           success: "You added a mentor profile to your account!"
 
     mentor:
+      dashboards:
+        show:
+          mentor_profile_created: "Nice! You now have a mentor profile!"
+
       join_requests:
         create:
           link: "Request to be a mentor for %{name}"
