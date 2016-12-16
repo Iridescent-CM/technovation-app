@@ -9,6 +9,11 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   enum development_platform: %w{
+    App\ Inventor\ 2
+    Swift\ or\ XCode
+    Java
+    C++
+    PhoneGap/Apache\ Cordova
     Other
   }
 
@@ -38,4 +43,12 @@ class TeamSubmission < ActiveRecord::Base
       errors.add(:integrity_affirmed, :accepted)
     end
   }
+
+  def development_platform_text
+    if development_platform == "Other"
+      ["Other", "-", development_platform_other].join(' ')
+    else
+      development_platform
+    end
+  end
 end
