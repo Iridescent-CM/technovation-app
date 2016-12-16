@@ -7,11 +7,10 @@
     update_url: student_team_submission_path(submission)
   } do %>
 
-  <div class="card__heading">
+  <div class="card__heading submission-step__code">
     Development Platform
-
-    <button type="button" data-action="edit" class="appy-button">
-      Edit
+    <button type="button" data-action="edit" class="unbutton">
+      <%= fa_icon("wrench") %>
     </button>
   </div>
 

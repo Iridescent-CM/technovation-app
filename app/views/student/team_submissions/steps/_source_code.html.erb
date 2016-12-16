@@ -1,16 +1,12 @@
 <div class="card">
-  <div class="card__heading">
+  <div class="card__heading submission-step__code">
     Source Code
 
-    <div data-modal-trigger="source-code-upload-modal"
-         role="button"
-         class="appy-button">
-      <% if submission.source_code_url %>
-        Edit
-      <% else %>
-        Upload
-      <% end %>
-    </div>
+    <button data-modal-trigger="source-code-upload-modal"
+            role="button"
+            class="unbutton">
+      <%= fa_icon("wrench") %>
+    </button>
   </div>
   <div class="card__body">
     <p>

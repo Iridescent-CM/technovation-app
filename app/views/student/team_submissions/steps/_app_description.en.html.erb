@@ -9,41 +9,38 @@
     <div class="ts-app-description__label">
       App Name
     </div>
-    <div
-      id="ts-app-description-buttons-wrapper"
-      class="ts-app-description__buttons-wrapper">
 
-      <button
-        id="ts-cancel-editable-btn"
-        class="appy-button ts-app-description__cancel-btn">
+    <div id="ts-app-description-buttons-wrapper"
+         class="ts-app-description__buttons-wrapper">
+
+      <button id="ts-cancel-editable-btn"
+              class="appy-button ts-app-description__cancel-btn">
         Cancel
       </button>
 
-      <button
-        id="ts-primary-editable-btn"
-        class="appy-button ts-app-description__primary-btn"
-      >
+      <button id="ts-primary-editable-btn"
+              class="appy-button ts-app-description__primary-btn">
         Edit App Info
       </button>
     </div>
   </div>
 
-  <p
-    data-editable
-    data-name="app_name"
-    class="ts-app-description__name"><%= @team_submission.app_name %></p><!--This line needs to be formatted like this in order to use the :empty CSS pseudoselector-->
+  <p data-editable
+     data-name="app_name"
+     class="ts-app-description__name"><%= @team_submission.app_name %></p>
+  <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 
   <div class="ts-app-description__label">
     App Description
   </div>
-  <p
-    data-editable
-    data-name="app_description"
-    class="ts-app-description__description">
+
+  <p data-editable
+     data-name="app_description"
+     class="ts-app-description__description">
     <% if submission.app_description.present? %>
       <%= submission.app_description %>
     <% else %>
-      In 100 to 200 words, give us a description of your application.
+      In about 100 words, provide a description of your application.
     <% end %>
   </p>
 <% end %>

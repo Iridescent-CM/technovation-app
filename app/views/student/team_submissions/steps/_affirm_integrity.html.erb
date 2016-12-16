@@ -1,25 +1,5 @@
 <div class="card">
-  <div class="card__heading">
-    Integrity
-
-    <% if submission.integrity_affirmed? %>
-      <%= fa_icon("check-circle", class: "card-heading__flair") %>
-    <% else %>
-      <%= fa_icon("circle-o", class: "card-heading__flair") %>
-    <% end %>
-  </div>
-
   <div class="card__body">
-    <% if submission.integrity_affirmed? %>
-      <p><strong><%= submission.team.name %></strong> has promised that this submission has only been worked on by its own students.</p>
-    <% else %>
-      <p>You need to affirm the integrity of your submission.</p>
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Affirm Submission Integrity",
-          [:edit, :student, submission, step: :affirm_integrity],
-          class: "appy-button" %>
-      </div>
-    <% end %>
+    <p><strong><%= submission.team.name %></strong> has promised that this submission has only been worked on by its own students.</p>
   </div>
 </div>
