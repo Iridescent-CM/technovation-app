@@ -7,8 +7,11 @@
       <% action = f.object.persisted? ? :save : :create %>
       <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")), class: "appy-button" %>
 
-      <% unless f.object.persisted? %>
-        <%= t("views.application.or") %>
+      <%= t("views.application.or") %>
+
+      <% if f.object.persisted? %>
+        <%= link_to t("views.application.cancel"), [prefix, @team] %>
+      <% else %>
         <%= link_to t("controllers.teams.index.browse"), [:new, prefix, :team_search] %>
       <% end %>
     </div>
