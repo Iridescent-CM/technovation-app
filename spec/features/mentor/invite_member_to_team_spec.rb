@@ -7,7 +7,7 @@ RSpec.feature "Invite a member to a team" do
 
   before do
     sign_in(mentor)
-    within(".navigation") { click_link "My teams" }
+    click_link "My teams"
     click_link mentor.team_names.first
 
     fill_in "team_member_invite[invitee_email]", with: "some@student.com"

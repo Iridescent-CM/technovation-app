@@ -79,8 +79,13 @@
   .my-stuff__item-wrapper {
     width: 50%;
 
-    &:first-child {
+    &:nth-child(odd) {
       padding-right: 1rem;
+    }
+
+    &:only-child {
+      width: 100%;
+      padding-right: 0;
     }
   }
 }

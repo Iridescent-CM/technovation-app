@@ -22,8 +22,7 @@
           <div class="card__actions-row--pos-fill">
             <%= link_to t("views.quick_links.my_account"),
               mentor_profile_path,
-              class: "appy-button"
-            %>
+              class: "appy-button" %>
           </div>
         </div>
       </div>
@@ -59,6 +58,44 @@
           <div class="card__actions-row--pos-fill">
             <%= link_to t("views.application.dashboards.menu.my_teams"),
               mentor_teams_path,
+              class: "appy-button" %>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="my-stuff__item-wrapper">
+      <div class="card">
+        <div class="card__body">
+          <div class="my-stuff__name">
+            <p>
+              <%= fa_icon("user-plus 4x") %><br />
+              <%= t("views.student.navigation.join_team") %>
+            </p>
+          </div>
+
+          <div class="card__actions-row--pos-fill">
+            <%= link_to t("controllers.team_searches.new.link"),
+              new_mentor_team_search_path,
+              class: "appy-button" %>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="my-stuff__item-wrapper">
+      <div class="card">
+        <div class="card__body">
+          <div class="my-stuff__name">
+            <p>
+              <%= fa_icon("users 4x") %><br />
+              <%= t("views.student.navigation.create_a_team") %>
+            </p>
+          </div>
+
+          <div class="card__actions-row--pos-fill">
+            <%= link_to t("controllers.teams.new.link"),
+              new_mentor_team_path,
               class: "appy-button" %>
           </div>
         </div>

@@ -5,13 +5,11 @@ RSpec.feature "Mentors leave their own team" do
     mentor = FactoryGirl.create(:mentor, :on_team)
     sign_in(mentor)
 
-    within(".navigation") { click_link "My teams" }
+    click_link "My teams"
     click_link mentor.team_names.last
 
     click_link "Leave #{mentor.team_names.last}"
     expect(current_path).to eq(mentor_dashboard_path)
-
-    within(".navigation") { click_link "My teams" }
-    expect(page).not_to have_link(Team.last.name)
+    expect(page).not_to have_link("My teams")
   end
 end

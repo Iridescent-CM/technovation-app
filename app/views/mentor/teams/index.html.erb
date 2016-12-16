@@ -1,8 +1,8 @@
 <%= t("views.teams.index.current_teams") %>
 
 <%= render 'mentor/teams/team_list',
-           type: :current,
-           teams: @current_teams %>
+  type: :current,
+  teams: @current_teams %>
 
 <p>
   <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>

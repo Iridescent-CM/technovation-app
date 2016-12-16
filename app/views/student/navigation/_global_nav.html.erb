@@ -1,6 +1,7 @@
 <% if current_student.is_on_team? %>
   <li class="nav-link <%= al(new_student_mentor_search_path) %>">
-    <%= link_to t('views.student.navigation.find_a_mentor'), new_student_mentor_search_path %>
+    <%= link_to t('views.student.navigation.find_a_mentor'),
+      new_student_mentor_search_path %>
   </li>
 
   <li class="nav-link <%= al(student_team_path(current_team)) %>">
