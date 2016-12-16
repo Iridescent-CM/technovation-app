@@ -60,7 +60,7 @@
           method: 'PUT',
           data: payload,
           success: function(res, status) {
-            createFlashNotification('success', 'We did the thing');
+            createFlashNotification('success', 'Progress saved!');
             currentData = latestData;
             exitEditMode();
           },
