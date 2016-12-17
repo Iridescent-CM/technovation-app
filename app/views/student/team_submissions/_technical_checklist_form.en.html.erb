@@ -133,9 +133,21 @@
         <h4>Use all 3 for full points</h4>
         <p><%= link_to "Learn in Code 5", "http://www.technovationchallenge.org/curriculum/coding-unit-5", target: :_blank %></p>
 
-        <%= t.input :paper_prototype %>
-        <%= t.input :paper_prototype_cache, as: :hidden %>
-        <%= image_tag(t.object.paper_prototype_url, width: 200) if t.object.paper_prototype.present? %>
+        <div class="tc-form-group" data-group-name="Pictures of Process" >
+          <div class="tc-form-group__photo-item">
+            <%= t.label :paper_prototype %>
+            <%= image_tag(t.object.paper_prototype_url, width: 200) if t.object.paper_prototype.present? %>
+            <%= t.file_field :paper_prototype %>
+            <%= t.input :paper_prototype_cache, as: :hidden %>
+          </div>
+
+          <div class="tc-form-group__photo-item">
+            <%= t.label :event_flow_chart %>
+            <%= image_tag(t.object.event_flow_chart_url, width: 200) if t.object.event_flow_chart.present? %>
+            <%= t.file_field :event_flow_chart %>
+            <%= t.input :event_flow_chart_cache, as: :hidden %>
+          </div>
+        </div>
 
         <p>
           At least <strong>two</strong> app screenshots.<br>
@@ -143,7 +155,7 @@
         </p>
         <% end %>
 
-        <%= f.button :submit, class: "appy-button" %>
+        <%= f.button :submit, class: "appy-button technical-checklist__submit-button" %>
       <% end %>
     </div>
   </div>

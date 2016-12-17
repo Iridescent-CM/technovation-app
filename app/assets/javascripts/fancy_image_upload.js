@@ -1,25 +1,24 @@
-// Fancy Image Upload
-// Add class "fancy-image-upload" to form containing file upload input,
-// submit button, and optional label.
-//
-// <%= direct_upload_form_for @screenshots_uploader, html: { id: "team_submission_screenshots", class: "fancy-image-upload" } do |f| %>
-//   <%= f.label :screenshots, t("models.team_submission.screenshots") %>
-//   <%= f.file_field :screenshots, multiple: true %>
-//   <%= f.submit t("views.application.continue"), class: "appy-button" %>
+// Add 'fancy-image-upload' class to form wrapper
+// <%= direct_upload_form_for @pitch_presentation_uploader,
+//                            html: {class: 'fancy-image-upload'} do |f| %>
+//   <%= f.file_field :pitch_presentation %>
+//   <%= f.submit t("views.application.upload"), class: "appy-button" %>
 // <% end %>
 
 (function() {
-  setTimeout(fancyImageUpload, 0);
-  function fancyImageUpload() {
-    var imageUploads = document.getElementsByClassName('fancy-image-upload');
-    if (imageUploads.length === 0) {
+  setTimeout(fancyFileUplodad, 0);
+
+  function fancyFileUplodad() {
+    var fileUploads = document.getElementsByClassName('fancy-image-upload');
+    if (fileUploads.length === 0) {
       return;
     }
     var spanLabelClass = 'fancy-image-upload__label';
     var dropZoneClass = 'fancy-image-upload__drop-zone';
     var bottomLabelText = 'Drop files here or click to browse';
-    for (var i = 0; i < imageUploads.length; i++) {
-      var currentForm = imageUploads[i];
+
+    for (var i = 0; i < fileUploads.length; i++) {
+      var currentForm = fileUploads[i];
       var dropZone = document.createElement('label');
       dropZone.classList.add(dropZoneClass);
 
@@ -30,6 +29,15 @@
 
       var fileInput = currentForm.querySelector('input[type="file"]');
       fileInput.addEventListener('change', setContent);
+
+      handleModalClose(i);
+    }
+
+    function handleModalClose(i) {
+      var currentForm = fileUploads[i];
+      document.addEventListener('modalclose', function(e) {
+        wipeSelfOnModalClose(e, currentForm);
+      });
     }
 
     function setContent(e) {
@@ -73,7 +81,30 @@
     }
 
     function makeEmptyDropZone(dropZone) {
+
+      function makeIcon() {
+        var faFileIcon = document.createElement('span');
+        faFileIcon.classList.add('fa', 'fa-picture-o');
+        dropZone.appendChild(faFileIcon);
+      }
+
+      function makeBottomLabel() {
+        var bottomLabel = document.createElement('span');
+        bottomLabel.classList.add(spanLabelClass);
+        bottomLabel.innerHTML = bottomLabelText;
+        dropZone.appendChild(bottomLabel);
+      }
+
+      if (dropZone.hasChildNodes()) {
+        // If the user has opened a form in a modal, added files,
+        // then closed the modal, we only need to make some cosmetic changes
+        makeIcon();
+        makeBottomLabel();
+        return;
+      }
+
       var form = dropZone.parentElement;
+
       // Selects a label that is NOT the drop zone
       var label = form.querySelector('label:not(.' + dropZoneClass + ')');
       if (label) {
@@ -84,17 +115,30 @@
         dropZone.appendChild(topLabel);
         label.style.display = 'none';
       }
-      var faPictureIcon = document.createElement('span');
-      faPictureIcon.classList.add('fa', 'fa-picture-o');
-      dropZone.appendChild(faPictureIcon);
-      var bottomLabel = document.createElement('span');
-      bottomLabel.classList.add(spanLabelClass);
-      bottomLabel.innerHTML = bottomLabelText;
-      dropZone.appendChild(bottomLabel);
+
+      makeIcon();
+      makeBottomLabel();
+
       if (!dropZone.querySelector('input[type="file"]')) {
         var fileInput = form.querySelector('input[type="file"]');
         dropZone.appendChild(fileInput);
       }
     }
-  };
+
+    function wipeSelfOnModalClose(e, form) {
+      var wrapperModal = e.target;
+      if (wrapperModal.contains(form)) {
+        form.querySelector('[type="file"]').value = '';
+        var dropZone = form.getElementsByClassName(dropZoneClass)[0];
+        var filesList = dropZone.querySelector('.fancy-image-upload__files-list');
+        if (filesList) {
+          var filesToUploadLabel = dropZone.querySelector('.fancy-image-upload__label');
+          filesToUploadLabel.remove();
+          filesList.remove();
+          makeEmptyDropZone(dropZone);
+        }
+      }
+    }
+
+  }
 })();

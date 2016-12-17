@@ -49,9 +49,24 @@
 }
 
 .tc-form-group__item--inactive {
-  div.input.string {
+  div.input.string,
+  div.input.tel {
     display: none;
   }
+}
+
+.tc-form-group__photo-item {
+  margin-bottom: 2em;
+
+  label {
+    font-size: 1.1em;
+  }
+}
+
+// Submit button
+
+.technical-checklist__submit-button {
+  margin: 0;
 }
 
 // Progress
