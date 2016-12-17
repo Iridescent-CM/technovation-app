@@ -22,4 +22,5 @@
 //= require select_fields
 //= require submissions_onboarding
 //= require submissions_page
+//= require technical_checklist
 //= require toast_flashes
