@@ -1,0 +1,76 @@
+.technical-checklist {
+  display: flex;
+  justify-content: space-between;
+}
+
+// Checklist
+
+.technical-checklist__checklist {
+  width: 75%;
+}
+
+.tc-intro__spacer {
+  border: 0;
+  border-top: 1px dotted $mid-grey;
+  margin: 1em 0;
+}
+
+.tc-form-group {
+  margin-bottom: 2em;
+
+  label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+
+    &::selection {
+      background-color: transparent;
+    }
+  }
+
+  label.checkbox {
+    align-items: center;
+    display: flex;
+  }
+
+  .fancy-toggle {
+    margin-right: 1em;
+  }
+
+  input[type="checkbox"] {
+    height: 0;
+    visibility: hidden;
+    width: 0;
+  }
+}
+
+.tc-form-group__item {
+  margin-bottom: 1em;
+}
+
+.tc-form-group__item--inactive {
+  div.input.string,
+  div.input.tel {
+    display: none;
+  }
+}
+
+.tc-form-group__photo-item {
+  margin-bottom: 2em;
+
+  label {
+    font-size: 1.1em;
+  }
+}
+
+// Submit button
+
+.technical-checklist__submit-button {
+  margin: 0;
+}
+
+// Progress
+
+.technical-checklist__progress {
+  width: 25%;
+}

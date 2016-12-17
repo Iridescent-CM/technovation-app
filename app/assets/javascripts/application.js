@@ -4,6 +4,7 @@
 //= require country_state_select
 //= require sortable
 //= require jquery.query
+//= require facebook_sdk
 
 //= require ajax_form_handler
 //= require background_checks
@@ -21,4 +22,5 @@
 //= require select_fields
 //= require submissions_onboarding
 //= require submissions_page
+//= require technical_checklist
 //= require toast_flashes

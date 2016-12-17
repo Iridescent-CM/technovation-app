@@ -1,0 +1,41 @@
+// Toggle
+// Place directly after a checkbox input. Changes its display
+// based on checkbox input value
+// <span class='fancy-toggle'></span>
+
+$borderWidth: 2px;
+$dotSize: 18px;
+
+.fancy-toggle {
+  background-color: $light-grey;
+  border-radius: $dotSize;
+  border: 2px solid $dark-grey;
+  box-sizing: content-box;
+  display: inline-block;
+  height: $dotSize;
+  position: relative;
+  transition: background-color 0.25s;
+  width: $dotSize * 2;
+
+  &::before {
+    background-color: white;
+    border-radius: $dotSize;
+    border: 1px solid $dark-grey;
+    content: '';
+    display: block;
+    height: $dotSize;
+    left: 0;
+    position: absolute;
+    transition: left 0.25s;
+    top: 0;
+    width: $dotSize;
+  }
+}
+
+input[type="checkbox"]:checked ~ .fancy-toggle {
+  background-color: $shamrock-mid;
+
+  &::before {
+    left: calc(100% - #{$dotSize});
+  }
+}

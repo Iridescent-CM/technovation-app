@@ -41,4 +41,45 @@
   <%= link_to "Go To Your Team Page",
     student_team_path(current_team),
     class: "ts-about-team__team-quick-link" %>
+
+  <div class="ts-about-team__share-wrapper">
+    <div class="social-share social-share--facebook">
+      <div
+        class="fb-share-button"
+        data-href="<%= team_submission_url(submission) %>"
+        data-layout="button"
+        data-size="large"
+        data-mobile-iframe="false"
+      >
+        <a
+          class="fb-xfbml-parse-ignore"
+          target="_blank"
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com%2F&amp;src=sdkpreparse"
+        >
+          Share
+        </a>
+      </div>
+    </div>
+
+    <div class="social-share social-share--twitter">
+      <!-- TODO: Figure out what the data-text copy should be -->
+      <a
+        href="https://twitter.com/share"
+        class="twitter-share-button"
+        data-size="large"
+        data-text="Check out our cool app!"
+        data-url="<%= team_submission_url(submission) %>"
+        data-via="technovation"
+        data-show-count="false"
+      >
+        Tweet
+      </a>
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <!-- TODO: Figure out if we want LinkedIn
+    <div class="social-share social-share- -linkedin">
+      <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+      <script type="IN/Share" data-url="<%= team_submission_url(submission) %>"></script>
+    </div> -->
+  </div>
 </div>
