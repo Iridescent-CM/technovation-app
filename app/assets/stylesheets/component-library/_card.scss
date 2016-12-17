@@ -26,8 +26,24 @@
   padding: 0.5rem 1rem;
 
   .appy-button {
+    border: 2px solid white;
     font-size: 0.75em;
-    padding: 0.25em 0.75em;
+    padding: 0.15em 0.75em;
+    background-color: transparent;
+    box-shadow: none;
+    text-transform: capitalize;
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: rgba(0,0,0,0.15);
+      color: white;
+    }
+
+    &:active {
+      box-shadow: none;
+      transform: none;
+    }
 
     &:first-of-type {
       margin-left: auto;
@@ -37,6 +53,12 @@
       margin-right: 0;
     }
   }
+}
+
+.card__heading-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-heading__flair {
