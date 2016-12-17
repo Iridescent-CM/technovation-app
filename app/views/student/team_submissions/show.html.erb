@@ -5,6 +5,7 @@
 <div data-team-submissions class="team-submissions">
   <div class="team-submissions__row-left">
     <%= render 'student/team_submissions/steps/team_photo',
+      submission: @team_submission,
       uploader: @team_photo_uploader %>
 
     <%= render 'student/team_submissions/steps/affirm_integrity',
