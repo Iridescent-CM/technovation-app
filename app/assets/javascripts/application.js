@@ -4,6 +4,7 @@
 //= require country_state_select
 //= require sortable
 //= require jquery.query
+//= require facebook_sdk
 
 //= require ajax_form_handler
 //= require background_checks

@@ -41,4 +41,39 @@
   <%= link_to "Go To Your Team Page",
     student_team_path(current_team),
     class: "ts-about-team__team-quick-link" %>
+
+  <div class="ts-about-team__share-wrapper">
+    <div class="social-share social-share--facebook">
+      <div
+        class="fb-share-button"
+        data-href="https://www.google.com"
+        data-layout="button"
+        data-size="large"
+        data-mobile-iframe="false"
+      >
+        <a
+          class="fb-xfbml-parse-ignore"
+          target="_blank"
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com%2F&amp;src=sdkpreparse"
+        >
+          Share
+        </a>
+      </div>
+    </div>
+
+    <div class="social-share social-share--twitter">
+      <a
+        href="https://twitter.com/share"
+        class="twitter-share-button"
+        data-size="large"
+        data-text="Check out our cool app!"
+        data-url="https://www.google.com"
+        data-via="technovation"
+        data-show-count="false"
+      >
+        Tweet
+      </a>
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+  </div>
 </div>
