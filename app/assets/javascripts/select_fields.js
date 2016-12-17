@@ -78,6 +78,7 @@
         $toggleField.show();
       } else {
         $toggleField.hide();
+        $toggleField[0].querySelector('input[type="text"]').value = '';
       }
     }
   }

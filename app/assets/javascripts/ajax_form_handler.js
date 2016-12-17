@@ -39,7 +39,7 @@
 
         // Cancel button
         cancelButton = document.createElement('button');
-        cancelButton.classList.add('unbutton');
+        cancelButton.classList.add('appy-button');
         cancelButton.innerText = 'Cancel';
         editButton.parentElement.insertBefore(cancelButton, editButton);
         cancelButton.addEventListener('click', cancelEdit);

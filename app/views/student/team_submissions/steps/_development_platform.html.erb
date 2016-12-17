@@ -8,8 +8,10 @@
   } do %>
 
   <div class="card__heading submission-step__code">
-    Development Platform
-    <button type="button" data-action="edit" class="unbutton">
+    <span class="card__heading-text">
+      Development Platform
+    </span>
+    <button type="button" data-action="edit" class="appy-button">
       edit
     </button>
   </div>
@@ -22,6 +24,10 @@
       <% else %>
         Tell us what you used to develop your app!
       <% end %>
+    </div>
+
+    <div class="ajax-form__static-input ajax-form-helper__static-mode"
+         data-display-for="development_platform_other">
     </div>
 
     <div class="ajax-form-helper__edit-mode">
