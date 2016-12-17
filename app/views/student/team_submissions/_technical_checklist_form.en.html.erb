@@ -86,6 +86,10 @@
     <%= t.input :paper_prototype_cache, as: :hidden %>
     <%= image_tag(t.object.paper_prototype_url, width: 200) if t.object.paper_prototype.present? %>
 
+    <%= t.input :event_flow_chart %>
+    <%= t.input :event_flow_chart_cache, as: :hidden %>
+    <%= image_tag(t.object.event_flow_chart_url, width: 200) if t.object.event_flow_chart.present? %>
+
     <p>
       At least <strong>two</strong> app screenshots.<br>
       Your team has uploaded <%= pluralize f.object.screenshots.count, "screenshot" %>.
