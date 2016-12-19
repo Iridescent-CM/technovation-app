@@ -53,7 +53,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def embed_code(method)
-    if send(method).match(/youtu/)
+    if send(method) and send(method).match(/youtu/)
       id = send(method)[/v=(.+)$/, 1]
 
       %{<iframe
@@ -63,7 +63,7 @@ class TeamSubmission < ActiveRecord::Base
           frameborder="0"
           allowfullscreen>
         </iframe>}.strip_heredoc
-    elsif send(method).match(/vimeo/)
+    elsif send(method) and send(method).match(/vimeo/)
       id = send(method)[/\/(\d+)$/, 1]
 
       %{<iframe
