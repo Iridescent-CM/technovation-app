@@ -45,7 +45,35 @@
         cancelButton.addEventListener('click', cancelEdit);
       }
 
+      function validateChanges() {
+        var valid = true;
+
+        Array.prototype.forEach.call(namedInputs, function(input) {
+          var validationStr = input.dataset.validateInput,
+              errorEl = document.createElement('p');
+
+          if (!input.value.match(new RegExp(validationStr))) {
+            var nextEl = input.nextElementSibling;
+
+            if (nextEl && nextEl.classList.contains("error")) {
+              input.nextElementSibling.remove();
+            }
+
+            errorEl.classList.add('error');
+            errorEl.innerText = input.dataset.validationMsg;
+            input.after(errorEl);
+            valid = false;
+          }
+        });
+
+        return valid;
+      }
+
       function saveChanges() {
+        if (!validateChanges()) {
+          return;
+        }
+
         editButton.removeEventListener('click', saveChanges);
 
         var latestData = {};

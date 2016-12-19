@@ -1,0 +1,42 @@
+<%= content_tag :div,
+  class: 'card ajax-form',
+  role: 'form',
+  data: {
+    ajax_form: true,
+    object_name: "team_submission",
+    update_url: student_team_submission_path(submission)
+  } do %>
+
+  <div class="card__heading submission-step__marketing">
+    <span class="card__heading-text">
+      Pitch Video
+    </span>
+    <button type="button" data-action="edit" class="appy-button">
+      edit
+    </button>
+  </div>
+
+  <div class="card__body">
+    <%= content_tag :div,
+      class: "ajax-form__static-input ajax-form-helper__static-mode",
+      data: {
+        display_for: "demo_video_link",
+      } do %>
+      <% if submission.demo_video_link %>
+        <%= submission.demo_video_link %>
+      <% else %>
+        Post the link to your app demo on Youtube or Vimeo!
+      <% end %>
+    <% end %>
+
+    <div class="ajax-form-helper__edit-mode">
+      <%= text_field_tag :demo_video_link,
+        submission.demo_video_link,
+        data: {
+          validate_input: "(?:youtube|vimeo)\.com",
+          validation_msg: "Must be a youtube or vimeo URL",
+        },
+        placeholder: 'Youtube or Vimeo URL'%>
+    </div>
+  </div>
+<% end %>
