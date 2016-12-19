@@ -9,7 +9,7 @@
 
   <div class="card__heading submission-step__marketing">
     <span class="card__heading-text">
-      Pitch Video
+      Demo Video
     </span>
     <button type="button" data-action="edit" class="appy-button">
       edit
@@ -23,7 +23,7 @@
         display_for: "demo_video_link",
       } do %>
       <% if submission.demo_video_link %>
-        <%= submission.demo_video_link %>
+        <%= submission.embed_code(:demo_video_link).html_safe %>
       <% else %>
         Post the link to your app demo on Youtube or Vimeo!
       <% end %>
@@ -35,6 +35,7 @@
         data: {
           validate_input: "(?:youtube|vimeo)\.com",
           validation_msg: "Must be a youtube or vimeo URL",
+          use_response: "demo_embed",
         },
         placeholder: 'Youtube or Vimeo URL'%>
     </div>

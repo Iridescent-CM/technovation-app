@@ -50,15 +50,14 @@
 
         Array.prototype.forEach.call(namedInputs, function(input) {
           var validationStr = input.dataset.validateInput,
-              errorEl = document.createElement('p');
+              errorEl = document.createElement('p'), 
+              nextEl = input.nextElementSibling;
+
+          if (nextEl && nextEl.classList.contains("error")) {
+            nextEl.remove();
+          }
 
           if (!input.value.match(new RegExp(validationStr))) {
-            var nextEl = input.nextElementSibling;
-
-            if (nextEl && nextEl.classList.contains("error")) {
-              input.nextElementSibling.remove();
-            }
-
             errorEl.classList.add('error');
             errorEl.innerText = input.dataset.validationMsg;
             input.after(errorEl);
@@ -90,7 +89,7 @@
           success: function(res, status) {
             createFlashNotification('success', 'Progress saved!');
             currentData = latestData;
-            exitEditMode();
+            exitEditMode(res);
           },
           error: function(res, status) {
             var responseText = JSON.parse(res.responseText);
@@ -109,7 +108,7 @@
         exitEditMode();
       }
 
-      function exitEditMode() {
+      function exitEditMode(resp) {
         // Cleanup
         cancelButton.remove();
         wrapper.classList.remove('ajax-form--edit-mode');
@@ -123,19 +122,28 @@
           if (!staticEl) {
             return;
           }
+
           var currentInput = wrapper.querySelector('[name="' + name + '"]');
           var value = currentData[name];
           if (!value) {
             return;
           }
+
           var valueText;
           if (currentInput.tagName === 'SELECT') {
             valueText = currentInput.querySelector('[value="' + value + '"]').innerText;
           } else {
             valueText = value;
           }
+
           currentInput.value = value;
-          staticEl.innerText = valueText;
+
+          var useResData = currentInput.dataset.useResponse;
+          if (useResData !== undefined) {
+            staticEl.innerHTML = resp[useResData];
+          } else {
+            staticEl.innerText = valueText;
+          }
         });
       }
     })();

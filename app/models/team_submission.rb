@@ -51,4 +51,30 @@ class TeamSubmission < ActiveRecord::Base
       development_platform
     end
   end
+
+  def embed_code(method)
+    if send(method).match(/youtu/)
+      id = send(method)[/v=(.+)$/, 1]
+
+      %{<iframe
+          width="100%"
+          height="315"
+          src="https://www.youtube.com/embed/#{id}"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>}.strip_heredoc
+    elsif send(method).match(/vimeo/)
+      id = send(method)[/\/(\d+)$/, 1]
+
+      %{<iframe
+          src="https://player.vimeo.com/video/#{id}"
+          width="100%"
+          height="360"
+          frameborder="0"
+          webkitallowfullscreen
+          mozallowfullscreen
+          allowfullscreen>
+        </iframe>}.strip_heredoc
+    end
+  end
 end

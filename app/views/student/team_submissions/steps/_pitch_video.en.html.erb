@@ -23,7 +23,7 @@
         display_for: "pitch_video_link",
       } do %>
       <% if submission.pitch_video_link %>
-        <%= submission.pitch_video_link %>
+        <%= submission.embed_code(:pitch_video_link).html_safe %>
       <% else %>
         Post the link to your pitch on Youtube or Vimeo!
       <% end %>
@@ -35,6 +35,7 @@
         data: {
           validate_input: "(?:youtube|vimeo)\.com",
           validation_msg: "Must be a youtube or vimeo URL",
+          use_response: "pitch_embed",
         },
         placeholder: 'Youtube or Vimeo URL'%>
     </div>
