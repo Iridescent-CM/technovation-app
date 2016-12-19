@@ -127,7 +127,7 @@ Rails.application.routes.draw do
   resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
-  resources :team_submissions, only: :show
+  resources :apps, controller: :team_submissions, only: :show
   resources :technical_checklists, only: :show
 
   resources :signup_attempts, only: [:create, :show, :update]
