@@ -1,0 +1,64 @@
+.tabs {
+  .tab-menu {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+
+    .tab-link {
+      background: #ddd;
+      border-top: 3px solid #999;
+      box-sizing: border-box;
+      margin-right: 0.5rem;
+      padding: 0;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 0;
+
+      &.active {
+        background: white;
+        border-color: $mulberry;
+      }
+    }
+  }
+
+  .tab-content {
+    position: relative;
+    z-index: 1;
+
+    .card__heading {
+      background: transparent;
+
+      .card__heading-text {
+        display: none;
+      }
+
+      .appy-button {
+        outline: 0;
+        color: black;
+        border-color: black;
+      }
+    }
+
+    &.tab-content__hiding {
+      display: none;
+    }
+
+    &.tab-content__showing {
+      display: block;
+    }
+  }
+}
+
+.tab-button {
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  border: 0;
+  color: currentColor;
+  outline: 0;
+
+  &:hover {
+    color: black;
+    background: white !important;
+  }
+}
