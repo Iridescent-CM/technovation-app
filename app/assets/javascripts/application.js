@@ -24,3 +24,4 @@
 //= require submissions_page
 //= require technical_checklist
 //= require toast_flashes
+//= require tabs

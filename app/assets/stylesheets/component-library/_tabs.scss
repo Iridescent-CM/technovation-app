@@ -51,14 +51,13 @@
 
 .tab-button {
   border-radius: 0;
-  background-color: transparent;
+  background-color: transparent !important;
   padding: 0.5rem 1rem;
   border: 0;
-  color: currentColor;
+  color: currentColor !important;
   outline: 0;
 
   &:hover {
-    color: black;
     background: white !important;
   }
 }
