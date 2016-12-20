@@ -16,6 +16,9 @@
     <%= render 'student/team_submissions/steps/app_description',
       submission: @team_submission %>
 
+    <%= render 'student/team_submissions/steps/sustainable_development_goals',
+      submission: @team_submission %>
+
     <div class="tabs">
       <ul class="tab-menu">
         <li class="tab-link active">
@@ -47,9 +50,6 @@
           submission: @team_submission %>
       </div>
     </div>
-
-    <%= render 'student/team_submissions/steps/sustainable_development_goals',
-      submission: @team_submission %>
 
     <%= render 'student/team_submissions/steps/screenshots',
       submission: @team_submission %>
