@@ -17,18 +17,16 @@
   </li>
 <% end %>
 
-<% unless Rails.env.production? or Rails.env.staging? %>
-  <% if current_student.is_on_team? and current_team.submission.present? %>
-    <li class="nav-link <%= al(student_team_submission_path(current_team.submission)) %>">
-      <%= link_to t("views.application.dashboards.menu.team_submission"),
-        student_team_submission_path(current_team.submission) %>
-    </li>
-  <% elsif current_student.is_on_team? %>
-    <li class="nav-link <%= al(new_student_team_submission_path) %>">
-      <%= link_to t("views.application.dashboards.menu.team_submission"),
-        new_student_team_submission_path %>
-    </li>
-  <% end %>
+<% if current_student.is_on_team? and current_team.submission.present? %>
+  <li class="nav-link <%= al(student_team_submission_path(current_team.submission)) %>">
+    <%= link_to t("views.application.dashboards.menu.team_submission"),
+      student_team_submission_path(current_team.submission) %>
+  </li>
+<% elsif current_student.is_on_team? %>
+  <li class="nav-link <%= al(new_student_team_submission_path) %>">
+    <%= link_to t("views.application.dashboards.menu.team_submission"),
+      new_student_team_submission_path %>
+  </li>
 <% end %>
 
 <li class="nav-link <%= al(student_profile_path) %>">
