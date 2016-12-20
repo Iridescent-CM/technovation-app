@@ -21,7 +21,7 @@
           tabContents[k].classList.add('tab-content__hiding');
         }
 
-        for (var l = 0; l < tabContents.length; l++) {
+        for (var l = 0; l < tabLinks.length; l++) {
           tabLinks[l].classList.remove('active');
         }
 
