@@ -327,3 +327,10 @@ h2.submissions-onboarding-step__heading {
 .submission-step__ideation {
   background-color: #c1c320;
 }
+
+@media only screen and (min-width: $device-md) {
+  .team-submissions__fixed-col {
+    position: sticky;
+    top: 15px;
+  }
+}

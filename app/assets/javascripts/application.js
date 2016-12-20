@@ -5,6 +5,7 @@
 //= require sortable
 //= require jquery.query
 //= require facebook_sdk
+//= require jquery.sticky-kit.1.1.2.min
 
 //= require ajax_form_handler
 //= require background_checks
