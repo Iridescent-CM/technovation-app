@@ -17,7 +17,6 @@ $modal-width: 600px;
   position: fixed;
   top: 0;
   width: 100vw;
-  z-index: $z-modal;
 }
 
 .modalify__shade {
@@ -27,12 +26,14 @@ $modal-width: 600px;
   left: 0;
   bottom: 0;
   right: 0;
+  z-index: $z-modal - 1;
 }
 
 .modalify__body {
+  position: relative;
   max-width: $modal-width;
   width: 100%;
-  z-index: $z-low;
+  z-index: $z-modal;
 }
 
 .modalify__top-bar {

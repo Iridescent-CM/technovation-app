@@ -3,7 +3,7 @@
 </h1>
 
 <div data-team-submissions class="team-submissions">
-  <div class="team-submissions__row-left">
+  <div class="team-submissions__row-left submissions-col">
     <div class="team-submissions__fixed-col">
       <%= render 'student/team_submissions/steps/team_photo',
         submission: @team_submission,
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="team-submissions__row-center">
+  <div class="team-submissions__row-center submissions-col">
     <%= render 'student/team_submissions/steps/app_description',
       submission: @team_submission %>
 
@@ -57,7 +57,7 @@
       submission: @team_submission %>
   </div>
 
-  <div class="team-submissions__row-right">
+  <div class="team-submissions__row-right submissions-col">
     <div class="team-submissions__fixed-col">
       <%= render 'student/team_submissions/steps/technical_checklist',
         submission: @team_submission %>
