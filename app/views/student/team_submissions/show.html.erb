@@ -73,8 +73,10 @@
           submission: @team_submission %>
       <% end %>
 
-      <%= render 'student/team_submissions/steps/business_plan',
-        submission: @team_submission%>
+      <% if Division.for(@team_submission.team).senior? %>
+        <%= render 'student/team_submissions/steps/business_plan',
+          submission: @team_submission %>
+      <% end %>
     </div>
   </div>
 </div>

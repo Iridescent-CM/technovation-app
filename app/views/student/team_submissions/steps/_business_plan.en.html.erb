@@ -1,16 +1,6 @@
-<%
-  if current_team.junior?
-    type = "report"
-    optional_text = "(optional)"
-  else
-    type = "plan"
-    optional_text = ""
-  end
-%>
-
 <div class="card">
   <div class="card__heading submission-step__business">
-    Business <%= type.titleize %> <%= optional_text %>
+    Business Plan
 
     <button data-modal-trigger="business-plan-upload-modal"
             role="button"
@@ -21,7 +11,7 @@
   <div class="card__body">
     <% if submission.business_plan %>
       <p>
-        <%= link_to "Your business #{type}", submission.business_plan.file_url %>
+        <%= link_to "Your business plan", submission.business_plan.file_url %>
 
         <br />
 
@@ -30,7 +20,7 @@
         </small>
       </p>
     <% else %>
-      Please add your business <%= type %> (.pdf) <%= optional_text %>
+      Please add your business plan (.pdf)
     <% end %>
   </div>
 </div>
@@ -38,7 +28,7 @@
 <%= content_tag :div,
   class: "modalify",
   id: "business-plan-upload-modal",
-  data: { heading: "Business #{type.titleize} (.pdf) #{optional_text}" } do %>
+  data: { heading: "Business plan (.pdf)" } do %>
   <%= direct_upload_form_for @business_plan_uploader,
                              html: { class: 'fancy-file-upload' },
                              data: { type: 'application/pdf' } do |f| %>
