@@ -45,10 +45,15 @@
 
 .tc-form-group__item {
   margin-bottom: 1em;
+
+  textarea {
+    height: 7rem;
+  }
 }
 
 .tc-form-group__item--inactive {
   div.input.string,
+  div.input.text,
   div.input.tel {
     display: none;
   }
