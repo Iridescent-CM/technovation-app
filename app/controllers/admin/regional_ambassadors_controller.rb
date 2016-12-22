@@ -31,7 +31,7 @@ module Admin
     end
 
     def update
-      ambassador = RegionalAmbassadorProfile.find_by(account_id: params.fetch(:id))
+      ambassador = RegionalAmbassadorProfile.find_by(params.fetch(:id))
       ambassador.public_send("#{params.fetch(:status)}!")
       redirect_to :back, success: "#{ambassador.full_name} was marked as #{params.fetch(:status)}"
     end
