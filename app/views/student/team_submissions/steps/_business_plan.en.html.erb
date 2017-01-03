@@ -18,6 +18,13 @@
         <small>
           <em>updated <%= time_ago_in_words(submission.business_plan.updated_at) %> ago</em>
         </small>
+
+        <small class="hint-link">
+          <%= link_to "See the checklist",
+            "http://www.technovationchallenge.org/wp-content/uploads/2016/12/BusinessPlanChecklist.pdf",
+            target: :_blank %>
+          for completing a Business Plan
+        </small>
       </p>
     <% else %>
       Please add your business plan (.pdf)
