@@ -46,19 +46,41 @@ RSpec.describe Team do
 
   it "scopes to past seasons" do
     FactoryGirl.create(:team) # current season by default
-    past_team = FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)
+
+    past_date = if Season.switch_date.year === Time.current.year
+                  Season.switch_date - 367.days
+                else
+                  Season.switch_date - 1.day
+                end
+
+    past_team = FactoryGirl.create(:team, created_at: past_date)
+
     expect(Team.past).to eq([past_team])
   end
 
   it "scopes to the current season" do
     current_team = FactoryGirl.create(:team) # current season by default
-    FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)
+
+    past_date = if Season.switch_date.year === Time.current.year
+                  Season.switch_date - 367.days
+                else
+                  Season.switch_date - 1.day
+                end
+
+    FactoryGirl.create(:team, created_at: past_date)
     expect(Team.current).to eq([current_team])
   end
 
   it "excludes current season teams from the past scope" do
     current_team = FactoryGirl.create(:team) # current season by default
-    past_team = FactoryGirl.create(:team, created_at: Season.switch_date - 1.day)
+
+    past_date = if Season.switch_date.year === Time.current.year
+                  Season.switch_date - 367.days
+                else
+                  Season.switch_date - 1.day
+                end
+
+    past_team = FactoryGirl.create(:team, created_at: past_date)
 
     SeasonRegistration.register(current_team, past_team.seasons.last)
 

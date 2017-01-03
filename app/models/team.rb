@@ -13,6 +13,8 @@ class Team < ActiveRecord::Base
   after_save    { IndexTeamJob.perform_later("index", id) }
   after_destroy { IndexTeamJob.perform_later("delete", id) }
 
+  after_commit :register_to_season, on: :create
+
   def as_indexed_json(options = {})
     as_json(only: %w{id name description})
   end
@@ -36,8 +38,6 @@ class Team < ActiveRecord::Base
   scope :accepting_mentor_requests, -> { where(accepting_mentor_requests: true) }
 
   scope :accepting_student_requests, -> { where(accepting_student_requests: true) }
-
-  after_commit :register_to_season, on: :create
 
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations
