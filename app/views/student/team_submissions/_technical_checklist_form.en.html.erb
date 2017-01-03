@@ -227,6 +227,12 @@
             <div class="tc-form-group__photo-item">
               <%= t.label :event_flow_chart, "Flowchart or Pseudocode" %>
 
+              <p>
+                <%= link_to "Learn in Code 6",
+                  "http://www.technovationchallenge.org/curriculum/code-6",
+                  target: :_blank %>
+              </p>
+
               <% if t.object.event_flow_chart.present? %>
                 <%= image_tag(t.object.event_flow_chart_url, width: 200) %>
               <% end %>
