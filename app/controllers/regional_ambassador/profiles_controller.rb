@@ -7,6 +7,10 @@ module RegionalAmbassador
       params[:type] ||= "All"
       params[:per_page] ||= 25
 
+      params[:team_status] = "All" if params[:team_status].blank?
+      params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
+      params[:cleared_status] = "All" if params[:cleared_status].blank?
+
       @accounts = RegionalAccount.(current_ambassador, params)
         .paginate(per_page: params[:per_page], page: params[:page])
     end

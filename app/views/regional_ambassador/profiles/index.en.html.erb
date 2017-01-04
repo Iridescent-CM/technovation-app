@@ -39,6 +39,14 @@
         class: "inline",
         data: { reload: true, param: :team_status } %>
     </label>
+
+    <label class="no-text-transform inline">
+      Cleared status:
+      <%= select_tag :cleared_status,
+        options_for_select(%w{All Clear Needs\ background\ check Needs\ consent\ waiver}, params[:cleared_status]),
+        class: "inline",
+        data: { reload: true, param: :cleared_status } %>
+    </label>
   <% end %>
 
   <label class="no-text-transform inline">

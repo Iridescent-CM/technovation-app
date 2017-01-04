@@ -67,6 +67,26 @@ module RegionalAccount
                                                   WHERE season_registrations.registerable_type = 'Team'
                                                   AND season_registrations.season_id = ?)))", Season.current.id)
       end
+
+      case params[:cleared_status]
+      when "Clear"
+        accounts = accounts.joins(:consent_waiver)
+          .includes(:background_check)
+          .references(:background_checks)
+          .where("country != 'US' OR
+                  background_checks.status = ?",
+                  BackgroundCheck.statuses[:clear])
+      when "Needs background check"
+        accounts = accounts.includes(:background_check)
+          .references(:background_checks)
+          .where("country = 'US' AND
+                  background_checks.id IS NULL")
+      when "Needs consent waiver"
+        accounts = accounts.includes(:consent_waiver)
+          .references(:consent_waivers)
+          .where("consent_waivers.id IS NULL OR
+                  consent_waivers.voided_at IS NOT NULL")
+      end
     end
 
     accounts = accounts
