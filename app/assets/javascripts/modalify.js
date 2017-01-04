@@ -69,6 +69,7 @@
 
   function hideModal(modal) {
     modal.classList.remove('modalify--active');
+    fixColumnZIndex(modal, 0);
     fireModalCloseEvent(modal);
   }
 
@@ -80,11 +81,24 @@
       return;
     }
     modalToShow.classList.add('modalify--active');
+    fixColumnZIndex(modalToShow, 1);
   }
 
   function fireModalCloseEvent(modal) {
     var event = new Event('modalclose', {bubbles: true, cancelable: true});
     modal.dispatchEvent(event);
+  }
+
+  function fixColumnZIndex(modal, zidx) {
+    var parentCol = modal.parentElement,
+        colFound = parentCol.classList.contains('submissions-col');
+
+    while(!colFound) {
+      parentCol = parentCol.parentElement;
+      colFound = parentCol.classList.contains('submissions-col');
+    }
+
+    parentCol.style.zIndex = zidx;
   }
 })();
 

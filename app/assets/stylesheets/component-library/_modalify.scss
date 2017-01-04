@@ -2,6 +2,7 @@ $modal-width: 600px;
 
 .modalify {
   display: none;
+  z-index: 2;
 }
 
 .modalify--active {
