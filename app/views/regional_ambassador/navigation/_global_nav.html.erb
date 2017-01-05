@@ -1,17 +1,35 @@
-<% if current_account.authenticated? and current_account.regional_ambassador_profile and current_account.regional_ambassador_profile.full_access_enabled? %>
-  <li class="nav-link <%= al(regional_ambassador_profiles_path) %>">
-    <%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_profiles_path %>
-  </li>
+<header class="navigation" role="banner">
+  <div class="container">
+    <div class="navigation__content-wrapper">
+      <%= link_to image_tag("tc-logo-white-tm.png"),
+                  content_for?(:root_path) ? yield(:root_path) : application_dashboard_path,
+                  class: "logo" %>
 
-  <li class="nav-link <%= al(regional_ambassador_teams_path) %>">
-    <%= link_to t("views.application.dashboards.menu.teams"), regional_ambassador_teams_path %>
-  </li>
-<% end %>
+      <nav>
+        <ul class="navigation__links-list">
+          <% if current_account.authenticated? and current_account.regional_ambassador_profile and current_account.regional_ambassador_profile.full_access_enabled? %>
+            <li class="nav-link <%= al(regional_ambassador_profiles_path) %>">
+              <%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_profiles_path %>
+            </li>
 
-<li class="nav-link <%= al(regional_ambassador_profile_path) %>">
-  <%= link_to t("views.application.dashboards.menu.my_account"), regional_ambassador_profile_path %>
-</li>
+            <li class="nav-link <%= al(regional_ambassador_teams_path) %>">
+              <%= link_to t("views.application.dashboards.menu.teams"), regional_ambassador_teams_path %>
+            </li>
+          <% end %>
 
-<li class="nav-link">
-  <%= link_to t('views.application.signout'), signout_path, method: :delete %>
-</li>
+          <li class="nav-link <%= al(regional_ambassador_profile_path) %>">
+            <%= link_to t("views.application.dashboards.menu.my_account"), regional_ambassador_profile_path %>
+          </li>
+
+          <li class="nav-link">
+            <%= link_to t('views.application.signout'), signout_path, method: :delete %>
+          </li>
+        </ul>
+
+        <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
+          <!--FontAwesome-->
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -4,122 +4,124 @@
   You're browsing users in your region: <%= current_ambassador.region_name %>.
 </p>
 
-<div class="wrapper__report-table">
-  <label class="no-text-transform inline">
-    Season:
-    <%= select_tag :season,
-      options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
-      class: "inline",
-      data: { reload: true, param: :season } %>
-  </label>
+<div class="flex-row">
+  <div class="flex-col-md-4">
+    <div class="admin-search__filter-options">
+      <label class="no-text-transform">
+        Search by name or email:
+        <%= text_field_tag :text, params[:text], class: "submit-on-enter",
+        placeholder: "Press enter after typing",
+        data: { param: :text } %>
+      </label>
 
-  <label class="no-text-transform inline">
-    Account type:
-    <%= select_tag :type,
-                   options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
-                   class: "inline",
-                   data: { reload: true, param: :type } %>
-  </label>
+      <label class="no-text-transform">
+        Season:<br />
+        <%= select_tag :season,
+          options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+          class: "inline",
+          data: { reload: true, param: :season } %>
+      </label>
 
-  <% if params[:type] == "Student" %>
-    <label class="no-text-transform inline">
-      Parental Consent Status:
-      <%= select_tag :parental_consent_status,
-                     options_for_select(%w{All Signed Sent No\ Info\ Entered}, params[:parental_consent_status]),
-                     class: "inline",
-                     data: { reload: true, param: :parental_consent_status } %>
-    </label>
-  <% end %>
+      <label class="no-text-transform">
+        Account type:<br />
+        <%= select_tag :type,
+          options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
+          class: "inline",
+          data: { reload: true, param: :type } %>
+      </label>
 
-  <% if params[:type] == "Mentor" %>
-    <label class="no-text-transform inline">
-      On a team:
-      <%= select_tag :team_status,
-        options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]),
-        class: "inline",
-        data: { reload: true, param: :team_status } %>
-    </label>
+      <% if params[:type] == "Student" %>
+        <label class="no-text-transform">
+          Parental Consent Status:<br />
+          <%= select_tag :parental_consent_status,
+            options_for_select(%w{All Signed Sent No\ Info\ Entered},
+                               params[:parental_consent_status]),
+          class: "inline",
+          data: { reload: true, param: :parental_consent_status } %>
+        </label>
+      <% end %>
 
-    <label class="no-text-transform inline">
-      Cleared status:
-      <%= select_tag :cleared_status,
-        options_for_select(%w{All Clear Needs\ background\ check Needs\ consent\ waiver}, params[:cleared_status]),
-        class: "inline",
-        data: { reload: true, param: :cleared_status } %>
-    </label>
-  <% end %>
+      <% if params[:type] == "Mentor" %>
+        <label class="no-text-transform">
+          On a team:<br />
+          <%= select_tag :team_status,
+            options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]),
+            class: "inline",
+            data: { reload: true, param: :team_status } %>
+        </label>
 
-  <label class="no-text-transform inline">
-    Per page:
-    <%= select_tag :per_page,
-                    options_for_select([10, 25, 50, 100], params[:per_page]),
-                    class: "inline",
-                    data: {
-                      reload: true,
-                      param: :per_page,
-                    } %>
-  </label>
+        <label class="no-text-transform">
+          Cleared status:<br />
+          <%= select_tag :cleared_status,
+            options_for_select(%w{All Clear Needs\ background\ check Needs\ consent\ waiver}, params[:cleared_status]),
+            class: "inline",
+            data: { reload: true, param: :cleared_status } %>
+        </label>
+      <% end %>
 
-  <label class="no-text-transform">
-    Search by name or email:
-    <%= text_field_tag :text, params[:text], class: "submit-on-enter",
-                                             placeholder: "Press enter after typing",
-                                             data: { param: :text } %>
-  </label>
+      <div class="clearfix admin-search__export-options">
+        <hr />
 
-  <div class="wrapper__regional_ambassador_accounts">
-    <div class="pagination_info">
-      <%= page_entries_info @accounts, model: params[:type] == "All" ? "Account" : params[:type] %>
+        <%= form_tag regional_ambassador_exports_path(params.merge(class: "accounts")) do %>
+          <%= button_tag "Email CSV Report", class: "appy-button" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-col-md-8 wrapper__report-column">
+    <div class="scrolly-table">
+      <div class="scrolly-table__overflow-handler">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Team Name(s)</th>
+              <th>School / Company</th>
+              <th>Division</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @accounts.each do |account| %>
+              <% cache(account) do %>
+                <tr>
+                  <td><%= account.type_name %></td>
+                  <td><%= account.full_name %></td>
+                  <td><%= account.email %></td>
+                  <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
+                  <td><%= account.get_school_company_name %></td>
+                  <td><%= account.division %></td>
+                  <td><%= account.address_details %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <% if @accounts.any? %>
+    <div class="wrapper__report-footer">
+      <div class="pagination_info">
+        <%= page_entries_info @accounts,
+          model: params[:type] == "All" ? "Account" : params[:type] %>
+      </div>
+
       <%= will_paginate @accounts %>
 
-      <table class="table__regional_ambassador_accounts sortable">
-        <thead>
-          <tr>
-            <th>User type</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email</th>
-            <th>Team name(s)</th>
-            <th>School / Company name</th>
-            <th>Division</th>
-            <th>City</th>
-            <th>State / Province</th>
-            <th>Country</th>
-          </tr>
-
-          <tr>
-            <td colspan="11">
-              <%= link_to "Export to CSV",
-                regional_ambassador_exports_path(params.merge(class: "accounts")),
-                data: { method: :post } %>
-            </td>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @accounts.each do |account| %>
-            <% cache(account) do %>
-              <tr>
-                <td><%= account.type_name %></td>
-                <td><%= account.first_name %></td>
-                <td><%= account.last_name %></td>
-                <td><%= account.email %></td>
-                <td><%= account.teams.current.flat_map(&:name).to_sentence %></td>
-                <td><%= account.get_school_company_name %></td>
-                <td><%= account.division %></td>
-                <td><%= account.city %></td>
-                <td><%= account.state_province %></td>
-                <td><%= Country[account.country].name %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= will_paginate(@accounts) %>
-    <% end %>
+      <label class="no-text-transform per_page">
+        Per page:
+        <%= select_tag :per_page,
+        options_for_select([10, 25, 50, 100], params[:per_page]),
+        class: "inline",
+        data: {
+          reload: true,
+          param: :per_page,
+        } %>
+      </label>
+    </div>
   </div>
 </div>
