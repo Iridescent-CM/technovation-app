@@ -8,13 +8,15 @@ class RegionalExportJob < ActiveJob::Base
 
   private
   def export_accounts(ambassador, token, params)
-    accounts = RegionalAccount.(ambassador, params)
+    account_ids = RegionalAccount.(ambassador, params).pluck(:id)
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:type]}-accounts-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id User\ type First\ name Last\ name Email Team\ name(s) School\ /\ company\ name Division City State\ /\ Province Country}
 
-      accounts.each do |account|
+      account_ids.each do |account_id|
+        account = Account.find(account_id)
+
         csv << [account.id, account.type_name, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.get_school_company_name, account.division, account.city,
@@ -26,14 +28,16 @@ class RegionalExportJob < ActiveJob::Base
   end
 
   def export_teams(ambassador, token, params)
-    teams = RegionalTeam.(ambassador, params)
+    team_ids = RegionalTeam.(ambassador, params).pluck(:id).uniq
     mentor_status = URI.escape("mentor-status-#{params[:mentor_status]}")
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:division]}-teams-#{mentor_status}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id Division Name City State Country}
 
-      teams.each do |team|
+      team_ids.each do |team_id|
+        team = Team.find(team_id)
+
         csv << [team.id, team.division_name, team.name, team.city,
                 team.state_province, team.country]
       end

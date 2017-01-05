@@ -10,14 +10,16 @@ class ExportJob < ActiveJob::Base
 
   private
   def export_accounts(admin, token, params)
-    accounts = Admin::SearchAccounts.(params)
+    account_ids = Admin::SearchAccounts.(params).pluck(:id)
     search_text = URI.escape("search-query-#{params[:text]}")
     filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{search_text}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{User\ type Signed\ up First\ name Last\ name Email Team\ name(s) Division Referred\ by City State Country}
 
-      accounts.each do |account|
+      account_ids.each do |account_id|
+        account = Account.find(account_id)
+
         csv << [account.type_name, account.created_at, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.division, "#{account.referred_by} #{account.referred_by_other}",
@@ -33,13 +35,15 @@ class ExportJob < ActiveJob::Base
     params[:season] = Season.current.year
     params[:status] ||= "pending"
 
-    ambassadors = Account.current.joins(:regional_ambassador_profile).where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[params[:status]])
+    ambassador_ids = Account.current.joins(:regional_ambassador_profile).where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[params[:status]]).pluck(:id)
     filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{params[:status]}-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Status Signed\ up First\ name Last\ name Email City State Country}
 
-      ambassadors.each do |ambassador|
+      ambassador_ids.each do |ambassador_id|
+        ambassador = Account.find(ambassador_id)
+
         csv << [ambassador.regional_ambassador_profile.status, ambassador.created_at,
                 ambassador.first_name, ambassador.last_name, ambassador.email,
                 ambassador.city, ambassador.state_province, Country[ambassador.country].name]
@@ -50,30 +54,17 @@ class ExportJob < ActiveJob::Base
   end
 
   def export_teams(admin, token, params)
-    teams = Admin::SearchTeams.(params)
+    team_ids = Admin::SearchTeams.(params).pluck(:id)
     filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id Division Name City State Country}
 
-      teams.each do |team|
+      team_ids.each do |team_id|
+        team = Team.find(team_id)
+
         csv << [team.id, team.division_name, team.name, team.city,
                 team.state_province, team.country]
-      end
-    end
-
-    export(filepath, admin, params[:export_email])
-  end
-
-  def export_signup_attempts(admin, token, params)
-    attempts = SignupAttempt.send(params[:status])
-    filepath = "./tmp/#{Season.current.year}-signup-attempts-#{params[:status]}-#{token}.csv"
-
-    CSV.open(filepath, 'wb') do |csv|
-      csv << %w{email status}
-
-      attempts.each do |attempt|
-        csv << [attempt.email, attempt.status]
       end
     end
 
