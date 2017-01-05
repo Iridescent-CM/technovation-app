@@ -2,17 +2,16 @@
   <div class="flex-col-md-4">
     <div class="admin-search__filter-options">
       <label class="no-text-transform">
-        Search by name or email:<br />
+        Search by name or email:
         <%= text_field_tag :text, params[:text], class: "submit-on-enter",
           placeholder: "Press enter after typing",
           data: { param: :text } %>
       </label>
 
       <label class="no-text-transform">
-        Status:<br />
+        Status:
         <%= select_tag :status,
           options_for_select([:pending, :approved, :declined], params[:status]),
-          class: "inline",
           data: {
             reload: true,
             param: :status,
@@ -41,13 +40,27 @@
             <% @regional_ambassadors.each do |ambassador| %>
               <% cache(ambassador) do %>
                 <tr>
-                  <td><%= image_tag ambassador.profile_image_url, width: 80, height: 80 %></td>
-                  <td><%= link_to ambassador.full_name, admin_regional_ambassador_path(ambassador) %></td>
+                  <td>
+                    <%= image_tag ambassador.profile_image_url, width: 80, height: 80 %>
+                  </td>
+
+                  <td>
+                    <%= link_to ambassador.full_name,
+                      admin_regional_ambassador_path(ambassador) %>
+                  </td>
+
                   <td><%= ambassador.email %></td>
+
                   <td><%= ambassador.address_details %></td>
+
                   <% if "declined" == params[:status] %>
                     <td class="danger notify-banner notify-banner--error">
-                      <%= link_to 'Mark spam', admin_regional_ambassador_path(ambassador, status: :spam), data: { method: :put, confirm: "Mark #{ambassador.full_name} as spam?" } %>
+                      <%= link_to 'Mark spam',
+                        admin_regional_ambassador_path(ambassador, status: :spam),
+                        data: {
+                          method: :put,
+                          confirm: "Mark #{ambassador.full_name} as spam?",
+                        } %>
                     </td>
                   <% end %>
                 </tr>
@@ -69,7 +82,6 @@
         Per page:
         <%= select_tag :per_page,
           options_for_select([10, 25, 50, 100], params[:per_page]),
-          class: "inline",
           data: {
             reload: true,
             param: :per_page,
@@ -81,7 +93,9 @@
 
         <%= form_tag admin_exports_path(params.merge(class: "regional_ambassador")) do %>
           <%= button_tag "Email CSV Report to:", class: "appy-button" %>
-          <%= text_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+          <%= text_field_tag :export_email,
+            cookies[:export_email],
+            class: "export-to-email" %>
         <% end %>
       </div>
     </div>

@@ -14,17 +14,15 @@
       <label class="no-text-transform">
         Division:
         <%= select_tag :division,
-                      options_for_select(%w{All Senior Junior}, params[:division]),
-                      class: "inline",
-                      data: { reload: true, param: :division } %>
+          options_for_select(%w{All Senior Junior}, params[:division]),
+          data: { reload: true, param: :division } %>
       </label>
 
       <label class="no-text-transform">
         Season:
         <%= select_tag :season,
-                      options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
-                      class: "inline",
-                      data: { reload: true, param: :season } %>
+          options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+          data: { reload: true, param: :season } %>
       </label>
     </div>
   </div>
@@ -74,7 +72,6 @@
         Per page:
         <%= select_tag :per_page,
           options_for_select([10, 25, 50, 100], params[:per_page]),
-          class: "inline",
           data: {
             reload: true,
             param: :per_page,

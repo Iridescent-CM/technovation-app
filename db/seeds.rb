@@ -49,8 +49,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       geocoded: "Chicago, IL, US",
-                                      season_ids: [Season.find_or_create_by(year: past,
-                                                                            starts_at: Time.new(past, 1, 1, 9, 0, 0, "-08:00")).id],
+                                      season_ids: [Season.find_or_create_by(year: past).id],
                                     })).valid?
   puts ""
   puts "============================================================="
@@ -76,8 +75,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       geocoded: "Chicago, IL, US",
-                                      season_ids: [Season.find_or_create_by(year: distant_past,
-                                                                            starts_at: Time.new(distant_past, 1, 1, 9, 0, 0, "-08:00")).id],
+                                      season_ids: [Season.find_or_create_by(year: distant_past).id],
                                     })).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""

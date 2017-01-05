@@ -15,46 +15,41 @@
       </label>
 
       <label class="no-text-transform">
-        Season:<br />
+        Season:
         <%= select_tag :season,
           options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
-          class: "inline",
           data: { reload: true, param: :season } %>
       </label>
 
       <label class="no-text-transform">
-        Account type:<br />
+        Account type:
         <%= select_tag :type,
           options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]),
-          class: "inline",
           data: { reload: true, param: :type } %>
       </label>
 
       <% if params[:type] == "Student" %>
         <label class="no-text-transform">
-          Parental Consent Status:<br />
+          Parental Consent Status:
           <%= select_tag :parental_consent_status,
             options_for_select(%w{All Signed Sent No\ Info\ Entered},
                                params[:parental_consent_status]),
-          class: "inline",
           data: { reload: true, param: :parental_consent_status } %>
         </label>
       <% end %>
 
       <% if params[:type] == "Mentor" %>
         <label class="no-text-transform">
-          On a team:<br />
+          On a team:
           <%= select_tag :team_status,
             options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]),
-            class: "inline",
             data: { reload: true, param: :team_status } %>
         </label>
 
         <label class="no-text-transform">
-          Cleared status:<br />
+          Cleared status:
           <%= select_tag :cleared_status,
             options_for_select(%w{All Clear Needs\ background\ check Needs\ consent\ waiver}, params[:cleared_status]),
-            class: "inline",
             data: { reload: true, param: :cleared_status } %>
         </label>
       <% end %>
@@ -116,7 +111,6 @@
         Per page:
         <%= select_tag :per_page,
         options_for_select([10, 25, 50, 100], params[:per_page]),
-        class: "inline",
         data: {
           reload: true,
           param: :per_page,
