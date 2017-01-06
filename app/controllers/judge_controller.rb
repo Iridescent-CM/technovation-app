@@ -5,6 +5,12 @@ class JudgeController < ApplicationController
   layout "judge"
   helper_method :current_judge
 
+  before_action -> {
+    if "judge" != cookies[:last_profile_used]
+      cookies[:last_profile_used] = "judge"
+    end
+  }
+
   private
   def current_judge
     @current_judge ||= current_account.judge_profile

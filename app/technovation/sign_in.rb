@@ -20,7 +20,10 @@ module SignIn
 
   private
   def self.after_signin_path(signin, context)
+    last_profile_used = context.remove_cookie(:last_profile_used)
+
     context.remove_cookie(:redirected_from) or
-      context.public_send("#{signin.type_name}_dashboard_path")
+      (last_profile_used && context.public_send("#{last_profile_used}_dashboard_path")) or
+        context.public_send("#{signin.type_name}_dashboard_path")
   end
 end

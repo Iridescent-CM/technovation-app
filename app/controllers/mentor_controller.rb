@@ -6,6 +6,12 @@ class MentorController < ApplicationController
   helper_method :current_mentor
 
   before_action -> {
+    if "mentor" != cookies[:last_profile_used]
+      cookies[:last_profile_used] = "mentor"
+    end
+  }
+
+  before_action -> {
     unless current_mentor.honor_code_signed?
       save_redirected_path
       redirect_to interruptions_path(issue: :honor_code)
