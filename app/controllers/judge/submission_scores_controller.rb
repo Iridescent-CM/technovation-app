@@ -30,7 +30,7 @@ module Judge
     end
 
     def current_team_submission
-      params[:team_submission_id] ||= TeamSubmission.pluck(:id).sample
+      params[:team_submission_id] ||= FindEligibleSubmissionId.(current_judge)
 
       begin
         @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])
