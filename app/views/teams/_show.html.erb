@@ -14,7 +14,7 @@
   <% if team.current? %>
     <p><%= link_to t("controllers.teams.edit.link"), [:edit, account.type_name, team], class: "appy-button" %></p>
 
-    <%= simple_form_for [account.type_name, @team], remote: true do |f| %>
+    <%= simple_form_for [account.type_name, @team], html: { class: "remote_checkboxes" }, remote: true do |f| %>
       <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
       <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
     <% end %>

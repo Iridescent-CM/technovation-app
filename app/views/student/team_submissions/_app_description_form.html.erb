@@ -4,11 +4,6 @@
   <%= render 'errors', record: @team_submission %>
 
   <%= f.input :app_description,
-              input_html: {
-                data: {
-                  count_words: true,
-                },
-              },
               label: t("models.team_submission.app_description") %>
 
   <span data-word-count-show='true'>
