@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106152142) do
+ActiveRecord::Schema.define(version: 20170106160818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,6 +319,11 @@ ActiveRecord::Schema.define(version: 20170106152142) do
     t.integer  "solution_stands_out"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.text     "ideation_comment"
+    t.text     "technical_comment"
+    t.text     "entrepreneurship_comment"
+    t.text     "pitch_comment"
+    t.text     "overall_comment"
   end
 
   add_index "submission_scores", ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id", using: :btree

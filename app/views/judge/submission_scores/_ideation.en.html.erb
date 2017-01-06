@@ -1,0 +1,13 @@
+<h1>Ideation</h1>
+
+<%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+  <%= f.hidden_field :id %>
+
+  <%= f.input :sdg_alignment %>
+  <%= f.input :evidence_of_problem %>
+  <%= f.input :problem_addressed %>
+
+  <%= f.input :ideation_comment %>
+
+  <%= f.button :submit, "Save Ideation Score" %>
+<% end %>

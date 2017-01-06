@@ -42,6 +42,10 @@ en:
         create:
           success: "You added a mentor profile to your account!"
 
+      submission_scores:
+        any:
+          no_submission_found: "There are no eligible submissions for you to judge right now."
+
     mentor:
       dashboards:
         show:

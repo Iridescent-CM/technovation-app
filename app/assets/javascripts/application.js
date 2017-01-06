@@ -26,3 +26,5 @@
 //= require technical_checklist
 //= require toast_flashes
 //= require tabs
+//
+//= require submission_scores

@@ -1,5 +1,5 @@
-<%= render 'judge/submission_scores/ideation' %>
-<%= render 'judge/submission_scores/technical' %>
-<%= render 'judge/submission_scores/entrepreneurship' %>
-<%= render 'judge/submission_scores/pitch' %>
-<%= render 'judge/submission_scores/overall_impression' %>
+<%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
+<%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
+<%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+<%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
+<%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
