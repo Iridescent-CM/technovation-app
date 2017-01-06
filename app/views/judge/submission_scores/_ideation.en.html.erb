@@ -3,9 +3,26 @@
 <%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
   <%= f.hidden_field :id %>
 
-  <%= f.input :sdg_alignment %>
-  <%= f.input :evidence_of_problem %>
-  <%= f.input :problem_addressed %>
+  <%= f.input :sdg_alignment,
+    label: "Sustainable Development Goal TODO: CORRECT LABEL PENDING",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :evidence_of_problem,
+    label: "The team has clearly outlined and provided evidence through facts and statistics of the problem they are addressing.",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :problem_addressed,
+    label: "The app effectively addresses the problem that was outlined.",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
 
   <%= f.input :ideation_comment %>
 
