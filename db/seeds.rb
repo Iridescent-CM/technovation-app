@@ -1,4 +1,9 @@
 ActionMailer::Base.perform_deliveries = false
+
+student = Account.find_by(email: "student@student.com").try(:student_profile)
+student_team = Team.find_by(name: "All Star Team")
+mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
+
 if (student = StudentProfile.create(school_name: "John Hughes High",
                                     parent_guardian_email: "parent@parent.com",
                                     parent_guardian_name: "Parent Name",
@@ -22,15 +27,21 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   puts ""
   puts "============================================================="
   puts ""
+else
+  student = Account.find_by(email: "student@student.com").try(:student_profile)
+end
 
-  if (team = Team.create(name: "All Star Team",
+if student
+  if (student_team = Team.create(name: "All Star Team",
                         description: "We are allstars",
                         division: Division.none_assigned_yet)).valid?
-    team.add_student(student)
-    puts "Added student to Team: #{team.name}"
+    student_team.add_student(student)
+    puts "Added student to Team: #{student_team.name}"
     puts ""
     puts "============================================================="
     puts ""
+  else
+    student_team = Team.find_by(name: "All Star Team")
   end
 end
 
@@ -114,7 +125,11 @@ if (mentor = MentorProfile.create(
   puts ""
   puts "============================================================="
   puts ""
+else
+  mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
+end
 
+if mentor
   if (team = Team.create(name: "Fun Times Team",
                          description: "We are fun times havers",
                          season_ids: [Season.current.id],
@@ -178,13 +193,14 @@ if (ra = RegionalAmbassadorProfile.create(
       geocoded: "Chicago, IL, US",
       season_ids: [Season.current.id],
     },
+    status: RegionalAmbassadorProfile.statuses[:approved],
     organization_company_name: "Iridescent",
     ambassador_since_year: "I'm new!",
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?
   ra.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
-  puts "Created RA: #{ra.email} with password #{ra.account.password}"
+  puts "Created approved RA: #{ra.email} with password #{ra.account.password}"
   puts ""
   puts "============================================================="
   puts ""
@@ -212,4 +228,18 @@ if (judge = JudgeProfile.create(
   puts ""
   puts "============================================================="
   puts ""
+end
+
+if student_team
+  submission = TeamSubmission.create(
+    team_id: student_team.id,
+    integrity_affirmed: true,
+  )
+
+  if submission.valid?
+    puts "Created Team Submission for the team: #{student_team.name}"
+    puts ""
+    puts "============================================================="
+    puts ""
+  end
 end
