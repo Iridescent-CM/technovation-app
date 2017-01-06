@@ -94,6 +94,8 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resource :mentor_profile
+
+    resources :submission_scores, only: [:new, :create, :update]
   end
 
   namespace :admin do

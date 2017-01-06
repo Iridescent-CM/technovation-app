@@ -1,3 +1,9 @@
+<% unless Rails.env.production? %>
+  <li class="nav-link">
+    <%= link_to t('views.application.score_submissions'), new_judge_submission_score_path %>
+  </li>
+<% end %>
+
 <li class="nav-link">
   <%= link_to t('views.application.my_profile'), judge_profile_path %>
 </li>

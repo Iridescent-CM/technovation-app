@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222151252) do
+ActiveRecord::Schema.define(version: 20170106152142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -296,6 +296,34 @@ ActiveRecord::Schema.define(version: 20161222151252) do
 
   add_index "student_profiles", ["account_id"], name: "index_student_profiles_on_account_id", using: :btree
 
+  create_table "submission_scores", force: :cascade do |t|
+    t.integer  "team_submission_id"
+    t.integer  "judge_profile_id"
+    t.integer  "sdg_alignment"
+    t.integer  "evidence_of_problem"
+    t.integer  "problem_addressed"
+    t.integer  "app_functional"
+    t.integer  "demo_video"
+    t.integer  "business_plan_short_term"
+    t.integer  "business_plan_long_term"
+    t.integer  "market_research"
+    t.integer  "viable_business_model"
+    t.integer  "problem_clearly_communicated"
+    t.integer  "compelling_argument"
+    t.integer  "passion_energy"
+    t.integer  "pitch_specific"
+    t.integer  "business_plan_feasible"
+    t.integer  "submission_thought_out"
+    t.integer  "cohesive_story"
+    t.integer  "solution_originality"
+    t.integer  "solution_stands_out"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "submission_scores", ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id", using: :btree
+  add_index "submission_scores", ["team_submission_id"], name: "index_submission_scores_on_team_submission_id", using: :btree
+
   create_table "team_member_invites", force: :cascade do |t|
     t.integer  "inviter_id",                null: false
     t.integer  "team_id",                   null: false
@@ -423,6 +451,8 @@ ActiveRecord::Schema.define(version: 20161222151252) do
   add_foreign_key "screenshots", "team_submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
+  add_foreign_key "submission_scores", "judge_profiles"
+  add_foreign_key "submission_scores", "team_submissions"
   add_foreign_key "team_submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "technical_checklists", "team_submissions"

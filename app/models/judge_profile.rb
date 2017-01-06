@@ -5,6 +5,8 @@ class JudgeProfile < ActiveRecord::Base
   accepts_nested_attributes_for :account
   validates_associated :account
 
+  has_many :submission_scores
+
   validates :company_name, :job_title,
     presence: true
 
