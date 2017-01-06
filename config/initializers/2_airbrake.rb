@@ -64,6 +64,7 @@ Airbrake.add_filter do |notice|
    ActionController::InvalidAuthenticityToken
    ActiveRecord::RecordInvalid
    CreateSend::BadRequest
+   Net::SMTPSyntaxError
  }
 
   if notice[:errors].any? { |error| ignored.include?(error[:type]) }
