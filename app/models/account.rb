@@ -5,6 +5,11 @@ class Account < ActiveRecord::Base
   after_save    { IndexAccountJob.perform_later("index", id) }
   after_destroy { IndexAccountJob.perform_later("delete", id) }
 
+  after_save -> { student_profile &&
+                    student_profile.team.present? &&
+                      student_profile.team.reconsider_division_with_save },
+    if: -> { date_of_birth_changed? }
+
   index_name "#{Rails.env}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
