@@ -67,7 +67,12 @@ Airbrake.add_filter do |notice|
    Net::SMTPSyntaxError
  }
 
-  if notice[:errors].any? { |error| ignored.include?(error[:type]) }
+  if notice[:errors].any? do |error|
+                      ignored.include?(error[:type]) ||
+                        error[:message].include?(
+                          "An SMTP To address is required to send a message."
+                        )
+                    end
     notice.ignore!
   end
 end
