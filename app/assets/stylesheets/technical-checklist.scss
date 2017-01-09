@@ -21,9 +21,14 @@
   label {
     font-weight: bold;
     font-size: 1.1rem;
+    cursor: pointer;
 
     &::selection {
       background-color: transparent;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
     }
   }
 
@@ -67,6 +72,24 @@
   }
 }
 
+.hint-link {
+  display: block;
+  margin-top: 1rem;
+  line-height: 1;
+}
+
+.tc-form-group__item--inactive {
+  .disabled,
+  + .tc-form-group__item--verify {
+    display: none !important;
+  }
+}
+
+.tc-form-group__item--verify {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 3rem;
+}
+
 // Submit button
 
 .technical-checklist__submit-button {
@@ -77,10 +100,4 @@
 
 .technical-checklist__progress {
   width: 25%;
-}
-
-.hint-link {
-  display: block;
-  margin-top: 1rem;
-  line-height: 1;
 }

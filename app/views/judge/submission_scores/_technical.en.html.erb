@@ -8,9 +8,13 @@
     value_method: :value,
     as: :radio_buttons %>
 
+  <h2>Verify the Technical Checklist</h2>
+
   <p>
-    TODO: Link to verifying the TC...<br>
-    The team has completed and you can <%= link_to "verify the Technical Checklist", '#' %>
+    You can
+    <%= link_to "verify that the team has completed their Technical Checklist",
+      new_judge_team_submission_technical_checklist_verification_path(submission_score.team_submission),
+      target: :_blank %>
   </p>
 
   <%= f.input :demo_video,

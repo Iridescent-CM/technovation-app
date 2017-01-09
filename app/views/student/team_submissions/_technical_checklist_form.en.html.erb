@@ -1,3 +1,10 @@
+<%
+  verifying ||= false
+  url = verifying ? judge_team_submission_technical_checklist_verifications_path(team_submission) :
+                    student_team_submission_path(team_submission)
+  method = verifying ? :post : :patch
+%>
+
 <h1 class="appy-title">
   Technical Checklist
 </h1>
@@ -5,213 +12,441 @@
 <div class="technical-checklist">
   <div class="technical-checklist__checklist">
     <div class="simple-card">
-      <div class="tc-intro">
-        <p>
-          You can earn up to <strong>10 points</strong> in this section.
-          All of the coding concepts on this checklist are available to learn for free in the curriculum.
-        </p>
+      <% unless verifying %>
+        <div class="tc-intro">
+          <p>
+            You can earn up to <strong>10 points</strong> in this section.
+            All of the coding concepts on this checklist are available to learn for free in the curriculum.
+          </p>
 
-        <p>
-          Check off and explain the components you used in your app with a simple sentence. You only need to explain one instance where you used it.
-        </p>
+          <p>
+            Check off and explain the components you used in your app with a simple sentence. You only need to explain one instance where you used it.
+          </p>
 
-        <p>
-          For example:<br>
-          <strong>Strings</strong><br>
-          "<em>We used a string to display the user’s name at the top of the screen.</em>"
-        </p>
-        <hr class="tc-intro__spacer" />
-      </div>
+          <p>
+            For example:<br>
+            <strong>Strings</strong><br>
+            "<em>We used a string to display the user’s name at the top of the screen.</em>"
+          </p>
+          <hr class="tc-intro__spacer" />
+        </div>
+      <% end %>
 
-      <%= simple_form_for [:student, team_submission],
-                          html: {
-                            class: "no-simple-form-style",
-                            id: "student-technical-checklist-form",
-                          } do |f| %>
+      <%= simple_form_for team_submission,
+        method: method,
+        url: url,
+        html: {
+          class: "no-simple-form-style",
+          id: "student-technical-checklist-form",
+        } do |f| %>
         <%= f.fields_for :technical_checklist do |t| %>
           <div class="tc-form-group" data-group-name="Technical Components" >
             <h3>Technical Components - Four Points</h3>
             <h4>Use at least 4 (1 point each, 4 points max)</h4>
 
-            <p>
-              <%= link_to "Learn in Code 2",
-                "http://www.technovationchallenge.org/curriculum/code-2",
-                target: :_blank %>
-            </p>
+            <% unless verifying %>
+              <p>
+                <%= link_to "Learn in Code 2",
+                  "http://www.technovationchallenge.org/curriculum/code-2",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
-            <div class="tc-form-group__item tc-form-group__item--is-checked">
-              <%= t.input :used_strings, label: "Strings", as: :boolean %>
+            <div class="tc-form-group__item">
+              <%= t.input :used_strings,
+                disabled: verifying,
+                label: "Strings",
+                as: :boolean %>
+
               <%= t.input :used_strings_explanation,
+                disabled: verifying,
                 label: "Explanation (Strings)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_strings_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_numbers, label: "Numbers", as: :boolean %>
+              <%= t.input :used_numbers,
+                disabled: verifying,
+                label: "Numbers",
+                as: :boolean %>
+
               <%= t.input :used_numbers_explanation,
+                disabled: verifying,
                 label: "Explanation (Numbers)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_numbers_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_variables, label: "Variables", as: :boolean %>
+              <%= t.input :used_variables,
+                disabled: verifying,
+                label: "Variables",
+                as: :boolean %>
+
               <%= t.input :used_variables_explanation,
+                disabled: verifying,
                 label: "Explanation (Variables)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_variables_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_lists, label: "Lists or Arrays", as: :boolean %>
+              <%= t.input :used_lists,
+                disabled: verifying,
+                label: "Lists or Arrays",
+                as: :boolean %>
+
               <%= t.input :used_lists_explanation,
+                disabled: verifying,
                 label: "Explanation (Lists or Arrays)",
                 as: :text %>
             </div>
 
-            <p>
-              <%= link_to "Learn in Code 3",
-                "http://www.technovationchallenge.org/curriculum/code-3",
-                target: :_blank %>
-            </p>
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_lists_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
+            <% unless verifying %>
+              <p>
+                <%= link_to "Learn in Code 3",
+                  "http://www.technovationchallenge.org/curriculum/code-3",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
             <div class="tc-form-group__item">
-              <%= t.input :used_booleans, label: "Booleans", as: :boolean %>
+              <%= t.input :used_booleans,
+                disabled: verifying,
+                label: "Booleans",
+                as: :boolean %>
+
               <%= t.input :used_booleans_explanation,
+                disabled: verifying,
                 label: "Explanation (Booleans)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_booleans_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_loops, label: "Loops", as: :boolean %>
+              <%= t.input :used_loops,
+                disabled: verifying,
+                label: "Loops",
+                as: :boolean %>
+
               <%= t.input :used_loops_explanation,
+                disabled: verifying,
                 label: "Explanation (Loops)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_loops_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
               <%= t.input :used_conditionals,
+                disabled: verifying,
                 label: "Conditional Statements",
                 as: :boolean %>
 
               <%= t.input :used_conditionals_explanation,
+                disabled: verifying,
                 label: "Explanation (Conditional Statements)",
                 as: :text %>
             </div>
+
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_conditionals_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
           </div>
 
           <div class="tc-form-group" data-group-name="Databases and Connectivity" >
             <h3>Databases and Connectivity - One Point</h3>
             <h4>Use at least 1 (1 point each, 1 point max)</h4>
 
-            <p>
-              <%= link_to "Learn in Code 2",
-                "http://www.technovationchallenge.org/curriculum/code-2",
-                target: :_blank %>
-            </p>
+            <% unless verifying %>
+              <p>
+                <%= link_to "Learn in Code 2",
+                  "http://www.technovationchallenge.org/curriculum/code-2",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
             <div class="tc-form-group__item">
-              <%= t.input :used_local_db, label: "Local Database", as: :boolean %>
+              <%= t.input :used_local_db,
+                disabled: verifying,
+                label: "Local Database",
+                as: :boolean %>
 
               <%= t.input :used_local_db_explanation,
+                disabled: verifying,
                 label: "Explanation (Local Database)",
                 as: :text %>
             </div>
 
-            <p>
-              <%= link_to "Learn in Code 4",
-                "http://www.technovationchallenge.org/curriculum/code-4",
-                target: :_blank %>
-            </p>
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_local_db_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
+            <% unless verifying %>
+              <p>
+                <%= link_to "Learn in Code 4",
+                  "http://www.technovationchallenge.org/curriculum/code-4",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
             <div class="tc-form-group__item">
               <%= t.input :used_external_db,
+                disabled: verifying,
                 label: "External Database or API",
                 as: :boolean %>
 
               <%= t.input :used_external_db_explanation,
+                disabled: verifying,
                 label: "Explanation (External Database or API)",
                 as: :text %>
             </div>
+
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_external_db_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
           </div>
 
           <div class="tc-form-group" data-group-name="Databases and Connectivity" >
             <h3>Mobile Features - Two Points</h3>
             <h4>Use at least 1 (2 points each, 2 points max)</h4>
 
-            <p>
-              <%= link_to "Learn in Code 4",
-                "http://www.technovationchallenge.org/curriculum/code-4",
-                target: :_blank %>
-            </p>
+            <% unless verifying %>
+              <p>
+                <%= link_to "Learn in Code 4",
+                  "http://www.technovationchallenge.org/curriculum/code-4",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
             <div class="tc-form-group__item">
-              <%= t.input :used_location_sensor, label: "Location Sensor", as: :boolean %>
+              <%= t.input :used_location_sensor,
+                disabled: verifying,
+                label: "Location Sensor",
+                as: :boolean %>
+
               <%= t.input :used_location_sensor_explanation,
+                disabled: verifying,
                 label: "Explanation (Location Sensor)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_location_sensor_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_camera, label: "Camera or Video", as: :boolean %>
+              <%= t.input :used_camera,
+                disabled: verifying,
+                label: "Camera or Video",
+                as: :boolean %>
+
               <%= t.input :used_camera_explanation,
+                disabled: verifying,
                 label: "Explanation (Camera or Video)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_camera_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_accelerometer, label: "Accelerometer", as: :boolean %>
+              <%= t.input :used_accelerometer,
+                disabled: verifying,
+                label: "Accelerometer",
+                as: :boolean %>
+
               <%= t.input :used_accelerometer_explanation,
+                disabled: verifying,
                 label: "Explanation (Accelerometer)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_accelerometer_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
               <%= t.input :used_sms_phone,
+                disabled: verifying,
                 label: "Text Messaging or Phone Call",
                 as: :boolean %>
 
               <%= t.input :used_sms_phone_explanation,
+                disabled: verifying,
                 label: "Explanation (Text Messaging or Phone Call)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_sms_phone_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_sound, label: "Sound or Speaker", as: :boolean %>
+              <%= t.input :used_sound,
+                disabled: verifying,
+                label: "Sound or Speaker",
+                as: :boolean %>
+
               <%= t.input :used_sound_explanation,
+                disabled: verifying,
                 label: "Explanation (Sound or Speaker)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_sound_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_sharing, label: "Sharing", as: :boolean %>
+              <%= t.input :used_sharing,
+                disabled: verifying,
+                label: "Sharing",
+                as: :boolean %>
+
               <%= t.input :used_sharing_explanation,
+                disabled: verifying,
                 label: "Explanation (Sharing)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_sharing_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_clock, label: "Clock", as: :boolean %>
+              <%= t.input :used_clock,
+                disabled: verifying,
+                label: "Clock",
+                as: :boolean %>
+
               <%= t.input :used_clock_explanation,
+                disabled: verifying,
                 label: "Explanation (Clock)",
                 as: :text %>
             </div>
 
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_clock_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
+
             <div class="tc-form-group__item">
-              <%= t.input :used_canvas, label: "Canvas", as: :boolean %>
+              <%= t.input :used_canvas,
+                disabled: verifying,
+                label: "Canvas",
+                as: :boolean %>
+
               <%= t.input :used_canvas_explanation,
+                disabled: verifying,
                 label: "Explanation (Canvas)",
                 as: :text %>
             </div>
+
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :used_canvas_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
           </div>
 
           <div class="tc-form-group" data-group-name="Pictures of Process" >
             <h3>Pictures of your process - Three Points</h3>
-            <h4>Do all 3 for full points</h4>
 
-            <p>
-              <%= link_to "Learn in Code 5",
-                "http://www.technovationchallenge.org/curriculum/code-5",
-                target: :_blank %>
-            </p>
+            <% unless verifying %>
+              <h4>Do all 3 for full points</h4>
+
+              <p>
+                <%= link_to "Learn in Code 5",
+                  "http://www.technovationchallenge.org/curriculum/code-5",
+                  target: :_blank %>
+              </p>
+            <% end %>
 
             <div class="tc-form-group__photo-item">
               <%= t.label :paper_prototype %>
@@ -220,43 +455,70 @@
                 <%= image_tag(t.object.paper_prototype_url, width: 200) %>
               <% end %>
 
-              <%= t.file_field :paper_prototype %>
-              <%= t.input :paper_prototype_cache, as: :hidden %>
+              <% unless verifying %>
+                <%= t.file_field :paper_prototype %>
+                <%= t.input :paper_prototype_cache,
+                  as: :hidden %>
+              <% end %>
             </div>
+
+            <% if verifying %>
+              <div class="tc-form-group__item">
+                <%= t.input :paper_prototype_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
 
             <div class="tc-form-group__photo-item">
               <%= t.label :event_flow_chart, "Flowchart or Pseudocode" %>
 
-              <p>
-                <%= link_to "Learn in Code 6",
-                  "http://www.technovationchallenge.org/curriculum/code-6",
-                  target: :_blank %>
-              </p>
+              <% unless verifying %>
+                <p>
+                  <%= link_to "Learn in Code 6",
+                    "http://www.technovationchallenge.org/curriculum/code-6",
+                    target: :_blank %>
+                </p>
+              <% end %>
 
               <% if t.object.event_flow_chart.present? %>
                 <%= image_tag(t.object.event_flow_chart_url, width: 200) %>
               <% end %>
 
-              <%= t.file_field :event_flow_chart %>
-              <%= t.input :event_flow_chart_cache, as: :hidden %>
+              <% unless verifying %>
+                <%= t.file_field :event_flow_chart %>
+                <%= t.input :event_flow_chart_cache, as: :hidden %>
+              <% end %>
             </div>
+
+            <% if verifying %>
+              <div class="tc-form-group__item tc-form-group__item--verify">
+                <%= t.input :event_flow_chart_verified,
+                  label: "Verify the above is true",
+                  as: :boolean %>
+              </div>
+            <% end %>
           </div>
 
-          <p>
-            At least <strong>two</strong> app screenshots.<br>
-            Your team has uploaded
-            <%= pluralize f.object.screenshots.count, "screenshot" %>.
-          </p>
+          <% unless verifying %>
+            <p>
+              At least <strong>two</strong> app screenshots.<br>
+              Your team has uploaded
+              <strong><%= pluralize f.object.screenshots.count, "screenshot" %></strong>
+            </p>
+          <% end %>
         <% end %>
 
-        <%= f.button :submit, class: "appy-button technical-checklist__submit-button" %>
+        <%= f.button :submit,
+          (verifying ? "Verify checklist" : "Save checklist"),
+          class: "appy-button technical-checklist__submit-button" %>
       <% end %>
     </div>
   </div>
 
   <div class="technical-checklist__progress">
     <!--
-      Add a sidebar item that shows the number of items completed
+      TODO: Add a sidebar item that shows the number of items completed
       per section, and a progress bar showing whether or not they've
       met the max number of items in that section
     -->

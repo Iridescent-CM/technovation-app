@@ -46,6 +46,10 @@ en:
         any:
           no_submission_found: "There are no eligible submissions for you to judge right now."
 
+      technical_checklist_verifications:
+        create:
+          success: "Thank you for verifying this technical checklist!"
+
     mentor:
       dashboards:
         show:

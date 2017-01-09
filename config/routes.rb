@@ -95,7 +95,11 @@ Rails.application.routes.draw do
 
     resource :mentor_profile
 
-    resources :submission_scores, only: [:new, :create, :update]
+    resources :submission_scores, only: [:new, :update]
+
+    resources :team_submissions, only: [] do
+      resources :technical_checklist_verifications, only: [:new, :create]
+    end
   end
 
   namespace :admin do

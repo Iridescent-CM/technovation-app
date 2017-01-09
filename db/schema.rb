@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106160818) do
+ActiveRecord::Schema.define(version: 20170109175008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -428,7 +428,7 @@ ActiveRecord::Schema.define(version: 20170106160818) do
     t.boolean  "used_sound_verified"
     t.boolean  "used_sharing"
     t.string   "used_sharing_explanation"
-    t.boolean  "used_screen_orientation_verified"
+    t.boolean  "used_sharing_verified"
     t.string   "paper_prototype"
     t.integer  "team_submission_id"
     t.datetime "created_at",                       null: false
@@ -438,6 +438,10 @@ ActiveRecord::Schema.define(version: 20170106160818) do
     t.string   "used_clock_explanation"
     t.boolean  "used_canvas"
     t.string   "used_canvas_explanation"
+    t.boolean  "paper_prototype_verified"
+    t.boolean  "event_flow_chart_verified"
+    t.boolean  "used_clock_verified"
+    t.boolean  "used_canvas_verified"
   end
 
   add_index "technical_checklists", ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id", using: :btree
