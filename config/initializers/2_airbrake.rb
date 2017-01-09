@@ -65,6 +65,7 @@ Airbrake.add_filter do |notice|
    ActiveRecord::RecordInvalid
    CreateSend::BadRequest
    Net::SMTPSyntaxError
+   SignalException
  }
 
   if notice[:errors].any? do |error|
