@@ -58,13 +58,14 @@ class ExportJob < ActiveJob::Base
     filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
-      csv << %w{Id Division Name City State Country}
+      csv << %w{Id Division Name City State Country Member\ emails}
 
       team_ids.each do |team_id|
         team = Team.find(team_id)
 
-        csv << [team.id, team.division_name, team.name, team.city,
-                team.state_province, team.country]
+        csv << [team.id, team.division_name, team.name,
+                team.city, team.state_province, team.country,
+                team.members.map(&:email).join(' ')]
       end
     end
 
