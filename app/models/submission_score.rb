@@ -11,4 +11,8 @@ class SubmissionScore < ActiveRecord::Base
   def incomplete?
     not complete?
   end
+
+  def team_submission_stated_goal
+    team_submission.stated_goal || "No goal selected!"
+  end
 end

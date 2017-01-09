@@ -3,8 +3,19 @@
 <%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
   <%= f.hidden_field :id %>
 
+  <p>
+    The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
+    <strong><%= submission_score.team_submission_stated_goal %></strong>
+  </p>
+
+  <p>
+    <%= link_to "Learn more about Sustainable Development Goals",
+      "https://sustainabledevelopment.un.org/?menu=1300.",
+      target: :_blank %>
+  </p>
+
   <%= f.input :sdg_alignment,
-    label: "Sustainable Development Goal TODO: CORRECT LABEL PENDING",
+    label: LabelForStatedGoal.(submission_score.team_submission_stated_goal),
     collection: JudgingRubricScores.new,
     label_method: :name,
     value_method: :value,
