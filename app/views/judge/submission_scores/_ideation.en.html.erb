@@ -1,8 +1,6 @@
 <h1>Ideation</h1>
 
 <%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
-  <%= f.hidden_field :id %>
-
   <p>
     The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
     <strong><%= submission_score.team_submission_stated_goal %></strong>

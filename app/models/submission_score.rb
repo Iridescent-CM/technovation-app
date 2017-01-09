@@ -15,4 +15,8 @@ class SubmissionScore < ActiveRecord::Base
   def team_submission_stated_goal
     team_submission.stated_goal || "No goal selected!"
   end
+
+  def senior_team_division?
+    team_submission.team.division.senior?
+  end
 end

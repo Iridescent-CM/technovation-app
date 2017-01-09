@@ -1,0 +1,26 @@
+<h1>Technical</h1>
+
+<%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+  <%= f.input :app_functional,
+    label: "The app is fully functional and has no noticeable bugs.",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <p>
+    TODO: Link to verifying the TC...<br>
+    The team has completed and you can <%= link_to "verify the Technical Checklist", '#' %>
+  </p>
+
+  <%= f.input :demo_video,
+    label: "The demo video demonstrates the functionality of the app well.",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :technical_comment %>
+
+  <%= f.button :submit, "Save Technical Score" %>
+<% end %>

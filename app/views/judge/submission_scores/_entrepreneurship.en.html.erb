@@ -1,0 +1,37 @@
+<% if submission_score.senior_team_division? %>
+  <h1>Entrepreneurship (Senior Division)</h1>
+
+  <%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+    <%= f.input :business_plan_short_term,
+      label: "The business plan reflects short term and clear strategy to achieve the plan.",
+      collection: JudgingRubricScores.new,
+      label_method: :name,
+      value_method: :value,
+      as: :radio_buttons %>
+
+    <%= f.input :business_plan_long_term,
+      label: "The business plan reflects long term and clear strategy to achieve the plan.  It includes an assessment of the market, research on competitors,  does not duplicate an existing product offering (may be similar but must have some differentiating feature).",
+      collection: JudgingRubricScores.new,
+      label_method: :name,
+      value_method: :value,
+      as: :radio_buttons %>
+
+    <%= f.input :market_research,
+      label: "The market research portion of the business plan is thoroughly researched (did they incorporate facts and figures, survey results, as well as the market size and segmentation?).",
+      collection: JudgingRubricScores.new,
+      label_method: :name,
+      value_method: :value,
+      as: :radio_buttons %>
+
+    <%= f.input :viable_business_model,
+      label: "There is a viable business model (For example: free, freemium, subscription, paid) and the reason for selecting it is explained.",
+      collection: JudgingRubricScores.new,
+      label_method: :name,
+      value_method: :value,
+      as: :radio_buttons %>
+
+    <%= f.input :entrepreneurship_comment %>
+
+    <%= f.button :submit, "Save Entrepreneurship Score" %>
+  <% end %>
+<% end %>
