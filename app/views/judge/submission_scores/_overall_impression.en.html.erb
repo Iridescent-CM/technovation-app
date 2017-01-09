@@ -1,0 +1,42 @@
+<h1>Overall Impression</h1>
+
+<%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+  <%= f.input :business_plan_feasible,
+    label: "Are you convinced the business plan is feasible and that the business could succeed?",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :submission_thought_out,
+    label: "Was each component of the team submission well thought out?",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :cohesive_story,
+    label: "Was there a cohesive and well communicated story about the problem and the solution?",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :solution_originality,
+    label: "Does the app address the problem in an original way?",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :solution_stands_out,
+    label: "Does the app solution stand out from other teams?",
+    collection: JudgingRubricScores.new,
+    label_method: :name,
+    value_method: :value,
+    as: :radio_buttons %>
+
+  <%= f.input :overall_comment %>
+
+  <%= f.button :submit, "Save Overall Impression Score" %>
+<% end %>
