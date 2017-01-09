@@ -19,6 +19,25 @@
   <div class="flex-col-sm-4 dashboard__sidebar">
     <div class="card">
       <div class="card__heading">
+        <%= t("views.application.pre_survey") %>
+        <%= fa_icon "list", class: "card-heading__flair" %>
+      </div>
+
+      <div class="card__body">
+        <p>
+          Make your voice heard, help us improve the program!
+        </p>
+
+        <p>
+          <%= link_to "Take the pre-program survey",
+            "https://www.surveymonkey.com/r/TC2017_Mentor_pre",
+            target: "_blank" %>
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__heading">
         <%= t("views.application.judge_mode") %>
         <%= fa_icon("refresh", class: "card-heading__flair") %>
       </div>
