@@ -3,6 +3,7 @@ module Admin
     def self.call(params)
       params[:per_page] = 25 if params[:per_page].blank?
       params[:division] = "All" if params[:division].blank?
+      params[:mentor_status] = "All" if params[:mentor_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
 
       teams = Team.joins(season_registrations: :season)
@@ -25,10 +26,22 @@ module Admin
 
       case params[:division]
       when "All"
-        teams
       else
-        teams.joins(:division).where("divisions.name = ?",
-                                     Division.names[params[:division].downcase])
+        teams = teams.joins(:division)
+          .where("divisions.name = ?", Division.names[params[:division].downcase])
+      end
+
+      case params[:mentor_status]
+      when "All"
+        teams
+      when "Has mentor(s)"
+        teams.joins(:mentors)
+      when "Has no mentor"
+        teams.eager_load(:memberships)
+          .where("teams.id NOT IN
+            (SELECT DISTINCT(joinable_id)
+                    FROM memberships
+                    WHERE memberships.member_type = 'MentorProfile')")
       end
     end
   end

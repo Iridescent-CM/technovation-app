@@ -8,6 +8,8 @@ module Admin
       params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
 
+      season = Season.find_by(year: params[:season])
+
       klass = if params[:type] == "All"
                 Account
               else
@@ -15,7 +17,7 @@ module Admin
               end
 
       accounts = klass.joins(season_registrations: :season)
-        .where("season_registrations.season_id = ?", Season.find_by(year: params[:season]))
+        .where("season_registrations.season_id = ?", season.id)
         .where.not(email: "info@technovationchallenge.org")
 
       unless params[:text].blank?
@@ -63,7 +65,7 @@ module Admin
 
                 (SELECT DISTINCT(registerable_id) FROM season_registrations
                                                   WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+                                                  AND season_registrations.season_id = ?)))", season.id)
         when "No team"
           accounts = accounts.where("mentor_profiles.id NOT IN
             (SELECT DISTINCT(member_id) FROM memberships
@@ -75,7 +77,7 @@ module Admin
 
                 (SELECT DISTINCT(registerable_id) FROM season_registrations
                                                   WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+                                                  AND season_registrations.season_id = ?)))", season.id)
         end
 
         case params[:cleared_status]

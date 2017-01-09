@@ -19,6 +19,13 @@
       </label>
 
       <label class="no-text-transform">
+        Mentor status:
+        <%= select_tag :mentor_status,
+          options_for_select(%w{All Has\ mentor(s) Has\ no\ mentor}, params[:mentor_status]),
+          data: { reload: true, param: :mentor_status } %>
+      </label>
+
+      <label class="no-text-transform">
         Season:
         <%= select_tag :season,
           options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
