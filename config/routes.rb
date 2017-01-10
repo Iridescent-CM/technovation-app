@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
+    resources :cookies, only: :create
+
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
 
@@ -47,6 +49,8 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+
+    resources :cookies, only: :create
 
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]

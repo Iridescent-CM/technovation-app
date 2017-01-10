@@ -20,6 +20,9 @@
   var modals = document.getElementsByClassName('modalify');
 
   for (var i = 0; i < modals.length; i++) {
+    if (modals[i].classList.contains("modalify-one-time"))
+      return;
+
     var currentModal = modals[i];
     var modalContent = currentModal.innerHTML;
 
@@ -57,6 +60,9 @@
     modalShade.addEventListener('click', function() {
       hideModal(this);
     }.bind(currentModal));
+
+    if (currentModal.classList.contains('modalify-on-page-load'))
+      showModal(null, currentModal.id);
   }
 
   var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
@@ -73,8 +79,8 @@
     fireModalCloseEvent(modal);
   }
 
-  function showModal(e) {
-    var modalId = e.target.dataset.modalTrigger;
+  function showModal(e, modalId) {
+    modalId = modalId || e.target.dataset.modalTrigger;
     var modalToShow = document.getElementById(modalId);
     if (!modalToShow) {
       console.error('Could not find modal with id of ' + modalId);
@@ -106,4 +112,3 @@
       parentCol.style.zIndex = zidx;
   }
 })();
-

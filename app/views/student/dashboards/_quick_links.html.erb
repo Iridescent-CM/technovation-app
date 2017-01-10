@@ -5,23 +5,7 @@
 
   <ul class="my-stuff__list">
     <li class="my-stuff__item-wrapper">
-      <div class="card">
-        <div class="card__heading">
-          <%= t("views.application.pre_survey") %>
-          <%= fa_icon "list", class: "card-heading__flair" %>
-        </div>
-        <div class="card__body">
-          <p>
-            Make your voice heard, help us improve the program!
-          </p>
-
-          <p>
-            <%= link_to "Take the pre-program survey",
-              "https://www.surveymonkey.com/r/TC2017_student_pre",
-              target: "_blank" %>
-          </p>
-        </div>
-      </div>
+      <%= render 'pre_program_survey', type: :student %>
     </li>
 
     <li class="my-stuff__item-wrapper">

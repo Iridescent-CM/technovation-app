@@ -1,0 +1,39 @@
+<% url = case type
+         when :student; "https://www.surveymonkey.com/r/TC2017_student_pre"
+         when :mentor; "https://www.surveymonkey.com/r/TC2017_Mentor_pre"
+         end %>
+
+<% if cookies[:saw_pre_survey_modal] %>
+  <div class="card">
+    <div class="card__heading">
+      <%= t("views.application.pre_survey") %>
+      <%= fa_icon "list", class: "card-heading__flair" %>
+    </div>
+
+    <div class="card__body">
+      <p>
+        Make your voice heard, help us improve the program!
+      </p>
+
+      <p>
+        <%= link_to "Take the pre-program survey",
+          target: "_blank" %>
+      </p>
+    </div>
+  </div>
+<% else %>
+  <div id="pre_survery_interrupt"
+        data-heading="<%= t("views.application.pre_survey") %>"
+        data-save-close-action-url="<%= public_send("#{type}_cookies_url",
+                                                    name: :saw_pre_survey_modal,
+                                                    value: true) %>"
+        class="modalify modalify-on-page-load">
+    <p>
+      Make your voice heard, help us improve the program!
+    </p>
+
+    <p>
+      <%= link_to "Take the pre-program survey", url, target: "_blank" %>
+    </p>
+  </div>
+<% end %>

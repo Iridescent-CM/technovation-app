@@ -28,3 +28,4 @@
 //= require tabs
 //
 //= require submission_scores
+//= require dashboards
