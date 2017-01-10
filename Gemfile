@@ -51,8 +51,6 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'indefinite_article'
 
-gem 'timecop'
-
 gem 'rack-rewrite', '~> 1.5.0', require: 'rack/rewrite'
 
 group :development, :test do
@@ -72,6 +70,7 @@ group :development do
 end
 
 group :test do
+  gem 'timecop'
   gem 'vcr'
   gem 'webmock'
   gem 'test_after_commit'
