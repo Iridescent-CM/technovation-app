@@ -1,8 +1,14 @@
 <%= simple_form_for [:regional_ambassador, @pitch_event], html: { class: "no-simple-form-style" } do |f| %>
   <%= render 'errors', record: @pitch_event %>
 
+  <%= f.input :division_id, collection: Division.all %>
+
   <%= f.input :starts_at, input_html: { class: "inline" } %>
   <%= f.input :ends_at, input_html: { class: "inline" } %>
+
+  <%= f.input :city %>
+  <%= f.input :venue_address %>
+  <%= f.input :eventbrite_link %>
 
   <p>
     <%= f.button :submit, class: "appy-button" %> or

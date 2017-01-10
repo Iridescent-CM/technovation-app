@@ -7,7 +7,9 @@
         <table>
           <thead>
             <tr>
+              <th>Division</th>
               <th>Date / Time</th>
+              <th>City</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -16,7 +18,15 @@
             <% @pitch_events.each do |pitch_event| %>
               <tr>
                 <td>
+                  <%= pitch_event.division_name %>
+                </td>
+
+                <td>
                   <%= pitch_event.starts_at.strftime("%A %b %e, at %H:%M %Z") %>
+                </td>
+
+                <td>
+                  <%= pitch_event.city %>
                 </td>
 
                 <td>

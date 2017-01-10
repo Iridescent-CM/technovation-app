@@ -1,11 +1,29 @@
 <h1 class="appy-title">Regional Pitch Event</h1>
 
 <p>
+  Division: <%= @pitch_event.division_name %>
+</p>
+
+<p>
   Starts: <%= @pitch_event.starts_at.strftime("%A %b %e, at %H:%M %Z") %>
 </p>
 
 <p>
-  Ends: <%= @pitch_event.ends_at.strftime("%A %b %e, at %H:%M %Z") %>
+  Ends: <%= @pitch_event.ends_at.strftime("%H:%M") %>
+</p>
+
+<p>
+  City: <%= @pitch_event.city %>
+</p>
+
+<p>
+  Venue address: <%= @pitch_event.venue_address %>
+</p>
+
+<p>
+  Eventbrite link: <%= link_to @pitch_event.eventbrite_link,
+                     @pitch_event.eventbrite_link,
+                     target: :_blank %>
 </p>
 
 <p>

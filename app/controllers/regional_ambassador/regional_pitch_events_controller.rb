@@ -1,6 +1,5 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
-
     def index
       @pitch_events = current_ambassador.regional_pitch_events
     end
@@ -46,9 +45,12 @@ module RegionalAmbassador
     private
     def pitch_event_params
       params.require(:regional_pitch_event).permit(
-        :timezone,
+        :division_id,
         :starts_at,
         :ends_at,
+        :city,
+        :venue_address,
+        :eventbrite_link,
       )
     end
   end

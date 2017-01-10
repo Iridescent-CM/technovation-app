@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110163737) do
+ActiveRecord::Schema.define(version: 20170110215030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -235,7 +236,13 @@ ActiveRecord::Schema.define(version: 20170110163737) do
     t.integer  "regional_ambassador_profile_id"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.integer  "division_id"
+    t.string   "city"
+    t.string   "venue_address"
+    t.string   "eventbrite_link"
   end
+
+  add_index "regional_pitch_events", ["division_id"], name: "index_regional_pitch_events_on_division_id", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",       null: false
@@ -465,6 +472,7 @@ ActiveRecord::Schema.define(version: 20170110163737) do
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "student_profiles"
+  add_foreign_key "regional_pitch_events", "divisions"
   add_foreign_key "screenshots", "team_submissions"
   add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
