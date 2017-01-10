@@ -11,8 +11,6 @@ module RegionalAmbassador
 
     def new
       @pitch_event = current_ambassador.regional_pitch_events.build
-      cookies[:user_timezone] ||= Timezone.lookup(current_ambassador.latitude, current_ambassador.longitude).name
-      @pitch_event.timezone = cookies[:user_timezone]
     end
 
     def edit

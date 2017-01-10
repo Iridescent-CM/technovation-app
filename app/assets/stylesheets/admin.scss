@@ -58,3 +58,34 @@
   }
 }
 
+.admin-dashboard__sidebar {
+  .no-simple-form-style {
+    margin: 0 0 1rem;
+
+    .appy-button {
+      margin-left: 0;
+    }
+  }
+}
+
+.no-simple-form-style {
+  p {
+    margin: 1rem 0;
+  }
+
+  .appy-button {
+    margin-left: 0;
+  }
+}
+
+.admin-actions {
+  margin: 1rem 0;
+
+  .appy-button {
+    margin-left: 0;
+  }
+}
+
+.only-col {
+  padding: 0;
+}

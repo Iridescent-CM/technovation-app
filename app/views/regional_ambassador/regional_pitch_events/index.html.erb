@@ -1,15 +1,7 @@
 <h1 class="appy-title">Regional Pitch Events</h1>
 
 <div class="flex-row">
-  <div class="flex-col-md-4">
-    <div class="admin-search__filter-options">
-      <%= link_to 'New Regional pitch event',
-        new_regional_ambassador_regional_pitch_event_path,
-        class: "appy-button" %>
-    </div>
-  </div>
-
-  <div class="flex-col-md-8 wrapper__report-column">
+  <div class="flex-col-md-12 wrapper__report-column only-col">
     <div class="scrolly-table">
       <div class="scrolly-table__overflow-handler">
         <table>
@@ -42,5 +34,11 @@
         </table>
       </div>
     </div>
+
+    <p class="admin-actions">
+      <%= link_to 'New Regional pitch event',
+        new_regional_ambassador_regional_pitch_event_path,
+        class: "appy-button" %>
+    </p>
   </div>
 </div>

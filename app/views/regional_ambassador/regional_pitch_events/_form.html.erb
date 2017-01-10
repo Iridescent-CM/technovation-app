@@ -1,9 +1,11 @@
 <%= simple_form_for [:regional_ambassador, @pitch_event], html: { class: "no-simple-form-style" } do |f| %>
   <%= render 'errors', record: @pitch_event %>
 
-  <%= f.input :timezone, collection: Timezone.names %>
   <%= f.input :starts_at, input_html: { class: "inline" } %>
   <%= f.input :ends_at, input_html: { class: "inline" } %>
 
-  <%= f.button :submit %>
+  <p>
+    <%= f.button :submit, class: "appy-button" %> or
+    <%= link_to 'cancel', :back %>
+  </p>
 <% end %>

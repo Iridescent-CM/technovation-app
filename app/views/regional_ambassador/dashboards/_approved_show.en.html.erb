@@ -114,9 +114,13 @@
   </div>
 
   <div class="admin-dashboard__sidebar">
+    <%= simple_form_for [:regional_ambassador, current_ambassador.account], html: { class: "no-simple-form-style" } do |f| %>
+      <%= f.input :timezone, collection: Timezone.names, label: "Set your timezone" %>
+      <%= f.submit "Save", class: "appy-button" %>
+    <% end %>
+
     <h2 class="appy-subtitle">
-      Submission Deadline:<br>
-      Wednesday, April 26th
+      Submission Deadline:<br/>Wednesday, April 26th
     </h2>
 
     <%= render 'account_snapshots', title: "#{Season.current.year} #{current_ambassador.region_name} Snapshot" %>

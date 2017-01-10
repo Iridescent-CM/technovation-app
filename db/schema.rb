@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110154102) do
+ActiveRecord::Schema.define(version: 20170110163737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170110154102) do
     t.integer  "gender"
     t.string   "last_login_ip"
     t.string   "locale",                       default: "en", null: false
+    t.string   "timezone"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree
@@ -230,7 +231,6 @@ ActiveRecord::Schema.define(version: 20170110154102) do
   add_index "regional_ambassador_profiles", ["status"], name: "index_regional_ambassador_profiles_on_status", using: :btree
 
   create_table "regional_pitch_events", force: :cascade do |t|
-    t.string   "timezone",                       null: false
     t.datetime "starts_at",                      null: false
     t.datetime "ends_at",                        null: false
     t.integer  "regional_ambassador_profile_id"

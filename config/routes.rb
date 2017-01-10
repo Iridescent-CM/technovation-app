@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :account, only: :update
 
     resources :profiles, only: :index
     resources :teams, only: [:show, :index]
