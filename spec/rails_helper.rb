@@ -9,6 +9,9 @@ require "geocoder_helper"
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+::Timezone::Lookup.config(:test)
+::Timezone::Lookup.lookup.default("America/Los_Angeles")
+
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.javascript_driver = :webkit
