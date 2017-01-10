@@ -8,9 +8,11 @@
       <nav>
         <ul class="navigation__links-list">
           <% if current_account.authenticated? and current_account.regional_ambassador_profile and current_account.regional_ambassador_profile.full_access_enabled? %>
-            <li class="nav-link <%= al(regional_ambassador_regional_pitch_events_path) %>">
-              <%= link_to t("views.application.dashboards.menu.events"), regional_ambassador_regional_pitch_events_path %>
-            </li>
+            <% unless Rails.env.production? %>
+              <li class="nav-link <%= al(regional_ambassador_regional_pitch_events_path) %>">
+                <%= link_to t("views.application.dashboards.menu.events"), regional_ambassador_regional_pitch_events_path %>
+              </li>
+            <% end %>
 
             <li class="nav-link <%= al(regional_ambassador_profiles_path) %>">
               <%= link_to t("views.application.dashboards.menu.accounts"), regional_ambassador_profiles_path %>
