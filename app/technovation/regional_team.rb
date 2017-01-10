@@ -3,6 +3,7 @@ module RegionalTeam
     teams = Team.includes(:seasons, :memberships)
                 .references(:seasons, :accounts)
                 .where("seasons.year = ?", Season.current.year)
+                .order('teams.created_at DESC')
 
     if ambassador.country == "US"
       students = StudentProfile.joins(:account)

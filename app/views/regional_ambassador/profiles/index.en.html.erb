@@ -81,7 +81,7 @@
           </thead>
 
           <tbody>
-            <% @accounts.each do |account| %>
+            <% @accounts.order('accounts.created_at DESC').each do |account| %>
               <% cache(account) do %>
                 <tr>
                   <td><%= account.type_name %></td>
