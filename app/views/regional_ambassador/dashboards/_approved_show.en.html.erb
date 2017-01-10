@@ -21,6 +21,8 @@
     <div class="admin-dashboard__header">
       <h1 class="appy-title">Recent activity</h1>
 
+      <h2>Submission Deadline: Wednesday, April 26th</h2>
+
       <label class="no-text-transform">
         Show signups in the past
         <%= select_tag :days,
@@ -114,14 +116,21 @@
   </div>
 
   <div class="admin-dashboard__sidebar">
-    <%= simple_form_for [:regional_ambassador, current_ambassador.account], html: { class: "no-simple-form-style" } do |f| %>
-      <%= f.input :timezone, collection: Timezone.names, label: "Set your timezone" %>
-      <%= f.submit "Save", class: "appy-button" %>
-    <% end %>
+    <div class="ra-timezone">
+      <p>
+        Your timezone is set to:<br />
+        <strong><%= Time.zone %></strong>
+        <%= link_to "edit", "#", data: { modal_trigger: "ra-timezone" } %>
+      </p>
+    </div>
 
-    <h2 class="appy-subtitle">
-      Submission Deadline:<br/>Wednesday, April 26th
-    </h2>
+    <div class="modalify" data-heading="Set your timezone" id="ra-timezone">
+      <%= simple_form_for [:regional_ambassador, current_ambassador.account], html: { class: "no-simple-form-style" } do |f| %>
+        <%= f.input :timezone, collection: Timezone.names, label: "Set your timezone" %>
+        <%= f.submit "Save", class: "appy-button" %>
+      <% end %>
+    </div>
+
 
     <%= render 'account_snapshots', title: "#{Season.current.year} #{current_ambassador.region_name} Snapshot" %>
 
