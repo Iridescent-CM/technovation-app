@@ -1,0 +1,12 @@
+<p>
+  Starts: <%= @pitch_event.starts_at.strftime("%A %b %e, at %H:%M %Z") %>
+</p>
+
+<p>
+  Ends: <%= @pitch_event.ends_at.strftime("%A %b %e, at %H:%M %Z") %>
+</p>
+
+<p>
+  <%= link_to 'Edit', [:edit, :regional_ambassador, @pitch_event] %> |
+  <%= link_to 'Back', regional_ambassador_regional_pitch_events_path %>
+</p>

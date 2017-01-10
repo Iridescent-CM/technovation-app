@@ -13,6 +13,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     presence: true
 
   has_many :exports, foreign_key: :account_id, dependent: :destroy
+  has_many :regional_pitch_events
 
   delegate :submitted?,
            :candidate_id,

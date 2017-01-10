@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109175008) do
+ActiveRecord::Schema.define(version: 20170110154102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,15 @@ ActiveRecord::Schema.define(version: 20170109175008) do
   add_index "regional_ambassador_profiles", ["account_id"], name: "index_regional_ambassador_profiles_on_account_id", using: :btree
   add_index "regional_ambassador_profiles", ["ambassador_since_year"], name: "index_regional_ambassador_profiles_on_ambassador_since_year", using: :btree
   add_index "regional_ambassador_profiles", ["status"], name: "index_regional_ambassador_profiles_on_status", using: :btree
+
+  create_table "regional_pitch_events", force: :cascade do |t|
+    t.string   "timezone",                       null: false
+    t.datetime "starts_at",                      null: false
+    t.datetime "ends_at",                        null: false
+    t.integer  "regional_ambassador_profile_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",       null: false

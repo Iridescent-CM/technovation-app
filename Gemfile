@@ -29,6 +29,8 @@ gem 'newrelic_rpm', '~> 3.14.2.312'
 gem 'dalli'
 
 gem 'geocoder', '~> 1.2.6'
+gem 'timezone', '~> 1.0'
+
 gem 'carrierwave', '~> 0.11.2'
 gem "mini_magick", "~> 4.5.1"
 gem "fog", "~> 1.38.0"
