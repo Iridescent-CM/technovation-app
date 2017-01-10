@@ -10,6 +10,7 @@ module RegionalAmbassador
 
     def new
       @pitch_event = current_ambassador.regional_pitch_events.build
+      @pitch_event.ends_at = 1.hour.from_now
     end
 
     def edit

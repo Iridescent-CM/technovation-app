@@ -8,3 +8,4 @@
 //= require toast_flashes
 //= require scrolly_table
 //= require modalify
+//= require datetime
