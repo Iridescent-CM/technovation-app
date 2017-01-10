@@ -95,10 +95,15 @@
 
     while(!colFound) {
       parentCol = parentCol.parentElement;
+
+      if (parentCol === null)
+        break;
+
       colFound = parentCol.classList.contains('submissions-col');
     }
 
-    parentCol.style.zIndex = zidx;
+    if (colFound)
+      parentCol.style.zIndex = zidx;
   }
 })();
 
