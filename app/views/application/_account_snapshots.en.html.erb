@@ -1,6 +1,7 @@
-<h1 class="appy-title"><%= title %></h1>
-
-<p><%= Time.current.strftime("%A, %b %e, %-I:%M %P %Z") %></p>
+<p>
+  <strong><%= title %></strong><br />
+  <%= Time.current.strftime("%A, %b %e, %H:%M %Z") %>
+</p>
 
 <p><strong><%= @snapshot_accounts.count %></strong> total Accounts</p>
 
