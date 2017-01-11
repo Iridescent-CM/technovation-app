@@ -91,6 +91,10 @@ module Student
         :pitch_video_link,
         :development_platform,
         :development_platform_other,
+        business_plan_attributes: [
+          :id,
+          :remote_file_url,
+        ],
         technical_checklist_attributes: [
           :id,
           :used_strings,
@@ -134,6 +138,14 @@ module Student
         ],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]
+
+        unless tapped[:source_code_external_url].blank?
+          tapped[:source_code_file_uploaded] = false
+        end
+
+        if tapped[:business_plan_attributes]
+          tapped[:business_plan_attributes][:file_uploaded] = false
+        end
       end
     end
   end

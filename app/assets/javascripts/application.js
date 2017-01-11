@@ -26,6 +26,7 @@
 //= require technical_checklist
 //= require toast_flashes
 //= require tabs
-//
+//= require alternative_forms
+
 //= require submission_scores
 //= require dashboards

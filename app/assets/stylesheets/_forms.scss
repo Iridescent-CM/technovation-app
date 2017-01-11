@@ -224,3 +224,17 @@ select.has-val + .chosen-container span {
     box-shadow: 0 2px 0 #bb321f;
   }
 }
+
+.no-simple-form-style {
+  clear: both;
+
+  hr {
+    padding: 1rem 0 0;
+    display: block;
+    clear: both;
+  }
+
+  .appy-button {
+    margin-left: 0;
+  }
+}

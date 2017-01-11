@@ -10,25 +10,51 @@
   </div>
   <div class="card__body">
     <p>
-      <% if submission.source_code.present? ||
-              submission.source_code_external_url.present? %>
-        <%= link_to "Your source code",
-          submission.source_code_url || submission.source_code_external_url,
+      <% if submission.detect_source_code_url %>
+        <%= link_to submission.source_code_url_text,
+          submission.detect_source_code_url,
           target: "_blank" %>
       <% else %>
-        Upload, your source code (.aia or .zip file)
+        Upload, your source code (.aia, .zip file, or URL)
       <% end %>
     </p>
   </div>
 </div>
 
-<div class="modalify"
+<div class="modalify alternative-forms"
      id="source-code-upload-modal"
-     data-heading="Source Code (.aia or .zip)">
+     data-heading="Source Code (.aia, .zip, or URL)">
+  <%
+    if submission.source_code_file_uploaded?
+      file_css = "active"
+      url_css = ""
+      switch_text = "Use a URL"
+    else
+      file_css = ""
+      url_css = "active"
+      switch_text = "Upload a file"
+    end
+  %>
+
   <%= direct_upload_form_for @source_code_uploader,
-    html: { class: 'fancy-file-upload' },
-    data: { type: 'application/zip,application/aia' } do |f| %>
+    html: { class: "fancy-file-upload alternative-form #{file_css}" },
+    data: { switch_text: 'Use a URL' } do |f| %>
     <%= f.file_field :source_code %>
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
+
+  <%= simple_form_for [:student, submission],
+    html: { class: "no-simple-form-style alternative-form #{url_css}" },
+    data: { switch_text: "Upload a file" } do |f| %>
+
+    <%= f.input :source_code_external_url,
+      label: "Or, copy/paste your source code URL here",
+      placeholder: "https://" %>
+
+    <%= f.submit t("views.application.save"), class: "appy-button" %>
+  <% end %>
+
+  <button class="alternative-form-switch">
+    <%= switch_text %>
+  </button>
 </div>

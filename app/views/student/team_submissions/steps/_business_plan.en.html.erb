@@ -11,35 +11,64 @@
   <div class="card__body">
     <% if submission.business_plan %>
       <p>
-        <%= link_to "Your business plan", submission.business_plan.file_url %>
-
-        <br />
-
-        <small>
-          <em>updated <%= time_ago_in_words(submission.business_plan.updated_at) %> ago</em>
-        </small>
-
-        <small class="hint-link">
-          <%= link_to "See the checklist",
-            "http://www.technovationchallenge.org/wp-content/uploads/2016/12/BusinessPlanChecklist.pdf",
-            target: :_blank %>
-          for completing a Business Plan
-        </small>
+        <%= link_to submission.business_plan_url_text,
+          submission.business_plan_url,
+          target: :_blank %>
       </p>
     <% else %>
-      Please add your business plan (.pdf)
+      Please add your business plan (.pdf or URL)
     <% end %>
+
+    <small class="hint-link">
+      <%= link_to "See the checklist",
+        "http://www.technovationchallenge.org/wp-content/uploads/2016/12/BusinessPlanChecklist.pdf",
+        target: :_blank %>
+      for completing a Business Plan
+    </small>
   </div>
 </div>
 
 <%= content_tag :div,
-  class: "modalify",
+  class: "modalify alternative-forms",
   id: "business-plan-upload-modal",
-  data: { heading: "Business plan (.pdf)" } do %>
+  data: { heading: "Business plan (.pdf or URL)" } do %>
+
+  <%
+    if submission.business_plan.file_uploaded?
+      file_css = "active"
+      url_css = ""
+      switch_text = "Use a URL"
+    else
+      file_css = ""
+      url_css = "active"
+      switch_text = "Upload a PDF"
+    end
+  %>
+
   <%= direct_upload_form_for @business_plan_uploader,
-                             html: { class: 'fancy-file-upload' },
-                             data: { type: 'application/pdf' } do |f| %>
+    html: { class: "fancy-file-upload alternative-form #{file_css}" },
+    data: { switch_text: 'Use a URL' } do |f| %>
+
     <%= f.file_field :business_plan %>
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
+
+  <%= simple_form_for [:student, submission],
+    html: {
+      class: "alternative-form no-simple-form-style #{url_css}",
+      data: { switch_text: "Upload a PDF" },
+    } do |f| %>
+
+    <%= f.fields_for :business_plan do |b| %>
+      <%= b.input :remote_file_url,
+        label: "Copy and paste your business plan's URL here",
+        placeholder: "https://" %>
+    <% end %>
+
+    <%= f.submit t("views.application.save"), class: "appy-button" %>
+  <% end %>
+
+  <button class="alternative-form-switch">
+    <%= switch_text %>
+  </button>
 <% end %>

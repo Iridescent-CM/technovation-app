@@ -30,7 +30,9 @@ class TeamSubmission < ActiveRecord::Base
 
   belongs_to :team
   has_many :screenshots, -> { order(:sort_position) }
+
   has_one :business_plan
+  accepts_nested_attributes_for :business_plan
 
   has_one :technical_checklist
   accepts_nested_attributes_for :technical_checklist
@@ -49,6 +51,38 @@ class TeamSubmission < ActiveRecord::Base
       ["Other", "-", development_platform_other].join(' ')
     else
       development_platform
+    end
+  end
+
+  def business_plan_url
+    if business_plan.file_uploaded?
+      business_plan.file_url
+    else
+      business_plan.remote_file_url
+    end
+  end
+
+  def detect_source_code_url
+    if source_code_file_uploaded?
+      source_code_url
+    else
+      source_code_external_url
+    end
+  end
+
+  def source_code_url_text
+    if source_code_file_uploaded?
+      source_code_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+    else
+      source_code_external_url
+    end
+  end
+
+  def business_plan_url_text
+    if business_plan.file_uploaded?
+      business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+    else
+      business_plan.remote_file_url
     end
   end
 

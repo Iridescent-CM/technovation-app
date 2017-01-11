@@ -1,0 +1,25 @@
+.alternative-form {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.alternative-form-switch {
+  @extend .appy-button;
+
+  margin: 1rem auto;
+  display: block;
+  clear: both;
+  outline: 0;
+  padding: 0.3rem 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
+
+  &:active,
+  &:hover,
+  &:focus {
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
