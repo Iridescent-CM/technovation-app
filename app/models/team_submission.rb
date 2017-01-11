@@ -29,12 +29,12 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   belongs_to :team
-  has_many :screenshots, -> { order(:sort_position) }
+  has_many :screenshots, -> { order(:sort_position) }, dependent: :destroy
 
-  has_one :business_plan
+  has_one :business_plan, dependent: :destroy
   accepts_nested_attributes_for :business_plan
 
-  has_one :technical_checklist
+  has_one :technical_checklist, dependent: :destroy
   accepts_nested_attributes_for :technical_checklist
 
   has_many :season_registrations, dependent: :destroy, as: :registerable

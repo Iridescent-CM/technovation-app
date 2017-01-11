@@ -186,16 +186,22 @@ h2.submissions-onboarding-step__heading {
   border-radius: 0.5em;
   margin: 0 auto 1.5em;
   max-width: 50ch;
+  transition: background-color 1s;
 
   label {
     align-items: center;
     display: flex;
     padding: 0.75rem;
     text-transform: none;
+    cursor: pointer;
   }
 
   input {
     width: 2em;
+  }
+
+  &:hover {
+    background-color: darken($light-grey, 25%);
   }
 }
 

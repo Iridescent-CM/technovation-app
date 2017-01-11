@@ -9,7 +9,7 @@
     </button>
   </div>
   <div class="card__body">
-    <% if submission.business_plan %>
+    <% if submission.business_plan.persisted? %>
       <p>
         <%= link_to submission.business_plan_url_text,
           submission.business_plan_url,

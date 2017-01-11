@@ -1,46 +1,75 @@
 <div class="submissions-onboarding" id="submissions-onboarding">
 
   <div class="submissions-onboarding-step simple-card">
-    <div class="submissions-onboarding-step__img">
-      <!--An image would go here-->
-    </div>
     <h2 class="submissions-onboarding-step__heading">Your Team's Submission</h2>
-    <p class="submissions-onboarding-step__explanation">Praeterea iter est quasdam res quas ex communi. Quis aute iure reprehenderit in voluptate velit esse. A communi observantia non est recedendum. Morbi fringilla convallis sapien.</p>
+
+    <p class="submissions-onboarding-step__explanation">
+      You are about to begin submitting your team’s application for judging!
+      All teams must submit their work here, <strong>even if you sign up to be judged at a live pitch event</strong>.
+      Check the <%= link_to "submission guidelines", "http://www.technovationchallenge.org/submission-guidelines/", target: :_blank %>
+      for your division to see what and how you need to submit.
+    </p>
+
+    <p class="submissions-onboarding-step__explanation">
+      The submission deadline is:<br />
+      <strong>
+        5:00 p.m. (17h00) US/Pacific time<br />
+        on Wednesday, April 26
+      </strong>
+    </p>
+
     <div class="submissions-onboarding-step__footer">
       <button data-next-step class="appy-button">
-        Continue <span class="fa fa-chevron-right"><!--FontAwesome--></span>
+        Continue <%= fa_icon "chevron-right" %>
       </button>
     </div>
   </div>
 
   <div class="submissions-onboarding-step simple-card">
-    <div class="submissions-onboarding-step__img">
-      <!--An image would go here-->
-    </div>
-    <h2 class="submissions-onboarding-step__heading">Placeholder Step Two</h2>
-    <p class="submissions-onboarding-step__explanation">Ullamco laboris nisi ut aliquid ex ea commodi consequat. Curabitur blandit tempus ardua ridiculus sed magna. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh.</p>
+    <h2 class="submissions-onboarding-step__heading">How it works</h2>
+
+    <p class="submissions-onboarding-step__explanation">
+      Your work will be saved every time you edit, so you can add everything at once, or at different times.
+      You will be able to edit your submission until the <strong>deadline</strong>.
+      You and your teammates will be able to update your team submission, but your mentor will not.
+    </p>
+
+    <p class="submissions-onboarding-step__explanation">
+      The submission deadline is:<br />
+      <strong>
+        5:00 p.m. (17h00) US/Pacific time<br />
+        on Wednesday, April 26
+      </strong>
+    </p>
+
     <div class="submissions-onboarding-step__footer">
       <button data-next-step class="appy-button">
-        Continue <span class="fa fa-chevron-right"><!--FontAwesome--></span>
+        Continue <%= fa_icon "chevron-right" %>
       </button>
     </div>
   </div>
 
   <div class="submissions-onboarding-step submissions-onboarding-step--integrity simple-card">
-    <div class="submissions-onboarding-step__img">
-      <!--An image would go here-->
-    </div>
     <h2 class="submissions-onboarding-step__heading">Before we get started,<br>please agree to the Integrity Clause</h2>
+
     <%= simple_form_for [:student, @team_submission], html: { class: "no-simple-form-style" } do |f| %>
       <%= render 'errors', record: @team_submission %>
 
       <div class="submissions-onboarding-step__integrity-clause">
         <%= f.input :integrity_affirmed, as: :boolean, label: t("models.team_submission.integrity_affirmed") %>
       </div>
+
+      <p class="submissions-onboarding-step__explanation">
+        The submission deadline is:<br />
+        <strong>
+          5:00 p.m. (17h00) US/Pacific time<br />
+          on Wednesday, April 26
+        </strong>
+      </p>
+
       <div class="submissions-onboarding-step__footer">
         <%= f.button :submit, t("views.application.get_started"), class: "appy-button" %>
       </div>
     <% end %>
   </div>
-
 </div>

@@ -27,6 +27,7 @@ module Student
 
     def show
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
+      @team_submission.build_business_plan unless @team_submission.business_plan
 
       @team_photo_uploader = ImageUploader.new
       @team_photo_uploader.success_action_redirect = student_team_photo_upload_confirmation_url(back: request.fullpath)
