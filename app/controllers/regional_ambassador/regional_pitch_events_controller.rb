@@ -46,12 +46,13 @@ module RegionalAmbassador
     private
     def pitch_event_params
       params.require(:regional_pitch_event).permit(
-        :division_id,
+        :name,
         :starts_at,
         :ends_at,
         :city,
         :venue_address,
         :eventbrite_link,
+        division_ids: [],
       )
     end
   end

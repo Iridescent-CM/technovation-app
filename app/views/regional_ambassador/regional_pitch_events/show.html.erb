@@ -1,15 +1,13 @@
-<h1 class="appy-title">Regional Pitch Event</h1>
+<h1 class="appy-title">Regional Pitch Event: <%= @pitch_event.name %></h1>
 
 <p>
-  <strong>Division:</strong> <%= @pitch_event.division_name %>
+  <strong>Division:</strong> <%= @pitch_event.divisions.map(&:name).to_sentence %>
 </p>
 
 <p>
-  <strong>Starts:</strong> <%= @pitch_event.starts_at.strftime("%A %b %e, at %H:%M %Z") %>
-</p>
-
-<p>
-  <strong>Ends:</strong> <%= @pitch_event.ends_at.strftime("%H:%M") %>
+  <strong>Time:</strong>
+  <%= @pitch_event.starts_at.strftime("%A, %B %e, %H:%M") %> &ndash;
+  <%= @pitch_event.ends_at.strftime("%H:%M %Z") %>
 </p>
 
 <p>

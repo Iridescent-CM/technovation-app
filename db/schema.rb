@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110215030) do
+ActiveRecord::Schema.define(version: 20170111174705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -96,6 +97,11 @@ ActiveRecord::Schema.define(version: 20170110215030) do
     t.integer  "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "divisions_regional_pitch_events", id: false, force: :cascade do |t|
+    t.integer "division_id"
+    t.integer "regional_pitch_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -239,6 +245,7 @@ ActiveRecord::Schema.define(version: 20170110215030) do
     t.string   "city"
     t.string   "venue_address"
     t.string   "eventbrite_link"
+    t.string   "name"
   end
 
   add_index "regional_pitch_events", ["division_id"], name: "index_regional_pitch_events_on_division_id", using: :btree
@@ -464,6 +471,8 @@ ActiveRecord::Schema.define(version: 20170110215030) do
   add_foreign_key "background_checks", "accounts"
   add_foreign_key "business_plans", "team_submissions"
   add_foreign_key "consent_waivers", "accounts"
+  add_foreign_key "divisions_regional_pitch_events", "divisions"
+  add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
   add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "teams", column: "joinable_id"

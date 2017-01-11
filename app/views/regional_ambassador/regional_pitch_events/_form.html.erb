@@ -1,7 +1,12 @@
-<%= simple_form_for [:regional_ambassador, @pitch_event], html: { class: "no-simple-form-style" } do |f| %>
+<%= simple_form_for [:regional_ambassador, @pitch_event], html: { class: "ra-pitch-event-form no-simple-form-style" } do |f| %>
   <%= render 'errors', record: @pitch_event %>
 
-  <%= f.input :division_id, collection: Division.all %>
+  <%= f.input :name %>
+
+  <%= f.input :division_ids,
+    label: "Division",
+    collection: [Division.senior, Division.junior],
+    as: :check_boxes %>
 
   <%= f.input :starts_at,
     start_year: Time.current.year,
@@ -29,7 +34,7 @@
     } %>
 
   <%= f.input :city %>
-  <%= f.input :venue_address %>
+  <%= f.input :venue_address, label: "Venue Street Address" %>
   <%= f.input :eventbrite_link %>
 
   <p>

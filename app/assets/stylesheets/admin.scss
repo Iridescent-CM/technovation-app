@@ -93,3 +93,22 @@
 .ra-timezone {
   margin: 0 0 1rem;
 }
+
+.ra-pitch-event-form {
+  max-width: 650px;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+
+  label {
+    cursor: pointer;
+  }
+
+  .checkbox label {
+    text-transform: capitalize;
+  }
+
+  div.input {
+    padding: 1rem 0;
+  }
+}

@@ -1,8 +1,6 @@
 class RegionalPitchEvent < ActiveRecord::Base
-  belongs_to :division
+  has_and_belongs_to_many :divisions
 
-  validates :starts_at, :ends_at, :division_id, :city, :venue_address,
+  validates :name, :starts_at, :ends_at, :division_ids, :city, :venue_address,
     presence: true
-
-  delegate :name, to: :division, prefix: true, allow_nil: true
 end
