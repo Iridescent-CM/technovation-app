@@ -20,9 +20,12 @@
 
 <p>
   <strong>Eventbrite link:</strong>
-  <%= link_to @pitch_event.eventbrite_link,
-    @pitch_event.eventbrite_link,
-    target: :_blank %>
+
+  <% unless @pitch_event.eventbrite_link.blank? %>
+    <%= link_to @pitch_event.eventbrite_link,
+      @pitch_event.eventbrite_link,
+      target: :_blank %>
+  <% end %>
 </p>
 
 <p>
