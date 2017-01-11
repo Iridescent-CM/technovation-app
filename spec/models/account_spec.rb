@@ -27,4 +27,17 @@ RSpec.describe Account do
     account = FactoryGirl.create(%i{mentor regional_ambassador}.sample, country: "BR")
     expect(account).to be_background_check_complete
   end
+
+  it "calculates age" do
+    account.date_of_birth = 15.years.ago + 1.day
+    expect(account.age).to eq(14)
+
+    account.date_of_birth = 15.years.ago
+    expect(account.age).to eq(15)
+  end
+
+  it "calculates age compared to a particular date" do
+    account.date_of_birth = 15.years.ago + 3.months
+    expect(account.age(3.months.from_now)).to eq(15)
+  end
 end
