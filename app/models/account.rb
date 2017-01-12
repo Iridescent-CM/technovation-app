@@ -160,7 +160,7 @@ class Account < ActiveRecord::Base
     Division.for(student_profile).name.humanize
   end
 
-  def age(now = Time.current.utc.to_date)
+  def age(now = Time.current.to_date)
     current_month_after_birth_month = now.month > date_of_birth.month
     current_month_is_birth_month = now.month == date_of_birth.month
     current_day_is_on_or_after_birthday = now.day >= date_of_birth.day
