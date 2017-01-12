@@ -9,6 +9,9 @@
           cells = wrapper.querySelectorAll('.cell'),
           maxWidths = {};
 
+      if (cells.length === 0)
+        return;
+
       cells.forEach(function(cell) {
         var index = getRowIndex(cell);
 
