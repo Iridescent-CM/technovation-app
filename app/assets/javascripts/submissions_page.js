@@ -5,9 +5,6 @@
 
   appNameAndDescription();
 
-  /**
-   * App Name and Description editing
-   */
   function appNameAndDescription() {
     var wrapper = document.getElementById("ts-app-description-wrapper");
     var buttonsWrapper = document.getElementById("ts-app-description-buttons-wrapper");
@@ -48,11 +45,9 @@
       });
 
       setTimeout(function() {
-        // If app has no name, place cursor in the app name field
         if (!nameField.innerText) {
           nameField.focus();
         } else {
-          // Otherwise place cursor at the end of the description field
           var range = document.createRange();
           range.selectNodeContents(descriptionField);
           range.collapse(false);
@@ -62,13 +57,27 @@
         }
       }, 0);
 
+      enableCharCountLimitOnDescription(descriptionField);
       primaryEditableButton.addEventListener('click', saveChanges);
       cancelEditableButton.addEventListener('click', cancelChanges);
     }
 
     function editTempObject(e) {
-      var nodeName = e.target.dataset.name;
-      tempObject[nodeName] = e.target.innerText;
+      var nodeName = e.target.dataset.name,
+          limit = parseInt(e.target.dataset.charLimit),
+          length = e.target.innerText.length;
+
+      if (e.target.innerText === "")
+        length = 0;
+
+      if (!isNaN(limit))
+        var remaining = limit - length;
+
+      if (isNaN(limit) || remaining >= 0) {
+        tempObject[nodeName] = e.target.innerText;
+      } else {
+        e.target.innerText = e.target.innerText.slice(0, -1);
+      }
     }
 
     function cloneContentObjToTempObj() {
@@ -77,7 +86,6 @@
       });
     }
 
-    // Submit changes to API
     function saveChanges() {
       primaryEditableButton.removeEventListener('click', saveChanges);
 
@@ -126,6 +134,24 @@
       });
       primaryEditableButton.innerText = 'Edit App Info';
       primaryEditableButton.addEventListener('click', makeContentEditable);
+    }
+
+    function enableCharCountLimitOnDescription(descriptionField) {
+      var selector = Array.prototype.join.call(descriptionField.classList) + " + span.char-count",
+          existingCharCount = document.querySelector(selector);
+
+      if (existingCharCount)
+        existingCharCount.remove();
+
+      var charCount = document.createElement('span');
+      charCount.innerText = "Characters reminaing: " + (parseInt(descriptionField.dataset.charLimit) - descriptionField.innerText.length);
+      charCount.classList.add('char-count');
+      descriptionField.after(charCount);
+
+      descriptionField.addEventListener('input', function(e) {
+        var reminaing = parseInt(e.target.dataset.charLimit) - e.target.innerText.length;
+        charCount.innerText = "Characters reminaing: " + reminaing;
+      });
     }
   }
 
