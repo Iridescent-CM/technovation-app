@@ -12,12 +12,12 @@
 }
 
 .admin-results-table {
-  border: 3px solid #666;
   max-width: 650px;
-  margin: 1rem 0;
-  white-space: nowrap;
-  height: 400px;
+  max-height: 400px;
   overflow: auto;
+  white-space: nowrap;
+  margin: 1rem 0;
+  border: 3px solid #666;
 
   .admin-results-header-table {
     display: table-row;
