@@ -16,12 +16,12 @@
           end
 %>
 
-<div class="admin-dashboard">
+<div class="admin-dashboard flex-row">
   <div class="admin-dashboard__column">
     <div class="admin-dashboard__header">
       <h1 class="appy-title">Recent activity</h1>
 
-      <label class="no-text-transform">
+      <label>
         Show signups in the past
         <%= select_tag :days,
                       options_for_select(

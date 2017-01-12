@@ -1,9 +1,12 @@
 @import "normalize";
+@import "font-awesome";
 
 @import 'admin/base';
 
 @import 'partials/variables';
+@import 'component-library/card';
 @import 'component-library/admin-buttons';
 
 @import 'admin/navigation';
 @import 'admin/data-tables';
+@import 'admin/dashboard';
