@@ -36,13 +36,10 @@
 
   <p data-editable
      data-name="app_description"
-     class="ts-app-description__description">
-    <% if submission.app_description.present? %>
-      <%= submission.app_description %>
-    <% else %>
-      In about 100 words, provide a description of your application.
-    <% end %>
-  </p>
+     class="ts-app-description__description"><%= submission.app_description %></p>
+  <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 <% end %>
 
-<div class="ts-app-description__edit-shade"><!--Shade for when the content is editable--></div>
+<div class="ts-app-description__edit-shade">
+  <!--Shade for when the content is editable-->
+</div>

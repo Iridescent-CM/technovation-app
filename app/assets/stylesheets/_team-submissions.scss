@@ -269,8 +269,13 @@ h2.submissions-onboarding-step__heading {
 }
 
 .ts-app-description__description {
-  opacity: 1;
   outline: none;
+
+  &:empty::before {
+    font-weight: bold;
+    content: 'In about 100 words, provide a description of your application.';
+    color: darken($mid-grey, 5%);
+  }
 }
 
 .ts-app-description--editable {

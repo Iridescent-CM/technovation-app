@@ -39,14 +39,14 @@
       <% if submission.stated_goal_explanation %>
         <%= submission.stated_goal_explanation %>
       <% else %>
-        In one or two sentences, explain your choice.
+        In one or two sentences, explain how your app solution aligns with your Sustainable Development Goal
       <% end %>
     </div>
 
     <div class="ajax-form-helper__edit-mode">
       <%= text_area_tag :stated_goal_explanation,
         submission.stated_goal_explanation,
-        placeholder: "In one or two sentences, explain your choice." %>
+        placeholder: "In one or two sentences, explain how your app solution aligns with your Sustainable Development Goal" %>
     </div>
   </div>
 <% end %>
