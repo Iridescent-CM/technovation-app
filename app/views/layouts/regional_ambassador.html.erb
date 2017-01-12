@@ -1,6 +1,3 @@
-<% provide :root_path, regional_ambassador_dashboard_path %>
-<% provide :menu, render('regional_ambassador/navigation/global_nav') %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -17,7 +14,7 @@
   </head>
 
   <body>
-    <%= render 'admin/navigation' %>
+    <%= render 'regional_ambassador/navigation/global_nav' %>
 
     <div class="container">
       <%= render 'flash_messages' %>
