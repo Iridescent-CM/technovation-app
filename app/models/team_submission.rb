@@ -48,6 +48,11 @@ class TeamSubmission < ActiveRecord::Base
     end
   }
 
+  delegate :name,
+           :division_name,
+    to: :team,
+    prefix: true
+
   def development_platform_text
     if development_platform == "Other"
       ["Other", "-", development_platform_other].join(' ')
@@ -81,11 +86,15 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def business_plan_url_text
-    if business_plan.file_uploaded?
+    if business_plan and business_plan.file_uploaded?
       business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
-    else
+    elsif business_plan
       business_plan.remote_file_url
     end
+  end
+
+  def technical_checklist_started?
+    technical_checklist.present? and technical_checklist.attributes.values.any? { |v| not v.blank? }
   end
 
   def embed_code(method)

@@ -5,5 +5,8 @@
 //= require jquery_ujs
 // RAILS VIEW HELPER DEPENDENCY
 
+
+//= reuire toast_flashes
+
 //= require admin-results-tables
 //= require admin-filter-options

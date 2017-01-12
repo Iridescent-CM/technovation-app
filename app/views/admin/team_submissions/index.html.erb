@@ -1,0 +1,51 @@
+<div class="flex-row">
+  <div class="flex-col-md-4">
+    <div class="admin-search__filter-options">
+      <%= render 'admin/team_submissions/filter_options' %>
+    </div>
+  </div>
+
+  <div class="flex-col-md-8 wrapper__report-column">
+    <div class="admin-results-table">
+      <div class="admin-results-header-table">
+        <div class="header">Team Name</div>
+        <div class="header">Division</div>
+        <div class="header">App Name</div>
+        <div class="header">Description</div>
+        <div class="header">SDG</div>
+        <div class="header">Demo video</div>
+        <div class="header">Pitch video</div>
+        <div class="header">Screenshots</div>
+        <div class="header">Technical checklist</div>
+        <div class="header">Source Code</div>
+        <div class="header">Platform</div>
+        <div class="header">Business plan</div>
+      </div>
+
+      <div class="admin-results-data-table">
+        <% @team_submissions.order('team_submissions.created_at DESC').each do |submission| %>
+          <% cache(submission) do %>
+            <div class="row">
+              <div class="cell"><%= submission.team_name %></div>
+              <div class="cell"><%= submission.team_division_name %></div>
+              <div class="cell"><%= link_to submission.app_name, admin_team_submission_path(submission) %></div>
+              <div class="cell"><%= truncate(submission.app_description) %></div>
+              <div class="cell"><%= submission.stated_goal %></div>
+              <div class="cell"><%= submission.demo_video_link %></div>
+              <div class="cell"><%= submission.pitch_video_link %></div>
+              <div class="cell"><%= submission.screenshots.count %></div>
+              <div class="cell"><%= submission.technical_checklist_started? ? 'started' : 'not started' %></div>
+              <div class="cell"><%= submission.source_code_url_text %></div>
+              <div class="cell"><%= submission.development_platform_text %></div>
+              <div class="cell"><%= submission.business_plan_url_text %></div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="wrapper__report-footer">
+      <%= render 'admin/team_submissions/footer' %>
+    </div>
+  </div>
+</div>

@@ -30,6 +30,43 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
+  def export_team_submissions(admin, token, params)
+    submission_ids = TeamSubmission.pluck(:id)
+    search_text = URI.escape("search-query-#{params[:text]}")
+    filepath = "./tmp/#{params[:season]}-#{params[:division]}-team-submissions-#{search_text}-#{token}.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{
+        Team\ name
+        Division
+        App\ name
+        Description
+        SDG
+        Demo\ video
+        Pitch\ video
+        Screenshots
+        Technical\ checklist
+        Source\ code
+        Platform
+        Business\ plan
+      }
+
+      submission_ids.each do |submission_id|
+        submission = TeamSubmission.find(submission_id)
+
+        csv << [submission.team_name, submission.team_division_name,
+                submission.app_name, submission.app_description, submission.stated_goal,
+                submission.demo_video_link, submission.pitch_video_link,
+                submission.screenshots.count,
+                submission.technical_checklist_started? ? 'started' : 'not started',
+                submission.source_code_url_text, submission.development_platform_text,
+                submission.business_plan_url_text]
+      end
+    end
+
+    export(filepath, admin, params[:export_email])
+  end
+
   def export_regional_ambassadors(admin, token, params)
     params[:type] = "RegionalAmbassador"
     params[:season] = Season.current.year
