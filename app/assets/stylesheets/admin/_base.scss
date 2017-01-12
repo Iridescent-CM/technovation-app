@@ -36,3 +36,16 @@ select {
 p {
   padding: 1rem 0;
 }
+
+dl {
+  dt {
+    font-weight: bold;
+    display: block;
+  }
+
+  dd {
+    display: block;
+    padding: 0;
+    margin: 0.5rem 0 2rem;
+  }
+}

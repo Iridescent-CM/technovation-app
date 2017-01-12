@@ -1,0 +1,21 @@
+.profile-avatar,
+.account-basic,
+.account-special {
+  flex-grow: 1;
+  padding: 0 1rem;
+}
+
+.profile-avatar {
+  padding: 0 1rem 0 0;
+}
+
+.account-special,
+.account-basic {
+  width: 40%;
+}
+
+.account-info {
+  max-width: 650px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
