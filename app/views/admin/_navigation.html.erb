@@ -7,6 +7,10 @@
 
       <nav>
         <ul class="navigation__links-list">
+          <li class="nav-link <%= al(admin_dashboard_path) %>">
+            <%= link_to "Dashboard", admin_dashboard_path %>
+          </li>
+
           <li class="nav-link <%= al(admin_profiles_path) %>">
             <%= link_to "Accounts", admin_profiles_path %>
           </li>
