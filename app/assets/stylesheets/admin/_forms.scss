@@ -1,0 +1,19 @@
+.form-group {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+
+  h3 {
+    margin: 0 0 1rem;
+  }
+}
+
+label {
+  font-weight: bold;
+  cursor: pointer;
+
+  [type='checkbox'] {
+    margin-right: 0.5rem;
+  }
+}

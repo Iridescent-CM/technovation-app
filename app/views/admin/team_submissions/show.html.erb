@@ -1,0 +1,65 @@
+<h1>Team Submission by: <%= @team_submission.team_name %></h1>
+<h2>Name: <%= @team_submission.app_name %></h2>
+<h3>Division: <%= @team_submission.team_division_name %></h3>
+
+<p>
+  <%= link_to 'edit this submission', edit_admin_team_submission_path(@team_submission) %>
+</p>
+
+<div>
+  <strong>Description</strong>
+  <%= simple_format @team_submission.app_description %>
+</div>
+
+<div>
+  <strong>Sustainable Development Goal:</strong>
+  <%= @team_submission.stated_goal %>
+  <%= simple_format @team_submission.stated_goal_explanation %>
+</div>
+
+<p>
+  <strong>Demo video:</strong>
+  <% if @team_submission.demo_video_link %>
+    <%= link_to @team_submission.demo_video_link, @team_submission.demo_video_link, target: :_blank %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Pitch video:</strong>
+  <% if @team_submission.pitch_video_link %>
+    <%= link_to @team_submission.pitch_video_link, @team_submission.pitch_video_link, target: :_blank %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Screenshots:</strong>
+  <%= @team_submission.screenshots.count %>
+</p>
+
+<p>
+  <strong>Technical checklist started?</strong>
+  <%= @team_submission.technical_checklist_started? ? 'yes' : 'no' %>
+</p>
+
+<p>
+  <strong>Source code</strong>
+  <% if @team_submission.source_code_url_text %>
+    <%= link_to @team_submission.source_code_url_text, @team_submission.source_code_url_text %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Development platform</strong>
+  <%= @team_submission.development_platform_text %>
+</p>
+
+<p>
+  <strong>Business plan</strong>
+  <% if @team_submission.team_division_name == "junior" %>
+    Junior team: no business plan required!
+  <% end %>
+
+  <% if @team_submission.business_plan %>
+    <%= link_to @team_submission.business_plan_url_text, @team_submission.business_plan_url_text %>
+  <% end %>
+</p>
