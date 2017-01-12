@@ -40,6 +40,11 @@
         font-weight: bold;
       }
 
+      &.nav-divider {
+        margin: 1rem 0 1rem 2rem;
+        border-bottom: 1px solid #aaa;
+      }
+
       &.logout {
         margin-top: 2rem;
         font-size: 0.8rem;
