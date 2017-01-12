@@ -1,12 +1,16 @@
 module Student
   class TeamSubmissionsController < StudentController
+    # TODO: GETTING LAST SUBMISSION LOGIC WILL NOT WORK FOR FUTURE SEASONS!
+
     def new
       params[:step] = :affirm_integrity if params[:step].blank?
-      @team_submission = current_team.team_submissions.build(step: params[:step])
+      @team_submission = current_team.team_submissions.last ||
+        current_team.team_submissions.build(step: params[:step])
     end
 
     def create
-      @team_submission = current_team.team_submissions.build(team_submission_params)
+      @team_submission = current_team.team_submissions.last ||
+        current_team.team_submissions.build(team_submission_params)
 
       if @team_submission.save
         redirect_to [:student, @team_submission],
