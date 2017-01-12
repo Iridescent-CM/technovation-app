@@ -1,0 +1,33 @@
+<label>
+  Search by name:
+
+  <%= text_field_tag :text,
+    params[:text],
+    class: "submit-on-enter",
+    placeholder: "Press enter after typing",
+    data: { param: :text } %>
+</label>
+
+<label>
+  Season:
+
+  <%= select_tag :season,
+    options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+    data: { reload: true, param: :season } %>
+</label>
+
+<label>
+  Division:
+
+  <%= select_tag :division,
+    options_for_select(%w{All Senior Junior}, params[:division]),
+    data: { reload: true, param: :division } %>
+</label>
+
+<label>
+  Mentor status:
+
+  <%= select_tag :mentor_status,
+    options_for_select(%w{All Has\ mentor(s) Has\ no\ mentor}, params[:mentor_status]),
+    data: { reload: true, param: :mentor_status } %>
+</label>

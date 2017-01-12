@@ -1,27 +1,37 @@
-<% if content_for? :menu %>
-  <%= yield :menu %>
-<% else %>
-  <header class="navigation" role="banner">
-    <div class="container">
-      <div class="navigation__content-wrapper">
-        <%= link_to image_tag("tc-logo-white-tm.png"),
-                    content_for?(:root_path) ? yield(:root_path) : application_dashboard_path,
-                    class: "logo" %>
+<header class="navigation" role="banner">
+  <div class="container">
+    <div class="navigation__content-wrapper">
+      <%= link_to image_tag("tc-logo-white-tm.png"),
+        admin_dashboard_path,
+        class: "logo" %>
 
-        <nav>
-          <ul class="navigation__links-list">
-            <li class="nav-link <%= al(admin_profiles_path) %>"><%= link_to "Accounts", admin_profiles_path %></li>
-            <li class="nav-link <%= al(admin_regional_ambassadors_path) %>"><%= link_to "Regional Ambassadors", admin_regional_ambassadors_path %></li>
-            <li class="nav-link <%= al(admin_teams_path) %>"><%= link_to "Teams", admin_teams_path %></li>
-            <li class="nav-link <%= al(admin_background_checks_path) %>"><%= link_to "Background Checks", admin_background_checks_path %></li>
-            <li class="nav-link"><%= link_to "Logout", logout_path, data: { method: :delete } %></li>
-          </ul>
+      <nav>
+        <ul class="navigation__links-list">
+          <li class="nav-link <%= al(admin_profiles_path) %>">
+            <%= link_to "Accounts", admin_profiles_path %>
+          </li>
 
-          <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
-            <!--FontAwesome-->
-          </a>
-        </nav>
-      </div>
+          <li class="nav-link <%= al(admin_regional_ambassadors_path) %>">
+            <%= link_to "Regional Ambassadors", admin_regional_ambassadors_path %>
+          </li>
+
+          <li class="nav-link <%= al(admin_teams_path) %>">
+            <%= link_to "Teams", admin_teams_path %>
+          </li>
+
+          <li class="nav-link <%= al(admin_background_checks_path) %>">
+            <%= link_to "Background Checks", admin_background_checks_path %>
+          </li>
+
+          <li class="nav-link logout">
+            <%= link_to "Logout", logout_path, data: { method: :delete } %>
+          </li>
+        </ul>
+
+        <a class="navigation__mobile-toggle fa fa-bars" id="mobile-menu-toggle">
+          <!--FontAwesome-->
+        </a>
+      </nav>
     </div>
-  </header>
-<% end %>
+  </div>
+</header>

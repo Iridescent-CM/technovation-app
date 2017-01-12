@@ -1,0 +1,15 @@
+<div class="pagination_info">
+  <%= page_entries_info @background_checks,
+    model: params[:type] == "All" ? "BackgroundCheck" : params[:type] %>
+</div>
+
+<label class="no-text-transform per_page">
+  Per page:
+
+  <%= select_tag :per_page,
+    options_for_select([10, 25, 50, 100], params[:per_page]),
+    data: {
+      reload: true,
+      param: :per_page,
+    } %>
+</label>

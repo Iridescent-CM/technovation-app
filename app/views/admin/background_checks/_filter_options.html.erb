@@ -1,0 +1,11 @@
+<label class="no-text-transform">
+  Status:
+
+  <%= select_tag :status,
+    options_for_select(BackgroundCheck.statuses.keys, params[:status]),
+    data: { reload: true, param: :status } %>
+</label>
+
+<p>
+  <%= button_to "Sync with checkr", [:admin, :background_check_sweeps], class: "appy-button" %>
+</p>

@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
   email.css
   admin.css
+  ra.css
+  ra.js
   admin.js
   technovation-typeahead.js
   Chart.bundle.js
