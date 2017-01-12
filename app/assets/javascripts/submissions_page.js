@@ -41,7 +41,7 @@
 
       Array.prototype.forEach.call(editableContent, function(node) {
         node.contentEditable = true;
-        node.addEventListener('input', editTempObject);
+        node.addEventListener('keydown', editTempObject);
       });
 
       setTimeout(function() {
@@ -65,7 +65,8 @@
     function editTempObject(e) {
       var nodeName = e.target.dataset.name,
           limit = parseInt(e.target.dataset.charLimit),
-          length = e.target.innerText.length;
+          length = e.target.innerText.length,
+          BACKSPACE = 8;
 
       if (e.target.innerText === "")
         length = 0;
@@ -75,8 +76,9 @@
 
       if (isNaN(limit) || remaining >= 0) {
         tempObject[nodeName] = e.target.innerText;
-      } else {
-        e.target.innerText = e.target.innerText.slice(0, -1);
+      } else if (e.keyCode != BACKSPACE) {
+        e.preventDefault();
+        e.stopPropagation();
       }
     }
 
@@ -148,7 +150,7 @@
       charCount.classList.add('char-count');
       descriptionField.after(charCount);
 
-      descriptionField.addEventListener('input', function(e) {
+      descriptionField.addEventListener('keydown', function(e) {
         var reminaing = parseInt(e.target.dataset.charLimit) - e.target.innerText.length;
         charCount.innerText = "Characters reminaing: " + reminaing;
       });
