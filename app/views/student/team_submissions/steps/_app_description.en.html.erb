@@ -34,9 +34,9 @@
     App Description
   </div>
 
-  <p data-editable
-     data-name="app_description"
-     class="ts-app-description__description"><%= submission.app_description %></p>
+  <div data-editable
+       data-name="app_description"
+       class="ts-app-description__description"><%= simple_format(submission.app_description) %></div>
   <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 <% end %>
 
