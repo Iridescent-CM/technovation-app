@@ -3,7 +3,7 @@
 
   function enableAdminFilterOptions() {
     var fields = document.querySelectorAll(
-      ".admin-search__filter-options input, .admin-search__filter-options select, .per_page"
+      ".admin-search__filter-options input, .admin-search__filter-options select, .per_page, [data-reload]"
     );
 
     fields.forEach(function(field) {
