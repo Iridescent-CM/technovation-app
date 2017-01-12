@@ -1,6 +1,10 @@
 <div class="submissions-onboarding" id="submissions-onboarding">
 
   <div class="submissions-onboarding-step simple-card">
+    <div class="submissions-onboarding-step__img">
+      <%= image_tag "onboarding-1.png" %>
+    </div>
+
     <h2 class="submissions-onboarding-step__heading">Your Team's Submission</h2>
 
     <p class="submissions-onboarding-step__explanation">
@@ -26,6 +30,10 @@
   </div>
 
   <div class="submissions-onboarding-step simple-card">
+    <div class="submissions-onboarding-step__img">
+      <%= image_tag "onboarding-2.png" %>
+    </div>
+
     <h2 class="submissions-onboarding-step__heading">How it works</h2>
 
     <p class="submissions-onboarding-step__explanation">
@@ -50,6 +58,10 @@
   </div>
 
   <div class="submissions-onboarding-step submissions-onboarding-step--integrity simple-card">
+    <div class="submissions-onboarding-step__img">
+      <%= image_tag "onboarding-3.png" %>
+    </div>
+
     <h2 class="submissions-onboarding-step__heading">Before we get started,<br>please agree to the Integrity Clause</h2>
 
     <%= simple_form_for [:student, @team_submission], html: { class: "no-simple-form-style" } do |f| %>

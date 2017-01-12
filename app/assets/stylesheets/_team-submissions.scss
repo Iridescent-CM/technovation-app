@@ -152,9 +152,8 @@
 
 .submissions-onboarding-step__img {
   $size: 150px;
-  background-color: $light-grey;
   height: $size;
-  margin: 0.75em auto 1.75em;
+  margin: 0 auto;
   width: $size;
 }
 
@@ -162,6 +161,7 @@ h2.submissions-onboarding-step__heading {
   color: $silver;
   font-size: 1.5rem;
   text-align: center;
+  margin: 0 0 0.75rem;
 }
 
 .submissions-onboarding-step__explanation {
