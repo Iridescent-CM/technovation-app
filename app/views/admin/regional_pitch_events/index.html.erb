@@ -8,9 +8,10 @@
   <div class="flex-col-md-8 wrapper__report-column">
     <div class="admin-results-table">
       <div class="admin-results-header-table">
+        <div class="header">RA</div>
         <div class="header">Name</div>
-        <div class="header">Division</div>
         <div class="header">Date / Time</div>
+        <div class="header">Division</div>
         <div class="header">City</div>
         <div class="header">State / Province</div>
         <div class="header">Country</div>
@@ -20,9 +21,10 @@
         <% @events.order('regional_pitch_events.created_at DESC').each do |event| %>
           <% cache(event) do %>
             <div class="row">
+              <div class="cell"><%= event.regional_ambassador_profile.full_name %></div>
               <div class="cell"><%= link_to event.name, [:admin, event] %></div>
-              <div class="cell"><%= event.division_names %></div>
               <div class="cell"><%= event.date_time %></div>
+              <div class="cell"><%= event.division_names %></div>
               <div class="cell"><%= event.city %></div>
               <div class="cell"><%= event.state_province %></div>
               <div class="cell"><%= event.country %></div>
