@@ -33,13 +33,6 @@
         if (header.offsetWidth < firstRowCells[i].offsetWidth)
           header.style.width = firstRowCells[i].offsetWidth.toString() + "px";
       });
-
-      wrapper.addEventListener('mousewheel', function(e) {
-        var maxX = this.scrollWidth - this.offsetWidth;
-
-        if (this.scrollLeft + e.deltaX < 0 || this.scrollLeft + e.deltaX > maxX)
-          e.preventDefault();
-      }, false);
     });
 
     function getRowIndex(cell) {
