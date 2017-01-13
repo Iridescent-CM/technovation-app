@@ -270,15 +270,12 @@ h2.submissions-onboarding-step__heading {
 
 .ts-app-description__description {
   outline: none;
+  padding: 0 0 1rem;
 
-  p {
-    padding: 0 0 1rem;
-
-    &:empty::before {
-      font-weight: bold;
-      content: 'Please describe your app in one paragraph.';
-      color: darken($mid-grey, 5%);
-    }
+  &:empty::before {
+    font-weight: bold;
+    content: 'In about 100 words, provide a description of your application.';
+    color: darken($mid-grey, 5%);
   }
 }
 

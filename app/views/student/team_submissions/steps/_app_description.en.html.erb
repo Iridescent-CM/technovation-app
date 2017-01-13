@@ -26,17 +26,19 @@
   </div>
 
   <p data-editable
-     data-name="app_name"
-     class="ts-app-description__name"><%= @team_submission.app_name %></p>
+    data-name="app_name"
+    class="ts-app-description__name"><%= @team_submission.app_name %></p>
   <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 
   <div class="ts-app-description__label">
     App Description
   </div>
 
-  <div data-editable
-       data-name="app_description"
-       class="ts-app-description__description"><%= simple_format(submission.app_description) %></div>
+  <p data-editable
+    data-char-limit="10"
+    data-word-limit="2"
+    data-name="app_description"
+    class="ts-app-description__description"><%= submission.app_description %></p>
   <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 <% end %>
 

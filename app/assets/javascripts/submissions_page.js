@@ -68,7 +68,22 @@
 
     function editTempObject(e) {
       var nodeName = e.target.dataset.name;
-      tempObject[nodeName] = e.target.innerText;
+      var wordLimit = e.target.dataset.wordLimit;
+      if (
+        wordLimit &&
+        e.target.innerText.split(/\s+/).length > parseInt(wordLimit, 10)
+      ) {
+        var range = document.createRange();
+        var selection = window.getSelection();
+        var cursorPosition = selection.anchorOffset - 1;
+        e.target.innerText = tempObject[nodeName];
+        range.setStart(e.target.firstChild, cursorPosition);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      } else {
+        tempObject[nodeName] = e.target.innerText;
+      }
     }
 
     function cloneContentObjToTempObj() {
