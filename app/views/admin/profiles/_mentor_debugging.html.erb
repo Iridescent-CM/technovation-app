@@ -18,6 +18,11 @@
   </p>
 
   <p>
+    <strong>Honor code</strong>
+    <%= profile.honor_code_signed? ? 'signed' : 'not signed' %>
+  </p>
+
+  <p>
     <strong>Searchable to students?</strong>
     <% if profile.searchable? %>
       <%= profile.accepting_team_invites? ? 'yes' : 'no' %>
