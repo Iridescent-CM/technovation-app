@@ -276,7 +276,7 @@ h2.submissions-onboarding-step__heading {
 
     &:empty::before {
       font-weight: bold;
-      content: 'In about 100 words, provide a description of your application.';
+      content: 'Please describe your app in one paragraph.';
       color: darken($mid-grey, 5%);
     }
   }

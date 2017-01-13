@@ -11,6 +11,17 @@
 
       <%= render 'student/team_submissions/steps/affirm_integrity',
         submission: @team_submission %>
+
+      <div class="card">
+        <div class="card__body">
+          <p>
+            Need help? Check the
+            <%= link_to "submission guidelines",
+              "http://www.technovationchallenge.org/submission-guidelines/",
+              target: :_blank %>.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
