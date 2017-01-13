@@ -1,0 +1,26 @@
+<div class="pagination_info">
+  <%= page_entries_info @events,
+    model: params[:type] == "All" ? "Team" : params[:type] %>
+</div>
+
+<%= will_paginate @events %>
+
+<label class="no-text-transform per_page">
+  Per page:
+
+  <%= select_tag :per_page,
+    options_for_select([10, 25, 50, 100], params[:per_page]),
+    data: {
+      reload: true,
+      param: :per_page,
+    } %>
+</label>
+
+<div class="clearfix admin-search__export-options">
+  <hr />
+
+  <%= form_tag admin_exports_path(params.merge(class: "regional_pitch_event")) do %>
+    <%= button_tag "Email CSV Report to:", class: "appy-button" %>
+    <%= email_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+  <% end %>
+</div>

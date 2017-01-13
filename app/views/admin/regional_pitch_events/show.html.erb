@@ -1,0 +1,33 @@
+<h1>Regional Pitch Event: <%= @event.name %></h1>
+<h2>RA: <%= @event.regional_ambassador_profile.full_name %></h2>
+
+<p>
+<strong>Division:</strong> <%= @event.division_names %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @event.date_time %>
+</p>
+
+<p>
+  <strong>City:</strong> <%= @event.city %>
+</p>
+
+<p>
+  <strong>Venue address:</strong> <%= @event.venue_address %>
+</p>
+
+<p>
+  <strong>Eventbrite link:</strong>
+
+  <% unless @event.eventbrite_link.blank? %>
+    <%= link_to @event.eventbrite_link,
+      @event.eventbrite_link,
+      target: :_blank %>
+  <% end %>
+</p>
+
+<p>
+  <%= link_to 'List all events', admin_regional_pitch_events_path %>
+</p>

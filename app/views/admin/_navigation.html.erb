@@ -37,6 +37,12 @@
 
           <li class="nav-divider"></li>
 
+          <li class="nav-link <%= al(admin_regional_pitch_events_path) %>">
+            <%= link_to "Regional Pitch Events", admin_regional_pitch_events_path %>
+          </li>
+
+          <li class="nav-divider"></li>
+
           <li class="nav-link logout">
             <%= link_to "Logout", logout_path, data: { method: :delete } %>
           </li>

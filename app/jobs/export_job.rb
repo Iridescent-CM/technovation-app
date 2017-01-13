@@ -30,6 +30,42 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
+  def export_regional_pitch_events(admin, token, params)
+    event_ids = RegionalPitchEvent.pluck(:id)
+    filepath = "./tmp/2017-regional-pitch-events-#{token}.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{
+        RA
+        Name
+        Senior\ division
+        Junior\ division
+        Starts\ at
+        Ends\ at
+        Timezone
+        Eventbrite\ link
+        Venue\ address
+        City
+        State/Province
+        Country
+      }
+
+      event_ids.each do |event_id|
+        event = RegionalPitchEvent.find(event_id)
+
+        csv << [event.regional_ambassador_profile.full_name, event.name,
+                event.division_names.include?("senior") ? "yes" : "no",
+                event.division_names.include?("junior") ? "yes" : "no",
+                event.starts_at.in_time_zone(event.timezone),
+                event.ends_at.in_time_zone(event.timezone),
+                event.timezone, event.eventbrite_link, event.venue_address,
+                event.city, event.state_province, event.country]
+      end
+    end
+
+    export(filepath, admin, params[:export_email])
+  end
+
   def export_team_submissions(admin, token, params)
     submission_ids = TeamSubmission.pluck(:id)
     search_text = URI.escape("search-query-#{params[:text]}")
