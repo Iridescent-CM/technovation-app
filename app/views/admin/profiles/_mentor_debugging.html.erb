@@ -1,0 +1,40 @@
+<div class="mentor-debug">
+  <h3>Admin debug info</h3>
+
+  <p>
+    <strong>Consent waiver</strong>
+    <%= profile.consent_signed? ? 'signed' : 'not signed' %>
+  </p>
+
+  <p>
+    <strong>Background check</strong>
+    <% if profile.background_check %>
+      <%= profile.background_check.status %>
+    <% elsif profile.country != "US" %>
+      International mentor! No BG Check needed
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Searchable to students?</strong>
+    <% if profile.searchable? %>
+      <%= profile.accepting_team_invites? ? "yes" : "no" %>
+    <% else %>
+      no
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Searchable to other mentors?</strong>
+    <% if profile.searchable? %>
+      <%= profile.connect_with_mentors? ? "yes" : "no" %>
+    <% else %>
+      no
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Virtual mentoring enabled?</strong>
+    <%= profile.virtual? ? 'yes' : 'no' %>
+  </p>
+</div>

@@ -19,3 +19,21 @@
   flex-wrap: wrap;
   flex-grow: 1;
 }
+
+.mentor-debug {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #666;
+
+  h3 {
+    margin: 0 0 1rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #666;
+    background: lightgrey;
+  }
+
+  p {
+    margin: 0 0 1rem;
+    padding: 0 1rem;
+  }
+}
