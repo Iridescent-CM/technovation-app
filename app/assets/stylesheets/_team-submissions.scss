@@ -273,12 +273,12 @@ h2.submissions-onboarding-step__heading {
 
   p {
     padding: 0 0 1rem;
-  }
 
-  &:empty::before {
-    font-weight: bold;
-    content: 'In about 100 words, provide a description of your application.';
-    color: darken($mid-grey, 5%);
+    &:empty::before {
+      font-weight: bold;
+      content: 'In about 100 words, provide a description of your application.';
+      color: darken($mid-grey, 5%);
+    }
   }
 }
 
