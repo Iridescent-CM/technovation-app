@@ -34,9 +34,11 @@
     App Description
   </div>
 
+                                  <!-- char-limit is set to 10 for testing, should be 700 -->
   <div data-editable
        data-name="app_description"
-       class="ts-app-description__description"><%= simple_format(submission.app_description) %></div>
+       data-char-limit="10"
+       class="ts-app-description__description"><%= simple_format(submission.app_description) unless submission.app_description.blank? %></div>
   <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
 <% end %>
 
