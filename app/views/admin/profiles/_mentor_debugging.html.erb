@@ -12,6 +12,8 @@
       <%= profile.background_check.status %>
     <% elsif profile.country != "US" %>
       International mentor! No BG Check needed
+    <% else %>
+        Not submitted
     <% end %>
   </p>
 
