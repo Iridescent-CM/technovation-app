@@ -18,7 +18,10 @@
   <p>
     <strong>Searchable to students?</strong>
     <% if profile.searchable? %>
-      <%= profile.accepting_team_invites? ? "yes" : "no" %>
+      <%= profile.accepting_team_invites? ? 'yes' : 'no' %>
+      <span class="hint">
+        To change this, mentor should toggle <strong>Allow teams to invite me to be their mentor</strong> on their profile page
+      </span>
     <% else %>
       no
     <% end %>
@@ -27,7 +30,10 @@
   <p>
     <strong>Searchable to other mentors?</strong>
     <% if profile.searchable? %>
-      <%= profile.connect_with_mentors? ? "yes" : "no" %>
+      <%= profile.connect_with_mentors? ? 'yes' : 'no' %>
+      <span class="hint">
+        To change this, mentor should toggle <strong>Allow other mentors to contact me</strong> on their profile page
+      </span>
     <% else %>
       no
     <% end %>
@@ -36,5 +42,8 @@
   <p>
     <strong>Virtual mentoring enabled?</strong>
     <%= profile.virtual? ? 'yes' : 'no' %>
+    <span class="hint">
+      To change this, mentor should toggle <strong>I am available to mentor teams virtually (online) from anywhere</strong> on their profile page
+    </span>
   </p>
 </div>
