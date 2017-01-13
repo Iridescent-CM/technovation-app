@@ -77,6 +77,9 @@
         var selection = window.getSelection();
         var cursorPosition = selection.anchorOffset - 1;
         e.target.innerText = tempObject[nodeName];
+        if (cursorPosition > e.target.firstChild.length) {
+          cursorPosition = e.target.firstChild.length;
+        }
         range.setStart(e.target.firstChild, cursorPosition);
         range.collapse(true);
         selection.removeAllRanges();

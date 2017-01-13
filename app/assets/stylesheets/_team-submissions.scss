@@ -271,6 +271,7 @@ h2.submissions-onboarding-step__heading {
 .ts-app-description__description {
   outline: none;
   padding: 0 0 1rem;
+  white-space: pre-wrap;
 
   &:empty::before {
     font-weight: bold;
