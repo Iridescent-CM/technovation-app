@@ -280,6 +280,22 @@ h2.submissions-onboarding-step__heading {
   }
 }
 
+.ts-app-description__word-limit {
+  color: $mid-grey;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: bold;
+  text-align: right;
+}
+
+.ts-app-description__word-limit--warn {
+  color: orange;
+}
+
+.ts-app-description__word-limit--max {
+  color: #F44336;
+}
+
 .ts-app-description--editable {
   z-index: $z-nuclear;
 

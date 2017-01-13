@@ -39,6 +39,9 @@
     data-name="app_description"
     class="ts-app-description__description"><%= submission.app_description %></p>
   <%# Above line needs to be formatted like this in order to use the :empty CSS pseudoselector %>
+  <div
+    class="ts-app-description__word-limit"
+    data-word-limit-for="app_description"><!-- Content provided by submissions_page.js --></div>
 <% end %>
 
 <div class="ts-app-description__edit-shade">

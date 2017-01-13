@@ -15,6 +15,8 @@
     var cancelEditableButton = document.getElementById("ts-cancel-editable-btn");
     var editableContent = wrapper.querySelectorAll('[data-editable]');
 
+    var wordCountEl = document.querySelector('[data-word-limit-for="app_description"]');
+
     var nameField = Array.prototype.find.call(editableContent, function(node) {
       return node.dataset.name === 'app_name';
     });
@@ -44,7 +46,7 @@
 
       Array.prototype.forEach.call(editableContent, function(node) {
         node.contentEditable = true;
-        node.addEventListener('input', editTempObject);
+        node.addEventListener('input', editableInputHandler);
       });
 
       setTimeout(function() {
@@ -62,16 +64,19 @@
         }
       }, 0);
 
+      setDescriptionCount();
+
       primaryEditableButton.addEventListener('click', saveChanges);
       cancelEditableButton.addEventListener('click', cancelChanges);
     }
 
-    function editTempObject(e) {
+    function editableInputHandler(e) {
       var nodeName = e.target.dataset.name;
       var wordLimit = e.target.dataset.wordLimit;
+
       if (
         wordLimit &&
-        e.target.innerText.split(/\s+/).length > parseInt(wordLimit, 10)
+        stringToWordCount(e.target.innerText) > parseInt(wordLimit, 10)
       ) {
         var range = document.createRange();
         var selection = window.getSelection();
@@ -87,6 +92,41 @@
       } else {
         tempObject[nodeName] = e.target.innerText;
       }
+
+      if (wordLimit) {
+        setDescriptionCount();
+      }
+    }
+
+    function stringToWordCount(str) {
+      return str.split(/\s+/)
+        .filter(function(item) {
+          return item !== '';
+        })
+        .length;
+    }
+
+    function setDescriptionCount() {
+      var currentCount = stringToWordCount(descriptionField.innerText);
+      var wordLimit = descriptionField.dataset.wordLimit;
+      var currentCountPercentage = (currentCount / wordLimit) * 100;
+      wordCountEl.innerText = '(Word count: ' +
+        currentCount + ' / ' + wordLimit + ')';
+
+      if (currentCountPercentage === 100) {
+        wordCountEl.classList.add('ts-app-description__word-limit--max');
+        wordCountEl.classList.remove('ts-app-description__word-limit--warn');
+      } else if (currentCountPercentage > 70) {
+        wordCountEl.classList.add('ts-app-description__word-limit--warn');
+        wordCountEl.classList.remove('ts-app-description__word-limit--max');
+      } else {
+        wordCountEl.classList.remove('ts-app-description__word-limit--max');
+        wordCountEl.classList.remove('ts-app-description__word-limit--warn');
+      }
+    }
+
+    function hideDescriptionCount() {
+      wordCountEl.innerHTML = '';
     }
 
     function cloneContentObjToTempObj() {
@@ -142,6 +182,9 @@
       Array.prototype.forEach.call(editableContent, function(node) {
         node.contentEditable = false;
       });
+
+      hideDescriptionCount();
+
       primaryEditableButton.innerText = 'Edit App Info';
       primaryEditableButton.addEventListener('click', makeContentEditable);
     }
