@@ -1,0 +1,64 @@
+.team-submissions-progress {
+  padding: 1rem;
+  margin: 0 0 1rem;
+  border-radius: 0.3rem;
+  background: white;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+
+  h3, .progress-help {
+    width: 100%;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .progress-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .progress-item {
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-right: 1px solid #999;
+    background: lightgrey;
+    position: relative;
+    opacity: 0.6;
+
+    .fa {
+      display: none;
+      position: absolute;
+      top: -8px;
+      right: -4px;
+      background: $lemon;
+      border-radius: 80px;
+      padding: 2px;
+      border: 2px solid #333;
+      z-index: $z-modal - 2;
+      color: #333;
+    }
+
+    &.complete {
+      background: $shamrock;
+      opacity: 1;
+
+      .fa {
+        display: block;
+      }
+    }
+
+    &:last-child {
+      margin: 0;
+      border: 0;
+      border-top-right-radius: 0.2rem;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    &:first-child {
+      border-top-left-radius: 0.2rem;
+      border-bottom-left-radius: 0.2rem;
+    }
+  }
+}

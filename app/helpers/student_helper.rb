@@ -10,4 +10,43 @@ module StudentHelper
       "invite_mentor"
     end
   end
+
+  def subprog(submission, step)
+    case step
+    when "team-photo"
+      return 'complete' if submission.team.team_photo.present?
+
+    when "app-info"
+      unless submission.app_name.blank? or submission.app_description.blank?
+        return 'complete'
+      end
+
+    when "sdg"
+      unless submission.stated_goal.blank? or submission.stated_goal_explanation.blank?
+        return 'complete'
+      end
+
+    when "pitch"
+      return 'complete' unless submission.pitch_video_link.blank?
+
+    when "demo"
+      return 'complete' unless submission.demo_video_link.blank?
+
+    when "screenshots"
+      return 'complete' if submission.screenshots.any?
+
+    when "technical-checklist"
+      return 'complete' if submission.technical_checklist_started?
+
+    when "source-code"
+      return 'complete' unless submission.source_code_url_text.blank?
+
+    when "development-platform"
+      return 'complete' unless submission.development_platform_text.blank?
+
+    when "business-plan"
+      return 'complete' unless submission.business_plan_url_text.blank?
+
+    end
+  end
 end
