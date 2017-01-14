@@ -189,6 +189,9 @@
       primaryEditableButton.addEventListener('click', makeContentEditable);
     }
   }
+})();
 
-  $(".team-submissions__fixed-col").stick_in_parent();
+(function() {
+  $(".team-submissions__fixed-col, .technical-checklist__progress .simple-card")
+    .stick_in_parent();
 })();

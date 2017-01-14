@@ -33,10 +33,10 @@ module StudentHelper
       return 'complete' unless submission.demo_video_link.blank?
 
     when "screenshots"
-      return 'complete' if submission.screenshots.any?
+      return 'complete' if submission.screenshots.count >= 2
 
     when "technical-checklist"
-      return 'complete' if submission.technical_checklist_started?
+      return 'complete' if submission.technical_checklist_completed?
 
     when "source-code"
       return 'complete' unless submission.source_code_url_text.blank?

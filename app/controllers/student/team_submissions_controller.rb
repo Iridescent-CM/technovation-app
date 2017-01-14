@@ -20,15 +20,6 @@ module Student
       end
     end
 
-    def edit
-      @team_submission = current_team.team_submissions.find(params.fetch(:id))
-      @team_submission.step = params[:step]
-
-      if @team_submission.technical_checklist.nil?
-        @team_submission.build_technical_checklist
-      end
-    end
-
     def show
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
       @team_submission.build_business_plan unless @team_submission.business_plan
@@ -99,47 +90,6 @@ module Student
         business_plan_attributes: [
           :id,
           :remote_file_url,
-        ],
-        technical_checklist_attributes: [
-          :id,
-          :used_strings,
-          :used_strings_explanation,
-          :used_numbers,
-          :used_numbers_explanation,
-          :used_variables,
-          :used_variables_explanation,
-          :used_lists,
-          :used_lists_explanation,
-          :used_booleans,
-          :used_booleans_explanation,
-          :used_loops,
-          :used_loops_explanation,
-          :used_conditionals,
-          :used_conditionals_explanation,
-          :used_local_db,
-          :used_local_db_explanation,
-          :used_external_db,
-          :used_external_db_explanation,
-          :used_location_sensor,
-          :used_location_sensor_explanation,
-          :used_camera,
-          :used_camera_explanation,
-          :used_accelerometer,
-          :used_accelerometer_explanation,
-          :used_sms_phone,
-          :used_sms_phone_explanation,
-          :used_sound,
-          :used_sound_explanation,
-          :used_sharing,
-          :used_sharing_explanation,
-          :used_clock,
-          :used_clock_explanation,
-          :used_canvas,
-          :used_canvas_explanation,
-          :paper_prototype,
-          :paper_prototype_cache,
-          :event_flow_chart,
-          :event_flow_chart_cache,
         ],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]

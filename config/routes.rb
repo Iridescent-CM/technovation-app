@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
+    resource :technical_checklist, only: [:edit, :update]
     resources :screenshots, only: [:update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show

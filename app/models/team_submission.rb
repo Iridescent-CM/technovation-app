@@ -94,7 +94,11 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def technical_checklist_started?
-    technical_checklist.present? and technical_checklist.attributes.values.any? { |v| not v.blank? }
+    !!technical_checklist and technical_checklist.attributes.values.any? { |v| not v.blank? }
+  end
+
+  def technical_checklist_completed?
+    !!technical_checklist and technical_checklist.completed?
   end
 
   def embed_code(method)
