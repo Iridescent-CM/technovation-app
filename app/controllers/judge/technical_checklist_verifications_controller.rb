@@ -3,19 +3,19 @@ module Judge
     helper_method :current_team_submission
 
     def new
-      current_team_submission.technical_checklist ||
+      @technical_checklist = current_team_submission.technical_checklist ||
         current_team_submission.build_technical_checklist
     end
 
     def create
-      current_team_submission
-        .technical_checklist
-        .update_attributes(technical_checklist_params[:technical_checklist_attributes])
+      @technical_checklist = current_team_submission.technical_checklist ||
+        current_team_submission.build_technical_checklist
+
+      @technical_checklist.update_attributes(technical_checklist_params)
 
       redirect_to new_judge_team_submission_technical_checklist_verification_path(
         current_team_submission
-      ),
-        success: t("controllers.judge.technical_checklist_verifications.create.success")
+      ), success: t("controllers.judge.technical_checklist_verifications.create.success")
     end
 
     private
@@ -24,7 +24,7 @@ module Judge
     end
 
     def technical_checklist_params
-      params.require(:team_submission).permit(technical_checklist_attributes: [
+      params.require(:technical_checklist).permit(
         :used_strings_verified,
         :used_numbers_verified,
         :used_variables_verified,
@@ -44,7 +44,7 @@ module Judge
         :used_canvas_verified,
         :paper_prototype_verified,
         :event_flow_chart_verified,
-      ])
+      )
     end
   end
 end
