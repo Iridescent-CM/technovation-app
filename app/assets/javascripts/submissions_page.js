@@ -83,6 +83,8 @@
       var nodeName = e.target.dataset.name;
       var wordLimit = e.target.dataset.wordLimit;
 
+      e.preventDefault();
+
       if (
         wordLimit &&
         stringToWordCount(e.target.innerText) > parseInt(wordLimit, 10)
@@ -104,6 +106,8 @@
         }
       } else {
         tempObject[nodeName] = e.target.innerText;
+        var trimmedString = e.target.innerText.trim();
+        e.target.innerHTML =  trimmedString;
       }
 
       if (wordLimit) {
