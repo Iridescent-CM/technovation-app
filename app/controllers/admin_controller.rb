@@ -6,7 +6,7 @@ class AdminController < ApplicationController
   helper_method :current_admin
 
   before_action -> {
-    cookies[:export_email] ||= "info@technovationchallenge.org"
+    cookies.permanent[:export_email] ||= "info@technovationchallenge.org"
   }
 
   private
