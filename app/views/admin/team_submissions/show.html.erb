@@ -63,3 +63,76 @@
     <%= link_to @team_submission.business_plan_url_text, @team_submission.business_plan_url_text %>
   <% end %>
 </p>
+
+<table class="admin-table__team-submissions-checklist">
+  <caption>Technical checklist</caption>
+  <thead>
+    <tr>
+      <th>Checklist item</th>
+      <th>Using?</th>
+      <th>Explanation</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td colspan="3">
+        <strong>Technical components</strong>
+      </td>
+    </tr>
+
+    <% @team_submission.technical_checklist.technical_components.each do |method| %>
+      <tr>
+        <td><%= method.to_s.titleize %></td>
+        <td><%= @team_submission.technical_checklist.public_send(method) %></td>
+        <td><%= @team_submission.technical_checklist.public_send("#{method}_explanation") %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td colspan="3">
+        <strong>Database components</strong>
+      </td>
+    </tr>
+
+    <% @team_submission.technical_checklist.database_components.each do |method| %>
+      <tr>
+        <td><%= method.to_s.titleize %></td>
+        <td><%= @team_submission.technical_checklist.public_send(method) %></td>
+        <td><%= @team_submission.technical_checklist.public_send("#{method}_explanation") %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td colspan="3">
+        <strong>Mobile components</strong>
+      </td>
+    </tr>
+
+    <% @team_submission.technical_checklist.mobile_components.each do |method| %>
+      <tr>
+        <td><%= method.to_s.titleize %></td>
+        <td><%= @team_submission.technical_checklist.public_send(method) %></td>
+        <td><%= @team_submission.technical_checklist.public_send("#{method}_explanation") %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td colspan="3">
+        <strong>Pictures of process</strong>
+      </td>
+    </tr>
+
+    <% @team_submission.technical_checklist.pics_of_process.each do |method| %>
+      <tr>
+        <td><%= method.to_s.titleize %></td>
+        <td colspan="2"><%= @team_submission.technical_checklist.public_send(method).present? %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td>Screenshots</td>
+      <td colspan="2"><%= @team_submission.screenshots.count %></td>
+    </tr>
+  </tbody>
+</table>

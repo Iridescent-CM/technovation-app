@@ -17,3 +17,22 @@
 .main-content {
   padding: 0 0 5rem;
 }
+
+.admin-table__team-submissions-checklist {
+  table-layout: fixed;
+  border: solid #333;
+  border-width: 1px 0 1px 0;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 650px;
+
+  td, th {
+    padding: 0.5rem 1rem;
+    border: solid #333;
+    border-width: 0 1px 0 1px;
+  }
+
+  tr {
+    border-bottom: 1px solid #333;
+  }
+}

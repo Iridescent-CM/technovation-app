@@ -23,8 +23,7 @@ class TechnicalChecklist < ActiveRecord::Base
           completed_pics_of_process?
   end
 
-  private
-  def total_technical_components
+  def technical_components
     %i{
       used_strings
       used_numbers
@@ -33,17 +32,17 @@ class TechnicalChecklist < ActiveRecord::Base
       used_booleans
       used_loops
       used_conditionals
-    }.reject { |m| send(m).blank? }.count
+    }
   end
 
-  def total_database_components
+  def database_components
     %i{
       used_local_db
       used_external_db
-    }.reject { |m| send(m).blank? }.count
+    }
   end
 
-  def total_mobile_components
+  def mobile_components
     %i{
       used_location_sensor
       used_camera
@@ -53,7 +52,28 @@ class TechnicalChecklist < ActiveRecord::Base
       used_sharing
       used_clock
       used_canvas
-    }.reject { |m| send(m).blank? }.count
+    }
+  end
+
+  def pics_of_process
+    %i{
+      paper_prototype
+      event_flow_chart
+    }
+  end
+
+
+  private
+  def total_technical_components
+    technical_components.reject { |m| send(m).blank? }.count
+  end
+
+  def total_database_components
+    database_components.reject { |m| send(m).blank? }.count
+  end
+
+  def total_mobile_components
+    mobile_components.reject { |m| send(m).blank? }.count
   end
 
   def completed_pics_of_process?
