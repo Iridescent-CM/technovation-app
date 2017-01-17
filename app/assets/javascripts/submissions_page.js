@@ -24,6 +24,15 @@
       return node.dataset.name === 'app_description';
     });
 
+    descriptionField.addEventListener('paste', function(e) {
+      var data = e.clipboardData;
+      var string = data.getData('Text');
+      var wordLimit = e.target.dataset.wordLimit;
+      if (stringToWordCount(string) > wordLimit) {
+        createFlashNotification('error', 'Your App Description must be ' + wordLimit + ' words or less');
+      }
+    });
+
     var editableWrapperClass = 'ts-app-description--editable';
     var visibleCancelButtonClass = 'ts-app-description__cancel-btn--show';
 
@@ -74,6 +83,8 @@
       var nodeName = e.target.dataset.name;
       var wordLimit = e.target.dataset.wordLimit;
 
+      e.preventDefault();
+
       if (
         wordLimit &&
         stringToWordCount(e.target.innerText) > parseInt(wordLimit, 10)
@@ -82,15 +93,21 @@
         var selection = window.getSelection();
         var cursorPosition = selection.anchorOffset - 1;
         e.target.innerText = tempObject[nodeName];
-        if (cursorPosition > e.target.firstChild.length) {
-          cursorPosition = e.target.firstChild.length;
+        if (e.target.firstChild) {
+
+          if (cursorPosition > e.target.firstChild.length) {
+            cursorPosition = e.target.firstChild.length;
+          }
+          range.setStart(e.target.firstChild, cursorPosition);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+
         }
-        range.setStart(e.target.firstChild, cursorPosition);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
       } else {
         tempObject[nodeName] = e.target.innerText;
+        var trimmedString = e.target.innerText.trim();
+        e.target.innerHTML =  trimmedString;
       }
 
       if (wordLimit) {
