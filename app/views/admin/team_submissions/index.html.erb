@@ -28,7 +28,7 @@
             <div class="row">
               <div class="cell"><%= submission.team_name %></div>
               <div class="cell"><%= submission.team_division_name %></div>
-              <div class="cell"><%= link_to submission.app_name, admin_team_submission_path(submission) %></div>
+              <div class="cell"><%= link_to submission.app_name || "(no name yet)", admin_team_submission_path(submission) %></div>
               <div class="cell"><%= truncate(submission.app_description) %></div>
               <div class="cell"><%= submission.stated_goal %></div>
               <div class="cell"><%= submission.demo_video_link %></div>
