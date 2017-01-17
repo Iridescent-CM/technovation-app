@@ -1,13 +1,19 @@
 @import "admin";
 @import "accounts";
+@import "background-checks";
 
 @import "partials/animations";
 
+@import "component-library/card";
 @import "component-library/modalify";
 
 .admin-dashboard {
   display: flex;
   flex-direction: row;
+}
+
+.container {
+  width: 100%;
 }
 
 // fancy-image fancy-upload fancy_upload fancy-image-upload fancy_image_upload
@@ -32,8 +38,7 @@ form {
     font-size: 1rem;
     margin: 1rem 0 0;
   }
-
-  [type="text"],
+[type="text"],
   [type="password"] {
     width: 100%;
 
@@ -84,4 +89,79 @@ form {
   padding: 0.5rem 1rem;
   background: lightgrey;
   border-radius: 0.3rem;
+}
+
+.background-check__columns {
+  display: flex;
+  flex-direction: row;
+
+  .simple_form .background_check_candidate_ssn {
+    label {
+      text-transform: uppercase;
+    }
+  }
+
+  .simple_form .background_check_candidate_ssn + .appy-hint {
+    display: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+
+    .appy-button {
+      text-align: left;
+      margin: 1rem 0 0;
+      font-size: 1rem;
+    }
+  }
+
+  .background_check_candidate_driver_license_state {
+    clear: both;
+  }
+
+  .background-check__column-security-info {
+    margin-left: auto;
+    width: 30%;
+    border: solid $mulberry;
+    border-width: 0 1px 1px;
+    border-radius: 0.3rem;
+    margin-top: 1rem;
+
+    p {
+      margin: 0 0 1rem;
+      padding: 0;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0 0 0 1rem;
+
+      li {
+        padding: 0;
+        margin: 0 0 0.5rem;
+      }
+    }
+  }
+}
+
+.to-do__list {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0;
+    margin: 0 0 1rem;
+    display: block;
+  }
+}
+
+.to-do {
+  width: 100%;
+  max-width: 600px;
+
+  .card {
+    border: solid $mulberry;
+    border-width: 0 1px 1px;
+    border-radius: 0.3rem;
+  }
 }

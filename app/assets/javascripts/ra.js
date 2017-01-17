@@ -9,6 +9,7 @@
 //= reuqire toast_flashes
 //= require fancy_uploads
 //= require modalify
+//= require background_checks
 
 //= require datetime
 //= require admin-results-tables

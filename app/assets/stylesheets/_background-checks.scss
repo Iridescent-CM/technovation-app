@@ -5,7 +5,7 @@
   .background-check__column-form, .background-check__column-security-info {
     display: flexbox;
     .simple_form {
-      @include span-columns(12);
+      width: 100%;
     }
   }
 
