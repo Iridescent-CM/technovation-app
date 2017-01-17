@@ -131,14 +131,15 @@ class ExportJob < ActiveJob::Base
     filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams-#{token}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
-      csv << %w{Id Division Name City State Country Member\ emails}
+      csv << %w{Id Division Name Has\ mentor(s) City State Country Student\ emails Mentor\ emails}
 
       team_ids.each do |team_id|
         team = Team.find(team_id)
 
         csv << [team.id, team.division_name, team.name,
-                team.city, team.state_province, team.country,
-                team.members.map(&:email).join(' ')]
+                team.mentors.any? ? "yes" : "no", team.city, team.state_province,
+                team.country, team.students.map(&:email).join(','),
+                team.mentors.map(&:email).join(',')]
       end
     end
 
