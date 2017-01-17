@@ -8,6 +8,12 @@
     collection: [Division.senior, Division.junior],
     as: :check_boxes %>
 
+  <p class="hint">
+    The time is displayed in 24-hour format<br />
+    Your time zone is set to: <strong><%= current_ambassador.timezone %></strong>.<br />
+    You can change your time zone on the top right corner of your dashboard.
+  </p>
+
   <%= f.input :starts_at,
     start_year: Time.current.year,
     end_year: Season.current.year,
