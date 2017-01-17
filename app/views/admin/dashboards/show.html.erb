@@ -2,6 +2,7 @@
   method = case params[:days]
            when 1;  :group_by_hour
            when 7;  :group_by_day
+           when 14; :group_by_day
            when 30; :group_by_week
            else;    :group_by_month
            end
@@ -9,6 +10,7 @@
   range = case params[:days]
           when 1; 24
           when 7; 7
+          when 14; 14
           when 30; 4
           when 90; 3
           when 180; 6
@@ -22,21 +24,20 @@
       <h1 class="appy-title">Recent activity</h1>
 
       <label>
-        Show signups in the past
+        Show activity in the past
         <%= select_tag :days,
-                      options_for_select(
-                        {
-                          "Day" => 1,
-                          "Week" => 7,
-                          "Month" => 30,
-                          "3 months" => 90,
-                          "6 months" => 180,
-                          "9 months" => 270,
-                        },
-                        params[:days]
-                      ),
-                      class: "inline",
-                      data: { reload: true, param: :days } %>
+          options_for_select(
+            {
+              "Day" => 1,
+              "Week" => 7,
+              "2 weeks" => 14,
+              "Month" => 30,
+              "3 months" => 90,
+              "6 months" => 180,
+              "9 months" => 270,
+            },
+            params[:days]),
+            data: { reload: true }%>
       </label>
     </div>
 
