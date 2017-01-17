@@ -1,0 +1,12 @@
+<div class="pagination_info">
+  <%= page_entries_info @teams,
+    model: params[:type] == "All" ? "Team" : params[:type] %>
+</div>
+
+<%= will_paginate @teams %>
+
+<label class="per_page">
+  Per page:
+  <%= select_tag :per_page,
+    options_for_select([10, 25, 50, 100], params[:per_page]) %>
+</label>

@@ -53,6 +53,12 @@
   }
 }
 
+.wrapper__report-column:only-child {
+  .admin-results-table {
+    max-width: 850px;
+  }
+}
+
 .pagination {
   padding: 1rem 0;
 
@@ -75,6 +81,8 @@
 }
 
 .admin-search__export-options {
+  padding: 0 0 1rem;
+
   [type='email'] {
     width: 60%;
     margin-left: 1rem;

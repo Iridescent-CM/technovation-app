@@ -49,7 +49,7 @@
         </div>
 
         <div class="card__body">
-          <%= line_chart @teams.public_send(method, "teams.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+          <%= line_chart @teams.public_send(method, "teams.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
         </div>
 
         <div class="card__body">
-          <%= line_chart @students.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+          <%= line_chart @students.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
         </div>
       </div>
 
@@ -69,7 +69,7 @@
       </div>
 
       <div class="card__body">
-        <%= line_chart @permitted_students.public_send(method, "parental_consents.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        <%= line_chart @permitted_students.public_send(method, "parental_consents.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
       </div>
       </div>
 
@@ -79,7 +79,7 @@
         </div>
 
         <div class="card__body">
-          <%= line_chart @mentors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+          <%= line_chart @mentors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
         </div>
       </div>
 
@@ -89,7 +89,7 @@
       </div>
 
       <div class="card__body">
-        <%= line_chart @cleared_mentors.public_send(method, "consent_waivers.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+        <%= line_chart @cleared_mentors.public_send(method, "consent_waivers.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
       </div>
       </div>
 
@@ -99,7 +99,7 @@
         </div>
 
         <div class="card__body">
-          <%= line_chart @ambassadors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+          <%= line_chart @ambassadors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
         </div>
       </div>
 
@@ -109,7 +109,7 @@
         </div>
 
         <div class="card__body">
-          <%= line_chart @judges.public_send(method, "accounts.created_at", last: range, current: false).count, width: "300px", height: "150px" %>
+          <%= line_chart @judges.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
         </div>
       </div>
     </div>
@@ -117,11 +117,9 @@
 
   <div class="admin-dashboard__sidebar">
     <div class="ra-timezone">
-      <p>
-        Your timezone is set to:<br />
-        <strong><%= Time.zone %></strong>
-        <%= link_to "edit", "#", data: { modal_trigger: "ra-timezone" } %>
-      </p>
+      Your timezone is:<br />
+      <strong><%= Time.zone %></strong><br />
+      <%= link_to "edit", "#", data: { modal_trigger: "ra-timezone" } %>
     </div>
 
     <div class="modalify" data-heading="Set your timezone" id="ra-timezone">

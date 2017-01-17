@@ -1,0 +1,33 @@
+<label>
+  Search by name:
+
+  <%= text_field_tag :text,
+    params[:text],
+    placeholder: "Press enter after typing" %>
+</label>
+
+<label>
+  Division:
+  <%= select_tag :division,
+    options_for_select(%w{All Senior Junior}, params[:division]) %>
+</label>
+
+<label>
+  Season:
+  <%= select_tag :season,
+    options_for_select(Season.pluck(:year).sort.reverse, params[:season]) %>
+</label>
+
+<label>
+  Mentor status:
+  <%= select_tag :mentor_status,
+    options_for_select(%w{All With\ Mentor(s) Without\ Mentor},
+                       params[:mentor_status]) %>
+</label>
+
+<div class="clearfix admin-search__export-options">
+  <%= form_tag regional_ambassador_exports_path(params.merge(class: "teams")) do %>
+    <strong>Export with active filters</strong>
+    <%= button_tag "Email CSV Report", class: "appy-button" %>
+  <% end %>
+</div>

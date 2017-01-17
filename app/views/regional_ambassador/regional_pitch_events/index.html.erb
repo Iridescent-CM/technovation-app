@@ -1,59 +1,53 @@
-<h1 class="appy-title">Regional Pitch Events</h1>
-
 <div class="flex-row">
-  <div class="flex-col-md-12 wrapper__report-column only-col">
-    <div class="scrolly-table">
-      <div class="scrolly-table__overflow-handler">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Division</th>
-              <th>Date / Time</th>
-              <th>City</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+  <div class="flex-col-md-8 wrapper__report-column">
+    <div class="admin-results-table">
+      <div class="admin-results-header-table">
+        <div class="header">Name</div>
+        <div class="header">Division</div>
+        <div class="header">Date / Time</div>
+        <div class="header">City</div>
+        <div class="header">Actions</div>
+      </div>
 
-          <tbody>
-            <% @pitch_events.each do |pitch_event| %>
-              <tr>
-                <td>
-                  <%= pitch_event.name %>
-                </td>
+      <div class="admin-results-data-table">
+        <% @pitch_events.each do |pitch_event| %>
+          <% cache(pitch_event) do %>
+            <div class="row">
+              <div class="cell">
+                <%= link_to pitch_event.name, regional_ambassador_regional_pitch_event_path(pitch_event) %>
+              </div>
 
-                <td>
-                  <%= pitch_event.divisions.map(&:name).to_sentence %>
-                </td>
+              <div class="cell">
+                <%= pitch_event.division_names %>
+              </div>
 
-                <td>
-                  <%= pitch_event.starts_at.strftime("%a, %b %e, %H:%M %Z") %>
-                </td>
+              <div class="cell">
+                <%= pitch_event.starts_at.in_time_zone(current_ambassador.timezone).strftime("%a, %b %e, %H:%M") %>
+                &ndash;
+                <%= pitch_event.ends_at.in_time_zone(current_ambassador.timezone).strftime("%H:%M %Z") %>
+              </div>
 
-                <td>
-                  <%= pitch_event.city %>
-                </td>
+              <div class="cell">
+                <%= pitch_event.city %>
+              </div>
 
-                <td>
-                  <%= link_to 'View', [:regional_ambassador, pitch_event] %>&nbsp;|
+              <div class="cell">
+                <%= link_to 'View', [:regional_ambassador, pitch_event] %>&nbsp;|
 
-                  <%= link_to 'Edit', [:edit, :regional_ambassador, pitch_event] %>&nbsp;|
+                <%= link_to 'Edit', [:edit, :regional_ambassador, pitch_event] %>&nbsp;|
 
-                  <%= link_to 'Delete', [:regional_ambassador, pitch_event],
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' } %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                <%= link_to 'Delete', [:regional_ambassador, pitch_event],
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
 
-    <p class="admin-actions">
-      <%= link_to 'New Regional pitch event',
-        new_regional_ambassador_regional_pitch_event_path,
-        class: "appy-button" %>
-    </p>
+    <div class="wrapper__report-footer">
+      <%= render 'regional_ambassador/regional_pitch_events/footer' %>
+    </div>
   </div>
 </div>

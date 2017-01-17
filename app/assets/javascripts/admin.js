@@ -6,7 +6,7 @@
 // RAILS VIEW HELPER DEPENDENCY
 
 
-//= reuire toast_flashes
+//= require toast_flashes
 
 //= require admin-results-tables
 //= require admin-filter-options

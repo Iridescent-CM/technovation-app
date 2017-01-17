@@ -2,9 +2,6 @@ require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
-  namespace :regional_ambassador do
-    resources :regional_pitch_events
-  end
   mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
   get '/sidekiq' => 'signins#new'
 
@@ -84,6 +81,7 @@ Rails.application.routes.draw do
 
     resources :profiles, only: :index
     resources :teams, only: [:show, :index]
+    resources :team_submissions, only: [:index, :show]
 
     resources :exports, only: :create
 

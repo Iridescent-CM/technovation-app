@@ -1,114 +1,87 @@
-@import "application";
+@import "admin";
+@import "accounts";
 
-.form_actions {
-  @include span-columns(12);
-  padding: 1rem 0 0;
-  border-top: 1px solid #ccc;
+@import "partials/animations";
+
+@import "component-library/modalify";
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: row;
 }
 
-.pagination_info {
-  padding: 0.5rem 0;
-  font-size: 1rem;
-  margin: 0;
-}
+// fancy-image fancy-upload fancy_upload fancy-image-upload fancy_image_upload
+form {
+  &.fancy-upload {
+    margin: 0;
+    padding: 0;
 
-.admin-search__filter-options {
-  align-self: flex-start;
-  border: 2px solid #666;
-  padding: 1rem;
+    input, label {
+      display: none;
+    }
 
-  input[type="text"] {
-    border: 2px solid #999;
-  }
-}
-
-.admin-search__export-options {
-  .appy-button {
-    margin: 0 1rem 0 0;
-    float: left;
-  }
-
-  .export-to-email {
-    width: 65%;
-  }
-}
-
-.per_page {
-  margin: 0.5rem 0 0;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 1rem;
-
-  select {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1rem;
-  }
-}
-
-.wrapper__report-column {
-
-  label.inline {
-    display: inline-block;
-    margin-right: 35px;
-  }
-
-  .pagination {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 0.75rem;
-    padding: 0.5rem 0;
-  }
-}
-
-.admin-dashboard__sidebar {
-  .no-simple-form-style {
-    margin: 0 0 1rem;
-
-    .appy-button {
-      margin-left: 0;
+    .appy-hint {
+      margin-top: 0;;
     }
   }
 }
 
-.no-simple-form-style {
-  p {
+// profile edit page
+.signup-form form {
+  h6 {
+    font-size: 1rem;
+    margin: 1rem 0 0;
+  }
+
+  [type="text"],
+  [type="password"] {
+    width: 100%;
+
+    &[disabled="disabled"] {
+      background: lightgrey;
+      border: 0;
+    }
+  }
+
+  .input {
     margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: lightgrey;
+    border-radius: 0.3rem;
+
+    &.hidden {
+      padding: 0;
+      margin: 0;
+    }
   }
 
-  .appy-button {
-    margin-left: 0;
+  .appy-hint {
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
   }
 }
 
-.admin-actions {
-  margin: 1rem 0;
-
-  .appy-button {
-    margin-left: 0;
-  }
+#regional_ambassador_profile_bio {
+  width: 100%;
+  min-height: 150px;
+  padding: 0.5rem;
 }
 
-.only-col {
+.resources__list {
+  margin: 0;
   padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .ra-timezone {
-  margin: 0 0 1rem;
-}
-
-.ra-pitch-event-form {
-  max-width: 650px;
-  background: white;
-  padding: 1rem;
-  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-
-  label {
-    cursor: pointer;
-  }
-
-  .checkbox label {
-    text-transform: capitalize;
-  }
-
-  div.input {
-    padding: 1rem 0;
-  }
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background: lightgrey;
+  border-radius: 0.3rem;
 }

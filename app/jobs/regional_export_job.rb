@@ -29,7 +29,7 @@ class RegionalExportJob < ActiveJob::Base
   end
 
   def export_teams(ambassador, token, params)
-    team_ids = RegionalTeam.(ambassador, params).pluck(:id).uniq
+    team_ids = RegionalTeam.(ambassador, params).select(:id).uniq
     mentor_status = URI.escape("mentor-status-#{params[:mentor_status]}")
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:division]}-teams-#{mentor_status}-#{token}.csv"
 
