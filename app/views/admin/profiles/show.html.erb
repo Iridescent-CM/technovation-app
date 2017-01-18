@@ -1,5 +1,10 @@
 <%= render 'profiles/privileged_show', edit: true, account: account, path: edit_admin_profile_path(account) %>
 
+
+<% if account.student_profile %>
+  <%= render 'admin/profiles/student_debugging', profile: account.student_profile %>
+<% end %>
+
 <% if account.mentor_profile %>
   <%= render 'admin/profiles/mentor_debugging', profile: account.mentor_profile %>
 

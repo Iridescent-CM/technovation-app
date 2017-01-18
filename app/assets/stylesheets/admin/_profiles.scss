@@ -20,10 +20,10 @@
   flex-grow: 1;
 }
 
-.mentor-debug {
+.mentor-debug, .student-debug {
   max-width: 650px;
   padding: 0;
-  margin: 0 1rem 0 0;
+  margin: 0 1rem 1rem 0;
   border: 1px solid #666;
 
   h3 {

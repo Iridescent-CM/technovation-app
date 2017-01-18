@@ -1,0 +1,13 @@
+<div class="student-debug">
+  <h3>Admin debug info</h3>
+
+  <p>
+    <strong>Parental consent</strong>
+    <%= profile.consent_signed? ? 'signed' : 'not signed' %>
+  </p>
+
+  <p>
+    <strong>Honor code</strong>
+    <%= profile.honor_code_signed? ? 'signed' : 'not signed' %>
+  </p>
+</div>
