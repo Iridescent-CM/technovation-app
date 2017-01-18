@@ -12,14 +12,30 @@
   <p class="team_description"><%= team.description %></p>
 
   <% if team.current? %>
-    <p><%= link_to t("controllers.teams.edit.link"), [:edit, account.type_name, team], class: "appy-button" %></p>
+    <p>
+      <%= link_to t("controllers.teams.edit.link"),
+        [:edit, account.type_name, team],
+        class: "appy-button" %>
+    </p>
 
-    <%= simple_form_for [account.type_name, @team], html: { class: "remote_checkboxes" }, remote: true do |f| %>
-      <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
-      <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
+    <%= simple_form_for [account.type_name, @team],
+      html: { class: "remote_checkboxes" },
+      remote: true do |f| %>
+      <%= f.input :accepting_student_requests,
+        as: :boolean,
+        label: t("models.team.accepting_student_requests") %>
+
+      <%= f.input :accepting_mentor_requests,
+        as: :boolean,
+        label: t("models.team.accepting_mentor_requests") %>
     <% end %>
 
-    <p><%= render 'teams/upload_team_photo', uploader: @uploader, namespace: account.type_name, team: team %></p>
+    <p>
+      <%= render 'teams/upload_team_photo',
+        uploader: @uploader,
+        namespace: account.type_name,
+        team: team %>
+    </p>
   <% end %>
 
   <div class="team-memberships">

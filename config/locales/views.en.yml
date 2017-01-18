@@ -300,6 +300,7 @@ en:
         current_teams: "Current Teams"
         none: "You don't have any %{type} teams."
         past_teams: "Past Teams"
+        submission_not_started: "%{name} has not begun their team submission."
       new:
         intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
         join: "Join a Team"

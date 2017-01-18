@@ -1,18 +1,27 @@
-<%= t("views.teams.index.current_teams") %>
+<h1 class="appy-title">
+  <%= t("views.teams.index.current_teams") %>
+</h1>
 
-<%= render 'mentor/teams/team_list',
-  type: :current,
-  teams: @current_teams %>
+<div class="current-teams">
+  <%= render 'mentor/teams/team_list',
+    type: :current,
+    teams: @current_teams %>
+</div>
 
-<p>
-  <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>
+<p class="standalone-buttons">
+  <%= link_to t("controllers.team_searches.new.link"),
+    new_mentor_team_search_path,
+    class: "appy-button" %>
   <%= t("views.application.or") %>
   <%= link_to t("controllers.teams.new.link"), new_mentor_team_path %>
 </p>
 
+<% if @past_teams.any? %>
+  <h1 class="appy-title">
+    <%= t("views.teams.index.past_teams") %>
+  </h1>
 
-<%= t("views.teams.index.past_teams") %>
-
-<%= render 'mentor/teams/team_list',
-           type: :past,
-           teams: @past_teams %>
+  <%= render 'mentor/teams/team_list',
+            type: :past,
+            teams: @past_teams %>
+<% end %>
