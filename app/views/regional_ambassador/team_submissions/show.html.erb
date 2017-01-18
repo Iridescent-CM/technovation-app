@@ -1,4 +1,4 @@
-<h1>Team Submission by: <%= @team_submission.team_name %></h1>
+<h1>Team Submission by: <%= link_to @team_submission.team_name, [:regional_ambassador, @team_submission.team] %></h1>
 <h2>Name: <%= @team_submission.app_name %></h2>
 <h3>Division: <%= @team_submission.team_division_name %></h3>
 
