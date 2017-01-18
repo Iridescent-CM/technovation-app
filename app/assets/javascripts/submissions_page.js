@@ -95,7 +95,7 @@
         var selection = window.getSelection();
         var cursorPosition = selection.anchorOffset - 1;
         e.target.innerText = tempObject[nodeName];
-
+        createFlashNotification('error', 'Your App Description must be ' + wordLimit + ' words or less');
         if (e.target.firstChild) {
           if (cursorPosition > e.target.firstChild.length) {
             cursorPosition = e.target.firstChild.length;
