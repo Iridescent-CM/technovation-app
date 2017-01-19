@@ -40,7 +40,7 @@
 <p>
   <strong>Source code</strong>
   <% if @team_submission.source_code_url_text %>
-    <%= link_to @team_submission.source_code_url_text, @team_submission.source_code_url_text %>
+    <%= link_to @team_submission.source_code_url_text, @team_submission.detect_source_code_url %>
   <% end %>
 </p>
 
@@ -56,7 +56,7 @@
   <% end %>
 
   <% if @team_submission.business_plan %>
-    <%= link_to @team_submission.business_plan_url_text, @team_submission.business_plan_url_text %>
+    <%= link_to @team_submission.business_plan_url_text, @team_submission.business_plan_url %>
   <% end %>
 </p>
 
