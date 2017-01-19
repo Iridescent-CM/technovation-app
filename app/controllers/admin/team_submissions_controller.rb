@@ -7,6 +7,7 @@ module Admin
 
     def show
       @team_submission = TeamSubmission.find(params[:id])
+      @team_submission.build_technical_checklist if @team_submission.technical_checklist.blank?
     end
 
     def edit
