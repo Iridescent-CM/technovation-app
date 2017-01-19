@@ -9,7 +9,17 @@
           </p>
 
           <% if type === :current and team.team_submissions.any? %>
-            <%= render 'student/team_submissions/progress', submission: team.team_submissions.last %>
+            <% submission = team.team_submissions.last %>
+
+            <p>
+              Submission:
+              <%= link_to "#{submission.app_name || '(no name yet)'} by #{submission.team_name}",
+                app_path(submission),
+                target: :_blank %>
+            </p>
+
+            <%= render 'student/team_submissions/progress', submission: submission %>
+
             <small>(finished sections will appear green with a checkmark)</small>
           <% elsif type === :current %>
             <p><%= t("views.teams.index.submission_not_started", name: team.name) %></p>
