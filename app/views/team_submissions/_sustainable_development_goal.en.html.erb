@@ -7,10 +7,8 @@
 
   <div class="card__body">
     <% if submission.stated_goal %>
-      <%= submission.stated_goal %>
-    <% else %>
-      No goal selected
+      <p><strong><%= submission.stated_goal %></strong></p>
+      <p><%= submission.stated_goal_explanation %></p>
     <% end %>
-    <p><%= submission.stated_goal_explanation %></p>
   </div>
 </div>
