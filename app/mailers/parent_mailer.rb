@@ -1,5 +1,6 @@
 class ParentMailer < ApplicationMailer
-  def consent_notice(profile)
+  def consent_notice(profile_id)
+    profile = StudentProfile.find(profile_id)
     @name = profile.parent_guardian_name
 
     if token = profile.account.consent_token
@@ -13,7 +14,8 @@ class ParentMailer < ApplicationMailer
     end
   end
 
-  def confirm_consent_finished(consent)
+  def confirm_consent_finished(consent_id)
+    consent = ParentalConsent.find(consent_id)
     return unless consent.student_profile.parent_guardian_email
 
     @name = consent.student_profile.parent_guardian_name

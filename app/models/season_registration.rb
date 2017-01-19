@@ -19,7 +19,7 @@ class SeasonRegistration < ActiveRecord::Base
         profile = registerable.student_profile
 
         if profile.parent_guardian_email and profile.parental_consent.nil?
-          ParentMailer.consent_notice(profile).deliver_later
+          ParentMailer.consent_notice(profile.id).deliver_later
         end
       end
     end

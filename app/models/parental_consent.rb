@@ -54,6 +54,6 @@ class ParentalConsent < ActiveRecord::Base
                                           "PARENT_LIST_ID")
     end
 
-    ParentMailer.confirm_consent_finished(self).deliver_later
+    ParentMailer.confirm_consent_finished(id).deliver_later
   end
 end
