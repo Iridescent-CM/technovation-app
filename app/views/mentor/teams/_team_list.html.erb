@@ -11,14 +11,16 @@
           <% if type === :current and team.team_submissions.any? %>
             <% submission = team.team_submissions.last %>
 
-            <p>
-              Submission:
-              <%= link_to "#{submission.app_name || '(no name yet)'} by #{submission.team_name}",
-                app_path(submission),
-                target: :_blank %>
-            </p>
+            <% cache(submission) do %>
+              <p>
+                Submission:
+                <%= link_to "#{submission.app_name || '(no name yet)'} by #{submission.team_name}",
+                  app_path(submission),
+                  target: :_blank %>
+              </p>
 
-            <%= render 'student/team_submissions/progress', submission: submission %>
+              <%= render 'student/team_submissions/progress', submission: submission %>
+            <% end %>
 
             <small>(finished sections will appear green with a checkmark)</small>
           <% elsif type === :current %>

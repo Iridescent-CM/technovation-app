@@ -1,5 +1,5 @@
 class Screenshot < ActiveRecord::Base
-  belongs_to :team_submission
+  belongs_to :team_submission, touch: true
 
   mount_uploader :image, ScreenshotProcessor
 
