@@ -6,7 +6,7 @@
   <div class="card__body">
     <% if submission.detect_source_code_url %>
       <p>
-        <%= link_to submission.source_code_url_text,
+        <%= link_to "View the source code",
           submission.detect_source_code_url,
           target: "_blank" %>
       </p>

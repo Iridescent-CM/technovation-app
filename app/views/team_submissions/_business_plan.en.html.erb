@@ -6,7 +6,7 @@
     <div class="card__body">
       <% if submission.business_plan.persisted? %>
         <p>
-          <%= link_to submission.business_plan_url_text,
+          <%= link_to "Read the business plan",
             submission.business_plan_url,
             target: :_blank %>
         </p>
