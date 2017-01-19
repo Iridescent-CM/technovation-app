@@ -2,10 +2,14 @@ class AccountMailer < ApplicationMailer
   def password_reset(account_id)
     account = Account.find(account_id)
     @first_name = account.first_name
-    @url = new_password_url(token: account.password_reset_token)
 
-    I18n.with_locale(account.locale) do
-      mail to: account.email
+    if token = account.password_reset_token
+      @url = new_password_url(token: token)
+      I18n.with_locale(account.locale) do
+        mail to: account.email
+      end
+    else
+      raise TokenNotPresent, "Account ID: #{account.id}"
     end
   end
 
@@ -26,4 +30,6 @@ class AccountMailer < ApplicationMailer
       mail to: account.email
     end
   end
+
+  class TokenNotPresent < StandardError; end
 end
