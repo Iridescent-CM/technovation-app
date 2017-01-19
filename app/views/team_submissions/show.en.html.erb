@@ -10,7 +10,9 @@
 
 <div class="team-submissions">
   <div class="team-submissions__row-left">
-    <%= render 'team_photo', submission: @team_submission %>
+    <div class="team-submissions__fixed-col">
+      <%= render 'team_photo', submission: @team_submission %>
+    </div>
   </div>
 
   <div class="team-submissions__row-center">
@@ -21,8 +23,10 @@
   </div>
 
   <div class="team-submissions__row-right">
-    <%= render 'source_code', submission: @team_submission %>
-    <%= render 'development_platform', submission: @team_submission %>
-    <%= render 'business_plan', submission: @team_submission %>
+    <div class="team-submissions__fixed-col">
+      <%= render 'source_code', submission: @team_submission %>
+      <%= render 'development_platform', submission: @team_submission %>
+      <%= render 'business_plan', submission: @team_submission %>
+    </div>
   </div>
 </div>
