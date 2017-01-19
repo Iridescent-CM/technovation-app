@@ -4,7 +4,7 @@
       Business Plan
     </div>
     <div class="card__body">
-      <% if submission.business_plan.persisted? %>
+      <% if submission.business_plan %>
         <p>
           <%= link_to "Read the business plan",
             submission.business_plan_url,
