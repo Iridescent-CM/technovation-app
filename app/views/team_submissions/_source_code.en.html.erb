@@ -4,10 +4,12 @@
   </div>
 
   <div class="card__body">
-    <p>
-      <%= link_to submission.source_code_url_text,
-        submission.detect_source_code_url,
-        target: "_blank" %>
-    </p>
+    <% if submission.detect_source_code_url %>
+      <p>
+        <%= link_to submission.source_code_url_text,
+          submission.detect_source_code_url,
+          target: "_blank" %>
+      </p>
+    <% end %>
   </div>
 </div>
