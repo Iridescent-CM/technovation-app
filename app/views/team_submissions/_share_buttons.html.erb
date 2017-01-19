@@ -26,8 +26,8 @@
     <a
       href="https://twitter.com/share"
       class="twitter-share-button"
-      data-size="large"
-      data-text="<%= submission.app_name %> built for Technovation Challenge!"
+      data-size="small"
+      data-text="<%= submission.app_name || "(no name yet)" %> built by <%= submission.team_name %> for Technovation Challenge!"
       data-url="<%= app_url(submission) %>"
       data-via="technovation"
       data-show-count="false"
