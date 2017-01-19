@@ -8,11 +8,15 @@ class RegionalAmbassadorController < ApplicationController
     if current_ambassador.timezone.blank?
       current_ambassador.account.update_column(:timezone, Timezone.lookup(current_ambassador.latitude, current_ambassador.longitude).name)
     end
-
-    Time.zone = current_ambassador.timezone
   }
 
+  around_action :set_time_zone, if: -> { current_ambassador.authenticated? }
+
   private
+  def set_time_zone(&block)
+    Time.use_zone(current_ambassador.timezone, &block)
+  end
+
   def current_ambassador
     @current_ambassador ||= current_account.regional_ambassador_profile
   end
