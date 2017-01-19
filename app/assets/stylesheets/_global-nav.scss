@@ -11,6 +11,10 @@ $logo-size-mobile: 36px;
   padding: 0;
   position: relative;
 
+  &.public-header {
+    padding: 1rem 0;
+  }
+
   .logo {
     align-items: center;
     display: flex;

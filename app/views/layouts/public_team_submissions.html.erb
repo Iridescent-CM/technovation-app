@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title><%= t('views.application.site_title') %></title>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+
+    <%= stylesheet_link_tag '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css', media: :all %>
+
+    <%= render 'favicons' %>
+    <link rel="manifest" href="favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <%= yield :og_meta %>
+
+    <%= csrf_meta_tags %>
+
+    <%= yield :head_js %>
+  </head>
+
+  <body>
+    <%= render 'application/header' %>
+
+    <div class="container">
+      <div class="main-content">
+        <%= yield %>
+      </div>
+
+      <footer id="site-footer">
+        <p>
+          Technovation Challenge<br />
+
+          <%= link_to t("views.application.terms_of_use"),
+            "http://iridescentlearning.org/terms-of-use/" %>&nbsp;|
+
+          <%= link_to t("views.application.privacy_policy"),
+            "http://iridescentlearning.org/privacy-policy/" %>
+        </p>
+      </footer>
+    </div>
+
+    <%= javascript_include_tag 'application' %>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-4055471-6', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

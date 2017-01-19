@@ -1,6 +1,8 @@
 class TeamSubmissionsController < ApplicationController
   helper_method :current_team
 
+  layout 'public_team_submissions'
+
   def show
     @team_submission = TeamSubmission.find(params[:id])
   end

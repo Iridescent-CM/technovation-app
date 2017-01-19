@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card__heading submission-step__ideation">
+    <span class="card__heading-text">
+      Sustainable Development Goal
+    </span>
+  </div>
+
+  <div class="card__body">
+    <% if submission.stated_goal %>
+      <%= submission.stated_goal %>
+    <% else %>
+      No goal selected
+    <% end %>
+    <p><%= submission.stated_goal_explanation %></p>
+  </div>
+</div>

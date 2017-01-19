@@ -1,0 +1,53 @@
+<div class="tabs">
+  <ul class="tab-menu">
+    <li class="tab-link active">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="tab--team_submission_pitch_video">
+        Pitch
+      </button>
+    </li>
+
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="tab--team_submission_demo_video">
+        Demo
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content tab-content__showing" id="tab--team_submission_pitch_video">
+    <div class="card">
+      <div class="card__heading submission-step__marketing">
+        <span class="card__heading-text">
+          Pitch Video
+        </span>
+      </div>
+
+      <div class="card__body">
+        <% if submission.pitch_video_link %>
+          <%= submission.embed_code(:pitch_video_link).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content tab-content__hiding" id="tab--team_submission_demo_video">
+    <div class="card">
+      <div class="card__heading submission-step__marketing">
+        <span class="card__heading-text">
+          Demo Video
+        </span>
+      </div>
+
+      <div class="card__body">
+        <% if submission.demo_video_link %>
+          <%= submission.embed_code(:demo_video_link).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
