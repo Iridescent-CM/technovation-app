@@ -1,10 +1,15 @@
 class ParentMailer < ApplicationMailer
   def consent_notice(profile)
     @name = profile.parent_guardian_name
-    @url = new_parental_consent_url(token: profile.account.consent_token)
 
-    I18n.with_locale(profile.account.locale) do
-      mail to: profile.parent_guardian_email
+    if token = profile.account.consent_token
+      @url = new_parental_consent_url(token: token)
+
+      I18n.with_locale(profile.account.locale) do
+        mail to: profile.parent_guardian_email
+      end
+    else
+      raise TokenNotPresent, "Account ID: #{profile.account_id}"
     end
   end
 

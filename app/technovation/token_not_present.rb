@@ -1,0 +1,1 @@
+class TokenNotPresent < StandardError; end

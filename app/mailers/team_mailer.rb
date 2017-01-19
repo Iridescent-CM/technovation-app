@@ -17,9 +17,13 @@ class TeamMailer < ApplicationMailer
         status: SignupAttempt.statuses[:temporary_password],
       )
 
-      @url = student_signup_url(token: attempt.activation_token)
-      @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
-      @link_text = "Signup to join this team"
+      if token = attempt.activation_token
+        @url = student_signup_url(token: token)
+        @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+        @link_text = "Signup to join this team"
+      else
+        raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
+      end
     end
 
     I18n.with_locale(invite.inviter.locale) do

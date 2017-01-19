@@ -1,11 +1,15 @@
 class RegistrationMailer < ApplicationMailer
   def confirm_email(signup_attempt)
-    @url = new_signup_attempt_confirmation_url(token: signup_attempt.activation_token)
+    if token = signup_attempt.activation_token
+      @url = new_signup_attempt_confirmation_url(token: token)
 
-    headers['X-Mailgun-Campaign-Id'] = 'tqylf'
+      headers['X-Mailgun-Campaign-Id'] = 'tqylf'
 
-    mail to: signup_attempt.email,
-         subject: t("registration_mailer.confirm_email.subject", season_year: Season.current.year)
+      mail to: signup_attempt.email,
+          subject: t("registration_mailer.confirm_email.subject", season_year: Season.current.year)
+    else
+      raise TokenNotPresent, "SignupAttempt ID: #{signup_attempt.id}"
+    end
   end
 
   def welcome_mentor(mentor)

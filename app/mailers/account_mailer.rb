@@ -30,6 +30,4 @@ class AccountMailer < ApplicationMailer
       mail to: account.email
     end
   end
-
-  class TokenNotPresent < StandardError; end
 end
