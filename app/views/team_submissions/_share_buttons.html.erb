@@ -1,4 +1,9 @@
 <div class="ts-about-team__share-wrapper">
+  <div class="social-share social-share- -linkedin">
+    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+    <script type="IN/Share" data-url="<%= app_url(submission) %>"></script>
+  </div>
+
   <div class="social-share social-share--facebook">
     <div
       class="fb-share-button"
@@ -31,10 +36,4 @@
     </a>
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
-
-  <!-- TODO: Figure out if we want LinkedIn
-  <div class="social-share social-share- -linkedin">
-    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-    <script type="IN/Share" data-url="<%= app_url(submission) %>"></script>
-  </div> -->
 </div>
