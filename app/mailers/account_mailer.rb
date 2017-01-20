@@ -3,7 +3,9 @@ class AccountMailer < ApplicationMailer
     account = Account.find(account_id)
     @first_name = account.first_name
 
-    if token = account.password_reset_token
+    token = account.password_reset_token
+
+    if not token.blank?
       @url = new_password_url(token: token)
       I18n.with_locale(account.locale) do
         mail to: account.email
