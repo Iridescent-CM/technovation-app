@@ -14,6 +14,8 @@
   <p><%= link_to t("controllers.teams.edit.link"), edit_admin_team_path(@team) %></p>
 </div>
 
+<%= render 'admin/teams/debugging', team: @team %>
+
 <div class="team-memberships">
   <%= render "admin/teams/member_list", team: @team %>
   <%= render "admin/teams/mentor_list", team: @team %>

@@ -20,17 +20,23 @@
   flex-grow: 1;
 }
 
-.mentor-debug, .student-debug {
+.mentor-debug, .student-debug, .team-debug {
   max-width: 650px;
   padding: 0;
   margin: 0 1rem 1rem 0;
   border: 1px solid #666;
 
-  h3 {
+  h3, h4 {
     margin: 0 0 1rem;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid #666;
     background: lightgrey;
+  }
+
+  h4 {
+    border: none;
+    background: none;
+    margin: 1rem 0 0;
   }
 
   p {
@@ -42,5 +48,45 @@
     opacity: 0.7;
     display: block;
     font-size: 0.8em;
+  }
+
+  table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+
+    tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+      padding: 0.5rem 1rem;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      padding: 0.5rem 1rem;
+    }
+
+    &.invites-debug {
+      th, td {
+        &:first-child {
+          width: 15%;
+        }
+
+        &:nth-child(2) {
+          width: 70%;
+        }
+      }
+    }
+
+    &.join-requests-debug {
+      th, td {
+        &:first-child {
+          width: 15%;
+        }
+      }
+    }
   }
 }

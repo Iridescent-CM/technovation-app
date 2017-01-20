@@ -1,0 +1,70 @@
+<div class="team-debug">
+  <h3>Admin debug info</h3>
+
+  <p>
+    <strong>Searchable to students?</strong>
+    <%= team.accepting_student_requests? ? "Yes" : "No" %>
+    <span class="hint">
+      To change this, a team member should toggle
+      <strong>Other students can request to join this team</strong>
+      on their team page
+    </span>
+  </p>
+
+  <p>
+    <strong>Searchable to mentors?</strong>
+    <%= team.accepting_mentor_requests? ? 'Yes' : 'No' %>
+
+    <span class="hint">
+      To change this, a team member should toggle
+      <strong>Other mentors can request to become mentors of this team</strong>
+      on their team page
+    </span>
+  </p>
+
+  <h4>Team Member Invites</h4>
+  <table class="invites-debug">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% team.team_member_invites.each do |i| %>
+        <tr>
+          <td><%= i.id %></td>
+          <td><%= i.invitee_email %></td>
+          <td><%= i.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Join Requests</h4>
+  <table class="join-requests-debug">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Account Type</th>
+        <th>Account ID</th>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% team.join_requests.each do |j| %>
+        <tr>
+          <td><%= j.id %></td>
+          <td><%= j.requestor_type_name %></td>
+          <td><%= j.requestor_account_id %></td>
+          <td><%= j.requrestor_full_name %></td>
+          <td><%= j.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
