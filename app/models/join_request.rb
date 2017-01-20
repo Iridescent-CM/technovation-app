@@ -12,8 +12,8 @@ class JoinRequest < ActiveRecord::Base
     prefix: true
 
   delegate :first_name,
-           :full_name,
            :type_name,
+           :full_name,
            :email,
            :account_id,
     to: :requestor,
