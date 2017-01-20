@@ -1,5 +1,7 @@
-<%= render 'profiles/privileged_show', edit: true, account: account, path: edit_admin_profile_path(account) %>
-
+<%= render 'profiles/privileged_show',
+  edit: true,
+  account: account,
+  path: edit_admin_profile_path(account) %>
 
 <% if account.student_profile %>
   <%= render 'admin/profiles/student_debugging', profile: account.student_profile %>
@@ -16,7 +18,8 @@
         <ul>
           <%= render partial: 'student/mentors/team_preview',
             collection: account.mentor_profile.teams.current,
-            cached: true %>
+            cached: true,
+            locals: { admin: true } %>
         </ul>
       <% else %>
         <p><%= t("views.student.mentors.show.no_teams", name: account.first_name) %></p>
