@@ -6,6 +6,13 @@
 </label>
 
 <label>
+  SDG:
+  <%= select_tag :sdg,
+    options_for_select(['all', 'not selected'] + TeamSubmission.stated_goals.keys,
+                      params[:sdg]) %>
+</label>
+
+<label>
   Has a name:
   <%= select_tag :has_name,
     options_for_select(['all', 'yes', 'no'], params[:has_name]) %>

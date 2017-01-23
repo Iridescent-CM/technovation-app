@@ -5,6 +5,7 @@ module RegionalAmbassador
       params[:has_name] = "all" if params[:has_name].blank?
       params[:technical_checklist] = "all" if params[:technical_checklist].blank?
       params[:completed] = "all" if params[:completed].blank?
+      params[:sdg] = "all" if params[:sdg].blank?
 
       account_ids = case ambassador.country
                     when "US"
@@ -25,6 +26,14 @@ module RegionalAmbassador
       else
         submissions = submissions.where("divisions.name = ?",
                                         Division.names[params[:division]])
+      end
+
+      case params[:sdg]
+      when 'all'
+      when 'not selected'
+        submissions = submissions.where("stated_goal IS NULL")
+      else
+        submissions = submissions.where(stated_goal: TeamSubmission.stated_goals[params[:sdg]])
       end
 
       case params[:has_name]
