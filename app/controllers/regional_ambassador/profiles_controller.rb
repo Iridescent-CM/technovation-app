@@ -5,7 +5,8 @@ module RegionalAmbassador
     def index
       params[:season] ||= Season.current.year
       params[:type] ||= "All"
-      params[:per_page] ||= 25
+      params[:per_page] = 25 if params[:per_page].blank?
+      params[:page] = 1 if params[:page].blank?
 
       params[:team_status] = "All" if params[:team_status].blank?
       params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
