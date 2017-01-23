@@ -52,8 +52,8 @@ module Student
     def update
       @team_submission = current_team.team_submissions.find(params.fetch(:id))
 
-      if params[:screenshot]
-        params[:screenshot].each_with_index do |id, index|
+      if team_submission_params[:screenshots]
+        team_submission_params[:screenshots].each_with_index do |id, index|
           screenshot = @team_submission.screenshots.find(id)
           screenshot.update_attributes(sort_position: index)
         end
@@ -91,6 +91,7 @@ module Student
           :id,
           :remote_file_url,
         ],
+        screenshots: [],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]
 
