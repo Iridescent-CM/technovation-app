@@ -1,0 +1,97 @@
+.admin-team-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .team-photo {
+    flex: 1;
+    max-width: 450px;
+  }
+
+  .team-info {
+    padding: 1rem;
+    flex: 1;
+
+    h3 {
+      margin: 0 0 1rem;
+      padding: 0;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      padding: 0;
+    }
+  }
+
+  .team-memberships {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    .team-members,
+    .team-mentors {
+      width: 50%;
+
+      h5 {
+        font-size: 1.2rem;
+        margin: 0 0 1rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          padding: 0;
+          margin: 0 1rem 1rem 0;
+          background: lightgrey;
+          display: flex;
+          flex-direction: row;
+
+          .member-image,
+          .member-info {
+            flex: 1;
+            padding: 1rem;
+          }
+
+          .member-image {
+            max-width: 80px;
+          }
+
+          .member-info {
+            margin-left: 1rem;
+
+            h3,
+            p {
+              margin: 0;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  form {
+    padding: 1rem;
+
+    .input {
+      margin: 0 0 1rem;
+
+      label {
+        margin: 0;
+        padding: 0;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
+
+    textarea {
+      height: 200px;
+      width: 400px;
+    }
+  }
+}
