@@ -56,7 +56,7 @@
 
       var scrShotField = inputGroup.querySelector('[data-count-needed]'),
           screenshotPoints = 0;
-      if (scrShotField && parseInt(scrShotField.dataset.countNeeded) === parseInt(scrShotField.dataset.countHas))
+      if (scrShotField && parseInt(scrShotField.dataset.countNeeded) <= parseInt(scrShotField.dataset.countHas))
         screenshotPoints = pointsEach;
 
       var totalPoints = filePoints.reduce(function(acc, p) { return acc + p; }, 0) + checkboxPoints + screenshotPoints;
