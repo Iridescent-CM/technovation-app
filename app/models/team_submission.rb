@@ -142,6 +142,8 @@ class TeamSubmission < ActiveRecord::Base
           mozallowfullscreen
           allowfullscreen>
         </iframe>}.strip_heredoc
+    else
+      ""
     end
   end
 
