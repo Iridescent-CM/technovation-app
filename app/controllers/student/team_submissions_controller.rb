@@ -50,7 +50,7 @@ module Student
     end
 
     def update
-      @team_submission = current_team.team_submissions.find(params.fetch(:id))
+      @team_submission = current_team.team_submissions.friendly.find(params.fetch(:id))
 
       if team_submission_params[:screenshots]
         team_submission_params[:screenshots].each_with_index do |id, index|
