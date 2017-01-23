@@ -87,4 +87,16 @@
     gallery.parentElement.insertBefore(galleryWrapper, gallery);
     gallery.remove();
   }
+
+  // If image is deleted and deletion handler throws custom 'imagedeleted' event,
+  // remove the image from any gallery thumbnails.
+  document.addEventListener('imagedeleted', function(e) {
+    var imageDeleted = e.detail;
+    var deletedThumbs = document.querySelectorAll('.gallerify__thumb-img-wrapper img[src="' + imageDeleted + '"]');
+    if (deletedThumbs.length > 0) {
+      for (var i = 0; i < deletedThumbs.length; i++) {
+        deletedThumbs[i].parentElement.remove();
+      }
+    }
+  });
 })();

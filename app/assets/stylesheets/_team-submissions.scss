@@ -406,6 +406,7 @@ h2.submissions-onboarding-step__heading {
   .gu-mirror {
     background-color: rgba(255, 255, 255, 0.9);
     transform: rotate(-1.5deg);
+    z-index: 99999;
   }
 
   li {
@@ -426,6 +427,10 @@ h2.submissions-onboarding-step__heading {
     cursor: grabbing;
   }
 
+  li:only-child a {
+    display: none;
+  }
+
   img {
     border-radius: 0.25em;
     max-height: 100%;
@@ -437,7 +442,6 @@ h2.submissions-onboarding-step__heading {
   color: $chalkboard;
   flex-grow: 1;
   font-weight: bold;
-  // max-width: 75%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

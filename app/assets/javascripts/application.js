@@ -22,7 +22,7 @@
 //= require remote_forms
 //= require search_options
 //= require select_fields
-//= require submission_screenshots_sort
+//= require submission_edit_screenshots
 //= require submissions_onboarding
 //= require submissions_page
 //= require technical_checklist

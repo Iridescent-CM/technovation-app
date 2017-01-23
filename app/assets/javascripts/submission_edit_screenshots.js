@@ -28,6 +28,27 @@
 
   draggable.on('drop', updateOrder);
 
+  var deleteButtons = $('.' + baseClass + ' [data-method="delete"]');
+  deleteButtons.on('ajax:success', function(e, xhr) {
+    var deletedImgSrc = e.target.parentElement.querySelector('img').src;
+    var event = new CustomEvent('imagedeleted', {bubbles: true, cancelable: true, detail: deletedImgSrc});
+    mainWrapper.dispatchEvent(event);
+    createFlashNotification('success', 'Image successfully deleted!');
+    e.target.parentElement.remove();
+
+    if (images.length < 2) {
+      // Hacky but there's a significant amount of work that would need to happen
+      // to revert the gallery back to an empty state if all images are deleted.
+      // Temporarily just closing the modal and removing the edit button instead.
+      mainWrapper.parentElement.querySelector('.modalify__close').click();
+      document.querySelector('[data-modal-trigger="screenshots-edit"]').remove();
+    }
+  });
+
+  deleteButtons.on('ajax:error', function(e, xhr) {
+    createFlashNotification('error', 'Uh uh, something went wrong. Please try again.');
+  });
+
   function updateOrder() {
     var items = wrapper.children;
     var order = Array.prototype.map.call(items, function(item) {
@@ -40,7 +61,6 @@
       screenshots: order
     };
 
-    console.log('PAYLOAD', payload);
     $.ajax(path, {
       method: 'PATCH',
       data: payload,
