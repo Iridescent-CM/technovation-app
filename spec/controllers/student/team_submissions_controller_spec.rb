@@ -11,7 +11,8 @@ RSpec.describe Student::TeamSubmissionsController do
 
       sign_in(student)
 
-      patch :update, id: team_submission.id, screenshot: [screenshot2.id, screenshot1.id]
+      patch :update, id: team_submission.id,
+        team_submission: { screenshots: [screenshot2.id, screenshot1.id] }
 
       expect(screenshot1.reload.sort_position).to eq(1)
       expect(screenshot2.reload.sort_position).to eq(0)
