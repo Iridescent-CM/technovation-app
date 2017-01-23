@@ -1,39 +1,43 @@
-<div class="ts-about-team__share-wrapper">
-  <div class="social-share social-share- -linkedin">
-    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-    <script type="IN/Share" data-url="<%= app_url(submission) %>"></script>
-  </div>
+<div class="card">
+  <div class="card__body">
+    <div class="ts-about-team__share-wrapper">
+      <div class="social-share social-share--linkedin">
+        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+        <script type="IN/Share" data-url="<%= app_url(submission) %>"></script>
+      </div>
 
-  <div class="social-share social-share--facebook">
-    <div
-      class="fb-share-button"
-      data-href="<%= app_url(submission) %>"
-      data-layout="button"
-      data-size="large"
-      data-mobile-iframe="false"
-    >
-      <a
-        class="fb-xfbml-parse-ignore"
-        target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com%2F&amp;src=sdkpreparse"
-      >
-        Share
-      </a>
+      <div class="social-share social-share--facebook">
+        <div
+          class="fb-share-button"
+          data-href="<%= app_url(submission) %>"
+          data-layout="button"
+          data-size="large"
+          data-mobile-iframe="false"
+        >
+          <a
+            class="fb-xfbml-parse-ignore"
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com%2F&amp;src=sdkpreparse"
+          >
+            Share
+          </a>
+        </div>
+      </div>
+
+      <div class="social-share social-share--twitter">
+        <a
+          href="https://twitter.com/share"
+          class="twitter-share-button"
+          data-size="small"
+          data-text="<%= submission.app_name || "(no name yet)" %> built by <%= submission.team_name %> for Technovation Challenge!"
+          data-url="<%= app_url(submission) %>"
+          data-via="technovation"
+          data-show-count="false"
+        >
+          Tweet
+        </a>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
     </div>
-  </div>
-
-  <div class="social-share social-share--twitter">
-    <a
-      href="https://twitter.com/share"
-      class="twitter-share-button"
-      data-size="small"
-      data-text="<%= submission.app_name || "(no name yet)" %> built by <%= submission.team_name %> for Technovation Challenge!"
-      data-url="<%= app_url(submission) %>"
-      data-via="technovation"
-      data-show-count="false"
-    >
-      Tweet
-    </a>
-    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
 </div>

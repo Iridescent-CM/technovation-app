@@ -53,6 +53,21 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
+  def complete?
+    team.team_photo.present? and
+      not app_name.blank? and
+        not app_description.blank? and
+          not stated_goal.blank? and
+            not stated_goal_explanation.blank? and
+              not pitch_video_link.blank? and
+                not demo_video_link.blank? and
+                  screenshots.many? and
+                    technical_checklist_completed? and
+                      not detect_source_code_url.blank? and
+                        not development_platform_text.blank? and
+                          not business_plan_url_text.blank?
+  end
+
   def development_platform_text
     if development_platform == "Other"
       ["Other", "-", development_platform_other].join(' ')

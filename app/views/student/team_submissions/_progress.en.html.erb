@@ -62,5 +62,16 @@
         <%= fa_icon 'check' %>
       </div>
     <% end %>
+
+    <% if submission.complete? %>
+      <p class="publish-submission progress-help">
+        Your submission is complete* and ready to share!<br />
+        <%= link_to "See the public version",
+          app_path(submission),
+          class: "appy-button",
+          target: :_blank %>
+          <span>*you can still make edits until 5:00pm (17h) US/Pacific Wednesday, April 26</span>
+      </p>
+    <% end %>
   </div>
 </div>

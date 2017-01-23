@@ -5,10 +5,25 @@
   background: white;
   box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 
-  h3, .progress-help {
+  h3,
+  .progress-help {
     width: 100%;
     font-size: 1rem;
     text-align: center;
+  }
+
+  .publish-submission {
+    margin: 1rem 1rem 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 1rem;
+
+    span {
+      display: block;
+      padding: 1rem 0 0;
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
   }
 
   .progress-bar {
