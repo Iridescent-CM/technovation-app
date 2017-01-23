@@ -6,17 +6,17 @@ module Admin
     end
 
     def show
-      @team_submission = TeamSubmission.find(params[:id])
+      @team_submission = TeamSubmission.friendly.find(params[:id])
       @team_submission.build_technical_checklist if @team_submission.technical_checklist.blank?
     end
 
     def edit
-      @team_submission = TeamSubmission.find(params[:id])
+      @team_submission = TeamSubmission.friendly.find(params[:id])
       @team_submission.build_business_plan if @team_submission.business_plan.blank?
     end
 
     def update
-      @team_submission = TeamSubmission.find(params[:id])
+      @team_submission = TeamSubmission.friendly.find(params[:id])
 
       if @team_submission.update_attributes(team_submission_params)
         redirect_to [:admin, @team_submission],

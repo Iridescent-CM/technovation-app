@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111214638) do
+ActiveRecord::Schema.define(version: 20170123202454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -385,6 +385,7 @@ ActiveRecord::Schema.define(version: 20170111214638) do
     t.string   "development_platform_other"
     t.integer  "development_platform"
     t.boolean  "source_code_file_uploaded"
+    t.string   "slug"
   end
 
   add_index "team_submissions", ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
@@ -396,7 +397,7 @@ ActiveRecord::Schema.define(version: 20170111214638) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.string   "team_photo"
-    t.string   "friendly_id"
+    t.string   "legacy_id"
     t.boolean  "accepting_student_requests", default: true, null: false
     t.boolean  "accepting_mentor_requests",  default: true, null: false
     t.float    "latitude"
@@ -404,7 +405,7 @@ ActiveRecord::Schema.define(version: 20170111214638) do
   end
 
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
-  add_index "teams", ["friendly_id"], name: "index_teams_on_friendly_id", using: :btree
+  add_index "teams", ["legacy_id"], name: "index_teams_on_legacy_id", using: :btree
 
   create_table "technical_checklists", force: :cascade do |t|
     t.boolean  "used_strings"

@@ -1,4 +1,7 @@
 class TeamSubmission < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :team_name_and_app_name, use: :slugged
+
   enum stated_goal: %w{
     Poverty
     Environment
@@ -140,5 +143,10 @@ class TeamSubmission < ActiveRecord::Base
           allowfullscreen>
         </iframe>}.strip_heredoc
     end
+  end
+
+  private
+  def team_name_and_app_name
+    "#{app_name} by #{team_name}"
   end
 end

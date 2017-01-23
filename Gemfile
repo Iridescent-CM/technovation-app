@@ -13,6 +13,8 @@ gem 'jquery-rails'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
+gem 'friendly_id'
+
 gem "autoprefixer-rails"
 gem 'nokogiri'
 
