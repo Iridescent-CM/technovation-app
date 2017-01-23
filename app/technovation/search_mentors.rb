@@ -28,8 +28,7 @@ module SearchMentors
     end
 
     if filter.needs_team
-      account_ids = Account.joins(:mentor_profile)
-        .where("mentor_profiles.id NOT IN
+      profile_ids = MentorProfile.where("mentor_profiles.id NOT IN
         (SELECT DISTINCT(member_id) FROM memberships
                                     WHERE memberships.member_type = 'MentorProfile'
                                     AND memberships.joinable_type = 'Team'
@@ -42,7 +41,24 @@ module SearchMentors
                                               AND season_registrations.season_id = ?)))", Season.current.id)
         .pluck(:id)
 
-      mentors = mentors.where(account_id: account_ids)
+      mentors = mentors.where(id: profile_ids)
+    end
+
+    if filter.on_team
+      profile_ids = MentorProfile.where("mentor_profiles.id IN
+        (SELECT DISTINCT(member_id) FROM memberships
+                                    WHERE memberships.member_type = 'MentorProfile'
+                                    AND memberships.joinable_type = 'Team'
+                                    AND memberships.joinable_id IN
+
+          (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
+
+            (SELECT DISTINCT(registerable_id) FROM season_registrations
+                                              WHERE season_registrations.registerable_type = 'Team'
+                                              AND season_registrations.season_id = ?)))", Season.current.id)
+        .pluck(:id)
+
+      mentors = mentors.where(id: profile_ids)
     end
 
     if filter.virtual_only

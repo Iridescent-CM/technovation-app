@@ -14,10 +14,8 @@
       <%= render 'searches/location_options', account: account %>
     </div>
 
-    <% if account.type_name == "student" %>
-      <%= render 'searches/toggle_mentor_needs_team', account: account %>
-      <%= render 'searches/toggle_mentor_virtual' %>
-    <% end %>
+    <%= render 'searches/toggle_mentor_needs_team', account: account %>
+    <%= render 'searches/toggle_mentor_virtual' %>
 
     <label>Gender Identity</label>
     <%= collection_check_boxes :search_filter, :gender_identities,

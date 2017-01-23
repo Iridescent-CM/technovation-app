@@ -3,7 +3,8 @@ module MentorSearchesController
 
   def new
     params[:nearby] = user.address_details if params[:nearby].blank?
-    params[:needs_team] = false if params[:needs_team].blank?
+    params[:needs_team] = false if params[:needs_team].blank? || params[:on_team] == "1"
+    params[:on_team] = false if params[:on_team].blank? || params[:needs_team] == "1"
     params[:virtual_only] = false if params[:virtual_only].blank?
     params[:gender_identities] = Account.genders.values if params[:gender_identities].blank?
 
@@ -19,6 +20,7 @@ module MentorSearchesController
       nearby: params.fetch(:nearby),
       user: user,
       needs_team: params.fetch(:needs_team),
+      on_team: params.fetch(:on_team),
       virtual_only: params.fetch(:virtual_only),
       text: params.fetch(:text) { "" },
       gender_identities: params.fetch(:gender_identities),
