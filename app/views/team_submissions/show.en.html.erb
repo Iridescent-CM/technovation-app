@@ -1,10 +1,12 @@
 <% cache @team_submission do %>
-  <% provide :title, "#{@team_submission.app_name || '(no name yet)'} built by #{@team_submission.team_name}" %>
+  <% @team_submission.app_name = "(no name yet)" if @team_submission.app_name.blank? %>
+
+  <% provide :title, "#{@team_submission.app_name} built by #{@team_submission.team_name}" %>
 
   <% provide :og_meta do %>
     <meta property="og:url" content="<%= app_url(@team_submission) %>" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<%= @team_submission.app_name || '(no name yet)' %> built by <%= @team_submission.team_name %>" />
+    <meta property="og:title" content="<%= @team_submission.app_name %> built by <%= @team_submission.team_name %>" />
     <meta property="og:description" content="<%= @team_submission.app_description %>" />
     <meta property="og:image" content="<%= @team_submission.team.team_photo_url %>" />
   <% end %>
