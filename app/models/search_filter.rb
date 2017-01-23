@@ -40,7 +40,13 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   def division_enums
-    filter_options.fetch(:division_enums) { [] }.reject(&:blank?).map(&:to_i)
+    options = filter_options.fetch(:division_enums) { [] }
+
+    if options.respond_to?(:keys)
+      options = options.keys
+    end
+
+    options.reject(&:blank?).map(&:to_i)
   end
 
   def badge_css(expertise)
