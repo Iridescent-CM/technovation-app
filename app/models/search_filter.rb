@@ -43,7 +43,7 @@ class SearchFilter < Struct.new(:filter_options)
     options = filter_options.fetch(:division_enums) { [] }
 
     if options.respond_to?(:keys)
-      options = options.keys
+      options = options.keys.flatten.uniq
     end
 
     options.reject(&:blank?).map(&:to_i)
