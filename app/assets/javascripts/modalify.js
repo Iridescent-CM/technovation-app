@@ -77,6 +77,7 @@
     modal.classList.remove('modalify--active');
     fixColumnZIndex(modal, 0);
     fireModalCloseEvent(modal);
+    document.body.removeAttribute('style');
   }
 
   function showModal(e, modalId) {
@@ -88,6 +89,7 @@
     }
     modalToShow.classList.add('modalify--active');
     fixColumnZIndex(modalToShow, 1);
+    document.body.style.overflow = 'hidden';
   }
 
   function fireModalCloseEvent(modal) {

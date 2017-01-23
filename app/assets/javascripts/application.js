@@ -6,6 +6,7 @@
 //= require jquery.query
 //= require facebook_sdk
 //= require jquery.sticky-kit.1.1.2.min
+//= require dragula
 
 //= require ajax_form_handler
 //= require background_checks
@@ -21,6 +22,7 @@
 //= require remote_forms
 //= require search_options
 //= require select_fields
+//= require submission_screenshots_sort
 //= require submissions_onboarding
 //= require submissions_page
 //= require technical_checklist

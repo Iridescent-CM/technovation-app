@@ -377,3 +377,68 @@ h2.submissions-onboarding-step__heading {
 .submission-step__ideation {
   background-color: #c1c320;
 }
+
+// Sortable screenshots
+
+.submission-screenshots-edit {
+  $red: #f44336;
+
+  .fa-bars {
+    color: $dark-grey;
+    margin-right: 0.5em;
+  }
+
+  .fa-trash-o {
+    background-color: white;
+    border: 2px solid $red;
+    border-radius: 0.25em;
+    color: $red;
+    margin-left: 0.5em;
+    padding: 0.25em 0.35em;
+    transition: all 0.25s;
+  }
+
+  .fa-trash-o:hover {
+    background-color: $red;
+    color: white;
+  }
+
+  .gu-mirror {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: rotate(-1.5deg);
+  }
+
+  li {
+    align-items: center;
+    border: 2px solid $dark-grey;
+    border-radius: 0.25em;
+    cursor: grab;
+    display: flex;
+    height: 80px;
+    padding: 0.5em;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 0.5em;
+  }
+
+  li:active {
+    cursor: grabbing;
+  }
+
+  img {
+    border-radius: 0.25em;
+    max-height: 100%;
+    width: auto;
+  }
+}
+
+.submission-screenshots-edit__label {
+  color: $chalkboard;
+  flex-grow: 1;
+  font-weight: bold;
+  // max-width: 75%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,1 +1,10 @@
-<li><%= image_tag screenshot.image_url, width: "100%" %></li>
+<li><%= image_tag screenshot.image_url, width: "100%" %>
+  <%= link_to "".html_safe,
+    [:student, screenshot],
+    class: 'fa fa-trash-o',
+    data: {
+      remote: true,
+      method: :delete,
+      confirm: "Are you sure you want to delete the screenshot?",
+    } %>
+</li>

@@ -1,0 +1,13 @@
+<%= content_tag :div, id: "foo",
+  class: 'submission-screenshots-edit',
+  id: 'submission-screenshots-edit',
+  data: {
+    object_name: "team_submission",
+    update_url: student_team_submission_path(@team_submission),
+  } do %>
+
+  <ul id="edit-screenshots-wrapper">
+    <%= render submission.screenshots, cached: true %>
+  </ul>
+
+<% end %>
