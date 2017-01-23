@@ -1,4 +1,4 @@
-<%= content_tag :div, id: "foo",
+<%= content_tag :div,
   class: 'submission-screenshots-edit',
   id: 'submission-screenshots-edit',
   data: {
@@ -7,7 +7,8 @@
   } do %>
 
   <ul id="edit-screenshots-wrapper">
-    <%= render submission.screenshots, cached: true %>
+    <%= render submission.screenshots,
+      cached: true,
+      edit: true %>
   </ul>
-
 <% end %>
