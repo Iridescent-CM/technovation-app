@@ -134,6 +134,7 @@ class Account < ActiveRecord::Base
   end
 
   def enable_password_reset!
+    self.geocoded = address_details
     regenerate_password_reset_token
     update_column(:password_reset_token_sent_at, Time.current)
   end
