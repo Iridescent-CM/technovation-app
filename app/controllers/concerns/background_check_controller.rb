@@ -35,7 +35,7 @@ module BackgroundCheckController
     params.require(:background_check_candidate)
       .permit(:first_name, :middle_name, :last_name, :email, :zipcode,
     :date_of_birth, :ssn, :driver_license_state, :copy_requested).tap do |tapped|
-        tapped[:driver_license_state] = tapped[:driver_license_state].strip
+        tapped[:driver_license_state] = tapped[:driver_license_state].strip.upcase
       end
   end
 end
