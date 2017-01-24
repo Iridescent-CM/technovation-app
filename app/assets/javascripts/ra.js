@@ -5,6 +5,7 @@
 //= require jquery_ujs
 // RAILS VIEW HELPER DEPENDENCY
 
+//= require url-search-params-polyfill
 
 //= reuqire toast_flashes
 //= require fancy_uploads
