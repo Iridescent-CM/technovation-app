@@ -10,6 +10,10 @@
       <%= t("views.teams.show.division_name", name: @team.division_name.humanize) %>
     </p>
 
+    <p class="team_location">
+      <%= t("views.teams.show.location", name: @team.creator_address_details) %>
+    </p>
+
     <p class="team_description"><%= @team.description %></p>
 
     <p><%= link_to t("controllers.teams.edit.link"), edit_admin_team_path(@team) %></p>
