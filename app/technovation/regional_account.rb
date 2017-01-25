@@ -29,7 +29,7 @@ module RegionalAccount
       accounts = case params[:parental_consent_status]
                  when "Signed"
                    accounts.joins(student_profile: :parental_consent)
-                 when "Sent"
+                 when "Email Info Entered"
                    accounts.includes(student_profile: :parental_consent)
                      .references(:parental_consents)
                      .where("parental_consents.id IS NULL

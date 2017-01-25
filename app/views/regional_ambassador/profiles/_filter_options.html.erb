@@ -19,8 +19,11 @@
   <label>
     Parental Consent Status:
     <%= select_tag :parental_consent_status,
-      options_for_select(%w{All Signed Sent No\ Info\ Entered},
-                         params[:parental_consent_status]) %>
+    options_for_select(%w{All
+                          Signed
+                          Email\ Info\ Entered
+                          No\ Info\ Entered
+                        }, params[:parental_consent_status]) %>
   </label>
 <% end %>
 
