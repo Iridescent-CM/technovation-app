@@ -16,6 +16,7 @@
         <div class="header">Signed up</div>
         <div class="header">Name</div>
         <div class="header">Email</div>
+        <div class="header">School / Company name</div>
         <div class="header">Division</div>
         <div class="header">Referred by</div>
         <div class="header">Location</div>
@@ -43,6 +44,10 @@
 
               <div class="cell">
                 <%= mail_to account.email %>
+              </div>
+
+              <div class="cell">
+                <%= account.get_school_company_name %>
               </div>
 
               <div class="cell">
