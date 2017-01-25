@@ -16,6 +16,11 @@
         <div class="header">Signed up</div>
         <div class="header">Name</div>
         <div class="header">Email</div>
+
+        <% if params[:type] == "Student" %>
+          <div class="header">Parent Email</div>
+        <% end %>
+
         <div class="header">School / Company name</div>
         <div class="header">Division</div>
         <div class="header">Referred by</div>
@@ -45,6 +50,10 @@
               <div class="cell">
                 <%= mail_to account.email %>
               </div>
+
+              <% if params[:type] == "Student" %>
+                <div class="cell"><%= mail_to account.student_profile.parent_guardian_email %></div>
+              <% end %>
 
               <div class="cell">
                 <%= account.get_school_company_name %>
