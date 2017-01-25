@@ -34,7 +34,14 @@
   <label>
     Cleared status:
     <%= select_tag :cleared_status,
-      options_for_select(%w{All Clear Needs\ background\ check Needs\ consent\ waiver}, params[:cleared_status]) %>
+    options_for_select(%w{All
+                       Consent\ Signed,\ BG\ Check\ Clear
+                       Background\ Check\ Pending
+                       Background\ Check\ Consider
+                       Background\ Check\ Suspended
+                       Background\ Check\ Not\ Started
+                       Consent\ Waiver\ Not\ Signed
+                       }, params[:cleared_status]) %>
   </label>
 <% end %>
 

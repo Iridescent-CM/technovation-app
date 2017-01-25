@@ -32,7 +32,8 @@ module RegionalAccount
                  when "Sent"
                    accounts.includes(student_profile: :parental_consent)
                      .references(:parental_consents)
-                     .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NOT NULL")
+                     .where("parental_consents.id IS NULL
+                             AND student_profiles.parent_guardian_email IS NOT NULL")
                  when "No Info Entered"
                    accounts.where("student_profiles.parent_guardian_email IS NULL")
                  else
@@ -69,19 +70,37 @@ module RegionalAccount
       end
 
       case params[:cleared_status]
-      when "Clear"
+      when "Consent Signed, BG Check Clear"
         accounts = accounts.joins(:consent_waiver)
           .includes(:background_check)
           .references(:background_checks)
           .where("country != 'US' OR
                   background_checks.status = ?",
                   BackgroundCheck.statuses[:clear])
-      when "Needs background check"
+      when "Background Check Pending"
+        accounts = accounts.includes(:background_check)
+          .references(:background_checks)
+          .where("country = 'US' AND
+                  background_checks.status = ?",
+                  BackgroundCheck.statuses[:pending])
+      when "Background Check Consider"
+        accounts = accounts.includes(:background_check)
+          .references(:background_checks)
+          .where("country = 'US' AND
+                  background_checks.status = ?",
+                  BackgroundCheck.statuses[:consider])
+      when "Background Check Suspended"
+        accounts = accounts.includes(:background_check)
+          .references(:background_checks)
+          .where("country = 'US' AND
+                  background_checks.status = ?",
+                  BackgroundCheck.statuses[:suspended])
+      when "Background Check Not Started"
         accounts = accounts.includes(:background_check)
           .references(:background_checks)
           .where("country = 'US' AND
                   background_checks.id IS NULL")
-      when "Needs consent waiver"
+      when "Consent Waiver Not Signed"
         accounts = accounts.includes(:consent_waiver)
           .references(:consent_waivers)
           .where("consent_waivers.id IS NULL OR
