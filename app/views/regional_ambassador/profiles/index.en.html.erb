@@ -29,50 +29,48 @@
 
       <div class="admin-results-data-table">
         <% @accounts.order('accounts.created_at DESC').each do |account| %>
-          <% cache(account) do %>
-            <div class="row">
-              <div class="cell">
-                <%= account.type_name %>
-              </div>
-
-              <div class="cell">
-                <% if account.created_at.year == Time.current.year %>
-                  <%= time_ago_in_words(account.created_at) %> ago
-                <% else %>
-                  <%= account.created_at.strftime("%b %e, %Y") %>
-                <% end %>
-              </div>
-
-              <div class="cell">
-                <%= account.full_name %>
-              </div>
-
-              <div class="cell">
-                <%= mail_to account.email %>
-              </div>
-
-              <% if params[:type] == "Student" %>
-                <div class="cell"><%= mail_to account.student_profile.parent_guardian_email %></div>
-              <% end %>
-
-              <div class="cell">
-                <%= account.get_school_company_name %>
-              </div>
-
-              <div class="cell">
-                <%= account.division %>
-              </div>
-
-              <div class="cell">
-                <%= account.referred_by %>
-                <%= account.referred_by_other %>
-              </div>
-
-              <div class="cell">
-                <%= account.address_details %>
-              </div>
+          <div class="row">
+            <div class="cell">
+              <%= account.type_name %>
             </div>
-          <% end %>
+
+            <div class="cell">
+              <% if account.created_at.year == Time.current.year %>
+                <%= time_ago_in_words(account.created_at) %> ago
+              <% else %>
+                <%= account.created_at.strftime("%b %e, %Y") %>
+              <% end %>
+            </div>
+
+            <div class="cell">
+              <%= account.full_name %>
+            </div>
+
+            <div class="cell">
+              <%= mail_to account.email %>
+            </div>
+
+            <% if params[:type] == "Student" %>
+              <div class="cell"><%= mail_to account.student_profile.parent_guardian_email %></div>
+            <% end %>
+
+            <div class="cell">
+              <%= account.get_school_company_name %>
+            </div>
+
+            <div class="cell">
+              <%= account.division %>
+            </div>
+
+            <div class="cell">
+              <%= account.referred_by %>
+              <%= account.referred_by_other %>
+            </div>
+
+            <div class="cell">
+              <%= account.address_details %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
