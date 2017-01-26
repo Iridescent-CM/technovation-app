@@ -15,6 +15,7 @@
         <div class="header">Type</div>
         <div class="header">Signed up</div>
         <div class="header">Name</div>
+        <div class="header">On a team?</div>
         <div class="header">Email</div>
 
         <% if params[:type] == "Student" %>
@@ -44,6 +45,12 @@
 
             <div class="cell">
               <%= account.full_name %>
+            </div>
+
+            <div class="cell">
+              <% if %w{student mentor}.include?(account.type_name) %>
+                <%= account.teams.current.any? ? "yes" : "no" %>
+              <% end %>
             </div>
 
             <div class="cell">
