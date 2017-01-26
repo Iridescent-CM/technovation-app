@@ -4,6 +4,7 @@
     return;
   }
   var allowed = ['image/bmp', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+  var awsKey = screenshotUploadForm.querySelector('input[name="key"]').value;
   var fileInput = screenshotUploadForm.querySelector('input[type="file"]');
   var formKeyElements = screenshotUploadForm.querySelectorAll('[type="hidden"][value]');
   var formKeyObj = {};
@@ -68,14 +69,18 @@
 
   function handleUploadCompletion() {
     var isDone = pendingUploads.reduce(function(r, item) {
-      // Add error handling
+      // TODO: Add error handling
       return r || (item.status == 'success');
     }, false);
     console.log(isDone);
     if (!isDone) {
       setTimeout(handleUploadCompletion, 100);
     } else {
-      console.log('IT IS DONE');
+      var payload = [];
+      pendingUploads.forEach(function(item) {
+        payload.push(awsKey.replace('${filename}', item.fileName));
+      });
+      console.log(payload);
     }
   }
 
