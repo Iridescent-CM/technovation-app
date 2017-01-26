@@ -87,31 +87,35 @@
         data: { keys: payload },
         success: function(res) {
           console.log('OG res', res);
-          checkJobStatus(res);
+          checkJobStatus(res['status_url']);
         }
       });
     }
   }
 
-  var fakeSuccess = false;
-  function checkJobStatus(statusObj) {
-    if (statusObj.status === 'completed' || fakeSuccess) {
-      console.log('Wow, I am completed');
-      handleImageProcessing();
-    } else {
-      fakeSuccess = true;
-      setTimeout(function() {
-        checkJobStatus(statusObj);
-      }, 4000);
-    }
+  function checkJobStatus(statusUrl) {
+    console.log(statusUrl);
+    $.ajax({
+      type: 'GET',
+      url: statusUrl,
+      success: function(res) {
+        if (res.status === 'complete') {
+          handleImageProcessing();
+        } else {
+          setTimeout(function() {
+            checkJobStatus(statusUrl);
+          }, 1000);
+        }
+      }
+    });
   }
 
   function handleImageProcessing() {
-    console.log('You should have finished by now');
     $.ajax({
       type: 'GET',
       url: screenshotsUrl,
       success: function(res) {
+        console.log('WE HAVE THE STUFF');
         console.log('Procesed images', res);
       }
     });
