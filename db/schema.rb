@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123202454) do
+ActiveRecord::Schema.define(version: 20170126052555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,13 @@ ActiveRecord::Schema.define(version: 20170123202454) do
   end
 
   add_index "honor_code_agreements", ["account_id"], name: "index_honor_code_agreements_on_account_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "job_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "join_requests", force: :cascade do |t|
     t.integer  "requestor_id",   null: false

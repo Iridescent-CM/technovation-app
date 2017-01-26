@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resource :team_submission_file_upload_confirmation, only: :show
 
     resources :image_process_jobs, only: :create
-    resources :job_status, only: :show
+    resources :job_statuses, only: :show
 
     resources :mentors, only: :show
     resources :students, only: :show

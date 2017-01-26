@@ -1,10 +1,10 @@
 class ProcessScreenshotsJob < ActiveJob::Base
   queue_as :default
 
-  attr_accessor :jid
-
   around_enqueue do |job, block|
-    job.jid = block.call
+    db_job = Job.create!(job_id: job.job_id, status: "queued")
+    block.call
+    db_job.update_column(:status, "complete")
   end
 
   def perform(record, keys)
