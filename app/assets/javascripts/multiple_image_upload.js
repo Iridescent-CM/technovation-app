@@ -44,7 +44,6 @@
     formData.append('file', file, file.name);
 
     var fileIndex = findIndex(pendingUploads, function(item) {
-      console.log(item.fileName, file.name);
       return item.fileName === file.name;
     });
 
@@ -59,9 +58,9 @@
       type: 'POST',
       success: function(data) {
         pendingUploads[fileIndex].status = 'success';
-        console.log('Huzzah!');
       },
       error: function(err) {
+        // TODO: Handle errors
         console.error(err);
       }
     });
@@ -72,7 +71,6 @@
       // TODO: Add error handling
       return r || (item.status == 'success');
     }, false);
-    console.log(isDone);
     if (!isDone) {
       setTimeout(handleUploadCompletion, 100);
     } else {
