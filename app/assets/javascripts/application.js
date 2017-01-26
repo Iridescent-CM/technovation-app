@@ -29,6 +29,7 @@
 //= require toast_flashes
 //= require tabs
 //= require alternative_forms
+//= require multiple_image_upload
 
 //= require submission_scores
 //= require dashboards
