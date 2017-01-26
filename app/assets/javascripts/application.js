@@ -8,6 +8,7 @@
 //= require jquery.sticky-kit.1.1.2.min
 //= require dragula
 
+//= require utils
 //= require ajax_form_handler
 //= require background_checks
 //= require fancy_file_upload

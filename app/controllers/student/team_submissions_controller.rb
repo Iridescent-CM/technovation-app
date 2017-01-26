@@ -28,7 +28,7 @@ module Student
       @team_photo_uploader.success_action_redirect = student_team_photo_upload_confirmation_url(back: request.fullpath)
 
       @screenshots_uploader = ImageUploader.new
-      @screenshots_uploader.success_action_redirect = student_team_submission_screenshot_upload_confirmation_url(back: student_team_submission_path(@team_submission))
+      @screenshots_uploader.success_action_redirect = ''
 
       @business_plan_uploader = FileUploader.new
       @business_plan_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
