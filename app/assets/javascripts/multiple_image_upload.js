@@ -7,6 +7,8 @@
   var awsKey = screenshotUploadForm.querySelector('input[name="key"]').value;
   var fileInput = screenshotUploadForm.querySelector('input[type="file"]');
   var formKeyElements = screenshotUploadForm.querySelectorAll('[type="hidden"][value]');
+  var processImagesUrl = screenshotUploadForm.dataset.processImagesUrl;
+  var screenshotsUrl = screenshotUploadForm.dataset.screenshotsUrl;
   var formKeyObj = {};
   forEach(formKeyElements, function(el) {
     formKeyObj[el.name] = el.value;
@@ -50,12 +52,12 @@
     pendingUploads[fileIndex].status = 'pending';
 
     $.ajax({
+      type: 'POST',
       url: screenshotUploadForm.action,
       data: formData,
       cache: false,
       contentType: false,
       processData: false,
-      type: 'POST',
       success: function(data) {
         pendingUploads[fileIndex].status = 'success';
       },
@@ -79,7 +81,40 @@
         payload.push(awsKey.replace('${filename}', item.fileName));
       });
       console.log(payload);
+      $.ajax({
+        type: 'POST',
+        url: processImagesUrl,
+        data: { keys: payload },
+        success: function(res) {
+          console.log('OG res', res);
+          checkJobStatus(res);
+        }
+      });
     }
+  }
+
+  var fakeSuccess = false;
+  function checkJobStatus(statusObj) {
+    if (statusObj.status === 'completed' || fakeSuccess) {
+      console.log('Wow, I am completed');
+      handleImageProcessing();
+    } else {
+      fakeSuccess = true;
+      setTimeout(function() {
+        checkJobStatus(statusObj);
+      }, 4000);
+    }
+  }
+
+  function handleImageProcessing() {
+    console.log('You should have finished by now');
+    $.ajax({
+      type: 'GET',
+      url: screenshotsUrl,
+      success: function(res) {
+        console.log('Procesed images', res);
+      }
+    });
   }
 
 })();
