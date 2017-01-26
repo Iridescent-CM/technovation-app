@@ -2,7 +2,6 @@
   <div class="card__heading submission-steps__market">
     Screenshots
 
-
     <% if submission.screenshots.length > 1 %>
       <button data-modal-trigger="screenshots-edit"
               role="button"
@@ -34,7 +33,7 @@
 </div>
 
 <div class="modalify" id="screenshots-modal" data-heading="Screenshots">
-  <%= render 'student/team_submissions/screenshots_form' %>
+  <%= render 'student/team_submissions/screenshots_form', submission: submission %>
 </div>
 
 <div class="modalify" id="screenshots-edit" data-heading="Sort Screenshots">
