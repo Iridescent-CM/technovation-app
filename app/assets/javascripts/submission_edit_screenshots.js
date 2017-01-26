@@ -11,8 +11,6 @@
 
   for (var i = 0; i < images.length; i++) {
     var currentImg = images[i];
-    // Pull image ID out of URL. Kind of hacky, but it works.
-    currentImg.dataset.id = currentImg.src.split('screenshot/image/')[1].split('/')[0];
     var dragHandle = document.createElement('span');
     dragHandle.classList.add('fa', 'fa-bars');
     currentImg.parentElement.insertBefore(dragHandle, currentImg);
@@ -52,7 +50,7 @@
   function updateOrder() {
     var items = wrapper.children;
     var order = Array.prototype.map.call(items, function(item) {
-      return item.querySelector('img').dataset.id;
+      return item.querySelector('img').dataset.imageId;
     });
 
     var path = mainWrapper.dataset.updateUrl;
