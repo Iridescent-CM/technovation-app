@@ -1,7 +1,11 @@
 <% edit ||= false %>
 
 <li>
-  <%= image_tag screenshot.image_url, width: "100%" %>
+  <%= image_tag screenshot.image_url,
+    data: {
+      image_id: screenshot.id,
+    },
+    width: "100%" %>
   <% if edit %>
     <%= link_to "".html_safe,
       [:student, screenshot],
