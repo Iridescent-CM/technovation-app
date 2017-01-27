@@ -1,4 +1,24 @@
-<%# see app/helpers/student_helper for SUBPROG function %>
+<% if submission.complete? %>
+  <div class="team-submission__complete-actions">
+    <% unless Rails.env.production? %>
+      <%= render 'student/team_submissions/assign_regional_pitch_event' %>
+    <% end %>
+
+    <p class="publish-submission progress-help">
+      Your submission is complete* and ready to share!<br />
+
+      <%= link_to "See the public version",
+        app_path(submission),
+        class: "appy-button",
+        target: :_blank %>
+
+        <span>
+          *you can still make edits until 5:00pm (17h) US/Pacific (PST) time
+          on  Wednesday, April 26
+        </span>
+    </p>
+  </div>
+<% end %>
 
 <div class="team-submissions-progress">
   <h3>Submission progress</h3>
@@ -11,6 +31,8 @@
   </p>
 
   <div class="progress-bar">
+    <%# see app/helpers/student_helper for SUBPROG function %>
+
     <div class="progress-item <%= subprog(submission, "team-photo") %>">
       Team photo
       <%= fa_icon 'check' %>
@@ -61,17 +83,6 @@
         Business Plan
         <%= fa_icon 'check' %>
       </div>
-    <% end %>
-
-    <% if submission.complete? %>
-      <p class="publish-submission progress-help">
-        Your submission is complete* and ready to share!<br />
-        <%= link_to "See the public version",
-          app_path(submission),
-          class: "appy-button",
-          target: :_blank %>
-          <span>*you can still make edits until 5:00pm (17h) US/Pacific Wednesday, April 26</span>
-      </p>
     <% end %>
   </div>
 </div>

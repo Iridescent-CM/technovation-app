@@ -1,0 +1,28 @@
+.team-submission__complete-actions {
+  padding: 1rem;
+  margin: 0 0 1rem;
+  text-align: center;
+
+  .publish-submission {
+    font-weight: bold;
+
+    span {
+      font-size: 0.9rem;
+      display: block;
+      margin: 1rem 0 0;
+    }
+  }
+}
+
+.team-submissions__assign-regional-event {
+  background: white;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+
+  select {
+    margin: 0 auto;
+    background: lightgrey;
+  }
+}

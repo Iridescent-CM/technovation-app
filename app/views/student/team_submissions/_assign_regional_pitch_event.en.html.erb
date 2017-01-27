@@ -1,0 +1,21 @@
+<% if @regional_events.any? %>
+  <div class="team-submissions__assign-regional-event">
+    <p>
+      You're invited to a Live Technovation Competition in your region!<br/>
+      To attend, simply select from this list of events in the
+      <strong>
+        <%= current_team.region_name %>
+        <%= current_team.division_name %>
+        division
+      </strong>
+      region:
+    </p>
+
+    <%= collection_select :event_assignment,
+      :event_id,
+      @regional_events,
+      :id,
+      :friendly_name,
+      prompt: true %>
+  </div>
+<% end %>

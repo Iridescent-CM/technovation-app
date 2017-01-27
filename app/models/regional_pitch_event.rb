@@ -10,6 +10,24 @@ class RegionalPitchEvent < ActiveRecord::Base
     to: :regional_ambassador_profile,
     prefix: false
 
+  scope :available_to, ->(submission) {
+    if submission.country === "US"
+      joins(:divisions)
+      .where("divisions.id = ?", submission.division_id)
+      .joins(regional_ambassador_profile: :account)
+      .where("accounts.state_province = ?", submission.state_province)
+    else
+      joins(:divisions)
+      .where("divisions.id = ?", submission.division_id)
+      .joins(regional_ambassador_profile: :account)
+      .where("accounts.country = ?", submission.country)
+    end
+  }
+
+  def friendly_name
+    "#{name} in #{city} on #{date_time}"
+  end
+
   def division_names
     divisions.flat_map(&:name).to_sentence
   end

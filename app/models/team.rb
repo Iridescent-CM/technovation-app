@@ -74,6 +74,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def region_name
+    creator.country == "US" ? state_province : country
+  end
+
   def junior?
     division.junior?
   end

@@ -71,6 +71,14 @@ class TeamSubmission < ActiveRecord::Base
                           not business_plan_url_text.blank?
   end
 
+  def country
+    team.members.first.country
+  end
+
+  def division_id
+    team.division_id
+  end
+
   def development_platform_text
     if development_platform == "Other"
       ["Other", "-", development_platform_other].join(' ')

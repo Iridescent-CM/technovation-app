@@ -47,6 +47,8 @@ module Student
         file_attribute: :source_code,
         back: student_team_submission_path(@team_submission)
       )
+
+      @regional_events = RegionalPitchEvent.available_to(@team_submission)
     end
 
     def update
