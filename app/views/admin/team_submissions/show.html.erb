@@ -6,6 +6,10 @@
   <%= link_to 'edit this submission', edit_admin_team_submission_path(@team_submission) %>
 </p>
 
+<p>
+  <%= link_to 'See the public app page', app_path(@team_submission), target: :_blank %>
+</p>
+
 <div>
   <strong>Description</strong>
   <%= simple_format @team_submission.app_description %>
