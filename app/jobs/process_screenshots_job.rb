@@ -2,12 +2,7 @@ class ProcessScreenshotsJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    Job.create!(job_id: job.job_id, status: "pending")
-  end
-
-  after_enqueue do |job|
-    db_job = Job.find_by(job_id: job.job_id)
-    db_job.update_column(:status, "queued")
+    Job.create!(job_id: job.job_id, status: "queued")
   end
 
   after_perform do |job|
