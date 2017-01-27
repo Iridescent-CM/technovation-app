@@ -11,11 +11,8 @@
       region:
     </p>
 
-    <%= collection_select :event_assignment,
-      :event_id,
-      @regional_events,
-      :id,
-      :friendly_name,
-      prompt: true %>
+    <div class="regional-pitch-events">
+      <%= render @regional_events %>
+    </div>
   </div>
 <% end %>
