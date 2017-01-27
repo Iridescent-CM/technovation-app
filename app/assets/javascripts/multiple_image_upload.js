@@ -10,14 +10,14 @@
   var processImagesUrl = screenshotUploadForm.dataset.processImagesUrl;
   var screenshotsUrl = screenshotUploadForm.dataset.screenshotsUrl;
   var formKeyObj = {};
+  // pendingUploads is an array of objects where each looks like:
+  // { fileName: foo.png, status: ['fresh', 'pending', 'success', 'error']}
+  var pendingUploads = [];
+
   forEach(formKeyElements, function(el) {
     formKeyObj[el.name] = el.value;
   });
 
-
-  // pendingUploads is an array of objects where each looks like:
-  // { fileName: foo.png, status: ['fresh', 'pending', 'success', 'error']}
-  var pendingUploads = [];
   screenshotUploadForm.addEventListener('submit', function(e) {
     e.preventDefault();
     var files = fileInput.files;
