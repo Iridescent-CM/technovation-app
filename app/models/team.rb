@@ -77,7 +77,11 @@ class Team < ActiveRecord::Base
   delegate :name, to: :division, prefix: true
 
   def region_name
-    creator.country == "US" ? state_province : country
+    if creator.country == "US"
+      Country[creator.country].states[creator.state_province]['name']
+    else
+      Country[creator.country].name
+    end
   end
 
   def junior?
