@@ -99,7 +99,6 @@
         url: processImagesUrl,
         data: { keys: payload },
         success: function(res) {
-          console.log('OG res', res);
           checkJobStatus(res['status_url']);
         }
       });
@@ -127,19 +126,21 @@
       type: 'GET',
       url: screenshotsUrl,
       success: function(res) {
+        resetUploadForm();
         updateGallery(res);
+        updateEditScreenshots(res);
       }
     });
   }
 
-  function updateGallery(images) {
-    // Reset form UI
+  function resetUploadForm() {
     submitButton.disabled = false;
     dropZone.classList.remove('fancy-image-upload__drop-zone--loading');
     dropZone.querySelector('.fa-spinner').remove();
-
     screenshotsModal.querySelector('.modalify__close').click();
+  }
 
+  function updateGallery(images) {
     var screenshotsBody = document.querySelector('.ts-screenshots .card__body');
     var imageList = document.createElement('ul');
     imageList.classList.add('gallerify');
@@ -155,6 +156,29 @@
     screenshotUploadForm.dispatchEvent(event);
 
     createFlashNotification('success', 'Images added!');
+  }
+
+  function updateEditScreenshots(res) {
+    var editScreenshotsWrapper = document.getElementById('edit-screenshots-wrapper');
+    editScreenshotsWrapper.innerHTML = '';
+    res.forEach(function(item) {
+      var li = document.createElement('li');
+      var img = document.createElement('img');
+      var a = document.createElement('a');
+      img.dataset.imageId = item.id;
+      img.setAttribute('width', '100%');
+      img.src = item.image_url;
+      a.classList.add('fa', 'fa-trash-o');
+      a.dataset.remote = true;
+      a.dataset.method =  'delete';
+      a.dataset.confirm = 'Are you sure you want to delete the screenshot?';
+      a.href = item.delete_url;
+      li.appendChild(img);
+      li.appendChild(a);
+      editScreenshotsWrapper.appendChild(li);
+    });
+    var event = new Event('editscreenshotschanged', {bubbles: true, cancelable: true});
+    editScreenshotsWrapper.dispatchEvent(event);
   }
 
 })();

@@ -9,16 +9,21 @@
   var wrapper = document.getElementById('edit-screenshots-wrapper');
   var images = wrapper.getElementsByTagName('img');
 
-  for (var i = 0; i < images.length; i++) {
-    var currentImg = images[i];
-    var dragHandle = document.createElement('span');
-    dragHandle.classList.add('fa', 'fa-bars');
-    currentImg.parentElement.insertBefore(dragHandle, currentImg);
-    var label = document.createElement('span');
-    label.classList.add(baseClass + '__label');
-    label.innerText = currentImg.alt || "";
-    currentImg.parentElement.insertBefore(label, currentImg);
+  function formatRows() {
+    for (var i = 0; i < images.length; i++) {
+      var currentImg = images[i];
+      var dragHandle = document.createElement('span');
+      dragHandle.classList.add('fa', 'fa-bars');
+      currentImg.parentElement.insertBefore(dragHandle, currentImg);
+      var label = document.createElement('span');
+      label.classList.add(baseClass + '__label');
+      label.innerText = currentImg.alt || "";
+      currentImg.parentElement.insertBefore(label, currentImg);
+    }
   }
+  formatRows();
+
+  document.addEventListener('editscreenshotschanged', formatRows);
 
   var draggable = dragula([wrapper], {
     mirrorContainer: mainWrapper
