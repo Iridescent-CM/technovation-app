@@ -16,4 +16,5 @@ CarrierWave.configure do |config|
   config.fog_directory = ENV.fetch("AWS_BUCKET_NAME")
   config.fog_public = true
   config.fog_attributes = { 'Cache-Control'=>'max-age=315576000' }
+  config.max_file_size = 500.megabytes
 end
