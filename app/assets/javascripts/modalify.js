@@ -20,8 +20,9 @@
   var modals = document.getElementsByClassName('modalify');
 
   for (var i = 0; i < modals.length; i++) {
-    if (modals[i].classList.contains("modalify-one-time"))
+    if (modals[i].classList.contains("modalify-one-time")) {
       return;
+    }
 
     var currentModal = modals[i];
     var modalContent = currentModal.innerHTML;

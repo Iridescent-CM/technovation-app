@@ -34,7 +34,7 @@
     createFlashNotification('success', 'Image successfully deleted!');
     e.target.parentElement.remove();
 
-    if (images.length < 2) {
+    if (images.length < 1) {
       // Hacky but there's a significant amount of work that would need to happen
       // to revert the gallery back to an empty state if all images are deleted.
       // Temporarily just closing the modal and removing the edit button instead.

@@ -1,8 +1,13 @@
 (function multipleImageUpload() {
   var screenshotUploadForm = document.getElementById('team_submission_screenshots');
+  var screenshotsModal = document.getElementById('screenshots-modal');
   if (!screenshotUploadForm) {
     return;
   }
+  var inputArea = document.getElementById('image_uploader_screenshots');
+  var submitButton = screenshotUploadForm.querySelector('input[type="submit"]');
+  var dropZone;
+
   var allowed = ['image/bmp', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
   var awsKey = screenshotUploadForm.querySelector('input[name="key"]').value;
   var fileInput = screenshotUploadForm.querySelector('input[type="file"]');
@@ -51,6 +56,14 @@
 
     pendingUploads[fileIndex].status = 'pending';
 
+    // Disable form while files are being uploaded
+    submitButton.disabled = true;
+    dropZone = screenshotUploadForm.querySelector('.fancy-image-upload__drop-zone');
+    dropZone.classList.add('fancy-image-upload__drop-zone--loading');
+    var spinner = document.createElement('span');
+    spinner.classList.add('fa', 'fa-spinner', 'fa-pulse');
+    dropZone.appendChild(spinner);
+
     $.ajax({
       type: 'POST',
       url: screenshotUploadForm.action,
@@ -80,7 +93,7 @@
       pendingUploads.forEach(function(item) {
         payload.push(awsKey.replace('${filename}', item.fileName));
       });
-      console.log(payload);
+
       $.ajax({
         type: 'POST',
         url: processImagesUrl,
@@ -94,7 +107,6 @@
   }
 
   function checkJobStatus(statusUrl) {
-    console.log(statusUrl);
     $.ajax({
       type: 'GET',
       url: statusUrl,
@@ -115,10 +127,34 @@
       type: 'GET',
       url: screenshotsUrl,
       success: function(res) {
-        console.log('WE HAVE THE STUFF');
-        console.log('Procesed images', res);
+        updateGallery(res);
       }
     });
+  }
+
+  function updateGallery(images) {
+    // Reset form UI
+    submitButton.disabled = false;
+    dropZone.classList.remove('fancy-image-upload__drop-zone--loading');
+    dropZone.querySelector('.fa-spinner').remove();
+
+    screenshotsModal.querySelector('.modalify__close').click();
+
+    var screenshotsBody = document.querySelector('.ts-screenshots .card__body');
+    var imageList = document.createElement('ul');
+    imageList.classList.add('gallerify');
+
+    images.forEach(function(img) {
+      var imgEl = document.createElement('img');
+      imgEl.src = img.image_url;
+      imageList.appendChild(imgEl);
+    });
+    screenshotsBody.innerHTML = '';
+    screenshotsBody.appendChild(imageList);
+    var event = new CustomEvent('refreshgalleries', {bubbles: true, cancelable: true, detail: images});
+    screenshotUploadForm.dispatchEvent(event);
+
+    createFlashNotification('success', 'Images added!');
   }
 
 })();

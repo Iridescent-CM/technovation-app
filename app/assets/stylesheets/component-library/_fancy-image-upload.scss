@@ -50,6 +50,20 @@
   }
 }
 
+.fancy-image-upload__drop-zone--loading {
+  .fancy-image-upload__label,
+  .fancy-image-upload__files-list {
+    opacity: 0.5;
+  }
+
+  .fa-spinner {
+    left: calc(50% - 0.5em);
+    margin: 0;
+    position: absolute;
+    top: 25%;
+  }
+}
+
 .fancy-file-upload__label,
 .fancy-image-upload__label {
   display: block;
