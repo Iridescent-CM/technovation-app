@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resource :team_submission_screenshot_upload_confirmation, only: :show
     resource :team_submission_file_upload_confirmation, only: :show
 
-    resources :regional_pitch_event_selections, only: [:show, :create, :update]
+    resource :regional_pitch_event_selection, only: [:show, :create, :update]
 
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
