@@ -177,6 +177,7 @@
       img.dataset.imageId = item.id;
       img.setAttribute('width', '100%');
       img.src = item.image_url;
+      img.alt = item.image_alt;
       a.classList.add('fa', 'fa-trash-o');
       a.dataset.remote = true;
       a.dataset.method =  'delete';
