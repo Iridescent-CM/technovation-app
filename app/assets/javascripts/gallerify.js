@@ -111,8 +111,4 @@
       }
     }
   }
-
-  // function makeEmptyGallery() {
-
-  // }
 })();
