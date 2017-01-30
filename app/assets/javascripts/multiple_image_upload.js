@@ -39,6 +39,7 @@
         });
       }
     });
+    disableForm();
     handleUploadCompletion();
   });
 
@@ -56,14 +57,6 @@
 
     pendingUploads[fileIndex].status = 'pending';
 
-    // Disable form while files are being uploaded
-    submitButton.disabled = true;
-    dropZone = screenshotUploadForm.querySelector('.fancy-image-upload__drop-zone');
-    dropZone.classList.add('fancy-image-upload__drop-zone--loading');
-    var spinner = document.createElement('span');
-    spinner.classList.add('fa', 'fa-spinner', 'fa-pulse');
-    dropZone.appendChild(spinner);
-
     $.ajax({
       type: 'POST',
       url: screenshotUploadForm.action,
@@ -79,6 +72,15 @@
         console.error(err);
       }
     });
+  }
+
+  function disableForm() {
+    submitButton.disabled = true;
+    dropZone = screenshotUploadForm.querySelector('.fancy-image-upload__drop-zone');
+    dropZone.classList.add('fancy-image-upload__drop-zone--loading');
+    var spinner = document.createElement('span');
+    spinner.classList.add('fa', 'fa-spinner', 'fa-pulse');
+    dropZone.appendChild(spinner);
   }
 
   function handleUploadCompletion() {
@@ -136,8 +138,11 @@
   function resetUploadForm() {
     submitButton.disabled = false;
     dropZone.classList.remove('fancy-image-upload__drop-zone--loading');
-    dropZone.querySelector('.fa-spinner').remove();
-    screenshotsModal.querySelector('.modalify__close').click();
+    var spinner = dropZone.querySelector('.fa-spinner');
+    spinner.remove();
+    setTimeout(function() {
+      screenshotsModal.querySelector('.modalify__close').click();
+    }, 0);
   }
 
   function updateGallery(images) {
@@ -154,6 +159,10 @@
     screenshotsBody.appendChild(imageList);
     var event = new CustomEvent('refreshgalleries', {bubbles: true, cancelable: true, detail: images});
     screenshotUploadForm.dispatchEvent(event);
+
+    if (images.length >= 2) {
+      document.querySelector('[data-modal-trigger="screenshots-edit"]').removeAttribute('style');
+    }
 
     createFlashNotification('success', 'Images added!');
   }

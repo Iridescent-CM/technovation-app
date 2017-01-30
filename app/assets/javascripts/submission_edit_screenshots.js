@@ -39,12 +39,12 @@
     createFlashNotification('success', 'Image successfully deleted!');
     e.target.parentElement.remove();
 
-    if (images.length < 1) {
+    if (images.length <= 1) {
       // Hacky but there's a significant amount of work that would need to happen
       // to revert the gallery back to an empty state if all images are deleted.
-      // Temporarily just closing the modal and removing the edit button instead.
+      // Temporarily just closing the modal and hiding the edit button instead.
       mainWrapper.parentElement.querySelector('.modalify__close').click();
-      document.querySelector('[data-modal-trigger="screenshots-edit"]').remove();
+      document.querySelector('[data-modal-trigger="screenshots-edit"]').style.display = 'none';
     }
   });
 

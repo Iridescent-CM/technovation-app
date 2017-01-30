@@ -8,6 +8,13 @@
               class="appy-button">
         Edit
       </button>
+    <% else %>
+      <button data-modal-trigger="screenshots-edit"
+              role="button"
+              class="appy-button"
+              style="display:none;">
+        Edit
+      </button>
     <% end %>
     <% if submission.screenshots.any? %>
       <button data-modal-trigger="screenshots-modal"
