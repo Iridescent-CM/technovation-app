@@ -1,4 +1,9 @@
-<div class="regional-pitch-event__info">
+<%= link_to student_regional_pitch_event_selections_path(event_id: regional_pitch_event.id),
+  data: { method: :post },
+  class: "regional-pitch-event__info #{'selected' if current_team.regional_pitch_events.include?(regional_pitch_event)}" do %>
+
+  <%= fa_icon("check") %>
+
   <h1><%= regional_pitch_event.name %></h1>
 
   <h2><%= regional_pitch_event.city %></h2>
@@ -29,4 +34,4 @@
         target: :_blank %>
     </p>
   <% end %>
-</div>
+<% end %>

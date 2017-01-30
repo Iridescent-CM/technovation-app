@@ -2,6 +2,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   belongs_to :regional_ambassador_profile
 
   has_and_belongs_to_many :divisions
+  has_and_belongs_to_many :teams, -> { uniq }
 
   validates :name, :starts_at, :ends_at, :division_ids, :city, :venue_address,
     presence: true

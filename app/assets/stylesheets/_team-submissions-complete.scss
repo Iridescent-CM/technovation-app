@@ -33,7 +33,50 @@
   flex-wrap: wrap;
 
   .regional-pitch-event__info {
+    flex: 1;
+    order: 2;
+    display: block;
+    position: relative;
     padding: 1rem 1rem 0;
+    margin-right: 15px;
+    border-radius: 0.3rem;
+    transition: background-color 0.5s;
+    color: #333;
+
+    &:hover {
+      background: lightgrey;
+    }
+
+    &:last-child,
+    &:only-child {
+      margin-right: 0;
+    }
+
+    &.selected {
+      order: 1;
+      background: $shamrock;
+      pointer-events: none;
+      cursor: normal;
+
+      .fa {
+        display: block;
+      }
+
+      .regional_pitch_event__info-time {
+        background: white;
+      }
+    }
+
+    .fa {
+      display: none;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: $lemon;
+      border-radius: 80px;
+      border: 2px solid #333;
+      color: #333;
+    }
 
     p {
       margin: 0;
