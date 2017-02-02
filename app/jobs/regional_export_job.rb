@@ -13,6 +13,7 @@ class RegionalExportJob < ActiveJob::Base
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Signup\ date
+                Last\ updated
                 User\ type
                 First\ name
                 Last\ name
@@ -27,9 +28,9 @@ class RegionalExportJob < ActiveJob::Base
       account_ids.each do |account_id|
         account = Account.find(account_id)
 
-        csv << [account.created_at.to_date, account.type_name, account.first_name,
-                account.last_name, account.email,
-                account.teams.current.flat_map(&:name).to_sentence,
+        csv << [account.created_at.to_date, account.updated_at.to_date,
+                account.type_name, account.first_name, account.last_name,
+                account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.get_school_company_name, account.division, account.city,
                 account.state_province, Country[account.country].name]
       end
