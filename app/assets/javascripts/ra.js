@@ -7,7 +7,7 @@
 
 //= require url-search-params-polyfill
 
-//= reuqire toast_flashes
+//= require toast_flashes
 //= require fancy_uploads
 //= require modalify
 //= require background_checks
