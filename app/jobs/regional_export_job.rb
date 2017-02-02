@@ -2,14 +2,13 @@ class RegionalExportJob < ActiveJob::Base
   queue_as :default
 
   def perform(ambassador, params)
-    token = SecureRandom.urlsafe_base64
-    send("export_#{params[:class]}", ambassador, token, params)
+    send("export_#{params[:class]}", ambassador, params)
   end
 
   private
-  def export_accounts(ambassador, token, params)
+  def export_accounts(ambassador, params)
     account_ids = RegionalAccount.(ambassador, params).pluck(:id)
-    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:type]}-accounts-#{token}.csv"
+    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:type]}-accounts.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Signup\ date
@@ -39,10 +38,10 @@ class RegionalExportJob < ActiveJob::Base
     export(filepath, ambassador)
   end
 
-  def export_teams(ambassador, token, params)
+  def export_teams(ambassador, params)
     team_ids = RegionalTeam.(ambassador, params).select(:id).uniq
     mentor_status = URI.escape("mentor-status-#{params[:mentor_status]}")
-    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:division]}-teams-#{mentor_status}-#{token}.csv"
+    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:division]}-teams-#{mentor_status}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id Division Name City State Country}

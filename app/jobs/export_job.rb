@@ -4,15 +4,14 @@ class ExportJob < ActiveJob::Base
   queue_as :default
 
   def perform(admin, params)
-    token = SecureRandom.urlsafe_base64
-    send("export_#{params[:class]}s", admin, token, params)
+    send("export_#{params[:class]}s", admin, params)
   end
 
   private
-  def export_accounts(admin, token, params)
+  def export_accounts(admin, params)
     account_ids = Admin::SearchAccounts.(params).pluck(:id)
-    search_text = URI.escape("search-query-#{params[:text]}")
-    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{search_text}-#{token}.csv"
+    search_text = params[:text].blank? ? "" : URI.escape("-search-query-#{params[:text]}")
+    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts#{search_text}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{
@@ -44,9 +43,9 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
-  def export_regional_pitch_events(admin, token, params)
+  def export_regional_pitch_events(admin, params)
     event_ids = RegionalPitchEvent.pluck(:id)
-    filepath = "./tmp/2017-regional-pitch-events-#{token}.csv"
+    filepath = "./tmp/2017-regional-pitch-events.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{
@@ -80,10 +79,10 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
-  def export_team_submissions(admin, token, params)
+  def export_team_submissions(admin, params)
     submission_ids = TeamSubmission.pluck(:id)
-    search_text = URI.escape("search-query-#{params[:text]}")
-    filepath = "./tmp/#{params[:season]}-#{params[:division]}-team-submissions-#{search_text}-#{token}.csv"
+    search_text = params[:text].blank? ? "" : URI.escape("-search-query-#{params[:text]}")
+    filepath = "./tmp/#{params[:season]}-#{params[:division]}-team-submissions#{search_text}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{
@@ -117,13 +116,13 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
-  def export_regional_ambassadors(admin, token, params)
+  def export_regional_ambassadors(admin, params)
     params[:type] = "RegionalAmbassador"
     params[:season] = Season.current.year
     params[:status] ||= "pending"
 
     ambassador_ids = Account.current.joins(:regional_ambassador_profile).where("regional_ambassador_profiles.status = ?", RegionalAmbassadorProfile.statuses[params[:status]]).pluck(:id)
-    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{params[:status]}-#{token}.csv"
+    filepath = "./tmp/#{params[:season]}-#{params[:type]}-accounts-#{params[:status]}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Status Signed\ up First\ name Last\ name Email City State Country}
@@ -140,9 +139,9 @@ class ExportJob < ActiveJob::Base
     export(filepath, admin, params[:export_email])
   end
 
-  def export_teams(admin, token, params)
+  def export_teams(admin, params)
     team_ids = Admin::SearchTeams.(params).pluck(:id).uniq
-    filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams-#{token}.csv"
+    filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams.csv"
 
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{Id Division Name Has\ mentor(s) City State Country Student\ emails Mentor\ emails}
