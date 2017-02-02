@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     resource :account, only: :update
 
     resources :profiles, only: :index
+    resources :users, only: :show
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]
 

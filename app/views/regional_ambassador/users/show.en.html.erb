@@ -1,0 +1,20 @@
+<%= render 'profiles/privileged_show', account: @account %>
+
+<% if @account.mentor_profile %>
+  <div class="flex-row">
+    <div class="flex-col-sm-12">
+      <h3><%= t("views.student.mentors.show.teams", name: @account.first_name) %></h3>
+
+      <% if @account.mentor_profile.teams.current.any? %>
+        <ul>
+          <%= render partial: 'student/mentors/team_preview',
+            collection: @account.mentor_profile.teams.current,
+            cached: true,
+            locals: { ra: true } %>
+        </ul>
+      <% else %>
+        <p><%= t("views.student.mentors.show.no_teams", name: @account.first_name) %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
