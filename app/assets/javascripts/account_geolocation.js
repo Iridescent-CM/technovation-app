@@ -19,7 +19,7 @@
           url = geocoded_field.dataset.geolocationUrl + "?lat=" + lat + "&lng=" + lng;
 
       $.getJSON(url, function(data) {
-        geocoded_field.value = data.geocoded;
+        $('#geocoded').typeahead('val', data.geocoded); // REQUIRED for typeahead compatibility
         country_field.value = data.country;
         lat_field.value = lat;
         lng_field.value = lng;
