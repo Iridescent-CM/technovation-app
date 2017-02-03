@@ -3,8 +3,7 @@ class FileProcessor < CarrierWave::Uploader::Base
   storage :fog
 
   def store_dir
-    token = SecureRandom.urlsafe_base64
-    "files/#{model.class.to_s.underscore}/#{mounted_as}/#{token}"
+    "files/#{model.class.to_s.underscore}/#{mounted_as}/#{model.download_token}"
   end
 
   def extension_white_list
