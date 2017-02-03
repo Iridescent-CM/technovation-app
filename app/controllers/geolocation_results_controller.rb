@@ -26,15 +26,15 @@ class GeolocationResultsController < ApplicationController
     lng = Float(lng)
 
     bbox = {
-      lng_east: 34.8747,
+      lng_west: 34.8747,
       lat_south: 31.3443,
-      lng_west: 35.5724,
+      lng_east: 35.5724,
       lat_north: 32.5584,
     }
 
     lat > bbox[:lat_south] and
       lat < bbox[:lat_north] and
-        lng > bbox[:lng_east] and
-          lng < bbox[:lng_west]
+        lng < bbox[:lng_east] and
+          lng > bbox[:lng_west]
   end
 end
