@@ -163,4 +163,8 @@ class TeamSubmission < ActiveRecord::Base
   def team_name_and_app_name
     "#{app_name} by #{team_name}"
   end
+
+  def should_generate_new_friendly_id?
+    super || team_name_and_app_name.parameterize != slug
+  end
 end
