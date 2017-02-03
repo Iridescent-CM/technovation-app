@@ -2,7 +2,10 @@
   geolocate();
 
   function geolocate() {
-    var geocoded_field = document.querySelector("#geocoded");
+    var geocoded_field = document.querySelector("#geocoded"),
+        country_field = document.querySelector("#country"),
+        lat_field = document.querySelector("#latitude"),
+        lng_field = document.querySelector("#latitude");
 
     if (!navigator.geolocation || !geocoded_field)
       return;
@@ -17,6 +20,9 @@
 
       $.getJSON(url, function(data) {
         geocoded_field.value = data.geocoded;
+        country_field.value = data.country;
+        lat_field.value = lat;
+        lng_field.value = lng;
       });
     });
   }
