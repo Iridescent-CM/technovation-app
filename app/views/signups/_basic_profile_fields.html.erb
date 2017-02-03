@@ -20,6 +20,9 @@
                     a.object.regional_ambassador_profile.present? and
                       a.object.regional_ambassador_profile.approved?),
                 onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
+      data: {
+        geolocation_url: geolocation_results_path,
+      },
     },
     label: t("models.account.geocoded") %>
 

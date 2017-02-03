@@ -31,6 +31,7 @@
 //= require tabs
 //= require alternative_forms
 //= require multiple_image_upload
+//= require account_geolocation
 
 //= require submission_scores
 //= require dashboards
