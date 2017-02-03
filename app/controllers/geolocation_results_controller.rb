@@ -17,6 +17,10 @@ class GeolocationResultsController < ApplicationController
       country = "PS"
     end
 
+    if geo_str.blank?
+      geo_str = geocoded.data.fetch("address") { {} }["adminDistrict2"]
+    end
+
     render json: { geocoded: geo_str, country: country }
   end
 
@@ -26,10 +30,10 @@ class GeolocationResultsController < ApplicationController
     lng = Float(lng)
 
     bbox = {
-      lng_west: 34.8747,
-      lat_south: 31.3443,
-      lng_east: 35.5724,
-      lat_north: 32.5584,
+      lng_west: 34.2675,
+      lat_south: 29.4534,
+      lng_east: 35.895,
+      lat_north: 33.3356,
     }
 
     lat > bbox[:lat_south] and
