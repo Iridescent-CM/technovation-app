@@ -1,5 +1,7 @@
 module Judge
   class SubmissionScoresController < JudgeController
+    helper_method :current_team
+
     def new
       @submission_score = current_judge.submission_scores.find_or_create_by!(
         team_submission_id: current_team_submission.id
@@ -56,6 +58,10 @@ module Judge
         redirect_to judge_dashboard_path,
           notice: t("controllers.judge.submission_scores.any.no_submission_found")
       end
+    end
+
+    def current_team
+      current_team_submission.team
     end
   end
 end
