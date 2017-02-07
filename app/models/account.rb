@@ -151,6 +151,12 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def parent_email
+    if student_profile
+      student_profile.parent_guardian_email
+    end
+  end
+
   def parental_consent
     if student_profile
       student_profile.parental_consent

@@ -207,5 +207,4 @@ class StudentProfile < ActiveRecord::Base
                                        "PARENT_LIST_ID")
     end
   end
-
 end
