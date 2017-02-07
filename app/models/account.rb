@@ -1,8 +1,7 @@
 class Account < ActiveRecord::Base
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
 
-  after_save    { IndexAccountJob.perform_later("index", id) }
+  after_save    :index_search_engine
   after_destroy { IndexAccountJob.perform_later("delete", id) }
 
   after_save -> { student_profile &&
@@ -268,6 +267,10 @@ class Account < ActiveRecord::Base
 
   def address_changed?
     city_changed? or state_province_changed? or country_changed?
+  end
+
+  def index_search_engine
+    IndexAccountJob.perform_later("index", id)
   end
 
   class NoAuthFound
