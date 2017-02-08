@@ -13,7 +13,12 @@ module RegionalAmbassador
       params[:cleared_status] = "All" if params[:cleared_status].blank?
 
       @accounts = RegionalAccount.(current_ambassador, params)
-        .paginate(per_page: params[:per_page], page: params[:page])
+        .page(params[:page].to_i)
+        .per_page(params[:per_page].to_i)
+
+      if @accounts.empty?
+        @accounts = @accounts.page(1)
+      end
     end
 
     def profile_params
