@@ -14,28 +14,64 @@
       <div class="admin-results-header-table">
         <div class="header">
           Type
-
           <%= fa_icon("caret-square-o-down",
                       class: "header-filter-menu",
                       data: { menu: "header-menu-type" }) %>
         </div>
-        <div class="header">Signed up</div>
-        <div class="header">Name</div>
+
+        <div class="header">
+          Signed up
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-created-at" }) %>
+        </div>
+
+        <div class="header">
+          Name
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-name" }) %>
+        </div>
+
         <div class="header">On a team?</div>
-        <div class="header">Email</div>
+
+        <div class="header">
+          Email
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-email" }) %>
+        </div>
 
         <% if params[:type] == "Student" %>
           <div class="header">Parent Email</div>
         <% end %>
 
-        <div class="header">School / Company name</div>
-        <div class="header">Division</div>
+        <div class="header">
+          School / Company name
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-school" }) %>
+        </div>
+
+        <div class="header">
+          Division
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-division" }) %>
+        </div>
+
         <div class="header">Referred by</div>
-        <div class="header">Location</div>
+
+        <div class="header">
+          Location
+          <%= fa_icon("caret-square-o-down",
+                      class: "header-filter-menu",
+                      data: { menu: "header-menu-location" }) %>
+        </div>
       </div>
 
       <div class="admin-results-data-table">
-        <% @accounts.order('accounts.created_at DESC').each do |account| %>
+        <% @accounts.each do |account| %>
           <div class="row">
             <div class="cell">
               <%= account.type_name %>
@@ -95,9 +131,10 @@
 </div>
 
 <div id="menu-underlay"></div>
-<div id="header-menu-type" class="header-menu">
-  <ul class="menu">
-    <li><%= fa_icon("sort-asc", text: "Sort ascending") %></li>
-    <li><%= fa_icon("sort-desc", text: "Sort descending") %></li>
-  </ul>
-</div>
+<%= render 'sorting_header_menu', id: "type" %>
+<%= render 'sorting_header_menu', id: "created-at", value: "accounts.created_at" %>
+<%= render 'sorting_header_menu', id: "name", value: "accounts.last_name" %>
+<%= render 'sorting_header_menu', id: "email", value: "accounts.email" %>
+<%= render 'sorting_header_menu', id: "school" %>
+<%= render 'sorting_header_menu', id: "division" %>
+<%= render 'sorting_header_menu', id: "location", value: "accounts.city" %>
