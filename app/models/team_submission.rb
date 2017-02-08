@@ -56,6 +56,16 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
+  def source_code_external_url=(url)
+    sanitized_url = if url.match(%r{\Ahttps?://})
+            url
+          else
+            url.sub(%r{\A(?:\w+://)?}, "http://")
+          end
+
+    super(sanitized_url)
+  end
+
   def complete?
     team.team_photo.present? and
       not app_name.blank? and

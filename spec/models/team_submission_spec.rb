@@ -16,4 +16,18 @@ RSpec.describe TeamSubmission do
       %w{Poverty Environment Peace Equality Education Health}
     )
   end
+
+  it "prepends urls with http:// if it's not there" do
+    subject.source_code_external_url = "joesak.com"
+    expect(subject.source_code_external_url).to eq("http://joesak.com")
+
+    subject.source_code_external_url = "http://joesak.com"
+    expect(subject.source_code_external_url).to eq("http://joesak.com")
+
+    subject.source_code_external_url = "https://joesak.com"
+    expect(subject.source_code_external_url).to eq("https://joesak.com")
+
+    subject.source_code_external_url = "ht://joesak.com"
+    expect(subject.source_code_external_url).to eq("http://joesak.com")
+  end
 end
