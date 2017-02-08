@@ -133,8 +133,8 @@
 <div id="menu-underlay"></div>
 <%= render 'sorting_header_menu', id: "type" %>
 <%= render 'sorting_header_menu', id: "created-at", value: "accounts.created_at" %>
-<%= render 'sorting_header_menu', id: "name", value: "accounts.last_name" %>
-<%= render 'sorting_header_menu', id: "email", value: "accounts.email" %>
+<%= render 'sorting_header_menu', id: "name", value: "LOWER(accounts.last_name)" %>
+<%= render 'sorting_header_menu', id: "email", value: "LOWER(accounts.email)" %>
 <%= render 'sorting_header_menu', id: "school" %>
 <%= render 'sorting_header_menu', id: "division" %>
-<%= render 'sorting_header_menu', id: "location", value: "accounts.city" %>
+<%= render 'sorting_header_menu', id: "location", value: "LOWER(accounts.city)" %>

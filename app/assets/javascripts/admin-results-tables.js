@@ -64,23 +64,12 @@
         menuItems = document.querySelectorAll('.header-menu li'),
         underlay = document.getElementById('menu-underlay');
 
-    if (underlay) {
-      underlay.close = function() {
-        underlay.style.display = "none";
-
-        var activeMenus = document.querySelectorAll('.header-menu.active');
-
-        activeMenus.forEach(function(m) {
-          m.classList.remove('active');
-        });
-      }
-
-      underlay.addEventListener('click', function() { underlay.close(); });
-    }
+    if (underlay)
+      underlay.addEventListener('click', function() { closeActiveMenus(); });
 
     menuItems.forEach(function(item) {
       item.addEventListener('click', function(e) {
-        underlay.close();
+        closeActiveMenus();
         var option = e.target.querySelector('.fa');
         Admin.Utils.updateURLSearchParams(option.dataset.name, option.dataset.value);
       });
@@ -91,16 +80,27 @@
         var menu = document.getElementById(e.target.dataset.menu),
             viewportOffset = e.target.getBoundingClientRect();
 
-        menu.style.top = viewportOffset.top + 17 + "px";
-        menu.style.left = viewportOffset.left + "px";
+        menu.style.top = e.pageY + 10 + "px";
+        menu.style.left = e.pageX + "px";
         menu.classList.toggle('active');
 
         if (menu.classList.contains('active')) {
           underlay.style.display = "block";
         } else {
-          underlay.close();
+          closeActiveMenus();
         }
       });
+    });
+  }
+
+  function closeActiveMenus() {
+    var underlay = document.getElementById('menu-underlay'),
+        activeMenus = document.querySelectorAll('.header-menu.active');
+
+    underlay.style.display = "none";
+
+    activeMenus.forEach(function(m) {
+      m.classList.remove('active');
     });
   }
 })();
