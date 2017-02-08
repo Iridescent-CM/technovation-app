@@ -6,6 +6,7 @@
 // RAILS VIEW HELPER DEPENDENCY
 
 //= require url-search-params-polyfill
+//= require admin/utils
 
 //= require toast_flashes
 //= require fancy_uploads

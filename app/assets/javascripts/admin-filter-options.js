@@ -7,22 +7,14 @@
     );
 
     fields.forEach(function(field) {
-      field.addEventListener('change', updateURLSearchParams);
+      field.addEventListener('change', function(e) {
+        Admin.Utils.updateURLSearchParams(e.target.name, e.target.value);
+      });
+
       field.addEventListener('keydown', function(e) {
         if (e.keyCode === 13) // ENTER
-          updateURLSearchParams(e);
+          Admin.Utils.updateURLSearchParams(e.target.name, e.target.value);
       });
     });
-
-    function updateURLSearchParams(e) {
-      var paramName = e.target.name,
-          paramValue = e.target.value,
-          url = new URL(window.location),
-          params = new URLSearchParams(url.search.slice(1));
-
-      params.set(paramName, paramValue);
-
-      location.href = window.location.pathname + "?" + params.toString();
-    }
   }
 })();

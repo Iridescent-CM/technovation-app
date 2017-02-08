@@ -70,7 +70,7 @@
 
         var activeMenus = document.querySelectorAll('.header-menu.active');
 
-        Array.prototype.forEach.call(activeMenus, function(m) {
+        activeMenus.forEach(function(m) {
           m.classList.remove('active');
         });
       }
@@ -78,13 +78,15 @@
       underlay.addEventListener('click', function() { underlay.close(); });
     }
 
-    Array.prototype.forEach.call(menuItems, function(item) {
+    menuItems.forEach(function(item) {
       item.addEventListener('click', function(e) {
         underlay.close();
+        var option = e.target.querySelector('.fa');
+        Admin.Utils.updateURLSearchParams(option.dataset.name, option.dataset.value);
       });
     });
 
-    Array.prototype.forEach.call(menuBtns, function(btn) {
+    menuBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         var menu = document.getElementById(e.target.dataset.menu),
             viewportOffset = e.target.getBoundingClientRect();
