@@ -1,5 +1,6 @@
 (function() {
   enableAdminDataTables();
+  syncTableScrolling();
 
   function enableAdminDataTables() {
     var wrappers = document.querySelectorAll('.admin-results-table');
@@ -39,5 +40,21 @@
       var row = cell.parentNode;
       return Array.prototype.indexOf.call(row.children, cell);
     }
+  }
+
+  function syncTableScrolling() {
+    var body = document.querySelector('.admin-results-data-table'),
+        header = document.querySelector('.admin-results-header-table');
+
+    if (!body)
+      return
+
+    body.addEventListener('scroll', function(e) {
+      header.scrollLeft = e.target.scrollLeft;
+    });
+
+    header.addEventListener('scroll', function(e) {
+      body.scrollLeft = e.target.scrollLeft;
+    });
   }
 })();

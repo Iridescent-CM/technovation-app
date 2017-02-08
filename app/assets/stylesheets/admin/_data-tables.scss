@@ -14,16 +14,21 @@
 
 .admin-results-table {
   max-width: 650px;
-  max-height: 400px;
-  overflow: auto;
   white-space: nowrap;
   margin: 1rem 0;
   border: 3px solid #666;
 
   .admin-results-header-table {
-    display: table-row;
     background: $mulberry;
     color: white;
+    max-width: 650px;
+    overflow: auto;
+  }
+
+  .admin-results-data-table {
+    max-width: 650px;
+    max-height: 400px;
+    overflow: auto;
   }
 
   .header,
