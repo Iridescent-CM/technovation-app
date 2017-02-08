@@ -1,6 +1,7 @@
 (function() {
   enableAdminDataTables();
   syncTableScrolling();
+  enableHeaderFilterMenus();
 
   function enableAdminDataTables() {
     var wrappers = document.querySelectorAll('.admin-results-table');
@@ -55,6 +56,49 @@
 
     header.addEventListener('scroll', function(e) {
       body.scrollLeft = e.target.scrollLeft;
+    });
+  }
+
+  function enableHeaderFilterMenus() {
+    var menuBtns = document.querySelectorAll('.header-filter-menu'),
+        menuItems = document.querySelectorAll('.header-menu li'),
+        underlay = document.getElementById('menu-underlay');
+
+    if (underlay) {
+      underlay.close = function() {
+        underlay.style.display = "none";
+
+        var activeMenus = document.querySelectorAll('.header-menu.active');
+
+        Array.prototype.forEach.call(activeMenus, function(m) {
+          m.classList.remove('active');
+        });
+      }
+
+      underlay.addEventListener('click', function() { underlay.close(); });
+    }
+
+    Array.prototype.forEach.call(menuItems, function(item) {
+      item.addEventListener('click', function(e) {
+        underlay.close();
+      });
+    });
+
+    Array.prototype.forEach.call(menuBtns, function(btn) {
+      btn.addEventListener('click', function(e) {
+        var menu = document.getElementById(e.target.dataset.menu),
+            viewportOffset = e.target.getBoundingClientRect();
+
+        menu.style.top = viewportOffset.top + 17 + "px";
+        menu.style.left = viewportOffset.left + "px";
+        menu.classList.toggle('active');
+
+        if (menu.classList.contains('active')) {
+          underlay.style.display = "block";
+        } else {
+          underlay.close();
+        }
+      });
     });
   }
 })();
