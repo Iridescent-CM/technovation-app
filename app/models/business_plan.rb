@@ -10,7 +10,7 @@ class BusinessPlan < ActiveRecord::Base
   def remote_file_url=(url)
     sanitized_url = if url.match(%r{\Ahttps?://})
             url
-          else
+          elsif not url.blank?
             url.sub(%r{\A(?:\w+://)?}, "http://")
           end
 

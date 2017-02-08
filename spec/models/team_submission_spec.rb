@@ -29,5 +29,8 @@ RSpec.describe TeamSubmission do
 
     subject.source_code_external_url = "ht://joesak.com"
     expect(subject.source_code_external_url).to eq("http://joesak.com")
+
+    subject.source_code_external_url = ""
+    expect(subject.source_code_external_url).to be_blank
   end
 end

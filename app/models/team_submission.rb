@@ -59,7 +59,7 @@ class TeamSubmission < ActiveRecord::Base
   def source_code_external_url=(url)
     sanitized_url = if url.match(%r{\Ahttps?://})
             url
-          else
+          elsif not url.blank?
             url.sub(%r{\A(?:\w+://)?}, "http://")
           end
 

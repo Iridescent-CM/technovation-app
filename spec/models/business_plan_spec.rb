@@ -14,5 +14,8 @@ RSpec.describe BusinessPlan do
 
     b.remote_file_url = "hts://joesak.com"
     expect(b.remote_file_url).to eq("http://joesak.com")
+
+    b.remote_file_url = ""
+    expect(b.remote_file_url).to be_blank
   end
 end
