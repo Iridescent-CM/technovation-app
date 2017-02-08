@@ -21,7 +21,7 @@ module Student
     end
 
     def show
-      @team_submission = current_team.team_submissions.friendly.find(params.fetch(:id))
+      @team_submission = current_team.team_submissions.last
       @team_submission.build_business_plan unless @team_submission.business_plan
 
       @team_photo_uploader = ImageUploader.new
@@ -52,7 +52,7 @@ module Student
     end
 
     def update
-      @team_submission = current_team.team_submissions.friendly.find(params.fetch(:id))
+      @team_submission = current_team.team_submissions.last
 
       if team_submission_params[:screenshots]
         team_submission_params[:screenshots].each_with_index do |id, index|
