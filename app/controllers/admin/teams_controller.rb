@@ -1,8 +1,16 @@
 module Admin
   class TeamsController < AdminController
     def index
-      teams = Admin::SearchTeams.(params)
-      @teams = teams.paginate(per_page: params[:per_page], page: params[:page])
+      params[:page] = 1 if params[:page].blank?
+      params[:per_page] = 15 if params[:per_page].blank?
+
+      @teams = Admin::SearchTeams.(params)
+        .page(params[:page].to_i)
+        .per_page(params[:per_page].to_i)
+
+      if @teams.empty?
+        @teams = @teams.page(1)
+      end
     end
 
     def show

@@ -2,6 +2,8 @@ module Admin
   class RegionalAmbassadorsController < AdminController
     def index
       params[:status] ||= :pending
+      params[:page] = 1 if params[:page].blank?
+      params[:per_page] = 15 if params[:per_page].blank?
 
       regional_ambassadors = Account.joins(:regional_ambassador_profile)
         .where("regional_ambassador_profiles.status = ?",
@@ -21,7 +23,11 @@ module Admin
         regional_ambassadors = regional_ambassadors.where(id: results.flat_map { |r| r._source.id })
       end
 
-      @regional_ambassadors = regional_ambassadors.paginate(per_page: params[:per_page], page: params[:page])
+      @regional_ambassadors = regional_ambassadors.page(params[:page].to_i).per_page(params[:per_page].to_i)
+
+      if @regional_ambassadors.empty?
+        @regional_ambassadors = @regional_ambassadors.page(1)
+      end
     end
 
     def show

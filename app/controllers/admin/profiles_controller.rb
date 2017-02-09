@@ -3,8 +3,16 @@ module Admin
     helper_method :account
 
     def index
-      accounts = SearchAccounts.(params)
-      @accounts = accounts.paginate(per_page: params[:per_page], page: params[:page])
+      params[:page] = 1 if params[:page].blank?
+      params[:per_page] = 15 if params[:per_page].blank?
+
+      @accounts = SearchAccounts.(params)
+        .page(params[:page].to_i)
+        .per_page(params[:per_page].to_i)
+
+      if @accounts.empty?
+        @accounts = @accounts.page(1)
+      end
     end
 
     def show

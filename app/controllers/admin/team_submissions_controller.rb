@@ -1,8 +1,16 @@
 module Admin
   class TeamSubmissionsController < AdminController
     def index
+      params[:page] = 1 if params[:page].blank?
+      params[:per_page] = 15 if params[:per_page].blank?
+
       @team_submissions = Admin::SearchTeamSubmissions.(params)
-        .paginate(per_page: params[:per_page], page: params[:page])
+        .page(params[:page].to_i)
+        .per_page(params[:per_page].to_i)
+
+      if @team_submissions.empty?
+        @team_submissions = @team_submissions.page(1)
+      end
     end
 
     def show
