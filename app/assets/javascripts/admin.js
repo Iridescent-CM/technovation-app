@@ -12,3 +12,4 @@
 
 //= require admin-results-tables
 //= require admin-filter-options
+//= require admin/pitch-events

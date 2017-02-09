@@ -1,4 +1,7 @@
 class RegionalPitchEvent < ActiveRecord::Base
+  scope :unofficial, -> { where(unofficial: true) }
+  scope :official, -> { where(unofficial: false) }
+
   belongs_to :regional_ambassador_profile
 
   has_and_belongs_to_many :divisions

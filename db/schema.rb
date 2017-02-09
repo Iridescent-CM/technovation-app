@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203150805) do
+ActiveRecord::Schema.define(version: 20170209160905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,16 +244,17 @@ ActiveRecord::Schema.define(version: 20170203150805) do
   add_index "regional_ambassador_profiles", ["status"], name: "index_regional_ambassador_profiles_on_status", using: :btree
 
   create_table "regional_pitch_events", force: :cascade do |t|
-    t.datetime "starts_at",                      null: false
-    t.datetime "ends_at",                        null: false
+    t.datetime "starts_at",                                      null: false
+    t.datetime "ends_at",                                        null: false
     t.integer  "regional_ambassador_profile_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "division_id"
     t.string   "city"
     t.string   "venue_address"
     t.string   "eventbrite_link"
     t.string   "name"
+    t.boolean  "unofficial",                     default: false
   end
 
   add_index "regional_pitch_events", ["division_id"], name: "index_regional_pitch_events_on_division_id", using: :btree
