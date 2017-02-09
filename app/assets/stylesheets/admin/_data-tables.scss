@@ -137,6 +137,10 @@
       margin: 0;
       cursor: pointer;
 
+      select {
+        font-size: 0.8rem;
+      }
+
       &:hover {
         background: rgba(0, 0, 0, 0.2);
       }

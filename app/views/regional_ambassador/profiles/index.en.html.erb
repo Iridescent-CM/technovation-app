@@ -131,7 +131,13 @@
 </div>
 
 <div id="menu-underlay"></div>
-<%= render 'sorting_header_menu', id: "type" %>
+<%= render layout: 'sorting_header_menu', locals: { id: "type" } do %>
+  <%= content_tag :li, data: { filter_select: true, reload: true } do %>
+    <%= select_tag :type,
+      options_for_select(%w{All Mentor Student RegionalAmbassador Judge}, params[:type]) %>
+  <% end %>
+<% end %>
+
 <%= render 'sorting_header_menu', id: "created-at", value: "accounts.created_at" %>
 <%= render 'sorting_header_menu', id: "name", value: "LOWER(accounts.last_name)" %>
 <%= render 'sorting_header_menu', id: "email", value: "LOWER(accounts.email)" %>

@@ -69,9 +69,11 @@
 
     menuItems.forEach(function(item) {
       item.addEventListener('click', function(e) {
-        closeActiveMenus();
-        var option = e.target.querySelector('.fa');
-        Admin.Utils.updateURLSearchParams(option.dataset.name, option.dataset.value);
+        if (!item.dataset.filterSelect) {
+          closeActiveMenus();
+          var option = e.target.querySelector('.fa');
+          Admin.Utils.updateURLSearchParams(option.dataset.name, option.dataset.value);
+        }
       });
     });
 
