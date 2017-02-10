@@ -12,7 +12,7 @@ class GeolocationResultsController < ApplicationController
 
     if !!geocoded
       city = geocoded.city
-      state = geocoded.state
+      state = geocoded.state_code
       country = geocoded.country_code
     end
 
