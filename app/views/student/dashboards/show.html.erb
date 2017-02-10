@@ -8,7 +8,11 @@
 
 <div class="flex-row dashboard">
   <div class="flex-col-sm-8 dashboard__main">
-    <% unless current_student.full_access_enabled? %>
+    <% if current_student.full_access_enabled? and current_student.is_on_team? and current_student.team.mentors.empty? %>
+      <ul class="to-do__list">
+        <%= render 'student/dashboards/completion_steps/find_a_mentor' %>
+      </ul>
+    <% else %>
       <%= render 'completion_steps' %>
     <% end %>
 
