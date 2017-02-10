@@ -17,6 +17,8 @@ ActiveRecord::Migration.maintain_test_schema!
 Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
+  config.fail_fast = true
+
   config.include SigninHelper, type: :feature
   config.include ControllerSigninHelper, type: :controller
   config.include SelectDateHelper, type: :feature

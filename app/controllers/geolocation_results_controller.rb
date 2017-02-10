@@ -3,25 +3,28 @@ class GeolocationResultsController < ApplicationController
     lat = params.fetch(:lat)
     lng = params.fetch(:lng)
     query = [lat, lng].join(',')
-    geo_str = ""
+    city = ""
+    state = ""
     country = ""
 
     geocoded = Geocoder.search(query).first ||
       Geocoder.search(query, lookup: :bing).first
 
     if !!geocoded
-      geo_str = [geocoded.city, geocoded.state, geocoded.country].compact.join(', ')
+      city = geocoded.city
+      state = geocoded.state
+      country = geocoded.country_code
     end
 
     if !!geocoded and geocoded.country.blank? and inside_palestine_bbox?(lat, lng)
       country = "PS"
     end
 
-    if geo_str.blank?
-      geo_str = geocoded.data.fetch("address") { {} }["adminDistrict2"]
+    if city.blank?
+      city = geocoded.data.fetch("address") { {} }["adminDistrict2"]
     end
 
-    render json: { geocoded: geo_str, country: country }
+    render json: { city: city, state: state, country: country }
   end
 
   private

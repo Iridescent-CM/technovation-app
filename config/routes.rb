@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
+    resource :location_details, only: :show
+
     resources :cookies, only: :create
 
     resource :dashboard, only: :show
@@ -50,6 +52,8 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
+    resource :location_details, only: :show
+
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
 
@@ -80,6 +84,8 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
+    resource :location_details, only: :show
+
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
     resource :account, only: :update
@@ -101,6 +107,8 @@ Rails.application.routes.draw do
   namespace :judge do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
+
+    resource :location_details, only: :show
 
     resource :profile, only: [:show, :edit, :update]
 

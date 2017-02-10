@@ -14,18 +14,19 @@ RSpec.feature "Edit account spec" do
   end
 
   scenario "edit geocoded info" do
-    click_link "Edit"
+    click_link "Edit my location"
 
-    expect(page).to have_css('input[value="Chicago, IL, United States"]')
+    expect(page).to have_css('input[value="Chicago"]')
 
-    fill_in "Postal code -OR- City & State/Province", with: "Los Angeles, CA"
-    click_button "Save"
+    fill_in "City", with: "Los Angeles"
+    fill_in "State / Province", with: "CA"
+    click_button "Confirm location details"
 
     expect(StudentProfile.last.city).to eq("Los Angeles")
   end
 
   scenario "attempt to edit with wrong existing password" do
-    click_link "Edit"
+    click_link "Edit my profile"
     fill_in "Change your password", with: "something@else.com"
 
     fill_in "Current password", with: "wrong"
@@ -34,7 +35,7 @@ RSpec.feature "Edit account spec" do
   end
 
   scenario "attempt to edit without existing password" do
-    click_link "Edit"
+    click_link "Edit my profile"
     fill_in "Change your password", with: "something@else.com"
 
     fill_in "Current password", with: ""
@@ -43,7 +44,7 @@ RSpec.feature "Edit account spec" do
   end
 
   scenario "edit profile info" do
-    click_link "Edit"
+    click_link "Edit my profile"
     fill_in "School name", with: "New School"
 
     click_button "Save"

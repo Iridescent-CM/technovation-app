@@ -161,3 +161,63 @@
   font-size: 2rem;
   margin: 15px 0;
 }
+
+.signups__location-fields {
+  max-width: 650px;
+
+  form {
+    label {
+      span.confirm_sentence {
+        text-transform: none;
+        color: red;
+        font-weight: bold;
+      }
+    }
+
+    ul {
+      background: lightgrey;
+      border-radius: 0.3rem;
+      box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+      list-style: disc;
+      margin: 1rem 0 2rem;
+      padding: 1rem 1rem 1rem 2rem;
+
+      li {
+        margin: 0;
+        padding: 0.5rem 0;
+      }
+    }
+
+    input, select, button, label, ul {
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+
+    .while-geocoding {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    input[type="submit"] {
+      opacity: 0.5;
+    }
+
+    &.confirmed {
+      input[type="submit"] {
+        opacity: 1;
+      }
+    }
+
+    &.geocoding {
+      input, select, button, label, ul {
+        opacity: 0;
+      }
+
+      .while-geocoding {
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
+}

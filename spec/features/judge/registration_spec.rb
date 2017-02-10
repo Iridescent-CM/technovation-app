@@ -11,8 +11,6 @@ RSpec.feature "Register as a judge" do
 
     select_date Date.today - 31.years, from: "Date of birth"
 
-    fill_in "Postal code -OR- City & State/Province", with: 60647
-
     fill_in "Company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Coming of age Storywriter"
 
@@ -30,6 +28,15 @@ RSpec.feature "Register as a judge" do
   end
 
   scenario "Address info is figured out" do
+    click_link "Enter your location now"
+
+    fill_in "City", with: "Chicago"
+    fill_in "State / Province", with: "IL"
+    select "United States", from: "Country"
+    fill_in "account_confirm_sentence", with: "yes this is my location"
+    click_button "Confirm location details"
+
     expect(JudgeProfile.last.address_details).to eq("Chicago, IL, United States")
+    expect(JudgeProfile.last.account).to be_location_confirmed
   end
 end

@@ -1,6 +1,7 @@
 @import "admin";
 
 @import "accounts";
+@import "signups";
 @import "background-checks";
 
 @import "partials/animations";
@@ -164,5 +165,11 @@ form {
     border: solid $mulberry;
     border-width: 0 1px 1px;
     border-radius: 0.3rem;
+  }
+}
+
+.signups__location-fields {
+  .appy-button {
+    margin: 1rem 0;
   }
 }

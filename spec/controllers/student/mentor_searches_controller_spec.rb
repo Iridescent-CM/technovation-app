@@ -31,10 +31,10 @@ RSpec.describe Student::MentorSearchesController do
       FactoryGirl.create(
         :mentor,
         virtual: false,
-        geocoded: "Los Angeles, CA",
+        city: "Los Angeles",
       )
 
-      sign_in(FactoryGirl.create(:student, :on_team, geocoded: "Chicago, IL"))
+      sign_in(FactoryGirl.create(:student, :on_team))
 
       get :new, nearby: "anywhere", virtual_only: 1
 

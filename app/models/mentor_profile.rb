@@ -4,8 +4,10 @@ class MentorProfile < ActiveRecord::Base
     .includes(account: :background_check)
     .references(:accounts, :background_checks)
     .where(
-      "(accounts.country = ? AND background_checks.status = ?) OR accounts.country != ?",
-      "US", BackgroundCheck.statuses[:clear], "US"
+      "(accounts.country = ?
+        AND background_checks.status = ?
+          AND accounts.location_confirmed = ?) OR accounts.country != ?",
+      "US", BackgroundCheck.statuses[:clear], true, "US"
     )
   }
 
@@ -167,11 +169,14 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    consent_signed? and background_check_complete? and not bio.blank?
+    consent_signed? and
+      background_check_complete? and
+        location_confirmed? and
+          not bio.blank?
   end
 
   private
   def can_enable_searchable?
-    consent_signed? and background_check_complete?
+    consent_signed? and background_check_complete? and location_confirmed?
   end
 end

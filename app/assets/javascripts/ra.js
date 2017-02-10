@@ -8,6 +8,9 @@
 //= require url-search-params-polyfill
 //= require admin/utils
 
+//= require account_geolocation
+//= require location_confirm
+
 //= require toast_flashes
 //= require fancy_uploads
 //= require modalify

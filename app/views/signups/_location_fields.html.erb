@@ -1,0 +1,66 @@
+<div class="signups__location-fields">
+  <%= simple_form_for current_profile,
+                      url: [current_account.type_name(controller_path.split('/').first), :profile],
+                      html: { class: "no-simple-form-style" } do |f| %>
+
+    <div class="while-geocoding">
+      <%= fa_icon "circle-o-notch spin", text: "Detecting your location..." %>
+    </div>
+
+    <%= f.fields_for :account do |a| %>
+      <%= a.input :city,
+        input_html: {
+          id: "account_city",
+          data: {
+            geolocation_url: geolocation_results_path,
+          },
+        } %>
+
+      <%= a.input :state_province,
+        label: t("models.account.state_province"),
+        input_html: {
+          id: "account_state_province",
+        } %>
+
+      <%= a.input :country,
+        label: t("models.account.country"),
+        collection: CountryStateSelect.countries_collection,
+        input_html: {
+          id: "account_country",
+        } %>
+
+      <%= a.input :latitude, as: :hidden,
+        input_html: {
+          id: "account_latitude",
+        } %>
+
+      <%= a.input :longitude, as: :hidden,
+        input_html: {
+          id: "account_longitude",
+        } %>
+
+      <ul>
+        <li><strong>Double-check</strong> and confirm the information above.</li>
+        <li><strong>Only</strong> change something that is incorrect.</li>
+        <li><strong>Do not</strong> change anything due to formatting.</li>
+      </ul>
+
+      <% unless a.object.location_confirmed? %>
+        <%= a.input :confirm_sentence,
+          label: 'You must type <span class="confirm_sentence">yes this is my location</span> to confirm'.html_safe,
+          input_html: {
+            autocomplete: :off,
+            id: "account_confirm_sentence",
+            data: {
+              confirm_sentence: "Yes this is my location",
+            },
+          } %>
+      <% end %>
+    <% end %>
+
+    <%= f.button :submit,
+      "Confirm location details",
+      disabled: (not Rails.env.test? and not f.object.account.location_confirmed?),
+      class: "appy-button" %>
+  <% end %>
+</div>

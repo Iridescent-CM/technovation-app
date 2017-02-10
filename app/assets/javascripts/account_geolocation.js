@@ -2,27 +2,34 @@
   geolocate();
 
   function geolocate() {
-    var geocoded_field = document.querySelector("#geocoded"),
-        country_field = document.querySelector("#country"),
-        lat_field = document.querySelector("#latitude"),
-        lng_field = document.querySelector("#longitude");
+    var cityField = document.querySelector("#account_city"),
+        stateField = document.querySelector("#account_state_province"),
+        countryField = document.querySelector("#account_country"),
+        latField = document.querySelector("#account_latitude"),
+        lngField = document.querySelector("#account_longitude");
 
-    if (!navigator.geolocation || !geocoded_field)
+    if (!navigator.geolocation || !cityField)
       return;
 
-    if (geocoded_field.value !== "")
+    if (cityField.value !== "")
       return;
+
+    cityField.closest('form').classList.add('geocoding');
 
     navigator.geolocation.getCurrentPosition(function(position) {
       var lat = position.coords.latitude,
           lng = position.coords.longitude,
-          url = geocoded_field.dataset.geolocationUrl + "?lat=" + lat + "&lng=" + lng;
+          url = cityField.dataset.geolocationUrl + "?lat=" + lat + "&lng=" + lng;
 
       $.getJSON(url, function(data) {
-        $('#geocoded').typeahead('val', data.geocoded); // REQUIRED for typeahead compatibility
-        country_field.value = data.country;
-        lat_field.value = lat;
-        lng_field.value = lng;
+        cityField.value = data.city;
+        stateField.value = data.state;
+        countryField.value = data.country;
+
+        latField.value = lat;
+        lngField.value = lng;
+
+        cityField.closest('form').classList.remove('geocoding');
       });
     });
   }

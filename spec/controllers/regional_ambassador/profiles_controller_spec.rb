@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe RegionalAmbassador::ProfilesController do
   describe "GET #index" do
     it "shows users in the state region for US RAs" do
-      FactoryGirl.create(:student, geocoded: "Chicago, IL")
-      FactoryGirl.create(:mentor, geocoded: "Evanston, IL")
+      FactoryGirl.create(:student) # Chicago is default
+      FactoryGirl.create(:mentor, city: "Evanston")
 
-      wisconsin_ra = FactoryGirl.create(:regional_ambassador, geocoded: "Milwaukee, WI")
-      illinois_ra = FactoryGirl.create(:regional_ambassador, geocoded: "Chicago, IL")
+      wisconsin_ra = FactoryGirl.create(:regional_ambassador, city: "Milwaukee")
+      illinois_ra = FactoryGirl.create(:regional_ambassador) # Chicago is default
 
       sign_in(illinois_ra)
       get :index
@@ -15,16 +15,16 @@ RSpec.describe RegionalAmbassador::ProfilesController do
     end
 
     it "shows users in the country region for Intn'l RAs" do
-      us_student = FactoryGirl.create(:student, geocoded: "Chicago, IL")
+      us_student = FactoryGirl.create(:student) # Chicago is default
       riyadh_ra = FactoryGirl.create(:regional_ambassador,
                                      status: :approved,
-                                     geocoded: "Dhurma")
-      najran_student = FactoryGirl.create(:student, geocoded: "Najran")
+                                     city: "Dhurma")
+      najran_student = FactoryGirl.create(:student, city: "Najran")
 
-      pending_ra = FactoryGirl.create(:ambassador, status: :pending, geocoded: "Dhurma")
-      approved_ra = FactoryGirl.create(:ambassador, status: :approved, geocoded: "Dhurma")
-      declined_ra = FactoryGirl.create(:ambassador, status: :declined, geocoded: "Dhurma")
-      spam_ra = FactoryGirl.create(:ambassador, status: :spam, geocoded: "Dhurma")
+      pending_ra = FactoryGirl.create(:ambassador, status: :pending, city: "Dhurma")
+      approved_ra = FactoryGirl.create(:ambassador, status: :approved, city: "Dhurma")
+      declined_ra = FactoryGirl.create(:ambassador, status: :declined, city: "Dhurma")
+      spam_ra = FactoryGirl.create(:ambassador, status: :spam, city: "Dhurma")
 
       sign_in(riyadh_ra)
       get :index

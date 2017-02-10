@@ -11,34 +11,6 @@
     end_year: f.object.oldest_birth_year,
     input_html: { class: "account_dob" } %>
 
-  <%= a.input :geocoded,
-    input_html: {
-      id: "geocoded",
-      value: a.object.address_details,
-      disabled: (not admin and
-                  a.object.persisted? and
-                    a.object.regional_ambassador_profile.present? and
-                      a.object.regional_ambassador_profile.approved?),
-                onblur: "ga('send', 'event', 'accounts', 'geocoded=' + this.value);",
-      data: {
-        geolocation_url: geolocation_results_path,
-      },
-    },
-    label: t("models.account.geocoded") %>
-
-  <%= a.input :latitude, as: :hidden, input_html: { id: "latitude" } %>
-  <%= a.input :longitude, as: :hidden, input_html: { id: "longitude" } %>
-
-  <%= a.input :country,
-    label: t("models.account.country"),
-    collection: CountryStateSelect.countries_collection,
-    input_html: { id: "country" },
-    wrapper_html: {
-      class: "location-#{extra_location_field(a.object, :country)}"
-    } %>
-
-  <%= a.input :state_province, as: :hidden, input_html: { id: "state" } %>
-
   <% if a.object.persisted? %>
     <h6 id="account-profile-image" class="signup-section">
       <%= t("views.signups.new.section_headers.profile_image") %>

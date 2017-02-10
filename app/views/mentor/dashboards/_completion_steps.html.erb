@@ -4,6 +4,7 @@
   </h2>
 
   <ul class="to-do__list">
+    <%= render 'completion_steps/location_details', account: current_mentor %>
     <%= render 'completion_steps/consent_waiver', account: current_mentor %>
     <%= render 'completion_steps/honor_code', account: current_mentor %>
     <%= render 'completion_steps/background_check', account: current_mentor %>

@@ -1,5 +1,5 @@
 class StudentProfile < ActiveRecord::Base
-  scope :full_access, -> { joins(:parental_consent) }
+  scope :full_access, -> { joins(:account, :parental_consent).where("accounts.location_confirmed = ?", true) }
 
   has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
@@ -158,7 +158,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    parental_consent_signed?
+    parental_consent_signed? and location_confirmed?
   end
 
   private

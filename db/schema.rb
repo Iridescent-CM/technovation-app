@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209160905) do
+ActiveRecord::Schema.define(version: 20170210154029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170209160905) do
     t.date     "date_of_birth",                               null: false
     t.string   "city"
     t.string   "state_province"
-    t.string   "country",                                     null: false
+    t.string   "country"
     t.integer  "referred_by"
     t.string   "referred_by_other"
     t.datetime "created_at",                                  null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170209160905) do
     t.string   "last_login_ip"
     t.string   "locale",                       default: "en", null: false
     t.string   "timezone"
+    t.boolean  "location_confirmed"
   end
 
   add_index "accounts", ["auth_token"], name: "index_accounts_on_auth_token", unique: true, using: :btree

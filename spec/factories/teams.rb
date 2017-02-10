@@ -11,13 +11,13 @@ FactoryGirl.define do
     end
 
     transient do
-      creator_in "Chicago, IL"
+      creator_in "Chicago"
       members_count 1
     end
 
     before(:create) do |team, evaluator|
       members = evaluator.members_count.times.collect {
-        FactoryGirl.create(:student, geocoded: evaluator.creator_in)
+        FactoryGirl.create(:student, city: evaluator.creator_in)
       }
       team.student_ids = members.map(&:id)
     end

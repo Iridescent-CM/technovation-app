@@ -8,11 +8,7 @@ FactoryGirl.define do
     last_name { "Account" }
 
     city "Chicago"
-    state_province "IL"
-    country "US"
-    latitude 41.50196838
-    longitude { -87.64051818 }
-    geocoded { [city, state_province, Country[country].name].compact.join(', ') }
+    location_confirmed true
 
     season_ids { [Season.current.id] }
 

@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  attr_accessor :existing_password, :skip_existing_password, :geocoded
+  attr_accessor :existing_password, :skip_existing_password, :confirm_sentence
 
   has_one :admin_profile, dependent: :destroy
   has_one :student_profile, dependent: :destroy
@@ -51,7 +51,31 @@ class Account < ActiveRecord::Base
 
   mount_uploader :profile_image, ImageProcessor
 
-  geocoded_by :geocoded
+  has_secure_token :auth_token
+  has_secure_token :consent_token
+  has_secure_token :password_reset_token
+  has_secure_password
+
+  after_validation :update_email_list, on: :update
+
+  before_validation :geocode, on: :create, if: -> (a) { a.latitude.blank? }
+  before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
+
+  after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
+
+  has_many :season_registrations, -> { active }, as: :registerable
+  has_many :seasons, through: :season_registrations
+
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :profile_image, verify_cached_file: true
+
+  validates :existing_password, valid_password: true, if: :changes_require_password?
+  validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
+  validates :password, length: { minimum: 8, on: :update, if: :changes_require_password? }
+
+  validates :date_of_birth, :first_name, :last_name, presence: true
+
+  geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
     if geo = results.first
       account.city = geo.city
@@ -63,34 +87,6 @@ class Account < ActiveRecord::Base
     end
   end
 
-  has_secure_token :auth_token
-  has_secure_token :consent_token
-  has_secure_token :password_reset_token
-  has_secure_password
-
-  # Fallback incase Typeahead doesn't work or isn't used
-  before_validation :geocode, if: ->(a) {
-    !a.geocoded.blank? and a.geocoded != address_details
-  }
-
-  before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
-
-  after_validation :update_email_list, on: :update
-  after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
-
-  has_many :season_registrations, -> { active }, as: :registerable
-  has_many :seasons, through: :season_registrations
-
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :geocoded, presence: true, if: ->(a) { a.latitude.blank? }
-  validates :profile_image, verify_cached_file: true
-
-  validates :existing_password, valid_password: true, if: :changes_require_password?
-  validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
-  validates :password, length: { minimum: 8, on: :update, if: :changes_require_password? }
-
-  validates :date_of_birth, :first_name, :last_name, :country, presence: true
-
   def self.find_with_token(token)
     find_by(auth_token: token) || NoAuthFound.new
   end
@@ -98,6 +94,16 @@ class Account < ActiveRecord::Base
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
       NoAuthFound.new
+  end
+
+  def confirm_sentence=(str)
+    if str.downcase.gsub(/[,\.]/, '') === "yes this is my location" and
+        not city.blank? and
+          not country.blank?
+      self.location_confirmed = true
+    else
+      self.location_confirmed = false
+    end
   end
 
   def profile_valid?
@@ -133,7 +139,6 @@ class Account < ActiveRecord::Base
   end
 
   def enable_password_reset!
-    self.geocoded = address_details
     regenerate_password_reset_token
     update_column(:password_reset_token_sent_at, Time.current)
   end
@@ -189,8 +194,10 @@ class Account < ActiveRecord::Base
       SignupAttempt.temporary_password.where("lower(email) = ?", email.downcase).any?
   end
 
-  def type_name
-    if mentor_profile.present?
+  def type_name(module_name = nil)
+    if module_name and module_name === "judge"
+      "judge"
+    elsif mentor_profile.present?
       "mentor"
     elsif regional_ambassador_profile.present?
       "regional_ambassador"

@@ -1,5 +1,8 @@
 class JudgeProfile < ActiveRecord::Base
-  scope :full_access, -> { joins(account: :consent_waiver) }
+  scope :full_access, -> {
+    joins(account: :consent_waiver)
+      .where("accounts.location_confirmed = ?", true)
+  }
 
   belongs_to :account
   accepts_nested_attributes_for :account
@@ -23,7 +26,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    consent_signed?
+    consent_signed? and location_confirmed?
   end
 
   def type_name

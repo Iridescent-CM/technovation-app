@@ -42,7 +42,6 @@ module ProfileController
         :first_name,
         :last_name,
         :gender,
-        :geocoded,
         :city,
         :state_province,
         :country,
@@ -50,6 +49,7 @@ module ProfileController
         :longitude,
         :profile_image,
         :profile_image_cache,
+        :confirm_sentence,
       ],
     )
   end

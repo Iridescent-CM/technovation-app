@@ -3,7 +3,7 @@ RSpec.configure do |config|
     Geocoder.configure(lookup: :test)
 
     Geocoder::Lookup::Test.add_stub(
-      "Los Angeles, CA, United States", [{
+      "Los Angeles", [{
         'latitude'     => 34.052363,
         'longitude'    => -118.256551,
         'address'      => 'Los Angeles, CA, USA',
@@ -16,7 +16,7 @@ RSpec.configure do |config|
     )
 
     Geocoder::Lookup::Test.add_stub(
-      "Milwaukee, WI", [{
+      "Milwaukee", [{
         'latitude'     => 43.0389,
         'longitude'    => 87.9065,
         'address'      => 'Milwaukee, WI, USA',
@@ -29,33 +29,7 @@ RSpec.configure do |config|
     )
 
     Geocoder::Lookup::Test.add_stub(
-      "Los Angeles, CA", [{
-        'latitude'     => 34.052363,
-        'longitude'    => -118.256551,
-        'address'      => 'Los Angeles, CA, USA',
-        'state'        => 'California',
-        'city'         => 'Los Angeles',
-        'state_code'   => 'CA',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Chicago, IL, United States", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Evanston, IL", [{
+      "Evanston", [{
         'latitude'     => 41.50196838,
         'longitude'    => -87.64051818,
         'address'      => 'Evanston, IL, USA',
@@ -67,31 +41,20 @@ RSpec.configure do |config|
       }]
     )
 
-    Geocoder::Lookup::Test.add_stub(
-      "60647", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "Chicago, IL", [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
+    ["Chicago", "Chicago, IL, United States"].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          'latitude'     => 41.50196838,
+          'longitude'    => -87.64051818,
+          'address'      => 'Chicago, IL, USA',
+          'state'        => 'Illinois',
+          'city'         => 'Chicago',
+          'state_code'   => 'IL',
+          'country'      => 'United States',
+          'country_code' => 'US',
+        }]
+      )
+    end
 
     Geocoder::Lookup::Test.add_stub(
       [41.50196838, -87.64051818], [{
@@ -146,6 +109,19 @@ RSpec.configure do |config|
     )
 
     Geocoder::Lookup::Test.add_stub(
+      "Dhurma, Riyadh Province, Saudi Arabia", [{
+        'latitude'     => 24.6769697,
+        'longitude'    =>  46.2431716,
+        'address'      => 'Dhurma, Riyadh Province, SA',
+        'state'        => 'Riyadh Province',
+        'city'         => 'Dhurma',
+        'state_code'   => 'Riyadh Province',
+        'country'      => 'Saudi Arabia',
+        'country_code' => 'SA',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
       "Dhurma", [{
         'latitude'     => 24.6769697,
         'longitude'    =>  46.2431716,
@@ -172,6 +148,32 @@ RSpec.configure do |config|
     )
 
     Geocoder::Lookup::Test.add_stub(
+      [-12.7872335, -38.3067572], [{
+        "latitude"     => -12.7872335,
+        "longitude"    => -38.3067572,
+        'address'      => 'Salvador, Bahia, Brazil',
+        'state'        => 'Bahia',
+        'city'         => 'Salvador',
+        'state_code'   => 'BH',
+        'country'      => 'Brazil',
+        'country_code' => 'BR',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "Najran, Najran Province, Saudi Arabia", [{
+        'latitude'     => 17.6004128,
+        'longitude'    => 44.2933307,
+        'address'      => 'Najran, Najran Province, SA',
+        'state'        => 'Najran Province',
+        'city'         => 'Najran',
+        'state_code'   => 'Najran Province',
+        'country'      => 'Saudi Arabia',
+        'country_code' => 'SA',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
       "Najran", [{
         'latitude'     => 17.6004128,
         'longitude'    => 44.2933307,
@@ -181,6 +183,19 @@ RSpec.configure do |config|
         'state_code'   => 'Najran Province',
         'country'      => 'Saudi Arabia',
         'country_code' => 'SA',
+      }]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "Salvador, Brazil", [{
+        "latitude"     => -12.7872335,
+        "longitude"    => -38.3067572,
+        'address'      => 'Salvador, Bahia, Brazil',
+        'state'        => 'Bahia',
+        'city'         => 'Salvador',
+        'state_code'   => 'BH',
+        'country'      => 'Brazil',
+        'country_code' => 'BR',
       }]
     )
   end

@@ -5,7 +5,7 @@ class RegionalAmbassadorController < ApplicationController
   helper_method :current_ambassador
 
   before_action -> {
-    if current_ambassador.timezone.blank?
+    if current_ambassador.timezone.blank? and current_ambassador.location_confirmed?
       current_ambassador.account.update_column(:timezone, Timezone.lookup(current_ambassador.latitude, current_ambassador.longitude).name)
     end
   }

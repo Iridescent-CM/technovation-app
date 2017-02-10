@@ -1,0 +1,29 @@
+<% unless account.location_confirmed? %>
+  <li class="card">
+    <div class="card__heading">
+      Enter your location details
+      <%= fa_icon "compass", class: "card-heading__flair" %>
+    </div>
+
+    <div class="card__body">
+      <p>
+        <% case controller_path.split('/').first
+           when "judge" %>
+          To match you to eligible team submissions,
+        <% when "regional_ambassador" %>
+          To match you to your region,
+        <% else %>
+          To help you find nearby teams and mentors,
+        <% end %>
+
+        we need to know your city, state, and country.
+      </p>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Enter your location now",
+          [account.type_name, :location_details],
+          class: "appy-button" %>
+      </div>
+    </div>
+  </li>
+<% end %>

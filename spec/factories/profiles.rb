@@ -5,7 +5,7 @@ FactoryGirl.define do
     school_name { "FactoryGirl High" }
 
     transient do
-      geocoded "Chicago, IL"
+      city "Chicago"
       date_of_birth Date.today - 15.years
       email nil
       password nil
@@ -19,7 +19,7 @@ FactoryGirl.define do
       attrs = FactoryGirl.attributes_for(:account)
 
       s.build_account(attrs.merge(
-        geocoded: e.geocoded,
+        city: e.city,
         date_of_birth: e.date_of_birth,
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
@@ -51,7 +51,7 @@ FactoryGirl.define do
 
     transient do
       first_name nil
-      geocoded "Chicago, IL"
+      city nil
       country nil
       email nil
       password nil
@@ -61,7 +61,7 @@ FactoryGirl.define do
       attrs = FactoryGirl.attributes_for(:account)
 
       m.build_account(attrs.merge(
-        geocoded: e.geocoded,
+        city: e.city || attrs[:city] || "Chicago",
         country: e.country || attrs[:country],
         first_name: e.first_name || attrs[:first_name],
         email: e.email || attrs[:email],
@@ -108,7 +108,7 @@ FactoryGirl.define do
     account
 
     transient do
-      geocoded "Chicago, IL"
+      city "Chicago"
       country nil
       email nil
       password nil
@@ -119,7 +119,7 @@ FactoryGirl.define do
       attrs = FactoryGirl.attributes_for(:account)
 
       r.build_account(attrs.merge(
-        geocoded: e.geocoded,
+        city: e.city,
         country: e.country || attrs[:country],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
@@ -138,6 +138,9 @@ FactoryGirl.define do
     trait :approved do
       after(:create) do |m|
         m.approved!
+        a = m.account
+        a.location_confirmed = true
+        a.save!
       end
     end
   end

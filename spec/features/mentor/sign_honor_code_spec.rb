@@ -38,28 +38,4 @@ RSpec.feature "Mentors sign the honor code" do
 
     expect(page).to have_content("can't be blank")
   end
-
-  %w{student mentor}.each do |type|
-    scenario "an invalid #{type} profile without an honor code agreement is interrupted" do
-      profile = FactoryGirl.create(type)
-
-      profile.account.update_columns(latitude: nil, longitude: nil, city: nil, state_province: nil)
-      profile.account.honor_code_agreement.destroy
-      profile.reload.account.geocoded = nil
-
-      expect(profile).not_to be_valid
-      expect(profile.honor_code_agreement).to be_nil
-
-      sign_in(profile)
-      expect(page).to have_current_path(interruptions_path(issue: :invalid_profile))
-
-      click_link "Fix my profile now"
-
-      within(".#{profile.type_name.underscore}_profile_account_geocoded") do
-        expect(page).to have_css('.error', text: "can't be blank")
-      end
-
-      sign_out
-    end
-  end
 end

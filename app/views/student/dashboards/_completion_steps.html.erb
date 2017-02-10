@@ -5,6 +5,7 @@
 
   <ul class="to-do__list">
     <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
+    <%= render 'completion_steps/location_details', account: current_student %>
     <%= render 'completion_steps/honor_code', account: current_student %>
     <%= render 'student/dashboards/completion_steps/build_a_team' %>
     <%= render 'student/dashboards/completion_steps/find_a_mentor' %>

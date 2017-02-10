@@ -13,8 +13,6 @@ RSpec.feature "Regional Ambassadors registration" do
 
     select_date Date.today - 31.years, from: "Date of birth"
 
-    fill_in "Postal code -OR- City & State/Province", with: 60647
-
     fill_in "Organization/company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Engineer"
     fill_in "Tell us about yourself", with: "I am cool"
@@ -46,5 +44,18 @@ RSpec.feature "Regional Ambassadors registration" do
 
   scenario "saves profile data" do
     expect(RegionalAmbassadorProfile.last.ambassador_since_year).to eq("I'm new!")
+  end
+
+  scenario "saves location details" do
+    click_link "Enter your location now"
+
+    fill_in "City", with: "Chicago"
+    fill_in "State / Province", with: "IL"
+    select "United States", from: "Country"
+    fill_in "account_confirm_sentence", with: "yes this is my location"
+    click_button "Confirm location details"
+
+    expect(RegionalAmbassadorProfile.last.address_details).to eq("Chicago, IL, United States")
+    expect(RegionalAmbassadorProfile.last.account).to be_location_confirmed
   end
 end

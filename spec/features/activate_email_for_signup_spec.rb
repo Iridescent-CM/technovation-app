@@ -96,8 +96,6 @@ RSpec.feature "Activate your email to sign up" do
 
     select_date Date.today - 15.years, from: "Date of birth"
 
-    fill_in "Postal code -OR- City & State/Province", with: "Chicago, IL"
-
     fill_in "School name", with: "John Hughes High."
 
     click_button "Create Your Account"
