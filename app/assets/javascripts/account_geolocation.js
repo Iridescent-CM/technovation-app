@@ -5,7 +5,7 @@
     var geocoded_field = document.querySelector("#geocoded"),
         country_field = document.querySelector("#country"),
         lat_field = document.querySelector("#latitude"),
-        lng_field = document.querySelector("#latitude");
+        lng_field = document.querySelector("#longitude");
 
     if (!navigator.geolocation || !geocoded_field)
       return;
