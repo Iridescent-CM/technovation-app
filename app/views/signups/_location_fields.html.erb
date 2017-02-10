@@ -1,7 +1,7 @@
 <div class="signups__location-fields">
   <%= simple_form_for current_profile,
                       url: [current_account.type_name(controller_path.split('/').first), :profile],
-                      html: { class: "no-simple-form-style" } do |f| %>
+                      html: { class: "no-simple-form-style #{'confirmed' if current_account.location_confirmed?}" } do |f| %>
 
     <div class="while-geocoding">
       <%= fa_icon "circle-o-notch spin", text: "Detecting your location..." %>

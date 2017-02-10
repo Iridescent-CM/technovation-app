@@ -7,9 +7,8 @@
 </h2>
 
 <div class="flex-row dashboard">
-
   <div class="flex-col-sm-8 dashboard__main">
-    <% unless current_student.parental_consent.present? and current_student.is_on_team? and current_student.team_has_mentor? %>
+    <% unless current_student.full_access_enabled? %>
       <%= render 'completion_steps' %>
     <% end %>
 
@@ -19,21 +18,46 @@
       </h2>
 
       <ul class="resources__list">
-        <% if current_student.parental_consent.present? %>
+        <li class="resources__item-wrapper">
+          <div class="card">
+            <div class="card__heading">
+              Internet Safety
+              <%= fa_icon("lock", class: "card-heading__flair") %>
+            </div>
+
+            <div class="card__body">
+              <p>
+                Please take some time right now to learn about internet safety and digital literacy.
+                We want you to be safe and well-informed as you participate in online programs!
+              </p>
+
+              <p>
+              <%= link_to "Take the Internet Safety Training", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <% if current_student.full_access_enabled? %>
           <li class="resources__item-wrapper">
             <div class="card">
               <div class="card__heading">
                 <%= t("views.application.curriculum") %>
                 <%= fa_icon "graduation-cap", class: "card-heading__flair" %>
               </div>
+
               <div class="card__body">
                 <p>
-                <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
+                  <%= link_to "Get Started on the Technovation Curriculum",
+                    "http://www.technovationchallenge.org/curriculum-intro/registered",
+                    target: "_blank" %>
                 </p>
 
                 <p>
-                <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
-                (if you came from Made With Code)
+                  <%= link_to "Read the Technovation Challenge Primer",
+                    "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
+                    target: "_blank" %>
+                  (if you came from Made With Code)
                 </p>
 
               </div>
@@ -60,25 +84,6 @@
           </li>
         <% end %>
 
-        <li class="resources__item-wrapper">
-          <div class="card">
-            <div class="card__heading">
-              Internet Safety
-              <%= fa_icon("lock", class: "card-heading__flair") %>
-            </div>
-
-            <div class="card__body">
-              <p>
-                Please take some time right now to learn about internet safety and digital literacy. We want you to be safe and well-informed as you participate in online programs!
-              </p>
-
-              <p>
-                <%= link_to "Take the Internet Safety Training", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
-              </p>
-            </div>
-          </div>
-        </li>
-
         <% if current_student.honor_code_signed? %>
           <li class="resources__item-wrapper">
             <%= render 'honor_code_signed', account: current_student %>
@@ -89,9 +94,9 @@
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
-    <% if current_student.is_on_team? %>
+    <% if current_student.full_access_enabled? and current_student.is_on_team? %>
       <%= render 'quick_links' %>
-    <% else %>
+    <% elsif current_student.full_access_enabled? %>
       <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
     <% end %>
   </div>

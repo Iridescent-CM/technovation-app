@@ -8,7 +8,7 @@
 
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
-    <% if current_mentor.can_join_a_team? and current_mentor.is_on_team?  %>
+    <% if current_mentor.full_access_enabled? and current_mentor.is_on_team?  %>
       <%= render 'quick_links', account: current_mentor %>
       <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
     <% else %>

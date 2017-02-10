@@ -158,7 +158,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    parental_consent_signed? and location_confirmed?
+    honor_code_signed? and parental_consent_signed? and location_confirmed?
   end
 
   private

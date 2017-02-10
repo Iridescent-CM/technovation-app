@@ -8,5 +8,8 @@
   </p>
 <% end %>
 
-<%= render 'regional_ambassador/dashboards/completion_steps' %>
-<%= render "regional_ambassador/dashboards/#{current_ambassador.status}_show" %>
+<% if current_ambassador.full_access_enabled? %>
+  <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_show" %>
+<% else %>
+  <%= render 'regional_ambassador/dashboards/completion_steps' %>
+<% end %>

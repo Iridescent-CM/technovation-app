@@ -6,24 +6,33 @@
     </div>
 
     <div class="card__body">
-      <p>
-        <% case controller_path.split('/').first
-           when "judge" %>
-          To match you to eligible team submissions,
-        <% when "regional_ambassador" %>
-          To match you to your region,
-        <% else %>
-          To help you find nearby teams and mentors,
-        <% end %>
+      <% if account.address_details.blank? %>
+          <% case controller_path.split('/').first
+            when "judge" %>
+            To match you to eligible team submissions,
+          <% when "regional_ambassador" %>
+            To match you to your region,
+          <% else %>
+            To help you find nearby teams and mentors,
+          <% end %>
 
-        we need to know your city, state, and country.
-      </p>
+          we need to know your city, state, and country.
 
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Enter your location now",
-          [account.type_name, :location_details],
-          class: "appy-button" %>
-      </div>
+        <div class="card__actions-row card__actions-row--pos-end">
+          <%= link_to "Enter your location now",
+            [account.type_name, :location_details],
+            class: "appy-button" %>
+        </div>
+      <% else %>
+        We're very sorry to inconvenience you, but we've had some trouble with location data.
+        Please help us out by confirming your information!
+
+        <div class="card__actions-row card__actions-row--pos-end">
+          <%= link_to "Confirm your location details now",
+            [account.type_name, :location_details],
+            class: "appy-button" %>
+        </div>
+      <% end %>
     </div>
   </li>
 <% end %>
