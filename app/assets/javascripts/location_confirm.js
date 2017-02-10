@@ -10,7 +10,7 @@
     confirmField.value = "";
 
     confirmField.addEventListener('keyup', function(e) {
-      var actual = e.target.value.toLowerCase().replace(/[\,\.\!\_]/gi, ''),
+      var actual = e.target.value.toLowerCase().replace(/[\,\.\!\_](?:\s\+$)?/gi, ''),
           expected = e.target.dataset.confirmSentence.toLowerCase(),
           form = e.target.closest('form');
 

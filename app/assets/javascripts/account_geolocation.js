@@ -8,13 +8,15 @@
         latField = document.querySelector("#account_latitude"),
         lngField = document.querySelector("#account_longitude");
 
-    if (!navigator.geolocation || !cityField)
-      return;
-
-    if (cityField.value !== "")
+    if (!cityField)
       return;
 
     cityField.closest('form').classList.add('geocoding');
+
+    if (!navigator.geolocation) {
+      cityField.closest('form').classList.remove('geocoding');
+      return;
+    }
 
     navigator.geolocation.getCurrentPosition(function(position) {
       var lat = position.coords.latitude,

@@ -58,8 +58,10 @@ class Account < ActiveRecord::Base
 
   after_validation :update_email_list, on: :update
 
-  before_validation :geocode, on: :create, if: -> (a) { a.latitude.blank? }
-  before_validation :reverse_geocode, if: ->(a) { a.latitude_changed? }
+  after_validation :geocode, if: -> (a) {
+    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
+  }
+  after_validation :reverse_geocode, if: ->(a) { a.latitude_changed? or a.longitude_changed? }
 
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
 
