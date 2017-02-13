@@ -1,4 +1,4 @@
-<% unless account.location_confirmed? %>
+<% if not account.location_confirmed? and account.address_details.blank? %>
   <li class="card">
     <div class="card__heading">
       Enter your location details
@@ -6,33 +6,37 @@
     </div>
 
     <div class="card__body">
-      <% if account.address_details.blank? %>
-          <% case controller_path.split('/').first
-            when "judge" %>
-            To match you to eligible team submissions,
-          <% when "regional_ambassador" %>
-            To match you to your region,
-          <% else %>
-            To help you find nearby teams and mentors,
-          <% end %>
-
-          we need to know your city, state, and country.
-
-        <div class="card__actions-row card__actions-row--pos-end">
-          <%= link_to "Enter your location now",
-            [account.type_name, :location_details],
-            class: "appy-button" %>
-        </div>
+      <% case controller_path.split('/').first
+        when "judge" %>
+        To match you to eligible team submissions,
+      <% when "regional_ambassador" %>
+        To match you to your region,
       <% else %>
-        We're very sorry to inconvenience you, but we've had some trouble with location data.
-        Please help us out by confirming your information!
-
-        <div class="card__actions-row card__actions-row--pos-end">
-          <%= link_to "Confirm your location details now",
-            [account.type_name, :location_details],
-            class: "appy-button" %>
-        </div>
+        To help you find nearby teams and mentors,
       <% end %>
+
+      we need to know your city, state, and country.
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to "Enter your location now",
+          [account.type_name, :location_details],
+          class: "appy-button" %>
+      </div>
     </div>
   </li>
+<% elsif not account.location_confirmed? %>
+  <div id="location_interrupt"
+        data-heading="Confirm your location"
+        class="modalify modalify-on-page-load">
+    <p>
+      We're very sorry to inconvenience you, but we've had some trouble with location data.
+      Please help us out by confirming your information!
+    </p>
+
+    <div class="card__actions-row card__actions-row--pos-end">
+      <%= link_to "Confirm your location details now",
+        [account.type_name, :location_details],
+        class: "appy-button" %>
+    </div>
+  </div>
 <% end %>
