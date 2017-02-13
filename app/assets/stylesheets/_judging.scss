@@ -1,10 +1,19 @@
+.judging-view {
+  margin-bottom: 350px; // Temp hardcoded value, will do this with JS later on
+}
+
 .judging-form {
+  $max-width: 900px;
+  align-items: center;
   background-color: white;
-  bottom: 1rem;
+  bottom: 2rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-  left: 1rem;
+  display: flex;
+  left: 50%;
+  max-width: $max-width;
   padding: 1rem;
   position: fixed;
+  transform: translateX(-50%);
   width: calc(100% - 2rem);
   z-index: $z-nuclear;
 }
@@ -12,11 +21,93 @@
 .judging-form__section {
   display: none;
 
-  .input:not(:first-of-type) {
+  .input:not(.active) {
     display: none;
+  }
+
+  .radio_buttons .radio { // span that wraps radio labels and inputs
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+  }
+
+  input[type="submit"] {
+    position: absolute;
+    visibility: hidden;
   }
 }
 
 .judging-form__section--active {
+  display: block;
+}
+
+.judge-helper {
+  margin: 1rem 0 1.5rem;
+  position: relative;
+}
+
+button.judging-form__button,
+button.judging-form__button:hover,
+button.judging-form__button:active,
+button.judging-form__button:focus {
+  $size: 40px;
+  align-items: center;
+  background-color: $shamrock-mid;
+  color: white;
+  display: flex;
+  font-family: "FontAwesome";
+  height: $size;
+  justify-content: center;
+  min-height: $size;
+  min-width: $size;
+  width: $size;
+}
+
+button.judging-form__button--back.unbutton {
+  margin-right: 1rem;
+
+  &::before {
+    transform: translateX(-2px) translateY(2px);
+  }
+}
+
+button.judging-form__button--next.unbutton {
+  margin-left: 1rem;
+
+  &::before {
+    transform: translateX(2px) translateY(2px);
+  }
+}
+
+.rangeslider__tooltip {
+  //display: none;
+  background-color: $shamrock-dark;
+  bottom: calc(100% + 2rem);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 0.9em;
+  font-weight: normal;
+  padding: 0.75em 1em;
+  position: absolute;
+  width: 250px;
+  z-index: $z-high;
+
+  &::before {
+    $size: 20px;
+    background-color: $shamrock-dark;
+    bottom: calc(-#{$size} / 2);
+    content: '';
+    display: block;
+    height: $size;
+    left: calc(50% - (#{$size} / 2));
+    position: absolute;
+    transform: rotate(45deg);
+    width: $size;
+  }
+}
+
+.rangeslider__tooltip--active {
   display: block;
 }
