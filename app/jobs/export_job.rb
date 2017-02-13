@@ -51,6 +51,7 @@ class ExportJob < ActiveJob::Base
       csv << %w{
         RA
         Name
+        Official?
         Senior\ division
         Junior\ division
         Starts\ at
@@ -67,6 +68,7 @@ class ExportJob < ActiveJob::Base
         event = RegionalPitchEvent.find(event_id)
 
         csv << [event.regional_ambassador_profile.full_name, event.name,
+                event.unofficial? ? "no" : "yes",
                 event.division_names.include?("senior") ? "yes" : "no",
                 event.division_names.include?("junior") ? "yes" : "no",
                 event.starts_at.in_time_zone(event.timezone),
