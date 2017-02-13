@@ -145,6 +145,10 @@ class Account < ActiveRecord::Base
     update_column(:password_reset_token_sent_at, Time.current)
   end
 
+  def get_country
+    country && Country[country] && Country[country].name
+  end
+
   def get_school_company_name
     if student_profile
       student_profile.school_name

@@ -36,7 +36,7 @@ class ExportJob < ActiveJob::Base
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.division, "#{account.referred_by} #{account.referred_by_other}",
                 account.get_school_company_name, account.city, account.state_province,
-                Country[account.country].name]
+                account.get_country]
       end
     end
 
@@ -134,7 +134,7 @@ class ExportJob < ActiveJob::Base
 
         csv << [ambassador.regional_ambassador_profile.status, ambassador.created_at,
                 ambassador.first_name, ambassador.last_name, ambassador.email,
-                ambassador.city, ambassador.state_province, Country[ambassador.country].name]
+                ambassador.city, ambassador.state_province, ambassador.get_country]
       end
     end
 
