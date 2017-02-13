@@ -1,6 +1,6 @@
 <h1>Technical</h1>
 
-<%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+<%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
   <%= f.input :app_functional,
     label: "The app is fully functional and has no noticeable bugs.",
     collection: JudgingRubricScores.new,

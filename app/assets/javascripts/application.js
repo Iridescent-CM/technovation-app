@@ -20,6 +20,7 @@
 //= require gallerify
 //= require global_nav
 //= require homepage/homepage
+//= require judging_form
 //= require modalify
 //= require remote_forms
 //= require search_options
