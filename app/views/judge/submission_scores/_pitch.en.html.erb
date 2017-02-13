@@ -1,6 +1,6 @@
 <h1>Pitch</h1>
 
-<%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+<%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
   <%= f.input :problem_clearly_communicated,
     label: "The team clearly communicates the problem they are addressing.",
     collection: JudgingRubricScores.new,

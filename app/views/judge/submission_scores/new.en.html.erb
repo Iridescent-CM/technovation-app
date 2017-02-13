@@ -5,16 +5,28 @@
   <%= @current_team_submission.team.name %>
 </h1>
 
-<%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+<div class="judging-form" id="judging-form">
+  <div class="judging-form__section">
+    <%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
+  </div>
+  <div class="judging-form__section">
+    <%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
+  </div>
+  <div class="judging-form__section">
+    <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+  </div>
+  <div class="judging-form__section">
+    <%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
+  </div>
+  <div class="judging-form__section">
+    <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+  </div>
+</div>
 
 <div class="team-submissions">
   <div class="team-submissions__row-left">
     <div class="team-submissions__fixed-col">
-      <%= render 'team_submissions/team_photo', submission: @current_team_submission %>
+      <%= render 'team_submissions/team_photo', submission: @current_team_submission, current_team: @current_team_submission.team %>
     </div>
   </div>
 

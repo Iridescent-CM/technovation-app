@@ -1,0 +1,22 @@
+.judging-form {
+  background-color: white;
+  bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  left: 1rem;
+  padding: 1rem;
+  position: fixed;
+  width: calc(100% - 2rem);
+  z-index: $z-nuclear;
+}
+
+.judging-form__section {
+  display: none;
+
+  .input:not(:first-of-type) {
+    display: none;
+  }
+}
+
+.judging-form__section--active {
+  display: block;
+}
