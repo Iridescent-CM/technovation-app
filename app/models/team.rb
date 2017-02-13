@@ -80,7 +80,7 @@ class Team < ActiveRecord::Base
     if creator.country == "US"
       Country[creator.country].states[creator.state_province]['name']
     else
-      Country[creator.country].name
+      creator.get_country
     end
   end
 
@@ -121,7 +121,7 @@ class Team < ActiveRecord::Base
   end
 
   def country
-    Country[creator.country].name if creator.present?
+    creator && creator.get_country
   end
 
   def creator
