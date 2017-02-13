@@ -7,17 +7,20 @@
   <%= render 'admin/profiles/student_debugging', profile: account.student_profile %>
 <% end %>
 
-<% if account.mentor_profile %>
-  <%= render 'admin/profiles/mentor_debugging', profile: account.mentor_profile %>
+<% if account.mentor_profile || account.student_profile %>
+
+  <% if account.mentor_profile %>
+    <%= render 'admin/profiles/mentor_debugging', profile: account.mentor_profile %>
+  <% end %>
 
   <div class="flex-row">
     <div class="flex-col-sm-12">
       <h3><%= t("views.student.mentors.show.teams", name: account.first_name) %></h3>
 
-      <% if account.mentor_profile.teams.current.any? %>
+      <% if account.teams.current.any? %>
         <ul>
           <%= render partial: 'student/mentors/team_preview',
-            collection: account.mentor_profile.teams.current,
+            collection: account.teams.current,
             cached: true,
             locals: { admin: true } %>
         </ul>
