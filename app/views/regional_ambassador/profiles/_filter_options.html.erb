@@ -17,6 +17,12 @@
 
 <% if params[:type] == "Student" %>
   <label>
+    On a team:
+    <%= select_tag :team_status,
+      options_for_select(%w{All On\ a\ team No\ team}, params[:team_status]) %>
+  </label>
+
+  <label>
     Parental Consent Status:
     <%= select_tag :parental_consent_status,
     options_for_select(%w{All
