@@ -33,6 +33,8 @@
 
         cityField.closest('form').classList.remove('geocoding');
       });
+    }, function() {
+      cityField.closest('form').classList.remove('geocoding');
     });
   }
 })();
