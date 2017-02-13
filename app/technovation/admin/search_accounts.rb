@@ -50,6 +50,34 @@ module Admin
                              .references(:parental_consents)
                              .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NULL")
         end
+
+        case params[:team_status]
+        when "On a team"
+          accounts = accounts.where("student_profiles.id IN
+            (SELECT DISTINCT(member_id) FROM memberships
+                                        WHERE memberships.member_type = 'StudentProfile'
+                                        AND memberships.joinable_type = 'Team'
+                                        AND memberships.joinable_id IN
+
+              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
+
+                (SELECT DISTINCT(registerable_id) FROM season_registrations
+                                                  WHERE season_registrations.registerable_type = 'Team'
+                                                  AND season_registrations.season_id = ?)))", season.id)
+        when "No team"
+          accounts = accounts.where("student_profiles.id NOT IN
+            (SELECT DISTINCT(member_id) FROM memberships
+                                        WHERE memberships.member_type = 'StudentProfile'
+                                        AND memberships.joinable_type = 'Team'
+                                        AND memberships.joinable_id IN
+
+              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
+
+                (SELECT DISTINCT(registerable_id) FROM season_registrations
+                                                  WHERE season_registrations.registerable_type = 'Team'
+                                                  AND season_registrations.season_id = ?)))", season.id)
+        end
+
       end
 
       if params[:type] == "Mentor"
