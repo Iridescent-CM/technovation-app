@@ -53,15 +53,14 @@ button.judging-form__button:hover,
 button.judging-form__button:active,
 button.judging-form__button:focus {
   $size: 40px;
-  align-items: center;
   background-color: $shamrock-mid;
   color: white;
-  display: flex;
   font-family: "FontAwesome";
   height: $size;
-  justify-content: center;
   min-height: $size;
   min-width: $size;
+  position: relative;
+  text-align: center;
   width: $size;
 }
 
@@ -69,7 +68,8 @@ button.judging-form__button--back.unbutton {
   margin-right: 1rem;
 
   &::before {
-    transform: translateX(-2px) translateY(2px);
+    display: block;
+    transform: translateX(-2px) translateY(1px);
   }
 }
 
@@ -77,12 +77,13 @@ button.judging-form__button--next.unbutton {
   margin-left: 1rem;
 
   &::before {
-    transform: translateX(2px) translateY(2px);
+    display: block;
+    transform: translateX(2px) translateY(1px);
   }
 }
 
 .rangeslider__tooltip {
-  //display: none;
+  display: none;
   background-color: $shamrock-dark;
   bottom: calc(100% + 2rem);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
@@ -91,6 +92,7 @@ button.judging-form__button--next.unbutton {
   font-weight: normal;
   padding: 0.75em 1em;
   position: absolute;
+  transform: translateX(calc(-50% + 23px)); // Make this less magic
   width: 250px;
   z-index: $z-high;
 
