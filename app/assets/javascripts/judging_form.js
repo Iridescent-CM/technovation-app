@@ -14,6 +14,13 @@
   activeQuestion.classList.add('active'); // Not BEM cause this thing is being generated dynamically
   activeSection.classList.add('judging-form__section--active');
 
+  var backButton = document.getElementById('juding-form-button-back');
+  var nextButton = document.getElementById('juding-form-button-next');
+
+  backButton.addEventListener('click', goToPrevQuestion);
+  nextButton.addEventListener('click', goToNextQuestion);
+  setShouldButtonsBeDisabled();
+
   generateMarkup();
   initRangeSliders();
 
@@ -66,6 +73,28 @@
     var inputWrapper = document.createElement('div');
     inputWrapper.classList.add('judge-helper', 'judge-helper--textarea');
     return inputWrapper;
+  }
+
+  function goToPrevQuestion() {
+    questions[activeQuestionIndex].classList.remove('active');
+    activeQuestionIndex = activeQuestionIndex - 1;
+    questions[activeQuestionIndex].classList.add('active');
+    setShouldButtonsBeDisabled();
+  }
+
+  function goToNextQuestion() {
+    questions[activeQuestionIndex].classList.remove('active');
+    activeQuestionIndex = activeQuestionIndex + 1;
+    questions[activeQuestionIndex].classList.add('active');
+    setShouldButtonsBeDisabled();
+  }
+
+  function setShouldButtonsBeDisabled() {
+    var isFirst = activeSectionIndex === 0 && activeQuestionIndex === 0;
+    backButton.disabled = isFirst;
+    var isLast = activeSectionIndex === (sections.length - 1) &&
+      activeQuestionIndex === (questions.length - 1);
+    nextButton.disabled = isLast;
   }
 
   function setRadioValueFromRange(range) {
