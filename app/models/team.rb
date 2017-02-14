@@ -186,6 +186,7 @@ class Team < ActiveRecord::Base
     def city; end
     def state_province; end
     def country; end
+    def get_country; end
 
     def present?
       false
