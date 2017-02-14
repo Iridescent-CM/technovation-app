@@ -7,6 +7,7 @@
 //= require facebook_sdk
 //= require jquery.sticky-kit.1.1.2.min
 //= require dragula
+//= require closest-polyfill
 
 //= require utils
 //= require ajax_form_handler
