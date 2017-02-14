@@ -68,6 +68,14 @@
     return inputWrapper;
   }
 
+  function setRadioValueFromRange(range) {
+    var correspondingRadio = range.$element[0]
+      .parentElement
+      .parentElement
+      .querySelector('input[type="radio"][value="' + range.value + '"]');
+    correspondingRadio.click();
+  }
+
   function initRangeSliders() {
     $('input[type="range"]').rangeslider({
         polyfill: false,
@@ -88,6 +96,8 @@
           this.$range[0].parentElement.appendChild(tooltip);
           this.tooltip = tooltip;
           tooltip.innerHTML = 'Fabio vel iudice vincam, sunt in culpa qui officia. Curabitur blandit tempus ardua ridiculus sed magna.';
+          console.log(this.value);
+          setRadioValueFromRange(this);
         },
 
         onSlide: function(position, value) {
@@ -101,6 +111,7 @@
 
         onSlideEnd: function(position, value) {
           this.tooltip.classList.remove('rangeslider__tooltip--active');
+          setRadioValueFromRange(this);
         }
     });
   }
