@@ -88,18 +88,19 @@
           this.$range[0].parentElement.appendChild(tooltip);
           this.tooltip = tooltip;
           tooltip.innerHTML = 'Fabio vel iudice vincam, sunt in culpa qui officia. Curabitur blandit tempus ardua ridiculus sed magna.';
-          console.log(this);
         },
 
         onSlide: function(position, value) {
           this.$handle[0].innerHTML = value;
+          var descriptions = this.$range[0].nextElementSibling;
+          var currentDescription = descriptions.dataset['description-' + value];
+          this.tooltip.innerHTML = currentDescription;
+          this.tooltip.classList.add('rangeslider__tooltip--active');
+          this.tooltip.style.left = position + 'px';
         },
 
         onSlideEnd: function(position, value) {
-          // Do something
-          console.log(this.identifier);
-          // var handle = document.querySelector('#' + this.identifier + ' .rangeslider__handle');
-          // handle.innerHTML = value;
+          this.tooltip.classList.remove('rangeslider__tooltip--active');
         }
     });
   }
