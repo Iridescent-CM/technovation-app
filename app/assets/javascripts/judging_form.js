@@ -124,8 +124,6 @@
           tooltip.classList.add('rangeslider__tooltip');
           this.$range[0].parentElement.appendChild(tooltip);
           this.tooltip = tooltip;
-          tooltip.innerHTML = 'Fabio vel iudice vincam, sunt in culpa qui officia. Curabitur blandit tempus ardua ridiculus sed magna.';
-          console.log(this.value);
           setRadioValueFromRange(this);
         },
 
