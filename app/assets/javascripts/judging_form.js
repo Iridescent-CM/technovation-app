@@ -31,8 +31,8 @@
 
       // Sorry for the nested for loop :(
       // This is more straightforward, IMO, than functioning it out
-      for (var i = 0; i < questions.length; i++) {
-        var currentQuestion = questions[i];
+      for (var y = 0; y < questions.length; y++) {
+        var currentQuestion = questions[y];
         generateHelperInput(currentQuestion);
       }
     }
@@ -77,14 +77,32 @@
 
   function goToPrevQuestion() {
     questions[activeQuestionIndex].classList.remove('active');
-    activeQuestionIndex = activeQuestionIndex - 1;
+    var isBeginningOfSection = activeQuestionIndex === 0;
+    if (isBeginningOfSection) {
+      activeSectionIndex = activeSectionIndex - 1;
+      activeSection.classList.remove('judging-form__section--active');
+      activeSection = sections[activeSectionIndex];
+      activeSection.classList.add('judging-form__section--active');
+      questions = activeSection.getElementsByClassName('input');
+      activeQuestionIndex = questions.length - 1;
+    } else {
+      activeQuestionIndex = activeQuestionIndex - 1;
+    }
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
   }
 
   function goToNextQuestion() {
     questions[activeQuestionIndex].classList.remove('active');
-    activeQuestionIndex = activeQuestionIndex + 1;
+    var isEndOfSection = questions.length === (activeQuestionIndex + 1);
+    activeQuestionIndex = isEndOfSection ? 0 : activeQuestionIndex + 1;
+    if (isEndOfSection) {
+      activeSectionIndex = activeSectionIndex + 1;
+      activeSection.classList.remove('judging-form__section--active');
+      activeSection = sections[activeSectionIndex];
+      activeSection.classList.add('judging-form__section--active');
+      questions = activeSection.getElementsByClassName('input');
+    }
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
   }
