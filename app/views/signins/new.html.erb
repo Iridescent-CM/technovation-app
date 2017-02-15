@@ -6,6 +6,11 @@
     <%= f.input :password %>
     <%= f.button :submit, t('views.signins.form.signin'), class: "appy-button" %>
     <p>
+      <%= t("controllers.signins.new.no_account") %>
+      <%= link_to t("controllers.signups.new.link"), root_path %>
+    </p>
+
+    <p>
       <%= t("controllers.password_resets.new.text") %>
       <%= link_to t("controllers.password_resets.new.link"), new_password_reset_path %>
     </p>

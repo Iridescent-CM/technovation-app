@@ -89,10 +89,14 @@ en:
         error: "Sorry, we didn't recognize that name and password"
       destroy:
         success: "You're signed out. See you next time!"
+      new:
+        no_account: "Don't have an account yet?"
 
     signups:
       create:
         success: "Welcome to the Technovation Challenge!"
+      new:
+        link: "Sign up"
 
     signup_attempts:
       create:
