@@ -10,7 +10,7 @@
           <%= render partial: 'student/mentors/team_preview',
             collection: @account.teams.current,
             cached: true,
-            locals: { ra: true } %>
+            locals: { ra: true, profile: @account.mentor_profile || @account.student_profile } %>
         </ul>
       <% else %>
         <p><%= t("views.student.mentors.show.no_teams", name: @account.first_name) %></p>

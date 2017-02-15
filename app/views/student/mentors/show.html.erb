@@ -3,10 +3,11 @@
 <h4><%= t("views.student.mentors.show.teams", name: @mentor.first_name) %></h4>
 
 <% if @mentor.teams.current.any? %>
-  <ul>
+  <ul class="mentor_teams_list">
     <%= render partial: 'student/mentors/team_preview',
               collection: @mentor.teams.current,
-              cached: true %>
+              cached: true,
+              locals: { profile: @mentor } %>
   </ul>
 <% else %>
   <p><%= t("views.student.mentors.show.no_teams", name: @mentor.first_name) %></p>
