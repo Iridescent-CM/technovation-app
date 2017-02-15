@@ -1,9 +1,4 @@
-//= require jquery2
-// JQUERY IS INCLUDED HERE STRICTLY
-// AS A DEPENDENCY OF TWITTER TYPEAHEAD
-
-//= require jquery_ujs
-// RAILS VIEW HELPER DEPENDENCY
+//= require vanilla-ujs
 
 //= require url-search-params-polyfill
 //= require admin/utils
