@@ -20,6 +20,7 @@
 
 .judging-form__section {
   display: none;
+  flex-grow: 1;
 
   .input:not(.active) {
     display: none;
@@ -65,7 +66,7 @@ button.judging-form__button:focus {
 }
 
 button.judging-form__button--back.unbutton {
-  margin-right: 1rem;
+  margin-right: 2rem;
 
   &::before {
     display: block;
@@ -74,7 +75,7 @@ button.judging-form__button--back.unbutton {
 }
 
 button.judging-form__button--next.unbutton {
-  margin-left: 1rem;
+  margin-left: 2rem;
 
   &::before {
     display: block;

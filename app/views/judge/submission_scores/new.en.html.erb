@@ -16,9 +16,11 @@
     <div class="judging-form__section">
       <%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
     </div>
-    <div class="judging-form__section">
-      <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
-    </div>
+    <% if @submission_score.senior_team_division? %>
+      <div class="judging-form__section">
+        <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+      </div>
+    <% end %>
     <div class="judging-form__section">
       <%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
     </div>
