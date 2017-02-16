@@ -1,9 +1,11 @@
 //= require jquery2
 // PLEASE DO NOT USE JQUERY, LEGACY SUPPORT ONLY
-//
+
+//= require url-polyfil
+//= require url-search-params-polyfill
+
 //= require vanilla-ujs
 
-//= require url-search-params-polyfill
 //= require admin/utils
 
 //= require account_geolocation
