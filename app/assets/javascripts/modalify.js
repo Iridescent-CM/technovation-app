@@ -89,6 +89,7 @@
       return;
     }
     modalToShow.classList.add('modalify--active');
+    debugger;
     fixColumnZIndex(modalToShow, 1);
     document.body.style.overflow = 'hidden';
   }
