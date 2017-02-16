@@ -7,29 +7,35 @@
   </h1>
 
   <div class="judging-form" id="judging-form">
-    <button id="juding-form-button-back" class="judging-form__button judging-form__button--back unbutton fa fa-chevron-left">
-      <!-- FontAwesome Chevron -->
-    </button>
-    <div class="judging-form__section">
-      <%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
+    <div class="judging-form__button-wrapper">
+      <button id="juding-form-button-back" class="judging-form__button judging-form__button--back unbutton fa fa-chevron-left">
+        <!-- FontAwesome Chevron -->
+      </button>
     </div>
-    <div class="judging-form__section">
-      <%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
-    </div>
-    <% if @submission_score.senior_team_division? %>
+    <div class="judging-form__sections-wrapper">
       <div class="judging-form__section">
-        <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+        <%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
       </div>
-    <% end %>
-    <div class="judging-form__section">
-      <%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
+      <div class="judging-form__section">
+        <%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
+      </div>
+      <% if @submission_score.senior_team_division? %>
+        <div class="judging-form__section">
+          <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+        </div>
+      <% end %>
+      <div class="judging-form__section">
+        <%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
+      </div>
+      <div class="judging-form__section">
+        <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+      </div>
     </div>
-    <div class="judging-form__section">
-      <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+    <div class="judging-form__button-wrapper">
+      <button id="juding-form-button-next" class="judging-form__button judging-form__button--next unbutton fa fa-chevron-right">
+        <!-- FontAwesome Chevron -->
+      </button>
     </div>
-    <button id="juding-form-button-next" class="judging-form__button judging-form__button--next unbutton fa fa-chevron-right">
-      <!-- FontAwesome Chevron -->
-    </button>
   </div>
 
   <div class="team-submissions">
