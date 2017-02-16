@@ -16,9 +16,17 @@
 
   var backButton = document.getElementById('juding-form-button-back');
   var nextButton = document.getElementById('juding-form-button-next');
+  var buttonWrappers = document.getElementsByClassName('judging-form__button-wrapper');
 
   backButton.addEventListener('click', goToPrevQuestion);
   nextButton.addEventListener('click', goToNextQuestion);
+
+  for (var i = 0; i < buttonWrappers.length; i++) {
+    buttonWrappers[i].addEventListener('click',  function() {
+      this.querySelector('button').click();
+    })
+  }
+
   setShouldButtonsBeDisabled();
 
   generateMarkup();
@@ -34,6 +42,40 @@
       for (var y = 0; y < questions.length; y++) {
         var currentQuestion = questions[y];
         generateHelperInput(currentQuestion);
+      }
+    }
+    makeBreadcrumbs();
+    setActiveBreadcrumbs();
+  }
+
+  function makeBreadcrumbs() {
+    var sectionsWrapper = formWrapper.getElementsByClassName('judging-form__sections-wrapper')[0];
+    var container = document.createElement('div');
+    container.classList.add('judging-form__breadcrumbs');
+    for (var i = 0; i < sections.length; i++) {
+      var currentSection = sections[i];
+      var currentSectionName = currentSection
+        .querySelector('h1')
+        .innerText;
+      currentSection.dataset.label = currentSectionName;
+      currentSection.dataset.index = i;
+      currentSection.dataset.isActive = false;
+      var breadcrumb = document.createElement('div');
+      breadcrumb.classList.add('judging-form__crumb');
+      var labelEl = document.createElement('div');
+      labelEl.classList.add('judging-form__crumb-label');
+      labelEl.innerText = currentSectionName;
+      breadcrumb.appendChild(labelEl);
+      container.appendChild(breadcrumb);
+    }
+    sectionsWrapper.insertBefore(container, sectionsWrapper.firstElementChild);
+  }
+
+  function setActiveBreadcrumbs() {
+    var breadcrumbs = document.getElementsByClassName('judging-form__crumb');
+    for (var i = 0; i < breadcrumbs.length; i++) {
+      if (i === activeSectionIndex) {
+        breadcrumbs[i].classList.add('judging-form__crumb--active');
       }
     }
   }
@@ -75,7 +117,8 @@
     return inputWrapper;
   }
 
-  function goToPrevQuestion() {
+  function goToPrevQuestion(e) {
+    e.stopPropagation();
     questions[activeQuestionIndex].classList.remove('active');
     var isBeginningOfSection = activeQuestionIndex === 0;
     if (isBeginningOfSection) {
@@ -90,9 +133,11 @@
     }
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
+    setActiveBreadcrumbs();
   }
 
-  function goToNextQuestion() {
+  function goToNextQuestion(e) {
+    e.stopPropagation();
     questions[activeQuestionIndex].classList.remove('active');
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
     activeQuestionIndex = isEndOfSection ? 0 : activeQuestionIndex + 1;
@@ -105,6 +150,7 @@
     }
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
+    setActiveBreadcrumbs();
   }
 
   function setShouldButtonsBeDisabled() {

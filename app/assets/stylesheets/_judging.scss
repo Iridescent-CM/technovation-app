@@ -3,6 +3,7 @@
 }
 
 .judging-form {
+  $min-height: 300px;
   $max-width: 900px;
   align-items: center;
   background-color: white;
@@ -11,6 +12,7 @@
   display: flex;
   left: 50%;
   max-width: $max-width;
+  min-height: $min-height;
   padding: 1rem;
   position: fixed;
   transform: translateX(-50%);
@@ -18,9 +20,12 @@
   z-index: $z-nuclear;
 }
 
+.judging-form__sections-wrapper {
+  flex-grow: 1;
+}
+
 .judging-form__section {
   display: none;
-  flex-grow: 1;
 
   .input:not(.active) {
     display: none;
@@ -47,6 +52,13 @@
 .judge-helper {
   margin: 1rem 0 1.5rem;
   position: relative;
+}
+
+.judging-form__button-wrapper {
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+  display: flex;
 }
 
 button.judging-form__button,
@@ -113,4 +125,76 @@ button.judging-form__button--next.unbutton {
 
 .rangeslider__tooltip--active {
   display: block;
+}
+
+// Breadcrumbs
+$size: 20px;
+
+.judging-form__breadcrumbs {
+  display: flex;
+  margin: 0 0 0.5em $size;
+  width: calc(100% - #{$size});
+}
+
+.judging-form__crumb {
+  $color: $light-grey;
+  align-items: center;
+  background-image: linear-gradient(to right, $color, $color calc(100% - #{$size}), transparent 0);
+  color: $granite;
+  display: flex;
+  flex-grow: 1;
+  font-size: 0.8em;
+  font-weight: bold;
+  justify-content: center;
+  padding: 0.5em 0.25em;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: $size;
+    background-size: 100% calc(50% + 1px);
+    background-repeat: no-repeat;
+    background-position: top left, bottom left;
+  }
+
+  &::before {
+    background-image: linear-gradient(to left bottom, transparent 50%, $color 0),
+      linear-gradient(to right bottom, $color 50%, transparent 0);
+    right: 0;
+  }
+
+  &::after {
+    background-image: linear-gradient(to left bottom, $color 50%, transparent 0),
+      linear-gradient(to right bottom, transparent 50%, $color 0);
+    right: 100%;
+  }
+
+  &:not(:last-child) {
+    margin-right: 0.25em;
+  }
+}
+
+.judging-form__crumb-label {
+  transform: translateX(-1em);
+}
+
+.judging-form__crumb--active {
+  $color: $shamrock-mid;
+  background-image: linear-gradient(to right, $color, $color calc(100% - #{$size}), transparent 0);
+  color: white;
+
+  &::before {
+    background-image: linear-gradient(to left bottom, transparent 50%, $color 0),
+      linear-gradient(to right bottom, $color 50%, transparent 0);
+  }
+
+  &::after {
+    background-image: linear-gradient(to left bottom, $color 50%, transparent 0),
+      linear-gradient(to right bottom, transparent 50%, $color 0);
+  }
 }
