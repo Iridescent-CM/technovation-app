@@ -1,3 +1,6 @@
+//= requir jquery2
+// PLEASE DO NOT USE JQUERY, LEGACY SUPPORT ONLY
+//
 //= require vanilla-ujs
 
 //= require url-search-params-polyfill
