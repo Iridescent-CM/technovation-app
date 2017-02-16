@@ -1,4 +1,4 @@
-//= requir jquery2
+//= require jquery2
 // PLEASE DO NOT USE JQUERY, LEGACY SUPPORT ONLY
 //
 //= require vanilla-ujs
