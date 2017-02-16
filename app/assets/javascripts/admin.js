@@ -1,4 +1,4 @@
-//= require url-polyfil
+//= require url-polyfill
 //= require url-search-params-polyfill
 
 //= require vanilla-ujs
