@@ -177,6 +177,6 @@ class MentorProfile < ActiveRecord::Base
 
   private
   def can_enable_searchable?
-    consent_signed? and background_check_complete? and location_confirmed?
+    consent_signed? and background_check_complete?
   end
 end
