@@ -71,15 +71,6 @@
     sectionsWrapper.insertBefore(container, sectionsWrapper.firstElementChild);
   }
 
-  function setActiveBreadcrumbs() {
-    var breadcrumbs = document.getElementsByClassName('judging-form__crumb');
-    for (var i = 0; i < breadcrumbs.length; i++) {
-      if (i === activeSectionIndex) {
-        breadcrumbs[i].classList.add('judging-form__crumb--active');
-      }
-    }
-  }
-
   function generateHelperInput(question) {
     var helper = question.classList.contains('radio_buttons')
       ? makeRadioHelper(question)
@@ -101,10 +92,21 @@
 
     // Helper description text div
     var descriptionTextEl = document.createElement('div');
+    var tickMarksWrapper = document.createElement('div');
+    tickMarksWrapper.classList.add('judge-helper__tick-marks-wrapper');
     for (var i = 0; i < radios.length; i++) {
       descriptionTextEl.dataset['description-' + i] = radios[i].parentElement.textContent;
     }
+
+    // Tick marks for range options
+    for (var i = 1; i < radios.length; i++) {
+      var tickMark = document.createElement('div');
+      tickMark.classList.add('judge-helper__tick-mark');
+      tickMarksWrapper.appendChild(tickMark);
+    }
+
     inputWrapper.appendChild(descriptionTextEl);
+    inputWrapper.appendChild(tickMarksWrapper);
 
     question.appendChild(inputWrapper);
   }
@@ -141,6 +143,7 @@
 
   function goToPrevQuestion(e) {
     e.stopPropagation();
+    saveProgress();
     questions[activeQuestionIndex].classList.remove('active');
     var isBeginningOfSection = activeQuestionIndex === 0;
     if (isBeginningOfSection) {
@@ -160,6 +163,7 @@
 
   function goToNextQuestion(e) {
     e.stopPropagation();
+    saveProgress();
     questions[activeQuestionIndex].classList.remove('active');
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
     activeQuestionIndex = isEndOfSection ? 0 : activeQuestionIndex + 1;
@@ -173,6 +177,11 @@
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
     setActiveBreadcrumbs();
+  }
+
+  function saveProgress() {
+    var submitButton = activeSection.querySelector('input[type="submit"]');
+    submitButton.click();
   }
 
   function setShouldButtonsBeDisabled() {
@@ -192,6 +201,15 @@
           nextButton.disabled = true;
         }
       };
+    }
+  }
+
+  function setActiveBreadcrumbs() {
+    var breadcrumbs = document.getElementsByClassName('judging-form__crumb');
+    for (var i = 0; i < breadcrumbs.length; i++) {
+      if (i === activeSectionIndex) {
+        breadcrumbs[i].classList.add('judging-form__crumb--active');
+      }
     }
   }
 
