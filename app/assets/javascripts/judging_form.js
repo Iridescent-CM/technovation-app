@@ -131,6 +131,7 @@
     responseDropdown.addEventListener('change', function(e) {
       if (e.target.value) {
         textarea.value = e.target.value;
+        textarea.oninput();
       }
       this.value = '';
     });
@@ -180,6 +181,18 @@
     var isLast = activeSectionIndex === (sections.length - 1) &&
       activeQuestionIndex === (questions.length - 1);
     nextButton.disabled = isLast;
+
+    var textarea = questions[activeQuestionIndex].querySelector('textarea');
+    if (textarea && !textarea.value) {
+      nextButton.disabled = true;
+      textarea.oninput = function() {
+        if (this.value) {
+          nextButton.disabled = false;
+        } else {
+          nextButton.disabled = true;
+        }
+      };
+    }
   }
 
   function setRadioValueFromRange(range) {
@@ -227,5 +240,4 @@
         }
     });
   }
-
 })();
