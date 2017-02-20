@@ -84,8 +84,6 @@
     var helper = question.classList.contains('radio_buttons')
       ? makeRadioHelper(question)
       : makeTextareaHelper(question);
-
-    question.appendChild(helper);
   }
 
   function makeRadioHelper(question) {
@@ -108,13 +106,36 @@
     }
     inputWrapper.appendChild(descriptionTextEl);
 
-    return inputWrapper;
+    question.appendChild(inputWrapper);
   }
 
   function makeTextareaHelper(question) {
-    var inputWrapper = document.createElement('div');
-    inputWrapper.classList.add('judge-helper', 'judge-helper--textarea');
-    return inputWrapper;
+    var textarea = question.querySelector('textarea');
+    var responseDropdown = document.createElement('select');
+    var defaultOption = document.createElement('option');
+    defaultOption.innerText = 'Something something canned responses...';
+    defaultOption.selected = true;
+    defaultOption.value = '';
+    responseDropdown.appendChild(defaultOption);
+    var options = [
+      'Curabitur est gravida et libero vitae dictum.',
+      'At nos hinc posthac, sitientis piros Afros.',
+      'Fabio vel iudice vincam, sunt in culpa qui officia.',
+      'Vivamus sagittis lacus vel augue laoreet rutrum faucibus.'
+    ];
+    options.forEach(function(option) {
+      var optionEl = document.createElement('option');
+      optionEl.innerText = option;
+      responseDropdown.appendChild(optionEl);
+    });
+    responseDropdown.addEventListener('change', function(e) {
+      if (e.target.value) {
+        textarea.value = e.target.value;
+      }
+      this.value = '';
+    });
+
+    question.insertBefore(responseDropdown, question.lastChild);
   }
 
   function goToPrevQuestion(e) {

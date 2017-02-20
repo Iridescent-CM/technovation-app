@@ -3,9 +3,9 @@
 }
 
 .judging-form {
-  $min-height: 300px;
+  $min-height: 250px;
   $max-width: 900px;
-  align-items: center;
+  // align-items: center;
   background-color: white;
   bottom: 2rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
@@ -43,6 +43,10 @@
     position: absolute;
     visibility: hidden;
   }
+
+  select {
+    width: 100%;
+  }
 }
 
 .judging-form__section--active {
@@ -50,7 +54,7 @@
 }
 
 .judge-helper {
-  margin: 1rem 0 1.5rem;
+  margin: 1.5rem 0;
   position: relative;
 }
 
