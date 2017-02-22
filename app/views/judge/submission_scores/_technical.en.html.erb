@@ -1,13 +1,22 @@
 <h1>Technical</h1>
 
+<div class="question-technical-checklist">
   <h2>Verify the Technical Checklist</h2>
 
   <p>
-    You can
-    <%= link_to "verify that the team has completed their Technical Checklist",
+    Please verify that the team has completed their Technical Checklist
+    <%#= link_to "verify that the team has completed their Technical Checklist",
       new_judge_team_submission_technical_checklist_verification_path(submission_score.team_submission),
       target: :_blank %>
   </p>
+
+  <button
+    type="button"
+    data-modal-trigger="judging-technical-checklist"
+  >
+    Verify Technical Checklist
+  </button>
+</div>
 
 <%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
   <%= f.input :app_functional,

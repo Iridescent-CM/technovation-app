@@ -17,7 +17,7 @@
   position: fixed;
   transform: translateX(-50%);
   width: calc(100% - 4rem);
-  z-index: $z-nuclear;
+  z-index: $z-high;
 }
 
 .judging-form__sections-wrapper {
@@ -27,6 +27,7 @@
 .judging-form__section {
   display: none;
 
+  .question-technical-checklist:not(.active),
   .input:not(.active) {
     display: none;
   }
@@ -207,6 +208,7 @@ $size: 20px;
 .judge-helper__tick-marks-wrapper {
   display: flex;
   height: 35px;
+  justify-content: space-between;
   left: 0;
   margin: 0 auto;
   position: absolute;
@@ -219,15 +221,8 @@ $size: 20px;
 
 .judge-helper__tick-mark {
   $color: $mid-grey;
-  flex-grow: 1;
-  border-right: 1px solid $color;
-  border-left: 1px solid $color;
-
-  &:first-child {
-  border-left-width: 2px;
-  }
-
-  &:last-child {
-    border-right-width: 2px;
-  }
+  background-color: $mid-grey;
+  border-radius: 1em;
+  transform: translateX(50%);
+  width: 3px;
 }
