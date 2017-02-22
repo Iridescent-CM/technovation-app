@@ -99,19 +99,21 @@
   }
 
   function fixColumnZIndex(modal, zidx) {
-    var parentCol = modal.parentElement,
-        colFound = parentCol.classList.contains('submissions-col');
+    var parentCol = modal.parentElement;
+    var colFound = parentCol.classList.contains('submissions-col');
 
     while(!colFound) {
       parentCol = parentCol.parentElement;
 
-      if (parentCol === null)
+      if (parentCol === null) {
         break;
+      }
 
       colFound = parentCol.classList.contains('submissions-col');
     }
 
-    if (colFound)
+    if (colFound) {
       parentCol.style.zIndex = zidx;
+    }
   }
 })();

@@ -9,7 +9,8 @@
   var activeQuestionIndex = 0;
   var sections = formWrapper.getElementsByClassName('judging-form__section');
   var activeSection = sections[activeSectionIndex];
-  var questions = activeSection.getElementsByClassName('input');
+  var questionSelector = '.input, .question-technical-checklist';
+  var questions = activeSection.querySelectorAll(questionSelector);
   var activeQuestion = questions[activeQuestionIndex];
   activeQuestion.classList.add('active'); // Not BEM cause this thing is being generated dynamically
   activeSection.classList.add('judging-form__section--active');
@@ -31,11 +32,12 @@
 
   generateMarkup();
   initRangeSliders();
+  handleTechnicalChecklist();
 
   function generateMarkup() {
     for (var i = 0; i < sections.length; i++) {
       var currentSection = sections[i];
-      var questions = currentSection.getElementsByClassName('input');
+      var questions = currentSection.querySelectorAll(questionSelector);
 
       // Sorry for the nested for loop :(
       // This is more straightforward, IMO, than functioning it out
@@ -72,9 +74,11 @@
   }
 
   function generateHelperInput(question) {
-    var helper = question.classList.contains('radio_buttons')
-      ? makeRadioHelper(question)
-      : makeTextareaHelper(question);
+    if (question.classList.contains('radio_buttons')) {
+      makeRadioHelper(question);
+    } else if (question.classList.contains('text')) {
+      makeTextareaHelper(question);
+    }
   }
 
   function makeRadioHelper(question) {
@@ -99,7 +103,7 @@
     }
 
     // Tick marks for range options
-    for (var i = 1; i < radios.length; i++) {
+    for (var i = 0; i < radios.length; i++) {
       var tickMark = document.createElement('div');
       tickMark.classList.add('judge-helper__tick-mark');
       tickMarksWrapper.appendChild(tickMark);
@@ -151,7 +155,7 @@
       activeSection.classList.remove('judging-form__section--active');
       activeSection = sections[activeSectionIndex];
       activeSection.classList.add('judging-form__section--active');
-      questions = activeSection.getElementsByClassName('input');
+      questions = activeSection.querySelectorAll(questionSelector);
       activeQuestionIndex = questions.length - 1;
     } else {
       activeQuestionIndex = activeQuestionIndex - 1;
@@ -172,7 +176,7 @@
       activeSection.classList.remove('judging-form__section--active');
       activeSection = sections[activeSectionIndex];
       activeSection.classList.add('judging-form__section--active');
-      questions = activeSection.getElementsByClassName('input');
+      questions = activeSection.querySelectorAll(questionSelector);
     }
     questions[activeQuestionIndex].classList.add('active');
     setShouldButtonsBeDisabled();
@@ -201,6 +205,11 @@
           nextButton.disabled = true;
         }
       };
+    }
+
+    var technicalChecklist = questions[activeQuestionIndex].classList.contains('question-technical-checklist');
+    if (technicalChecklist) {
+      nextButton.disabled = true;
     }
   }
 
@@ -257,5 +266,15 @@
           setRadioValueFromRange(this);
         }
     });
+  }
+
+  function handleTechnicalChecklist() {
+    setTimeout(function() {
+      var tempCompleteButton = document.getElementById('complete-technical-checklist');
+      tempCompleteButton.addEventListener('click', function() {
+        nextButton.disabled = false;
+        tempCompleteButton.parentElement.querySelector('.modalify__close').click();
+      });
+    }, 0);
   }
 })();
