@@ -2,9 +2,11 @@ module ClearBackgroundCheck
   def self.call(background_check)
     background_check.clear!
 
-    AccountMailer.background_check_clear(background_check.account).deliver_later
+    account = background_check.account
 
-    if background_check.account.mentor_profile.present?
+    AccountMailer.background_check_clear(account).deliver_later
+
+    if account.mentor_profile.present?
       account.mentor_profile.enable_searchability
     end
   end
