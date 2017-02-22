@@ -1,4 +1,10 @@
 namespace :cm do
+  # BECAUSE THE LOCAL ENV IDs ARE TEST IDs!
+  # YOU MUST SET BY HAND WHEN RUNNING THE SCRIPT
+  ENV["STUDENT_LIST_ID"] = nil
+  ENV["MENTOR_LIST_ID"] = nil
+  ENV["JUDGE_LIST_ID"] = nil
+
   desc "Remove students who are not permitted by their parents"
   task remove_unpermitted_students: :environment do
     auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
