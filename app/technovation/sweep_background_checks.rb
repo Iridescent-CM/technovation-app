@@ -9,7 +9,7 @@ module SweepBackgroundChecks
         bg_check.send("#{report.status}!")
         puts "Report UPDATED TO #{report.status.upcase} for #{bg_check.account.email}"
       elsif report.present? and "engaged" == report.adjudication
-        bg_check.clear!
+        ClearBackgroundCheck.(bg_check)
         puts "Report UPDATED TO #{bg_check.status.upcase} for #{bg_check.account.email}"
       elsif report.present? and bg_check.respond_to?("#{report.status}!")
         puts "Report STILL #{bg_check.status} for #{bg_check.account.email}"

@@ -6,7 +6,7 @@ RSpec.describe BackgroundCheck do
       account = FactoryGirl.create(%i{mentor regional_ambassador}.sample)
 
       account.background_check.pending!
-      account.background_check.clear!
+      ClearBackgroundCheck.(account.background_check)
 
       email = ActionMailer::Base.deliveries.last
       expect(email).to be_present, "no account email sent"
