@@ -177,5 +177,7 @@ Rails.application.routes.draw do
 
   resources :signins, only: :create
 
+  resource :token_error, only: :show
+
   root to: "application/dashboards#show"
 end

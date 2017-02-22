@@ -1,0 +1,2 @@
+class TokenErrorsController < ApplicationController
+end

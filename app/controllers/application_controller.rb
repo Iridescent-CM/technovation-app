@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
     I18n.locale = current_account.locale
   }
 
+  rescue_from "ActionController::ParameterMissing" do |e|
+    if e.message.include?("token")
+      redirect_to token_error_path
+    else
+      raise e
+    end
+  end
+
   def set_cookie(key, value)
     cookies[key] = value
   end
