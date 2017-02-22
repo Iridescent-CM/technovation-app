@@ -88,6 +88,10 @@ class MentorProfile < ActiveRecord::Base
     end
   end
 
+  def youngest_birth_year
+    Date.today.year - 15
+  end
+
   def expertise_names
     expertises.flat_map(&:name)
   end
