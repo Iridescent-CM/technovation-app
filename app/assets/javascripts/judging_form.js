@@ -168,8 +168,13 @@
   function goToNextQuestion(e) {
     e.stopPropagation();
     saveProgress();
-    questions[activeQuestionIndex].classList.remove('active');
+    var isLastSection = Array.prototype.indexOf.call(sections, activeSection) === (sections.length - 1);
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
+    if (isLastSection && isEndOfSection) {
+      console.log('We are at the end');
+      return;
+    }
+    questions[activeQuestionIndex].classList.remove('active');
     activeQuestionIndex = isEndOfSection ? 0 : activeQuestionIndex + 1;
     if (isEndOfSection) {
       activeSectionIndex = activeSectionIndex + 1;
