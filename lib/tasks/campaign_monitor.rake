@@ -58,4 +58,23 @@ namespace :cm do
       end
     end
   end
+
+  desc "Remove judges who have not signed the waiver"
+  task remove_unconsenting_judges: :environment do
+    auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
+
+    Account.joins(:judge_profile)
+           .includes(:consent_waiver)
+           .references(:consent_waivers)
+           .where("consent_waivers.id IS NULL")
+           .pluck(:email).each do |email|
+      begin
+        CreateSend::Subscriber.new(auth, ENV.fetch("JUDGE_LIST_ID"), email).delete
+        puts "Removed #{email}"
+      rescue => e
+        puts "PROBLEM REMOVING #{email}"
+        puts e.message
+      end
+    end
+  end
 end
