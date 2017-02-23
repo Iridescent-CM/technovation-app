@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from "Rack::Timeout::RequestTimeoutException" do |e|
+    redirect_to timeout_error_path(back: request.fullpath)
+  end
+
   def set_cookie(key, value)
     cookies[key] = value
   end

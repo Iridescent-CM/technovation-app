@@ -1,0 +1,2 @@
+class TimeoutErrorsController < ApplicationController
+end
