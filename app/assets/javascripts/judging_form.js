@@ -1,8 +1,10 @@
 (function judgingForm() {
+  return;
   var formWrapper = document.getElementById('judging-form');
   if (!formWrapper) {
     return;
   }
+  document.querySelector('.judging-form__loader').remove();
   // Todo: Figure out what the active question/section is by looking
   // at what sections have valid inputs already
   var activeSectionIndex = 0;
