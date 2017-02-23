@@ -1,5 +1,4 @@
 (function judgingForm() {
-  return;
   var formWrapper = document.getElementById('judging-form');
   if (!formWrapper) {
     return;
