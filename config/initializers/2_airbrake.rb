@@ -66,6 +66,7 @@ Airbrake.add_filter do |notice|
    CreateSend::BadRequest
    Net::SMTPSyntaxError
    SignalException
+   Elasticsearch::Transport::Transport::ServerError
  }
 
   if notice[:errors].any? do |error|
