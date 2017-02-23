@@ -111,7 +111,7 @@ class MentorProfile < ActiveRecord::Base
         "MENTOR_LIST_ID",
         [{ Key: 'City', Value: city },
          { Key: 'State/Province', Value: state_province },
-         { Key: 'Country', Value: Country[country].name }]
+         { Key: 'Country', Value: get_country }]
       )
     end
   end
