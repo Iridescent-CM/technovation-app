@@ -1,16 +1,6 @@
 <h1>Ideation</h1>
 
 <%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
-  <p>
-    The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
-    <strong><%= submission_score.team_submission_stated_goal %></strong>
-  </p>
-
-  <p>
-    <%= link_to "Learn more about Sustainable Development Goals",
-      "https://sustainabledevelopment.un.org/?menu=1300.",
-      target: :_blank %>
-  </p>
 
   <%= f.input :sdg_alignment,
     label: LabelForStatedGoal.(submission_score.team_submission_stated_goal),
@@ -34,6 +24,17 @@
     as: :radio_buttons %>
 
   <%= f.input :ideation_comment %>
+
+  <p>
+    The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
+    <strong><%= submission_score.team_submission_stated_goal %></strong>
+  </p>
+
+  <p>
+    <%= link_to "Learn more about Sustainable Development Goals",
+      "https://sustainabledevelopment.un.org/?menu=1300.",
+      target: :_blank %>
+  </p>
 
   <%= f.button :submit, "Save Ideation Score" %>
 <% end %>
