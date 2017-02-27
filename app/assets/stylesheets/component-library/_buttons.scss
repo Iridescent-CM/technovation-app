@@ -45,7 +45,6 @@
   border: 0;
   color: currentColor;
   display: inline;
-  font-family: $base-font-family;
   font-size: 1em;
   font-weight: normal;
   margin: 0;
@@ -53,6 +52,10 @@
   outline: none;
   padding: 0;
   text-transform: none;
+
+  &:not(.fa) {
+    font-family: $base-font-family;
+  }
 }
 
 .standalone-buttons {

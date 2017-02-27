@@ -5,19 +5,81 @@
 .judging-form {
   $min-height: 250px;
   $max-width: 900px;
-  // align-items: center;
   background-color: white;
   bottom: 2rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-  display: flex;
   left: 50%;
   max-width: $max-width;
   min-height: $min-height;
   padding: 1rem;
   position: fixed;
   transform: translateX(-50%);
+  transition: opacity 0.35s;
   width: calc(100% - 4rem);
   z-index: $z-high;
+}
+
+.judging-form--transition {
+  opacity: 0;
+}
+
+.judging-form--loading {
+
+  .judging-form__display-controls {
+    display: none;
+  }
+
+  .judging-form__button-wrapper {
+    display: none;
+  }
+}
+
+.judging-form--maximize {
+  bottom: 0;
+  height: 100vh;
+  max-width: 100%;
+  overflow: auto;
+  width: 100vw;
+
+  .judging-form__header {
+    margin-bottom: 2.5em;
+  }
+
+  .judging-form__button-wrapper {
+    display: none;
+  }
+
+  .judging-form__section {
+    display: block;
+    padding: 0 4rem;
+  }
+
+  .judging-form__section .question-technical-checklist:not(.active),
+  .judging-form__section .input:not(.active) {
+    display: block;
+  }
+
+  .judge-helper {
+    margin-bottom: 2.5em;
+  }
+}
+
+.judging-form__header {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75em;
+  position: relative;
+  width: 100%;
+}
+
+.judging-form__display-controls {
+  position: absolute;
+  right: 0;
+}
+
+.judging-form__body {
+  display: flex;
 }
 
 $loader-size: 60px;
@@ -152,6 +214,14 @@ button.judging-form__button--next.unbutton {
   }
 }
 
+// Expand, contract, minimize
+.judging-form__display-actions {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+}
+
+// Range slider
 .rangeslider__tooltip {
   display: none;
   background-color: $shamrock-dark;
@@ -190,7 +260,9 @@ $size: 20px;
 
 .judging-form__breadcrumbs {
   display: flex;
-  margin: 0 0 0.75em $size;
+  justify-content: center;
+  margin-left: $size;
+  max-width: 700px;
   width: calc(100% - #{$size});
 }
 
