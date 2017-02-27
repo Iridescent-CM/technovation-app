@@ -12,7 +12,7 @@
 !/log/.keep
 /tmp
 .byebug_history
-.env
+.env*
 coverage/**/*
 output.txt
 .DS_Store
