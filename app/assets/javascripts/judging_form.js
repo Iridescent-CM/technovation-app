@@ -4,6 +4,7 @@
     return;
   }
   document.querySelector('.judging-form__loader').remove();
+  formWrapper.classList.remove('judging-form--loading');
   // Todo: Figure out what the active question/section is by looking
   // at what sections have valid inputs already
   var activeSectionIndex = 0;
@@ -19,6 +20,11 @@
   var backButton = document.getElementById('juding-form-button-back');
   var nextButton = document.getElementById('juding-form-button-next');
   var buttonWrappers = document.getElementsByClassName('judging-form__button-wrapper');
+
+  var maximizeButton = document.getElementById('juding-form-maximize');
+  maximizeButton.addEventListener('click', function() {
+    setFormDisplay('maximize');
+  });
 
   backButton.addEventListener('click', goToPrevQuestion);
   nextButton.addEventListener('click', goToNextQuestion);
@@ -52,7 +58,7 @@
   }
 
   function makeBreadcrumbs() {
-    var sectionsWrapper = formWrapper.getElementsByClassName('judging-form__sections-wrapper')[0];
+    var headerWrapper = formWrapper.querySelector('.judging-form__header');
     var container = document.createElement('div');
     container.classList.add('judging-form__breadcrumbs');
     for (var i = 0; i < sections.length; i++) {
@@ -71,7 +77,7 @@
       breadcrumb.appendChild(labelEl);
       container.appendChild(breadcrumb);
     }
-    sectionsWrapper.insertBefore(container, sectionsWrapper.firstElementChild);
+    headerWrapper.insertBefore(container, headerWrapper.firstElementChild);
   }
 
   function generateHelperInput(question) {
@@ -282,5 +288,21 @@
         tempCompleteButton.parentElement.querySelector('.modalify__close').click();
       });
     }, 0);
+  }
+
+  function setFormDisplay(type) {
+    formWrapper.classList.add('judging-form--transition');
+    if (type === 'maximize') {
+      formWrapper.addEventListener('transitionend', maximizeForm);
+    }
+  }
+
+  function maximizeForm() {
+    formWrapper.classList.toggle('judging-form--maximize');
+    var isBodyOverflowHidden = document.body.style.overflow === 'hidden';
+    document.body.style.overflow = isBodyOverflowHidden ? 'auto' : 'hidden';
+
+    formWrapper.classList.remove('judging-form--transition');
+    formWrapper.removeEventListener('transitionend', maximizeForm);
   }
 })();
