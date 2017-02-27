@@ -9,6 +9,9 @@
     <%= render 'completion_steps/honor_code', account: current_mentor %>
     <%= render 'completion_steps/background_check', account: current_mentor %>
     <%= render 'completion_steps/complete_profile', account: current_mentor %>
-    <%= render 'completion_steps/create_join_team', account: current_mentor %>
+
+    <% if current_mentor.full_access_enabled? %>
+      <%= render 'completion_steps/create_join_team', account: current_mentor %>
+    <% end %>
   </ul>
 </div>

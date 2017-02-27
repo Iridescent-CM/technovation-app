@@ -6,8 +6,13 @@ module TeamMemberInviteController
   end
 
   def show
-    @invite = current_profile.team_member_invites.find_by(invite_token: params.fetch(:id)) ||
-      NullInvite.new
+    if current_profile.full_access_enabled?
+      @invite = current_profile.team_member_invites.find_by(invite_token: params.fetch(:id)) ||
+        NullInvite.new
+    else
+      redirect_to [current_profile.type_name, :dashboard],
+        error: t("controllers.invites.show.full_access_needed")
+    end
   end
 
   def create
