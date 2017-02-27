@@ -16,6 +16,14 @@ module Student
       current_student.join_requests.pending.find_each(&:destroy)
     }, only: :create
 
+    def index
+      if current_student.is_on_team?
+        redirect_to [:student, current_student.team]
+      else
+        redirect_to [:student, :dashboard]
+      end
+    end
+
     private
     def current_profile
       current_student
