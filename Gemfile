@@ -7,7 +7,7 @@ gem 'pg', '~> 0.19'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 3.1'
-gem 'coffee-rails', '~> 4.1'
+gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails', "~> 4.2"
 gem 'vanilla-ujs', "~> 1.3"
 
@@ -25,23 +25,23 @@ gem 'obscenity', '~> 1.0'
 gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
 gem 'sidekiq', '~> 4.2'
-gem 'airbrake', '~> 5.2'
-gem 'createsend', '~> 4.0'
-gem 'newrelic_rpm', '~> 3.14'
+gem 'airbrake', '~> 5.8'
+gem 'createsend', '~> 4.1'
+gem 'newrelic_rpm', '~> 3.18'
 
 gem 'dalli', "~> 2.7"
 
-gem 'geocoder', '~> 1.2'
+gem 'geocoder', '~> 1.4'
 gem 'timezone', '~> 1.2'
 
 gem 'carrierwave', '~> 0.11'
-gem "mini_magick", "~> 4.5"
+gem "mini_magick", "~> 4.6"
 gem "fog", "~> 1.38"
 gem 'carrierwave_direct', "~> 0.0"
 
 gem 'checkr-official', "~> 1.1", require: "checkr"
 
-gem 'font-awesome-rails', '~> 4.6'
+gem 'font-awesome-rails', '~> 4.7'
 gem 'chosen-rails', "~> 1.5"
 gem 'simple_form', "~> 3.4"
 gem 'countries', '~> 1.2', require: "countries/global"
@@ -55,6 +55,8 @@ gem 'will_paginate', '~> 3.1'
 gem 'indefinite_article', "~> 0.2"
 
 gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
+
+gem 'browser', "~> 2.3"
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"

@@ -9,10 +9,9 @@ module SignIn
     context.remove_cookie(:signup_token)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
-
-    if context.request.remote_ip != signin.last_login_ip
-      signin.update_attributes(last_login_ip: context.request.remote_ip)
-    end
+    RecordBrowserDetailsJob.perform_later(signin.id,
+                                          context.request.remote_ip,
+                                          context.request.user_agent)
 
     context.redirect_to signin_options[:redirect_to],
                         success: signin_options[:message]
