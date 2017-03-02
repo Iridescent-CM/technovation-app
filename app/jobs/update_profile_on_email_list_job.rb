@@ -6,14 +6,14 @@ class UpdateProfileOnEmailListJob < ActiveJob::Base
 
     account = Account.find(account_id)
 
-    UpdateProfileOnEmailListJob.perform_now(
+    UpdateEmailListJob.perform_now(
       email_was,
       account.email,
       account.full_name,
       list_env_key,
       [{ Key: 'City', Value: account.city },
-        { Key: 'State/Province', Value: account.state_province },
-        { Key: 'Country', Value: account.get_country }]
+       { Key: 'State/Province', Value: account.state_province },
+       { Key: 'Country', Value: account.get_country }]
     )
   end
 end
