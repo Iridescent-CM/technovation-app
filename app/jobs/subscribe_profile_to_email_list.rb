@@ -4,7 +4,7 @@ class SubscribeProfileToEmailList < ActiveJob::Base
   def perform(account_id, list_env_key)
     return if Rails.env.development? or Rails.env.test?
 
-    account = Account.find(id)
+    account = Account.find(account_id)
 
     SubscribeEmailListJob.perform_now(
       account.email,
