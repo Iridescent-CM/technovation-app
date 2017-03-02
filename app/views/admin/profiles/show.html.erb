@@ -1,7 +1,16 @@
 <%= render 'profiles/privileged_show',
   edit: true,
   account: account,
-  path: edit_admin_profile_path(@account) %>
+  path: edit_admin_profile_path(account) %>
+
+
+<%= simple_form_for @profile,
+  url: admin_profile_path(@profile),
+  html: { data: { remote: true } } do |f| %>
+  <%= f.fields_for :account do |a| %>
+    <%= a.input :location_confirmed, as: :boolean %>
+  <% end %>
+<% end %>
 
 <% if account.student_profile %>
   <%= render 'admin/profiles/student_debugging', profile: account.student_profile %>
