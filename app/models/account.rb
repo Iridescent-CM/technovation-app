@@ -259,13 +259,13 @@ class Account < ActiveRecord::Base
               state_province_changed? or
                 country_changed?
 
-      custom_fields = if mentor_profile.present?
-                        [{ Key: 'City', Value: city },
-                         { Key: 'State/Province', Value: state_province },
-                         { Key: 'Country', Value: (Country[country] && Country[country].name) }]
-                      else
-                        []
-                      end
+      custom_fields = if mentor_profile || judge_profile
+        [{ Key: 'City', Value: city },
+          { Key: 'State/Province', Value: state_province },
+          { Key: 'Country', Value: (Country[country] && Country[country].name) }]
+      else
+        []
+      end
 
       UpdateEmailListJob.perform_later(
         email_was, email, full_name, "#{type_name.upcase}_LIST_ID", custom_fields
