@@ -19,3 +19,4 @@ output.txt
 path
 public/uploads
 .heroku-configs
+*.backup
