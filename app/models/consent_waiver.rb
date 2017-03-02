@@ -12,6 +12,10 @@ class ConsentWaiver < ActiveRecord::Base
     if account.mentor_profile.present?
       account.mentor_profile.enable_searchability
     end
+
+    if account.judge_profile
+      SubscribeProfileToEmailList.perform_later(account.id, "JUDGE_LIST_ID")
+    end
   }, on: :create
 
   def account_consent_token=(token)
