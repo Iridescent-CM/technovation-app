@@ -17,16 +17,8 @@ RSpec.describe Account do
   it "re-subscribes new email addresses" do
     account = FactoryGirl.create(:account)
 
-    expect(UpdateEmailListJob).to receive(:perform_later)
-      .with(account.email,
-            "new@email.com",
-            account.full_name,
-            "APPLICATION_LIST_ID",
-            [
-              { Key: 'City', Value: "Chicago" },
-              { Key: 'State/Province', Value: "IL", },
-              { Key: 'Country', Value: "United States" },
-            ])
+    expect(UpdateProfileOnEmailListJob).to receive(:perform_later)
+      .with(account.id, account.email, "APPLICATION_LIST_ID")
 
     account.update_attributes(email: "new@email.com")
   end

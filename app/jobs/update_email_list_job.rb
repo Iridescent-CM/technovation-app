@@ -11,7 +11,7 @@ class UpdateEmailListJob < ActiveJob::Base
       subscriber = CreateSend::Subscriber.new(auth, ENV.fetch(list_env_key), email_was)
       subscriber.update(email.strip, name, custom_fields, false)
     rescue CreateSend::BadRequest => br
-      Rails.logger.info("#{email} - #{br.message}")
+      Rails.logger.error("[UPDATE EMAIL LIST ERROR] #{email} - #{br.message}")
     end
   end
 end
