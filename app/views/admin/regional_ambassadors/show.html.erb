@@ -12,10 +12,10 @@
 
   <dt>Browser / OS Info</dt>
   <dd>
-    <%= [profile.browser_name,
-         profile.browser_version,
-         profile.os_name,
-         profile.os_version].compact.join(' - ') %>
+    <%= [@regional_ambassador.browser_name,
+         @regional_ambassador.browser_version,
+         @regional_ambassador.os_name,
+         @regional_ambassador.os_version].compact.join(' - ') %>
   </dd>
 
   <dt>Actions</dt>
