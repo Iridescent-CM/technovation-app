@@ -31,8 +31,13 @@ module Admin
       @account = @profile.account
 
       if @profile.update_attributes(profile_params)
-        redirect_to admin_profile_path(@account),
-          success: "Account information saved"
+        if params[:regional_ambassador_profile]
+          redirect_to admin_regional_ambassador_path(@account),
+            success: "Account information saved"
+        else
+          redirect_to admin_profile_path(@account),
+            success: "Account information saved"
+        end
       else
         @expertises ||= Expertise.all
         render :edit

@@ -36,5 +36,13 @@
                  status: :declined,
                  text: "decline" %>
     <% end %>
+
+    <%= simple_form_for @regional_ambassador,
+      url: admin_profile_path(@regional_ambassador),
+      html: { data: { remote: true } } do |f| %>
+      <%= f.fields_for :account do |a| %>
+        <%= a.input :location_confirmed, as: :boolean %>
+      <% end %>
+    <% end %>
   </dd>
 </dl>
