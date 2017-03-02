@@ -18,13 +18,23 @@ RSpec.describe Account do
     account = FactoryGirl.create(:account)
 
     expect(UpdateEmailListJob).to receive(:perform_later)
-      .with(account.email, "new@email.com", account.full_name, "APPLICATION_LIST_ID", [])
+      .with(account.email,
+            "new@email.com",
+            account.full_name,
+            "APPLICATION_LIST_ID",
+            [
+              { Key: 'City', Value: "Chicago" },
+              { Key: 'State/Province', Value: "IL", },
+              { Key: 'Country', Value: "United States" },
+            ])
 
     account.update_attributes(email: "new@email.com")
   end
 
   it "doesn't need a BG check outside of the US" do
-    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample, city: "Salvador", country: "BR")
+    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample,
+                                 city: "Salvador",
+                                 country: "BR")
     expect(account).to be_background_check_complete
   end
 
