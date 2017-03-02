@@ -10,6 +10,14 @@
   <dt>Background check</dt>
   <dd><%= @report.status %></dd>
 
+  <dt>Browser / OS Info</dt>
+  <dd>
+    <%= [profile.browser_name,
+         profile.browser_version,
+         profile.os_name,
+         profile.os_version].compact.join(' - ') %>
+  </dd>
+
   <dt>Actions</dt>
   <dd>
     <% if @regional_ambassador.approved? %>
