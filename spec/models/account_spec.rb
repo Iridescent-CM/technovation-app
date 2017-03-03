@@ -14,13 +14,14 @@ RSpec.describe Account do
     expect(account.errors[:password]).to eq(["is too short (minimum is 8 characters)"])
   end
 
-  it "re-subscribes new email addresses" do
+  it "updates newsletters with a change to the email address" do
     account = FactoryGirl.create(:account)
 
     expect(UpdateProfileOnEmailListJob).to receive(:perform_later)
       .with(account.id, account.email, "APPLICATION_LIST_ID")
 
     account.update_attributes(email: "new@email.com")
+    account.run_callbacks(:commit)
   end
 
   it "doesn't need a BG check outside of the US" do

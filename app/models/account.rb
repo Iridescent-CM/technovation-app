@@ -56,14 +56,13 @@ class Account < ActiveRecord::Base
   has_secure_token :password_reset_token
   has_secure_password
 
-  after_validation :update_email_list, on: :update
-
   after_validation :geocode, if: -> (a) {
     a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
   }
   after_validation :reverse_geocode, if: ->(a) { a.latitude_changed? or a.longitude_changed? }
 
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
+  after_commit :update_email_list, on: :update
 
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
