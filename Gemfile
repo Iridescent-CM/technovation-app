@@ -57,6 +57,7 @@ gem 'indefinite_article', "~> 0.2"
 gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
 
 gem 'browser', "~> 2.3"
+gem "oink", "~> 0.10"
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
