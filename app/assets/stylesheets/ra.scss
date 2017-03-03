@@ -1,4 +1,5 @@
 @import "admin";
+@import "chosen";
 
 @import "accounts";
 @import "signups";
@@ -171,5 +172,11 @@ form {
 .signups__location-fields {
   .appy-button {
     margin: 1rem 0;
+  }
+}
+
+#ra-timezone {
+  .input.select {
+    margin: 0 0 1rem;
   }
 }
