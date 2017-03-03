@@ -50,8 +50,10 @@
   }
 
   .judging-form__section {
+    $max-width: 900px;
     display: block;
-    padding: 0 4rem;
+    margin: 0 auto 2em;
+    max-width: $max-width
   }
 
   .judging-form__section .question-technical-checklist:not(.active),
