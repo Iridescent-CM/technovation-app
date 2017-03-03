@@ -17,11 +17,12 @@ RSpec.describe Account do
   it "updates newsletters with a change to the email address" do
     account = FactoryGirl.create(:account, email: "old@oldtime.com")
 
-    expect(UpdateProfileOnEmailListJob).to receive(:perform_later)
-      .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
+    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
-    account.update_attributes(email: "new@email.com")
-    account.run_callbacks(:commit)
+    account.update_attributes(email: "new@email.com", skip_existing_password: true)
+
+    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
   end
 
   it "doesn't need a BG check outside of the US" do

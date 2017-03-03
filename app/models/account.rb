@@ -59,10 +59,27 @@ class Account < ActiveRecord::Base
   after_validation :geocode, if: -> (a) {
     a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
   }
-  after_validation :reverse_geocode, if: ->(a) { a.latitude_changed? or a.longitude_changed? }
+
+  after_validation :reverse_geocode, if: ->(a) {
+    a.latitude_changed? or a.longitude_changed?
+  }
+
+  after_validation -> {
+    # I hate you, sometimes, Rails
+    # See 'after_commit' below for what this is about
+    @update_email_list = (first_name_changed? or last_name_changed? or email_changed? or
+      city_changed? or state_province_changed? or country_changed?)
+    @old_email = email_was
+  }, on: :update
 
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
-  after_commit :update_email_list, on: :update
+
+  # See after_validation above
+  after_commit -> {
+    UpdateProfileOnEmailListJob.perform_later(
+      id, @old_email, "#{type_name.upcase}_LIST_ID"
+    )
+  }, on: :update, if: -> { @update_email_list }
 
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
@@ -250,14 +267,6 @@ class Account < ActiveRecord::Base
   end
 
   private
-  def update_email_list
-    if first_name_changed? or last_name_changed? or email_changed? or
-        city_changed? or state_province_changed? or country_changed?
-
-      UpdateProfileOnEmailListJob.perform_later(id, email_was, "#{type_name.upcase}_LIST_ID")
-    end
-  end
-
   def changes_require_password?
     !!!skip_existing_password &&
       (persisted? && (email_changed? || password_digest_changed?))
