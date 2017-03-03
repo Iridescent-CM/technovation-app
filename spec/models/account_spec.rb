@@ -15,10 +15,10 @@ RSpec.describe Account do
   end
 
   it "updates newsletters with a change to the email address" do
-    account = FactoryGirl.create(:account)
+    account = FactoryGirl.create(:account, email: "old@oldtime.com")
 
     expect(UpdateProfileOnEmailListJob).to receive(:perform_later)
-      .with(account.id, account.email, "APPLICATION_LIST_ID")
+      .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
 
     account.update_attributes(email: "new@email.com")
     account.run_callbacks(:commit)
