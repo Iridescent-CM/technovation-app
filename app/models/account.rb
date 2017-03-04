@@ -20,7 +20,7 @@ class Account < ActiveRecord::Base
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
   has_one :regional_ambassador_profile, dependent: :destroy
-  belongs_to :signup_attempt, dependent: :destroy
+  has_one :signup_attempt, dependent: :destroy
 
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
