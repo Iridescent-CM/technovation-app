@@ -44,6 +44,10 @@ module SearchTeams
     miles = filter.nearby == "anywhere" ? 40_000 : 50
     nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
+    if filter.user.country == "PS"
+      nearby = "Palestine"
+    end
+
     teams = teams.near(nearby, miles)
 
     if filter.spot_available
