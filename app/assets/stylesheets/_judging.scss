@@ -48,7 +48,6 @@
   left: 0;
   max-width: 100%;
   overflow: auto;
-  padding-bottom: 1rem;
   transform: none;
   width: 100vw;
 
@@ -58,6 +57,10 @@
     left: 0;
     width: 100%;
     z-index: $z-high;
+  }
+
+  .judging-form__body {
+    padding-bottom: 6rem;
   }
 
   .judging-form__breadcrumbs-wrapper {
@@ -264,12 +267,15 @@ button.judging-form__button--next.unbutton {
 // Maximized view bottom action buttons
 
 .judging-form__maximized-action-helpers {
+  background-color: white;
+  bottom: 0;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
   display: none;
   justify-content: flex-end;
-
-  button {
-
-  }
+  left: 0;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
 }
 
 // Expand, contract, minimize

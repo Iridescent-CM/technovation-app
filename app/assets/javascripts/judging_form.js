@@ -195,6 +195,11 @@
     submitButton.click();
   }
 
+  function saveProgressAll() {
+    var submitButtons = formWrapper.querySelectorAll('input[type="submit"]');
+    submitButton.click();
+  }
+
   function setShouldButtonsBeDisabled() {
     var isFirst = activeSectionIndex === 0 && activeQuestionIndex === 0;
     backButton.disabled = isFirst;
@@ -352,7 +357,6 @@
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', minimizeForm);
-    $(window).trigger('resize');
   }
 
 })();
