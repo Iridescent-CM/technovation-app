@@ -31,8 +31,13 @@ module Admin
       @account = @profile.account
 
       if @profile.update_attributes(profile_params)
-        redirect_to admin_profile_path(@account),
-          success: "Account information saved"
+        if params[:regional_ambassador_profile]
+          redirect_to admin_regional_ambassador_path(@account),
+            success: "Account information saved"
+        else
+          redirect_to admin_profile_path(@account),
+            success: "Account information saved"
+        end
       else
         @expertises ||= Expertise.all
         render :edit
@@ -62,6 +67,7 @@ module Admin
           :profile_image,
           :profile_image_cache,
           :password,
+          :location_confirmed,
         ],
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
@@ -71,6 +77,7 @@ module Admin
     def account
       @account ||= Account.find(params[:id])
       @profile ||= @account.send("#{@account.type_name}_profile")
+      @account
     end
   end
 end

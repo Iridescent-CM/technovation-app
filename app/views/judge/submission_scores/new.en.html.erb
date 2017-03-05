@@ -6,13 +6,25 @@
     <%= @current_team_submission.team.name %>
   </h1>
 
-  <div class="judging-form judging-form--loading" id="judging-form"><!-- loading class removed once JS loads -->
-    <div class="judging-form__header">
+  <div class="card judging-form judging-form--loading" id="judging-form"><!-- loading class removed once JS loads -->
+
+    <div class="card__heading judging-form__title-bar">
+      <span>Judging Form</span>
       <div class="judging-form__display-controls">
-        <button id="juding-form-maximize" class="unbutton fa fa-expand" >
+        <button id="juding-form-minimize" class="unbutton fa fa-window-minimize" >
+          <!-- FontAwesome Chevron -->
+        </button>
+        <button id="juding-form-window" class="unbutton fa fa-window-restore" >
+          <!-- FontAwesome Chevron -->
+        </button>
+        <button id="juding-form-maximize" class="unbutton fa fa-window-maximize" >
           <!-- FontAwesome Chevron -->
         </button>
       </div>
+    </div>
+
+    <div class="judging-form__breadcrumbs-wrapper">
+      <!-- Breadcrumbs go here -->
     </div>
 
     <div class="judging-form__body">
@@ -44,6 +56,14 @@
         </div>
         <div class="judging-form__section">
           <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+        </div>
+        <div class='judging-form__maximized-action-helpers'>
+          <button class="appy-button" id='submit-all-forms'>
+            Save Scores
+          </button>
+          <button class="appy-button" id='submit-scores'>
+            Submit Scores
+          </button>
         </div>
       </div>
       <div class="judging-form__button-wrapper">

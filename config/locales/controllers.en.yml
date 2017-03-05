@@ -30,6 +30,9 @@ en:
         confirm: "Are you sure you want to revoke your invitation to %{name}?"
         link: "revoke"
         success: "You revoked the invitation to %{name}"
+      show:
+        full_access_needed: "Please finish the items in your To-Do list before reviewing this invitation"
+
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
 

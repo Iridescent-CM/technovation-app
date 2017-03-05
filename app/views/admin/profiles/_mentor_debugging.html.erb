@@ -23,6 +23,14 @@
   </p>
 
   <p>
+    <strong>Browser / OS Info</strong>
+    <%= [profile.browser_name,
+         profile.browser_version,
+         profile.os_name,
+         profile.os_version].compact.join(' - ') %>
+  </p>
+
+  <p>
     <strong>Searchable to students?</strong>
     <% if profile.searchable? %>
       <%= profile.accepting_team_invites? ? 'yes' : 'no' %>

@@ -10,6 +10,14 @@
   <dt>Background check</dt>
   <dd><%= @report.status %></dd>
 
+  <dt>Browser / OS Info</dt>
+  <dd>
+    <%= [@regional_ambassador.browser_name,
+         @regional_ambassador.browser_version,
+         @regional_ambassador.os_name,
+         @regional_ambassador.os_version].compact.join(' - ') %>
+  </dd>
+
   <dt>Actions</dt>
   <dd>
     <% if @regional_ambassador.approved? %>
@@ -35,6 +43,14 @@
                  ambassador: @regional_ambassador,
                  status: :declined,
                  text: "decline" %>
+    <% end %>
+
+    <%= simple_form_for @regional_ambassador,
+      url: admin_profile_path(@regional_ambassador),
+      html: { data: { remote: true } } do |f| %>
+      <%= f.fields_for :account do |a| %>
+        <%= a.input :location_confirmed, as: :boolean %>
+      <% end %>
     <% end %>
   </dd>
 </dl>

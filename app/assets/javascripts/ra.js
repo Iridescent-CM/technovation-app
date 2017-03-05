@@ -1,4 +1,5 @@
 //= require jquery2
+//= require chosen-jquery
 // PLEASE DO NOT USE JQUERY, LEGACY SUPPORT ONLY
 
 //= require url-polyfill
@@ -31,4 +32,10 @@
       ta.style.height = ta.scrollHeight / 1.25 + "px";
     });
   }
+})();
+
+(function enableChosen() {
+  $('.chosen').chosen({
+    width: '250px',
+  });
 })();

@@ -14,17 +14,21 @@ RSpec.describe Account do
     expect(account.errors[:password]).to eq(["is too short (minimum is 8 characters)"])
   end
 
-  it "re-subscribes new email addresses" do
-    account = FactoryGirl.create(:account)
+  it "updates newsletters with a change to the email address" do
+    account = FactoryGirl.create(:account, email: "old@oldtime.com")
 
-    expect(UpdateEmailListJob).to receive(:perform_later)
-      .with(account.email, "new@email.com", account.full_name, "APPLICATION_LIST_ID", [])
+    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
-    account.update_attributes(email: "new@email.com")
+    account.update_attributes(email: "new@email.com", skip_existing_password: true)
+
+    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
   end
 
   it "doesn't need a BG check outside of the US" do
-    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample, city: "Salvador", country: "BR")
+    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample,
+                                 city: "Salvador",
+                                 country: "BR")
     expect(account).to be_background_check_complete
   end
 

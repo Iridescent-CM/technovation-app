@@ -11,16 +11,23 @@
   left: 50%;
   max-width: $max-width;
   min-height: $min-height;
-  padding: 1rem;
   position: fixed;
   transform: translateX(-50%);
   transition: opacity 0.35s;
   width: calc(100% - 4rem);
   z-index: $z-high;
+
+  &:not(.judging-form--maximize) {
+    border-radius: 0.5em;
+  }
 }
 
 .judging-form--transition {
   opacity: 0;
+
+  .rangeslider__handle {
+    transition: 0s;
+  }
 }
 
 .judging-form--loading {
@@ -35,14 +42,26 @@
 }
 
 .judging-form--maximize {
+  border-radius: 0;
   bottom: 0;
   height: 100vh;
+  left: 0;
   max-width: 100%;
   overflow: auto;
+  padding-bottom: 1rem;
+  transform: none;
   width: 100vw;
 
-  .judging-form__header {
-    margin-bottom: 2.5em;
+  .judging-form__title-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: $z-high;
+  }
+
+  .judging-form__breadcrumbs-wrapper {
+    margin: 3.5em 0 1.5em;
   }
 
   .judging-form__button-wrapper {
@@ -64,30 +83,56 @@
   .judge-helper {
     margin-bottom: 2.5em;
   }
+
+  .judging-form__maximized-action-helpers {
+    display: flex;
+  }
 }
 
-.judging-form__header {
+.judging-form--minimize {
+  min-height: 0;
+
+  .judging-form__title-bar {
+    padding: 0.75rem 1rem 0.8em;
+  }
+
+  .judging-form__breadcrumbs-wrapper,
+  .judging-form__body {
+    display: none;
+  }
+}
+
+.judging-form__title-bar {
+  background-color: $mulberry;
+  color: white;
+}
+
+.judging-form__breadcrumbs-wrapper {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-bottom: 0.75em;
+  margin: 0.75em 0;
   position: relative;
   width: 100%;
 }
 
 .judging-form__display-controls {
-  position: absolute;
-  right: 0;
+  font-size: 0.9em;
+
+  button:not(:last-child) {
+    margin-right: 0.5em;
+  }
 }
 
 .judging-form__body {
   display: flex;
+  padding: 0 1rem 1rem;
 }
 
 $loader-size: 60px;
 $loader-bar-width: 8px;
 
-.judging-form__loader { // TODO: Make this work later
+.judging-form__loader {
   align-items: center;
   display: flex;
   height: $loader-size;
@@ -213,6 +258,17 @@ button.judging-form__button--next.unbutton {
   &::before {
     display: block;
     transform: translateX(2px) translateY(1px);
+  }
+}
+
+// Maximized view bottom action buttons
+
+.judging-form__maximized-action-helpers {
+  display: none;
+  justify-content: flex-end;
+
+  button {
+
   }
 }
 

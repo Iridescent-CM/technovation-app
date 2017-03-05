@@ -21,11 +21,6 @@
   var nextButton = document.getElementById('juding-form-button-next');
   var buttonWrappers = document.getElementsByClassName('judging-form__button-wrapper');
 
-  var maximizeButton = document.getElementById('juding-form-maximize');
-  maximizeButton.addEventListener('click', function() {
-    setFormDisplay('maximize');
-  });
-
   backButton.addEventListener('click', goToPrevQuestion);
   nextButton.addEventListener('click', goToNextQuestion);
 
@@ -58,7 +53,7 @@
   }
 
   function makeBreadcrumbs() {
-    var headerWrapper = formWrapper.querySelector('.judging-form__header');
+    var breadcrumbsWrapper = formWrapper.querySelector('.judging-form__breadcrumbs-wrapper');
     var container = document.createElement('div');
     container.classList.add('judging-form__breadcrumbs');
     for (var i = 0; i < sections.length; i++) {
@@ -77,7 +72,7 @@
       breadcrumb.appendChild(labelEl);
       container.appendChild(breadcrumb);
     }
-    headerWrapper.insertBefore(container, headerWrapper.firstElementChild);
+    breadcrumbsWrapper.appendChild(container);
   }
 
   function generateHelperInput(question) {
@@ -290,19 +285,74 @@
     }, 0);
   }
 
+  // Maximize, minimize, window features
+  var maximizeButton = document.getElementById('juding-form-maximize');
+  maximizeButton.addEventListener('click', function() {
+    setFormDisplay('maximize');
+  });
+
+  var windowButton = document.getElementById('juding-form-window');
+  windowButton.addEventListener('click', function() {
+    setFormDisplay('window');
+  });
+
+  var minimizeButton = document.getElementById('juding-form-minimize');
+  minimizeButton.addEventListener('click', function() {
+    setFormDisplay('minimize');
+  });
+
+  var maximizeClass = 'judging-form--maximize';
+  var minimizeClass = 'judging-form--minimize';
+
   function setFormDisplay(type) {
-    formWrapper.classList.add('judging-form--transition');
     if (type === 'maximize') {
+      if (formWrapper.classList.contains(maximizeClass)) {
+        return;
+      }
       formWrapper.addEventListener('transitionend', maximizeForm);
+    } else if (type === 'window') {
+      if (!formWrapper.classList.contains(maximizeClass) && !formWrapper.classList.contains(minimizeClass)) {
+        return;
+      }
+      formWrapper.addEventListener('transitionend', windowForm);
+    } else if (type === 'minimize') {
+      if (formWrapper.classList.contains(minimizeClass)) {
+        return;
+      }
+      formWrapper.addEventListener('transitionend', minimizeForm);
     }
+
+    formWrapper.classList.add('judging-form--transition');
   }
 
   function maximizeForm() {
-    formWrapper.classList.toggle('judging-form--maximize');
-    var isBodyOverflowHidden = document.body.style.overflow === 'hidden';
-    document.body.style.overflow = isBodyOverflowHidden ? 'auto' : 'hidden';
+    formWrapper.classList.remove(minimizeClass);
+    formWrapper.classList.add(maximizeClass);
+    document.body.style.overflow = 'hidden';
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', maximizeForm);
+    $(window).trigger('resize');
   }
+
+  function windowForm() {
+    formWrapper.classList.remove(maximizeClass);
+    formWrapper.classList.remove(minimizeClass);
+    document.body.style.overflow = 'auto';
+
+    formWrapper.classList.remove('judging-form--transition');
+    formWrapper.removeEventListener('transitionend', windowForm);
+    $(window).trigger('resize');
+  }
+
+  function minimizeForm() {
+    formWrapper.classList.remove(maximizeClass);
+    formWrapper.classList.add(minimizeClass);
+    document.body.style.overflow = 'auto';
+
+    formWrapper.classList.remove('judging-form--transition');
+    formWrapper.removeEventListener('transitionend', minimizeForm);
+    $(window).trigger('resize');
+  }
+
 })();
