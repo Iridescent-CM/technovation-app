@@ -11,6 +11,11 @@ class JudgeController < ApplicationController
     end
   }
 
+  # For Airbrake Notifier
+  def current_user
+    current_judge
+  end
+
   private
   def current_judge
     @current_judge ||= current_account.judge_profile

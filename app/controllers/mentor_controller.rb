@@ -20,6 +20,11 @@ class MentorController < ApplicationController
     %w{interruptions location_details profiles honor_code_agreements cookies dashboards background_checks}.include?(controller_name)
   }
 
+  # For Airbrake Notifier
+  def current_user
+    current_mentor
+  end
+
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile

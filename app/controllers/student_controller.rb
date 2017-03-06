@@ -20,6 +20,11 @@ class StudentController < ApplicationController
     }.include?(controller_name)
   }
 
+  # For Airbrake Notifier
+  def current_user
+    current_student
+  end
+
   private
   def current_student
     @current_student ||= current_account.student_profile
