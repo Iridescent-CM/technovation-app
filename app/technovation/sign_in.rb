@@ -7,6 +7,7 @@ module SignIn
 
     context.set_cookie(:auth_token, signin.auth_token)
     context.remove_cookie(:signup_token)
+    context.remove_cookie(:admin_permission_token)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
     RecordBrowserDetailsJob.perform_later(signin.id,
