@@ -1,5 +1,7 @@
 module RegionalAccount
   def self.call(ambassador, params = {})
+    params[:text] = params[:text].sub(/(@.+$)/, '')
+
     account = if params[:type] == "All"
                 Account
               else
