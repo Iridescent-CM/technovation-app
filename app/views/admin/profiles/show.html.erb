@@ -1,6 +1,8 @@
 <%= render 'profiles/privileged_show',
+  admin: true,
   edit: true,
   account: account,
+  location_edit_path: edit_admin_profile_location_path(account),
   path: edit_admin_profile_path(account) %>
 
 

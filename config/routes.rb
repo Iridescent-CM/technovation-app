@@ -129,6 +129,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :profiles
+    resources :profile_locations, only: :edit
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy

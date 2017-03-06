@@ -1,5 +1,7 @@
-<%= render 'profiles/show',
+<%= render 'profiles/privileged_show',
   edit: true,
+  admin: true,
+  location_edit_path: edit_admin_profile_location_path(@regional_ambassador.account),
   path: edit_admin_profile_path(@regional_ambassador.account),
   account: @regional_ambassador %>
 
