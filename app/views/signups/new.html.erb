@@ -10,7 +10,7 @@
   </p>
 
   <%= render 'signups/account_type', role: :judge %>
-  <%= render 'signups/account_type', role: :student, disabled: true %>
-  <%= render 'signups/account_type', role: :mentor, disabled: true %>
-  <%= render 'signups/account_type', role: :regional_ambassador, disabled: true %>
+  <%= render 'signups/account_type', role: :student, disabled: no_admin_permission? %>
+  <%= render 'signups/account_type', role: :mentor, disabled: no_admin_permission? %>
+  <%= render 'signups/account_type', role: :regional_ambassador, disabled: no_admin_permission? %>
 </div>

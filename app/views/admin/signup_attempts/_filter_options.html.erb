@@ -1,0 +1,15 @@
+<label>
+  Search:
+  <%= text_field_tag :text,
+    params[:text],
+    class: "submit-on-enter",
+    placeholder: "Press enter after typing",
+    data: { param: :text } %>
+</label>
+
+<label>
+  Status:
+  <%= select_tag :status,
+    options_for_select(SignupAttempt.statuses.keys, params[:status]),
+    data: { param: :status } %>
+</label>

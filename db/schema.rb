@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302222004) do
+ActiveRecord::Schema.define(version: 20170306172821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,15 +310,16 @@ ActiveRecord::Schema.define(version: 20170302222004) do
   end
 
   create_table "signup_attempts", force: :cascade do |t|
-    t.string   "email",                        null: false
-    t.string   "activation_token",             null: false
+    t.string   "email",                              null: false
+    t.string   "activation_token",                   null: false
     t.integer  "account_id"
-    t.integer  "status",           default: 0, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "status",                 default: 0, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "signup_token"
     t.string   "pending_token"
     t.string   "password_digest"
+    t.string   "admin_permission_token"
   end
 
   add_index "signup_attempts", ["account_id"], name: "index_signup_attempts_on_account_id", using: :btree
