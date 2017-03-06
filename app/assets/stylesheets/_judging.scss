@@ -11,6 +11,7 @@
   left: 50%;
   max-width: $max-width;
   min-height: $min-height;
+  overflow: visible;
   position: fixed;
   transform: translateX(-50%);
   transition: opacity 0.35s;
@@ -52,6 +53,7 @@
   width: 100vw;
 
   .judging-form__title-bar {
+    border-radius: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -107,6 +109,8 @@
 
 .judging-form__title-bar {
   background-color: $mulberry;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
   color: white;
 }
 
