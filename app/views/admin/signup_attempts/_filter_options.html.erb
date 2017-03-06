@@ -10,6 +10,6 @@
 <label>
   Status:
   <%= select_tag :status,
-    options_for_select(SignupAttempt.statuses.keys, params[:status]),
+    options_for_select(["All"] + SignupAttempt.statuses.keys.map(&:humanize), params[:status]),
     data: { param: :status } %>
 </label>
