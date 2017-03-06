@@ -1,36 +1,34 @@
-<% cache @team_submission do %>
-  <% @team_submission.app_name = "(no name yet)" if @team_submission.app_name.blank? %>
+<% @team_submission.app_name = "(no name yet)" if @team_submission.app_name.blank? %>
 
-  <% provide :title, "#{@team_submission.app_name} built by #{@team_submission.team_name}" %>
+<% provide :title, "#{@team_submission.app_name} built by #{@team_submission.team_name}" %>
 
-  <% provide :og_meta do %>
-    <meta property="og:url" content="<%= app_url(@team_submission) %>">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= @team_submission.app_name %> built by <%= @team_submission.team_name %>">
-    <meta property="og:description" content="<%= @team_submission.app_description %>">
-    <meta property="og:image" content="<%= @team_submission.team.team_photo_url %>">
-  <% end %>
+<% provide :og_meta do %>
+  <meta property="og:url" content="<%= app_url(@team_submission) %>">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<%= @team_submission.app_name %> built by <%= @team_submission.team_name %>">
+  <meta property="og:description" content="<%= @team_submission.app_description %>">
+  <meta property="og:image" content="<%= @team_submission.team.team_photo_url %>">
+<% end %>
 
-  <div class="team-submissions">
-    <div class="team-submissions__row-left">
-      <div class="team-submissions__fixed-col">
-        <%= render 'team_photo', submission: @team_submission %>
-      </div>
-    </div>
-
-    <div class="team-submissions__row-center">
-      <%= render 'app_description', submission: @team_submission %>
-      <%= render 'sustainable_development_goal', submission: @team_submission %>
-      <%= render 'demo_pitch_videos', submission: @team_submission %>
-      <%= render 'screenshots', submission: @team_submission %>
-    </div>
-
-    <div class="team-submissions__row-right">
-      <div class="team-submissions__fixed-col">
-        <%= render 'source_code', submission: @team_submission %>
-        <%= render 'development_platform', submission: @team_submission %>
-        <%= render 'business_plan', submission: @team_submission %>
-      </div>
+<div class="team-submissions">
+  <div class="team-submissions__row-left">
+    <div class="team-submissions__fixed-col">
+      <%= render 'team_photo', submission: @team_submission %>
     </div>
   </div>
-<% end %>
+
+  <div class="team-submissions__row-center">
+    <%= render 'app_description', submission: @team_submission %>
+    <%= render 'sustainable_development_goal', submission: @team_submission %>
+    <%= render 'demo_pitch_videos', submission: @team_submission %>
+    <%= render 'screenshots', submission: @team_submission %>
+  </div>
+
+  <div class="team-submissions__row-right">
+    <div class="team-submissions__fixed-col">
+      <%= render 'source_code', submission: @team_submission %>
+      <%= render 'development_platform', submission: @team_submission %>
+      <%= render 'business_plan', submission: @team_submission %>
+    </div>
+  </div>
+</div>

@@ -16,25 +16,23 @@
 
       <div class="admin-results-data-table">
         <% @background_checks.order('created_at DESC').each do |bg_check| %>
-          <% cache(bg_check) do %>
-            <div class="row">
-              <div class="cell">
-                <%= bg_check.account.type_name %>
-              </div>
-
-              <div class="cell">
-                <%= time_ago_in_words(bg_check.created_at) %> ago
-              </div>
-
-              <div class="cell">
-                <%= bg_check.account.email %>
-              </div>
-
-              <div class="cell">
-                <%= bg_check.status %>
-              </div>
+          <div class="row">
+            <div class="cell">
+              <%= bg_check.account.type_name %>
             </div>
-          <% end %>
+
+            <div class="cell">
+              <%= time_ago_in_words(bg_check.created_at) %> ago
+            </div>
+
+            <div class="cell">
+              <%= bg_check.account.email %>
+            </div>
+
+            <div class="cell">
+              <%= bg_check.status %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

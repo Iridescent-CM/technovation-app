@@ -40,12 +40,10 @@
 
     <tbody>
       <% @signup_attempts.each do |attempt| %>
-        <% cache(attempt) do %>
-          <tr>
-            <td><%= attempt.email %></td>
-            <td><%= attempt.status %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%= attempt.email %></td>
+          <td><%= attempt.status %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
