@@ -1,6 +1,6 @@
 module RegionalAccount
   def self.call(ambassador, params = {})
-    params[:text] = params[:text].sub(/(@.+$)/, '')
+    params[:text] = params.fetch(:text) { "" }.sub(/(@.+$)/, '')
 
     account = if params[:type] == "All"
                 Account
