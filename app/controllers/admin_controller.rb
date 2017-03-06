@@ -10,7 +10,7 @@ class AdminController < ApplicationController
   }
 
   def current_user
-    current_admin
+    current_admin.account
   end
 
   private

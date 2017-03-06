@@ -22,7 +22,7 @@ class MentorController < ApplicationController
 
   # For Airbrake Notifier
   def current_user
-    current_mentor
+    current_mentor.account
   end
 
   private

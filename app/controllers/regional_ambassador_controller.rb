@@ -14,7 +14,7 @@ class RegionalAmbassadorController < ApplicationController
 
   # For Airbrake Notifier
   def current_user
-    current_ambassador
+    current_ambassador.account
   end
 
   private

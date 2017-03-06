@@ -22,7 +22,7 @@ class StudentController < ApplicationController
 
   # For Airbrake Notifier
   def current_user
-    current_student
+    current_student.account
   end
 
   private

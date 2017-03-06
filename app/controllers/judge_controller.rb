@@ -13,7 +13,7 @@ class JudgeController < ApplicationController
 
   # For Airbrake Notifier
   def current_user
-    current_judge
+    current_judge.account
   end
 
   private
