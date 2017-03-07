@@ -33,7 +33,9 @@ module RegionalAmbassador
       when 'not selected'
         submissions = submissions.where("stated_goal IS NULL")
       else
-        submissions = submissions.where(stated_goal: TeamSubmission.stated_goals[params[:sdg]])
+        submissions = submissions.where(
+          stated_goal: TeamSubmission.stated_goals[params[:sdg]]
+        )
       end
 
       case params[:has_name]
