@@ -9,6 +9,8 @@ module Student
         decline_invitation(invite)
       elsif invite.update_attributes(invite_params)
         redirect_based_on_status(invite)
+      elsif invite = current_student.team_member_invites.find_by(invite_token: params.fetch(:id))
+        redirect_based_on_status(invite)
       else
         redirect_to :back, alert: t("controllers.application.general_error")
       end
