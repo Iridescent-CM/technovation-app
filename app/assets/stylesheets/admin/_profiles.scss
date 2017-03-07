@@ -11,7 +11,8 @@
 
 .account-special,
 .account-basic {
-  width: 40%;
+  max-width: 400px;
+  min-width: 300px;
 }
 
 .account-info {
