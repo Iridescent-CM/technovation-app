@@ -31,7 +31,10 @@
         <ul>
           <%= render partial: 'student/mentors/team_preview',
             collection: account.teams.current,
-            locals: { admin: true, profile: account.mentor_profile || account.student_profile } %>
+            locals: {
+              admin: true,
+              profile: account.mentor_profile || account.student_profile
+            } %>
         </ul>
       <% else %>
         <p><%= t("views.student.mentors.show.no_teams", name: account.first_name) %></p>
@@ -42,20 +45,20 @@
 
 <% if account.mentor_profile %>
   <%= link_to "Drop #{account.first_name} out of Season #{Season.current.year}",
-              admin_mentor_drop_out_path(id: account.mentor_profile.id),
-              class: "appy-button",
-              data: {
-                method: :post,
-                confirm: "Are you sure you want to DROP #{account.first_name} OUT from Season #{Season.current.year}?"
-              } %>
+    admin_mentor_drop_out_path(id: account.mentor_profile.id),
+    class: "appy-button",
+    data: {
+      method: :post,
+      confirm: "Are you sure you want to DROP #{account.first_name} OUT from Season #{Season.current.year}?",
+    } %>
 <% end %>
 
 <% if account.student_profile and account.parental_consent.nil? %>
   <%= link_to "Paper parental consent on file",
-              admin_paper_parental_consent_path(id: account.id),
-              class: "appy-button",
-              data: {
-                method: :post,
-                confirm: "You are marking #{account.full_name} as having a paper parental consent on file."
-              } %>
+    admin_paper_parental_consent_path(id: @profile.id),
+    class: "appy-button",
+    data: {
+      method: :post,
+      confirm: "You are marking #{account.full_name} as having a paper parental consent on file.",
+    } %>
 <% end %>
