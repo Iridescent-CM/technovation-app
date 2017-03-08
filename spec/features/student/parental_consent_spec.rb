@@ -42,7 +42,7 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
     visit new_parental_consent_path(token: student.reload.consent_token)
 
-    fill_in "Electronic signature", with: "Parent M. McGee"
+    fill_in "Your name", with: "Parent M. McGee"
     click_button "I agree"
 
     expect(current_path).to eq(parental_consent_path(ParentalConsent.last))
