@@ -9,7 +9,7 @@ module RegionalAmbassador
 
       account_ids = case ambassador.country
                     when "US"
-                      Account.where(state_province: ambassador.state_province).pluck(:id)
+                      Account.where(state_province: ambassador.state_province, country: "US").pluck(:id)
                     else
                       Account.where(country: ambassador.country).pluck(:id)
                     end

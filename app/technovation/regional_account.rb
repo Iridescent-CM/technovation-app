@@ -143,7 +143,7 @@ module RegionalAccount
              RegionalAmbassadorProfile.statuses[:approved])
 
     if ambassador.country == "US"
-      accounts.where(state_province: ambassador.state_province)
+      accounts.where(state_province: ambassador.state_province, country: "US")
     else
       accounts.where(country: ambassador.country)
     end

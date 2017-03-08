@@ -7,9 +7,9 @@ module RegionalTeam
 
     if ambassador.country == "US"
       students = StudentProfile.joins(:account)
-        .where("accounts.state_province = ?", ambassador.state_province)
+        .where("accounts.state_province = ? AND accounts.country = ?", ambassador.state_province, "US")
       mentors = MentorProfile.joins(:account)
-        .where("accounts.state_province = ?", ambassador.state_province)
+        .where("accounts.state_province = ? AND accounts.country = ?", ambassador.state_province, "US")
 
       teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
     else
