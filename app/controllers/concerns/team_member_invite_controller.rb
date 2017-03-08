@@ -14,7 +14,12 @@ module TeamMemberInviteController
         error: t("controllers.invites.show.full_access_needed") and return
     end
 
-    render template: "/team_member_invites/show"
+    case current_profile.type_name
+    when "mentor"
+      render template: "mentor/mentor_invites/show"
+    when "student"
+      render template: "team_member_invites/show"
+    end
   end
 
   def create
