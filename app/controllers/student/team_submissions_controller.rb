@@ -1,5 +1,8 @@
 module Student
   class TeamSubmissionsController < StudentController
+    before_action :require_full_access,
+                  :require_current_team
+
     # TODO: GETTING LAST SUBMISSION LOGIC WILL NOT WORK FOR FUTURE SEASONS!
 
     def new
