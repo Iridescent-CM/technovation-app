@@ -5,7 +5,7 @@ module Student
     def update
       invite = current_student.team_member_invites.pending.find_by(invite_token: params.fetch(:id))
 
-      if invite_params[:status] == "accepted" and invite.cannot_be_accepted?
+      if invite_params[:status] == "accepted" and invite and invite.cannot_be_accepted?
         decline_invitation(invite)
       elsif invite.update_attributes(invite_params)
         redirect_based_on_status(invite)
