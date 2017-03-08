@@ -11,7 +11,7 @@ module TeamMemberInviteController
         NullInvite.new
     else
       redirect_to [current_profile.type_name, :dashboard],
-        error: t("controllers.invites.show.full_access_needed")
+        error: t("controllers.invites.show.full_access_needed") and return
     end
 
     render template: "/team_member_invites/show"
