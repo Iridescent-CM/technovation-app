@@ -4,7 +4,7 @@ class AdminMailer < ApplicationMailer
     @url = admin_regional_ambassadors_url(status: :pending)
 
     I18n.with_locale(ambassador.locale) do
-      mail to: "info@technovationchallenge.org",
+      mail to: "mailer@technovationchallenge.org",
           subject: "RA Application — Pending Approval"
     end
   end

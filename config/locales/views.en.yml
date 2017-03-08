@@ -199,7 +199,7 @@ en:
           send_link:
             text: "Send Email Consent Form"
           trouble:
-            postfix: "A new email will be sent if you update the address.<br /><br />Also have them check their spam folder. If the email is there, they should add 'info@technovationchallenge.org' to their contacts."
+            postfix: "A new email will be sent if you update the address.<br /><br />Also have them check their spam folder. If the email is there, they should add 'mailer@technovationchallenge.org' to their contacts."
             prefix: "Trouble receiving the email?"
             text: "Double check the email address."
 

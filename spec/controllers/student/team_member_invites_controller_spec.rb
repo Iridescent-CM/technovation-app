@@ -30,7 +30,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     it "sends the invitation email" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq(["some@student.com"])
-      expect(mail.from).to eq(["info@technovationchallenge.org"])
+      expect(mail.from).to eq(["mailer@technovationchallenge.org"])
       expect(mail.subject).to eq("You're invited to join a Technovation team!")
     end
 
