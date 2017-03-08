@@ -10,13 +10,19 @@
 
       <tr>
         <td class="content-block">
-          We are writing to let you know that your daughter has registered for Technovation, a global mobile app, technology, and entrepreneurship program for girls. In order to participate, she needs your permission.
+          We are writing to let you know that your daughter, <strong><%= @student_name %></strong>, has registered for Technovation, a global mobile app, technology, and entrepreneurship program for girls. In order to participate, she needs your permission.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
           Please review the permission form at this link and sign electronically as soon as possible.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>If you can, please use this link; do not reply to this email to give consent.</strong>
         </td>
       </tr>
 
@@ -28,7 +34,7 @@
 
       <tr>
         <td class="content-block">
-          If you have any questions, please get in touch with us at <%= mail_to "info@technovationchallenge.org" %>.
+          If you have any questions, or you cannot use the link above, reply to this email immediately, which is <%= mail_to "info@technovationchallenge.org" %>.
         </td>
       </tr>
 

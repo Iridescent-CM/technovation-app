@@ -8,7 +8,11 @@
   <%= label_tag t("models.parental_consent.student_name") %>
   <%= text_field_tag :student_name, f.object.student_profile.full_name, disabled: true %>
 
-  <%= f.input :electronic_signature %>
+  <%= f.input :electronic_signature,
+    label: t("models.parental_consent.electronic_signature"),
+    input_html: {
+      placeholder: "Please type your name here as electronic consent",
+    } %>
 
   <%= f.input :newsletter_opt_in,
     as: :boolean,

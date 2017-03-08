@@ -36,6 +36,7 @@ en:
       school_company_name: "School or company name"
 
     parental_consent:
+      electronic_signature: "Your name"
       student_name: "Student's Name"
 
     profile:
