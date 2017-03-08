@@ -20,7 +20,11 @@
   flex-grow: 1;
 }
 
-.mentor-debug, .student-debug, .team-debug {
+.mentor-debug,
+.student-debug,
+.ra-debug,
+.judge-debug,
+.team-debug {
   max-width: 650px;
   padding: 0;
   margin: 0 1rem 1rem 0;

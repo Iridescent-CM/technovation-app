@@ -1,0 +1,11 @@
+<div class="ra-debug">
+  <h3>Regional Ambassador debugging info</h3>
+
+  <p>
+    <strong>Browser / OS Info</strong>
+    <%= [profile.browser_name,
+         profile.browser_version,
+         profile.os_name,
+         profile.os_version].compact.join(' - ') %>
+  </p>
+</div>

@@ -1,5 +1,10 @@
 <div class="mentor-debug">
-  <h3>Admin debug info</h3>
+  <h3>Mentor Profile debugging info</h3>
+
+  <p>
+    <strong>Has judge profile?</strong>
+    <%= profile.account.judge_profile.present? ? "yes" : "no" %>
+  </p>
 
   <p>
     <strong>Consent waiver</strong>

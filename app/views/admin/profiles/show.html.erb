@@ -18,6 +18,14 @@
   <%= render 'admin/profiles/student_debugging', profile: account.student_profile %>
 <% end %>
 
+<% if account.regional_ambassador_profile %>
+  <%= render 'admin/profiles/ra_debugging', profile: account.regional_ambassador_profile %>
+<% end %>
+
+<% if account.judge_profile %>
+  <%= render 'admin/profiles/judge_debugging', profile: account.judge_profile %>
+<% end %>
+
 <% if account.mentor_profile %>
   <%= render 'admin/profiles/mentor_debugging', profile: account.mentor_profile %>
 <% end %>
