@@ -13,6 +13,8 @@ module TeamMemberInviteController
       redirect_to [current_profile.type_name, :dashboard],
         error: t("controllers.invites.show.full_access_needed")
     end
+
+    render template: "/team_member_invites/show"
   end
 
   def create
