@@ -29,15 +29,20 @@ module TeamMemberInviteController
   end
 
   def destroy
-    @invite = TeamMemberInvite.find_by(team_id: current_profile.team_ids,
-                                       invite_token: params.fetch(:id))
-    if @invite
-      @invite.destroy
-      redirect_to [account_type, @invite.team],
-        success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+    if current_profile.team_ids.any?
+      @invite = TeamMemberInvite.find_by(team_id: current_profile.team_ids,
+                                        invite_token: params.fetch(:id))
+      if @invite
+        @invite.destroy
+        redirect_to [account_type, @invite.team],
+          success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+      else
+        redirect_to [account_type, @invite.team],
+          notice: t("controllers.invites.destroy.not_found")
+      end
     else
-      redirect_to [account_type, @invite.team],
-        notice: t("controllers.invites.destroy.not_found")
+      redirect_to [account_type, :dashboard],
+        notice: t("controllers.application.general_error")
     end
   end
 
