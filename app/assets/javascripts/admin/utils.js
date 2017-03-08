@@ -1,8 +1,7 @@
 window.Admin = {
   Utils: {
     updateURLSearchParams: function(name, value) {
-      var url = new URL(window.location),
-        params = new URLSearchParams(url.search.slice(1));
+      var params = new URLSearchParams(window.location.search);
 
       params.set(name, value);
 
