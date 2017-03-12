@@ -20,7 +20,7 @@ $success-color: $shamrock;
   width: calc(100% - 2rem);
   z-index: $z-modal;
 
-  &::before {
+  &::after {
     font-family: FontAwesome;
     position: absolute;
     right: 0.5rem;
@@ -28,10 +28,29 @@ $success-color: $shamrock;
   }
 }
 
+.flash--small {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5em;
+  border-top: 0;
+  color: white;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  min-height: 0;
+  padding: 0.5em 0.75em;
+
+  &::after {
+    position: relative;
+    right: auto;
+    bottom: auto; 
+  }
+}
+
 .flash--alert {
   border-color: $alert-color;
 
-  &::before {
+  &::after {
     color: $alert-color;
     content: '\f071';
   }
@@ -40,7 +59,7 @@ $success-color: $shamrock;
 .flash--error {
   border-color: $error-color;
 
-  &::before {
+  &::after {
     color: $error-color;
     content: '\f06a';
   }
@@ -49,7 +68,7 @@ $success-color: $shamrock;
 .flash--notice {
   border-color: $notice-color;
 
-  &::before {
+  &::after {
     color: $notice-color;
     content: '\f0f3';
   }
@@ -58,7 +77,7 @@ $success-color: $shamrock;
 .flash--success {
   border-color: $success-color;
 
-  &::before {
+  &::after {
     color: $success-color;
     content: '\f058';
   }

@@ -24,6 +24,13 @@
   backButton.addEventListener('click', goToPrevQuestion);
   nextButton.addEventListener('click', goToNextQuestion);
 
+  var saveAllButton = document.getElementById('submit-all-forms');
+  saveAllButton.addEventListener('click', saveProgressAll);
+
+  var saveAllPending = false;
+  var saveAllPendingCount = 0;
+  $(document).ajaxSuccess(handleAjaxSave);
+
   for (var i = 0; i < buttonWrappers.length; i++) {
     buttonWrappers[i].addEventListener('click',  function() {
       this.querySelector('button').click();
@@ -31,10 +38,13 @@
   }
 
   setShouldButtonsBeDisabled();
-
   generateMarkup();
   initRangeSliders();
   handleTechnicalChecklist();
+
+  /**
+   * Basic DOM structure and initial set up
+   */
 
   function generateMarkup() {
     for (var i = 0; i < sections.length; i++) {
@@ -85,6 +95,12 @@
 
   function makeRadioHelper(question) {
     var radios = question.querySelectorAll('.radio input');
+    var checkedValue;
+    forEach(radios, function(r) {
+      if (r.checked) {
+        checkedValue = r.value;
+      }
+    });
     var inputWrapper = document.createElement('div');
     inputWrapper.classList.add('judge-helper', 'judge-helper--range');
 
@@ -93,7 +109,7 @@
     input.type = 'range';
     input.min = radios[0].value;
     input.max = radios[radios.length - 1].value;
-    input.defaultValue = input.min;
+    input.defaultValue = checkedValue || input.min;
     inputWrapper.appendChild(input);
 
     // Helper description text div
@@ -147,6 +163,10 @@
     question.insertBefore(responseDropdown, question.lastChild);
   }
 
+  /**
+   * Form navigation
+   */
+
   function goToPrevQuestion(e) {
     e.stopPropagation();
     saveProgress();
@@ -174,7 +194,7 @@
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
     if (isLastSection && isEndOfSection) {
       console.log('We are at the end');
-      return;
+      return; 
     }
     questions[activeQuestionIndex].classList.remove('active');
     activeQuestionIndex = isEndOfSection ? 0 : activeQuestionIndex + 1;
@@ -197,7 +217,26 @@
 
   function saveProgressAll() {
     var submitButtons = formWrapper.querySelectorAll('input[type="submit"]');
-    submitButton.click();
+    forEach(submitButtons, function(button) {
+      button.click();
+    });
+    saveAllPending = true;
+    saveAllButton.disabled = true;
+  }
+
+  function handleAjaxSave() {
+    if (saveAllPending) {
+      saveAllPendingCount++;
+
+      if (saveAllPendingCount === sections.length) {
+        createFlashNotification('success', 'Saved successfully!', 2000);
+        saveAllPendingCount = 0;
+        handleSaveAll = false;
+        saveAllButton.disabled = false;
+      }
+    } else {
+      createFlashNotification(['success', 'small'], 'Saved successfully!', 1000);
+    }
   }
 
   function setShouldButtonsBeDisabled() {
@@ -233,6 +272,10 @@
       }
     }
   }
+
+  /**
+   * Range slider methods
+   */
 
   function setRadioValueFromRange(range) {
     var correspondingRadio = range.$element[0]
@@ -280,6 +323,10 @@
     });
   }
 
+  /**
+   * Technical checklist step
+   */
+
   function handleTechnicalChecklist() {
     setTimeout(function() {
       var tempCompleteButton = document.getElementById('complete-technical-checklist');
@@ -290,7 +337,10 @@
     }, 0);
   }
 
-  // Maximize, minimize, window features
+  /**
+   * Maximize, minimize, window view
+   */
+
   var maximizeButton = document.getElementById('juding-form-maximize');
   maximizeButton.addEventListener('click', function() {
     setFormDisplay('maximize');
@@ -358,5 +408,9 @@
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', minimizeForm);
   }
+
+  /**
+   * Review submission form
+   */
 
 })();
