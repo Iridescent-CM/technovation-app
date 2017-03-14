@@ -1,9 +1,5 @@
 <% if submission.complete? %>
   <div class="team-submission__complete-actions">
-    <% unless Rails.env.production? %>
-      <%= render 'student/team_submissions/assign_regional_pitch_event' %>
-    <% end %>
-
     <p class="publish-submission progress-help">
       Your submission is complete* and ready to share!<br />
 
@@ -12,10 +8,10 @@
         class: "appy-button",
         target: :_blank %>
 
-        <span>
-          *you can still make edits until 5:00pm (17h) US/Pacific (PST)
-          on  Wednesday, April 26
-        </span>
+      <span>
+        *you can still make edits until 5:00pm (17h) US/Pacific (PST)
+        on Wednesday, April 26
+      </span>
     </p>
   </div>
 <% end %>
