@@ -1,0 +1,20 @@
+<li class="card">
+  <div class="card__heading">
+    Start Submitting Today!
+    <%= fa_icon("mobile", class: "card-heading__flair") %>
+  </div>
+
+  <div class="card__body">
+    <p>
+      You and your teammates can begin submitting your app now!
+      As you work through the curriculum, you can upload it in parts.
+      You can also edit as much as you need to until the deadline!
+    </p>
+
+    <div class="card__actions-row card__actions-row--pos-end">
+      <%= link_to 'Begin your submission',
+        new_student_team_submission_path,
+        class: "appy-button" %>
+    </div>
+  </div>
+</li>

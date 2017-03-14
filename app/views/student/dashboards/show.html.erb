@@ -8,9 +8,18 @@
 
 <div class="flex-row dashboard">
   <div class="flex-col-sm-8 dashboard__main">
-    <% if current_student.full_access_enabled? and current_student.is_on_team? and current_student.team.mentors.empty? %>
+    <% if current_student.full_access_enabled? and current_team %>
       <ul class="to-do__list">
-        <%= render 'student/dashboards/completion_steps/find_a_mentor' %>
+        <% if current_team.submission %>
+          <%= render 'student/dashboards/team_submission_progress',
+            submission: current_team.submission %>
+        <% else %>
+          <%= render 'student/dashboards/start_team_submission' %>
+        <% end %>
+
+        <% if current_team.mentors.empty? %>
+          <%= render 'student/dashboards/completion_steps/find_a_mentor' %>
+        <% end %>
       </ul>
     <% else %>
       <%= render 'completion_steps' %>
