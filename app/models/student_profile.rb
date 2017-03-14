@@ -171,11 +171,23 @@ class StudentProfile < ActiveRecord::Base
       false
     end
 
+    def mentors
+      []
+    end
+
     def current_team_submission
       NullTeamSubmission.new
     end
 
+    def submission
+      NullTeamSubmission.new
+    end
+
     class NullTeamSubmission
+      def present?
+        false
+      end
+
       def screenshots
         []
       end
