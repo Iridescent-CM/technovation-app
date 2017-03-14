@@ -51,7 +51,14 @@ module SearchTeams
     teams = teams.near(nearby, miles)
 
     if filter.spot_available
-      teams.select(&:spot_available?)
+      teams.includes(
+        :pending_student_invites,
+        :pending_student_join_requests,
+        :students,
+        :mentors,
+      )
+        .references(:memberships)
+        .select(&:spot_available?)
     else
       teams
     end

@@ -66,6 +66,10 @@ class Team < ActiveRecord::Base
   has_many :pending_mentor_invites, -> { pending }, class_name: "MentorInvite"
   has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 
+  has_many :pending_student_join_requests, -> { pending.for_students },
+    class_name: "JoinRequest",
+    as: :joinable
+
   has_and_belongs_to_many :regional_pitch_events, -> { uniq }
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
@@ -105,7 +109,7 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + pending_student_invites + join_requests.pending.select { |j| j.requestor.type_name == 'student' }).size < 5
+    (students + pending_student_invites + pending_student_join_requests).size < 5
   end
 
   def creator_address_details
