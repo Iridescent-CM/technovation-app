@@ -19,7 +19,7 @@
     <div class="home-page-sign-up-form__submit-wrapper">
       <% if attempt.new_record? %>
         <p>If you have an existing account, you can <%= link_to "sign in now", signin_path %> instead.</p>
-        <%= f.button :submit, t("views.application.get_started"), class: 'appy-button' %>
+        <%= f.button :submit, t("views.application.get_started_judges_only"), class: 'appy-button' %>
       <% else %>
         <%= f.button :submit, t("views.signups.form.resend_email"), class: 'appy-button' %>
       <% end %>
