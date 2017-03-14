@@ -12,8 +12,10 @@
         <strong>Division:</strong> <%= current_team.division_name %>
       </p>
 
+      <hr />
+
       <p>
-        <strong>Selected Event:</strong>
+        <strong>Your currently selected event:</strong>
         <%= current_team.selected_regional_pitch_event_name %>
 
         <span class="small-action-bar">
@@ -32,8 +34,10 @@
         </span>
       </p>
 
+      <hr />
+
       <% if events.any? %>
-        <strong>Select an event to attend:</strong>
+        <strong>Select a different event to attend:</strong>
 
         <ul class="regional-event-selection-list">
           <% events.each do |event| %>
@@ -46,6 +50,8 @@
           <strong>Your team's submission will be judged online.</strong>
         </p>
       <% end %>
+
+      <hr />
 
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to 'See how your submission looks to the judges',
