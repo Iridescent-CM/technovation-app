@@ -10,7 +10,8 @@ module RegionalAmbassador
 
     def new
       @pitch_event = current_ambassador.regional_pitch_events.build
-      @pitch_event.ends_at = 1.hour.from_now
+      @pitch_event.starts_at = Date.new(Season.current.year, 5, 1)
+      @pitch_event.ends_at = @pitch_event.starts_at + 1.hour
     end
 
     def edit
