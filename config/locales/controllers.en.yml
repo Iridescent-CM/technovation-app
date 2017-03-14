@@ -133,6 +133,8 @@ en:
       regional_pitch_event_selections:
         create:
           success: "You're attending a Live Regional Pitch Event!"
+        destroy:
+          success: "You removed your team from that live Regional Pitch Event"
 
     teams:
       create:

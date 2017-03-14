@@ -1,0 +1,14 @@
+<h1 class="appy-title"><%= @regional_pitch_event.name %></h1>
+
+<p>Details...</p>
+
+<p class="standalone-buttons">
+  <%= link_to 'See how your submission looks to judges',
+    app_path(current_team.submission),
+    target: :_blank,
+    class: "appy-button" %>
+</p>
+
+<p>
+  <%= link_to 'Go to your dashboard', student_dashboard_path %>
+</p>

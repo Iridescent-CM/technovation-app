@@ -6,6 +6,7 @@ module Student
         render template: 'regional_pitch_events/virtual'
       else
         @regional_pitch_event = RegionalPitchEvent.find(params[:id])
+        render template: 'regional_pitch_events/show'
       end
     end
   end
