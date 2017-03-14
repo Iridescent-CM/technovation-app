@@ -12,8 +12,16 @@
       You can edit it as much as you need to until the deadline!
     </p>
 
+    <p>
+      Make sure you regularly take time to
+      <%= link_to 'check how it will look to the judges',
+        app_path(submission),
+        target: :_blank %>!
+    </p>
+
     <div class="card__actions-row card__actions-row--pos-end">
-      <%= link_to 'Edit your submission', student_team_submission_path(submission),
+      <%= link_to 'Edit your submission',
+        student_team_submission_path(submission),
         class: "appy-button" %>
     </div>
   </div>
