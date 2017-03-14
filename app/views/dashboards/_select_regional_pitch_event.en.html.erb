@@ -1,5 +1,5 @@
 <% unless Rails.env.production? %>
-  <li class="card">
+  <li class="regional-event-selection card">
     <div class="card__heading">
       Select a Regional Pitch Event!
       <%= fa_icon("flash", class: "card-heading__flair") %>
@@ -7,9 +7,8 @@
 
     <div class="card__body">
       <p>
-        <strong>Your team:</strong><br />
-        <strong>Region:</strong> <%= current_team.region_name %><br />
-        <strong>Division:</strong> <%= current_team.division_name %>
+        Your team is in the <strong><%= current_team.region_name %></strong> region
+        and the <strong><%= current_team.division_name.titleize %></strong> division.
       </p>
 
       <hr />
