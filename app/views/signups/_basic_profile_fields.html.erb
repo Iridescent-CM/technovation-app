@@ -10,18 +10,4 @@
     start_year: f.object.youngest_birth_year,
     end_year: f.object.oldest_birth_year,
     input_html: { class: "account_dob" } %>
-
-  <% if a.object.persisted? %>
-    <h6 id="account-profile-image" class="signup-section">
-      <%= t("views.signups.new.section_headers.profile_image") %>
-    </h6>
-
-    <%= image_tag a.object.profile_image, with: 233, height: 233 %>
-    <%= a.input :profile_image %>
-    <%= a.input :profile_image_cache, as: :hidden %>
-
-    <p class="appy-hint">
-      <%= t("controllers.accounts.update.change_image_hint") %>
-    </p>
-  <% end %>
 <% end %>
