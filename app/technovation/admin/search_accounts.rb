@@ -25,7 +25,7 @@ module Admin
         results = accounts.search(
           query: {
             query_string: {
-              query: "*#{params[:text]}*"
+              query: params[:text]
             }
           },
           from: 0,

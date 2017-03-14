@@ -32,7 +32,6 @@ module SearchTeams
       end
 
       results = teams.search(query).results
-
       teams = teams.where(id: results.flat_map { |r| r._source.id })
     end
 

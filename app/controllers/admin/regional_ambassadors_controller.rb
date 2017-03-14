@@ -13,7 +13,7 @@ module Admin
         results = regional_ambassadors.search({
           query: {
             query_string: {
-              query: "*#{params[:text]}*"
+              query: params[:text]
             },
           },
           from: 0,

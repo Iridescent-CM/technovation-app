@@ -9,7 +9,7 @@ module SearchMentors
         .search(
           query: {
             query_string: {
-              query: "*#{sanitized_text}*"
+              query: sanitized_text
             }
           },
           from: 0,
