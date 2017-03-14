@@ -7,10 +7,12 @@
 
     <div class="card__body">
       <p>
-        Your team information:<br />
+        <strong>Your team:</strong><br />
         <strong>Region:</strong> <%= current_team.region_name %><br />
-        <strong>Division:</strong> <%= current_team.division_name %><br />
+        <strong>Division:</strong> <%= current_team.division_name %>
+      </p>
 
+      <p>
         <strong>Selected Event:</strong>
         <%= current_team.selected_regional_pitch_event_name %>
 
@@ -31,6 +33,8 @@
       </p>
 
       <% if events.any? %>
+        <strong>Select an event to attend:</strong>
+
         <ul class="regional-event-selection-list">
           <% events.each do |event| %>
             <li><%= event.name %></li>
