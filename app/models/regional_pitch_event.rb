@@ -19,7 +19,10 @@ class RegionalPitchEvent < ActiveRecord::Base
       joins(:divisions)
       .where("divisions.id = ?", submission.division_id)
       .joins(regional_ambassador_profile: :account)
-      .where("accounts.state_province = ?", submission.state_province)
+      .where(
+        "accounts.country = 'US' AND accounts.state_province = ?",
+        submission.state_province
+      )
     else
       joins(:divisions)
       .where("divisions.id = ?", submission.division_id)
@@ -41,5 +44,9 @@ class RegionalPitchEvent < ActiveRecord::Base
      "-",
      ends_at.in_time_zone(timezone).strftime("%H:%M"),
      regional_ambassador_profile.timezone].join(' ')
+  end
+
+  def live?
+    true
   end
 end

@@ -80,6 +80,14 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def selected_regional_pitch_event
+    regional_pitch_events.last or VirtualRegionalPitchEvent.new
+  end
+
+  def selected_regional_pitch_event_name
+    selected_regional_pitch_event.name
+  end
+
   def region_name
     if creator.country == "US"
       Country[creator.country].states[creator.state_province]['name']
@@ -207,5 +215,12 @@ class Team < ActiveRecord::Base
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)
     end
+  end
+
+  class VirtualRegionalPitchEvent
+    def name; "Virtual (online) Judging"; end
+    def live?; false; end
+    def to_param; "virtual"; end
+    def id; "virtual"; end
   end
 end
