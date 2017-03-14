@@ -1,5 +1,12 @@
 class Account < ActiveRecord::Base
   include Elasticsearch::Model
+  include PgSearch
+
+  pg_search_scope :search_by_text,
+    :against => [:first_name, :last_name, :email],
+    :using => {
+      :tsearch => { prefix: true, negation: true }
+    }
 
   after_save    :index_search_engine
   after_destroy { IndexAccountJob.perform_later("delete", id) }

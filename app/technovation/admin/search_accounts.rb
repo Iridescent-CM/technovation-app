@@ -22,16 +22,7 @@ module Admin
         .where.not(email: "info@technovationchallenge.org")
 
       unless params[:text].blank?
-        results = accounts.search(
-          query: {
-            query_string: {
-              query: "*#{params[:text]}*"
-            }
-          },
-          from: 0,
-          size: 10_000,
-        ).results
-        accounts = accounts.where(id: results.flat_map { |r| r._source.id })
+        accounts = accounts.search_by_text(params[:text])
       end
 
       unless params[:how_heard] == "All"
