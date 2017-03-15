@@ -20,13 +20,13 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git push --all"
-  puts "-------------------------"
-  puts ""
-
   sh "git push --tags"
   puts "-------------------------"
   puts ""
 
   sh "git checkout master"
+  puts "-------------------------"
+  puts ""
+
+  sh "git push --all"
 end
