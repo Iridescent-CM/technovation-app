@@ -18,6 +18,14 @@ module Student
 
     private
     def do_destroy
+      if current_team.selected_regional_pitch_event.live?
+        AmbassadorMailer.team_left_event(
+          current_team.selected_regional_pitch_event.regional_ambassador_profile.account,
+          current_team.selected_regional_pitch_event,
+          current_team
+        ).deliver_later
+      end
+
       current_team.regional_pitch_events.destroy_all
       redirect_to [:student, :dashboard],
         success: t("controllers.student.regional_pitch_event_selections.destroy.success")
@@ -25,8 +33,15 @@ module Student
 
     def do_create(params)
       current_team.regional_pitch_events.destroy_all
-      current_team.regional_pitch_events << RegionalPitchEvent.find(params.fetch(:event_id))
+      event = RegionalPitchEvent.find(params.fetch(:event_id))
+      current_team.regional_pitch_events << event
       current_team.save!
+
+      AmbassadorMailer.team_joined_event(
+        event.regional_ambassador_profile.account,
+        event,
+        current_team
+      ).deliver_later
 
       redirect_to [:student, current_team.selected_regional_pitch_event],
         success: t("controllers.student.regional_pitch_event_selections.create.success")
