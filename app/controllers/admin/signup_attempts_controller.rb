@@ -6,7 +6,7 @@ module Admin
       params[:page] = 1 if params[:page].blank?
 
       @signup_attempts = SignupAttempt.send(params[:status].gsub(' ', '_').downcase)
-        .where("email LIKE ?", "%#{params[:text].strip}%")
+        .where("email LIKE ?", "%#{(params[:text] || "").strip}%")
         .page(params[:page].to_i)
         .per_page(params[:per_page].to_i)
 
