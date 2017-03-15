@@ -13,3 +13,17 @@
     options_for_select(["All"] + SignupAttempt.statuses.keys.map(&:humanize), params[:status]),
     data: { param: :status } %>
 </label>
+
+<dl>
+  <dt>Pending</dt>
+  <dd>User has NOT confirmed their email</dd>
+
+  <dt>Active</dt>
+  <dd>User HAS confirmed, but HAS NOT signed up</dd>
+
+  <dt>Registered</dt>
+  <dd>User HAS signed up. Good to go</dd>
+
+  <dt>Temporary Password</dt>
+  <dd>User was invited by a team or an admin - signup form will make them enter a password</dd>
+</dl>
