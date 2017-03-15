@@ -44,12 +44,17 @@
         <strong>Select a different event to attend:</strong>
 
         <ul class="regional-event-selection-list">
-          <% events.each do |event| %>
+          <% (events - [current_team.selected_regional_pitch_event]).each do |event| %>
             <li>
               <%= event.name %><br />
               <%= event.city %><br />
               <strong><%= event.starts_at.strftime("%A, %B %e") %></strong><br />
-              <%= event.starts_at.strftime("%-I:%M%P") %> &ndash; <%= event.ends_at.strftime("%-I:%M%P") %>
+
+              <%= event.starts_at.strftime("%-I:%M%P") %>
+              &ndash;
+              <%= event.ends_at.strftime("%-I:%M%P %Z") %><br />
+
+              <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
             </li>
           <% end %>
         </ul>
