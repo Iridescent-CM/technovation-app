@@ -352,7 +352,6 @@ GEM
     newrelic_rpm (3.18.1.330)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
-    obscenity (1.0.2)
     oink (0.10.1)
       activerecord
       hodel_3000_compliant_logger
@@ -527,7 +526,6 @@ DEPENDENCIES
   chartkick (~> 2.2)
   checkr-official (~> 1.1)
   chosen-rails (~> 1.5)
-  coffee-rails (~> 4.2)
   countries (~> 1.2)
   country_state_select (~> 3.0)
   createsend (~> 4.1)
@@ -552,7 +550,6 @@ DEPENDENCIES
   mini_magick (~> 4.6)
   newrelic_rpm (~> 3.18)
   nokogiri (~> 1.7)
-  obscenity (~> 1.0)
   oink (~> 0.10)
   paperclip (~> 5.1)
   pg (~> 0.19)
@@ -585,4 +582,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.4
+   1.14.6

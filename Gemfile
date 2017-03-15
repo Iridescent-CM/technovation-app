@@ -7,7 +7,6 @@ gem 'pg', '~> 0.19'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 3.1'
-gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails', "~> 4.2"
 gem 'vanilla-ujs', "~> 1.3"
 
@@ -20,7 +19,6 @@ gem "autoprefixer-rails", "~> 6.7"
 gem 'nokogiri', "~> 1.7"
 
 gem 'rails-i18n', '~> 4.0'
-gem 'obscenity', '~> 1.0'
 
 gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
@@ -98,9 +96,11 @@ group :qa, :test, :development do
   gem 'factory_girl_rails', "~> 4.8"
 end
 
-# LEGACY MIGRATION
-# Do not use these gems
-#
-gem 'flag_shih_tzu', "~> 0.3"
-gem 'paperclip', "~> 5.1"
-gem 'aws-sdk', "~> 2.8"
+group :legacy do
+  # LEGACY MIGRATION
+  # Do not use these gems
+  #
+  gem 'flag_shih_tzu', "~> 0.3"
+  gem 'paperclip', "~> 5.1"
+  gem 'aws-sdk', "~> 2.8"
+end
