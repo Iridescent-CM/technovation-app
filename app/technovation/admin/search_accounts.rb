@@ -130,7 +130,7 @@ module Admin
         end
       end
 
-      accounts
+      accounts.uniq
     end
   end
 end
