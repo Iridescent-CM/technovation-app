@@ -9,6 +9,10 @@ module Admin
         .where("email LIKE ?", "%#{params[:text]}%")
         .page(params[:page].to_i)
         .per_page(params[:per_page].to_i)
+
+      if @signup_attempts.empty?
+        @signup_attempts = @signup_attempts.page(1)
+      end
     end
   end
 end
