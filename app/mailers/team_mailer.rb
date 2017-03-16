@@ -1,30 +1,25 @@
 class TeamMailer < ApplicationMailer
-  def confirm_left_event(team, event)
+  def confirm_left_event(team, member, event)
     @team = team
     @event = event
+    @member = member
 
-    team.members.each do |member|
-      @name = member.first_name
-
-      I18n.with_locale(member.locale) do
-        mail to: member.email,
-             subject: "#{@team.name} has left the regional pitch event: #{@event.name}"
-      end
+    I18n.with_locale(@member.locale) do
+      mail to: @member.email,
+           subject: "#{@team.name} has left the regional pitch event: #{@event.name}"
     end
   end
 
-  def confirm_joined_event(team, event)
+  def confirm_joined_event(team, member, event)
     @team = team
     @event = event
+    @member = member
 
-    team.members.each do |member|
-      @name = member.first_name
-      @event_url = send("#{member.type_name}_regional_pitch_event_url", event)
+    @event_url = send("#{@member.type_name}_regional_pitch_event_url", event)
 
-      I18n.with_locale(member.locale) do
-        mail to: member.email,
-             subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
-      end
+    I18n.with_locale(@member.locale) do
+      mail to: @member.email,
+           subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
     end
   end
 

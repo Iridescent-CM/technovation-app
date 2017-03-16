@@ -41,28 +41,33 @@ module Student
         current_team
       ).deliver_later
 
-      TeamMailer.confirm_joined_event(current_team, event).deliver_later
+      current_team.members.each do |member|
+        TeamMailer.confirm_joined_event(member, event).deliver_later
+      end
 
       redirect_to [:student, current_team.selected_regional_pitch_event],
         success: t("controllers.student.regional_pitch_event_selections.create.success")
     end
 
     def notify_ambassador_of_leaving_team
-      if current_team.selected_regional_pitch_event.live?
+      event = current_team.selected_regional_pitch_event
+
+      if event.live?
         AmbassadorMailer.team_left_event(
-          current_team.selected_regional_pitch_event.regional_ambassador_profile.account,
-          current_team.selected_regional_pitch_event,
+          event.regional_ambassador_profile.account,
+          event,
           current_team
         ).deliver_later
       end
     end
 
     def confirm_leaving_with_team_members
-      if current_team.selected_regional_pitch_event.live?
-        TeamMailer.confirm_left_event(
-          current_team,
-          current_team.selected_regional_pitch_event
-        ).deliver_later
+      event = current_team.selected_regional_pitch_event
+
+      if event.live?
+        current_team.members.each do |member|
+          TeamMailer.confirm_left_event(member, event).deliver_later
+        end
       end
     end
   end
