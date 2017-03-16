@@ -16,12 +16,16 @@
       </tr>
       <tr>
         <td class="content-block">
-          <strong>Current Team List (as of this email):</strong>
-          <ul>
-            <% @event.teams.each do |team| %>
-              <li><%= team.name %></li>
-            <% end %>
-          </ul>
+          <p><strong>Current Team List (as of this email):</strong></p>
+          <% if @event.teams.empty? %>
+            <p>None</p>
+          <% else %>
+            <ul>
+              <% @event.teams.each do |team| %>
+                <li><%= team.name %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </td>
       </tr>
       <tr>
