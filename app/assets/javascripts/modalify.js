@@ -46,10 +46,6 @@
     var closeButton = document.createElement('span');
     closeButton.classList.add('fa', 'fa-times', 'modalify__close');
     modalTopBar.appendChild(closeButton);
-    closeButton.addEventListener('click', function() {
-      hideModal(this);
-    }.bind(currentModal));
-
 
     var modalShade = document.createElement('div');
     modalShade.classList.add('modalify__shade');
@@ -62,6 +58,13 @@
       hideModal(this);
     }.bind(currentModal));
 
+    var closeBtns = currentModal.querySelectorAll('.modalify__close');
+    forEach(closeBtns, function(closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        hideModal(this);
+      }.bind(currentModal));
+    });
+
     if (currentModal.classList.contains('modalify-on-page-load'))
       showModal(null, currentModal.id);
   }
@@ -70,6 +73,7 @@
   for (var i = 0; i < modalTriggers.length; i++) {
     var currentTrigger = modalTriggers[i];
     currentTrigger.addEventListener('click', function(e) {
+      e.preventDefault();
       showModal(e);
     });
   }
