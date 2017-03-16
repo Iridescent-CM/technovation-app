@@ -2,6 +2,7 @@
 //= require chosen-jquery
 
 //= require vanilla-ujs
+//= require clipboard
 
 //= require utils
 //= require admin/utils
@@ -13,8 +14,18 @@
 //= require admin/pitch-events
 //= require admin/buttonless-forms
 
-(function enableChosen() {
+(function enableAdminUI() {
   $('.chosen').chosen({
     width: '250px',
+  });
+
+  var clipboard = new Clipboard('.clipboard-btn');
+
+  clipboard.on('success', function(e) {
+    createFlashNotification('success', 'Special link copied! ');
+  });
+
+  clipboard.on('error', function(e) {
+    createFlashNotification('error', 'Error: Highlight and use Ctrl/Cmd+C instead');
   });
 })();

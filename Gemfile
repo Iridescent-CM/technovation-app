@@ -10,6 +10,8 @@ gem 'uglifier', '~> 3.1'
 gem 'jquery-rails', "~> 4.2"
 gem 'vanilla-ujs', "~> 1.3"
 
+gem 'clipboard-rails', "~> 1.6"
+
 gem 'elasticsearch-model', "~> 0.1"
 gem 'elasticsearch-rails', "~> 0.1"
 

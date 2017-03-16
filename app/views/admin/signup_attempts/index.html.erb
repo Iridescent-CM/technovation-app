@@ -18,10 +18,21 @@
         <% @signup_attempts.order('signup_attempts.created_at DESC').each do |attempt| %>
           <div class="row">
             <div class="cell">
-              <% if %w{pending active}.include?(attempt.status) %>
+              <% if %w{pending active}.include?(attempt.status) and attempt.admin_permission_token.blank? %>
                 <%= link_to "Invite to sign up",
                   admin_signup_invitations_path(email: attempt.email),
                   data: { method: :post } %>
+              <% elsif %w{pending active}.include?(attempt.status) %>
+                <%= text_field_tag "special_link_#{attempt.id}",
+                  signup_url(admin_permission_token: attempt.admin_permission_token),
+                  readonly: true %>
+
+                <button
+                 class="clipboard-btn appy-button appy-button--sm"
+                 data-clipboard-action="copy"
+                 data-clipboard-target="#special_link_<%= attempt.id %>">
+                  Copy
+                </button>
               <% else %>
                   &nbsp;
                 <% end %>
