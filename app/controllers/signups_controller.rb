@@ -19,6 +19,6 @@ class SignupsController < ApplicationController
   private
   def no_admin_permission?
     token = cookies.fetch(:admin_permission_token) { "" }
-    token.blank?
+    Rails.env.production? and token.blank?
   end
 end
