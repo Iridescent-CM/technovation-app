@@ -16,6 +16,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       city: "Chicago",
                                       state_province: "IL",
                                       country: "US",
+                                      location_confirmed: true,
                                       season_ids: [Season.current.id],
                                     })).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
@@ -58,6 +59,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       city: "Chicago",
                                       state_province: "IL",
                                       country: "US",
+                                      location_confirmed: true,
                                       season_ids: [Season.find_or_create_by(year: past).id],
                                     })).valid?
   puts ""
@@ -83,6 +85,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       city: "Chicago",
                                       state_province: "IL",
                                       country: "US",
+                                      location_confirmed: true,
                                       season_ids: [Season.find_or_create_by(year: distant_past).id],
                                     })).valid?
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
@@ -105,6 +108,7 @@ if (mentor = MentorProfile.create(
       city: "Boulder",
       state_province: "CO",
       country: "US",
+      location_confirmed: true,
       season_ids: [Season.current.id],
 
       background_check_attributes: {
@@ -155,6 +159,7 @@ if (mentor = MentorProfile.create(
       city: "Evanston",
       state_province: "IL",
       country: "US",
+      location_confirmed: true,
       season_ids: [Season.current.id],
     },
     school_company_name: "Boeing",
@@ -185,6 +190,7 @@ if (ra = RegionalAmbassadorProfile.create(
       city: "Chicago",
       state_province: "IL",
       country: "US",
+      location_confirmed: true,
       season_ids: [Season.current.id],
     },
     status: RegionalAmbassadorProfile.statuses[:approved],
@@ -210,6 +216,7 @@ if (judge = JudgeProfile.create(
       city: "Evanston",
       state_province: "IL",
       country: "US",
+      location_confirmed: true,
       season_ids: [Season.current.id],
     },
     company_name: "Boeing",
