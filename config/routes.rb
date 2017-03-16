@@ -79,6 +79,8 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create, :show]
     resources :honor_code_agreements, only: [:new, :create]
     resource :honor_code_agreement, only: :show
+
+    resources :regional_pitch_events, only: :show
   end
 
   namespace :regional_ambassador do
