@@ -42,7 +42,7 @@ module Student
       ).deliver_later
 
       current_team.members.each do |member|
-        TeamMailer.confirm_joined_event(member, event).deliver_later
+        TeamMailer.confirm_joined_event(current_team, member, event).deliver_later
       end
 
       redirect_to [:student, current_team.selected_regional_pitch_event],
@@ -66,7 +66,7 @@ module Student
 
       if event.live?
         current_team.members.each do |member|
-          TeamMailer.confirm_left_event(member, event).deliver_later
+          TeamMailer.confirm_left_event(current_team, member, event).deliver_later
         end
       end
     end
