@@ -1,15 +1,46 @@
-<p>Team left event email</p>
-
-<p>Should tell <%= @name %> that <%= @team_name %> left <%= @event.name %></p>
-
-<p>Then it should list the current event participants here:</p>
-
-<ul>
-  <li>TODO...</li>
-</ul>
-
-
-<p>Then link the RA to the event page: <%= link_to @event_url, @event_url %></p>
-
-<p>Regards,<br />
-Joe</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hey <%= @name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong><%= @team_name %></strong>
+          has just left your event:
+          <strong><%= @event.name %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong>Current Team List (as of this email):</strong>
+          <ul>
+            <% @event.teams.each do |team| %>
+              <li><%= team.name %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block"
+            itemprop="handler"
+            itemscope
+            itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "View Your Event Details",
+            @event_url,
+            class: "btn-primary",
+            role: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Regards,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

@@ -25,7 +25,8 @@ class AmbassadorMailer < ApplicationMailer
     @event_url = regional_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
-      mail to: account.email
+      mail to: account.email,
+           subject: "#{@team_name} left your event: #{@event.name}"
     end
   end
 
@@ -36,7 +37,8 @@ class AmbassadorMailer < ApplicationMailer
     @event_url = regional_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
-      mail to: account.email
+      mail to: account.email,
+           subject: "#{@team_name} joined your event: #{@event.name}"
     end
   end
 
