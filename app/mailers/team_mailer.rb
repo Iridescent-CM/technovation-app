@@ -1,4 +1,33 @@
 class TeamMailer < ApplicationMailer
+  def confirm_left_event(team, event)
+    @team = team
+    @event = event
+
+    team.members.each do |member|
+      @name = member.first_name
+
+      I18n.with_locale(member.locale) do
+        mail to: member.email,
+             subject: "#{@team.name} has left the regional pitch event: #{@event.name}"
+      end
+    end
+  end
+
+  def confirm_joined_event(team, event)
+    @team = team
+    @event = event
+
+    team.members.each do |member|
+      @name = member.first_name
+      @event_url = send("#{member.type_name}_regional_pitch_event_url", event)
+
+      I18n.with_locale(member.locale) do
+        mail to: member.email,
+             subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
+      end
+    end
+  end
+
   def invite_member(invite)
     @greeting = I18n.translate("team_mailer.invite_member.greeting.student", name: invite.team_name)
 

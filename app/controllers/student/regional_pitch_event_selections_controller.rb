@@ -19,6 +19,7 @@ module Student
     private
     def do_destroy
       notify_ambassador_of_leaving_team
+      confirm_leaving_with_team_members
       current_team.regional_pitch_events.destroy_all
 
       redirect_to [:student, :dashboard],
@@ -27,6 +28,7 @@ module Student
 
     def do_create(params)
       notify_ambassador_of_leaving_team
+      confirm_leaving_with_team_members
 
       current_team.regional_pitch_events.destroy_all
       event = RegionalPitchEvent.find(params.fetch(:event_id))
@@ -39,6 +41,8 @@ module Student
         current_team
       ).deliver_later
 
+      TeamMailer.confirm_joined_event(current_team, event).deliver_later
+
       redirect_to [:student, current_team.selected_regional_pitch_event],
         success: t("controllers.student.regional_pitch_event_selections.create.success")
     end
@@ -49,6 +53,15 @@ module Student
           current_team.selected_regional_pitch_event.regional_ambassador_profile.account,
           current_team.selected_regional_pitch_event,
           current_team
+        ).deliver_later
+      end
+    end
+
+    def confirm_leaving_with_team_members
+      if current_team.selected_regional_pitch_event.live?
+        TeamMailer.confirm_left_event(
+          current_team,
+          current_team.selected_regional_pitch_event
         ).deliver_later
       end
     end
