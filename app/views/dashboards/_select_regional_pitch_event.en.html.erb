@@ -39,30 +39,32 @@
           </span>
         </p>
 
-        <hr />
+        <% if (events - [current_team.selected_regional_pitch_event]).any? %>
+          <hr />
 
-        <strong>Select a different event to attend:</strong>
+          <strong>Select a different event to attend:</strong>
 
-        <ul class="regional-event-selection-list">
-          <% (events - [current_team.selected_regional_pitch_event]).each do |event| %>
-            <li>
-              <%= event.name %><br />
-              <%= event.city %><br />
-              <strong><%= event.starts_at.strftime("%A, %B %e") %></strong><br />
+          <ul class="regional-event-selection-list">
+            <% (events - [current_team.selected_regional_pitch_event]).each do |event| %>
+              <li>
+                <%= event.name %><br />
+                <%= event.city %><br />
+                <strong><%= event.starts_at.strftime("%A, %B %e") %></strong><br />
 
-              <%= event.starts_at.strftime("%-I:%M%P") %>
-              &ndash;
-              <%= event.ends_at.strftime("%-I:%M%P %Z") %><br />
+                <%= event.starts_at.strftime("%-I:%M%P") %>
+                &ndash;
+                <%= event.ends_at.strftime("%-I:%M%P %Z") %><br />
 
-              <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
-            </li>
-          <% end %>
-        </ul>
+                <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
 
         <hr />
       <% else %>
         <p>
-          Because there are no live events scheduled in your region,
+          Because there are <strong>no live events</strong> scheduled in your region,
           <strong>your team's submission will be judged online.</strong>
         </p>
       <% end %>
