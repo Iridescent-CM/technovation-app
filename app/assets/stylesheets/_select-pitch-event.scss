@@ -67,6 +67,19 @@
   .card-body__selection {
     clear: both;
     padding: 1rem 0;
+
+    label {
+      cursor: pointer;
+      text-transform: none;
+
+      a {
+        font-size: 0.8rem;
+      }
+
+      &.selected {
+        font-weight: bold;
+      }
+    }
   }
 }
 
