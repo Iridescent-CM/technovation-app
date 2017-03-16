@@ -1,3 +1,25 @@
+<% unless Rails.env.production? %>
+  <h1 class="appy-title">
+    Regional Pitch Events
+  </h1>
+
+  <div class="card standalone-buttons">
+    <div class="card__heading">
+      Regional Pitch Events
+    </div>
+
+    <div class="card__body">
+      <p>You can now select any pitch events in your region for your teams to attend!</p>
+
+      <p>
+        <%= link_to "Manage your regional pitch events",
+          new_mentor_regional_pitch_event_selection_path,
+          class: "appy-button" %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <h1 class="appy-title">
   <%= t("views.teams.index.current_teams") %>
 </h1>

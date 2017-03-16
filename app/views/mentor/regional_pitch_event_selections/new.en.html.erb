@@ -1,0 +1,56 @@
+<div class="mentor-regional-pitch-events__team-review">
+  <% @teams.each do |team| %>
+    <div class="card standalone-buttons">
+      <div class="card__heading">
+        <%= team.name %>
+      </div>
+
+      <div class="card__body">
+        <div class="card-body__img">
+          <%= image_tag team.team_photo, width: 150 %>
+
+          <strong><%= team.name %></strong><br />
+          <strong>Division:</strong> <%= team.division_name.titleize %><br />
+
+          <small>
+            <%= team.creator_address_details %><br />
+
+            <% if team.submission.present? %>
+              <%= link_to 'Review app submission',
+                app_url(team.submission),
+                target: :_blank %><br />
+
+                (this is how the judges will see it)
+            <% else %>
+              <strong class="has-danger">
+                <%= team.name %> has not begun their app submission!
+              </strong>
+            <% end %>
+          </small>
+        </div>
+
+        <% if team.submission.present? %>
+          <strong>Select a Regional Pitch Event:</strong>
+
+          <ul class="card-body__selection">
+            <% team.eligible_events.each do |event| %>
+              <li>
+                <label>
+                  <%= radio_button_tag "team_#{team.id}_events",
+                    event.id,
+                    team.selected_regional_pitch_event.id == event.id,
+                    id: "team_#{team.id}_event_#{event.id}" %>
+                  <%= event.name %>
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+  save or cancel
+</div>

@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     resources :honor_code_agreements, only: [:new, :create]
     resource :honor_code_agreement, only: :show
 
+    resource :regional_pitch_event_selection, only: [:new, :show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show
   end
 

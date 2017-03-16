@@ -77,6 +77,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def eligible_events
+    [VirtualRegionalPitchEvent.new] + RegionalPitchEvent.available_to(self)
+  end
+
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
