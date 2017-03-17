@@ -20,7 +20,7 @@ module Judge
 
     private
     def current_team_submission
-      @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])
+      @current_team_submission ||= TeamSubmission.friendly.find(params[:team_submission_id])
     end
 
     def technical_checklist_params
