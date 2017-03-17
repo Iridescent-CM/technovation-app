@@ -1,6 +1,24 @@
+<h1 class="appy-title">
+  Review & Select Regional Pitch Events
+</h1>
+
+<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+  <div class="actions">
+    <button class="save-mentor-pitch-events appy-button"
+            data-url="<%= mentor_regional_pitch_event_selection_path %>">
+      Save changes
+    </button>
+
+    or
+
+    <%= link_to 'cancel', mentor_teams_path %>
+  </div>
+</div>
+
 <div class="mentor-regional-pitch-events__team-review">
   <% @teams.each do |team| %>
-    <div class="card standalone-buttons">
+    <div data-team-id="<%= team.id %>"
+         class="card team-card standalone-buttons">
       <div class="card__heading">
         <%= team.name %>
       </div>
@@ -101,5 +119,14 @@
 </div>
 
 <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-  save or cancel
+  <div class="actions">
+    <button class="save-mentor-pitch-events appy-button"
+            data-url="<%= mentor_regional_pitch_event_selection_path %>">
+      Save changes
+    </button>
+
+    or
+
+    <%= link_to 'cancel', mentor_teams_path %>
+  </div>
 </div>
