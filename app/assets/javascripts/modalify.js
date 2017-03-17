@@ -60,7 +60,8 @@
 
     var closeBtns = currentModal.querySelectorAll('.modalify__close');
     forEach(closeBtns, function(closeBtn) {
-      closeBtn.addEventListener('click', function() {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
         hideModal(this);
       }.bind(currentModal));
     });
