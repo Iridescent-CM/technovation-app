@@ -44,4 +44,20 @@ RSpec.describe Account do
     account.date_of_birth = 15.years.ago + 3.months
     expect(account.age(3.months.from_now)).to eq(15)
   end
+
+  it "does a somewhat normal email validation" do
+    account.skip_existing_password = true
+
+    account.email = "hello@world.com"
+    account.valid?
+    expect(account.errors.keys).not_to include(:email)
+
+    account.email = "hellono"
+    account.valid?
+    expect(account.errors.keys).to include(:email)
+
+    account.email = "hello@world.com, hello@someone.com"
+    account.valid?
+    expect(account.errors.keys).to include(:email)
+  end
 end

@@ -85,7 +85,7 @@ class Account < ActiveRecord::Base
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :profile_image, verify_cached_file: true
 
   validates :existing_password, valid_password: true, if: :changes_require_password?
