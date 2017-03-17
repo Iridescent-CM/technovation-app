@@ -13,9 +13,13 @@ module Judge
 
       @technical_checklist.update_attributes(technical_checklist_params)
 
-      redirect_to new_judge_team_submission_technical_checklist_verification_path(
-        current_team_submission
-      ), success: t("controllers.judge.technical_checklist_verifications.create.success")
+      if request.xhr?
+        head 200 and return
+      else
+        redirect_to new_judge_team_submission_technical_checklist_verification_path(
+          current_team_submission
+        ), success: t("controllers.judge.technical_checklist_verifications.create.success") and return
+      end
     end
 
     private
