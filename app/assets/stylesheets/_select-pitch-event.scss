@@ -53,6 +53,8 @@
   }
 
   .card-body__img {
+    padding: 0 0 1rem;
+
     img {
       float: left;
       margin: 0 1rem 1rem 0;
@@ -79,6 +81,16 @@
       &.selected {
         font-weight: bold;
       }
+    }
+  }
+
+  .modal-actions {
+    button.modalify__close {
+      color: white;
+    }
+
+    a.modalify__close {
+      color: $shamrock;
     }
   }
 }

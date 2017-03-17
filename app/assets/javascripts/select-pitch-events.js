@@ -5,17 +5,29 @@
 
   forEach(eventInputs, function(input) {
     input.addEventListener('change', function(e) {
-      var i = e.target;
-
-      if (i.checked) {
-        closest(i, 'ul', function(el) {
-          el.querySelector('.selected').classList.remove('selected');
-        });
-
-        closest(i, 'label', function(el) {
-          el.classList.add('selected');
-        });
-      }
+      selectInput(e.target);
     });
   });
+
+  var modalSelectBtns = document.querySelectorAll(
+    '.mentor-regional-pitch-events__team-review .modal-actions button'
+  );
+
+  forEach(modalSelectBtns, function(btn) {
+    btn.addEventListener('click', function(e) {
+      selectInput(document.getElementById(e.target.dataset.selects));
+    });
+  });
+
+  function selectInput(i) {
+    closest(i, 'ul', function(el) {
+      el.querySelector('.selected').classList.remove('selected');
+
+      i.checked = true;
+
+      closest(i, 'label', function(el) {
+        el.classList.add('selected');
+      });
+    });
+  }
 })();

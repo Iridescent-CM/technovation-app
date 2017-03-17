@@ -15,6 +15,9 @@ function findIndex(arr, func) {
 }
 
 function forEach(arr, func) {
+  if (!arr)
+    return;
+
   Array.prototype.forEach.call(arr, func);
 }
 
