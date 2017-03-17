@@ -37,3 +37,4 @@
 
 //= require submission_scores
 //= require dashboards
+//= require select-pitch-events
