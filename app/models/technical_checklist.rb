@@ -62,6 +62,15 @@ class TechnicalChecklist < ActiveRecord::Base
     }
   end
 
+  def checked_items
+    attributes.reject { |a|
+      a.match(/id$/) or
+        a.match(/_at$/) or
+          a.match(/_explanation/) or
+            a.match(/_verified/) or
+              !send(a)
+    }.map { |a| Item.new(self, a) }
+  end
 
   private
   def total_technical_components
@@ -78,5 +87,41 @@ class TechnicalChecklist < ActiveRecord::Base
 
   def completed_pics_of_process?
     paper_prototype and event_flow_chart and team_submission.screenshots.count >= 2
+  end
+
+  class Item
+    def initialize(tc, attribute)
+      @tc = tc
+      @attribute = attribute
+    end
+
+    def label
+      if name.match(/prototype/) or name.match(/flow_chart/)
+        @attribute[0].humanize
+      else
+        "We #{@attribute[0]}".humanize
+      end
+    end
+
+    def name
+      @attribute[0]
+    end
+
+    def value
+      @attribute[1]
+    end
+
+    def explanation
+      if name.match(/prototype/) or name.match(/flow_chart/)
+        false
+      else
+        @tc.public_send("#{name}_explanation")
+      end
+    end
+
+    def display
+      # for paper prototype / event flow chart, which are image urls
+      @tc.public_send(name)
+    end
   end
 end
