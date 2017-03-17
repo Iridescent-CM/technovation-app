@@ -53,6 +53,8 @@ module Judge
 
       begin
         @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])
+        @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
+        @current_team_submission
       rescue ActiveRecord::RecordNotFound
         redirect_to judge_dashboard_path,
           notice: t("controllers.judge.submission_scores.any.no_submission_found")

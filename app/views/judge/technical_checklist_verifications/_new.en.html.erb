@@ -1,8 +1,8 @@
-<%= simple_form_for @technical_checklist,
+<%= simple_form_for submission.technical_checklist,
   method: :post,
-  url: judge_team_submission_technical_checklist_verifications_path(@technical_checklist.team_submission) do |f| %>
+  url: judge_team_submission_technical_checklist_verifications_path(submission) do |f| %>
 
-  <% @technical_checklist.checked_items.each do |item| %>
+  <% submission.technical_checklist.checked_items.each do |item| %>
     <strong><%= item.label %></strong>
 
     <% if item.explanation %>
