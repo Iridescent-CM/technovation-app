@@ -26,10 +26,12 @@
 
   var saveAllButton = document.getElementById('submit-all-forms');
   saveAllButton.addEventListener('click', saveProgressAll);
-
   var saveAllPending = false;
   var saveAllPendingCount = 0;
   $(document).ajaxSuccess(handleAjaxSave);
+
+  var verifySubmissionButton = document.getElementById('verify-scores');
+  verifySubmissionButton.addEventListener('click', reviewSubmissionForm);
 
   for (var i = 0; i < buttonWrappers.length; i++) {
     buttonWrappers[i].addEventListener('click',  function() {
@@ -40,12 +42,13 @@
   setShouldButtonsBeDisabled();
   generateMarkup();
   initRangeSliders();
+
+  var hasVerifiedTechnicalChecklist = false;
   handleTechnicalChecklist();
 
   /**
    * Basic DOM structure and initial set up
    */
-
   function generateMarkup() {
     for (var i = 0; i < sections.length; i++) {
       var currentSection = sections[i];
@@ -235,7 +238,9 @@
         saveAllButton.disabled = false;
       }
     } else {
-      createFlashNotification(['success', 'small'], 'Saved successfully!', 1000);
+      setTimeout(function() {
+        createFlashNotification(['success', 'small'], 'Progress saved...', 1000);
+      }, 250);
     }
   }
 
@@ -328,13 +333,14 @@
    */
 
   function handleTechnicalChecklist() {
-    setTimeout(function() {
-      var tempCompleteButton = document.getElementById('complete-technical-checklist');
-      tempCompleteButton.addEventListener('click', function() {
-        nextButton.disabled = false;
-        tempCompleteButton.parentElement.querySelector('.modalify__close').click();
-      });
-    }, 0);
+    // setTimeout(function() {
+    //   var tempCompleteButton = document.getElementById('complete-technical-checklist');
+    //   tempCompleteButton.addEventListener('click', function() {
+    //     nextButton.disabled = false;
+    //     tempCompleteButton.parentElement.querySelector('.modalify__close').click();
+    //     hasVerifiedTechnicalChecklist = true;
+    //   });
+    // }, 0);
   }
 
   /**
@@ -412,5 +418,35 @@
   /**
    * Review submission form
    */
+  function reviewSubmissionForm() {
+    var submissionVerification = verifySubmission();
+    if (submissionVerification.isValid) {
+      console.log('woo!');
+    } else {
+      createFlashNotification('error', submissionVerification.error, 4000);
+    }
+  }
 
+  function verifySubmission() {
+    if (!hasVerifiedTechnicalChecklist) {
+      return {
+        isValid: false,
+        error: 'Please review the Technical Checklist before continuing'
+      };
+    }
+    var allSectionsHaveComments = true;
+    forEach(sections, function(section) {
+      if (!section.querySelector('textarea').value) {
+        allSectionsHaveComments = false;
+      }
+    });
+    if (!allSectionsHaveComments) {
+      return {
+        isValid: false,
+        error: 'Please ensure all sections have a valid comment'
+      };
+    }
+    // If we're down here, everything is valid
+    return {isValid: true};
+  }
 })();

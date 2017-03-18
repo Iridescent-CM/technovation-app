@@ -58,10 +58,10 @@
           <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
         </div>
         <div class='judging-form__maximized-action-helpers'>
-          <button class="appy-button" id='submit-all-forms'>
+          <button class="appy-button" id="submit-all-forms">
             Save Progress
           </button>
-          <button class="appy-button" id='submit-scores'>
+          <button class="appy-button" id="verify-scores">
             Verify and Submit Scores
           </button>
         </div>
@@ -104,7 +104,7 @@
   data-heading="Verify Technical Checklisst"
   id="judging-technical-checklist"
 >
-<%= render 'judge/technical_checklist_verifications/new', submission: @current_team_submission %>
+  <%= render 'judge/technical_checklist_verifications/new', submission: @current_team_submission %>
 </div>
 
 <!-- Submission review before final submission -->
