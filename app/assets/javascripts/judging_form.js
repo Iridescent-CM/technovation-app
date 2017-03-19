@@ -446,8 +446,7 @@
     }, 0);
 
     function maximizeImage(e) {
-      console.log('MAXIMIZING');
-      var figure = e.currentTarget; 
+      var figure = e.currentTarget;
       var positionerWrapper = document.createElement('div');
       positionerWrapper.classList.add('judging-tc-fullscreen-image');
       var contentWrapper = document.createElement('div');
@@ -457,9 +456,11 @@
       var closeButton = document.createElement('span');
       closeButton.classList.add('fa', 'fa-times');
       closeButtonWrapper.appendChild(closeButton);
-      var imageClone = figure.firstElementChild.cloneNode();
+      var pseudoImageElement = document.createElement('div');
+      pseudoImageElement.classList.add('judging-tc-fullscreen-image__pseudo-img');
+      pseudoImageElement.style.backgroundImage = 'url("' + figure.firstElementChild.src + '")';
       contentWrapper.appendChild(closeButtonWrapper);
-      contentWrapper.appendChild(imageClone);
+      contentWrapper.appendChild(pseudoImageElement);
       positionerWrapper.appendChild(contentWrapper);
       document.body.appendChild(positionerWrapper);
 

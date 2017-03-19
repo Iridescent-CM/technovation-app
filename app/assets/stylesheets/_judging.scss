@@ -485,6 +485,8 @@ $size: 20px;
   }
 }
 
+$close-button-wrapper-height: 50px;
+
 .judging-tc-fullscreen-image {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.75);
@@ -500,7 +502,7 @@ $size: 20px;
 
 .judging-tc-fullscreen-image__content {
   max-height: calc(100vh - 4em);
-  max-width: calc(100% - 4em);
+  max-width: calc(100vw - 4em);
   width: 100%;
 
   img {
@@ -508,10 +510,20 @@ $size: 20px;
   }
 }
 
+.judging-tc-fullscreen-image__pseudo-img {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: calc(100vh - 4em - #{$close-button-wrapper-height});
+}
+
 .judging-tc-fullscreen-image__close-button-wrapper {
+  align-items: center;
   color: white;
   display: flex;
+  height: $close-button-wrapper-height;
   justify-content: flex-end;
+  min-height: $close-button-wrapper-height;
 
   .fa {
     cursor: pointer;
