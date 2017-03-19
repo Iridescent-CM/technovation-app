@@ -18,7 +18,7 @@ gem 'elasticsearch-rails', "~> 0.1"
 gem 'friendly_id', "~> 5.2"
 
 gem "autoprefixer-rails", "~> 6.7"
-gem 'nokogiri', "~> 1.7"
+# gem 'nokogiri', "~> 1.7"
 
 gem 'rails-i18n', '~> 4.0'
 
@@ -64,7 +64,7 @@ group :development, :test do
   gem 'pry-nav', "~> 0.2"
   gem 'quiet_assets', "~> 1.1"
   gem 'rspec-rails', "~> 3.5"
-  gem 'capybara-webkit', "~> 1.12"
+  # gem 'capybara-webkit', "~> 1.12"
   gem 'database_cleaner', "~> 1.5"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"

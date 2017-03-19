@@ -1,0 +1,533 @@
+.judging-view {
+  margin-bottom: 350px; // Temp hardcoded value, will do this with JS later on
+
+  // Don't need this in the judging view
+  .ts-about-team__share-wrapper {
+    display: none;
+  }
+
+  .ts-about-team__team-quick-link {
+    display: none;
+  }
+}
+
+.judging-form {
+  $min-height: 250px;
+  $max-width: 900px;
+  background-color: white;
+  bottom: 2rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  left: 50%;
+  max-width: $max-width;
+  min-height: $min-height;
+  overflow: visible;
+  position: fixed;
+  transform: translateX(-50%);
+  transition: opacity 0.35s;
+  width: calc(100% - 4rem);
+  z-index: $z-high;
+
+  *::selection {
+    background-color: transparent;
+  } 
+
+  &:not(.judging-form--maximize) {
+    border-radius: 0.5em;
+  }
+}
+
+.judging-form--transition {
+  opacity: 0;
+
+  .rangeslider__handle {
+    transition: 0s;
+  }
+}
+
+.judging-form--loading {
+
+  .judging-form__display-controls {
+    display: none;
+  }
+
+  .judging-form__button-wrapper {
+    display: none;
+  }
+}
+
+.judging-form--maximize {
+  border-radius: 0;
+  bottom: 0;
+  height: 100vh;
+  left: 0;
+  max-width: 100%;
+  overflow: auto;
+  transform: none;
+  width: 100vw;
+
+  .judging-form__title-bar {
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: $z-high;
+  }
+
+  .judging-form__body {
+    padding-bottom: 6rem;
+  }
+
+  .judging-form__breadcrumbs-wrapper {
+    margin: 3.5em 0 1.5em;
+  }
+
+  .judging-form__button-wrapper {
+    display: none;
+  }
+
+  .judging-form__section {
+    $max-width: 900px;
+    display: block;
+    margin: 0 auto 2em;
+    max-width: $max-width
+  }
+
+  .judging-form__section .question-technical-checklist:not(.active),
+  .judging-form__section .input:not(.active) {
+    display: block;
+  }
+
+  .judge-helper {
+    margin-bottom: 2.5em;
+  }
+
+  .judging-form__maximized-action-helpers {
+    display: flex;
+  }
+}
+
+.judging-form--minimize {
+  min-height: 0;
+
+  .judging-form__title-bar {
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    padding: 0.75rem 1rem 0.8em;
+  }
+
+  .judging-form__breadcrumbs-wrapper,
+  .judging-form__body {
+    display: none;
+  }
+}
+
+.judging-form__title-bar {
+  background-color: $mulberry;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  color: white;
+}
+
+.judging-form__breadcrumbs-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0.75em 0;
+  padding: 0 1em;
+  position: relative;
+  width: 100%;
+}
+
+.judging-form__display-controls {
+  font-size: 0.9em;
+
+  button:not(:last-child) {
+    margin-right: 0.5em;
+  }
+}
+
+.judging-form__body {
+  display: flex;
+  padding: 0 1rem 1rem;
+}
+
+$loader-size: 60px;
+$loader-bar-width: 8px;
+
+.judging-form__loader {
+  align-items: center;
+  display: flex;
+  height: $loader-size;
+  left: calc(50% - #{$loader-size / 2});
+  position: absolute;
+  top: calc(50% - #{$loader-size / 2});
+
+  span {
+    animation-direction: alternate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: loader;
+    animation-timing-function: ease-in-out;
+    background-color: $mid-grey;
+    border-radius: $loader-bar-width;
+    display: block;
+    margin: 0 0.125em;
+    width: $loader-bar-width;
+
+    &:nth-child(2) {
+      animation-delay: -0.25s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: -0.5s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: -0.75s;
+    }
+  }
+}
+
+@keyframes loader {
+  from {
+    height: $loader-bar-width;
+  } to {
+    height: $loader-size;
+  }
+}
+
+.judging-form__sections-wrapper {
+  flex-grow: 1;
+}
+
+.judging-form__section {
+  display: none;
+
+  .question-technical-checklist:not(.active),
+  .input:not(.active) {
+    display: none;
+  }
+
+  .radio_buttons .radio { // span that wraps radio labels and inputs
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+  }
+
+  .input label, // The actual question is actually the label for the radio group
+  .question-technical-checklist__label { // The faux label for the technical checkllist
+    font-size: 1.2rem;
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  input[type="submit"] {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+.judging-form__section--active {
+  display: block;
+}
+
+.judge-helper {
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.judging-form__button-wrapper {
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+  display: flex;
+}
+
+button.judging-form__button,
+button.judging-form__button:hover,
+button.judging-form__button:active,
+button.judging-form__button:focus {
+  $size: 40px;
+  background-color: $shamrock-mid;
+  color: white;
+  font-family: "FontAwesome";
+  height: $size;
+  min-height: $size;
+  min-width: $size;
+  position: relative;
+  text-align: center;
+  width: $size;
+}
+
+button.judging-form__button--back.unbutton {
+  margin-right: 2rem;
+
+  &::before {
+    display: block;
+    transform: translateX(-2px) translateY(1px);
+  }
+}
+
+button.judging-form__button--next.unbutton {
+  margin-left: 2rem;
+
+  &::before {
+    display: block;
+    transform: translateX(2px) translateY(1px);
+  }
+}
+
+// Maximized view bottom action buttons
+
+.judging-form__maximized-action-helpers {
+  background-color: white;
+  bottom: 0;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: flex-end;
+  left: 0;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+}
+
+// Expand, contract, minimize
+.judging-form__display-actions {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+}
+
+// Range slider
+.rangeslider__tooltip {
+  display: none;
+  background-color: $shamrock-dark;
+  bottom: calc(100% + 2rem);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 0.9em;
+  font-weight: normal;
+  padding: 0.75em 1em;
+  position: absolute;
+  transform: translateX(calc(-50% + 23px)); // Make this less magic
+  width: 250px;
+  z-index: $z-high;
+
+  &::before {
+    $size: 20px;
+    background-color: $shamrock-dark;
+    bottom: calc(-#{$size} / 2);
+    content: '';
+    display: block;
+    height: $size;
+    left: calc(50% - (#{$size} / 2));
+    position: absolute;
+    transform: rotate(45deg);
+    width: $size;
+  }
+}
+
+.rangeslider__tooltip--active {
+  display: block;
+  transition: left 0.2s;
+}
+
+// Breadcrumbs
+$size: 20px;
+
+.judging-form__breadcrumbs {
+  display: flex;
+  justify-content: center;
+  margin-left: $size;
+  max-width: 700px;
+  width: calc(100% - #{$size});
+}
+
+.judging-form__crumb {
+  $color: $light-grey;
+  align-items: center;
+  background-image: linear-gradient(to right, $color, $color calc(100% - #{$size}), transparent 0);
+  color: $granite;
+  display: flex;
+  flex-grow: 1;
+  font-size: 0.8em;
+  font-weight: bold;
+  justify-content: center;
+  padding: 0.5em 0.25em;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: $size;
+    background-size: 100% calc(50% + 1px);
+    background-repeat: no-repeat;
+    background-position: top left, bottom left;
+  }
+
+  &::before {
+    background-image: linear-gradient(to left bottom, transparent 50%, $color 0),
+      linear-gradient(to right bottom, $color 50%, transparent 0);
+    right: 0;
+  }
+
+  &::after {
+    background-image: linear-gradient(to left bottom, $color 50%, transparent 0),
+      linear-gradient(to right bottom, transparent 50%, $color 0);
+    right: 100%;
+  }
+
+  &:not(:last-child) {
+    margin-right: 0.25em;
+  }
+}
+
+.judging-form__crumb-label {
+  transform: translateX(-1em);
+}
+
+.judging-form__crumb--active {
+  $color: $shamrock-mid;
+  background-image: linear-gradient(to right, $color, $color calc(100% - #{$size}), transparent 0);
+  color: white;
+
+  &::before {
+    background-image: linear-gradient(to left bottom, transparent 50%, $color 0),
+      linear-gradient(to right bottom, $color 50%, transparent 0);
+  }
+
+  &::after {
+    background-image: linear-gradient(to left bottom, $color 50%, transparent 0),
+      linear-gradient(to right bottom, transparent 50%, $color 0);
+  }
+}
+
+.judge-helper__tick-marks-wrapper {
+  display: flex;
+  height: 35px;
+  justify-content: space-between;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(100% - 2em);
+  z-index: -1;
+}
+
+.judge-helper__tick-mark {
+  $color: $mid-grey;
+  background-color: $mid-grey;
+  border-radius: 1em;
+  transform: translateX(50%);
+  width: 3px;
+}
+
+// Technical checklist
+
+.question-technical-checklist {
+  margin-bottom: 1rem;
+
+  .appy-button {
+    margin-left: 0;
+  }
+}
+
+.judging-technical-checklist-modal {
+  .appy-button {
+    float: right;
+    margin-right: 0;
+  }
+}
+
+.judging-tc-modal__checkbox-wrapper {
+  margin-bottom: 1em;
+
+  label {
+    align-items: center;
+    display: flex;
+  }
+
+  .judging-tc-modal__label-text {
+    margin-left: 0.5em;
+    text-transform: none;
+  }
+}
+
+.judging-tc-modal__image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0.25em 0 0.5em;
+
+  figure {
+    display: inline-block;
+    padding: 0.5em;
+    background-color: $light-grey;
+    border-radius: 0.25em;
+  }
+
+  figcaption {
+    font-weight: 400;
+    font-size: 0.9em;
+    font-style: italic;
+  }
+}
+
+$close-button-wrapper-height: 50px;
+
+.judging-tc-fullscreen-image {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $z-modal;
+}
+
+.judging-tc-fullscreen-image__content {
+  max-height: calc(100vh - 4em);
+  max-width: calc(100vw - 4em);
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+
+.judging-tc-fullscreen-image__pseudo-img {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: calc(100vh - 4em - #{$close-button-wrapper-height});
+}
+
+.judging-tc-fullscreen-image__close-button-wrapper {
+  align-items: center;
+  color: white;
+  display: flex;
+  height: $close-button-wrapper-height;
+  justify-content: flex-end;
+  min-height: $close-button-wrapper-height;
+
+  .fa {
+    cursor: pointer;
+    font-size: 1.75em;
+    padding: 0.25em;  
+  }
+}

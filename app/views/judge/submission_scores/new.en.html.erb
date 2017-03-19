@@ -1,12 +1,126 @@
-<h1 class="appy-title">
-  Scoring
-  <%= @current_team_submission.app_name || "[No App Name]" %>
-  by
-  <%= @current_team_submission.team.name %>
-</h1>
+<div class="judging-view">
+  <h1 class="appy-title">
+    Scoring
+    <%= @current_team_submission.app_name || "[No App Name]" %>
+    by
+    <%= @current_team_submission.team.name %>
+  </h1>
 
-<%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
-<%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+  <div class="card judging-form judging-form--loading" id="judging-form"><!-- loading class removed once JS loads -->
+
+    <div class="card__heading judging-form__title-bar">
+      <span>Judging Form</span>
+      <div class="judging-form__display-controls">
+        <button id="juding-form-minimize" class="unbutton fa fa-window-minimize" >
+          <!-- FontAwesome Chevron -->
+        </button>
+        <button id="juding-form-window" class="unbutton fa fa-window-restore" >
+          <!-- FontAwesome Chevron -->
+        </button>
+        <button id="juding-form-maximize" class="unbutton fa fa-window-maximize" >
+          <!-- FontAwesome Chevron -->
+        </button>
+      </div>
+    </div>
+
+    <div class="judging-form__breadcrumbs-wrapper">
+      <!-- Breadcrumbs go here -->
+    </div>
+
+    <div class="judging-form__body">
+      <div class="judging-form__button-wrapper">
+        <button id="juding-form-button-back" class="judging-form__button judging-form__button--back unbutton fa fa-chevron-left">
+          <!-- FontAwesome Chevron -->
+        </button>
+      </div>
+      <div class="judging-form__loader">
+        <span><!----></span>
+        <span><!----></span>
+        <span><!----></span>
+        <span><!----></span>
+      </div>
+      <div class="judging-form__sections-wrapper">
+        <div class="judging-form__section">
+          <%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
+        </div>
+        <div class="judging-form__section">
+          <!-- Pseudo-section for technical checklist step. Clicking the button in this section opens the Technical Checklist partial in a modal -->
+          <h1>Technical</h1>
+          <div class="question-technical-checklist">
+            <h2>Verify the Technical Checklist</h2>
+            <p class="question-technical-checklist__label">
+              Please verify that the team has completed their Technical Checklist
+            </p>
+            <button
+              class="appy-button"
+              type="button"
+              data-modal-trigger="judging-technical-checklist"
+            >
+              Verify Technical Checklist
+            </button>
+          </div>
+        </div>
+        <% if @submission_score.senior_team_division? %>
+          <div class="judging-form__section">
+            <%= render 'judge/submission_scores/entrepreneurship', submission_score: @submission_score %>
+          </div>
+        <% end %>
+        <div class="judging-form__section">
+          <%= render 'judge/submission_scores/pitch', submission_score: @submission_score %>
+        </div>
+        <div class="judging-form__section">
+          <%= render 'judge/submission_scores/overall_impression', submission_score: @submission_score %>
+        </div>
+        <div class='judging-form__maximized-action-helpers'>
+          <button class="appy-button" id="submit-all-forms">
+            Save Progress
+          </button>
+          <button class="appy-button" id="verify-scores">
+            Verify and Submit Scores
+          </button>
+        </div>
+      </div>
+      <div class="judging-form__button-wrapper">
+        <button id="juding-form-button-next" class="judging-form__button judging-form__button--next unbutton fa fa-chevron-right">
+          <!-- FontAwesome Chevron -->
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-submissions">
+    <div class="team-submissions__row-left">
+      <div class="team-submissions__fixed-col">
+        <%= render 'team_submissions/team_photo', submission: @current_team_submission, current_team: @current_team_submission.team %>
+      </div>
+    </div>
+
+    <div class="team-submissions__row-center">
+      <%= render 'team_submissions/app_description', submission: @current_team_submission %>
+      <%= render 'team_submissions/sustainable_development_goal', submission: @current_team_submission %>
+      <%= render 'team_submissions/demo_pitch_videos', submission: @current_team_submission %>
+      <%= render 'team_submissions/screenshots', submission: @current_team_submission %>
+    </div>
+
+    <div class="team-submissions__row-right">
+      <div class="team-submissions__fixed-col">
+        <%= render 'team_submissions/source_code', submission: @current_team_submission %>
+        <%= render 'team_submissions/development_platform', submission: @current_team_submission %>
+        <%= render 'team_submissions/business_plan', submission: @current_team_submission %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modalify modalify--fixed judging-technical-checklist-modal"
+  data-heading="Verify Technical Checklist"
+  id="judging-technical-checklist"
+>
+  <%= render 'judge/technical_checklist_verifications/new', submission: @current_team_submission %>
+</div>
+
+<!-- Submission review before final submission -->
+<div>
+
+</div>

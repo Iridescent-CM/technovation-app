@@ -9,7 +9,7 @@ module Judge
     end
 
     def update
-      @submission_score = current_judge.submission_scores.find(submission_score_params[:id])
+      @submission_score = current_judge.submission_scores.find(params[:id])
 
       if @submission_score.update_attributes(submission_score_params)
         render json: @submission_score
@@ -21,7 +21,6 @@ module Judge
     private
     def submission_score_params
       params.require(:submission_score).permit(
-        :id,
         :sdg_alignment,
         :evidence_of_problem,
         :problem_addressed,
@@ -54,6 +53,8 @@ module Judge
 
       begin
         @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])
+        @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
+        @current_team_submission
       rescue ActiveRecord::RecordNotFound
         redirect_to judge_dashboard_path,
           notice: t("controllers.judge.submission_scores.any.no_submission_found")

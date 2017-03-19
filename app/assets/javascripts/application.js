@@ -8,6 +8,7 @@
 //= require jquery.sticky-kit.1.1.2.min
 //= require dragula
 //= require closest-polyfill
+//= require rangeslider
 
 //= require utils
 //= require ajax_form_handler
@@ -20,6 +21,7 @@
 //= require gallerify
 //= require global_nav
 //= require homepage/homepage
+//= require judging_form
 //= require modalify
 //= require remote_forms
 //= require search_options

@@ -1,7 +1,7 @@
 <% if submission_score.senior_team_division? %>
   <h1>Entrepreneurship (Senior Division)</h1>
 
-  <%= simple_form_for [:judge, submission_score], data: { remote: true } do |f| %>
+  <%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
     <%= f.input :business_plan_short_term,
       label: "The business plan reflects short term and clear strategy to achieve the plan.",
       collection: JudgingRubricScores.new,

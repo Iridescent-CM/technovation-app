@@ -1,9 +1,25 @@
 // Available flash types: 'alert', 'error', 'notice', 'success'
-function createFlashNotification(type, message) {
+// Available type modifiers: 'small'
+// You can add a type and modifier by passing an array of multiple strings as the 'type' argument
+function createFlashNotification(type, message, timeout) {
   var flashWrapper = document.createElement('div');
-  flashWrapper.classList.add('flash', 'flash--show','flash--' + type);
+  if (Array.isArray(type)) {
+    flashWrapper.classList.add('flash');
+    type.forEach(function(type) {
+      flashWrapper.classList.add('flash--' + type);
+    });
+  } else {
+    flashWrapper.classList.add('flash', 'flash--' + type);
+  }
   flashWrapper.innerHTML = message;
+  if (timeout) {
+    flashWrapper.dataset.timeout = timeout;
+  }
   document.body.appendChild(flashWrapper);
+
+  setTimeout(function() {
+    flashWrapper.classList.add('flash--show');
+  }, 0);
 }
 
 (function toastFlashes() {

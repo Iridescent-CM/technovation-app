@@ -2,7 +2,7 @@ $modal-width: 600px;
 
 .modalify {
   display: none;
-  z-index: 2;
+  z-index: $z-modal - 1;
 }
 
 .modalify--active {
@@ -53,4 +53,44 @@ $modal-width: 600px;
 .modalify__close {
   color: $dark-grey;
   cursor: pointer;
+}
+
+// Big, scorllable modals with fixed headers
+$border-radius: 0.5rem;
+$fixed-modal-width: 800px;
+$body-top-bottom-padding: 1.25rem;
+$body-left-right-padding: 1.25rem;
+$body-padding: $body-top-bottom-padding $body-left-right-padding;
+$top-bar-height: 3em;
+
+.modalify--fixed {
+  .modalify__body {
+    max-height: calc(100vh - 2em);
+    max-width: $fixed-modal-width;
+    overflow: auto;
+    padding: $body-padding;
+    padding-top: calc(#{$top-bar-height} + #{$body-top-bottom-padding});
+    position: fixed;
+    top: 1em;
+    width: 100%;
+    z-index: $z-modal;
+  }
+
+  .modalify__top-bar {
+    align-items: center;
+    background-color: white;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    display: flex;
+    height: $top-bar-height;
+    margin: 0;
+    max-width: $fixed-modal-width;
+    padding: 0 $body-left-right-padding;
+    position: fixed;
+    top: 1em;
+    transform: translateX(-#{$body-left-right-padding});
+    width: 100%;
+    z-index: $z-high;
+  }
 }
