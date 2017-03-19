@@ -1,0 +1,132 @@
+<h1 class="appy-title">
+  Review & Select Regional Pitch Events
+</h1>
+
+<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+  <div class="actions">
+    <button class="save-mentor-pitch-events appy-button"
+            data-url="<%= mentor_regional_pitch_event_selection_path %>">
+      Save changes
+    </button>
+
+    or
+
+    <%= link_to 'cancel', mentor_teams_path %>
+  </div>
+</div>
+
+<div class="mentor-regional-pitch-events__team-review">
+  <% @teams.each do |team| %>
+    <div data-team-id="<%= team.id %>"
+         class="card team-card standalone-buttons">
+      <div class="card__heading">
+        <%= team.name %>
+      </div>
+
+      <div class="card__body">
+        <div class="card-body__img">
+          <%= image_tag team.team_photo, width: 150, height: 100 %>
+
+          <strong><%= team.name %></strong><br />
+          <strong>Division:</strong> <%= team.division_name.titleize %><br />
+
+          <small>
+            <%= team.creator_address_details %><br />
+
+            <% if team.submission.present? %>
+              <%= link_to 'Review app submission',
+                app_url(team.submission),
+                target: :_blank %><br />
+
+                (this is how the judges will see it)
+            <% else %>
+              <strong class="has-danger">
+                <%= team.name %> has not begun their app submission!
+              </strong>
+            <% end %>
+          </small>
+        </div>
+
+        <% if team.submission.present? %>
+          <strong>Select a Regional Pitch Event:</strong>
+
+          <ul class="card-body__selection">
+            <% team.eligible_events.each do |event| %>
+              <li>
+                <label class="<%= 'selected' if team.selected_regional_pitch_event.id == event.id %>">
+                  <%= radio_button_tag "team_#{team.id}_events",
+                    event.id,
+                    team.selected_regional_pitch_event.id == event.id,
+                    id: "team_#{team.id}_event_#{event.id}" %>
+
+                  <%= event.name %>
+                  <%= link_to '(more info)',
+                    mentor_regional_pitch_event_path(event),
+                    data: {
+                      modal_trigger: "team_#{team.id}_event_info_#{event.id}",
+                    } %>
+                </label>
+              </li>
+
+              <div class="modalify"
+                   data-heading="<%= event.name %> Details"
+                   id="team_<%= team.id %>_event_info_<%= event.id %>">
+                <% if event.live? %>
+                  <p><strong>Division:</strong> <%= event.division_names %></p>
+                  <p><strong>City:</strong> <%= event.city %></p>
+                  <p><strong>Date / time:</strong> <%= event.date_time %></p>
+                  <p><strong>Address:</strong> <%= event.venue_address %></p>
+
+                  <% if event.eventbrite_link %>
+                    <p>
+                      <%= link_to event.eventbrite_link,
+                        event.eventbrite_link,
+                        target: :_blank %>
+                    </p>
+                  <% end %>
+                <% else %>
+                  <p>
+                    By default, all teams with completed submissions are entered
+                    into virtual judging.
+                  </p>
+
+                  <p>
+                    Virtual judging is a competition between all teams in the same
+                    region and division.
+                  </p>
+
+                  <p>
+                    If you select this event — or you simply do not select any
+                    live events — your team's completed submission will be judged online.
+                  </p>
+                <% end %>
+
+                <div class="modal-actions">
+                  <button class="appy-button modalify__close"
+                          data-selects="team_<%= team.id %>_event_<%= event.id %>">
+                    Select
+                  </button>
+                  or
+                  <%= link_to 'cancel', '#', class: "modalify__close" %>
+                </div>
+              </div>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+  <div class="actions">
+    <button class="save-mentor-pitch-events appy-button"
+            data-url="<%= mentor_regional_pitch_event_selection_path %>">
+      Save changes
+    </button>
+
+    or
+
+    <%= link_to 'cancel', mentor_teams_path %>
+  </div>
+</div>

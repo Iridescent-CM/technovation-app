@@ -28,7 +28,8 @@ Rails.application.routes.draw do
     resource :team_submission_screenshot_upload_confirmation, only: :show
     resource :team_submission_file_upload_confirmation, only: :show
 
-    resource :regional_pitch_event_selection, only: [:show, :create, :update]
+    resource :regional_pitch_event_selection, only: [:show, :create, :update, :destroy]
+    resources :regional_pitch_events, only: :show
 
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
@@ -78,6 +79,9 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create, :show]
     resources :honor_code_agreements, only: [:new, :create]
     resource :honor_code_agreement, only: :show
+
+    resource :regional_pitch_event_selection, only: [:new, :show, :create, :update, :destroy]
+    resources :regional_pitch_events, only: :show
   end
 
   namespace :regional_ambassador do
@@ -129,12 +133,16 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :profiles
+    resources :profile_locations, only: :edit
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
+
+    resources :signup_attempts, only: :index
+    resources :signup_invitations, only: :create
 
     resources :regional_pitch_events, only: [:index, :show, :update]
 

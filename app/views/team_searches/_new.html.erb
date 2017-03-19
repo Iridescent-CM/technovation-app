@@ -48,7 +48,6 @@
       <div class="team-search__teams-wrapper">
         <%= render(partial: "team_searches/result",
                    collection: teams,
-                   cached: true,
                    locals: { account_type: account.type_name }) or
               t("views.team_searches.new.no_results") %>
       </div>

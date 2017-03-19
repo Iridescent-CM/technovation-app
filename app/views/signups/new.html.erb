@@ -8,8 +8,9 @@
     <%= link_to t("views.application.signin"), signin_path %>
     <%= t("views.application.instead") %>.
   </p>
-  <%= render 'signups/account_type', role: :student %>
-  <%= render 'signups/account_type', role: :mentor %>
+
   <%= render 'signups/account_type', role: :judge %>
-  <%= render 'signups/account_type', role: :regional_ambassador %>
+  <%= render 'signups/account_type', role: :student, disabled: no_admin_permission? %>
+  <%= render 'signups/account_type', role: :mentor, disabled: no_admin_permission? %>
+  <%= render 'signups/account_type', role: :regional_ambassador, disabled: no_admin_permission? %>
 </div>

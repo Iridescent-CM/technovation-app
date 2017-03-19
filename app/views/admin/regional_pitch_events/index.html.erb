@@ -19,17 +19,15 @@
 
       <div class="admin-results-data-table">
         <% @events.order('regional_pitch_events.created_at DESC').each do |event| %>
-          <% cache(event) do %>
-            <div class="row">
-              <div class="cell"><%= event.regional_ambassador_profile.full_name %></div>
-              <div class="cell"><%= link_to event.name, [:admin, event] %></div>
-              <div class="cell"><%= event.date_time %></div>
-              <div class="cell"><%= event.division_names %></div>
-              <div class="cell"><%= event.city %></div>
-              <div class="cell"><%= event.state_province %></div>
-              <div class="cell"><%= event.country %></div>
-            </div>
-          <% end %>
+          <div class="row">
+            <div class="cell"><%= event.regional_ambassador_profile.full_name %></div>
+            <div class="cell"><%= link_to event.name, [:admin, event] %></div>
+            <div class="cell"><%= event.date_time %></div>
+            <div class="cell"><%= event.division_names %></div>
+            <div class="cell"><%= event.city %></div>
+            <div class="cell"><%= event.state_province %></div>
+            <div class="cell"><%= event.country %></div>
+          </div>
         <% end %>
       </div>
     </div>

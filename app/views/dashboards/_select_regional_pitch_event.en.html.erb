@@ -1,0 +1,80 @@
+<% unless Rails.env.production? %>
+  <li class="regional-event-selection card">
+    <div class="card__heading">
+      <% if events.any? %>
+        Select a Regional Pitch Event!
+      <% else %>
+        Virtual Judging begins on May 1!
+      <% end %>
+
+      <%= fa_icon("flash", class: "card-heading__flair") %>
+    </div>
+
+    <div class="card__body">
+      <p>
+        Your team, <strong><%= current_team.name %></strong>, is in the <strong><%= current_team.region_name %></strong> region
+        and the <strong><%= current_team.division_name.titleize %></strong> division.
+      </p>
+
+      <hr />
+
+      <% if events.any? %>
+        <p>
+          <strong>Your currently selected event:</strong>
+          <%= current_team.selected_regional_pitch_event_name %>
+
+          <span class="small-action-bar">
+            <%= link_to 'view full details',
+              student_regional_pitch_event_path(current_team.selected_regional_pitch_event) %>
+
+            <% if current_team.selected_regional_pitch_event.live? %>
+              &nbsp;|&nbsp;
+              <%= link_to 'remove',
+                student_regional_pitch_event_selection_path,
+                data: {
+                  method: :delete,
+                  confirm: "Are you sure you want to remove your team from the event: #{current_team.selected_regional_pitch_event_name}?",
+                } %>
+            <% end %>
+          </span>
+        </p>
+
+        <% if (events - [current_team.selected_regional_pitch_event]).any? %>
+          <hr />
+
+          <strong>Select a different event to attend:</strong>
+
+          <ul class="regional-event-selection-list">
+            <% (events - [current_team.selected_regional_pitch_event]).each do |event| %>
+              <li>
+                <%= event.name %><br />
+                <%= event.city %><br />
+                <strong><%= event.starts_at.strftime("%A, %B %e") %></strong><br />
+
+                <%= event.starts_at.strftime("%-I:%M%P") %>
+                &ndash;
+                <%= event.ends_at.strftime("%-I:%M%P %Z") %><br />
+
+                <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <hr />
+      <% else %>
+        <p>
+          Because there are <strong>no live events</strong> scheduled in your region,
+          <strong>your team's submission will be judged online.</strong>
+        </p>
+      <% end %>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to 'See how your submission looks to the judges',
+          app_path(submission),
+          class: "appy-button",
+          target: :_blank %>
+      </div>
+    </div>
+  </li>
+<% end %>

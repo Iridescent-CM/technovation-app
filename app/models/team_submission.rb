@@ -78,7 +78,7 @@ class TeamSubmission < ActiveRecord::Base
                     technical_checklist_completed? and
                       not detect_source_code_url.blank? and
                         not development_platform_text.blank? and
-                          not business_plan_url_text.blank?
+                          (junior_division? or (senior_division? and not business_plan_url_text.blank?))
   end
 
   def country
@@ -91,6 +91,14 @@ class TeamSubmission < ActiveRecord::Base
 
   def division_id
     team.division_id
+  end
+
+  def junior_division?
+    team_division_name == "junior"
+  end
+
+  def senior_division?
+    team_division_name == "senior"
   end
 
   def development_platform_text

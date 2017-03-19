@@ -2,9 +2,7 @@
 //= require chosen-jquery
 // PLEASE DO NOT USE JQUERY, LEGACY SUPPORT ONLY
 
-//= require url-polyfill
 //= require url-search-params-polyfill
-
 //= require vanilla-ujs
 
 //= require admin/utils

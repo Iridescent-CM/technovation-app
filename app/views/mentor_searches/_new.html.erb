@@ -13,7 +13,6 @@
       <div class="mentor-search__mentors-wrapper">
         <%= render(partial: "mentor_searches/mentor_preview",
                    collection: @mentors,
-                   cached: true,
                    locals: { account: account }) or
               t("views.mentor_searches.none_found") %>
       </div>

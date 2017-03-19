@@ -22,11 +22,17 @@
 
       <%= render 'errors', record: signup %>
 
-      <p>
-        <strong>
-          <%= t("views.signups.form.signing_up_email", email: signup.email) %>
-        </strong>
-      </p>
+      <% if admin %>
+        <%= f.fields_for :account do |a| %>
+          <%= a.input :email %>
+        <% end %>
+      <% else %>
+        <p>
+          <strong>
+            <%= t("views.signups.form.signing_up_email", email: signup.email) %>
+          </strong>
+        </p>
+      <% end %>
 
       <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
 

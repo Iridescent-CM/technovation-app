@@ -1,5 +1,8 @@
 module Student
   class TeamSubmissionsController < StudentController
+    before_action :require_full_access,
+                  :require_current_team
+
     # TODO: GETTING LAST SUBMISSION LOGIC WILL NOT WORK FOR FUTURE SEASONS!
 
     def new
@@ -47,8 +50,6 @@ module Student
         file_attribute: :source_code,
         back: student_team_submission_path(@team_submission)
       )
-
-      @regional_events = RegionalPitchEvent.available_to(@team_submission)
     end
 
     def update

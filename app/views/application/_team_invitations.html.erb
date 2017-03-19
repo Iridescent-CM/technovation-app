@@ -8,29 +8,27 @@
       <% if account.pending_team_invitations.any? %>
         <ul class="team-invitations__list">
           <% account.pending_team_invitations.each do |invitation| %>
-            <% cache(invitation) do %>
-              <li class="team-invitations__invitation card">
-                <div class="team-invitations__team-photo">
-                  <%= image_tag invitation.team.team_photo, width: 100, height: 100 %>
+            <li class="team-invitations__invitation card">
+              <div class="team-invitations__team-photo">
+                <%= image_tag invitation.team.team_photo, width: 100, height: 100 %>
+              </div>
+
+              <div class="team-invitations__team-info">
+                <div class="team-invitations__team-name">
+                  <%= invitation.team_name %>
                 </div>
 
-                <div class="team-invitations__team-info">
-                  <div class="team-invitations__team-name">
-                    <%= invitation.team_name %>
-                  </div>
-
-                  <div class="team-invitations__team-description">
-                    <%= invitation.team.description %>
-                  </div>
-
-                  <div class="card__actions-row card__actions-row--pos-fill">
-                    <%= link_to t("views.application.view_team"),
-                      send("#{account.type_name}_#{invite_type}_invite_path", invitation),
-                      class: "appy-button" %>
-                  </div>
+                <div class="team-invitations__team-description">
+                  <%= invitation.team.description %>
                 </div>
-              </li>
-            <% end %>
+
+                <div class="card__actions-row card__actions-row--pos-fill">
+                  <%= link_to t("views.application.view_team"),
+                    send("#{account.type_name}_#{invite_type}_invite_path", invitation),
+                    class: "appy-button" %>
+                </div>
+              </div>
+            </li>
           <% end %>
         </ul>
       <% elsif account.can_join_a_team? %>
@@ -52,22 +50,20 @@
       <% if account.pending_team_requests.any? %>
         <ul class="team-invitations__list">
           <% account.pending_team_requests.each do |team_request| %>
-            <% cache(team_request) do %>
-              <li class="team-invitations__invitation card">
-                <div class="team-invitations__team-info team-invitations__team-info--no-photo">
-                  <div class="team-invitations__team-name">
-                    <%= team_request.joinable_name %>
-                  </div>
-
-                  <div class="card__actions-row card__actions-row--pos-fill">
-                    <%= link_to t("views.application.view_team"),
-                      team_request.joinable,
-                      class: "appy-button"
-                    %>
-                  </div>
+            <li class="team-invitations__invitation card">
+              <div class="team-invitations__team-info team-invitations__team-info--no-photo">
+                <div class="team-invitations__team-name">
+                  <%= team_request.joinable_name %>
                 </div>
-              </li>
-            <% end %>
+
+                <div class="card__actions-row card__actions-row--pos-fill">
+                  <%= link_to t("views.application.view_team"),
+                    team_request.joinable,
+                    class: "appy-button"
+                  %>
+                </div>
+              </div>
+            </li>
           <% end %>
         </ul>
       <% elsif account.can_join_a_team? %>

@@ -43,6 +43,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   def region_name
+    return unless Country[country]
+
     if country == "US"
       Country[country].states.fetch(state_province) { {} }['name']
     else

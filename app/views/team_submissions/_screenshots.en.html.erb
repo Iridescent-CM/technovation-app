@@ -7,8 +7,7 @@
     <% if submission.screenshots.any? %>
       <ul class="gallerify">
         <%= render partial: 'student/screenshots/screenshot',
-          collection: submission.screenshots,
-          cached: true %>
+          collection: submission.screenshots %>
       </ul>
     <% end %>
   </div>

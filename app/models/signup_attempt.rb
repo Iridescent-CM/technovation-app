@@ -10,4 +10,5 @@ class SignupAttempt < ActiveRecord::Base
   has_secure_token :pending_token
   has_secure_token :activation_token
   has_secure_token :signup_token
+  has_secure_token :admin_permission_token
 end

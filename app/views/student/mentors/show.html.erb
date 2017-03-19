@@ -6,7 +6,6 @@
   <ul class="mentor_teams_list">
     <%= render partial: 'student/mentors/team_preview',
               collection: @mentor.teams.current,
-              cached: true,
               locals: { profile: @mentor } %>
   </ul>
 <% else %>

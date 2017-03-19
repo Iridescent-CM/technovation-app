@@ -1,13 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Team do
-  it "censors dirty words" do
-    team = FactoryGirl.create(:team, name: "Fuck Is A Bad Word",
-                              description: "Shit is a bad word too")
-    expect(team.name).to eq("[censored] Is A Bad Word")
-    expect(team.description).to eq("[censored] is a bad word too")
-  end
-
   it "assigns to the B division if all students are in Division B" do
     team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)

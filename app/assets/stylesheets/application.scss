@@ -58,3 +58,21 @@
 @import "technical-checklist";
 @import "background-checks";
 @import "submission-scores";
+@import "select-pitch-event";
+
+.small-action-bar {
+  font-size: 0.8rem;
+  display: inline-block;
+  background: lightgrey;
+  padding: 0.1rem 0.3rem;
+  border-radius: 50px;
+  color: grey;
+
+  a {
+    color: grey;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

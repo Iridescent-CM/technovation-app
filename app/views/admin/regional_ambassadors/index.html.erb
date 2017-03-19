@@ -17,45 +17,43 @@
 
       <div class="admin-results-data-table">
         <% @regional_ambassadors.order('created_at DESC').each do |ambassador| %>
-          <% cache(ambassador) do %>
-            <div class="row">
-              <div class="cell">
-                <%= image_tag ambassador.profile_image_url, width: 80, height: 80 %>
-              </div>
-
-              <div class="cell">
-                <p>
-                  <strong>
-                    <%= link_to ambassador.full_name,
-                      admin_regional_ambassador_path(ambassador) %>
-                  </strong>
-                </p>
-
-                <p>
-                  <%= mail_to ambassador.email %>
-                </p>
-
-                <p>
-                  <%= ambassador.address_details %>
-                </p>
-
-                <p>
-                  <em>Applied <%= time_ago_in_words(ambassador.created_at) %> ago</em>
-                </p>
-              </div>
-
-              <% if "declined" == params[:status] %>
-                <div class="cell danger">
-                  <%= link_to 'Mark spam',
-                    admin_regional_ambassador_path(ambassador, status: :spam),
-                    data: {
-                      method: :put,
-                      confirm: "Mark #{ambassador.full_name} as spam?",
-                    } %>
-                </div>
-              <% end %>
+          <div class="row">
+            <div class="cell">
+              <%= image_tag ambassador.profile_image_url, width: 80, height: 80 %>
             </div>
-          <% end %>
+
+            <div class="cell">
+              <p>
+                <strong>
+                  <%= link_to ambassador.full_name,
+                    admin_regional_ambassador_path(ambassador) %>
+                </strong>
+              </p>
+
+              <p>
+                <%= mail_to ambassador.email %>
+              </p>
+
+              <p>
+                <%= ambassador.address_details %>
+              </p>
+
+              <p>
+                <em>Applied <%= time_ago_in_words(ambassador.created_at) %> ago</em>
+              </p>
+            </div>
+
+            <% if "declined" == params[:status] %>
+              <div class="cell danger">
+                <%= link_to 'Mark spam',
+                  admin_regional_ambassador_path(ambassador, status: :spam),
+                  data: {
+                    method: :put,
+                    confirm: "Mark #{ambassador.full_name} as spam?",
+                  } %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>

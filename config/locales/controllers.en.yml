@@ -2,8 +2,10 @@ en:
   controllers:
     application:
       already_authenticated: "You are already signed in."
-      general_error: "Sorry, but something went wrong. It probably wasn't your fault."
+      full_access_required: "You need to complete your To-Do's before going there"
+      general_error: "Sorry, but something went wrong. Please go and try again."
       generic_unauthenticated: "You must be signed in to go there!"
+      team_required: "You need to be on a team to access that page"
       unauthenticated: "You must be signed in as %{profile} to go there!"
       unauthorized: "You don't have permission to go there!"
 
@@ -29,6 +31,7 @@ en:
       destroy:
         confirm: "Are you sure you want to revoke your invitation to %{name}?"
         link: "revoke"
+        not_found: "That invitation was not found. Perhaps it was already revoked."
         success: "You revoked the invitation to %{name}"
       show:
         full_access_needed: "Please finish the items in your To-Do list before reviewing this invitation"
@@ -130,6 +133,8 @@ en:
       regional_pitch_event_selections:
         create:
           success: "You're attending a Live Regional Pitch Event!"
+        destroy:
+          success: "You removed your team from that live Regional Pitch Event"
 
     teams:
       create:

@@ -4,6 +4,8 @@ class JoinRequest < ActiveRecord::Base
 
   scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
 
+  scope :for_students, -> { where(requestor_type: "StudentProfile") }
+
   belongs_to :requestor, polymorphic: true
   belongs_to :joinable, polymorphic: true
 

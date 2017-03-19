@@ -1,0 +1,16 @@
+<div class="judge-debug">
+  <h3>Judge Profile debugging info</h3>
+
+  <p>
+    <strong>Has mentor profile?</strong>
+    <%= profile.account.mentor_profile.present? ? "yes" : "no" %>
+  </p>
+
+  <p>
+    <strong>Browser / OS Info</strong>
+    <%= [profile.browser_name,
+         profile.browser_version,
+         profile.os_name,
+         profile.os_version].compact.join(' - ') %>
+  </p>
+</div>

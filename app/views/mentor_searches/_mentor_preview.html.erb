@@ -20,11 +20,9 @@
 
     <div class="mentor__expertise">
       <% mentor_preview.expertises.each do |expertise| %>
-        <% cache(expertise) do %>
-          <span class="badge-<%= @search_filter.badge_css(expertise) %>">
-            <%= expertise.name %>
-          </span>
-        <% end %>
+        <span class="badge-<%= @search_filter.badge_css(expertise) %>">
+          <%= expertise.name %>
+        </span>
       <% end %>
     </div>
 

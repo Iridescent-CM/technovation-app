@@ -9,6 +9,10 @@ class AdminController < ApplicationController
     cookies.permanent[:export_email] ||= "info@technovationchallenge.org"
   }
 
+  def current_user
+    current_admin.account
+  end
+
   private
   def current_admin
     @current_admin ||= current_account.admin_profile

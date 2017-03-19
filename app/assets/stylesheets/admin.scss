@@ -1,5 +1,6 @@
 @import "normalize";
 @import "font-awesome";
+@import "chosen";
 
 @import 'admin/base';
 
@@ -35,5 +36,11 @@
 
   tr {
     border-bottom: 1px solid #333;
+  }
+}
+
+.admin-search__filter-options {
+  dl {
+    padding: 1rem 0;
   }
 }

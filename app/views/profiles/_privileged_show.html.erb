@@ -1,6 +1,7 @@
 <%
   title ||= t("views.accounts.show.title")
   edit ||= false
+  admin ||= false
 %>
 
 <div class="dashboard-page-info">
@@ -29,7 +30,14 @@
       <% end %>
 
       <dt><%= t('models.account.address') %></dt>
-      <dd><%= account.address_details %></dd>
+      <dd>
+        <%= account.address_details %>
+        <% if admin %>
+          <p>
+            <%= link_to "Edit location", location_edit_path %>
+          </p>
+        <% end %>
+      </dd>
     </dl>
 
     <div class="flex-col-sm-6 account-special">

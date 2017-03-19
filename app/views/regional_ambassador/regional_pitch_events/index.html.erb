@@ -11,37 +11,35 @@
 
       <div class="admin-results-data-table">
         <% @pitch_events.each do |pitch_event| %>
-          <% cache(pitch_event) do %>
-            <div class="row">
-              <div class="cell">
-                <%= link_to pitch_event.name, regional_ambassador_regional_pitch_event_path(pitch_event) %>
-              </div>
-
-              <div class="cell">
-                <%= pitch_event.division_names %>
-              </div>
-
-              <div class="cell">
-                <%= pitch_event.starts_at.in_time_zone(current_ambassador.timezone).strftime("%a, %b %e, %H:%M") %>
-                &ndash;
-                <%= pitch_event.ends_at.in_time_zone(current_ambassador.timezone).strftime("%H:%M %Z") %>
-              </div>
-
-              <div class="cell">
-                <%= pitch_event.city %>
-              </div>
-
-              <div class="cell">
-                <%= link_to 'View', [:regional_ambassador, pitch_event] %>&nbsp;|
-
-                <%= link_to 'Edit', [:edit, :regional_ambassador, pitch_event] %>&nbsp;|
-
-                <%= link_to 'Delete', [:regional_ambassador, pitch_event],
-                  method: :delete,
-                  data: { confirm: 'Are you sure?' } %>
-              </div>
+          <div class="row">
+            <div class="cell">
+              <%= link_to pitch_event.name, regional_ambassador_regional_pitch_event_path(pitch_event) %>
             </div>
-          <% end %>
+
+            <div class="cell">
+              <%= pitch_event.division_names %>
+            </div>
+
+            <div class="cell">
+              <%= pitch_event.starts_at.in_time_zone(current_ambassador.timezone).strftime("%a, %b %e, %H:%M") %>
+              &ndash;
+              <%= pitch_event.ends_at.in_time_zone(current_ambassador.timezone).strftime("%H:%M %Z") %>
+            </div>
+
+            <div class="cell">
+              <%= pitch_event.city %>
+            </div>
+
+            <div class="cell">
+              <%= link_to 'View', [:regional_ambassador, pitch_event] %>&nbsp;|
+
+              <%= link_to 'Edit', [:edit, :regional_ambassador, pitch_event] %>&nbsp;|
+
+              <%= link_to 'Delete', [:regional_ambassador, pitch_event],
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

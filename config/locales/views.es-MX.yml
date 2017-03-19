@@ -183,7 +183,7 @@ es-MX:
           send_link:
             text: "Envíar el formato de consentimiento por correo electrónico"
           trouble:
-            postfix: "Un nuevo correo electrónico será enviado si actualizas la dirección.<br /><br />Favor de revisar la carpeta de spam o correo no deseado, si el correo electrónico ha sido enviado ahí, puede agregar a 'info@technovationchallenge.org' a su lista de contactos para prevenir futuros incidentes."
+            postfix: "Un nuevo correo electrónico será enviado si actualizas la dirección.<br /><br />Favor de revisar la carpeta de spam o correo no deseado, si el correo electrónico ha sido enviado ahí, puede agregar a 'mailer@technovationchallenge.org' a su lista de contactos para prevenir futuros incidentes."
             prefix: "¿Problemas recibiendo el correo electrónico?"
             text: "Revisar la dirección de correo electrónico."
 

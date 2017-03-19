@@ -59,6 +59,36 @@ class RegionalExportJob < ActiveJob::Base
     export(filepath, ambassador)
   end
 
+  def export_team_submissions(ambassador, params)
+    submission_ids = RegionalAmbassador::SearchTeamSubmissions.(params, ambassador)
+      .pluck(:id).uniq
+    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Team_Submissions-Division_#{params[:division]}-SustainableDevGaol_#{params[:sdg]}-HasName_#{params[:has_name]}-TechCheckListStarted_#{params[:technical_checklist]}.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{Team\ name Division App\ name Description SDG Demo\ video Pitch\ video
+      Screenshot\ count Technical\ checklist\ status Source\ code Platform Business\ plan
+      Submission\ url Team\ url}
+
+      submission_ids.each do |sub_id|
+        sub = TeamSubmission.includes(
+          :screenshots, :business_plan, :technical_checklist,
+          { team: :division }
+        ).find(sub_id)
+
+        csv << [sub.team_name, sub.team_division_name, sub.app_name,
+                sub.app_description, sub.stated_goal, sub.demo_video_link,
+                sub.pitch_video_link, sub.screenshots.count,
+                (sub.technical_checklist_started? ? 'started' : 'not started'),
+                sub.source_code_url_text, sub.development_platform_text,
+                sub.business_plan_url_text,
+                Rails.application.routes.url_helpers.app_url(sub),
+                Rails.application.routes.url_helpers.team_url(sub.team)]
+      end
+    end
+
+    export(filepath, ambassador)
+  end
+
   def export(filepath, ambassador)
     file = File.open(filepath)
     export = ambassador.exports.create!(file: file)

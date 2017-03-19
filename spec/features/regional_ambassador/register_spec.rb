@@ -39,7 +39,7 @@ RSpec.feature "Regional Ambassadors registration" do
   scenario "admins receive an email about it" do
     expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
     emails = ActionMailer::Base.deliveries
-    expect(emails.collect(&:to)).to include(["info@technovationchallenge.org"])
+    expect(emails.collect(&:to)).to include(["mailer@technovationchallenge.org"])
   end
 
   scenario "saves profile data" do

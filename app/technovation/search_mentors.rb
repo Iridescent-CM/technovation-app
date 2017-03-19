@@ -68,6 +68,10 @@ module SearchMentors
     miles = filter.nearby == "anywhere" ? 40_000 : 50
     nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
+    if filter.user.country == "PS"
+      nearby = "Palestine"
+    end
+
     mentors.joins(:account).near(nearby, miles)
   end
 

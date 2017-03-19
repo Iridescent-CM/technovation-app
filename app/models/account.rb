@@ -20,6 +20,7 @@ class Account < ActiveRecord::Base
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
   has_one :regional_ambassador_profile, dependent: :destroy
+  has_one :signup_attempt, dependent: :destroy
 
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
@@ -84,7 +85,7 @@ class Account < ActiveRecord::Base
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :profile_image, verify_cached_file: true
 
   validates :existing_password, valid_password: true, if: :changes_require_password?

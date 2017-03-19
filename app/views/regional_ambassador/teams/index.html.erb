@@ -21,15 +21,13 @@
 
       <div class="admin-results-data-table">
         <% @teams.order('teams.created_at DESC').each do |team| %>
-          <% cache(team) do %>
-            <div class="row">
-              <div class="cell"><%= link_to team.name, regional_ambassador_team_path(team) %></div>
-              <div class="cell"><%= time_ago_in_words(team.created_at) %> ago</div>
-              <div class="cell"><%= team.mentors.any? ? 'yes' : 'no' %></div>
-              <div class="cell"><%= team.division_name %></div>
-              <div class="cell"><%= team.city %></div>
-            </div>
-          <% end %>
+          <div class="row">
+            <div class="cell"><%= link_to team.name, regional_ambassador_team_path(team) %></div>
+            <div class="cell"><%= time_ago_in_words(team.created_at) %> ago</div>
+            <div class="cell"><%= team.mentors.any? ? 'yes' : 'no' %></div>
+            <div class="cell"><%= team.division_name %></div>
+            <div class="cell"><%= team.city %></div>
+          </div>
         <% end %>
       </div>
     </div>

@@ -35,7 +35,7 @@ RSpec.feature "Invite a member to a team" do
   scenario "the team member invite email is sent" do
     mail = ActionMailer::Base.deliveries.last
     expect(mail.to).to eq(["some@student.com"])
-    expect(mail.from).to eq(["info@technovationchallenge.org"])
+    expect(mail.from).to eq(["mailer@technovationchallenge.org"])
   end
 
   scenario "student accepts invite" do

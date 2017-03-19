@@ -16,11 +16,25 @@ brew install elasticsearch
 brew services start elasticsearch
 ```
 
+You **must** install `postgresql`
+
+```
+brew update
+brew install postgresql
+```
+
+You **must** install `redis server`
+
+```
+brew update
+brew install redis
+```
+
 ### Setup
 
-Set your Ruby version with your favorite ruby version management tool to:
+Set your Ruby version with your favorite ruby version management tool **(RVM, rbenv, chruby, etc)** to:
 
-`Ruby Version: 2.3.1`
+`Use Ruby Version: 2.3.1`
 
 Request sensitive keys from your teammates for the `.env` file.
 
@@ -31,18 +45,34 @@ cd technovation-app
 ./bin/setup
 ```
 
+## Drop / recreate / re-seed / re-bootstrap  database
+
+```
+rake db:drop db:create db:migrate && rake db:seed bootstrap
+```
+
+
+## Copy data from production (don't be reckless with the data!)
+
+```
+dropdb technovation-app_development
+heroku pg:pull DATABASE_URL technovation-app_development --app technovation
+```
+
 ## Development server
 
 ```
-$ rails server
+rails server
 ```
+
+**Visit http://localhost:3000 for the web**
 
 ## Tests
 
 TechnovationApp uses RSpec
 
 ```
-$ rake
+rake
 ```
 
 ## Rake tasks

@@ -9,7 +9,6 @@
         <ul>
           <%= render partial: 'student/mentors/team_preview',
             collection: @account.teams.current,
-            cached: true,
             locals: { ra: true, profile: @account.mentor_profile || @account.student_profile } %>
         </ul>
       <% else %>

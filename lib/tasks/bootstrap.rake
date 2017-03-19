@@ -24,7 +24,6 @@ task bootstrap: :environment do
         city: "San Francisco",
         state_province: "CA",
         country: "US",
-        geocoded: "San Francisco, CA, US",
         date_of_birth: 100.years.ago,
       }
     )

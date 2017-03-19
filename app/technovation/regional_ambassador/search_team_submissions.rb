@@ -9,7 +9,7 @@ module RegionalAmbassador
 
       account_ids = case ambassador.country
                     when "US"
-                      Account.where(state_province: ambassador.state_province).pluck(:id)
+                      Account.where(state_province: ambassador.state_province, country: "US").pluck(:id)
                     else
                       Account.where(country: ambassador.country).pluck(:id)
                     end
@@ -33,14 +33,18 @@ module RegionalAmbassador
       when 'not selected'
         submissions = submissions.where("stated_goal IS NULL")
       else
-        submissions = submissions.where(stated_goal: TeamSubmission.stated_goals[params[:sdg]])
+        submissions = submissions.where(
+          stated_goal: TeamSubmission.stated_goals[params[:sdg]]
+        )
       end
 
       case params[:has_name]
       when 'yes'
-        submissions = submissions.where("team_submissions.app_name IS NOT NULL")
+        submissions = submissions.where("team_submissions.app_name IS NOT NULL AND
+                                        team_submissions.app_name != ?", "")
       when 'no'
-        submissions = submissions.where("team_submissions.app_name IS NULL")
+        submissions = submissions.where("team_submissions.app_name IS NULL OR
+                                        team_submissions.app_name = ?", "")
       end
 
       case params[:technical_checklist]

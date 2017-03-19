@@ -1,54 +1,65 @@
-<h1 class="appy-title">Signup Attempts</h1>
-
-<div class="wrapper__report_table">
-  <label class="no-text-transform">
-    Per page:
-    <%= select_tag :per_page,
-                   options_for_select([15, 25, 50, 100], params[:per_page]),
-                   class: "inline",
-                   data: { reload: true, param: :per_page } %>
-  </label>
-
-  <label class="no-text-transform">
-    Status:
-    <%= select_tag :status,
-                   options_for_select(SignupAttempt.statuses.keys, params[:status]),
-                   class: "inline",
-                   data: { reload: true, param: :status } %>
-  </label>
-
-
-  <div class="pagination_info">
-    <%= page_entries_info @signup_attempts, model: "#{params[:status]} signup attempt" %>
-    (<%= number_to_percentage @signup_attempts.count / SignupAttempt.count.to_f * 100, precision: 0 %>)
+<div class="flex-row">
+  <div class="flex-col-md-4">
+    <div class="admin-search__filter-options">
+      <%= render 'admin/signup_attempts/filter_options' %>
+    </div>
   </div>
 
-  <%= will_paginate @signup_attempts %>
+  <div class="flex-col-md-8 wrapper__report-column">
+    <div class="admin-results-table">
+      <div class="admin-results-header-table">
+        <div class="header">Actions</div>
+        <div class="header">Status</div>
+        <div class="header">Email</div>
+        <div class="header">Account</div>
+      </div>
 
-  <table class="table__report_table">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Status</th>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <%= link_to "Export these results", admin_exports_path(params.merge(class: "signup_attempt")), data: { method: :post } %>
-        </td>
-      </tr>
-    </thead>
+      <div class="admin-results-data-table">
+        <% @signup_attempts.order('signup_attempts.created_at DESC').each do |attempt| %>
+          <div class="row">
+            <div class="cell">
+              <% if %w{pending active}.include?(attempt.status) and attempt.admin_permission_token.blank? %>
+                <%= link_to "Invite to sign up",
+                  admin_signup_invitations_path(email: attempt.email),
+                  data: { method: :post } %>
+              <% elsif %w{pending active}.include?(attempt.status) %>
+                <%= text_field_tag "special_link_#{attempt.id}",
+                  signup_url(admin_permission_token: attempt.admin_permission_token),
+                  readonly: true %>
 
-    <tbody>
-      <% @signup_attempts.each do |attempt| %>
-        <% cache(attempt) do %>
-          <tr>
-            <td><%= attempt.email %></td>
-            <td><%= attempt.status %></td>
-          </tr>
+                <button
+                 class="clipboard-btn appy-button appy-button--sm"
+                 data-clipboard-action="copy"
+                 data-clipboard-target="#special_link_<%= attempt.id %>">
+                  Copy
+                </button>
+              <% else %>
+                  &nbsp;
+                <% end %>
+            </div>
+
+            <div class="cell">
+              <%= attempt.status %>
+            </div>
+
+            <div class="cell">
+              <%= attempt.email %>
+            </div>
+
+            <div class="cell">
+              <% if attempt.account %>
+                <%= link_to attempt.account.full_name, admin_profile_path(attempt.account) %>
+              <% else %>
+                &nbsp;
+              <% end %>
+            </div>
+          </div>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </div>
+    </div>
 
-  <%= will_paginate @signup_attempts %>
+    <div class="wrapper__report-footer">
+      <%= render 'admin/signup_attempts/footer' %>
+    </div>
+  </div>
 </div>

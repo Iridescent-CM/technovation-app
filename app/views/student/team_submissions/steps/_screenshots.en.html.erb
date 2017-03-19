@@ -28,7 +28,7 @@
   <div class="card__body">
     <% if submission.screenshots.any? %>
       <ul class="gallerify">
-        <%= render submission.screenshots, cached: true %>
+        <%= render submission.screenshots %>
       </ul>
     <% else %>
       <div class="ts-screenshots__no-screenshots-body">

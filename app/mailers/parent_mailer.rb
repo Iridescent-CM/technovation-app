@@ -2,6 +2,7 @@ class ParentMailer < ApplicationMailer
   def consent_notice(profile_id)
     profile = StudentProfile.find(profile_id)
     @name = profile.parent_guardian_name
+    @student_name = profile.full_name
 
     if token = profile.account.consent_token
       @url = new_parental_consent_url(token: token)

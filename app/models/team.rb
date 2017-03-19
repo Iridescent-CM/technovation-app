@@ -1,5 +1,3 @@
-require 'obscenity/active_model'
-
 class Team < ActiveRecord::Base
   include Elasticsearch::Model
 
@@ -66,15 +64,34 @@ class Team < ActiveRecord::Base
   has_many :pending_mentor_invites, -> { pending }, class_name: "MentorInvite"
   has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
 
+  has_many :pending_student_join_requests, -> { pending.for_students },
+    class_name: "JoinRequest",
+    as: :joinable
+
   has_and_belongs_to_many :regional_pitch_events, -> { uniq }
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
   validates :description, presence: true
   validates :division, presence: true
   validates :team_photo, verify_cached_file: true
-  validates :name, :description,  obscenity: { sanitize: true, replacement: "[censored]" }
 
   delegate :name, to: :division, prefix: true
+
+  def eligible_events
+    if submission.present?
+      [VirtualRegionalPitchEvent.new] + RegionalPitchEvent.available_to(submission)
+    else
+      []
+    end
+  end
+
+  def selected_regional_pitch_event
+    regional_pitch_events.last or VirtualRegionalPitchEvent.new
+  end
+
+  def selected_regional_pitch_event_name
+    selected_regional_pitch_event.name
+  end
 
   def region_name
     if creator.country == "US"
@@ -105,7 +122,7 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + pending_student_invites + join_requests.pending.select { |j| j.requestor.type_name == 'student' }).size < 5
+    (students + pending_student_invites + pending_student_join_requests).size < 5
   end
 
   def creator_address_details
@@ -203,5 +220,12 @@ class Team < ActiveRecord::Base
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)
     end
+  end
+
+  class VirtualRegionalPitchEvent
+    def name; "Virtual (online) Judging"; end
+    def live?; false; end
+    def to_param; "virtual"; end
+    def id; "virtual"; end
   end
 end

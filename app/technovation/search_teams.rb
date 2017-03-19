@@ -44,10 +44,21 @@ module SearchTeams
     miles = filter.nearby == "anywhere" ? 40_000 : 50
     nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
 
+    if filter.user.country == "PS"
+      nearby = "Palestine"
+    end
+
     teams = teams.near(nearby, miles)
 
     if filter.spot_available
-      teams.select(&:spot_available?)
+      teams.includes(
+        :pending_student_invites,
+        :pending_student_join_requests,
+        :students,
+        :mentors,
+      )
+        .references(:memberships)
+        .select(&:spot_available?)
     else
       teams
     end
