@@ -5,8 +5,6 @@
   }
   document.querySelector('.judging-form__loader').remove();
   formWrapper.classList.remove('judging-form--loading');
-  // Todo: Figure out what the active question/section is by looking
-  // at what sections have valid inputs already
   var activeSectionIndex = 0;
   var activeQuestionIndex = 0;
   var sections = formWrapper.getElementsByClassName('judging-form__section');
@@ -423,8 +421,9 @@
       label.appendChild(fancyToggle);
       label.appendChild(labelSpan);
     }
+
     // If user is on touch device, change copy on the technical checklist label toggles
-    var handleDetectTouch = function() {
+    function handleDetectTouch() {
       var labelSpans = document.getElementsByClassName(labelSpanClass);
       for (var i = 0; i < labelSpans.length; i++) {
         labelSpans[i].innerText = 'Tap to Verify';
@@ -436,7 +435,38 @@
       window.removeEventListener('touchstart', handleDetectTouch);
     };
     window.addEventListener('touchstart', handleDetectTouch);
-    
+
+    // Paper prototype/flow chart image expand
+    var imageFigures = document.querySelectorAll('.judging-tc-modal__image-wrapper figure');
+    console.log(imageFigures);
+    for (var i = 0; i < imageFigures.length; i++) {
+      var figure = imageFigures[i];
+      console.log(figure);
+      figure.addEventListener('click', maximizeImage);
+    }
+
+    function maximizeImage(e) {
+      console.log('MAXIMIZING');
+      var figure = e.currentTarget; 
+      var positionerWrapper = document.createElement('div');
+      positionerWrapper.classList.add('judging-tc-fullscreen-image');
+      var contentWrapper = document.createElement('div');
+      contentWrapper.classList.add('judging-tc-fullscreen-image__content');
+      var closeButtonWrapper = document.createElement('div');
+      closeButtonWrapper.classList.add('judging-tc-fullscreen-image__close-button-wrapper');
+      var closeButton = document.createElement('span');
+      closeButton.classList.add('fa', 'fa-times');
+      closeButtonWrapper.appendChild(closeButton);
+      var imageClone = figure.firstElementChild.cloneNode();
+      contentWrapper.appendChild(closeButtonWrapper);
+      contentWrapper.appendChild(imageClone);
+      positionerWrapper.appendChild(contentWrapper);
+      document.body.appendChild(positionerWrapper);
+
+      closeButton.addEventListener('click', function() {
+        positionerWrapper.remove();
+      });
+    }
   }
 
   /**
