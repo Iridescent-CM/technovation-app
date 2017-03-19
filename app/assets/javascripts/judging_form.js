@@ -221,7 +221,6 @@
   function saveProgressAll() {
     var submitButtons = formWrapper.querySelectorAll('input[type="submit"]');
     forEach(submitButtons, function(button) {
-      console.log('COUNTER');
       button.click();
     });
     saveAllPending = true;
@@ -478,7 +477,7 @@
   function reviewSubmissionForm() {
     var submissionVerification = verifySubmission();
     if (submissionVerification.isValid) {
-      console.log('woo!');
+      console.log('Let us actually submit the form somewhere now');
     } else {
       createFlashNotification('error', submissionVerification.error, 4000);
     }
