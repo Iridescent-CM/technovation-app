@@ -437,13 +437,13 @@
     window.addEventListener('touchstart', handleDetectTouch);
 
     // Paper prototype/flow chart image expand
-    var imageFigures = document.querySelectorAll('.judging-tc-modal__image-wrapper figure');
-    console.log(imageFigures);
-    for (var i = 0; i < imageFigures.length; i++) {
-      var figure = imageFigures[i];
-      console.log(figure);
-      figure.addEventListener('click', maximizeImage);
-    }
+    setTimeout(function() {
+      var imageFigures = document.querySelectorAll('.judging-tc-modal__image-wrapper figure');
+      for (var i = 0; i < imageFigures.length; i++) {
+        var figure = imageFigures[i];
+        figure.addEventListener('click', maximizeImage);
+      }
+    }, 0);
 
     function maximizeImage(e) {
       console.log('MAXIMIZING');
