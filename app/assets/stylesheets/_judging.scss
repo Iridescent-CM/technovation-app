@@ -1,5 +1,14 @@
 .judging-view {
   margin-bottom: 350px; // Temp hardcoded value, will do this with JS later on
+
+  // Don't need this in the judging view
+  .ts-about-team__share-wrapper {
+    display: none;
+  }
+
+  .ts-about-team__team-quick-link {
+    display: none;
+  }
 }
 
 .judging-form {
@@ -17,6 +26,10 @@
   transition: opacity 0.35s;
   width: calc(100% - 4rem);
   z-index: $z-high;
+
+  *::selection {
+    background-color: transparent;
+  } 
 
   &:not(.judging-form--maximize) {
     border-radius: 0.5em;
@@ -121,6 +134,7 @@
   display: flex;
   justify-content: center;
   margin: 0.75em 0;
+  padding: 0 1em;
   position: relative;
   width: 100%;
 }
@@ -425,4 +439,48 @@ $size: 20px;
 
 .question-technical-checklist {
   margin-bottom: 1rem;
+
+  .appy-button {
+    margin-left: 0;
+  }
+}
+
+.judging-technical-checklist-modal {
+  .appy-button {
+    float: right;
+    margin-right: 0;
+  }
+}
+
+.judging-tc-modal__checkbox-wrapper {
+  margin-bottom: 1em;
+
+  label {
+    align-items: center;
+    display: flex;
+  }
+
+  .judging-tc-modal__label-text {
+    margin-left: 0.5em;
+    text-transform: none;
+  }
+}
+
+.judging-tc-modal__image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0.25em 0 0.5em;
+
+  figure {
+    display: inline-block;
+    padding: 0.5em;
+    background-color: $light-grey;
+    border-radius: 0.25em;
+  }
+
+  figcaption {
+    font-weight: 400;
+    font-size: 0.9em;
+    font-style: italic;
+  }
 }

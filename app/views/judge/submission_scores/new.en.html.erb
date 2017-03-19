@@ -44,7 +44,21 @@
           <%= render 'judge/submission_scores/ideation', submission_score: @submission_score %>
         </div>
         <div class="judging-form__section">
-          <%= render 'judge/submission_scores/technical', submission_score: @submission_score %>
+          <!-- Pseudo-section for technical checklist step. Clicking the button in this section opens the Technical Checklist partial in a modal -->
+          <h1>Technical</h1>
+          <div class="question-technical-checklist">
+            <h2>Verify the Technical Checklist</h2>
+            <p class="question-technical-checklist__label">
+              Please verify that the team has completed their Technical Checklist
+            </p>
+            <button
+              class="appy-button"
+              type="button"
+              data-modal-trigger="judging-technical-checklist"
+            >
+              Verify Technical Checklist
+            </button>
+          </div>
         </div>
         <% if @submission_score.senior_team_division? %>
           <div class="judging-form__section">
@@ -98,10 +112,9 @@
   </div>
 </div>
 
-<!-- Technical Checklist Modal -->
 <div
-  class="modalify"
-  data-heading="Verify Technical Checklisst"
+  class="modalify modalify--fixed judging-technical-checklist-modal"
+  data-heading="Verify Technical Checklist"
   id="judging-technical-checklist"
 >
   <%= render 'judge/technical_checklist_verifications/new', submission: @current_team_submission %>

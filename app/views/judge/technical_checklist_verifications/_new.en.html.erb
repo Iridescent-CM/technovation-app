@@ -1,5 +1,6 @@
 <%= simple_form_for submission.technical_checklist,
   method: :post,
+  html: { class: "no-simple-form-style" },
   url: judge_team_submission_technical_checklist_verifications_path(submission) do |f| %>
 
   <% submission.technical_checklist.checked_items.each do |item| %>
@@ -8,15 +9,19 @@
     <% if item.explanation %>
       <%= simple_format item.explanation %>
     <% else %>
-      <br />
-      <%= image_tag item.display, width: 100 %>
-      <br />
-      TODO: Dan, please modalify (or whatever) a full-size (fit to window) version of the image
+      <div class="judging-tc-modal__image-wrapper">
+        <figure>
+        <%= image_tag item.display %>
+        <figcaption>
+          Click to expand
+        </figcaption>
+        </figure>
+      </div>
     <% end %>
 
-    <div class="tc-form-group__item tc-form-group__item--verify">
+    <div class="judging-tc-modal__checkbox-wrapper fancy-toggle-wrapper">
       <%= f.input "#{item.name}_verified",
-        label: "Verify this",
+        label: "Click to Verify",
         as: :boolean %>
     </div>
   <% end %>

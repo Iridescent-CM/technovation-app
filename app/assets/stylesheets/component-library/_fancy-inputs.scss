@@ -2,6 +2,9 @@
 // Place directly after a checkbox input. Changes its display
 // based on checkbox input value
 // <span class='fancy-toggle'></span>
+// ========
+// Optionally, wrap the checkbox and helper span in an element with the
+// 'fancy-toggle-wrapper' class to automatically hide the checkbox
 
 $borderWidth: 2px;
 $dotSize: 18px;
@@ -14,6 +17,7 @@ $dotSize: 18px;
   display: inline-block;
   height: $dotSize;
   position: relative;
+  transform: translate3d(0, 0, 0);
   transition: background-color 0.25s;
   width: $dotSize * 2;
 
@@ -37,5 +41,20 @@ input[type="checkbox"]:checked ~ .fancy-toggle {
 
   &::before {
     left: calc(100% - #{$dotSize});
+  }
+}
+
+.fancy-toggle-wrapper {
+  *::selection {
+    background-color: transparent;
+  }
+
+  input[type="checkbox"] {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    width: 0;
   }
 }

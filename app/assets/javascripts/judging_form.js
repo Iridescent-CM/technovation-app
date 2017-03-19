@@ -215,7 +215,9 @@
 
   function saveProgress() {
     var submitButton = activeSection.querySelector('input[type="submit"]');
-    submitButton.click();
+    if (submitButton) {
+      submitButton.click();
+    }
   }
 
   function saveProgressAll() {
@@ -239,7 +241,7 @@
       }
     } else {
       setTimeout(function() {
-        createFlashNotification(['success', 'small'], 'Progress saved...', 1000);
+        createFlashNotification(['success', 'small'], 'Progress saved...', 750);
       }, 250);
     }
   }
@@ -329,21 +331,6 @@
   }
 
   /**
-   * Technical checklist step
-   */
-
-  function handleTechnicalChecklist() {
-    // setTimeout(function() {
-    //   var tempCompleteButton = document.getElementById('complete-technical-checklist');
-    //   tempCompleteButton.addEventListener('click', function() {
-    //     nextButton.disabled = false;
-    //     tempCompleteButton.parentElement.querySelector('.modalify__close').click();
-    //     hasVerifiedTechnicalChecklist = true;
-    //   });
-    // }, 0);
-  }
-
-  /**
    * Maximize, minimize, window view
    */
 
@@ -413,6 +400,43 @@
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', minimizeForm);
+  }
+
+  /**
+   * Technical checklist step
+   */
+
+  function handleTechnicalChecklist() {
+    // Make Checkboxes Fancy Again
+    var checkboxes = document.getElementsByClassName('judging-tc-modal__checkbox-wrapper');
+    var labelSpanClass = 'judging-tc-modal__label-text';
+    for (var i = 0; i < checkboxes.length; i++) {
+      var fancyToggle = document.createElement('span');
+      fancyToggle.classList.add('fancy-toggle');
+      var checkbox = checkboxes[i].querySelector('[type="checkbox"]');
+      var label = checkbox.parentElement;
+      var labelText = checkbox.parentElement.innerText;
+      var labelSpan = document.createElement('span');
+      labelSpan.innerText = labelText;
+      labelSpan.classList.add(labelSpanClass);
+      label.lastChild.remove();
+      label.appendChild(fancyToggle);
+      label.appendChild(labelSpan);
+    }
+    // If user is on touch device, change copy on the technical checklist label toggles
+    var handleDetectTouch = function() {
+      var labelSpans = document.getElementsByClassName(labelSpanClass);
+      for (var i = 0; i < labelSpans.length; i++) {
+        labelSpans[i].innerText = 'Tap to Verify';
+      }
+      var figCaptions = document.querySelectorAll('.judging-tc-modal__image-wrapper figcaption');
+      for (var i = 0; i < figCaptions.length; i++) {
+        figCaptions[i].innerText = 'Tap to expand';
+      }
+      window.removeEventListener('touchstart', handleDetectTouch);
+    };
+    window.addEventListener('touchstart', handleDetectTouch);
+    
   }
 
   /**
