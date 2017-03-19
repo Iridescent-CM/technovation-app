@@ -221,6 +221,7 @@
   function saveProgressAll() {
     var submitButtons = formWrapper.querySelectorAll('input[type="submit"]');
     forEach(submitButtons, function(button) {
+      console.log('COUNTER');
       button.click();
     });
     saveAllPending = true;
@@ -231,7 +232,8 @@
     if (saveAllPending) {
       saveAllPendingCount++;
 
-      if (saveAllPendingCount === sections.length) {
+      // We compare against sections.length - 1 to account for the Technical Checklist
+      if (saveAllPendingCount === (sections.length - 1)) {
         createFlashNotification('success', 'Saved successfully!', 2000);
         saveAllPendingCount = 0;
         handleSaveAll = false;
