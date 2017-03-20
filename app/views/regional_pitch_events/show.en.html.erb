@@ -27,7 +27,7 @@
   </p>
 <% end %>
 
-<% if current_student %>
+<% if current_account.student_profile.present? and current_student %>
   <div class="standalone-buttons">
     <div class="regional-pitch-event-selection-info">
       <% if current_team.selected_regional_pitch_event == @regional_pitch_event %>
