@@ -4,6 +4,7 @@ ruby "~> 2.3.1"
 gem 'rails', '~> 4.2'
 gem 'puma', '~> 3.7'
 gem 'pg', '~> 0.19'
+gem 'pg_search', '~> 2.0.1'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 3.1'
