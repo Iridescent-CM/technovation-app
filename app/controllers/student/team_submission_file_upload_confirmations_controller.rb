@@ -15,7 +15,7 @@ module Student
       else
         ProcessUploadJob.perform_later(
           current_team.submission.id,
-          TeamSubmission,
+          'TeamSubmission',
           params.fetch(:file_attribute),
           params.fetch(:key)
         )

@@ -2,7 +2,7 @@ class ProcessUploadJob < ActiveJob::Base
   queue_as :default
 
   def perform(record_id, klass, method_name, key)
-    record = klass.find(record_id)
+    record = klass.constantize.find(record_id)
     url = "http://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/#{key}"
     record.send("remote_#{method_name}_url=", url)
 
