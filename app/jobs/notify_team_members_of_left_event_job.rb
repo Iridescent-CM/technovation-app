@@ -1,4 +1,4 @@
-class NotifyTeamMembersOfLeftEventJob < ActiveJob::base
+class NotifyTeamMembersOfLeftEventJob < ActiveJob::Base
   queue_as :default
 
   def perform(event_id, team_id)
