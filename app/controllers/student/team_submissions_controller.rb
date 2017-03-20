@@ -43,7 +43,7 @@ module Student
       @pitch_presentation_uploader = FileUploader.new
       @pitch_presentation_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
         file_attribute: :pitch_presentation,
-        back: edit_student_team_submission_pitch_presentation_path
+        back: student_team_submission_path(@team_submission)
       )
 
       @source_code_uploader = FileUploader.new
@@ -95,6 +95,10 @@ module Student
           :id,
           :remote_file_url,
         ],
+        pitch_presentation_attributes: [
+          :id,
+          :remote_file_url,
+        ],
         screenshots: [],
       ).tap do |tapped|
         tapped[:step] = params[:submission_step]
@@ -105,6 +109,10 @@ module Student
 
         if tapped[:business_plan_attributes]
           tapped[:business_plan_attributes][:file_uploaded] = false
+        end
+
+        if tapped[:pitch_presentation_attributes]
+          tapped[:pitch_presentation_attributes][:file_uploaded] = false
         end
       end
     end
