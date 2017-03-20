@@ -1,5 +1,5 @@
 <% unless Rails.env.production? %>
-  <li class="regional-event-selection card">
+  <div class="regional-event-selection card">
     <div class="card__heading">
       <% if events.any? %>
         Select a Regional Pitch Event!
@@ -76,5 +76,5 @@
           target: :_blank %>
       </div>
     </div>
-  </li>
+  </div>
 <% end %>

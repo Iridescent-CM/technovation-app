@@ -42,6 +42,7 @@
         <p>
           <%= link_to "Remove #{current_team.name} from this event",
             student_regional_pitch_event_selection_path,
+            class: "cta-link",
             data: {
               method: :delete,
               confirm: "Are you sure you want to remove your team from the event: #{@regional_pitch_event.name}?",
@@ -59,7 +60,10 @@
 
         <p>
           <%= link_to "Select this event instead",
-            student_regional_pitch_event_selection_path(event_id: @regional_pitch_event.id),
+            student_regional_pitch_event_selection_path(
+             event_id: @regional_pitch_event.id
+            ),
+            class: "cta-link",
             data: { method: :post } %>
         </p>
       <% end %>

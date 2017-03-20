@@ -6,6 +6,24 @@
   Submission Deadline &ndash; Wednesday, April 26th
 </h2>
 
+<% unless Rails.env.production? %>
+  <div class="card mentor-rpe-selection-cta standalone-buttons">
+    <div class="card__heading">
+      Regional Pitch Events
+    </div>
+
+    <div class="card__body">
+      <p>You can now select any pitch events in your region for your teams to attend!</p>
+
+      <p>
+        <%= link_to "Manage your regional pitch events",
+          new_mentor_regional_pitch_event_selection_path,
+          class: "appy-button" %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
     <% if current_mentor.full_access_enabled? and current_mentor.is_on_team?  %>

@@ -120,3 +120,20 @@
     }
   }
 }
+
+.mentor-rpe-selection-cta, .student-manage-submission-cta {
+  margin: 0 0 1rem;
+}
+
+.cta-link {
+  font-weight: bold;
+  color: $mulberry;
+
+  &:hover {
+    color: lighten($mulberry, 20%);
+  }
+
+  &:focus {
+    color: $mulberry;
+  }
+}
