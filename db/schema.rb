@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306172821) do
+ActiveRecord::Schema.define(version: 20170320144434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -182,6 +181,11 @@ ActiveRecord::Schema.define(version: 20170306172821) do
   end
 
   add_index "judge_profiles", ["account_id"], name: "index_judge_profiles_on_account_id", using: :btree
+
+  create_table "judge_profiles_regional_pitch_events", id: false, force: :cascade do |t|
+    t.integer "judge_profile_id"
+    t.integer "regional_pitch_event_id"
+  end
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "member_id",     null: false

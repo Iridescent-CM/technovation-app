@@ -1,35 +1,68 @@
-<h1 class="appy-title">Regional Pitch Event: <%= @pitch_event.name %></h1>
+<h1 class="appy-title">
+  Regional Pitch Event: <%= @pitch_event.name %>
+</h1>
 
-<p>
-  <strong>Division:</strong> <%= @pitch_event.divisions.map(&:name).to_sentence %>
-</p>
+<div class="card ra-pitch-event-details">
+  <div class="card__body">
+    <p>
+      <strong>Division:</strong> <%= @pitch_event.divisions.map(&:name).to_sentence %>
+    </p>
 
-<p>
-  <strong>Time:</strong>
-  <%= @pitch_event.starts_at.strftime("%A, %B %e, %H:%M") %> &ndash;
-  <%= @pitch_event.ends_at.strftime("%H:%M %Z") %>
-</p>
+    <p>
+      <strong>Time:</strong>
+      <%= @pitch_event.starts_at.strftime("%A, %B %e, %H:%M") %> &ndash;
+      <%= @pitch_event.ends_at.strftime("%H:%M %Z") %>
+    </p>
 
-<p>
-  <strong>City:</strong> <%= @pitch_event.city %>
-</p>
+    <p>
+      <strong>City:</strong> <%= @pitch_event.city %>
+    </p>
 
-<p>
-  <strong>Venue address:</strong> <%= @pitch_event.venue_address %>
-</p>
+    <p>
+      <strong>Venue address:</strong> <%= @pitch_event.venue_address %>
+    </p>
 
-<p>
-  <strong>Eventbrite link:</strong>
+    <p>
+      <strong>Eventbrite link:</strong>
 
-  <% unless @pitch_event.eventbrite_link.blank? %>
-    <%= link_to @pitch_event.eventbrite_link,
-      @pitch_event.eventbrite_link,
-      target: :_blank %>
-  <% end %>
-</p>
+      <% unless @pitch_event.eventbrite_link.blank? %>
+        <%= link_to @pitch_event.eventbrite_link,
+          @pitch_event.eventbrite_link,
+          target: :_blank %>
+      <% end %>
+    </p>
+  </div>
 
-<p>
-  <%= link_to 'Edit', [:edit, :regional_ambassador, @pitch_event] %> |
-  <%= link_to 'List all events', regional_ambassador_regional_pitch_events_path %> |
-  <%= link_to 'Back', :back %>
-</p>
+  <div class="card__actions-row card__actions-row--pos-end">
+    <p>
+      <%= link_to 'Edit',
+        [:edit, :regional_ambassador, @pitch_event],
+        class: "appy-button appy-button--sm" %>
+
+      <%= link_to 'List all events',
+        regional_ambassador_regional_pitch_events_path %> |
+
+      <%= link_to 'Back', :back %>
+    </p>
+  </div>
+</div>
+
+<div class="ra-manage-participants">
+  <%= render 'regional_ambassador/regional_pitch_events/team_list',
+    pitch_event: @pitch_event,
+    division: :junior %>
+
+  <%= render 'regional_ambassador/regional_pitch_events/team_list',
+    pitch_event: @pitch_event,
+    division: :senior %>
+
+  <div class="participants-list">
+    <h2>Judges</h2>
+
+    <ul class="ra-participants-list teams">
+      <% @pitch_event.judges do |team| %>
+        <li><%= team.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

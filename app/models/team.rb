@@ -24,6 +24,14 @@ class Team < ActiveRecord::Base
     .where("seasons.year = ?", Season.current.year)
   }
 
+  scope :junior, -> {
+    joins(:division).where("divisions.name = ?", Division.names[:junior])
+  }
+
+  scope :senior, -> {
+    joins(:division).where("divisions.name = ?", Division.names[:senior])
+  }
+
   scope :past, -> {
     eager_load(season_registrations: :season)
     .where.not(id: current.map(&:id).uniq)
