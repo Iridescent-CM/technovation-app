@@ -1,32 +1,67 @@
 <div class="card">
-  <div class="card__heading submission-step__pitch">
+  <div class="card__heading submission-step__marketing">
     Pitch Presentation
 
-    <div data-modal-trigger="pitch-presentation-upload-modal"
-         role="button"
-         class="appy-button">
-      Edit
-    </div>
+    <button data-modal-trigger="pitch-presentation-upload-modal"
+            role="button"
+            class="appy-button">
+      edit
+    </button>
   </div>
-
   <div class="card__body">
-    <p>
-      <% if submission.pitch_presentation_url %>
-        <%= link_to "Your pitch presentation", submission.pitch_presentation_url %>
-      <% else %>
-        Please add your pitch presentation (.ppt or .pdf)
-      <% end %>
-    </p>
+    <% if submission.pitch_presentation.persisted? %>
+      <p>
+        <%= link_to submission.pitch_presentation_url_text,
+          submission.pitch_presentation_url,
+          target: :_blank %>
+      </p>
+    <% else %>
+      Please add your pitch presentation (.ppt, .pdf, or URL)
+    <% end %>
   </div>
 </div>
 
-<div class="modalify"
-     id="pitch-presentation-upload-modal"
-     data-heading="Pitch Presentation">
+<%= content_tag :div,
+  class: "modalify alternative-forms",
+  id: "pitch-presentation-upload-modal",
+  data: { heading: "Pitch presentation (.ppt, .pdf or URL)" } do %>
+
+  <%
+    if submission.pitch_presentation.file_uploaded?
+      file_css = "active"
+      url_css = ""
+      switch_text = "Use a URL"
+    else
+      file_css = ""
+      url_css = "active"
+      switch_text = "Upload a PDF"
+    end
+  %>
+
   <%= direct_upload_form_for @pitch_presentation_uploader,
-                             html: { class: 'fancy-file-upload' },
-                             data: { type: 'application/pdf,application/ppt' } do |f| %>
+    html: { class: "fancy-file-upload alternative-form #{file_css}" },
+    data: { switch_text: 'Use a URL' } do |f| %>
+
     <%= f.file_field :pitch_presentation %>
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
-</div>
+
+  <%= simple_form_for [:student, submission],
+    html: {
+      class: "alternative-form no-simple-form-style #{url_css}",
+      data: { switch_text: "Upload a PDF" },
+    } do |f| %>
+
+    <%= f.fields_for :pitch_presentation do |b| %>
+      <%= b.input :remote_file_url,
+        label: "Copy and paste your pitch presentation's URL here",
+        placeholder: "https://" %>
+    <% end %>
+
+    <%= f.submit t("views.application.save"), class: "appy-button" %>
+  <% end %>
+
+  <button class="alternative-form-switch">
+    <%= switch_text %>
+  </button>
+<% end %>

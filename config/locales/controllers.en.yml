@@ -133,6 +133,7 @@ en:
       regional_pitch_event_selections:
         create:
           success: "You're attending a Live Regional Pitch Event!"
+          success_pitch_needed: "Great! You need to attach your pitch presentation to your submission"
         destroy:
           success: "You removed your team from that live Regional Pitch Event"
 

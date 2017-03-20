@@ -1,0 +1,17 @@
+<% if submission.team.selected_regional_pitch_event.live? %>
+  <div class="card">
+    <div class="card__heading submission-step__marketing">
+      Pitch Presenation
+    </div>
+
+    <div class="card__body">
+      <% if submission.pitch_presentation %>
+        <p>
+          <%= link_to "Download the pitch presentation",
+            submission.pitch_presentation_url,
+            target: :_blank %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

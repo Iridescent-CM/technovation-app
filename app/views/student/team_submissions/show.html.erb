@@ -64,10 +64,10 @@
       <%= render 'student/team_submissions/steps/technical_checklist',
         submission: @team_submission %>
 
-      <%= render 'student/team_submissions/steps/source_code',
+      <%= render 'student/team_submissions/steps/development_platform',
         submission: @team_submission %>
 
-      <%= render 'student/team_submissions/steps/development_platform',
+      <%= render 'student/team_submissions/steps/source_code',
         submission: @team_submission %>
 
       <% if false # HIDE UNTIL Regional Competition Events EXIST %>
@@ -77,6 +77,11 @@
 
       <% if Division.for(@team_submission.team).senior? %>
         <%= render 'student/team_submissions/steps/business_plan',
+          submission: @team_submission %>
+      <% end %>
+
+      <% if @team_submission.team.selected_regional_pitch_event.live? %>
+        <%= render 'student/team_submissions/steps/pitch_presentation',
           submission: @team_submission %>
       <% end %>
     </div>

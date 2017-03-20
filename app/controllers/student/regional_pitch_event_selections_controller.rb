@@ -46,8 +46,13 @@ module Student
         joining_event_id: event.id
       )
 
-      redirect_to [:student, current_team.selected_regional_pitch_event],
-        success: t("controllers.student.regional_pitch_event_selections.create.success")
+      if current_team.submission.pitch_presentation_complete?
+        redirect_to [:student, current_team.selected_regional_pitch_event],
+          success: t("controllers.student.regional_pitch_event_selections.create.success")
+      else
+        redirect_to new_student_team_submission_pitch_presentation_path,
+          success: t("controllers.student.regional_pitch_event_selections.create.success_pitch_needed")
+      end
     end
   end
 end

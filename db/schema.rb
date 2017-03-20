@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320144434) do
+ActiveRecord::Schema.define(version: 20170320192010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -238,6 +238,15 @@ ActiveRecord::Schema.define(version: 20170320144434) do
   add_index "parental_consents", ["student_profile_id"], name: "index_parental_consents_on_student_profile_id", using: :btree
   add_index "parental_consents", ["voided_at"], name: "index_parental_consents_on_voided_at", using: :btree
 
+  create_table "pitch_presentations", force: :cascade do |t|
+    t.string   "uploaded_file"
+    t.string   "remote_file_url"
+    t.integer  "team_submission_id", null: false
+    t.boolean  "file_uploaded"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "regional_ambassador_profiles", force: :cascade do |t|
     t.string   "organization_company_name",             null: false
     t.string   "ambassador_since_year",                 null: false
@@ -408,7 +417,6 @@ ActiveRecord::Schema.define(version: 20170320144434) do
     t.string   "app_name"
     t.string   "demo_video_link"
     t.string   "pitch_video_link"
-    t.string   "pitch_presentation"
     t.string   "development_platform_other"
     t.integer  "development_platform"
     t.boolean  "source_code_file_uploaded"

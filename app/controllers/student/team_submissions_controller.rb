@@ -26,6 +26,7 @@ module Student
     def show
       @team_submission = current_team.team_submissions.last
       @team_submission.build_business_plan unless @team_submission.business_plan
+      @team_submission.build_pitch_presentation unless @team_submission.pitch_presentation
 
       @team_photo_uploader = ImageUploader.new
       @team_photo_uploader.success_action_redirect = student_team_photo_upload_confirmation_url(back: request.fullpath)
@@ -42,7 +43,7 @@ module Student
       @pitch_presentation_uploader = FileUploader.new
       @pitch_presentation_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
         file_attribute: :pitch_presentation,
-        back: student_team_submission_path(@team_submission)
+        back: edit_student_team_submission_pitch_presentation_path
       )
 
       @source_code_uploader = FileUploader.new

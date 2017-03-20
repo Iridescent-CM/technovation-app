@@ -47,6 +47,9 @@ module StudentHelper
     when "business-plan"
       return 'complete' unless submission.business_plan_url_text.blank?
 
+    when "pitch-presentation"
+      return 'complete' if submission.pitch_presentation_complete?
+
     end
   end
 end

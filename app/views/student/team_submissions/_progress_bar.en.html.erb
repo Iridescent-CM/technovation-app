@@ -62,6 +62,13 @@
         <%= fa_icon 'check' %>
       </div>
     <% end %>
+
+    <% if submission.team.selected_regional_pitch_event.live? %>
+      <div class="progress-item <%= subprog(submission, "pitch-presentation") %>">
+        Pitch Presentation
+        <%= fa_icon 'check' %>
+      </div>
+    <% end %>
   </div>
 
   <p>
