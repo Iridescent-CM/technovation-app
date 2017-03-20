@@ -123,6 +123,15 @@
 
 .mentor-rpe-selection-cta, .student-manage-submission-cta {
   margin: 0 0 1rem;
+
+  .card {
+    margin-bottom: 1rem;
+
+    &:last-child,
+    &:only-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .cta-link {
