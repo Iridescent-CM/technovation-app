@@ -36,6 +36,14 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   }
 
+  def self.find(id)
+    if id == "virtual"
+      Team::VirtualRegionalPitchEvent.new
+    else
+      super
+    end
+  end
+
   def friendly_name
     "#{name} in #{city} on #{date_time}"
   end
