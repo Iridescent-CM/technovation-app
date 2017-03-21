@@ -48,11 +48,11 @@
             <li>
               <%= event.name %><br />
               <%= event.city %><br />
-              <strong><%= event.starts_at.strftime("%A, %B %e") %></strong><br />
+              <strong><%= event.starts_at.in_time_zone(event.timezone).strftime("%A, %B %e") %></strong><br />
 
-              <%= event.starts_at.strftime("%-I:%M%P") %>
+              <%= event.starts_at.in_time_zone(event.timezone).strftime("%-I:%M%P") %>
               &ndash;
-              <%= event.ends_at.strftime("%-I:%M%P %Z") %><br />
+              <%= event.ends_at.in_time_zone(event.timezone).strftime("%-I:%M%P %Z") %><br />
 
               <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
             </li>

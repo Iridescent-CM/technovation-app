@@ -6,8 +6,8 @@
 
 <p>
   <strong>Time:</strong>
-  <%= @regional_pitch_event.starts_at.strftime("%A, %B %e, %-I:%M%P") %> &ndash;
-  <%= @regional_pitch_event.ends_at.strftime("%-I:%M%P %Z") %>
+  <%= @regional_pitch_event.starts_at.in_time_zone(@regional_pitch_event.timezone).strftime("%A, %B %e, %-I:%M%P") %> &ndash;
+  <%= @regional_pitch_event.ends_at.in_time_zone(@regional_pitch_event.timezone).strftime("%-I:%M%P %Z") %>
 </p>
 
 <p>
