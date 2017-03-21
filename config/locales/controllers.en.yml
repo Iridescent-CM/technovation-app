@@ -157,7 +157,7 @@ en:
 
     team_memberships:
       destroy:
-        link: "Leave %{name}"
+        link: "Remove your membership from %{name}"
         success: "You have left the team `%{name}`"
 
     team_member_invites:
