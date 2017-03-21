@@ -47,10 +47,10 @@
   </div>
 </div>
 
-<div class="tabs">
+<div class="tabs ra-pitch-event-participants-lists">
   <ul class="tab-menu">
     <% if @pitch_event.division_names.include?("senior") %>
-      <li class="tab-link active">
+      <li class="tab-link">
         <button
           role="button"
           class="tab-button"
@@ -81,21 +81,27 @@
     </li>
   </ul>
 
-  <div class="tab-content tab-content__showing" id="tab-ra-pitch-senior-teams">
-    <%= render 'regional_ambassador/regional_pitch_events/team_list',
-      pitch_event: @pitch_event,
-      division: :senior %>
-  </div>
+  <div class="content">
+    <% if @pitch_event.division_names.include?("senior") %>
+      <div class="tab-content" id="tab-ra-pitch-senior-teams">
+        <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          pitch_event: @pitch_event,
+          division: :senior %>
+      </div>
+    <% end %>
 
-  <div class="tab-content tab-content__hiding" id="tab-ra-pitch-junior-teams">
-    <%= render 'regional_ambassador/regional_pitch_events/team_list',
-      pitch_event: @pitch_event,
-      division: :junior %>
-  </div>
+    <% if @pitch_event.division_names.include?("junior") %>
+      <div class="tab-content" id="tab-ra-pitch-junior-teams">
+        <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          pitch_event: @pitch_event,
+          division: :junior %>
+      </div>
+    <% end %>
 
-  <div class="tab-content tab-content__hiding" id="tab-ra-pitch-judges">
-    <div class="participants-list">
-      <p>Judges list / assignments is coming very soon <3</p>
+    <div class="tab-content" id="tab-ra-pitch-judges">
+      <div class="participants-list">
+        <p>Judges list / assignments is coming very soon <3</p>
+      </div>
     </div>
   </div>
 </div>
