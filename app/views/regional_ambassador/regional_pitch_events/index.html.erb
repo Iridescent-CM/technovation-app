@@ -3,6 +3,7 @@
     <div class="admin-results-table">
       <div class="admin-results-header-table">
         <div class="header">Name</div>
+        <div class="header">Teams</div>
         <div class="header">Division</div>
         <div class="header">Date / Time</div>
         <div class="header">City</div>
@@ -14,6 +15,10 @@
           <div class="row">
             <div class="cell">
               <%= link_to pitch_event.name, regional_ambassador_regional_pitch_event_path(pitch_event) %>
+            </div>
+
+            <div class="cell">
+              <%= pluralize(pitch_event.teams.count, "Team") %>
             </div>
 
             <div class="cell">
