@@ -1,3 +1,33 @@
+//<div class="tabs">
+  //<ul class="tab-menu">
+    //<li class="tab-link active">
+      //<button
+        //role="button"
+        //class="tab-button"
+        //data-tab-id="<TAB-ID-HERE>">
+        //BUTTON TEXT
+      //</button>
+    //</li>
+
+    //<li class="tab-link">
+      //<button
+        //role="button"
+        //class="tab-button"
+        //data-tab-id="<TAB-ID-HERE>">
+        //BUTTON TEXT
+      //</button>
+    //</li>
+  //</ul>
+
+  //<div class="tab-content tab-content__showing" id="<TAB-ID-HERE>">
+    //CONTENT
+  //</div>
+
+  //<div class="tab-content tab-content__hiding" id="<TAB-ID-HERE>">
+    //CONTENT
+  //</div>
+//</div>
+
 .tabs {
   .tab-menu {
     display: flex;

@@ -13,6 +13,7 @@
 //= require toast_flashes
 //= require fancy_uploads
 //= require modalify
+//= require tabs
 //= require background_checks
 
 //= require datetime

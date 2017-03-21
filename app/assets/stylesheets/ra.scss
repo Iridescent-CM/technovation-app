@@ -8,6 +8,7 @@
 @import "partials/animations";
 
 @import "component-library/card";
+@import "component-library/tabs";
 @import "component-library/modalify";
 
 .admin-dashboard {
@@ -194,30 +195,15 @@ form {
   }
 }
 
-.ra-manage-participants {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.participants-list {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-  .participants-list {
-    min-width: 300px;
-    max-width: 500px;
-    margin-right: 1rem;
-
-    &:last-child,
-    &:only-child {
-      margin-right: 0;
-    }
-
-    ul {
+    li {
       margin: 0;
       padding: 0;
-      list-style: none;
-
-      li {
-        margin: 0;
-        padding: 0;
-      }
     }
   }
 }
