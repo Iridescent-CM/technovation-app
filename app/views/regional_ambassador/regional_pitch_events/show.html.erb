@@ -47,22 +47,61 @@
   </div>
 </div>
 
-<div class="ra-manage-participants">
-  <%= render 'regional_ambassador/regional_pitch_events/team_list',
-    pitch_event: @pitch_event,
-    division: :junior %>
+<div class="tabs ra-pitch-event-participants-lists">
+  <ul class="tab-menu">
+    <% if @pitch_event.division_names.include?("senior") %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="tab-ra-pitch-senior-teams">
+          Senior Teams
+        </button>
+      </li>
+    <% end %>
 
-  <%= render 'regional_ambassador/regional_pitch_events/team_list',
-    pitch_event: @pitch_event,
-    division: :senior %>
+    <% if @pitch_event.division_names.include?("junior") %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="tab-ra-pitch-junior-teams">
+          Junior Teams
+        </button>
+      </li>
+    <% end %>
 
-  <div class="participants-list">
-    <h2>Judges</h2>
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="tab-ra-pitch-judges">
+        Judges
+      </button>
+    </li>
+  </ul>
 
-    <ul class="ra-participants-list teams">
-      <% @pitch_event.judges do |team| %>
-        <li><%= team.name %></li>
-      <% end %>
-    </ul>
+  <div class="content">
+    <% if @pitch_event.division_names.include?("senior") %>
+      <div class="tab-content" id="tab-ra-pitch-senior-teams">
+        <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          pitch_event: @pitch_event,
+          division: :senior %>
+      </div>
+    <% end %>
+
+    <% if @pitch_event.division_names.include?("junior") %>
+      <div class="tab-content" id="tab-ra-pitch-junior-teams">
+        <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          pitch_event: @pitch_event,
+          division: :junior %>
+      </div>
+    <% end %>
+
+    <div class="tab-content" id="tab-ra-pitch-judges">
+      <div class="participants-list">
+        <p>Judges list / assignments is coming very soon <3</p>
+      </div>
+    </div>
   </div>
 </div>

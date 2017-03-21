@@ -8,6 +8,7 @@
 @import "partials/animations";
 
 @import "component-library/card";
+@import "component-library/tabs";
 @import "component-library/modalify";
 
 .admin-dashboard {
@@ -194,29 +195,61 @@ form {
   }
 }
 
-.ra-manage-participants {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.ra-pitch-event-participants-lists {
+  margin: 1rem;
 
-  .participants-list {
-    min-width: 300px;
-    max-width: 500px;
-    margin-right: 1rem;
+  .tab-content {
+    padding: 1rem;
+    max-width: 800px;
+    background: white;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 
-    &:last-child,
-    &:only-child {
-      margin-right: 0;
+    p {
+      margin: 0;
     }
 
-    ul {
+    .ra-participants-list {
+      width: 100%;
+      border-collapse: collapse;
       margin: 0;
       padding: 0;
-      list-style: none;
 
-      li {
-        margin: 0;
-        padding: 0;
+      td,
+      th {
+        text-align: left;
+        border: 0;
+      }
+
+      td {
+        padding: 1rem 0.5rem;
+        border: solid #999;
+        border-width: 1px 0;
+
+        a {
+          color: #333;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      th {
+        color: grey;
+        opacity: 0.8;
+        padding: 0.5rem 0.5rem 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      tr {
+        &:hover {
+          td {
+            background: #f4faff;
+            border-top-color: #cce6fa;
+            border-bottom-color: #cce6fa;
+          }
+        }
       }
     }
   }

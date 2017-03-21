@@ -1,36 +1,50 @@
+//=require utils
+
 (function tabs() {
   var tabs = document.querySelectorAll('.tabs');
-  if (tabs.length === 0) {
+
+  if (tabs.length === 0)
     return;
-  }
 
-  for (var i = 0; i < tabs.length; i++) {
-    (function() {
-      var tabLinks = tabs[i].querySelectorAll('.tab-link'),
-          tabContents = tabs[i].querySelectorAll('.tab-content');
+  var tabMenus = document.querySelectorAll('.tab-menu');
+  forEach(tabMenus, function(tabMenu) {
+    var firstItem = tabMenu.querySelector('.tab-link:first-child');
+    firstItem.classList.add('active');
+  });
 
-      for (var j = 0; j < tabLinks.length; j ++) {
-        tabLinks[j].addEventListener('click', revealTabContent, false);
-      }
+  var contents = document.querySelectorAll('.content .tab-content');
+  forEach(contents, function(content) {
+    content.classList.add('tab-content__hiding');
+  });
 
-      function revealTabContent(e) {
-        e.preventDefault();
+  contents[0].classList.remove('tab-content__hiding');
+  contents[0].classList.add('tab-content__showing');
 
-        for (var k = 0; k < tabContents.length; k++) {
-          tabContents[k].classList.remove('tab-content__showing');
-          tabContents[k].classList.add('tab-content__hiding');
-        }
+  forEach(tabs, function(tab) {
+    var tabLinks = tab.querySelectorAll('.tab-link'),
+        tabContents = tab.querySelectorAll('.tab-content');
 
-        for (var l = 0; l < tabLinks.length; l++) {
-          tabLinks[l].classList.remove('active');
-        }
+    forEach(tabLinks, function(tabLink) {
+      tabLink.addEventListener('click', revealTabContent, false);
+    });
 
-        e.target.parentElement.classList.add('active');
+    function revealTabContent(e) {
+      e.preventDefault();
 
-        var revealEl = document.getElementById(e.target.dataset.tabId);
-        revealEl.classList.remove('tab-content__hiding');
-        revealEl.classList.add('tab-content__showing');
-      }
-    })();
-  }
+      forEach(tabContents, function(tabContent) {
+        tabContent.classList.remove('tab-content__showing');
+        tabContent.classList.add('tab-content__hiding');
+      });
+
+      forEach(tabLinks, function(tabLink) {
+        tabLink.classList.remove('active');
+      });
+
+      e.target.parentElement.classList.add('active');
+
+      var revealEl = document.getElementById(e.target.dataset.tabId);
+      revealEl.classList.remove('tab-content__hiding');
+      revealEl.classList.add('tab-content__showing');
+    }
+  });
 })();

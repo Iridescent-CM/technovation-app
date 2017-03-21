@@ -1,8 +1,42 @@
+//<div class="tabs">
+  //<ul class="tab-menu">
+    //<li class="tab-link">
+      //<button
+        //role="button"
+        //class="tab-button"
+        //data-tab-id="<TAB-ID-HERE>">
+        //BUTTON TEXT
+      //</button>
+    //</li>
+
+    //<li class="tab-link">
+      //<button
+        //role="button"
+        //class="tab-button"
+        //data-tab-id="<TAB-ID-HERE>">
+        //BUTTON TEXT
+      //</button>
+    //</li>
+  //</ul>
+
+  //<div class="content">
+    //<div class="tab-content" id="<TAB-ID-HERE>">
+      //CONTENT
+    //</div>
+
+    //<div class="tab-content" id="<TAB-ID-HERE>">
+      //CONTENT
+    //</div>
+  //</div>
+//</div>
+
 .tabs {
   .tab-menu {
     display: flex;
     flex-direction: row;
     margin: 0;
+    padding: 0;
+    list-style: none;
 
     .tab-link {
       background: #ddd;
