@@ -313,7 +313,7 @@ en:
         title: "Create a Team"
       show:
         add_members: "Add members"
-        confirm_leave: "Are you sure you want to leave the team?"
+        confirm_leave: "Are you sure you want to REMOVE YOUR MEMBERSHIP the team?"
         division_name: "Division: %{name}"
         invite: "Invite more students"
         location: "Primary location: %{name}"

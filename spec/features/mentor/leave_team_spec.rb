@@ -8,7 +8,7 @@ RSpec.feature "Mentors leave their own team" do
     within(".navigation") { click_link "My teams" }
     click_link mentor.team_names.last
 
-    click_link "Leave #{mentor.team_names.last}"
+    click_link "Remove your membership from #{mentor.team_names.last}"
     expect(current_path).to eq(mentor_dashboard_path)
 
     within(".navigation") { click_link "My teams" }
