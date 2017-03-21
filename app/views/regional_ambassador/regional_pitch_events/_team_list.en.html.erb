@@ -1,22 +1,39 @@
 <% if pitch_event.divisions.include?(Division.public_send(division)) %>
   <div class="participants-list">
     <% if pitch_event.teams.public_send(division).any? %>
-      <ul class="ra-participants-list teams">
-        <% pitch_event.teams.public_send(division).each do |team| %>
-          <li>
-            <%= link_to team.name, regional_ambassador_team_path(team) %> -
-            <% if team.submission.present? %>
-              <small>
-                (<%= link_to 'see submission',
-                  app_path(team.submission),
-                  target: :_blank %>)
-              </small>
-            <% else %>
-              <small class="has-danger">(submission not begun!)</small>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
+      <table class="ra-participants-list teams">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Submission</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% pitch_event.teams.public_send(division).each do |team| %>
+            <tr>
+              <td>
+                <%= link_to team.name, regional_ambassador_team_path(team) %>
+              </td>
+
+              <td>
+                <% if team.submission.present? %>
+                  <%= link_to team.submission.app_name,
+                    app_path(team.submission),
+                    target: :_blank %>
+                <% else %>
+                  <small class="has-danger">(submission not begun!)</small>
+                <% end %>
+              </td>
+
+              <td>
+                -- coming soon --
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     <% else %>
       <p>No teams are assigned in this event's <%= division.to_s.titleize %> division</p>
     <% end %>
