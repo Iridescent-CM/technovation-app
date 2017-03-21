@@ -1,17 +1,25 @@
 class NotifyAmbassadorOfTeamLeftEventJob < ActiveJob::Base
   queue_as :default
 
-  def perform(event_id, team_id)
+  def perform(event_id, team_id, options = {})
     event = RegionalPitchEvent.find(event_id)
 
     if event.live?
       team = Team.find(team_id)
 
-      AmbassadorMailer.team_left_event(
-        event.regional_ambassador_profile.account,
-        event,
-        team
-      ).deliver_now
+      if options[:ra_removed]
+        AmbassadorMailer.confirm_team_removed(
+          event.regional_ambassador_profile.account,
+          event,
+          team
+        ).deliver_now
+      else
+        AmbassadorMailer.team_left_event(
+          event.regional_ambassador_profile.account,
+          event,
+          team
+        ).deliver_now
+      end
     end
   end
 end

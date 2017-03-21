@@ -2,6 +2,20 @@ class SendPitchEventRSVPNotifications < ActiveJob::Base
   queue_as :default
 
   def perform(team_id, event_ids = {})
+    if event_ids[:ra_removed_participant_from]
+      NotifyAmbassadorOfTeamLeftEventJob.perform_now(
+        event_ids[:ra_removed_participant_from],
+        team_id,
+        ra_removed: true
+      )
+
+      NotifyTeamMembersOfLeftEventJob.perform_now(
+        event_ids[:ra_removed_participant_from],
+        team_id,
+        ra_removed: true
+      )
+    end
+
     if event_ids[:leaving_event_id]
       NotifyAmbassadorOfTeamLeftEventJob.perform_now(
         event_ids[:leaving_event_id],

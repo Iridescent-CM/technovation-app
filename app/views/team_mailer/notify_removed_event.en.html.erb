@@ -1,0 +1,31 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hey <%= @member.first_name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Your Regional Ambassador has just removed
+          <strong><%= @team.name %></strong>
+          from the event:
+          <strong><%= @event.name %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Send an email to your ambassador, <%= @ambassador_name %>, at <%= mail_to @ambassador_email %> if you have questions.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Regards,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

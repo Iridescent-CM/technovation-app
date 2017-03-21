@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     resource :team_submission_screenshot_upload_confirmation, only: :show
     resource :team_submission_file_upload_confirmation, only: :show
 
-    resource :team_submission_pitch_presentation, only: [:new, :edit, :create, :update, :destroy]
 
     resource :regional_pitch_event_selection, only: [:show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show
@@ -108,6 +107,7 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create, :show]
 
     resources :regional_pitch_events
+    resources :regional_pitch_event_participations, only: :destroy
   end
 
   namespace :judge do

@@ -28,7 +28,16 @@
               </td>
 
               <td>
-                -- coming soon --
+                <%= link_to 'remove',
+                  regional_ambassador_regional_pitch_event_participation_path(
+                    pitch_event,
+                    participant_id: team.id,
+                    participant_type: "Team"
+                  ),
+                  data: {
+                    method: :delete,
+                    confirm: "You are REMOVING #{team.name} from this event!",
+                  } %>
               </td>
             </tr>
           <% end %>

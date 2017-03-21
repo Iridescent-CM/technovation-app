@@ -1,4 +1,17 @@
 class TeamMailer < ApplicationMailer
+  def notify_removed_event(team, member, event)
+    @team = team
+    @event = event
+    @member = member
+    @ambassador_name = event.regional_ambassador_profile.full_name
+    @ambassador_email = event.regional_ambassador_profile.email
+
+    I18n.with_locale(@member.locale) do
+      mail to: @member.email,
+           subject: "Your RA has removed #{@team.name} from the regional pitch event: #{@event.name}"
+    end
+  end
+
   def confirm_left_event(team, member, event)
     @team = team
     @event = event
