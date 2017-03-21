@@ -207,49 +207,60 @@ form {
     p {
       margin: 0;
     }
+  }
+}
 
-    .ra-participants-list {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0;
-      padding: 0;
+.ra-participants-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
 
-      td,
-      th {
-        text-align: left;
-        border: 0;
+  td,
+  th {
+    text-align: left;
+    border: 0;
+  }
+
+  td {
+    padding: 1rem 0.5rem;
+    border: solid #999;
+    border-width: 1px 0;
+
+    a {
+      color: #333;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.add-participant a {
+      &:hover {
+        text-decoration: none;
+        font-weight: bold;
       }
 
+      .fa {
+        color: $shamrock;
+      }
+    }
+  }
+
+  th {
+    color: grey;
+    opacity: 0.8;
+    padding: 0.5rem 0.5rem 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  tr {
+    &:hover {
       td {
-        padding: 1rem 0.5rem;
-        border: solid #999;
-        border-width: 1px 0;
-
-        a {
-          color: #333;
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-
-      th {
-        color: grey;
-        opacity: 0.8;
-        padding: 0.5rem 0.5rem 0.2rem;
-        font-size: 0.8rem;
-      }
-
-      tr {
-        &:hover {
-          td {
-            background: #f4faff;
-            border-top-color: #cce6fa;
-            border-bottom-color: #cce6fa;
-          }
-        }
+        background: #f4faff;
+        border-top-color: #cce6fa;
+        border-bottom-color: #cce6fa;
       }
     }
   }

@@ -191,6 +191,10 @@ class StudentProfile < ActiveRecord::Base
       def screenshots
         []
       end
+
+      def app_name
+        "not started"
+      end
     end
   end
 

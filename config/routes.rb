@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create, :show]
 
     resources :regional_pitch_events
-    resources :regional_pitch_event_participations, only: :destroy
+    resources :regional_pitch_event_participations, only: [:new, :create, :destroy]
   end
 
   namespace :judge do

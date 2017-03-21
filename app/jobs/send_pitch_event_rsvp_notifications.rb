@@ -16,6 +16,20 @@ class SendPitchEventRSVPNotifications < ActiveJob::Base
       )
     end
 
+    if event_ids[:ra_added_participant_to]
+      NotifyAmbassadorOfTeamJoinedEventJob.perform_now(
+        event_ids[:ra_added_participant_to],
+        team_id,
+        ra_added: true
+      )
+
+      NotifyTeamMembersOfJoinedEventJob.perform_now(
+        event_ids[:ra_added_participant_to],
+        team_id,
+        ra_added: true
+      )
+    end
+
     if event_ids[:leaving_event_id]
       NotifyAmbassadorOfTeamLeftEventJob.perform_now(
         event_ids[:leaving_event_id],

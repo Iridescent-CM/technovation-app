@@ -1,0 +1,43 @@
+<table class="ra-participants-list">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Submission</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% participants.each do |participant| %>
+      <tr>
+        <td>
+          <%= link_to participant.name,
+            regional_ambassador_team_path(participant),
+            target: :_blank %>
+        </td>
+
+        <td>
+          <% if participant.submission.present? %>
+            <%= link_to participant.submission.app_name || "(no name yet)",
+              app_url(participant.submission),
+              target: :_blank %>
+          <% else %>
+            <span class="has-danger">not started!</span>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to fa_icon('plus', text: 'Add'),
+            regional_ambassador_regional_pitch_event_participations_path(
+              event_id: event.id,
+              participant_id: participant.id,
+              participant_type: participant.class.name
+            ),
+            data: {
+              method: :post
+            } %> | send message
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

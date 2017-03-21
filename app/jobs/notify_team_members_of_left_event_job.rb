@@ -3,6 +3,9 @@ class NotifyTeamMembersOfLeftEventJob < ActiveJob::Base
 
   def perform(event_id, team_id, options = {})
     event = RegionalPitchEvent.find(event_id)
+
+    return unless event.live?
+
     team = Team.find(team_id)
 
     team.members.each do |member|

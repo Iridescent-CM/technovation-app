@@ -41,6 +41,35 @@ class Team < ActiveRecord::Base
     where.not(id: Membership.where(member_type: "MentorProfile").map(&:joinable_id))
   }
 
+  scope :for_ambassador, ->(ambassador) {
+    students = []
+    mentors = []
+
+    if ambassador.country == "US"
+      students = StudentProfile.joins(:account)
+        .where("accounts.state_province = ? AND accounts.country = 'US'",
+               ambassador.state_province)
+
+      mentors = MentorProfile.joins(:account)
+        .where("accounts.state_province = ? AND accounts.country = 'US'",
+               ambassador.state_province)
+    else
+      students = StudentProfile.joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+
+      mentors = MentorProfile.joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+    end
+
+    where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
+  }
+
+  scope :not_attending_live_event, -> {
+    includes(:regional_pitch_events)
+      .references(:regional_pitch_events)
+      .where("regional_pitch_events.id IS NULL")
+  }
+
   scope :accepting_mentor_requests, -> { where(accepting_mentor_requests: true) }
 
   scope :accepting_student_requests, -> { where(accepting_student_requests: true) }
@@ -201,7 +230,8 @@ class Team < ActiveRecord::Base
   end
 
   def submission
-    team_submissions.current.last
+    team_submissions.current.last or
+      StudentProfile::NullTeam::NullTeamSubmission.new
   end
 
   class NullCreator
