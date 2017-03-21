@@ -1,21 +1,37 @@
 require 'will_paginate/array'
+require 'elasticsearch/dsl'
 
 module SearchTeams
+
   def self.call(filter)
     teams = Team.current
 
-    unless filter.text.blank?
-      sanitized_text = sanitize_string_for_elasticsearch_string_query(filter.text)
+    if use_search_index(filter)
 
-      results = teams.search({
-        query: {
-          query_string: {
-            query: "*#{sanitized_text}*"
-          },
-        },
-        from: 0,
-        size: 10_000
-      }).results
+      query = Elasticsearch::DSL::Search.search do |q|
+        q.query do |q|
+          q.bool do |q|
+            unless filter.text.blank?
+              q.must do |q|
+                q.query_string do |q|
+                  q.query sanitize_string_for_elasticsearch_string_query(filter.text)
+                end
+              end
+            end
+
+            if filter.spot_available
+              q.must do |q|
+                q.term spot_available?: true
+              end
+            end
+          end
+        end
+
+        q.from 0
+        q.size 10_000
+      end
+
+      results = teams.search(query).results
 
       teams = teams.where(id: results.flat_map { |r| r._source.id })
     end
@@ -50,18 +66,6 @@ module SearchTeams
 
     teams = teams.near(nearby, miles)
 
-    if filter.spot_available
-      teams.includes(
-        :pending_student_invites,
-        :pending_student_join_requests,
-        :students,
-        :mentors,
-      )
-        .references(:memberships)
-        .select(&:spot_available?)
-    else
-      teams
-    end
   end
 
   def self.sanitize_string_for_elasticsearch_string_query(str)
@@ -82,5 +86,9 @@ module SearchTeams
     str = str.gsub(/(.*)"(.*)/, '\1\"\3') if quote_count % 2 == 1
 
     str
+  end
+
+  def self.use_search_index(filter)
+    return (!filter.text.blank? or filter.spot_available)
   end
 end

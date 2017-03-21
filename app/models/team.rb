@@ -10,11 +10,15 @@ class Team < ActiveRecord::Base
 
   after_save    { IndexTeamJob.perform_later("index", id) }
   after_destroy { IndexTeamJob.perform_later("delete", id) }
+  after_touch   { IndexTeamJob.perform_later("index", id) }
 
   after_commit :register_to_season, on: :create
 
   def as_indexed_json(options = {})
-    as_json(only: %w{id name description})
+    as_json(
+      only: %w{id name description spot_available?},
+      methods: :spot_available?
+    )
   end
 
   mount_uploader :team_photo, TeamPhotoProcessor

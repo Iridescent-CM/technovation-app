@@ -12,7 +12,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   after_save :after_accept, if: -> { status_changed? && accepted? }
 
-  belongs_to :team
+  belongs_to :team, touch: true
   belongs_to :inviter, polymorphic: true
   belongs_to :invitee, polymorphic: true
 

@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
   }
 
   belongs_to :member, polymorphic: true
-  belongs_to :joinable, polymorphic: true
+  belongs_to :joinable, polymorphic: true, touch: true
 
   delegate :address_details, :city, :state_province, :country, :email,
     to: :member,
