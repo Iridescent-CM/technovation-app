@@ -235,5 +235,17 @@ class Team < ActiveRecord::Base
     def live?; false; end
     def to_param; "virtual"; end
     def id; "virtual"; end
+
+    def timezone
+      "PDT"
+    end
+
+    def starts_at
+      DateTime.new(2017, 5, 1, 0, 0, 0)
+    end
+
+    def ends_at
+      DateTime.new(2017, 5, 15, 23, 59, 59)
+    end
   end
 end
