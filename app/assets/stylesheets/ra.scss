@@ -195,15 +195,31 @@ form {
   }
 }
 
-.participants-list {
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.ra-pitch-event-participants-lists {
+  .tab-content {
+    padding: 1rem;
+    max-width: 500px;
+    background: white;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 
-    li {
+    p {
+      margin: 0;
+    }
+
+    .ra-participants-list {
       margin: 0;
       padding: 0;
+      list-style: none;
+
+      li {
+        margin: 0 0 1rem;
+        padding: 0;
+
+        &:only-child,
+        &:last-child {
+          margin: 0;
+        }
+      }
     }
   }
 }

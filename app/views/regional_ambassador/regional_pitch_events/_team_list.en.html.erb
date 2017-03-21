@@ -1,7 +1,6 @@
 <% if pitch_event.divisions.include?(Division.public_send(division)) %>
   <div class="participants-list">
     <% if pitch_event.teams.public_send(division).any? %>
-      hi
       <ul class="ra-participants-list teams">
         <% pitch_event.teams.public_send(division).each do |team| %>
           <li>
