@@ -1,3 +1,7 @@
+<p>
+  Selecting <%= params[:division] %> <%= params[:participant_type].pluralize %> for <strong><%= event.name %></strong>.
+</p>
+
 <table class="ra-participants-list">
   <thead>
     <tr>
@@ -8,34 +12,53 @@
   </thead>
 
   <tbody>
-    <% participants.each do |participant| %>
-      <tr>
-        <td>
-          <%= link_to participant.name,
-            regional_ambassador_team_path(participant),
-            target: :_blank %>
-        </td>
+    <tr>
+      <td colspan="3">
+        Listing <%= params[:division] %> <%= params[:participant_type].pluralize %> which are not already attending another event.
+      </td>
+    </tr>
 
-        <td>
-          <% if participant.submission.present? %>
-            <%= link_to participant.submission.app_name || "(no name yet)",
-              app_url(participant.submission),
+    <% if participants.any? %>
+      <% participants.each do |participant| %>
+        <tr>
+          <td>
+            <%= link_to participant.name,
+              regional_ambassador_team_path(participant),
               target: :_blank %>
-          <% else %>
-            <span class="has-danger">not started!</span>
-          <% end %>
-        </td>
+          </td>
 
-        <td>
-          <%= link_to fa_icon('plus', text: 'Add'),
-            regional_ambassador_regional_pitch_event_participations_path(
-              event_id: event.id,
-              participant_id: participant.id,
-              participant_type: participant.class.name
-            ),
-            data: {
-              method: :post
-            } %>
+          <td>
+            <% if participant.submission.present? %>
+              <%= link_to participant.submission.app_name || "(no name yet)",
+                app_url(participant.submission),
+                target: :_blank %>
+            <% else %>
+              <span class="has-danger">not started!</span>
+            <% end %>
+          </td>
+
+          <td>
+            <%= link_to fa_icon('plus', text: 'Add'),
+              regional_ambassador_regional_pitch_event_participations_path(
+                event_id: event.id,
+                participant_id: participant.id,
+                participant_type: participant.class.name
+              ),
+              data: {
+                method: :post
+              } %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="3">
+          There are no more <%= params[:division] %> <%= params[:participant_type].pluralize %> available to select for <strong><%= event.name %></strong>.
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <%= link_to fa_icon('arrow-left', text: 'Go back'), regional_ambassador_regional_pitch_event_path(event) %>
         </td>
       </tr>
     <% end %>
