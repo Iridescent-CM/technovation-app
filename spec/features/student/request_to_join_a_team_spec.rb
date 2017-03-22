@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Students request to join a team" do
+RSpec.feature "Students request to join a team", :elasticsearch do
   scenario "students already on a team don't see the link" do
     student = FactoryGirl.create(:student, :on_team)
     sign_in(student)
@@ -8,7 +8,11 @@ RSpec.feature "Students request to join a team" do
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team) } # Creator is in Chicago
+    let!(:team) {
+      t = FactoryGirl.create(:team)
+      sleep(1.second) # let the index update
+      return t
+    } # Creator is in Chicago
     let!(:student) { FactoryGirl.create(:student) } # Default Chicago
 
     before do
