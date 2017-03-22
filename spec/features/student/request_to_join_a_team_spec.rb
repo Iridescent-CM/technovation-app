@@ -8,11 +8,7 @@ RSpec.feature "Students request to join a team", :elasticsearch do
   end
 
   context "a valid student requestor" do
-    let!(:team) {
-      t = FactoryGirl.create(:team)
-      sleep(1.second) # let the index update
-      return t
-    } # Creator is in Chicago
+    let!(:team) { t = FactoryGirl.create(:team) } # Creator is in Chicago
     let!(:student) { FactoryGirl.create(:student) } # Default Chicago
 
     before do
