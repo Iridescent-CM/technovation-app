@@ -5,11 +5,9 @@
         <tr>
           <th>Team</th>
           <th>Submission</th>
-          <% unless Rails.env.production? %>
-            <th>Last message</th>
-            <th>Unsent message</th>
-            <th>New message</th>
-          <% end %>
+          <th>Last message</th>
+          <th>Unsent message</th>
+          <th>New message</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -53,49 +51,47 @@
                   (submission not begun!)
                 <% end %>
               </td>
-              <% unless Rails.env.production? %>
-                <td>
-                  <% if current_ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
-                    sent <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
-                  <% else %>
-                    none
-                  <% end %>
-                </td>
+              <td>
+                <% if current_ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
+                  sent <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
+                <% else %>
+                  none
+                <% end %>
+              </td>
 
-                <td>
-                  <% if current_ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
-                    <%= link_to fa_icon('eye', text: 'review unsent message'),
-                      [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
-                  <% else %>
-                    none
-                  <% end %>
-                </td>
+              <td>
+                <% if current_ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
+                  <%= link_to fa_icon('eye', text: 'review unsent message'),
+                    [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
+                <% else %>
+                  none
+                <% end %>
+              </td>
 
-                <td>
-                  <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
-                    new_regional_ambassador_message_path(
-                      recipient_type: "Team",
+              <td>
+                <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
+                  new_regional_ambassador_message_path(
+                    recipient_type: "Team",
+                    recipient_id: team.id,
+                    regarding_id: pitch_event.id,
+                    regarding_type: "RegionalPitchEvent"
+                  ),
+                  data: {
+                    modal_trigger: "send-message-#{team.id}"
+                  } %>
+
+                <div id="send-message-<%= team.id %>"
+                      class="modalify modalify--fixed"
+                      data-heading="Send a message to <%= team.name %>">
+                  <%= render 'regional_ambassador/messages/new',
+                    message: current_ambassador.messages.build(
                       recipient_id: team.id,
+                      recipient_type: "Team",
                       regarding_id: pitch_event.id,
                       regarding_type: "RegionalPitchEvent"
-                    ),
-                    data: {
-                      modal_trigger: "send-message-#{team.id}"
-                    } %>
-
-                  <div id="send-message-<%= team.id %>"
-                       class="modalify modalify--fixed"
-                       data-heading="Send a message to <%= team.name %>">
-                    <%= render 'regional_ambassador/messages/new',
-                      message: current_ambassador.messages.build(
-                        recipient_id: team.id,
-                        recipient_type: "Team",
-                        regarding_id: pitch_event.id,
-                        regarding_type: "RegionalPitchEvent"
-                      ) %>
-                  </div>
-                </td>
-              <% end %>
+                    ) %>
+                </div>
+              </td>
               <td>
                 <%= link_to fa_icon('times', text: 'remove team'),
                   regional_ambassador_regional_pitch_event_participation_path(
