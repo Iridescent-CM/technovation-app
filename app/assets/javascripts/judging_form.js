@@ -267,8 +267,10 @@
     }
 
     var technicalChecklist = questions[activeQuestionIndex].classList.contains('question-technical-checklist');
-    if (technicalChecklist) {
+    if (technicalChecklist && !hasVerifiedTechnicalChecklist) {
       nextButton.disabled = true;
+    } else {
+      nextButton.disabled = false;
     }
   }
 
@@ -478,7 +480,6 @@
     submitButton.addEventListener('click', submitTechnicalChecklist);
     // AJAX submit Technical Checklist
     function submitTechnicalChecklist(e) {
-      console.log('eyyy gonna try to submit');
       e.preventDefault();
       $.ajax({
         type: 'POST',
@@ -487,6 +488,7 @@
         success: function(data) {
           hasVerifiedTechnicalChecklist = true;
           document.querySelector('.judging-technical-checklist-modal .fa-times').click();
+          setShouldButtonsBeDisabled();
         },
         error: function(err) {
           console.error(err);
