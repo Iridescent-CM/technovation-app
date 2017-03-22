@@ -41,10 +41,24 @@
   generateMarkup();
   initRangeSliders();
 
-  var hasVerifiedTechnicalChecklist = false;
-  // Need to defer this to the event loop to ensure this happens after
-  // everything has finished being modified
-  setTimeout(handleTechnicalChecklist, 0);
+  var tcForm = document.querySelector('#judging-technical-checklist form');
+  // If any of the technical checklist toggles are toggled on, we can assume
+  // that the TC has been looked at
+  var hasVerifiedTechnicalChecklist = (function() {
+    var checkboxes = tcForm.querySelectorAll('[type="checkbox"]');
+    var hasVerified = false;
+    while (hasVerified === false) {
+      var checkboxCount = checkboxes.length;
+      for (var i = 0; i < checkboxCount; i++) {
+        if (checkboxes[i].checked) {
+          hasVerified = true;
+        }
+      }
+      break;
+    }
+    return hasVerified;
+  })();
+  handleTechnicalChecklist();
 
   /**
    * Basic DOM structure and initial set up
@@ -474,12 +488,13 @@
       });
     }
 
-    var tcForm = document.querySelector('#judging-technical-checklist form');
-    var submitButton = tcForm.querySelector('[type="submit"]');
-    console.log(submitButton);
-    submitButton.addEventListener('click', submitTechnicalChecklist);
+    setTimeout(function() {
+      var tcSubmitButton = document.querySelector('#judging-technical-checklist [type="submit"]');
+      tcSubmitButton.addEventListener('click', submitTechnicalChecklist);
+    }, 0);
     // AJAX submit Technical Checklist
     function submitTechnicalChecklist(e) {
+      console.log('clicked me');
       e.preventDefault();
       $.ajax({
         type: 'POST',
