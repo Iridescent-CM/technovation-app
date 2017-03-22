@@ -2,18 +2,20 @@
   Review & Select Regional Pitch Events
 </h1>
 
-<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-  <div class="actions">
-    <button class="save-mentor-pitch-events appy-button"
-            data-url="<%= mentor_regional_pitch_event_selection_path %>">
-      Save changes
-    </button>
+<% if @teams.flat_map(&:eligible_events).any? %>
+  <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+    <div class="actions">
+      <button class="save-mentor-pitch-events appy-button"
+              data-url="<%= mentor_regional_pitch_event_selection_path %>">
+        Save changes
+      </button>
 
-    or
+      or
 
-    <%= link_to 'cancel', mentor_teams_path %>
+      <%= link_to 'cancel', mentor_teams_path %>
+    </div>
   </div>
-</div>
+ <% end %>
 
 <div class="mentor-regional-pitch-events__team-review">
   <% @teams.each do |team| %>
@@ -118,15 +120,17 @@
   <% end %>
 </div>
 
-<div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-  <div class="actions">
-    <button class="save-mentor-pitch-events appy-button"
-            data-url="<%= mentor_regional_pitch_event_selection_path %>">
-      Save changes
-    </button>
+<% if @teams.flat_map(&:eligible_events).any? %>
+  <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+    <div class="actions">
+      <button class="save-mentor-pitch-events appy-button"
+              data-url="<%= mentor_regional_pitch_event_selection_path %>">
+        Save changes
+      </button>
 
-    or
+      or
 
-    <%= link_to 'cancel', mentor_teams_path %>
+      <%= link_to 'cancel', mentor_teams_path %>
+    </div>
   </div>
-</div>
+<% end %>
