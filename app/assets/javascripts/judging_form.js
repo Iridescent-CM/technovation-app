@@ -518,7 +518,7 @@
   function reviewSubmissionForm() {
     var submissionVerification = verifySubmission();
     if (submissionVerification.isValid) {
-      console.log('Let us actually submit the form somewhere now');
+      createVerificationView();
     } else {
       createFlashNotification('error', submissionVerification.error, 4000);
     }
@@ -533,7 +533,7 @@
     }
     var allSectionsHaveComments = true;
     forEach(sections, function(section) {
-      if (!section.querySelector('textarea').value) {
+      if (section.querySelector('textarea') && !section.querySelector('textarea').value) {
         allSectionsHaveComments = false;
       }
     });
@@ -545,5 +545,14 @@
     }
     // If we're down here, everything is valid
     return {isValid: true};
+  }
+
+  function createVerificationView() {
+    var modalId = 'judging-submission-review';
+    var submissionModal = document.getElementById(modalId);
+
+
+
+    showModal(modalId);
   }
 })();
