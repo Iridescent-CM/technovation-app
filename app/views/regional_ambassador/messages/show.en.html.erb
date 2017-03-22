@@ -63,3 +63,8 @@
     </p>
   </div>
 <% end %>
+
+<p>
+  <%= link_to fa_icon('arrow-left', text: "Go back to #{@message.regarding_name}"),
+    [:regional_ambassador, @message.regarding] %>
+</p>

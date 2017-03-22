@@ -5,13 +5,16 @@
         <tr>
           <th>Team</th>
           <th>Submission</th>
-          <th>Actions</th>
+          <% unless Rails.env.production? %>
+            <th>Send Message</th>
+          <% end %>
+          <th>Remove</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <td colspan="3" class="add-participant">
+          <td colspan="4" class="add-participant">
             <%= link_to fa_icon("plus", text: "Add a #{division.to_s.titleize} team to this event"),
               new_regional_ambassador_regional_pitch_event_participation_path(
                 event_id: pitch_event.id,
@@ -48,7 +51,27 @@
                   <small class="has-danger">(submission not begun!)</small>
                 <% end %>
               </td>
+              <% unless Rails.env.production? %>
+                <td>
+                  <% if current_ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
+                    <em>last message sent: <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago</em>
+                    <br  />
+                  <% end %>
 
+                  <% if current_ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
+                    <%= link_to 'review unsent message', [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
+                    <br  />
+                  <% end %>
+
+                  <%= link_to 'send new message',
+                    new_regional_ambassador_message_path(
+                      recipient_type: "Team",
+                      recipient_id: team.id,
+                      regarding_id: pitch_event.id,
+                      regarding_type: "RegionalPitchEvent"
+                    ) %>
+                </td>
+              <% end %>
               <td>
                 <%= link_to 'remove',
                   regional_ambassador_regional_pitch_event_participation_path(
@@ -59,15 +82,7 @@
                   data: {
                     method: :delete,
                     confirm: "You are REMOVING #{team.name} from this event!",
-                  } %><% unless Rails.env.production? %> |
-
-                <%= link_to 'send message',
-                  new_regional_ambassador_message_path(
-                    recipient_type: "Team",
-                    recipient_id: team.id,
-                    regarding_id: pitch_event.id,
-                    regarding_type: "RegionalPitchEvent"
-                  ) %><% end %>
+                  } %>
               </td>
             </tr>
           <% end %>

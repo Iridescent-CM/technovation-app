@@ -1,4 +1,5 @@
 class Message < ActiveRecord::Base
+  scope :sent, -> { where("sent_at IS NOT NULL") }
   scope :unsent, -> { where("sent_at IS NULL") }
 
   belongs_to :sender, polymorphic: true
