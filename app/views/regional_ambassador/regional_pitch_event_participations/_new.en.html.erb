@@ -6,6 +6,10 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>City</th>
+      <% if current_ambassador.country != "US" %>
+        <th>State / Province</th>
+      <% end %>
       <th>Submission</th>
       <th>Action</th>
     </tr>
@@ -26,6 +30,16 @@
               regional_ambassador_team_path(participant),
               target: :_blank %>
           </td>
+
+          <td>
+            <%= participant.city %>
+          </td>
+
+          <% if current_ambassador.country != "US" %>
+            <td>
+              <%= participant.state_province %>
+            </td>
+          <% end %>
 
           <td>
             <% if participant.submission.present? %>
