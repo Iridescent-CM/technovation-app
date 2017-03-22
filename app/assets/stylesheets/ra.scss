@@ -200,7 +200,7 @@ form {
 
   .tab-content {
     padding: 1rem;
-    max-width: 800px;
+    max-width: 900px;
     background: white;
     box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 
@@ -226,6 +226,8 @@ form {
     padding: 1rem 0.5rem;
     border: solid #999;
     border-width: 1px 0;
+    font-size: 0.8rem;
+    font-style: italic;
 
     a {
       color: #333;
@@ -234,6 +236,11 @@ form {
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    &.primary-col {
+      font-size: 1rem;
+      font-style: normal;
     }
 
     &.add-participant a {

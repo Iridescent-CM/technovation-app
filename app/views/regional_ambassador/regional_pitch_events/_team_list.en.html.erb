@@ -6,7 +6,9 @@
           <th>Team</th>
           <th>Submission</th>
           <% unless Rails.env.production? %>
-            <th>Send Message</th>
+            <th>Last message</th>
+            <th>Unsent message</th>
+            <th>New message</th>
           <% end %>
           <th>Remove</th>
         </tr>
@@ -14,7 +16,7 @@
 
       <tbody>
         <tr>
-          <td colspan="4" class="add-participant">
+          <td colspan="6" class="add-participant">
             <%= link_to fa_icon("plus", text: "Add a #{division.to_s.titleize} team to this event"),
               new_regional_ambassador_regional_pitch_event_participation_path(
                 event_id: pitch_event.id,
@@ -38,32 +40,39 @@
         <% if pitch_event.teams.public_send(division).any? %>
           <% pitch_event.teams.public_send(division).each do |team| %>
             <tr>
-              <td>
+              <td class="primary-col">
                 <%= link_to team.name, regional_ambassador_team_path(team) %>
               </td>
 
               <td>
                 <% if team.submission.present? %>
-                  <%= link_to team.submission.app_name,
+                  <%= link_to fa_icon('file-code-o', text: team.submission.app_name || "no name yet"),
                     app_path(team.submission),
                     target: :_blank %>
                 <% else %>
-                  <small class="has-danger">(submission not begun!)</small>
+                  (submission not begun!)
                 <% end %>
               </td>
               <% unless Rails.env.production? %>
                 <td>
                   <% if current_ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
-                    <em>last message sent: <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago</em>
-                    <br  />
+                    sent <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
+                  <% else %>
+                    none
                   <% end %>
+                </td>
 
+                <td>
                   <% if current_ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
-                    <%= link_to 'review unsent message', [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
-                    <br  />
+                    <%= link_to fa_icon('eye', text: 'review unsent message'),
+                      [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
+                  <% else %>
+                    none
                   <% end %>
+                </td>
 
-                  <%= link_to 'send new message',
+                <td>
+                  <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
                     new_regional_ambassador_message_path(
                       recipient_type: "Team",
                       recipient_id: team.id,
@@ -73,7 +82,7 @@
                 </td>
               <% end %>
               <td>
-                <%= link_to 'remove',
+                <%= link_to fa_icon('times', text: 'remove team'),
                   regional_ambassador_regional_pitch_event_participation_path(
                     pitch_event,
                     participant_id: team.id,
