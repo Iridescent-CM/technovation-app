@@ -1,0 +1,40 @@
+<p>You're writing a message to <%= @message.recipient_name %></p>
+
+<%= simple_form_for [:regional_ambassador, @message] do |f| %>
+  <%= f.input :regarding_id, as: :hidden %>
+  <%= f.input :regarding_type, as: :hidden %>
+
+  <%= f.input :recipient_id, as: :hidden %>
+  <%= f.input :recipient_type, as: :hidden %>
+
+  <%= f.input :subject %>
+
+  <div class="message-preview">
+    <p>
+      Dear <em>&lt;individual name will go here&gt;</em>,
+    </p>
+
+    <% if @message.regarding %>
+      <p>
+        This is a message from your Regional Ambassador regarding<br />
+        <strong><%= @message.regarding_name %></strong>.
+      </p>
+
+      <p>
+        <em>&lt;link to <%= @message.regarding_name %> will go here&gt;</em>
+      </p>
+    </div>
+
+    <%= f.input :body, label: false, as: :text, input_html: { size: "60x15" } %>
+
+    <p>
+      Your Ambassador,<br />
+      <%= current_ambassador.full_name %><br />
+      <%= mail_to current_ambassador.email %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.submit "Preview", class: "appy-button" %>
+  </p>
+<% end %>

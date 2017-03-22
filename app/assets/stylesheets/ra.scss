@@ -265,3 +265,18 @@ form {
     }
   }
 }
+
+.message-preview {
+  padding: 1rem 0;
+  max-width: 600px;
+
+  .card__body {
+    padding: 0 1rem 1rem;
+  }
+
+  p {
+    line-height: 1.2;
+    padding: 0;
+    margin: 0.75rem 0;
+  }
+}

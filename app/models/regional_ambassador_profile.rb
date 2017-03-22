@@ -15,6 +15,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   has_many :exports, foreign_key: :account_id, dependent: :destroy
   has_many :regional_pitch_events
 
+  has_many :messages, as: :sender
+
   delegate :submitted?,
            :candidate_id,
            :report_id,

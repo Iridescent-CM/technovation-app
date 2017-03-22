@@ -59,7 +59,15 @@
                   data: {
                     method: :delete,
                     confirm: "You are REMOVING #{team.name} from this event!",
-                  } %>
+                  } %><% unless Rails.env.production? %> |
+
+                <%= link_to 'send message',
+                  new_regional_ambassador_message_path(
+                    recipient_type: "Team",
+                    recipient_id: team.id,
+                    regarding_id: pitch_event.id,
+                    regarding_type: "RegionalPitchEvent"
+                  ) %><% end %>
               </td>
             </tr>
           <% end %>

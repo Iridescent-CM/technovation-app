@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320192010) do
+ActiveRecord::Schema.define(version: 20170322172744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -225,6 +226,22 @@ ActiveRecord::Schema.define(version: 20170320192010) do
   add_index "mentor_profiles", ["account_id"], name: "index_mentor_profiles_on_account_id", using: :btree
   add_index "mentor_profiles", ["searchable"], name: "index_mentor_profiles_on_searchable", using: :btree
   add_index "mentor_profiles", ["virtual"], name: "index_mentor_profiles_on_virtual", using: :btree
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.integer  "sender_id"
+    t.string   "sender_type"
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "regarding_id"
+    t.string   "regarding_type"
+    t.datetime "sent_at"
+  end
+
+  add_index "messages", ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id", using: :btree
 
   create_table "parental_consents", force: :cascade do |t|
     t.string   "electronic_signature", null: false
