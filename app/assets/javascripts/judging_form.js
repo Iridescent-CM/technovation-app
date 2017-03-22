@@ -42,7 +42,9 @@
   initRangeSliders();
 
   var hasVerifiedTechnicalChecklist = false;
-  handleTechnicalChecklist();
+  // Need to defer this to the event loop to ensure this happens after
+  // everything has finished being modified
+  setTimeout(handleTechnicalChecklist, 0);
 
   /**
    * Basic DOM structure and initial set up
@@ -467,6 +469,39 @@
 
       closeButton.addEventListener('click', function() {
         positionerWrapper.remove();
+      });
+    }
+
+    var tcForm = document.querySelector('#judging-technical-checklist form');
+    var submitButton = tcForm.querySelector('[type="submit"]');
+    console.log(submitButton);
+    submitButton.addEventListener('click', submitTechnicalChecklist);
+    // AJAX submit Technical Checklist
+    function submitTechnicalChecklist(e) {
+      console.log('eyyy gonna try to submit');
+      e.preventDefault();
+      var checkboxes = tcForm.querySelectorAll('[type="checkbox"]');
+      var data = {technical_checklist: {}};
+      for (var i = 0; i < checkboxes.length; i++) {
+        var current = checkboxes[i];
+        var name = current.name.split('[')[1].split(']')[0];
+        data.technical_checklist[name] = current.checked ? '1' : '0';
+      }
+      console.log(data);
+      console.log(JSON.stringify(data));
+      $.ajax({
+        type: 'POST',
+        url: tcForm.action,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+          console.log('WOW IT WAS SAVED WAS IT NOW? I THINK IT WAS')
+        },
+        error: function(err) {
+          console.error(err);
+        }
       });
     }
   }

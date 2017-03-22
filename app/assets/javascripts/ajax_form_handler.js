@@ -83,6 +83,8 @@
         var payload = {};
         payload[objectName] = latestData;
 
+        console.log(payload);
+
         $.ajax(path, {
           method: 'PUT',
           data: payload,
