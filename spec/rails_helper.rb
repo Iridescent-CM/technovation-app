@@ -40,6 +40,12 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:each, elasticsearch: true) do
+    [Team, Account].each do |model|
+      model.__elasticsearch__.create_index! force: true
+    end
+  end
+
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
   end
