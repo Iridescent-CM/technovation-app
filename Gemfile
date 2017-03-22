@@ -9,6 +9,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 3.1'
 gem 'jquery-rails', "~> 4.2"
 gem 'vanilla-ujs', "~> 1.3"
+gem 'lodash-rails', "~> 4.17"
 
 gem 'clipboard-rails', "~> 1.6"
 
