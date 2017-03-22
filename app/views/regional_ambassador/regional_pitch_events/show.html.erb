@@ -10,8 +10,8 @@
 
     <p>
       <strong>Time:</strong>
-      <%= @pitch_event.starts_at.strftime("%A, %B %e, %H:%M") %> &ndash;
-      <%= @pitch_event.ends_at.strftime("%H:%M %Z") %>
+      <%= @pitch_event.starts_at.in_time_zone(@pitch_event.timezone).strftime("%A, %B %e, %H:%M") %> &ndash;
+      <%= @pitch_event.ends_at.in_time_zone(@pitch_event.timezone).strftime("%H:%M %Z") %>
     </p>
 
     <p>

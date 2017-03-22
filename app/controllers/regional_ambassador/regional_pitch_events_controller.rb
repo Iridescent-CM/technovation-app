@@ -10,8 +10,8 @@ module RegionalAmbassador
 
     def new
       @pitch_event = current_ambassador.regional_pitch_events.build
-      @pitch_event.starts_at = Date.new(Season.current.year, 5, 1)
-      @pitch_event.ends_at = @pitch_event.starts_at + 1.hour
+      @pitch_event.starts_at = Date.new(Season.current.year, 5, 1).in_time_zone(current_ambassador.timezone)
+      @pitch_event.ends_at = (@pitch_event.starts_at + 1.hour).in_time_zone(current_ambassador.timezone)
     end
 
     def edit
