@@ -1,6 +1,7 @@
 class Message < ActiveRecord::Base
   scope :sent, -> { where("sent_at IS NOT NULL") }
   scope :unsent, -> { where("sent_at IS NULL") }
+  scope :undelivered, -> { where("delivered_at IS NULL") }
 
   belongs_to :sender, polymorphic: true
   belongs_to :recipient, polymorphic: true
@@ -10,6 +11,11 @@ class Message < ActiveRecord::Base
 
   def sent!
     self.sent_at = Time.current
+    save!
+  end
+
+  def delivered!
+    self.delivered_at = Time.current
     save!
   end
 
