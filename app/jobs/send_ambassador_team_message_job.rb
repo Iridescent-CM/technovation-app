@@ -7,7 +7,5 @@ class SendAmbassadorTeamMessageJob < ActiveJob::Base
     message.recipient.members.each do |member|
       MessageMailer.send_message(message, member).deliver_now
     end
-
-    message.sent!
   end
 end
