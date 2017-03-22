@@ -59,7 +59,7 @@
     }.bind(currentModal));
 
     var closeBtns = currentModal.querySelectorAll('.modalify__close');
-    forEach(closeBtns, function(closeBtn) {
+    _.each(closeBtns, function(closeBtn) {
       closeBtn.addEventListener('click', function(e) {
         e.preventDefault();
         hideModal(this);
@@ -71,13 +71,12 @@
   }
 
   var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
-  for (var i = 0; i < modalTriggers.length; i++) {
-    var currentTrigger = modalTriggers[i];
+  _.each(modalTriggers, function(currentTrigger) {
     currentTrigger.addEventListener('click', function(e) {
       e.preventDefault();
       showModal(e);
     });
-  }
+  });
 
   function hideModal(modal) {
     modal.classList.remove('modalify--active');
