@@ -99,7 +99,7 @@
   }
 
   function fireModalCloseEvent(modal) {
-    var event = new Event('modalclose', {bubbles: true, cancelable: true});
+    var event = new CustomEvent('modalclose', {bubbles: true, cancelable: true});
     modal.dispatchEvent(event);
   }
 

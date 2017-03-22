@@ -31,6 +31,8 @@ $modal-width: 600px;
 }
 
 .modalify__body {
+  padding: 1rem;
+  background: white;
   position: relative;
   max-width: $modal-width;
   width: 100%;

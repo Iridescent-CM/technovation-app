@@ -9,6 +9,7 @@
 //= require jquery.sticky-kit.1.1.2.min
 //= require dragula
 //= require closest-polyfill
+//= require event-polyfill
 //= require rangeslider
 
 //= require utils

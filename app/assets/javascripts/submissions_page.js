@@ -17,12 +17,15 @@
 
     var wordCountEl = document.querySelector('[data-word-limit-for="app_description"]');
 
-    var nameField = Array.prototype.find.call(editableContent, function(node) {
-      return node.dataset.name === 'app_name';
-    });
-    var descriptionField = Array.prototype.find.call(editableContent, function(node) {
-      return node.dataset.name === 'app_description';
-    });
+    var nameFieldIdx = _.findIndex(editableContent, function(node) {
+          return node.dataset.name === 'app_name';
+        }),
+        nameField = editableContent[nameFieldIdx];
+
+    var descriptionFieldIdx = _.findIndex(editableContent, function(node) {
+          return node.dataset.name === 'app_description';
+        }),
+        descriptionField = editableContent[descriptionFieldIdx];
 
     descriptionField.addEventListener('paste', function(e) {
       var data = e.clipboardData;
