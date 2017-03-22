@@ -6,6 +6,16 @@ module RegionalAmbassador
 
     def show
       @pitch_event = current_ambassador.regional_pitch_events.find(params[:id])
+
+      @senior_team_participants = Team.current
+        .senior
+        .for_ambassador(current_ambassador)
+        .not_attending_live_event
+
+      @junior_team_participants = Team.current
+        .junior
+        .for_ambassador(current_ambassador)
+        .not_attending_live_event
     end
 
     def new

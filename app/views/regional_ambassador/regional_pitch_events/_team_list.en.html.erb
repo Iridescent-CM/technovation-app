@@ -17,7 +17,18 @@
                 event_id: pitch_event.id,
                 participant_type: "Team",
                 division: division
-              ) %>
+              ),
+              data: { modal_trigger: "participants-list-#{division}-teams" } %>
+
+            <div id="participants-list-<%= division %>-teams"
+                 class="modalify modalify--fixed"
+                 data-heading="Select <%= division.to_s.titleize %> Teams">
+              <%= render 'regional_ambassador/regional_pitch_event_participations/new',
+                division: division,
+                participant_type: "Team",
+                event: pitch_event,
+                participants: instance_variable_get("@#{division}_team_participants") %>
+            </div>
           </td>
         </tr>
 

@@ -1,5 +1,5 @@
 <p>
-  Selecting <%= params[:division] %> <%= params[:participant_type].pluralize %> for <strong><%= event.name %></strong>.
+  Selecting <%= division %> <%= participant_type.pluralize %> for <strong><%= event.name %></strong>.
 </p>
 
 <table class="ra-participants-list">
@@ -14,7 +14,7 @@
   <tbody>
     <tr>
       <td colspan="3">
-        Listing <%= params[:division] %> <%= params[:participant_type].pluralize %> which are not already attending another event.
+        Listing <%= division %> <%= participant_type.pluralize %> which are not already attending another event.
       </td>
     </tr>
 
@@ -53,7 +53,7 @@
     <% else %>
       <tr>
         <td colspan="3">
-          There are no more <%= params[:division] %> <%= params[:participant_type].pluralize %> available to select for <strong><%= event.name %></strong>.
+          There are no more <%= division %> <%= participant_type.pluralize %> available to select for <strong><%= event.name %></strong>.
         </td>
       </tr>
       <tr>

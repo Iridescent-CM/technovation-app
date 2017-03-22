@@ -257,7 +257,7 @@ form {
 
   tr {
     &:hover {
-      td {
+      > td {
         background: #f4faff;
         border-top-color: #cce6fa;
         border-bottom-color: #cce6fa;
