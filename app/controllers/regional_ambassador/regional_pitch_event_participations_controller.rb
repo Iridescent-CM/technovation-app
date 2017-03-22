@@ -5,7 +5,8 @@ module RegionalAmbassador
 
       case params.fetch(:participant_type)
       when "Team"
-        @participants = Team.public_send(params.fetch(:division))
+        @participants = Team.current
+          .public_send(params.fetch(:division))
           .for_ambassador(current_ambassador)
           .not_attending_live_event
       end
