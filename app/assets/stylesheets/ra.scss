@@ -222,12 +222,33 @@ form {
     border: 0;
   }
 
+  > tbody > tr > td {
+    font-size: 0.8rem;
+    font-style: italic;
+
+    &.primary-col {
+      font-size: 1rem;
+      font-style: normal;
+    }
+
+    .modalify {
+      font-size: 1rem;
+      font-style: normal;
+
+      p {
+        margin: 0.75rem 0;
+      }
+
+      textarea {
+        min-height: 200px;
+      }
+    }
+  }
+
   td {
     padding: 1rem 0.5rem;
     border: solid #999;
     border-width: 1px 0;
-    font-size: 0.8rem;
-    font-style: italic;
 
     a {
       color: #333;
@@ -236,11 +257,6 @@ form {
       &:hover {
         text-decoration: underline;
       }
-    }
-
-    &.primary-col {
-      font-size: 1rem;
-      font-style: normal;
     }
 
     &.add-participant a {

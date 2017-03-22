@@ -1,6 +1,6 @@
-<p>You're writing a message to <%= @message.recipient_name %></p>
+<p>You're writing a message to <%= message.recipient_name %></p>
 
-<%= simple_form_for [:regional_ambassador, @message] do |f| %>
+<%= simple_form_for [:regional_ambassador, message] do |f| %>
   <%= f.input :regarding_id, as: :hidden %>
   <%= f.input :regarding_type, as: :hidden %>
 
@@ -14,14 +14,14 @@
       Dear <em>&lt;individual name will go here&gt;</em>,
     </p>
 
-    <% if @message.regarding %>
+    <% if message.regarding %>
       <p>
         This is a message from your Regional Ambassador regarding<br />
-        <strong><%= @message.regarding_name %></strong>.
+        <strong><%= message.regarding_name %></strong>.
       </p>
 
       <p>
-        <em>&lt;link to <%= @message.regarding_name %> will go here&gt;</em>
+        <em>&lt;link to <%= message.regarding_name %> will go here&gt;</em>
       </p>
     </div>
 

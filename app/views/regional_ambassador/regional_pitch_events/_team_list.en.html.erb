@@ -78,7 +78,22 @@
                       recipient_id: team.id,
                       regarding_id: pitch_event.id,
                       regarding_type: "RegionalPitchEvent"
-                    ) %>
+                    ),
+                    data: {
+                      modal_trigger: "send-message-#{team.id}"
+                    } %>
+
+                  <div id="send-message-<%= team.id %>"
+                       class="modalify modalify--fixed"
+                       data-heading="Send a message to <%= team.name %>">
+                    <%= render 'regional_ambassador/messages/new',
+                      message: current_ambassador.messages.build(
+                        recipient_id: team.id,
+                        recipient_type: "Team",
+                        regarding_id: pitch_event.id,
+                        regarding_type: "RegionalPitchEvent"
+                      ) %>
+                  </div>
                 </td>
               <% end %>
               <td>
