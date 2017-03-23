@@ -1,3 +1,8 @@
+<%
+  ambassador ||= false
+  user ||= ambassador
+%>
+
 <% if pitch_event.divisions.include?(Division.public_send(division)) %>
   <div class="participants-list">
     <table class="ra-participants-list teams">
@@ -5,41 +10,46 @@
         <tr>
           <th>Team</th>
           <th>Submission</th>
-          <th>Last message</th>
-          <th>Unsent message</th>
-          <th>New message</th>
-          <th>Remove</th>
+
+          <% if ambassador %>
+            <th>Last message</th>
+            <th>Unsent message</th>
+            <th>New message</th>
+            <th>Remove</th>
+          <% end %>
         </tr>
       </thead>
 
       <tbody>
-        <tr>
-          <td colspan="6" class="add-participant">
-            <%= link_to fa_icon("plus", text: "Add a #{division.to_s.titleize} team to this event"),
-              new_regional_ambassador_regional_pitch_event_participation_path(
-                event_id: pitch_event.id,
-                participant_type: "Team",
-                division: division
-              ),
-              data: { modal_trigger: "participants-list-#{division}-teams" } %>
+        <% if ambassador %>
+          <tr>
+            <td colspan="6" class="add-participant">
+              <%= link_to fa_icon("plus", text: "Add a #{division.to_s.titleize} team to this event"),
+                new_regional_ambassador_regional_pitch_event_participation_path(
+                  event_id: pitch_event.id,
+                  participant_type: "Team",
+                  division: division
+                ),
+                data: { modal_trigger: "participants-list-#{division}-teams" } %>
 
-            <div id="participants-list-<%= division %>-teams"
-                 class="modalify modalify--fixed"
-                 data-heading="Select <%= division.to_s.titleize %> Teams">
-              <%= render 'regional_ambassador/regional_pitch_event_participations/new',
-                division: division,
-                participant_type: "Team",
-                event: pitch_event,
-                participants: instance_variable_get("@#{division}_team_participants") %>
-            </div>
-          </td>
-        </tr>
+              <div id="participants-list-<%= division %>-teams"
+                  class="modalify modalify--fixed"
+                  data-heading="Select <%= division.to_s.titleize %> Teams">
+                <%= render 'regional_ambassador/regional_pitch_event_participations/new',
+                  division: division,
+                  participant_type: "Team",
+                  event: pitch_event,
+                  participants: instance_variable_get("@#{division}_team_participants") %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
 
         <% if pitch_event.teams.public_send(division).any? %>
           <% pitch_event.teams.public_send(division).each do |team| %>
             <tr>
               <td class="primary-col">
-                <%= link_to team.name, regional_ambassador_team_path(team) %>
+                <%= link_to team.name, [user.type_name, team] %>
               </td>
 
               <td>
@@ -51,59 +61,63 @@
                   (submission not begun!)
                 <% end %>
               </td>
-              <td>
-                <% if current_ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
-                  sent <%= time_ago_in_words current_ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
-                <% else %>
-                  none
-                <% end %>
-              </td>
 
-              <td>
-                <% if current_ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
-                  <%= link_to fa_icon('eye', text: 'review unsent message'),
-                    [:regional_ambassador, current_ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
-                <% else %>
-                  none
-                <% end %>
-              </td>
+              <% if ambassador %>
+                <td>
+                  <% if ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
+                    sent <%= time_ago_in_words ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
+                  <% else %>
+                    none
+                  <% end %>
+                </td>
 
-              <td>
-                <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
-                  new_regional_ambassador_message_path(
-                    recipient_type: "Team",
-                    recipient_id: team.id,
-                    regarding_id: pitch_event.id,
-                    regarding_type: "RegionalPitchEvent"
-                  ),
-                  data: {
-                    modal_trigger: "send-message-#{team.id}"
-                  } %>
+                <td>
+                  <% if ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
+                    <%= link_to fa_icon('eye', text: 'review unsent message'),
+                      [:regional_ambassador, ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
+                  <% else %>
+                    none
+                  <% end %>
+                </td>
 
-                <div id="send-message-<%= team.id %>"
-                      class="modalify modalify--fixed"
-                      data-heading="Send a message to <%= team.name %>">
-                  <%= render 'regional_ambassador/messages/new',
-                    message: current_ambassador.messages.build(
-                      recipient_id: team.id,
+                <td>
+                  <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
+                    new_regional_ambassador_message_path(
                       recipient_type: "Team",
+                      recipient_id: team.id,
                       regarding_id: pitch_event.id,
                       regarding_type: "RegionalPitchEvent"
-                    ) %>
-                </div>
-              </td>
-              <td>
-                <%= link_to fa_icon('times', text: 'remove team'),
-                  regional_ambassador_regional_pitch_event_participation_path(
-                    pitch_event,
-                    participant_id: team.id,
-                    participant_type: "Team"
-                  ),
-                  data: {
-                    method: :delete,
-                    confirm: "You are REMOVING #{team.name} from this event!",
-                  } %>
-              </td>
+                    ),
+                    data: {
+                      modal_trigger: "send-message-#{team.id}"
+                    } %>
+
+                  <div id="send-message-<%= team.id %>"
+                        class="modalify modalify--fixed"
+                        data-heading="Send a message to <%= team.name %>">
+                    <%= render 'regional_ambassador/messages/new',
+                      message: ambassador.messages.build(
+                        recipient_id: team.id,
+                        recipient_type: "Team",
+                        regarding_id: pitch_event.id,
+                        regarding_type: "RegionalPitchEvent"
+                      ) %>
+                  </div>
+                </td>
+                <td>
+                  <%= link_to fa_icon('times', text: 'remove team'),
+                    send(
+                      "#{user.type_name}_regional_pitch_event_participation_path",
+                      pitch_event,
+                      participant_id: team.id,
+                      participant_type: "Team"
+                    ),
+                    data: {
+                      method: :delete,
+                      confirm: "You are REMOVING #{team.name} from this event!",
+                    } %>
+                </td>
+              <% end %>
             </tr>
           <% end %>
         <% else %>

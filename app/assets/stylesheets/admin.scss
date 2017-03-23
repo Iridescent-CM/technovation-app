@@ -2,12 +2,15 @@
 @import "font-awesome";
 @import "chosen";
 
+@import "partials/animations";
 @import 'admin/base';
 
 @import 'partials/variables';
 @import 'component-library/card';
 @import 'component-library/flashes';
 @import 'component-library/admin-buttons';
+@import "component-library/tabs";
+@import "component-library/modalify";
 
 @import 'admin/navigation';
 @import 'admin/data-tables';
@@ -42,5 +45,99 @@
 .admin-search__filter-options {
   dl {
     padding: 1rem 0;
+  }
+}
+
+.ra-pitch-event-participants-lists {
+  margin: 1rem;
+
+  .tab-content {
+    padding: 1rem;
+    max-width: 900px;
+    background: white;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.ra-participants-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+
+  td,
+  th {
+    text-align: left;
+    border: 0;
+  }
+
+  > tbody > tr > td {
+    font-size: 0.8rem;
+    font-style: italic;
+
+    &.primary-col {
+      font-size: 1rem;
+      font-style: normal;
+    }
+
+    .modalify {
+      font-size: 1rem;
+      font-style: normal;
+
+      p {
+        margin: 0.75rem 0;
+      }
+
+      textarea {
+        min-height: 200px;
+      }
+    }
+  }
+
+  td {
+    padding: 1rem 0.5rem;
+    border: solid #999;
+    border-width: 1px 0;
+
+    a {
+      color: #333;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.add-participant a {
+      &:hover {
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .fa {
+        color: $shamrock;
+      }
+    }
+  }
+
+  th {
+    color: grey;
+    opacity: 0.8;
+    padding: 0.5rem 0.5rem 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  tr {
+    &:hover {
+      > td {
+        background: #f4faff;
+        border-top-color: #cce6fa;
+        border-bottom-color: #cce6fa;
+      }
+    }
   }
 }

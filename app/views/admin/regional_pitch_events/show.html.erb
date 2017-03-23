@@ -36,25 +36,6 @@
   <%= f.input :unofficial, label: "Mark this event as unofficial (internally)" %>
 <% end %>
 
-<div class="pitch-event__registered-teams">
-  <h1>Teams intending to go</h1>
-
-  <ol>
-    <% @event.teams.each do |team| %>
-      <li>
-        <%= link_to team.name, [:admin, team] %> —
-        Submission:
-        <% if team.submission.present? %>
-          <%= link_to team.submission.app_name, [:admin, team.submission] %> —
-          Complete? <%= team.submission.complete? ? "yes" : "no" %>
-        <% else %>
-          <em>&lt;not started&gt;</em>
-        <% end %>
-      </li>
-    <% end %>
-  </ol>
-
-  <% if @event.teams.empty? %>
-    <p>No teams signed up yet</p>
-  <% end %>
-</div>
+<%= render 'regional_ambassador/regional_pitch_events/participants_list',
+  user: current_admin,
+  event: @event %>

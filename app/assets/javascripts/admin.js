@@ -8,6 +8,8 @@
 //= require admin/utils
 
 //= require toast_flashes
+//= require modalify
+//= require tabs
 
 //= require admin-results-tables
 //= require admin-filter-options
