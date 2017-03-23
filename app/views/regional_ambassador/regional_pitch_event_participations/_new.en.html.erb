@@ -6,18 +6,18 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Submission</th>
       <th>City</th>
       <% if current_ambassador.country != "US" %>
         <th>State / Province</th>
       <% end %>
-      <th>Submission</th>
       <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <td colspan="3">
+      <td colspan="5">
         Listing <%= division %> <%= participant_type.pluralize %> which are not already attending another event.
       </td>
     </tr>
@@ -32,16 +32,6 @@
           </td>
 
           <td>
-            <%= participant.city %>
-          </td>
-
-          <% if current_ambassador.country != "US" %>
-            <td>
-              <%= participant.state_province %>
-            </td>
-          <% end %>
-
-          <td>
             <% if participant.submission.present? %>
               <%= link_to participant.submission.app_name || "(no name yet)",
                 app_url(participant.submission),
@@ -50,6 +40,16 @@
               <span class="has-danger">not started!</span>
             <% end %>
           </td>
+
+          <td>
+            <%= participant.city %>
+          </td>
+
+          <% if current_ambassador.country != "US" %>
+            <td>
+              <%= participant.state_province %>
+            </td>
+          <% end %>
 
           <td>
             <%= link_to fa_icon('plus', text: 'Add'),
@@ -66,7 +66,7 @@
       <% end %>
     <% else %>
       <tr>
-        <td colspan="3">
+        <td colspan="5">
           There are no more <%= division %> <%= participant_type.pluralize %> available to select for <strong><%= event.name %></strong>.
         </td>
       </tr>
