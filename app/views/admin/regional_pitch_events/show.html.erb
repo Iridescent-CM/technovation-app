@@ -44,8 +44,12 @@
       <li>
         <%= link_to team.name, [:admin, team] %> —
         Submission:
-        <%= link_to team.submission.app_name, [:admin, team.submission] %> —
-        Complete? <%= team.submission.complete? ? "yes" : "no" %>
+        <% if team.submission.present? %>
+          <%= link_to team.submission.app_name, [:admin, team.submission] %> —
+          Complete? <%= team.submission.complete? ? "yes" : "no" %>
+        <% else %>
+          <em>&lt;not started&gt;</em>
+        <% end %>
       </li>
     <% end %>
   </ol>
