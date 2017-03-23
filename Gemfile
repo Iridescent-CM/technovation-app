@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 ruby "~> 2.3.1"
 
 gem 'rails', '~> 4.2'
-gem 'puma', '~> 3.7'
-gem 'pg', '~> 0.19'
+gem 'puma', '~> 3.8'
+gem 'pg', '~> 0.20'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 3.1'
-gem 'jquery-rails', "~> 4.2"
+gem 'jquery-rails', "~> 4.3"
 gem 'vanilla-ujs', "~> 1.3"
 gem 'lodash-rails', "~> 4.17"
 
@@ -26,7 +26,7 @@ gem 'rails-i18n', '~> 4.0'
 gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
 gem 'sidekiq', '~> 4.2'
-gem 'airbrake', '~> 5.8'
+gem 'airbrake', '~> 6.0'
 gem 'createsend', '~> 4.1'
 gem 'newrelic_rpm', '~> 3.18'
 
@@ -37,7 +37,7 @@ gem 'timezone', '~> 1.2'
 
 gem 'carrierwave', '~> 0.11'
 gem "mini_magick", "~> 4.6"
-gem "fog", "~> 1.38"
+gem "fog", "~> 1.40"
 gem 'carrierwave_direct', "~> 0.0"
 
 gem 'checkr-official', "~> 1.1", require: "checkr"
@@ -65,7 +65,7 @@ group :development, :test do
   gem 'pry-nav', "~> 0.2"
   gem 'quiet_assets', "~> 1.1"
   gem 'rspec-rails', "~> 3.5"
-  gem 'capybara-webkit', "~> 1.12"
+  gem 'capybara-webkit', "~> 1.13"
   gem 'database_cleaner', "~> 1.5"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
