@@ -67,14 +67,14 @@
     });
 
     if (currentModal.classList.contains('modalify-on-page-load'))
-      showModal(null, currentModal.id);
+      showModal(currentModal.id);
   }
 
   var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
   _.each(modalTriggers, function(currentTrigger) {
     currentTrigger.addEventListener('click', function(e) {
       e.preventDefault();
-      showModal(e);
+      showModal(null, e);
     });
   });
 
@@ -85,7 +85,7 @@
     document.body.removeAttribute('style');
   }
 
-  function showModal(e, modalId) {
+  function showModal(modalId, e) {
     modalId = modalId || e.target.dataset.modalTrigger;
     var modalToShow = document.getElementById(modalId);
     if (!modalToShow) {
@@ -96,6 +96,10 @@
     fixColumnZIndex(modalToShow, 1);
     document.body.style.overflow = 'hidden';
   }
+
+  // Attach these to the window object so they can be called from anywhere
+  window.hideModal = hideModal;
+  window.showModal = showModal;
 
   function fireModalCloseEvent(modal) {
     var event = new CustomEvent('modalclose', {bubbles: true, cancelable: true});
