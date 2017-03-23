@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322172744) do
+ActiveRecord::Schema.define(version: 20170322194755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(version: 20170322172744) do
     t.integer  "regarding_id"
     t.string   "regarding_type"
     t.datetime "sent_at"
+    t.datetime "delivered_at"
   end
 
   add_index "messages", ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id", using: :btree
