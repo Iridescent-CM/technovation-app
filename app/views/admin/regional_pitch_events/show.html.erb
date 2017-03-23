@@ -44,8 +44,8 @@
       <li>
         <%= link_to team.name, [:admin, team] %> —
         Submission:
-        <%= link_to team.team_submissions.last.app_name, [:admin, team.team_submissions.last] %> —
-        Complete? <%= team.team_submissions.last.complete? ? "yes" : "no" %>
+        <%= link_to team.submission.app_name, [:admin, team.submission] %> —
+        Complete? <%= team.submission.complete? ? "yes" : "no" %>
       </li>
     <% end %>
   </ol>
