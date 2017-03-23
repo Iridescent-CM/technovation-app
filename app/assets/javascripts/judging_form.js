@@ -153,22 +153,25 @@
   function makeTextareaHelper(question) {
     var textarea = question.querySelector('textarea');
     var responseDropdown = document.createElement('select');
-    var defaultOption = document.createElement('option');
-    defaultOption.innerText = 'Something something canned responses...';
-    defaultOption.selected = true;
-    defaultOption.value = '';
-    responseDropdown.appendChild(defaultOption);
-    var options = [
-      'Curabitur est gravida et libero vitae dictum.',
-      'At nos hinc posthac, sitientis piros Afros.',
-      'Fabio vel iudice vincam, sunt in culpa qui officia.',
-      'Vivamus sagittis lacus vel augue laoreet rutrum faucibus.'
-    ];
+    var cannedResponses = question.dataset.cannedResponses;
+
+    if (!cannedResponses) return;
+
+
+    var options = JSON.parse(cannedResponses);
+
+    var promptOption = document.createElement('option');
+    promptOption.innerText = 'Choose a sentence prompt to help you get started...'
+    promptOption.selected = true;
+    promptOption.value = '';
+    responseDropdown.appendChild(promptOption);
+
     options.forEach(function(option) {
       var optionEl = document.createElement('option');
       optionEl.innerText = option;
       responseDropdown.appendChild(optionEl);
     });
+
     responseDropdown.addEventListener('change', function(e) {
       if (e.target.value) {
         textarea.value = e.target.value;
