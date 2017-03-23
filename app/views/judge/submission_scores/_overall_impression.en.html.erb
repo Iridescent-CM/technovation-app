@@ -1,6 +1,6 @@
-<h1>Overall Impression</h1>
-
 <%= simple_form_for [:judge, submission_score], data: { remote: true }, html: { class: "no-simple-form-style"} do |f| %>
+  <h1>Overall Impression</h1>
+
   <%= f.input :business_plan_feasible,
     label: "Are you convinced the business plan is feasible and that the business could succeed?",
     collection: JudgingRubricScores.new,

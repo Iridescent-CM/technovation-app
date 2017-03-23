@@ -172,7 +172,9 @@
     responseDropdown.addEventListener('change', function(e) {
       if (e.target.value) {
         textarea.value = e.target.value;
-        textarea.oninput();
+        if (textarea.oninput) {
+          textarea.oninput();
+        }
       }
       this.value = '';
     });
@@ -183,7 +185,6 @@
   /**
    * Form navigation
    */
-
   function goToPrevQuestion(e) {
     e.stopPropagation();
     saveProgress();
@@ -210,7 +211,7 @@
     var isLastSection = Array.prototype.indexOf.call(sections, activeSection) === (sections.length - 1);
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
     if (isLastSection && isEndOfSection) {
-      console.log('We are at the end');
+      reviewSubmissionForm();
       return; 
     }
     questions[activeQuestionIndex].classList.remove('active');
@@ -256,7 +257,7 @@
       }
     } else {
       setTimeout(function() {
-        createFlashNotification(['success', 'small'], 'Progress saved...', 750);
+        createFlashNotification(['success', 'small'], 'Progress saved...', 500);
       }, 250);
     }
   }
@@ -494,7 +495,6 @@
     }, 0);
     // AJAX submit Technical Checklist
     function submitTechnicalChecklist(e) {
-      console.log('clicked me');
       e.preventDefault();
       $.ajax({
         type: 'POST',
@@ -550,8 +550,72 @@
   function createVerificationView() {
     var modalId = 'judging-submission-review';
     var submissionModal = document.getElementById(modalId);
+    var modalBody = submissionModal.querySelector('.modalify__body');
+    var wraperClass = 'verify-submission__wrapper';
+    // If we have content, destroy it
+    if (modalBody.getElementsByClassName(wraperClass).length > 0) {
+      modalBody.getElementsByClassName(wraperClass)[0].remove();
+    }
 
+    var sectionsToRender = document.createElement('div');
+    sectionsToRender.classList.add(wraperClass);
 
+    for (var i = 0; i < sections.length; i++) {
+      var section = sections[i];
+      var form = section.querySelector('form');
+      var sectionWrapper = document.createElement('div');
+      var headerText = section.querySelector('h1').innerText;
+      var header = document.createElement('h2');
+      header.classList.add('verify-submission__header', 'appy-title');
+      header.innerText = headerText;
+      sectionWrapper.appendChild(header);
+      var items = [];
+      if (form) {
+        var inputs = form.getElementsByClassName('input');
+        for (var c = 0; c < inputs.length; c++) {
+          var label = document.createElement('p');
+          var value = document.createElement('p');
+          label.classList.add('verify-submission__label');
+          value.classList.add('verify-submission__value');
+          var current = inputs[c];
+          label.innerText = current.querySelector('label').innerText;
+          var inputType = current.querySelector('input:checked') ? 'checkbox' : 'textarea';
+          value.innerText = inputType === 'checkbox'
+            ? current.querySelector('input:checked').nextSibling.textContent
+            : current.querySelector('textarea').value;
+          sectionWrapper.appendChild(label);
+          sectionWrapper.appendChild(value);
+        }
+      } else {
+        // Technical Checklist
+        var label = document.createElement('p');
+        var value = document.createElement('p');
+        label.classList.add('verify-submission__label');
+        value.classList.add('verify-submission__value');
+        var checkedCount = tcForm.querySelectorAll('input[type="checkbox"]:checked').length;
+        var totalCount = tcForm.querySelectorAll('input[type="checkbox"]').length;
+        label.innerText = 'Number of technical checklist items verified:';
+        value.innerText = checkedCount + ' out of ' + totalCount;
+        sectionWrapper.appendChild(label);
+        sectionWrapper.appendChild(value);
+      }
+      sectionsToRender.appendChild(sectionWrapper);
+    }
+
+    var buttonsWrapper = document.createElement('div');
+    buttonsWrapper.classList.add('verify-submission__buttons-wrapper');
+    var submitButton = document.createElement('button');
+    buttonsWrapper.appendChild(submitButton);
+    submitButton.classList.add('appy-button');
+    submitButton.innerText = 'Submit Scores';
+
+    submitButton.addEventListener('click', function() {
+      console.log('Wow, good job, you have reached the end.');
+    });
+
+    sectionsToRender.appendChild(buttonsWrapper);
+
+    modalBody.appendChild(sectionsToRender);
 
     showModal(modalId);
   }

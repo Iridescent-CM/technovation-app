@@ -79,7 +79,7 @@
   }
 
   .judging-form__breadcrumbs-wrapper {
-    margin: 3.5em 0 1.5em;
+    display: none;
   }
 
   .judging-form__button-wrapper {
@@ -90,7 +90,11 @@
     $max-width: 900px;
     display: block;
     margin: 0 auto 2em;
-    max-width: $max-width
+    max-width: $max-width;
+
+    &:first-child {
+      margin-top: 4em;
+    }
   }
 
   .judging-form__section .question-technical-checklist:not(.active),
@@ -530,4 +534,29 @@ $close-button-wrapper-height: 50px;
     font-size: 1.75em;
     padding: 0.25em;  
   }
+}
+
+// Submission verification
+
+// Specificity to override _layout.scss
+.container h2.verify-submission__header {
+  color: $chalkboard;
+  font-size: 1.5em;
+  font-weight: normal;
+  padding-bottom: 0.25em;
+}
+
+.verify-submission__label {
+  font-weight: bold;
+}
+
+.verify-submission__value {
+  font-weight: 400;
+  margin-bottom: 1em;
+  opacity: 1;
+}
+
+.verify-submission__buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
