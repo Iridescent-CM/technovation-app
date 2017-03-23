@@ -12,13 +12,13 @@ module RegionalAmbassador
 
     private
     def execute_snapshot
-      @snapshot_accounts = RegionalAccount.(current_ambassador, params)
-      @snapshot_teams = RegionalTeam.(current_ambassador, params)
+      @snapshot_accounts = RegionalAccount.(current_ambassador, params).uniq
+      @snapshot_teams = RegionalTeam.(current_ambassador, params).uniq
 
-      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id))
-      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id))
-      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id))
-      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id))
+      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
+      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
+      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
+      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
     end
 
     def execute_search

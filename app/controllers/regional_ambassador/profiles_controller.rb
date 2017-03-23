@@ -14,7 +14,7 @@ module RegionalAmbassador
       params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
       params[:cleared_status] = "All" if params[:cleared_status].blank?
 
-      @accounts = RegionalAccount.(current_ambassador, params)
+      @accounts = RegionalAccount.(current_ambassador, params).uniq
 
       params[:sort] = "accounts.created_at desc" if params[:sort].blank?
 
