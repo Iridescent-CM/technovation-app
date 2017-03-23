@@ -29,7 +29,17 @@
     value_method: :value,
     as: :radio_buttons %>
 
-  <%= f.input :pitch_comment %>
+  <%= f.input :pitch_comment,
+      wrapper_html: {
+        data: {
+          canned_responses: [
+            'Your pitch was convincing because...',
+            'Your pitch would be more convincing if...',
+            'The strongest part of your pitch video was...',
+            'Your pitch video could be improved by...',
+          ],
+        }
+      } %>
 
   <%= f.button :submit, "Save Pitch Score" %>
 <% end %>

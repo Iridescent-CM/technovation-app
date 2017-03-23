@@ -30,7 +30,17 @@
       value_method: :value,
       as: :radio_buttons %>
 
-    <%= f.input :entrepreneurship_comment %>
+    <%= f.input :entrepreneurship_comment,
+      wrapper_html: {
+        data: {
+          canned_responses: [
+            'Some of the best aspects of your business plan are...',
+            'Your business plan could be improved by...',
+            'Your business model is convincing because...',
+            'Your business model would be more convincing if...',
+          ],
+        }
+      } %>
 
     <%= f.button :submit, "Save Entrepreneurship Score" %>
   <% end %>

@@ -22,7 +22,17 @@
     value_method: :value,
     as: :radio_buttons %>
 
-  <%= f.input :ideation_comment %>
+  <%= f.input :ideation_comment,
+    wrapper_html: {
+      data: {
+        canned_responses: [
+          'Your app aligns clearly with the SDG you chose because...',
+          'Your app does not align clearly with the SDG you choose because...',
+          'The problem you are outlining is unique because...',
+          'The problem you are outlining would be more convincing if...',
+        ],
+      }
+    } %>
 
   <p>
     The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
