@@ -1,5 +1,6 @@
 //= require jquery2
 //= require chosen-jquery
+//= require lodash
 
 //= require vanilla-ujs
 //= require clipboard
