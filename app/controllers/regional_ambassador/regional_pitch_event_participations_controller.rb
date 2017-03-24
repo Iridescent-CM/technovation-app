@@ -52,6 +52,11 @@ module RegionalAmbassador
           record.id,
           ra_removed_participant_from: event.id,
         )
+      else
+        SendPitchEventRSVPNotifications.perform_later(
+          record.id,
+          ra_removed_judge_from: old_event.id,
+        )
       end
 
       redirect_to regional_ambassador_regional_pitch_event_path(event),
