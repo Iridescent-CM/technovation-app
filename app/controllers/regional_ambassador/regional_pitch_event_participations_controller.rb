@@ -32,7 +32,7 @@ module RegionalAmbassador
       end
 
       redirect_to regional_ambassador_regional_pitch_event_path(event),
-        success: "You added #{record.class.name} #{record.name} to your event!"
+        success: "You added #{record.class.name} #{record.name rescue record.full_name} to your event!"
     end
 
     def destroy
@@ -49,7 +49,7 @@ module RegionalAmbassador
       end
 
       redirect_to regional_ambassador_regional_pitch_event_path(event),
-        success: "You removed #{record.class.name} #{record.name} from your event"
+        success: "You removed #{record.class.name} #{record.name rescue record.full_name} from your event"
     end
   end
 end

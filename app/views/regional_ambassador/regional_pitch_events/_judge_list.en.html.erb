@@ -1,0 +1,117 @@
+<%
+  ambassador ||= false
+  user ||= ambassador
+%>
+
+<div class="participants-list">
+  <table class="ra-participants-list judges">
+    <thead>
+      <tr>
+        <th>Judge</th>
+        <% if ambassador %>
+          <th>Last message</th>
+          <th>Unsent message</th>
+          <th>New message</th>
+          <th>Remove</th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if ambassador %>
+        <tr>
+          <td colspan="6" class="add-participant">
+            <%= link_to fa_icon("plus", text: "Add a judge to this event"),
+              new_regional_ambassador_regional_pitch_event_participation_path(
+                event_id: pitch_event.id,
+                participant_type: "JudgeProfile",
+              ),
+              data: { modal_trigger: "participants-list-judges" } %>
+
+            <div id="participants-list-judges"
+                class="modalify modalify--fixed"
+                data-heading="Select Judges">
+              <%= render 'regional_ambassador/regional_pitch_event_participations/new',
+                participant_type: "JudgeProfile",
+                event: pitch_event,
+                participants: instance_variable_get("@judge_participants") %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if pitch_event.judges.any? %>
+        <% pitch_event.judges.each do |judge| %>
+          <tr>
+            <td class="primary-col">
+              <%= link_to judge.full_name, send("#{user.type_name}_user_path", judge.account) %>
+            </td>
+
+            <% if ambassador %>
+              <td>
+                <% if ambassador.messages.sent.flat_map(&:recipient).include?(judge) %>
+                  sent <%= time_ago_in_words ambassador.messages.sent.select { |m| m.recipient == judge }.last.sent_at %> ago
+                <% else %>
+                  none
+                <% end %>
+              </td>
+
+              <td>
+                <% if ambassador.messages.unsent.flat_map(&:recipient).include?(judge) %>
+                  <%= link_to fa_icon('eye', text: 'review unsent message'),
+                    [:regional_ambassador, ambassador.messages.unsent.detect { |m| m.recipient == judge }] %>
+                <% else %>
+                  none
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
+                  new_regional_ambassador_message_path(
+                    recipient_type: "JudgeProfile",
+                    recipient_id: judge.id,
+                    regarding_id: pitch_event.id,
+                    regarding_type: "RegionalPitchEvent"
+                  ),
+                  data: {
+                    modal_trigger: "send-message-#{judge.id}"
+                  } %>
+
+                <div id="send-message-<%= judge.id %>"
+                      class="modalify modalify--fixed"
+                      data-heading="Send a message to <%= judge.full_name %>">
+                  <%= render 'regional_ambassador/messages/new',
+                    message: ambassador.messages.build(
+                      recipient_id: judge.id,
+                      recipient_type: "JudgeProfile",
+                      regarding_id: pitch_event.id,
+                      regarding_type: "RegionalPitchEvent"
+                    ) %>
+                </div>
+              </td>
+              <td>
+                <%= link_to fa_icon('times', text: 'remove judge'),
+                  send(
+                    "#{user.type_name}_regional_pitch_event_participation_path",
+                    pitch_event,
+                    participant_id: judge.id,
+                    participant_type: "JudgeProfile"
+                  ),
+                  data: {
+                    method: :delete,
+                    confirm: "You are REMOVING #{judge.full_name} from this event!",
+                  } %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3">
+            No judges are assigned in this event
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,5 +1,5 @@
 class MessageMailer < ApplicationMailer
-  def send_message(message, recipient)
+  def send_message(message, recipient = message.recipient)
     @body = message.body
     @name = recipient.full_name
     @sender_name = message.sender.full_name

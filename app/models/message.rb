@@ -37,6 +37,8 @@ class Message < ActiveRecord::Base
     case recipient_type
     when "Team"
       "the entire team: #{recipient.name}"
+    when "JudgeProfile"
+      "the judge: #{recipient.full_name}"
     end
   end
 end

@@ -4,6 +4,28 @@ class JudgeProfile < ActiveRecord::Base
       .where("accounts.location_confirmed = ?", true)
   }
 
+  scope :current, -> {
+    joins(account: :seasons)
+    .where("seasons.year = ?", Season.current.year)
+  }
+
+  scope :for_ambassador, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(:account)
+      .where("accounts.country = 'US' AND accounts.state_province = ?",
+             ambassador.state_province)
+    else
+      joins(:account)
+      .where("accounts.country = ?", ambassador.country)
+    end
+  }
+
+  scope :not_attending_live_event, -> {
+    includes(:regional_pitch_events)
+      .references(:regional_pitch_events)
+      .where("regional_pitch_events.id IS NULL")
+  }
+
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account

@@ -1,3 +1,5 @@
+<% division ||= nil %>
+
 <p>
   Selecting <%= division %> <%= participant_type.pluralize %> for <strong><%= event.name %></strong>.
 </p>
@@ -6,11 +8,17 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Submission</th>
+
+      <% if participant_type == "Team" %>
+        <th>Submission</th>
+      <% end %>
+
       <th>City</th>
+
       <% if current_ambassador.country != "US" %>
         <th>State / Province</th>
       <% end %>
+
       <th>Action</th>
     </tr>
   </thead>
@@ -26,20 +34,28 @@
       <% participants.each do |participant| %>
         <tr>
           <td>
-            <%= link_to participant.name,
-              regional_ambassador_team_path(participant),
-              target: :_blank %>
-          </td>
-
-          <td>
-            <% if participant.submission.present? %>
-              <%= link_to participant.submission.app_name || "(no name yet)",
-                app_url(participant.submission),
+            <% if participant_type == "Team" %>
+              <%= link_to participant.name,
+                regional_ambassador_team_path(participant),
                 target: :_blank %>
             <% else %>
-              <span class="has-danger">not started!</span>
+              <%= link_to participant.full_name,
+                regional_ambassador_user_path(participant.account),
+                target: :_blank %>
             <% end %>
           </td>
+
+          <% if participant_type == "Team" %>
+            <td>
+              <% if participant.submission.present? %>
+                <%= link_to participant.submission.app_name || "(no name yet)",
+                  app_url(participant.submission),
+                  target: :_blank %>
+              <% else %>
+                <span class="has-danger">not started!</span>
+              <% end %>
+            </td>
+          <% end %>
 
           <td>
             <%= participant.city %>
@@ -72,7 +88,7 @@
       </tr>
       <tr>
         <td colspan="3">
-          <%= link_to fa_icon('arrow-left', text: 'Go back'), regional_ambassador_regional_pitch_event_path(event) %>
+          <%= link_to fa_icon('arrow-left', text: 'Go back'), regional_ambassador_regional_pitch_event_path(event), class: "modalify__close" %>
         </td>
       </tr>
     <% end %>

@@ -11,11 +11,18 @@ module RegionalAmbassador
         .senior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
+        .uniq
 
       @junior_team_participants = Team.current
         .junior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
+        .uniq
+
+      @judge_participants = JudgeProfile.current
+        .for_ambassador(current_ambassador)
+        .not_attending_live_event
+        .uniq
     end
 
     def new

@@ -32,7 +32,7 @@
         role="button"
         class="tab-button"
         data-tab-id="tab-ra-pitch-judges">
-        Judges
+        Judges (<%= event.judges.count %>)
       </button>
     </li>
   </ul>
@@ -60,7 +60,10 @@
 
     <div class="tab-content" id="tab-ra-pitch-judges">
       <div class="participants-list">
-        <p>Judges list / assignments is coming very soon <3</p>
+        <%= render 'regional_ambassador/regional_pitch_events/judge_list',
+          user: user,
+          ambassador: ambassador,
+          pitch_event: event %>
       </div>
     </div>
   </div>
