@@ -29,7 +29,13 @@
 
   *::selection {
     background-color: transparent;
-  } 
+  }
+
+  input[type='text']::selection,
+  textarea::selection {
+    background-color: $marine-mid;
+    color: white;
+  }
 
   &:not(.judging-form--maximize) {
     border-radius: 0.5em;
