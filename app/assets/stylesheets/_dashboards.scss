@@ -166,6 +166,10 @@
   @media screen and (max-width: $device-sm) {
     padding: 0;
   }
+
+  .card {
+    margin-bottom: 1rem;
+  }
 }
 
 .dashboard__sidebar {
