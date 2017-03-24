@@ -18,6 +18,30 @@ class AmbassadorMailer < ApplicationMailer
     end
   end
 
+  def confirm_judge_removed(account, event, judge)
+    @name = account.first_name
+    @event = event
+    @judge_name = judge.full_name
+    @event_url = regional_ambassador_regional_pitch_event_url(event)
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+        subject: "You removed Judge #{@judge_name} from your event: #{@event.name}"
+    end
+  end
+
+  def confirm_judge_added(account, event, judge)
+    @name = account.first_name
+    @event = event
+    @judge_name = judge.full_name
+    @event_url = regional_ambassador_regional_pitch_event_url(event)
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+        subject: "You added Judge #{@judge_name} to your event: #{@event.name}"
+    end
+  end
+
   def confirm_team_removed(account, event, team)
     @name = account.first_name
     @event = event

@@ -4,6 +4,7 @@
       <div class="admin-results-header-table">
         <div class="header">Name</div>
         <div class="header">Teams</div>
+        <div class="header">Judges</div>
         <div class="header">Division</div>
         <div class="header">Date / Time</div>
         <div class="header">City</div>
@@ -19,6 +20,10 @@
 
             <div class="cell">
               <%= pluralize(pitch_event.teams.count, "Team") %>
+            </div>
+
+            <div class="cell">
+              <%= pluralize(pitch_event.judges.count, "Judge") %>
             </div>
 
             <div class="cell">

@@ -27,7 +27,6 @@ class TeamMailer < ApplicationMailer
     end
   end
 
-
   def confirm_left_event(team, member, event)
     @team = team
     @event = event
