@@ -17,6 +17,10 @@ class Team < ActiveRecord::Base
     as_json(only: %w{id name description})
   end
 
+  def type_name
+    "student" # TODO this is a big mistake -- using it for RPE selection
+  end
+
   mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> {
@@ -261,9 +265,21 @@ class Team < ActiveRecord::Base
   end
 
   class VirtualRegionalPitchEvent
+    include ActiveModel::Conversion
+    extend ActiveModel::Naming
+
+    attr_accessor :id
+
+    def self.model_name  
+      ActiveModel::Name.new(self, nil, "RegionalPitchEvent")  
+    end  
+
+    def persisted?
+      true
+    end
+
     def name; "Virtual (online) Judging"; end
     def live?; false; end
-    def to_param; "virtual"; end
     def id; "virtual"; end
 
     def timezone

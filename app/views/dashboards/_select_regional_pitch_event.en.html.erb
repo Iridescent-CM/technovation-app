@@ -1,3 +1,5 @@
+<% user ||= current_team %>
+
 <div class="regional-event-selection card">
   <div class="card__heading">
     <% if events.any? %>
@@ -10,41 +12,43 @@
   </div>
 
   <div class="card__body">
-    <p>
-      Your team, <strong><%= current_team.name %></strong>, is in the <strong><%= current_team.region_name %></strong> region
-      and the <strong><%= current_team.division_name.titleize %></strong> division.
-    </p>
+    <% if user.is_a?(Team) %>
+      <p>
+        Your team, <strong><%= user.name %></strong>, is in the <strong><%= user.region_name %></strong> region
+        and the <strong><%= user.division_name.titleize %></strong> division.
+      </p>
 
-    <hr />
+      <hr />
+    <% end %>
 
     <% if events.any? %>
       <p>
         <strong>Your currently selected event:</strong>
-        <%= current_team.selected_regional_pitch_event_name %>
+        <%= user.selected_regional_pitch_event_name %>
 
         <span class="small-action-bar">
           <%= link_to 'view full details',
-            student_regional_pitch_event_path(current_team.selected_regional_pitch_event) %>
+            [user.type_name, user.selected_regional_pitch_event] %>
 
-          <% if current_team.selected_regional_pitch_event.live? %>
+          <% if user.selected_regional_pitch_event.live? %>
             &nbsp;|&nbsp;
             <%= link_to 'remove',
-              student_regional_pitch_event_selection_path,
+              [user.type_name, :regional_pitch_event_selection],
               data: {
                 method: :delete,
-                confirm: "Are you sure you want to remove your team from the event: #{current_team.selected_regional_pitch_event_name}?",
+                confirm: "Are you sure you want to remove your team from the event: #{user.selected_regional_pitch_event_name}?",
               } %>
           <% end %>
         </span>
       </p>
 
-      <% if (events - [current_team.selected_regional_pitch_event]).any? %>
+      <% if (events - [user.selected_regional_pitch_event]).any? %>
         <hr />
 
         <strong>Select a different event to attend:</strong>
 
         <ul class="regional-event-selection-list">
-          <% (events - [current_team.selected_regional_pitch_event]).each do |event| %>
+          <% (events - [user.selected_regional_pitch_event]).each do |event| %>
             <li>
               <%= event.name %><br />
               <%= event.city %><br />
@@ -54,7 +58,7 @@
               &ndash;
               <%= event.ends_at.in_time_zone(event.timezone).strftime("%-I:%M%P %Z") %><br />
 
-              <%= link_to 'view full details', student_regional_pitch_event_path(event) %>
+              <%= link_to 'view full details', [user.type_name, event] %>
             </li>
           <% end %>
         </ul>
@@ -64,15 +68,21 @@
     <% else %>
       <p>
         Because there are <strong>no live events</strong> scheduled in your region,
-        <strong>your team's submission will be judged online.</strong>
+        <% if user.is_a?(Team) %>
+          <strong>your team's submission will be judged online.</strong>
+        <% else %>
+          <strong>you will judge submissions online.</strong>
+        <% end %>
       </p>
     <% end %>
 
-    <div class="card__actions-row card__actions-row--pos-end">
-      <%= link_to 'See how your submission looks to the judges',
-        app_path(submission),
-        class: "appy-button",
-        target: :_blank %>
-    </div>
+    <% if user.is_a?(Team) %>
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to 'See how your submission looks to the judges',
+          app_path(submission),
+          class: "appy-button",
+          target: :_blank %>
+      </div>
+    <% end %>
   </div>
 </div>

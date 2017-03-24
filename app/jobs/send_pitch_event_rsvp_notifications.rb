@@ -53,5 +53,29 @@ class SendPitchEventRSVPNotifications < ActiveJob::Base
         team_id
       )
     end
+
+    if event_ids[:judge_leaving_event_id]
+      NotifyAmbassadorOfJudgeLeftEventJob.perform_now(
+        event_ids[:judge_leaving_event_id],
+        team_id
+      )
+
+      NotifyJudgeOfLeftEventJob.perform_now(
+        event_ids[:judge_leaving_event_id],
+        team_id
+      )
+    end
+
+    if event_ids[:judge_joining_event_id]
+      NotifyAmbassadorOfJudgeJoinedEventJob.perform_now(
+        event_ids[:judge_joining_event_id],
+        team_id
+      )
+
+      NotifyJudgeOfJoinedEventJob.perform_now(
+        event_ids[:judge_joining_event_id],
+        team_id
+      )
+    end
   end
 end

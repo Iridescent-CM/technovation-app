@@ -9,7 +9,11 @@
 
 <div class="dashboard flex-row">
   <div class="flex-col-sm-8 dashboard__main">
-    <% unless current_judge.full_access_enabled? %>
+    <% if current_judge.full_access_enabled? %>
+      <%= render 'dashboards/select_regional_pitch_event',
+        user: current_judge,
+        events: @regional_events %>
+    <% else %>
       <div class="to-do">
         <h2 class="to-do__heading appy-heading-lg">
           <%= t("views.application.to_do") %>

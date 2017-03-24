@@ -1,5 +1,9 @@
 module Judge
   class DashboardsController < JudgeController
+    def show
+      @regional_events = RegionalPitchEvent.available_to(current_judge)
+    end
+
     private
     def create_mentor_judge_on_dashboard
       if current_account.mentor_profile.present? and current_account.judge_profile.nil?

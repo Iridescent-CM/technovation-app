@@ -10,6 +10,8 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :submission_scores
 
+  has_and_belongs_to_many :regional_pitch_events, -> { uniq }
+
   validates :company_name, :job_title,
     presence: true
 
@@ -19,6 +21,14 @@ class JudgeProfile < ActiveRecord::Base
     rescue
       raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
     end
+  end
+
+  def selected_regional_pitch_event
+    regional_pitch_events.last or Team::VirtualRegionalPitchEvent.new
+  end
+
+  def selected_regional_pitch_event_name
+    selected_regional_pitch_event.name
   end
 
   def authenticated?

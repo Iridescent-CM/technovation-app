@@ -15,21 +15,33 @@ class RegionalPitchEvent < ActiveRecord::Base
     to: :regional_ambassador_profile,
     prefix: false
 
-  scope :available_to, ->(submission) {
-    if submission.present?
-      if submission.country === "US"
-        joins(:divisions)
-        .where("divisions.id = ?", submission.division_id)
-        .joins(regional_ambassador_profile: :account)
-        .where(
-          "accounts.country = 'US' AND accounts.state_province = ?",
-          submission.state_province
-        )
-      else
-        joins(:divisions)
-        .where("divisions.id = ?", submission.division_id)
-        .joins(regional_ambassador_profile: :account)
-        .where("accounts.country = ?", submission.country)
+  scope :available_to, ->(record) {
+    if record.present?
+      case record
+      when JudgeProfile
+        if record.country === "US"
+          joins(regional_ambassador_profile: :account)
+          .where("accounts.country = 'US' AND accounts.state_province = ?",
+                 record.state_province)
+        else
+          joins(regional_ambassador_profile: :account)
+          .where("accounts.country = ?", record.country)
+        end
+      when TeamSubmission
+        if record.country === "US"
+          joins(:divisions)
+          .where("divisions.id = ?", record.division_id)
+          .joins(regional_ambassador_profile: :account)
+          .where(
+            "accounts.country = 'US' AND accounts.state_province = ?",
+            record.state_province
+          )
+        else
+          joins(:divisions)
+          .where("divisions.id = ?", record.division_id)
+          .joins(regional_ambassador_profile: :account)
+          .where("accounts.country = ?", record.country)
+        end
       end
     else
       none

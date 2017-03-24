@@ -54,6 +54,18 @@ class AmbassadorMailer < ApplicationMailer
     end
   end
 
+  def judge_left_event(account, event, judge)
+    @name = account.first_name
+    @event = event
+    @judge_name = judge.full_name
+    @event_url = regional_ambassador_regional_pitch_event_url(event)
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+           subject: "Judge #{@judge_name} left your event: #{@event.name}"
+    end
+  end
+
   def team_joined_event(account, event, team)
     @name = account.first_name
     @event = event
@@ -63,6 +75,18 @@ class AmbassadorMailer < ApplicationMailer
     I18n.with_locale(account.locale) do
       mail to: account.email,
            subject: "#{@team_name} joined your event: #{@event.name}"
+    end
+  end
+
+  def judge_joined_event(account, event, judge)
+    @name = account.first_name
+    @event = event
+    @judge_name = judge.full_name
+    @event_url = regional_ambassador_regional_pitch_event_url(event)
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+           subject: "Judge #{@judge_name} joined your event: #{@event.name}"
     end
   end
 
