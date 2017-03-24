@@ -73,7 +73,7 @@
   </div>
 <% end %>
 
-<% if current_account.judge_profile.present? and current_judge %>
+<% if (current_account.judge_profile.present? and current_judge rescue false) %>
   <div class="standalone-buttons">
     <div class="regional-pitch-event-selection-info">
       <% if current_judge.selected_regional_pitch_event == @regional_pitch_event %>
