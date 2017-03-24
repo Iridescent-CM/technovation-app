@@ -76,6 +76,16 @@
 }
 
 .dashboard__main {
+  padding: 0 1rem 0 0;
+
+  @media screen and (max-width: $device-sm) {
+    padding: 0;
+  }
+
+  > .card {
+    margin-bottom: 1rem;
+  }
+
   .my-stuff__item-wrapper {
     width: 50%;
 
@@ -158,14 +168,6 @@
   font-size: 1.1rem;
   margin-bottom: 1rem;
   text-align: center;
-}
-
-.dashboard__main {
-  padding: 0 1rem 0 0;
-
-  @media screen and (max-width: $device-sm) {
-    padding: 0;
-  }
 }
 
 .dashboard__sidebar {
