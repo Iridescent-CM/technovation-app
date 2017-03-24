@@ -13,12 +13,29 @@
       <%= render 'dashboards/select_regional_pitch_event',
         user: current_judge,
         events: @regional_events %>
+
+      <div class="card">
+        <div class="card__heading">
+          Judge Training
+          <%= fa_icon("calendar-check-o", class: "card-heading__flair") %>
+        </div>
+        <div class="card__body">
+          <p>
+            Confused? Not sure where to start? Attend a Judge Training.
+          </p>
+          <div class="card__actions-row card__actions-row--pos-end">
+            <%= link_to 'Attend a Judge Training',
+              'http://technovationchallenge.org/judge-training/',
+              target: :_blank,
+              class: "appy-button" %>
+          </div>
+        </div>
+      </div>
     <% else %>
       <div class="to-do">
         <h2 class="to-do__heading appy-heading-lg">
           <%= t("views.application.to_do") %>
         </h2>
-
         <ul class="to-do__list">
           <%= render 'completion_steps/consent_waiver', account: current_judge %>
           <%= render 'completion_steps/location_details', account: current_judge %>
