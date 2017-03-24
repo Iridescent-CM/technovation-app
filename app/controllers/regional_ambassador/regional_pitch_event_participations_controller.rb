@@ -55,7 +55,7 @@ module RegionalAmbassador
       else
         SendPitchEventRSVPNotifications.perform_later(
           record.id,
-          ra_removed_judge_from: old_event.id,
+          ra_removed_judge_from: event.id,
         )
       end
 
