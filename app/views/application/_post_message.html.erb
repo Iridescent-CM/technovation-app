@@ -1,0 +1,35 @@
+<h1 class="appy-title">Thanks for your interest!</h1>
+
+<p>
+  Registration is now closed for students, mentors, and regional ambassadors for the 
+  <%= Season.current.year %> 
+  season. Check back in the Fall for details about the 
+  <%= Season.current.year + 1 %> 
+  season. Feel free to email 
+  <%= mail_to "info@technovationchallenge.org" %>
+  or check out our
+  <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
+  for more information.
+</p>
+
+<p>
+  In the meantime, stay connected! Follow us.
+  <h1>
+    <%= link_to fa_icon("facebook-square"), 
+        'https://www.facebook.com/TechChal', 
+        target: :_blank %>
+    <%= link_to fa_icon("instagram"), 
+        'https://www.instagram.com/techchal/', 
+        target: :_blank %>
+    <%= link_to fa_icon("twitter-square"), 
+        'https://twitter.com/technovation', 
+        target: :_blank %>
+    <%= link_to fa_icon("linkedin-square"), 
+        'https://www.linkedin.com/company/technovation', 
+        target: :_blank %>   
+  </h1>
+</p>
+
+<p>
+  -The Technovation Team
+</p>
