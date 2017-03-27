@@ -5,11 +5,16 @@ class SubmissionScore < ActiveRecord::Base
   validates :team_submission_id, uniqueness: { scope: :judge_profile_id }
 
   def complete?
-    not attributes.values.any?(&:blank?)
+    not attributes.reject { |k, _| k == 'completed_at' }.values.any?(&:blank?)
   end
 
   def incomplete?
     not complete?
+  end
+
+  def complete!
+    self.completed_at = Time.current
+    save!
   end
 
   def team_submission_stated_goal
