@@ -620,7 +620,21 @@
     submitButton.innerText = 'Submit Scores';
 
     submitButton.addEventListener('click', function() {
-      console.log('Wow, good job, you have reached the end.');
+      $.ajax({
+        method: "PATCH",
+        url: formWrapper.dataset.url,
+        data: {
+          submission_score: {
+            completed_at: new Date(),
+          },
+        },
+        success: function() {
+          location.href = formWrapper.dataset.successUrl;
+        },
+        error: function(data) {
+          createFlashNotification('error', data.errorMessage);
+        },
+      });
     });
 
     sectionsToRender.appendChild(buttonsWrapper);

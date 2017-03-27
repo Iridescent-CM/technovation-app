@@ -1,12 +1,18 @@
 <div class="judging-view">
-  <h1 class="appy-title">
-    Scoring
-    <%= @current_team_submission.app_name || "[No App Name]" %>
-    by
-    <%= @current_team_submission.team.name %>
-  </h1>
+  <h1 class="appy-title"><%= @current_team_submission.app_name || "[No App Name]" %></h1>
 
-  <div class="card judging-form judging-form--loading" id="judging-form">
+  <h3>
+    by
+    <%= @current_team_submission.team.name %>,
+    from
+    <%= @current_team_submission.team_primary_location %>
+  </h3>
+
+  <div
+    data-success-url="<%= judge_submission_scores_path %>"
+    data-url="<%= judge_submission_score_path(@submission_score) %>"
+    class="card judging-form judging-form--loading"
+    id="judging-form">
     <!-- loading class removed once JS loads -->
 
     <div class="card__heading judging-form__title-bar">
