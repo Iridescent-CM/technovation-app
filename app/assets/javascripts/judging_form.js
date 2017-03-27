@@ -40,6 +40,7 @@
   setShouldButtonsBeDisabled();
   generateMarkup();
   initRangeSliders();
+  setFormDisplay('minimize');
 
   var tcForm = document.querySelector('#judging-technical-checklist form');
   // If any of the technical checklist toggles are toggled on, we can assume
@@ -360,9 +361,12 @@
     setFormDisplay('maximize');
   });
 
-  var windowButton = document.getElementById('juding-form-window');
-  windowButton.addEventListener('click', function() {
-    setFormDisplay('window');
+  var windowButton = document.getElementById('juding-form-window'),
+      windowButtonSecondary = document.getElementById('juding-form-window-reveal');
+  _.each([windowButton, windowButtonSecondary], function(btn) {
+    btn.addEventListener('click', function() {
+      setFormDisplay('window');
+    });
   });
 
   var minimizeButton = document.getElementById('juding-form-minimize');
@@ -397,6 +401,7 @@
   function maximizeForm() {
     formWrapper.classList.remove(minimizeClass);
     formWrapper.classList.add(maximizeClass);
+    formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
     document.body.style.overflow = 'hidden';
 
     formWrapper.classList.remove('judging-form--transition');
@@ -407,6 +412,7 @@
   function windowForm() {
     formWrapper.classList.remove(maximizeClass);
     formWrapper.classList.remove(minimizeClass);
+    formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
     document.body.style.overflow = 'auto';
 
     formWrapper.classList.remove('judging-form--transition');
@@ -417,6 +423,7 @@
   function minimizeForm() {
     formWrapper.classList.remove(maximizeClass);
     formWrapper.classList.add(minimizeClass);
+    formWrapper.querySelector("[data-show-on='minimize']").style.display = "block";
     document.body.style.overflow = 'auto';
 
     formWrapper.classList.remove('judging-form--transition');
