@@ -4,28 +4,6 @@
 
 <div class="flex-row">
   <div class="flex-col-sm-8">
-    <% if @submission_scores.incomplete.empty? %>
-      <div class="card">
-        <div class="card__heading">
-          Start a new score now!
-        </div>
-
-        <div class="card__body">
-          <p>
-            You're ready to start scoring a new submission!
-          </p>
-
-          <div class="card__actions-row card__actions-row--pos-end">
-            <%= link_to 'Score a new submission',
-              new_judge_submission_score_path,
-              class: "appy-button" %>
-          </div>
-        </div>
-      </div>
-    <% else %>
-      <p>Please finish your incomplete score before scoring another one.</p>
-    <% end %>
-
     <h4>Completed scores</h4>
 
     <% if @submission_scores.complete.empty? %>
@@ -57,29 +35,51 @@
     <% end %>
   </div>
 
-  <div class="flex-col-sm-4 dashboard__sidebar">
-    <% @submission_scores.incomplete.each do |score| %>
+  <div class="flex-col-sm-4">
+    <% if @submission_scores.incomplete.empty? %>
       <div class="card">
         <div class="card__heading">
-          Submission score in progress
+          Start a new score now!
         </div>
 
         <div class="card__body">
-          <%= image_tag score.team_submission_team_photo, width: "100%" %>
-
-          <center>
-            <strong>
-              <%= score.team_submission_app_name %> by <%= score.team_submission_team_name %>
-            </strong>
-          </center>
+          <p>
+            You're ready to start scoring a new submission!
+          </p>
 
           <div class="card__actions-row card__actions-row--pos-end">
-            <%= link_to 'Continue Scoring',
-              edit_judge_submission_score_path(score),
+            <%= link_to 'Score a new submission',
+              new_judge_submission_score_path,
               class: "appy-button" %>
           </div>
         </div>
       </div>
+    <% else %>
+      <p>Please finish your incomplete scores. Thanks!</p>
+
+      <% @submission_scores.incomplete.each do |score| %>
+        <div class="card">
+          <div class="card__heading">
+            Submission score in progress
+          </div>
+
+          <div class="card__body">
+            <%= image_tag score.team_submission_team_photo, width: "100%" %>
+
+            <center>
+              <strong>
+                <%= score.team_submission_app_name %> by <%= score.team_submission_team_name %>
+              </strong>
+            </center>
+
+            <div class="card__actions-row card__actions-row--pos-end">
+              <%= link_to 'Continue Scoring',
+                edit_judge_submission_score_path(score),
+                class: "appy-button" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
