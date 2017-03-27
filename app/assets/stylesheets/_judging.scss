@@ -154,10 +154,22 @@
 }
 
 .judging-form__display-controls {
+  background: white;
+  color: black;
   font-size: 0.9em;
+  padding: 1rem;
+  margin: -1rem -1rem -1rem 0;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border: 1px solid white;
 
   button:not(:last-child) {
-    margin-right: 0.5em;
+    margin-right: 1rem;
+  }
+
+  button:hover, button.active {
+    color: $mulberry;
+    font-weight: bold;
   }
 }
 

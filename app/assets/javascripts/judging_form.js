@@ -378,6 +378,12 @@
   var minimizeClass = 'judging-form--minimize';
 
   function setFormDisplay(type) {
+    _.each(document.querySelectorAll('.judging-form__display-controls .active'), function(a) {
+      a.classList.remove('active');
+    });
+
+    document.querySelector('.judging-form__display-controls .' + type).classList.add('active');
+
     if (type === 'maximize') {
       if (formWrapper.classList.contains(maximizeClass)) {
         return;
