@@ -45,6 +45,27 @@
   </div>
 
   <div class="flex-col-sm-4 dashboard__sidebar">
+    <% if current_judge.full_access_enabled? %>
+      <% unless Rails.env.production? %>
+        <div class="card">
+          <div class="card__heading">
+            Start Scoring Submissions Now
+            <%= fa_icon("gavel", class: "card-heading__flair") %>
+          </div>
+          <div class="card__body">
+            <p>
+              You can score submissions online now!
+            </p>
+            <div class="card__actions-row card__actions-row--pos-end">
+              <%= link_to 'Score Submissions',
+                judge_submission_scores_path,
+                class: "appy-button" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
     <% if current_judge.mentor_profile || current_judge.created_at < Date.new(2017, 3, 8) %>
       <div class="card">
         <div class="card__heading">

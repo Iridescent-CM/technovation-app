@@ -128,7 +128,7 @@ Rails.application.routes.draw do
 
     resource :mentor_profile
 
-    resources :submission_scores, only: [:new, :update]
+    resources :submission_scores, only: [:index, :new, :edit, :update]
 
     resources :team_submissions, only: [] do
       resources :technical_checklist_verifications, only: [:new, :create]

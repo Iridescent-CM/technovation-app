@@ -21,6 +21,10 @@ class Team < ActiveRecord::Base
     "student" # TODO this is a big mistake -- using it for RPE selection
   end
 
+  def photo
+    team_photo
+  end
+
   mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> {

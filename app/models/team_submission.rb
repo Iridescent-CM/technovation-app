@@ -55,6 +55,7 @@ class TeamSubmission < ActiveRecord::Base
 
   delegate :name,
            :division_name,
+           :photo,
     to: :team,
     prefix: true
 
@@ -186,7 +187,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def embed_code(method)
     if send(method) and send(method).match(/youtu/)
-      id = send(method)[/v=([\w]+[^&])&?.*$/, 1]
+      id = send(method)[/v=([\w\-]+[^&])&?.*$/, 1]
 
       %{<iframe
           width="100%"

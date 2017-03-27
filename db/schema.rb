@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322194755) do
+ActiveRecord::Schema.define(version: 20170327151204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,8 +399,10 @@ ActiveRecord::Schema.define(version: 20170322194755) do
     t.text     "entrepreneurship_comment"
     t.text     "pitch_comment"
     t.text     "overall_comment"
+    t.datetime "completed_at"
   end
 
+  add_index "submission_scores", ["completed_at"], name: "index_submission_scores_on_completed_at", using: :btree
   add_index "submission_scores", ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id", using: :btree
   add_index "submission_scores", ["team_submission_id"], name: "index_submission_scores_on_team_submission_id", using: :btree
 
@@ -438,9 +440,14 @@ ActiveRecord::Schema.define(version: 20170322194755) do
     t.integer  "development_platform"
     t.boolean  "source_code_file_uploaded"
     t.string   "slug"
+    t.integer  "submission_score_count"
+    t.integer  "judge_opened_id"
+    t.datetime "judge_opened_at"
   end
 
+  add_index "team_submissions", ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at", using: :btree
   add_index "team_submissions", ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
+  add_index "team_submissions", ["submission_score_count"], name: "index_team_submissions_on_submission_score_count", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",                                      null: false
