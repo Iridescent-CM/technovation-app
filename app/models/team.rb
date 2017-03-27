@@ -174,6 +174,10 @@ class Team < ActiveRecord::Base
     creator.address_details
   end
 
+  def primary_location
+    creator_address_details
+  end
+
   def city
     creator.city
   end

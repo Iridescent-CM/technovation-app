@@ -1,10 +1,12 @@
 <div class="judging-view">
-  <h1 class="appy-title">
-    Scoring
-    <%= @current_team_submission.app_name || "[No App Name]" %>
+  <h1 class="appy-title"><%= @current_team_submission.app_name || "[No App Name]" %></h1>
+
+  <h3>
     by
-    <%= @current_team_submission.team.name %>
-  </h1>
+    <%= @current_team_submission.team.name %>,
+    from
+    <%= @current_team_submission.team_primary_location %>
+  </h3>
 
   <div
     data-success-url="<%= judge_submission_scores_path %>"
