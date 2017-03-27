@@ -6,7 +6,11 @@
     <%= @current_team_submission.team.name %>
   </h1>
 
-  <div class="card judging-form judging-form--loading" id="judging-form">
+  <div
+    data-success-url="<%= judge_submission_scores_path %>"
+    data-url="<%= judge_submission_score_path(@submission_score) %>"
+    class="card judging-form judging-form--loading"
+    id="judging-form">
     <!-- loading class removed once JS loads -->
 
     <div class="card__heading judging-form__title-bar">
