@@ -2,6 +2,16 @@ module Judge
   class SubmissionScoresController < JudgeController
     helper_method :current_team
 
+    def index
+      @submission_scores = current_judge.submission_scores
+    end
+
+    def edit
+      current_team_submission
+      @submission_score = current_judge.submission_scores.find(params[:id])
+      render :new
+    end
+
     def new
       @submission_score = current_judge.submission_scores.find_or_create_by!(
         team_submission_id: current_team_submission.id
@@ -49,7 +59,10 @@ module Judge
     end
 
     def current_team_submission
-      params[:team_submission_id] ||= FindEligibleSubmissionId.(current_judge)
+      params[:team_submission_id] ||= FindEligibleSubmissionId.(
+        current_judge,
+        submission_score_id: params[:id]
+      )
 
       begin
         @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])

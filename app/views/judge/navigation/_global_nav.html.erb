@@ -1,7 +1,7 @@
 <% unless Rails.env.production? %>
   <% if current_judge.full_access_enabled? %>
     <li class="nav-link">
-      <%= link_to t('views.application.score_submissions'), new_judge_submission_score_path %>
+      <%= link_to t('views.application.score_submissions'), judge_submission_scores_path %>
     </li>
   <% end %>
 <% end %>

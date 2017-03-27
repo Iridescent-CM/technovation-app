@@ -55,6 +55,7 @@ class TeamSubmission < ActiveRecord::Base
 
   delegate :name,
            :division_name,
+           :photo,
     to: :team,
     prefix: true
 

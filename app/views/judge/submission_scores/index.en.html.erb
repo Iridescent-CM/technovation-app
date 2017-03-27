@@ -1,0 +1,25 @@
+<h1 class="appy-title">
+  Scoring App Submissions
+</h1>
+
+<% @submission_scores.each do |score| %>
+  <div class="card">
+    <div class="card__heading">
+      <%= score.team_submission_app_name %>
+    </div>
+
+    <div class="card__body">
+      <%= image_tag score.team_submission_team_photo, width: 200, height: 150 %>
+
+      <p>
+        <%= score.team_submission_app_name %> by <%= score.team_submission_team_name %>
+      </p>
+
+      <div class="card__actions-row card__actions-row--pos-end">
+        <%= link_to 'Continue Scoring',
+          edit_judge_submission_score_path(score),
+          class: "appy-button" %>
+      </div>
+    </div>
+  </div>
+<% end %>
