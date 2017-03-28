@@ -1,21 +1,13 @@
 <div class="home-page">
+
   <div class="home-page__form-wrapper simple-card">
     <h1 class="appy-title">Create Your Judge Account</h1>
     <%= render 'signup_attempts/form', attempt: @signup_attempt %>
   </div>
 
   <div class="home-page__welcome-message">
-
-    <button class="home-page__expand-welcome-message unbutton">
-      Learn more <span class="hide-on-device-xs">about Technovation</span>
-
-      <span class="fa"><!--Chevron dn/up being set via CSS--></span>
-    </button>
-
-    <div class="home-page__welcome-message-overflow-container">
-      <div class="home-page__welcome-message-wrapper">
-      <%= render 'application/post_message' %>
-      </div>
-    </div>
+    <%= render 'post_message' %>
   </div>
+
 </div>
+    

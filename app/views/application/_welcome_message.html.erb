@@ -1,40 +1,51 @@
-<h1 class="appy-title">Welcome to Technovation <%= Season.current.year %>!</h1>
+<button class="home-page__expand-welcome-message unbutton">
+  Learn more <span class="hide-on-device-xs">about Technovation</span>
+  <span class="fa"><!--Chevron dn/up being set via CSS--></span>
+</button>
 
-<p>
-  We're excited to begin registration for our
-  <%= Season.current.year %>
-  Technovation season.
-  Through this website, you will be able to sign up as a student, as a mentor,
-  as a judge, or you can apply to become a regional ambassador.
-</p>
+<div class="home-page__welcome-message-overflow-container">
+  <div class="home-page__welcome-message-wrapper">
 
-<p>
-  After you complete your profile, you can create a team, join another team, 
-  invite students to join your team and also find virtual or in-person mentors
-  in your area.
+    <h1 class="appy-title">Welcome to Technovation <%= Season.current.year %>!</h1>
 
-  You will also have access to the full Technovation curriculum, which will
-  walk you through identifying a problem in your community, developing a
-  mobile app, and building a business plan and pitch.
-</p>
+    <p>
+      We're excited to begin registration for our
+      <%= Season.current.year %>
+      Technovation season.
+      Through this website, you will be able to sign up as a student, as a mentor,
+      as a judge, or you can apply to become a regional ambassador.
+    </p>
 
-<p>
-  If you participated in the
-  <%= Season.current.year - 1 %>
-  Technovation season, you can use the same email and password to sign in
-  and register for the new
-  <%= Season.current.year %>
-  season. Otherwise, please sign up to get started!
-</p>
+    <p>
+      After you complete your profile, you can create a team, join another team, 
+      invite students to join your team and also find virtual or in-person mentors
+      in your area.
 
-<p>
-  Feel free to email <%= mail_to "info@technovationchallenge.org" %>
-  or check out our
-  <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
-  for more information.
-</p>
+      You will also have access to the full Technovation curriculum, which will
+      walk you through identifying a problem in your community, developing a
+      mobile app, and building a business plan and pitch.
+    </p>
 
-<p>
-  Happy coding!<br />
-  The Technovation Team
-</p>
+    <p>
+      If you participated in the
+      <%= Season.current.year - 1 %>
+      Technovation season, you can use the same email and password to sign in
+      and register for the new
+      <%= Season.current.year %>
+      season. Otherwise, please sign up to get started!
+    </p>
+
+    <p>
+      Feel free to email <%= mail_to "info@technovationchallenge.org" %>
+      or check out our
+      <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
+      for more information.
+    </p>
+
+    <p>
+      Happy coding!<br />
+      The Technovation Team
+    </p>
+    
+  </div>
+</div>
