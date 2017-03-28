@@ -75,11 +75,12 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def as_indexed_json(options = {})
+    mp = account && account.mentor_profile
     {
       "id" => id,
-      "mentor_profile_id" => account.mentor_profile && account.mentor_profile.id,
+      "mentor_profile_id" => mp && mp.id,
       "regional_pitch_event_id" => selected_regional_pitch_event.id,
-      "region_division_names" => account.mentor_profile && account.mentor_profile.team_region_division_names
+      "region_division_names" => mp && mp.team_region_division_names
     }
   end
 end
