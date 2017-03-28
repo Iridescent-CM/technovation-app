@@ -237,7 +237,10 @@ class TeamSubmission < ActiveRecord::Base
   def as_indexed_json(options = {})
     {
       "id" => id,
-      "regional_pitch_event_id" => team.selected_regional_pitch_event.id
+      "regional_pitch_event_id" => team.selected_regional_pitch_event.id,
+      "region_division_name" => team.region_division_name,
+      "sdg" => stated_goal
+
     }
   end
 

@@ -157,7 +157,7 @@ class Team < ActiveRecord::Base
   end
 
   def region_division_name
-    name = creator.country
+    name = creator.country || ""
     if name == "US"
       name += "_#{state_province}"
     end
