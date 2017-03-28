@@ -108,4 +108,21 @@ RSpec.describe Team do
     team = FactoryGirl.create(:team, created_at: Time.new(2015, 8, 1, 0, 0, 0, "-08:00"))
     expect(team.seasons.map(&:year)).to eq([2016])
   end
+
+  describe ".region_division_name" do
+    it "includes state in US" do
+      team = FactoryGirl.create(:team)
+      expect(team.region_division_name).to eq("US_IL,senior")
+    end
+
+    it "uses only country outside the US" do
+      team = FactoryGirl.create(:team, creator_in: "Salvador", creator_country: "BR")
+      expect(team.region_division_name).to eq("BR,senior")
+    end
+
+    it "won't blow up without country" do
+      team = FactoryGirl.create(:team, creator_in: nil, creator_country: nil)
+      expect(team.region_division_name).to eq(",senior")
+    end
+  end
 end

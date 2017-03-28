@@ -240,7 +240,6 @@ class TeamSubmission < ActiveRecord::Base
       "regional_pitch_event_id" => team.selected_regional_pitch_event.id,
       "region_division_name" => team.region_division_name,
       "sdg" => stated_goal
-
     }
   end
 

@@ -1,4 +1,13 @@
 class JudgeProfile < ActiveRecord::Base
+  include Elasticsearch::Model
+
+  index_name "#{Rails.env}_profiles"
+  document_type 'judge'
+  settings index: { number_of_shards: 1, number_of_replicas: 1 }
+
+  after_save    { IndexModelJob.perform_later("index", "JudgeProfile", id) }
+  after_destroy { IndexModelJob.perform_later("delete", "JudgeProfile", id) }
+
   scope :full_access, -> {
     joins(account: :consent_waiver)
       .where("accounts.location_confirmed = ?", true)
@@ -63,5 +72,14 @@ class JudgeProfile < ActiveRecord::Base
 
   def type_name
     "judge"
+  end
+
+  def as_indexed_json(options = {})
+    {
+      "id" => id,
+      "mentor_profile_id" => account.mentor_profile && account.mentor_profile.id,
+      "regional_pitch_event_id" => selected_regional_pitch_event.id,
+      "region_division_names" => account.mentor_profile && account.mentor_profile.team_region_division_names
+    }
   end
 end
