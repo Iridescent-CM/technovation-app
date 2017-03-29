@@ -48,6 +48,16 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   }
 
+  scope :in_region_of, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(regional_ambassador_profile: :account)
+      .where("accounts.country = 'US' AND accounts.state_province = ?", ambassador.state_province)
+    else
+      joins(regional_ambassador_profile: :account)
+      .where("accounts.country = ?", ambassador.country)
+    end
+  }
+
   def self.find(id)
     if id == "virtual"
       Team::VirtualRegionalPitchEvent.new

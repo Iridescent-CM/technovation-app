@@ -1,11 +1,11 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      @pitch_events = current_ambassador.regional_pitch_events
+      @pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
     end
 
     def show
-      @pitch_event = current_ambassador.regional_pitch_events.find(params[:id])
+      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
 
       @senior_team_participants = Team.current
         .senior
@@ -32,7 +32,7 @@ module RegionalAmbassador
     end
 
     def edit
-      @pitch_event = current_ambassador.regional_pitch_events.find(params[:id])
+      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
     end
 
     def create
@@ -46,7 +46,7 @@ module RegionalAmbassador
     end
 
     def update
-      @pitch_event = current_ambassador.regional_pitch_events.find(params[:id])
+      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
         redirect_to [:regional_ambassador, @pitch_event], notice: 'Regional pitch event was successfully updated.'
@@ -56,7 +56,7 @@ module RegionalAmbassador
     end
 
     def destroy
-      current_ambassador.regional_pitch_events.find(params[:id]).destroy
+      RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id]).destroy
       redirect_to regional_ambassador_regional_pitch_events_url,
         notice: 'Regional pitch event was successfully destroyed.'
     end

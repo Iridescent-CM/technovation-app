@@ -55,6 +55,9 @@ $modal-width: 600px;
 .modalify__close {
   color: $dark-grey;
   cursor: pointer;
+  &.appy-button {
+    color: white;
+  }
 }
 
 // Big, scorllable modals with fixed headers
