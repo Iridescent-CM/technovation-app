@@ -36,7 +36,7 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     DatabaseCleaner.strategy = :transaction
     unless example.metadata[:elasticsearch]
-      stub_request(:any, /#{ENV.fetch("BONSAI_URL")}/).to_rack(FakeBonsai)
+      stub_request(:any, /#{URI(ENV.fetch("BONSAI_URL")).host}/).to_rack(FakeBonsai)
     end
   end
 
