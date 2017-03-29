@@ -7,7 +7,7 @@ class JoinRequest < ActiveRecord::Base
   scope :for_students, -> { where(requestor_type: "StudentProfile") }
 
   belongs_to :requestor, polymorphic: true
-  belongs_to :joinable, polymorphic: true
+  belongs_to :joinable, polymorphic: true, touch: true
 
   delegate :name,
     to: :joinable,

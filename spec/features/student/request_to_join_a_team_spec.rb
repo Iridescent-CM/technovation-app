@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Students request to join a team" do
+RSpec.feature "Students request to join a team", :elasticsearch do
   scenario "students already on a team don't see the link" do
     student = FactoryGirl.create(:student, :on_team)
     sign_in(student)

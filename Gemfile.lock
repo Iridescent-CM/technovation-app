@@ -149,6 +149,7 @@ GEM
       elasticsearch-transport (= 5.0.3)
     elasticsearch-api (5.0.3)
       multi_json
+    elasticsearch-dsl (0.1.5)
     elasticsearch-model (0.1.9)
       activesupport (> 3)
       elasticsearch (> 0.4)
@@ -548,6 +549,7 @@ DEPENDENCIES
   dalli (~> 2.7)
   database_cleaner (~> 1.5)
   dotenv-rails (~> 2.2)
+  elasticsearch-dsl (~> 0.1)
   elasticsearch-model (~> 0.1)
   elasticsearch-rails (~> 0.1)
   factory_girl_rails (~> 4.8)
