@@ -62,7 +62,10 @@
           .member-info {
             margin-left: 1rem;
 
-            h3,
+            h3 {
+              margin: 0 0 1rem;
+            }
+
             p {
               margin: 0;
               padding: 0;

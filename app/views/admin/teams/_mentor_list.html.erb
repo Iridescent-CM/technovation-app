@@ -5,7 +5,9 @@
 
   <div class="module-body">
     <ul class="team_members">
-      <%= render(partial: "teams/member", collection: team.mentors) %>
+      <%= render partial: "teams/member",
+        collection: team.mentors,
+        locals: { admin: true } %>
     </ul>
   </div>
 </div>

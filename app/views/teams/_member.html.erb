@@ -1,10 +1,21 @@
+<% admin ||= false %>
+<% path_name = current_account.type_name == "admin" ? "profile" : "user" %>
+
 <li>
   <div class="member-image">
     <%= image_tag member.profile_image_url, width: 80, height: 80 %>
   </div>
 
   <div class="member-info">
-    <h3><%= member.full_name %></h3>
+    <% if admin %>
+      <h3>
+        <%= link_to member.full_name,
+          send("#{current_account.type_name}_#{path_name}_path", member.account_id) %>
+      </h3>
+    <% else %>
+      <h3><%= member.full_name %></h3>
+    <% end %>
+
     <p><%= mail_to member.email %></p>
   </div>
 </li>
