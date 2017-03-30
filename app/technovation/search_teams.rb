@@ -9,26 +9,26 @@ module SearchTeams
     if use_search_index(filter)
 
       query = Elasticsearch::DSL::Search.search do |q|
-        q.query do |q|
-          q.bool do |q|
+        q.query do |qq|
+          qq.bool do |q3|
             unless filter.text.blank?
-              q.must do |q|
-                q.query_string do |q|
-                  q.query sanitize_string_for_elasticsearch_string_query(filter.text)
+              q3.must do |q4|
+                q4.query_string do |q5|
+                  q5.query sanitize_string_for_elasticsearch_string_query(filter.text)
                 end
               end
             end
 
             if filter.spot_available
-              q.must do |q|
-                q.term spot_available?: true
+              q3.must do |q4|
+                q4.term spot_available?: true
               end
             end
           end
         end
 
-        q.from 0
-        q.size 10_000
+        qq.from 0
+        qq.size 10_000
       end
 
       results = teams.search(query).results
