@@ -29,7 +29,6 @@
     var textareas = document.querySelectorAll('textarea');
 
     textareas.forEach(function(ta) {
-      console.log("resizing textarea", ta.id);
       ta.style.height = ta.scrollHeight / 1.25 + "px";
     });
   }
