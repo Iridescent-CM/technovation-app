@@ -9,6 +9,16 @@ RSpec.describe Team do
     expect { team.region_name }.not_to raise_error
   end
 
+  it "fixes funky brasil/brazil region issue" do
+    team = FactoryGirl.create(:team)
+
+    allow(team.creator.account).to receive(:state_province) { "Brasil" }
+    expect(team.region_name).to eq("Brazil")
+
+    allow(team.creator.account).to receive(:state_province) { "Brazil" }
+    expect(team.region_name).to eq("Brazil")
+  end
+
   it "assigns to the B division if all students are in Division B" do
     team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
