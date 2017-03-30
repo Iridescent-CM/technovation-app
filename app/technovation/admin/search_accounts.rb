@@ -7,7 +7,6 @@ module Admin
       params[:team_status] = "All" if params[:team_status].blank?
       params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
-      params[:text] = params.fetch(:text) { "" }.sub(/(@.+$)/, '')
 
       season = Season.find_by(year: params[:season])
 
@@ -25,7 +24,7 @@ module Admin
         results = accounts.search(
           query: {
             query_string: {
-              query: "*#{params[:text]}*"
+              query: params[:text]
             }
           },
           from: 0,
