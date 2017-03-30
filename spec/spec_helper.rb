@@ -1,8 +1,8 @@
 require "dotenv"
+Dotenv.load
+
 require "pry"
 require "vcr_helper"
-
-Dotenv.load
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

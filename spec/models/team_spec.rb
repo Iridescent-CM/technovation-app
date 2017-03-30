@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Team do
+  it "deals okay with funky region name input" do
+    team = FactoryGirl.create(:team)
+
+    allow(team.creator.account).to receive(:state_province) { " NY " }
+
+    expect { team.region_name }.not_to raise_error
+  end
+
   it "assigns to the B division if all students are in Division B" do
     team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
