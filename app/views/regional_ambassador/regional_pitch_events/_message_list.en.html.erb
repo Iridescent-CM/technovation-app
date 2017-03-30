@@ -24,7 +24,7 @@
 
     <tbody>
       <% if (pitch_event.messages + pitch_event.multi_messages).select(&:persisted?).any? %>
-        <% (pitch_event.messages + pitch_event.multi_messages).select(&:persisted?).sort_by(&:created_at).each do |message| %>
+        <% (pitch_event.messages + pitch_event.multi_messages).select(&:persisted?).sort_by(&:created_at).reverse.each do |message| %>
           <tr>
             <td class="primary-col">
               <%= message.recipient_name  %>
