@@ -10,25 +10,25 @@ module SearchTeams
 
       query = Elasticsearch::DSL::Search.search do |q|
         q.query do |qq|
-          qq.bool do |q3|
+          qq.bool do |bl|
             unless filter.text.blank?
-              q3.must do |q4|
-                q4.query_string do |q5|
-                  q5.query sanitize_string_for_elasticsearch_string_query(filter.text)
+              bl.must do |m|
+                m.query_string do |qs|
+                  qs.query sanitize_string_for_elasticsearch_string_query(filter.text)
                 end
               end
             end
 
             if filter.spot_available
-              q3.must do |q4|
-                q4.term spot_available?: true
+              bl.must do |m|
+                m.term spot_available?: true
               end
             end
           end
         end
 
-        qq.from 0
-        qq.size 10_000
+        q.from 0
+        q.size 10_000
       end
 
       results = teams.search(query).results
