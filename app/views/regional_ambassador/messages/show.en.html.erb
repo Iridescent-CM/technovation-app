@@ -11,7 +11,7 @@
 
   <div class="card__body">
     <p>
-      Dear <em>&lt;individual name will go here&gt;</em>,
+      Dear <em>{name}</em>,
     </p>
 
     <% if @message.regarding %>
@@ -21,7 +21,7 @@
       </p>
 
       <p>
-        <em>&lt;link to <%= @message.regarding_name %> will go here&gt;</em>
+        <em>{link to <%= @message.regarding_name %>}</em>
       </p>
     <% end %>
 
@@ -54,7 +54,10 @@
 
     <p>
       <%= link_to 'SEND NOW',
-        regional_ambassador_message_deliveries_path(message_id: @message.id),
+        regional_ambassador_message_deliveries_path(
+          message_type: @message.class.name,
+          message_id: @message.id
+        ),
         class: "appy-button",
         data: {
           method: :post,

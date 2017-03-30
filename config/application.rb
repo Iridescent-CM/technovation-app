@@ -19,6 +19,10 @@ if Rails.env.development? or Rails.env.test?
   Dotenv.load
 end
 
+if Rails.env.development?
+  require 'elasticsearch/rails/instrumentation'
+end
+
 Bundler.require(*Rails.groups)
 
 module TechnovationApp

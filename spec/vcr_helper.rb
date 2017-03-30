@@ -6,4 +6,5 @@ VCR.configure do |config|
   config.hook_into :webmock # or :fakeweb
   config.configure_rspec_metadata!
   config.ignore_localhost = true
+  config.ignore_hosts URI(ENV.fetch("BONSAI_URL")).host
 end

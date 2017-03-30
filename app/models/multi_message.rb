@@ -1,10 +1,11 @@
-class Message < ActiveRecord::Base
+class MultiMessage < ActiveRecord::Base
+  store_accessor :recipients, :team, :judge_profile
+
   scope :sent, -> { where("sent_at IS NOT NULL") }
   scope :unsent, -> { where("sent_at IS NULL") }
   scope :undelivered, -> { where("delivered_at IS NULL") }
 
   belongs_to :sender, polymorphic: true
-  belongs_to :recipient, polymorphic: true
   belongs_to :regarding, polymorphic: true
 
   validates :body, presence: true
@@ -31,26 +32,24 @@ class Message < ActiveRecord::Base
     delivered_at
   end
 
-  def regarding_name
-    case regarding_type
-    when "RegionalPitchEvent"
-      "event: #{regarding.name}"
+  def teams
+    @teams ||= team.split(',').map do |id|
+      Team.find(id)
     end
   end
 
-  def regarding_link_text
-    case regarding_type
-    when "RegionalPitchEvent"
-      "View the full event details for #{regarding.name}"
+  def judges
+    @judges ||= judge_profile.split(',').map do |id|
+      JudgeProfile.find(id)
     end
   end
 
   def recipient_name
-    case recipient_type
-    when "Team"
-      "team: #{recipient.name}"
-    when "JudgeProfile"
-      "judge: #{recipient.full_name}"
-    end
+    names = recipients.reject { |_, v| v.blank? }.keys
+    "All #{names.map(&:humanize).map(&:pluralize).to_sentence} for #{regarding_name}"
+  end
+
+  def regarding_name
+    regarding.name
   end
 end

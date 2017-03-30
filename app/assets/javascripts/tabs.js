@@ -26,10 +26,14 @@
 
     forEach(tabLinks, function(tabLink) {
       tabLink.addEventListener('click', revealTabContent, false);
+      var btn = tabLink.querySelector('button');
+      if (btn && location.href.split("#")[1] === btn.dataset.tabId)
+        btn.click();
     });
 
     function revealTabContent(e) {
       e.preventDefault();
+      location.href = location.href.split("#")[0] + "#" + e.target.dataset.tabId;
 
       forEach(tabContents, function(tabContent) {
         tabContent.classList.remove('tab-content__showing');

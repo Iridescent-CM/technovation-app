@@ -15,6 +15,7 @@ gem 'clipboard-rails', "~> 1.6"
 
 gem 'elasticsearch-model', "~> 0.1"
 gem 'elasticsearch-rails', "~> 0.1"
+gem 'elasticsearch-dsl', "~> 0.1"
 
 gem 'friendly_id', "~> 5.2"
 

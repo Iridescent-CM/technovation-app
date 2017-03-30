@@ -33,9 +33,17 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
+  config.before(:each) do |example|
     DatabaseCleaner.strategy = :transaction
-    stub_request(:any, /localhost:9200/).to_rack(FakeBonsai)
+    unless example.metadata[:elasticsearch]
+      stub_request(:any, /#{URI(ENV.fetch("BONSAI_URL")).host}/).to_rack(FakeBonsai)
+    end
+  end
+
+  config.before(:each, elasticsearch: true) do
+    [Team, Account].each do |model|
+      model.__elasticsearch__.create_index! force: true
+    end
   end
 
   config.before(:each, js: true) do
