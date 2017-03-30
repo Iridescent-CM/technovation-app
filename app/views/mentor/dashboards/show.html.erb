@@ -92,6 +92,25 @@
       </div>
     </div>
 
+    <div class="card">
+      <div class="card__heading">
+        <%= t("views.application.judging_rubric") %>
+        <%= fa_icon "gavel", class: "card-heading__flair" %>
+      </div>
+
+      <div class="card__body">
+        <p>
+          Check out the 
+          <%= Season.current.year %> 
+          judging rubric to see how teams will be scored!<br>
+
+          <%= link_to "Judging Rubric".html_safe,
+            "http://www.technovationchallenge.org/judging-rubric/",
+            target: "_blank" %>
+        </p>
+      </div>
+    </div>
+    
     <% if current_mentor.honor_code_signed? %>
       <%= render 'honor_code_signed', account: current_mentor %>
     <% end %>

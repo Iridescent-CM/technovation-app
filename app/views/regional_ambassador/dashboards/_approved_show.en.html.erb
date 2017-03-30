@@ -176,7 +176,7 @@
 
           <div class="card__body">
             <p>
-              Make sure you have everything ready to submit your app to Technovation!<br>
+              See what teams need to do to complete their submissions!<br>
 
               <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
                 "http://www.technovationchallenge.org/submission-guidelines/",
@@ -185,8 +185,30 @@
           </div>
         </div>
       </li>
+
+      <li class="resources__item-wrapper">
+        <div class="card">
+          <div class="card__heading">
+            <%= t("views.application.judging_rubric") %>
+            <%= fa_icon "gavel", class: "card-heading__flair" %>
+          </div>
+
+          <div class="card__body">
+            <p>
+              Check out the 
+              <%= Season.current.year %> 
+              judging rubric to see how teams will be scored!<br>
+
+              <%= link_to "Judging Rubric".html_safe,
+                "http://www.technovationchallenge.org/judging-rubric/",
+                target: "_blank" %>
+            </p>
+          </div>
+        </div>
+      </li>
+
     </ul>
-  </div>
+  </div>  
 </div>
 
 <% provide(:head_js) do %>
