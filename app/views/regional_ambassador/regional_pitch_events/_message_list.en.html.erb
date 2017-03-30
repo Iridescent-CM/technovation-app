@@ -11,8 +11,8 @@
   <table class="ra-messages-list">
     <thead>
       <tr>
-        <th>Recipient</th>
         <th>Subject</th>
+        <th>Recipient</th>
         <th>Sent at</th>
         <% if ambassador %>
           <th>Review Unsent</th>
@@ -27,12 +27,12 @@
         <% (pitch_event.messages + pitch_event.multi_messages).select(&:persisted?).sort_by(&:created_at).reverse.each do |message| %>
           <tr>
             <td class="primary-col">
-              <%= message.recipient_name  %>
-            </td>
-
-            <td class="primary-col">
               <%= link_to message.subject.blank? ? "(no subject)" : message.subject,
                 [user.type_name, message] %>
+            </td>
+
+            <td>
+              <%= message.recipient_name  %>
             </td>
 
             <td>
