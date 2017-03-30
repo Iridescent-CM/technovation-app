@@ -31,7 +31,8 @@
             </td>
 
             <td class="primary-col">
-              <%= link_to message.subject, send("#{user.type_name}_message_path", message) %>
+              <%= link_to message.subject.blank? ? "(no subject)" : message.subject,
+                [user.type_name, message] %>
             </td>
 
             <td>
