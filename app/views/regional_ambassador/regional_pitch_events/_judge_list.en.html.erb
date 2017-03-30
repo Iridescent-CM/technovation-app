@@ -44,7 +44,11 @@
         <% pitch_event.judges.each do |judge| %>
           <tr>
             <td class="primary-col">
-              <%= link_to judge.full_name, send("#{user.type_name}_user_path", judge.account) %>
+              <% if ambassador %>
+                <%= link_to judge.full_name, regional_ambassador_user_path(judge.account) %>
+              <% else %>
+                <%= link_to judge.full_name, admin_profile_path(judge.account) %>
+              <% end %>
             </td>
 
             <% if ambassador %>
