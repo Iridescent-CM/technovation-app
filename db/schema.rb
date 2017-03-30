@@ -11,10 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327151204) do
+ActiveRecord::Schema.define(version: 20170330022645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
+  enable_extension "hstore"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -242,6 +244,20 @@ ActiveRecord::Schema.define(version: 20170327151204) do
   end
 
   add_index "messages", ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id", using: :btree
+
+  create_table "multi_messages", force: :cascade do |t|
+    t.integer  "sender_id",      null: false
+    t.string   "sender_type",    null: false
+    t.integer  "regarding_id",   null: false
+    t.string   "regarding_type", null: false
+    t.hstore   "recipients",     null: false
+    t.string   "subject"
+    t.text     "body",           null: false
+    t.datetime "sent_at"
+    t.datetime "delivered_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "parental_consents", force: :cascade do |t|
     t.string   "electronic_signature", null: false

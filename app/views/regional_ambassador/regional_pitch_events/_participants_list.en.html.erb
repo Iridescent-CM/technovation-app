@@ -35,6 +35,20 @@
         Judges (<%= event.judges.count %>)
       </button>
     </li>
+
+    <% if ambassador %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="tab-ra-pitch-messages">
+          Messages (<%=
+            ambassador.messages.select(&:persisted?).count +
+              ambassador.multi_messages.select(&:persisted?).count
+          %>)
+        </button>
+      </li>
+    <% end %>
   </ul>
 
   <div class="content">
@@ -66,5 +80,16 @@
           pitch_event: event %>
       </div>
     </div>
+
+    <% if ambassador %>
+      <div class="tab-content" id="tab-ra-pitch-messages">
+        <div class="messages-list">
+          <%= render 'regional_ambassador/regional_pitch_events/message_list',
+            user: user,
+            ambassador: ambassador,
+            pitch_event: event %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

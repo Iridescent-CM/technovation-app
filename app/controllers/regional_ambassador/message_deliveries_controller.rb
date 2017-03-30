@@ -1,9 +1,13 @@
 module RegionalAmbassador
   class MessageDeliveriesController < RegionalAmbassadorController
     def create
-      @message = current_ambassador.messages.unsent.find(params.fetch(:message_id))
+      @message = current_ambassador
+        .public_send(params.fetch(:message_type).underscore.pluralize)
+        .unsent.find(params.fetch(:message_id))
 
-      if @message.recipient_type == "Team"
+      if params[:message_type] == "MultiMessage"
+        SendAmbassadorMultiMessageJob.perform_later(@message.id)
+      elsif @message.recipient_type == "Team"
         SendAmbassadorTeamMessageJob.perform_later(@message.id)
       else
         SendAmbassadorJudgeMessageJob.perform_later(@message.id)

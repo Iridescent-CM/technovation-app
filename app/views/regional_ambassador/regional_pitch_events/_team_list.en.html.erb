@@ -122,7 +122,11 @@
           <% end %>
         <% else %>
           <tr>
-            <td colspan="3">
+            <% if ambassador %>
+              <td colspan="6">
+            <% else %>
+              <td colspan="2">
+            <% end %>
               No teams are assigned in this event's <%= division.to_s.titleize %> division
             </td>
           </tr>

@@ -16,6 +16,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   has_many :regional_pitch_events
 
   has_many :messages, as: :sender
+  has_many :multi_messages, as: :sender
 
   delegate :submitted?,
            :candidate_id,

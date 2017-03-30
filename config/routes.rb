@@ -110,7 +110,8 @@ Rails.application.routes.draw do
     resources :regional_pitch_events
     resources :regional_pitch_event_participations, only: [:new, :create, :destroy]
 
-    resources :messages, except: :destroy
+    resources :messages
+    resources :multi_messages
     resources :message_deliveries, only: :create
   end
 

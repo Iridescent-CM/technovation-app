@@ -107,7 +107,11 @@
         <% end %>
       <% else %>
         <tr>
-          <td colspan="3">
+          <% if ambassador %>
+            <td colspan="6">
+          <% else %>
+            <td>
+          <% end %>
             No judges are assigned in this event
           </td>
         </tr>
