@@ -25,7 +25,7 @@ module RegionalTeam
       results = teams.search({
         query: {
           query_string: {
-            query: "*#{params[:text]}*"
+            query: params[:text]
           },
         },
         from: 0,

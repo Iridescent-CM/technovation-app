@@ -1,7 +1,5 @@
 module RegionalAccount
   def self.call(ambassador, params = {})
-    params[:text] = params.fetch(:text) { "" }.sub(/(@.+$)/, '')
-
     account = if params[:type] == "All"
                 Account
               else
@@ -17,7 +15,7 @@ module RegionalAccount
       results = accounts.search(
         query: {
           query_string: {
-            query: "*#{params[:text]}*"
+            query: params[:text]
           }
         },
         from: 0,
