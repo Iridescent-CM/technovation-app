@@ -7,7 +7,6 @@ module Admin
       params[:team_status] = "All" if params[:team_status].blank?
       params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
-      params[:text] = params.fetch(:text) { "" }
 
       season = Season.find_by(year: params[:season])
 
