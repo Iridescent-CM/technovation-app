@@ -552,6 +552,7 @@
    * Review submission form
    */
   function reviewSubmissionForm() {
+    saveProgressAll();
     var submissionVerification = verifySubmission();
     if (submissionVerification.isValid) {
       createVerificationView();
