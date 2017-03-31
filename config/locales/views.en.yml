@@ -28,6 +28,7 @@ en:
       instead: "instead"
       invite: "Send invite"
       judge_mode: "Switch to judging"
+      judging_rubric: "Judging Rubric"
       language: "Choose language:"
       leave_team: "Leave this team"
       mentor_mode: "Switch to mentor mode"
