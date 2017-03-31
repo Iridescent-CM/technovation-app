@@ -1,55 +1,107 @@
-<div class="dashboard-page-info">
-  <div class="team-photo">
-    <%= image_tag @team.team_photo_url, width: 450, height: 300 %>
-  </div>
+<!-- Students My Team page
+  Todo: Localize the text
+-->
 
-  <h3 class="team_name"><%= team.name %></h3>
+<h1 class="appy-title">
+  My Team
+</h1>
 
-  <p class="team_division">
-    <%= t("views.teams.show.division_name", name: team.division_name.humanize) %>
-  </p>
+<div class="my-teams">
 
-  <p class="team_description"><%= team.description %></p>
-
-  <% if team.current? %>
-    <p>
-      <%= link_to t("controllers.teams.edit.link"),
-        [:edit, account.type_name, team],
-        class: "appy-button" %>
-    </p>
-
-    <%= simple_form_for [account.type_name, @team],
-      html: { class: "remote_checkboxes" },
-      remote: true do |f| %>
-      <%= f.input :accepting_student_requests,
-        as: :boolean,
-        label: t("models.team.accepting_student_requests") %>
-
-      <%= f.input :accepting_mentor_requests,
-        as: :boolean,
-        label: t("models.team.accepting_mentor_requests") %>
-    <% end %>
-
-    <p>
+  <div class="my-teams__col-left">
+    <div class="mt-team-photo simple-card">
+      <a
+        data-uploader="true"
+        class="mt-team-photo__photo"
+        style="background-image: url(<%= team.team_photo_url %>)">
+      </a>
       <%= render 'teams/upload_team_photo',
-        uploader: @uploader,
-        namespace: account.type_name,
-        team: team %>
-    </p>
-  <% end %>
-
-  <div class="team-memberships">
-    <%= render "teams/member_list", team: team %>
-    <%= render "teams/mentor_list", team: team %>
+                  uploader: @uploader,
+                  namespace: account.type_name,
+                  team: team %>
+    </div>
   </div>
 
-  <div>
-    <% if team.current? && team.spot_available? %>
-      <%= render "teams/invite_students" %>
-    <% elsif team.spot_available? %>
-      <%= t("views.teams.show.past_team") %>
-    <% else %>
-      <%= t("views.teams.show.members_full") %>
-    <% end %>
+  <div class="my-teams__col-main">
+
+    <div class="my-teams__col-wide">
+      <div class="mt-about-team simple-card">
+        <div class="mt-about-team__header">
+          <div class="mt-about-team__name">
+            <%= team.name %>
+          </div>
+          <div class="mt-about-team__division">
+            <%= t("views.teams.show.division_name", name: team.division_name.humanize) %>
+          </div>
+        </div>
+
+        <div class="mt-about-team__description">
+          <%= team.description %>
+        </div>
+
+        <% if team.current? %>
+          <p><%= link_to t("controllers.teams.edit.link"), [:edit, account.type_name, team], class: "appy-button" %></p>
+        <% end %>
+      </div>
+
+      <% if team.current? %>
+        <div class="card">
+          <div class="card__heading">
+            Team Settings
+            <span class="fa fa-cog card-heading__flair"></span>
+          </div>
+          <div class="card__body">
+            <%= simple_form_for [account.type_name, @team],
+                                html: { class: "no-simple-form-style" },
+                                remote: true do |f| %>
+              <%= f.input :accepting_student_requests, as: :boolean, label: t("models.team.accepting_student_requests") %>
+              <%= f.input :accepting_mentor_requests, as: :boolean, label: t("models.team.accepting_mentor_requests") %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="my-teams__col-half">
+
+      <div class="card mt-team-members">
+        <div class="card__heading">
+          <%= t("views.teams.show.members_subheading") %>
+          <span class="fa fa-users card-heading__flair"></span>
+        </div>
+        <div class="card__body">
+          <ul class="team_members">
+            <%= render partial: "teams/member", collection: team.students, cached: true %>
+          </ul>
+          <%= render "teams/pending_invites",
+            preview_method: :invitee_email,
+            invites: team.pending_student_invites %>
+          <% if team.current? && team.spot_available? %>
+            <%= render "teams/invite_students" %>
+          <% elsif team.spot_available? %>
+            <%= t("views.teams.show.past_team") %>
+          <% else %>
+            <%= t("views.teams.show.members_full") %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card mt-mentors">
+        <div class="card__heading">
+          <%= t("views.teams.show.mentors_subheading") %>
+        </div>
+        <div class="card__body">
+          <%= render "teams/pending_invites", invites: team.pending_mentor_invites %>
+          <ul class="team_members">
+            <%= render(partial: "teams/member", collection: team.mentors, cached: true) or
+                link_to(t("views.#{account_type}.navigation.find_a_mentor"),
+                        send("new_#{account_type}_mentor_search_path"),
+                        class: "appy-button") %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+

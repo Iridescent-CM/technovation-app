@@ -1,9 +1,8 @@
 <%= direct_upload_form_for uploader, html: { class: 'fancy-upload' } do |f| %>
+  <%= link_to t("controllers.teams.update.change_image"), '#',
+              data: { uploader: true },
+              class: "appy-button" %>
   <p class="appy-hint">
-    <%= link_to t("controllers.teams.update.change_image"), '#',
-                data: { uploader: true },
-                class: "transparent-accent-button" %>
-    <br>
     <%= t("controllers.teams.update.change_image_hint") %>
   </p>
 

@@ -1,229 +1,175 @@
-.team-search__teams-wrapper {
+// General layout
+
+.my-teams {
   display: flex;
-  flex-wrap: wrap;
-}
+  margin-bottom: 50px;
 
-.team-search-result {
-  margin-bottom: 1rem;
-  padding: 0 0.5rem;
-  width: calc(100% / 3);
-
-  @media screen and (max-width: $device-lg) {
-    width: 50%;
+  .card,
+  .simple-card {
+    margin-bottom: 1em;
   }
 
-  @media screen and (max-width: $device-md) {
+  @media (max-width: $device-sm) {
+    flex-direction: column;
+  }
+}
+
+.my-teams__col-left {
+  width: 25%;
+
+  @media (max-width: $device-sm) {
+    width: 100%;
+  }
+}
+
+.my-teams__col-main {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+  width: 75%;
+
+  @media (max-width: $device-sm) {
     padding: 0;
     width: 100%;
   }
 }
 
-.team-search-result__card {
-  align-items: center;
-  background-color: white;
-  border-radius: 0.25em;
-  box-shadow: 0 2px 2px rgba(black, 0.15);
+.my-teams__col-wide {
+  justify-content: space-between;
   display: flex;
-  height: 100%;
-  flex-direction: column;
-  padding: 1rem;
-  position: relative;
 
-  * {
-    max-width: 100%;
+  > :first-child {
+    width: calc((100% * 2/3) - 1em);
+  }
+
+  > :first-child:only-child {
+    width: 100%;
+  }
+
+  > :last-child {
+    width: calc(100% * 1/3);
+  }
+
+  @media (max-width: $device-sm) {
+    flex-direction: column;
+
+    > :first-child,
+    > :last-child {
+      width: 100%;
+    }
   }
 }
 
-.team-search-result__photo img {
+.my-teams__col-half {
+  display: flex;
+  justify-content: space-between;
+
+  > :first-child {
+    width: calc(50% - 1em);
+  }
+
+  > :last-child {
+    width: 50%;
+  }
+
+  @media (max-width: $device-sm) {
+    flex-direction: column;
+
+    > :first-child,
+    > :last-child {
+      width: 100%;
+    }
+  }
+}
+
+// Team photo/name area
+
+.mt-team-photo {
+
+  form {
+    text-align: center;
+  }
+
+  .appy-button {
+    margin: 0 0 0.5rem;
+    width: 100%;
+  }
+
+  .appy-hint {
+    font-size: 0.75em;
+  }
+}
+
+.mt-team-photo__photo {
+  background-image: image-url("placeholders/placeholder-pattern.jpg");
+  background-size: cover;
   border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin: 0 auto 1em;
+  max-width: 300px;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% - 2em);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
 }
 
-.team-search-result__name,
-.team-search-result__location,
-.team-search-result__blurb {
-  font-size: 1.2rem;
-  text-align: center;
+// Team photo/description
+
+.mt-about-team {
+  display: flex;
+  flex-direction: column;
+
+  .appy-button {
+    margin: 1rem 0 0;
+  }
 }
 
-.team-search-result__name {
-  font-size: 1.3rem;
+.mt-about-team__header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mt-about-team__name {
+  font-size: $h3;
   font-weight: bold;
 }
 
-.team-search-result__link-wrapper {
-  display: block;
-  margin-top: auto;
-  width: 100%;
+.mt-about-team__description {
+  margin-bottom: auto;
+}
 
-  button {
-    font-size: 1.2rem;
-    margin-top: 1.25rem;
-    padding: 0.5rem;
-    text-transform: none;
-    width: 100%;
+.mt-about-team__division {
+  color: $mulberry;
+  font-style: italic;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+// Team members
+
+.mt-mentors,
+.mt-team-members {
+  input[type='email'] {
+    font-size: 1.1rem;
+  }
+
+  .appy-button {
+    margin: 0;
   }
 }
 
-.pending-invites {
-  margin: 15px 0 0;
+// Leave team wrapper
 
-  table {
-    margin: 5px 0;
-    width: auto;
-
-    td {
-      border: none;
-      padding: 0 5px 0 0;
-    }
-  }
-
-  h6 {
-    color: $mulberry;
-    margin-bottom: $small-spacing;
-  }
-
-  a {
-    color: $mulberry-dark;
-    &:hover {
-      color: $mulberry;
-    }
-  }
-}
-
-.update-invite {
-  margin: 0 0 1rem;
-}
-
-.team-memberships {
-  align-items: flex-start;
-  display: flex;
-  width: 100%;
-
-  @media screen and (max-width: $device-sm) {
-    flex-wrap: wrap;
-  }
-
-  .team-members {
-    width: 50%;
-    margin: 0 $small-spacing $base-spacing;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    @media screen and (max-width: $device-sm) {
-      margin: 0 0 $base-spacing;
-      width: 100%;
-    }
-
-    ul.team_members li {
-      margin-bottom: $small-spacing;
-
-      .member-image {
-        display: table-cell;
-        padding-right: $small-spacing;
-
-        img {
-          width: 80px;
-          height: auto;
-          border: 3px solid #fff;
-        }
-      }
-
-      .member-info {
-        display: table-cell;
-        vertical-align: top;
-        color: #fff;
-
-        h3 {
-          color: #fff;
-          margin: 0;
-          font-weight: normal;
-        }
-
-        a {
-          color: #fff;
-          text-decoration: underline;
-          &:hover { color: #ddd; }
-        }
-      }
-    }
-  }
-}
-
-.update-invite {
-  @include clearfix;
-
-  .accept-invite, .decline-invite {
-    @include span-columns(6);
-  }
-
-  .decline-invite {
-    @invite omega;
-  }
-}
-
-.team-photo {
-  display: block;
-  float: left;
-  margin: 0 1rem 1rem 0;
-}
-
-.simple_form {
-  .input {
-    &.team_member_invite_invitee_email {
-      width: 50%;
-      margin: 0;
-      padding: 0;
-
-      input {
-        margin: 0 0 0.5rem;
-      }
-
-      + .appy-button {
-        margin: 0 0 1rem;
-      }
-    }
-  }
-}
-
-.leave-team {
-  margin-top: 5rem;
-}
-
-.current-teams {
-  margin: 1rem 0;
-  max-width: 650px;
-
-  .mentor-teams {
-    li {
-      padding: 1rem;
-      margin: 0 0 1rem;
-      background: white;
-      border-radius: 0.3rem;
-      box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-
-      h4 {
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
-
-      .team-submissions-progress {
-        padding: 0;
-        border-radius: 0;
-        background: none;
-        box-shadow: none;
-        margin: 0;
-      }
-
-      small {
-        display: block;
-        text-align: center;
-      }
-    }
-  }
+.mt-leave-team-wrapper {
+  text-align: right;
 }
