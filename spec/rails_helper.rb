@@ -5,6 +5,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'vcr_helper'
 
+require 'elasticsearch_helper'
 require "geocoder_helper"
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -36,7 +37,7 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     DatabaseCleaner.strategy = :transaction
     unless example.metadata[:elasticsearch]
-      stub_request(:any, /#{URI(ENV.fetch("BONSAI_URL")).host}/).to_rack(FakeBonsai)
+      stub_request(:any, ElasticsearchHelper.urls_regex).to_rack(FakeBonsai)
     end
   end
 
