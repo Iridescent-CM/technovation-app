@@ -268,27 +268,42 @@
 
   function setShouldButtonsBeDisabled() {
     var isFirst = activeSectionIndex === 0 && activeQuestionIndex === 0;
+
     backButton.disabled = isFirst;
+
     var isLast = activeSectionIndex === (sections.length - 1) &&
       activeQuestionIndex === (questions.length - 1);
+
     nextButton.disabled = isLast;
 
     var textarea = questions[activeQuestionIndex].querySelector('textarea');
-    if (textarea && !textarea.value) {
-      nextButton.disabled = true;
-      textarea.oninput = function() {
-        if (this.value) {
-          nextButton.disabled = false;
-        } else {
-          nextButton.disabled = true;
-        }
-      };
+
+    if (textarea) {
+      var wrapper = closest(textarea, "[data-canned-responses]"),
+          trimmedValue = (textarea.value || "").trim();
+
+      if (trimmedValue === "" ||
+           _.includes(wrapper.dataset.cannedResponses, trimmedValue)) {
+        nextButton.disabled = true;
+
+        textarea.oninput = function() {
+          var trimmedValue = (this.value || "").trim();
+
+          if (trimmedValue !== "" &&
+               !_.includes(wrapper.dataset.cannedResponses, trimmedValue)) {
+            nextButton.disabled = false;
+          } else {
+            nextButton.disabled = true;
+          }
+        };
+      }
     }
 
-    var technicalChecklist = questions[activeQuestionIndex].classList.contains('question-technical-checklist');
+    var technicalChecklist = questions[activeQuestionIndex].classList
+                               .contains('question-technical-checklist');
     if (technicalChecklist && !hasVerifiedTechnicalChecklist) {
       nextButton.disabled = true;
-    } else {
+    } else if (technicalChecklist && hasVerifiedTechnicalChecklist) {
       nextButton.disabled = false;
     }
   }
