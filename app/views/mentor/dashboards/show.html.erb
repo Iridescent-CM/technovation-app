@@ -62,11 +62,15 @@
       <div class="card__body">
         <% if current_mentor.full_access_enabled? %>
           <p>
-            <%= link_to "Get Started on the Technovation Curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>
+            <%= link_to "Get Started on the Technovation Curriculum", 
+            "http://www.technovationchallenge.org/curriculum-intro/registered", 
+            target: "_blank" %>
           </p>
 
           <p>
-            <%= link_to "Read the Technovation Challenge Primer", "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", target: "_blank" %>
+            <%= link_to "Read the Technovation Challenge Primer", 
+            "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", 
+            target: "_blank" %>
             <br />(if you came from Made With Code)
           </p>
         <% else %>
@@ -83,12 +87,11 @@
 
       <div class="card__body">
         <p>
-          Make sure your team has everything ready to submit their app to Technovation!<br>
-
+          Make sure your team has everything ready to submit their app to Technovation!
+        </p>
           <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
             "http://www.technovationchallenge.org/submission-guidelines/",
             target: "_blank" %>
-        </p>
       </div>
     </div>
 
@@ -102,12 +105,11 @@
         <p>
           Check out the 
           <%= Season.current.year %> 
-          judging rubric to see how teams will be scored!<br>
-
+          judging rubric to see how teams will be scored!
+        </p>
           <%= link_to "Judging Rubric".html_safe,
             "http://www.technovationchallenge.org/judging-rubric/",
             target: "_blank" %>
-        </p>
       </div>
     </div>
     

@@ -136,14 +136,17 @@
       <li class="resources__item-wrapper">
         <div class="card">
           <div class="card__heading">
-            Curriculum
+            <%= t("views.application.curriculum") %>
             <%= fa_icon("graduation-cap", class: "card-heading__flair") %>
           </div>
 
           <div class="card__body">
             <p>
-              <%= link_to "Go to the #{Season.current.year} Technovation curriculum", "http://www.technovationchallenge.org/curriculum-intro/registered", target: "_blank" %>.
+              Check out what the girls will be learning.
             </p>
+              <%= link_to "#{Season.current.year} Technovation Curriculum", 
+              "http://www.technovationchallenge.org/curriculum-intro/registered", 
+              target: "_blank" %>
           </div>
         </div>
       </li>
@@ -151,7 +154,7 @@
       <li class="resources__item-wrapper">
         <div class="card">
           <div class="card__heading">
-            Resources
+            <%= t("views.application.resources") %>
             <%= fa_icon("globe", class: "card-heading__flair") %>
           </div>
 
@@ -159,10 +162,9 @@
             <p>
               Use this link to access RA Resources to support events and recruitment throughout the season.
             </p>
-
-            <p>
-              <%= link_to "RA Resources", "http://www.technovationchallenge.org/ra-resources/", target: "_blank" %>
-            </p>
+              <%= link_to "RA Resources", 
+              "http://www.technovationchallenge.org/ra-resources/", 
+              target: "_blank" %>
           </div>
         </div>
       </li>
@@ -176,12 +178,11 @@
 
           <div class="card__body">
             <p>
-              See what teams need to do to complete their submissions!<br>
-
+              See what teams need to do to complete their submissions!
+            </p>
               <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
                 "http://www.technovationchallenge.org/submission-guidelines/",
                 target: "_blank" %>
-            </p>
           </div>
         </div>
       </li>
@@ -197,12 +198,11 @@
             <p>
               Check out the 
               <%= Season.current.year %> 
-              judging rubric to see how teams will be scored!<br>
-
+              judging rubric to see how teams will be scored!
+            </p>
               <%= link_to "Judging Rubric".html_safe,
                 "http://www.technovationchallenge.org/judging-rubric/",
                 target: "_blank" %>
-            </p>
           </div>
         </div>
       </li>
