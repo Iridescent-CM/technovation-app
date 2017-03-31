@@ -40,7 +40,11 @@
   setShouldButtonsBeDisabled();
   generateMarkup();
   initRangeSliders();
-  setFormDisplay('minimize');
+  if (_.includes(window.location.search, "review")) {
+    setFormDisplay('maximize');
+  } else {
+    setFormDisplay('minimize');
+  }
 
   var tcForm = document.querySelector('#judging-technical-checklist form');
   // If any of the technical checklist toggles are toggled on, we can assume

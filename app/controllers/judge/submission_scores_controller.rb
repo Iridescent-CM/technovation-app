@@ -54,6 +54,7 @@ module Judge
         :solution_originality,
         :solution_stands_out,
         :overall_comment,
+        :technical_comment,
       ).tap do |tapped|
         tapped[:team_submission_id] = current_team_submission.id
       end
