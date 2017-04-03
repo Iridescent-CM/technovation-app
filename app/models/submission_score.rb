@@ -10,6 +10,7 @@ class SubmissionScore < ActiveRecord::Base
   delegate :app_name,
            :team_photo,
            :team_name,
+           :team_division_name,
     to: :team_submission,
     prefix: true,
     allow_nil: false
@@ -33,5 +34,25 @@ class SubmissionScore < ActiveRecord::Base
 
   def senior_team_division?
     team_submission.team.division.senior?
+  end
+
+  def total
+    sdg_alignment + evidence_of_problem + problem_addressed + app_functional +
+      demo_video + business_plan_short_term + business_plan_long_term +
+        market_research + viable_business_model + problem_clearly_communicated +
+          compelling_argument + passion_energy + pitch_specific + business_plan_feasible +
+            submission_thought_out + cohesive_story + solution_originality +
+              solution_stands_out
+  end
+
+  def total_possible
+    case team_submission.team_division_name
+    when "junior"
+      80
+    when "senior"
+      100
+    else
+      0
+    end
   end
 end

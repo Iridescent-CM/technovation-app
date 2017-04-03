@@ -37,6 +37,32 @@
   </div>
 
   <div class="flex-col-sm-4">
-    Sidebar!
+    <% if @submission_scores.incomplete.any? %>
+      <p>Please finish your incomplete scores. Thanks!</p>
+
+      <% @submission_scores.incomplete.each do |score| %>
+        <div class="card judge-submission-cta">
+          <div class="card__heading">
+            Submission score in progress
+          </div>
+
+          <div class="card__body">
+            <%= image_tag score.team_submission_team_photo, width: "100%" %>
+
+            <div class="card-body__details">
+              <p><strong>App:</strong> <%= score.team_submission_app_name %></p>
+              <p><strong>Team:</strong> <%= score.team_submission_team_name %></p>
+              <p><strong>Score:</strong> <%= score.total %> / <%= score.total_possible %></p>
+            </div>
+
+            <div class="card__actions-row card__actions-row--pos-end">
+              <%= link_to 'Continue Scoring',
+                edit_judge_submission_score_path(score),
+                class: "appy-button" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>

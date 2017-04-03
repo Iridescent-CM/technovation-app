@@ -7,6 +7,7 @@ module Judge
 
       if current_judge.selected_regional_pitch_event
         @team_submissions = current_judge.selected_regional_pitch_event.team_submissions
+        @team_submissions = @team_submissions - @submission_scores.flat_map(&:team_submission)
       end
     end
 
