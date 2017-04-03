@@ -15,6 +15,7 @@
           <div class="card-body__details">
             <p><strong>App:</strong> <%= submission.app_name %></p>
             <p><strong>Team:</strong> <%= submission.team_name %></p>
+            <p><strong>Division:</strong> <%= submission.team_division_name %></p>
             <p><strong>Location:</strong> <%= submission.team_primary_location %></p>
             <p><strong>Ages:</strong> <%= submission.team_ages.to_sentence %></p>
           </div>
@@ -52,6 +53,7 @@
             <div class="card-body__details">
               <p><strong>App:</strong> <%= score.team_submission_app_name %></p>
               <p><strong>Team:</strong> <%= score.team_submission_team_name %></p>
+              <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
               <p><strong>Score:</strong> <%= score.total %> / <%= score.total_possible %></p>
             </div>
 
