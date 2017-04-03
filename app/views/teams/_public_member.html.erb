@@ -5,5 +5,9 @@
 
   <div class="member-info">
     <h3><%= public_member.first_name %></h3>
+
+    <% if public_member.student_profile %>
+      <h4>Age <%= public_member.age %></h4>
+    <% end %>
   </div>
 </li>
