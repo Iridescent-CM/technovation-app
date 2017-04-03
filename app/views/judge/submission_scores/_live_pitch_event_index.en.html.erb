@@ -18,7 +18,9 @@
           </div>
 
           <div class="card__body">
-            <%= image_tag score.team_submission_team_photo, width: "100%" %>
+            <div class="card-body__img">
+              <%= image_tag score.team_submission_team_photo, width: 200, height: 133.33 %>
+            </div>
 
             <div class="card-body__details">
               <p><strong>App:</strong> <%= score.team_submission_app_name %></p>
