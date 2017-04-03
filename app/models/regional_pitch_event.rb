@@ -8,6 +8,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   has_and_belongs_to_many :teams, -> { uniq }
   has_and_belongs_to_many :judges, -> { uniq }, class_name: "JudgeProfile"
 
+  has_many :team_submissions, through: :teams
+
   has_many :messages, as: :regarding
   has_many :multi_messages, as: :regarding
 
