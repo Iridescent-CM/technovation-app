@@ -15,7 +15,8 @@
     <% @submission_scores.complete.each do |score| %>
       <div class="card judge-submission-cta">
         <div class="card__heading">
-          <%= score.team_submission_app_name %> by <%= score.team_submission_team_name %>
+          <%= score.team_submission_app_name %>
+          <small><%= score.team_submission_team_name %></small>
         </div>
 
         <div class="card__body">

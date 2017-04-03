@@ -10,10 +10,11 @@
 
       <p>Editable until Monday, May 15</p>
 
-      <% @submission_scores.incomplete.each do |score| %>
+      <% @submission_scores.complete.each do |score| %>
         <div class="card judge-submission-cta">
           <div class="card__heading">
-            Submission score in progress
+            <%= score.team_submission_app_name %>
+            <small><%= score.team_submission_team_name %></small>
           </div>
 
           <div class="card__body">
