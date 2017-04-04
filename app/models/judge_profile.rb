@@ -3,7 +3,11 @@ class JudgeProfile < ActiveRecord::Base
 
   index_name "#{Rails.env}_profiles"
   document_type 'judge'
-  settings index: { number_of_shards: 1, number_of_replicas: 1 }
+  settings index: { number_of_shards: 1, number_of_replicas: 1 } do
+    mappings do
+      indexes :region_division_names, index: "not_analyzed"
+    end
+  end
 
   after_destroy { IndexModelJob.perform_later("delete", "JudgeProfile", id) }
 
