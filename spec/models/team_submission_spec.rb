@@ -43,10 +43,15 @@ RSpec.describe TeamSubmission do
     })
 
     sub.create_technical_checklist!({
+      used_accelerometer: true,
+      used_accelerometer_explanation: "hey!",
       used_accelerometer_verified: true,
-      used_sound_verified: true,
+
+      used_loops: true,
+      used_loops_explanation: "okay",
+      used_loops_verified: true,
     })
 
-    expect(sub.total_technical_checklist_verified).to eq(2)
+    expect(sub.total_technical_checklist_verified).to eq(3)
   end
 end

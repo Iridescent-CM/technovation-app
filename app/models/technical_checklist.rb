@@ -17,12 +17,45 @@ class TechnicalChecklist < ActiveRecord::Base
   }
 
   def total_verified
-    attributes.reduce(0) do |sum, (k, v)|
-      if k.match(/_verified$/) and v
-        sum += 1
-      else
-        sum
-      end
+    total_coding_verified +
+      total_db_verified +
+        total_mobile_verified +
+          total_process_verified
+  end
+
+  def total_coding_verified
+    calculate_total_verified(
+      technical_components,
+      points_each: 1,
+      points_max:  4
+    )
+  end
+
+  def total_db_verified
+    calculate_total_verified(
+      database_components,
+      points_each: 1,
+      points_max: 1
+    )
+  end
+
+  def total_mobile_verified
+    calculate_total_verified(
+      mobile_components,
+      points_each: 2,
+      points_max: 2
+    )
+  end
+
+  def total_process_verified
+    if %i{paper_prototype
+          event_flow_chart
+          paper_prototype_verified
+          event_flow_chart_verified}.all? { |a| self[a] } and
+         team_submission.screenshots.count >= 2
+      3
+    else
+      0
     end
   end
 
@@ -83,6 +116,20 @@ class TechnicalChecklist < ActiveRecord::Base
   end
 
   private
+  def calculate_total_verified(components, options)
+    components.reduce(0) do |sum, aspect|
+      if sum == options[:points_max]
+        sum
+      elsif self[aspect] and
+          not self["#{aspect}_explanation"].blank? and
+            self["#{aspect}_verified"]
+        sum += options[:points_each]
+      else
+        sum
+      end
+    end
+  end
+
   def total_technical_components
     technical_components.reject { |m| send(m).blank? }.count
   end

@@ -142,10 +142,13 @@ RSpec.describe SubmissionScore do
     judge_profile = FactoryGirl.create(:judge_profile)
 
     team_submission.create_technical_checklist!({
+      used_canvas: true,
+      used_canvas_explanation: "hello",
       used_canvas_verified: true,
-      used_clock_verified: true,
+
+      used_lists: true,
+      used_lists_explanation: "hello",
       used_lists_verified: true,
-      used_accelerometer_verified: true,
     });
 
     subscore = SubmissionScore.create!({
@@ -153,6 +156,38 @@ RSpec.describe SubmissionScore do
       judge_profile: judge_profile,
     })
 
-    expect(subscore.total).to eq(4)
+    expect(subscore.total).to eq(3)
+  end
+
+  it "includes screenshots count as part of tech checklist score" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    team_submission.create_technical_checklist!({
+      used_canvas: true,
+      used_canvas_explanation: "hello",
+      used_canvas_verified: true,
+
+      used_lists: true,
+      used_lists_explanation: "hello",
+      used_lists_verified: true,
+    });
+
+    # 1/2 screenshots, not enough for points
+    team_submission.screenshots.create!
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+    })
+
+    expect(subscore.total).to eq(3)
+
+    # 2/2 screenshots
+    # but not other process stuff
+    team_submission.screenshots.create!
+
+    expect(subscore.total).to eq(3)
   end
 end
