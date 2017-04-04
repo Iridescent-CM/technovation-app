@@ -215,6 +215,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def total_technical_checklist_verified
+    if technical_checklist
+      technical_checklist.total_verified
+    else
+      0
+    end
+  end
+
   private
   def business_plan_complete_or_not_required?
     junior_division? or
