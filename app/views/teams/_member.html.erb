@@ -17,5 +17,17 @@
     <% end %>
 
     <p><%= mail_to member.email %></p>
+    <% if admin %>
+      <p class="member-action">
+        <%= link_to "Remove from team",
+                    send("#{current_account.type_name}_team_membership_path",
+                          @team,
+                          account_id: member.account_id),
+                    data: {
+                      method: :delete,
+                      confirm: "You are REMOVING #{member.full_name} from #{@team.name}",
+                    } %>
+      </p>
+    <% end %>
   </div>
 </li>
