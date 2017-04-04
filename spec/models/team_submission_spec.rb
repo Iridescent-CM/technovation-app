@@ -33,4 +33,20 @@ RSpec.describe TeamSubmission do
     subject.source_code_external_url = ""
     expect(subject.source_code_external_url).to be_blank
   end
+
+  it "knows its total technical checklist verified count" do
+    team = FactoryGirl.create(:team)
+
+    sub = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team,
+    })
+
+    sub.create_technical_checklist!({
+      used_accelerometer_verified: true,
+      used_sound_verified: true,
+    })
+
+    expect(sub.total_technical_checklist_verified).to eq(2)
+  end
 end

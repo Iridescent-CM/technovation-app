@@ -79,4 +79,80 @@ RSpec.describe SubmissionScore do
 
     expect(subscore).to be_complete
   end
+
+  it "calculates scores" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+
+      sdg_alignment: 3,
+      evidence_of_problem: 5,
+      problem_addressed: 4,
+      app_functional: 2,
+
+      demo_video: 0,
+      business_plan_short_term: 5,
+      business_plan_long_term: 5,
+      market_research: 3,
+
+      viable_business_model: 4,
+      problem_clearly_communicated: 2,
+      compelling_argument: 1,
+      passion_energy: 5,
+
+      pitch_specific: 5,
+      business_plan_feasible: 4,
+      submission_thought_out: 4,
+
+      cohesive_story: 4,
+      solution_originality: 3,
+      solution_stands_out: 5,
+    })
+
+    expect(subscore.total).to eq(64)
+  end
+
+  it "calculates total possible score based on division" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+    })
+
+    expect(subscore.total_possible).to eq(100)
+
+    team.division = Division.junior
+    team.save!
+
+    team_submission.reload
+
+    expect(subscore.total_possible).to eq(80)
+  end
+
+  it "includes tech checklist verification in the score" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    team_submission.create_technical_checklist!({
+      used_canvas_verified: true,
+      used_clock_verified: true,
+      used_lists_verified: true,
+      used_accelerometer_verified: true,
+    });
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+    })
+
+    expect(subscore.total).to eq(4)
+  end
 end

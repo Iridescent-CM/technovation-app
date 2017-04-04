@@ -16,6 +16,16 @@ class TechnicalChecklist < ActiveRecord::Base
     end
   }
 
+  def total_verified
+    attributes.reduce(0) do |sum, (k, v)|
+      if k.match(/_verified$/) and v
+        sum += 1
+      else
+        sum
+      end
+    end
+  end
+
   def completed?
     total_technical_components >= 4 and
       total_database_components >= 1 and

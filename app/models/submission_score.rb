@@ -37,13 +37,47 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def total
-    sdg_alignment + evidence_of_problem + problem_addressed + app_functional +
-      demo_video + business_plan_short_term + business_plan_long_term +
-        market_research + viable_business_model + problem_clearly_communicated +
-          compelling_argument + passion_energy + pitch_specific + business_plan_feasible +
-            submission_thought_out + cohesive_story + solution_originality +
-              solution_stands_out
+    ideation_total +
+      technical_total +
+        entrepreneurship_total +
+          pitch_total +
+            overall_impression_total
   end
+
+  def ideation_total
+    sdg_alignment +
+      evidence_of_problem +
+        problem_addressed
+  end
+
+  def technical_total
+    app_functional +
+      demo_video +
+        team_submission.total_technical_checklist_verified
+  end
+
+  def entrepreneurship_total
+    business_plan_short_term +
+      business_plan_long_term +
+        market_research +
+          viable_business_model
+  end
+
+  def pitch_total
+    problem_clearly_communicated +
+      compelling_argument +
+        passion_energy +
+          pitch_specific
+  end
+
+  def overall_impression_total
+    business_plan_feasible +
+      submission_thought_out +
+        cohesive_story +
+          solution_originality +
+            solution_stands_out
+  end
+
 
   def total_possible
     case team_submission.team_division_name
