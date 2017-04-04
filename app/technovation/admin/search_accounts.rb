@@ -7,6 +7,7 @@ module Admin
       params[:team_status] = "All" if params[:team_status].blank?
       params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
+      params[:country] = "All" if params[:country].blank?
 
       season = Season.find_by(year: params[:season])
 
@@ -35,6 +36,10 @@ module Admin
 
       unless params[:how_heard] == "All"
         accounts = accounts.where(referred_by: Account.referred_bies[params[:how_heard]])
+      end
+
+      unless params[:country] == "All"
+        accounts = accounts.where(country: params[:country])
       end
 
       if params[:type] == "Student"
