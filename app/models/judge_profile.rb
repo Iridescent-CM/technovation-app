@@ -5,7 +5,6 @@ class JudgeProfile < ActiveRecord::Base
   document_type 'judge'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  after_save    { IndexModelJob.perform_later("index", "JudgeProfile", id) }
   after_destroy { IndexModelJob.perform_later("delete", "JudgeProfile", id) }
 
   scope :full_access, -> {

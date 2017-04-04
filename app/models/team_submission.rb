@@ -10,7 +10,6 @@ class TeamSubmission < ActiveRecord::Base
   document_type 'submission'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  after_save    { IndexModelJob.perform_later("index", "TeamSubmission", id) }
   after_destroy { IndexModelJob.perform_later("delete", "TeamSubmission", id) }
 
   enum stated_goal: %w{
