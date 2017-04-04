@@ -4,6 +4,18 @@ module FindEligibleSubmissionId
       judge_profile.submission_scores
         .find(options[:submission_score_id])
         .team_submission_id
+    elsif judge_profile.selected_regional_pitch_event.live?
+      if options[:team_submission_id]
+        judge_profile.selected_regional_pitch_event
+          .team_submissions
+          .find(options[:team_submission_id])
+          .id
+      else
+        judge_profile.selected_regional_pitch_event
+          .team_submissions
+          .pluck(:id)
+          .sample
+      end
     else
       judge_profile.submission_scores
         .incomplete

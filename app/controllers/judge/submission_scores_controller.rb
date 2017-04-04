@@ -4,6 +4,11 @@ module Judge
 
     def index
       @submission_scores = current_judge.submission_scores
+
+      if current_judge.selected_regional_pitch_event
+        @team_submissions = current_judge.selected_regional_pitch_event.team_submissions
+        @team_submissions = @team_submissions - @submission_scores.flat_map(&:team_submission)
+      end
     end
 
     def edit
@@ -54,15 +59,17 @@ module Judge
         :solution_originality,
         :solution_stands_out,
         :overall_comment,
+        :technical_comment,
       ).tap do |tapped|
         tapped[:team_submission_id] = current_team_submission.id
       end
     end
 
     def current_team_submission
-      params[:team_submission_id] ||= FindEligibleSubmissionId.(
+      params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
-        submission_score_id: params[:id]
+        submission_score_id: params[:id],
+        team_submission_id: params[:team_submission_id]
       )
 
       begin

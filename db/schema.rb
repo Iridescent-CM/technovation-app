@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330022645) do
+ActiveRecord::Schema.define(version: 20170403171506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -389,26 +390,26 @@ ActiveRecord::Schema.define(version: 20170330022645) do
   create_table "submission_scores", force: :cascade do |t|
     t.integer  "team_submission_id"
     t.integer  "judge_profile_id"
-    t.integer  "sdg_alignment"
-    t.integer  "evidence_of_problem"
-    t.integer  "problem_addressed"
-    t.integer  "app_functional"
-    t.integer  "demo_video"
-    t.integer  "business_plan_short_term"
-    t.integer  "business_plan_long_term"
-    t.integer  "market_research"
-    t.integer  "viable_business_model"
-    t.integer  "problem_clearly_communicated"
-    t.integer  "compelling_argument"
-    t.integer  "passion_energy"
-    t.integer  "pitch_specific"
-    t.integer  "business_plan_feasible"
-    t.integer  "submission_thought_out"
-    t.integer  "cohesive_story"
-    t.integer  "solution_originality"
-    t.integer  "solution_stands_out"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "sdg_alignment",                default: 0
+    t.integer  "evidence_of_problem",          default: 0
+    t.integer  "problem_addressed",            default: 0
+    t.integer  "app_functional",               default: 0
+    t.integer  "demo_video",                   default: 0
+    t.integer  "business_plan_short_term",     default: 0
+    t.integer  "business_plan_long_term",      default: 0
+    t.integer  "market_research",              default: 0
+    t.integer  "viable_business_model",        default: 0
+    t.integer  "problem_clearly_communicated", default: 0
+    t.integer  "compelling_argument",          default: 0
+    t.integer  "passion_energy",               default: 0
+    t.integer  "pitch_specific",               default: 0
+    t.integer  "business_plan_feasible",       default: 0
+    t.integer  "submission_thought_out",       default: 0
+    t.integer  "cohesive_story",               default: 0
+    t.integer  "solution_originality",         default: 0
+    t.integer  "solution_stands_out",          default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.text     "ideation_comment"
     t.text     "technical_comment"
     t.text     "entrepreneurship_comment"

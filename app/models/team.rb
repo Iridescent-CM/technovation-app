@@ -134,6 +134,10 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def ages
+    students.map(&:age)
+  end
+
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end

@@ -68,6 +68,18 @@
 
 .card__body {
   padding: 1rem;
+  clear: both;
+
+  .card-body__img {
+    float: left;
+    margin: 0 1rem 1rem 0;
+  }
+
+  .card-body__details {
+    p {
+      margin: 0 0 0.5rem;
+    }
+  }
 }
 
 .card__actions-row {

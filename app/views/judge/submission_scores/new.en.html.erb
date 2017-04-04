@@ -95,6 +95,28 @@
           </div>
         </div>
 
+        <div class="judging-form__section">
+          <%= simple_form_for [:judge, @submission_score],
+            data: { remote: true },
+            html: { class: "no-simple-form-style"} do |f| %>
+            <h1>Technical Comment</h1>
+
+            <%= f.input :technical_comment,
+              wrapper_html: {
+                data: {
+                  canned_responses: [
+                    'The most impressive functionality of your app is...',
+                    'You demonstrated a strong understanding of...',
+                    'Your app could benefit from...',
+                    'Your app has a bug when...',
+                  ],
+                }
+              } %>
+
+              <%= f.button :submit, "Save Technical Feedback" %>
+          <% end %>
+        </div>
+
         <% if @submission_score.senior_team_division? %>
           <div class="judging-form__section">
             <%= render 'judge/submission_scores/entrepreneurship',

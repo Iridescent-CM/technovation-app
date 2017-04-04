@@ -1,0 +1,93 @@
+<h1 class="appy-title">
+  Virtual Judging
+</h1>
+
+<div class="flex-row">
+  <div class="flex-col-sm-8">
+    <h4>Completed scores</h4>
+
+    <% if @submission_scores.complete.empty? %>
+      <p>You have not yet completed any submission scores.</p>
+    <% end %>
+
+    <p>Please try to complete 3 to 5 scores. Thank you!</p>
+
+    <% @submission_scores.complete.each do |score| %>
+      <div class="card judge-submission-cta">
+        <div class="card__heading">
+          <%= score.team_submission_app_name %>
+          <small><%= score.team_submission_team_name %></small>
+        </div>
+
+        <div class="card__body">
+          <div class="card-body__img">
+            <%= image_tag score.team_submission.team_photo, width: 200, height: 133.33 %>
+          </div>
+
+          <div class="card-body__details">
+            <p><strong>App:</strong> <%= score.team_submission.app_name %></p>
+            <p><strong>Team:</strong> <%= score.team_submission.team_name %></p>
+            <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+            <p><strong>Location:</strong> <%= score.team_submission.team_primary_location %></p>
+            <p><strong>Ages:</strong> <%= score.team_submission.team_ages.to_sentence %></p>
+          </div>
+
+          <div class="card__actions-row card__actions-row--pos-end">
+            <%= link_to 'Review and Edit Score',
+              edit_judge_submission_score_path(score, review: true),
+              class: "appy-button" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex-col-sm-4">
+    <% if @submission_scores.incomplete.empty? %>
+      <div class="card">
+        <div class="card__heading">
+          Start a new score now!
+        </div>
+
+        <div class="card__body">
+          <p>
+            You're ready to start scoring a new submission!
+          </p>
+
+          <div class="card__actions-row card__actions-row--pos-end">
+            <%= link_to 'Score a new submission',
+              new_judge_submission_score_path,
+              class: "appy-button" %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <p>Please finish your incomplete scores. Thanks!</p>
+
+      <% @submission_scores.incomplete.each do |score| %>
+        <div class="card judge-submission-cta">
+          <div class="card__heading">
+            Submission score in progress
+          </div>
+
+          <div class="card__body">
+            <%= image_tag score.team_submission_team_photo, width: "100%" %>
+
+            <div class="card-body__details">
+              <p><strong>App:</strong> <%= score.team_submission_app_name %></p>
+              <p><strong>Team:</strong> <%= score.team_submission_team_name %></p>
+              <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+              <p><strong>Score:</strong> <%= score.total %> / <%= score.total_possible %></p>
+            </div>
+
+            <div class="card__actions-row card__actions-row--pos-end">
+              <%= link_to 'Continue Scoring',
+                edit_judge_submission_score_path(score),
+                class: "appy-button" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
