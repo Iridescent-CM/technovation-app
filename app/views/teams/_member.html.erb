@@ -9,6 +9,16 @@
   <div class="member-info">
     <% if admin %>
       <h3>
+        <p>
+        <%= link_to t("controllers.team_memberships.destroy.link", name: @team.name),
+                      [current_account.type_name, @team, :membership],
+                      send("#{current_account.type_name}_team_membership_path", @team, 
+                      data: {
+                      method: :delete,
+                      confirm: "You are REMOVING #{member.full_name} from #{@team.name}",
+                      },
+                      class: "appy-button" %>
+        </p>
         <%= link_to member.full_name,
           send("#{current_account.type_name}_#{path_name}_path", member.account_id) %>
       </h3>

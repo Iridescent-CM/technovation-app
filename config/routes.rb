@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     resources :users, only: :show
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]
+    resources :team_memberships, only: :destroy
 
     resources :exports, only: :create
 
@@ -147,6 +148,7 @@ Rails.application.routes.draw do
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy
+    resources :team_memberships, only: :destroy
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
