@@ -38,7 +38,7 @@ module RegionalAmbassador
         redirect_to [:regional_ambassador, @message],
           success: "Your message is ready to send"
       else
-        render :edit
+        render 'regional_ambassador/messages/edit'
       end
     end
 
