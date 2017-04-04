@@ -25,6 +25,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def complete!
     self.completed_at = Time.current
+    team_submission.clear_judge_opened_details!
     save!
   end
 

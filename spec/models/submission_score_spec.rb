@@ -190,4 +190,26 @@ RSpec.describe SubmissionScore do
 
     expect(subscore.total).to eq(3)
   end
+
+  it "clears the judge opened id/at on complete" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    team_submission.update_attributes(
+      judge_opened_at: Time.current,
+      judge_opened_id: judge_profile.id
+    )
+
+    sub = SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+    )
+
+    sub.complete!
+    team_submission.reload
+
+    expect(team_submission.judge_opened_at).to be_blank
+    expect(team_submission.judge_opened_id).to be_blank
+  end
 end

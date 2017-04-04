@@ -237,6 +237,13 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def clear_judge_opened_details!
+    update_attributes({
+      judge_opened_at: nil,
+      judge_opened_id: nil
+    })
+  end
+
   def as_indexed_json(options = {})
     {
       "id" => id,
