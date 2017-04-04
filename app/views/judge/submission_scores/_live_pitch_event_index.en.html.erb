@@ -26,6 +26,8 @@
               <p><strong>App:</strong> <%= score.team_submission_app_name %></p>
               <p><strong>Team:</strong> <%= score.team_submission_team_name %></p>
               <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+              <p><strong>Location:</strong> <%= score.team_submission.team_primary_location %></p>
+              <p><strong>Ages:</strong> <%= score.team_submission.team_ages.to_sentence %></p>
               <p><strong>Score:</strong> <%= score.total %> / <%= score.total_possible %></p>
             </div>
 
