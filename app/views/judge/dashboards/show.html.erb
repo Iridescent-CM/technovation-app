@@ -1,5 +1,13 @@
 <h1 class="appy-title">
-  <%= t("views.application.dashboard") %>
+  <%= t("views.application.judge_dashboard") %>
+
+  <% if current_judge.mentor_profile or
+      current_judge.created_at < Date.new(2017, 3, 8) %>
+    <small>
+      <%= link_to fa_icon('refresh', text: "Switch to Mentoring"),
+        mentor_dashboard_path %>
+    </small>
+  <% end %>
 </h1>
 
 <h2 class="appy-subtitle">
@@ -66,7 +74,7 @@
       <% end %>
     <% end %>
 
-    <% if current_judge.mentor_profile || current_judge.created_at < Date.new(2017, 3, 8) %>
+    <% if current_judge.mentor_profile or current_judge.created_at < Date.new(2017, 3, 8) %>
       <div class="card">
         <div class="card__heading">
           <%= t("views.application.mentor_mode") %>

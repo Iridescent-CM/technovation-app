@@ -5,6 +5,18 @@
   padding: 0 0.5rem 0.5rem 0;
   position: relative;
 
+  small {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+
+    a {
+      display: block;
+      padding: 0.25rem 0;
+      color: $mulberry;
+    }
+  }
+
   &::after {
     background-color: $shamrock;
     bottom: 0;

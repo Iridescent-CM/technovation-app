@@ -1,5 +1,9 @@
 <h1 class="appy-title">
-  <%= t("views.application.dashboard") %>
+  <%= t("views.application.mentor_dashboard") %>
+  <small>
+    <%= link_to fa_icon('refresh', text: "Switch to Judging"),
+      judge_dashboard_path %>
+  </small>
 </h1>
 
 <h2 class="appy-subtitle">
