@@ -39,7 +39,7 @@ module Admin
       end
 
       unless params[:country] == "All"
-        accounts = accounts.where(country: Account.countries[params[:country]])
+        accounts = accounts.where(country: params[:country])
       end
 
       if params[:type] == "Student"

@@ -22,6 +22,10 @@
     width: '250px',
   });
 
+  $('.chosen[data-reload]').chosen().change(function(e){
+    Admin.Utils.updateURLSearchParams(e.target.name, e.target.value);
+  });
+
   var clipboard = new Clipboard('.clipboard-btn');
 
   clipboard.on('success', function(e) {

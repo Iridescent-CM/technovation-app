@@ -56,8 +56,9 @@
 <label>
   Country:
   <%= select_tag :country,
-    options_for_select(["All", "United States", "Mexico"], params[:country]),
-    data: { reload: true, param: :country } %>
+    options_for_select(["All"] + CountryStateSelect.countries_collection, params[:country]),
+    data: { reload: true, param: :country },
+    class: "chosen" %>
 </label>
 
 <label>
