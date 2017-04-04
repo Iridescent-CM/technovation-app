@@ -147,7 +147,7 @@ class Team < ActiveRecord::Base
   end
 
   def region_name
-    if %{Brasil Brazil}.include?(creator.state_province || "")
+    if %w{Brasil Brazil}.include?(creator.state_province || "")
       "Brazil"
     elsif creator.country == "US"
       Country["US"].states[creator.state_province.strip]['name']
