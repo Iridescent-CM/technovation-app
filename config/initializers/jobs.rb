@@ -1,3 +1,3 @@
 if Rails.env.test?
-  IndexTeamJob.force_refresh true
+  IndexModelJob.force_refresh true
 end
