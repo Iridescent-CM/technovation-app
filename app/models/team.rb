@@ -239,7 +239,6 @@ class Team < ActiveRecord::Base
                                     member_type: "MentorProfile",
                                     member_id: mentor.id)
     membership.destroy
-    save
   end
 
   def reconsider_division_with_save
