@@ -19,8 +19,13 @@ module Judge
 
     def new
       @submission_score = current_judge.submission_scores.find_or_create_by!(
-        team_submission_id: current_team_submission.id
+        team_submission_id: current_team_submission.id,
       )
+
+      @submission_score.team_submission.update_attributes({
+        judge_opened_id: current_judge.id,
+        judge_opened_at: Time.current,
+      })
     end
 
     def update

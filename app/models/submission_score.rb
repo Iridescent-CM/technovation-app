@@ -1,5 +1,5 @@
 class SubmissionScore < ActiveRecord::Base
-  belongs_to :team_submission
+  belongs_to :team_submission, counter_cache: true
   belongs_to :judge_profile
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
