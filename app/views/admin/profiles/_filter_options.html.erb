@@ -54,6 +54,14 @@
 <% end %>
 
 <label>
+  Country:
+  <%= select_tag :country,
+    options_for_select(["All"] + CountryStateSelect.countries_collection, params[:country]),
+    data: { reload: true, param: :country },
+    class: "chosen" %>
+</label>
+
+<label>
   How did you hear about us?
   <%= select_tag :how_heard,
     options_for_select(["All"] + Account.referred_bies.keys, params[:how_heard]),
