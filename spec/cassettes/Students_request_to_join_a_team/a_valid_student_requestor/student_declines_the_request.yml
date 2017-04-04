@@ -1,0 +1,337 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/11
+    body:
+      encoding: UTF-8
+      string: '{"id":11,"email":"account11@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"11","_version":10,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/12
+    body:
+      encoding: UTF-8
+      string: '{"id":12,"email":"account12@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"12","_version":10,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/4?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":4,"name":"Go Team Factory Girl 4!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"4","_version":8,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/4?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":4,"name":"Go Team Factory Girl 4!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"4","_version":9,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/13
+    body:
+      encoding: UTF-8
+      string: '{"id":13,"email":"account13@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"13","_version":10,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/14
+    body:
+      encoding: UTF-8
+      string: '{"id":14,"email":"account14@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"14","_version":9,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/14
+    body:
+      encoding: UTF-8
+      string: '{"id":14,"email":"account14@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"14","_version":10,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/test_teams/team/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"bool":{"must":[{"term":{"spot_available?":true}}]}},"size":10000,"from":0}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":2,"timed_out":false,"_shards":{"total":1,"successful":1,"failed":0},"hits":{"total":11,"max_score":0.036367644,"hits":[{"_index":"test_teams","_type":"team","_id":"56","_score":0.036367644,"_source":{"id":56,"name":"Go
+        Team Factory Girl 53!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"57","_score":0.036367644,"_source":{"id":57,"name":"Go
+        Team Factory Girl 54!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"58","_score":0.036367644,"_source":{"id":58,"name":"Go
+        Team Factory Girl 55!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"59","_score":0.036367644,"_source":{"id":59,"name":"Go
+        Team Factory Girl 56!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"6","_score":0.036367644,"_source":{"id":6,"name":"Go
+        Team Factory Girl 6!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"7","_score":0.036367644,"_source":{"id":7,"name":"Go
+        Team Factory Girl 7!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"1","_score":0.036367644,"_source":{"id":1,"name":"Go
+        Team Factory Girl 1!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"2","_score":0.036367644,"_source":{"id":2,"name":"Go
+        Team Factory Girl 2!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"5","_score":0.036367644,"_source":{"id":5,"name":"Go
+        Team Factory Girl 5!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"3","_score":0.036367644,"_source":{"id":3,"name":"Go
+        Team Factory Girl 3!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}},{"_index":"test_teams","_type":"team","_id":"4","_score":0.036367644,"_source":{"id":4,"name":"Go
+        Team Factory Girl 4!","description":"Made with \u003c3 by FactoryGirl","spot_available?":true}}]}}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:48 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/4?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":4,"name":"Go Team Factory Girl 4!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"4","_version":10,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:49 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/12
+    body:
+      encoding: UTF-8
+      string: '{"id":12,"email":"account12@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"12","_version":11,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:49 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/4?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":4,"name":"Go Team Factory Girl 4!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"4","_version":11,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:49 GMT
+recorded_with: VCR 3.0.3

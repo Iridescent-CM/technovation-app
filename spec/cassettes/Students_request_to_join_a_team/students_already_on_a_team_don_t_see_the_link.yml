@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/1
+    body:
+      encoding: UTF-8
+      string: '{"id":1,"email":"account1@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"1","_version":11,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:45 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/2
+    body:
+      encoding: UTF-8
+      string: '{"id":2,"email":"account2@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"2","_version":11,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:45 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/1?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":1,"name":"Go Team Factory Girl 1!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"1","_version":37,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:45 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_teams/team/1?refresh=true
+    body:
+      encoding: UTF-8
+      string: '{"id":1,"name":"Go Team Factory Girl 1!","description":"Made with \u003c3
+        by FactoryGirl","spot_available?":true}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_teams","_type":"team","_id":"1","_version":38,"result":"updated","forced_refresh":true,"_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:45 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/test_accounts/account/2
+    body:
+      encoding: UTF-8
+      string: '{"id":2,"email":"account2@example.com","first_name":"Factory","last_name":"Account"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"test_accounts","_type":"account","_id":"2","_version":12,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}'
+    http_version: 
+  recorded_at: Mon, 03 Apr 2017 19:00:46 GMT
+recorded_with: VCR 3.0.3
