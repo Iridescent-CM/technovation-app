@@ -180,7 +180,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def team_region_division_names
-    teams.current.map {|t| t.region_division_name}.compact
+    teams.current.map {|t| t.region_division_name}.compact.uniq
   end
 
   private
