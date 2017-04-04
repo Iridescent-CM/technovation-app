@@ -60,7 +60,15 @@
           }
 
           .member-info {
+            clear: both;
             margin-left: 1rem;
+
+            .member-action {
+              float: right;
+              a {
+                color:red;
+              }
+            }
 
             h3 {
               margin: 0 0 1rem;
