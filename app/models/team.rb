@@ -234,6 +234,14 @@ class Team < ActiveRecord::Base
     save
   end
 
+  def remove_mentor(mentor)
+    membership = Membership.find_by(joinable: self,
+                                    member_type: "MentorProfile",
+                                    member_id: mentor.id)
+    membership.destroy
+    save
+  end
+
   def reconsider_division_with_save
     reconsider_division
     save
@@ -288,9 +296,9 @@ class Team < ActiveRecord::Base
 
     attr_accessor :id
 
-    def self.model_name  
-      ActiveModel::Name.new(self, nil, "RegionalPitchEvent")  
-    end  
+    def self.model_name
+      ActiveModel::Name.new(self, nil, "RegionalPitchEvent")
+    end
 
     def persisted?
       true
