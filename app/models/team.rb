@@ -8,9 +8,9 @@ class Team < ActiveRecord::Base
   before_create :update_geocoding
   reverse_geocoded_by :latitude, :longitude
 
-  after_save    { IndexTeamJob.perform_later("index", id) }
-  after_destroy { IndexTeamJob.perform_later("delete", id) }
-  after_touch   { IndexTeamJob.perform_later("index", id) }
+  after_save    { IndexModelJob.perform_later("index", "Team", id) }
+  after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
+  after_touch   { IndexModelJob.perform_later("index", "Team", id) }
 
   after_commit :register_to_season, on: :create
 
@@ -154,6 +154,14 @@ class Team < ActiveRecord::Base
     else
       creator.get_country
     end
+  end
+
+  def region_division_name
+    name = creator.country || ""
+    if name == "US"
+      name += "_#{state_province}"
+    end
+    name += ",#{division.name}"
   end
 
   def junior?

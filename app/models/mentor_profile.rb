@@ -179,6 +179,10 @@ class MentorProfile < ActiveRecord::Base
           not bio.blank?
   end
 
+  def team_region_division_names
+    teams.current.map {|t| t.region_division_name}.compact.uniq
+  end
+
   private
   def can_enable_searchable?
     consent_signed? and background_check_complete?
