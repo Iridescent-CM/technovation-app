@@ -27,8 +27,6 @@ module FindEligibleSubmissionId
   end
 
   def self.random_eligible_id(judge)
-    # TODO: Add real logic here from elasticsearch work
-
     query = Elasticsearch::DSL::Search.search do |s|
       s.query do |q|
         q.bool do |b|
