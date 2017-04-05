@@ -1,4 +1,10 @@
 class SubmissionScore < ActiveRecord::Base
+  before_destroy -> {
+    if incomplete?
+      team_submission.clear_judge_opened_details!
+    end
+  }
+
   belongs_to :team_submission, counter_cache: true
   belongs_to :judge_profile
 

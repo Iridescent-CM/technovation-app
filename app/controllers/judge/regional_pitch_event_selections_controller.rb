@@ -21,6 +21,7 @@ module Judge
       old_event = current_judge.selected_regional_pitch_event
 
       current_judge.regional_pitch_events.destroy_all
+      current_judge.submission_scores.destroy_all
 
       SendPitchEventRSVPNotifications.perform_later(
         current_judge.id,
@@ -35,6 +36,7 @@ module Judge
       old_event = current_judge.selected_regional_pitch_event
 
       current_judge.regional_pitch_events.destroy_all
+      current_judge.submission_scores.destroy_all
 
       event = RegionalPitchEvent.find(params.fetch(:event_id))
       current_judge.regional_pitch_events << event
