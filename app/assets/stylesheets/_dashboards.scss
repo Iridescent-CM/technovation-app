@@ -1,3 +1,13 @@
+.student-dashboard {
+  > h3 {
+    margin: 1rem 0;
+  }
+
+  .tabs .tab-content {
+    background: white;
+  }
+}
+
 .dashboard__heading {
   margin-bottom: 2rem;
 }

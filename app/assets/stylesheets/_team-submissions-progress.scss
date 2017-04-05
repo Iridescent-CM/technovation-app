@@ -84,3 +84,24 @@
     }
   }
 }
+
+.progress-list {
+  li {
+    margin: 0 0 1rem;
+
+    .fa-check-circle {
+      display: none;
+    }
+
+    &.complete {
+      .fa-circle-o {
+        display: none;
+      }
+
+      .fa-check-circle {
+        display: inline;
+        color: $shamrock;
+      }
+    }
+  }
+}

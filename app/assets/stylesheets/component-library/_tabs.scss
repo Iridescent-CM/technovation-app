@@ -79,6 +79,10 @@
 
     &.tab-content__showing {
       display: block;
+
+      &.flex-row {
+        display: flex;
+      }
     }
   }
 }

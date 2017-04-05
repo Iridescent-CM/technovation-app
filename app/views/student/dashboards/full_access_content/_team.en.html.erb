@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card__body">
+    <% if current_team.present? %>
+      <% if current_team.mentors.empty? %>
+        <h1><%= t("views.profile_requirements.find_mentor.heading") %></h1>
+
+        <p>
+          <%= t("views.profile_requirements.find_mentor.label") %><br>
+        </p>
+
+        <p>
+          <%= link_to t("views.profile_requirements.find_mentor.links.pre_unit.text"),
+            "http://www.technovationchallenge.org/curriculum/findamentor/",
+            target: "_blank" %>
+        </p>
+
+        <p>
+          <%= t("views.profile_requirements.find_mentor.links.pre_unit.postfix") %>
+        </p>
+
+        <p>
+          <%= link_to t("views.profile_requirements.find_mentor.links.browse.text"),
+            new_student_mentor_search_path,
+            class: "appy-button" %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="card__body">
+    <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
+  </div>
+</div>

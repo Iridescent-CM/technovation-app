@@ -1,0 +1,40 @@
+<div class="flex-col-md-8">
+  <% if current_team.present? %>
+    <div class="student-manage-submission-cta">
+      <% if current_team.submission.present? %>
+        <%= render 'student/dashboards/team_submission_progress',
+          submission: current_team.submission %>
+      <% else %>
+        <%= render 'student/dashboards/start_team_submission' %>
+      <% end %>
+    </div>
+  <% else %>
+      Start / Join a team CTA
+  <% end %>
+</div>
+
+<div class="flex-col-md-4">
+  <h1>Information</h1>
+
+  <%= render 'honor_code_signed', account: current_student %>
+
+  <p>
+    Learn about what to submit to Technovation.
+  </p>
+
+  <p>
+    <%= link_to "Read the Submission Guidelines".html_safe,
+      "http://www.technovationchallenge.org/submission-guidelines/",
+      target: "_blank" %>
+  </p>
+
+  <p>
+    See how the <%= Season.current.year %> judging will work!
+  </p>  
+
+  <p>
+    <%= link_to "Read the Judging Rubric".html_safe,
+      "http://www.technovationchallenge.org/judging-rubric/",
+      target: "_blank" %>
+  </p>
+</div>

@@ -1,140 +1,17 @@
 <h1 class="appy-title">
-  <%= t("views.application.dashboard") %>
+  <%= t("views.application.student_dashboard") %>
+
+  <small>
+    <%= render 'pre_program_survey', type: :student %>
+  </small>
 </h1>
 
-<h2 class="appy-subtitle">
-  Submission Deadline &ndash; Wednesday, April 26th
-</h2>
+<div class="student-dashboard">
+  <h3>Submission Deadline &ndash; Wednesday, April 26th</h3>
 
-<% if current_student.full_access_enabled? and current_team.present? %>
-  <div class="student-manage-submission-cta">
-    <% if current_team.submission.present? %>
-      <%= render 'student/dashboards/team_submission_progress',
-        submission: current_team.submission %>
-    <% else %>
-      <%= render 'student/dashboards/start_team_submission' %>
-    <% end %>
-  </div>
-<% end %>
-
-<div class="flex-row dashboard">
-  <div class="flex-col-sm-8 dashboard__main">
-    <% if current_student.full_access_enabled? and current_team.present? %>
-      <ul class="to-do__list">
-        <% if current_team.mentors.empty? %>
-          <%= render 'student/dashboards/completion_steps/find_a_mentor' %>
-        <% end %>
-      </ul>
-    <% else %>
-      <%= render 'completion_steps' %>
-    <% end %>
-
-    <div class="resources">
-      <h2 class="resources__heading appy-heading-lg">
-        <%= t("views.application.resources") %>
-      </h2>
-
-      <ul class="resources__list">
-        <li class="resources__item-wrapper">
-          <div class="card">
-            <div class="card__heading">
-              Internet Safety
-              <%= fa_icon("lock", class: "card-heading__flair") %>
-            </div>
-
-            <div class="card__body">
-              <p>
-                Please take some time right now to learn about internet safety and digital literacy.
-                We want you to be safe and well-informed as you participate in online programs!
-              </p>
-
-              <p>
-              <%= link_to "Take the Internet Safety Training", "http://iridescentlearning.org/internet-safety/", target: "_blank" %>
-              </p>
-            </div>
-          </div>
-        </li>
-
-        <% if current_student.full_access_enabled? %>
-          <li class="resources__item-wrapper">
-            <div class="card">
-              <div class="card__heading">
-                <%= t("views.application.curriculum") %>
-                <%= fa_icon "graduation-cap", class: "card-heading__flair" %>
-              </div>
-
-              <div class="card__body">
-                <p>
-                  <%= link_to "Get Started on the Technovation Curriculum",
-                    "http://www.technovationchallenge.org/curriculum-intro/registered",
-                    target: "_blank" %>
-                </p>
-
-                <p>
-                  <%= link_to "Read the Technovation Challenge Primer",
-                    "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
-                    target: "_blank" %>
-                  (if you came from Made With Code)
-                </p>
-
-              </div>
-            </div>
-          </li>
-
-          <li class="resources__item-wrapper">
-            <div class="card">
-              <div class="card__heading">
-                <%= t("views.application.submission_deliverables") %>
-                <%= fa_icon "file-text-o", class: "card-heading__flair" %>
-              </div>
-
-              <div class="card__body">
-                <p>
-                  Make sure you have everything ready to submit your app to Technovation!
-                </p>
-                <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
-                    "http://www.technovationchallenge.org/submission-guidelines/",
-                    target: "_blank" %>
-              </div>
-            </div>
-          </li>
-
-          <li class="resources__item-wrapper">
-            <div class="card">
-              <div class="card__heading">
-                <%= t("views.application.judging_rubric") %>
-                <%= fa_icon "gavel", class: "card-heading__flair" %>
-              </div>
-
-              <div class="card__body">
-                <p>
-                  Check out the 
-                  <%= Season.current.year %> 
-                  judging rubric to see how you will be scored!
-                </p>  
-                <%= link_to "Judging Rubric".html_safe,
-                    "http://www.technovationchallenge.org/judging-rubric/",
-                    target: "_blank" %>
-              </div>
-            </div>
-          </li>
-
-        <% end %>
-
-        <% if current_student.honor_code_signed? %>
-          <li class="resources__item-wrapper">
-            <%= render 'honor_code_signed', account: current_student %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-
-  <div class="flex-col-sm-4 dashboard__sidebar">
-    <% if current_student.full_access_enabled? and current_student.is_on_team? %>
-      <%= render 'quick_links' %>
-    <% elsif current_student.full_access_enabled? %>
-      <%= render 'team_invitations', invite_type: :team_member, account: current_student %>
-    <% end %>
-  </div>
+  <% if current_student.full_access_enabled? %>
+    <%= render 'student/dashboards/full_access' %>
+  <% else %>
+    <%= render 'student/dashboards/to_do' %>
+  <% end %>
 </div>

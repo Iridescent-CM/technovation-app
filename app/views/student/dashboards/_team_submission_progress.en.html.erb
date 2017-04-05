@@ -1,32 +1,114 @@
-<%= render 'dashboards/select_regional_pitch_event',
-  submission: submission,
-  events: @regional_events %>
+<h1>Submission Progress</h1>
 
-<div class="card">
-  <div class="card__heading">
-    Your Team's Submission
-    <%= fa_icon("mobile", class: "card-heading__flair") %>
+<p>
+  Your team has begun submitting!<br />You can
+  <%= link_to 'edit your submission', student_team_submission_path(submission) %>
+  as much as you need to until the deadline!
+</p>
+
+<%# see app/helpers/student_helper for SUBPROG function %>
+
+<div class="flex-row">
+  <div class="flex-col-md-6">
+    <ul class="progress-list">
+      <li class="<%= subprog(submission, "team-photo") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Team photo
+      </li>
+
+      <li class="<%= subprog(submission, "app-info") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Name & description
+      </li>
+
+      <li class="<%= subprog(submission, "sdg") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Sustainable development goal
+      </li>
+
+      <li class="<%= subprog(submission, "pitch") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Pitch video
+      </li>
+
+      <li class="<%= subprog(submission, "demo") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Demo video
+      </li>
+    </ul>
   </div>
 
-  <div class="card__body">
-    <%= render 'student/team_submissions/progress_bar', submission: submission %>
+  <div class="flex-col-md-6">
+    <ul class="progress-list">
+      <li class="<%= subprog(submission, "screenshots") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        At least 2 screenshots
+      </li>
 
-    <p>
-      Your team has begun submitting!
-      You can edit it as much as you need to until the deadline!
-    </p>
+      <li class="<%= subprog(submission, "technical-checklist") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Technical checklist
+      </li>
 
+      <li class="<%= subprog(submission, "source-code") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Source code
+      </li>
+
+      <li class="<%= subprog(submission, "development-platform") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        Development platform
+      </li>
+    </ul>
+  </div>
+
+  <% if submission.team.division.senior? or
+          submission.team.selected_regional_pitch_event.live? %>
+    <div class="extra-progress-items">
+      <ul class="progress-list">
+        <% if submission.team.division.senior? %>
+          <li class="<%= subprog(submission, "business-plan") %>">
+            <%= fa_icon('circle-o') %>
+            <%= fa_icon('check-circle') %>
+            Senior teams: Business plan
+          </li>
+        <% end %>
+
+        <% if submission.team.selected_regional_pitch_event.live? %>
+          <li class="<%= subprog(submission, "pitch-presentation") %>">
+            <%= fa_icon('circle-o') %>
+            <%= fa_icon('check-circle') %>
+            Pitch events: Presentation slides
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<div class="flex-row">
+  <div class="flex-col-md-6">
     <p>
-      Make sure you regularly take time to
-      <%= link_to 'check how it will look to the judges',
+      <%= link_to 'See how your submission looks to judges',
         app_path(submission),
-        target: :_blank %>!
+        target: :_blank %>
     </p>
+  </div>
 
-    <div class="card__actions-row card__actions-row--pos-end">
+  <div class="flex-col-md-6">
+    <p class="standalone-buttons align-right">
       <%= link_to 'Edit your submission',
         student_team_submission_path(submission),
         class: "appy-button" %>
-    </div>
+    </p>
   </div>
 </div>

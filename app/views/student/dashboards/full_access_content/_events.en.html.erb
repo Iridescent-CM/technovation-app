@@ -1,0 +1,9 @@
+<% if current_team.present? and current_team.submission.present? %>
+  <%= render 'dashboards/select_regional_pitch_event',
+    submission: current_team.submission,
+    events: @regional_events %>
+<% elsif current_team.present? %>
+  <%= render 'student/dashboards/start_team_submission' %>
+<% else %>
+    Start / Join a team CTA
+<% end %>
