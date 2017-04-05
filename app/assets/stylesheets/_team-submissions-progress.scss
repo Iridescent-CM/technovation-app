@@ -94,6 +94,12 @@
     }
 
     &.complete {
+      span {
+        font-style: italic;
+        text-decoration: line-through;
+        color: #999;
+      }
+
       .fa-circle-o {
         display: none;
       }
