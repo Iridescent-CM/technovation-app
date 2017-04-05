@@ -41,6 +41,35 @@
         <span>Demo video</span>
       </li>
     </ul>
+
+    <% if submission.team.division.senior? or
+            submission.team.selected_regional_pitch_event.live? %>
+      <div class="extra-progress-items">
+        <% if submission.team.division.senior? %>
+          <h5>Senior division teams</h5>
+
+          <ul class="progress-list">
+            <li class="<%= subprog(submission, "business-plan") %>">
+              <%= fa_icon('circle-o') %>
+              <%= fa_icon('check-circle') %>
+              <span>Business plan</span>
+            </li>
+          </ul>
+        <% end %>
+
+        <% if submission.team.selected_regional_pitch_event.live? %>
+          <h5>Teams attending live pitch events</h5>
+
+          <ul class="progress-list">
+            <li class="<%= subprog(submission, "pitch-presentation") %>">
+              <%= fa_icon('circle-o') %>
+              <%= fa_icon('check-circle') %>
+              <span>Pitch presentation</span>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
   <div class="flex-col-md-6">
@@ -70,29 +99,6 @@
       </li>
     </ul>
   </div>
-
-  <% if submission.team.division.senior? or
-          submission.team.selected_regional_pitch_event.live? %>
-    <div class="extra-progress-items">
-      <ul class="progress-list">
-        <% if submission.team.division.senior? %>
-          <li class="<%= subprog(submission, "business-plan") %>">
-            <%= fa_icon('circle-o') %>
-            <%= fa_icon('check-circle') %>
-            <span>Senior teams: Business plan</span>
-          </li>
-        <% end %>
-
-        <% if submission.team.selected_regional_pitch_event.live? %>
-          <li class="<%= subprog(submission, "pitch-presentation") %>">
-            <%= fa_icon('circle-o') %>
-            <%= fa_icon('check-circle') %>
-            <span>Pitch events: Presentation slides</span>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 </div>
 
 <div class="flex-row">
