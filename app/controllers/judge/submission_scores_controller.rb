@@ -18,9 +18,14 @@ module Judge
     end
 
     def new
-      @submission_score = current_judge.submission_scores.find_or_create_by!(
-        team_submission_id: current_team_submission.id,
-      )
+      if params[:id]
+        @submission_score = current_judge.submission_scores.find(params[:id])
+        @current_team_submission = @submission_score.team_submission
+      else
+        @submission_score = current_judge.submission_scores.find_or_create_by!(
+          team_submission_id: current_team_submission.id,
+        )
+      end
 
       @submission_score.team_submission.update_attributes({
         judge_opened_id: current_judge.id,
@@ -73,7 +78,6 @@ module Judge
     def current_team_submission
       params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
-        submission_score_id: params[:id],
         team_submission_id: params[:team_submission_id]
       )
 
