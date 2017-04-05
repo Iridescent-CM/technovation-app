@@ -13,7 +13,7 @@
   <% end %>
 </div>
 
-<div class="flex-col-md-4">
+<div class="flex-col-md-4 border-left">
   <h1>Information</h1>
 
   <%= render 'honor_code_signed', account: current_student %>
@@ -30,7 +30,7 @@
 
   <p>
     See how the <%= Season.current.year %> judging will work!
-  </p>  
+  </p>
 
   <p>
     <%= link_to "Read the Judging Rubric".html_safe,
