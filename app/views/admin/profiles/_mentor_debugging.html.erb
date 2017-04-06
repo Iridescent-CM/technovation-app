@@ -35,6 +35,17 @@
          profile.os_version].compact.join(' - ') %>
   </p>
 
+  <%= form_tag(admin_team_memberships_path) do %>
+    <%= hidden_field_tag :account_id, profile.account_id %>
+    <p>
+      <strong> Add this mentor to a team </strong> <br>
+      <%= select_tag "team_id",
+          options_from_collection_for_select(Team.current, "id", "name"),
+          class: "chosen" %>
+      <%= submit_tag 'Add', class: "appy-button" %>
+    </p>
+  <% end %>
+
   <p>
     <strong>Searchable to students?</strong>
     <% if profile.searchable? %>
