@@ -1,12 +1,15 @@
-Start Submitting Today!
-<%= fa_icon("mobile", class: "card-heading__flair") %>
+<center class="start-submitting">
+  <h1>Start Submitting Today!</h1>
 
-<p>
-  You and your teammates can begin submitting your app now!
-  As you work through the curriculum, you can upload it in parts.
-  You can also edit as much as you need to until the deadline!
-</p>
+  <p>
+    You and your teammates can begin submitting your app now!
+    As you work through the curriculum, you can upload it in parts.
+    You can also edit as much as you need to until the deadline!
+  </p>
 
-  <%= link_to 'Begin your submission',
-    new_student_team_submission_path,
-    class: "appy-button" %>
+  <p class="standalone-buttons">
+    <%= link_to 'Begin your submission',
+      new_student_team_submission_path,
+      class: "appy-button" %>
+  </p>
+</center>
