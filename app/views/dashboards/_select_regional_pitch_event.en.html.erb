@@ -57,7 +57,12 @@
       <dt>Date / Time:</dt>
       <dd>
         <% if model.selected_regional_pitch_event.live? %>
-          <%= model.selected_regional_pitch_event.starts_at.in_time_zone(model.selected_regional_pitch_event.timezone).strftime("%A, %B %e, %-I:%M%P") %> &ndash;
+          <%= model.selected_regional_pitch_event.starts_at.in_time_zone(model.selected_regional_pitch_event.timezone).strftime("%A, %B %e") %>
+
+          <br />
+
+          <%= model.selected_regional_pitch_event.starts_at.in_time_zone(model.selected_regional_pitch_event.timezone).strftime("%-I:%M%P") %>
+          &ndash;
           <%= model.selected_regional_pitch_event.ends_at.in_time_zone(model.selected_regional_pitch_event.timezone).strftime("%-I:%M%P %Z") %>
         <% else %>
           <%= model.selected_regional_pitch_event.starts_at.in_time_zone(model.selected_regional_pitch_event.timezone).strftime("%A, %B %e") %>
