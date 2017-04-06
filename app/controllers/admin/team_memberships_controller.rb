@@ -13,5 +13,9 @@ module Admin
       redirect_to admin_team_path(team),
         success: "You have removed #{account.full_name} from this team"
     end
+
+    def create
+    end
+
   end
 end

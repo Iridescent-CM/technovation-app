@@ -18,4 +18,15 @@
          profile.os_name,
          profile.os_version].compact.join(' - ') %>
   </p>
+  <p>
+      <% if !account.student_profile.team.present? %>
+        <%= form_tag() do %>
+          <strong> Add this student to a team </strong> <br>
+          <%= select_tag :id,
+              options_for_select(Team.current),
+              class: "chosen" %>
+          <%= submit_tag("Add") %>
+        <% end %>
+      <% end %>
+</p>
 </div>
