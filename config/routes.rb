@@ -148,7 +148,7 @@ Rails.application.routes.draw do
     resources :regional_ambassadors, only: [:index, :show, :update]
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy
-    resources :team_memberships, only: :destroy
+    resources :team_memberships, only: [:destroy, :create]
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
