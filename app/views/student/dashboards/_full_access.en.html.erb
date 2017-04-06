@@ -6,38 +6,15 @@
       <%= render 'student/dashboards/full_access_content/submission' %>
     </div>
 
-    <div class="tab-content" id="live-events">
+    <div class="tab-content flex-row" id="live-events">
       <%= render 'student/dashboards/full_access_content/events' %>
     </div>
 
-    <div class="tab-content" id="your-team">
+    <div class="tab-content flex-row" id="your-team">
       <%= render 'student/dashboards/full_access_content/team' %>
     </div>
 
-    <div class="tab-content" id="curriculum">
-      <%= render 'student/dashboards/full_access_content/curriculum' %>
-    </div>
-
-    <div class="tab-content" id="internet-safety">
-      <div class="card">
-        <div class="card__body">
-          <h1>Internet Safety</h1>
-
-          <p>
-            Please take some time right now to learn about internet safety and digital literacy.
-            We want you to be safe and well-informed as you participate in online programs!
-          </p>
-
-          <p>
-            <%= link_to "Internet Safety Training",
-              "http://iridescentlearning.org/internet-safety/",
-              target: "_blank" %>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="your-account">
+    <div class="tab-content flex-row" id="your-account">
       <%= render 'student/dashboards/full_access_content/account' %>
     </div>
   </div>

@@ -314,17 +314,24 @@ class Team < ActiveRecord::Base
     def name; "Virtual (online) Judging"; end
     def live?; false; end
     def id; "virtual"; end
+    def city; "No city, all online"; end
+    def venue_address; "No address, all online"; end
+    def eventbrite_link; end
 
     def timezone
-      "PDT"
+      "US/Pacific"
     end
 
     def starts_at
-      DateTime.new(2017, 5, 1, 0, 0, 0)
+      DateTime.new(2017, 5, 1, 7, 0, 0).in_time_zone(timezone)
     end
 
     def ends_at
-      DateTime.new(2017, 5, 15, 23, 59, 59)
+      DateTime.new(2017, 5, 16, 6, 59, 59).in_time_zone(timezone)
+    end
+
+    def divisions
+      [Division.junior, Division.senior]
     end
   end
 end

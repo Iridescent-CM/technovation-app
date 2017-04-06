@@ -1,10 +1,14 @@
-<div class="card">
+<div class="flex-col-md-8">
   <div class="card__body">
-    <%= image_tag current_student.profile_image_url, width: 100, height: 100 %>
+    <div class="card-body__img">
+      <%= image_tag current_student.profile_image_url, width: 100, height: 100 %>
+    </div>
 
-    <p><%= current_student.full_name %></p>
+    <div class="card-body__details">
+      <p><%= current_student.full_name %></p>
 
-    <p><%= current_student.email %></p>
+      <p><%= current_student.email %></p>
+    </div>
 
     <p class="standalone-buttons">
       <%= link_to t("views.quick_links.my_account"),
@@ -13,3 +17,5 @@
     </p>
   </div>
 </div>
+
+<%= render 'student/dashboards/info_sidebar' %>

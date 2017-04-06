@@ -1,3 +1,56 @@
+.regional-pitch-team-info {
+  clear: both;
+
+  div {
+    clear: both;
+    margin: 0;
+  }
+
+  dt,
+  dd {
+    float: left;
+    margin: 0;
+  }
+
+  dd {
+    margin-left: 1rem;
+
+    p {
+      clear: both;
+      margin: 0;
+      line-height: 1;
+
+      a {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.regional-pitch-selected-blurb {
+  padding: 1rem;
+  border: 1px solid black;
+  background: lighten($shamrock, 30%);
+
+  h3 {
+    font-size: 1.1rem;
+  }
+}
+
+.regional-pitch-selected-full {
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+}
+
+.regional-pitch-others {
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+
+  h3 {
+    font-size: 1.1rem;
+  }
+}
+
 .regional-event-selection-list {
   display: flex;
   flex-direction: row;
@@ -99,7 +152,16 @@
 }
 
 .has-danger {
-  color: red;
+  color: darkred;
+
+  &:focus {
+    color: darkred;
+  }
+
+  &:hover,
+  &:active {
+    color: black;
+  }
 }
 
 .mentor-regional-pitch-events__save-selections {

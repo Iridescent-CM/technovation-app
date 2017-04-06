@@ -13,28 +13,4 @@
   <% end %>
 </div>
 
-<div class="flex-col-md-4 border-left">
-  <h1>Information</h1>
-
-  <%= render 'honor_code_signed', account: current_student %>
-
-  <p>
-    Learn about what to submit to Technovation.
-  </p>
-
-  <p>
-    <%= link_to "Read the Submission Guidelines".html_safe,
-      "http://www.technovationchallenge.org/submission-guidelines/",
-      target: "_blank" %>
-  </p>
-
-  <p>
-    See how the <%= Season.current.year %> judging will work!
-  </p>
-
-  <p>
-    <%= link_to "Read the Judging Rubric".html_safe,
-      "http://www.technovationchallenge.org/judging-rubric/",
-      target: "_blank" %>
-  </p>
-</div>
+<%= render 'student/dashboards/info_sidebar' %>
