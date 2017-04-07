@@ -1,4 +1,5 @@
 <% model ||= current_team %>
+<% subject = model.is_a?(Team) ? "your team" : "yourself" %>
 
 <div class="flex-row">
   <% if model.is_a?(Team) %>
@@ -90,12 +91,12 @@
 
       <% if model.selected_regional_pitch_event.live? %>
         <p class="standalone-buttons">
-          <%= link_to 'remove your team from this event',
+          <%= link_to "remove #{subject} from this event",
             [model.type_name, :regional_pitch_event_selection],
             class: "has-danger",
             data: {
               method: :delete,
-              confirm: "Are you sure you want to remove your team from the event: #{model.selected_regional_pitch_event_name}?",
+              confirm: "Are you sure you want to remove #{subject} from the event: #{model.selected_regional_pitch_event_name}?",
             } %>
         </p>
       <% end %>

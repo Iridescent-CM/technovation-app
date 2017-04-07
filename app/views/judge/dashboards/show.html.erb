@@ -1,93 +1,35 @@
-<h1 class="appy-title">
-  <%= t("views.application.judge_dashboard") %>
+<div class="judge-dashboard">
+  <div class="flex-row">
+    <div class="flex-col-md-6">
+      <h1 class="appy-title">
+        <%= t("views.application.judge_dashboard") %>
 
-  <% if current_judge.mentor_profile or
-      current_judge.created_at < Date.new(2017, 3, 8) %>
-    <small>
-      <%= link_to fa_icon('refresh', text: "Switch to Mentoring"),
-        mentor_dashboard_path %>
-    </small>
-  <% end %>
-</h1>
-
-<h2 class="appy-subtitle">
-  Judging will open on Monday, May 1, 2017
-</h2>
-
-
-<div class="dashboard flex-row">
-  <div class="flex-col-sm-8 dashboard__main">
-    <% if current_judge.full_access_enabled? %>
-      <%= render 'dashboards/select_regional_pitch_event',
-        model: current_judge,
-        events: @regional_events %>
-    <% else %>
-      <div class="to-do">
-        <h2 class="to-do__heading appy-heading-lg">
-          <%= t("views.application.to_do") %>
-        </h2>
-        <ul class="to-do__list">
-          <%= render 'completion_steps/consent_waiver', account: current_judge %>
-          <%= render 'completion_steps/location_details', account: current_judge %>
-        </ul>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="flex-col-sm-4 dashboard__sidebar">
-    <div class="card">
-      <div class="card__heading">
-        Judge Training
-        <%= fa_icon("calendar-check-o", class: "card-heading__flair") %>
-      </div>
-      <div class="card__body">
-        <p>
-          Confused? Not sure where to start? Attend a Judge Training.
-        </p>
-
-        <%= link_to 'Attend a Judge Training',
-          'http://technovationchallenge.org/judge-training/',
-          target: :_blank %>
-      </div>
+        <% if current_judge.mentor_profile or
+            current_judge.created_at < Date.new(2017, 3, 8) %>
+          <small>
+            <%= link_to fa_icon('refresh', text: "Switch to Mentoring"),
+              mentor_dashboard_path %>
+          </small>
+        <% end %>
+      </h1>
     </div>
 
-    <% if current_judge.full_access_enabled? %>
-      <% unless Rails.env.production? %>
-        <div class="card">
-          <div class="card__heading">
-            Start Scoring Submissions Now
-            <%= fa_icon("gavel", class: "card-heading__flair") %>
-          </div>
-          <div class="card__body">
-            <p>
-              You can score submissions online now!
-            </p>
-            <div class="card__actions-row card__actions-row--pos-end">
-              <%= link_to 'Score Submissions',
-                judge_submission_scores_path,
-                class: "appy-button" %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
+    <div class="flex-col-md-6 align-right">
+      <h1 class="appy-title">
+        Judging starts on Monday, May 1
 
-    <% if current_judge.mentor_profile or current_judge.created_at < Date.new(2017, 3, 8) %>
-      <div class="card">
-        <div class="card__heading">
-          <%= t("views.application.mentor_mode") %>
-          <%= fa_icon("refresh", class: "card-heading__flair") %>
-        </div>
-
-        <div class="card__body">
-          <p><%= t("views.judge.dashboards.show.switch_to_mentor_mode") %></p>
-          <p>
-            <%= link_to t("views.application.switch_now"), mentor_dashboard_path %>
-            <br />
-            <small><em>(you can switch back and forth repeatedly)</em></small>
-          </p>
-        </div>
-      </div>
-    <% end %>
+        <small>
+          <%= link_to fa_icon('gavel', text: 'Attend Judge Training'),
+            'http://technovationchallenge.org/judge-training/',
+            target: :_blank %>
+        </small>
+      </h1>
+    </div>
   </div>
+
+  <% if current_judge.full_access_enabled? %>
+    <%= render 'judge/dashboards/full_access' %>
+  <% else %>
+    <%= render 'judge/dashboards/to_do' %>
+  <% end %>
 </div>

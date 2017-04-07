@@ -1,0 +1,18 @@
+<div class="flex-col-md-4 dashboard-sidebar border-left">
+  <h3>Judge Training</h3>
+
+  <p>
+    Confused? Not sure where to start?
+    <%= link_to "Attend a Judge Training",
+      'http://technovationchallenge.org/judge-training/',
+      target: "_blank" %>
+  </p>
+
+  <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(2017, 3, 8) %>
+    <h3>Mentor Dashboard</h3>
+
+    <p>
+      <%= link_to "Go to the Mentor Dashboard", mentor_dashboard_path %>
+    </p>
+  <% end %>
+</div>
