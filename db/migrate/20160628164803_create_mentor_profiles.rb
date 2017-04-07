@@ -1,4 +1,4 @@
-class CreateMentorProfiles < ActiveRecord::Migration
+class CreateMentorProfiles < ActiveRecord::Migration[4.2]
   def change
     create_table :mentor_profiles do |t|
       t.references :account, index: true, foreign_key: true, nulL: false

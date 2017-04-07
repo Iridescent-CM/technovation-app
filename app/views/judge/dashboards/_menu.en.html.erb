@@ -1,5 +1,5 @@
 <ul class="tab-menu">
-  <% unless Rails.env.production? %>
+  <% if ENV["ENABLE_SUBMISSION_SCORES"] %>
     <li class="tab-link">
       <button
         role="button"

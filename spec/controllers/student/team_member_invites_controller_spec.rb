@@ -9,10 +9,10 @@ RSpec.describe Student::TeamMemberInvitesController do
     before do
       sign_in(student)
 
-      post :create, team_member_invite: {
+      post :create, params: { team_member_invite: {
         invitee_email: "some@student.com",
         team_id: student.team_id,
-      }
+      } }
     end
 
     it "sets the invitee email" do
@@ -37,10 +37,10 @@ RSpec.describe Student::TeamMemberInvitesController do
     it "sets the invitee to an existing account" do
       existing = FactoryGirl.create(:student)
 
-      post :create, team_member_invite: {
+      post :create, params: { team_member_invite: {
         invitee_email: existing.email,
         team_id: student.team_id,
-      }
+      } }
 
       expect(invite.invitee).to eq(existing)
     end
@@ -55,12 +55,12 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "accepts the team member invite" do
-      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+      put :update, params: { id: invite.invite_token, team_member_invite: { status: :accepted } }
       expect(invite.reload).to be_accepted
     end
 
     it "redirects to the student team page" do
-      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+      put :update, params: { id: invite.invite_token, team_member_invite: { status: :accepted } }
       expect(response).to redirect_to student_team_path(invite.team)
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Student::TeamMemberInvitesController do
       team = FactoryGirl.create(:team)
       team.add_student(student)
 
-      put :update, id: invite.invite_token, team_member_invite: { status: :accepted }
+      put :update, params: { id: invite.invite_token, team_member_invite: { status: :accepted } }
 
       expect(response).to redirect_to student_dashboard_path
       expect(flash[:alert]).to eq("You are already on a team, so you cannot accept that invite.")

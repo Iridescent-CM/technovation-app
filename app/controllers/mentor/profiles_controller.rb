@@ -2,7 +2,7 @@ module Mentor
   class ProfilesController < MentorController
     include ProfileController
 
-    before_filter :expertises
+    before_action :expertises
 
     def profile_params
       [

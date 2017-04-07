@@ -2,7 +2,7 @@
 //= require chosen-jquery
 //= require lodash
 
-//= require vanilla-ujs
+//= require jquery_ujs
 //= require clipboard
 
 //= require utils

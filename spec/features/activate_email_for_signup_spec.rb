@@ -69,7 +69,15 @@ RSpec.feature "Activate your email to sign up" do
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present, "no confirmation email sent"
     expect(mail.to).to eq(["joe@joesak.com"])
-    expect(mail.body).to have_link("Confirm Email Address", href: new_signup_attempt_confirmation_url(token: SignupAttempt.last.activation_token))
+    expect(mail.body.to_s).to include("Confirm Email Address")
+
+    url = new_signup_attempt_confirmation_url(
+      token: SignupAttempt.last.activation_token,
+      host: ENV["HOST_DOMAIN"],
+      port: ENV["HOST_DOMAIN"].split(":")[1]
+    )
+
+    expect(mail.body.to_s).to include("href=\"#{url}\"")
   end
 
   scenario "Activate your email for signing up" do

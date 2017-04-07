@@ -5,7 +5,7 @@
 //= require lodash
 //= require url-search-params-polyfill
 //= require event-polyfill
-//= require vanilla-ujs
+//= require jquery_ujs
 
 //= require admin/utils
 

@@ -10,9 +10,9 @@ RSpec.describe Student::SignupsController do
       invite = FactoryGirl.create(:team_member_invite,
                                   invitee_email: "invited@thanks.com")
 
-      post :create, student_profile: FactoryGirl.attributes_for(:student).merge(
+      post :create, params: { student_profile: FactoryGirl.attributes_for(:student).merge(
         account_attributes: FactoryGirl.attributes_for(:account, email: "invited@thanks.com")
-      )
+      ) }
 
       expect(invite.reload.invitee).to eq(StudentProfile.last)
     end
@@ -20,9 +20,9 @@ RSpec.describe Student::SignupsController do
 
   describe "POST #create" do
     before do
-      post :create, student_profile: FactoryGirl.attributes_for(:student).merge(
+      post :create, params: { student_profile: FactoryGirl.attributes_for(:student).merge(
         account_attributes: FactoryGirl.attributes_for(:account)
-      )
+      ) }
     end
 
     it "redirects to the student dashboard" do

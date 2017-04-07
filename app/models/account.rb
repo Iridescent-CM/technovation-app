@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
         student_profile.team.reconsider_division_with_save
   }, if: :date_of_birth_changed?
 
-  index_name "#{Rails.env}_accounts"
+  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 

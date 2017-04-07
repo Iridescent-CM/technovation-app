@@ -1,4 +1,4 @@
-class CreateSignupAttempts < ActiveRecord::Migration
+class CreateSignupAttempts < ActiveRecord::Migration[4.2]
   def change
     create_table :signup_attempts do |t|
       t.string :email, null: false

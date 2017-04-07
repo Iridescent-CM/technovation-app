@@ -134,7 +134,7 @@ module Admin
         end
       end
 
-      accounts.uniq
+      accounts.distinct
     end
   end
 end

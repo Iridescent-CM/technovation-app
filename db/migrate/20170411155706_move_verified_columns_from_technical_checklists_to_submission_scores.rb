@@ -1,4 +1,4 @@
-class MoveVerifiedColumnsFromTechnicalChecklistsToSubmissionScores < ActiveRecord::Migration
+class MoveVerifiedColumnsFromTechnicalChecklistsToSubmissionScores < ActiveRecord::Migration[4.2]
   def change
     remove_column :technical_checklists, :used_strings_verified, :boolean
     remove_column :technical_checklists, :used_numbers_verified, :boolean

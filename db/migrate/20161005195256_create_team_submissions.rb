@@ -1,4 +1,4 @@
-class CreateTeamSubmissions < ActiveRecord::Migration
+class CreateTeamSubmissions < ActiveRecord::Migration[4.2]
   def change
     create_table :team_submissions do |t|
       t.boolean :integrity_affirmed, null: false, default: false

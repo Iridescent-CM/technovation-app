@@ -1,4 +1,4 @@
-class AddCommentsToSubmissionScores < ActiveRecord::Migration
+class AddCommentsToSubmissionScores < ActiveRecord::Migration[4.2]
   def change
     add_column :submission_scores, :ideation_comment, :text
     add_column :submission_scores, :technical_comment, :text

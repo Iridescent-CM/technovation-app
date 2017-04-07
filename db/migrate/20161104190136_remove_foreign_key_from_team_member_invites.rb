@@ -1,4 +1,4 @@
-class RemoveForeignKeyFromTeamMemberInvites < ActiveRecord::Migration
+class RemoveForeignKeyFromTeamMemberInvites < ActiveRecord::Migration[4.2]
   def up
     remove_foreign_key :team_member_invites, column: :inviter_id
     remove_foreign_key :team_member_invites, column: :invitee_id

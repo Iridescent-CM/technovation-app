@@ -1,4 +1,4 @@
-class BackFillPendingActiveSignupAttempts < ActiveRecord::Migration
+class BackFillPendingActiveSignupAttempts < ActiveRecord::Migration[4.2]
   def up
     (SignupAttempt.pending | SignupAttempt.active).each do |attempt|
       puts "Setting scrambled temporary password for #{attempt.email}"

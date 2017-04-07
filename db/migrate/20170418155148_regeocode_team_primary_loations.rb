@@ -1,4 +1,4 @@
-class RegeocodeTeamPrimaryLoations < ActiveRecord::Migration
+class RegeocodeTeamPrimaryLoations < ActiveRecord::Migration[4.2]
   def up
     Team.current.where("city IS NULL AND state_province IS NULL and country IS NULL").each do |team|
       next unless team.members.any?

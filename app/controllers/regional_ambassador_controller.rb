@@ -8,6 +8,8 @@ class RegionalAmbassadorController < ApplicationController
     if current_ambassador.timezone.blank? and current_ambassador.location_confirmed?
       current_ambassador.account.update_column(:timezone, Timezone.lookup(current_ambassador.latitude, current_ambassador.longitude).name)
     end
+    params.permit! # TODO: don't do it like this
+    # http://stackoverflow.com/a/40544839
   }
 
   around_action :set_time_zone, if: -> { current_ambassador.authenticated? }

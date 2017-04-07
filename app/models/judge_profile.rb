@@ -1,7 +1,7 @@
 class JudgeProfile < ActiveRecord::Base
   include Elasticsearch::Model
 
-  index_name "#{Rails.env}_profiles"
+  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_profiles"
   document_type 'judge'
   settings index: { number_of_shards: 1, number_of_replicas: 1 } do
     mappings do
@@ -44,7 +44,7 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :submission_scores
 
-  has_and_belongs_to_many :regional_pitch_events, -> { uniq }
+  has_and_belongs_to_many :regional_pitch_events, -> { distinct }
   has_many :judge_assignments
   has_many :assigned_teams, through: :judge_assignments, source: :team
 

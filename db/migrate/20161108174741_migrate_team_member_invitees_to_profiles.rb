@@ -1,4 +1,4 @@
-class MigrateTeamMemberInviteesToProfiles < ActiveRecord::Migration
+class MigrateTeamMemberInviteesToProfiles < ActiveRecord::Migration[4.2]
   def up
     logger = Logger.new("log/accounts-profiles-migrations-up.log")
 

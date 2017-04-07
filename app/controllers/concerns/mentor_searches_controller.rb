@@ -16,7 +16,7 @@ module MentorSearchesController
 
   private
   def search_filter_params
-    default_params = {
+    default_params = ActionController::Parameters.new({
       nearby: params.fetch(:nearby),
       user: user,
       needs_team: params.fetch(:needs_team),
@@ -24,9 +24,11 @@ module MentorSearchesController
       virtual_only: params.fetch(:virtual_only),
       text: params.fetch(:text) { "" },
       gender_identities: params.fetch(:gender_identities),
-    }
+    })
 
-    default_params.merge(params.fetch(:search_filter) { {} }.symbolize_keys)
+    default_params.merge(params.fetch(:search_filter) {
+      ActionController::Parameters.new({})
+    })
   end
 
   def user

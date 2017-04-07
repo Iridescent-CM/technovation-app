@@ -10,10 +10,10 @@ module Admin
       @snapshot_accounts = Account.current
       @snapshot_teams = Team.current
 
-      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
-      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
-      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
-      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id)).uniq
+      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
+      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
+      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
+      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
 
       @snapshot_signups = SignupAttempt.all
     end

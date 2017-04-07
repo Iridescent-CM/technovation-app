@@ -1,4 +1,4 @@
-class AddDefaultsToSubmissionScores < ActiveRecord::Migration
+class AddDefaultsToSubmissionScores < ActiveRecord::Migration[4.2]
   def change
     change_column_default :submission_scores, :sdg_alignment, 0
     change_column_default :submission_scores, :evidence_of_problem, 0

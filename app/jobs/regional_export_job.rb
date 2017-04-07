@@ -41,7 +41,7 @@ class RegionalExportJob < ActiveJob::Base
   end
 
   def export_teams(ambassador, params)
-    team_ids = RegionalTeam.(ambassador, params).select(:id).uniq
+    team_ids = RegionalTeam.(ambassador, params).select(:id).distinct
     mentor_status = URI.escape("mentor-status-#{params[:mentor_status]}")
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-#{params[:division]}-teams-#{mentor_status}.csv"
 
@@ -61,7 +61,7 @@ class RegionalExportJob < ActiveJob::Base
 
   def export_team_submissions(ambassador, params)
     submission_ids = RegionalAmbassador::SearchTeamSubmissions.(params, ambassador)
-      .pluck(:id).uniq
+      .pluck(:id).distinct
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Team_Submissions-Division_#{params[:division]}-SustainableDevGaol_#{params[:sdg]}-HasName_#{params[:has_name]}-TechCheckListStarted_#{params[:technical_checklist]}.csv"
 
     CSV.open(filepath, 'wb') do |csv|

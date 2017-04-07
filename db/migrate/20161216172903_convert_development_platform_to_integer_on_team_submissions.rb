@@ -1,4 +1,4 @@
-class ConvertDevelopmentPlatformToIntegerOnTeamSubmissions < ActiveRecord::Migration
+class ConvertDevelopmentPlatformToIntegerOnTeamSubmissions < ActiveRecord::Migration[4.2]
   def up
     add_column :team_submissions, :development_platform_other, :string
     remove_column :team_submissions, :development_platform

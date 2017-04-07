@@ -1,4 +1,4 @@
-class CreateHonorCodeAgreements < ActiveRecord::Migration
+class CreateHonorCodeAgreements < ActiveRecord::Migration[4.2]
   def change
     create_table :honor_code_agreements do |t|
       t.integer :account_id, null: false, foreign_key: true

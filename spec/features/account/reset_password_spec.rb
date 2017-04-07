@@ -31,7 +31,10 @@ RSpec.feature "Reset your forgotten password" do
     expect(account.password_reset_token_sent_at).not_to be_blank
     expect(email.to).to eq(["Find@me.com"])
     expect(email.subject).to eq("Reset your Technovation password")
-    expect(email.body).to include("href=\"http://www.example.com/passwords/new?token=#{account.password_reset_token}\"")
+
+    url = "http://#{ENV["HOST_DOMAIN"]}/passwords/new?token=#{account.password_reset_token}"
+
+    expect(email.body.to_s).to include("href=\"#{url}\"")
   end
 
   scenario "Attempt a password reset too late" do

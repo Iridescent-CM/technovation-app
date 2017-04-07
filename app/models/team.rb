@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
   include Elasticsearch::Model
 
-  index_name "#{Rails.env}_teams"
+  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_teams"
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
@@ -98,7 +98,7 @@ class Team < ActiveRecord::Base
         .where("accounts.country = ?", ambassador.country)
     end
 
-    where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
+    where(id: (students + mentors).flat_map(&:teams).distinct.map(&:id))
   }
 
   scope :not_attending_live_event, -> {
@@ -142,7 +142,7 @@ class Team < ActiveRecord::Base
     class_name: "JoinRequest",
     as: :joinable
 
-  has_and_belongs_to_many :regional_pitch_events, -> { uniq },
+  has_and_belongs_to_many :regional_pitch_events, -> { distinct },
     after_add: :update_submission, after_remove: :update_submission
 
   def update_submission(o)

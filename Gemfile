@@ -1,15 +1,14 @@
 source 'https://rubygems.org'
 ruby "~> 2.3.1"
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 5.0'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '~> 3.1'
+gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
-gem 'vanilla-ujs', "~> 1.3"
 gem 'lodash-rails', "~> 4.17"
+gem 'sass-rails', "~> 5.0"
 
 gem 'clipboard-rails', "~> 1.6"
 
@@ -22,7 +21,7 @@ gem 'friendly_id', "~> 5.2"
 gem "autoprefixer-rails", "~> 6.7"
 gem 'nokogiri', "~> 1.7"
 
-gem 'rails-i18n', '~> 4.0'
+gem 'rails-i18n', "~> 5.0"
 
 gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
@@ -37,17 +36,19 @@ gem 'geocoder', '~> 1.4'
 gem 'timezone', '~> 1.2'
 
 gem 'carrierwave', '~> 0.11'
-gem "mini_magick", "~> 4.6"
+gem "mini_magick", "~> 4.7"
 gem "fog", "~> 1.40"
 gem 'carrierwave_direct', "~> 0.0"
 
 gem 'checkr-official', "~> 1.1", require: "checkr"
 
-gem 'font-awesome-rails', '~> 4.7'
+gem 'font-awesome-rails', "~> 4.7"
 gem 'chosen-rails', "~> 1.5"
 gem 'simple_form', "~> 3.4"
 gem 'countries', '~> 1.2', require: "countries/global"
-gem 'country_state_select', '~> 3.0'
+gem 'country_state_select',
+  git: 'https://github.com/arvindvyas/Country-State-Select.git',
+  branch: 'master'
 
 gem "chartkick", "~> 2.2"
 gem 'groupdate', "~> 3.2"
@@ -64,9 +65,7 @@ gem "oink", "~> 0.10"
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
   gem 'pry-nav', "~> 0.2"
-  gem 'quiet_assets', "~> 1.1"
   gem 'rspec-rails', "~> 3.5"
-  gem 'capybara-webkit', "~> 1.13"
   gem 'database_cleaner', "~> 1.5"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
@@ -80,9 +79,10 @@ end
 group :test do
   gem 'timecop', "~> 0.8"
   gem 'vcr', "~> 3.0"
-  gem 'webmock', "~> 2.3"
-  gem 'test_after_commit', "~> 1.1"
-  gem 'sinatra', "~> 1.4"
+  gem 'webmock', "~> 3.0"
+  gem 'sinatra', '~> 2.0.0.beta'
+  gem 'capybara-webkit', "~> 1.14"
+  gem 'rails-controller-testing', "~> 1.0"
 end
 
 group :qa, :staging, :production, :development do
@@ -90,7 +90,6 @@ group :qa, :staging, :production, :development do
 end
 
 group :qa, :staging, :production do
-  gem 'rails_12factor', "~> 0.0"
   gem 'hiredis', "~> 0.6"
   gem 'tunemygc', "~> 1.0"
   gem "rack-timeout", "~> 0.4"
@@ -106,5 +105,5 @@ group :legacy do
   #
   gem 'flag_shih_tzu', "~> 0.3"
   gem 'paperclip', "~> 5.1"
-  gem 'aws-sdk', "~> 2.8"
+  gem 'aws-sdk', "~> 2.9"
 end

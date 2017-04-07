@@ -10,7 +10,7 @@ RSpec.describe Mentor::JoinRequestsController do
       sign_in(mentor)
     # TODO: Creating students with parental consents is requiring this deliveries purge
       ActionMailer::Base.deliveries.clear
-      post :create, team_id: team.id
+      post :create, params: { team_id: team.id }
     end
 
     it "emails the team members" do
@@ -20,9 +20,16 @@ RSpec.describe Mentor::JoinRequestsController do
     it "sends the correct email" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq("A mentor has requested to join your team!")
-      expect(mail.body).to include("#{mentor.first_name} has requested to join your Technovation team as a mentor")
-      expect(mail.body).to include("Review This Request")
-      expect(mail.body).to include("href=\"#{student_team_url(team, host: "www.example.com")}\"")
+      expect(mail.body.to_s).to include("#{mentor.first_name} has requested to join your Technovation team as a mentor")
+      expect(mail.body.to_s).to include("Review This Request")
+
+      url = student_team_url(
+        team,
+        host: ENV["HOST_DOMAIN"],
+        port: ENV["HOST_DOMAIN"].split(":")[1]
+      )
+
+      expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
   end
 end

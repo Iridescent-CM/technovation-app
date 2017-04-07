@@ -1,4 +1,4 @@
-class CreateStudentProfiles < ActiveRecord::Migration
+class CreateStudentProfiles < ActiveRecord::Migration[4.2]
   def change
     create_table :student_profiles do |t|
       t.integer :account_id, foreign_key: true, index: true, null: false

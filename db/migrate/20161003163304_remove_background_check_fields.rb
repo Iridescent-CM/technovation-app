@@ -1,4 +1,4 @@
-class RemoveBackgroundCheckFields < ActiveRecord::Migration
+class RemoveBackgroundCheckFields < ActiveRecord::Migration[4.2]
   def change
     remove_column :mentor_profiles, :background_check_candidate_id, :string
     remove_column :mentor_profiles, :background_check_report_id, :string

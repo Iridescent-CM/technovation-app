@@ -5,7 +5,7 @@ module Mentor
       params[:division_enums] ||= Division.names.values
 
       if params[:division_enums].respond_to?(:keys)
-        params[:division_enums] = params[:division_enums].keys.flatten.uniq
+        params[:division_enums] = params[:division_enums].keys.flatten.distinct
       end
 
       @search_filter = SearchFilter.new({

@@ -5,7 +5,7 @@ RSpec.describe SigninsController do
     it "is case-insenstive for email" do
       FactoryGirl.create(:student, email: "CapiTalLettERS@gmail.com")
 
-      post :create, account: { email: "capitalletters@gmail.com", password: "secret1234" }
+      post :create, params: { account: { email: "capitalletters@gmail.com", password: "secret1234" } }
       expect(response).to redirect_to(student_dashboard_path)
     end
 
@@ -19,7 +19,7 @@ RSpec.describe SigninsController do
 
       ActionMailer::Base.deliveries.clear
 
-      post :create, account: { email: student.email, password: student.password }
+      post :create, params: { account: { email: student.email, password: student.password } }
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no parent permission email sent"
@@ -30,7 +30,7 @@ RSpec.describe SigninsController do
 
       ActionMailer::Base.deliveries.clear
 
-      post :create, account: { email: student.email, password: student.password }
+      post :create, params: { account: { email: student.email, password: student.password } }
 
       expect(ActionMailer::Base.deliveries).to be_empty, "another one was sent"
     end

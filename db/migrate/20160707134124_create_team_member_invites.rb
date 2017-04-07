@@ -1,4 +1,4 @@
-class CreateTeamMemberInvites < ActiveRecord::Migration
+class CreateTeamMemberInvites < ActiveRecord::Migration[4.2]
   def change
     create_table :team_member_invites do |t|
       t.integer :inviter_id, null: false

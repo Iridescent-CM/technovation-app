@@ -142,7 +142,7 @@ class ExportJob < ActiveJob::Base
   end
 
   def export_teams(admin, params)
-    team_ids = Admin::SearchTeams.(params).pluck(:id).uniq
+    team_ids = Admin::SearchTeams.(params).pluck(:id).distinct
     filepath = "./tmp/#{params[:season]}-#{params[:division]}-teams.csv"
 
     CSV.open(filepath, 'wb') do |csv|

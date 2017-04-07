@@ -1,4 +1,4 @@
-class CreateSeasonRegistrations < ActiveRecord::Migration
+class CreateSeasonRegistrations < ActiveRecord::Migration[4.2]
   def change
     create_table :season_registrations do |t|
       t.references :season, index: true, foreign_key: true, null: false

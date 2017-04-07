@@ -2,7 +2,7 @@
   <%= render 'judge/dashboards/menu' %>
 
   <div class="content">
-    <% unless Rails.env.production? %>
+    <% if ENV["ENABLE_SUBMISSION_SCORES"] %>
       <div class="tab-content flex-row" id="scores">
         <%= render 'judge/dashboards/full_access_content/scores' %>
       </div>

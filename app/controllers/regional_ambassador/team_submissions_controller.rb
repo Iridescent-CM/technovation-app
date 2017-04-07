@@ -5,7 +5,7 @@ module RegionalAmbassador
       params[:page] = 1 if params[:page].blank?
 
       @team_submissions = RegionalAmbassador::SearchTeamSubmissions.(params, current_ambassador)
-        .uniq
+        .distinct
         .page(params[:page].to_i)
         .per_page(params[:per_page].to_i)
 

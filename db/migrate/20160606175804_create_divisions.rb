@@ -1,4 +1,4 @@
-class CreateDivisions < ActiveRecord::Migration
+class CreateDivisions < ActiveRecord::Migration[4.2]
   def change
     create_table :divisions do |t|
       t.integer :name, null: false

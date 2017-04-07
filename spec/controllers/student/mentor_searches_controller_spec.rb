@@ -37,7 +37,7 @@ RSpec.describe Student::MentorSearchesController do
 
       sign_in(FactoryGirl.create(:student, :on_team))
 
-      get :new, nearby: "anywhere", virtual_only: 1
+      get :new, params: { nearby: "anywhere", virtual_only: 1 }
 
       expect(assigns[:mentors]).to be_empty
     end

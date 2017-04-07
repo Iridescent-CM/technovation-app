@@ -6,7 +6,7 @@ module RegionalAmbassador
       params[:page] = 1 if params[:page].blank?
 
       @teams = RegionalTeam.(current_ambassador, params)
-        .uniq
+        .distinct
         .page(params[:page].to_i)
         .per_page(params[:per_page].to_i)
 

@@ -5,7 +5,7 @@ module Admin
       params[:per_page] = 15 if params[:per_page].blank?
 
       @teams = Admin::SearchTeams.(params)
-        .uniq
+        .distinct
         .page(params[:page].to_i)
         .per_page(params[:per_page].to_i)
 

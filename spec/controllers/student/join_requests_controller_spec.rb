@@ -11,12 +11,17 @@ RSpec.describe Student::JoinRequestsController do
 
       sign_in(student)
       request.env["HTTP_REFERER"] = "/somewhere"
-      post :create, team_id: team.id
+      post :create, params: { team_id: team.id }
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no join request email sent"
       expect(mail.to).to eq([mentor.email])
-      expect(mail.body).to include("href=\"#{mentor_team_url(team, host: "www.example.com")}\"")
+
+      url = mentor_team_url(team,
+                            host: ENV["HOST_DOMAIN"],
+                            port: ENV["HOST_DOMAIN"].split(":")[1])
+
+      expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
   end
 
@@ -35,7 +40,7 @@ RSpec.describe Student::JoinRequestsController do
     context "accepting the request" do
       before do
         ActionMailer::Base.deliveries.clear
-        put :update, id: join_request.id, status: :approved
+        put :update, params: { id: join_request.id, status: :approved }
       end
 
       it "adds the mentor to the team" do
@@ -47,15 +52,20 @@ RSpec.describe Student::JoinRequestsController do
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
         expect(mail.subject).to eq("Your request to mentor #{team.name} was accepted!")
-        expect(mail.body).to include("#{team.name} accepted your request to be their mentor!")
-        expect(mail.body).to include("href=\"#{mentor_team_url(team, host: "www.example.com")}\"")
+        expect(mail.body.to_s).to include("#{team.name} accepted your request to be their mentor!")
+
+        url = mentor_team_url(team,
+                              host: ENV["HOST_DOMAIN"],
+                              port: ENV["HOST_DOMAIN"].split(":")[1])
+
+        expect(mail.body.to_s).to include("href=\"#{url}\"")
       end
     end
 
     context "declining the request" do
       before do
         ActionMailer::Base.deliveries.clear
-        put :update, id: join_request.id, status: :declined
+        put :update, params: { id: join_request.id, status: :declined }
       end
 
       it "does not add the mentor to the team" do
@@ -67,7 +77,7 @@ RSpec.describe Student::JoinRequestsController do
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
         expect(mail.subject).to eq("Your request to mentor #{team.name} was declined")
-        expect(mail.body).to include("#{team.name} has declined your request to be their mentor.")
+        expect(mail.body.to_s).to include("#{team.name} has declined your request to be their mentor.")
       end
     end
   end

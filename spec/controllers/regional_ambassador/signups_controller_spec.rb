@@ -10,11 +10,11 @@ RSpec.describe RegionalAmbassador::SignupsController do
                               status: SignupAttempt.statuses[:active]).signup_token
       )
 
-      post :create, regional_ambassador_profile: FactoryGirl.attributes_for(
+      post :create, params: { regional_ambassador_profile: FactoryGirl.attributes_for(
         :regional_ambassador,
         bio: "Hello, bio",
         account_attributes: FactoryGirl.attributes_for(:account),
-      )
+      ) }
 
       expect(RegionalAmbassadorProfile.last.bio).to eq("Hello, bio")
     end

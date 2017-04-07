@@ -1,4 +1,4 @@
-class CreateConsentWaivers < ActiveRecord::Migration
+class CreateConsentWaivers < ActiveRecord::Migration[4.2]
   def change
     create_table :consent_waivers do |t|
       t.integer :consent_confirmation, null: false, default: 0

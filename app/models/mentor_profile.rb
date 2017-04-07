@@ -15,7 +15,7 @@ class MentorProfile < ActiveRecord::Base
     joins(:mentor_profile_expertises)
     .preload(:mentor_profile_expertises)
     .where("mentor_profile_expertises.expertise_id IN (?)", ids)
-    .uniq
+    .distinct
   }
 
   scope :by_gender_identities, ->(ids) {
@@ -25,7 +25,7 @@ class MentorProfile < ActiveRecord::Base
 
     if ids == male_female
       ids = ids + [Account.genders["Prefer not to say"], Account.genders["Non-binary"]]
-      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids.uniq)
+      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids.distinct)
     elsif ids == all_genders
       joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
     else

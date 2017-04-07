@@ -1,4 +1,4 @@
-class CreateJudgeAssignments < ActiveRecord::Migration
+class CreateJudgeAssignments < ActiveRecord::Migration[4.2]
   def change
     create_table :judge_assignments do |t|
       t.references :team, index: true, foreign_key: true

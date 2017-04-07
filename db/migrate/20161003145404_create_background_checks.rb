@@ -1,4 +1,4 @@
-class CreateBackgroundChecks < ActiveRecord::Migration
+class CreateBackgroundChecks < ActiveRecord::Migration[4.2]
   def change
     create_table :background_checks do |t|
       t.string :candidate_id, null: false

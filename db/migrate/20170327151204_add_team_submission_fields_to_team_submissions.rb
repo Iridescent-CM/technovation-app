@@ -1,4 +1,4 @@
-class AddTeamSubmissionFieldsToTeamSubmissions < ActiveRecord::Migration
+class AddTeamSubmissionFieldsToTeamSubmissions < ActiveRecord::Migration[4.2]
   def change
     add_column :team_submissions, :submission_score_count, :integer
     add_index :team_submissions, :submission_score_count

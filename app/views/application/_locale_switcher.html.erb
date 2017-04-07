@@ -1,4 +1,4 @@
-<% unless Rails.env.production? %>
+<% if ENV["ENABLE_LOCALE_SWITCHER"] %>
   <div class="settings__locale-switcher">
     <%= form_tag locale_switch_url, data: { fancy: true } do %>
       <%= label_tag :locale, t("views.application.language") %>

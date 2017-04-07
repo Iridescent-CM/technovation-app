@@ -1,4 +1,4 @@
-class CreateRegionalAmbassadorProfiles < ActiveRecord::Migration
+class CreateRegionalAmbassadorProfiles < ActiveRecord::Migration[4.2]
   def change
     create_table :regional_ambassador_profiles do |t|
       t.string :organization_company_name, null: false

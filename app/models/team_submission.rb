@@ -6,7 +6,7 @@ class TeamSubmission < ActiveRecord::Base
 
   include Elasticsearch::Model
 
-  index_name "#{Rails.env}_submissions"
+  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_submissions"
   document_type 'submission'
   settings index: { number_of_shards: 1, number_of_replicas: 1 } do
     mappings do

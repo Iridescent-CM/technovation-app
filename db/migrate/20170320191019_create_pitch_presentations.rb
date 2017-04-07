@@ -1,4 +1,4 @@
-class CreatePitchPresentations < ActiveRecord::Migration
+class CreatePitchPresentations < ActiveRecord::Migration[4.2]
   def change
     create_table :pitch_presentations do |t|
       t.string :uploaded_file

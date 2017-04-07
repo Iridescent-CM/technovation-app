@@ -1,4 +1,4 @@
-class CreateJudgeProfiles < ActiveRecord::Migration
+class CreateJudgeProfiles < ActiveRecord::Migration[4.2]
   def change
     create_table :judge_profiles do |t|
       t.integer :account_id, foreign_key: true, index: true, null: false

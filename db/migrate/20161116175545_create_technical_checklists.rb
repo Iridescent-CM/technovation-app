@@ -1,4 +1,4 @@
-class CreateTechnicalChecklists < ActiveRecord::Migration
+class CreateTechnicalChecklists < ActiveRecord::Migration[4.2]
   def change
     create_table :technical_checklists do |t|
       t.boolean :used_strings

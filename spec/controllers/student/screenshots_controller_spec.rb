@@ -10,7 +10,7 @@ RSpec.describe Student::ScreenshotsController do
       sign_in(student)
 
       expect {
-        delete :destroy, id: screenshot.id
+        delete :destroy, params: { id: screenshot.id }
       }.to change { Screenshot.count }.by(-1)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Student::ScreenshotsController do
       sign_in(student)
 
       expect {
-        delete :destroy, id: other.id
+        delete :destroy, params: { id: other.id }
       }.not_to change { Screenshot.count }
     end
   end

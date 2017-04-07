@@ -1,4 +1,4 @@
-class UpdatePrimaryLocationOnTeams < ActiveRecord::Migration
+class UpdatePrimaryLocationOnTeams < ActiveRecord::Migration[4.2]
   def up
     # out of date!
     #

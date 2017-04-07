@@ -1,25 +1,16 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
-require "rails"
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "sprockets/railtie"
-require "rails/test_unit/railtie"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 
-if Rails.env.development? or Rails.env.test?
+if ENV["USE_DOTENV"]
   require 'dotenv'
   Dotenv.load
 end
 
-if Rails.env.development?
+if ENV["ES_INSTRUMENTATION"]
   require 'elasticsearch/rails/instrumentation'
 end
 
@@ -44,9 +35,6 @@ module TechnovationApp
     config.i18n.default_locale = :en
     config.i18n.fallbacks = [:en]
     config.i18n.available_locales = [:en, :'es-MX']
-
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
 
     config.generators do |g|
       g.test_framework false

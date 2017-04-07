@@ -1,4 +1,4 @@
-class MigrateBackgroundChecks < ActiveRecord::Migration
+class MigrateBackgroundChecks < ActiveRecord::Migration[4.2]
   def up
     profiles = MentorProfile.where("background_check_report_id IS NOT NULL") +
                  RegionalAmbassadorProfile.where("background_check_report_id IS NOT NULL")

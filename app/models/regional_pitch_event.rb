@@ -5,8 +5,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   belongs_to :regional_ambassador_profile
 
   has_and_belongs_to_many :divisions
-  has_and_belongs_to_many :teams, -> { uniq }
-  has_and_belongs_to_many :judges, -> { includes(:account).references(:accounts).uniq }, class_name: "JudgeProfile"
+  has_and_belongs_to_many :teams, -> { distinct }
+  has_and_belongs_to_many :judges, -> { includes(:account).references(:accounts).distinct }, class_name: "JudgeProfile"
 
   has_many :team_submissions, through: :teams
 

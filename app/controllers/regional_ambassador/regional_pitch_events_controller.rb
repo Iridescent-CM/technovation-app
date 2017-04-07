@@ -12,14 +12,14 @@ module RegionalAmbassador
         .senior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
-        .uniq
+        .distinct
 
       @junior_team_participants = Team.current
         .order("teams.name")
         .junior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
-        .uniq
+        .distinct
 
       @judge_participants = JudgeProfile.current
         .order("accounts.first_name")

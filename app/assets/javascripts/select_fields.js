@@ -1,8 +1,7 @@
 (function initSelectFields() {
   document.addEventListener('DOMContentLoaded', function() {
     initCountrySelect();
-    initChosenDOB();
-    initChosenGenderSelect();
+    initChosens();
     initRASinceYear();
     enableToggleFields();
   });
@@ -17,18 +16,10 @@
     });
   }
 
-  function initChosenDOB() {
-    $('.account_dob')
+  function initChosens() {
+    $('.chosen')
       .chosen({
         disable_search_threshold: 8
-      })
-      .change(function() {
-        setHasVal(this);
-      });
-
-    $('.sign-up-referred-by')
-      .chosen({
-        disable_search_threshold: 20
       })
       .change(function() {
         setHasVal(this);

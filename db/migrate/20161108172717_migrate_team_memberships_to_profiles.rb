@@ -11,7 +11,7 @@ class MigrateTeamMembershipsToProfiles < ActiveRecord::Migration
 
       if student_profile || mentor_profile
         m.update_columns(member_id: (student_profile || mentor_profile).id,
-                        member_type: (student_profile || mentor_profile).class.name)
+                         member_type: (student_profile || mentor_profile).class.name)[4.2]
 
         logger.info "#{m.member_type} #{m.member_email} assigned as member to Membership##{m.id}"
       else

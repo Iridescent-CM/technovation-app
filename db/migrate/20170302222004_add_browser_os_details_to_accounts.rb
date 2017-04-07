@@ -1,4 +1,4 @@
-class AddBrowserOsDetailsToAccounts < ActiveRecord::Migration
+class AddBrowserOsDetailsToAccounts < ActiveRecord::Migration[4.2]
   def change
     add_column :accounts, :browser_name, :string
     add_column :accounts, :browser_version, :string

@@ -1,4 +1,4 @@
-class CreateParentalConsents < ActiveRecord::Migration
+class CreateParentalConsents < ActiveRecord::Migration[4.2]
   def change
     create_table :parental_consents do |t|
       t.integer :consent_confirmation, null: false, default: 0

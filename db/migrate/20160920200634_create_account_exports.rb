@@ -1,4 +1,4 @@
-class CreateAccountExports < ActiveRecord::Migration
+class CreateAccountExports < ActiveRecord::Migration[4.2]
   def change
     create_table :account_exports do |t|
       t.references :regional_ambassador_account, index: true, null: false

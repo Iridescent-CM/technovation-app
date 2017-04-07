@@ -1,4 +1,4 @@
-class AddPasswordResetTokenToAccounts < ActiveRecord::Migration
+class AddPasswordResetTokenToAccounts < ActiveRecord::Migration[4.2]
   def change
     add_column :accounts, :password_reset_token, :string
     add_index :accounts, :password_reset_token, unique: true

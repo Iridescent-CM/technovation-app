@@ -1,4 +1,4 @@
-class CreateSubmissionScores < ActiveRecord::Migration
+class CreateSubmissionScores < ActiveRecord::Migration[4.2]
   def change
     create_table :submission_scores do |t|
       t.references :team_submission, index: true, foreign_key: true

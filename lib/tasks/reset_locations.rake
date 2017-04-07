@@ -34,7 +34,7 @@ namespace :utils do
       puts "Reset Account #{a.email} to #{a.city}"
     end
 
-    puts "Account latitudes are now: #{Account.pluck(:latitude).uniq}"
-    puts "Team latitudes are now: #{Team.pluck(:latitude).uniq}"
+    puts "Account latitudes are now: #{Account.pluck(:latitude).distinct}"
+    puts "Team latitudes are now: #{Team.pluck(:latitude).distinct}"
   end
 end

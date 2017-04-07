@@ -1,4 +1,4 @@
-class CreateDivisionRegionalPitchEvents < ActiveRecord::Migration
+class CreateDivisionRegionalPitchEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :divisions_regional_pitch_events, id: false do |t|
       t.references :division, foreign_key: true

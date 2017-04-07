@@ -19,7 +19,7 @@ module RegionalAmbassador
 
       submissions = TeamSubmission.joins(team: [:division, :memberships])
         .where("memberships.member_id IN (?)", profile_ids)
-        .uniq
+        .distinct
 
       case params[:division]
       when 'all'
