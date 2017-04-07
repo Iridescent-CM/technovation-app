@@ -1,5 +1,5 @@
 class BackgroundCheck::Report
-  attr_accessor :id, :status, :candidate_id
+  attr_accessor :id, :status, :candidate_id, :adjudication
 
   def initialize(attributes = {})
     required_keys.each do |key|
@@ -40,6 +40,6 @@ class BackgroundCheck::Report
 
   private
   def required_keys
-    [:id, :status, :candidate_id]
+    [:id, :status, :candidate_id, :adjudication]
   end
 end
