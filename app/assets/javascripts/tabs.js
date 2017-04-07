@@ -1,11 +1,5 @@
 //=require utils
 
-var Tabs = {
-  intendedTab: (window.location.hash).replace('#', ''),
-};
-
-window.location.hash = "";
-
 (function tabs() {
   var tabs = document.querySelectorAll('.tabs');
 
@@ -32,8 +26,9 @@ window.location.hash = "";
 
     forEach(tabLinks, function(tabLink) {
       tabLink.addEventListener('click', revealTabContent, false);
-      var btn = tabLink.querySelector('button');
-      if (btn && Tabs.intendedTab === btn.dataset.tabId)
+      var btn = tabLink.querySelector('button'),
+          intendedTab = (window.location.hash).replace('#', '');
+      if (btn && intendedTab === btn.dataset.tabId)
         btn.click();
     });
 
