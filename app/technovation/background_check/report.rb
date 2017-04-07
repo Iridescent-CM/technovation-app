@@ -1,15 +1,9 @@
 class BackgroundCheck::Report
-  attr_accessor :id, :object, :uri, :status, :created_at, :completed_at,
-    :upgraded_at, :turnaround_time, :package, :tags, :candidate_id, :ssn_trace_id,
-    :sex_offender_search_id, :national_criminal_search_id, :federal_criminal_search_id,
-    :county_criminal_search_ids, :motor_vehicle_report_id, :state_criminal_search_ids,
-    :document_ids, :due_time, :adjudication, :global_watchlist_search_id,
-    :personal_reference_verification_ids, :professional_reference_verification_ids,
-    :terrorist_watchlist_search_id
+  attr_accessor :id, :status, :candidate_id
 
   def initialize(attributes = {})
-    attributes.each do |key, value|
-      send("#{key}=", value)
+    required_keys.each do |key|
+      send("#{key}=", attributes[key])
     end
   end
 
@@ -24,7 +18,13 @@ class BackgroundCheck::Report
   end
 
   def submit
-    resp = BackgroundCheck.post(:reports, { package: "tasker_standard", candidate_id: candidate_id })
+    resp = BackgroundCheck.post(
+      :reports,
+      {
+        package: "tasker_standard",
+        candidate_id: candidate_id,
+      }
+    )
     @id = resp.fetch(:id)
   end
 
@@ -36,5 +36,10 @@ class BackgroundCheck::Report
     def present?
       false
     end
+  end
+
+  private
+  def required_keys
+    [:id, :status, :candidate_id]
   end
 end
