@@ -64,7 +64,10 @@
              event_id: @regional_pitch_event.id
             ),
             class: "cta-link",
-            data: { method: :post } %>
+            data: {
+              method: :post,
+              confirm: "Are you sure you want to leave your previous event and select this one?",
+            } %>
         </p>
       <% end %>
     </div>
@@ -103,7 +106,10 @@
              event_id: @regional_pitch_event.id
             ),
             class: "cta-link",
-            data: { method: :post } %>
+            data: {
+              method: :post,
+              confirm: "Are you sure you want to leave your previous event and select this one?",
+            } %>
         </p>
       <% end %>
     </div>
