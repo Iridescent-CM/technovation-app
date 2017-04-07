@@ -1,5 +1,11 @@
 //=require utils
 
+var Tabs = {
+  intendedTab: (window.location.hash).replace('#', ''),
+};
+
+window.location.hash = "";
+
 (function tabs() {
   var tabs = document.querySelectorAll('.tabs');
 
@@ -27,13 +33,18 @@
     forEach(tabLinks, function(tabLink) {
       tabLink.addEventListener('click', revealTabContent, false);
       var btn = tabLink.querySelector('button');
-      if (btn && location.href.split("#")[1] === btn.dataset.tabId)
+      if (btn && Tabs.intendedTab === btn.dataset.tabId)
         btn.click();
     });
 
     function revealTabContent(e) {
       e.preventDefault();
-      location.href = location.href.split("#")[0] + "#" + e.target.dataset.tabId;
+      var target = e.target;
+
+      if (!target.dataset.tabId)
+        target = e.target.querySelector('button');
+
+      window.location.hash = "#" + target.dataset.tabId;
 
       forEach(tabContents, function(tabContent) {
         tabContent.classList.remove('tab-content__showing');
@@ -44,9 +55,9 @@
         tabLink.classList.remove('active');
       });
 
-      e.target.parentElement.classList.add('active');
+      target.parentElement.classList.add('active');
 
-      var revealEl = document.getElementById(e.target.dataset.tabId);
+      var revealEl = document.getElementById(target.dataset.tabId);
       revealEl.classList.remove('tab-content__hiding');
       revealEl.classList.add('tab-content__showing');
     }
