@@ -2,6 +2,12 @@
   <%= render 'student/dashboards/menu' %>
 
   <div class="content">
+    <% if current_student.team_member_invites.pending.any? %>
+      <div class="tab-content" id="invitations">
+        <%= render 'student/dashboards/full_access_content/invitations' %>
+      </div>
+    <% end %>
+
     <div class="tab-content flex-row" id="your-submission">
       <%= render 'student/dashboards/full_access_content/submission' %>
     </div>

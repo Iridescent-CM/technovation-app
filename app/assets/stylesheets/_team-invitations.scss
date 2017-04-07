@@ -1,6 +1,10 @@
 $no-action-color: rgba(black, 0.35);
 $invitations-team-photo-width: 100px;
 
+.student-team-invitation {
+  border-bottom: 1px solid #ddd;
+}
+
 .team-invitations__incoming {
   margin-bottom: 1.5rem;
 }

@@ -1,4 +1,15 @@
 <ul class="tab-menu">
+  <% if current_student.team_member_invites.pending.any? %>
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="invitations">
+        Invitations
+      </button>
+    </li>
+  <% end %>
+
   <li class="tab-link">
     <button
       role="button"
