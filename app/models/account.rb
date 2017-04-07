@@ -4,10 +4,11 @@ class Account < ActiveRecord::Base
   after_save    { IndexModelJob.perform_later("index", "Account", id) }
   after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
 
-  after_save -> { student_profile &&
-                    student_profile.team.present? &&
-                      student_profile.team.reconsider_division_with_save },
-    if: -> { date_of_birth_changed? }
+  after_save -> {
+    student_profile &&
+      student_profile.team.present? &&
+        student_profile.team.reconsider_division_with_save
+  }, if: :date_of_birth_changed?
 
   index_name "#{Rails.env}_accounts"
   document_type 'account'

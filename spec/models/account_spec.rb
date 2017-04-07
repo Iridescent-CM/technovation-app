@@ -60,4 +60,27 @@ RSpec.describe Account do
     account.valid?
     expect(account.errors.keys).to include(:email)
   end
+
+  it "tells teams to reconsider division when students on teams chaneg their birthdate" do
+    student = FactoryGirl.create(
+      :student,
+      email: "student@testing.com",
+      date_of_birth: 13.years.ago
+    )
+    team = FactoryGirl.create(:team, members_count: 0)
+    team.add_student(student)
+
+    expect(team.division_name).to eq("junior")
+
+    student.account.reload
+
+    student.update_attributes({
+      account_attributes: {
+        id: student.account_id,
+        date_of_birth: 15.years.ago,
+      },
+    })
+
+    expect(team.reload.division_name).to eq("senior")
+  end
 end
