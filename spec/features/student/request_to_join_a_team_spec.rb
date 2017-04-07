@@ -14,8 +14,7 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
     before do
       ActionMailer::Base.deliveries.clear
       sign_in(student)
-      within(".navigation__links-list") { click_link "Join a team" }
-      click_link "View Team"
+      visit new_student_join_request_path(team_id: team.id)
       click_button "Request to join #{team.name}"
     end
 
