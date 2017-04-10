@@ -80,13 +80,18 @@
       firstItem.classList.add('active');
     });
 
-    var contents = document.querySelectorAll('.content .tab-content');
+    var tabContents = document.querySelectorAll('.tab-content');
 
-    _.each(contents, function(content) {
+    _.each(tabContents, function(content) {
       content.classList.add('tab-content__hiding');
     });
 
-    contents[0].classList.remove('tab-content__hiding');
-    contents[0].classList.add('tab-content__showing');
+    var contents = document.querySelectorAll('.content');
+
+    _.each(contents, function(content) {
+      var firstItem = content.querySelector('.tab-content');
+      firstItem.classList.remove('tab-content__hiding');
+      firstItem.classList.add('tab-content__showing');
+    });
   }
 })();
