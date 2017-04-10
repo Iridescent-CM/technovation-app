@@ -1,4 +1,21 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
+  <% unless Rails.env.production? %>
+    <h3>Score Submissions</h3>
+
+    <% if current_judge.selected_regional_pitch_event.live? %>
+      <p>live events info...</p>
+    <% elsif current_judge.submission_scores.incomplete.empty? %>
+      <p>
+        <%= link_to 'Start a new score', new_judge_submission_score_path %>
+      </p>
+    <% elsif current_judge.submission_scores.incomplete.any? %>
+      <p>
+        <%= link_to "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
+          edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
+      </p>
+    <% end %>
+  <% end %>
+
   <h3>Judge Training</h3>
 
   <p>
@@ -26,21 +43,6 @@
 
     <p>
       <%= link_to "Go to the Mentor Dashboard", mentor_dashboard_path %>
-    </p>
-  <% end %>
-
-  <h3>Score Submissions</h3>
-
-  <% if current_judge.selected_regional_pitch_event.live? %>
-    <p>live events info...</p>
-  <% elsif current_judge.submission_scores.incomplete.empty? %>
-    <p>
-      <%= link_to 'Start a new score', new_judge_submission_score_path %>
-    </p>
-  <% elsif current_judge.submission_scores.incomplete.any? %>
-    <p>
-      <%= link_to "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
-        edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
     </p>
   <% end %>
 </div>
