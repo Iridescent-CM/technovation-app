@@ -2,14 +2,14 @@
   <%= render 'judge/dashboards/menu' %>
 
   <div class="content">
-    <div class="tab-content flex-row" id="pitch-events">
-      <%= render 'judge/dashboards/full_access_content/events' %>
-    </div>
-
     <% unless Rails.env.production? %>
       <div class="tab-content flex-row" id="scores">
         <%= render 'judge/dashboards/full_access_content/scores' %>
       </div>
     <% end %>
+
+    <div class="tab-content flex-row" id="pitch-events">
+      <%= render 'judge/dashboards/full_access_content/events' %>
+    </div>
   </div>
 </div>

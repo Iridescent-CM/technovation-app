@@ -1,13 +1,4 @@
 <ul class="tab-menu">
-  <li class="tab-link">
-    <button
-      role="button"
-      class="tab-button"
-      data-tab-id="pitch-events">
-      Pitch Events
-    </button>
-  </li>
-
   <% unless Rails.env.production? %>
     <li class="tab-link">
       <button
@@ -18,4 +9,13 @@
       </button>
     </li>
   <% end %>
+
+  <li class="tab-link">
+    <button
+      role="button"
+      class="tab-button"
+      data-tab-id="pitch-events">
+      Pitch Events
+    </button>
+  </li>
 </ul>
