@@ -32,7 +32,12 @@ module FindEligibleSubmissionId
       .select {|sub|
         not judge.team_region_division_names.include?(sub.team.region_division_name)
       }
-    sub = candidates.sample
+      .sort {|x,y|
+        x = x.submission_scores_count || 0
+        y = y.submission_scores_count || 0
+        x <=> y
+      }
+    sub = candidates.first
     sub && sub.id
   end
 end

@@ -1,6 +1,28 @@
 require "rails_helper"
 
 RSpec.describe FindEligibleSubmissionId do
+  it "should choose submission with fewest scores" do
+    judge1 = FactoryGirl.create(:judge)
+    team1 = FactoryGirl.create(:team)
+    sub_with_score = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team1,
+    })
+    SubmissionScore.create!(
+      judge_profile_id: judge1.id,
+      team_submission_id: sub_with_score.id,
+    )
+
+    judge2 = FactoryGirl.create(:judge)
+    team2 = FactoryGirl.create(:team)
+    sub_without_score = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team2,
+    })
+
+    expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
+  end
+
   context "judge without team" do
     it "returns submission id" do
       judge = FactoryGirl.create(:judge)
