@@ -51,6 +51,47 @@
       &.active {
         background: white;
         border-color: $mulberry;
+
+        .tab-button {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &.tabs-vertical {
+    padding: 0;
+
+    .tab-menu {
+      display: block;
+    }
+
+    .tab-link {
+      background: inherit;
+      border: 0;
+      margin: 0;
+      box-shadow: none;
+    }
+
+    .tab-content {
+      margin: 0;
+    }
+
+    .content,
+    + .content {
+      border-left: 1px solid #ddd;
+    }
+
+    .tab-button {
+      font-weight: normal;
+      font-family: sans-serif;
+      text-align: left;
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid #ddd;
+      text-transform: none;
+
+      &:hover {
+        font-weight: bold;
       }
     }
   }
