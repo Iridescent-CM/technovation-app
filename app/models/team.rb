@@ -317,6 +317,7 @@ class Team < ActiveRecord::Base
     def city; "No city, all online"; end
     def venue_address; "No address, all online"; end
     def eventbrite_link; end
+    def teams; []; end
 
     def timezone
       "US/Pacific"
