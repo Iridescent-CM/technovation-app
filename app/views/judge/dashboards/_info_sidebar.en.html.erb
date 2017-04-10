@@ -3,9 +3,22 @@
 
   <p>
     Confused? Not sure where to start?
+  <br>
     <%= link_to "Attend a Judge Training",
       'http://technovationchallenge.org/judge-training/',
       target: "_blank" %>
+  </p>
+
+  <h3><%= t("views.application.judging_rubric") %></h3>
+
+  <p>
+    Check out the
+    <%= Season.current.year %>
+    judging rubric.
+ <br>
+    <%= link_to "Judging Rubric".html_safe,
+    "http://www.technovationchallenge.org/judging-rubric/",
+    target: "_blank" %>
   </p>
 
   <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(2017, 3, 8) %>
