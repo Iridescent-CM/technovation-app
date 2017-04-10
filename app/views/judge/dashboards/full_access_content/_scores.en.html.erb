@@ -12,23 +12,27 @@
         </li>
 
         <% if current_judge.selected_regional_pitch_event.live? %>
-          <li class="tab-link">
-            <button
-              role="button"
-              class="tab-button"
-              data-tab-id="senior-submissions">
-              Senior Teams (0)
-            </button>
-          </li>
+          <% if current_judge.selected_regional_pitch_event.teams.senior.any? %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="senior-submissions">
+                Senior Teams (<%= current_judge.selected_regional_pitch_event.teams.senior.count %>)
+              </button>
+            </li>
+          <% end %>
 
-          <li class="tab-link">
-            <button
-              role="button"
-              class="tab-button"
-              data-tab-id="junior-submissions">
-              Junior Teams (0)
-            </button>
-          </li>
+          <% if current_judge.selected_regional_pitch_event.teams.junior.any? %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="junior-submissions">
+                Junior Teams (<%= current_judge.selected_regional_pitch_event.teams.junior.count %>)
+              </button>
+            </li>
+          <% end %>
         <% end %>
 
         <li class="tab-link">
@@ -48,7 +52,11 @@
           <p>You don't have any scores currently in progress.</p>
 
           <% if current_judge.selected_regional_pitch_event.live? %>
-            <p>Live event info...</p>
+            <p>
+              Choose a submission from among the
+              <%= current_judge.selected_regional_pitch_event.division_names %>
+              teams to get started.
+            </p>
           <% else %>
             <p><%= link_to 'Start a new score now', new_judge_submission_score_path %></p>
           <% end %>
@@ -74,15 +82,71 @@
       </div>
 
       <div class="tab-content" id="senior-submissions">
-        <p>
-          Senior submissions...
-        </p>
+        <% current_judge.selected_regional_pitch_event.teams.junior.each do |team| %>
+          <div class="choose-senior-score">
+            <h1><%= team.team_submissions.last.app_name %></h1>
+            <p><strong>Team:</strong> <%= team.name %></p>
+            <p><strong>Location:</strong> <%= team.primary_location %></p>
+            <p><strong>Division:</strong> <%= team.division_name %></p>
+            <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
+
+            <% if current_judge.submission_scores.incomplete.flat_map(&:team).include?(team) %>
+              <p>
+                <%= link_to "Resume scoring this submission",
+                  edit_judge_submission_score_path(
+                    current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id)
+                  ) %>
+              </p>
+            <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
+              <p>
+                <%= link_to "Review & edit your score for this submission",
+                  edit_judge_submission_score_path(
+                    current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id),
+                    review: true
+                  ) %>
+              </p>
+            <% else %>
+              <p>
+                <%= link_to "Start scoring this submission",
+                  new_judge_submission_score_path(team_submission_id: team.team_submissions.last.id) %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
       <div class="tab-content" id="junior-submissions">
-        <p>
-          Junior submissions...
-        </p>
+        <% current_judge.selected_regional_pitch_event.teams.senior.each do |team| %>
+          <div class="choose-junior-score">
+            <h1><%= team.team_submissions.last.app_name %></h1>
+            <p><strong>Team:</strong> <%= team.name %></p>
+            <p><strong>Location:</strong> <%= team.primary_location %></p>
+            <p><strong>Division:</strong> <%= team.division_name %></p>
+            <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
+
+            <% if current_judge.submission_scores.incomplete.flat_map(&:team).include?(team) %>
+              <p>
+                <%= link_to "Resume scoring this submission",
+                  edit_judge_submission_score_path(
+                    current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id)
+                  ) %>
+              </p>
+            <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
+              <p>
+                <%= link_to "Review & edit your score for this submission",
+                  edit_judge_submission_score_path(
+                    current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id),
+                    review: true
+                  ) %>
+              </p>
+            <% else %>
+              <p>
+                <%= link_to "Start scoring this submission",
+                  new_judge_submission_score_path(team_submission_id: team.team_submissions.last.id) %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
       <div class="tab-content" id="completed">

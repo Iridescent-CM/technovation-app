@@ -75,6 +75,13 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
+  def app_name
+    if self[:app_name].strip.blank?
+      "(app not yet named)"
+    else
+      self[:app_name]
+    end
+  end
   def source_code_external_url=(url)
     sanitized_url = if url.match(%r{\Ahttps?://})
             url

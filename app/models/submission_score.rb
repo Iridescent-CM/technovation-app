@@ -23,6 +23,11 @@ class SubmissionScore < ActiveRecord::Base
     prefix: true,
     allow_nil: false
 
+  delegate :team,
+    to: :team_submission,
+    prefix: false,
+    allow_nil: false
+
   def name
     [team_submission_app_name,
      team_submission_team_name].join(' by ')

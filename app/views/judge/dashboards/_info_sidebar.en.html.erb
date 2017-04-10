@@ -2,16 +2,20 @@
   <% unless Rails.env.production? %>
     <h3>Score Submissions</h3>
 
-    <% if current_judge.selected_regional_pitch_event.live? %>
-      <p>live events info...</p>
-    <% elsif current_judge.submission_scores.incomplete.empty? %>
-      <p>
-        <%= link_to 'Start a new score', new_judge_submission_score_path %>
-      </p>
-    <% elsif current_judge.submission_scores.incomplete.any? %>
+    <% if current_judge.submission_scores.incomplete.any? %>
       <p>
         <%= link_to "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
           edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
+      </p>
+    <% elsif current_judge.selected_regional_pitch_event.live? %>
+      <p>
+        Choose a submission from among the
+        <%= current_judge.selected_regional_pitch_event.division_names %>
+        teams to get started.
+      </p>
+    <% elsif current_judge.submission_scores.incomplete.empty? %>
+      <p>
+        <%= link_to 'Start a new score', new_judge_submission_score_path %>
       </p>
     <% end %>
   <% end %>
