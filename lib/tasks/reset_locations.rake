@@ -5,6 +5,14 @@ namespace :utils do
       raise StandardError, "Unsupported task on production"
     end
 
+    RegionalPitchEvent.find_each do |r|
+      r.update_attributes({
+        city: %w{Guadalajara Mexico\ City Puerto\ Vallarta Cancun Tijuana}.sample,
+      })
+
+      puts "Reset RPE #{r.name} to #{r.city}"
+    end
+
     Team.find_each do |t|
       t.update_attributes({
         latitude: nil,
