@@ -23,6 +23,22 @@ RSpec.describe FindEligibleSubmissionId do
     expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
   end
 
+  it "should not reselect previously judged submission" do
+    judge = FactoryGirl.create(:judge)
+    team = FactoryGirl.create(:team)
+    sub = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team,
+    })
+    score = SubmissionScore.create!(
+      judge_profile_id: judge.id,
+      team_submission_id: sub.id,
+    )
+    score.complete!
+
+    expect(FindEligibleSubmissionId.(judge)).to be_nil
+  end
+
   context "judge without team" do
     it "returns submission id" do
       judge = FactoryGirl.create(:judge)
