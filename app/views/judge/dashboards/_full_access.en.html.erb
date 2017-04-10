@@ -7,8 +7,8 @@
     </div>
 
     <% unless Rails.env.production? %>
-      <div class="tab-content flex-row" id="pending-scores">
-        <%= render 'judge/dashboards/full_access_content/pending_scores' %>
+      <div class="tab-content flex-row" id="scores">
+        <%= render 'judge/dashboards/full_access_content/scores' %>
       </div>
     <% end %>
   </div>

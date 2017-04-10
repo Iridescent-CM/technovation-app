@@ -1,11 +1,75 @@
-<div class="flex-col-md-6">
-  <p>
-    This tab is QA-only and still in progress.
-  </p>
+<div class="flex-col-md-8">
+  <div class="flex-row">
+    <div id="judge-scores-menu" class="flex-col-md-3 tabs tabs-vertical">
+      <ul class="tab-menu">
+        <li class="tab-link">
+          <button
+            role="button"
+            class="tab-button"
+            data-tab-id="in-progress">
+            In progress (0)
+          </button>
+        </li>
 
-  <p class="standalone-buttons">
-    <%= link_to 'Score Submissions', judge_submission_scores_path, class: "appy-button" %>
-  </p>
+        <li class="tab-link">
+          <button
+            role="button"
+            class="tab-button"
+            data-tab-id="senior-submissions">
+            Senior Teams (0)
+          </button>
+        </li>
+
+        <li class="tab-link">
+          <button
+            role="button"
+            class="tab-button"
+            data-tab-id="junior-submissions">
+            Junior Teams (0)
+          </button>
+        </li>
+
+        <li class="tab-link">
+          <button
+            role="button"
+            class="tab-button"
+            data-tab-id="completed">
+            Completed (0)
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex-col-md-9 content">
+      <p>
+        This tab is QA-only and still in progress.
+      </p>
+
+      <div class="tab-content" id="in-progress">
+        <p class="standalone-buttons">
+          <%= link_to 'Score Submissions', judge_submission_scores_path, class: "appy-button" %>
+        </p>
+      </div>
+
+      <div class="tab-content" id="senior-submissions">
+        <p>
+          Senior submissions...
+        </p>
+      </div>
+
+      <div class="tab-content" id="junior-submissions">
+        <p>
+          Junior submissions...
+        </p>
+      </div>
+
+      <div class="tab-content" id="completed">
+        <p>
+          Completed scores...
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%= render 'judge/dashboards/info_sidebar' %>
