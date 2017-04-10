@@ -3,8 +3,8 @@ module Judge
     helper_method :current_team
 
     def edit
-      current_team_submission
       @submission_score = current_judge.submission_scores.find(params[:id])
+      @current_team_submission = @submission_score.team_submission
       render :new
     end
 
@@ -67,13 +67,15 @@ module Judge
     end
 
     def current_team_submission
+      return @current_team_submission if @current_team_submission
+
       params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
         team_submission_id: params[:team_submission_id]
       )
 
       begin
-        @current_team_submission ||= TeamSubmission.find(params[:team_submission_id])
+        @current_team_submission = TeamSubmission.find(params[:team_submission_id])
         @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
         @current_team_submission
       rescue ActiveRecord::RecordNotFound
