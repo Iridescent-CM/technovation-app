@@ -76,7 +76,7 @@ class TeamSubmission < ActiveRecord::Base
     prefix: true
 
   def app_name
-    if self[:app_name].strip.blank?
+    if (self[:app_name] || "").strip.blank?
       "(app not yet named)"
     else
       self[:app_name]
