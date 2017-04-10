@@ -431,6 +431,8 @@
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', maximizeForm);
+    var titleBarText = formWrapper.querySelector('.title-bar-text');
+    titleBarText.innerText = titleBarText.dataset.maximizedTitle;
     $(window).trigger('resize');
   }
 
@@ -442,6 +444,7 @@
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', windowForm);
+    formWrapper.querySelector('.title-bar-text').innerText = "Enter scores here";
     $(window).trigger('resize');
   }
 
@@ -453,6 +456,7 @@
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', minimizeForm);
+    formWrapper.querySelector('.title-bar-text').innerText = "Enter scores here";
   }
 
   /**
