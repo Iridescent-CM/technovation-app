@@ -27,7 +27,31 @@ module FindEligibleSubmissionId
   end
 
   def self.random_eligible_id(judge)
-    # TODO: Add real logic here from elasticsearch work
-    TeamSubmission.pluck(:id).sample
+    query = Elasticsearch::DSL::Search.search do |s|
+      s.query do |q|
+        q.bool do |b|
+          b.must_not do |mn|
+            mn.terms region_division_name: {
+              index: JudgeProfile.index_name,
+              type: "judge",
+              id: judge.id,
+              path: "region_division_names"
+            }
+          end
+
+          b.must do |m|
+            m.term regional_pitch_event_id: {
+              value: "virtual"
+            }
+          end
+        end
+      end
+
+      s.from 0
+      s.size 10_000
+    end
+
+    results = TeamSubmission.search(query).results
+    results.flat_map { |r| r._source.id }.sample
   end
 end
