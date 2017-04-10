@@ -26,7 +26,7 @@
         <strong> Add this student to a team </strong> <br>
         <%= select_tag "team_id",
             options_from_collection_for_select(Team.current, "id", "name"),
-            :include_blank => true,
+            include_blank: true,
             required: true,
             class: "chosen" %>
         <%= submit_tag 'Add', class: "appy-button" %>
