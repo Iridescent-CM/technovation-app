@@ -17,9 +17,16 @@ class SubmissionScore < ActiveRecord::Base
            :team_photo,
            :team_name,
            :team_division_name,
+           :team_primary_location,
+           :team_ages,
     to: :team_submission,
     prefix: true,
     allow_nil: false
+
+  def name
+    [team_submission_app_name,
+     team_submission_team_name].join(' by ')
+  end
 
   def complete?
     not attributes.reject { |k, _| k == 'completed_at' }.values.any?(&:blank?)

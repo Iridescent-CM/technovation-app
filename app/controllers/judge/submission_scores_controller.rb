@@ -2,15 +2,6 @@ module Judge
   class SubmissionScoresController < JudgeController
     helper_method :current_team
 
-    def index
-      @submission_scores = current_judge.submission_scores
-
-      if current_judge.selected_regional_pitch_event.live?
-        @team_submissions = current_judge.selected_regional_pitch_event.team_submissions
-        @team_submissions = @team_submissions - @submission_scores.flat_map(&:team_submission)
-      end
-    end
-
     def edit
       current_team_submission
       @submission_score = current_judge.submission_scores.find(params[:id])

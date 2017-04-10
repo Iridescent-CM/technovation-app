@@ -586,3 +586,15 @@ $close-button-wrapper-height: 50px;
 .judge-submission-cta {
   margin: 0 0 1rem;
 }
+
+.complete-score,
+.incomplete-score {
+  padding: 1rem;
+  margin: 0 0 1rem;
+  border-bottom: 1px solid #ddd;
+
+  h1 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+  }
+}

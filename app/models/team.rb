@@ -135,7 +135,7 @@ class Team < ActiveRecord::Base
   end
 
   def ages
-    students.map(&:age)
+    students.map(&:age).compact.uniq
   end
 
   def selected_regional_pitch_event

@@ -7,48 +7,70 @@
             role="button"
             class="tab-button"
             data-tab-id="in-progress">
-            In progress (0)
+            In progress (<%= current_judge.submission_scores.incomplete.count %>)
           </button>
         </li>
 
-        <li class="tab-link">
-          <button
-            role="button"
-            class="tab-button"
-            data-tab-id="senior-submissions">
-            Senior Teams (0)
-          </button>
-        </li>
+        <% if current_judge.selected_regional_pitch_event.live? %>
+          <li class="tab-link">
+            <button
+              role="button"
+              class="tab-button"
+              data-tab-id="senior-submissions">
+              Senior Teams (0)
+            </button>
+          </li>
 
-        <li class="tab-link">
-          <button
-            role="button"
-            class="tab-button"
-            data-tab-id="junior-submissions">
-            Junior Teams (0)
-          </button>
-        </li>
+          <li class="tab-link">
+            <button
+              role="button"
+              class="tab-button"
+              data-tab-id="junior-submissions">
+              Junior Teams (0)
+            </button>
+          </li>
+        <% end %>
 
         <li class="tab-link">
           <button
             role="button"
             class="tab-button"
             data-tab-id="completed">
-            Completed (0)
+            Completed (<%= current_judge.submission_scores.complete.count %>)
           </button>
         </li>
       </ul>
     </div>
 
     <div class="flex-col-md-9 content">
-      <p>
-        This tab is QA-only and still in progress.
-      </p>
-
       <div class="tab-content" id="in-progress">
-        <p class="standalone-buttons">
-          <%= link_to 'Score Submissions', judge_submission_scores_path, class: "appy-button" %>
-        </p>
+        <% if current_judge.submission_scores.incomplete.empty? %>
+          <p>You don't have any scores currently in progress.</p>
+
+          <% if current_judge.selected_regional_pitch_event.live? %>
+            <p>Live event info...</p>
+          <% else %>
+            <p><%= link_to 'Start a new score now', new_judge_submission_score_path %></p>
+          <% end %>
+        <% end %>
+
+        <% current_judge.submission_scores.incomplete.each do |score| %>
+          <div class="incomplete-score">
+            <h1><%= score.name %></h1>
+            <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>
+            <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+            <p><strong>Ages:</strong> <%= score.team_submission_team_ages.to_sentence %></p>
+            <p>
+              <strong>Score so far:</strong>
+              <%= score.total %> / <%= score.total_possible %>
+            </p>
+
+            <p>
+              <%= link_to "Resume scoring #{score.name}",
+                edit_judge_submission_score_path(score) %>
+            </p>
+          </div>
+        <% end %>
       </div>
 
       <div class="tab-content" id="senior-submissions">
@@ -64,9 +86,37 @@
       </div>
 
       <div class="tab-content" id="completed">
-        <p>
-          Completed scores...
-        </p>
+        <% if current_judge.submission_scores.complete.empty? %>
+          <p>You haven't completed any scores yet.</p>
+
+          <% if current_judge.submission_scores.incomplete.any? %>
+            <p>
+              <%= link_to(
+                "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
+                edit_judge_submission_score_path(
+                  current_judge.submission_scores.incomplete.last.id
+                )) %>
+            </p>
+          <% end %>
+        <% end %>
+
+        <% current_judge.submission_scores.complete.each do |score| %>
+          <div class="complete-score">
+            <h1><%= score.name %></h1>
+            <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>
+            <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+            <p><strong>Ages:</strong> <%= score.team_submission_team_ages.to_sentence %></p>
+            <p>
+              <strong>Score:</strong>
+              <%= score.total %> / <%= score.total_possible %>
+            </p>
+
+            <p>
+              <%= link_to "Review & Edit this score",
+                edit_judge_submission_score_path(score, review: true) %>
+            </p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
