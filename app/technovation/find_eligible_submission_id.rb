@@ -27,7 +27,12 @@ module FindEligibleSubmissionId
   end
 
   def self.random_eligible_id(judge)
-    # TODO: Add real logic here from elasticsearch work
-    TeamSubmission.pluck(:id).sample
+    candidates = TeamSubmission.current
+      .includes(:team)
+      .select {|sub|
+        not judge.team_region_division_names.include?(sub.team.region_division_name)
+      }
+    sub = candidates.sample
+    sub && sub.id
   end
 end

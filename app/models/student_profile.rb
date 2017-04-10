@@ -8,7 +8,7 @@ class StudentProfile < ActiveRecord::Base
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :team_member_invites, as: :invitee, dependent: :destroy
 
-  belongs_to :account
+  belongs_to :account, touch: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
@@ -19,6 +19,9 @@ class StudentProfile < ActiveRecord::Base
     dependent: :destroy
 
   after_update :reset_parent
+
+  after_save { teams.current.find_each(&:touch) }
+  after_touch { teams.current.find_each(&:touch) }
 
   validates :school_name, presence: true
 
