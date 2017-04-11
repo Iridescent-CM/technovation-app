@@ -53,13 +53,12 @@
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
 
-  <%= simple_form_for send("#{current_account.type_name}_team_submission_path",
-                          submission,
-                          team_id: current_team.id),
+  <%= simple_form_for [current_account.type_name, submission],
     html: {
       class: "alternative-form no-simple-form-style #{url_css}",
       data: { switch_text: "Upload a PDF" },
     } do |f| %>
+    <%= hidden_field_tag :team_id, current_team.id %>
 
     <%= f.fields_for :business_plan do |b| %>
       <%= b.input :remote_file_url,
