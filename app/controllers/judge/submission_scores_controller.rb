@@ -5,6 +5,7 @@ module Judge
     def edit
       @submission_score = current_judge.submission_scores.find(params[:id])
       @current_team_submission = @submission_score.team_submission
+      @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
       render :new
     end
 
@@ -23,6 +24,8 @@ module Judge
             notice: t("controllers.judge.submission_scores.any.no_submission_found")
         end
       end
+
+      @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
 
       @submission_score.team_submission.update_attributes({
         judge_opened_id: current_judge.id,
