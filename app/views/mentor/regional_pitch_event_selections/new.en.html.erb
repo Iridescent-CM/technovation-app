@@ -28,7 +28,9 @@
       <div class="card__body">
         <div class="card-body__img">
           <%= image_tag team.team_photo, width: 150, height: 100 %>
+        </div>
 
+        <div class="card-body__details">
           <strong><%= team.name %></strong><br />
           <strong>Division:</strong> <%= team.division_name.titleize %><br />
 
@@ -36,84 +38,90 @@
             <%= team.creator_address_details %><br />
 
             <% if team.submission.present? %>
-              <%= link_to 'Review app submission',
+              <%= link_to 'Edit app submission',
+                mentor_team_submission_path(team.submission, team_id: team.id) %>
+              <br />
+              <%= link_to 'See how it looks to the judges',
                 app_url(team.submission),
-                target: :_blank %><br />
-
-                (this is how the judges will see it)
+                target: :_blank %>
             <% else %>
               <strong class="has-danger">
                 <%= team.name %> has not begun their app submission!
+                <br />
+                <%= link_to 'Start the submission now',
+                  new_mentor_team_submission_path %>
               </strong>
             <% end %>
           </small>
         </div>
 
         <% if team.submission.present? %>
-          <strong>Select a Regional Pitch Event:</strong>
+          <div style="clear: both;">
+            <strong>Select a Regional Pitch Event:</strong>
 
-          <ul class="card-body__selection">
-            <% team.eligible_events.each do |event| %>
-              <li>
-                <label class="<%= 'selected' if team.selected_regional_pitch_event.id == event.id %>">
-                  <%= radio_button_tag "team_#{team.id}_events",
-                    event.id,
-                    team.selected_regional_pitch_event.id == event.id,
-                    id: "team_#{team.id}_event_#{event.id}" %>
+            <ul class="card-body__selection">
+              <% team.eligible_events.each do |event| %>
+                <li>
+                  <label class="<%= 'selected' if team.selected_regional_pitch_event.id == event.id %>">
+                    <%= radio_button_tag "team_#{team.id}_events",
+                      event.id,
+                      team.selected_regional_pitch_event.id == event.id,
+                      id: "team_#{team.id}_event_#{event.id}" %>
 
-                  <%= event.name %>
-                  <%= link_to '(more info)',
-                    mentor_regional_pitch_event_path(event),
-                    data: {
-                      modal_trigger: "team_#{team.id}_event_info_#{event.id}",
-                    } %>
-                </label>
-              </li>
+                    <%= event.name %>
+                    <%= link_to '(more info)',
+                      mentor_regional_pitch_event_path(event),
+                      data: {
+                        modal_trigger: "team_#{team.id}_event_info_#{event.id}",
+                      } %>
+                  </label>
+                </li>
 
-              <div class="modalify"
-                   data-heading="<%= event.name %> Details"
-                   id="team_<%= team.id %>_event_info_<%= event.id %>">
-                <% if event.live? %>
-                  <p><strong>Division:</strong> <%= event.division_names %></p>
-                  <p><strong>City:</strong> <%= event.city %></p>
-                  <p><strong>Date / time:</strong> <%= event.date_time %></p>
-                  <p><strong>Address:</strong> <%= event.venue_address %></p>
+                <div class="modalify"
+                    data-heading="<%= event.name %> Details"
+                    id="team_<%= team.id %>_event_info_<%= event.id %>">
+                  <% if event.live? %>
+                    <p><strong>Division:</strong> <%= event.division_names %></p>
+                    <p><strong>City:</strong> <%= event.city %></p>
+                    <p><strong>Date / time:</strong> <%= event.date_time %></p>
+                    <p><strong>Address:</strong> <%= event.venue_address %></p>
 
-                  <% if event.eventbrite_link %>
+                    <% if event.eventbrite_link %>
+                      <p>
+                        <%= link_to event.eventbrite_link,
+                          event.eventbrite_link,
+                          target: :_blank %>
+                      </p>
+                    <% end %>
+                  <% else %>
                     <p>
-                      <%= link_to event.eventbrite_link,
-                        event.eventbrite_link,
-                        target: :_blank %>
+                      By default, all teams with completed submissions are entered
+                      into virtual judging.
+                    </p>
+
+                    <p>
+                      Virtual judging is a competition between all teams in the same
+                      region and division.
+                    </p>
+
+                    <p>
+                      If you select this event — or you simply do not select any
+                      live events — your team's completed submission will be judged online.
                     </p>
                   <% end %>
-                <% else %>
-                  <p>
-                    By default, all teams with completed submissions are entered
-                    into virtual judging.
-                  </p>
 
-                  <p>
-                    Virtual judging is a competition between all teams in the same
-                    region and division.
-                  </p>
-
-                  <p>
-                    If you select this event — or you simply do not select any
-                    live events — your team's completed submission will be judged online.
-                  </p>
-                <% end %>
-
-                <div class="modal-actions">
-                  <button class="appy-button modalify__close"
-                          data-selects="team_<%= team.id %>_event_<%= event.id %>">
-                    Select
-                  </button>
-                  or
-                  <%= link_to 'cancel', '#', class: "modalify__close" %>
+                  <div class="modal-actions">
+                    <button class="appy-button modalify__close"
+                            data-selects="team_<%= team.id %>_event_<%= event.id %>">
+                      Select
+                    </button>
+                    or
+                    <%= link_to 'cancel', '#', class: "modalify__close" %>
+                  </div>
                 </div>
-              </div>
-            <% end %>
-          </ul>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
       </div>
     </div>
