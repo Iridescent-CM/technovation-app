@@ -79,31 +79,41 @@
         </div>
 
         <div class="judging-form__section">
-          <!-- Pseudo-section for technical checklist step. Clicking the button in this section opens the Technical Checklist partial in a modal -->
-          <h1>Technical</h1>
-
-          <div class="question-technical-checklist">
-            <h2>Verify the Technical Checklist</h2>
-
-            <p class="question-technical-checklist__label">
-              Please verify that the team has completed their Technical Checklist
-            </p>
-
-            <button
-              class="appy-button"
-              type="button"
-              data-modal-trigger="judging-technical-checklist"
-            >
-              Verify Technical Checklist
-            </button>
-          </div>
-        </div>
-
-        <div class="judging-form__section">
           <%= simple_form_for [:judge, @submission_score],
             data: { remote: true },
             html: { class: "no-simple-form-style"} do |f| %>
-            <h1>Technical Comment</h1>
+
+            <h1>Technical</h1>
+
+            <%= f.input :app_functional,
+              label: "The app is fully functional and has no noticeable bugs.",
+              collection: JudgingRubricScores.new,
+              label_method: :name,
+              value_method: :value,
+              as: :radio_buttons %>
+
+            <%= f.input :demo_video,
+              label: "The demo video demonstrates the functionality of the app well.",
+              collection: JudgingRubricScores.new,
+              label_method: :name,
+              value_method: :value,
+              as: :radio_buttons %>
+
+            <div class="question-technical-checklist">
+              <h2>Verify the Technical Checklist</h2>
+
+              <p class="question-technical-checklist__label">
+                Please verify that the team has completed their Technical Checklist
+              </p>
+
+              <button
+                class="appy-button"
+                type="button"
+                data-modal-trigger="judging-technical-checklist"
+              >
+                Verify Technical Checklist
+              </button>
+            </div>
 
             <%= f.input :technical_comment,
               wrapper_html: {
@@ -117,7 +127,7 @@
                 }
               } %>
 
-              <%= f.button :submit, "Save Technical Feedback" %>
+            <%= f.button :submit, "Save Technical Feedback" %>
           <% end %>
         </div>
 

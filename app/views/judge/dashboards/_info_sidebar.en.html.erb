@@ -4,8 +4,9 @@
 
     <% if current_judge.submission_scores.incomplete.any? %>
       <p>
-        <%= link_to "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
+        <%= link_to "Resume scoring",
           edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
+        <%= current_judge.submission_scores.incomplete.last.name %>
       </p>
     <% elsif current_judge.selected_regional_pitch_event.live? %>
       <p>
