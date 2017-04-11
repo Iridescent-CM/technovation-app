@@ -89,23 +89,8 @@
 }
 
 .mentor-regional-pitch-events__team-review {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
   .card {
-    width: 49%;
-    margin-right: 1rem;
     margin-bottom: 1rem;
-
-    &:last-child,
-    &:only-child {
-      margin-right: 0;
-    }
-
-    &:only-child {
-      width: 100%;
-    }
   }
 
   .card-body__img {
