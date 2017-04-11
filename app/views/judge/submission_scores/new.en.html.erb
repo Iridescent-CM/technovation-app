@@ -2,10 +2,14 @@
   <h1 class="appy-title"><%= @current_team_submission.app_name || "[No App Name]" %></h1>
 
   <h3>
-    by
-    <%= @current_team_submission.team.name %>,
-    from
-    <%= @current_team_submission.team_primary_location %>
+    <span>Team:</span>
+    <%= @current_team_submission.team.name %> |
+
+    <span>Location:</span>
+    <%= @current_team_submission.team_primary_location %> |
+
+    <span>Division:</span>
+    <%= @current_team_submission.team_division_name.capitalize %>
   </h3>
 
   <div
