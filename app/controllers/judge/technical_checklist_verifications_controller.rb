@@ -5,13 +5,20 @@ module Judge
     def new
       @technical_checklist = current_team_submission.technical_checklist ||
         current_team_submission.build_technical_checklist
+      @submission_score = current_judge.submission_scores.find_by(
+        team_submission_id: current_team_submission.id
+      )
     end
 
     def create
       @technical_checklist = current_team_submission.technical_checklist ||
         current_team_submission.build_technical_checklist
 
-      @technical_checklist.update_attributes(technical_checklist_params)
+      @submission_score = current_judge.submission_scores.find_by(
+        team_submission_id: current_team_submission.id
+      )
+
+      @submission_score.update_attributes(submission_score_params)
 
       if request.xhr?
         head 200 and return
@@ -27,8 +34,8 @@ module Judge
       @current_team_submission ||= TeamSubmission.friendly.find(params[:team_submission_id])
     end
 
-    def technical_checklist_params
-      params.require(:technical_checklist).permit(
+    def submission_score_params
+      params.require(:submission_score).permit(
         :used_strings_verified,
         :used_numbers_verified,
         :used_variables_verified,

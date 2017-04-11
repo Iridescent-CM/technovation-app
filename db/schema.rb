@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404211311) do
+ActiveRecord::Schema.define(version: 20170411155706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,32 +389,51 @@ ActiveRecord::Schema.define(version: 20170404211311) do
   create_table "submission_scores", force: :cascade do |t|
     t.integer  "team_submission_id"
     t.integer  "judge_profile_id"
-    t.integer  "sdg_alignment",                default: 0
-    t.integer  "evidence_of_problem",          default: 0
-    t.integer  "problem_addressed",            default: 0
-    t.integer  "app_functional",               default: 0
-    t.integer  "demo_video",                   default: 0
-    t.integer  "business_plan_short_term",     default: 0
-    t.integer  "business_plan_long_term",      default: 0
-    t.integer  "market_research",              default: 0
-    t.integer  "viable_business_model",        default: 0
-    t.integer  "problem_clearly_communicated", default: 0
-    t.integer  "compelling_argument",          default: 0
-    t.integer  "passion_energy",               default: 0
-    t.integer  "pitch_specific",               default: 0
-    t.integer  "business_plan_feasible",       default: 0
-    t.integer  "submission_thought_out",       default: 0
-    t.integer  "cohesive_story",               default: 0
-    t.integer  "solution_originality",         default: 0
-    t.integer  "solution_stands_out",          default: 0
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "sdg_alignment",                 default: 0
+    t.integer  "evidence_of_problem",           default: 0
+    t.integer  "problem_addressed",             default: 0
+    t.integer  "app_functional",                default: 0
+    t.integer  "demo_video",                    default: 0
+    t.integer  "business_plan_short_term",      default: 0
+    t.integer  "business_plan_long_term",       default: 0
+    t.integer  "market_research",               default: 0
+    t.integer  "viable_business_model",         default: 0
+    t.integer  "problem_clearly_communicated",  default: 0
+    t.integer  "compelling_argument",           default: 0
+    t.integer  "passion_energy",                default: 0
+    t.integer  "pitch_specific",                default: 0
+    t.integer  "business_plan_feasible",        default: 0
+    t.integer  "submission_thought_out",        default: 0
+    t.integer  "cohesive_story",                default: 0
+    t.integer  "solution_originality",          default: 0
+    t.integer  "solution_stands_out",           default: 0
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.text     "ideation_comment"
     t.text     "technical_comment"
     t.text     "entrepreneurship_comment"
     t.text     "pitch_comment"
     t.text     "overall_comment"
     t.datetime "completed_at"
+    t.boolean  "used_strings_verified"
+    t.boolean  "used_numbers_verified"
+    t.boolean  "used_variables_verified"
+    t.boolean  "used_lists_verified"
+    t.boolean  "used_booleans_verified"
+    t.boolean  "used_loops_verified"
+    t.boolean  "used_conditionals_verified"
+    t.boolean  "used_local_db_verified"
+    t.boolean  "used_external_db_verified"
+    t.boolean  "used_location_sensor_verified"
+    t.boolean  "used_camera_verified"
+    t.boolean  "used_accelerometer_verified"
+    t.boolean  "used_sms_phone_verified"
+    t.boolean  "used_sound_verified"
+    t.boolean  "used_sharing_verified"
+    t.boolean  "paper_prototype_verified"
+    t.boolean  "event_flow_chart_verified"
+    t.boolean  "used_clock_verified"
+    t.boolean  "used_canvas_verified"
   end
 
   add_index "submission_scores", ["completed_at"], name: "index_submission_scores_on_completed_at", using: :btree
@@ -484,49 +503,34 @@ ActiveRecord::Schema.define(version: 20170404211311) do
   create_table "technical_checklists", force: :cascade do |t|
     t.boolean  "used_strings"
     t.string   "used_strings_explanation"
-    t.boolean  "used_strings_verified"
     t.boolean  "used_numbers"
     t.string   "used_numbers_explanation"
-    t.boolean  "used_numbers_verified"
     t.boolean  "used_variables"
     t.string   "used_variables_explanation"
-    t.boolean  "used_variables_verified"
     t.boolean  "used_lists"
     t.string   "used_lists_explanation"
-    t.boolean  "used_lists_verified"
     t.boolean  "used_booleans"
     t.string   "used_booleans_explanation"
-    t.boolean  "used_booleans_verified"
     t.boolean  "used_loops"
     t.string   "used_loops_explanation"
-    t.boolean  "used_loops_verified"
     t.boolean  "used_conditionals"
     t.string   "used_conditionals_explanation"
-    t.boolean  "used_conditionals_verified"
     t.boolean  "used_local_db"
     t.string   "used_local_db_explanation"
-    t.boolean  "used_local_db_verified"
     t.boolean  "used_external_db"
     t.string   "used_external_db_explanation"
-    t.boolean  "used_external_db_verified"
     t.boolean  "used_location_sensor"
     t.string   "used_location_sensor_explanation"
-    t.boolean  "used_location_sensor_verified"
     t.boolean  "used_camera"
     t.string   "used_camera_explanation"
-    t.boolean  "used_camera_verified"
     t.boolean  "used_accelerometer"
     t.string   "used_accelerometer_explanation"
-    t.boolean  "used_accelerometer_verified"
     t.boolean  "used_sms_phone"
     t.string   "used_sms_phone_explanation"
-    t.boolean  "used_sms_phone_verified"
     t.boolean  "used_sound"
     t.string   "used_sound_explanation"
-    t.boolean  "used_sound_verified"
     t.boolean  "used_sharing"
     t.string   "used_sharing_explanation"
-    t.boolean  "used_sharing_verified"
     t.string   "paper_prototype"
     t.integer  "team_submission_id"
     t.datetime "created_at",                       null: false
@@ -536,10 +540,6 @@ ActiveRecord::Schema.define(version: 20170404211311) do
     t.string   "used_clock_explanation"
     t.boolean  "used_canvas"
     t.string   "used_canvas_explanation"
-    t.boolean  "paper_prototype_verified"
-    t.boolean  "event_flow_chart_verified"
-    t.boolean  "used_clock_verified"
-    t.boolean  "used_canvas_verified"
   end
 
   add_index "technical_checklists", ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id", using: :btree

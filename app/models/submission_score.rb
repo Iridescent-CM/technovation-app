@@ -34,7 +34,10 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def complete?
-    not attributes.reject { |k, _| k == 'completed_at' }.values.any?(&:blank?)
+    not attributes.reject { |k, _|
+      k == 'completed_at' or
+        k.match(/_verified$/)
+    }.values.any?(&:blank?)
   end
 
   def incomplete?
@@ -72,7 +75,15 @@ class SubmissionScore < ActiveRecord::Base
   def technical_total
     app_functional +
       demo_video +
-        team_submission.total_technical_checklist_verified
+        total_technical_checklist_verified
+  end
+
+  def total_technical_checklist_verified
+    if team_submission.technical_checklist
+      total_verified
+    else
+      0
+    end
   end
 
   def entrepreneurship_total
@@ -106,6 +117,70 @@ class SubmissionScore < ActiveRecord::Base
       100
     else
       0
+    end
+  end
+
+  private
+  def total_verified
+    total_coding_verified +
+      total_db_verified +
+        total_mobile_verified +
+          total_process_verified
+  end
+
+  def total_coding_verified
+    calculate_total_verified(
+      team_submission.technical_checklist.technical_components,
+      points_each: 1,
+      points_max:  4
+    )
+  end
+
+  def total_db_verified
+    calculate_total_verified(
+      team_submission.technical_checklist.database_components,
+      points_each: 1,
+      points_max: 1
+    )
+  end
+
+  def total_mobile_verified
+    calculate_total_verified(
+      team_submission.technical_checklist.mobile_components,
+      points_each: 2,
+      points_max: 2
+    )
+  end
+
+  def total_process_verified
+    if team_submission.technical_checklist.pics_of_process.all? { |a|
+         team_submission.technical_checklist.send(a).present?
+       } and 
+
+         team_submission.technical_checklist.pics_of_process.map { |a|
+           "#{a}_verified"
+         }.all? { |a|
+           self[a] # returns true?
+         } and
+
+           team_submission.screenshots.count >= 2
+      3
+    else
+      0
+    end
+  end
+
+  def calculate_total_verified(components, options)
+    components.reduce(0) do |sum, aspect|
+      if sum == options[:points_max]
+        sum
+      elsif team_submission.technical_checklist.send(aspect) and
+          not team_submission.technical_checklist.send("#{aspect}_explanation").blank? and
+            self["#{aspect}_verified"]
+        sum += options[:points_each]
+      else
+        sum
+      end
     end
   end
 end

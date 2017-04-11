@@ -236,14 +236,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def total_technical_checklist_verified
-    if technical_checklist
-      technical_checklist.total_verified
-    else
-      0
-    end
-  end
-
   def clear_judge_opened_details!
     update_attributes({
       judge_opened_at: nil,

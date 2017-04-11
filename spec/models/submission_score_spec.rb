@@ -144,16 +144,16 @@ RSpec.describe SubmissionScore do
     team_submission.create_technical_checklist!({
       used_canvas: true,
       used_canvas_explanation: "hello",
-      used_canvas_verified: true,
 
       used_lists: true,
       used_lists_explanation: "hello",
-      used_lists_verified: true,
-    });
+    })
 
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
       judge_profile: judge_profile,
+      used_canvas_verified: true,
+      used_lists_verified: true,
     })
 
     expect(subscore.total).to eq(3)
@@ -167,12 +167,10 @@ RSpec.describe SubmissionScore do
     team_submission.create_technical_checklist!({
       used_canvas: true,
       used_canvas_explanation: "hello",
-      used_canvas_verified: true,
 
       used_lists: true,
       used_lists_explanation: "hello",
-      used_lists_verified: true,
-    });
+    })
 
     # 1/2 screenshots, not enough for points
     team_submission.screenshots.create!
@@ -180,6 +178,8 @@ RSpec.describe SubmissionScore do
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
       judge_profile: judge_profile,
+      used_canvas_verified: true,
+      used_lists_verified: true,
     })
 
     expect(subscore.total).to eq(3)

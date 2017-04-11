@@ -1,4 +1,4 @@
-<%= simple_form_for submission.technical_checklist,
+<%= simple_form_for @submission_score,
   method: :post,
   html: { class: "no-simple-form-style" },
   url: judge_team_submission_technical_checklist_verifications_path(submission) do |f| %>
