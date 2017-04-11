@@ -263,8 +263,14 @@ class Account < ActiveRecord::Base
       mentor_profile.teams
     else
       t = Struct.new(:current)
-      def t.current; []; end
+      def t.current; Team.none; end
       t
+    end
+  end
+
+  def team_region_division_names
+    Rails.cache.fetch("#{cache_key}/team_region_division_names") do
+      teams.current.map {|t| t.region_division_name }.uniq
     end
   end
 

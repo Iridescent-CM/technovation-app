@@ -51,7 +51,7 @@ class MentorProfile < ActiveRecord::Base
            Season.current.year)
   }
 
-  belongs_to :account
+  belongs_to :account, touch: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
@@ -59,7 +59,13 @@ class MentorProfile < ActiveRecord::Base
   has_many :expertises, through: :mentor_profile_expertises
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
+  has_many :teams, through: :memberships, source: :joinable, source_type: "Team",
+    after_add: :invalidate_cache, after_remove: :invalidate_cache
+
+  def invalidate_cache(o)
+    self.touch
+    self.account.touch
+  end
 
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
@@ -70,6 +76,9 @@ class MentorProfile < ActiveRecord::Base
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
     if: -> { account.country_changed? }
+
+  after_save { teams.current.find_each(&:touch) }
+  after_touch { teams.current.find_each(&:touch) }
 
   validates :school_company_name, :job_title, presence: true
 
@@ -177,10 +186,6 @@ class MentorProfile < ActiveRecord::Base
       background_check_complete? and
         location_confirmed? and
           not bio.blank?
-  end
-
-  def team_region_division_names
-    teams.current.map {|t| t.region_division_name}.compact.uniq
   end
 
   private

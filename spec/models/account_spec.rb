@@ -83,4 +83,13 @@ RSpec.describe Account do
 
     expect(team.reload.division_name).to eq("senior")
   end
+
+  it "re-cache team_region_division_names as account gets added to new teams" do
+    account = FactoryGirl.create(:mentor).account
+    expect(account.team_region_division_names).to be_empty
+    account.teams << FactoryGirl.create(:team)
+    expect(account.team_region_division_names).to match_array(["US_IL,senior"])
+    account.teams << FactoryGirl.create(:team, creator_in: "Los Angeles")
+    expect(account.team_region_division_names).to match_array(["US_IL,senior","US_CA,senior"])
+  end
 end

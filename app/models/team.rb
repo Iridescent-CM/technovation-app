@@ -157,11 +157,13 @@ class Team < ActiveRecord::Base
   end
 
   def region_division_name
-    name = creator.country || ""
-    if name == "US"
-      name += "_#{state_province}"
+    Rails.cache.fetch("#{cache_key}/region_division_name") do
+      name = creator.country || ""
+      if name == "US"
+        name += "_#{state_province}"
+      end
+      name += ",#{division.name}"
     end
-    name += ",#{division.name}"
   end
 
   def junior?
@@ -282,6 +284,10 @@ class Team < ActiveRecord::Base
 
     def present?
       false
+    end
+
+    def cache_key
+      "null key"
     end
   end
 

@@ -124,5 +124,20 @@ RSpec.describe Team do
       team = FactoryGirl.create(:team, creator_in: nil, creator_country: nil)
       expect(team.region_division_name).to eq(",senior")
     end
+
+    it "should re-cache if creator details change" do
+      team = FactoryGirl.create(:team)
+      expect(team.region_division_name).to eq("US_IL,senior")
+      team.creator.date_of_birth = Date.today - 10.years
+      team.creator.save
+      expect(team.reload.region_division_name).to eq("US_IL,junior")
+    end
+
+    it "should re-cache if members change" do
+      team = FactoryGirl.create(:team)
+      expect(team.region_division_name).to eq("US_IL,senior")
+      team.remove_student(team.students.first)
+      expect(team.reload.region_division_name).to eq(",none_assigned_yet")
+    end
   end
 end
