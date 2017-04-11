@@ -2,14 +2,7 @@ class StudentProfile < ActiveRecord::Base
   scope :full_access, -> { joins(:account, :parental_consent).where("accounts.location_confirmed = ?", true) }
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team",
-    after_add: :invalidate_cache, after_remove: :invalidate_cache
-
-  def invalidate_cache(o)
-    self.touch
-    self.account.touch
-  end
-
+  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor, dependent: :destroy

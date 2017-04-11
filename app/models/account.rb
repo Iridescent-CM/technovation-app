@@ -269,7 +269,8 @@ class Account < ActiveRecord::Base
   end
 
   def team_region_division_names
-    Rails.cache.fetch("#{cache_key}/team_region_division_names") do
+    team_keys = teams.current.map(&:cache_key).join('/')
+    Rails.cache.fetch("#{team_keys}/team_region_division_names") do
       teams.current.map {|t| t.region_division_name }.uniq
     end
   end
