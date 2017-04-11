@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411155706) do
+ActiveRecord::Schema.define(version: 20170411163946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -434,6 +434,7 @@ ActiveRecord::Schema.define(version: 20170411155706) do
     t.boolean  "event_flow_chart_verified"
     t.boolean  "used_clock_verified"
     t.boolean  "used_canvas_verified"
+    t.string   "event_type"
   end
 
   add_index "submission_scores", ["completed_at"], name: "index_submission_scores_on_completed_at", using: :btree

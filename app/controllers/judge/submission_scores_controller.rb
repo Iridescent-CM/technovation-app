@@ -15,6 +15,7 @@ module Judge
       else
         @submission_score = current_judge.submission_scores.find_or_create_by!(
           team_submission_id: current_team_submission.id,
+          event_type: current_judge.selected_regional_pitch_event.live? ? "live" : "virtual",
         )
       end
 

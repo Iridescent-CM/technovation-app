@@ -36,7 +36,8 @@ class SubmissionScore < ActiveRecord::Base
   def complete?
     not attributes.reject { |k, _|
       k == 'completed_at' or
-        k.match(/_verified$/)
+        k == 'event_type' or
+          k.match(/_verified$/)
     }.values.any?(&:blank?)
   end
 
