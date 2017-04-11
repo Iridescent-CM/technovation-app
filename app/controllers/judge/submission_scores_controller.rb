@@ -72,7 +72,7 @@ module Judge
 
       params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
-        team_submission_id: params[:team_submission_id]
+        team_submission_id: params[:team_submission_id] || @submission_score.try(:team_submission_id)
       )
 
       begin
