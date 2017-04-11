@@ -84,8 +84,10 @@
       <% if current_judge.selected_regional_pitch_event.live? %>
         <div class="tab-content" id="senior-submissions">
           <% current_judge.selected_regional_pitch_event.teams.junior.each do |team| %>
+            <% next unless team.submission.present? %>
+
             <div class="choose-senior-score">
-              <h1><%= team.team_submissions.last.app_name %></h1>
+              <h1><%= team.submission.app_name %></h1>
               <p><strong>Team:</strong> <%= team.name %></p>
               <p><strong>Location:</strong> <%= team.primary_location %></p>
               <p><strong>Division:</strong> <%= team.division_name %></p>
@@ -95,21 +97,21 @@
                 <p>
                   <%= link_to "Resume scoring this submission",
                     edit_judge_submission_score_path(
-                      current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id)
+                      current_judge.submission_scores.find_by(team_submission_id: team.submission.id)
                     ) %>
                 </p>
               <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
                 <p>
                   <%= link_to "Review & edit your score for this submission",
                     edit_judge_submission_score_path(
-                      current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id),
+                      current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
                       review: true
                     ) %>
                 </p>
               <% else %>
                 <p>
                   <%= link_to "Start scoring this submission",
-                    new_judge_submission_score_path(team_submission_id: team.team_submissions.last.id) %>
+                    new_judge_submission_score_path(team_submission_id: team.submission.id) %>
                 </p>
               <% end %>
             </div>
@@ -118,8 +120,10 @@
 
         <div class="tab-content" id="junior-submissions">
           <% current_judge.selected_regional_pitch_event.teams.senior.each do |team| %>
+            <% next unless team.submission.present? %>
+
             <div class="choose-junior-score">
-              <h1><%= team.team_submissions.last.app_name %></h1>
+              <h1><%= team.submission.app_name %></h1>
               <p><strong>Team:</strong> <%= team.name %></p>
               <p><strong>Location:</strong> <%= team.primary_location %></p>
               <p><strong>Division:</strong> <%= team.division_name %></p>
@@ -129,21 +133,21 @@
                 <p>
                   <%= link_to "Resume scoring this submission",
                     edit_judge_submission_score_path(
-                      current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id)
+                      current_judge.submission_scores.find_by(team_submission_id: team.submission.id)
                     ) %>
                 </p>
               <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
                 <p>
                   <%= link_to "Review & edit your score for this submission",
                     edit_judge_submission_score_path(
-                      current_judge.submission_scores.find_by(team_submission_id: team.team_submissions.last.id),
+                      current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
                       review: true
                     ) %>
                 </p>
               <% else %>
                 <p>
                   <%= link_to "Start scoring this submission",
-                    new_judge_submission_score_path(team_submission_id: team.team_submissions.last.id) %>
+                    new_judge_submission_score_path(team_submission_id: team.submission.id) %>
                 </p>
               <% end %>
             </div>
