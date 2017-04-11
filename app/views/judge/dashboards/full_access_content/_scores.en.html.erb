@@ -83,7 +83,7 @@
 
       <% if current_judge.selected_regional_pitch_event.live? %>
         <div class="tab-content" id="senior-submissions">
-          <% current_judge.selected_regional_pitch_event.teams.junior.each do |team| %>
+          <% current_judge.selected_regional_pitch_event.teams.senior.each do |team| %>
             <div class="choose-senior-score">
               <% if team.submission.present? %>
                 <h1><%= team.submission.app_name %></h1>
@@ -121,7 +121,7 @@
         </div>
 
         <div class="tab-content" id="junior-submissions">
-          <% current_judge.selected_regional_pitch_event.teams.senior.each do |team| %>
+          <% current_judge.selected_regional_pitch_event.teams.junior.each do |team| %>
             <div class="choose-junior-score">
               <% if team.submission.present? %>
                 <h1><%= team.submission.app_name %></h1>
