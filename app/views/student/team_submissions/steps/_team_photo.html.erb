@@ -39,8 +39,6 @@
   </div>
 
   <%= link_to "Go To Your Team Page",
-    student_team_path(current_team),
+    send("#{current_account.type_name}_team_path", current_team),
     class: "ts-about-team__team-quick-link" %>
-
-  <%# TODO = render 'team_submissions/share_buttons', submission: submission %>
 </div>

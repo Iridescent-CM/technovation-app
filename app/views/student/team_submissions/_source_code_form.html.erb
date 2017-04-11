@@ -1,4 +1,6 @@
-<%= simple_form_for [:student, @team_submission] do |f| %>
+<%= simple_form_for send("#{current_account.type_name}_team_submission_path",
+                        submission,
+                        team_id: current_team.id) do |f| %>
   <%= render 'errors', record: @team_submission %>
 
   <%= f.input :source_code_external_url,

@@ -25,12 +25,14 @@
 
       <%= simple_form_for @technical_checklist,
         method: :patch,
-        url: student_technical_checklist_path,
+        url: [current_account.type_name, :technical_checklist],
         html: {
           class: "no-simple-form-style",
           id: "student-technical-checklist-form",
         } do |f| %>
         <%= render 'errors', record: f.object %>
+
+        <%= hidden_field_tag :team_id, current_team.id %>
 
         <div
           class="tc-form-group"

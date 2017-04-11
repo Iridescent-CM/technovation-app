@@ -43,9 +43,11 @@
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
 
-  <%= simple_form_for [:student, submission],
+  <%= simple_form_for [current_account.type_name, submission],
     html: { class: "no-simple-form-style alternative-form #{url_css}" },
     data: { switch_text: "Upload a file" } do |f| %>
+
+    <%= hidden_field_tag :team_id, current_team.id %>
 
     <%= f.input :source_code_external_url,
       label: "Or, copy/paste your source code URL here",

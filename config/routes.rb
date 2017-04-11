@@ -67,9 +67,18 @@ Rails.application.routes.draw do
 
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
+    resources :team_submissions
+    resource :technical_checklist, only: [:edit, :update]
+    resources :screenshots, only: [:index, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show
+
+    resource :team_submission_screenshot_upload_confirmation, only: :show
+    resource :team_submission_file_upload_confirmation, only: :show
+
+    resources :image_process_jobs, only: :create
+    resources :job_statuses, only: :show
 
     resources :team_member_invites, except: [:edit, :index]
     resources :join_requests, except: [:index, :edit]

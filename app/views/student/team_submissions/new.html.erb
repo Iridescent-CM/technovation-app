@@ -9,8 +9,12 @@
 
     <p class="submissions-onboarding-step__explanation">
       You are about to begin submitting your team’s work to be judged!
-      All teams must submit their work here, <strong>even if you sign up to be judged at a live pitch event</strong>.
-      Check the <%= link_to "submission guidelines", "http://www.technovationchallenge.org/submission-guidelines/", target: :_blank %>
+      All teams must submit their work here,
+      <strong>even if you sign up to be judged at a live pitch event</strong>.
+      Check the
+      <%= link_to "submission guidelines",
+        "http://www.technovationchallenge.org/submission-guidelines/",
+        target: :_blank %>
       for your division to see what and how you need to submit.
     </p>
 
@@ -37,9 +41,10 @@
     <h2 class="submissions-onboarding-step__heading">How it works</h2>
 
     <p class="submissions-onboarding-step__explanation">
-      Your work will be saved every time you edit, so you can add everything at once, or at different times.
+      Your work will be saved every time you edit, so you can add everything at once,
+      or at different times.
       You will be able to edit your submission until the <strong>deadline</strong>.
-      You and your teammates will be able to update your team submission, but your mentor will not.
+      You, your teammates, and your mentor, will be able to update your team submission.
     </p>
 
     <p class="submissions-onboarding-step__explanation">
@@ -62,13 +67,21 @@
       <%= image_tag "onboarding-mulberry-03.svg" %>
     </div>
 
-    <h2 class="submissions-onboarding-step__heading">Before we get started,<br>please agree to the Integrity Clause</h2>
+    <h2 class="submissions-onboarding-step__heading">
+      Before we get started,<br>
+      please agree to the Integrity Clause
+    </h2>
 
-    <%= simple_form_for [:student, @team_submission], html: { class: "no-simple-form-style" } do |f| %>
+    <%= simple_form_for [current_account.type_name, @team_submission],
+                        html: { class: "no-simple-form-style" } do |f| %>
       <%= render 'errors', record: @team_submission %>
 
+      <%= hidden_field_tag :team_id, @team_submission.team_id %>
+
       <div class="submissions-onboarding-step__integrity-clause">
-        <%= f.input :integrity_affirmed, as: :boolean, label: t("models.team_submission.integrity_affirmed") %>
+        <%= f.input :integrity_affirmed,
+          as: :boolean,
+          label: t("models.team_submission.integrity_affirmed") %>
       </div>
 
       <p class="submissions-onboarding-step__explanation">
