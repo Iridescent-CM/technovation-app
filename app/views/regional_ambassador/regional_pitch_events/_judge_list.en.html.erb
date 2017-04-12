@@ -47,6 +47,34 @@
             <td class="primary-col">
               <% if ambassador %>
                 <%= link_to judge.full_name, regional_ambassador_user_path(judge.account) %>
+                <small class="team-list-action">
+                  Assigned teams:
+                  <% if judge.assigned_teams.any? %>
+                    <div class="show-hide-action">
+                      <span>Show</span>
+
+                      <ul class="show-hide-panel">
+                        <% judge.assigned_teams.each do |team| %>
+                          <li>
+                            <%= link_to "&times;".html_safe,
+                              regional_ambassador_judge_assignment_path(
+                                team.judge_assignment,
+                                http_referer: request.fullpath,
+                                referring_anchor: "tab-ra-pitch-judges",
+                              ),
+                              data: {
+                                method: :delete,
+                                confirm: "You are REMOVING #{team.name} from Judge: #{judge.full_name}",
+                              } %>
+                            <%= team.name %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% else %>
+                    <em>none</em>
+                  <% end %>
+                </small>
               <% else %>
                 <%= link_to judge.full_name, admin_profile_path(judge.account) %>
               <% end %>

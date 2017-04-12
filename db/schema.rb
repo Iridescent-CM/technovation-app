@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411163946) do
+ActiveRecord::Schema.define(version: 20170412153616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,16 @@ ActiveRecord::Schema.define(version: 20170411163946) do
   add_index "join_requests", ["declined_at"], name: "index_join_requests_on_declined_at", using: :btree
   add_index "join_requests", ["joinable_type", "joinable_id"], name: "index_join_requests_on_joinable_type_and_joinable_id", using: :btree
   add_index "join_requests", ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id", using: :btree
+
+  create_table "judge_assignments", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "judge_profile_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "judge_assignments", ["judge_profile_id"], name: "index_judge_assignments_on_judge_profile_id", using: :btree
+  add_index "judge_assignments", ["team_id"], name: "index_judge_assignments_on_team_id", using: :btree
 
   create_table "judge_profiles", force: :cascade do |t|
     t.integer  "account_id",   null: false
@@ -554,6 +564,8 @@ ActiveRecord::Schema.define(version: 20170411163946) do
   add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
+  add_foreign_key "judge_assignments", "judge_profiles"
+  add_foreign_key "judge_assignments", "teams"
   add_foreign_key "mentor_profile_expertises", "expertises"
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"

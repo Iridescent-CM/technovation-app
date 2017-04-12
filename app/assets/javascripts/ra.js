@@ -39,3 +39,17 @@
     width: '250px',
   });
 })();
+
+(function showHideAction() {
+  $('.show-hide-action span').on('click', function(e) {
+    var $target = $(e.target);
+
+    $target.next('.show-hide-panel').toggle();
+
+    if ($target.text() === "Show") {
+      $target.text("Hide");
+    } else {
+      $target.text("Show");
+    }
+  });
+})();

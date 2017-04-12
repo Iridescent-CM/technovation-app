@@ -24,7 +24,10 @@
         <% if ambassador %>
           <tr>
             <td colspan="6" class="add-participant">
-              <%= link_to fa_icon("plus", text: "Add a #{division.to_s.titleize} team to this event"),
+              <%= link_to fa_icon(
+                  "plus",
+                  text: "Add a #{division.to_s.titleize} team to this event"
+                ),
                 new_regional_ambassador_regional_pitch_event_participation_path(
                   event_id: pitch_event.id,
                   participant_type: "Team",
@@ -51,6 +54,33 @@
             <tr>
               <td class="primary-col">
                 <%= link_to team.name, [user.type_name, team] %>
+                <% if ambassador %>
+                  <% if team.unassigned? %>
+                    <small class="team-list-action">
+                      <%= link_to fa_icon('gavel', text: 'Assign to a judge'),
+                        new_regional_ambassador_judge_assignment_path(
+                          team_id: team.id,
+                          referring_anchor: anchor
+                        ) %>
+                    </small>
+                  <% else %>
+                    <small class="team-list-action">
+                      <%= link_to fa_icon(
+                          'times',
+                          text: "Unassign from judge: #{team.assigned_judge_name}"
+                        ),
+                        regional_ambassador_judge_assignment_path(
+                          team.judge_assignment,
+                          http_referer: request.fullpath,
+                          referring_anchor: anchor
+                        ),
+                        data: {
+                          method: :delete,
+                          confirm: "You are REMOVING #{team.name} from Judge: #{team.assigned_judge_name}",
+                        } %>
+                    </small>
+                  <% end %>
+                <% end %>
               </td>
 
               <td>

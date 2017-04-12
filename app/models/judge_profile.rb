@@ -45,6 +45,8 @@ class JudgeProfile < ActiveRecord::Base
   has_many :submission_scores
 
   has_and_belongs_to_many :regional_pitch_events, -> { uniq }
+  has_many :judge_assignments
+  has_many :assigned_teams, through: :judge_assignments, source: :team
 
   validates :company_name, :job_title,
     presence: true
@@ -55,6 +57,10 @@ class JudgeProfile < ActiveRecord::Base
     rescue
       raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
     end
+  end
+
+  def assigned_team_names
+    assigned_teams.pluck(:name)
   end
 
   def selected_regional_pitch_event

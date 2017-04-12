@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
 
-    resources :teams, except: :delete
+    resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
@@ -119,6 +119,7 @@ Rails.application.routes.draw do
 
     resources :regional_pitch_events
     resources :regional_pitch_event_participations, only: [:new, :create, :destroy]
+    resources :judge_assignments, only: [:new, :create, :destroy]
 
     resources :messages
     resources :multi_messages

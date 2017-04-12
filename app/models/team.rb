@@ -118,6 +118,7 @@ class Team < ActiveRecord::Base
     as: :joinable
 
   has_and_belongs_to_many :regional_pitch_events, -> { uniq }
+  has_one :judge_assignment
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
   validates :description, presence: true
@@ -271,6 +272,22 @@ class Team < ActiveRecord::Base
   def submission
     team_submissions.current.last or
       StudentProfile::NullTeam::NullTeamSubmission.new
+  end
+
+  def unassigned?
+    not assigned?
+  end
+
+  def assigned?
+    judge_assignment.present?
+  end
+
+  def assigned_judge
+    judge_assignment.judge_profile
+  end
+
+  def assigned_judge_name
+    assigned_judge.full_name
   end
 
   class NullCreator
