@@ -35,7 +35,8 @@ module FindEligibleSubmissionId
       )
       .includes(:team)
       .select {|sub|
-        not judge_conflicts.include?(sub.team.region_division_name)
+        (sub.complete? and
+          not judge_conflicts.include?(sub.team.region_division_name))
       }
       .sort {|x,y|
         x = x.submission_scores_count || 0

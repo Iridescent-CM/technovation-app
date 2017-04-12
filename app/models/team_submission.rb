@@ -45,7 +45,12 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   belongs_to :team, touch: true
-  has_many :screenshots, -> { order(:sort_position) }, dependent: :destroy
+  has_many :screenshots, -> { order(:sort_position) }, dependent: :destroy,
+    after_add: :update_self, after_remove: :update_self
+
+  def update_self(o)
+    self.touch
+  end
 
   has_one :business_plan, dependent: :destroy
   accepts_nested_attributes_for :business_plan
@@ -98,31 +103,33 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def complete?
-    team.team_photo.present? and
+    Rails.cache.fetch("#{cache_key}/complete?") do
+      (team.team_photo.present? and
 
-      not app_name.blank? and
+        not app_name.blank? and
 
-      not app_description.blank? and
+        not app_description.blank? and
 
-      not stated_goal.blank? and
+        not stated_goal.blank? and
 
-      not stated_goal_explanation.blank? and
+        not stated_goal_explanation.blank? and
 
-      not pitch_video_link.blank? and
+        not pitch_video_link.blank? and
 
-      not demo_video_link.blank? and
+        not demo_video_link.blank? and
 
-      screenshots.many? and
+        screenshots.many? and
 
-      technical_checklist_completed? and
+        technical_checklist_completed? and
 
-      not detect_source_code_url.blank? and
+        not detect_source_code_url.blank? and
 
-      not development_platform_text.blank? and
+        not development_platform_text.blank? and
 
-      business_plan_complete_or_not_required?  and
+        business_plan_complete_or_not_required?  and
 
-      pitch_presentation_complete_or_not_required?
+        pitch_presentation_complete_or_not_required?)
+    end
   end
 
   def country
