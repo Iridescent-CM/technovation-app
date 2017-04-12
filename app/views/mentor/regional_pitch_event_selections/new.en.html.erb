@@ -50,7 +50,7 @@
                   <%= team.name %> has not begun their app submission!
                   <br />
                   <%= link_to 'Start the submission now',
-                    new_mentor_team_submission_path %>
+                    new_mentor_team_submission_path(team_id: team.id) %>
                 </strong>
               <% end %>
             </small>
