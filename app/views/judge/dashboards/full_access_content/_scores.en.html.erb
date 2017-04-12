@@ -12,24 +12,24 @@
         </li>
 
         <% if current_judge.selected_regional_pitch_event.live? %>
-          <% if current_judge.selected_regional_pitch_event.teams.senior.any? %>
+          <% if assigned_teams(current_judge).senior.any? %>
             <li class="tab-link">
               <button
                 role="button"
                 class="tab-button"
                 data-tab-id="senior-submissions">
-                Senior Teams (<%= current_judge.selected_regional_pitch_event.teams.senior.count %>)
+                Senior Teams (<%= assigned_teams(current_judge).senior.count %>)
               </button>
             </li>
           <% end %>
 
-          <% if current_judge.selected_regional_pitch_event.teams.junior.any? %>
+          <% if assigned_teams(current_judge).junior.any? %>
             <li class="tab-link">
               <button
                 role="button"
                 class="tab-button"
                 data-tab-id="junior-submissions">
-                Junior Teams (<%= current_judge.selected_regional_pitch_event.teams.junior.count %>)
+                Junior Teams (<%= assigned_teams(current_judge).junior.count %>)
               </button>
             </li>
           <% end %>
@@ -83,7 +83,7 @@
 
       <% if current_judge.selected_regional_pitch_event.live? %>
         <div class="tab-content" id="senior-submissions">
-          <% current_judge.selected_regional_pitch_event.teams.senior.each do |team| %>
+          <% assigned_teams(current_judge).senior.each do |team| %>
             <div class="choose-senior-score">
               <% if team.submission.present? %>
                 <h1><%= team.submission.app_name %></h1>
@@ -114,14 +114,18 @@
                   </p>
                 <% end %>
               <% else %>
-                <p>Team <strong><%= team.name %></strong> did not begin their submission! They cannot be judged</p>
+                <p>
+                  Team <strong><%= team.name %></strong> did not begin their submission!
+                  <br />
+                  They cannot be judged.
+                </p>
               <% end %>
             </div>
           <% end %>
         </div>
 
         <div class="tab-content" id="junior-submissions">
-          <% current_judge.selected_regional_pitch_event.teams.junior.each do |team| %>
+          <% assigned_teams(current_judge).junior.each do |team| %>
             <div class="choose-junior-score">
               <% if team.submission.present? %>
                 <h1><%= team.submission.app_name %></h1>
@@ -152,7 +156,11 @@
                   </p>
                 <% end %>
               <% else %>
-                <p>Team <strong><%= team.name %></strong> did not begin their submission! They cannot be judged</p>
+                <p>
+                  Team <strong><%= team.name %></strong> did not begin their submission!
+                  <br />
+                  They cannot be judged.
+                </p>
               <% end %>
             </div>
           <% end %>

@@ -3,7 +3,8 @@ class JudgeController < ApplicationController
   include Authenticated
 
   layout "judge"
-  helper_method :current_judge
+  helper_method :current_judge,
+                :assigned_teams
 
   before_action -> {
     if "judge" != cookies[:last_profile_used]
@@ -27,5 +28,13 @@ class JudgeController < ApplicationController
 
   def create_mentor_judge_on_dashboard
     # Implemented in Judge::DashboardsController
+  end
+
+  def assigned_teams(judge)
+    if judge.assigned_teams.empty?
+      judge.selected_regional_pitch_event.teams
+    else
+      judge.assigned_teams
+    end
   end
 end
