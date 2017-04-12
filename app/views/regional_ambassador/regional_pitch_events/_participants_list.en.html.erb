@@ -65,25 +65,25 @@
       <div class="flex-col-md-6">
         <dl>
           <dt>Division:</dt>
-          <dd><%= @pitch_event.divisions.map(&:name).to_sentence %></dd>
+          <dd><%= event.divisions.map(&:name).to_sentence %></dd>
 
           <dt>Starts:</dt>
           <dd>
-            <%= @pitch_event.starts_at.in_time_zone(@pitch_event.timezone)
+            <%= event.starts_at.in_time_zone(event.timezone)
               .strftime("%A, %B %e, %H:%M") %>
           </dd>
 
 
           <dt>Ends:</dt>
           <dd>
-            <%= @pitch_event.ends_at.in_time_zone(@pitch_event.timezone)
+            <%= event.ends_at.in_time_zone(event.timezone)
                 .strftime("%A, %B %e, %H:%M") %>
           </dd>
         </dl>
 
         <p>
           <%= link_to 'Edit',
-            [:edit, :regional_ambassador, @pitch_event],
+            [:edit, :regional_ambassador, event],
             class: "appy-button appy-button--sm" %>
 
           <%= link_to 'Back to all events',
@@ -94,16 +94,16 @@
       <div class="flex-col-md-6">
         <dl>
           <dt>City:</dt>
-          <dd><%= @pitch_event.city %></dd>
+          <dd><%= event.city %></dd>
 
           <dt>Venue address:</dt>
-          <dd><%= @pitch_event.venue_address %></dd>
+          <dd><%= event.venue_address %></dd>
 
-          <% unless @pitch_event.eventbrite_link.blank? %>
+          <% unless event.eventbrite_link.blank? %>
             <dt>Eventbrite link:</dt>
             <dd>
-              <%= link_to @pitch_event.eventbrite_link,
-                  @pitch_event.eventbrite_link,
+              <%= link_to event.eventbrite_link,
+                  event.eventbrite_link,
                   target: :_blank %>
             </dd>
           <% end %>
