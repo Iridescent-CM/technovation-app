@@ -2,7 +2,7 @@ module RegionalAmbassador
   class JudgeAssignmentsController < RegionalAmbassadorController
     def new
       @team = Team.for_ambassador(current_ambassador).find(params.fetch(:team_id))
-      @judges = @team.selected_regional_pitch_event.judges
+      @judges = @team.selected_regional_pitch_event.judges.order("accounts.first_name")
       @judge_assignment = @team.build_judge_assignment
     end
 

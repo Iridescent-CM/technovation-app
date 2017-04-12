@@ -6,7 +6,7 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :divisions
   has_and_belongs_to_many :teams, -> { uniq }
-  has_and_belongs_to_many :judges, -> { uniq }, class_name: "JudgeProfile"
+  has_and_belongs_to_many :judges, -> { includes(:account).references(:accounts).uniq }, class_name: "JudgeProfile"
 
   has_many :team_submissions, through: :teams
 

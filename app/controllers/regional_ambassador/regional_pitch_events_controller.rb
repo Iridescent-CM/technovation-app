@@ -8,21 +8,23 @@ module RegionalAmbassador
       @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
 
       @senior_team_participants = Team.current
+        .order("teams.name")
         .senior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .uniq
 
       @junior_team_participants = Team.current
+        .order("teams.name")
         .junior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .uniq
 
       @judge_participants = JudgeProfile.current
+        .order("accounts.first_name")
         .for_ambassador(current_ambassador)
         .not_attending_live_event
-        .uniq
     end
 
     def new
