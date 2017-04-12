@@ -42,7 +42,7 @@
       <% end %>
 
       <% if pitch_event.judges.any? %>
-        <% pitch_event.judges.each do |judge| %>
+        <% pitch_event.judges.order("accounts.first_name").each do |judge| %>
           <tr>
             <td class="primary-col">
               <% if ambassador %>
@@ -54,7 +54,7 @@
                       <span>Show</span>
 
                       <ul class="show-hide-panel">
-                        <% judge.assigned_teams.each do |team| %>
+                        <% judge.assigned_teams.order("teams.name").each do |team| %>
                           <li>
                             <%= link_to "&times;".html_safe,
                               regional_ambassador_judge_assignment_path(

@@ -50,7 +50,7 @@
         <% end %>
 
         <% if pitch_event.teams.public_send(division).any? %>
-          <% pitch_event.teams.public_send(division).each do |team| %>
+          <% pitch_event.teams.public_send(division).order("teams.name").each do |team| %>
             <tr>
               <td class="primary-col">
                 <%= link_to team.name, [user.type_name, team] %>
