@@ -1,10 +1,4 @@
 namespace :cm do
-  # BECAUSE THE LOCAL ENV IDs ARE TEST IDs!
-  # YOU MUST SET BY HAND WHEN RUNNING THE SCRIPT
-  ENV["STUDENT_LIST_ID"] = nil
-  ENV["MENTOR_LIST_ID"] = nil
-  ENV["JUDGE_LIST_ID"] = nil
-
   desc "Remove students who are not permitted by their parents"
   task remove_unpermitted_students: :environment do
     auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
@@ -79,6 +73,30 @@ namespace :cm do
         puts "Removed #{email}"
       rescue => e
         puts "PROBLEM REMOVING #{email}"
+        puts e.message
+      end
+    end
+  end
+
+  desc "Add judges who have signed the waiver"
+  task add_consenting_judges: :environment do
+    auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
+
+    Account.joins(:judge_profile, :consent_waiver).each do |a|
+      begin
+        CreateSend::Subscriber.add(
+          auth,
+          ENV.fetch("JUDGE_LIST_ID"),
+          a.email,
+          a.full_name,
+          [{ Key: 'City', Value: a.city },
+           { Key: 'State/Province', Value: a.state_province },
+           { Key: 'Country', Value: a.get_country }],
+          false # resubscribe?
+        )
+        puts "Added #{a.email}"
+      rescue => e
+        puts "PROBLEM ADDING #{a.email}"
         puts e.message
       end
     end
