@@ -36,6 +36,7 @@
                   class="modalify modalify--fixed"
                   data-heading="Select <%= division.to_s.titleize %> Teams">
                 <%= render 'regional_ambassador/regional_pitch_event_participations/new',
+                  anchor: anchor,
                   division: division,
                   participant_type: "Team",
                   event: pitch_event,
@@ -110,7 +111,8 @@
                       "#{user.type_name}_regional_pitch_event_participation_path",
                       pitch_event,
                       participant_id: team.id,
-                      participant_type: "Team"
+                      participant_type: "Team",
+                      referring_anchor: anchor,
                     ),
                     data: {
                       method: :delete,

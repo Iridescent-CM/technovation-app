@@ -37,7 +37,10 @@ module RegionalAmbassador
         )
       end
 
-      redirect_to regional_ambassador_regional_pitch_event_path(event),
+      redirect_to regional_ambassador_regional_pitch_event_path(
+        event,
+        anchor: params[:referring_anchor],
+      ),
         success: "You added #{record.class.name} #{record.name rescue record.full_name} to your event!"
     end
 
@@ -59,7 +62,10 @@ module RegionalAmbassador
         )
       end
 
-      redirect_to regional_ambassador_regional_pitch_event_path(event),
+      redirect_to regional_ambassador_regional_pitch_event_path(
+        event,
+        anchor: params[:referring_anchor],
+      ),
         success: "You removed #{record.class.name} #{record.name rescue record.full_name} from your event"
     end
   end

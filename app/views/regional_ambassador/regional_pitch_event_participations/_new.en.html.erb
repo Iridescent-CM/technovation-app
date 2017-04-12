@@ -72,10 +72,11 @@
               regional_ambassador_regional_pitch_event_participations_path(
                 event_id: event.id,
                 participant_id: participant.id,
-                participant_type: participant.class.name
+                participant_type: participant.class.name,
+                referring_anchor: anchor,
               ),
               data: {
-                method: :post
+                method: :post,
               } %>
           </td>
         </tr>

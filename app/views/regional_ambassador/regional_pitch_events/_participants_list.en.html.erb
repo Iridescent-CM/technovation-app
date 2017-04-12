@@ -114,6 +114,7 @@
     <% if event.division_names.include?("senior") %>
       <div class="tab-content" id="tab-ra-pitch-senior-teams">
         <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          anchor: "tab-ra-pitch-senior-teams",
           user: user,
           ambassador: ambassador,
           pitch_event: event,
@@ -124,6 +125,7 @@
     <% if event.division_names.include?("junior") %>
       <div class="tab-content" id="tab-ra-pitch-junior-teams">
         <%= render 'regional_ambassador/regional_pitch_events/team_list',
+          anchor: "tab-ra-pitch-junior-teams",
           user: user,
           ambassador: ambassador,
           pitch_event: event,
@@ -134,6 +136,7 @@
     <div class="tab-content" id="tab-ra-pitch-judges">
       <div class="participants-list">
         <%= render 'regional_ambassador/regional_pitch_events/judge_list',
+          anchor: "tab-ra-pitch-judges",
           user: user,
           ambassador: ambassador,
           pitch_event: event %>

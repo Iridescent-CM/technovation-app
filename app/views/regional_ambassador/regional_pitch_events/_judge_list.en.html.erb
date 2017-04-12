@@ -32,6 +32,7 @@
                 class="modalify modalify--fixed"
                 data-heading="Select Judges">
               <%= render 'regional_ambassador/regional_pitch_event_participations/new',
+                anchor: anchor,
                 participant_type: "JudgeProfile",
                 event: pitch_event,
                 participants: instance_variable_get("@judge_participants") %>
@@ -99,7 +100,8 @@
                     "#{user.type_name}_regional_pitch_event_participation_path",
                     pitch_event,
                     participant_id: judge.id,
-                    participant_type: "JudgeProfile"
+                    participant_type: "JudgeProfile",
+                    referring_anchor: anchor,
                   ),
                   data: {
                     method: :delete,
