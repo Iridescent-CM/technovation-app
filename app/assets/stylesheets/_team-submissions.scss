@@ -40,9 +40,9 @@
 // Team photo/name area
 
 .ts-about-team__photo {
-  background-image: image-url("placeholders/placeholder-pattern.jpg");
-  background-size: cover;
-  border-radius: 50%;
+  background-image: image-url("placeholders/team-missing.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   color: white;
   cursor: pointer;
   display: block;
