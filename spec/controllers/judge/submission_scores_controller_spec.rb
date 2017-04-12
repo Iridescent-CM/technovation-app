@@ -4,10 +4,7 @@ RSpec.describe Judge::SubmissionScoresController do
   describe "GET #new" do
     it "sets up a score as opened by the judge at current time" do
       team = FactoryGirl.create(:team)
-      TeamSubmission.create!(
-        integrity_affirmed: true,
-        team: team
-      )
+      FactoryGirl.create(:submission, :complete, team: team)
 
       now = Time.current
       judge = FactoryGirl.create(:judge)

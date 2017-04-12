@@ -1,13 +1,18 @@
 require "rails_helper"
 
 RSpec.describe FindEligibleSubmissionId do
+  it "should not choose incomplete submission" do
+    judge = FactoryGirl.create(:judge)
+    team = FactoryGirl.create(:team)
+    sub = FactoryGirl.create(:submission, team: team)
+
+    expect(FindEligibleSubmissionId.(judge)).to be_nil
+  end
+
   it "should choose submission with fewest scores" do
     judge1 = FactoryGirl.create(:judge)
     team1 = FactoryGirl.create(:team)
-    sub_with_score = TeamSubmission.create!({
-      integrity_affirmed: true,
-      team: team1,
-    })
+    sub_with_score = FactoryGirl.create(:submission, :complete, team: team1)
     SubmissionScore.create!(
       judge_profile_id: judge1.id,
       team_submission_id: sub_with_score.id,
@@ -15,10 +20,7 @@ RSpec.describe FindEligibleSubmissionId do
 
     judge2 = FactoryGirl.create(:judge)
     team2 = FactoryGirl.create(:team)
-    sub_without_score = TeamSubmission.create!({
-      integrity_affirmed: true,
-      team: team2,
-    })
+    sub_without_score = FactoryGirl.create(:submission, :complete, team: team2)
 
     expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
   end
@@ -43,10 +45,7 @@ RSpec.describe FindEligibleSubmissionId do
     it "returns submission id" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
-      sub = TeamSubmission.create!({
-        integrity_affirmed: true,
-        team: team,
-      })
+      sub = FactoryGirl.create(:submission, :complete, team: team)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
     end
@@ -61,10 +60,7 @@ RSpec.describe FindEligibleSubmissionId do
       judge.teams << judges_team
 
       different_region_team = FactoryGirl.create(:team, creator_in: "Los Angeles", division: Division.senior)
-      sub = TeamSubmission.create!({
-        integrity_affirmed: true,
-        team: different_region_team,
-      })
+      sub = FactoryGirl.create(:submission, :complete, team: different_region_team)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
     end
@@ -77,10 +73,7 @@ RSpec.describe FindEligibleSubmissionId do
       judge.teams << judges_team
 
       different_division_team = FactoryGirl.create(:team, creator_in: "Chicago", division: Division.junior)
-      sub = TeamSubmission.create!({
-        integrity_affirmed: true,
-        team: different_division_team,
-      })
+      sub = FactoryGirl.create(:submission, :complete, team: different_division_team)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
     end
@@ -91,10 +84,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       judges_team = FactoryGirl.create(:team)
       judge.teams << judges_team
-      sub = TeamSubmission.create!({
-        integrity_affirmed: true,
-        team: judges_team,
-      })
+      sub = FactoryGirl.create(:submission, :complete, team: judges_team)
 
       expect(FindEligibleSubmissionId.(judge)).to be_nil
     end
@@ -107,10 +97,7 @@ RSpec.describe FindEligibleSubmissionId do
       judge.teams << judges_team
 
       same_region_division_team = FactoryGirl.create(:team)
-      sub = TeamSubmission.create!({
-        integrity_affirmed: true,
-        team: same_region_division_team,
-      })
+      sub = FactoryGirl.create(:submission, :complete, team: same_region_division_team)
 
       expect(FindEligibleSubmissionId.(judge)).to be_nil
     end

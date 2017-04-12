@@ -14,6 +14,14 @@ class Team < ActiveRecord::Base
 
   after_commit :register_to_season, on: :create
 
+  after_save -> {
+    submission.touch if submission.present?
+  }, if: :submission_completeness_could_change?
+
+  def submission_completeness_could_change?()
+    team_photo_changed? or division_id_changed?
+  end
+
   def as_indexed_json(options = {})
     as_json(
       only: %w{id name description spot_available?},
@@ -117,7 +125,13 @@ class Team < ActiveRecord::Base
     class_name: "JoinRequest",
     as: :joinable
 
-  has_and_belongs_to_many :regional_pitch_events, -> { uniq }
+  has_and_belongs_to_many :regional_pitch_events, -> { uniq },
+    after_add: :update_submission, after_remove: :update_submission
+
+  def update_submission(o)
+    submission.touch if submission.present?
+  end
+
   has_one :judge_assignment
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
