@@ -29,11 +29,15 @@ module FindEligibleSubmissionId
   def self.random_eligible_id(judge)
     scored_submissions = judge.submission_scores.pluck(:team_submission_id)
     judge_conflicts = judge.team_region_division_names
+    official_rpe_team_ids = RegionalPitchEvent.official.joins(:teams).pluck(:team_id)
     candidates = TeamSubmission.current
       .where.not(
         id: scored_submissions
       )
       .includes(:team)
+      .where.not(
+        teams: { id: official_rpe_team_ids }
+      )
       .select {|sub|
         (sub.complete? and
           not judge_conflicts.include?(sub.team.region_division_name))

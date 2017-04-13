@@ -41,6 +41,44 @@ RSpec.describe FindEligibleSubmissionId do
     expect(FindEligibleSubmissionId.(judge)).to be_nil
   end
 
+  it "should select submission for an unofficial regional pitch event" do
+    judge = FactoryGirl.create(:judge)
+    team = FactoryGirl.create(:team)
+    team.regional_pitch_events << RegionalPitchEvent.create!({
+      name: "RPE",
+      starts_at: Date.today,
+      ends_at: Date.today + 1.day,
+      division_ids: Division.senior.id,
+      city: "City",
+      venue_address: "123 Street St.",
+      unofficial: true
+    })
+    sub = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team,
+    })
+    expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+  end
+
+  it "should not select submission for an official regional pitch event" do
+    judge = FactoryGirl.create(:judge)
+    team = FactoryGirl.create(:team)
+    team.regional_pitch_events << RegionalPitchEvent.create!({
+      name: "RPE",
+      starts_at: Date.today,
+      ends_at: Date.today + 1.day,
+      division_ids: Division.senior.id,
+      city: "City",
+      venue_address: "123 Street St.",
+      unofficial: false
+    })
+    sub = TeamSubmission.create!({
+      integrity_affirmed: true,
+      team: team,
+    })
+    expect(FindEligibleSubmissionId.(judge)).to be_nil
+  end
+
   context "judge without team" do
     it "returns submission id" do
       judge = FactoryGirl.create(:judge)
