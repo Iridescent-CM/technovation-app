@@ -1,4 +1,5 @@
 (function judgingForm() {
+  var showToast = true;
   var formWrapper = document.getElementById('judging-form');
   if (!formWrapper) {
     return;
@@ -258,10 +259,13 @@
 
       // We compare against sections.length - 1 to account for the Technical Checklist
       if (saveAllPendingCount === (sections.length - 1)) {
-        createFlashNotification('success', 'Saved successfully!', 2000);
+        if (showToast)
+          createFlashNotification('success', 'Saved successfully!', 2000);
+
         saveAllPendingCount = 0;
         handleSaveAll = false;
         saveAllButton.disabled = false;
+        showToast = true;
       }
     } else {
       setTimeout(function() {
@@ -556,6 +560,7 @@
    * Review submission form
    */
   function reviewSubmissionForm() {
+    showToast = false;
     saveProgressAll();
     var submissionVerification = verifySubmission();
     if (submissionVerification.isValid) {
