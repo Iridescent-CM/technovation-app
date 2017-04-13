@@ -1,124 +1,29 @@
-<h1 class="appy-title">
-  <%= t("views.application.mentor_dashboard") %>
-  <small>
-    <%= link_to fa_icon('refresh', text: "Switch to Judging"),
-      judge_dashboard_path %>
-  </small>
-</h1>
+<div class="student-dashboard">
+  <div class="flex-row">
+    <div class="flex-col-md-6">
+      <h1 class="appy-title">
+        <%= t("views.application.mentor_dashboard") %>
 
-<h2 class="appy-subtitle">
-  Submission Deadline &ndash; Wednesday, April 26th
-</h2>
-
-<% if current_mentor.full_access_enabled? and current_mentor.is_on_team? %>
-  <div class="card mentor-rpe-selection-cta standalone-buttons">
-    <div class="card__heading">
-      Regional Pitch Events
+        <small>
+          <%= link_to fa_icon('refresh', text: "Switch to Judging"),
+            judge_dashboard_path %>
+        </small>
+      </h1>
     </div>
 
-    <div class="card__body">
-      <p>You can now select any pitch events in your region for your teams to attend!</p>
-
-      <p>
-        <%= link_to "Manage your regional pitch events",
-          new_mentor_regional_pitch_event_selection_path,
-          class: "appy-button" %>
-      </p>
+    <div class="flex-col-md-6 align-right">
+      <h1 class="appy-title">
+        Submission Deadline: Wed, Apr 26
+        <small>
+          <%= render 'pre_program_survey', type: :mentor %>
+        </small>
+      </h1>
     </div>
   </div>
-<% end %>
 
-<div class="dashboard flex-row">
-  <div class="flex-col-sm-8 dashboard__main">
-    <% if current_mentor.full_access_enabled? and current_mentor.is_on_team?  %>
-      <%= render 'quick_links', account: current_mentor %>
-      <%= render 'team_invitations', invite_type: :mentor, account: current_mentor %>
-    <% else %>
-      <%= render 'mentor/dashboards/completion_steps' %>
-    <% end %>
-  </div>
-
-  <div class="flex-col-sm-4 dashboard__sidebar">
-    <%= render 'pre_program_survey', type: :mentor %>
-
-    <div class="card">
-      <div class="card__heading">
-        <%= t("views.application.judge_mode") %>
-        <%= fa_icon("refresh", class: "card-heading__flair") %>
-      </div>
-
-      <div class="card__body">
-        <p><%= t("views.mentor.dashboards.show.switch_to_judge_mode") %></p>
-        <p>
-          <%= link_to t("views.application.switch_now"), judge_dashboard_path %>
-          <br />
-          <small><em>(you can switch back and forth repeatedly)</em></small>
-        </p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__heading">
-        <%= t("views.application.curriculum") %>
-        <%= fa_icon("graduation-cap", class: "card-heading__flair") %>
-      </div>
-
-      <div class="card__body">
-        <% if current_mentor.full_access_enabled? %>
-          <p>
-            <%= link_to "Get Started on the Technovation Curriculum", 
-            "http://www.technovationchallenge.org/curriculum-intro/registered", 
-            target: "_blank" %>
-          </p>
-
-          <p>
-            <%= link_to "Read the Technovation Challenge Primer", 
-            "http://www.technovationchallenge.org/curriculum/madewithcodeprimer", 
-            target: "_blank" %>
-            <br />(if you came from Made With Code)
-          </p>
-        <% else %>
-          <p>Please complete the tasks on the left to gain full access to Technovation.</p>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__heading">
-        <%= t("views.application.submission_deliverables") %>
-        <%= fa_icon "file-text-o", class: "card-heading__flair" %>
-      </div>
-
-      <div class="card__body">
-        <p>
-          Make sure your team has everything ready to submit their app to Technovation!
-        </p>
-          <%= link_to "Submission Deliverables &amp; Guidelines".html_safe,
-            "http://www.technovationchallenge.org/submission-guidelines/",
-            target: "_blank" %>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__heading">
-        <%= t("views.application.judging_rubric") %>
-        <%= fa_icon "gavel", class: "card-heading__flair" %>
-      </div>
-
-      <div class="card__body">
-        <p>
-          Check out the 
-          <%= Season.current.year %> 
-          judging rubric to see how teams will be scored!
-        </p>
-          <%= link_to "Judging Rubric".html_safe,
-            "http://www.technovationchallenge.org/judging-rubric/",
-            target: "_blank" %>
-      </div>
-    </div>
-    
-    <% if current_mentor.honor_code_signed? %>
-      <%= render 'honor_code_signed', account: current_mentor %>
-    <% end %>
-  </div>
+  <% if current_mentor.full_access_enabled? %>
+    <%= render 'mentor/dashboards/full_access' %>
+  <% else %>
+    <%= render 'mentor/dashboards/to_do' %>
+  <% end %>
 </div>

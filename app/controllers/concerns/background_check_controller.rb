@@ -19,7 +19,7 @@ module BackgroundCheckController
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
     if @candidate.submit
-      current_profile.update_attributes(background_check_attributes: {
+      current_profile.account.update_attributes(background_check_attributes: {
         candidate_id: @candidate.id,
         report_id: @candidate.report_id
       })

@@ -1,0 +1,10 @@
+<div class="flex-col-md-8">
+  <% if not current_mentor.is_on_team? %>
+    <%= render 'completion_steps/create_join_team', account: current_mentor %>
+  <% else %>
+    <p>list teams with submission progress</p>
+    <p>link to start new where needed</p>
+  <% end %>
+</div>
+
+<%= render 'mentor/dashboards/info_sidebar' %>

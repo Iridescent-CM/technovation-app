@@ -1,5 +1,9 @@
 module Mentor
   class DashboardsController < MentorController
+    def show
+      @teams = current_mentor.teams.current
+    end
+
     private
     def create_judge_mentor_on_dashboard
       if current_account.judge_profile.present? and current_account.mentor_profile.nil?

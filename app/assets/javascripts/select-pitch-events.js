@@ -39,7 +39,7 @@
           body = {
             regional_pitch_events_teams: {},
           },
-          teams = document.querySelectorAll('.team-card');
+          teams = document.querySelectorAll('[data-team-id]');
 
       forEach(teams, function(team) {
         var checkedEvent = team.querySelector(':checked');

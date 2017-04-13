@@ -52,8 +52,16 @@ class ApplicationController < ActionController::Base
 
   def current_account
     @current_account ||= Account.eager_load(
-      :mentor_profile,
       :regional_ambassador_profile,
+
+      mentor_profile: [
+        :team_member_invites,
+        teams: [
+          :team_submissions,
+          :division,
+          regional_pitch_events: :regional_ambassador_profile,
+        ],
+      ],
 
       judge_profile: [
         :submission_scores,
