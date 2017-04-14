@@ -2,6 +2,12 @@
   <%= render 'mentor/dashboards/menu' %>
 
   <div class="content">
+    <% if current_mentor.mentor_invites.pending.any? %>
+      <div class="tab-content" id="invitations">
+        <%= render 'mentor/dashboards/full_access_content/invitations' %>
+      </div>
+    <% end %>
+
     <div class="tab-content flex-row" id="submissions">
       <%= render 'mentor/dashboards/full_access_content/submissions' %>
     </div>
