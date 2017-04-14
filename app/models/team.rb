@@ -66,18 +66,18 @@ class Team < ActiveRecord::Base
     mentors = []
 
     if ambassador.country == "US"
-      students = StudentProfile.joins(:account)
+      students = StudentProfile.joins(:account).includes(:teams)
         .where("accounts.state_province = ? AND accounts.country = 'US'",
                ambassador.state_province)
 
-      mentors = MentorProfile.joins(:account)
+      mentors = MentorProfile.joins(:account).includes(:teams)
         .where("accounts.state_province = ? AND accounts.country = 'US'",
                ambassador.state_province)
     else
-      students = StudentProfile.joins(:account)
+      students = StudentProfile.joins(:account).includes(:teams)
         .where("accounts.country = ?", ambassador.country)
 
-      mentors = MentorProfile.joins(:account)
+      mentors = MentorProfile.joins(:account).includes(:teams)
         .where("accounts.country = ?", ambassador.country)
     end
 
