@@ -12,7 +12,7 @@ RSpec.feature "Mentors find a team" do
     mentored_team = FactoryGirl.create(:team, :with_mentor) # Creator is in Chicago
     faraway_team = FactoryGirl.create(:team, creator_in: "Los Angeles")
 
-    within('#teams') { click_link "Join a team" }
+    within('#submissions') { click_link "Join a team" }
 
     expect(page).to have_css(".team-search-result__name", text: available_team.name)
     expect(page).to have_css(".team-search-result__name", text: mentored_team.name)
@@ -20,7 +20,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    within('#teams') { click_link "Join a team" }
+    within('#submissions') { click_link "Join a team" }
     click_link "View Team"
     click_button "Request to be a mentor for #{available_team.name}"
 
