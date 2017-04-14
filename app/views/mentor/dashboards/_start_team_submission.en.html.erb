@@ -1,0 +1,15 @@
+<center class="start-submitting">
+  <h1>Start Submitting Today!</h1>
+
+  <p>
+    You and your students can begin submitting your app now!
+    As you work through the curriculum, you can upload it in parts.
+    You can also edit as much as you need to until the deadline!
+  </p>
+
+  <p class="standalone-buttons">
+    <%= link_to 'Start the submission for this team',
+      new_mentor_team_submission_path(team_id: team.id),
+      class: "appy-button" %>
+  </p>
+</center>

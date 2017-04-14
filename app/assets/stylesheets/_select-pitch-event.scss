@@ -89,6 +89,10 @@
 }
 
 .mentor-regional-pitch-events__team-review {
+  > div {
+    width: 100%;
+  }
+
   .card__body {
     margin-bottom: 1rem;
     border-bottom: 1px solid #ddd;

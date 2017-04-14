@@ -1,7 +1,7 @@
 module Mentor
   class DashboardsController < MentorController
     def show
-      @teams = current_mentor.teams.current
+      @teams = current_mentor.teams.current.order("teams.name")
     end
 
     private

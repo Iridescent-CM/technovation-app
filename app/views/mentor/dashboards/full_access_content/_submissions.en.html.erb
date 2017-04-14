@@ -2,8 +2,54 @@
   <% if not current_mentor.is_on_team? %>
     <%= render 'completion_steps/create_join_team', account: current_mentor %>
   <% else %>
-    <p>list teams with submission progress</p>
-    <p>link to start new where needed</p>
+    <div class="flex-row">
+      <div class="flex-col-md-3 tabs tabs-vertical" id="team-submissions-team-list">
+        <ul class="tab-menu">
+          <% @teams.each do |team| %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="team-submission-team-list-team-<%= team.id %>">
+                <%= team.name %>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="flex-col-md-9 content">
+        <% @teams.each do |team| %>
+          <div id="team-submission-team-list-team-<%= team.id %>" class="tab-content">
+            <div class="flex-row">
+              <dl class="flex-col-md-6" style="padding: 0;">
+                <dt>Division</dt>
+                <dd><%= team.division_name.humanize %></dd>
+
+                <dt>Region</dt>
+                <dd><%= team.region_name %></dd>
+              </dl>
+
+              <dl class="flex-col-md-6" style="padding: 0;">
+                <dt>Pitch Event</dt>
+                <dd><%= team.selected_regional_pitch_event_name %></dd>
+
+                <dt>Submission</dt>
+                <dd><%= team.submission.app_name || "no name given" %></dd>
+              </dl>
+            </div>
+
+            <% if team.submission.present? %>
+              <%= render 'mentor/dashboards/team_submission_progress',
+                submission: team.submission %>
+            <% else %>
+              <%= render 'mentor/dashboards/start_team_submission',
+                team: team %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
 

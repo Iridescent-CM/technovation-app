@@ -104,23 +104,21 @@
                     </div>
                   <% end %>
                 </ul>
+
+                <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
+                  <div class="actions">
+                    <button class="save-mentor-pitch-events appy-button"
+                            data-url="<%= mentor_regional_pitch_event_selection_path %>">
+                      Save selection
+                    </button>
+                  </div>
+                </div>
               </div>
             <% end %>
           </div>
         </div>
       <% end %>
     </div>
-
-    <% if @teams.flat_map(&:eligible_events).any? %>
-      <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-        <div class="actions">
-          <button class="save-mentor-pitch-events appy-button"
-                  data-url="<%= mentor_regional_pitch_event_selection_path %>">
-            Save selections
-          </button>
-        </div>
-      </div>
-    <% end %>
   <% end %>
 </div>
 
