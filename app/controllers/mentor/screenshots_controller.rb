@@ -9,7 +9,7 @@ module Mentor
           image_url: s.image_url,
           image_alt: image_alt(s.image_url),
           sort_position: s.sort_position,
-          delete_url: mentor_screenshot_url(s),
+          delete_url: mentor_screenshot_url(s, team_id: current_team.id),
         }
       end
 
