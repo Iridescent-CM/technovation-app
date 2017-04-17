@@ -4,7 +4,7 @@
   function geolocate() {
     var cityField = document.querySelector("#account_city"),
         stateField = document.querySelector("#account_state_province"),
-        countryField = document.querySelector("#account_country"),
+        $countryField = $("#account_country"),
         latField = document.querySelector("#account_latitude"),
         lngField = document.querySelector("#account_longitude");
 
@@ -26,7 +26,8 @@
       $.getJSON(url, function(data) {
         cityField.value = data.city;
         stateField.value = data.state;
-        countryField.value = data.country;
+        $countryField.val(data.country);
+        $countryField.trigger("chosen:updated");
 
         latField.value = lat;
         lngField.value = lng;
