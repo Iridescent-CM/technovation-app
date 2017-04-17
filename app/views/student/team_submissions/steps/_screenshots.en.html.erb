@@ -1,28 +1,22 @@
-<div class="card ts-screenshots">
+<div id="team-submission-screenshots" class="card ts-screenshots">
   <div class="card__heading submission-steps__market">
     Screenshots
 
-    <% if submission.screenshots.length > 1 %>
-      <button data-modal-trigger="screenshots-edit"
-              role="button"
-              class="appy-button">
-        Edit
-      </button>
-    <% else %>
-      <button data-modal-trigger="screenshots-edit"
-              role="button"
-              class="appy-button"
-              style="display:none;">
-        Edit
-      </button>
-    <% end %>
-    <% if submission.screenshots.any? %>
-      <button data-modal-trigger="screenshots-modal"
-              role="button"
-              class="appy-button">
-        Add Screenshots
-      </button>
-    <% end %>
+    <button data-modal-trigger="screenshots-edit"
+            role="button"
+            class="appy-button"
+              <% unless submission.screenshots.any? %>
+                style="display:none;"
+              <% end %>
+            >
+      Edit
+    </button>
+
+    <button data-modal-trigger="screenshots-modal"
+            role="button"
+            class="appy-button">
+      Add Screenshots
+    </button>
   </div>
 
   <div class="card__body">
@@ -44,6 +38,6 @@
   <%= render 'student/team_submissions/screenshots_form', submission: submission %>
 </div>
 
-<div class="modalify" id="screenshots-edit" data-heading="Sort Screenshots">
+<div class="modalify" id="screenshots-edit" data-heading="Sort & Remove Screenshots">
   <%= render 'student/team_submissions/screenshots_edit', submission: submission %>
 </div>

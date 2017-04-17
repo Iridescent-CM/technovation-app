@@ -160,9 +160,8 @@
     var event = new CustomEvent('refreshgalleries', {bubbles: true, cancelable: true, detail: images});
     screenshotUploadForm.dispatchEvent(event);
 
-    if (images.length >= 2) {
+    if (images.length > 0)
       document.querySelector('[data-modal-trigger="screenshots-edit"]').removeAttribute('style');
-    }
 
     createFlashNotification('success', 'Images added!');
   }
