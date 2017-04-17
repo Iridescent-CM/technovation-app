@@ -10,7 +10,7 @@
     <%= link_to "".html_safe,
       send("#{current_account.type_name}_screenshot_path",
            screenshot,
-           team_id: params[:team_id]),
+           team_id: current_team.id),
       class: 'fa fa-trash-o',
       data: {
         remote: true,
