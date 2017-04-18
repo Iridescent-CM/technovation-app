@@ -1,7 +1,6 @@
 class Account < ActiveRecord::Base
   include Elasticsearch::Model
 
-  after_save    { IndexModelJob.perform_later("index", "Account", id) }
   after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
 
   after_save -> {

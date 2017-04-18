@@ -25,9 +25,7 @@ class Team < ActiveRecord::Base
     a.latitude_changed? or a.longitude_changed?
   }
 
-  after_save    { IndexModelJob.perform_later("index", "Team", id) }
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
-  after_touch   { IndexModelJob.perform_later("index", "Team", id) }
 
   after_commit :register_to_season, on: :create
 
