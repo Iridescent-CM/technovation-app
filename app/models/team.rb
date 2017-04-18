@@ -96,7 +96,7 @@ class Team < ActiveRecord::Base
         .where("accounts.country = ?", ambassador.country)
     end
 
-    where(id: (students + mentors).flat_map(&:teams).distinct.map(&:id))
+    where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
   }
 
   scope :not_attending_live_event, -> {
