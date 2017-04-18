@@ -92,7 +92,7 @@ RSpec.describe Account do
     expect(account.team_region_division_names).to be_empty
     account.teams << FactoryGirl.create(:team)
     expect(account.team_region_division_names).to match_array(["US_IL,senior"])
-    account.teams << FactoryGirl.create(:team, creator_in: "Los Angeles")
+    account.teams << FactoryGirl.create(:team, city: "Los Angeles", state_province: "CA")
     expect(account.team_region_division_names).to match_array(["US_IL,senior","US_CA,senior"])
   end
 end

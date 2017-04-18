@@ -34,7 +34,13 @@ module Admin
 
     private
     def team_params
-      params.require(:team).permit(:name, :description)
+      params.require(:team).permit(
+        :name,
+        :description,
+        :city,
+        :state_province,
+        :country
+      )
     end
   end
 end

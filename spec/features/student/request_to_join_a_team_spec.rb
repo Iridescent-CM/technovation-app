@@ -8,7 +8,7 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team) } # Creator is in Chicago
+    let!(:team) { FactoryGirl.create(:team) } # Default is in Chicago
     let!(:student) { FactoryGirl.create(:student) } # Default Chicago
 
     before do

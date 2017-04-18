@@ -36,7 +36,7 @@
             <strong>Division:</strong> <%= team.division_name.titleize %><br />
 
             <small>
-              <%= team.creator_address_details %><br />
+              <%= team.primary_location %><br />
 
               <% if team.submission.present? %>
                 <%= link_to 'Edit app submission',

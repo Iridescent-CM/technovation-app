@@ -96,10 +96,13 @@ RSpec.describe FindEligibleSubmissionId do
       judge = FactoryGirl.create(:judge)
       judge.account.mentor_profile = FactoryGirl.create(:mentor)
 
-      judges_team = FactoryGirl.create(:team, creator_in: "Chicago", division: Division.senior)
+      judges_team = FactoryGirl.create(:team, division: Division.senior)
       judge.teams << judges_team
 
-      different_region_team = FactoryGirl.create(:team, creator_in: "Los Angeles", division: Division.senior)
+      different_region_team = FactoryGirl.create(:team,
+                                                 city: "Los Angeles",
+                                                 state_province: "CA",
+                                                 division: Division.senior)
       sub = FactoryGirl.create(:submission, :complete, team: different_region_team)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
@@ -109,10 +112,10 @@ RSpec.describe FindEligibleSubmissionId do
       judge = FactoryGirl.create(:judge)
       judge.account.mentor_profile = FactoryGirl.create(:mentor)
 
-      judges_team = FactoryGirl.create(:team, creator_in: "Chicago", division: Division.senior)
+      judges_team = FactoryGirl.create(:team, division: Division.senior)
       judge.teams << judges_team
 
-      different_division_team = FactoryGirl.create(:team, creator_in: "Chicago", division: Division.junior)
+      different_division_team = FactoryGirl.create(:team, division: Division.junior)
       sub = FactoryGirl.create(:submission, :complete, team: different_division_team)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)

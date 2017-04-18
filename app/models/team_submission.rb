@@ -133,7 +133,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def country
-    team.creator.country
+    team.country
   end
 
   def state_province

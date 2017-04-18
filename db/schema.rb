@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412153616) do
+ActiveRecord::Schema.define(version: 20170418143205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -506,6 +506,9 @@ ActiveRecord::Schema.define(version: 20170412153616) do
     t.boolean  "accepting_mentor_requests",  default: true, null: false
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "city"
+    t.string   "state_province"
+    t.string   "country"
   end
 
   add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree

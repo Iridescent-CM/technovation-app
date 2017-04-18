@@ -156,9 +156,11 @@ Rails.application.routes.draw do
     resources :profiles
     resources :profile_locations, only: :edit
     resources :regional_ambassadors, only: [:index, :show, :update]
+
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy
     resources :team_memberships, only: [:destroy, :create]
+    resources :team_locations, only: :edit
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create

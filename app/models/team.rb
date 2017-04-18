@@ -5,8 +5,25 @@ class Team < ActiveRecord::Base
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  before_create :update_geocoding
-  reverse_geocoded_by :latitude, :longitude
+  geocoded_by :primary_location
+  reverse_geocoded_by :latitude, :longitude do |team, results|
+    if geo = results.first
+      team.city = geo.city
+      team.state_province = geo.state_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      team.country = country.alpha2
+    end
+  end
+
+  after_validation :geocode, if: -> (a) {
+    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
+  }
+
+  after_validation :reverse_geocode, if: ->(a) {
+    a.latitude_changed? or a.longitude_changed?
+  }
 
   after_save    { IndexModelJob.perform_later("index", "Team", id) }
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
@@ -162,18 +179,18 @@ class Team < ActiveRecord::Base
   end
 
   def region_name
-    if %w{Brasil Brazil}.include?(creator.state_province || "")
+    if %w{Brasil Brazil}.include?(state_province || "")
       "Brazil"
-    elsif creator.country == "US"
-      Country["US"].states[creator.state_province.strip]['name']
+    elsif country == "US"
+      Country["US"].states[state_province.strip]['name']
     else
-      creator.get_country
+      get_country
     end
   end
 
   def region_division_name
     Rails.cache.fetch("#{cache_key}/region_division_name") do
-      name = creator.country || ""
+      name = country || ""
       if name == "US"
         name += "_#{state_province}"
       end
@@ -205,28 +222,8 @@ class Team < ActiveRecord::Base
     (students + pending_student_invites + pending_student_join_requests).size < 5
   end
 
-  def creator_address_details
-    creator.address_details
-  end
-
   def primary_location
-    creator_address_details
-  end
-
-  def city
-    creator.city
-  end
-
-  def state_province
-     creator.state_province
-  end
-
-  def country
-    creator && creator.get_country
-  end
-
-  def creator
-    members.first || NullCreator.new
+    [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
   end
 
   def pending_invitee_emails
@@ -236,7 +233,6 @@ class Team < ActiveRecord::Base
   def add_mentor(mentor)
     if !!mentor and not mentors.include?(mentor)
       mentors << mentor
-      update_geocoding if mentor == creator
       save
     end
   end
@@ -244,7 +240,6 @@ class Team < ActiveRecord::Base
   def add_student(student)
     if !!student and not students.include?(student) and spot_available?
       students << student
-      update_geocoding if student == creator
       reconsider_division
       save
     end
@@ -304,30 +299,7 @@ class Team < ActiveRecord::Base
     assigned_judge.full_name
   end
 
-  class NullCreator
-    def address_details; end
-    def latitude; end
-    def longitude; end
-    def city; end
-    def state_province; end
-    def country; end
-    def get_country; end
-
-    def present?
-      false
-    end
-
-    def cache_key
-      "null key"
-    end
-  end
-
   private
-  def update_geocoding
-    self.latitude = creator.latitude
-    self.longitude = creator.longitude
-  end
-
   def register_to_season
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)

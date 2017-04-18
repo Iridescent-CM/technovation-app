@@ -11,8 +11,10 @@
     </p>
 
     <p class="team_location">
-      <%= t("views.teams.show.location", name: @team.creator_address_details) %>
+      <%= t("views.teams.show.location", name: @team.primary_location) %>
     </p>
+
+    <p><%= link_to "Edit team location", edit_admin_team_location_path(@team) %></p>
 
     <p class="team_description"><%= @team.description %></p>
 

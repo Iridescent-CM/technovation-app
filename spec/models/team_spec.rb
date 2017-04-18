@@ -4,7 +4,7 @@ RSpec.describe Team do
   it "deals okay with funky region name input" do
     team = FactoryGirl.create(:team)
 
-    allow(team.creator.account).to receive(:state_province) { " NY " }
+    allow(team).to receive(:state_province) { " NY " }
 
     expect { team.region_name }.not_to raise_error
   end
@@ -12,10 +12,10 @@ RSpec.describe Team do
   it "fixes funky brasil/brazil region issue" do
     team = FactoryGirl.create(:team)
 
-    allow(team.creator.account).to receive(:state_province) { "Brasil" }
+    allow(team).to receive(:state_province) { "Brasil" }
     expect(team.region_name).to eq("Brazil")
 
-    allow(team.creator.account).to receive(:state_province) { "Brazil" }
+    allow(team).to receive(:state_province) { "Brazil" }
     expect(team.region_name).to eq("Brazil")
   end
 
@@ -116,28 +116,34 @@ RSpec.describe Team do
     end
 
     it "uses only country outside the US" do
-      team = FactoryGirl.create(:team, creator_in: "Salvador", creator_country: "BR")
+      team = FactoryGirl.create(:team,
+                                city: "Salvador",
+                                state_province: "Bahia",
+                                country: "BR")
       expect(team.region_division_name).to eq("BR,senior")
     end
 
     it "won't blow up without country" do
-      team = FactoryGirl.create(:team, creator_in: nil, creator_country: nil)
+      team = FactoryGirl.create(:team, city: nil, state_province: nil, country: nil)
       expect(team.region_division_name).to eq(",senior")
     end
 
-    it "should re-cache if creator details change" do
+    it "should re-cache if member details change" do
       team = FactoryGirl.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
-      team.creator.date_of_birth = Date.today - 10.years
-      team.creator.save
+
+      m = team.members.sample
+      m.date_of_birth = Date.today - 10.years
+      m.save
       expect(team.reload.region_division_name).to eq("US_IL,junior")
     end
 
-    it "should re-cache if members change" do
+    it "should re-cache if membership changes" do
       team = FactoryGirl.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
-      team.remove_student(team.students.first)
-      expect(team.reload.region_division_name).to eq(",none_assigned_yet")
+
+      team.memberships.each(&:destroy)
+      expect(team.reload.region_division_name).to eq("US_IL,none_assigned_yet")
     end
   end
 end

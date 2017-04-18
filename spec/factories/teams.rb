@@ -3,6 +3,9 @@ FactoryGirl.define do
     sequence(:name) { |n| "Go Team Factory Girl #{n}!" }
     description { "Made with <3 by FactoryGirl" }
     division { Division.senior }
+    city "Chicago"
+    state_province "IL"
+    country "US"
 
     trait :with_mentor do
       after(:create) do |team, _|
