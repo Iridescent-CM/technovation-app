@@ -226,6 +226,10 @@ class Team < ActiveRecord::Base
     [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
   end
 
+  def get_country
+    country && Country[country] && Country[country].name
+  end
+
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
   end
