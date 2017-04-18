@@ -15,7 +15,10 @@
               <strong>Division:</strong> <%= team.division_name.titleize %><br />
 
               <small>
-                <%= team.primary_location %><br />
+                <%= team.primary_location %>
+                <%= link_to "Edit location",
+                  edit_mentor_team_location_path(team) %>
+                <br />
 
                 <% if team.submission.present? %>
                   <%= link_to 'Edit app submission',

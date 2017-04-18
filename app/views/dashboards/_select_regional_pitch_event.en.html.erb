@@ -17,16 +17,13 @@
 
         <div>
           <dt>Region:</dt>
-          <dd><%= model.region_name %></dd>
-        </div>
-
-        <div>
-          <dt>
+          <dd>
+            <%= model.region_name %>
             <small>
-              <%= link_to "Edit your team location",
+              <%= link_to "Edit location",
                 edit_student_team_location_path(model) %>
             </small>
-          </dt>
+          </dd>
         </div>
 
         <div>

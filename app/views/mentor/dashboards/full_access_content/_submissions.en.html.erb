@@ -27,7 +27,13 @@
                 <dd><%= team.division_name.humanize %></dd>
 
                 <dt>Region</dt>
-                <dd><%= team.region_name %></dd>
+                <dd>
+                  <%= team.region_name %>
+                  <small>
+                    <%= link_to "Edit location",
+                      edit_mentor_team_location_path(team) %>
+                  </small>
+                </dd>
               </dl>
 
               <dl class="flex-col-md-6" style="padding: 0;">
