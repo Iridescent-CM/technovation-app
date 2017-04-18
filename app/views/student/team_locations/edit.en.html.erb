@@ -1,0 +1,23 @@
+<h1 class="appy-title">
+  Edit Your Team Location
+</h1>
+
+<h2><%= @team.name %></h2>
+
+<%= simple_form_for [:student, @team] do |f| %>
+  <%= f.input :city %>
+
+  <%= f.input :state_province,
+    label: t("models.account.state_province") %>
+
+  <%= f.input :country,
+    collection: CountryStateSelect.countries_collection,
+    input_html: {
+      class: "chosen",
+      id: "account_country",
+    } %>
+
+  <p class="standalone-buttons">
+    <%= f.submit "Save", class: "appy-button" %>
+  </p>
+<% end %>

@@ -51,6 +51,9 @@ module TeamController
       :team_photo_cache,
       :accepting_student_requests,
       :accepting_mentor_requests,
+      :city,
+      :state_province,
+      :country,
     ).tap do |tapped|
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_profile)
