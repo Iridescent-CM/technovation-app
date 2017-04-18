@@ -42,3 +42,9 @@
 //= require submission_scores
 //= require dashboards
 //= require select-pitch-events
+
+(function() {
+  $(".chosen").chosen({
+    placeholder_text_single: "Choose a country",
+  });
+})();
