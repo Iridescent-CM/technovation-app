@@ -268,6 +268,11 @@ class Team < ActiveRecord::Base
                                     member_type: "StudentProfile",
                                     member_id: student.id)
     membership.destroy
+
+    if invite = student.team_member_invites.find_by(team_id: id)
+      invite.deleted!
+    end
+
     reconsider_division
     save
   end
@@ -277,6 +282,10 @@ class Team < ActiveRecord::Base
                                     member_type: "MentorProfile",
                                     member_id: mentor.id)
     membership.destroy
+
+    if invite = mentor.mentor_invites.find_by(team_id: id)
+      invite.deleted!
+    end
   end
 
   def reconsider_division_with_save
