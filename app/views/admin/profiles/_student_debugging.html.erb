@@ -19,7 +19,8 @@
          profile.os_version].compact.join(' - ') %>
   </p>
 
-  <% if !account.student_profile.team.present? %>
+  <% if not account.student_profile.team.present? and
+       account.student_profile.full_access_enabled? %>
     <%= form_tag(admin_team_memberships_path) do %>
       <%= hidden_field_tag :account_id, profile.account_id %>
       <p>
@@ -32,6 +33,13 @@
         <%= submit_tag 'Add', class: "appy-button" %>
       </p>
     <% end %>
+  <% elsif account.student_profile.team.present? %>
+    <p>
+      This student is already on a team.
+    </p>
+  <% elsif not account.student_profile.full_access_enabled? %>
+    <p>
+      This student cannot be added to a team until they get full access to the platform.
+    </p>
   <% end %>
-
 </div>
