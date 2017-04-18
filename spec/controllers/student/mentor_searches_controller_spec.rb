@@ -32,6 +32,7 @@ RSpec.describe Student::MentorSearchesController do
         :mentor,
         virtual: false,
         city: "Los Angeles",
+        state_province: "CA",
       )
 
       sign_in(FactoryGirl.create(:student, :on_team))

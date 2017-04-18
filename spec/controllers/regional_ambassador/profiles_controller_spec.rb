@@ -6,7 +6,9 @@ RSpec.describe RegionalAmbassador::ProfilesController do
       FactoryGirl.create(:student) # Chicago is default
       FactoryGirl.create(:mentor, city: "Evanston")
 
-      wisconsin_ra = FactoryGirl.create(:regional_ambassador, city: "Milwaukee")
+      wisconsin_ra = FactoryGirl.create(:regional_ambassador,
+                                        city: "Milwaukee",
+                                        state_province: "WI")
       illinois_ra = FactoryGirl.create(:regional_ambassador) # Chicago is default
 
       sign_in(illinois_ra)
@@ -18,13 +20,38 @@ RSpec.describe RegionalAmbassador::ProfilesController do
       us_student = FactoryGirl.create(:student) # Chicago is default
       riyadh_ra = FactoryGirl.create(:regional_ambassador,
                                      status: :approved,
-                                     city: "Dhurma")
-      najran_student = FactoryGirl.create(:student, city: "Najran")
+                                     city: "Dhurma",
+                                     state_province: "Riyadh Province",
+                                     country: "Saudi Arabia")
 
-      pending_ra = FactoryGirl.create(:ambassador, status: :pending, city: "Dhurma")
-      approved_ra = FactoryGirl.create(:ambassador, status: :approved, city: "Dhurma")
-      declined_ra = FactoryGirl.create(:ambassador, status: :declined, city: "Dhurma")
-      spam_ra = FactoryGirl.create(:ambassador, status: :spam, city: "Dhurma")
+      najran_student = FactoryGirl.create(:student,
+                                          city: "Najran",
+                                          state_province: "Najran Province",
+                                          country: "Saudi Arabia")
+
+      pending_ra = FactoryGirl.create(:ambassador,
+                                      status: :pending,
+                                      city: "Dhurma",
+                                      state_province: "Riyadh Province",
+                                      country: "Saudi Arabia")
+
+      approved_ra = FactoryGirl.create(:ambassador,
+                                       status: :approved,
+                                       city: "Dhurma",
+                                       state_province: "Riyadh Province",
+                                       country: "Saudi Arabia")
+
+      declined_ra = FactoryGirl.create(:ambassador,
+                                       status: :declined,
+                                       city: "Dhurma",
+                                       state_province: "Riyadh Province",
+                                       country: "Saudi Arabia")
+
+      spam_ra = FactoryGirl.create(:ambassador,
+                                   status: :spam,
+                                   city: "Dhurma",
+                                   state_province: "Riyadh Province",
+                                   country: "Saudi Arabia")
 
       sign_in(riyadh_ra)
       get :index

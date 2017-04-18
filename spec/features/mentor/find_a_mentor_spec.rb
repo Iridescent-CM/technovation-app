@@ -10,7 +10,8 @@ RSpec.feature "Mentors find a team" do
 
   scenario "browse nearby mentors" do
     FactoryGirl.create(:mentor, first_name: "Faraway",
-                                city: "Los Angeles")
+                                city: "Los Angeles",
+                                state_province: "CA")
 
     click_link "Connect with mentors"
 

@@ -6,6 +6,7 @@ FactoryGirl.define do
 
     transient do
       city "Chicago"
+      state_province "IL"
       country nil
       date_of_birth Date.today - 15.years
       email nil
@@ -21,6 +22,7 @@ FactoryGirl.define do
 
       s.build_account(attrs.merge(
         city: e.city,
+        state_province: e.state_province,
         country: e.country || attrs[:country],
         date_of_birth: e.date_of_birth,
         email: e.email || attrs[:email],
@@ -54,6 +56,7 @@ FactoryGirl.define do
     transient do
       first_name nil
       city nil
+      state_province nil
       country nil
       email nil
       password nil
@@ -64,6 +67,7 @@ FactoryGirl.define do
 
       m.build_account(attrs.merge(
         city: e.city || attrs[:city] || "Chicago",
+        state_province: e.state_province || attrs[:state_province] || "IL",
         country: e.country || attrs[:country],
         first_name: e.first_name || attrs[:first_name],
         email: e.email || attrs[:email],
@@ -111,6 +115,7 @@ FactoryGirl.define do
 
     transient do
       city "Chicago"
+      state_province "IL"
       country nil
       email nil
       password nil
@@ -122,6 +127,7 @@ FactoryGirl.define do
 
       r.build_account(attrs.merge(
         city: e.city,
+        state_province: e.state_province,
         country: e.country || attrs[:country],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],

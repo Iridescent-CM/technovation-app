@@ -25,11 +25,14 @@ RSpec.describe Account do
       .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
   end
 
-  it "doesn't need a BG check outside of the US" do
-    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample,
-                                 city: "Salvador",
-                                 country: "BR")
-    expect(account).to be_background_check_complete
+  %i{mentor regional_ambassador}.each do |type|
+    it "doesn't need a BG check outside of the US" do
+      account = FactoryGirl.create(type,
+                                   city: "Salvador",
+                                   state_province: "Bahia",
+                                   country: "BR")
+      expect(account).to be_background_check_complete
+    end
   end
 
   it "calculates age" do
