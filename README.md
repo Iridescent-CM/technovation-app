@@ -48,7 +48,7 @@ cd technovation-app
 ## Drop / recreate / re-seed / re-bootstrap  database
 
 ```
-rake db:drop db:create db:migrate && rake db:seed bootstrap
+rails db:drop db:create db:migrate && rails db:seed bootstrap
 ```
 
 
@@ -72,18 +72,18 @@ rails server
 TechnovationApp uses RSpec
 
 ```
-rake
+rails test
 ```
 
 ## Rake tasks
 
 ```
-rake db:seed 
+rails db:seed 
 # Seeds with a student, a couple of mentors, and an admin for manual testing
 ```
 
 ```
-rake bootstrap
+rails bootstrap
 # Adds the Technovation expertises for mentors to choose for their profile
 # Adds the Technovation admin account
 ```
