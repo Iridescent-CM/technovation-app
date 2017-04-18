@@ -3,6 +3,10 @@ class Membership < ActiveRecord::Base
     where("joinable_id IN (?)", account.teams.current.pluck(:id))
   }
 
+  after_destroy -> {
+    joinable.reconsider_division_with_save
+  }
+
   belongs_to :member, polymorphic: true
   belongs_to :joinable, polymorphic: true, touch: true
 
