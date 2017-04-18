@@ -18,7 +18,7 @@ module RegionalTeam
       mentors = MentorProfile.joins(:account)
         .where("accounts.country = ?", ambassador.country)
 
-      teams = teams.where(id: (students + mentors).flat_map(&:teams).distinct.map(&:id))
+      teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
     end
 
     unless params[:text].blank?
