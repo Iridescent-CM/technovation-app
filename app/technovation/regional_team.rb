@@ -1,25 +1,8 @@
 module RegionalTeam
   def self.call(ambassador, params = {})
-    teams = Team.includes(:seasons, :memberships)
-                .references(:seasons, :accounts)
-                .where("seasons.year = ?", Season.current.year)
+    teams = Team.current
+                .for_ambassador(ambassador)
                 .order('teams.created_at DESC')
-
-    if ambassador.country == "US"
-      students = StudentProfile.joins(:account)
-        .where("accounts.state_province = ? AND accounts.country = ?", ambassador.state_province, "US")
-      mentors = MentorProfile.joins(:account)
-        .where("accounts.state_province = ? AND accounts.country = ?", ambassador.state_province, "US")
-
-      teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
-    else
-      students = StudentProfile.joins(:account)
-        .where("accounts.country = ?", ambassador.country)
-      mentors = MentorProfile.joins(:account)
-        .where("accounts.country = ?", ambassador.country)
-
-      teams = teams.where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
-    end
 
     unless params[:text].blank?
       results = teams.search({
