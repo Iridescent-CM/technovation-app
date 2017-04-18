@@ -8,9 +8,7 @@ class Team < ActiveRecord::Base
   before_create :update_geocoding
   reverse_geocoded_by :latitude, :longitude
 
-  after_save    { IndexModelJob.perform_later("index", "Team", id) }
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
-  after_touch   { IndexModelJob.perform_later("index", "Team", id) }
 
   after_commit :register_to_season, on: :create
 
