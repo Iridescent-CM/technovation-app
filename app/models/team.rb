@@ -235,14 +235,28 @@ class Team < ActiveRecord::Base
   end
 
   def add_mentor(mentor)
-    if !!mentor and not mentors.include?(mentor)
+    return if !!!mentor
+
+    if invite = mentor.mentor_invites.pending.find_by(team_id: id)
+      invite.accepted!
+      return
+    end
+
+    if not mentors.include?(mentor)
       mentors << mentor
       save
     end
   end
 
   def add_student(student)
-    if !!student and not students.include?(student) and spot_available?
+    return if !!!student
+
+    if invite = student.team_member_invites.pending.find_by(team_id: id)
+      invite.accepted!
+      return
+    end
+
+    if not students.include?(student) and spot_available?
       students << student
       reconsider_division
       save
