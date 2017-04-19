@@ -86,6 +86,7 @@
           <%= simple_form_for [:judge, @submission_score],
             data: { remote: true },
             html: { class: "no-simple-form-style"} do |f| %>
+            <%= f.hidden_field :team_submission_id %>
 
             <h1>Technical</h1>
 
