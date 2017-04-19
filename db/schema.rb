@@ -149,10 +149,10 @@ ActiveRecord::Schema.define(version: 20170418155148) do
   end
 
   create_table "join_requests", force: :cascade do |t|
-    t.string   "requestor_type", null: false
     t.integer  "requestor_id",   null: false
-    t.string   "joinable_type",  null: false
+    t.string   "requestor_type", null: false
     t.integer  "joinable_id",    null: false
+    t.string   "joinable_type",  null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at",     null: false
@@ -187,10 +187,10 @@ ActiveRecord::Schema.define(version: 20170418155148) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.string   "member_type",   null: false
     t.integer  "member_id",     null: false
-    t.string   "joinable_type", null: false
+    t.string   "member_type",   null: false
     t.integer  "joinable_id",   null: false
+    t.string   "joinable_type", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id", using: :btree
@@ -231,18 +231,18 @@ ActiveRecord::Schema.define(version: 20170418155148) do
     t.text     "body"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.string   "regarding_type"
     t.integer  "regarding_id"
+    t.string   "regarding_type"
     t.datetime "sent_at"
     t.datetime "delivered_at"
     t.index ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id", using: :btree
   end
 
   create_table "multi_messages", force: :cascade do |t|
-    t.string   "sender_type",    null: false
     t.integer  "sender_id",      null: false
-    t.string   "regarding_type", null: false
+    t.string   "sender_type",    null: false
     t.integer  "regarding_id",   null: false
+    t.string   "regarding_type", null: false
     t.hstore   "recipients",     null: false
     t.string   "subject"
     t.text     "body",           null: false
@@ -326,8 +326,8 @@ ActiveRecord::Schema.define(version: 20170418155148) do
 
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",                     null: false
-    t.string   "registerable_type",             null: false
     t.integer  "registerable_id",               null: false
+    t.string   "registerable_type",             null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.integer  "status",            default: 1, null: false
