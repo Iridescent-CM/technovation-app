@@ -9,8 +9,8 @@
     <%= t("views.application.instead") %>.
   </p>
 
-  <%= render 'signups/account_type', role: :judge %>
-  <%= render 'signups/account_type', role: :student, disabled: no_admin_permission? %>
-  <%= render 'signups/account_type', role: :mentor, disabled: no_admin_permission? %>
-  <%= render 'signups/account_type', role: :regional_ambassador, disabled: no_admin_permission? %>
+  <%= render 'signups/account_type', role: :judge, enabled: true %>
+  <%= render 'signups/account_type', role: :student, enabled: admin_permission? %>
+  <%= render 'signups/account_type', role: :mentor, enabled: admin_permission? %>
+  <%= render 'signups/account_type', role: :regional_ambassador, enabled: admin_permission? %>
 </div>

@@ -1,29 +1,29 @@
-<% disabled ||= false %>
+<% enabled ||= false %>
 
 <div class="account-type">
-  <% if disabled %>
+  <% if enabled %>
+    <%= link_to public_send("#{role}_signup_path"), class: "account-type__img account-type__img--#{role}" do %>
+      <span><%= t("views.signups.new.roles.#{role}") %></span>
+    <% end %>
+  <% else %>
     <div class="account-type__img account-type__img--disabled account-type__img--<%= role %>">
       <span>
         <%= t("views.signups.new.roles.#{role}") %>
       </span>
     </div>
-  <% else %>
-    <%= link_to public_send("#{role}_signup_path"), class: "account-type__img account-type__img--#{role}" do %>
-      <span><%= t("views.signups.new.roles.#{role}") %></span>
-    <% end %>
   <% end %>
 
   <div class="account-type__description">
-    <% if disabled %>
-      <p><%= t("views.signups.new.descriptions.disabled.#{role}") %></p>
-    <% else %>
+    <% if enabled %>
       <p><%= t("views.signups.new.descriptions.#{role}") %></p>
+    <% else %>
+      <p><%= t("views.signups.new.descriptions.disabled.#{role}") %></p>
     <% end %>
 
     <%= link_to t("views.signups.new.signup_link.#{role}"),
                 public_send("#{role}_signup_path"),
                 class: "appy-button",
-                disabled: disabled %>
+                disabled: !enabled %>
   </div>
 </div>
 

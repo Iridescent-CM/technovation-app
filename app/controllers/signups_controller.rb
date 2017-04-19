@@ -1,7 +1,7 @@
 class SignupsController < ApplicationController
   before_action :require_unauthenticated
 
-  helper_method :no_admin_permission?
+  helper_method :admin_permission?
 
   def new
     if not params[:admin_permission_token].blank? and (attempt = SignupAttempt.find_by(
@@ -17,8 +17,8 @@ class SignupsController < ApplicationController
   end
 
   private
-  def no_admin_permission?
+  def admin_permission?
     token = cookies.fetch(:admin_permission_token) { "" }
-    Rails.env.production? and token.blank?
+    ENV["ENABLE_ALL_PROFILE_TYPE_SIGNUPS"] or not token.blank?
   end
 end
