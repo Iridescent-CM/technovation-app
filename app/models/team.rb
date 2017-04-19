@@ -17,12 +17,18 @@ class Team < ActiveRecord::Base
     end
   end
 
-  after_validation :geocode, if: -> (a) {
-    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
+  after_validation :geocode, if: -> (t) {
+    t.latitude.blank? or (not t.city_was.blank? and t.city_changed?)
   }
 
-  after_validation :reverse_geocode, if: ->(a) {
-    a.latitude_changed? or a.longitude_changed?
+  after_validation :reverse_geocode, if: ->(t) {
+    t.latitude_changed? or t.longitude_changed?
+  }
+
+  after_validation ->(t) {
+    t.regional_pitch_events.destroy_all
+  }, if: -> (t) {
+    (t.country === "US" and t.state_province_changed?) or t.country_changed?
   }
 
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
