@@ -33,13 +33,17 @@ class MultiMessage < ActiveRecord::Base
   end
 
   def teams
-    @teams ||= team.split(',').map do |id|
+    @teams ||= team.split(',').map { |id|
+      id.gsub(/[\D]/, '')
+    }.reject(&:blank?).map do |id|
       Team.find(id)
     end
   end
 
   def judges
-    @judges ||= judge_profile.split(',').map do |id|
+    @judges ||= judge_profile.split(',').map { |id|
+      id.gsub(/[\D]/, '')
+    }.reject(&:blank?).map do |id|
       JudgeProfile.find(id)
     end
   end
