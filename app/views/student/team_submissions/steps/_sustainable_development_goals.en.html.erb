@@ -39,7 +39,7 @@
     <div class="ajax-form__static-input ajax-form-helper__static-mode"
          data-display-for="stated_goal_explanation">
       <% if submission.stated_goal_explanation %>
-        <%= submission.stated_goal_explanation %>
+        <%= simple_format submission.stated_goal_explanation %>
       <% else %>
         In one or two sentences, explain how your app solution aligns with your Sustainable Development Goal
       <% end %>
