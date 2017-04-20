@@ -246,6 +246,11 @@ class Team < ActiveRecord::Base
       return
     end
 
+    if join_request = mentor.join_requests.pending.find_by(joinable: self)
+      join_request.approved!
+      return
+    end
+
     if not mentors.include?(mentor)
       mentors << mentor
       save
@@ -257,6 +262,11 @@ class Team < ActiveRecord::Base
 
     if invite = student.team_member_invites.pending.find_by(team_id: id)
       invite.accepted!
+      return
+    end
+
+    if join_request = student.join_requests.pending.find_by(joinable: self)
+      join_request.approved!
       return
     end
 
@@ -277,6 +287,10 @@ class Team < ActiveRecord::Base
       invite.deleted!
     end
 
+    if join_request = student.join_requests.find_by(joinable: self)
+      join_request.deleted!
+    end
+
     reconsider_division
     save
   end
@@ -289,6 +303,10 @@ class Team < ActiveRecord::Base
 
     if invite = mentor.mentor_invites.find_by(team_id: id)
       invite.deleted!
+    end
+
+    if join_request = mentor.join_requests.find_by(joinable: self)
+      join_request.deleted!
     end
   end
 

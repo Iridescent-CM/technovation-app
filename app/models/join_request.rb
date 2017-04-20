@@ -44,7 +44,15 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def pending?
-    not approved? and not declined?
+    not approved? and not declined? and not deleted?
+  end
+
+  def deleted?
+    !!deleted_at
+  end
+
+  def deleted!
+    update_attributes(deleted_at: Time.current)
   end
 
   def status
@@ -52,6 +60,8 @@ class JoinRequest < ActiveRecord::Base
       "Accepted"
     elsif declined?
       "Declined"
+    elsif deleted?
+      "Removed from team"
     else
       "Pending review"
     end
