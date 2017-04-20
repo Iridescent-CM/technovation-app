@@ -72,7 +72,7 @@ rails server
 TechnovationApp uses RSpec
 
 ```
-rails test
+rake
 ```
 
 ## Rake tasks
