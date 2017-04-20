@@ -1,6 +1,3 @@
-<% url = case type
-         when :student; "https://www.surveymonkey.com/r/technovationstudentpostprogram2017"
-         when :mentor; "https://www.surveymonkey.com/r/technovationmentorpostprogram2017"
-         end %>
-
-<%= link_to "Take the post-program survey", url, target: "_blank" %>
+<%= link_to "Take the post-program survey",
+            "https://www.surveymonkey.com/r/technovation#{type}postprogram2017",
+            target: "_blank" %>
