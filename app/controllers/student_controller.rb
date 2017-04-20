@@ -7,7 +7,7 @@ class StudentController < ApplicationController
   before_action -> {
     unless current_student.honor_code_signed?
       save_redirected_path
-      redirect_to interruptions_path(issue: :honor_code) and return
+      redirect_to interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
     %w{interruptions
