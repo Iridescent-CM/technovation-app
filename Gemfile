@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "~> 2.4.1"
+ruby "~> 2.4"
 
 gem 'rails', '~> 5.0'
 gem 'puma', '~> 3.8'
