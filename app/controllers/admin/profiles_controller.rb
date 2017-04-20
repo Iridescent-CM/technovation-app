@@ -71,7 +71,7 @@ module Admin
           :location_confirmed,
         ],
       ).tap do |tapped|
-        tapped[:skip_existing_password] = true
+        tapped[:account][:skip_existing_password] = true
       end
     end
 
