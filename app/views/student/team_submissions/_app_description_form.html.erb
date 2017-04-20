@@ -1,7 +1,6 @@
 <%= simple_form_for send("#{current_account.type_name}_team_submission_path",
-                         submission,
-                         team_id: current_team.id) do |f| %>
-  <%= hidden_field_tag :submission_step, params[:step] %>
+                         submission) do |f| %>
+  <%= hidden_field_tag :team_id, current_team.id %>
 
   <%= render 'errors', record: @team_submission %>
 
