@@ -23,6 +23,7 @@ module RegionalAmbassador
 
       @judge_participants = JudgeProfile.current
         .order("accounts.first_name")
+        .full_access
         .for_ambassador(current_ambassador)
         .not_attending_live_event
     end
