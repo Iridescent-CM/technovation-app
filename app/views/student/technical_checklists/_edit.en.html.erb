@@ -301,6 +301,11 @@
           <div class="tc-form-group__photo-item">
             <%= f.label :paper_prototype %>
 
+            <p>
+              You <strong>do not</strong> have to attach more than one,
+              just choose your <strong>one</strong> favorite example.
+            </p>
+
             <% if f.object.paper_prototype.present? %>
               <%= image_tag(f.object.paper_prototype_url, width: 200) %>
             <% end %>
@@ -312,6 +317,11 @@
 
           <div class="tc-form-group__photo-item">
             <%= f.label :event_flow_chart, "Flowchart or Pseudocode" %>
+
+            <p>
+              You <strong>do not</strong> have to attach more than one,
+              just choose your <strong>one</strong> favorite example.
+            </p>
 
             <p>
               <%= link_to "Learn in Code 6",
