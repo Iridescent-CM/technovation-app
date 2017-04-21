@@ -186,20 +186,20 @@
     var options = JSON.parse(cannedResponses);
 
     var promptOption = document.createElement('option');
-    promptOption.innerText = 'Choose a sentence prompt to help you get started...'
+    promptOption.innerText = 'Optional: choose a prompt to get started';
     promptOption.selected = true;
     promptOption.value = '';
     responseDropdown.appendChild(promptOption);
 
     options.forEach(function(option) {
       var optionEl = document.createElement('option');
-      optionEl.innerText = option;
+      optionEl.innerText = option + "...";
       responseDropdown.appendChild(optionEl);
     });
 
     responseDropdown.addEventListener('change', function(e) {
       if (e.target.value) {
-        textarea.value = e.target.value;
+        textarea.value = e.target.value.replace('...', '');
         if (textarea.oninput) {
           textarea.oninput();
         }
