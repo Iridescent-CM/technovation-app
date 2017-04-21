@@ -10,6 +10,7 @@
 //= require dragula
 //= require closest-polyfill
 //= require event-polyfill
+//= require prepend-polyfill
 //= require rangeslider
 
 //= require utils
