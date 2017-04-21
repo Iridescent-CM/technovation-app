@@ -79,17 +79,20 @@
    * Basic DOM structure and initial set up
    */
   function generateMarkup() {
-    for (var i = 0; i < sections.length; i++) {
-      var currentSection = sections[i];
-      var questions = currentSection.querySelectorAll(questionSelector);
+    _.each(sections, function(section) {
+      var questions = section.querySelectorAll(questionSelector);
 
       // Sorry for the nested for loop :(
       // This is more straightforward, IMO, than functioning it out
-      for (var y = 0; y < questions.length; y++) {
-        var currentQuestion = questions[y];
-        generateHelperInput(currentQuestion);
-      }
-    }
+      _.each(questions, function(question, idx) {
+        var questionIndexNote = document.createElement('p');
+        questionIndexNote.classList.add('judge-helper--question-index-note');
+        questionIndexNote.innerText = (idx + 1) + " of " + questions.length;
+        question.prepend(questionIndexNote);
+
+        generateHelperInput(question);
+      });
+    });
 
     makeBreadcrumbs();
     setActiveBreadcrumbs();
@@ -466,12 +469,16 @@
     formWrapper.classList.remove(minimizeClass);
     formWrapper.classList.add(maximizeClass);
     formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
+
     document.body.style.overflow = 'hidden';
 
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', maximizeForm);
+
     var titleBarText = formWrapper.querySelector('.title-bar-text');
+
     titleBarText.innerText = titleBarText.dataset.maximizedTitle;
+
     $(window).trigger('resize');
   }
 
