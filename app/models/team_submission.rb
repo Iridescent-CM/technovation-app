@@ -120,7 +120,7 @@ class TeamSubmission < ActiveRecord::Base
 
         screenshots.many? and
 
-        technical_checklist_completed? and
+        technical_checklist.present? and
 
         not detect_source_code_url.blank? and
 
