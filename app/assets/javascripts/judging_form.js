@@ -544,7 +544,7 @@
     if (!allSectionsHaveComments) {
       return {
         isValid: false,
-        error: 'Please ensure all sections have a valid comment'
+        error: 'Please ensure you have left comments in each section!'
       };
     }
     // If we're down here, everything is valid
