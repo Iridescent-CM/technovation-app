@@ -1,25 +1,34 @@
 (function judgingForm() {
-  var showToast = true;
-  var formWrapper = document.getElementById('judging-form');
-  if (!formWrapper) {
+  var showToast = true,
+      formWrapper = document.getElementById('judging-form');
+
+  if (!formWrapper)
     return;
-  }
+
   document.querySelector('.judging-form__loader').remove();
+
   formWrapper.classList.remove('judging-form--loading');
-  var activeSectionIndex = 0;
-  var activeQuestionIndex = 0;
-  var sections = formWrapper.getElementsByClassName('judging-form__section');
-  var activeSection = sections[activeSectionIndex];
-  var questionSelector = '.input';
-  var questions = activeSection.querySelectorAll(questionSelector);
-  var activeQuestion = questions[activeQuestionIndex];
+
+  var activeSectionIndex = 0,
+      activeQuestionIndex = 0,
+      sections = formWrapper.getElementsByClassName('judging-form__section'),
+      questionSelector = '.input';
+
+  if (_.includes(window.location.hash, "-question-")) {
+    activeSectionIndex = parseInt(window.location.hash.split('-section-')[1].split('-')[0]) - 1;
+    activeQuestionIndex = parseInt(window.location.hash.split('-question-')[1].split('-')[0]) - 1;
+  }
+
+  var activeSection = sections[activeSectionIndex],
+      questions = activeSection.querySelectorAll(questionSelector);
+      activeQuestion = questions[activeQuestionIndex];
 
   activeQuestion.classList.add('active'); // Not BEM cause this thing is being generated dynamically
   activeSection.classList.add('judging-form__section--active');
 
-  var backButton = document.getElementById('juding-form-button-back');
-  var nextButton = document.getElementById('juding-form-button-next');
-  var buttonWrappers = document.getElementsByClassName('judging-form__button-wrapper');
+  var backButton = document.getElementById('juding-form-button-back'),
+      nextButton = document.getElementById('juding-form-button-next'),
+      buttonWrappers = document.getElementsByClassName('judging-form__button-wrapper');
 
   backButton.addEventListener('click', goToPrevQuestion);
   nextButton.addEventListener('click', goToNextQuestion);
@@ -27,19 +36,19 @@
   var saveAllButton = document.getElementById('submit-all-forms');
   saveAllButton.addEventListener('click', saveProgressAll);
 
-  var saveAllPending = false;
-  var saveAllPendingCount = 0;
+  var saveAllPending = false,
+      saveAllPendingCount = 0;
 
   $(document).ajaxSuccess(handleAjaxSave);
 
   var verifySubmissionButton = document.getElementById('verify-scores');
   verifySubmissionButton.addEventListener('click', reviewSubmissionForm);
 
-  for (var i = 0; i < buttonWrappers.length; i++) {
-    buttonWrappers[i].addEventListener('click',  function() {
+  _.each(buttonWrappers, function(btnWrapper) {
+    btnWrapper.addEventListener('click',  function() {
       this.querySelector('button').click();
     })
-  }
+  });
 
   setShouldButtonsBeDisabled();
 
@@ -217,6 +226,7 @@
     }
 
     questions[activeQuestionIndex].classList.add('active');
+    window.location.hash = "window-section-" + (activeSectionIndex + 1) + "-question-" + (activeQuestionIndex + 1);
 
     setShouldButtonsBeDisabled();
     setActiveBreadcrumbs();
@@ -249,6 +259,7 @@
 
     questions[activeQuestionIndex].classList.add('active');
 
+    window.location.hash = "window-section-" + (activeSectionIndex + 1) + "-question-" + (activeQuestionIndex + 1);
     setShouldButtonsBeDisabled();
     setActiveBreadcrumbs();
   }
