@@ -162,15 +162,7 @@ class SubmissionScore < ActiveRecord::Base
   def total_process_verified
     if team_submission.technical_checklist.pics_of_process.all? { |a|
          team_submission.technical_checklist.send(a).present?
-       } and 
-
-         team_submission.technical_checklist.pics_of_process.map { |a|
-           "#{a}_verified"
-         }.all? { |a|
-           self[a] # returns true?
-         } and
-
-           team_submission.screenshots.count >= 2
+       } and team_submission.screenshots.count >= 2
       3
     else
       0
