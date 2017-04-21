@@ -398,21 +398,34 @@
           var tooltip = document.createElement('div');
           tooltip.classList.add('rangeslider__tooltip');
           this.$range[0].parentElement.appendChild(tooltip);
+
+          tooltip.addEventListener('click', function(e) {
+            $(e.target).hide('fade');
+          });
+
+          this.$handle[0].addEventListener('click', function(e) {
+            $(this.tooltip).toggle('fade');
+          }.bind(this));
+
           this.tooltip = tooltip;
           setRadioValueFromRange(this);
         },
 
         onSlide: function(position, value) {
-          this.$handle[0].innerHTML = value;
-          var descriptions = this.$range[0].nextElementSibling;
-          var currentDescription = descriptions.dataset['description-' + value];
-          this.tooltip.innerHTML = currentDescription;
-          this.tooltip.classList.add('rangeslider__tooltip--active');
-          this.tooltip.style.left = position + 'px';
+          $(this.tooltip).hide('fade', function() {
+            this.$handle[0].innerHTML = value;
+
+            var descriptions = this.$range[0].nextElementSibling;
+            var currentDescription = descriptions.dataset['description-' + value];
+
+            this.tooltip.innerHTML = currentDescription;
+            this.tooltip.style.left = position + 'px';
+
+            $(this.tooltip).show('fade');
+          }.bind(this));
         },
 
         onSlideEnd: function(position, value) {
-          this.tooltip.classList.remove('rangeslider__tooltip--active');
           setRadioValueFromRange(this);
         }
     });
