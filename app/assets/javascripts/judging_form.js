@@ -105,10 +105,31 @@
 
       var breadcrumb = document.createElement('div');
       breadcrumb.classList.add('judging-form__crumb');
+      breadcrumb.dataset.sectionIndex = i + 1;
 
       var labelEl = document.createElement('div');
       labelEl.classList.add('judging-form__crumb-label');
       labelEl.innerText = currentSectionName;
+
+      breadcrumb.addEventListener('click', function(e) {
+        var idx = parseInt(this.dataset.sectionIndex);
+
+        activeSection.classList.remove('judging-form__section--active');
+        questions[activeQuestionIndex].classList.remove('active');
+
+        activeSectionIndex = idx - 1;
+        activeQuestionIndex = 0;
+
+        activeSection = sections[activeSectionIndex];
+        questions = activeSection.querySelectorAll(questionSelector);
+
+        activeSection.classList.add('judging-form__section--active');
+        questions[activeQuestionIndex].classList.add('active');
+
+        window.location.hash = "window-section-" + (activeSectionIndex + 1) + "-question-" + (activeQuestionIndex + 1);
+        setShouldButtonsBeDisabled();
+        setActiveBreadcrumbs();
+      });
 
       breadcrumb.appendChild(labelEl);
       container.appendChild(breadcrumb);
@@ -338,10 +359,12 @@
 
   function setActiveBreadcrumbs() {
     var breadcrumbs = document.getElementsByClassName('judging-form__crumb');
+
     for (var i = 0; i < breadcrumbs.length; i++) {
-      if (i === activeSectionIndex) {
+      breadcrumbs[i].classList.remove('judging-form__crumb--active');
+
+      if (i === activeSectionIndex)
         breadcrumbs[i].classList.add('judging-form__crumb--active');
-      }
     }
   }
 
