@@ -1,31 +1,37 @@
 (function submissionEditScreenshots() {
   var mainWrapper = document.getElementById('submission-screenshots-edit');
+
   if (!mainWrapper)
     return;
 
-  document.addEventListener('editscreenshotschanged', initEditScreenshots);
+  var baseClass = 'submission-screenshots-edit';
+  var wrapper = document.getElementById('edit-screenshots-wrapper');
+  var images = wrapper.getElementsByTagName('img');
+
+  document.addEventListener('editscreenshotschanged', formatRows);
+  formatRows();
   initEditScreenshots();
 
-  function initEditScreenshots() {
-    var baseClass = 'submission-screenshots-edit';
-    var wrapper = document.getElementById('edit-screenshots-wrapper');
-    var images = wrapper.getElementsByTagName('img');
+  function formatRows() {
+    if (_.every(images, function(i) { i.parentElement.querySelector('.fa-bars'); }))
+      return;
 
-    formatRows();
+    for (var i = 0; i < images.length; i++) {
+      var currentImg = images[i];
+      var dragHandle = document.createElement('span');
 
-    function formatRows() {
-      for (var i = 0; i < images.length; i++) {
-        var currentImg = images[i];
-        var dragHandle = document.createElement('span');
-        dragHandle.classList.add('fa', 'fa-bars');
-        currentImg.parentElement.insertBefore(dragHandle, currentImg);
-        var label = document.createElement('span');
-        label.classList.add(baseClass + '__label');
-        label.innerText = currentImg.alt || "";
-        currentImg.parentElement.insertBefore(label, currentImg);
-      }
+      dragHandle.classList.add('fa', 'fa-bars');
+      currentImg.parentElement.insertBefore(dragHandle, currentImg);
+
+      var label = document.createElement('span');
+
+      label.classList.add(baseClass + '__label');
+      label.innerText = currentImg.alt || "";
+      currentImg.parentElement.insertBefore(label, currentImg);
     }
+  }
 
+  function initEditScreenshots() {
     var draggable = dragula([wrapper], {
       mirrorContainer: mainWrapper
     });
@@ -62,6 +68,7 @@
 
       var path = mainWrapper.dataset.updateUrl;
       var payload = {};
+
       payload[mainWrapper.dataset.objectName] = {
         screenshots: order
       };
