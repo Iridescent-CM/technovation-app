@@ -126,9 +126,7 @@ class TeamSubmission < ActiveRecord::Base
 
         not development_platform_text.blank? and
 
-        business_plan_complete_or_not_required?  and
-
-        pitch_presentation_complete_or_not_required?)
+        business_plan_complete_or_not_required?)
     end
   end
 
@@ -265,12 +263,6 @@ class TeamSubmission < ActiveRecord::Base
     junior_division? or
 
     (senior_division? and not business_plan_url_text.blank?)
-  end
-
-  def pitch_presentation_complete_or_not_required?
-    not team.selected_regional_pitch_event.live? or
-
-    (team.selected_regional_pitch_event.live? and pitch_presentation_complete?)
   end
 
   def team_name_and_app_name
