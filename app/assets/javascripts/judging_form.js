@@ -632,10 +632,13 @@
 
     var allSectionsHaveComments = true;
 
-    forEach(sections, function(section) {
-      if (section.querySelector('textarea') && !section.querySelector('textarea').value) {
+    _.each(sections, function(section) {
+      var textarea = section.querySelector('textarea'),
+          trimmedValue = (textarea.value || "").trim(),
+          cannedResponses = textarea.parentElement.dataset.cannedResponses;
+
+      if (trimmedValue === "" || _.includes(cannedResponses, trimmedValue))
         allSectionsHaveComments = false;
-      }
     });
 
     if (!allSectionsHaveComments) {
