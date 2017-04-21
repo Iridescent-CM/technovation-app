@@ -122,5 +122,9 @@ class TechnicalChecklist < ActiveRecord::Base
       # for paper prototype / event flow chart, which are image urls
       @tc.public_send(name)
     end
+
+    def present?
+      !!value
+    end
   end
 end

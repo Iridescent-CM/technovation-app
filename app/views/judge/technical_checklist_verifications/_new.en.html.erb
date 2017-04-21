@@ -4,26 +4,28 @@
   url: judge_team_submission_technical_checklist_verifications_path(submission) do |f| %>
 
   <% submission.technical_checklist.checked_items.each do |item| %>
-    <strong><%= item.label %></strong>
+    <% if item.present? %>
+      <strong><%= item.label %></strong>
 
-    <% if item.explanation %>
-      <%= simple_format item.explanation %>
-    <% else %>
-      <div class="judging-tc-modal__image-wrapper">
-        <figure>
-        <%= image_tag item.display %>
-        <figcaption>
-          Click to expand
-        </figcaption>
-        </figure>
+      <% if item.explanation %>
+        <%= simple_format item.explanation %>
+      <% else %>
+        <div class="judging-tc-modal__image-wrapper">
+          <figure>
+            <%= image_tag item.display %>
+            <figcaption>
+              Click to expand
+            </figcaption>
+          </figure>
+        </div>
+      <% end %>
+
+      <div class="judging-tc-modal__checkbox-wrapper fancy-toggle-wrapper">
+        <%= f.input "#{item.name}_verified",
+          label: "Click to Verify",
+          as: :boolean %>
       </div>
     <% end %>
-
-    <div class="judging-tc-modal__checkbox-wrapper fancy-toggle-wrapper">
-      <%= f.input "#{item.name}_verified",
-        label: "Click to Verify",
-        as: :boolean %>
-    </div>
   <% end %>
 
   <%= f.submit "Save verification", class: "appy-button modalify__close" %>
