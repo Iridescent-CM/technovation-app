@@ -10,7 +10,7 @@
   var activeQuestionIndex = 0;
   var sections = formWrapper.getElementsByClassName('judging-form__section');
   var activeSection = sections[activeSectionIndex];
-  var questionSelector = '.input, .question-technical-checklist';
+  var questionSelector = '.input';
   var questions = activeSection.querySelectorAll(questionSelector);
   var activeQuestion = questions[activeQuestionIndex];
 
@@ -52,28 +52,6 @@
   } else {
     setFormDisplay('minimize');
   }
-
-  var tcForm = document.querySelector('#judging-technical-checklist form');
-  // If any of the technical checklist toggles are toggled on, we can assume
-  // that the TC has been looked at
-  var hasVerifiedTechnicalChecklist = (function() {
-    var checkboxes = tcForm.querySelectorAll('[type="checkbox"]');
-    var hasVerified = false;
-
-    while (hasVerified === false) {
-      var checkboxCount = checkboxes.length;
-
-      for (var i = 0; i < checkboxCount; i++) {
-        if (checkboxes[i].checked) {
-          hasVerified = true;
-        }
-      }
-      break;
-    }
-    return hasVerified;
-  })();
-
-  handleTechnicalChecklist();
 
   /**
    * Basic DOM structure and initial set up
@@ -246,7 +224,7 @@
     e.stopPropagation();
     saveProgress();
 
-    var isLastSection = Array.prototype.indexOf.call(sections, activeSection) === (sections.length - 1);
+    var isLastSection = Array.prototype.indexOf.call(sections, activeSection) === sections.length - 1;
     var isEndOfSection = questions.length === (activeQuestionIndex + 1);
 
     if (isLastSection && isEndOfSection) {
@@ -295,8 +273,7 @@
     if (saveAllPending) {
       saveAllPendingCount++;
 
-      // We compare against sections.length - 1 to account for the Technical Checklist
-      if (saveAllPendingCount === (sections.length - 1)) {
+      if (saveAllPendingCount === sections.length) {
         if (showToast)
           createFlashNotification('success', 'Saved successfully!', 2000);
 
@@ -317,8 +294,8 @@
 
     backButton.disabled = isFirst;
 
-    var isLast = activeSectionIndex === (sections.length - 1) &&
-      activeQuestionIndex === (questions.length - 1);
+    var isLast = activeSectionIndex === sections.length &&
+                   activeQuestionIndex === questions.length;
 
     nextButton.disabled = isLast;
 
@@ -343,14 +320,6 @@
           }
         };
       }
-    }
-
-    var technicalChecklist = questions[activeQuestionIndex].classList
-                               .contains('question-technical-checklist');
-    if (technicalChecklist && !hasVerifiedTechnicalChecklist) {
-      nextButton.disabled = true;
-    } else if (technicalChecklist && hasVerifiedTechnicalChecklist) {
-      nextButton.disabled = false;
     }
   }
 
@@ -505,113 +474,6 @@
     formWrapper.querySelector('.title-bar-text').innerText = "Enter scores here";
   }
 
-  /**
-   * Technical checklist step
-   */
-
-  function handleTechnicalChecklist() {
-    // Make Checkboxes Fancy Again
-    var checkboxes = document.getElementsByClassName('judging-tc-modal__checkbox-wrapper');
-    var labelSpanClass = 'judging-tc-modal__label-text';
-
-    for (var i = 0; i < checkboxes.length; i++) {
-      var fancyToggle = document.createElement('span');
-      fancyToggle.classList.add('fancy-toggle');
-
-      var checkbox = checkboxes[i].querySelector('[type="checkbox"]');
-      var label = checkbox.parentElement;
-      var labelText = checkbox.parentElement.innerText;
-      var labelSpan = document.createElement('span');
-
-      labelSpan.innerText = labelText;
-      labelSpan.classList.add(labelSpanClass);
-      label.lastChild.remove();
-      label.appendChild(fancyToggle);
-      label.appendChild(labelSpan);
-    }
-
-    // If user is on touch device, change copy on the technical checklist label toggles
-    function handleDetectTouch() {
-      var labelSpans = document.getElementsByClassName(labelSpanClass);
-
-      for (var i = 0; i < labelSpans.length; i++) {
-        labelSpans[i].innerText = 'Tap to Verify';
-      }
-
-      var figCaptions = document.querySelectorAll('.judging-tc-modal__image-wrapper figcaption');
-
-      for (var i = 0; i < figCaptions.length; i++) {
-        figCaptions[i].innerText = 'Tap to expand';
-      }
-
-      window.removeEventListener('touchstart', handleDetectTouch);
-    };
-    window.addEventListener('touchstart', handleDetectTouch);
-
-    // Paper prototype/flow chart image expand
-    setTimeout(function() {
-      var imageFigures = document.querySelectorAll('.judging-tc-modal__image-wrapper figure');
-
-      for (var i = 0; i < imageFigures.length; i++) {
-        var figure = imageFigures[i];
-        figure.addEventListener('click', maximizeImage);
-      }
-    }, 0);
-
-    function maximizeImage(e) {
-      var figure = e.currentTarget;
-
-      var positionerWrapper = document.createElement('div');
-      positionerWrapper.classList.add('judging-tc-fullscreen-image');
-
-      var contentWrapper = document.createElement('div');
-      contentWrapper.classList.add('judging-tc-fullscreen-image__content');
-
-      var closeButtonWrapper = document.createElement('div');
-      closeButtonWrapper.classList.add('judging-tc-fullscreen-image__close-button-wrapper');
-
-      var closeButton = document.createElement('span');
-      closeButton.classList.add('fa', 'fa-times');
-      closeButtonWrapper.appendChild(closeButton);
-
-      var pseudoImageElement = document.createElement('div');
-      pseudoImageElement.classList.add('judging-tc-fullscreen-image__pseudo-img');
-      pseudoImageElement.style.backgroundImage = 'url("' + figure.firstElementChild.src + '")';
-
-      contentWrapper.appendChild(closeButtonWrapper);
-      contentWrapper.appendChild(pseudoImageElement);
-
-      positionerWrapper.appendChild(contentWrapper);
-      document.body.appendChild(positionerWrapper);
-
-      closeButton.addEventListener('click', function() {
-        positionerWrapper.remove();
-      });
-    }
-
-    setTimeout(function() {
-      var tcSubmitButton = document.querySelector('#judging-technical-checklist [type="submit"]');
-      tcSubmitButton.addEventListener('click', submitTechnicalChecklist);
-    }, 0);
-    // AJAX submit Technical Checklist
-    function submitTechnicalChecklist(e) {
-      e.preventDefault();
-      var form = $(e.target).closest('form')[0];
-
-      $.ajax({
-        method: 'POST',
-        url: form.action,
-        data: $(form).serialize(),
-        success: function(data) {
-          hasVerifiedTechnicalChecklist = true;
-          setShouldButtonsBeDisabled();
-        },
-        error: function(err) {
-          console.error(err);
-        }
-      });
-    }
-  }
 
   /**
    * Review submission form
@@ -630,13 +492,6 @@
   }
 
   function verifySubmission() {
-    if (!hasVerifiedTechnicalChecklist) {
-      return {
-        isValid: false,
-        error: 'Please review the Technical Checklist before continuing'
-      };
-    }
-
     var allSectionsHaveComments = true;
 
     _.each(sections, function(section) {
@@ -707,23 +562,8 @@
           sectionWrapper.appendChild(label);
           sectionWrapper.appendChild(value);
         }
-      } else {
-        // Technical Checklist
-        var label = document.createElement('p');
-        var value = document.createElement('p');
-
-        label.classList.add('verify-submission__label');
-        value.classList.add('verify-submission__value');
-
-        var checkedCount = tcForm.querySelectorAll('input[type="checkbox"]:checked').length;
-        var totalCount = tcForm.querySelectorAll('input[type="checkbox"]').length;
-
-        label.innerText = 'Number of technical checklist items verified:';
-        value.innerText = checkedCount + ' out of ' + totalCount;
-
-        sectionWrapper.appendChild(label);
-        sectionWrapper.appendChild(value);
       }
+
       sectionsToRender.appendChild(sectionWrapper);
     }
 
