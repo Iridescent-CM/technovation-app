@@ -2,7 +2,7 @@
   <h1>Ideation</h1>
 
   <%= f.input :sdg_alignment,
-    label: LabelForStatedGoal.(submission_score.team_submission_stated_goal),
+    label: "The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal: #{submission_score.team_submission_stated_goal}",
     collection: JudgingRubricScores.new,
     label_method: :name,
     value_method: :value,
@@ -35,8 +35,7 @@
     } %>
 
   <p>
-    The team clearly demonstrates how their app idea aligns with their selected Technovation theme of the UN Sustainable Development Goal:
-    <strong><%= submission_score.team_submission_stated_goal %></strong>
+    <%= LabelForStatedGoal.(submission_score.team_submission_stated_goal) %>
   </p>
 
   <p>
