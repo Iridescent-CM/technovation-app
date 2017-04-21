@@ -1,5 +1,6 @@
 //= require jquery2
 //= require jquery_ujs
+//= require jquery-ui/effect.all
 //= require lodash
 //= require chosen-jquery
 //= require country_state_select
