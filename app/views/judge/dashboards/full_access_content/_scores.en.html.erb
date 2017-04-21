@@ -71,6 +71,11 @@
             <p>
               <strong>Score so far:</strong>
               <%= score.total %> / <%= score.total_possible %>
+              <small style="display:block;">
+                (<%= score.team_submission_team_name %> earned
+                <%= score.total_technical_checklist %>
+                extra points through their technical checklist)
+              </small>
             </p>
 
             <p>
@@ -194,6 +199,11 @@
             <p>
               <strong>Score:</strong>
               <%= score.total %> / <%= score.total_possible %>
+              <small style="display:block;">
+                (<%= score.team_submission_team_name %> earned
+                <%= score.total_technical_checklist %>
+                extra points through their technical checklist)
+              </small>
             </p>
 
             <p>

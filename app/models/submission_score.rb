@@ -89,6 +89,10 @@ class SubmissionScore < ActiveRecord::Base
     end
   end
 
+  def total_technical_checklist
+    total_technical_checklist_verified
+  end
+
   def entrepreneurship_total
     business_plan_short_term +
       business_plan_long_term +
