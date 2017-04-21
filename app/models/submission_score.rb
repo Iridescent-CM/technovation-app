@@ -178,8 +178,7 @@ class SubmissionScore < ActiveRecord::Base
       if sum == options[:points_max]
         sum
       elsif team_submission.technical_checklist.send(aspect) and
-          not team_submission.technical_checklist.send("#{aspect}_explanation").blank? and
-            self["#{aspect}_verified"]
+          not team_submission.technical_checklist.send("#{aspect}_explanation").blank?
         sum += options[:points_each]
       else
         sum
