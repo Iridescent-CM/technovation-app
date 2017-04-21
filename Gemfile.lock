@@ -365,6 +365,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paranoia (2.3.0)
+      activerecord (>= 4.0, < 5.1)
     pg (0.20.0)
     premailer (1.10.3)
       addressable
@@ -551,6 +553,7 @@ DEPENDENCIES
   nokogiri (~> 1.7)
   oink (~> 0.10)
   paperclip (~> 5.1)
+  paranoia (~> 2.3)
   pg (~> 0.20)
   premailer-rails (~> 1.9)
   pry-nav (~> 0.2)

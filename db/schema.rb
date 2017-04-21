@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420210612) do
+ActiveRecord::Schema.define(version: 20170421141723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -422,6 +422,7 @@ ActiveRecord::Schema.define(version: 20170420210612) do
     t.boolean  "used_clock_verified"
     t.boolean  "used_canvas_verified"
     t.string   "event_type"
+    t.datetime "deleted_at"
     t.index ["completed_at"], name: "index_submission_scores_on_completed_at", using: :btree
     t.index ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id", using: :btree
     t.index ["team_submission_id"], name: "index_submission_scores_on_team_submission_id", using: :btree

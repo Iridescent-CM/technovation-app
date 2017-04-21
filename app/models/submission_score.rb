@@ -1,4 +1,6 @@
 class SubmissionScore < ActiveRecord::Base
+  acts_as_paranoid
+
   before_destroy -> {
     if incomplete?
       team_submission.clear_judge_opened_details!
@@ -11,7 +13,7 @@ class SubmissionScore < ActiveRecord::Base
   scope :complete, -> { where("completed_at IS NOT NULL") }
   scope :incomplete, -> { where("completed_at IS NULL") }
 
-  validates :team_submission_id, uniqueness: { scope: :judge_profile_id }
+  validates :team_submission_id, presence: true, uniqueness: { scope: :judge_profile_id }
 
   delegate :app_name,
            :team_photo,
@@ -35,7 +37,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def complete?
     not attributes.reject { |k, _|
-      k == 'completed_at' or
+      k.match(/_at$/) or
         k == 'event_type' or
           k.match(/_verified$/)
     }.values.any?(&:blank?)

@@ -5,6 +5,8 @@ gem 'rails', '~> 5.0'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
+gem "paranoia", '~> 2.3'
+
 gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
 gem 'lodash-rails', "~> 4.17"

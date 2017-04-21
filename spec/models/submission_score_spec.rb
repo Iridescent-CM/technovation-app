@@ -1,6 +1,17 @@
 require "rails_helper"
 
 RSpec.describe SubmissionScore do
+  it "acts as paranoid" do
+    team = FactoryGirl.create(:team)
+    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    score = SubmissionScore.create!(team_submission: team_submission)
+
+    score.destroy
+
+    expect(SubmissionScore.all).to be_empty
+    expect(score).to be_deleted
+  end
+
   it "cannot be duplicated for the same submission and judge" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
     team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
