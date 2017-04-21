@@ -75,7 +75,7 @@
 
             <p>
               <%= link_to "Resume scoring #{score.name}",
-                edit_judge_submission_score_path(score) %>
+                edit_judge_submission_score_path(score, anchor: :window) %>
             </p>
           </div>
         <% end %>
@@ -96,7 +96,8 @@
                   <p>
                     <%= link_to "Resume scoring this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id)
+                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        anchor: :window
                       ) %>
                   </p>
                 <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
@@ -104,7 +105,7 @@
                     <%= link_to "Review & edit your score for this submission",
                       edit_judge_submission_score_path(
                         current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
-                        review: true
+                        anchor: :review
                       ) %>
                   </p>
                 <% else %>
@@ -138,7 +139,8 @@
                   <p>
                     <%= link_to "Resume scoring this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id)
+                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        anchor: :window
                       ) %>
                   </p>
                 <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
@@ -146,7 +148,7 @@
                     <%= link_to "Review & edit your score for this submission",
                       edit_judge_submission_score_path(
                         current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
-                        review: true
+                        anchor: :review
                       ) %>
                   </p>
                 <% else %>
@@ -176,7 +178,8 @@
               <%= link_to(
                 "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
                 edit_judge_submission_score_path(
-                  current_judge.submission_scores.incomplete.last.id
+                  current_judge.submission_scores.incomplete.last.id,
+                  anchor: :window
                 )) %>
             </p>
           <% end %>
@@ -195,7 +198,7 @@
 
             <p>
               <%= link_to "Review & Edit this score",
-                edit_judge_submission_score_path(score, review: true) %>
+                edit_judge_submission_score_path(score, anchor: :review) %>
             </p>
           </div>
         <% end %>

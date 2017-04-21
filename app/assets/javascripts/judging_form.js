@@ -47,8 +47,10 @@
 
   initRangeSliders();
 
-  if (_.includes(window.location.search, "review")) {
+  if (_.includes(window.location.hash, "review")) {
     setFormDisplay('maximize');
+  } else if (_.includes(window.location.hash, "window")) {
+    setFormDisplay('window');
   } else {
     setFormDisplay('minimize');
   }
@@ -413,21 +415,26 @@
     });
 
     document.querySelector('.judging-form__display-controls .' + type).classList.add('active');
+    formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
 
     if (type === 'maximize') {
-      if (formWrapper.classList.contains(maximizeClass)) {
+      if (formWrapper.classList.contains(maximizeClass))
         return;
-      }
+
+      window.location.hash = "review";
       formWrapper.addEventListener('transitionend', maximizeForm);
     } else if (type === 'window') {
-      if (!formWrapper.classList.contains(maximizeClass) && !formWrapper.classList.contains(minimizeClass)) {
+      if (!formWrapper.classList.contains(maximizeClass) &&
+            !formWrapper.classList.contains(minimizeClass))
         return;
-      }
+
+      window.location.hash = "window";
       formWrapper.addEventListener('transitionend', windowForm);
     } else if (type === 'minimize') {
-      if (formWrapper.classList.contains(minimizeClass)) {
+      if (formWrapper.classList.contains(minimizeClass))
         return;
-      }
+
+      window.location.hash = "minimize";
       formWrapper.addEventListener('transitionend', minimizeForm);
     }
 
@@ -437,8 +444,6 @@
   function maximizeForm() {
     formWrapper.classList.remove(minimizeClass);
     formWrapper.classList.add(maximizeClass);
-    formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
-
     document.body.style.overflow = 'hidden';
 
     formWrapper.classList.remove('judging-form--transition');
@@ -454,7 +459,6 @@
   function windowForm() {
     formWrapper.classList.remove(maximizeClass);
     formWrapper.classList.remove(minimizeClass);
-    formWrapper.querySelector("[data-show-on='minimize']").style.display = "none";
     document.body.style.overflow = 'auto';
 
     formWrapper.classList.remove('judging-form--transition');
