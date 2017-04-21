@@ -15,7 +15,7 @@ module Mentor
         current_team.team_submissions.build(team_submission_params)
 
       if @team_submission.save
-        redirect_to mentor_team_submission_path(@team_submission, team_id: params[:team_id]),
+        redirect_to mentor_team_submission_path(@team_submission, team_id: current_team.id),
           success: t("controllers.team_submissions.create.success")
       else
         render 'student/team_submissions/new'
@@ -75,7 +75,7 @@ module Mentor
             demo_embed: @team_submission.embed_code(:demo_video_link),
           }
         else
-          redirect_to mentor_team_submission_path(@team_submission, team_id: params[:team_id]),
+          redirect_to mentor_team_submission_path(@team_submission, team_id: current_team.id),
             success: t("controllers.team_submissions.update.success")
         end
       else

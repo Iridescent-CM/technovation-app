@@ -6,7 +6,7 @@
     object_name: "team_submission",
     update_url: send("#{current_account.type_name}_team_submission_path",
                      submission,
-                     team_id: params[:team_id])
+                     team_id: current_team.id),
   } do %>
 
   <div class="card__heading submission-step__code">
