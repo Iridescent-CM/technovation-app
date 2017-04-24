@@ -21,7 +21,7 @@ FactoryGirl.define do
         end
 
         2.times {
-          screenshot = Screenshot.create!()
+          screenshot = Screenshot.create!
           screenshot.update_column(:image, "/img/screenshot.png")
           sub.screenshots << screenshot
         }

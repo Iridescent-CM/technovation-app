@@ -108,6 +108,6 @@ RSpec.describe TeamSubmission do
     team = FactoryGirl.create(:team)
     team.update_column(:team_photo, "/foo/bar/img.png")
     sub = FactoryGirl.create(:submission, :complete, team: team)
-    expect(sub.complete?).to be true
+    expect(sub.reload.complete?).to be true
   end
 end
