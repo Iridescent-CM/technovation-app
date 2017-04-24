@@ -1,20 +1,21 @@
 <h1 class="appy-title">Detailed Scores for <%= @team.name %></h1>
 
-<dl>
-  <dt>Division:</dt>
-  <dd><%= @team.division_name %></dd>
+<p style="padding: 0; margin: 0 0 1rem;">
+  <strong>Division:</strong> <%= @team.division_name %> |
+  <strong>App:</strong> <%= @team_submission.app_name || "No name" %> |
+  <strong>Average score:</strong> <%= @team_submission.average_score %>
+</p>
 
-  <dt>App:</dt>
-  <dd><%= @team_submission.app_name || "No name" %></dd>
-
-  <dt>Average score:</dt>
-  <dd><%= @team_submission.average_score %></dd>
-</dl>
+<p style="padding: 0; margin: 0 0 1rem;">
+  <%= link_to 'back',
+    regional_ambassador_scores_path(
+      anchor: "ra-event-#{@event.id}-#{@team.division_name}"
+    ) %>
+</p>
 
 <% if @scores.empty? %>
   <p>
-    No scores are available for this submission.
-    <%= link_to 'back', regional_ambassador_scores_path %>
+    No completed scores are available for this submission.
   </p>
 <% else %>
   <div id="ra-scores-detail" class="flex-row tabs tabs-vertical">

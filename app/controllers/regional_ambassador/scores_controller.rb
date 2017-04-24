@@ -29,7 +29,10 @@ module RegionalAmbassador
 
       @team = @team_submission.team
 
+      @event = @team.selected_regional_pitch_event
+
       @scores = @team_submission.submission_scores
+        .complete
         .includes(judge_profile: :account)
         .references(:accounts)
         .order("accounts.first_name")

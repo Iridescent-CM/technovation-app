@@ -81,8 +81,8 @@ class TeamSubmission < ActiveRecord::Base
     prefix: true
 
   def average_score
-    if submission_scores.reload.any?
-      (submission_scores.inject(0.0) { |result, score|
+    if submission_scores.complete.any?
+      (submission_scores.complete.inject(0.0) { |result, score|
         result + score.total
         } / submission_scores.complete.size).round(2)
     else
