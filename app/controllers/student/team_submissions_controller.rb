@@ -25,6 +25,11 @@ module Student
 
     def show
       @team_submission = current_team.team_submissions.last
+
+      if @team_submission.blank?
+        redirect_to new_student_team_submission_path and return
+      end
+
       @team_submission.build_business_plan unless @team_submission.business_plan
       @team_submission.build_pitch_presentation unless @team_submission.pitch_presentation
 
