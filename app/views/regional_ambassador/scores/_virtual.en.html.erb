@@ -1,0 +1,24 @@
+<% if teams.any? %>
+  <table class="ra-participants-list">
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>Submission</th>
+        <th>Average Score</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% teams.each do |team| %>
+        <tr>
+          <td><%= team.name %></td>
+          <td><%= team.submission.app_name %></td>
+          <td><%= team.submission.average_score %></td>
+          <td><%= link_to 'View details',
+            regional_ambassador_score_path(team.submission) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

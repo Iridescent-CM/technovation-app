@@ -121,6 +121,7 @@ class Team < ActiveRecord::Base
   belongs_to :division
 
   has_many :team_submissions, dependent: :destroy
+  has_many :submission_scores, through: :team_submissions
 
   has_many :memberships, as: :joinable, dependent: :destroy
 

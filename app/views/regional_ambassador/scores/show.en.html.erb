@@ -1,0 +1,44 @@
+<h1 class="appy-title">Detailed Scores for <%= @team.name %></h1>
+
+<dl>
+  <dt>Division:</dt>
+  <dd><%= @team.division_name %></dd>
+
+  <dt>App:</dt>
+  <dd><%= @team_submission.app_name || "No name" %></dd>
+
+  <dt>Average score:</dt>
+  <dd><%= @team_submission.average_score %></dd>
+</dl>
+
+<% if @scores.empty? %>
+  <p>
+    No scores are available for this submission.
+    <%= link_to 'back', regional_ambassador_scores_path %>
+  </p>
+<% else %>
+  <div class="flex-row">
+    <div class="flex-col-md-3 tabs tabs-vertical">
+      <ul class="tab-menu">
+        <% @judges.each do |judge| %>
+          <li class="tab-link">
+            <button
+              role="button"
+              class="tab-button"
+              data-tab-id="ra-scores-judge-<%= judge.id %>">
+              <%= judge.full_name %>
+            </button>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="content flex-col-md-9">
+        <% @judges.each do |judge| %>
+          <div class="tab-content" id="ra-scores-judge-<%= judge.id %>">
+            Detailed score by <%= judge.full_name %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

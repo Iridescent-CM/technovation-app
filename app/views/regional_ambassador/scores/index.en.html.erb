@@ -1,0 +1,76 @@
+<h1 class="appy-title">
+  Regional Scores
+</h1>
+
+<div id="ra-scores-index" class="tabs">
+  <ul class="tab-menu">
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="ra-event-virtual">
+        Virtual Judging
+      </button>
+    </li>
+
+    <% @events.each do |event| %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="ra-event-<%= event.id %>">
+          <%= event.name %>
+        </button>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="content">
+    <div class="flex-row tab-content" id="ra-event-virtual">
+      <div id="ra-event-virtual-divisions"
+           class="flex-col-md-2 card__body tabs tabs-vertical">
+        <ul class="tab-menu" style="background-color: white;">
+          <% if @virtual_senior_teams.any? %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="ra-event-virtual-senior">
+                Senior Division
+              </button>
+            </li>
+          <% end %>
+
+          <% if @virtual_junior_teams.any? %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="ra-event-virtual-junior">
+                Junior Division
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="flex-col-md-10 content">
+        <div class="tab-content" id="ra-event-virtual-senior">
+          <%= render 'regional_ambassador/scores/virtual', teams: @virtual_senior_teams %>
+        </div>
+
+        <div class="tab-content" id="ra-event-virtual-junior">
+          <%= render 'regional_ambassador/scores/virtual', teams: @virtual_junior_teams %>
+        </div>
+      </div>
+    </div>
+
+    <% @events.each do |event| %>
+      <div class="tab-content" id="ra-event-<%= event.id %>">
+        <div class="card__body">
+          <%= event.name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

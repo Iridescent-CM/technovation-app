@@ -198,6 +198,10 @@ class StudentProfile < ActiveRecord::Base
       def app_name
         "not started"
       end
+
+      def average_score
+        0
+      end
     end
   end
 

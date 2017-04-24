@@ -80,6 +80,16 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
+  def average_score
+    if submission_scores.reload.any?
+      submission_scores.inject(0.0) { |result, score|
+        result + score.total
+      } / submission_scores_count
+    else
+      0
+    end
+  end
+
   def app_name
     if (self[:app_name] || "").strip.blank?
       nil
