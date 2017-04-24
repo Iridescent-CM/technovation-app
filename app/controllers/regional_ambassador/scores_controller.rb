@@ -27,9 +27,7 @@ module RegionalAmbassador
 
       @team = @team_submission.team
 
-      @scores = @team_submission.submission_scores
-
-      @judges = @scores.flat_map(&:judge_profile).sort_by(&:first_name)
+      @scores = @team_submission.submission_scores.order("judge_profile.first_name")
     end
   end
 end
