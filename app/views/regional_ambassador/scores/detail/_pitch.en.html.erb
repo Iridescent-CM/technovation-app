@@ -1,0 +1,34 @@
+<h3>Pitch - <%= score.pitch_total %></h3>
+
+<dl>
+  <dt>
+    The team clearly communicates the problem they are addressing.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(score.problem_clearly_communicated) %>
+  </dd>
+
+  <dt>
+    The team presents a compelling argument to support the solution they are proposing.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(score.compelling_argument) %>
+  </dd>
+
+  <dt>
+    The team’s passion and energy for solving the problem is evident in their pitch delivery.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(score.passion_energy) %>
+  </dd>
+
+  <dt>
+    The pitch is specific and to the point.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(score.pitch_specific) %>
+  </dd>
+
+  <dt>Comment:</dt>
+  <dd><%= simple_format score.pitch_comment %></dd>
+</dl>

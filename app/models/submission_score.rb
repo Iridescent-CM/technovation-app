@@ -127,6 +127,14 @@ class SubmissionScore < ActiveRecord::Base
     end
   end
 
+  def status
+    if !!completed_at
+      'complete'
+    else
+      'pending'
+    end
+  end
+
   private
   def total_verified
     total_coding_verified +

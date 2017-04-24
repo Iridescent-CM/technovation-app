@@ -9,6 +9,12 @@ class JudgingRubricScores
     @options.each(&block)
   end
 
+  module Explain
+    def self.call(score_value)
+      Option.new(score_value).name
+    end
+  end
+
   private
   class Option < Struct.new(:value)
     def name

@@ -26,6 +26,7 @@
             class="tab-button"
             data-tab-id="ra-scores-score-<%= score.id %>">
             <%= score.judge_profile.full_name %> -
+            <%= score.status %> -
             <%= score.total %>
           </button>
         </li>
@@ -35,7 +36,33 @@
     <div class="content flex-col-md-9">
       <% @scores.each do |score| %>
         <div class="tab-content" id="ra-scores-score-<%= score.id %>">
-          Detailed score by <%= score.judge_profile.full_name %> -- <%= score.total %>
+          <%= render 'regional_ambassador/scores/detail_summary',
+            score: score,
+            team: @team %>
+
+          <h3>Breakdown</h3>
+
+          <div class="score-section" id="score-section-ideation">
+            <%= render 'regional_ambassador/scores/detail/ideation', score: score %>
+          </div>
+
+          <div class="score-section" id="score-section-technical">
+            <%= render 'regional_ambassador/scores/detail/technical', score: score %>
+          </div>
+
+          <% if @team.division.senior? %>
+            <div class="score-section" id="score-section-entrepreneurship">
+              <%= render 'regional_ambassador/scores/detail/entrepreneurship', score: score %>
+            </div>
+          <% end %>
+
+          <div class="score-section" id="score-section-pitch">
+            <%= render 'regional_ambassador/scores/detail/pitch', score: score %>
+          </div>
+
+          <div class="score-section" id="score-section-overall">
+            <%= render 'regional_ambassador/scores/detail/overall', score: score %>
+          </div>
         </div>
       <% end %>
     </div>
