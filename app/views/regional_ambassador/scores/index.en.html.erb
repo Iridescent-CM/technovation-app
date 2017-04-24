@@ -26,49 +26,42 @@
   </ul>
 
   <div class="content">
-    <div class="flex-row tab-content" id="ra-event-virtual">
-      <div id="ra-event-virtual-divisions"
-           class="flex-col-md-2 card__body tabs tabs-vertical">
-        <ul class="tab-menu" style="background-color: white;">
-          <% if @virtual_senior_teams.any? %>
-            <li class="tab-link">
-              <button
-                role="button"
-                class="tab-button"
-                data-tab-id="ra-event-virtual-senior">
-                Senior Division
-              </button>
-            </li>
-          <% end %>
-
-          <% if @virtual_junior_teams.any? %>
-            <li class="tab-link">
-              <button
-                role="button"
-                class="tab-button"
-                data-tab-id="ra-event-virtual-junior">
-                Junior Division
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="flex-row tab-content" id="ra-event-virtual" style="background: white;">
+      <%= render 'regional_ambassador/scores/divisions', event: @virtual_event %>
 
       <div class="flex-col-md-10 content">
         <div class="tab-content" id="ra-event-virtual-senior">
-          <%= render 'regional_ambassador/scores/virtual', teams: @virtual_senior_teams %>
+          <%= render 'regional_ambassador/scores/list',
+            event: @virtual_event,
+            division: :senior,
+            teams: @virtual_senior_teams %>
         </div>
 
         <div class="tab-content" id="ra-event-virtual-junior">
-          <%= render 'regional_ambassador/scores/virtual', teams: @virtual_junior_teams %>
+          <%= render 'regional_ambassador/scores/list',
+            event: @virtual_event,
+            division: :junior,
+            teams: @virtual_junior_teams %>
         </div>
       </div>
     </div>
 
     <% @events.each do |event| %>
-      <div class="tab-content" id="ra-event-<%= event.id %>">
-        <div class="card__body">
-          <%= event.name %>
+      <div class="flex-row tab-content" id="ra-event-<%= event.id %>" style="background: white;">
+        <%= render 'regional_ambassador/scores/divisions', event: event %>
+
+        <div class="flex-col-md-10 content">
+          <div class="tab-content" id="ra-event-<%= event.id %>-senior">
+            <%= render 'regional_ambassador/scores/list',
+              division: :senior,
+              event: event %>
+          </div>
+
+          <div class="tab-content" id="ra-event-<%= event.id %>-junior">
+            <%= render 'regional_ambassador/scores/list',
+              division: :junior,
+              event: event %>
+          </div>
         </div>
       </div>
     <% end %>

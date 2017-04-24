@@ -1,3 +1,5 @@
+<% teams ||= event.teams.public_send(division) %>
+
 <% if teams.any? %>
   <table class="ra-participants-list">
     <thead>
@@ -21,4 +23,9 @@
       <% end %>
     </tbody>
   </table>
+<% else %>
+  <p>
+    No teams were found for the <strong><%= division %></strong> division of the event: <strong><%= event.name %></strong>.<br />
+    It's possible that the <%= division %> division is not enabled for this event.
+  </p>
 <% end %>

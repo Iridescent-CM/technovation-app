@@ -103,4 +103,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   def live?
     true
   end
+
+  def virtual?
+    false
+  end
 end

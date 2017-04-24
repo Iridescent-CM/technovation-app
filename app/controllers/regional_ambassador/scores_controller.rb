@@ -4,6 +4,8 @@ module RegionalAmbassador
       @events = RegionalPitchEvent.in_region_of(current_ambassador)
         .includes(:teams, :divisions, :judges)
 
+      @virtual_event = Team::VirtualRegionalPitchEvent.new
+
       @virtual_senior_teams = Team.for_ambassador(current_ambassador)
         .not_attending_live_event
         .includes(team_submissions: :submission_scores)
