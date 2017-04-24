@@ -221,7 +221,7 @@ class TeamSubmission < ActiveRecord::Base
       %{<iframe
           width="100%"
           height="315"
-          src="https://www.youtube.com/embed/#{id}"
+          src="https://www.youtube.com/embed/#{id}&rel=0"
           frameborder="0"
           allowfullscreen>
         </iframe>}.strip_heredoc
