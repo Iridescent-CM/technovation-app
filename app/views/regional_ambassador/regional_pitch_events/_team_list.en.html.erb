@@ -55,32 +55,30 @@
               <td class="primary-col">
                 <%= link_to team.name, [user.type_name, team] %>
                 <% if ambassador %>
-                  <% if team.unassigned? %>
+                  <small class="team-list-action">
+                    <%= link_to fa_icon('gavel', text: 'Assign to a judge'),
+                      new_regional_ambassador_judge_assignment_path(
+                        team_id: team.id,
+                        referring_anchor: anchor
+                      ) %>
+                  </small>
+
+                  <% team.judge_assignments.each do |assignment| %>
                     <small class="team-list-action">
-                      <%= link_to fa_icon('gavel', text: 'Assign to a judge'),
-                        new_regional_ambassador_judge_assignment_path(
-                          team_id: team.id,
+                      <%= link_to fa_icon(
+                          'times',
+                          text: "Unassign from judge: #{assignment.judge_profile.full_name}"
+                        ),
+                        regional_ambassador_judge_assignment_path(
+                          assignment,
+                          http_referer: request.fullpath,
                           referring_anchor: anchor
-                        ) %>
+                        ),
+                        data: {
+                          method: :delete,
+                          confirm: "You are REMOVING #{team.name} from Judge: #{assignment.judge_profile.full_name}",
+                        } %>
                     </small>
-                  <% else %>
-                    <% team.judge_assignments.each do |assignment| %>
-                      <small class="team-list-action">
-                        <%= link_to fa_icon(
-                            'times',
-                            text: "Unassign from judge: #{assignment.judge_profile.full_name}"
-                          ),
-                          regional_ambassador_judge_assignment_path(
-                            assignment,
-                            http_referer: request.fullpath,
-                            referring_anchor: anchor
-                          ),
-                          data: {
-                            method: :delete,
-                            confirm: "You are REMOVING #{team.name} from Judge: #{assignment.judge_profile.full_name}",
-                          } %>
-                      </small>
-                    <% end %>
                   <% end %>
                 <% end %>
               </td>
