@@ -64,21 +64,23 @@
                         ) %>
                     </small>
                   <% else %>
-                    <small class="team-list-action">
-                      <%= link_to fa_icon(
-                          'times',
-                          text: "Unassign from judge: #{team.assigned_judge_name}"
-                        ),
-                        regional_ambassador_judge_assignment_path(
-                          team.judge_assignment,
-                          http_referer: request.fullpath,
-                          referring_anchor: anchor
-                        ),
-                        data: {
-                          method: :delete,
-                          confirm: "You are REMOVING #{team.name} from Judge: #{team.assigned_judge_name}",
-                        } %>
-                    </small>
+                    <% team.judge_assignments.each do |assignment| %>
+                      <small class="team-list-action">
+                        <%= link_to fa_icon(
+                            'times',
+                            text: "Unassign from judge: #{assignment.judge_profile.full_name}"
+                          ),
+                          regional_ambassador_judge_assignment_path(
+                            assignment,
+                            http_referer: request.fullpath,
+                            referring_anchor: anchor
+                          ),
+                          data: {
+                            method: :delete,
+                            confirm: "You are REMOVING #{team.name} from Judge: #{assignment.judge_profile.full_name}",
+                          } %>
+                      </small>
+                    <% end %>
                   <% end %>
                 <% end %>
               </td>

@@ -154,7 +154,8 @@ class Team < ActiveRecord::Base
     submission.touch if submission.present?
   end
 
-  has_one :judge_assignment
+  has_many :judge_assignments
+  has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
   validates :description, presence: true
@@ -338,15 +339,11 @@ class Team < ActiveRecord::Base
   end
 
   def assigned?
-    judge_assignment.present?
+    judge_assignments.any?
   end
 
-  def assigned_judge
-    judge_assignment.judge_profile
-  end
-
-  def assigned_judge_name
-    assigned_judge.full_name
+  def assigned_judge_names
+    assigned_judges.flat_map(&:full_name)
   end
 
   private

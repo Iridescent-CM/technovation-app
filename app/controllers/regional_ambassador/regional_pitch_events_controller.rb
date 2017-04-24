@@ -5,7 +5,11 @@ module RegionalAmbassador
     end
 
     def show
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
+      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
+        .includes(
+          teams: [:division, :team_submissions, { judge_assignments: :judge_profile }],
+          judges: { judge_assignments: :team }
+        ).find(params[:id])
 
       @senior_team_participants = Team.current
         .order("teams.name")

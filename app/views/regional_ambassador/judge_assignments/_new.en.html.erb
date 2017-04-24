@@ -3,13 +3,18 @@
   <%= f.input :team_id, value: team.id, as: :hidden %>
 
   <%= f.input :judge_profile_id,
+    label: "Judges",
     collection: judges,
     prompt: "Select a judge",
-    selected: team.assigned_judge,
+    selected: team.assigned_judges,
     value_method: :id,
     label_method: :full_name,
     input_html: {
+      multiple: true,
       class: "chosen",
+      data: {
+        placeholder: "Choose 3 judges...",
+      },
     } %>
 
   <p class="standalone-buttons">

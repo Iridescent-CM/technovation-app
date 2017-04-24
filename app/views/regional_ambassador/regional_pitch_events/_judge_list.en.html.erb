@@ -54,19 +54,19 @@
                       <span>Show</span>
 
                       <ul class="show-hide-panel">
-                        <% judge.assigned_teams.order("teams.name").each do |team| %>
+                        <% judge.judge_assignments.includes(:team).references(:teams).order("teams.name").each do |assignment| %>
                           <li>
                             <%= link_to "&times;".html_safe,
                               regional_ambassador_judge_assignment_path(
-                                team.judge_assignment,
+                                assignment,
                                 http_referer: request.fullpath,
                                 referring_anchor: "tab-ra-pitch-judges",
                               ),
                               data: {
                                 method: :delete,
-                                confirm: "You are REMOVING #{team.name} from Judge: #{judge.full_name}",
+                                confirm: "You are REMOVING #{assignment.team.name} from Judge: #{judge.full_name}",
                               } %>
-                            <%= team.name %>
+                            <%= assignment.team.name %>
                           </li>
                         <% end %>
                       </ul>

@@ -3,32 +3,27 @@ module RegionalAmbassador
     def new
       @team = Team.for_ambassador(current_ambassador).find(params.fetch(:team_id))
       @judges = @team.selected_regional_pitch_event.judges.order("accounts.first_name")
-      @judge_assignment = @team.build_judge_assignment
+      @judge_assignment = @team.judge_assignments.build
     end
 
     def create
       @team = Team.for_ambassador(current_ambassador).find(assignment_params.fetch(:team_id))
       event = @team.selected_regional_pitch_event
-      @judge = event.judges.find(assignment_params.fetch(:judge_profile_id))
 
-      @judge_assignment = JudgeAssignment.new(team: @team, judge_profile: @judge)
+      assignment_params.fetch(:judge_profile_id).reject(&:blank?).each do |id|
+        @judge = event.judges.find(id)
+        @judge_assignment = JudgeAssignment.new(team: @team, judge_profile: @judge)
+        @judge_assignment.save!
+      end
 
-      if @judge_assignment.save
-        if request.xhr?
-          head 200
-        else
-          redirect_to regional_ambassador_regional_pitch_event_path(
-            event,
-            anchor: params[:referring_anchor]
-          ),
-          success: "You assigned #{@team.name} to judge: #{@team.assigned_judge_name}!"
-        end
+      if request.xhr?
+        head 200
       else
-        if request.xhr?
-          render status: 422, json: @judge_assignment.errors.full_messages
-        else
-          render :new
-        end
+        redirect_to regional_ambassador_regional_pitch_event_path(
+          event,
+          anchor: params[:referring_anchor]
+        ),
+        success: "You assigned #{@team.name} to judges: #{@team.assigned_judge_names.to_sentence}!"
       end
     end
 
@@ -41,7 +36,7 @@ module RegionalAmbassador
 
     private
     def assignment_params
-      params.require(:judge_assignment).permit(:team_id, :judge_profile_id)
+      params.require(:judge_assignment).permit(:team_id, judge_profile_id: [])
     end
   end
 end
