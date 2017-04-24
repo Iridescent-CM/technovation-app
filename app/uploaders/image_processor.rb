@@ -1,8 +1,6 @@
 # encoding: utf-8
 class ImageProcessor < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  include CarrierWave::MimeTypes
-  process :set_content_type
   process :fix_exif_rotation
 
   # Choose what kind of storage to use for this uploader:

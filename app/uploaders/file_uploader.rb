@@ -5,9 +5,6 @@ class FileUploader < CarrierWave::Uploader::Base
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  include CarrierWave::MimeTypes
-  process :set_content_type
-
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
