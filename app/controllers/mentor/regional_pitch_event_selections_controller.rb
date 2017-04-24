@@ -11,7 +11,7 @@ module Mentor
         old_event = team.selected_regional_pitch_event
 
         if event
-          team.regional_pitch_events.destroy_all
+          team.remove_from_live_event
         else
           head 404 and return
         end

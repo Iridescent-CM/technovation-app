@@ -28,9 +28,7 @@ namespace :teams do
 
         event_name = t.selected_regional_pitch_event_name
 
-        t.team_submissions.flat_map(&:submission_scores).each(&:destroy)
-        t.judge_assignments.destroy_all
-        t.regional_pitch_events.destroy_all
+        t.remove_from_live_event
 
         puts "Removed #{t.name} from #{event_name}"
       end

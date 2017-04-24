@@ -148,11 +148,8 @@ class Team < ActiveRecord::Base
     as: :joinable
 
   has_and_belongs_to_many :regional_pitch_events, -> { distinct },
-    after_add: :update_submission, after_remove: :update_submission
-
-  def update_submission(o)
-    submission.touch if submission.present?
-  end
+    after_add: :update_submission,
+    after_remove: :update_submission
 
   has_many :judge_assignments
   has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
@@ -163,6 +160,16 @@ class Team < ActiveRecord::Base
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
+
+  def remove_from_live_event
+    team_submissions.flat_map(&:submission_scores).each(&:destroy)
+    judge_assignments.destroy_all
+    regional_pitch_events.destroy_all
+  end
+
+  def update_submission(team)
+    submission.touch if submission.present?
+  end
 
   def eligible_events
     if submission.present?

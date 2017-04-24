@@ -59,6 +59,12 @@ class JudgeProfile < ActiveRecord::Base
     end
   end
 
+  def remove_from_live_event
+    submission_scores.destroy_all
+    judge_assignments.destroy_all
+    regional_pitch_events.destroy_all
+  end
+
   def assigned_team_names
     assigned_teams.pluck(:name)
   end

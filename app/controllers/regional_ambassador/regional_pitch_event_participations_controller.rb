@@ -48,7 +48,7 @@ module RegionalAmbassador
       event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
       record = params.fetch(:participant_type).constantize.find(params.fetch(:participant_id))
 
-      record.regional_pitch_events.destroy_all
+      record.remove_from_live_event
 
       if record.is_a?(Team)
         SendPitchEventRSVPNotifications.perform_later(

@@ -1,4 +1,13 @@
 class RegionalPitchEvent < ActiveRecord::Base
+  after_validation -> {
+    teams.includes(:regional_pitch_events,
+                   team_submissions: :submission_scores).find_each do |team|
+      if not division_ids.include?(team.division.id)
+        team.remove_from_live_event
+      end
+    end
+  }
+
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 

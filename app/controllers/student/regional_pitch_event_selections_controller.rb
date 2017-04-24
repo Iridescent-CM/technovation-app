@@ -20,7 +20,7 @@ module Student
     def do_destroy
       old_event = current_team.selected_regional_pitch_event
 
-      current_team.regional_pitch_events.destroy_all
+      current_team.remove_from_live_event
 
       SendPitchEventRSVPNotifications.perform_later(
         current_team.id,
@@ -34,7 +34,7 @@ module Student
     def do_create(params)
       old_event = current_team.selected_regional_pitch_event
 
-      current_team.regional_pitch_events.destroy_all
+      current_team.remove_from_live_event
 
       event = RegionalPitchEvent.find(params.fetch(:event_id))
       current_team.regional_pitch_events << event
