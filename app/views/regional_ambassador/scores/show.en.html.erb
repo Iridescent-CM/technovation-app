@@ -17,28 +17,26 @@
     <%= link_to 'back', regional_ambassador_scores_path %>
   </p>
 <% else %>
-  <div class="flex-row">
-    <div class="flex-col-md-3 tabs tabs-vertical">
-      <ul class="tab-menu">
-        <% @scores.each do |score| %>
-          <li class="tab-link">
-            <button
-              role="button"
-              class="tab-button"
-              data-tab-id="ra-scores-score-<%= score.id %>">
-              <%= score.judge_profile.full_name %>
-            </button>
-          </li>
-        <% end %>
-      </ul>
+  <div id="ra-scores-detail" class="flex-row tabs tabs-vertical">
+    <ul class="flex-col-md-3 tab-menu">
+      <% @scores.each do |score| %>
+        <li class="tab-link">
+          <button
+            role="button"
+            class="tab-button"
+            data-tab-id="ra-scores-score-<%= score.id %>">
+            <%= score.judge_profile.full_name %> -
+            <%= score.total %>
+          </button>
+        </li>
+      <% end %>
+    </ul>
 
-      <div class="content">
-        <% @scores.each do |score| %>
-          <div class="flex-col-md-9 tab-content" id="ra-scores-score-<%= score.id %>">
-            Detailed score by <%= score.judge_profile.full_name %> -- <%= score.total %>
-          </div>
-        <% end %>
-      </div>
+    <div class="content flex-col-md-9">
+      <% @scores.each do |score| %>
+        <div class="tab-content" id="ra-scores-score-<%= score.id %>">
+          Detailed score by <%= score.judge_profile.full_name %> -- <%= score.total %>
+        </div>
+      <% end %>
     </div>
-  </div>
 <% end %>

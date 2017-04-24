@@ -22,12 +22,15 @@ module RegionalAmbassador
     def show
       @team_submission = TeamSubmission.includes(
         team: :division,
-        submission_scores: :judge_profile
+        submission_scores: { judge_profile: :account }
       ).friendly.find(params[:id])
 
       @team = @team_submission.team
 
-      @scores = @team_submission.submission_scores.order("judge_profile.first_name")
+      @scores = @team_submission.submission_scores
+        .includes(judge_profile: :account)
+        .references(:accounts)
+        .order("accounts.first_name")
     end
   end
 end
