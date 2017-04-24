@@ -60,6 +60,18 @@
   <% end %>
 </p>
 
+<p>
+  <strong>Pitch presentation</strong>
+  <% if @team_submission.team.selected_regional_pitch_event.live? %>
+    Not attending a live event: no pitch presentation required
+  <% end %>
+
+  <% if @team_submission.pitch_presentation %>
+    <%= link_to @team_submission.pitch_presentation_url_text,
+      @team_submission.pitch_presentation_url %>
+  <% end %>
+</p>
+
 <% if @team_submission.technical_checklist_started? %>
   <table class="admin-table__team-submissions-checklist">
     <caption>Technical checklist</caption>
