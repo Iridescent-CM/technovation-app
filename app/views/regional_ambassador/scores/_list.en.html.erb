@@ -14,7 +14,7 @@
     </thead>
 
     <tbody>
-      <% teams.each do |team| %>
+      <% teams.order('teams.name').each do |team| %>
         <tr>
           <td><%= team.name %></td>
           <td><%= team.submission.app_name %></td>
