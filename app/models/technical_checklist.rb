@@ -16,6 +16,9 @@ class TechnicalChecklist < ActiveRecord::Base
     end
   }
 
+  validates :paper_prototype, :event_flow_chart,
+    verify_cached_file: true
+
   def completed?
     total_technical_components >= 4 and
       total_database_components >= 1 and
