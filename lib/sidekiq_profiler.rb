@@ -1,5 +1,6 @@
 require "objspace"
 require "tempfile"
+require "fileutils"
 
 class HeapDumpUploader < CarrierWave::Uploader::Base
   storage :fog
@@ -47,6 +48,10 @@ module Sidekiq
                     uploader = HeapDumpUploader.new
                     uploader.store!(f)
                     Sidekiq.logger.info "heap uploaded to #{uploader.url}"
+                  else
+                    path = File.join('.', 'tmp', File.basename(f.path))
+                    FileUtils.mv(f.path, path)
+                    Sidekiq.logger.info "heap moved to #{path}"
                   end
                 ensure
                   f.close
