@@ -8,12 +8,14 @@ module RegionalAmbassador
         .not_attending_live_event
         .includes(team_submissions: :submission_scores)
         .senior
+        .where("team_submissions.id IS NOT NULL")
         .order(:name)
 
       @virtual_junior_teams = Team.for_ambassador(current_ambassador)
         .not_attending_live_event
         .includes(team_submissions: :submission_scores)
         .junior
+        .where("team_submissions.id IS NOT NULL")
         .order(:name)
     end
 
