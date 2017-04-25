@@ -223,4 +223,37 @@ RSpec.describe SubmissionScore do
     expect(team_submission.judge_opened_at).to be_blank
     expect(team_submission.judge_opened_id).to be_blank
   end
+
+  it "udpates team submission average on save when complete" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    sub = SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+      sdg_alignment: 5,
+    )
+    expect(team_submission.reload.average_score).to be_zero
+
+    sub.complete!
+    expect(team_submission.reload.average_score).to eq(15)
+    # 10 pts from complete checklist
+
+    sub.update_attributes(sdg_alignment: 4)
+    expect(team_submission.reload.average_score).to eq(14)
+    # 10 pts from complete checklist
+
+    judge_profile2 = FactoryGirl.create(:judge_profile)
+
+    sub2 = SubmissionScore.create!(
+      judge_profile_id: judge_profile2.id,
+      team_submission_id: team_submission.id,
+      sdg_alignment: 2,
+    )
+
+    sub2.complete!
+    expect(team_submission.reload.average_score).to eq(13)
+    # 10 pts from complete checklist
+  end
 end

@@ -80,13 +80,15 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
-  def average_score
+  def update_average_score
     if submission_scores.complete.any?
-      (submission_scores.complete.inject(0.0) { |result, score|
-        result + score.total
-        } / submission_scores.complete.size).round(2)
+      average = (submission_scores.complete.inject(0.0) { |result, score|
+                  result + score.total
+                } / submission_scores.complete.size).round(2)
+
+      update_column(:average_score, average)
     else
-      0
+      update_column(:average_score, 0)
     end
   end
 

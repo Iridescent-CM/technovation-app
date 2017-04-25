@@ -21,4 +21,12 @@ namespace :scores do
       score.save!
     end
   end
+
+  desc "Update all averages for completed scores"
+  task set_average_of_completed: :environment do
+    SubmissionScore.complete.inlcudes(:team_submission).find_each do |score|
+      score.team_submission.update_average_score
+      puts "Updated #{score.team_submission_app_name} avg to #{score.team_submission.reload.average_score}"
+    end
+  end
 end

@@ -7,6 +7,12 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
+  after_commit ->(sub) {
+    if !!sub.completed_at
+      sub.team_submission.update_average_score
+    end
+  }
+
   belongs_to :team_submission, counter_cache: true
   belongs_to :judge_profile
 
@@ -48,9 +54,8 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def complete!
-    self.completed_at = Time.current
+    update_attributes(completed_at: Time.current)
     team_submission.clear_judge_opened_details!
-    save!
   end
 
   def team_submission_stated_goal
