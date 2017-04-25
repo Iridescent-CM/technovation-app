@@ -26,9 +26,11 @@
             role="button"
             class="tab-button"
             data-tab-id="ra-scores-score-<%= score.id %>">
-            <%= score.judge_profile.full_name %> -
-            <%= score.status %> -
-            <%= score.total %>
+            <%= score.judge_profile.full_name %><br />
+            <small style="color: #999; font-style: italic;">
+              <%= score.event_type %> event -
+              Scored <%= score.total %> / <%= score.total_possible %>
+            </small>
           </button>
         </li>
       <% end %>
