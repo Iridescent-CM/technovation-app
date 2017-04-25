@@ -2,6 +2,16 @@
   Regional Scores
 </h1>
 
+<label>
+  Sort all results by:
+  <%= select_tag :sort,
+    options_for_select([["Team name", "LOWER(teams.name) asc"],
+                        ["Average score ascending", "team_submissions.average_score asc"],
+                        ["Average score descending", "team_submissions.average_score desc"]],
+                       params.fetch(:sort) { "LOWER(teams.name) asc" }),
+    data: { reload: true } %>
+</label>
+
 <div id="ra-scores-index" class="tabs">
   <ul class="tab-menu">
     <li class="tab-link">

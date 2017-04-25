@@ -5,7 +5,7 @@ window.Admin = {
 
       params.set(name, value);
 
-      location.href = window.location.pathname + "?" + params.toString();
+      location.href = window.location.pathname + "?" + params.toString() + location.hash;
     },
   },
 };
