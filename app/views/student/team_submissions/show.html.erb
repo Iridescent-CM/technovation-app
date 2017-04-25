@@ -2,6 +2,15 @@
   <%= t("views.team_submissions.show.title", team_name: @team_submission.team.name) %>
 </h1>
 
+<p>
+  <center>
+    <strong>
+      Track your progress from
+      <%= link_to "your dashboard!", [current_account.type_name, :dashboard] %>
+    </strong>
+  </center>
+</p>
+
 <div data-team-submissions class="team-submissions">
   <div class="team-submissions__row-left submissions-col">
     <div class="team-submissions__fixed-col">
