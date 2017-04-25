@@ -12,24 +12,24 @@ module RegionalAmbassador
         ).find(params[:id])
 
       @senior_team_participants = Team.current
-        .order("LOWER(teams.name)")
         .senior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .distinct
+        .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
 
       @junior_team_participants = Team.current
-        .order("LOWER(teams.name)")
         .junior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .distinct
+        .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
 
       @judge_participants = JudgeProfile.current
-        .order("LOWER(accounts.first_name)")
         .full_access
         .for_ambassador(current_ambassador)
         .not_attending_live_event
+        .sort { |j1, j2| j1.first_name.downcase <=> j2.first_name.downcase }
     end
 
     def new

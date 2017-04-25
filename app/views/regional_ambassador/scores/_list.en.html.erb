@@ -14,7 +14,16 @@
     </thead>
 
     <tbody>
-      <% teams.order(params.fetch(:sort) { "LOWER(teams.name) asc" }).each do |team| %>
+      <% teams.sort { |t1, t2|
+        case params.fetch(:sort) { "team_name" }
+        when "team_name"
+          t1.name.downcase <=> t2.name.downcase
+        when "avg_score_asc"
+          t1.submission.average_score <=> t2.submission.average_score
+        when "avg_score_desc"
+          t2.submission.average_score <=> t1.submission.average_score
+        end
+      }.each do |team| %>
         <tr>
           <td><%= team.name %></td>
           <td><%= team.submission.app_name %></td>

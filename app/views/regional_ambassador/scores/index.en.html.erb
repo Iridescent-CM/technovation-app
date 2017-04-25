@@ -5,10 +5,10 @@
 <label>
   Sort all results by:
   <%= select_tag :sort,
-    options_for_select([["Team name", "LOWER(teams.name) asc"],
-                        ["Average score ascending", "team_submissions.average_score asc"],
-                        ["Average score descending", "team_submissions.average_score desc"]],
-                       params.fetch(:sort) { "LOWER(teams.name) asc" }),
+    options_for_select([["Team name", "team_name"],
+                        ["Average score ascending", "avg_score_asc"],
+                        ["Average score descending", "avg_score_desc"]],
+                       params.fetch(:sort) { "team_name" }),
     data: { reload: true } %>
 </label>
 

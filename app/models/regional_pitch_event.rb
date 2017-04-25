@@ -21,16 +21,11 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :divisions
 
-  has_and_belongs_to_many :teams, -> {
-    distinct
-      .joins(:team_submissions)
-      .select("teams.*, team_submissions.*, LOWER(teams.name)")
-  }
-
   has_and_belongs_to_many :judges,
     -> { includes(:account).references(:accounts).distinct },
     class_name: "JudgeProfile"
 
+  has_and_belongs_to_many :teams, -> { distinct.joins(:team_submissions) }
   has_many :team_submissions, through: :teams
 
   has_many :messages, as: :regarding
