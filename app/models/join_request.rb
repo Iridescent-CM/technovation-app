@@ -56,12 +56,12 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def status
-    if approved?
+    if deleted?
+      "Removed from team"
+    elsif approved?
       "Accepted"
     elsif declined?
       "Declined"
-    elsif deleted?
-      "Removed from team"
     else
       "Pending review"
     end
