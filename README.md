@@ -34,7 +34,7 @@ brew install redis
 
 Set your Ruby version with your favorite ruby version management tool **(RVM, rbenv, chruby, etc)** to:
 
-`Use Ruby Version: 2.3.1`
+`Use Ruby Version: 2.4.1`
 
 Request sensitive keys from your teammates for the `.env` file.
 
