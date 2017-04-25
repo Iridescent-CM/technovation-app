@@ -62,7 +62,8 @@
             <li class="<%= subprog(submission, "pitch-presentation") %>">
               <%= fa_icon('circle-o') %>
               <%= fa_icon('check-circle') %>
-              <span>Pitch presentation</span>
+              <span>Pitch presentation</span><br />
+              <small>presentation upload is due in time for your event</small>
             </li>
           </ul>
         <% end %>
@@ -78,12 +79,6 @@
         <span>At least 2 screenshots</span>
       </li>
 
-      <li class="<%= subprog(submission, "technical-checklist") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
-        <span>Technical checklist</span>
-      </li>
-
       <li class="<%= subprog(submission, "source-code") %>">
         <%= fa_icon('check-circle') %>
         <%= fa_icon('circle-o') %>
@@ -94,6 +89,16 @@
         <%= fa_icon('check-circle') %>
         <%= fa_icon('circle-o') %>
         <span>Development platform</span>
+      </li>
+
+      <li class="<%= subprog(submission, "technical-checklist") %>">
+        <%= fa_icon('check-circle') %>
+        <%= fa_icon('circle-o') %>
+        <span>Technical checklist</span><br />
+        <small>
+          The checklist does not have to be complete,
+          but is not editable after the deadline.
+        </small>
       </li>
     </ul>
   </div>
