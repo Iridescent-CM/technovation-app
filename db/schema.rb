@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421141723) do
+ActiveRecord::Schema.define(version: 20170425143550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -464,6 +464,8 @@ ActiveRecord::Schema.define(version: 20170421141723) do
     t.integer  "submission_scores_count"
     t.integer  "judge_opened_id"
     t.datetime "judge_opened_at"
+    t.integer  "average_score"
+    t.index ["average_score"], name: "index_team_submissions_on_average_score", using: :btree
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at", using: :btree
     t.index ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
     t.index ["submission_scores_count"], name: "index_team_submissions_on_submission_scores_count", using: :btree
@@ -537,7 +539,6 @@ ActiveRecord::Schema.define(version: 20170421141723) do
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
-  add_foreign_key "exports", "accounts"
   add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "judge_assignments", "judge_profiles"
