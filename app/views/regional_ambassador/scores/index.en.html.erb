@@ -5,10 +5,10 @@
 <label>
   Sort all results by:
   <%= select_tag :sort,
-    options_for_select([["Team name", "team_name"],
-                        ["Average score ascending", "avg_score_asc"],
-                        ["Average score descending", "avg_score_desc"]],
-                       params.fetch(:sort) { "team_name" }),
+    options_for_select([["Highest average score", "avg_score_desc"],
+                        ["Lowest average score", "avg_score_asc"],
+                        ["Team name", "team_name"]],
+                       params.fetch(:sort) { "avg_score_desc" }),
     data: { reload: true } %>
 </label>
 
@@ -65,7 +65,8 @@
             <div class="tab-content" id="ra-event-<%= event.id %>-senior">
               <%= render 'regional_ambassador/scores/list',
                 division: :senior,
-                event: event %>
+                event: event,
+                teams: event.teams.senior %>
             </div>
           <% end %>
 
@@ -73,7 +74,8 @@
             <div class="tab-content" id="ra-event-<%= event.id %>-junior">
               <%= render 'regional_ambassador/scores/list',
                 division: :junior,
-                event: event %>
+                event: event,
+                teams: event.teams.junior %>
             </div>
           <% end %>
         </div>

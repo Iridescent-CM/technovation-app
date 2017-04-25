@@ -1,5 +1,3 @@
-<% teams ||= event.teams.public_send(division) %>
-
 <% if teams.any? %>
   <table class="ra-participants-list">
     <thead>
@@ -15,13 +13,13 @@
 
     <tbody>
       <% teams.sort { |t1, t2|
-        case params.fetch(:sort) { "team_name" }
-        when "team_name"
-          t1.name.downcase <=> t2.name.downcase
-        when "avg_score_asc"
-          t1.submission.average_score <=> t2.submission.average_score
+        case params.fetch(:sort) { "avg_score_desc" }
         when "avg_score_desc"
           t2.submission.average_score <=> t1.submission.average_score
+        when "avg_score_asc"
+          t1.submission.average_score <=> t2.submission.average_score
+        when "team_name"
+          t1.name.downcase <=> t2.name.downcase
         end
       }.each do |team| %>
         <tr>
