@@ -234,7 +234,6 @@ RSpec.describe SubmissionScore do
       team_submission_id: team_submission.id,
       sdg_alignment: 5,
     )
-    expect(team_submission.reload.average_score).to be_zero
 
     sub.complete!
     expect(team_submission.reload.average_score).to eq(15)
@@ -255,5 +254,18 @@ RSpec.describe SubmissionScore do
     sub2.complete!
     expect(team_submission.reload.average_score).to eq(13)
     # 10 pts from complete checklist
+  end
+
+  it "does not update a team submission average score if it is not complete" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+      sdg_alignment: 5,
+    )
+    expect(team_submission.reload.average_score).to be_zero
   end
 end
