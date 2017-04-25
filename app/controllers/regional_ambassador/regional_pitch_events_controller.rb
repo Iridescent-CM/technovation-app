@@ -6,27 +6,27 @@ module RegionalAmbassador
 
     def show
       @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
-        .includes(
+        .eager_load(
           teams: [:division, :team_submissions, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
         ).find(params[:id])
 
       @senior_team_participants = Team.current
-        .order("teams.name")
+        .order("LOWER(teams.name)")
         .senior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .distinct
 
       @junior_team_participants = Team.current
-        .order("teams.name")
+        .order("LOWER(teams.name)")
         .junior
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .distinct
 
       @judge_participants = JudgeProfile.current
-        .order("accounts.first_name")
+        .order("LOWER(accounts.first_name)")
         .full_access
         .for_ambassador(current_ambassador)
         .not_attending_live_event
