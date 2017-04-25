@@ -110,4 +110,44 @@ RSpec.describe TeamSubmission do
     sub = FactoryGirl.create(:submission, :complete, team: team)
     expect(sub.reload.complete?).to be true
   end
+
+  it "only averages scores that count" do
+    team = FactoryGirl.create(:team)
+    sub = FactoryGirl.create(:submission, :complete, team: team)
+
+    live_judge = FactoryGirl.create(:judge_profile)
+    virtual_judge = FactoryGirl.create(:judge_profile)
+
+
+    rpe = RegionalPitchEvent.create!({
+      name: "RPE",
+      starts_at: Date.today,
+      ends_at: Date.today + 1.day,
+      division_ids: Division.senior.id,
+      city: "City",
+      venue_address: "123 Street St.",
+      unofficial: true,
+    })
+
+    team.regional_pitch_events << rpe
+    team.save
+
+    live_judge.regional_pitch_events << rpe
+    live_judge.save
+
+    live_judge.submission_scores.create!({
+      team_submission: sub,
+      sdg_alignment: 5,
+      completed_at: Time.current
+    })
+
+    virtual_judge.submission_scores.create!({
+      team_submission: sub,
+      sdg_alignment: 2,
+      completed_at: Time.current
+    })
+
+    # 10 points for completed technical checklist
+    expect(sub.reload.average_score).to eq(12)
+  end
 end

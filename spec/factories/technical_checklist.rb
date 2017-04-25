@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :technical_checklist do
-    
     team_submission nil
 
     trait :completed do
@@ -18,11 +17,19 @@ FactoryGirl.define do
       used_camera true
       used_camera_explanation "yep"
 
-      after(:create) do |o|
-        o.update_column(:paper_prototype, "prototype.png")
-        o.update_column(:event_flow_chart, "chart.png")
-      end
-    end
+      paper_prototype {
+        Rack::Test::UploadedFile.new(
+          File.join(Rails.root, 'spec', 'support', 'imgs', 'natasha-avatar.jpg'),
+          'image/jpg'
+        )
+      }
 
+      event_flow_chart {
+        Rack::Test::UploadedFile.new(
+          File.join(Rails.root, 'spec', 'support', 'imgs', 'natasha-avatar.jpg'),
+          'image/jpg'
+        )
+      }
+    end
   end
 end

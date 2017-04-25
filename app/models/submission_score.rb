@@ -23,6 +23,9 @@ class SubmissionScore < ActiveRecord::Base
   scope :complete, -> { where("completed_at IS NOT NULL") }
   scope :incomplete, -> { where("completed_at IS NULL") }
 
+  scope :live, -> { where(event_type: :live) }
+  scope :virtual, -> { where(event_type: :virtual) }
+
   validates :team_submission_id, presence: true, uniqueness: { scope: :judge_profile_id }
   validates :judge_profile_id, presence: true, uniqueness: { scope: :team_submission_id }
 
