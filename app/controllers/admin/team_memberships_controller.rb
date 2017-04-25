@@ -24,8 +24,15 @@ module Admin
         team.add_student(account.student_profile)
       end
 
-      redirect_to admin_profile_path(account),
-        success: "You have added #{account.full_name} to this team"
+      msg = if team.members.include?(account.mentor_profile || account.student_profile)
+              { success: "You have added #{account.full_name} to this team" }
+            elsif account.student_profile
+              { alert: team.errors[:add_student][0] }
+            else
+              { alert: "An error occurred." }
+            end
+
+      redirect_to admin_profile_path(account), msg
     end
 
   end

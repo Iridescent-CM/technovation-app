@@ -283,6 +283,10 @@ class Team < ActiveRecord::Base
       students << student
       reconsider_division
       save
+    elsif students.include?(student)
+      errors.add(:add_student, "Student is already on this team")
+    elsif not spot_available?
+      errors.add(:add_student, "No spot available to add this student")
     end
   end
 
