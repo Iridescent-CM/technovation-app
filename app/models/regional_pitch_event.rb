@@ -8,6 +8,12 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   }
 
+  after_update -> {
+    if unofficial_changed?
+      team_submissions.find_each(&:update_average_score)
+    end
+  }
+
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
