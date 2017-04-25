@@ -392,16 +392,12 @@
         handleClass: 'rangeslider__handle',
 
         onInit: function() {
-          // Write value to drag hhandle
           this.$handle[0].innerHTML = this.value;
-          // Make tooltip
+
           var tooltip = document.createElement('div');
           tooltip.classList.add('rangeslider__tooltip');
-          this.$range[0].parentElement.appendChild(tooltip);
 
-          tooltip.addEventListener('click', function(e) {
-            $(e.target).hide('fade');
-          });
+          this.$range[0].parentElement.appendChild(tooltip);
 
           this.$handle[0].addEventListener('click', function(e) {
             $(this.tooltip).toggle('fade');
@@ -419,6 +415,15 @@
             var currentDescription = descriptions.dataset['description-' + value];
 
             this.tooltip.innerHTML = currentDescription;
+
+            var tooltipClose = document.createElement('span');
+            tooltipClose.classList.add('tooltip-close', 'fa', 'fa-times');
+
+            tooltipClose.addEventListener('click', function(e) {
+              $(e.target.parentElement).hide('fade');
+            });
+
+            this.tooltip.appendChild(tooltipClose);
             this.tooltip.style.left = position + 'px';
 
             $(this.tooltip).show('fade');
@@ -442,6 +447,7 @@
 
   var windowButton = document.getElementById('juding-form-window'),
       windowButtonSecondary = document.getElementById('juding-form-window-reveal');
+
   _.each([windowButton, windowButtonSecondary], function(btn) {
     btn.addEventListener('click', function() {
       setFormDisplay('window');
@@ -449,6 +455,7 @@
   });
 
   var minimizeButton = document.getElementById('juding-form-minimize');
+
   minimizeButton.addEventListener('click', function() {
     setFormDisplay('minimize');
   });

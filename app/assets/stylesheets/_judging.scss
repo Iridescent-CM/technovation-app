@@ -60,7 +60,6 @@
 }
 
 .judging-form--loading {
-
   .judging-form__display-controls {
     display: none;
   }
@@ -167,6 +166,10 @@
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   border: 1px solid white;
+
+  button {
+    border-radius: 0;
+  }
 
   button:not(:last-child) {
     margin-right: 1rem;
@@ -350,6 +353,13 @@ button.judging-form__button--next.unbutton {
   transform: translateX(calc(-50% + 23px)); // Make this less magic
   width: 250px;
   z-index: $z-high;
+
+  span {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+  }
 
   &::before {
     $size: 20px;
@@ -560,7 +570,7 @@ $close-button-wrapper-height: 50px;
   .fa {
     cursor: pointer;
     font-size: 1.75em;
-    padding: 0.25em;  
+    padding: 0.25em;
   }
 }
 
