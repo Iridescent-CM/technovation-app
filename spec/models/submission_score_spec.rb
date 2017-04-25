@@ -3,8 +3,9 @@ require "rails_helper"
 RSpec.describe SubmissionScore do
   it "acts as paranoid" do
     team = FactoryGirl.create(:team)
+    judge = FactoryGirl.create(:judge_profile)
     team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
-    score = SubmissionScore.create!(team_submission: team_submission)
+    score = SubmissionScore.create!(team_submission: team_submission, judge_profile: judge)
 
     score.destroy
 
@@ -267,5 +268,72 @@ RSpec.describe SubmissionScore do
       sdg_alignment: 5,
     )
     expect(team_submission.reload.average_score).to be_zero
+  end
+
+  it "sets the event_type to virtual for virtual judges" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    score = SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+    )
+
+    expect(score.event_type).to eq("virtual")
+  end
+
+  it "sets the event_type to live for RPE judges" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    rpe = RegionalPitchEvent.create!({
+      name: "RPE",
+      starts_at: Date.today,
+      ends_at: Date.today + 1.day,
+      division_ids: Division.senior.id,
+      city: "City",
+      venue_address: "123 Street St.",
+    })
+
+    judge_profile.regional_pitch_events << rpe
+    judge_profile.save!
+
+    score = SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+    )
+
+    expect(score.event_type).to eq("live")
+  end
+
+  it "does not re-set the event type if the judge changes" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    rpe = RegionalPitchEvent.create!({
+      name: "RPE",
+      starts_at: Date.today,
+      ends_at: Date.today + 1.day,
+      division_ids: Division.senior.id,
+      city: "City",
+      venue_address: "123 Street St.",
+    })
+
+    judge_profile.regional_pitch_events << rpe
+    judge_profile.save!
+
+    score = SubmissionScore.create!(
+      judge_profile_id: judge_profile.id,
+      team_submission_id: team_submission.id,
+    )
+
+    expect(score.event_type).to eq("live")
+
+    judge_profile.remove_from_live_event
+
+    expect(score.event_type).to eq("live")
   end
 end

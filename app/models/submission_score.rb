@@ -13,6 +13,10 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
+  before_create -> {
+    self.event_type = judge_profile.selected_regional_pitch_event.live? ? "live" : "virtual"
+  }
+
   belongs_to :team_submission, counter_cache: true
   belongs_to :judge_profile
 
@@ -20,6 +24,7 @@ class SubmissionScore < ActiveRecord::Base
   scope :incomplete, -> { where("completed_at IS NULL") }
 
   validates :team_submission_id, presence: true, uniqueness: { scope: :judge_profile_id }
+  validates :judge_profile_id, presence: true, uniqueness: { scope: :team_submission_id }
 
   delegate :app_name,
            :team_photo,
