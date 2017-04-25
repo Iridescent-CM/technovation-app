@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(version: 20170425143550) do
     t.integer  "submission_scores_count"
     t.integer  "judge_opened_id"
     t.datetime "judge_opened_at"
-    t.decimal  "average_score",              precision: 3, scale: 2, default: "0.0", null: false
+    t.decimal  "average_score",              precision: 5, scale: 2, default: "0.0", null: false
     t.index ["average_score"], name: "index_team_submissions_on_average_score", using: :btree
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at", using: :btree
     t.index ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
