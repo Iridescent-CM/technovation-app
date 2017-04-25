@@ -44,19 +44,20 @@ module Sidekiq
                 begin
                   ObjectSpace.dump_all(output: f)
                   Sidekiq.logger.info "heap saved to #{f.path}"
-                  if ENV["UPLOAD_SIDEKIQ_HEAP_DUMPS"].present?
-                    uploader = HeapDumpUploader.new
-                    uploader.store!(f)
-                    Sidekiq.logger.info "heap uploaded to #{uploader.url}"
-                  else
-                    path = File.join('.', 'tmp', File.basename(f.path))
-                    FileUtils.mv(f.path, path)
-                    Sidekiq.logger.info "heap moved to #{path}"
-                  end
                 ensure
                   f.close
-                  f.unlink
                 end
+
+                if ENV["UPLOAD_SIDEKIQ_HEAP_DUMPS"].present?
+                  uploader = HeapDumpUploader.new
+                  uploader.store!(f)
+                  Sidekiq.logger.info "heap uploaded to #{uploader.url}"
+                else
+                  path = File.join('.', 'tmp', File.basename(f.path))
+                  FileUtils.mv(f.path, path)
+                  Sidekiq.logger.info "heap moved to #{path}"
+                end
+                f.unlink
               end
             end
           end
