@@ -51,17 +51,21 @@
         <%= render 'regional_ambassador/scores/divisions', event: event %>
 
         <div class="flex-col-md-10 content">
-          <div class="tab-content" id="ra-event-<%= event.id %>-senior">
-            <%= render 'regional_ambassador/scores/list',
-              division: :senior,
-              event: event %>
-          </div>
+          <% if event.divisions.include?(Division.senior) %>
+            <div class="tab-content" id="ra-event-<%= event.id %>-senior">
+              <%= render 'regional_ambassador/scores/list',
+                division: :senior,
+                event: event %>
+            </div>
+          <% end %>
 
-          <div class="tab-content" id="ra-event-<%= event.id %>-junior">
-            <%= render 'regional_ambassador/scores/list',
-              division: :junior,
-              event: event %>
-          </div>
+          <% if event.divisions.include?(Division.junior) %>
+            <div class="tab-content" id="ra-event-<%= event.id %>-junior">
+              <%= render 'regional_ambassador/scores/list',
+                division: :junior,
+                event: event %>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
