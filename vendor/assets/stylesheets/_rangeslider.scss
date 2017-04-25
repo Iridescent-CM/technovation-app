@@ -35,7 +35,6 @@
 .rangeslider__fill {
   background: $shamrock-mid;
   position: absolute;
-  transition: width 0.2s;
 }
 .rangeslider--horizontal .rangeslider__fill {
   top: 0;
@@ -63,7 +62,6 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  transition: left 0.2s;
   width: $size;
 }
 
