@@ -1,3 +1,5 @@
+require "will_paginate/array"
+
 module Admin
   class TeamSubmissionsController < AdminController
     def index
@@ -5,8 +7,7 @@ module Admin
       params[:per_page] = 15 if params[:per_page].blank?
 
       @team_submissions = Admin::SearchTeamSubmissions.(params)
-        .page(params[:page].to_i)
-        .per_page(params[:per_page].to_i)
+        .paginate(page: params[:page].to_i, per_page: params[:per_page].to_i)
 
       if @team_submissions.empty?
         @team_submissions = @team_submissions.page(1)
