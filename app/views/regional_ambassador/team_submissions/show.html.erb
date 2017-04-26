@@ -91,6 +91,12 @@
 </p>
 
 <% if @team_submission.technical_checklist_started? %>
+  <p>
+    This team has at least started their technical checklist and will so far earn
+    <strong><%= @team_submission.total_technical_checklist %> points</strong>
+    from it.
+  </p>
+
   <table class="admin-table__team-submissions-checklist">
     <caption>Technical checklist</caption>
     <thead>
