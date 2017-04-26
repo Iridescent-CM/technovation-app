@@ -3,8 +3,13 @@ module Student
     before_action :require_current_team
 
     def edit
-      @technical_checklist = current_team.team_submissions.last.technical_checklist ||
-        current_team.team_submissions.last.create_technical_checklist!
+      if current_team.submission.technical_checklist.present?
+        @technical_checklist = current_team.submission.technical_checklist
+      elsif current_team.submission.present?
+        @technical_checklist = current_team.submission.create_technical_checklist!
+      else
+        redirect_to new_student_team_submission_path
+      end
     end
 
     def update
