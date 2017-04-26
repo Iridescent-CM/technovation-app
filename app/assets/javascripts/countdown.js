@@ -39,9 +39,15 @@
       if (t.seconds === 1)
         secondsTxt = ' second!';
 
-      clock.innerHTML = t.hours + hoursTxt +
-                        t.minutes + minutesTxt +
-                        t.seconds + secondsTxt;
+      html = '';
+
+      if (t.hours > 0)
+        html += t.hours + hoursTxt;
+
+      if (t.minutes > 0)
+        html += t.minutes + minutesTxt;
+
+      clock.innerHTML = html + t.seconds + secondsTxt;
       if(t.total<=0){
         clearInterval(timeinterval);
       }
