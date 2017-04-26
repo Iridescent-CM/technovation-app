@@ -206,13 +206,35 @@ class StudentProfile < ActiveRecord::Base
       def average_score
         0
       end
+
+      def technical_checklist_started?
+        false
+      end
+
+      def technical_checklist
+        NullTechnicalChecklist.new
+      end
+
+      class NullTechnicalChecklist
+        def present?; false; end
+        def started?; false; end
+        def total_points; 0; end
+        def total_technical_components; 0; end
+        def total_database_components; 0; end
+        def total_mobile_components; 0; end
+        def completed_pics_of_process?; false; end
+      end
     end
   end
 
   def validate_valid_parent_email
-    return if parent_guardian_email.blank? || (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE")
+    return if parent_guardian_email.blank? ||
+      (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE")
 
-    if Account.joins(:student_profile).where("lower(email) = ?", parent_guardian_email.downcase).any?
+    if Account.joins(:student_profile).where(
+         "lower(email) = ?",
+         parent_guardian_email.downcase
+       ).any?
       errors.add(:parent_guardian_email, :found_in_student_accounts)
     end
 
@@ -227,7 +249,9 @@ class StudentProfile < ActiveRecord::Base
       ParentMailer.consent_notice(id).deliver_later
     end
 
-    if parent_guardian_name_changed? or parent_guardian_email_changed? and parent_guardian_email.present?
+    if parent_guardian_name_changed? or
+         parent_guardian_email_changed? and
+           parent_guardian_email.present?
       UpdateEmailListJob.perform_later(parent_guardian_email_was,
                                        parent_guardian_email,
                                        parent_guardian_name,

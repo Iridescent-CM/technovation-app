@@ -74,7 +74,13 @@ class TechnicalChecklist < ActiveRecord::Base
     }.map { |a| Item.new(self, a) }
   end
 
-  private
+  def total_points
+    total_technical_components +
+      total_database_components +
+        total_mobile_components +
+          (completed_pics_of_process? ? 3 : 0)
+  end
+
   def total_technical_components
     technical_components.reject { |m| send(m).blank? }.count
   end
@@ -91,6 +97,7 @@ class TechnicalChecklist < ActiveRecord::Base
     paper_prototype and event_flow_chart and team_submission.screenshots.count >= 2
   end
 
+  private
   class Item
     def initialize(tc, attribute)
       @tc = tc

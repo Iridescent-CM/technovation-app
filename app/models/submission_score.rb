@@ -95,7 +95,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def total_technical_checklist_verified
-    if team_submission.technical_checklist
+    if team_submission.technical_checklist.present?
       total_verified
     else
       0
@@ -148,7 +148,6 @@ class SubmissionScore < ActiveRecord::Base
     end
   end
 
-  private
   def total_verified
     total_coding_verified +
       total_db_verified +
@@ -157,39 +156,56 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def total_coding_verified
-    calculate_total_verified(
-      team_submission.technical_checklist.technical_components,
-      points_each: 1,
-      points_max:  4
-    )
-  end
-
-  def total_db_verified
-    calculate_total_verified(
-      team_submission.technical_checklist.database_components,
-      points_each: 1,
-      points_max: 1
-    )
-  end
-
-  def total_mobile_verified
-    calculate_total_verified(
-      team_submission.technical_checklist.mobile_components,
-      points_each: 2,
-      points_max: 2
-    )
-  end
-
-  def total_process_verified
-    if team_submission.technical_checklist.pics_of_process.all? { |a|
-         team_submission.technical_checklist.send(a).present?
-       } and team_submission.screenshots.count >= 2
-      3
+    if team_submission.technical_checklist.present?
+      calculate_total_verified(
+        team_submission.technical_checklist.technical_components,
+        points_each: 1,
+        points_max:  4
+      )
     else
       0
     end
   end
 
+  def total_db_verified
+    if team_submission.technical_checklist.present?
+      calculate_total_verified(
+        team_submission.technical_checklist.database_components,
+        points_each: 1,
+        points_max: 1
+      )
+    else
+      0
+    end
+  end
+
+  def total_mobile_verified
+    if team_submission.technical_checklist.present?
+      calculate_total_verified(
+        team_submission.technical_checklist.mobile_components,
+        points_each: 2,
+        points_max: 2
+      )
+    else
+      0
+    end
+  end
+
+  def total_process_verified
+    if team_submission.technical_checklist.present?
+      if team_submission.technical_checklist.pics_of_process.all? { |a|
+          team_submission.technical_checklist.send(a).present?
+        } and team_submission.screenshots.count >= 2
+        3
+      else
+        0
+      end
+    else
+      0
+    end
+  end
+
+  private
   def calculate_total_verified(components, options)
     components.reduce(0) do |sum, aspect|
       if sum == options[:points_max]

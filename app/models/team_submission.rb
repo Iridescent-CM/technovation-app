@@ -110,6 +110,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def technical_checklist
+    super || StudentProfile::NullTeam::NullTeamSubmission::NullTechnicalChecklist.new
+  end
+
   def app_name
     if (self[:app_name] || "").strip.blank?
       nil
@@ -241,11 +245,12 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def technical_checklist_started?
-    !!technical_checklist and technical_checklist.attributes.values.any? { |v| not v.blank? }
+    technical_checklist.present? and
+      technical_checklist.attributes.values.any? { |v| not v.blank? }
   end
 
   def technical_checklist_completed?
-    !!technical_checklist and technical_checklist.completed?
+    technical_checklist.present? and technical_checklist.completed?
   end
 
   def embed_code(method)
