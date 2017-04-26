@@ -81,12 +81,12 @@
 <p>
   <strong>Pitch presentation</strong>
   <% if @team_submission.team.selected_regional_pitch_event.live? %>
+    <% if @team_submission.pitch_presentation %>
+      <%= link_to @team_submission.pitch_presentation_url_text,
+        @team_submission.pitch_presentation_url %>
+    <% end %>
+  <% else %>
     Not attending a live event: no pitch presentation required
-  <% end %>
-
-  <% if @team_submission.pitch_presentation %>
-    <%= link_to @team_submission.pitch_presentation_url_text,
-      @team_submission.pitch_presentation_url %>
   <% end %>
 </p>
 
