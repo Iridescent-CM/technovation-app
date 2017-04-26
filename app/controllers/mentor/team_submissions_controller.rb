@@ -1,7 +1,6 @@
 module Mentor
   class TeamSubmissionsController < MentorController
-    before_action :require_full_access,
-                  :require_current_team
+    before_action :require_full_access
 
     def new
       params[:step] = :affirm_integrity if params[:step].blank?
@@ -23,12 +22,12 @@ module Mentor
     end
 
     def show
-      @team_submission = current_team.team_submissions.last
+      @team_submission = TeamSubmission.friendly.find(params[:id])
       @team_submission.build_business_plan unless @team_submission.business_plan
       @team_submission.build_pitch_presentation unless @team_submission.pitch_presentation
 
       @team_photo_uploader = ImageUploader.new
-      @team_photo_uploader.success_action_redirect = mentor_team_photo_upload_confirmation_url(team_id: current_team.id,
+      @team_photo_uploader.success_action_redirect = mentor_team_photo_upload_confirmation_url(team_id: @team_submission.team_id,
                                                                                                back: request.fullpath)
 
       @screenshots_uploader = ImageUploader.new
@@ -36,30 +35,30 @@ module Mentor
 
       @business_plan_uploader = FileUploader.new
       @business_plan_uploader.success_action_redirect = mentor_team_submission_file_upload_confirmation_url(
-        team_id: current_team.id,
+        team_id: @team_submission.team_id,
         file_attribute: :business_plan,
-        back: mentor_team_submission_path(@team_submission, team_id: current_team.id)
+        back: mentor_team_submission_path(@team_submission, team_id: @team_submission.team_id)
       )
 
       @pitch_presentation_uploader = FileUploader.new
       @pitch_presentation_uploader.success_action_redirect = mentor_team_submission_file_upload_confirmation_url(
-        team_id: current_team.id,
+        team_id: @team_submission.team_id,
         file_attribute: :pitch_presentation,
-        back: mentor_team_submission_path(@team_submission, team_id: current_team.id)
+        back: mentor_team_submission_path(@team_submission, team_id: @team_submission.team_id)
       )
 
       @source_code_uploader = FileUploader.new
       @source_code_uploader.success_action_redirect = mentor_team_submission_file_upload_confirmation_url(
-        team_id: current_team.id,
+        team_id: @team_submission.team_id,
         file_attribute: :source_code,
-        back: mentor_team_submission_path(@team_submission, team_id: current_team.id)
+        back: mentor_team_submission_path(@team_submission, team_id: @team_submission.team_id)
       )
 
       render 'student/team_submissions/show'
     end
 
     def update
-      @team_submission = current_team.team_submissions.last
+      @team_submission = TeamSubmission.friendly.find(params[:id])
 
       if team_submission_params[:screenshots]
         team_submission_params[:screenshots].each_with_index do |id, index|
@@ -75,7 +74,7 @@ module Mentor
             demo_embed: @team_submission.embed_code(:demo_video_link),
           }
         else
-          redirect_to mentor_team_submission_path(@team_submission, team_id: current_team.id),
+          redirect_to mentor_team_submission_path(@team_submission, team_id: @team_submission.team_id),
             success: t("controllers.team_submissions.update.success")
         end
       else
@@ -90,15 +89,6 @@ module Mentor
       else
         redirect_to mentor_dashboard_path,
           notice: t("controllers.application.full_access_required")
-      end
-    end
-
-    def require_current_team
-      if current_team.present?
-        true
-      else
-        redirect_to mentor_dashboard_path,
-          notice: t("controllers.application.team_required")
       end
     end
 
