@@ -25,11 +25,23 @@
 
     var timeinterval = setInterval(function(){
       var t = getTimeRemaining(endtime);
-          html = '';
 
-      clock.innerHTML = t.hours + ' hours, ' +
-                        t.minutes + ' minutes, ' +
-                        t.seconds + ' seconds!';
+      var hoursTxt = ' hours, ',
+          minutesTxt = ' minutes, ',
+          secondsTxt = ' seconds!';
+
+      if (t.hours === 1)
+        hoursTxt = ' hour, ';
+
+      if (t.minutes === 1)
+        minutesTxt = ' minute, ';
+
+      if (t.seconds === 1)
+        secondsTxt = ' second!';
+
+      clock.innerHTML = t.hours + hoursTxt +
+                        t.minutes + minutesTxt +
+                        t.seconds + secondsTxt;
       if(t.total<=0){
         clearInterval(timeinterval);
       }
