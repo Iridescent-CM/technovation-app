@@ -10,7 +10,7 @@ module RegionalAmbassador
         .paginate(page: params[:page].to_i, per_page: params[:per_page].to_i)
 
       if @team_submissions.empty?
-        @team_submissions = @team_submissions.page(1)
+        @team_submissions = @team_submissions.paginate(page: 1)
       end
     end
 
