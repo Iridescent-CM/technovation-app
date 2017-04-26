@@ -66,7 +66,7 @@ class RegionalExportJob < ActiveJob::Base
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Team_Submissions-Division_#{params[:division]}-SustainableDevGaol_#{params[:sdg]}-HasName_#{params[:has_name]}-TechCheckListStarted_#{params[:technical_checklist]}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
-      csv << %w{Team\ name Division App\ name Description SDG Demo\ video Pitch\ video
+      csv << %w{Team\ name City State/Province Country Division App\ name Description SDG Demo\ video Pitch\ video
       Screenshot\ count Technical\ checklist\ status Source\ code Platform Business\ plan
       Submission\ url Team\ url}
 
@@ -76,9 +76,10 @@ class RegionalExportJob < ActiveJob::Base
           { team: :division }
         ).find(sub_id)
 
-        csv << [sub.team_name, sub.team_division_name, sub.app_name,
-                sub.app_description, sub.stated_goal, sub.demo_video_link,
-                sub.pitch_video_link, sub.screenshots.count,
+        csv << [sub.team_name, sub.team_city, sub.team_state_province, sub.team_country,
+                sub.team_division_name, sub.app_name, sub.app_description,
+                sub.stated_goal, sub.demo_video_link, sub.pitch_video_link,
+                sub.screenshots.count,
                 (sub.technical_checklist_started? ? 'started' : 'not started'),
                 sub.source_code_url_text, sub.development_platform_text,
                 sub.business_plan_url_text,

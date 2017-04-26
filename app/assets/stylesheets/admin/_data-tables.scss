@@ -10,6 +10,11 @@
   label {
     display: block;
   }
+
+  &.flex-col-md-6 {
+    background: none;
+    margin: 0;
+  }
 }
 
 .admin-results-table {

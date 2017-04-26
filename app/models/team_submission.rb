@@ -76,6 +76,9 @@ class TeamSubmission < ActiveRecord::Base
            :division_name,
            :photo,
            :primary_location,
+           :city,
+           :state_province,
+           :country,
            :ages,
     to: :team,
     prefix: true

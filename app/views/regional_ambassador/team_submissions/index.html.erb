@@ -1,51 +1,91 @@
+<h1><%= current_ambassador.region_name %> Team Submissions</h1>
+
+<table class="ra-participants-list">
+  <thead>
+    <tr>
+      <th>Team Name</th>
+      <th>Division</th>
+      <th>City</th>
+      <th>State/Province</th>
+      <th>App Name</th>
+      <th>Description</th>
+      <th>SDG</th>
+      <th>Demo video</th>
+      <th>Pitch video</th>
+      <th>Screenshots</th>
+      <th>Technical checklist</th>
+      <th>Source Code</th>
+      <th>Platform</th>
+      <th>Business plan</th>
+      <th>Pitch presentation</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @team_submissions.order('team_submissions.created_at DESC').each do |submission| %>
+      <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
+
+      <tr>
+        <td><%= submission.team_name %></td>
+        <td><%= submission.team_division_name %></td>
+        <td><%= submission.team_city %></td>
+        <td><%= submission.team_state_province %></td>
+
+        <td>
+          <%= link_to submission.app_name,
+            regional_ambassador_team_submission_path(submission) %>
+        </td>
+
+        <td><%= truncate(submission.app_description) %></td>
+        <td><%= submission.stated_goal %></td>
+
+        <td>
+          <% if submission.demo_video_link %>
+            yes
+          <% else %>
+            no
+          <% end %>
+        </td>
+
+        <td>
+          <% if submission.pitch_video_link %>
+            yes
+          <% else %>
+            no
+          <% end %>
+        </td>
+
+        <td><%= submission.screenshots.count %></td>
+        <td><%= submission.technical_checklist_started? ? 'started' : 'not started!' %></td>
+        <td><%= submission.source_code_url_text ? "yes" : "no" %></td>
+        <td><%= submission.development_platform_text ? "yes" : "no" %></td>
+
+        <td>
+          <% if submission.team_division_name == "senior" %>
+            <%= submission.business_plan_url_text ? "yes" : "no" %>
+          <% else %>
+            Not required
+          <% end %>
+        </td>
+
+        <td>
+          <% if submission.team.selected_regional_pitch_event.live? %>
+            <%= submission.pitch_presentation_url_text ? "yes" : "no" %>
+          <% else %>
+            Not required
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <div class="flex-row">
-  <div class="flex-col-md-4">
-    <div class="admin-search__filter-options">
-      <%= render 'regional_ambassador/team_submissions/filter_options' %>
-    </div>
+  <div class="admin-search__filter-options flex-col-md-6">
+    <%= render 'regional_ambassador/team_submissions/filter_options' %>
   </div>
 
-  <div class="flex-col-md-8 wrapper__report-column">
-    <div class="admin-results-table">
-      <div class="admin-results-header-table">
-        <div class="header">Team Name</div>
-        <div class="header">Division</div>
-        <div class="header">App Name</div>
-        <div class="header">Description</div>
-        <div class="header">SDG</div>
-        <div class="header">Demo video</div>
-        <div class="header">Pitch video</div>
-        <div class="header">Screenshots</div>
-        <div class="header">Technical checklist</div>
-        <div class="header">Source Code</div>
-        <div class="header">Platform</div>
-        <div class="header">Business plan</div>
-      </div>
-
-      <div class="admin-results-data-table">
-        <% @team_submissions.order('team_submissions.created_at DESC').each do |submission| %>
-          <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
-
-          <div class="row">
-            <div class="cell"><%= submission.team_name %></div>
-            <div class="cell"><%= submission.team_division_name %></div>
-            <div class="cell"><%= link_to submission.app_name, regional_ambassador_team_submission_path(submission) %></div>
-            <div class="cell"><%= truncate(submission.app_description) %></div>
-            <div class="cell"><%= submission.stated_goal %></div>
-            <div class="cell"><%= submission.demo_video_link %></div>
-            <div class="cell"><%= submission.pitch_video_link %></div>
-            <div class="cell"><%= submission.screenshots.count %></div>
-            <div class="cell"><%= submission.technical_checklist_started? ? 'started' : 'not started' %></div>
-            <div class="cell"><%= submission.source_code_url_text %></div>
-            <div class="cell"><%= submission.development_platform_text %></div>
-            <div class="cell"><%= submission.business_plan_url_text %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="wrapper__report-footer">
-      <%= render 'regional_ambassador/team_submissions/footer' %>
-    </div>
+  <div class="wrapper__report-footer flex-col-md-6">
+    <%= render 'regional_ambassador/team_submissions/footer' %>
   </div>
 </div>

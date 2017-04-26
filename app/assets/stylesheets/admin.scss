@@ -81,6 +81,7 @@
   > tbody > tr > td {
     font-size: 0.8rem;
     font-style: italic;
+    white-space: nowrap;
 
     &.primary-col {
       font-size: 1rem;
