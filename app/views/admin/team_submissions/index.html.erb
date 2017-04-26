@@ -22,7 +22,7 @@
   </label>
 
   <div class="flex-col-md-6">
-    <%= form_tag admin_exports_path(params.merge(class: "team_submissions")) do %>
+    <%= form_tag admin_exports_path(params.merge(class: "team_submission")) do %>
       <%= button_tag "Email CSV to:", class: "appy-button" %>
       <%= text_field_tag :epxort_email, cookies[:export_email], placeholder: "Email" %>
     <% end %>
