@@ -381,17 +381,19 @@
   }
 
   var tooltips = document.querySelectorAll('.rangeslider__tooltip');
+
   function repositionTooltips() {
     _.each(tooltips, function(tooltip) {
       var handle = tooltip.parentElement.querySelector('.rangeslider__handle');
       tooltip.style.left = handle.style.left;
     });
   }
+
   window.addEventListener('resize', repositionTooltips);
 
   function handleFormDisplayChangeTooltipPosition() {
     formWrapper.removeEventListener('transitionend', handleFormDisplayChangeTooltipPosition);
-    setTimeout(repositionTooltips, 500);
+    setTimeout(repositionTooltips);
   }
 
   function initRangeSliders() {
@@ -521,8 +523,8 @@
 
     titleBarText.innerText = titleBarText.dataset.maximizedTitle;
 
+    $(window).trigger('resize');
     formWrapper.addEventListener('transitionend', handleFormDisplayChangeTooltipPosition);
-
   }
 
   function windowForm() {
@@ -533,7 +535,8 @@
     formWrapper.classList.remove('judging-form--transition');
     formWrapper.removeEventListener('transitionend', windowForm);
     formWrapper.querySelector('.title-bar-text').innerText = "Enter scores here";
-    
+
+    $(window).trigger('resize');
     formWrapper.addEventListener('transitionend', handleFormDisplayChangeTooltipPosition);
   }
 
