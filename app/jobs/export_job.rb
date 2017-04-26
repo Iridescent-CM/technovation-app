@@ -89,6 +89,10 @@ class ExportJob < ActiveJob::Base
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{
         Team\ name
+        City
+        State/Province
+        Country
+        Status
         Division
         App\ name
         Description
@@ -105,7 +109,8 @@ class ExportJob < ActiveJob::Base
       submission_ids.each do |submission_id|
         submission = TeamSubmission.find(submission_id)
 
-        csv << [submission.team_name, submission.team_division_name,
+        csv << [submission.team_name, submission.team_city, submission.team_state_province,
+                submission.team_country, submission.status, submission.team_division_name,
                 submission.app_name, submission.app_description, submission.stated_goal,
                 submission.demo_video_link, submission.pitch_video_link,
                 submission.screenshots.count,

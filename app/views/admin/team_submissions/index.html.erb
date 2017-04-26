@@ -1,51 +1,63 @@
+<h1>Team Submissions</h1>
+
 <div class="flex-row">
-  <div class="flex-col-md-4">
-    <div class="admin-search__filter-options">
-      <%= render 'admin/team_submissions/filter_options' %>
-    </div>
-  </div>
+  <label class="flex-col-md-3">
+    Status:
+    <%= select_tag :status,
+      options_for_select([["All", "all"],
+                          ["Complete", "complete"],
+                          ["Incomplete", "incomplete"]],
+                         params.fetch(:status) { "all" }),
+      data: { reload: true } %>
+  </label>
 
-  <div class="flex-col-md-8 wrapper__report-column">
-    <div class="admin-results-table">
-      <div class="admin-results-header-table">
-        <div class="header">Team Name</div>
-        <div class="header">Division</div>
-        <div class="header">App Name</div>
-        <div class="header">Description</div>
-        <div class="header">SDG</div>
-        <div class="header">Demo video</div>
-        <div class="header">Pitch video</div>
-        <div class="header">Screenshots</div>
-        <div class="header">Technical checklist</div>
-        <div class="header">Source Code</div>
-        <div class="header">Platform</div>
-        <div class="header">Business plan</div>
-      </div>
+  <label class="flex-col-md-3">
+    Division:
+    <%= select_tag :division,
+      options_for_select([['All', 'all'],
+                          ['Senior', 'senior'],
+                          ['Junior', 'junior']],
+                        params.fetch(:division) { "all" }),
+      data: { reload: true } %>
+  </label>
 
-      <div class="admin-results-data-table">
-        <% @team_submissions.order('team_submissions.created_at DESC').each do |submission| %>
-          <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
-
-          <div class="row">
-            <div class="cell"><%= submission.team_name %></div>
-            <div class="cell"><%= submission.team_division_name %></div>
-            <div class="cell"><%= link_to submission.app_name, admin_team_submission_path(submission) %></div>
-            <div class="cell"><%= truncate(submission.app_description) %></div>
-            <div class="cell"><%= submission.stated_goal %></div>
-            <div class="cell"><%= submission.demo_video_link %></div>
-            <div class="cell"><%= submission.pitch_video_link %></div>
-            <div class="cell"><%= submission.screenshots.count %></div>
-            <div class="cell"><%= submission.technical_checklist_started? ? 'started' : 'not started' %></div>
-            <div class="cell"><%= submission.source_code_url_text %></div>
-            <div class="cell"><%= submission.development_platform_text %></div>
-            <div class="cell"><%= submission.business_plan_url_text %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="wrapper__report-footer">
-      <%= render 'admin/team_submissions/footer' %>
-    </div>
+  <div class="flex-col-md-6">
+    <%= form_tag admin_exports_path(params.merge(class: "team_submissions")) do %>
+      <%= button_tag "Email CSV to:", class: "appy-button" %>
+      <%= text_field_tag :epxort_email, cookies[:export_email], placeholder: "Email" %>
+    <% end %>
   </div>
 </div>
+
+<table class="ra-participants-list">
+  <thead>
+    <tr>
+      <th>Team Name</th>
+      <th>Division</th>
+      <th>City</th>
+      <th>State/Province</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @team_submissions.sort { |a, b| a.team_name.downcase <=> b.team_name.downcase }.each do |submission| %>
+      <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
+
+      <tr>
+        <td><%= submission.team_name %></td>
+        <td><%= submission.team_division_name %></td>
+        <td><%= submission.team_city %></td>
+        <td><%= submission.team_state_province %></td>
+        <td><%= submission.status %></td>
+
+        <td>
+          <%= link_to "View details", admin_team_submission_path(submission) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'admin/team_submissions/footer' %>
