@@ -45,8 +45,6 @@
 //= require dashboards
 //= require select-pitch-events
 
-//= require countdown
-
 (function() {
   $(".chosen").chosen({
     placeholder_text_single: "Choose a country",
