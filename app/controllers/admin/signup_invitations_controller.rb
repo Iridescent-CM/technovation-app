@@ -1,6 +1,10 @@
 module Admin
   class SignupInvitationsController < AdminController
     def create
+      if Account.where("LOWER(email) = ?", params[:email].downcase).first
+        redirect_to :back, alert: "#{params[:email]} already has an account! Have them try resetting their password if they can't sign in." and return
+      end
+
       attempt = SignupAttempt.find_by(email: params[:email])
 
       unless attempt
