@@ -19,6 +19,10 @@
 
   function initializeClock(id, endtime){
     var clock = document.getElementById(id);
+
+    if (!clock)
+      return;
+
     var timeinterval = setInterval(function(){
       var t = getTimeRemaining(endtime);
           html = '';
