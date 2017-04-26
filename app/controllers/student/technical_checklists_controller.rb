@@ -1,5 +1,7 @@
 module Student
   class TechnicalChecklistsController < StudentController
+    before_action :require_current_team
+
     def edit
       @technical_checklist = current_team.team_submissions.last.technical_checklist ||
         current_team.team_submissions.last.create_technical_checklist!
