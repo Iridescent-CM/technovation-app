@@ -178,6 +178,10 @@ class StudentProfile < ActiveRecord::Base
       []
     end
 
+    def selected_regional_pitch_event
+      nil
+    end
+
     def current_team_submission
       NullTeamSubmission.new
     end
