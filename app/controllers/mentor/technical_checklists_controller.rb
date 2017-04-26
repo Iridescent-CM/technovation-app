@@ -1,8 +1,13 @@
 module Mentor
   class TechnicalChecklistsController < MentorController
     def edit
-      @technical_checklist = current_team.team_submissions.last.technical_checklist ||
-        current_team.team_submissions.last.create_technical_checklist!
+      if current_team.submission.technical_checklist.present?
+        @technical_checklist = current_team.submission.technical_checklist
+      elsif current_team.submission.present?
+        @technical_checklist = current_team.submission.create_technical_checklist!
+      else
+        redirect_to new_mentor_team_submission_path(team_id: current_team.id) and return
+      end
 
       render 'student/technical_checklists/edit'
     end
