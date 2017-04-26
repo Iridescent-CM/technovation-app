@@ -1,6 +1,24 @@
-<h1>Team Submission by: <%= link_to @team_submission.team_name, [:regional_ambassador, @team_submission.team] %></h1>
-<h2>Name: <%= @team_submission.app_name %></h2>
-<h3>Division: <%= @team_submission.team_division_name %></h3>
+<h1>Team Submission Details</h1>
+
+<dl class="flex-row">
+  <div class="flex-col-md-6">
+    <dt>Team:</dt>
+    <dd><%= link_to @team_submission.team_name, [:regional_ambassador, @team_submission.team] %></dd>
+
+    <dt>Division:</dt>
+    <dd><%= @team_submission.team_division_name %></dd>
+  </div>
+
+  <div class="flex-col-md-6">
+    <dt>App name:</dt>
+    <dd><%= @team_submission.app_name %></dd>
+
+    <dt>Status:</dt>
+    <dd><%= @team_submission.status %></dd>
+  </div>
+</dl>
+
+<p><%= link_to 'See the public/judge version', app_path(@team_submission), target: :_blank %></p>
 
 <div>
   <strong>Description</strong>

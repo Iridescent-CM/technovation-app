@@ -102,6 +102,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def status
+    if complete?
+      'complete'
+    else
+      'incomplete'
+    end
+  end
+
   def app_name
     if (self[:app_name] || "").strip.blank?
       nil
@@ -122,6 +130,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def pitch_presentation_complete?
     pitch_presentation.present? and pitch_presentation.persisted?
+  end
+
+  def incomplete?
+    not complete?
   end
 
   def complete?

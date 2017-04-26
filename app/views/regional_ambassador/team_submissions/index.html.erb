@@ -1,91 +1,70 @@
 <h1><%= current_ambassador.region_name %> Team Submissions</h1>
 
+<div class="flex-row">
+  <label class="flex-col-md-4">
+    Status:
+    <%= select_tag :status,
+      options_for_select([["All", "all"],
+                          ["Complete", "complete"],
+                          ["Incomplete", "incomplete"]],
+                         params.fetch(:status) { "all" }),
+      data: { reload: true } %>
+  </label>
+
+  <label class="flex-col-md-4">
+    Division:
+    <%= select_tag :division,
+      options_for_select([['All', 'all'],
+                          ['Senior', 'senior'],
+                          ['Junior', 'junior']],
+                        params.fetch(:division) { "all" }),
+      data: { reload: true } %>
+  </label>
+
+  <div class="flex-col-md-4">
+    <%= form_tag regional_ambassador_exports_path(params.merge(class: "team_submissions")) do %>
+      <%= button_tag "Email CSV Report", class: "appy-button" %>
+    <% end %>
+  </div>
+</div>
+
 <table class="ra-participants-list">
   <thead>
     <tr>
       <th>Team Name</th>
       <th>Division</th>
       <th>City</th>
-      <th>State/Province</th>
-      <th>App Name</th>
-      <th>Description</th>
-      <th>SDG</th>
-      <th>Demo video</th>
-      <th>Pitch video</th>
-      <th>Screenshots</th>
-      <th>Technical checklist</th>
-      <th>Source Code</th>
-      <th>Platform</th>
-      <th>Business plan</th>
-      <th>Pitch presentation</th>
+      <% unless current_ambassador.country == "US" %>
+        <th>State/Province</th>
+      <% end %>
+      <th>Status</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @team_submissions.order('team_submissions.created_at DESC').each do |submission| %>
+    <% @team_submissions.sort { |a, b| a.team_name.downcase <=> b.team_name.downcase }.each do |submission| %>
       <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
 
       <tr>
         <td><%= submission.team_name %></td>
         <td><%= submission.team_division_name %></td>
         <td><%= submission.team_city %></td>
-        <td><%= submission.team_state_province %></td>
+
+        <% unless current_ambassador.country == "US" %>
+          <td><%= submission.team_state_province %></td>
+        <% end %>
 
         <td>
-          <%= link_to submission.app_name,
-            regional_ambassador_team_submission_path(submission) %>
-        </td>
-
-        <td><%= truncate(submission.app_description) %></td>
-        <td><%= submission.stated_goal %></td>
-
-        <td>
-          <% if submission.demo_video_link %>
-            yes
-          <% else %>
-            no
-          <% end %>
+          <%= submission.status %>
         </td>
 
         <td>
-          <% if submission.pitch_video_link %>
-            yes
-          <% else %>
-            no
-          <% end %>
-        </td>
-
-        <td><%= submission.screenshots.count %></td>
-        <td><%= submission.technical_checklist_started? ? 'started' : 'not started!' %></td>
-        <td><%= submission.source_code_url_text ? "yes" : "no" %></td>
-        <td><%= submission.development_platform_text ? "yes" : "no" %></td>
-
-        <td>
-          <% if submission.team_division_name == "senior" %>
-            <%= submission.business_plan_url_text ? "yes" : "no" %>
-          <% else %>
-            Not required
-          <% end %>
-        </td>
-
-        <td>
-          <% if submission.team.selected_regional_pitch_event.live? %>
-            <%= submission.pitch_presentation_url_text ? "yes" : "no" %>
-          <% else %>
-            Not required
-          <% end %>
+          <%= link_to "View details", regional_ambassador_team_submission_path(submission) %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<div class="flex-row">
-  <div class="admin-search__filter-options flex-col-md-6">
-    <%= render 'regional_ambassador/team_submissions/filter_options' %>
-  </div>
-
-  <div class="wrapper__report-footer flex-col-md-6">
-    <%= render 'regional_ambassador/team_submissions/footer' %>
-  </div>
-</div>
+<%= render 'regional_ambassador/team_submissions/footer' %>

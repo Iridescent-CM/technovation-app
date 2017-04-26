@@ -37,6 +37,13 @@ module RegionalAmbassador
                                         team_submissions.app_name = ?", "")
       end
 
+      case params[:status]
+      when 'complete'
+        submissions = submissions.select(&:complete?)
+      when 'incomplete'
+        submissions = submissions.select(&:incomplete?)
+      end
+
       case params[:technical_checklist]
       when 'started'
         submissions.joins(:technical_checklist)

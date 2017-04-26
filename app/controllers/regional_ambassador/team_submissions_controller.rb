@@ -1,3 +1,5 @@
+require "will_paginate/array"
+
 module RegionalAmbassador
   class TeamSubmissionsController < RegionalAmbassadorController
     def index
@@ -5,9 +7,7 @@ module RegionalAmbassador
       params[:page] = 1 if params[:page].blank?
 
       @team_submissions = RegionalAmbassador::SearchTeamSubmissions.(params, current_ambassador)
-        .distinct
-        .page(params[:page].to_i)
-        .per_page(params[:per_page].to_i)
+        .paginate(page: params[:page].to_i, per_page: params[:per_page].to_i)
 
       if @team_submissions.empty?
         @team_submissions = @team_submissions.page(1)
