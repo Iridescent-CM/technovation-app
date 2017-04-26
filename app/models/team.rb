@@ -83,26 +83,11 @@ class Team < ActiveRecord::Base
   }
 
   scope :for_ambassador, ->(ambassador) {
-    students = []
-    mentors = []
-
     if ambassador.country == "US"
-      students = StudentProfile.joins(:account).includes(:teams)
-        .where("accounts.state_province = ? AND accounts.country = 'US'",
-               ambassador.state_province)
-
-      mentors = MentorProfile.joins(:account).includes(:teams)
-        .where("accounts.state_province = ? AND accounts.country = 'US'",
-               ambassador.state_province)
+      where("state_province = ? AND country = 'US'", ambassador.state_province)
     else
-      students = StudentProfile.joins(:account).includes(:teams)
-        .where("accounts.country = ?", ambassador.country)
-
-      mentors = MentorProfile.joins(:account).includes(:teams)
-        .where("accounts.country = ?", ambassador.country)
+      where("country = ?", ambassador.country)
     end
-
-    where(id: (students + mentors).flat_map(&:teams).uniq.map(&:id))
   }
 
   scope :not_attending_live_event, -> {

@@ -7,18 +7,8 @@ module RegionalAmbassador
       params[:completed] = "all" if params[:completed].blank?
       params[:sdg] = "all" if params[:sdg].blank?
 
-      account_ids = case ambassador.country
-                    when "US"
-                      Account.where(state_province: ambassador.state_province, country: "US").pluck(:id)
-                    else
-                      Account.where(country: ambassador.country).pluck(:id)
-                    end
-
-      profile_ids = StudentProfile.where(account_id: account_ids).pluck(:id) +
-        MentorProfile.where(account_id: account_ids).pluck(:id)
-
       submissions = TeamSubmission.joins(team: [:division, :memberships])
-        .where("memberships.member_id IN (?)", profile_ids)
+        .where("teams.id IN (?)", Team.for_ambassador(ambassador).pluck(:id))
         .distinct
 
       case params[:division]
