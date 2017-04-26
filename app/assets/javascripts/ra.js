@@ -22,6 +22,8 @@
 //= require admin-results-tables
 //= require admin-filter-options
 
+//= require countdown
+
 (function resizeTextAreas() {
   resizeTextAreaheightByContent();
 
