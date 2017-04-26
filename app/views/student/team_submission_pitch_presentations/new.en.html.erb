@@ -7,7 +7,12 @@
 </h3>
 
 <p>
-  <em>You can do this later from <%= link_to "your submission page", [:student, @submission] %>, but make sure you do this!</em>
+  <em>
+    You can do this later from 
+    <%= link_to "your submission page",
+      [current_account.type_name, @submission] %> ,
+      but make sure you do this!
+  </em>
 </p>
 
 <%= render 'student/team_submissions/steps/pitch_presentation',

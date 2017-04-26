@@ -59,10 +59,17 @@
           <h5>Teams attending live pitch events</h5>
 
           <ul class="progress-list">
-            <li class="<%= subprog(submission, "pitch-presentation") %>">
+            <li class="standalone-buttons <%= subprog(submission, "pitch-presentation") %>">
               <%= fa_icon('circle-o') %>
               <%= fa_icon('check-circle') %>
               <span>Pitch presentation</span><br />
+
+              <%= link_to 'Edit the pitch presentation',
+                new_mentor_team_submission_pitch_presentation_path(
+                  team_id: submission.team_id
+                ),
+                class: "appy-button appy-button--sm" %><br />
+
               <small>presentation upload is due in time for your event</small>
             </li>
           </ul>
@@ -104,20 +111,8 @@
   </div>
 </div>
 
-<div class="flex-row">
-  <div class="flex-col-md-6">
-    <p>
-      <%= link_to 'See how this submission looks to judges',
-        app_path(submission),
-        target: :_blank %>
-    </p>
-  </div>
-
-  <div class="flex-col-md-6">
-    <p class="standalone-buttons align-right">
-      <%= link_to 'Edit this submission',
-        mentor_team_submission_path(submission, team_id: submission.team_id),
-        class: "appy-button" %>
-    </p>
-  </div>
-</div>
+<p>
+  <%= link_to 'See how this submission looks to judges',
+    app_path(submission),
+    target: :_blank %>
+</p>

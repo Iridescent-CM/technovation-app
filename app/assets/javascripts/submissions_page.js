@@ -10,6 +10,10 @@
    */
   function appNameAndDescription() {
     var wrapper = document.getElementById("ts-app-description-wrapper");
+
+    if (!wrapper)
+      return;
+
     var buttonsWrapper = document.getElementById("ts-app-description-buttons-wrapper");
     var primaryEditableButton = document.getElementById("ts-primary-editable-btn");
     var cancelEditableButton = document.getElementById("ts-cancel-editable-btn");

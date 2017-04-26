@@ -9,6 +9,8 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "browse nearby teams" do
+    skip "Doesn't work in post-deadline"
+
     mentored_team = FactoryGirl.create(:team, :with_mentor) # Default is in Chicago
     faraway_team = FactoryGirl.create(:team,
                                       city: "Los Angeles",
@@ -22,6 +24,8 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
+    skip "Doesn't work in post-deadline"
+
     within('#submissions') { click_link "Join a team" }
     click_link "View Team"
     click_button "Request to be a mentor for #{available_team.name}"

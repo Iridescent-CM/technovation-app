@@ -8,14 +8,9 @@
         </p>
 
         <% if type === :current and team.submission.present? %>
-          <%= render 'student/team_submissions/progress', submission: team.submission %>
-
-          <small>(finished sections will appear green with a checkmark)</small>
-
           <div style="padding: 1rem; margin: 1rem 0; border: 1px solid #ddd;">
             <p>
-              <%= link_to "Edit this team's submission",
-                mentor_team_submission_path(team.submission, team_id: team.id) %>
+              Submission app name: <strong><%= team.submission.app_name %></strong>
             </p>
 
             <p>

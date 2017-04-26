@@ -4,12 +4,10 @@
       <% if current_team.submission.present? %>
         <%= render 'student/dashboards/team_submission_progress',
           submission: current_team.submission %>
-      <% else %>
-        <%= render 'student/dashboards/start_team_submission' %>
       <% end %>
     </div>
   <% else %>
-    <%= render 'student/dashboards/join_create_team' %>
+      The submission deadline has passed.
   <% end %>
 </div>
 

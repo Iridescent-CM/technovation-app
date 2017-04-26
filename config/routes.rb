@@ -80,6 +80,8 @@ Rails.application.routes.draw do
     resource :team_submission_screenshot_upload_confirmation, only: :show
     resource :team_submission_file_upload_confirmation, only: :show
 
+    resources :team_submission_pitch_presentations, only: [:new, :edit]
+
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
 

@@ -1,9 +1,7 @@
 <h1>Submission Progress</h1>
 
 <p>
-  Your team has begun submitting!<br />You can
-  <%= link_to 'edit your submission', student_team_submission_path(submission) %>
-  as much as you need to until the deadline!
+  The deadline has passed. Good luck!
 </p>
 
 <%# see app/helpers/student_helper for SUBPROG function %>
@@ -61,10 +59,15 @@
           <h5>Teams attending live pitch events</h5>
 
           <ul class="progress-list">
-            <li class="<%= subprog(submission, "pitch-presentation") %>">
+            <li class="standalone-buttons <%= subprog(submission, "pitch-presentation") %>">
               <%= fa_icon('circle-o') %>
               <%= fa_icon('check-circle') %>
               <span>Pitch presentation</span><br />
+
+              <%= link_to 'Edit your pitch presentation',
+                new_student_team_submission_pitch_presentation_path,
+                class: "appy-button appy-button--sm" %><br />
+
               <small>presentation upload is due in time for your event</small>
             </li>
           </ul>
@@ -106,20 +109,10 @@
   </div>
 </div>
 
-<div class="flex-row">
-  <div class="flex-col-md-6">
-    <p>
-      <%= link_to 'See how your submission looks to judges',
-        app_path(submission),
-        target: :_blank %>
-    </p>
-  </div>
+<p>
+  <%= link_to 'See how your submission looks to judges',
+    app_path(submission),
+    target: :_blank %>
 
-  <div class="flex-col-md-6">
-    <p class="standalone-buttons align-right">
-      <%= link_to 'Edit your submission',
-        student_team_submission_path(submission),
-        class: "appy-button" %>
-    </p>
-  </div>
-</div>
+  (you can also share it on social media!)
+</p>

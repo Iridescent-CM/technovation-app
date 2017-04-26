@@ -24,36 +24,19 @@ module Student
     end
 
     def show
-      @team_submission = current_team.team_submissions.last
+      @team_submission = current_team.submission
 
-      if @team_submission.blank?
-        redirect_to new_student_team_submission_path and return
+      if not @team_submission.present?
+        redirect_to student_dashboard_path and return
       end
 
-      @team_submission.build_business_plan unless @team_submission.business_plan
-      @team_submission.build_pitch_presentation unless @team_submission.pitch_presentation
-
-      @team_photo_uploader = ImageUploader.new
-      @team_photo_uploader.success_action_redirect = student_team_photo_upload_confirmation_url(back: request.fullpath)
-
-      @screenshots_uploader = ImageUploader.new
-      @screenshots_uploader.success_action_redirect = ''
-
-      @business_plan_uploader = FileUploader.new
-      @business_plan_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
-        file_attribute: :business_plan,
-        back: student_team_submission_path(@team_submission)
-      )
+      unless @team_submission.pitch_presentation.present?
+        @team_submission.build_pitch_presentation
+      end
 
       @pitch_presentation_uploader = FileUploader.new
       @pitch_presentation_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
         file_attribute: :pitch_presentation,
-        back: student_team_submission_path(@team_submission)
-      )
-
-      @source_code_uploader = FileUploader.new
-      @source_code_uploader.success_action_redirect = student_team_submission_file_upload_confirmation_url(
-        file_attribute: :source_code,
         back: student_team_submission_path(@team_submission)
       )
     end
@@ -86,36 +69,11 @@ module Student
     private
     def team_submission_params
       params.require(:team_submission).permit(
-        :app_name,
-        :app_description,
-        :integrity_affirmed,
-        :source_code_external_url,
-        :stated_goal,
-        :stated_goal_explanation,
-        :demo_video_link,
-        :pitch_video_link,
-        :development_platform,
-        :development_platform_other,
-        business_plan_attributes: [
-          :id,
-          :remote_file_url,
-        ],
         pitch_presentation_attributes: [
           :id,
           :remote_file_url,
         ],
-        screenshots: [],
       ).tap do |tapped|
-        tapped[:step] = params[:submission_step]
-
-        unless tapped[:source_code_external_url].blank?
-          tapped[:source_code_file_uploaded] = false
-        end
-
-        if tapped[:business_plan_attributes]
-          tapped[:business_plan_attributes][:file_uploaded] = false
-        end
-
         if tapped[:pitch_presentation_attributes]
           tapped[:pitch_presentation_attributes][:file_uploaded] = false
         end
