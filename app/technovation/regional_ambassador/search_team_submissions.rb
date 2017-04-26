@@ -2,10 +2,6 @@ module RegionalAmbassador
   module SearchTeamSubmissions
     def self.call(params, ambassador)
       params[:division] = "all" if params[:division].blank?
-      params[:has_name] = "all" if params[:has_name].blank?
-      params[:technical_checklist] = "all" if params[:technical_checklist].blank?
-      params[:completed] = "all" if params[:completed].blank?
-      params[:sdg] = "all" if params[:sdg].blank?
 
       submissions = TeamSubmission.joins(team: [:division, :memberships])
         .where("teams.id IN (?)", Team.for_ambassador(ambassador).pluck(:id))
@@ -18,23 +14,9 @@ module RegionalAmbassador
                                         Division.names[params[:division]])
       end
 
-      case params[:sdg]
-      when 'all'
-      when 'not selected'
-        submissions = submissions.where("stated_goal IS NULL")
-      else
-        submissions = submissions.where(
-          stated_goal: TeamSubmission.stated_goals[params[:sdg]]
-        )
-      end
-
-      case params[:has_name]
-      when 'yes'
-        submissions = submissions.where("team_submissions.app_name IS NOT NULL AND
-                                        team_submissions.app_name != ?", "")
-      when 'no'
-        submissions = submissions.where("team_submissions.app_name IS NULL OR
-                                        team_submissions.app_name = ?", "")
+      unless params[:team_name].blank?
+        submissions = submissions.where("LOWER(teams.name) LIKE ?",
+                                        "%#{params[:team_name].downcase}%")
       end
 
       case params[:status]
@@ -44,18 +26,7 @@ module RegionalAmbassador
         submissions = submissions.select(&:incomplete?)
       end
 
-      case params[:technical_checklist]
-      when 'started'
-        submissions.joins(:technical_checklist)
-      when 'not started'
-        submissions.where(
-          "team_submissions.id NOT IN (
-             SELECT team_submission_id FROM technical_checklists
-           )"
-        )
-      else
-        submissions
-      end
+      submissions
     end
   end
 end

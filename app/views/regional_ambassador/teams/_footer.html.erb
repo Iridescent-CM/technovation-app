@@ -1,6 +1,5 @@
 <div class="pagination_info">
-  <%= page_entries_info @teams,
-    model: params[:type] == "All" ? "Team" : params[:type] %>
+  <%= page_entries_info @teams %>
 </div>
 
 <%= will_paginate @teams %>

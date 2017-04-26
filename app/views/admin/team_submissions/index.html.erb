@@ -1,8 +1,16 @@
 <h1>Team Submissions</h1>
 
 <div class="flex-row">
+  <label class="flex-col-md-6">
+    Team name:<br />
+    <%= text_field_tag :team_name,
+    params[:team_name],
+    placeholder: "Press enter after typing",
+    data: { reload: true } %>
+</label>
+
   <label class="flex-col-md-3">
-    Status:
+    Status:<br />
     <%= select_tag :status,
       options_for_select([["All", "all"],
                           ["Complete", "complete"],
@@ -12,7 +20,7 @@
   </label>
 
   <label class="flex-col-md-3">
-    Division:
+    Division:<br />
     <%= select_tag :division,
       options_for_select([['All', 'all'],
                           ['Senior', 'senior'],
@@ -20,13 +28,6 @@
                         params.fetch(:division) { "all" }),
       data: { reload: true } %>
   </label>
-
-  <div class="flex-col-md-6">
-    <%= form_tag admin_exports_path(params.merge(class: "team_submission")) do %>
-      <%= button_tag "Email CSV to:", class: "appy-button" %>
-      <%= email_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
-    <% end %>
-  </div>
 </div>
 
 <table class="ra-participants-list">
@@ -61,7 +62,7 @@
 </table>
 
 <div class="pagination_info">
-  <%= page_entries_info @team_submissions %>
+  <p><%= page_entries_info @team_submissions %></p>
 </div>
 
 <%= will_paginate @team_submissions %>
@@ -76,3 +77,8 @@
     param: :per_page,
   } %>
 </label>
+
+<%= form_tag admin_exports_path(params.merge(class: "team_submission")) do %>
+  <%= button_tag "Email CSV to:", class: "appy-button" %>
+  <%= email_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+<% end %>
