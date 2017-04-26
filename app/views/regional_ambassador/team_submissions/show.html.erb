@@ -90,6 +90,10 @@
   <% end %>
 </p>
 
+<% unless @team_submission.technical_checklist_started? %>
+  <p>Technical checklist <strong>not started!</strong>. They must <strong>at least</strong> start it for judging eligibility.</p>
+<% end %>
+
 <% if @team_submission.technical_checklist_started? %>
   <p>
     This team has at least started their technical checklist and will so far earn
