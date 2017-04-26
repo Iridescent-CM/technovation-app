@@ -7,6 +7,7 @@ module RegionalAmbassador
       params[:page] = 1 if params[:page].blank?
 
       @team_submissions = RegionalAmbassador::SearchTeamSubmissions.(params, current_ambassador)
+        .sort { |a, b| a.team_name.downcase <=> b.team_name.downcase }
         .paginate(page: params[:page].to_i, per_page: params[:per_page].to_i)
 
       if @team_submissions.empty?

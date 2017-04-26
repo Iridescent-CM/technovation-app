@@ -42,7 +42,7 @@
   </thead>
 
   <tbody>
-    <% @team_submissions.sort { |a, b| a.team_name.downcase <=> b.team_name.downcase }.each do |submission| %>
+    <% @team_submissions.each do |submission| %>
       <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
 
       <tr>
