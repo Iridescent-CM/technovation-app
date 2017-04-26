@@ -23,6 +23,7 @@ module Mentor
 
     def show
       @team_submission = TeamSubmission.friendly.find(params[:id])
+      params[:team_id] = @team_submission.team_id
       @team_submission.build_business_plan unless @team_submission.business_plan
       @team_submission.build_pitch_presentation unless @team_submission.pitch_presentation
 
