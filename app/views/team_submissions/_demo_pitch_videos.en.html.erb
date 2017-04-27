@@ -1,3 +1,5 @@
+<% judge_note ||= false %>
+
 <div id="team-submission-videos" class="tabs">
   <ul class="tab-menu">
     <li class="tab-link">
@@ -30,6 +32,16 @@
 
         <div class="card__body">
           <% if submission.pitch_video_link %>
+            <% if judge_note %>
+              <p class="judge-note">
+                <%= mail_to "info@technovationchallenge.org",
+                  "Contact Technovation",
+                  subject: "Submission problem for Team: #{submission.team_name}",
+                  body: "There is a problem with the pitch video" %>
+                if the video is broken
+              </p>
+            <% end %>
+
             <%= submission.embed_code(:pitch_video_link).html_safe %>
           <% end %>
         </div>
@@ -46,6 +58,16 @@
 
         <div class="card__body">
           <% if submission.demo_video_link %>
+            <% if judge_note %>
+              <p class="judge-note">
+                <%= mail_to "info@technovationchallenge.org",
+                  "Contact Technovation",
+                  subject: "Submission problem for Team: #{submission.team_name}",
+                  body: "There is a problem with the demo video" %>
+                if the video is broken
+              </p>
+            <% end %>
+
             <%= submission.embed_code(:demo_video_link).html_safe %>
           <% end %>
         </div>

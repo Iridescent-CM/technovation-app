@@ -175,7 +175,8 @@
         submission: @current_team_submission %>
 
       <%= render 'team_submissions/demo_pitch_videos',
-        submission: @current_team_submission %>
+        submission: @current_team_submission,
+        judge_note: true %>
 
       <%= render 'team_submissions/screenshots',
         submission: @current_team_submission %>
@@ -184,16 +185,19 @@
     <div class="team-submissions__row-right">
       <div class="team-submissions__fixed-col">
         <%= render 'team_submissions/source_code',
-          submission: @current_team_submission %>
+          submission: @current_team_submission,
+          judge_note: true %>
 
         <%= render 'team_submissions/development_platform',
           submission: @current_team_submission %>
 
         <%= render 'team_submissions/business_plan',
-          submission: @current_team_submission %>
+          submission: @current_team_submission,
+          judge_note: true %>
 
         <%= render 'team_submissions/pitch_presentation',
-          submission: @current_team_submission %>
+          submission: @current_team_submission,
+          judge_note: true %>
       </div>
     </div>
   </div>

@@ -11,6 +11,21 @@
             submission.pitch_presentation_url,
             target: :_blank %>
         </p>
+
+        <% if judge_note %>
+          <p class="judge-note">
+            <%= mail_to "info@technovationchallenge.org",
+              "Contact Technovation",
+              subject: "Submission problem for Team: #{submission.team_name}",
+              body: "There is a problem with the pitch presentation link" %>
+            if the link is broken
+          </p>
+        <% end %>
+      <% else %>
+        <p class="judge-note">
+          Pitch presentations are not due until the date of the live event.
+          Check this box again later.
+        </p>
       <% end %>
     </div>
   </div>
