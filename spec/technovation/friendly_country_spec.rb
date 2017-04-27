@@ -1,5 +1,4 @@
-require "spec_helper"
-require "./app/technovation/friendly_country"
+require "rails_helper"
 
 RSpec.describe FriendlyCountry do
   it "returns nil if the object doesn't support the interface" do
@@ -13,42 +12,17 @@ RSpec.describe FriendlyCountry do
   end
 
   it "returns the result of #country if Country[] is blank" do
-    module FakeCountry
-      def self.[](country)
-        OpenStruct.new(:blank? => true)
-      end
-    end
-
-    stub_const("Country", FakeCountry)
-
     object = OpenStruct.new(country: "foo")
     expect(FriendlyCountry.(object)).to eq("foo")
   end
 
   it "returns a nicely formatted country ISO prefix with full name" do
-    module FakeCountry
-      def self.[](country)
-        OpenStruct.new(name: "My Country")
-      end
-    end
-
-    stub_const("Country", FakeCountry)
-
-    object = OpenStruct.new(country: "MC")
-    expect(FriendlyCountry.(object)).to eq("MC - My Country")
+    object = OpenStruct.new(country: "US")
+    expect(FriendlyCountry.(object)).to eq("US - United States")
   end
 
   it "allows the caller to disable the prefix" do
-    module FakeCountry
-      def self.[](country)
-        OpenStruct.new(name: "My Country")
-      end
-    end
-
-    stub_const("Country", FakeCountry)
-
-    object = OpenStruct.new(country: "MC")
-
-    expect(FriendlyCountry.(object, prefix: false)).to eq("My Country")
+    object = OpenStruct.new(country: "US")
+    expect(FriendlyCountry.(object, prefix: false)).to eq("United States")
   end
 end
