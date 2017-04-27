@@ -42,35 +42,47 @@ namespace :teams do
     filename =  "./#{Season.current.year}-team-locations-dump.csv"
 
     CSV.open(filename, 'wb') do |csv|
-      header = %w{
+      csv << %w{
         Team\ name
-        Primary\ state/province
-        Primary\ country
+        Team\ state/province
+        Members\ state/province
+        Team\ country
+        Members\ country
+        Submission\ status
       }
 
-      most_members_team = Team.current.includes(:memberships).max { |t| t.memberships.count }
-
-      most_members_team.memberships.count.times do |i|
-        header << "Member #{i+1} state/province"
-        header << "Member #{i+1} country"
-      end
-
-      csv << header
-
       Team.current.includes(memberships: { member: :account }).find_each do |team|
-        puts "Exporting Team##{team.id} location information"
-
         row = [
           team.name,
           team.state_province,
-          FriendlyCountry.(team),
         ]
 
-        team.members.each do |member|
-          puts "Exporting Team##{team.id} member##{member.id} location information"
-          row << member.state_province
-          row << FriendlyCountry.(member)
+        states = team.members.collect(&:state_province).compact
+        popular_state = states.max
+
+        countries = team.members.flat_map(&:account).collect { |a| FriendlyCountry.(a) }.compact
+        popular_country = countries.max
+
+        next if popular_country == FriendlyCountry.(team) &&
+                  popular_state == team.state_province
+
+        puts "Exporting Team##{team.id} location information"
+
+        if states.count > 2
+          row << popular_state
+        else
+          row << states.join(', ')
         end
+
+        row << FriendlyCountry.(team)
+
+        if countries.count > 2
+          row << popular_country
+        else
+          row << countries.join(', ')
+        end
+
+        row << team.submission.status
 
         csv << row
       end
