@@ -12,7 +12,7 @@ class SubscribeProfileToEmailList < ActiveJob::Base
       list_env_key,
       [{ Key: 'City', Value: account.city },
         { Key: 'State/Province', Value: account.state_province },
-        { Key: 'Country', Value: account.get_country }]
+        { Key: 'Country', Value: FriendlyCountry.(account, prefix: false) }]
     )
   end
 end
