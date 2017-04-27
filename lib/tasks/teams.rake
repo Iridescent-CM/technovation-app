@@ -68,7 +68,7 @@ namespace :teams do
 
         puts "Exporting Team##{team.id} location information"
 
-        if states.count > 2
+        if states.uniq.count != states.count
           row << popular_state
         else
           row << states.join(', ')
@@ -76,7 +76,7 @@ namespace :teams do
 
         row << FriendlyCountry.(team)
 
-        if countries.count > 2
+        if countries.uniq.count != countries.count
           row << popular_country
         else
           row << countries.join(', ')
