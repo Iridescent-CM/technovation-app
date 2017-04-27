@@ -11,6 +11,10 @@ module Student
         current_team.team_submissions.build(step: params[:step])
     end
 
+    def edit
+      redirect_to student_dashboard_path, alert: "Sorry, can't go there"
+    end
+
     def create
       @team_submission = current_team.team_submissions.last ||
         current_team.team_submissions.build(team_submission_params)
