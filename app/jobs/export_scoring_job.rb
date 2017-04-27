@@ -11,6 +11,7 @@ class ExportScoringJob < ActiveJob::Base
         App\ name
         Region
         Division
+        Sustainable\ development\ goal
         #\ of\ incomplete\ scores
         #\ of\ completed\ scores
         #\ live
@@ -20,7 +21,7 @@ class ExportScoringJob < ActiveJob::Base
 
       TeamSubmission.current.each do |s|
         if s.complete?
-          csv << [s.team_name, s.app_name, s.team.region_name, s.team.division.name,
+          csv << [s.team_name, s.app_name, s.team.region_name, s.team.division.name, s.stated_goal,
                   s.submission_scores.incomplete.count, s.submission_scores.complete.count,
                   s.submission_scores.complete.live.count, s.submission_scores.complete.virtual.count,
                   s.average_score]
