@@ -3,7 +3,7 @@ require "tempfile"
 class ExportScoringJob < ActiveJob::Base
   queue_as :default
   
-  def perform()
+  def perform(admin, email)
     Tempfile.open(["scores-#{Time.now.to_i}-", ".csv"], "./tmp/") do |fh|
       csv = CSV.new(fh)
       csv << %w{
@@ -26,6 +26,10 @@ class ExportScoringJob < ActiveJob::Base
                   s.average_score]
         end
       end
+
+      csv.close()
+      export = admin.exports.create!(file: fh)
+      FilesMailer.export_ready(admin, export, email).deliver_later
     end
   end
 end
