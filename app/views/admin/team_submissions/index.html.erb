@@ -52,7 +52,7 @@
         <td><%= submission.team_division_name %></td>
         <td><%= submission.team_city %></td>
         <td><%= submission.team_state_province %></td>
-        <td><%= submission.team.get_country %></td>
+        <td><%= FriendlyCountry.(submission.team) %></td>
         <td><%= submission.status %></td>
 
         <td>

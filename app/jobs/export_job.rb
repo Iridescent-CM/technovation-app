@@ -36,7 +36,7 @@ class ExportJob < ActiveJob::Base
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.division, "#{account.referred_by} #{account.referred_by_other}",
                 account.get_school_company_name, account.city, account.state_province,
-                account.get_country]
+                FriendlyCountry.(account)]
       end
     end
 
@@ -74,7 +74,7 @@ class ExportJob < ActiveJob::Base
                 event.starts_at.in_time_zone(event.timezone),
                 event.ends_at.in_time_zone(event.timezone),
                 event.timezone, event.eventbrite_link, event.venue_address,
-                event.city, event.state_province, event.country]
+                event.city, event.state_province, FriendlyCountry.(event)]
       end
     end
 
@@ -110,8 +110,9 @@ class ExportJob < ActiveJob::Base
         submission = TeamSubmission.find(submission_id)
 
         csv << [submission.team_name, submission.team_city, submission.team_state_province,
-                submission.team_country, submission.status, submission.team_division_name,
-                submission.app_name, submission.app_description, submission.stated_goal,
+                FriendlyCountry.(submission.team), submission.status,
+                submission.team_division_name, submission.app_name,
+                submission.app_description, submission.stated_goal,
                 submission.demo_video_link, submission.pitch_video_link,
                 submission.screenshots.count,
                 submission.technical_checklist_started? ? 'started' : 'not started',
@@ -139,7 +140,7 @@ class ExportJob < ActiveJob::Base
 
         csv << [ambassador.regional_ambassador_profile.status, ambassador.created_at,
                 ambassador.first_name, ambassador.last_name, ambassador.email,
-                ambassador.city, ambassador.state_province, ambassador.get_country]
+                ambassador.city, ambassador.state_province, FriendlyCountry.(ambassador)]
       end
     end
 
@@ -158,7 +159,7 @@ class ExportJob < ActiveJob::Base
 
         csv << [team.id, team.division_name, team.name,
                 team.mentors.any? ? "yes" : "no", team.city, team.state_province,
-                team.country, team.students.map(&:email).join(','),
+                FriendlyCountry.(team), team.students.map(&:email).join(','),
                 team.mentors.map(&:email).join(',')]
       end
     end

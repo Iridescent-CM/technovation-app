@@ -182,7 +182,7 @@ class Team < ActiveRecord::Base
     elsif country == "US"
       Country["US"].states[state_province.strip]['name']
     else
-      get_country
+      FriendlyCountry.(self)
     end
   end
 
@@ -222,10 +222,6 @@ class Team < ActiveRecord::Base
 
   def primary_location
     [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
-  end
-
-  def get_country
-    country && Country[country] && Country[country].name
   end
 
   def pending_invitee_emails

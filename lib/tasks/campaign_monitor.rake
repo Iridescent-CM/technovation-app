@@ -91,7 +91,7 @@ namespace :cm do
           a.full_name,
           [{ Key: 'City', Value: a.city },
            { Key: 'State/Province', Value: a.state_province },
-           { Key: 'Country', Value: a.get_country }],
+           { Key: 'Country', Value: FriendlyCountry.(a) }],
           false # resubscribe?
         )
         puts "Added #{a.email}"

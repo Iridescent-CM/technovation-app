@@ -63,13 +63,13 @@ namespace :teams do
         row = [
           team.name,
           team.state_province,
-          team.country
+          FriendlyCountry.(team),
         ]
 
         team.members.each do |member|
           puts "Exporting Team##{team.id} member##{member.id} location information"
           row << member.state_province
-          row << member.country
+          row << FriendlyCountry.(member)
         end
 
         csv << row
@@ -108,7 +108,7 @@ namespace :teams do
         csv << [
           team.name,
           team.state_province,
-          team.country,
+          FriendlyCountry.(team),
           team.submission.technical_checklist_started? ? "yes" : "no",
           score.total_technical_checklist_verified,
           score.total_coding_verified,
