@@ -102,6 +102,7 @@ namespace :teams do
         Team\ name
         State/province
         Country
+        Submission\ status
         Started?
         Total\ points
         Technical\ components
@@ -121,6 +122,7 @@ namespace :teams do
           team.name,
           team.state_province,
           FriendlyCountry.(team),
+          team.submission.status,
           team.submission.technical_checklist_started? ? "yes" : "no",
           score.total_technical_checklist_verified,
           score.total_coding_verified,
