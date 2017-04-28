@@ -52,36 +52,38 @@ namespace :teams do
       }
 
       Team.current.includes(memberships: { member: :account }).find_each do |team|
-        row = [
-          team.name,
-          team.state_province,
-        ]
+        row = [team.name]
 
         states = team.members.collect(&:state_province).compact
-        popular_state = states.max
-
         countries = team.members.flat_map(&:account).collect { |a| FriendlyCountry.(a) }.compact
-        popular_country = countries.max
 
-        next if popular_country == FriendlyCountry.(team) &&
-                  popular_state == team.state_province
+        next if [team.state_province] == states.uniq and
+                  [FriendlyCountry.(team)] == countries.uniq
+
+        row <<  team.state_province
+
+        members_state_entry = if states.uniq.count != states.count
+                                state_counts = states.inject(Hash.new(0)) { |h, v| h[v] += 1; h }
+                                states.max_by { |v| state_counts[v] }
+                              else
+                                states.join(', ')
+                              end
+
+        members_country_entry = if countries.uniq.count != countries.count
+                                  country_counts = countries.inject(Hash.new(0)) { |h, v| h[v] += 1; h }
+                                  countries.max_by { |v| country_counts[v] }
+                                else
+                                  countries.join(', ')
+                                end
+
+        next if members_state_entry == team.state_province and
+                  members_country_entry == FriendlyCountry.(team)
 
         puts "Exporting Team##{team.id} location information"
 
-        if states.uniq.count != states.count
-          row << popular_state
-        else
-          row << states.join(', ')
-        end
-
+        row << members_state_entry
         row << FriendlyCountry.(team)
-
-        if countries.uniq.count != countries.count
-          row << popular_country
-        else
-          row << countries.join(', ')
-        end
-
+        row << members_country_entry
         row << team.submission.status
 
         csv << row
