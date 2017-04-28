@@ -84,16 +84,16 @@ class TeamSubmission < ActiveRecord::Base
     prefix: true
 
   def update_average_score
-    if submission_scores.complete.any?
-      scores = if team.selected_regional_pitch_event.live? and
-                    team.selected_regional_pitch_event.unofficial?
-                 submission_scores.virtual.complete
-               elsif team.selected_regional_pitch_event.live?
-                 submission_scores.live.complete
-               else
-                 submission_scores.virtual.complete
-               end
+    scores = if team.selected_regional_pitch_event.live? and
+                  team.selected_regional_pitch_event.unofficial?
+               submission_scores.virtual.complete
+             elsif team.selected_regional_pitch_event.live?
+               submission_scores.live.complete
+             else
+               submission_scores.virtual.complete
+             end
 
+    if scores.any?
       avg = (scores.inject(0.0) { |acc, s| acc + s.total } / scores.count).round(2)
 
       update_column(:average_score, avg)
