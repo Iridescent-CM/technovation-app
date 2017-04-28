@@ -1,8 +1,8 @@
 require "tempfile"
 
-class ExportScoringJob < ActiveJob::Base
+class ExportScoresJob < ActiveJob::Base
   queue_as :default
-  
+
   def perform(admin, email)
     Tempfile.open(["scores-#{Time.now.to_i}-", ".csv"], "./tmp/") do |fh|
       csv = CSV.new(fh)
