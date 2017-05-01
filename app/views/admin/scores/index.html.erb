@@ -1,0 +1,71 @@
+<h1 class="appy-title">
+  Regional Scores
+</h1>
+
+<label>
+  Sort all results by:
+  <%= select_tag :sort,
+    options_for_select([["Highest average score", "avg_score_desc"],
+                        ["Lowest average score", "avg_score_asc"],
+                        ["Team name", "team_name"]],
+                       params.fetch(:sort) { "avg_score_desc" }),
+    data: { reload: true } %>
+</label>
+
+<div style="padding:1rem 0">
+  Select an Event
+  <%= select_tag "event",
+    options_from_collection_for_select(@events, 'id', 'name', params[:event]),
+    include_blank: true,
+    required: true,
+    data: { reload: true, param: :event},
+    class: "chosen" %>
+</div>
+
+<div class="tabs" id="admin-scores">
+  <ul class="tab-menu">
+    <% if @event.divisions.include?(Division.senior) %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="ra-event-<%= @event.id %>-senior">
+          Senior Division
+        </button>
+      </li>
+    <% end %>
+
+    <% if @event.divisions.include?(Division.junior) %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="ra-event-<%= @event.id %>-junior">
+          Junior Division
+        </button>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="content" style="padding:1rem 0; background-color: white;">
+    <% if @event.divisions.include?(Division.senior) %>
+    <div class="tab-content" id="ra-event-<%= @event.id %>-senior">
+      <%= render 'regional_ambassador/scores/list',
+      division: :senior,
+      event: @event,
+      teams: @event.teams.senior,
+      scope: :admin %>
+    </div>
+    <% end %>
+
+    <% if @event.divisions.include?(Division.junior) %>
+    <div class="tab-content" id="ra-event-<%= @event.id %>-junior">
+      <%= render 'regional_ambassador/scores/list',
+      division: :junior,
+      event: @event,
+      teams: @event.teams.junior,
+      scope: :admin %>
+    </div>
+    <% end %>
+  </div>
+</div>
