@@ -93,11 +93,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def complete?
-    not attributes.reject { |k, _|
-      k.match(/_at$/) or
-        k == 'event_type' or
-          k.match(/_verified$/)
-    }.values.any?(&:blank?)
+    completed_at != nil
   end
 
   def incomplete?
