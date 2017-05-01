@@ -2,15 +2,25 @@
   Regional Scores
 </h1>
 
-<label>
-  Sort all results by:
-  <%= select_tag :sort,
-    options_for_select([["Highest average score", "avg_score_desc"],
-                        ["Lowest average score", "avg_score_asc"],
-                        ["Team name", "team_name"]],
-                       params.fetch(:sort) { "avg_score_desc" }),
-    data: { reload: true } %>
-</label>
+<div class="flex-row">
+  <div class="flex-col-md-9">
+    <label>
+      Sort all results by:
+      <%= select_tag :sort,
+        options_for_select([["Highest average score", "avg_score_desc"],
+                            ["Lowest average score", "avg_score_asc"],
+                            ["Team name", "team_name"]],
+                          params.fetch(:sort) { "avg_score_desc" }),
+        data: { reload: true } %>
+    </label>
+  </div>
+
+  <div class="flex-col-md-3">
+    <%= form_tag regional_ambassador_exports_path(params.merge(class: "scores")) do %>
+      <%= button_tag "Email CSV Report", class: "appy-button" %>
+    <% end %>
+  </div>
+</div>
 
 <div id="ra-scores-index" class="tabs">
   <ul class="tab-menu">

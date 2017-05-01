@@ -26,6 +26,23 @@ class SubmissionScore < ActiveRecord::Base
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }
 
+  scope :current, -> {
+    joins(team_submission: { team: { season_registrations: :season } })
+    .where("seasons.year = ?", Season.current.year)
+  }
+
+  scope :for_ambassador, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(team_submission: :team)
+      .where(
+        "teams.state_province = ? AND teams.country = 'US'",
+        ambassador.state_province
+      )
+    else
+      where("teams.country = ?", ambassador.country)
+    end
+  }
+
   validates :team_submission_id, presence: true, uniqueness: { scope: :judge_profile_id }
   validates :judge_profile_id, presence: true, uniqueness: { scope: :team_submission_id }
 

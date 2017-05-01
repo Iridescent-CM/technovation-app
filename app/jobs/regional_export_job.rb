@@ -108,6 +108,40 @@ class RegionalExportJob < ActiveJob::Base
     export(filepath, ambassador)
   end
 
+  def export_scores(ambassador, params)
+    score_ids = SubmissionScore.current.for_ambassador(ambassador).pluck(:id)
+
+    filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Scores.csv"
+
+    CSV.open(filepath, 'wb') do |csv|
+      csv << %w{
+        Team\ name
+        Event\ name
+        Event\ type
+        Event\ official?
+        Division
+        Average\ completed\ live\ score
+        Average\ completed\ virtual\ score
+      }
+    end
+
+    score_ids.each do |score_id|
+      score = SubmissionScore.find(score_id)
+
+      csv << [
+        score.team_name,
+        score.event_name,
+        score.event_type,
+        score.event_official_status,
+        score.division_name,
+        score.average_completed_live_score,
+        score.average_completed_virtual_score,
+      ]
+    end
+
+    export(filepath, ambassador)
+  end
+
   def export(filepath, ambassador)
     file = File.open(filepath)
     export = ambassador.exports.create!(file: file)
