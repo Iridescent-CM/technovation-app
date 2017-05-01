@@ -11,12 +11,14 @@ module RegionalAmbassador
         .not_attending_live_event
         .senior
         .where("team_submissions.id IS NOT NULL")
+        .select { |t| t.submission.complete? }
 
       @virtual_junior_teams = Team.for_ambassador(current_ambassador)
         .eager_load(team_submissions: :submission_scores)
         .not_attending_live_event
         .junior
         .where("team_submissions.id IS NOT NULL")
+        .select { |t| t.submission.complete? }
     end
 
     def show
