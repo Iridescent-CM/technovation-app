@@ -2,6 +2,18 @@
   <%= hidden_field_tag :referring_anchor, anchor %>
   <%= f.input :team_id, value: team.id, as: :hidden %>
 
+  <p>Currently assigned:</p>
+
+  <% if team.assigned_judges.empty? %>
+    <p>None yet</p>
+  <% else %>
+    <ul>
+      <% team.assigned_judges.each do |judge| %>
+        <li><%= judge.full_name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <%= f.input :judge_profile_id,
     label: "Judges",
     collection: judges,

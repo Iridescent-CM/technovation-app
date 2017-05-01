@@ -1,8 +1,18 @@
 module RegionalAmbassador
   class JudgeAssignmentsController < RegionalAmbassadorController
     def new
-      @team = Team.for_ambassador(current_ambassador).find(params.fetch(:team_id))
-      @judges = @team.selected_regional_pitch_event.judges.order("accounts.first_name")
+      @team = Team.for_ambassador(current_ambassador)
+        .includes(:judge_assignments)
+        .find(params.fetch(:team_id))
+
+      @judges = @team.selected_regional_pitch_event.judges
+        .includes(:judge_assignments)
+        .where("judge_profiles.id NOT IN (
+                SELECT judge_assignments.judge_profile_id
+                FROM judge_assignments
+                WHERE judge_assignments.team_id = ?)", @team.id)
+        .order("accounts.first_name")
+
       @judge_assignment = @team.judge_assignments.build
     end
 
