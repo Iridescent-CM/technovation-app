@@ -6,8 +6,8 @@ module RegionalAmbassador
 
     def show
       @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
-        .eager_load(
-          teams: [:division, :team_submissions, { judge_assignments: :judge_profile }],
+        .includes(
+          teams: [:division, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
         ).find(params[:id])
 
@@ -26,6 +26,7 @@ module RegionalAmbassador
         .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
 
       @judge_participants = JudgeProfile.current
+        .includes(:judge_assignments)
         .full_access
         .for_ambassador(current_ambassador)
         .not_attending_live_event

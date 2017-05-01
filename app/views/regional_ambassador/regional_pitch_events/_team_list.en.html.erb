@@ -9,11 +9,8 @@
       <thead>
         <tr>
           <th>Team</th>
-          <th>Submission</th>
 
           <% if ambassador %>
-            <th>Last message</th>
-            <th>Unsent message</th>
             <th>New message</th>
             <th>Remove</th>
           <% end %>
@@ -83,36 +80,9 @@
                 <% end %>
               </td>
 
-              <td>
-                <% if team.submission.present? %>
-                  <%= link_to fa_icon('file-code-o', text: team.submission.app_name || "no name yet"),
-                    app_path(team.submission),
-                    target: :_blank %>
-                <% else %>
-                  (submission not begun!)
-                <% end %>
-              </td>
-
               <% if ambassador %>
                 <td>
-                  <% if ambassador.messages.sent.flat_map(&:recipient).include?(team) %>
-                    sent <%= time_ago_in_words ambassador.messages.sent.select { |m| m.recipient == team }.last.sent_at %> ago
-                  <% else %>
-                    none
-                  <% end %>
-                </td>
-
-                <td>
-                  <% if ambassador.messages.unsent.flat_map(&:recipient).include?(team) %>
-                    <%= link_to fa_icon('eye', text: 'review unsent message'),
-                      [:regional_ambassador, ambassador.messages.unsent.detect { |m| m.recipient == team }] %>
-                  <% else %>
-                    none
-                  <% end %>
-                </td>
-
-                <td>
-                  <%= link_to fa_icon('pencil-square-o', text: 'compose new'),
+                  <%= link_to fa_icon('pencil-square-o', text: 'compose message'),
                     new_regional_ambassador_message_path(
                       recipient_type: "Team",
                       recipient_id: team.id,
