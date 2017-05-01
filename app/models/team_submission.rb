@@ -225,7 +225,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def source_code_url_text
     if source_code_file_uploaded?
-      (source_code_url || "").match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+      ((source_code_url || "").match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
     else
       source_code_external_url
     end
@@ -233,7 +233,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def business_plan_url_text
     if business_plan and business_plan.file_uploaded?
-      business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+      (business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
     elsif business_plan
       business_plan.remote_file_url
     end
@@ -241,7 +241,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def pitch_presentation_url_text
     if pitch_presentation and pitch_presentation.file_uploaded?
-      pitch_presentation.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+      (pitch_presentation.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
     elsif pitch_presentation
       pitch_presentation.remote_file_url
     end
