@@ -1,5 +1,7 @@
 module Student
   class RegionalPitchEventSelectionsController < StudentController
+    before_action :require_current_team
+
     def show
       if params[:event_id]
         do_create(params)

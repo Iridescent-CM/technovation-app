@@ -1,5 +1,7 @@
 module Student
   class RegionalPitchEventsController < StudentController
+    before_action :require_current_team
+
     def show
       if params[:id] == "virtual"
         @regional_pitch_event = Team::VirtualRegionalPitchEvent.new
