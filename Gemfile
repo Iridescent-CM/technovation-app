@@ -5,6 +5,7 @@ gem 'rails', '~> 5.0'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
+
 gem "paranoia", '~> 2.3'
 
 gem 'uglifier', '~> 3.2'
@@ -80,6 +81,8 @@ end
 group :development do
   gem 'active_record_query_trace', "~> 1.5"
   gem "letter_opener", "~> 1.4"
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
 end
 
 group :test do
