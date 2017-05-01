@@ -45,12 +45,10 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   belongs_to :team, touch: true
-  has_many :screenshots, -> { order(:sort_position) }, dependent: :destroy,
-    after_add: :update_self, after_remove: :update_self
-
-  def update_self(o)
-    self.touch
-  end
+  has_many :screenshots, -> { order(:sort_position) },
+    dependent: :destroy,
+    after_add: Proc.new { |ts, _| ts.touch },
+    after_remove: Proc.new { |ts, _| ts.touch }
 
   has_one :business_plan, dependent: :destroy
   accepts_nested_attributes_for :business_plan
