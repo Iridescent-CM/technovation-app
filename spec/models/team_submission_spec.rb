@@ -147,7 +147,6 @@ RSpec.describe TeamSubmission do
       completed_at: Time.current
     })
 
-    # 10 points for completed technical checklist
-    expect(sub.reload.average_score).to eq(12)
+    expect(sub.reload.average_score).to eq(2)
   end
 end

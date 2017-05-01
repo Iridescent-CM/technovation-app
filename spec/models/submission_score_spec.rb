@@ -237,12 +237,10 @@ RSpec.describe SubmissionScore do
     )
 
     sub.complete!
-    expect(team_submission.reload.average_score).to eq(15)
-    # 10 pts from complete checklist
+    expect(team_submission.reload.average_score).to eq(5)
 
     sub.update_attributes(sdg_alignment: 4)
-    expect(team_submission.reload.average_score).to eq(14)
-    # 10 pts from complete checklist
+    expect(team_submission.reload.average_score).to eq(4)
 
     judge_profile2 = FactoryGirl.create(:judge_profile)
 
@@ -253,8 +251,7 @@ RSpec.describe SubmissionScore do
     )
 
     sub2.complete!
-    expect(team_submission.reload.average_score).to eq(13)
-    # 10 pts from complete checklist
+    expect(team_submission.reload.average_score).to eq(3)
   end
 
   it "does not update a team submission average score if it is not complete" do

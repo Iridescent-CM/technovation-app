@@ -35,15 +35,14 @@ RSpec.describe RegionalPitchEvent do
       completed_at: Time.current
     })
 
-    # 10 points for completed technical checklist
-    expect(sub.reload.average_score).to eq(15)
+    expect(sub.reload.average_score).to eq(5)
 
     rpe.update_attributes(unofficial: true)
 
-    expect(sub.reload.average_score).to eq(12)
+    expect(sub.reload.average_score).to eq(2)
 
     rpe.update_attributes(unofficial: false)
 
-    expect(sub.reload.average_score).to eq(15)
+    expect(sub.reload.average_score).to eq(5)
   end
 end

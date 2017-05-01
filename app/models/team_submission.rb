@@ -84,7 +84,7 @@ class TeamSubmission < ActiveRecord::Base
     prefix: true
 
   def update_average_score
-    scores = if team.selected_regional_pitch_event.live? and
+    scores = if team.selected_regional_pitch_event.live? &&
                   team.selected_regional_pitch_event.unofficial?
                submission_scores.virtual.complete
              elsif team.selected_regional_pitch_event.live?
@@ -142,29 +142,17 @@ class TeamSubmission < ActiveRecord::Base
 
   def complete?
     Rails.cache.fetch("#{cache_key}/complete?") do
-      (team.team_photo.present? and
+      (not app_name.blank? and
 
-        not app_name.blank? and
+       not app_description.blank? and
 
-        not app_description.blank? and
+       not pitch_video_link.blank? and
 
-        not stated_goal.blank? and
+       not demo_video_link.blank? and
 
-        not stated_goal_explanation.blank? and
+       not detect_source_code_url.blank? and
 
-        not pitch_video_link.blank? and
-
-        not demo_video_link.blank? and
-
-        screenshots.many? and
-
-        technical_checklist.present? and
-
-        not detect_source_code_url.blank? and
-
-        not development_platform_text.blank? and
-
-        business_plan_complete_or_not_required?)
+       business_plan_complete_or_not_required?)
     end
   end
 
