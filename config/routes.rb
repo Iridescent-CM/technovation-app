@@ -178,6 +178,9 @@ Rails.application.routes.draw do
     resources :regional_pitch_events, only: [:index, :show, :update]
     resources :regional_pitch_event_participations, only: :destroy
 
+    resources :scores, only: [:index, :show]
+
+
     resource :mentor_drop_out, only: :create
     resource :paper_parental_consent, only: :create
 

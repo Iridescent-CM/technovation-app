@@ -29,7 +29,7 @@
           <td><%= team.submission_scores.incomplete.count %></td>
           <td><%= team.submission.average_score %></td>
           <td><%= link_to 'View details',
-            regional_ambassador_score_path(team.submission) %></td>
+            send("#{scope}_score_path", team.submission) %></td>
         </tr>
       <% end %>
     </tbody>
