@@ -345,6 +345,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    memory_profiler (0.9.8)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -392,6 +393,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.8.2)
     rack (2.0.1)
+    rack-mini-profiler (0.10.2)
+      rack (>= 1.2.0)
     rack-protection (2.0.0.rc2)
       rack
     rack-rewrite (1.5.1)
@@ -556,6 +559,7 @@ DEPENDENCIES
   launchy (~> 2.4)
   letter_opener (~> 1.4)
   lodash-rails (~> 4.17)
+  memory_profiler
   mini_magick (~> 4.7)
   newrelic_rpm (~> 3.18)
   nokogiri (~> 1.7)
@@ -567,6 +571,7 @@ DEPENDENCIES
   pry-nav (~> 0.2)
   pry-rails (~> 0.3)
   puma (~> 3.8)
+  rack-mini-profiler
   rack-rewrite (~> 1.5)
   rack-timeout (~> 0.4)
   rails (~> 5.0)
