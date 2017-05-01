@@ -148,5 +148,7 @@ RSpec.describe TeamSubmission do
     })
 
     expect(sub.reload.average_score).to eq(2)
+
+    expect(sub.reload.average_unofficial_score).to eq(5)
   end
 end

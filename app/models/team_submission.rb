@@ -100,6 +100,21 @@ class TeamSubmission < ActiveRecord::Base
     else
       update_column(:average_score, 0)
     end
+
+    if team.selected_regional_pitch_event.live? &&
+         team.selected_regional_pitch_event.unofficial?
+      unofficial_scores = submission_scores.live.complete
+
+      if unofficial_scores.any?
+        avg = (unofficial_scores.inject(0.0) { |acc, s|
+          acc + s.total
+        } / unofficial_scores.count).round(2)
+
+        update_column(:average_unofficial_score, avg)
+      else
+        update_column(:average_unofficial_score, 0)
+      end
+    end
   end
 
   def status

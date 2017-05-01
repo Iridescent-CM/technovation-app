@@ -123,20 +123,20 @@ class RegionalExportJob < ActiveJob::Base
         Average\ completed\ live\ score
         Average\ completed\ virtual\ score
       }
-    end
 
-    score_ids.each do |score_id|
-      score = SubmissionScore.find(score_id)
+      score_ids.each do |score_id|
+        score = SubmissionScore.find(score_id)
 
-      csv << [
-        score.team_name,
-        score.event_name,
-        score.event_type,
-        score.event_official_status,
-        score.division_name,
-        score.average_completed_live_score,
-        score.average_completed_virtual_score,
-      ]
+        csv << [
+          score.team_submission_team_name,
+          score.event_name,
+          score.event_type,
+          score.event_official_status,
+          score.team_submission_team_division_name,
+          score.average_completed_live_score,
+          score.average_completed_virtual_score,
+        ]
+      end
     end
 
     export(filepath, ambassador)

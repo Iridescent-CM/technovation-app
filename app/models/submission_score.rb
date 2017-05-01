@@ -66,6 +66,32 @@ class SubmissionScore < ActiveRecord::Base
      team_submission_team_name].join(' by ')
   end
 
+  def event_name
+    judge_profile.selected_regional_pitch_event_name
+  end
+
+  def event_official_status
+    judge_profile.selected_regional_pitch_event.unofficial? ? "unofficial" : "official"
+  end
+
+  def average_completed_live_score
+    if event_type == "live" and event_official_status == "official"
+      team_submission.average_score
+    elsif event_type == "live"
+      team_submission.average_unofficial_score
+    else
+      0.0
+    end
+  end
+
+  def average_completed_virtual_score
+    if event_type == "virtual"
+      team_submission.average_score
+    else
+      0.0
+    end
+  end
+
   def complete?
     not attributes.reject { |k, _|
       k.match(/_at$/) or

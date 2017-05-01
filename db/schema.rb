@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425143550) do
+ActiveRecord::Schema.define(version: 20170501141721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -465,7 +466,9 @@ ActiveRecord::Schema.define(version: 20170425143550) do
     t.integer  "judge_opened_id"
     t.datetime "judge_opened_at"
     t.decimal  "average_score",              precision: 5, scale: 2, default: "0.0", null: false
+    t.decimal  "average_unofficial_score",   precision: 5, scale: 2, default: "0.0", null: false
     t.index ["average_score"], name: "index_team_submissions_on_average_score", using: :btree
+    t.index ["average_unofficial_score"], name: "index_team_submissions_on_average_unofficial_score", using: :btree
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at", using: :btree
     t.index ["stated_goal"], name: "index_team_submissions_on_stated_goal", using: :btree
     t.index ["submission_scores_count"], name: "index_team_submissions_on_submission_scores_count", using: :btree
