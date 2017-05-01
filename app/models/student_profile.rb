@@ -215,6 +215,10 @@ class StudentProfile < ActiveRecord::Base
         'incomplete'
       end
 
+      def complete?
+        false
+      end
+
       def technical_checklist
         NullTechnicalChecklist.new
       end
