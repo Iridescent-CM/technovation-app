@@ -4,7 +4,7 @@ class ExportScoresJob < ActiveJob::Base
   queue_as :default
 
   def perform(admin, email, type="summary")
-    Tempfile.open(["scores-#{Time.now.to_i}-", ".csv"], "./tmp/") do |fh|
+    Tempfile.open(["scores-#{type}-#{Time.now.to_i}-", ".csv"], "./tmp/") do |fh|
       send("make_#{type}", fh)
       export = admin.exports.create!(file: fh)
       FilesMailer.export_ready(admin, export, email).deliver_later
