@@ -210,7 +210,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def source_code_url_text
     if source_code_file_uploaded?
-      source_code_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
+      (source_code_url || "").match(/\/([\s\w\-\.%\(\)\]\[]+)$/)[1]
     else
       source_code_external_url
     end
