@@ -39,7 +39,7 @@ class Team < ActiveRecord::Base
     submission.touch if submission.present?
   }, if: :submission_completeness_could_change?
 
-  def submission_completeness_could_change?()
+  def submission_completeness_could_change?
     team_photo_changed? or division_id_changed?
   end
 

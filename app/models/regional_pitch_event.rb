@@ -34,6 +34,12 @@ class RegionalPitchEvent < ActiveRecord::Base
   validates :name, :starts_at, :ends_at, :division_ids, :city, :venue_address,
     presence: true
 
+  after_commit -> {
+    if unofficial_changed?
+      teams.team_submissions.find_each(&:touch)
+    end
+  }
+
   delegate :state_province, :country, :timezone,
     to: :regional_ambassador_profile,
     prefix: false
@@ -87,6 +93,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     else
       super
     end
+  end
+
+  def unofficial!
+    update_attributes(unofficial: true)
   end
 
   def friendly_name
