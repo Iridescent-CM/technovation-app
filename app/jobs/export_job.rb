@@ -187,13 +187,12 @@ class ExportJob < ActiveJob::Base
         Average\ score
       }
 
-      TeamSubmission.current.each do |s|
-        if s.complete?
-          csv << [s.team_name, s.app_name, s.team.region_name, s.team.division.name, s.stated_goal,
-                  s.submission_scores.incomplete.count, s.submission_scores.complete.count,
-                  s.submission_scores.complete.live.count, s.submission_scores.complete.virtual.count,
-                  s.average_score]
-        end
+      TeamSubmission.current.find_each do |s|
+        next unless s.complete?
+        csv << [s.team_name, s.app_name, s.team.region_name, s.team.division.name, s.stated_goal,
+                s.submission_scores.incomplete.count, s.submission_scores.complete.count,
+                s.submission_scores.complete.live.count, s.submission_scores.complete.virtual.count,
+                s.average_score]
       end
 
       csv.close()
@@ -217,7 +216,7 @@ class ExportJob < ActiveJob::Base
         Total\ score
       }
 
-      SubmissionScore.all.each do |s|
+      SubmissionScore.current.find_each do |s|
         account = s.judge_profile.account
         csv << [s.team_submission_team_name, s.team_submission_app_name,
                 s.team_submission.team.region_name, s.team_submission.team.division.name, s.team_submission.stated_goal,
