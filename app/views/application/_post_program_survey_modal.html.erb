@@ -1,6 +1,6 @@
 <% if !cookies[:saw_post_survey_modal] %>
   <div id="survery_interrupt"
-        data-heading="<%= t("views.application.pre_survey") %>"
+        data-heading="<%= t("views.application.survey") %>"
         data-save-close-action-url="<%= public_send("#{type}_cookies_url",
                                                     name: :saw_post_survey_modal,
                                                     value: true) %>"

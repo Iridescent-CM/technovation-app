@@ -40,7 +40,7 @@ en:
       only_one_email: "Enter only one email"
       optional: "(optional)"
       or: "or"
-      pre_survey: "Take our survey"
+      survey: "Take our survey"
       privacy_policy: "Privacy Policy"
       ra_mode: "RA mode"
       resources: "Resources"
