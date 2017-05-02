@@ -182,6 +182,9 @@ class ExportJob < ActiveJob::Base
         Country
         Division
         Sustainable\ development\ goal
+        Event\ name
+        Event\ type
+        Event\ official?
         #\ of\ incomplete\ scores
         #\ of\ completed\ scores
         #\ completed\ live
@@ -189,13 +192,25 @@ class ExportJob < ActiveJob::Base
         Average\ score
       }
 
-      TeamSubmission.current.find_each do |s|
-        next unless s.complete? or s.team.selected_regional_pitch_event.live?
-        csv << [s.team_name, s.app_name, s.team_city, s.team_state_province,
-                FriendlyCountry.(s.team), s.team.division.name, s.stated_goal,
-                s.submission_scores.incomplete.count, s.submission_scores.complete.count,
-                s.submission_scores.complete.live.count, s.submission_scores.complete.virtual.count,
-                s.average_score]
+      TeamSubmission.current.find_each do |submission|
+        next unless submission.complete? or submission.team.selected_regional_pitch_event.live?
+        team = submission.team
+        rpe = team.selected_regional_pitch_event
+        csv << [team.name,
+                submission.app_name,
+                team.city,
+                team.state_province,
+                FriendlyCountry.(team),
+                team.division.name,
+                submission.stated_goal,
+                rpe.name,
+                rpe.live? ? "live" : "virtual",
+                rpe.unofficial? ? "unofficial" : "official",
+                submission.submission_scores.incomplete.count,
+                submission.submission_scores.complete.count,
+                submission.submission_scores.complete.live.count,
+                submission.submission_scores.complete.virtual.count,
+                submission.average_score]
       end
 
       csv.close()
@@ -214,6 +229,9 @@ class ExportJob < ActiveJob::Base
         Country
         Division
         Sustainable\ development\ goal
+        Event\ name
+        Event\ type
+        Event\ official?
         Judge\ email
         Judge\ name
         Complete?
@@ -222,14 +240,28 @@ class ExportJob < ActiveJob::Base
         Team\ region/divisions
       }
 
-      SubmissionScore.current.find_each do |s|
-        account = s.judge_profile.account
+      SubmissionScore.current.find_each do |score|
+        account = score.judge_profile.account
+        submission = score.team_submission
+        team = submission.team
+        rpe = team.selected_regional_pitch_event
+
         team_region_divisions = account.team_region_division_names.map {|trd| trd.split(',') }.flatten
 
-        csv << [s.team_submission_team_name, s.team_submission_app_name, s.team.city,
-                s.team.state_province, FriendlyCountry.(s.team),
-                s.team.division.name, s.team_submission.stated_goal,
-                account.email, account.full_name, s.complete?, s.total,
+        csv << [team.name,
+                submission.app_name,
+                team.city,
+                team.state_province,
+                FriendlyCountry.(team),
+                team.division.name,
+                submission.stated_goal,
+                rpe.name,
+                rpe.live? ? "live" : "virtual",
+                rpe.unofficial? ? "unofficial" : "official",
+                account.email,
+                account.full_name,
+                score.complete?,
+                score.total,
                 account.mentor_profile.present?] + team_region_divisions
       end
 
