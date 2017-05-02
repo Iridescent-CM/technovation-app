@@ -116,10 +116,13 @@ class RegionalExportJob < ActiveJob::Base
     CSV.open(filepath, 'wb') do |csv|
       csv << %w{
         Team\ name
+        Judge\ name
+        Score\ status
         Event\ name
         Event\ type
         Event\ official?
         Division
+        Total
         Average\ completed\ live\ score
         Average\ completed\ virtual\ score
       }
@@ -129,10 +132,13 @@ class RegionalExportJob < ActiveJob::Base
 
         csv << [
           score.team_submission_team_name,
+          score.judge_profile.account.full_name,
+          score.status,
           score.event_name,
           score.event_type,
           score.event_official_status,
           score.team_submission_team_division_name,
+          "#{score.total} \ #{score.total_possible}",
           score.average_completed_live_score,
           score.average_completed_virtual_score,
         ]
