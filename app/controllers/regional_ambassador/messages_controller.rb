@@ -42,7 +42,8 @@ module RegionalAmbassador
 
     def destroy
       current_ambassador.messages.find(params[:id]).destroy
-      redirect_to :back, success: "The message was deleted"
+      redirect_back fallback_location: regional_ambassador_dashboard_path,
+        success: "The message was deleted"
     end
 
     private

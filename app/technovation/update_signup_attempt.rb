@@ -3,7 +3,7 @@ module UpdateSignupAttempt
     attempt = SignupAttempt.find_by(pending_token: pending_token)
 
     if attempt.update_attributes(params)
-      if attempt.status_changed? and attempt.active?
+      if attempt.saved_change_to_status? and attempt.active?
         attempt.regenerate_signup_token
       elsif attempt.pending?
         RegistrationMailer.confirm_email(attempt).deliver_later

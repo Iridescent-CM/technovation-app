@@ -2,7 +2,8 @@ module Admin
   class SignupInvitationsController < AdminController
     def create
       if Account.where("LOWER(email) = ?", params[:email].downcase).first
-        redirect_to :back, alert: "#{params[:email]} already has an account! Have them try resetting their password if they can't sign in." and return
+        redirect_back fallback_location: admin_signup_attempts_path,
+          alert: "#{params[:email]} already has an account! Have them try resetting their password if they can't sign in." and return
       end
 
       attempt = SignupAttempt.find_by(email: params[:email])
@@ -19,7 +20,8 @@ module Admin
 
       RegistrationMailer.admin_permission(attempt).deliver_later
 
-      redirect_to :back, success: "#{attempt.email} was sent a special signup inivitation!"
+      redirect_back fallback_location: admin_signup_attempts_path,
+        success: "#{attempt.email} was sent a special signup inivitation!"
     end
   end
 end

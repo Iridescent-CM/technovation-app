@@ -31,4 +31,16 @@ RSpec.describe MentorProfile do
       expect(mentor.team_region_division_names).to match_array(["US_CA,senior"])
     end
   end
+
+  it "changes searchability when country changes" do
+    mentor = FactoryGirl.create(:mentor) # Default in US
+
+    # Sanity
+    mentor.background_check.destroy
+    expect(mentor).not_to be_searchable
+
+    mentor.country = "BR"
+    mentor.valid?
+    expect(mentor).to be_searchable
+  end
 end

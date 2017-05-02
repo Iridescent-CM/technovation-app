@@ -46,6 +46,7 @@ RSpec.describe FindEligibleSubmissionId do
     team = FactoryGirl.create(:team)
 
     team.regional_pitch_events << RegionalPitchEvent.create!({
+      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
@@ -64,6 +65,7 @@ RSpec.describe FindEligibleSubmissionId do
     judge = FactoryGirl.create(:judge)
     team = FactoryGirl.create(:team)
     team.regional_pitch_events << RegionalPitchEvent.create!({
+      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,

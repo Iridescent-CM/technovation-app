@@ -20,6 +20,9 @@ module TeamController
     @team = Team.new(team_params)
 
     if @team.save
+      RegisterToCurrentSeasonJob.perform_later(@team)
+      @team.public_send("add_#{account_type}", current_profile)
+
       redirect_to [account_type, @team],
         success: t("controllers.teams.create.success")
     else
@@ -57,8 +60,6 @@ module TeamController
     ).tap do |tapped|
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_profile)
-        tapped["#{account_type}_ids"] = current_profile.id
-        tapped[:season_ids] = [Season.current.id]
       end
     end
   end

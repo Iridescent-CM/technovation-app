@@ -75,7 +75,7 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def notify_requestor
-    if accepted_at_changed? or declined_at_changed?
+    if saved_change_to_accepted_at? or saved_change_to_declined_at?
       TeamMailer.public_send("#{requestor_type_name}_join_request_#{status.underscore}", self).deliver_later
     end
   end

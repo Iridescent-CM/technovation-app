@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "~> 2.4"
 
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 5.1'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
@@ -40,19 +40,24 @@ gem 'geocoder', '~> 1.4'
 gem 'timezone', '~> 1.2'
 
 gem 'carrierwave',
-  git: "https://github.com/fedorkk/carrierwave.git",
-  branch: "decode_unicode_filename_from_url"
+  git: "https://github.com/carrierwaveuploader/carrierwave.git",
+  branch: "master"
 
 gem "mini_magick", "~> 4.7"
 gem "fog", "~> 1.40"
 gem 'carrierwave_direct', "~> 0.0"
 
-gem 'checkr-official', "~> 1.1", require: "checkr"
+gem 'checkr-official', "~> 1.2", require: "checkr"
 
 gem 'font-awesome-rails', "~> 4.7"
 gem 'chosen-rails', "~> 1.5"
-gem 'simple_form', "~> 3.4"
+
+gem 'simple_form',
+  git: 'https://github.com/elsurudo/simple_form.git',
+  branch: 'rails-5.1.0'
+
 gem 'countries', '~> 1.2', require: "countries/global"
+
 gem 'country_state_select',
   git: 'https://github.com/arvindvyas/Country-State-Select.git',
   branch: 'master'
@@ -73,7 +78,6 @@ group :development, :test do
   gem 'pry-rails', "~> 0.3"
   gem 'pry-nav', "~> 0.2"
   gem 'rspec-rails', "~> 3.5"
-  gem 'database_cleaner', "~> 1.5"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
 end
@@ -81,8 +85,8 @@ end
 group :development do
   gem 'active_record_query_trace', "~> 1.5"
   gem "letter_opener", "~> 1.4"
-  gem 'rack-mini-profiler'
-  gem 'memory_profiler'
+  gem 'rack-mini-profiler', "~> 0.10"
+  gem 'memory_profiler', "~> 0.9"
 end
 
 group :test do
@@ -91,21 +95,22 @@ group :test do
   gem 'webmock', "~> 3.0"
   gem 'sinatra', '~> 2.0.0.beta'
   gem 'capybara-webkit', "~> 1.14"
+  gem 'database_cleaner', "~> 1.5"
   gem 'rails-controller-testing', "~> 1.0"
 end
 
-group :qa, :staging, :production, :development do
+group :production, :development do
   gem 'premailer-rails', "~> 1.9"
 end
 
-group :qa, :staging, :production do
+group :production do
   gem 'hiredis', "~> 0.6"
   gem 'tunemygc', "~> 1.0"
   gem 'scout_apm', "~> 2.1"
   gem "rack-timeout", "~> 0.4"
 end
 
-group :qa, :test, :development do
+group :test, :development do
   gem 'factory_girl_rails', "~> 4.8"
 end
 

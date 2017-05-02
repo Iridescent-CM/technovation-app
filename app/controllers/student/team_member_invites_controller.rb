@@ -12,7 +12,8 @@ module Student
       elsif invite = current_student.team_member_invites.find_by(invite_token: params.fetch(:id))
         redirect_based_on_status(invite)
       else
-        redirect_to :back, alert: t("controllers.application.general_error")
+        redirect_back fallback_location: student_dashboard_path,
+          alert: t("controllers.application.general_error")
       end
     end
 

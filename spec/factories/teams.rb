@@ -17,7 +17,7 @@ FactoryGirl.define do
       members_count 1
     end
 
-    before(:create) do |team, evaluator|
+    after(:create) do |team, evaluator|
       members = evaluator.members_count.times.collect {
         FactoryGirl.create(:student)
       }

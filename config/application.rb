@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module TechnovationApp
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.1
+
     config.active_job.queue_adapter = ENV.fetch('ACTIVE_JOB_BACKEND') { :inline }
 
     # Settings in config/environments/* take precedence over those specified here.

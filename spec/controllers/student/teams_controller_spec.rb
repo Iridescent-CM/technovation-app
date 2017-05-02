@@ -7,7 +7,12 @@ RSpec.describe Student::TeamsController do
       sign_in(student)
 
       expect {
-        post :create, params: { team: { name: "Girl Power", description: "We are a great team" } }
+        post :create, params: {
+          team: {
+            name: "Girl Power",
+            description: "We are a great team",
+          }
+        }
       }.to change { Team.count }.from(0).to 1
 
       expect(student.team).to eq(Team.last)

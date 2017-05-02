@@ -24,8 +24,9 @@ class Mentor::JoinRequestsController < MentorController
     join_request = JoinRequest.find(params.fetch(:id))
     join_request.public_send("#{params.fetch(:status)}!")
 
-    redirect_to :back, success: t("controllers.mentor.join_requests.update.success",
-                                  name: join_request.requestor_first_name,
-                                  status: params.fetch(:status))
+    redirect_back fallback_location: mentor_dashboard_path,
+      success: t("controllers.mentor.join_requests.update.success",
+                 name: join_request.requestor_first_name,
+                 status: params.fetch(:status))
   end
 end

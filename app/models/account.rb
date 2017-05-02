@@ -7,7 +7,7 @@ class Account < ActiveRecord::Base
     student_profile &&
       student_profile.team.present? &&
         student_profile.team.reconsider_division_with_save
-  }, if: :date_of_birth_changed?
+  }, if: :saved_change_to_date_of_birth?
 
   index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
   document_type 'account'
@@ -62,14 +62,18 @@ class Account < ActiveRecord::Base
   }
 
   after_validation :reverse_geocode, if: ->(a) {
-    a.latitude_changed? or a.longitude_changed?
+    a.saved_change_to_latitude? or a.saved_change_to_longitude?
   }
 
   after_validation -> {
     # I hate you, sometimes, Rails
     # See 'after_commit' below for what this is about
-    @update_email_list = (first_name_changed? or last_name_changed? or email_changed? or
-      city_changed? or state_province_changed? or country_changed?)
+    @update_email_list = (
+      saved_change_to_first_name? or
+        saved_change_to_last_name? or
+          saved_change_to_email? or
+            address_changed?
+    )
     @old_email = email_was
   }, on: :update
 
@@ -277,7 +281,7 @@ class Account < ActiveRecord::Base
   end
 
   def address_changed?
-    city_changed? or state_province_changed? or country_changed?
+    saved_change_to_city? or saved_change_to_state_province? or saved_change_to_country?
   end
 
   class NoAuthFound

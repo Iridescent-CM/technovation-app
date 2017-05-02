@@ -7,7 +7,7 @@ FactoryGirl.define do
     transient do
       city "Chicago"
       state_province "IL"
-      country nil
+      country "US"
       date_of_birth Date.today - 15.years
       email nil
       password nil
@@ -30,6 +30,10 @@ FactoryGirl.define do
       ))
 
       s.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
+    end
+
+    after(:create) do |s, e|
+      RegisterToCurrentSeasonJob.perform_now(s.account)
     end
 
     trait :on_team do
@@ -55,9 +59,9 @@ FactoryGirl.define do
 
     transient do
       first_name nil
-      city nil
-      state_province nil
-      country nil
+      city "Chicago"
+      state_province "IL"
+      country "US"
       email nil
       password nil
     end
@@ -85,6 +89,10 @@ FactoryGirl.define do
       unless m.honor_code_signed?
         m.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
       end
+    end
+
+    after(:create) do |m, e|
+      RegisterToCurrentSeasonJob.perform_now(m.account)
     end
 
     trait :with_expertises do
@@ -116,7 +124,7 @@ FactoryGirl.define do
     transient do
       city "Chicago"
       state_province "IL"
-      country nil
+      country "US"
       email nil
       password nil
       first_name nil
@@ -141,6 +149,10 @@ FactoryGirl.define do
       unless r.consent_signed?
         r.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
       end
+    end
+
+    after(:create) do |r, e|
+      RegisterToCurrentSeasonJob.perform_now(r.account)
     end
 
     trait :approved do
@@ -169,6 +181,10 @@ FactoryGirl.define do
         email: e.email || attrs[:email],
         first_name: e.first_name || attrs[:first_name],
       ))
+    end
+
+    after(:create) do |j, e|
+      RegisterToCurrentSeasonJob.perform_now(j.account)
     end
   end
 end

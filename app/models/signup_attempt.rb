@@ -2,7 +2,7 @@ class SignupAttempt < ActiveRecord::Base
   has_secure_password
 
   enum status: %i{pending active registered temporary_password}
-  belongs_to :account
+  belongs_to :account, required: false
 
   validates :email, presence: true, email: true
   validates :password, length: { minimum: 8, on: :create }
