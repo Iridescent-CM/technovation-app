@@ -138,7 +138,7 @@ class RegionalExportJob < ActiveJob::Base
           score.event_type,
           score.event_official_status,
           score.team_submission_team_division_name,
-          "#{score.total} \ #{score.total_possible}",
+          "#{score.total}/#{score.total_possible}",
           score.average_completed_live_score,
           score.average_completed_virtual_score,
         ]
