@@ -368,10 +368,8 @@ class Team < ActiveRecord::Base
     def eventbrite_link; end
 
     def teams
-      Team
-      .eager_load(team_submissions: :submission_scores)
-      .not_attending_live_event
-      .where("team_submissions.id IS NOT NULL")
+      Team.joins(team_submissions: :submission_scores)
+          .not_attending_live_event
     end
 
     def timezone
