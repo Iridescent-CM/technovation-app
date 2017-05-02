@@ -190,7 +190,7 @@ class ExportJob < ActiveJob::Base
       }
 
       TeamSubmission.current.find_each do |s|
-        next unless s.complete?
+        next unless s.complete? or s.team.selected_regional_pitch_event.live?
         csv << [s.team_name, s.app_name, s.team_city, s.team_state_province,
                 FriendlyCountry.(s.team), s.team.division.name, s.stated_goal,
                 s.submission_scores.incomplete.count, s.submission_scores.complete.count,
