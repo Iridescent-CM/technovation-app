@@ -54,14 +54,16 @@
           <%= render 'regional_ambassador/scores/list',
             event: @virtual_event,
             division: :senior,
-            teams: @virtual_senior_teams %>
+            teams: @virtual_senior_teams,
+            scope: :regional_ambassador %>
         </div>
 
         <div class="tab-content" id="ra-event-virtual-junior">
           <%= render 'regional_ambassador/scores/list',
             event: @virtual_event,
             division: :junior,
-            teams: @virtual_junior_teams %>
+            teams: @virtual_junior_teams,
+            scope: :regional_ambassador  %>
         </div>
       </div>
     </div>
@@ -76,7 +78,8 @@
               <%= render 'regional_ambassador/scores/list',
                 division: :senior,
                 event: event,
-                teams: event.teams.senior %>
+                teams: event.teams.senior,
+                scope: :regional_ambassador  %>
             </div>
           <% end %>
 
@@ -85,7 +88,8 @@
               <%= render 'regional_ambassador/scores/list',
                 division: :junior,
                 event: event,
-                teams: event.teams.junior %>
+                teams: event.teams.junior,
+                scope: :regional_ambassador  %>
             </div>
           <% end %>
         </div>

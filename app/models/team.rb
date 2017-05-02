@@ -366,7 +366,13 @@ class Team < ActiveRecord::Base
     def city; "No city, all online"; end
     def venue_address; "No address, all online"; end
     def eventbrite_link; end
-    def teams; []; end
+
+    def teams
+      Team
+      .eager_load(team_submissions: :submission_scores)
+      .not_attending_live_event
+      .where("team_submissions.id IS NOT NULL")
+    end
 
     def timezone
       "US/Pacific"
