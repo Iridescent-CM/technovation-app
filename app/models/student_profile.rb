@@ -1,5 +1,8 @@
 class StudentProfile < ActiveRecord::Base
-  scope :full_access, -> { joins(:account, :parental_consent).where("accounts.location_confirmed = ?", true) }
+  scope :full_access, -> {
+    joins(:account, :parental_consent)
+    .where("accounts.location_confirmed = ?", true)
+  }
 
   has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
@@ -252,15 +255,15 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def reset_parent
-    if parent_guardian_email_changed? and parent_guardian_email.present?
+    if saved_change_to_parent_guardian_email? and parent_guardian_email.present?
       void_parental_consent!
       ParentMailer.consent_notice(id).deliver_later
     end
 
-    if parent_guardian_name_changed? or
-         parent_guardian_email_changed? and
+    if saved_change_to_parent_guardian_name? or
+         saved_change_to_parent_guardian_email? and
            parent_guardian_email.present?
-      UpdateEmailListJob.perform_later(parent_guardian_email_was,
+      UpdateEmailListJob.perform_later(parent_guardian_email_before_last_save,
                                        parent_guardian_email,
                                        parent_guardian_name,
                                        "PARENT_LIST_ID")

@@ -25,6 +25,17 @@ RSpec.describe Account do
       .with(account.id, "old@oldtime.com", "APPLICATION_LIST_ID")
   end
 
+  it "updates newsletters with a change to the address" do
+    account = FactoryGirl.create(:account)
+
+    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+
+    account.update_attributes(city: "Los Angeles", state_province: "CA")
+
+    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      .with(account.id, account.email, "APPLICATION_LIST_ID")
+  end
+
   %i{mentor regional_ambassador}.each do |type|
     it "doesn't need a BG check outside of the US" do
       account = FactoryGirl.create(type,
@@ -94,5 +105,37 @@ RSpec.describe Account do
     expect(account.team_region_division_names).to match_array(["US_IL,senior"])
     account.teams << FactoryGirl.create(:team, city: "Los Angeles", state_province: "CA")
     expect(account.team_region_division_names).to match_array(["US_IL,senior","US_CA,senior"])
+  end
+
+  it "geocodes when address info changes" do
+    a = FactoryGirl.create(:account) # Chicago by default
+
+    # Sanity
+    expect(a.latitude).to eq(41.50196838)
+    expect(a.longitude).to eq(-87.64051818)
+
+    a.city = "Los Angeles"
+    a.state_province = "CA"
+    a.valid?
+
+    expect(a.latitude).to eq(34.052363)
+    expect(a.longitude).to eq(-118.256551)
+  end
+
+  it "reverse geocodes when coords change" do
+    a = FactoryGirl.create(:account, city: "Los Angeles", state_province: "CA")
+
+    # Sanity
+    expect(a.city).to eq("Los Angeles")
+    expect(a.state_province).to eq("CA")
+    expect(a.latitude).to eq(34.052363)
+    expect(a.longitude).to eq(-118.256551)
+
+    a.latitude = 41.50196838
+    a.longitude = -87.64051818
+    a.valid?
+
+    expect(a.city).to eq("Chicago")
+    expect(a.state_province).to eq("IL")
   end
 end

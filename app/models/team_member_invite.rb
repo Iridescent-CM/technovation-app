@@ -7,14 +7,14 @@ class TeamMemberInvite < ActiveRecord::Base
 
   has_secure_token :invite_token
 
-  before_create :set_invitee
+  before_validation :set_invitee
   after_commit :send_invite, on: :create
 
-  after_save :after_accept, if: -> { status_changed? && accepted? }
+  after_save :after_accept, if: -> { saved_change_to_status? && accepted? }
 
   belongs_to :team, touch: true
   belongs_to :inviter, polymorphic: true
-  belongs_to :invitee, polymorphic: true
+  belongs_to :invitee, polymorphic: true, required: false
 
   validates :invitee_email, presence: true, email: true
 

@@ -146,4 +146,59 @@ RSpec.describe Team do
       expect(team.reload.region_division_name).to eq("US_IL,none_assigned_yet")
     end
   end
+
+  it "geocodes when address info changes" do
+    team = FactoryGirl.create(:team) # Chicago by default
+
+    # Sanity
+    expect(team.latitude).to eq(41.50196838)
+    expect(team.longitude).to eq(-87.64051818)
+
+    team.city = "Los Angeles"
+    team.state_province = "CA"
+    team.valid?
+
+    expect(team.latitude).to eq(34.052363)
+    expect(team.longitude).to eq(-118.256551)
+  end
+
+  it "reverse geocodes when coords change" do
+    team = FactoryGirl.create(:team, city: "Los Angeles", state_province: "CA")
+
+    # Sanity
+    expect(team.city).to eq("Los Angeles")
+    expect(team.state_province).to eq("CA")
+    expect(team.latitude).to eq(34.052363)
+    expect(team.longitude).to eq(-118.256551)
+
+    team.latitude = 41.50196838
+    team.longitude = -87.64051818
+    team.valid?
+
+    expect(team.city).to eq("Chicago")
+    expect(team.state_province).to eq("IL")
+  end
+
+  it "removes associated RPEs when address info changes" do
+    team = FactoryGirl.create(:team)
+    rpe = FactoryGirl.create(:rpe)
+
+    # Sanity
+    team.regional_pitch_events << rpe
+    expect(team.reload.selected_regional_pitch_event).to eq(rpe)
+
+    team.state_province = "CA"
+    team.valid?
+    expect(team.regional_pitch_events).to be_empty
+
+    # Sanity
+    team.regional_pitch_events << rpe
+    expect(team.reload.selected_regional_pitch_event).to eq(rpe)
+
+    team.city = "Salvador"
+    team.state_province = "Bahia"
+    team.country = "BR"
+    team.valid?
+    expect(team.regional_pitch_events).to be_empty
+  end
 end

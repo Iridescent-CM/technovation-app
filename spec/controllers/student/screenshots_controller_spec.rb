@@ -19,7 +19,9 @@ RSpec.describe Student::ScreenshotsController do
       team_submission = student.team.team_submissions.create!(integrity_affirmed: true)
       team_submission.screenshots.create!
 
-      other = Screenshot.create!
+      other_team = FactoryGirl.create(:team)
+      other_sub = other_team.team_submissions.create!(integrity_affirmed: true)
+      other = Screenshot.create!(team_submission: other_sub)
 
       sign_in(student)
 

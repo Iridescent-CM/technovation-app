@@ -39,7 +39,8 @@ module Admin
     def update
       ambassador = RegionalAmbassadorProfile.find(params.fetch(:id))
       ambassador.public_send("#{params.fetch(:status)}!")
-      redirect_to :back, success: "#{ambassador.full_name} was marked as #{params.fetch(:status)}"
+      redirect_back fallback_location: admin_regional_ambassadors_path,
+        success: "#{ambassador.full_name} was marked as #{params.fetch(:status)}"
     end
   end
 end

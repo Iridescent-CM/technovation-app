@@ -7,14 +7,17 @@ module Student
         redirect_to [:student, @mentor_invite.team],
           success: t("controllers.team_member_invites.create.success")
       else
-        redirect_to :back, alert: t("views.application.general_error")
+        redirect_back fallback_location: student_dashboard_path,
+          alert: t("views.application.general_error")
       end
     end
 
     def destroy
       @invite = current_student.team.mentor_invites.find_by(invite_token: params.fetch(:id))
       @invite.destroy
-      redirect_to :back, success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+      redirect_back fallback_location: student_dashboard_path,
+        success: t("controllers.invites.destroy.success",
+                   name: @invite.invitee_name)
     end
 
     private

@@ -17,7 +17,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Milwaukee", "Milwaukee, WI"].each do |loc|
+    ["Milwaukee", "Milwaukee, WI", "Milwaukee, WI, United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 43.0389,
@@ -32,7 +32,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Evanston", "Evanston, IL"].each do |loc|
+    ["Evanston", "Evanston, IL", "Evanston, IL, United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 41.50196838,

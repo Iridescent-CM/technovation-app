@@ -14,7 +14,8 @@ module RegionalAmbassador
       end
 
       @message.sent!
-      redirect_to :back, success: "Your message has been sent!"
+      redirect_back fallback_location: regional_ambassador_dashboard_path,
+        success: "Your message has been sent!"
     end
   end
 end

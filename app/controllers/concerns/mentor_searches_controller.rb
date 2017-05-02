@@ -16,19 +16,19 @@ module MentorSearchesController
 
   private
   def search_filter_params
+    search_params = params.to_unsafe_h
+
     default_params = ActionController::Parameters.new({
-      nearby: params.fetch(:nearby),
+      nearby: search_params.fetch(:nearby),
       user: user,
-      needs_team: params.fetch(:needs_team),
-      on_team: params.fetch(:on_team),
-      virtual_only: params.fetch(:virtual_only),
-      text: params.fetch(:text) { "" },
-      gender_identities: params.fetch(:gender_identities),
+      needs_team: search_params.fetch(:needs_team),
+      on_team: search_params.fetch(:on_team),
+      virtual_only: search_params.fetch(:virtual_only),
+      text: search_params.fetch(:text) { "" },
+      gender_identities: search_params.fetch(:gender_identities),
     })
 
-    default_params.merge(params.fetch(:search_filter) {
-      ActionController::Parameters.new({})
-    })
+    default_params.merge(search_params.fetch(:search_filter) { {} })
   end
 
   def user

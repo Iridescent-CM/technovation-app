@@ -10,9 +10,8 @@ FactoryGirl.define do
     city "Chicago"
     location_confirmed true
 
-    season_ids { [Season.current.id] }
-
     after :create do |a|
+      RegisterToCurrentSeasonJob.perform_now(a)
       a.update_column(:profile_image, "foo/bar/baz.png")
 
       unless a.honor_code_signed?

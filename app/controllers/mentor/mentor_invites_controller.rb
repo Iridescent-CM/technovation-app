@@ -18,7 +18,8 @@ module Mentor
       @invite = MentorInvite.find_by(team_id: current_mentor.team_ids,
                                      invite_token: params.fetch(:id))
       @invite.destroy
-      redirect_to :back, success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
+      redirect_back fallback_location: mentor_dashboard_path,
+        success: t("controllers.invites.destroy.success", name: @invite.invitee_name)
     end
 
     private

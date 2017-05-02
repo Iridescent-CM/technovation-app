@@ -3,7 +3,10 @@ require "rails_helper"
 RSpec.describe Mentor::SignupsController do
   describe "POST #create" do
     it "saves the bio" do
-      controller.set_cookie(:signup_token, SignupAttempt.create!(email: "joe@example.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token)
+      controller.set_cookie(
+        :signup_token,
+        FactoryGirl.create(:signup_attempt).signup_token
+      )
 
       post :create, params: { mentor_profile: FactoryGirl.attributes_for(
         :mentor,

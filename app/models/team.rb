@@ -22,13 +22,14 @@ class Team < ActiveRecord::Base
   }
 
   after_validation :reverse_geocode, if: ->(t) {
-    t.latitude_changed? or t.longitude_changed?
+    t.saved_change_to_latitude? or t.saved_change_to_longitude?
   }
 
   after_validation ->(t) {
     t.regional_pitch_events.destroy_all
   }, if: -> (t) {
-    (t.country === "US" and t.state_province_changed?) or t.country_changed?
+    (t.country === "US" and t.state_province_changed?) or
+      t.country_changed?
   }
 
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
@@ -37,11 +38,7 @@ class Team < ActiveRecord::Base
 
   after_save -> {
     submission.touch if submission.present?
-  }, if: :submission_completeness_could_change?
-
-  def submission_completeness_could_change?()
-    team_photo_changed? or division_id_changed?
-  end
+  }, if: :saved_change_to_division_id?
 
   def as_indexed_json(options = {})
     as_json(

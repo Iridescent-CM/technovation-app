@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe RegionalAmbassador::ProfilesController do
   describe "GET #index" do
     it "shows users in the state region for US RAs" do
-      FactoryGirl.create(:student) # Chicago is default
-      FactoryGirl.create(:mentor, city: "Evanston")
+      il_student = FactoryGirl.create(:student) # Chicago is default
+      il_mentor = FactoryGirl.create(:mentor, city: "Evanston")
 
       wisconsin_ra = FactoryGirl.create(:regional_ambassador,
                                         city: "Milwaukee",
@@ -12,8 +12,13 @@ RSpec.describe RegionalAmbassador::ProfilesController do
       illinois_ra = FactoryGirl.create(:regional_ambassador) # Chicago is default
 
       sign_in(illinois_ra)
+
       get :index
+
       expect(assigns[:accounts].map(&:id)).not_to include(wisconsin_ra.account_id)
+
+      expect(assigns[:accounts].map(&:id)).to include(il_student.account_id)
+      expect(assigns[:accounts].map(&:id)).to include(il_mentor.account_id)
     end
 
     it "shows users in the country region for Intn'l RAs" do

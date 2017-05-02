@@ -5,7 +5,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   accepts_nested_attributes_for :account
   validates_associated :account
 
-  after_update :after_status_changed, if: :status_changed?
+  after_update :after_status_changed, if: :saved_change_to_status?
 
   enum status: %i{pending approved declined spam}
 

@@ -9,6 +9,7 @@ RSpec.describe RegionalPitchEvent do
     virtual_judge = FactoryGirl.create(:judge_profile)
 
     rpe = RegionalPitchEvent.create!({
+      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
