@@ -177,19 +177,22 @@ class ExportJob < ActiveJob::Base
       csv << %w{
         Team\ name
         App\ name
-        Region
+        City
+        State/Province
+        Country
         Division
         Sustainable\ development\ goal
         #\ of\ incomplete\ scores
         #\ of\ completed\ scores
-        #\ live
-        #\ virtual
+        #\ completed\ live
+        #\ completed\ virtual
         Average\ score
       }
 
       TeamSubmission.current.find_each do |s|
         next unless s.complete?
-        csv << [s.team_name, s.app_name, s.team.region_name, s.team.division.name, s.stated_goal,
+        csv << [s.team_name, s.app_name, s.team_city, s.team_state_province,
+                FriendlyCountry.(s.team), s.team.division.name, s.stated_goal,
                 s.submission_scores.incomplete.count, s.submission_scores.complete.count,
                 s.submission_scores.complete.live.count, s.submission_scores.complete.virtual.count,
                 s.average_score]
@@ -206,22 +209,28 @@ class ExportJob < ActiveJob::Base
       csv << %w{
         Team\ name
         App\ name
-        Region
+        City
+        State/Province
+        Country
         Division
         Sustainable\ development\ goal
-        Judge
-        Mentor?
-        Team\ region/division\ names
+        Judge\ email
+        Judge\ name
         Complete?
         Total\ score
+        Mentor?
+        Team\ region/divisions
       }
 
       SubmissionScore.current.find_each do |s|
         account = s.judge_profile.account
-        csv << [s.team_submission_team_name, s.team_submission_app_name,
-                s.team_submission.team.region_name, s.team_submission.team.division.name, s.team_submission.stated_goal,
-                account.email, account.mentor_profile.present?, account.team_region_division_names,
-                s.complete?, s.total]
+        team_region_divisions = account.team_region_division_names.map {|trd| trd.split(',') }.flatten
+
+        csv << [s.team_submission_team_name, s.team_submission_app_name, s.team.city,
+                s.team.state_province, FriendlyCountry.(s.team),
+                s.team.division.name, s.team_submission.stated_goal,
+                account.email, account.full_name, s.complete?, s.total,
+                account.mentor_profile.present?] + team_region_divisions
       end
 
       csv.close()
