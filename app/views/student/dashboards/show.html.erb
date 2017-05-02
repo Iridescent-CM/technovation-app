@@ -3,12 +3,13 @@
     <div class="flex-col-md-6">
       <h1 class="appy-title">
         <%= t("views.application.student_dashboard") %>
-
         <small>
           <%= render 'post_program_survey', type: :student %>
         </small>
       </h1>
-    </div>
+    </div>s
+
+<%= render 'post_program_survey_modal', type: :student %>
 
     <div class="flex-col-md-6 align-right">
       <h1 class="appy-title">

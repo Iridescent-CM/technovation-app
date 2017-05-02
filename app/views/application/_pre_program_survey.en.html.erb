@@ -6,7 +6,7 @@
 <% if cookies[:saw_pre_survey_modal] %>
   <%= link_to "Take the pre-program survey", url, target: "_blank" %>
 <% else %>
-  <div id="pre_survery_interrupt"
+  <div id="survery_interrupt"
         data-heading="<%= t("views.application.pre_survey") %>"
         data-save-close-action-url="<%= public_send("#{type}_cookies_url",
                                                     name: :saw_pre_survey_modal,

@@ -1,12 +1,12 @@
 (function dashboards() {
   var surveyModals = function() {
-    var preSurveyModal = document.getElementById("pre_survery_interrupt");
+    var surveyModal = document.getElementById("survery_interrupt") ;
 
-    if (!preSurveyModal)
+    if (!surveyModal)
       return;
 
-    preSurveyModal.addEventListener('modalclose', function(e) {
-      var saveCloseActionUrl = preSurveyModal.dataset.saveCloseActionUrl;
+    surveyModal.addEventListener('modalclose', function(e) {
+      var saveCloseActionUrl = surveyModal.dataset.saveCloseActionUrl;
       $.post(saveCloseActionUrl);
     });
   };
