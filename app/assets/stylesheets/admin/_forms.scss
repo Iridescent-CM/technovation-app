@@ -21,3 +21,12 @@ label {
 form[data-remote] {
   padding: 1rem 0;
 }
+
+.inline-radio, .inline-checkbox {
+  display: block;
+  margin: 1rem 0;
+
+  label {
+    display: inline;
+  }
+}
