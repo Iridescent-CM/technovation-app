@@ -82,36 +82,42 @@ class TeamSubmission < ActiveRecord::Base
     prefix: true
 
   def update_average_score
-    scores = if team.selected_regional_pitch_event.live? &&
-                  team.selected_regional_pitch_event.unofficial?
-               submission_scores.virtual.complete
-             elsif team.selected_regional_pitch_event.live?
-               submission_scores.live.complete
-             else
-               submission_scores.virtual.complete
-             end
+    if team.selected_regional_pitch_event.live? &&
+         team.selected_regional_pitch_event.unofficial?
 
-    if scores.any?
-      avg = (scores.inject(0.0) { |acc, s| acc + s.total } / scores.count).round(2)
+      official_scores = submission_scores.virtual.complete
+      unofficial_scores = submission_scores.live.complete
+
+    elsif team.selected_regional_pitch_event.live?
+
+      official_scores = submission_scores.live.complete
+      unofficial_scores = submission_scores.virtual.complete
+
+    else
+
+      official_scores = submission_scores.virtual.complete
+      unofficial_scores = submission_scores.live.complete
+
+    end
+
+    if official_scores.any?
+      avg = (official_scores.inject(0.0) { |acc, s|
+        acc + s.total
+      } / official_scores.count).round(2)
 
       update_column(:average_score, avg)
     else
       update_column(:average_score, 0)
     end
 
-    if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.unofficial?
-      unofficial_scores = submission_scores.live.complete
+    if unofficial_scores.any?
+      avg = (unofficial_scores.inject(0.0) { |acc, s|
+        acc + s.total
+      } / unofficial_scores.count).round(2)
 
-      if unofficial_scores.any?
-        avg = (unofficial_scores.inject(0.0) { |acc, s|
-          acc + s.total
-        } / unofficial_scores.count).round(2)
-
-        update_column(:average_unofficial_score, avg)
-      else
-        update_column(:average_unofficial_score, 0)
-      end
+      update_column(:average_unofficial_score, avg)
+    else
+      update_column(:average_unofficial_score, 0)
     end
   end
 
