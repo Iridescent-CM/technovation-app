@@ -17,6 +17,12 @@ class SubmissionScore < ActiveRecord::Base
     self.event_type = judge_profile.selected_regional_pitch_event.live? ? "live" : "virtual"
   }
 
+  enum round: %w{
+    quarterfinals
+    semifinals
+    finals
+  }
+
   belongs_to :team_submission, counter_cache: true
   belongs_to :judge_profile
 
