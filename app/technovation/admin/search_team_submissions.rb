@@ -18,9 +18,7 @@ module Admin
                                         "%#{params[:team_name].downcase}%")
       end
 
-      case params[:rank]
-      when 'all'
-      else
+      unless params[:rank] == "all"
         submissions = submissions.public_send(params[:rank])
       end
 
