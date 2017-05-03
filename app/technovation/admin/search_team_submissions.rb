@@ -21,8 +21,7 @@ module Admin
       case params[:rank]
       when 'all'
       else
-        submissions = submissions.where("contest_rank = ?",
-                                        TeamSubmission.contest_ranks[params[:rank]])
+        submissions = submissions.public_send(params[:rank])
       end
 
       case params[:status]
