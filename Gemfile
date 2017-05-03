@@ -87,6 +87,7 @@ group :development do
   gem "letter_opener", "~> 1.4"
   gem 'rack-mini-profiler', "~> 0.10"
   gem 'memory_profiler', "~> 0.9"
+  gem 'listen', '~> 3.1'
 end
 
 group :test do
