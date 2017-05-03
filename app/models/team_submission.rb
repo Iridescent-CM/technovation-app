@@ -34,6 +34,13 @@ class TeamSubmission < ActiveRecord::Base
     Other
   }
 
+  enum contest_rank: %w{
+    quarterfinalist
+    semifinalist
+    finalist
+    winner
+  }
+
   attr_accessor :step
 
   after_commit -> { SeasonRegistration.register(self) }, on: :create

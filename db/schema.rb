@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501141721) do
+ActiveRecord::Schema.define(version: 20170503170451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -150,10 +149,10 @@ ActiveRecord::Schema.define(version: 20170501141721) do
   end
 
   create_table "join_requests", force: :cascade do |t|
-    t.integer  "requestor_id",   null: false
     t.string   "requestor_type", null: false
-    t.integer  "joinable_id",    null: false
+    t.integer  "requestor_id",   null: false
     t.string   "joinable_type",  null: false
+    t.integer  "joinable_id",    null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at",     null: false
@@ -189,10 +188,10 @@ ActiveRecord::Schema.define(version: 20170501141721) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.integer  "member_id",     null: false
     t.string   "member_type",   null: false
-    t.integer  "joinable_id",   null: false
+    t.integer  "member_id",     null: false
     t.string   "joinable_type", null: false
+    t.integer  "joinable_id",   null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id", using: :btree
@@ -233,18 +232,18 @@ ActiveRecord::Schema.define(version: 20170501141721) do
     t.text     "body"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "regarding_id"
     t.string   "regarding_type"
+    t.integer  "regarding_id"
     t.datetime "sent_at"
     t.datetime "delivered_at"
     t.index ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id", using: :btree
   end
 
   create_table "multi_messages", force: :cascade do |t|
-    t.integer  "sender_id",      null: false
     t.string   "sender_type",    null: false
-    t.integer  "regarding_id",   null: false
+    t.integer  "sender_id",      null: false
     t.string   "regarding_type", null: false
+    t.integer  "regarding_id",   null: false
     t.hstore   "recipients",     null: false
     t.string   "subject"
     t.text     "body",           null: false
@@ -328,8 +327,8 @@ ActiveRecord::Schema.define(version: 20170501141721) do
 
   create_table "season_registrations", force: :cascade do |t|
     t.integer  "season_id",                     null: false
-    t.integer  "registerable_id",               null: false
     t.string   "registerable_type",             null: false
+    t.integer  "registerable_id",               null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.integer  "status",            default: 1, null: false
@@ -467,6 +466,7 @@ ActiveRecord::Schema.define(version: 20170501141721) do
     t.datetime "judge_opened_at"
     t.decimal  "average_score",              precision: 5, scale: 2, default: "0.0", null: false
     t.decimal  "average_unofficial_score",   precision: 5, scale: 2, default: "0.0", null: false
+    t.integer  "contest_rank",                                       default: 0,     null: false
     t.index ["average_score"], name: "index_team_submissions_on_average_score", using: :btree
     t.index ["average_unofficial_score"], name: "index_team_submissions_on_average_unofficial_score", using: :btree
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at", using: :btree

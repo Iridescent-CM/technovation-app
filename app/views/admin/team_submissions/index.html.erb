@@ -1,15 +1,15 @@
 <h1>Team Submissions</h1>
 
 <div class="flex-row">
-  <label class="flex-col-md-6">
+  <label class="flex-col-md-12">
     Team name:<br />
     <%= text_field_tag :team_name,
     params[:team_name],
     placeholder: "Press enter after typing",
     data: { reload: true } %>
-</label>
+  </label>
 
-  <label class="flex-col-md-3">
+  <label class="flex-col-md-4">
     Status:<br />
     <%= select_tag :status,
       options_for_select([["All", "all"],
@@ -19,13 +19,25 @@
       data: { reload: true } %>
   </label>
 
-  <label class="flex-col-md-3">
+  <label class="flex-col-md-4">
     Division:<br />
     <%= select_tag :division,
       options_for_select([['All', 'all'],
                           ['Senior', 'senior'],
                           ['Junior', 'junior']],
                         params.fetch(:division) { "all" }),
+      data: { reload: true } %>
+  </label>
+
+  <label class="flex-col-md-4">
+    Rank:<br />
+    <%= select_tag :rank,
+      options_for_select([['All', 'all'],
+                          ['Quarterfinalist', 'quarterfinalist'],
+                          ['Semifinalist', 'semifinalist'],
+                          ['Finalist', 'finalist'],
+                          ['Winner', 'winner']],
+                        params.fetch(:rank) { "all" }),
       data: { reload: true } %>
   </label>
 </div>

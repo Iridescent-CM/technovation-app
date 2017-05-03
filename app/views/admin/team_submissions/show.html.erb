@@ -5,7 +5,7 @@
   user_type: :admin %>
 
 <div class="flex-row">
-  <div class="flex-col-sm-12">
+  <div class="flex-col-sm-6">
     <%= link_to 'Edit this submission',
       edit_admin_team_submission_path(@team_submission) %>
 
@@ -14,6 +14,12 @@
     <%= link_to 'See the public/judge version',
       app_path(@team_submission),
       target: :_blank %>
+  </div>
+  <div class="flex-col-sm-6">
+    <dl>
+      <dt>Contest rank:</dt>
+      <dd><%= @team_submission.contest_rank %></dd>
+    </dl>
   </div>
 </div>
 
