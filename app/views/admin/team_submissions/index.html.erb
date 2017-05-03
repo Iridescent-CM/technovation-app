@@ -51,6 +51,7 @@
       <th>State/Province</th>
       <th>Country</th>
       <th>Status</th>
+      <th>Rank</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -66,6 +67,7 @@
         <td><%= submission.team_state_province %></td>
         <td><%= FriendlyCountry.(submission.team) %></td>
         <td><%= submission.status %></td>
+        <td><%= submission.contest_rank %></td>
 
         <td>
           <%= link_to "View details", admin_team_submission_path(submission) %>
