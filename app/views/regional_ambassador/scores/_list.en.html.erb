@@ -12,16 +12,7 @@
     </thead>
 
     <tbody>
-      <% teams.sort { |t1, t2|
-        case params.fetch(:sort) { "avg_score_desc" }
-        when "avg_score_desc"
-          t2.submission.average_score <=> t1.submission.average_score
-        when "avg_score_asc"
-          t1.submission.average_score <=> t2.submission.average_score
-        when "team_name"
-          t1.name.downcase <=> t2.name.downcase
-        end
-      }.each do |team| %>
+      <% teams.each do |team| %>
         <tr>
           <td><%= team.name %></td>
           <td><%= team.submission.app_name %></td>
@@ -34,8 +25,18 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="pagination_info" style="padding: 1rem 0 0;">
+    <%= page_entries_info teams,
+      model: "#{division.capitalize}_team" %>
+  </div>
+
+  <%= will_paginate teams, param_name: "#{division}_page" %>
 <% else %>
   <p>
-    No teams were found for the <strong><%= division %></strong> division of the event: <strong><%= event.name %></strong>.
+    No teams were found for the
+    <strong><%= division %></strong>
+    division of the event:
+    <strong><%= event.name %></strong>.
   </p>
 <% end %>

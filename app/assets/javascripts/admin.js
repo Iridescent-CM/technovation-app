@@ -22,7 +22,11 @@
     width: '250px',
   });
 
-  $('.chosen[data-reload]').chosen().change(function(e){
+  $('.chosen-wide').chosen({
+    width: '550px',
+  });
+
+  $('.chosen[data-reload], .chosen-wide[data-reload]').chosen().change(function(e){
     Admin.Utils.updateURLSearchParams(e.target.name, e.target.value);
   });
 
