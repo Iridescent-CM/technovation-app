@@ -197,6 +197,10 @@ class Team < ActiveRecord::Base
     division.junior?
   end
 
+  def senior?
+    division.senior?
+  end
+
   def current_team_submission
     team_submissions.current.first
   end
@@ -357,6 +361,7 @@ class Team < ActiveRecord::Base
     end
 
     def name; "Virtual (online) Judging"; end
+    def name_with_friendly_country_prefix; name; end
     def live?; false; end
     def virtual?; true; end
     def unofficial?; false; end

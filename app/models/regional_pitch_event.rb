@@ -112,4 +112,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   def virtual?
     false
   end
+
+  def name_with_friendly_country_prefix
+    "#{FriendlyCountry.(regional_ambassador_profile.account)} - #{name}"
+  end
 end
