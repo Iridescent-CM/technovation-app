@@ -24,14 +24,16 @@
 
 <div id="ra-scores-index" class="tabs">
   <ul class="tab-menu">
-    <li class="tab-link">
-      <button
-        role="button"
-        class="tab-button"
-        data-tab-id="ra-event-virtual">
-        Virtual Judging
-      </button>
-    </li>
+    <% if @virtual_senior_teams.any? or @virtual_junior_teams.any? %>
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="ra-event-virtual">
+          Virtual Judging
+        </button>
+      </li>
+    <% end %>
 
     <% @events.each do |event| %>
       <li class="tab-link">
@@ -46,27 +48,29 @@
   </ul>
 
   <div class="content">
-    <div class="flex-row tab-content" id="ra-event-virtual" style="background: white;">
-      <%= render 'regional_ambassador/scores/divisions', event: @virtual_event %>
+    <% if @virtual_senior_teams.any? or @virtual_junior_teams.any? %>
+      <div class="flex-row tab-content" id="ra-event-virtual" style="background: white;">
+        <%= render 'regional_ambassador/scores/divisions', event: @virtual_event %>
 
-      <div class="flex-col-md-10 content">
-        <div class="tab-content" id="ra-event-virtual-senior">
-          <%= render 'regional_ambassador/scores/list',
-            event: @virtual_event,
-            division: :senior,
-            teams: @virtual_senior_teams,
-            scope: :regional_ambassador %>
-        </div>
+        <div class="flex-col-md-10 content">
+          <div class="tab-content" id="ra-event-virtual-senior">
+            <%= render 'regional_ambassador/scores/list',
+              event: @virtual_event,
+              division: :senior,
+              teams: @virtual_senior_teams,
+              scope: :regional_ambassador %>
+          </div>
 
-        <div class="tab-content" id="ra-event-virtual-junior">
-          <%= render 'regional_ambassador/scores/list',
-            event: @virtual_event,
-            division: :junior,
-            teams: @virtual_junior_teams,
-            scope: :regional_ambassador  %>
+          <div class="tab-content" id="ra-event-virtual-junior">
+            <%= render 'regional_ambassador/scores/list',
+              event: @virtual_event,
+              division: :junior,
+              teams: @virtual_junior_teams,
+              scope: :regional_ambassador  %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
     <% @events.each do |event| %>
       <div class="flex-row tab-content" id="ra-event-<%= event.id %>" style="background: white;">
