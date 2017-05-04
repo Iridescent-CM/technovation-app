@@ -182,6 +182,7 @@ class ExportJob < ActiveJob::Base
         Country
         Division
         Sustainable\ development\ goal
+        Submisson\ complete?
         Event\ name
         Event\ type
         Event\ official?
@@ -203,6 +204,7 @@ class ExportJob < ActiveJob::Base
                 FriendlyCountry.(team),
                 team.division.name,
                 submission.stated_goal,
+                submission.complete? ? "complete" : "incomplete",
                 rpe.name,
                 rpe.live? ? "live" : "virtual",
                 rpe.unofficial? ? "unofficial" : "official",
@@ -229,6 +231,7 @@ class ExportJob < ActiveJob::Base
         Country
         Division
         Sustainable\ development\ goal
+        Submission\ complete?
         Event\ name
         Event\ type
         Event\ official?
@@ -255,6 +258,7 @@ class ExportJob < ActiveJob::Base
                 FriendlyCountry.(team),
                 team.division.name,
                 submission.stated_goal,
+                submission.complete? ? "complete" : "incomplete",
                 rpe.name,
                 rpe.live? ? "live" : "virtual",
                 rpe.unofficial? ? "unofficial" : "official",
