@@ -648,9 +648,15 @@
     buttonsWrapper.classList.add('verify-submission__buttons-wrapper');
 
     var submitButton = document.createElement('button');
-    buttonsWrapper.appendChild(submitButton);
     submitButton.classList.add('appy-button');
     submitButton.innerText = 'Submit Scores';
+
+    var note = document.createElement('span');
+    note.classList.add('note');
+    note.innerText = "(you can return to your submitted scores and edit them)";
+
+    buttonsWrapper.appendChild(submitButton);
+    buttonsWrapper.appendChild(note);
 
     submitButton.addEventListener('click', function() {
       $.ajax({

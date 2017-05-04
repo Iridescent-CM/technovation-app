@@ -595,8 +595,14 @@ $close-button-wrapper-height: 50px;
 }
 
 .verify-submission__buttons-wrapper {
-  display: flex;
-  justify-content: flex-end;
+  text-align: right;
+
+  .note {
+    margin: 1rem 0 0;
+    font-style: italic;
+    font-size: 0.9rem;
+    display: block;
+  }
 }
 
 .judge-submission-cta {
