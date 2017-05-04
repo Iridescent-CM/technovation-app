@@ -9,7 +9,8 @@
     </button>
   </div>
   <div class="card__body">
-    <% if submission.pitch_presentation.persisted? %>
+    <% if submission.pitch_presentation.persisted? and
+         not submission.pitch_presentation_url_text.blank? %>
       <p>
         <%= link_to submission.pitch_presentation_url_text,
           submission.pitch_presentation_url,
