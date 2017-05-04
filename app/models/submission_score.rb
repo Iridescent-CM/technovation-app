@@ -37,6 +37,17 @@ class SubmissionScore < ActiveRecord::Base
     .where("seasons.year = ?", Season.current.year)
   }
 
+  scope :current_round, -> {
+    case ENV.fetch("JUDGING_ROUND") { "QF" }
+    when "QF"
+      current.quarterfinals
+    when "SF"
+      current.semifinals
+    else
+      none
+    end
+  }
+
   scope :for_ambassador, ->(ambassador) {
     if ambassador.country == "US"
       joins(team_submission: :team)
