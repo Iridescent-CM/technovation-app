@@ -71,7 +71,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def event_official_status
-    if judge_profile.selected_regional_pitch_event_name.live?
+    if judge_profile.selected_regional_pitch_event.live?
       judge_profile.selected_regional_pitch_event.unofficial? ? "unofficial" : "official"
     else
       "virtual"
