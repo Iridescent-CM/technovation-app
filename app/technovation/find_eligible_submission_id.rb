@@ -1,7 +1,7 @@
 module FindEligibleSubmissionId
   class << self
     def call(judge_profile, options = {})
-      if judge_profile.selected_regional_pitch_event.live?
+      if quarterfinals? and judge_profile.selected_regional_pitch_event.live?
         submission_id_from_live_event(
           judge_profile.selected_regional_pitch_event,
           options[:team_submission_id]
@@ -28,9 +28,14 @@ module FindEligibleSubmissionId
     end
 
     def random_eligible_id(judge)
-      scored_submissions = judge.submission_scores.pluck(:team_submission_id)
+      scored_submissions = judge.submission_scores.current_round.pluck(:team_submission_id)
       judge_conflicts = judge.team_region_division_names
-      official_rpe_team_ids = RegionalPitchEvent.official.joins(:teams).pluck(:team_id)
+      official_rpe_team_ids = 
+        if quarterfinals?
+          RegionalPitchEvent.official.joins(:teams).pluck(:team_id)
+        else
+          []
+        end
       candidates = TeamSubmission.current
         .where.not(
           id: scored_submissions
@@ -51,5 +56,9 @@ module FindEligibleSubmissionId
       sub = candidates.first
       sub && sub.id
     end
+  end
+
+  def self.quarterfinals?
+    ENV.fetch("JUDGING_ROUND") { "QF" } == "QF"
   end
 end
