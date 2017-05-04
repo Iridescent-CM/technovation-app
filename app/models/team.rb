@@ -359,7 +359,7 @@ class Team < ActiveRecord::Base
     def name; "Virtual (online) Judging"; end
     def live?; false; end
     def virtual?; true; end
-    def unofficial?; true; end
+    def unofficial?; false; end
     def id; "virtual"; end
     def city; "No city, all online"; end
     def venue_address; "No address, all online"; end

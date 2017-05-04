@@ -71,24 +71,28 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def event_official_status
-    judge_profile.selected_regional_pitch_event.unofficial? ? "unofficial" : "official"
+    if judge_profile.selected_regional_pitch_event_name.live?
+      judge_profile.selected_regional_pitch_event.unofficial? ? "unofficial" : "official"
+    else
+      "virtual"
+    end
   end
 
   def average_completed_live_score
     if event_type == "live" and event_official_status == "official"
       team_submission.average_score
-    elsif event_type == "live"
-      team_submission.average_unofficial_score
     else
-      0.0
+      team_submission.average_unofficial_score
     end
   end
 
   def average_completed_virtual_score
     if event_type == "virtual"
       team_submission.average_score
+    elsif event_type == "live" and event_official_status == "unofficial"
+      team_submission.average_score
     else
-      0.0
+      team_submission.average_unofficial_score
     end
   end
 
