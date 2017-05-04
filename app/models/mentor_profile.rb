@@ -25,7 +25,7 @@ class MentorProfile < ActiveRecord::Base
 
     if ids == male_female
       ids = ids + [Account.genders["Prefer not to say"], Account.genders["Non-binary"]]
-      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids.distinct)
+      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids.uniquniq
     elsif ids == all_genders
       joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
     else
