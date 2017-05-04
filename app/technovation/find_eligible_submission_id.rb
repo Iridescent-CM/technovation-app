@@ -36,7 +36,7 @@ module FindEligibleSubmissionId
         else
           []
         end
-      candidates = TeamSubmission.current
+      candidates = TeamSubmission.current.public_send(rank_for_current_round)
         .where.not(
           id: scored_submissions
         )
@@ -56,9 +56,27 @@ module FindEligibleSubmissionId
       sub = candidates.first
       sub && sub.id
     end
-  end
 
-  def self.quarterfinals?
-    ENV.fetch("JUDGING_ROUND") { "QF" } == "QF"
+    def current_round
+      case ENV.fetch("JUDGING_ROUND") { "QF" }
+      when "QF"
+        :quarterfinals
+      when "SF"
+        :semifinals
+      end
+    end
+
+    def rank_for_current_round
+      case current_round
+      when :quarterfinals
+        :quarterfinalist
+      when :semifinals
+        :semifinalist
+      end
+    end
+
+    def quarterfinals?
+      current_round == :quarterfinals
+    end
   end
 end
