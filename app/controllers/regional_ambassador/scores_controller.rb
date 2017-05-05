@@ -12,7 +12,7 @@ module RegionalAmbassador
       virtual_event = Team::VirtualRegionalPitchEvent.new
 
       if virtual_event.teams.for_ambassador(current_ambassador).any?
-        params[:evemt] ||= "virtual"
+        params[:event] ||= "virtual"
 
         @event = if params[:event] == "virtual"
                   virtual_event
