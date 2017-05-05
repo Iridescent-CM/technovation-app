@@ -58,6 +58,13 @@ module RegionalAmbassador
         .includes(team_submissions: :submission_scores)
         .for_ambassador(current_ambassador)
         .public_send(params[:division])
+        .select { |t|
+          if t.selected_regional_pitch_event.live?
+            true
+          else
+            t.submission.complete?
+          end
+        }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
