@@ -1,103 +1,14 @@
-<h1 class="appy-title">
-  Regional Scores
-</h1>
-
 <div class="flex-row">
   <div class="flex-col-md-9">
-    <label>
-      Sort all results by:
-      <%= select_tag :sort,
-        options_for_select([["Highest average score", "avg_score_desc"],
-                            ["Lowest average score", "avg_score_asc"],
-                            ["Team name", "team_name"]],
-                          params.fetch(:sort) { "avg_score_desc" }),
-        data: { reload: true } %>
-    </label>
+    <h1 class="appy-title" style="margin: 0;">
+      <%= Season.current.year %> <%= current_ambassador.region_name.titleize %> Scores
+    </h1>
   </div>
 
-  <div class="flex-col-md-3">
-    <%= form_tag regional_ambassador_exports_path(params.merge(class: "scores")) do %>
-      <%= button_tag "Email CSV Report", class: "appy-button" %>
-    <% end %>
-  </div>
-</div>
-
-<div id="ra-scores-index" class="tabs">
-  <ul class="tab-menu">
-    <% if @virtual_senior_teams.any? or @virtual_junior_teams.any? %>
-      <li class="tab-link">
-        <button
-          role="button"
-          class="tab-button"
-          data-tab-id="ra-event-virtual">
-          Virtual Judging
-        </button>
-      </li>
-    <% end %>
-
-    <% @events.each do |event| %>
-      <li class="tab-link">
-        <button
-          role="button"
-          class="tab-button"
-          data-tab-id="ra-event-<%= event.id %>">
-          <%= event.name %>
-        </button>
-      </li>
-    <% end %>
-  </ul>
-
-  <div class="content">
-    <% if @virtual_senior_teams.any? or @virtual_junior_teams.any? %>
-      <div class="flex-row tab-content" id="ra-event-virtual" style="background: white;">
-        <%= render 'regional_ambassador/scores/divisions', event: @virtual_event %>
-
-        <div class="flex-col-md-10 content">
-          <div class="tab-content" id="ra-event-virtual-senior">
-            <%= render 'regional_ambassador/scores/list',
-              event: @virtual_event,
-              division: :senior,
-              teams: @virtual_senior_teams,
-              scope: :regional_ambassador %>
-          </div>
-
-          <div class="tab-content" id="ra-event-virtual-junior">
-            <%= render 'regional_ambassador/scores/list',
-              event: @virtual_event,
-              division: :junior,
-              teams: @virtual_junior_teams,
-              scope: :regional_ambassador  %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <% @events.each do |event| %>
-      <div class="flex-row tab-content" id="ra-event-<%= event.id %>" style="background: white;">
-        <%= render 'regional_ambassador/scores/divisions', event: event %>
-
-        <div class="flex-col-md-10 content">
-          <% if event.divisions.include?(Division.senior) %>
-            <div class="tab-content" id="ra-event-<%= event.id %>-senior">
-              <%= render 'regional_ambassador/scores/list',
-                division: :senior,
-                event: event,
-                teams: event.teams.senior,
-                scope: :regional_ambassador  %>
-            </div>
-          <% end %>
-
-          <% if event.divisions.include?(Division.junior) %>
-            <div class="tab-content" id="ra-event-<%= event.id %>-junior">
-              <%= render 'regional_ambassador/scores/list',
-                division: :junior,
-                event: event,
-                teams: event.teams.junior,
-                scope: :regional_ambassador  %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <%= render 'regional_ambassador/scores/index',
+    teams: @teams,
+    event: @event,
+    events: @events,
+    division: @division,
+    scope: :regional_ambassador %>
 </div>

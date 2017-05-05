@@ -37,6 +37,14 @@
   $('.chosen').chosen({
     width: '250px',
   });
+
+  $('.chosen-wide').chosen({
+    width: '250px',
+  });
+
+  $('.chosen[data-reload], .chosen-wide[data-reload]').chosen().change(function(e){
+    Admin.Utils.updateURLSearchParams(e.target.name, e.target.value);
+  });
 })();
 
 (function showHideAction() {
