@@ -104,7 +104,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def update_average_scores
     update_quarterfinals_average_score
-    # will eventually update semifinals too
+    update_semifinals_average_score
   end
 
   def update_quarterfinals_average_score
@@ -144,6 +144,19 @@ class TeamSubmission < ActiveRecord::Base
       update_column(:average_unofficial_score, avg)
     else
       update_column(:average_unofficial_score, 0)
+    end
+  end
+
+  def update_semifinals_average_score
+    scores = submission_scores.complete.semifinals
+    if scores.any?
+      avg = (scores.inject(0.0) { |acc, s|
+        acc + s.total
+      } / scores.count).round(2)
+
+      update_column(:semifinals_average_score, avg)
+    else
+      update_column(:semifinals_average_score, 0)
     end
   end
 

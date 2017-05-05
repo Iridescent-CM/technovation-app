@@ -29,7 +29,7 @@ namespace :scores do
       ts.reload
       puts "Updated #{ts.app_name} averages to"
       puts "    quarterfinals: #{ts.quarterfinals_average_score}"
-      #puts "       semifinals: #{ts.semifinals_average_score}"
+      puts "       semifinals: #{ts.semifinals_average_score}"
     end
   end
 end
