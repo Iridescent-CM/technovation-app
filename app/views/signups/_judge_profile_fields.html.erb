@@ -1,8 +1,0 @@
-<%= f.fields_for :account do |a| %>
-  <%= a.input :gender,
-    label: "#{t('models.account.gender')} #{t('views.application.optional')}",
-    collection: Account.genders.keys %>
-<% end %>
-
-<%= f.input :company_name %>
-<%= f.input :job_title %>
