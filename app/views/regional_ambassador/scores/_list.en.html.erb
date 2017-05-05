@@ -1,4 +1,4 @@
-<% if teams.any? %>
+<% if submissions.any? %>
   <table class="ra-participants-list">
     <thead>
       <tr>
@@ -12,30 +12,30 @@
     </thead>
 
     <tbody>
-      <% teams.each do |team| %>
+      <% submissions.each do |submission| %>
         <tr>
-          <td><%= team.name %></td>
+          <td><%= submission.team.name %></td>
           <td>
-            <%= link_to team.submission.app_name,
-              app_path(team.submission),
+            <%= link_to submission.app_name,
+              app_path(submission),
               target: :_blank %>
           </td>
-          <td><%= team.submission_scores.complete.count %></td>
-          <td><%= team.submission_scores.incomplete.count %></td>
-          <td><%= team.submission.average_score %></td>
+          <td><%= submission.submission_scores.complete.count %></td>
+          <td><%= submission.submission_scores.incomplete.count %></td>
+          <td><%= submission.average_score %></td>
           <td><%= link_to 'View details',
-            send("#{scope}_score_path", team.submission) %></td>
+            send("#{scope}_score_path", submission) %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
   <div class="pagination_info" style="padding: 1rem 0 0;">
-    <%= page_entries_info teams,
+    <%= page_entries_info submissions,
       model: "#{division.capitalize}_team" %>
   </div>
 
-  <%= will_paginate teams %>
+  <%= will_paginate submissions %>
 
   <label class="per_page">
     Per page:
