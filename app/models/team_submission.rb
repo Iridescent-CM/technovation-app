@@ -34,6 +34,13 @@ class TeamSubmission < ActiveRecord::Base
     Other
   }
 
+  enum contest_rank: %w{
+    quarterfinalist
+    semifinalist
+    finalist
+    winner
+  }
+
   attr_accessor :step
 
   after_commit -> { SeasonRegistration.register(self) }, on: :create
@@ -43,6 +50,20 @@ class TeamSubmission < ActiveRecord::Base
   scope :current, -> {
     joins(season_registrations: :season).where("seasons.year = ?", Season.current.year)
   }
+
+  scope :for_ambassador, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(:team).where("teams.state_province = ? AND teams.country = 'US'", ambassador.state_province)
+    else
+      joins(:team).where("teams.country = ?", ambassador.country)
+    end
+  }
+
+  Division.names.keys.each do |division_name|
+    scope division_name, -> {
+      joins(team: :division).where("divisions.name = ?", Division.names[division_name])
+    }
+  end
 
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
@@ -85,18 +106,18 @@ class TeamSubmission < ActiveRecord::Base
     if team.selected_regional_pitch_event.live? &&
          team.selected_regional_pitch_event.unofficial?
 
-      official_scores = submission_scores.virtual.complete
-      unofficial_scores = submission_scores.live.complete
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     elsif team.selected_regional_pitch_event.live?
 
-      official_scores = submission_scores.live.complete
-      unofficial_scores = submission_scores.virtual.complete
+      official_scores = submission_scores.live.complete.quarterfinals
+      unofficial_scores = submission_scores.virtual.complete.quarterfinals
 
     else
 
-      official_scores = submission_scores.virtual.complete
-      unofficial_scores = submission_scores.live.complete
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     end
 

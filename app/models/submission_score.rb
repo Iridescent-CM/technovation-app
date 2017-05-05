@@ -17,7 +17,19 @@ class SubmissionScore < ActiveRecord::Base
     self.event_type = judge_profile.selected_regional_pitch_event.live? ? "live" : "virtual"
   }
 
+  enum round: %w{
+    quarterfinals
+    semifinals
+    finals
+  }
+
   belongs_to :team_submission, counter_cache: true
+  counter_culture :team_submission,
+                  column_name: proc {|model| "#{model.round}_submission_scores_count" },
+                  column_names: {
+                    ["submission_scores.round = ?", rounds[:quarterfinals]] => 'quarterfinals_submission_scores_count',
+                    ["submission_scores.round = ?", rounds[:semifinals]] => 'semifinals_submission_scores_count'
+                  }
   belongs_to :judge_profile
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
@@ -29,6 +41,17 @@ class SubmissionScore < ActiveRecord::Base
   scope :current, -> {
     joins(team_submission: { team: { season_registrations: :season } })
     .where("seasons.year = ?", Season.current.year)
+  }
+
+  scope :current_round, -> {
+    case ENV.fetch("JUDGING_ROUND") { "QF" }
+    when "QF"
+      current.quarterfinals
+    when "SF"
+      current.semifinals
+    else
+      none
+    end
   }
 
   scope :for_ambassador, ->(ambassador) {

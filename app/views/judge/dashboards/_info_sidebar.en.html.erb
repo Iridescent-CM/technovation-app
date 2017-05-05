@@ -8,7 +8,7 @@
           edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
         <%= current_judge.submission_scores.incomplete.last.name %>
       </p>
-    <% elsif current_judge.selected_regional_pitch_event.live? %>
+    <% elsif quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
       <p>
         Choose a submission from among the
         <%= current_judge.selected_regional_pitch_event.division_names %>

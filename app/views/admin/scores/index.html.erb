@@ -17,11 +17,23 @@
     </h1>
   </div>
 
+  <div class="flex-col-md-12">
+    <label>
+      Judging round:
+
+      <%= select_tag :round,
+        options_for_select([["Quarterfinals", "quarterfinals"],
+                            ["Semifinals", "semifinals"]],
+                          params.fetch(:round)),
+        data: { reload: true } %>
+    </label>
+  </div>
   <%= render 'regional_ambassador/scores/index',
-    teams: @teams,
+    submissions: @submissions,
     event: @event,
     events: @events,
     division: @division,
+    judging_round: params.fetch(:round),
     scope: :admin %>
 
   <div class="flex-col-md-12">

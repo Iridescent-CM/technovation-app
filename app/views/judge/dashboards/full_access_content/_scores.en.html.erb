@@ -7,11 +7,11 @@
             role="button"
             class="tab-button"
             data-tab-id="in-progress">
-            In progress (<%= current_judge.submission_scores.incomplete.count %>)
+            In progress (<%= current_judge.submission_scores.current_round.incomplete.count %>)
           </button>
         </li>
 
-        <% if current_judge.selected_regional_pitch_event.live? %>
+        <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
           <% if assigned_teams(current_judge).senior.any? %>
             <li class="tab-link">
               <button
@@ -40,7 +40,7 @@
             role="button"
             class="tab-button"
             data-tab-id="completed">
-            Completed (<%= current_judge.submission_scores.complete.count %>)
+            Completed (<%= current_judge.submission_scores.current_round.complete.count %>)
           </button>
         </li>
       </ul>
@@ -48,10 +48,10 @@
 
     <div class="flex-col-md-9 content">
       <div class="tab-content" id="in-progress">
-        <% if current_judge.submission_scores.incomplete.empty? %>
+        <% if current_judge.submission_scores.current_round.incomplete.empty? %>
           <p>You don't have any scores currently in progress.</p>
 
-          <% if current_judge.selected_regional_pitch_event.live? %>
+          <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
             <p>
               Choose a submission from among the
               <%= current_judge.selected_regional_pitch_event.division_names %>
@@ -62,7 +62,7 @@
           <% end %>
         <% end %>
 
-        <% current_judge.submission_scores.incomplete.each do |score| %>
+        <% current_judge.submission_scores.current_round.incomplete.each do |score| %>
           <div class="incomplete-score">
             <h1><%= score.name %></h1>
             <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>
@@ -86,7 +86,7 @@
         <% end %>
       </div>
 
-      <% if current_judge.selected_regional_pitch_event.live? %>
+      <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
         <div class="tab-content" id="senior-submissions">
           <% assigned_teams(current_judge).senior.each do |team| %>
             <div class="choose-senior-score">
@@ -97,19 +97,19 @@
                 <p><strong>Division:</strong> <%= team.division_name %></p>
                 <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
 
-                <% if current_judge.submission_scores.incomplete.flat_map(&:team).include?(team) %>
+                <% if current_judge.submission_scores.current_round.incomplete.flat_map(&:team).include?(team) %>
                   <p>
                     <%= link_to "Resume scoring this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
                         anchor: :window
                       ) %>
                   </p>
-                <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
+                <% elsif current_judge.submission_scores.current_round.complete.flat_map(&:team).include?(team) %>
                   <p>
                     <%= link_to "Review & edit your score for this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
                         anchor: :review
                       ) %>
                   </p>
@@ -140,19 +140,19 @@
                 <p><strong>Division:</strong> <%= team.division_name %></p>
                 <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
 
-                <% if current_judge.submission_scores.incomplete.flat_map(&:team).include?(team) %>
+                <% if current_judge.submission_scores.current_round.incomplete.flat_map(&:team).include?(team) %>
                   <p>
                     <%= link_to "Resume scoring this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
                         anchor: :window
                       ) %>
                   </p>
-                <% elsif current_judge.submission_scores.complete.flat_map(&:team).include?(team) %>
+                <% elsif current_judge.submission_scores.current_round.complete.flat_map(&:team).include?(team) %>
                   <p>
                     <%= link_to "Review & edit your score for this submission",
                       edit_judge_submission_score_path(
-                        current_judge.submission_scores.find_by(team_submission_id: team.submission.id),
+                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
                         anchor: :review
                       ) %>
                   </p>
@@ -175,22 +175,22 @@
       <% end %>
 
       <div class="tab-content" id="completed">
-        <% if current_judge.submission_scores.complete.empty? %>
+        <% if current_judge.submission_scores.current_round.complete.empty? %>
           <p>You haven't completed any scores yet.</p>
 
-          <% if current_judge.submission_scores.incomplete.any? %>
+          <% if current_judge.submission_scores.current_round.incomplete.any? %>
             <p>
               <%= link_to(
-                "Resume scoring #{current_judge.submission_scores.incomplete.last.name}",
+                "Resume scoring #{current_judge.submission_scores.current_round.incomplete.last.name}",
                 edit_judge_submission_score_path(
-                  current_judge.submission_scores.incomplete.last.id,
+                  current_judge.submission_scores.current_round.incomplete.last.id,
                   anchor: :window
                 )) %>
             </p>
           <% end %>
         <% end %>
 
-        <% current_judge.submission_scores.complete.each do |score| %>
+        <% current_judge.submission_scores.current_round.complete.each do |score| %>
           <div class="complete-score">
             <h1><%= score.name %></h1>
             <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>

@@ -4,7 +4,9 @@ class JudgeController < ApplicationController
 
   layout "judge"
   helper_method :current_judge,
-                :assigned_teams
+                :assigned_teams,
+                :current_round,
+                :quarterfinals?
 
   before_action -> {
     if "judge" != cookies[:last_profile_used]
@@ -36,5 +38,18 @@ class JudgeController < ApplicationController
     else
       judge.assigned_teams
     end
+  end
+
+  def current_round
+    case ENV.fetch("JUDGING_ROUND") { "QF" }
+    when "QF"
+      :quarterfinals
+    when "SF"
+      :semifinals
+    end
+  end
+
+  def quarterfinals?
+    current_round == :quarterfinals
   end
 end

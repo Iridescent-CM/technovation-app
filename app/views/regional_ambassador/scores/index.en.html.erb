@@ -6,9 +6,10 @@
   </div>
 
   <%= render 'regional_ambassador/scores/index',
-    teams: @teams,
+    submissions: @submissions,
     event: @event,
     events: @events,
     division: @division,
+    judging_round: "quarterfinals",
     scope: :regional_ambassador %>
 </div>

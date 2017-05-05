@@ -43,7 +43,7 @@
       class: "chosen-wide",
       data: { reload: true } %>
     </label>
-  <% else %>
+  <% elsif event %>
     <strong>Your event: <%= event.name %>.</strong>
   <% end %>
 </div>
@@ -62,7 +62,8 @@
 <div class="flex-col-md-12">
   <%= render 'regional_ambassador/scores/list',
     division: division,
+    judging_round: judging_round,
     event: event,
-    teams: teams,
+    submissions: submissions,
     scope: scope %>
 </div>

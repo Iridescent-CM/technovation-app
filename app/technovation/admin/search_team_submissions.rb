@@ -2,6 +2,7 @@ module Admin
   module SearchTeamSubmissions
     def self.call(params)
       params[:division] = "all" if params[:division].blank?
+      params[:rank] = "all" if params[:rank].blank?
 
       submissions = TeamSubmission.joins(team: :division)
 
@@ -15,6 +16,10 @@ module Admin
       unless params[:team_name].blank?
         submissions = submissions.where("LOWER(teams.name) LIKE ?",
                                         "%#{params[:team_name].downcase}%")
+      end
+
+      unless params[:rank] == "all"
+        submissions = submissions.public_send(params[:rank])
       end
 
       case params[:status]
