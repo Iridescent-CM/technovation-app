@@ -54,7 +54,7 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
     select "United States", from: "Country"
-    click_button "Confirm location details"
+    click_button "Save"
 
     expect(RegionalAmbassadorProfile.last.address_details).to eq("Chicago, IL, United States")
     expect(RegionalAmbassadorProfile.last.account).to be_location_confirmed

@@ -20,7 +20,7 @@ RSpec.feature "Edit account spec" do
 
     fill_in "City", with: "Los Angeles"
     fill_in "State / Province", with: "CA"
-    click_button "Confirm location details"
+    click_button "Save"
 
     expect(StudentProfile.last.city).to eq("Los Angeles")
   end
