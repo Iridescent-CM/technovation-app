@@ -13,6 +13,8 @@ RSpec.configure do |config|
   config.fail_fast = true
 
   config.include WebMock::API
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false

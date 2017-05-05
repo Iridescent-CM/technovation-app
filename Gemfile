@@ -5,25 +5,24 @@ gem 'rails', '~> 5.1'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
+gem 'devise',
+  git: 'https://github.com/plataformatec/devise.git',
+  branch: 'master'
+
+gem 'omniauth', '~> 1.6'
 
 gem "paranoia", '~> 2.3'
 
+gem 'foundation-rails', '~> 6.3'
+gem 'jquery-rails', '~> 4.3'
 gem 'uglifier', '~> 3.2'
-gem 'jquery-rails', "~> 4.3"
-gem 'jquery-ui-rails', '~> 6.0'
-gem 'lodash-rails', "~> 4.17"
 gem 'sass-rails', "~> 5.0"
-
-gem 'clipboard-rails', "~> 1.6"
 
 gem 'elasticsearch-model', "~> 0.1"
 gem 'elasticsearch-rails', "~> 0.1"
 gem 'elasticsearch-dsl', "~> 0.1"
 
 gem 'friendly_id', "~> 5.2"
-
-gem "autoprefixer-rails", "~> 6.7"
-gem 'nokogiri', "~> 1.7"
 
 gem 'rails-i18n', "~> 5.0"
 
@@ -50,11 +49,6 @@ gem 'carrierwave_direct', "~> 0.0"
 gem 'checkr-official', "~> 1.2", require: "checkr"
 
 gem 'font-awesome-rails', "~> 4.7"
-gem 'chosen-rails', "~> 1.5"
-
-gem 'simple_form',
-  git: 'https://github.com/elsurudo/simple_form.git',
-  branch: 'rails-5.1.0'
 
 gem 'countries', '~> 1.2', require: "countries/global"
 
@@ -62,12 +56,7 @@ gem 'country_state_select',
   git: 'https://github.com/arvindvyas/Country-State-Select.git',
   branch: 'master'
 
-gem "chartkick", "~> 2.2"
-gem 'groupdate', "~> 3.2"
-
 gem 'will_paginate', '~> 3.1'
-
-gem 'indefinite_article', "~> 0.2"
 
 gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
 
@@ -78,12 +67,10 @@ group :development, :test do
   gem 'pry-rails', "~> 0.3"
   gem 'pry-nav', "~> 0.2"
   gem 'rspec-rails', "~> 3.5"
-  gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
 end
 
 group :development do
-  gem 'active_record_query_trace', "~> 1.5"
   gem "letter_opener", "~> 1.4"
   gem 'rack-mini-profiler', "~> 0.10"
   gem 'memory_profiler', "~> 0.9"
@@ -97,7 +84,6 @@ group :test do
   gem 'sinatra', '~> 2.0.0.beta'
   gem 'capybara-webkit', "~> 1.14"
   gem 'database_cleaner', "~> 1.5"
-  gem 'rails-controller-testing', "~> 1.0"
 end
 
 group :production, :development do
@@ -115,7 +101,7 @@ group :test, :development do
   gem 'factory_girl_rails', "~> 4.8"
 end
 
-group :legacy do
+group :legacy1 do
   # LEGACY MIGRATION
   # Do not use these gems
   #
