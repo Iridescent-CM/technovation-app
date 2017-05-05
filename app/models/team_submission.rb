@@ -111,18 +111,18 @@ class TeamSubmission < ActiveRecord::Base
     if team.selected_regional_pitch_event.live? &&
          team.selected_regional_pitch_event.unofficial?
 
-      official_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.quarterfinals.live.complete.quarterfinals
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     elsif team.selected_regional_pitch_event.live?
 
-      official_scores = submission_scores.quarterfinals.live.complete.quarterfinals
-      unofficial_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
+      official_scores = submission_scores.live.complete.quarterfinals
+      unofficial_scores = submission_scores.virtual.complete.quarterfinals
 
     else
 
-      official_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.quarterfinals.live.complete.quarterfinals
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     end
 
