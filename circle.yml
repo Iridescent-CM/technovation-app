@@ -22,3 +22,14 @@ machine:
     BONSAI_URL: localhost:9200
     GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
     BING_MAPS_API_KEY: no-matter-in-test
+
+deployment:
+  qa:
+    branch: master
+    heroku:
+      appname: technovation-qa
+      
+  prod:
+    branch: production
+    heroku:
+      appname: technovation
