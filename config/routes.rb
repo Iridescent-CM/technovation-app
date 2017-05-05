@@ -19,5 +19,5 @@ Rails.application.routes.draw do
   namespace :admin do
   end
 
-  root to: "team_registrations#show"
+  root to: "team_registrations#new"
 end
