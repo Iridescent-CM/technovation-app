@@ -2,14 +2,14 @@
   geolocate();
 
   function geolocate() {
+    if (!document.getElementById('account_city'));
+      return;
+
     var $cityField = $("#account_city"),
         $stateField = $("#account_state_province"),
         $countryField = $("#account_country"),
         $latField = $("#account_latitude"),
         $lngField = $("#account_longitude");
-
-    if (!$cityField)
-      return;
 
     $cityField.closest('form').addClass('geocoding');
 
