@@ -40,9 +40,9 @@ module TechnovationApp
     config.i18n.available_locales = [:en, :'es-MX']
 
     config.generators do |g|
-      g.test_framework false
+      g.test_framework :rspec
       g.routes false
-      g.assets false
+      g.assets true
       g.helper false
       g.factory_girl false
       g.factory_girl dir: 'spec/factories'
