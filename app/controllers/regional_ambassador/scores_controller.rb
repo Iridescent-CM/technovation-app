@@ -55,10 +55,9 @@ module RegionalAmbassador
     def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
       submissions = @event.team_submissions
         .includes(:submission_scores)
-        .includes(team: :regional_pitch_events, :submission_scores)
         .for_ambassador(current_ambassador)
         .public_send(params[:division])
-        .select { |t| t.selected_regional_pitch_event.live? or t.submission.complete? }
+        .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
