@@ -72,7 +72,7 @@ module Admin
           end
         }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
 
-      if teams.empty?
+      if teams.empty? and page.to_i != 1
         get_sorted_paginated_teams_in_requested_division(1)
       else
         teams
