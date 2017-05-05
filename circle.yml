@@ -4,6 +4,9 @@ machine:
       2.4.1
       
   environment:
+    AIRBRAKE_PROJECT_ID: n-a
+    AIRBRAKE_PROJECT_KEY: n-a
+    NEW_RELIC_LICENSE_KEY: no-matter
     GOOGLE_MAPS_API_KEY: no-matter-in-test
     HOST_DOMAIN: localhost:3000
     AWS_ACCESS_KEY_ID: test
