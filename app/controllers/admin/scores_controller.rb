@@ -41,9 +41,8 @@ module Admin
           @event.teams
         else
           @events = RegionalPitchEvent.none
-          foo = Team.current.joins(:team_submissions)
+          Team.current.joins(:team_submissions)
               .where(team_submissions: { contest_rank: TeamSubmission.contest_ranks[:semifinalist]})
-          foo
         end
 
       @teams = get_sorted_paginated_teams_in_requested_division(teams)
