@@ -24,7 +24,7 @@ module FindEligibleSubmissionId
     end
 
     def id_for_score_in_progress(judge)
-      judge.submission_scores.incomplete.last.try(:team_submission_id)
+      judge.submission_scores.current_round.incomplete.last.try(:team_submission_id)
     end
 
     def random_eligible_id(judge)
@@ -49,8 +49,8 @@ module FindEligibleSubmissionId
             not judge_conflicts.include?(sub.team.region_division_name))
         }
         .sort {|x,y|
-          x = x.submission_scores_count || 0
-          y = y.submission_scores_count || 0
+          x = x.public_send("#{current_round}_submission_scores_count") || 0
+          y = y.public_send("#{current_round}_submission_scores_count") || 0
           x <=> y
         }
       sub = candidates.first

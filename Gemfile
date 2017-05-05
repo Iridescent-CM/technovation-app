@@ -7,6 +7,7 @@ gem 'pg', '~> 0.20'
 
 
 gem "paranoia", '~> 2.3'
+gem 'counter_culture', '~> 1.0'
 
 gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
