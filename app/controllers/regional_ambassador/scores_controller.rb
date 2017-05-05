@@ -54,6 +54,8 @@ module RegionalAmbassador
     private
     def get_sorted_paginated_teams_in_requested_division(page = params[:page])
       teams = @event.teams
+        .joins(:team_submissions)
+        .includes(team_submissions: :submission_scores)
         .for_ambassador(current_ambassador)
         .public_send(params[:division])
         .sort { |a, b|

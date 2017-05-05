@@ -369,8 +369,7 @@ class Team < ActiveRecord::Base
     def eventbrite_link; end
 
     def teams
-      Team.joins(team_submissions: :submission_scores)
-          .not_attending_live_event
+      Team.not_attending_live_event
     end
 
     def timezone

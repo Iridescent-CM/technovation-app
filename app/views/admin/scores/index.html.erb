@@ -1,7 +1,19 @@
 <div class="flex-row">
-  <div class="flex-col-md-12">
+  <div class="flex-col-md-4">
     <h1 class="appy-title">
       All Scores
+    </h1>
+  </div>
+
+  <div class="flex-col-md-4">
+    <h1 class="appy-title">
+      <%= pluralize SubmissionScore.complete.count, "complete score" %>
+    </h1>
+  </div>
+
+  <div class="flex-col-md-4">
+    <h1 class="appy-title">
+      <%= pluralize SubmissionScore.incomplete.count, "pending score" %>
     </h1>
   </div>
 
