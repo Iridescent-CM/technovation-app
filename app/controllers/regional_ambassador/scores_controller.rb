@@ -31,7 +31,7 @@ module RegionalAmbassador
         @events = events.sort_by(&:name)
       end
 
-      @teams = get_sorted_paginated_teams_in_requested_division
+      @submissions = get_sorted_paginated_submissions_in_requested_division
     end
 
     def show
@@ -52,28 +52,27 @@ module RegionalAmbassador
     end
 
     private
-    def get_sorted_paginated_teams_in_requested_division(page = params[:page])
-      teams = @event.teams
-        .joins(:team_submissions)
-        .includes(:regional_pitch_events, team_submissions: :submission_scores)
+    def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
+      submissions = @event.team_submissions
+        .includes(:submission_scores, team: :regional_pitch_events)
         .for_ambassador(current_ambassador)
         .public_send(params[:division])
-        .select { |t| t.selected_regional_pitch_event.live? or t.submission.complete? }
+        .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
-            b.submission.average_score <=> a.submission.average_score
+            b.average_score <=> a.average_score
           when "avg_score_asc"
-            a.submission.average_score <=> b.submission.average_score
+            a.average_score <=> b.average_score
           when "team_name"
-            a.name <=> b.name
+            a.team.name <=> b.team.name
           end
         }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
 
-      if teams.empty? and page.to_i != 1
-        get_sorted_paginated_teams_in_requested_division(1)
+      if submissions.empty? and page.to_i != 1
+        get_sorted_paginated_submissions_in_requested_division(1)
       else
-        teams
+        submissions
       end
     end
   end
