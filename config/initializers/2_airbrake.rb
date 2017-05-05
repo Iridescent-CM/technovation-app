@@ -67,6 +67,7 @@ Airbrake.add_filter do |notice|
    Net::SMTPSyntaxError
    SignalException
    Elasticsearch::Transport::Transport::ServerError
+   ActionController::UnknownFormat
  }
 
   if notice[:errors].any? do |error|
