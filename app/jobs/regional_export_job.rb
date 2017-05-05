@@ -61,8 +61,9 @@ class RegionalExportJob < ActiveJob::Base
 
   def export_team_submissions(ambassador, params)
     submission_ids = RegionalAmbassador::SearchTeamSubmissions.(params, ambassador)
-      .select(&:id)
+      .map(&:id)
       .uniq
+
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Team_Submissions-Division_#{params[:division]}-SustainableDevGaol_#{params[:sdg]}-HasName_#{params[:has_name]}-TechCheckListStarted_#{params[:technical_checklist]}.csv"
 
     CSV.open(filepath, 'wb') do |csv|
