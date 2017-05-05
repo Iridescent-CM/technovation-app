@@ -20,8 +20,8 @@
               app_path(team.submission),
               target: :_blank %>
           </td>
-          <td><%= team.submission_scores.quarterfinals.complete.count %></td>
-          <td><%= team.submission_scores.quarterfinals.incomplete.count %></td>
+          <td><%= team.submission_scores.public_send(judging_round).complete.count %></td>
+          <td><%= team.submission_scores.public_send(judging_round).incomplete.count %></td>
           <td><%= team.submission.average_score %></td>
           <td><%= link_to 'View details',
             send("#{scope}_score_path", team.submission) %></td>
@@ -49,9 +49,15 @@
   </label>
 <% else %>
   <p>
-    No teams were found for the
-    <strong><%= division %></strong>
-    division of the event:
-    <strong><%= event.name %></strong>.
+    <% if event %>
+      No teams were found for the
+      <strong><%= division %></strong>
+      division of the event:
+      <strong><%= event.name %></strong>.
+    <% else %>
+      No teams were found for the
+      <strong><%= division %></strong>
+      division.
+    <% end %>
   </p>
 <% end %>

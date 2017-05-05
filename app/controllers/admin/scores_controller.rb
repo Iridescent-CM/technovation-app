@@ -4,6 +4,7 @@ module Admin
   class ScoresController < AdminController
     def index
       params[:event] ||= "virtual"
+      params[:round] ||= "quarterfinals"
       params[:page] ||= 1
       params[:per_page] ||= 15
 
@@ -18,24 +19,34 @@ module Admin
                "teams.name ASC"
              end
 
-      events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
-      virtual_event = Team::VirtualRegionalPitchEvent.new
+      teams =
+        if params[:round] == "quarterfinals"
+          events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
+          virtual_event = Team::VirtualRegionalPitchEvent.new
 
-      @event = if params[:event] == "virtual"
-                 virtual_event
-               else
-                 events.eager_load(
-                   :divisions,
-                   :judges,
-                   teams: { team_submissions: :submission_scores }
-                 ).find(params[:event])
-               end
+          @event = if params[:event] == "virtual"
+                     virtual_event
+                   else
+                     events.eager_load(
+                       :divisions,
+                       :judges,
+                       teams: { team_submissions: :submission_scores }
+                     ).find(params[:event])
+                   end
 
-      @events = [virtual_event] + events.sort_by { |e|
-        FriendlyCountry.(e.regional_ambassador_profile.account)
-      }
+          @events = [virtual_event] + events.sort_by { |e|
+            FriendlyCountry.(e.regional_ambassador_profile.account)
+          }
 
-      @teams = get_sorted_paginated_teams_in_requested_division
+          @event.teams
+        else
+          @events = RegionalPitchEvent.none
+          foo = Team.current.joins(:team_submissions)
+              .where(team_submissions: { contest_rank: TeamSubmission.contest_ranks[:semifinalist]})
+          foo
+        end
+
+      @teams = get_sorted_paginated_teams_in_requested_division(teams)
     end
 
     def show
@@ -58,8 +69,8 @@ module Admin
     end
 
     private
-    def get_sorted_paginated_teams_in_requested_division(page = params[:page])
-      teams = @event.teams
+    def get_sorted_paginated_teams_in_requested_division(teams, page = params[:page])
+      result = teams
         .includes(:regional_pitch_events, team_submissions: :submission_scores)
         .public_send(params[:division])
         .select { |t| t.selected_regional_pitch_event.live? or t.submission.complete? }
@@ -72,12 +83,12 @@ module Admin
           when "team_name"
             a.name <=> b.name
           end
-        }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
+        }.paginate(page: page.to_i, per_page: params[:per_page].to_i) unless teams.empty?
 
-      if teams.empty? and page.to_i != 1
-        get_sorted_paginated_teams_in_requested_division(1)
+      if result.empty? and page.to_i != 1
+        get_sorted_paginated_teams_in_requested_division(teams, 1)
       else
-        teams
+        result
       end
     end
   end
