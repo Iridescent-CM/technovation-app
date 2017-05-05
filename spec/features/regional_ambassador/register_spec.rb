@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassadors registration" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "regional@ambassador.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
+    token = FactoryGirl.create(:signup_attempt, email: "regional@ambassador.com").signup_token
+    page.driver.browser.set_cookie("signup_token=#{token}")
     ActionMailer::Base.deliveries.clear
 
     visit signup_path
@@ -19,7 +20,8 @@ RSpec.feature "Regional Ambassadors registration" do
     select "I'm new!", from: "In which year did you become a regional ambassador?"
 
     select "Other", from: "How did you hear about Technovation?"
-    fill_in "regional_ambassador_profile[account_attributes][referred_by_other]", with: "Some other value"
+    fill_in "regional_ambassador_profile[account_attributes][referred_by_other]",
+      with: "Some other value"
 
     click_button "Create Your Account"
   end
@@ -52,7 +54,6 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
     select "United States", from: "Country"
-    fill_in "account_confirm_sentence", with: "yes this is my location"
     click_button "Confirm location details"
 
     expect(RegionalAmbassadorProfile.last.address_details).to eq("Chicago, IL, United States")

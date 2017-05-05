@@ -66,25 +66,22 @@ class Account < ActiveRecord::Base
   }
 
   after_validation -> {
-    # I hate you, sometimes, Rails
-    # See 'after_commit' below for what this is about
-    @update_email_list = (
-      saved_change_to_first_name? or
-        saved_change_to_last_name? or
-          saved_change_to_email? or
-            address_changed?
-    )
-    @old_email = email_was
-  }, on: :update
+    self.location_confirmed = (not city.blank? and not country.blank?)
+  }
 
   after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
 
   # See after_validation above
   after_commit -> {
     UpdateProfileOnEmailListJob.perform_later(
-      id, @old_email, "#{type_name.upcase}_LIST_ID"
+      id, email_before_last_save, "#{type_name.upcase}_LIST_ID"
     )
-  }, on: :update, if: -> { @update_email_list }
+  }, on: :update, if: -> {
+    saved_change_to_first_name? or
+      saved_change_to_last_name? or
+        saved_change_to_email? or
+          address_changed?
+  }
 
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
@@ -117,16 +114,6 @@ class Account < ActiveRecord::Base
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
       NoAuthFound.new
-  end
-
-  def confirm_sentence=(str)
-    if str.downcase.gsub(/[,\.]/, '') === "yes this is my location" and
-        not city.blank? and
-          not country.blank?
-      self.location_confirmed = true
-    else
-      self.location_confirmed = false
-    end
   end
 
   def profile_valid?

@@ -39,7 +39,6 @@
 //= require alternative_forms
 //= require multiple_image_upload
 //= require account_geolocation
-//= require location_confirm
 
 //= require submission_scores
 //= require dashboards

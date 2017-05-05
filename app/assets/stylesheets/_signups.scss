@@ -199,16 +199,6 @@
       transition: opacity 0.5s;
     }
 
-    input[type="submit"] {
-      opacity: 0.5;
-    }
-
-    &.confirmed {
-      input[type="submit"] {
-        opacity: 1;
-      }
-    }
-
     &.geocoding {
       input, select, button, label, ul {
         opacity: 0;

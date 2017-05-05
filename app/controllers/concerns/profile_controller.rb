@@ -47,7 +47,6 @@ module ProfileController
         :country,
         :latitude,
         :longitude,
-        :confirm_sentence,
       ],
     )
   end

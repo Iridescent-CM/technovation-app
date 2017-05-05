@@ -2,40 +2,40 @@
   geolocate();
 
   function geolocate() {
-    var cityField = document.querySelector("#account_city"),
-        stateField = document.querySelector("#account_state_province"),
+    var $cityField = $("#account_city"),
+        $stateField = $("#account_state_province"),
         $countryField = $("#account_country"),
-        latField = document.querySelector("#account_latitude"),
-        lngField = document.querySelector("#account_longitude");
+        $latField = $("#account_latitude"),
+        $lngField = $("#account_longitude");
 
-    if (!cityField)
+    if (!$cityField)
       return;
 
-    cityField.closest('form').classList.add('geocoding');
+    $cityField.closest('form').addClass('geocoding');
 
     if (!navigator.geolocation) {
-      cityField.closest('form').classList.remove('geocoding');
+      $cityField.closest('form').removeClass('geocoding');
       return;
     }
 
     navigator.geolocation.getCurrentPosition(function(position) {
       var lat = position.coords.latitude,
           lng = position.coords.longitude,
-          url = cityField.dataset.geolocationUrl + "?lat=" + lat + "&lng=" + lng;
+          url = $cityField.data('geolocation-url') + "?lat=" + lat + "&lng=" + lng;
 
       $.getJSON(url, function(data) {
-        cityField.value = data.city;
-        stateField.value = data.state;
+        $cityField.val(data.city);
+        $stateField.val(data.state);
         $countryField.val(data.country);
         $countryField.trigger("chosen:updated");
 
-        latField.value = lat;
-        lngField.value = lng;
+        $latField.val(lat);
+        lngField.val(lng);
 
-        cityField.closest('form').classList.remove('geocoding');
+        $cityField.closest('form').removeClass('geocoding');
       });
     }, function() {
-      cityField.closest('form').classList.remove('geocoding');
+      $cityField.closest('form').removeClass('geocoding');
     });
   }
 })();

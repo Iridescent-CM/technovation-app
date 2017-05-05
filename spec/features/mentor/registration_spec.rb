@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Register as a mentor" do
   before do
-    page.driver.browser.set_cookie("signup_token=#{SignupAttempt.create!(email: "mentor@mentor.com", password: "secret1234", status: SignupAttempt.statuses[:active]).signup_token}")
+    token = FactoryGirl.create(:signup_attempt, email: "mentor@mentor.com").signup_token
+    page.driver.browser.set_cookie("signup_token=#{token}")
 
     visit mentor_signup_path
 
@@ -27,7 +28,6 @@ RSpec.feature "Register as a mentor" do
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
     select "United States", from: "Country"
-    fill_in "account_confirm_sentence", with: "yes this is my location"
     click_button "Confirm location details"
 
     expect(MentorProfile.last.address_details).to eq("Chicago, IL, United States")

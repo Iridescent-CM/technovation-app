@@ -4,7 +4,11 @@
   <%= simple_form_for @signin, url: signins_path do |f| %>
     <%= f.input :email %>
     <%= f.input :password %>
-    <%= f.button :submit, t('views.signins.form.signin'), class: "appy-button" %>
+
+    <p class="standalone-buttons">
+      <%= f.button :submit, t('views.signins.form.signin'), class: "appy-button" %>
+    </p>
+
     <p>
       <%= t("controllers.signins.new.no_account") %>
       <%= link_to t("controllers.signups.new.link"), root_path %>
