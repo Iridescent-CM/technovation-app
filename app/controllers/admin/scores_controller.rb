@@ -10,42 +10,7 @@ module Admin
 
       @division = params[:division] ||= "senior"
 
-      sort = case params.fetch(:sort) { "avg_score_desc" }
-             when "avg_score_desc"
-               "team_submissions.average_score DESC"
-             when "avg_score_asc"
-               "team_submissions.average_score ASC"
-             when "team_name"
-               "teams.name ASC"
-             end
-
-      teams =
-        if params[:round] == "quarterfinals"
-          events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
-          virtual_event = Team::VirtualRegionalPitchEvent.new
-
-          @event = if params[:event] == "virtual"
-                     virtual_event
-                   else
-                     events.eager_load(
-                       :divisions,
-                       :judges,
-                       teams: { team_submissions: :submission_scores }
-                     ).find(params[:event])
-                   end
-
-          @events = [virtual_event] + events.sort_by { |e|
-            FriendlyCountry.(e.regional_ambassador_profile.account)
-          }
-
-          @event.teams
-        else
-          @events = RegionalPitchEvent.none
-          Team.current.joins(:team_submissions)
-              .where(team_submissions: { contest_rank: TeamSubmission.contest_ranks[:semifinalist]})
-        end
-
-      @teams = get_sorted_paginated_teams_in_requested_division(teams)
+      send("get_#{params[:round]}_events_and_submissions")
     end
 
     def show
@@ -68,24 +33,50 @@ module Admin
     end
 
     private
-    def get_sorted_paginated_teams_in_requested_division(teams, page = params[:page])
-      result = teams
-        .includes(:regional_pitch_events, team_submissions: :submission_scores)
+    def get_quarterfinals_events_and_submissions
+      events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
+      virtual_event = Team::VirtualRegionalPitchEvent.new
+
+      @event = if params[:event] == "virtual"
+                 virtual_event
+               else
+                 events.eager_load(
+                   :divisions,
+                   :judges,
+                   teams: { team_submissions: :submission_scores }
+                 ).find(params[:event])
+               end
+
+      @events = [virtual_event] + events.sort_by { |e|
+        FriendlyCountry.(e.regional_ambassador_profile.account)
+      }
+
+      @submissions = get_sorted_paginated_submissions_in_requested_division(@event.team_submissions)
+    end
+
+    def get_semifinals_events_and_submissions
+      @events = RegionalPitchEvent.none
+      @submissions = get_sorted_paginated_submissions_in_requested_division(TeamSubmission.current.semifinalist)
+    end
+
+    def get_sorted_paginated_submissions_in_requested_division(submissions, page = params[:page])
+      result = submissions
+        .includes(team: :regional_pitch_events, :submission_scores)
         .public_send(params[:division])
         .select { |t| t.selected_regional_pitch_event.live? or t.submission.complete? }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
-            b.submission.average_score <=> a.submission.average_score
+            b.average_score <=> a.average_score
           when "avg_score_asc"
-            a.submission.average_score <=> b.submission.average_score
+            a.average_score <=> b.average_score
           when "team_name"
-            a.name <=> b.name
+            a.team.name <=> b.team.name
           end
-        }.paginate(page: page.to_i, per_page: params[:per_page].to_i) unless teams.empty?
+        }.paginate(page: page.to_i, per_page: params[:per_page].to_i) unless submissions.empty?
 
       if result.empty? and page.to_i != 1
-        get_sorted_paginated_teams_in_requested_division(teams, 1)
+        get_sorted_paginated_submissions_in_requested_division(submissions, 1)
       else
         result
       end

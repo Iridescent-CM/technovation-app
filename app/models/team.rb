@@ -372,6 +372,12 @@ class Team < ActiveRecord::Base
       Team.not_attending_live_event
     end
 
+    def team_submissions
+      TeamSubmission.includes(team: :regional_pitch_events)
+        .references(:regional_pitch_events)
+        .where("regional_pitch_events.id IS NULL")
+    end
+
     def timezone
       "US/Pacific"
     end
