@@ -62,13 +62,11 @@ class Team < ActiveRecord::Base
     .where("seasons.year = ?", Season.current.year)
   }
 
-  scope :junior, -> {
-    joins(:division).where("divisions.name = ?", Division.names[:junior])
-  }
-
-  scope :senior, -> {
-    joins(:division).where("divisions.name = ?", Division.names[:senior])
-  }
+  Division.names.keys.each do |division_name|
+    scope division_name, -> {
+      joins(:division).where("divisions.name = ?", Division.names[division_name])
+    }
+  end
 
   scope :past, -> {
     eager_load(season_registrations: :season)

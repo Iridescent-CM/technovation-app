@@ -15,7 +15,11 @@
       <% teams.each do |team| %>
         <tr>
           <td><%= team.name %></td>
-          <td><%= team.submission.app_name %></td>
+          <td>
+            <%= link_to team.submission.app_name,
+              app_path(team.submission),
+              target: :_blank %>
+          </td>
           <td><%= team.submission_scores.complete.count %></td>
           <td><%= team.submission_scores.incomplete.count %></td>
           <td><%= team.submission.average_score %></td>
@@ -31,7 +35,18 @@
       model: "#{division.capitalize}_team" %>
   </div>
 
-  <%= will_paginate teams, param_name: "#{division}_page" %>
+  <%= will_paginate teams %>
+
+  <label class="per_page">
+    Per page:
+
+    <%= select_tag :per_page,
+      options_for_select([15, 25, 50, 100], params[:per_page]),
+      data: {
+        reload: true,
+        param: :per_page,
+      } %>
+  </label>
 <% else %>
   <p>
     No teams were found for the
