@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505213902) do
+ActiveRecord::Schema.define(version: 20170505220217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.string "email", null: false
@@ -150,10 +149,10 @@ ActiveRecord::Schema.define(version: 20170505213902) do
   end
 
   create_table "join_requests", id: :serial, force: :cascade do |t|
-    t.integer "requestor_id", null: false
     t.string "requestor_type", null: false
-    t.integer "joinable_id", null: false
+    t.integer "requestor_id", null: false
     t.string "joinable_type", null: false
+    t.integer "joinable_id", null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at", null: false
@@ -189,10 +188,10 @@ ActiveRecord::Schema.define(version: 20170505213902) do
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
-    t.integer "member_id", null: false
     t.string "member_type", null: false
-    t.integer "joinable_id", null: false
+    t.integer "member_id", null: false
     t.string "joinable_type", null: false
+    t.integer "joinable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id"
@@ -233,18 +232,18 @@ ActiveRecord::Schema.define(version: 20170505213902) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "regarding_id"
     t.string "regarding_type"
+    t.integer "regarding_id"
     t.datetime "sent_at"
     t.datetime "delivered_at"
     t.index ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
-    t.integer "sender_id", null: false
     t.string "sender_type", null: false
-    t.integer "regarding_id", null: false
+    t.integer "sender_id", null: false
     t.string "regarding_type", null: false
+    t.integer "regarding_id", null: false
     t.hstore "recipients", null: false
     t.string "subject"
     t.text "body", null: false
@@ -328,8 +327,8 @@ ActiveRecord::Schema.define(version: 20170505213902) do
 
   create_table "season_registrations", id: :serial, force: :cascade do |t|
     t.integer "season_id", null: false
-    t.integer "registerable_id", null: false
     t.string "registerable_type", null: false
+    t.integer "registerable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 1, null: false
@@ -540,6 +539,28 @@ ActiveRecord::Schema.define(version: 20170505213902) do
     t.boolean "used_canvas"
     t.string "used_canvas_explanation"
     t.index ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "admin_profiles", "accounts"

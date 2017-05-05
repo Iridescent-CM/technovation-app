@@ -1,7 +1,0 @@
-<%= simple_form_for([:admin, @event]) do |f| %>
-  <%= f.input :unofficial, label: "Mark this event as unofficial (internally)" %>
-<% end %>
-
-<%= render 'regional_ambassador/regional_pitch_events/participants_list',
-  user: current_admin,
-  event: @event %>
