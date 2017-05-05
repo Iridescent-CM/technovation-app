@@ -60,7 +60,9 @@ module Admin
     private
     def get_sorted_paginated_teams_in_requested_division(page = params[:page])
       teams = @event.teams
+        .includes(:regional_pitch_events, team_submissions: :submission_scores)
         .public_send(params[:division])
+        .select { |t| t.selected_regional_pitch_event.live? or t.submission.complete? }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
