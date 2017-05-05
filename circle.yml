@@ -2,3 +2,20 @@ machine:
   ruby:
     version:
       2.4.1
+      
+  environment:
+    GOOGLE_MAPS_API_KEY: no-matter-in-test
+    HOST_DOMAIN: localhost:3000
+    AWS_ACCESS_KEY_ID: test
+    AWS_SECRET_ACCESS_KEY: test
+    AWS_BUCKET_NAME: test
+    CAMPAIGN_MONITOR_API_KEY: no-matter-in-test
+    STUDENT_LIST_ID: no-matter-in-test
+    MENTOR_LIST_ID: no-matter-in-test
+    JUDGE_LIST_ID: no-matter-in-test
+    REGIONAL_AMBASSADOR_LIST_ID: no-matter-in-test
+    PARENT_LIST_ID: no-matter-in-test
+    REDIS_URL: redis://127.0.0.1:6379/0
+    BONSAI_URL: localhost:9200
+    GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
+    BING_MAPS_API_KEY: no-matter-in-test
