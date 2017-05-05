@@ -7,13 +7,13 @@
 
   <div class="flex-col-md-4">
     <h1 class="appy-title">
-      <%= pluralize SubmissionScore.complete.count, "complete score" %>
+      <%= pluralize SubmissionScore.quarterfinals.complete.count, "complete score" %>
     </h1>
   </div>
 
   <div class="flex-col-md-4">
     <h1 class="appy-title">
-      <%= pluralize SubmissionScore.incomplete.count, "pending score" %>
+      <%= pluralize SubmissionScore.quarterfinals.incomplete.count, "pending score" %>
     </h1>
   </div>
 

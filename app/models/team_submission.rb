@@ -102,22 +102,27 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
-  def update_average_score
+  def update_average_scores
+    update_quarterfinals_average_score
+    # will eventually update semifinals too
+  end
+
+  def update_quarterfinals_average_score
     if team.selected_regional_pitch_event.live? &&
          team.selected_regional_pitch_event.unofficial?
 
-      official_scores = submission_scores.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.live.complete.quarterfinals
+      official_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.quarterfinals.live.complete.quarterfinals
 
     elsif team.selected_regional_pitch_event.live?
 
-      official_scores = submission_scores.live.complete.quarterfinals
-      unofficial_scores = submission_scores.virtual.complete.quarterfinals
+      official_scores = submission_scores.quarterfinals.live.complete.quarterfinals
+      unofficial_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
 
     else
 
-      official_scores = submission_scores.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.live.complete.quarterfinals
+      official_scores = submission_scores.quarterfinals.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.quarterfinals.live.complete.quarterfinals
 
     end
 
@@ -126,9 +131,9 @@ class TeamSubmission < ActiveRecord::Base
         acc + s.total
       } / official_scores.count).round(2)
 
-      update_column(:average_score, avg)
+      update_column(:quarterfinals_average_score, avg)
     else
-      update_column(:average_score, 0)
+      update_column(:quarterfinals_average_score, 0)
     end
 
     if unofficial_scores.any?

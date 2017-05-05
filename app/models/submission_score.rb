@@ -9,7 +9,7 @@ class SubmissionScore < ActiveRecord::Base
 
   after_commit ->(sub) {
     if !!sub.completed_at
-      sub.team_submission.update_average_score
+      sub.team_submission.update_average_scores
     end
   }
 

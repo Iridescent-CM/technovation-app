@@ -212,7 +212,7 @@ class ExportJob < ActiveJob::Base
                 submission.submission_scores.complete.count,
                 submission.submission_scores.complete.live.count,
                 submission.submission_scores.complete.virtual.count,
-                submission.average_score]
+                submission.quarterfinals_average_score]
       end
 
       csv.close()

@@ -57,9 +57,9 @@ module Admin
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
-            b.average_score <=> a.average_score
+            b.quarterfinals_average_score <=> a.quarterfinals_average_score
           when "avg_score_asc"
-            a.average_score <=> b.average_score
+            a.quarterfinals_average_score <=> b.quarterfinals_average_score
           when "team_name"
             a.team.name <=> b.team.name
           end
