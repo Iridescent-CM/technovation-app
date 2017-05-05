@@ -33,3 +33,7 @@ deployment:
     branch: production
     heroku:
       appname: technovation
+
+branches:
+  ignore:
+    - /.*-stable/
