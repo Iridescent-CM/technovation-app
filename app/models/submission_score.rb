@@ -24,6 +24,12 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   belongs_to :team_submission, counter_cache: true
+  counter_culture :team_submission,
+                  column_name: proc {|model| "#{model.round}_submission_scores_count" },
+                  column_names: {
+                    ["submission_scores.round = ?", rounds[:quarterfinals]] => 'quarterfinals_submission_scores_count',
+                    ["submission_scores.round = ?", rounds[:semifinals]] => 'semifinals_submission_scores_count'
+                  }
   belongs_to :judge_profile
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
