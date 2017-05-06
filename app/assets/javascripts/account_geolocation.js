@@ -2,8 +2,12 @@
   geolocate();
 
   function geolocate() {
-    if (!document.getElementById('account_city'));
+    console.log('hello');
+
+    if (!document.getElementById('account_city'))
       return;
+
+    console.log('in');
 
     var $cityField = $("#account_city"),
         $stateField = $("#account_state_province"),
