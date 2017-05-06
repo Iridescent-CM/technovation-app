@@ -1,13 +1,17 @@
 (function() {
-  geolocate();
+  try {
+    geolocate();
+  } catch (err) {
+    console.log(err);
+    _.each(document.querySelectorAll('.geocoding'), funciton(geocoding) {
+      console.log('closing', geocoding);
+      geocoding.classList.remove('geocoding');
+    });
+  }
 
   function geolocate() {
-    console.log('hello');
-
     if (!document.getElementById('account_city'))
       return;
-
-    console.log('in');
 
     var $cityField = $("#account_city"),
         $stateField = $("#account_state_province"),
