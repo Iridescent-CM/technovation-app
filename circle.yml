@@ -2,7 +2,7 @@ machine:
   ruby:
     version:
       2.4.1
-      
+
   environment:
     AIRBRAKE_PROJECT_ID: n-a
     AIRBRAKE_PROJECT_KEY: n-a
@@ -23,17 +23,18 @@ machine:
     GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
     BING_MAPS_API_KEY: no-matter-in-test
 
+general:
+  branches:
+    ignore:
+      - /.*-stable/
+
 deployment:
   qa:
     branch: master
     heroku:
       appname: technovation-qa
-      
+
   prod:
     branch: production
     heroku:
       appname: technovation
-
-branches:
-  ignore:
-    - /.*-stable/
