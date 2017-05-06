@@ -29,6 +29,11 @@ general:
       - /.*-stable/
 
 deployment:
+  beta:
+    branch: tc2018
+    heroku:
+      appname: tc-2018
+
   qa:
     branch: master
     heroku:
