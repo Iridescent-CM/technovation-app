@@ -1,9 +1,13 @@
-module RegionalAmbassador
-  class BackgroundChecksController < RegionalAmbassadorController
-    include BackgroundCheckController
-    private
-    def current_profile
-      current_ambassador
+module Legacy
+  module V2
+    module RegionalAmbassador
+      class BackgroundChecksController < RegionalAmbassadorController
+        include BackgroundCheckController
+        private
+        def current_profile
+          current_ambassador
+        end
+      end
     end
   end
 end

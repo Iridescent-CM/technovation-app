@@ -1,4 +1,5 @@
 require "will_paginate/array"
+
 module Legacy
   module V2
     module Admin
@@ -50,25 +51,29 @@ module Legacy
           render "regional_ambassador/scores/show"
         end
 
-    private
-    def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
-      submissions = @event.team_submissions
-        .includes(:submission_scores, team: :regional_pitch_events)
-        .public_send(params[:division])
-        .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
-        .sort { |a, b|
-          case params.fetch(:sort) { "avg_score_desc" }
-          when "avg_score_desc"
-            b.quarterfinals_average_score <=> a.quarterfinals_average_score
-          when "avg_score_asc"
-            a.quarterfinals_average_score <=> b.quarterfinals_average_score
-          when "team_name"
-            a.team.name <=> b.team.name
+        private
+        def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
+          submissions = @event.team_submissions
+            .includes(:submission_scores, team: :regional_pitch_events)
+            .public_send(params[:division])
+            .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
+            .sort { |a, b|
+              case params.fetch(:sort) { "avg_score_desc" }
+              when "avg_score_desc"
+                b.quarterfinals_average_score <=> a.quarterfinals_average_score
+              when "avg_score_asc"
+                a.quarterfinals_average_score <=> b.quarterfinals_average_score
+              when "team_name"
+                a.team.name <=> b.team.name
+              end
+            }
 
-      if submissions.empty? and page.to_i != 1
-        get_sorted_paginated_submissions_in_requested_division(1)
-      else
-        submissions
+          if submissions.empty? and page.to_i != 1
+            get_sorted_paginated_submissions_in_requested_division(1)
+          else
+            submissions
+          end
+        end
       end
     end
   end
