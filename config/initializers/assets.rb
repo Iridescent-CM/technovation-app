@@ -21,3 +21,4 @@ Rails.application.config.assets.precompile += %w(
   Chart.bundle.js
   chartkick.js
 )
+Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]

@@ -5,6 +5,8 @@ gem 'rails', '~> 5.1'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
+gem 'serviceworker-rails', '~> 0.5'
+
 gem 'devise',
   git: 'https://github.com/plataformatec/devise.git',
   branch: 'master'
