@@ -1,7 +1,7 @@
 module Legacy
   module V2
     class AdminController < ApplicationController
-      include Authenticated
+      include Concerns::Authenticated
 
       layout 'admin'
 

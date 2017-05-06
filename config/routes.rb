@@ -13,20 +13,26 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
   end
 
-  namespace :student do
-  end
-
-  namespace :mentor do
-  end
-
-  namespace :regional_ambassador do
-  end
-
-  namespace :judge do
-  end
-
-  namespace :admin do
-  end
-
   root to: "team_registrations#new"
+
+  namespace :legacy do
+    namespace :v2 do
+      namespace :student do
+      end
+
+      namespace :mentor do
+      end
+
+      namespace :regional_ambassador do
+      end
+
+      namespace :judge do
+      end
+
+      namespace :admin do
+        resources :background_check_sweeps, only: :create
+        resources :background_checks, only: :index
+      end
+    end
+  end
 end
