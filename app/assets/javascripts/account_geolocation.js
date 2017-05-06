@@ -34,7 +34,7 @@
         $countryField.trigger("chosen:updated");
 
         $latField.val(lat);
-        lngField.val(lng);
+        $lngField.val(lng);
 
         $cityField.closest('form').removeClass('geocoding');
       });
