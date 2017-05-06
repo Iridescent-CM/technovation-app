@@ -34,6 +34,13 @@ class TeamSubmission < ActiveRecord::Base
     Other
   }
 
+  enum contest_rank: %w{
+    quarterfinalist
+    semifinalist
+    finalist
+    winner
+  }
+
   attr_accessor :step
 
   after_commit -> { SeasonRegistration.register(self) }, on: :create
@@ -99,18 +106,18 @@ class TeamSubmission < ActiveRecord::Base
     if team.selected_regional_pitch_event.live? &&
          team.selected_regional_pitch_event.unofficial?
 
-      official_scores = submission_scores.virtual.complete
-      unofficial_scores = submission_scores.live.complete
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     elsif team.selected_regional_pitch_event.live?
 
-      official_scores = submission_scores.live.complete
-      unofficial_scores = submission_scores.virtual.complete
+      official_scores = submission_scores.live.complete.quarterfinals
+      unofficial_scores = submission_scores.virtual.complete.quarterfinals
 
     else
 
-      official_scores = submission_scores.virtual.complete
-      unofficial_scores = submission_scores.live.complete
+      official_scores = submission_scores.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.live.complete.quarterfinals
 
     end
 

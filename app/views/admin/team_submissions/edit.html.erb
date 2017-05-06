@@ -1,6 +1,7 @@
 <h1>Editing Team Submission</h1>
 
 <%= simple_form_for [:admin, @team_submission] do |f| %>
+  <%= f.input :contest_rank, collection: TeamSubmission.contest_ranks.keys %>
   <%= f.input :app_name %>
   <%= f.input :app_description, input_html: { size: "40x7" } %>
   <%= f.input :stated_goal, collection: TeamSubmission.stated_goals.keys %>
