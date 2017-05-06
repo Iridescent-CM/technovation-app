@@ -1,7 +1,7 @@
 module Legacy
   module V2
     class RegionalAmbassadorController < ApplicationController
-      include Authenticated
+      include Concerns::Authenticated
 
       layout "regional_ambassador"
       helper_method :current_ambassador

@@ -2,7 +2,7 @@ module Legacy
   module V2
     class JudgeController < ApplicationController
       before_action :create_mentor_judge_on_dashboard
-      include Authenticated
+      include Concerns::Authenticated
 
       layout "judge"
       helper_method :current_judge,

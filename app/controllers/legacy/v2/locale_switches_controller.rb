@@ -1,7 +1,7 @@
 module Legacy
   module V2
     class LocaleSwitchesController < ApplicationController
-      include Authenticated
+      include Concerns::Authenticated
 
       def create
         current_account.update_attributes(locale: params[:locale])

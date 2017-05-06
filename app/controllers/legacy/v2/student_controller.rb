@@ -1,7 +1,7 @@
 module Legacy
   module V2
     class StudentController < ApplicationController
-      include Authenticated
+      include Concerns::Authenticated
 
       layout "student"
       helper_method :current_student, :current_team
