@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Mentor
       class TeamsController < MentorController
-        include TeamController
+        include Concerns::TeamController
 
         def index
           @current_teams = current_mentor.teams.current

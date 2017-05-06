@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Judge
       class ProfilesController < JudgeController
-        include ProfileController
+        include Concerns::ProfileController
 
         def profile_params
           [

@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class TeamMemberInvitesController < StudentController
-        include TeamMemberInviteController
+        include Concerns::TeamMemberInviteController
 
         def update
           invite = current_student.team_member_invites.pending.find_by(invite_token: params.fetch(:id))

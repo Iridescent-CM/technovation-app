@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class HonorCodeAgreementsController < StudentController
-        include HonorCodeAgreementController
+        include Concerns::HonorCodeAgreementController
       end
     end
   end

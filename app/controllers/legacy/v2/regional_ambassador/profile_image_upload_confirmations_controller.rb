@@ -2,7 +2,7 @@ module Legacy
   module V2
     module RegionalAmbassador
       class ProfileImageUploadConfirmationsController < RegionalAmbassadorController
-        include ProfileImageUploadConfirmationController
+        include Concerns::ProfileImageUploadConfirmationController
       end
     end
   end

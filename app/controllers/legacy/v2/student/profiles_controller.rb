@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class ProfilesController < StudentController
-        include ProfileController
+        include Concerns::ProfileController
 
         def profile_params
           [

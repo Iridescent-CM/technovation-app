@@ -2,7 +2,8 @@ module Legacy
   module V2
     module RegionalAmbassador
       class BackgroundChecksController < RegionalAmbassadorController
-        include BackgroundCheckController
+        include Concerns::BackgroundCheckController
+
         private
         def current_profile
           current_ambassador

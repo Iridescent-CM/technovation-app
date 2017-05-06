@@ -4,7 +4,7 @@ module Legacy
 
     module RegionalAmbassador
       class ProfilesController < RegionalAmbassadorController
-        include ProfileController
+        include Concerns::ProfileController
 
         def index
           params[:season] ||= Season.current.year

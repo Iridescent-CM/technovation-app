@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Mentor
       class TeamMemberInvitesController < MentorController
-        include TeamMemberInviteController
+        include Concerns::TeamMemberInviteController
 
         private
         def account_type

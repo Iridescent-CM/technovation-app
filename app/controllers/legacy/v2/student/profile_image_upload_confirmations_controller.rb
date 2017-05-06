@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class ProfileImageUploadConfirmationsController < StudentController
-        include ProfileImageUploadConfirmationController
+        include Concerns::ProfileImageUploadConfirmationController
       end
     end
   end

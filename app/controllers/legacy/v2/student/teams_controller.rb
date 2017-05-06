@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class TeamsController < StudentController
-        include TeamController
+        include Concerns::TeamController
 
         before_action -> {
           if current_student.is_on_team?

@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Mentor
       class ProfilesController < MentorController
-        include ProfileController
+        include Concerns::ProfileController
 
         before_action :expertises
 
