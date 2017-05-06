@@ -14,7 +14,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |s, e|
-      unless s.parental_consent.present?
+      if s.parental_consent.nil?
         s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
       end
 
