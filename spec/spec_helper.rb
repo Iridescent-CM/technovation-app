@@ -1,6 +1,9 @@
 require "dotenv"
 Dotenv.load
 
+require 'simplecov'
+SimpleCov.start
+
 require "pry"
 require "vcr_helper"
 
