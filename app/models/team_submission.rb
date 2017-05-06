@@ -144,7 +144,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def technical_checklist
-    super || StudentProfile::NullTeam::NullTeamSubmission::NullTechnicalChecklist.new
+    super || NullTechnicalChecklist.new
   end
 
   def app_name

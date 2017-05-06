@@ -321,8 +321,7 @@ class Team < ActiveRecord::Base
   end
 
   def submission
-    team_submissions.current.last or
-      StudentProfile::NullTeam::NullTeamSubmission.new
+    team_submissions.current.last or NullTeamSubmission.new
   end
 
   def unassigned?

@@ -3,11 +3,9 @@ module Student
     before_action :require_full_access,
                   :require_current_team
 
-    # TODO: GETTING LAST SUBMISSION LOGIC WILL NOT WORK FOR FUTURE SEASONS!
-
     def new
       params[:step] = :affirm_integrity if params[:step].blank?
-      @team_submission = current_team.team_submissions.last ||
+      @team_submission = current_team.submission ||
         current_team.team_submissions.build(step: params[:step])
     end
 
@@ -16,7 +14,7 @@ module Student
     end
 
     def create
-      @team_submission = current_team.team_submissions.last ||
+      @team_submission = current_team.submission ||
         current_team.team_submissions.build(team_submission_params)
 
       if @team_submission.save
@@ -46,7 +44,7 @@ module Student
     end
 
     def update
-      @team_submission = current_team.team_submissions.last
+      @team_submission = current_team.submission
 
       if team_submission_params[:screenshots]
         team_submission_params[:screenshots].each_with_index do |id, index|
