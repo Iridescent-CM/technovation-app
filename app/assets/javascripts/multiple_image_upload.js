@@ -68,7 +68,6 @@
         pendingUploads[fileIndex].status = 'success';
       },
       error: function(err) {
-        // TODO: Handle errors
         console.error(err);
       }
     });
@@ -85,7 +84,6 @@
 
   function handleUploadCompletion() {
     var isDone = pendingUploads.reduce(function(r, item) {
-      // TODO: Add error handling
       return r || (item.status == 'success');
     }, false);
     if (!isDone) {
