@@ -1,53 +1,54 @@
 require "will_paginate/array"
+module Legacy
+  module V2
+    module Admin
+      class ScoresController < AdminController
+        def index
+          params[:event] ||= "virtual"
+          params[:page] ||= 1
+          params[:per_page] ||= 15
 
-module Admin
-  class ScoresController < AdminController
-    def index
-      params[:event] ||= "virtual"
-      params[:page] ||= 1
-      params[:per_page] ||= 15
+          @division = params[:division] ||= "senior"
 
-      @division = params[:division] ||= "senior"
+          events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
+          virtual_event = Team::VirtualRegionalPitchEvent.new
 
-      events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
-      virtual_event = Team::VirtualRegionalPitchEvent.new
+          @event = if params[:event] == "virtual"
+                    virtual_event
+                  else
+                    events.eager_load(
+                      :divisions,
+                      :judges,
+                      teams: { team_submissions: :submission_scores }
+                    ).find(params[:event])
+                  end
 
-      @event = if params[:event] == "virtual"
-                 virtual_event
-               else
-                 events.eager_load(
-                   :divisions,
-                   :judges,
-                   teams: { team_submissions: :submission_scores }
-                 ).find(params[:event])
-               end
+          @events = [virtual_event] + events.sort_by { |e|
+            FriendlyCountry.(e.regional_ambassador_profile.account)
+          }
 
-      @events = [virtual_event] + events.sort_by { |e|
-        FriendlyCountry.(e.regional_ambassador_profile.account)
-      }
+          @submissions = get_sorted_paginated_submissions_in_requested_division
+        end
 
-      @submissions = get_sorted_paginated_submissions_in_requested_division
-    end
+        def show
+          @team_submission = TeamSubmission.includes(
+            team: :division,
+            submission_scores: { judge_profile: :account }
+          ).friendly.find(params[:id])
 
-    def show
-      @team_submission = TeamSubmission.includes(
-        team: :division,
-        submission_scores: { judge_profile: :account }
-      ).friendly.find(params[:id])
+          @team = @team_submission.team
 
-      @team = @team_submission.team
+          @event = @team.selected_regional_pitch_event
 
-      @event = @team.selected_regional_pitch_event
+          @scores = @team_submission.submission_scores
+            .complete
+            .quarterfinals
+            .includes(judge_profile: :account)
+            .references(:accounts)
+            .order("accounts.first_name")
 
-      @scores = @team_submission.submission_scores
-        .complete
-        .quarterfinals
-        .includes(judge_profile: :account)
-        .references(:accounts)
-        .order("accounts.first_name")
-
-      render "regional_ambassador/scores/show"
-    end
+          render "regional_ambassador/scores/show"
+        end
 
     private
     def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
@@ -63,8 +64,6 @@ module Admin
             a.quarterfinals_average_score <=> b.quarterfinals_average_score
           when "team_name"
             a.team.name <=> b.team.name
-          end
-        }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
 
       if submissions.empty? and page.to_i != 1
         get_sorted_paginated_submissions_in_requested_division(1)
