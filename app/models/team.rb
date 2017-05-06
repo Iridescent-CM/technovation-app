@@ -48,7 +48,7 @@ class Team < ActiveRecord::Base
   end
 
   def type_name
-    "student" # TODO this is a big mistake -- using it for RPE selection
+    "student" # Needed for RPE selection views that are shared by judges
   end
 
   def photo
