@@ -2,7 +2,7 @@ module Legacy
   module V2
     module Student
       class MentorSearchesController < StudentController
-        include ::MentorSearchesController
+        include Concerns::MentorSearchesController
 
         private
         def user
