@@ -1,9 +1,10 @@
 (function() {
   try {
     geolocate();
-  } catch (err) {
+  }
+  catch (err) {
     console.log(err);
-    _.each(document.querySelectorAll('.geocoding'), funciton(geocoding) {
+    _.each(document.querySelectorAll('.geocoding'), function(geocoding) {
       console.log('closing', geocoding);
       geocoding.classList.remove('geocoding');
     });
