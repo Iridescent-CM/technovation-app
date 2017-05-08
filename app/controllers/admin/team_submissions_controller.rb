@@ -39,6 +39,7 @@ module Admin
     private
     def team_submission_params
       params.require(:team_submission).permit(
+        :contest_rank,
         :app_name,
         :app_description,
         :stated_goal,

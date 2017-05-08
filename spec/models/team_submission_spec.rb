@@ -138,7 +138,7 @@ RSpec.describe TeamSubmission do
       completed_at: Time.current
     })
 
-    expect(sub.reload.average_score).to eq(2)
+    expect(sub.reload.quarterfinals_average_score).to eq(2)
 
     expect(sub.reload.average_unofficial_score).to eq(5)
   end

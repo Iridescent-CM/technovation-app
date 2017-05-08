@@ -25,8 +25,11 @@ namespace :scores do
   desc "Update all averages for completed scores"
   task set_average_of_completed: :environment do
     TeamSubmission.find_each do |ts|
-      ts.update_average_score
-      puts "Updated #{ts.app_name} avg to #{ts.reload.average_score}"
+      ts.update_average_scores
+      ts.reload
+      puts "Updated #{ts.app_name} averages to"
+      puts "    quarterfinals: #{ts.quarterfinals_average_score}"
+      puts "       semifinals: #{ts.semifinals_average_score}"
     end
   end
 end

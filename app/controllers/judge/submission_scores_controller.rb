@@ -17,6 +17,7 @@ module Judge
         begin
           @submission_score = current_judge.submission_scores.find_or_create_by!(
             team_submission_id: current_team_submission.id,
+            round: current_round
           )
         rescue ActiveRecord::RecordNotFound
           return redirect_to judge_dashboard_path,

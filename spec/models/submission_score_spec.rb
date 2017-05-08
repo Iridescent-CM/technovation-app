@@ -191,10 +191,10 @@ RSpec.describe SubmissionScore do
     )
 
     sub.complete!
-    expect(team_submission.reload.average_score).to eq(5)
+    expect(team_submission.reload.quarterfinals_average_score).to eq(5)
 
     sub.update_attributes(sdg_alignment: 4)
-    expect(team_submission.reload.average_score).to eq(4)
+    expect(team_submission.reload.quarterfinals_average_score).to eq(4)
 
     judge_profile2 = FactoryGirl.create(:judge_profile)
 
@@ -205,7 +205,7 @@ RSpec.describe SubmissionScore do
     )
 
     sub2.complete!
-    expect(team_submission.reload.average_score).to eq(3)
+    expect(team_submission.reload.quarterfinals_average_score).to eq(3)
   end
 
   it "does not update a team submission average score if it is not complete" do
@@ -218,7 +218,7 @@ RSpec.describe SubmissionScore do
       team_submission_id: team_submission.id,
       sdg_alignment: 5,
     )
-    expect(team_submission.reload.average_score).to be_zero
+    expect(team_submission.reload.quarterfinals_average_score).to be_zero
   end
 
   it "sets the event_type to virtual for virtual judges" do

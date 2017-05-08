@@ -168,11 +168,13 @@ class ExportJob < ActiveJob::Base
   end
 
   def export_scores(admin, params)
-    send("export_scores_#{params[:type]}", admin, params)
+    round = params[:round] || :quarterfinals
+    type = params[:type] || :summary
+    send("export_#{round}_scores_#{type}", admin, params)
   end
 
-  def export_scores_summary(admin, params)
-    Tempfile.open(["score-summary-", ".csv"], "./tmp/") do |fh|
+  def export_quarterfinals_scores_summary(admin, params)
+    Tempfile.open(["score-qf-summary-", ".csv"], "./tmp/") do |fh|
       csv = CSV.new(fh)
       csv << %w{
         Team\ name
@@ -208,11 +210,11 @@ class ExportJob < ActiveJob::Base
                 rpe.name,
                 rpe.live? ? "live" : "virtual",
                 rpe.unofficial? ? "unofficial" : "official",
-                submission.submission_scores.incomplete.count,
-                submission.submission_scores.complete.count,
-                submission.submission_scores.complete.live.count,
-                submission.submission_scores.complete.virtual.count,
-                submission.average_score]
+                submission.submission_scores.quarterfinals.incomplete.count,
+                submission.submission_scores.quarterfinals.complete.count,
+                submission.submission_scores.quarterfinals.complete.live.count,
+                submission.submission_scores.quarterfinals.complete.virtual.count,
+                submission.quarterfinals_average_score]
       end
 
       csv.close()
@@ -220,8 +222,49 @@ class ExportJob < ActiveJob::Base
     end
   end
 
-  def export_scores_detail(admin, params)
-    Tempfile.open(["score-detail-", ".csv"], "./tmp/") do |fh|
+  def export_semifinals_scores_summary(admin, params)
+    Tempfile.open(["score-sf-summary-", ".csv"], "./tmp/") do |fh|
+      csv = CSV.new(fh)
+      csv << %w{
+        Team\ name
+        App\ name
+        City
+        State/Province
+        Country
+        Division
+        Sustainable\ development\ goal
+        Submisson\ complete?
+        #\ of\ incomplete\ scores
+        #\ of\ completed\ scores
+        #\ completed\ live
+        #\ completed\ virtual
+        Average\ score
+      }
+
+      TeamSubmission.current.semifinalist.find_each do |submission|
+        team = submission.team
+        csv << [team.name,
+                submission.app_name,
+                team.city,
+                team.state_province,
+                FriendlyCountry.(team),
+                team.division.name,
+                submission.stated_goal,
+                submission.complete? ? "complete" : "incomplete",
+                submission.submission_scores.semifinals.incomplete.count,
+                submission.submission_scores.semifinals.complete.count,
+                submission.submission_scores.semifinals.complete.live.count,
+                submission.submission_scores.semifinals.complete.virtual.count,
+                submission.semifinals_average_score]
+      end
+
+      csv.close()
+      export(fh, admin, params[:export_email])
+    end
+  end
+
+  def export_quarterfinals_scores_detail(admin, params)
+    Tempfile.open(["score-qf-detail-", ".csv"], "./tmp/") do |fh|
       csv = CSV.new(fh)
       csv << %w{
         Team\ name
@@ -243,7 +286,7 @@ class ExportJob < ActiveJob::Base
         Team\ region/divisions
       }
 
-      SubmissionScore.current.find_each do |score|
+      SubmissionScore.current.quarterfinals.find_each do |score|
         account = score.judge_profile.account
         submission = score.team_submission
         team = submission.team
@@ -262,6 +305,53 @@ class ExportJob < ActiveJob::Base
                 rpe.name,
                 rpe.live? ? "live" : "virtual",
                 rpe.unofficial? ? "unofficial" : "official",
+                account.email,
+                account.full_name,
+                score.complete?,
+                score.total,
+                account.mentor_profile.present?] + team_region_divisions
+      end
+
+      csv.close()
+      export(fh, admin, params[:export_email])
+    end
+  end
+
+  def export_semifinals_scores_detail(admin, params)
+    Tempfile.open(["score-sf-detail-", ".csv"], "./tmp/") do |fh|
+      csv = CSV.new(fh)
+      csv << %w{
+        Team\ name
+        App\ name
+        City
+        State/Province
+        Country
+        Division
+        Sustainable\ development\ goal
+        Submission\ complete?
+        Judge\ email
+        Judge\ name
+        Complete?
+        Total\ score
+        Mentor?
+        Team\ region/divisions
+      }
+
+      SubmissionScore.current.semifinals.find_each do |score|
+        account = score.judge_profile.account
+        submission = score.team_submission
+        team = submission.team
+
+        team_region_divisions = account.team_region_division_names.map {|trd| trd.split(',') }.flatten
+
+        csv << [team.name,
+                submission.app_name,
+                team.city,
+                team.state_province,
+                FriendlyCountry.(team),
+                team.division.name,
+                submission.stated_goal,
+                submission.complete? ? "complete" : "incomplete",
                 account.email,
                 account.full_name,
                 score.complete?,

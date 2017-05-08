@@ -179,6 +179,7 @@ Rails.application.routes.draw do
     resources :regional_pitch_event_participations, only: :destroy
 
     resources :scores, only: [:index, :show]
+    resources :semifinals_scores, only: [:index, :show]
 
 
     resource :mentor_drop_out, only: :create

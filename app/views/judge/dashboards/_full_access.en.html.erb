@@ -8,8 +8,10 @@
       </div>
     <% end %>
 
-    <div class="tab-content flex-row" id="pitch-events">
-      <%= render 'judge/dashboards/full_access_content/events' %>
-    </div>
+    <% if quarterfinals? %>
+      <div class="tab-content flex-row" id="pitch-events">
+        <%= render 'judge/dashboards/full_access_content/events' %>
+      </div>
+    <% end %>
   </div>
 </div>

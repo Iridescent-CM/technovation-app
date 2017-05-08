@@ -11,7 +11,7 @@ class NullTeamSubmission
     "not started"
   end
 
-  def average_score
+  def quarterfinals_average_score
     0
   end
 
