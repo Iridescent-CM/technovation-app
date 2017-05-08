@@ -105,7 +105,7 @@
   <div class="flex-col-md-12">
     <h2>Export all scores</h2>
 
-    <%= form_tag admin_exports_path(params.merge(class: "score")) do %>
+    <%= form_tag admin_exports_path(params.merge(class: :score, round: :semifinals)) do %>
       <span class="inline-radio">
         <%= radio_button_tag(:type, "summary", true) %>
         <%= label_tag(:type_summary, "Summary") %>
