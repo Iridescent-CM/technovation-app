@@ -1,0 +1,121 @@
+<div class="flex-row">
+  <div class="flex-col-md-4">
+    <h1 class="appy-title">
+      Semifinals Scores
+    </h1>
+  </div>
+
+  <div class="flex-col-md-4">
+    <h1 class="appy-title">
+      <%= pluralize SubmissionScore.semifinals.complete.count, "complete score" %>
+    </h1>
+  </div>
+
+  <div class="flex-col-md-4">
+    <h1 class="appy-title">
+      <%= pluralize SubmissionScore.semifinals.incomplete.count, "pending score" %>
+    </h1>
+  </div>
+
+  <div class="flex-col-md-6">
+    <label>
+      Sort by:
+
+      <%= select_tag :sort,
+        options_for_select([["Highest average score", "avg_score_desc"],
+                            ["Lowest average score", "avg_score_asc"],
+                            ["Team name", "team_name"]],
+                          params.fetch(:sort) { "avg_score_desc" }),
+        data: { reload: true } %>
+    </label>
+  </div>
+
+  <div class="flex-col-md-6">
+    <label>
+      Division
+
+      <%= select_tag :division,
+        options_for_select(
+          Division.names.keys.map { |k| [k.titleize, k] },
+          params.fetch(:division) { "senior" }
+        ),
+        data: { reload: true } %>
+    </label>
+  </div>
+
+  <div class="flex-col-md-12">
+    <% if @submissions.any? %>
+      <table class="ra-participants-list">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Submission</th>
+            <th>Completed scores</th>
+            <th>Pending scores</th>
+            <th>Average of completed scores</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @submissions.each do |submission| %>
+            <tr>
+              <td><%= submission.team.name %></td>
+              <td>
+                <%= link_to submission.app_name,
+                  app_path(submission),
+                  target: :_blank %>
+              </td>
+              <td><%= submission.submission_scores.semifinals.complete.count %></td>
+              <td><%= submission.submission_scores.semifinals.incomplete.count %></td>
+              <td><%= submission.semifinals_average_score %></td>
+              <td><%= link_to 'View details',
+                send("admin_semifinals_score_path", submission) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="pagination_info" style="padding: 1rem 0 0;">
+        <%= page_entries_info @submissions,
+          model: "#{@division.capitalize}_team" %>
+      </div>
+
+      <%= will_paginate @submissions %>
+
+      <label class="per_page">
+        Per page:
+
+        <%= select_tag :per_page,
+          options_for_select([15, 25, 50, 100], params[:per_page]),
+          data: {
+            reload: true,
+            param: :per_page,
+          } %>
+      </label>
+    <% else %>
+      <p>
+        No teams were found for the
+        <strong><%= @division %></strong>
+        division of the semifinals.
+      </p>
+    <% end %>
+  </div>
+
+  <div class="flex-col-md-12">
+    <h2>Export all scores</h2>
+
+    <%= form_tag admin_exports_path(params.merge(class: "score")) do %>
+      <span class="inline-radio">
+        <%= radio_button_tag(:type, "summary", true) %>
+        <%= label_tag(:type_summary, "Summary") %>
+      </span>
+      <span class="inline-radio">
+        <%= radio_button_tag(:type, "detail") %>
+        <%= label_tag(:type_detail, "Detail") %>
+      </span>
+      <%= button_tag "Email CSV Summary Report to:", class: "appy-button" %>
+      <%= email_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+    <% end %>
+  </div>
+</div>

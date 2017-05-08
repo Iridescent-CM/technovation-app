@@ -41,6 +41,7 @@ module Admin
 
       @scores = @team_submission.submission_scores
         .complete
+        .quarterfinals
         .includes(judge_profile: :account)
         .references(:accounts)
         .order("accounts.first_name")
