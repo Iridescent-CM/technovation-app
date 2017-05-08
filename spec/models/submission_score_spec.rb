@@ -179,46 +179,56 @@ RSpec.describe SubmissionScore do
     expect(team_submission.judge_opened_id).to be_blank
   end
 
-  it "udpates team submission average on save when complete" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+  [:quarterfinals, :semifinals].each do |judging_round|
+    context judging_round do
 
-    sub = SubmissionScore.create!(
-      judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
-      sdg_alignment: 5,
-    )
+      let(:round) { SubmissionScore.rounds[judging_round] }
 
-    sub.complete!
-    expect(team_submission.reload.quarterfinals_average_score).to eq(5)
+      it "udpates team submission average on save when complete" do
+        team = FactoryGirl.create(:team)
+        team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+        judge_profile = FactoryGirl.create(:judge_profile)
 
-    sub.update_attributes(sdg_alignment: 4)
-    expect(team_submission.reload.quarterfinals_average_score).to eq(4)
+        sub = SubmissionScore.create!(
+          judge_profile_id: judge_profile.id,
+          team_submission_id: team_submission.id,
+          sdg_alignment: 5,
+          round: round,
+        )
 
-    judge_profile2 = FactoryGirl.create(:judge_profile)
+        sub.complete!
+        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(5)
 
-    sub2 = SubmissionScore.create!(
-      judge_profile_id: judge_profile2.id,
-      team_submission_id: team_submission.id,
-      sdg_alignment: 2,
-    )
+        sub.update_attributes(sdg_alignment: 4)
+        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(4)
 
-    sub2.complete!
-    expect(team_submission.reload.quarterfinals_average_score).to eq(3)
-  end
+        judge_profile2 = FactoryGirl.create(:judge_profile)
 
-  it "does not update a team submission average score if it is not complete" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+        sub2 = SubmissionScore.create!(
+          judge_profile_id: judge_profile2.id,
+          team_submission_id: team_submission.id,
+          sdg_alignment: 2,
+          round: round,
+        )
 
-    SubmissionScore.create!(
-      judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
-      sdg_alignment: 5,
-    )
-    expect(team_submission.reload.quarterfinals_average_score).to be_zero
+        sub2.complete!
+        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(3)
+      end
+
+      it "does not update a team submission average score if it is not complete" do
+        team = FactoryGirl.create(:team)
+        team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+        judge_profile = FactoryGirl.create(:judge_profile)
+
+        SubmissionScore.create!(
+          judge_profile_id: judge_profile.id,
+          team_submission_id: team_submission.id,
+          sdg_alignment: 5,
+          round: round,
+        )
+        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to be_zero
+      end
+    end
   end
 
   it "sets the event_type to virtual for virtual judges" do
