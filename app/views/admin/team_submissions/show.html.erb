@@ -19,6 +19,17 @@
     <dl>
       <dt>Contest rank:</dt>
       <dd><%= @team_submission.contest_rank %></dd>
+
+      <dt>Average <%= @team_submission.contest_rank %> score</dt>
+      <dd>
+        <%= @team_submission.public_send("#{@team_submission.contest_rank.sub("ist", "s")}_average_score") %>
+
+        <% if @team_submission.submission_scores.deleted.any? %>
+           - <%= link_to 'Restore scores',
+            admin_submission_score_restoration_path(@team_submission),
+            data: { method: :patch } %>
+        <% end %>
+      </dd>
     </dl>
   </div>
 </div>

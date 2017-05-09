@@ -180,6 +180,7 @@ Rails.application.routes.draw do
 
     resources :scores, only: [:index, :show]
     resources :semifinals_scores, only: [:index, :show]
+    resources :submission_score_restorations, only: :update
 
 
     resource :mentor_drop_out, only: :create
