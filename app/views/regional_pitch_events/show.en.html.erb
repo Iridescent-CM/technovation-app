@@ -47,18 +47,6 @@
               student_regional_pitch_event_path(current_team.selected_regional_pitch_event) %>
           </strong>
         </p>
-
-        <p>
-          <%= link_to "Select this event instead",
-            student_regional_pitch_event_selection_path(
-             event_id: @regional_pitch_event.id
-            ),
-            class: "cta-link",
-            data: {
-              method: :post,
-              confirm: "Are you sure you want to leave your previous event and select this one?",
-            } %>
-        </p>
       <% end %>
     </div>
 
