@@ -1,17 +1,21 @@
 <div class="flex-col-md-8">
   <div class="flex-row">
-    <div id="judge-scores-menu" class="flex-col-md-3 tabs tabs-vertical">
+    <div id="<%= event_type %>-judge-scores-menu" class="flex-col-md-3 tabs tabs-vertical">
       <ul class="tab-menu">
         <li class="tab-link">
           <button
             role="button"
             class="tab-button"
-            data-tab-id="in-progress">
-            In progress (<%= current_judge.submission_scores.current_round.incomplete.count %>)
+            data-tab-id="<%= event_type %>-in-progress">
+            In progress (<%= current_judge.submission_scores
+                                          .public_send(event_type)
+                                          .current_round
+                                          .incomplete
+                                          .count %>)
           </button>
         </li>
 
-        <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
+        <% if event_type == :live and quarterfinals? %>
           <% if assigned_teams(current_judge).senior.any? %>
             <li class="tab-link">
               <button
@@ -39,179 +43,117 @@
           <button
             role="button"
             class="tab-button"
-            data-tab-id="completed">
-            Completed (<%= current_judge.submission_scores.current_round.complete.count %>)
+            data-tab-id="<%= event_type %>-completed">
+            Completed (<%= current_judge.submission_scores
+                                        .public_send(event_type)
+                                        .current_round
+                                        .complete
+                                        .count %>)
           </button>
         </li>
       </ul>
     </div>
 
     <div class="flex-col-md-9 content">
-      <div class="tab-content" id="in-progress">
-        <% if current_judge.submission_scores.current_round.incomplete.empty? %>
-          <p>You don't have any scores currently in progress.</p>
+      <div class="tab-content" id="<%= event_type %>-in-progress">
+        <% if current_judge.submission_scores
+                           .public_send(event_type)
+                           .current_round
+                           .incomplete
+                           .empty? %>
+          <p>You don't have any <%= event_type %> scores currently in progress.</p>
 
-          <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
+          <% if event_type == :live and assigned_teams(current_judge).all? { |t|
+            t.submission_scores.where(judge_profile_id: current_judge.id).all?(&:complete?)
+          } %>
+
+            <p>Thank you for judging all of your live teams! Great job! You're invited to keep judging virtually in <strong>Virtual Scores</strong>!</p>
+
+          <% elsif event_type == :live and quarterfinals? %>
             <p>
               Choose a submission from among the
               <%= current_judge.selected_regional_pitch_event.division_names %>
               teams to get started.
             </p>
+
+          <% elsif assigned_teams(current_judge).any? { |t|
+            t.submission_scores.where(judge_profile_id: current_judge.id).none? or
+              t.submission_scores.where(judge_profile_id: current_judge.id,  completed_at: nil).any?
+          } %>
+
+            <p>Please complete your Live Event scores to gain access to virtual judging.</p>
           <% else %>
-            <p><%= link_to 'Start a new score now', new_judge_submission_score_path %></p>
+            <p><%= link_to 'Start a new score now',
+              new_judge_submission_score_path(event_type: event_type) %></p>
           <% end %>
         <% end %>
 
-        <% current_judge.submission_scores.current_round.incomplete.each do |score| %>
-          <div class="incomplete-score">
-            <h1><%= score.name %></h1>
-            <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>
-            <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
-            <p><strong>Ages:</strong> <%= score.team_submission_team_ages.to_sentence %></p>
-            <p>
-              <strong>Score so far:</strong>
-              <%= score.total %> / <%= score.total_possible %>
-              <small style="display:block;">
-                (<%= score.team_submission_team_name %> earned
-                <%= score.total_technical_checklist %>
-                extra points through their technical checklist)
-              </small>
-            </p>
-
-            <p>
-              <%= link_to "Resume scoring #{score.name}",
-                edit_judge_submission_score_path(score, anchor: :window) %>
-            </p>
-          </div>
-        <% end %>
+        <%= render partial: 'judge/dashboards/full_access_content/score',
+          collection: current_judge.submission_scores
+                                   .public_send(event_type)
+                                   .current_round
+                                   .incomplete,
+          locals: { type: :incomplete } %>
       </div>
 
-      <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
+      <% if event_type == :live and quarterfinals? %>
         <div class="tab-content" id="senior-submissions">
-          <% assigned_teams(current_judge).senior.each do |team| %>
-            <div class="choose-senior-score">
-              <% if team.submission.present? %>
-                <h1><%= team.submission.app_name %></h1>
-                <p><strong>Team:</strong> <%= team.name %></p>
-                <p><strong>Location:</strong> <%= team.primary_location %></p>
-                <p><strong>Division:</strong> <%= team.division_name %></p>
-                <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
-
-                <% if current_judge.submission_scores.current_round.incomplete.flat_map(&:team).include?(team) %>
-                  <p>
-                    <%= link_to "Resume scoring this submission",
-                      edit_judge_submission_score_path(
-                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
-                        anchor: :window
-                      ) %>
-                  </p>
-                <% elsif current_judge.submission_scores.current_round.complete.flat_map(&:team).include?(team) %>
-                  <p>
-                    <%= link_to "Review & edit your score for this submission",
-                      edit_judge_submission_score_path(
-                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
-                        anchor: :review
-                      ) %>
-                  </p>
-                <% else %>
-                  <p>
-                    <%= link_to "Start scoring this submission",
-                      new_judge_submission_score_path(team_submission_id: team.submission.id) %>
-                  </p>
-                <% end %>
-              <% else %>
-                <p>
-                  Team <strong><%= team.name %></strong> did not begin their submission!
-                  <br />
-                  They cannot be judged.
-                </p>
-              <% end %>
-            </div>
-          <% end %>
+          <%= render 'judge/dashboards/full_access_content/live_scores', division: :senior %>
         </div>
 
         <div class="tab-content" id="junior-submissions">
-          <% assigned_teams(current_judge).junior.each do |team| %>
-            <div class="choose-junior-score">
-              <% if team.submission.present? %>
-                <h1><%= team.submission.app_name %></h1>
-                <p><strong>Team:</strong> <%= team.name %></p>
-                <p><strong>Location:</strong> <%= team.primary_location %></p>
-                <p><strong>Division:</strong> <%= team.division_name %></p>
-                <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
-
-                <% if current_judge.submission_scores.current_round.incomplete.flat_map(&:team).include?(team) %>
-                  <p>
-                    <%= link_to "Resume scoring this submission",
-                      edit_judge_submission_score_path(
-                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
-                        anchor: :window
-                      ) %>
-                  </p>
-                <% elsif current_judge.submission_scores.current_round.complete.flat_map(&:team).include?(team) %>
-                  <p>
-                    <%= link_to "Review & edit your score for this submission",
-                      edit_judge_submission_score_path(
-                        current_judge.submission_scores.current_round.find_by(team_submission_id: team.submission.id),
-                        anchor: :review
-                      ) %>
-                  </p>
-                <% else %>
-                  <p>
-                    <%= link_to "Start scoring this submission",
-                      new_judge_submission_score_path(team_submission_id: team.submission.id) %>
-                  </p>
-                <% end %>
-              <% else %>
-                <p>
-                  Team <strong><%= team.name %></strong> did not begin their submission!
-                  <br />
-                  They cannot be judged.
-                </p>
-              <% end %>
-            </div>
-          <% end %>
+          <%= render 'judge/dashboards/full_access_content/live_scores', division: :junior %>
         </div>
       <% end %>
 
-      <div class="tab-content" id="completed">
-        <% if current_judge.submission_scores.current_round.complete.empty? %>
-          <p>You haven't completed any scores yet.</p>
+      <div class="tab-content" id="<%= event_type %>-completed">
+        <% if current_judge.submission_scores
+                           .public_send(event_type)
+                           .current_round
+                           .complete
+                           .empty? %>
+          <p>You haven't completed any <%= event_type %> scores yet.</p>
 
-          <% if current_judge.submission_scores.current_round.incomplete.any? %>
+          <% if current_judge.submission_scores
+                             .public_send(event_type)
+                             .current_round
+                             .incomplete
+                             .any? %>
             <p>
-              <%= link_to(
-                "Resume scoring #{current_judge.submission_scores.current_round.incomplete.last.name}",
+              <%= link_to(("Resume scoring " +
+                           current_judge.submission_scores
+                                        .public_send(event_type)
+                                        .current_round
+                                        .incomplete
+                                        .last
+                                        .name),
                 edit_judge_submission_score_path(
-                  current_judge.submission_scores.current_round.incomplete.last.id,
+                  current_judge.submission_scores
+                               .public_send(event_type)
+                               .current_round
+                               .incomplete
+                               .pluck(:id)
+                               .last,
                   anchor: :window
                 )) %>
             </p>
+
+          <% elsif assigned_teams(current_judge).any? { |t|
+            t.submission_scores.where(judge_profile_id: current_judge.id).none? or
+              t.submission_scores.where(judge_profile_id: current_judge.id,  completed_at: nil).any?
+          } %>
+
+            <p>Please complete your Live Event scores to gain access to virtual judging.</p>
+
           <% end %>
         <% end %>
 
-        <% current_judge.submission_scores.current_round.complete.each do |score| %>
-          <div class="complete-score">
-            <h1><%= score.name %></h1>
-            <p><strong>Location:</strong> <%= score.team_submission_team_primary_location %></p>
-            <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
-            <p><strong>Ages:</strong> <%= score.team_submission_team_ages.to_sentence %></p>
-            <p>
-              <strong>Score:</strong>
-              <%= score.total %> / <%= score.total_possible %>
-              <small style="display:block;">
-                (<%= score.team_submission_team_name %> earned
-                <%= score.total_technical_checklist %>
-                extra points through their technical checklist)
-              </small>
-            </p>
-
-            <p>
-              <%= link_to "Review & Edit this score",
-                edit_judge_submission_score_path(score, anchor: :review) %>
-            </p>
-          </div>
-        <% end %>
+        <%= render partial: 'judge/dashboards/full_access_content/score',
+          collection: current_judge.submission_scores
+                                   .public_send(event_type)
+                                   .current_round
+                                   .complete,
+          locals: { type: :complete } %>
       </div>
     </div>
   </div>

@@ -3,8 +3,14 @@
 
   <div class="content">
     <% if ENV["ENABLE_SUBMISSION_SCORES"] %>
-      <div class="tab-content flex-row" id="scores">
-        <%= render 'judge/dashboards/full_access_content/scores' %>
+      <% if current_judge.selected_regional_pitch_event.live? %>
+        <div class="tab-content flex-row" id="scores">
+          <%= render 'judge/dashboards/full_access_content/scores', event_type: :live %>
+        </div>
+      <% end %>
+
+      <div class="tab-content flex-row" id="virtual-scores">
+        <%= render 'judge/dashboards/full_access_content/scores', event_type: :virtual %>
       </div>
     <% end %>
 

@@ -16,6 +16,7 @@ module Judge
       else
         begin
           @submission_score = current_judge.submission_scores.find_or_create_by!(
+            event_type: params[:event_type],
             team_submission_id: current_team_submission.id,
             round: current_round
           )
