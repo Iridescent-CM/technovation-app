@@ -1,0 +1,29 @@
+<div class="<%= type %>-score">
+  <h1><%= score.name %></h1>
+  <p>
+    <strong>Location:</strong> <%= score.team_submission_team_primary_location %>
+  </p>
+  <p><strong>Division:</strong> <%= score.team_submission_team_division_name %></p>
+  <p><strong>Ages:</strong> <%= score.team_submission_team_ages.to_sentence %></p>
+  <p>
+    <strong>Score:</strong>
+    <%= score.total %> / <%= score.total_possible %>
+    <small style="display:block;">
+      (<%= score.team_submission_team_name %> earned
+      <%= score.total_technical_checklist %>
+      extra points through their technical checklist)
+    </small>
+  </p>
+
+  <% if type == :complete %>
+    <p>
+      <%= link_to "Review & Edit this score",
+        edit_judge_submission_score_path(score, anchor: :review) %>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to "Resume scoring #{score.name}",
+        edit_judge_submission_score_path(score, anchor: :window) %>
+    </p>
+  <% end %>
+</div>

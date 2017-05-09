@@ -1,0 +1,55 @@
+<% assigned_teams(current_judge).public_send(division).each do |team| %>
+  <div class="choose-<%= division %>-score">
+    <% if team.submission.present? %>
+      <h1><%= team.submission.app_name %></h1>
+      <p><strong>Team:</strong> <%= team.name %></p>
+      <p><strong>Location:</strong> <%= team.primary_location %></p>
+      <p><strong>Division:</strong> <%= team.division_name %></p>
+      <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
+
+      <% if current_judge.submission_scores
+                          .current_round
+                          .incomplete
+                          .flat_map(&:team)
+                          .include?(team) %>
+        <p>
+          <%= link_to "Resume scoring this submission",
+            edit_judge_submission_score_path(
+              current_judge.submission_scores
+                            .current_round
+                            .find_by(team_submission_id: team.submission.id),
+              anchor: :window
+            ) %>
+        </p>
+      <% elsif current_judge.submission_scores
+                            .current_round
+                            .complete
+                            .flat_map(&:team)
+                            .include?(team) %>
+        <p>
+          <%= link_to "Review & edit your score for this submission",
+            edit_judge_submission_score_path(
+              current_judge.submission_scores
+                            .current_round
+                            .find_by(team_submission_id: team.submission.id),
+              anchor: :review
+            ) %>
+        </p>
+      <% else %>
+        <p>
+          <%= link_to "Start scoring this submission",
+            new_judge_submission_score_path(
+              team_submission_id: team.submission.id,
+              event_type: :live,
+            ) %>
+        </p>
+      <% end %>
+    <% else %>
+      <p>
+        Team <strong><%= team.name %></strong> did not begin their submission!
+        <br />
+        They cannot be judged.
+      </p>
+    <% end %>
+  </div>
+<% end %>
