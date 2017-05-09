@@ -175,7 +175,8 @@ class Team < ActiveRecord::Base
     if %w{Brasil Brazil}.include?(state_province || "")
       "Brazil"
     elsif country == "US"
-      Country["US"].states[state_province.strip]['name']
+      state = Country["US"].states[state_province.strip]
+      (state && state['name']) || state_province
     else
       FriendlyCountry.(self)
     end
