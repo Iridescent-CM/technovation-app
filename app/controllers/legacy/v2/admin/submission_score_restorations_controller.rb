@@ -1,4 +1,4 @@
-module Lgeacy
+module Legacy
   module V2
     module Admin
       class SubmissionScoreRestorationsController < AdminController
