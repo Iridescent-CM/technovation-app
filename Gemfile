@@ -7,6 +7,8 @@ gem 'pg', '~> 0.20'
 
 gem 'serviceworker-rails', '~> 0.5'
 
+gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
+
 gem 'devise',
   git: 'https://github.com/plataformatec/devise.git',
   branch: 'master'
