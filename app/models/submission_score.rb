@@ -30,6 +30,22 @@ class SubmissionScore < ActiveRecord::Base
                     ["submission_scores.round = ?", rounds[:quarterfinals]] => 'quarterfinals_submission_scores_count',
                     ["submission_scores.round = ?", rounds[:semifinals]] => 'semifinals_submission_scores_count'
                   }
+  counter_culture :team_submission,
+                  column_name: proc {|model|
+                    status = model.complete? ? :complete : :incomplete
+                    "#{model.round}_#{status}_submission_scores_count"
+                  },
+                  column_names: {
+                    ["submission_scores.round = ? and submission_scores.completed_at IS NULL", rounds[:quarterfinals]] =>
+                        'quarterfinals_incomplete_submission_scores_count',
+                    ["submission_scores.round = ? and submission_scores.completed_at IS NOT NULL", rounds[:quarterfinals]] =>
+                        'quarterfinals_complete_submission_scores_count',
+                    ["submission_scores.round = ? and submission_scores.completed_at IS NULL", rounds[:semifinals]] =>
+                        'semifinals_incomplete_submission_scores_count',
+                    ["submission_scores.round = ? and submission_scores.completed_at IS NOT NULL", rounds[:semifinals]] =>
+                        'semifinals_complete_submission_scores_count'
+                  }
+
   belongs_to :judge_profile
 
   scope :complete, -> { where("completed_at IS NOT NULL") }

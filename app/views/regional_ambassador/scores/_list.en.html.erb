@@ -20,8 +20,8 @@
               app_path(submission),
               target: :_blank %>
           </td>
-          <td><%= submission.submission_scores.quarterfinals.complete.count %></td>
-          <td><%= submission.submission_scores.quarterfinals.incomplete.count %></td>
+          <td><%= submission.quarterfinals_complete_submission_scores_count %></td>
+          <td><%= submission.quarterfinals_incomplete_submission_scores_count %></td>
           <td><%= submission.quarterfinals_average_score %></td>
           <td><%= link_to 'View details',
             send("#{scope}_score_path", submission) %></td>
