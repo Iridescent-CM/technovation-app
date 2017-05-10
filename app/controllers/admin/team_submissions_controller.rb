@@ -7,7 +7,7 @@ module Admin
       params[:per_page] = 15 if params[:per_page].blank?
 
       @team_submissions = Admin::SearchTeamSubmissions.(params)
-        .sort { |a, b| a.team_name.downcase <=> b.team_name.downcase }
+        .order("lower(teams.name) asc")
         .paginate(page: params[:page].to_i, per_page: params[:per_page].to_i)
 
       if @team_submissions.empty?
