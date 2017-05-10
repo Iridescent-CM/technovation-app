@@ -22,3 +22,5 @@ public/uploads
 *.backup
 .vscode/**/*
 coverage
+/public/packs
+/node_modules
