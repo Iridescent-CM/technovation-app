@@ -50,10 +50,13 @@ module Admin
     end
 
     private
-    def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
+    def get_sorted_paginated_submissions_in_requested_division(
+      page = params[:page],
+      division = params[:division]
+    )
       submissions = @event.team_submissions
         .includes(:submission_scores, team: :regional_pitch_events)
-        .public_send(params[:division])
+        .public_send(division)
         .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
@@ -68,6 +71,9 @@ module Admin
 
       if submissions.empty? and page.to_i != 1
         get_sorted_paginated_submissions_in_requested_division(1)
+      elsif submissions.empty?
+        opposite_division = params[:division] == "senior" ? "junior":"senior"
+        get_sorted_paginated_submissions_in_requested_division(page, opposite_division)
       else
         submissions
       end
