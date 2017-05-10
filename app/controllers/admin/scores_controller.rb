@@ -9,6 +9,15 @@ module Admin
 
       @division = params[:division] ||= "senior"
 
+      @sort = case params.fetch(:sort) { "avg_score_desc" }
+              when "avg_score_desc"
+                "team_submissions.quarterfinals_average_score DESC"
+              when "avg_score_asc"
+                "team_submissions.quarterfinals_average_score ASC"
+              when "team_name"
+                "lower(teams.name) ASC"
+              end
+
       events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
       virtual_event = Team::VirtualRegionalPitchEvent.new
 
@@ -52,19 +61,11 @@ module Admin
     private
     def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
       submissions = @event.team_submissions
-        .includes(:submission_scores, team: :regional_pitch_events)
         .public_send(params[:division])
-        .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
-        .sort { |a, b|
-          case params.fetch(:sort) { "avg_score_desc" }
-          when "avg_score_desc"
-            b.quarterfinals_average_score <=> a.quarterfinals_average_score
-          when "avg_score_asc"
-            a.quarterfinals_average_score <=> b.quarterfinals_average_score
-          when "team_name"
-            a.team.name <=> b.team.name
-          end
-        }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
+        .includes(:submission_scores, team: :regional_pitch_events)
+        .where("team_submissions.complete = ? OR regional_pitch_events_teams.regional_pitch_event_id IS NOT NULL", true)
+        .order(@sort)
+        .paginate(page: page.to_i, per_page: params[:per_page].to_i)
 
       if submissions.empty? and page.to_i != 1
         get_sorted_paginated_submissions_in_requested_division(1)

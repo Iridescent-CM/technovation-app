@@ -12,7 +12,7 @@ module Admin
              when "avg_score_asc"
                "team_submissions.semifinals_average_score ASC"
              when "team_name"
-               "teams.name ASC"
+               "lower(teams.name) ASC"
              end
       @division = params[:division] ||= "senior"
 

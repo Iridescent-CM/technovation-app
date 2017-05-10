@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510214324) do
+ActiveRecord::Schema.define(version: 20170510215942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -476,6 +476,7 @@ ActiveRecord::Schema.define(version: 20170510214324) do
     t.integer "semifinals_incomplete_submission_scores_count", default: 0, null: false
     t.integer "quarterfinals_complete_submission_scores_count", default: 0, null: false
     t.integer "quarterfinals_incomplete_submission_scores_count", default: 0, null: false
+    t.boolean "complete", default: false, null: false
     t.index ["average_unofficial_score"], name: "index_team_submissions_on_average_unofficial_score"
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at"
     t.index ["quarterfinals_average_score"], name: "index_team_submissions_on_quarterfinals_average_score"
