@@ -103,7 +103,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def average_completed_live_score
     if event_type == "live" and event_official_status == "official"
-      team_submission.average_score
+      team_submission.quarterfinals_average_score
     else
       team_submission.average_unofficial_score
     end
@@ -111,9 +111,9 @@ class SubmissionScore < ActiveRecord::Base
 
   def average_completed_virtual_score
     if event_type == "virtual"
-      team_submission.average_score
+      team_submission.quarterfinals_average_score
     elsif event_type == "live" and event_official_status == "unofficial"
-      team_submission.average_score
+      team_submission.quarterfinals_average_score
     else
       team_submission.average_unofficial_score
     end
