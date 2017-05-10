@@ -25,6 +25,8 @@ module Legacy
             rescue ActiveRecord::RecordNotFound
               return redirect_to judge_dashboard_path,
                 notice: t("controllers.judge.submission_scores.any.no_submission_found")
+            end
+          end
         end
 
         def new
