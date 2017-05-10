@@ -1,7 +1,0 @@
-<%= render 'honor_code_agreements/honor_code' %>
-
-<%= simple_form_for @honor_code_agreement, url: [current_account.type_name, @honor_code_agreement] do |f| %>
-  <%= f.input :agreement_confirmed, as: :boolean, label: "I agree to the statement above" %>
-  <%= f.input :electronic_signature %>
-  <%= f.button :submit, "Agree", class: "appy-button" %>
-<% end %>

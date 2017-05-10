@@ -40,9 +40,9 @@ module TechnovationApp
     config.i18n.available_locales = [:en, :'es-MX']
 
     config.generators do |g|
-      g.test_framework false
+      g.test_framework :rspec
       g.routes false
-      g.assets false
+      g.assets true
       g.helper false
       g.factory_girl false
       g.factory_girl dir: 'spec/factories'
@@ -50,10 +50,5 @@ module TechnovationApp
 
     require "#{Rails.root}/lib/cloud_flare_middleware"
     config.middleware.insert_before(0, Rack::CloudFlareMiddleware)
-
-    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
-      r301 '/users/sign_up', '/signup'
-      r301 '/users/sign_in', '/signin'
-    end
   end
 end

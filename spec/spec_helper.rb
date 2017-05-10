@@ -1,6 +1,9 @@
 require "dotenv"
 Dotenv.load
 
+require 'simplecov'
+SimpleCov.start 'rails'
+
 require "pry"
 require "vcr_helper"
 
