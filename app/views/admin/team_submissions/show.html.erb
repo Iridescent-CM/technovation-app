@@ -22,7 +22,9 @@
 
       <dt>Average <%= @team_submission.contest_rank %> score</dt>
       <dd>
-        <%= @team_submission.public_send("#{@team_submission.contest_rank.sub("ist", "s")}_average_score") %>
+        <%= @team_submission.public_send(
+          "#{@team_submission.contest_rank.sub("ist", "s")}_average_score"
+        ) %>
 
         <% if @team_submission.submission_scores.deleted.any? %>
            - <%= link_to 'Restore scores',
@@ -33,6 +35,38 @@
     </dl>
   </div>
 </div>
+
+<hr />
+
+<div class="flex-row">
+  <div class="flex-col-sm-6">
+    Student completion certificates:
+    <ul>
+      <% @team_submission.team.students.each do |student| %>
+        <% next if student.certificates.empty? %>
+        <li><%= link_to "#{student.full_name}", student.certificates.last.file_url %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="flex-col-sm-6">
+    Mentor completion certificates:
+    <ul>
+      <% @team_submission.team.mentors.each do |mentor| %>
+        <% next if mentor.certificates.empty? %>
+        <li><%= link_to "#{mentor.full_name}", mentor.certificates.last.file_url %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="flex-col-sm-12">
+    <%= link_to 'Generate Completion Certificates',
+      admin_team_submission_certificate_path(@team_submission, type: :completion),
+      data: { method: :patch } %>
+  </div>
+</div>
+
+<hr />
 
 <%= render 'admin/team_submissions/detail/full',
   submission: @team_submission %>
