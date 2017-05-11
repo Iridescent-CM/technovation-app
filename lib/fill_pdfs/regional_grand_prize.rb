@@ -4,6 +4,7 @@ module FillPdfs
   class RegionalGrandPrize
     include FillPdfs
 
+    private
     def pathname
       './lib/RegionalGrandPrize_nobleed-fillable.pdf'
     end
