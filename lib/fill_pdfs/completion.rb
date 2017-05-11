@@ -6,7 +6,7 @@ module FillPdfs
 
     private
     def pathname
-      './lib/Completion_nobleed-fillable.pdf'
+      './lib/Completion_nobleed-fillable2.pdf'
     end
 
     def tmp_output
