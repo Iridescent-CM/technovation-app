@@ -21,7 +21,6 @@ module FillPdfs
     else
       raise "Unsupported type #{type}"
     end
-
   end
 
   attr_reader :participant
