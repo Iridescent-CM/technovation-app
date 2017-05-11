@@ -7,7 +7,7 @@ require 'fill_pdfs/mentor_appreciation'
 require 'fill_pdfs/completion'
 
 module FillPdfs
-  PDFTK = PdfForms::PdftkWrapper.new('/usr/bin/pdftk')
+  PDFTK = PdfForms::PdftkWrapper.new('pdftk')
 
   def self.call(participant, type)
     case type
