@@ -581,7 +581,6 @@ ActiveRecord::Schema.define(version: 20170511160750) do
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
   add_foreign_key "exports", "accounts"
-  add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "judge_assignments", "judge_profiles"
   add_foreign_key "judge_assignments", "teams"
