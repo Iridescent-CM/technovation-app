@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'pdf_forms'
-require 'pry'
 
 require 'fill_pdfs/regional_grand_prize'
 require 'fill_pdfs/mentor_appreciation'
