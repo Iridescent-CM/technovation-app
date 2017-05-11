@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505213902) do
+ActiveRecord::Schema.define(version: 20170511160750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,15 @@ ActiveRecord::Schema.define(version: 20170505213902) do
     t.datetime "updated_at", null: false
     t.boolean "file_uploaded"
     t.index ["team_submission_id"], name: "index_business_plans_on_team_submission_id"
+  end
+
+  create_table "certificates", force: :cascade do |t|
+    t.bigint "account_id"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "season"
+    t.index ["account_id"], name: "index_certificates_on_account_id"
   end
 
   create_table "consent_waivers", id: :serial, force: :cascade do |t|
@@ -545,6 +554,7 @@ ActiveRecord::Schema.define(version: 20170505213902) do
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
   add_foreign_key "business_plans", "team_submissions"
+  add_foreign_key "certificates", "accounts"
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"

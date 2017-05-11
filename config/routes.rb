@@ -168,6 +168,7 @@ Rails.application.routes.draw do
     resources :team_submissions, except: :destroy
     resources :team_memberships, only: [:destroy, :create]
     resources :team_locations, only: :edit
+    resources :team_submission_certificates, only: :update
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
