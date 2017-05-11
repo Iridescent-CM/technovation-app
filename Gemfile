@@ -5,6 +5,7 @@ gem 'rails', '~> 5.1'
 gem 'puma', '~> 3.8'
 gem 'pg', '~> 0.20'
 
+gem 'pdf-forms', '~> 1.1'
 
 gem "paranoia", '~> 2.3'
 gem 'counter_culture', '~> 1.0'

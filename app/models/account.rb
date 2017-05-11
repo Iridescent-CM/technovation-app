@@ -25,6 +25,7 @@ class Account < ActiveRecord::Base
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
+  has_many :certificates
   has_many :void_honor_code_agreements,
     -> { void },
     class_name: "HonorCodeAgreement",
