@@ -1,6 +1,7 @@
 module ExportCertificates
-  def self.call(submission_id)
-    submission = TeamSubmission.includes(team: { memberships: { member: :account } }).find(submission_id)
+  def self.call(submission_id, type)
+    submission = TeamSubmission.includes(team: { memberships: { member: :account } })
+      .friendly.find(submission_id)
     return unless submission.complete?
 
     puts "Generating certs for #{submission.app_name}"
