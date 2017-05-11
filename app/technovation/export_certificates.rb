@@ -26,7 +26,5 @@ module ExportCertificates
       }
       FillPdfJob.perform_later(mentor_data, "mentor")
     end
-
-    puts Certificate.last.file_url
   end
 end
