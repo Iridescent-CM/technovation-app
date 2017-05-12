@@ -66,14 +66,15 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
-  validates :team_submission_id,
-    presence: true,
-    uniqueness: { scope: :judge_profile_id },
+  validates :team_submission_id, presence: true
+  validates :judge_profile_id, presence: true
+
+  validates_uniqueness_of :team_submission_id,
+    scope: :judge_profile_id,
     conditions: -> { where(deleted_at: nil) }
 
-  validates :judge_profile_id,
-    presence: true,
-    uniqueness: { scope: :team_submission_id },
+  validates_uniqueness_of :judge_profile_id,
+    scope: :team_submission_id,
     conditions: -> { where(deleted_at: nil) }
 
   delegate :app_name,
