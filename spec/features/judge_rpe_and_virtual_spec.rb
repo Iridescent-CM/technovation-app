@@ -6,6 +6,7 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
     FactoryGirl.create(:team)
     sign_in(vjudge)
 
+    puts page.body
     within("#virtual-scores") do
       expect(page).to have_link(
         "Start a new score now",
