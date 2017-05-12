@@ -81,7 +81,7 @@ module Judge
       params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
         team_submission_id: params[:team_submission_id] || @submission_score.try(:team_submission_id),
-        live: params[:event_type] != :virtual,
+        live: String(params[:event_type]) != "virtual",
       )
 
       @current_team_submission = TeamSubmission.find(params[:team_submission_id])
