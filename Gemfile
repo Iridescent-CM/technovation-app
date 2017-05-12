@@ -41,9 +41,7 @@ gem 'dalli', "~> 2.7"
 gem 'geocoder', '~> 1.4'
 gem 'timezone', '~> 1.2'
 
-gem 'carrierwave',
-  git: "https://github.com/carrierwaveuploader/carrierwave.git",
-  branch: "master"
+gem 'carrierwave', '~> 1.1'
 
 gem "mini_magick", "~> 4.7"
 gem "fog", "~> 1.40"

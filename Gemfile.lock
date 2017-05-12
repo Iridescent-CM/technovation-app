@@ -8,16 +8,6 @@ GIT
       rails
 
 GIT
-  remote: https://github.com/carrierwaveuploader/carrierwave.git
-  revision: 07dc4d7bd7806ab4b963cf8acbad73d97cdfe74e
-  branch: master
-  specs:
-    carrierwave (1.1.0)
-      activemodel (>= 4.0.0)
-      activesupport (>= 4.0.0)
-      mime-types (>= 1.16)
-
-GIT
   remote: https://github.com/elsurudo/simple_form.git
   revision: a1faca93ed39c0f54055890578307bdbade3de0b
   branch: rails-5.1.0
@@ -79,13 +69,13 @@ GEM
     arel (8.0.0)
     autoprefixer-rails (6.7.7.2)
       execjs
-    aws-sdk (2.9.16)
-      aws-sdk-resources (= 2.9.16)
-    aws-sdk-core (2.9.16)
+    aws-sdk (2.9.17)
+      aws-sdk-resources (= 2.9.17)
+    aws-sdk-core (2.9.17)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.16)
-      aws-sdk-core (= 2.9.16)
+    aws-sdk-resources (2.9.17)
+      aws-sdk-core (= 2.9.17)
     aws-sigv4 (1.0.0)
     bcrypt (3.1.11)
     browser (2.4.0)
@@ -100,6 +90,10 @@ GEM
     capybara-webkit (1.14.0)
       capybara (>= 2.3.0, < 2.14.0)
       json
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     carrierwave_direct (0.0.15)
       carrierwave
       fog
@@ -556,7 +550,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   browser (~> 2.3)
   capybara-webkit (~> 1.14)
-  carrierwave!
+  carrierwave (~> 1.1)
   carrierwave_direct (~> 0.0)
   chartkick (~> 2.2)
   checkr-official (~> 1.2)
