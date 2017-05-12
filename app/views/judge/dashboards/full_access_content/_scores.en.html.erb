@@ -77,7 +77,7 @@
               teams to get started.
             </p>
 
-          <% elsif assigned_teams(current_judge).any? { |t|
+          <% elsif event_type == :live and assigned_teams(current_judge).any? { |t|
             t.submission_scores.where(judge_profile_id: current_judge.id).none? or
               t.submission_scores.where(judge_profile_id: current_judge.id,  completed_at: nil).any?
           } %>

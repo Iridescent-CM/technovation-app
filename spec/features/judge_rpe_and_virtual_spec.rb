@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   scenario "Virtual judge notices no difference" do
     vjudge = FactoryGirl.create(:judge, full_access: true)
+    FactoryGirl.create(:team)
     sign_in(vjudge)
 
     within("#virtual-scores") do
