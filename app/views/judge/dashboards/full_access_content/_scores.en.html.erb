@@ -64,7 +64,8 @@
           <p>You don't have any <%= event_type %> scores currently in progress.</p>
 
           <% if event_type == :live and assigned_teams(current_judge).all? { |t|
-            t.submission_scores.where(judge_profile_id: current_judge.id).all?(&:complete?)
+            t.submission_scores.where(judge_profile_id: current_judge.id).any? and
+              t.submission_scores.where(judge_profile_id: current_judge.id).all?(&:complete?)
           } %>
 
             <p>Thank you for judging all of your live teams! Great job! You're invited to keep judging virtually in <strong>Virtual Scores</strong>!</p>
