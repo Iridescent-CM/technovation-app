@@ -7,9 +7,13 @@ require 'fill_pdfs/mentor_appreciation'
 require 'fill_pdfs/completion'
 
 module FillPdfs
-  PDFTK = PdfForms::PdftkWrapper.new(ENV.fetch("PDFTK_PATH"))
+  if !!ENV["PDFTK_PATH"]
+    PDFTK = PdfForms::PdftkWrapper.new(ENV["PDFTK_PATH"])
+  end
 
   def self.call(participant, type)
+    return unless !!ENV["PDFTK_PATH"]
+
     case type
     when :regional_grand_prize
       RegionalGrandPrize.new(participant).generate_certificate
