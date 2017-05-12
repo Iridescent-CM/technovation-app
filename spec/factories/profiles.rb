@@ -172,15 +172,34 @@ FactoryGirl.define do
     transient do
       email nil
       first_name nil
+      full_access false
+      virtual true
     end
 
     before(:create) do |j, e|
-      attrs = FactoryGirl.attributes_for(:account)
+      attrs = {}
 
-      j.build_account(attrs.merge(
-        email: e.email || attrs[:email],
-        first_name: e.first_name || attrs[:first_name],
+      if e.full_access
+        attrs = {
+          city: "Chicago",
+          state_province: "IL",
+          country: "US",
+          location_confirmed: true,
+        }
+      end
+
+      act_attrs = FactoryGirl.attributes_for(:account).merge(attrs)
+
+      j.build_account(act_attrs.merge(
+        email: e.email || act_attrs[:email],
+        first_name: e.first_name || act_attrs[:first_name],
       ))
+
+      if e.full_access
+        j.account.build_consent_waiver({
+          electronic_signature: "test",
+        })
+      end
     end
 
     after(:create) do |j, e|
