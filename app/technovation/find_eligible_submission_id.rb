@@ -1,7 +1,7 @@
 module FindEligibleSubmissionId
   class << self
     def call(judge_profile, options = {})
-      if quarterfinals? and judge_profile.selected_regional_pitch_event.live?
+      if quarterfinals? and options[:live] and judge_profile.selected_regional_pitch_event.live?
         submission_id_from_live_event(
           judge_profile.selected_regional_pitch_event,
           options[:team_submission_id]
