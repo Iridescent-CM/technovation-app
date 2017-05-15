@@ -6,7 +6,6 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
     FactoryGirl.create(:team)
     sign_in(vjudge)
 
-    puts page.body
     within("#virtual-scores") do
       expect(page).to have_link(
         "Start a new score now",
@@ -35,6 +34,11 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
     within("#scores") do
       expect(page).to have_content("Please complete your Live Event scores")
     end
+
+    within("#virtual-scores") do
+      expect(page).to have_content("Please complete your Live Event scores")
+      expect(page).not_to have_link("Start a new score now")
+    end
   end
 
   scenario "Live judge finishes their live event scores" do
@@ -55,6 +59,13 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
 
     within("#scores") do
       expect(page).to have_content("You're invited to keep judging virtually")
+    end
+
+    within("#virtual-scores") do
+      expect(page).to have_link(
+        "Start a new score now",
+        href: new_judge_submission_score_path(event_type: :virtual)
+      )
     end
   end
 end
