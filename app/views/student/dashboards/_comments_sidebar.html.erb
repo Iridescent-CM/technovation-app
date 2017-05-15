@@ -1,0 +1,21 @@
+<div class="flex-col-md-4 dashboard-sidebar border-left">
+  <h3> Comments: <%= @best_category %></h3><br>
+  <p>
+    <% @scores.each do |score| %>
+
+      <% case "#{@best_category}" %>
+        <% when "Ideation"%>
+          "<em><%= score.ideation_comment %></em>" <br><br>
+        <% when "Technical"%>
+          "<em><%= score.technical_comment %></em>" <br><br>
+        <% when "Entrepreneurship"%>
+          "<em><%= score.entrepreneurship_comment %></em>" <br><br>
+        <% when "Pitch"%>
+          "<em><%= score.pitch_comment %></em>" <br><br>
+        <% when "Overall Impression" %>
+          "<em><%= score.overall_comment %></em>" <br><br>
+      <% end %>
+
+    <% end %>
+  </p>
+</div>

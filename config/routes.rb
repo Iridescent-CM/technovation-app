@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
     resource :regional_pitch_event_selection, only: [:show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show
+    resources :scores, only: [:show]
 
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
