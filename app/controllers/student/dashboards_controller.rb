@@ -4,7 +4,7 @@ module Student
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
 
       if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
-        @scores = current_team.submission.submission_scores.quarterfinals
+        @scores = current_team.submission.submission_scores.complete.quarterfinals
 
         @ideation_average = category_average(:ideation)
         @technical_average = category_average(:technical)
