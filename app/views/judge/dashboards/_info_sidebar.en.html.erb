@@ -2,7 +2,7 @@
   <% if ENV["ENABLE_SUBMISSION_SCORES"] %>
     <h3>Score Submissions</h3>
 
-    <% if current_judge.submission_scores.incomplete.any? %>
+    <% if current_judge.submission_scores.current_round.incomplete.any? %>
       <p>
         <%= link_to "Resume scoring",
           edit_judge_submission_score_path(current_judge.submission_scores.incomplete.last.id) %>
@@ -14,7 +14,7 @@
         <%= current_judge.selected_regional_pitch_event.division_names %>
         teams to get started.
       </p>
-    <% elsif current_judge.submission_scores.incomplete.empty? %>
+    <% elsif current_judge.submission_scores.current_round.incomplete.empty? %>
       <p>
         <%= link_to 'Start a new score', new_judge_submission_score_path %>
       </p>
