@@ -2,14 +2,17 @@ module Student
   class DashboardsController < StudentController
     def show
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
-      @scores = current_team.submission.submission_scores.quarterfinals
 
-      @ideation_average = category_average(:ideation)
-      @technical_average = category_average(:technical)
-      @entrepreneurship_average = category_average(:entrepreneurship)
-      @pitch_average = category_average(:pitch)
-      @overall_impression_average = category_average(:overall_impression)
-      @best_category = best_category
+      if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
+        @scores = current_team.submission.submission_scores.quarterfinals
+
+        @ideation_average = category_average(:ideation)
+        @technical_average = category_average(:technical)
+        @entrepreneurship_average = category_average(:entrepreneurship)
+        @pitch_average = category_average(:pitch)
+        @overall_impression_average = category_average(:overall_impression)
+        @best_category = best_category
+      end
     end
 
     private
