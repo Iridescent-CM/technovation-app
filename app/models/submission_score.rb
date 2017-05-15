@@ -16,6 +16,9 @@ class SubmissionScore < ActiveRecord::Base
   before_create -> {
     self.event_type ||= judge_profile.selected_regional_pitch_event.live? ? "live" : "virtual"
   }
+  before_create -> {
+    self.official ||= official?
+  }
 
   enum round: %w{
     quarterfinals
@@ -25,10 +28,22 @@ class SubmissionScore < ActiveRecord::Base
 
   belongs_to :team_submission, counter_cache: true
   counter_culture :team_submission,
-                  column_name: proc {|model| "#{model.round}_submission_scores_count" },
+                  column_name: proc { |model|
+                    "#{model.round}_submission_scores_count"
+                  },
                   column_names: {
                     ["submission_scores.round = ?", rounds[:quarterfinals]] => 'quarterfinals_submission_scores_count',
                     ["submission_scores.round = ?", rounds[:semifinals]] => 'semifinals_submission_scores_count'
+                  }
+  counter_culture :team_submission,
+                  column_name: proc { |model|
+                    model.official? ? "#{model.round}_official_submission_scores_count" : nil
+                  },
+                  column_names: {
+                    ["submission_scores.round = ? and submission_scores.official = ?", rounds[:quarterfinals], true] =>
+                      'quarterfinals_official_submission_scores_count',
+                    ["submission_scores.round = ? and submission_scores.official = ?", rounds[:semifinals], true] =>
+                      'semifinals_official_submission_scores_count'
                   }
   belongs_to :judge_profile
 
@@ -277,6 +292,13 @@ class SubmissionScore < ActiveRecord::Base
     else
       0
     end
+  end
+
+  def official?
+    not (quarterfinals? and
+         (team.selected_regional_pitch_event == judge_profile.selected_regional_pitch_event and
+          team.selected_regional_pitch_event.live? and
+          team.selected_regional_pitch_event.unofficial?))
   end
 
   private

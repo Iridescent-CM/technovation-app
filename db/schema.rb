@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511160750) do
+ActiveRecord::Schema.define(version: 20170515173429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -434,6 +434,7 @@ ActiveRecord::Schema.define(version: 20170511160750) do
     t.string "event_type"
     t.datetime "deleted_at"
     t.integer "round", default: 0, null: false
+    t.boolean "official", default: true
     t.index ["completed_at"], name: "index_submission_scores_on_completed_at"
     t.index ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id"
     t.index ["team_submission_id"], name: "index_submission_scores_on_team_submission_id"
@@ -481,6 +482,8 @@ ActiveRecord::Schema.define(version: 20170511160750) do
     t.integer "semifinals_submission_scores_count", default: 0, null: false
     t.integer "quarterfinals_submission_scores_count", default: 0, null: false
     t.decimal "semifinals_average_score", precision: 5, scale: 2, default: "0.0", null: false
+    t.integer "semifinals_official_submission_scores_count", default: 0, null: false
+    t.integer "quarterfinals_official_submission_scores_count", default: 0, null: false
     t.index ["average_unofficial_score"], name: "index_team_submissions_on_average_unofficial_score"
     t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at"
     t.index ["quarterfinals_average_score"], name: "index_team_submissions_on_quarterfinals_average_score"
