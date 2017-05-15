@@ -37,8 +37,7 @@ class SubmissionScore < ActiveRecord::Base
                   }
   counter_culture :team_submission,
                   column_name: proc { |model|
-                    return if not model.official?
-                    "#{model.round}_official_submission_scores_count"
+                    model.official? ? "#{model.round}_official_submission_scores_count" : nil
                   },
                   column_names: {
                     ["submission_scores.round = ? and submission_scores.official = ?", rounds[:quarterfinals], true] =>

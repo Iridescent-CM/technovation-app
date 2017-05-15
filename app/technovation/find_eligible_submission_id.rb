@@ -48,8 +48,8 @@ module FindEligibleSubmissionId
             not judge_conflicts.include?(sub.team.region_division_name))
         }
         .sort {|x,y|
-          x = x.public_send("#{current_round}_official_submission_scores_count") || 0
-          y = y.public_send("#{current_round}_official_submission_scores_count") || 0
+          x = x.public_send("#{current_round}_submission_scores_count") || 0
+          y = y.public_send("#{current_round}_submission_scores_count") || 0
           x <=> y
         }
       sub = candidates.first
