@@ -37,18 +37,16 @@
   <table class="ra-participants-list" style="align:center">
     <thead>
       <tr>
-        <th>Judge</th>
-        <th>Location </th>
         <th>Score</th>
+        <th>Judge Location </th>
         <th>View</th>
       </tr>
     </thead>
     <tbody>
       <% @scores.each do |score| %>
         <tr>
-        <td><%= score.judge_profile.full_name %></td>
-        <td><%= score.judge_profile.address_details %></td>
-        <td><%= score.total %> </td>
+          <td><%= score.total %> </td>
+          <td><%= score.judge_profile.address_details %></td>
           <td><%= link_to 'View details', student_score_path(score.id) %></td>
         </tr>
       <% end %>
