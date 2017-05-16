@@ -59,6 +59,48 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
     end
 
+    it "ignores unofficial live scores when selecting" do
+      unofficial_rpe = RegionalPitchEvent.create!({
+        regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
+        name: "RPE",
+        starts_at: Date.today,
+        ends_at: Date.today + 1.day,
+        division_ids: Division.senior.id,
+        city: "City",
+        venue_address: "123 Street St.",
+        unofficial: true
+      })
+
+      team1 = FactoryGirl.create(:team)
+      team1.regional_pitch_events << unofficial_rpe
+      sub_with_unofficial_scores = FactoryGirl.create(:submission, :complete, team: team1)
+
+      team2 = FactoryGirl.create(:team)
+      sub_with_official_score = FactoryGirl.create(:submission, :complete, team: team2)
+
+      rpe_judge1 = FactoryGirl.create(:judge)
+      rpe_judge1.regional_pitch_events << unofficial_rpe
+      SubmissionScore.create!(
+        judge_profile_id: rpe_judge1.id,
+        team_submission_id: sub_with_unofficial_scores.id
+      )
+
+      rpe_judge2 = FactoryGirl.create(:judge)
+      rpe_judge2.regional_pitch_events << unofficial_rpe
+      SubmissionScore.create!(
+        judge_profile_id: rpe_judge2.id,
+        team_submission_id: sub_with_unofficial_scores.id
+      )
+
+      judge3 = FactoryGirl.create(:judge)
+      SubmissionScore.create!(
+        judge_profile_id: judge3.id,
+        team_submission_id: sub_with_official_score.id
+      )
+
+      expect(FindEligibleSubmissionId.(FactoryGirl.create(:judge))).to eq(sub_with_unofficial_scores.id)
+    end
+
     it "does not select submission for an official regional pitch event" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
