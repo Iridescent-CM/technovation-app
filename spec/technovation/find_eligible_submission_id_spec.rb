@@ -242,7 +242,7 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_sf_score.id)
     end
 
-    it "selects submission judged in quarterfinals" do
+    it "does not select submission judged in quarterfinals" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
       sub = FactoryGirl.create(:submission, :complete, team: team, contest_rank: sf_rank)
@@ -253,7 +253,7 @@ RSpec.describe FindEligibleSubmissionId do
       )
       score.complete!
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+      expect(FindEligibleSubmissionId.(judge)).to be_nil
     end
 
     it "does not select submission judged already in semifinals" do

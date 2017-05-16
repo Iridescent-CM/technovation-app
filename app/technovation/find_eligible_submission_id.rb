@@ -28,7 +28,7 @@ module FindEligibleSubmissionId
     end
 
     def random_eligible_id(judge)
-      scored_submissions = judge.submission_scores.current_round.pluck(:team_submission_id)
+      scored_submissions = judge.submission_scores.pluck(:team_submission_id)
       judge_conflicts = judge.team_region_division_names
       official_rpe_team_ids = if quarterfinals?
                                 RegionalPitchEvent.official.joins(:teams).pluck(:team_id)
