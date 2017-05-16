@@ -10,14 +10,16 @@
     </li>
   <% end %>
 
-  <li class="tab-link">
-    <button
-      role="button"
-      class="tab-button"
-      data-tab-id="scores">
-      Scores
-    </button>
-  </li>
+  <% if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"] and false%>
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="scores">
+        Scores
+      </button>
+    </li>
+  <% end %>
 
   <li class="tab-link">
     <button
