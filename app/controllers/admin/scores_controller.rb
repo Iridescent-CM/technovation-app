@@ -18,7 +18,7 @@ module Admin
                  events.eager_load(
                    :divisions,
                    :judges,
-                   teams: { team_submissions: :submission_scores }
+                   teams: :team_submissions
                  ).find(params[:event])
                end
 
