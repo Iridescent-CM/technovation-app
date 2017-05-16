@@ -5,13 +5,14 @@ module Student
 
       if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
         @scores = current_team.submission.submission_scores.complete.quarterfinals
-
-        @ideation_average = category_average(:ideation)
-        @technical_average = category_average(:technical)
-        @entrepreneurship_average = category_average(:entrepreneurship)
-        @pitch_average = category_average(:pitch)
-        @overall_impression_average = category_average(:overall_impression)
-        @best_category = best_category
+        if @scores.any?
+          @ideation_average = category_average(:ideation)
+          @technical_average = category_average(:technical)
+          @entrepreneurship_average = category_average(:entrepreneurship)
+          @pitch_average = category_average(:pitch)
+          @overall_impression_average = category_average(:overall_impression)
+          @best_category = best_category
+        end
       end
     end
 
