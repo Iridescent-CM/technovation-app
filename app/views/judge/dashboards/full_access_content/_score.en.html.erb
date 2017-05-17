@@ -15,15 +15,17 @@
     </small>
   </p>
 
-  <% if type == :complete %>
+  <% if ENV["JUDGING_OPEN"] and type == :complete %>
     <p>
       <%= link_to "Review & Edit this score",
         edit_judge_submission_score_path(score, anchor: :review) %>
     </p>
-  <% else %>
+  <% elsif ENV["JUDGING_OPEN"] %>
     <p>
       <%= link_to "Resume scoring #{score.name}",
         edit_judge_submission_score_path(score, anchor: :window) %>
     </p>
+  <% else %>
+    <p>This round of judging is currently closed. Thank you for your excellent help!</p>
   <% end %>
 </div>

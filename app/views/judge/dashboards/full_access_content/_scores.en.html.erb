@@ -83,9 +83,11 @@
           } %>
 
             <p>Please complete your Live Event scores to gain access to virtual judging.</p>
-          <% else %>
+          <% elsif ENV["JUDGING_OPEN"] %>
             <p><%= link_to 'Start a new score now',
               new_judge_submission_score_path(event_type: event_type) %></p>
+          <% else %>
+            <p>This round of judging is currently closed. Thank you for your excellent help!</p>
           <% end %>
         <% end %>
 
@@ -115,11 +117,11 @@
                            .empty? %>
           <p>You haven't completed any <%= event_type %> scores yet.</p>
 
-          <% if current_judge.submission_scores
-                             .public_send(event_type)
-                             .current_round
-                             .incomplete
-                             .any? %>
+          <% if ENV["JUDGING_OPEN"] and current_judge.submission_scores
+                                                     .public_send(event_type)
+                                                     .current_round
+                                                     .incomplete
+                                                     .any? %>
             <p>
               <%= link_to(("Resume scoring " +
                            current_judge.submission_scores
@@ -139,13 +141,17 @@
                 )) %>
             </p>
 
-          <% elsif quarterfinals? and assigned_teams(current_judge).any? { |t|
+          <% elsif ENV["JUDGING_OPEN"] and
+                     quarterfinals? and
+                       assigned_teams(current_judge).any? { |t|
             t.submission_scores.where(judge_profile_id: current_judge.id).none? or
               t.submission_scores.where(judge_profile_id: current_judge.id,  completed_at: nil).any?
           } %>
 
             <p>Please complete your Live Event scores to gain access to virtual judging.</p>
 
+          <% else %>
+            <p>This round of judging is currently closed. Thank you for your excellent help!</p>
           <% end %>
         <% end %>
 

@@ -7,25 +7,25 @@
       <p><strong>Division:</strong> <%= team.division_name %></p>
       <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
 
-      <% if current_judge.submission_scores
-                          .current_round
-                          .incomplete
-                          .flat_map(&:team)
-                          .include?(team) %>
+      <% if ENV["JUDGING_OPEN"] and current_judge.submission_scores
+                                                 .current_round
+                                                 .incomplete
+                                                 .flat_map(&:team)
+                                                 .include?(team) %>
         <p>
           <%= link_to "Resume scoring this submission",
             edit_judge_submission_score_path(
               current_judge.submission_scores
-                            .current_round
-                            .find_by(team_submission_id: team.submission.id),
+                           .current_round
+                           .find_by(team_submission_id: team.submission.id),
               anchor: :window
             ) %>
         </p>
-      <% elsif current_judge.submission_scores
-                            .current_round
-                            .complete
-                            .flat_map(&:team)
-                            .include?(team) %>
+      <% elsif ENV["JUDGING_OPEN"] and current_judge.submission_scores
+                                                    .current_round
+                                                    .complete
+                                                    .flat_map(&:team)
+                                                    .include?(team) %>
         <p>
           <%= link_to "Review & edit your score for this submission",
             edit_judge_submission_score_path(
@@ -35,7 +35,7 @@
               anchor: :review
             ) %>
         </p>
-      <% else %>
+      <% elsif ENV["JUDGING_OPEN"] %>
         <p>
           <%= link_to "Start scoring this submission",
             new_judge_submission_score_path(
@@ -43,6 +43,8 @@
               event_type: :live,
             ) %>
         </p>
+      <% else %>
+        <p>This round of judging is currently closed. Thank you for your excellent help!</p>
       <% end %>
     <% else %>
       <p>
