@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
+  before do
+    @judging_open = ENV["JUDGING_OPEN"]
+    ENV["JUDGING_OPEN"] = "present"
+  end
+
+  after do
+    if @judging_open.present?
+      ENV["JUDGING_OPEN"] = @judging_open
+    else
+      ENV.delete("JUDGING_OPEN")
+    end
+  end
+
   scenario "Virtual judge notices no difference" do
     vjudge = FactoryGirl.create(:judge, full_access: true)
     FactoryGirl.create(:team)
