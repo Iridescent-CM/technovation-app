@@ -17,6 +17,7 @@ RSpec.describe FindEligibleSubmissionId do
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
         team_submission_id: sub_with_score.id,
+        completed_at: Time.current,
       )
 
       judge2 = FactoryGirl.create(:judge)
@@ -222,7 +223,8 @@ RSpec.describe FindEligibleSubmissionId do
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
         team_submission_id: sub_with_sf_score.id,
-        round: SubmissionScore.rounds[:semifinals]
+        round: SubmissionScore.rounds[:semifinals],
+        completed_at: Time.current,
       )
 
       judge2 = FactoryGirl.create(:judge)

@@ -299,4 +299,21 @@ RSpec.describe SubmissionScore do
 
     expect(score.event_type).to eq("live")
   end
+
+  it "only counts itself on the submission when it's complete" do
+    team = FactoryGirl.create(:team)
+    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryGirl.create(:judge_profile)
+
+    score = SubmissionScore.create!({
+      judge_profile: judge_profile,
+      team_submission: team_submission,
+    })
+
+    expect(team_submission.reload.quarterfinals_submission_scores_count).to be_zero
+
+    score.complete!
+
+    expect(team_submission.reload.quarterfinals_submission_scores_count).to eq(1)
+  end
 end

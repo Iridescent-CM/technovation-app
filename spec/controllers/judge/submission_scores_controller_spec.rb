@@ -24,7 +24,8 @@ RSpec.describe Judge::SubmissionScoresController do
         .strftime("%Y%m%d%H%M%S")
       ).to eq(now.strftime("%Y%m%d%H%M%S"))
 
-      expect(judge.submission_scores.last.team_submission.submission_scores_count).to eq(1)
+      submission = judge.submission_scores.last.team_submission
+      expect(submission.submission_scores_count).to eq(1)
     end
   end
 end
