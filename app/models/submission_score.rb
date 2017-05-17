@@ -53,6 +53,9 @@ class SubmissionScore < ActiveRecord::Base
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }
 
+  scope :official, -> { where(official: true) }
+  scope :unofficial, -> { where(official: false) }
+
   scope :current, -> {
     joins(team_submission: { team: { season_registrations: :season } })
     .where("seasons.year = ?", Season.current.year)

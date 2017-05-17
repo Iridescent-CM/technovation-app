@@ -192,6 +192,8 @@ class ExportJob < ActiveJob::Base
         #\ of\ completed\ scores
         #\ completed\ live
         #\ completed\ virtual
+        #\ completed\ official
+        #\ completed\ unofficial
         Average\ score
       }
 
@@ -214,6 +216,8 @@ class ExportJob < ActiveJob::Base
                 submission.submission_scores.quarterfinals.complete.count,
                 submission.submission_scores.quarterfinals.complete.live.count,
                 submission.submission_scores.quarterfinals.complete.virtual.count,
+                submission.submission_scores.quarterfinals.complete.official.count,
+                submission.submission_scores.quarterfinals.complete.unofficial.count,
                 submission.quarterfinals_average_score]
       end
 
@@ -236,8 +240,8 @@ class ExportJob < ActiveJob::Base
         Submisson\ complete?
         #\ of\ incomplete\ scores
         #\ of\ completed\ scores
-        #\ completed\ live
-        #\ completed\ virtual
+        #\ completed\ official
+        #\ completed\ unofficial
         Average\ score
       }
 
@@ -253,8 +257,8 @@ class ExportJob < ActiveJob::Base
                 submission.complete? ? "complete" : "incomplete",
                 submission.submission_scores.semifinals.incomplete.count,
                 submission.submission_scores.semifinals.complete.count,
-                submission.submission_scores.semifinals.complete.live.count,
-                submission.submission_scores.semifinals.complete.virtual.count,
+                submission.submission_scores.semifinals.complete.official.count,
+                submission.submission_scores.semifinals.complete.unofficial.count,
                 submission.semifinals_average_score]
       end
 
