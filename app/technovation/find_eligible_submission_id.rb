@@ -69,7 +69,7 @@ module FindEligibleSubmissionId
       if sub
         sub.id
       elsif pending_ceiling <= 50
-        random_eligible_id(pending_ceiling + 2)
+        random_eligible_id(judge, pending_ceiling + 2)
       end
     end
 
