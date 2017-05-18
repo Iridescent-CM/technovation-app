@@ -1,21 +1,6 @@
 <h1 class="appy-title">
-  Review & Select Regional Pitch Events
+  Review Regional Pitch Events
 </h1>
-
-<% if @teams.flat_map(&:eligible_events).any? %>
-  <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-    <div class="actions">
-      <button class="save-mentor-pitch-events appy-button"
-              data-url="<%= mentor_regional_pitch_event_selection_path %>">
-        Save changes
-      </button>
-
-      or
-
-      <%= link_to 'cancel', mentor_teams_path %>
-    </div>
-  </div>
- <% end %>
 
 <div class="flex-row mentor-regional-pitch-events__team-review">
   <% @teams.each do |team| %>
@@ -39,18 +24,12 @@
               <%= team.primary_location %><br />
 
               <% if team.submission.present? %>
-                <%= link_to 'Edit app submission',
-                  mentor_team_submission_path(team.submission, team_id: team.id) %>
-                <br />
                 <%= link_to 'See how it looks to the judges',
                   app_url(team.submission),
                   target: :_blank %>
               <% else %>
                 <strong class="has-danger">
                   <%= team.name %> has not begun their app submission!
-                  <br />
-                  <%= link_to 'Start the submission now',
-                    new_mentor_team_submission_path(team_id: team.id) %>
                 </strong>
               <% end %>
             </small>
@@ -67,6 +46,7 @@
                       <%= radio_button_tag "team_#{team.id}_events",
                         event.id,
                         team.selected_regional_pitch_event.id == event.id,
+                        disabled: true,
                         id: "team_#{team.id}_event_#{event.id}" %>
 
                       <%= event.name %>
@@ -110,15 +90,6 @@
                         live events — your team's completed submission will be judged online.
                       </p>
                     <% end %>
-
-                    <div class="modal-actions">
-                      <button class="appy-button modalify__close"
-                              data-selects="team_<%= team.id %>_event_<%= event.id %>">
-                        Select
-                      </button>
-                      or
-                      <%= link_to 'cancel', '#', class: "modalify__close" %>
-                    </div>
                   </div>
                 <% end %>
               </ul>
@@ -129,18 +100,3 @@
     </div>
   <% end %>
 </div>
-
-<% if @teams.flat_map(&:eligible_events).any? %>
-  <div class="mentor-regional-pitch-events__save-selections standalone-buttons">
-    <div class="actions">
-      <button class="save-mentor-pitch-events appy-button"
-              data-url="<%= mentor_regional_pitch_event_selection_path %>">
-        Save changes
-      </button>
-
-      or
-
-      <%= link_to 'cancel', mentor_teams_path %>
-    </div>
-  </div>
-<% end %>
