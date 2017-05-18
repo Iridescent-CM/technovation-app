@@ -310,10 +310,12 @@ RSpec.describe SubmissionScore do
       team_submission: team_submission,
     })
 
-    expect(team_submission.reload.quarterfinals_submission_scores_count).to be_zero
+    expect(team_submission.reload.pending_quarterfinals_submission_scores_count).to eq(1)
+    expect(team_submission.reload.complete_quarterfinals_submission_scores_count).to eq(0)
 
     score.complete!
 
-    expect(team_submission.reload.quarterfinals_submission_scores_count).to eq(1)
+    expect(team_submission.reload.pending_quarterfinals_submission_scores_count).to eq(0)
+    expect(team_submission.reload.complete_quarterfinals_submission_scores_count).to eq(1)
   end
 end

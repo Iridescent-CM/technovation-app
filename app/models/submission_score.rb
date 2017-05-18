@@ -31,7 +31,9 @@ class SubmissionScore < ActiveRecord::Base
   counter_culture :team_submission,
     column_name: ->(score) {
       if score.complete?
-        "#{score.round}_submission_scores_count"
+        "complete_#{score.round}_submission_scores_count"
+      else
+        "pending_#{score.round}_submission_scores_count"
       end
     },
 
@@ -39,18 +41,30 @@ class SubmissionScore < ActiveRecord::Base
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:quarterfinals]
-      ] => 'quarterfinals_submission_scores_count',
+      ] => 'complete_quarterfinals_submission_scores_count',
+
+      [
+        "submission_scores.round = ? and submission_scores.completed_at IS NULL",
+        rounds[:quarterfinals]
+      ] => 'pending_quarterfinals_submission_scores_count',
 
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:semifinals]
-      ] => 'semifinals_submission_scores_count'
+      ] => 'complete_semifinals_submission_scores_count',
+
+      [
+        "submission_scores.round = ? and submission_scores.completed_at IS NULL",
+        rounds[:semifinals]
+      ] => 'pending_semifinals_submission_scores_count'
     }
 
   counter_culture :team_submission,
     column_name: ->(score) {
       if score.official? and score.complete?
-        "#{score.round}_official_submission_scores_count"
+        "complete_#{score.round}_official_submission_scores_count"
+      elsif score.official?
+        "pending_#{score.round}_official_submission_scores_count"
       end
     },
 
@@ -59,13 +73,25 @@ class SubmissionScore < ActiveRecord::Base
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:quarterfinals],
         true
-      ] => 'quarterfinals_official_submission_scores_count',
+      ] => 'complete_quarterfinals_official_submission_scores_count',
+
+      [
+        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL",
+        rounds[:quarterfinals],
+        true
+      ] => 'pending_quarterfinals_official_submission_scores_count',
 
       [
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:semifinals],
         true
-      ] => 'semifinals_official_submission_scores_count'
+      ] => 'complete_semifinals_official_submission_scores_count',
+
+      [
+        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL",
+        rounds[:semifinals],
+        true
+      ] => 'pending_semifinals_official_submission_scores_count'
     }
 
   belongs_to :judge_profile

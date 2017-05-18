@@ -43,13 +43,25 @@ module FindEligibleSubmissionId
         .where.not(
           teams: { id: official_rpe_team_ids }
         )
-        .select {|sub|
+        .where(
+          "(complete_#{current_round}_official_submission_scores_count IS NULL OR
+            complete_#{current_round}_official_submission_scores_count < 3) AND
+
+              (pending_#{current_round}_official_submission_scores_count IS NULL OR
+                pending_#{current_round}_official_submission_scores_count < 5)"
+        )
+        .select { |sub|
           (sub.complete? and
             not judge_conflicts.include?(sub.team.region_division_name))
         }
-        .sort {|x,y|
-          x = x.public_send("#{current_round}_official_submission_scores_count") || 0
-          y = y.public_send("#{current_round}_official_submission_scores_count") || 0
+        .sort { |a, b|
+          x = a.public_send("pending_#{current_round}_official_submission_scores_count") || 0
+          y = b.public_send("pending_#{current_round}_official_submission_scores_count") || 0
+          x <=> y
+        }
+        .sort { |a, b|
+          x = a.public_send("complete_#{current_round}_official_submission_scores_count") || 0
+          y = b.public_send("complete_#{current_round}_official_submission_scores_count") || 0
           x <=> y
         }
       sub = candidates.first

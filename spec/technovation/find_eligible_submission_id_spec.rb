@@ -27,6 +27,59 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
     end
 
+    it "prefers submissions with less than 3 complete scores" do
+      team = FactoryGirl.create(:team)
+      sub = FactoryGirl.create(:submission, :complete, team: team)
+
+      2.times do
+        j = FactoryGirl.create(:judge)
+        SubmissionScore.create!(
+          judge_profile_id: j.id,
+          team_submission_id: sub.id,
+          completed_at: Time.current,
+        )
+      end
+
+      judge = FactoryGirl.create(:judge)
+      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+
+      judge2 = FactoryGirl.create(:judge)
+      SubmissionScore.create!(
+        judge_profile_id: judge2.id,
+        team_submission_id: sub.id,
+        completed_at: Time.current,
+      )
+
+      judge3 = FactoryGirl.create(:judge)
+      expect(FindEligibleSubmissionId.(judge3)).to be_nil
+    end
+
+    it "prefers submissions with less than 5 pending scores" do
+      team = FactoryGirl.create(:team)
+      sub = FactoryGirl.create(:submission, :complete, team: team)
+
+      4.times do
+        j = FactoryGirl.create(:judge)
+        SubmissionScore.create!(
+          judge_profile_id: j.id,
+          team_submission_id: sub.id,
+        )
+      end
+
+      judge = FactoryGirl.create(:judge)
+      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+
+      judge2 = FactoryGirl.create(:judge)
+      SubmissionScore.create!(
+        judge_profile_id: judge2.id,
+        team_submission_id: sub.id,
+      )
+
+      judge3 = FactoryGirl.create(:judge)
+      expect(FindEligibleSubmissionId.(judge3)).to be_nil
+    end
+
+
     it "does not reselect previously judged submission" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
@@ -61,16 +114,7 @@ RSpec.describe FindEligibleSubmissionId do
     end
 
     it "ignores unofficial live scores when selecting" do
-      unofficial_rpe = RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
-        name: "RPE",
-        starts_at: Date.today,
-        ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id,
-        city: "City",
-        venue_address: "123 Street St.",
-        unofficial: true
-      })
+      unofficial_rpe = FactoryGirl.create(:rpe, unofficial: true)
 
       team1 = FactoryGirl.create(:team)
       team1.regional_pitch_events << unofficial_rpe
@@ -99,7 +143,9 @@ RSpec.describe FindEligibleSubmissionId do
         team_submission_id: sub_with_official_score.id
       )
 
-      expect(FindEligibleSubmissionId.(FactoryGirl.create(:judge))).to eq(sub_with_unofficial_scores.id)
+      expect(FindEligibleSubmissionId.(FactoryGirl.create(:judge))).to eq(
+        sub_with_unofficial_scores.id
+      )
     end
 
     it "does not select submission for an official regional pitch event" do
@@ -191,10 +237,12 @@ RSpec.describe FindEligibleSubmissionId do
   end
 
   context "semifinals" do
-
     before do
+      @judging_round = ENV["JUDGING_ROUND"]
       ENV["JUDGING_ROUND"] = "SF"
     end
+
+    after { ENV["JUDGING_ROUND"] = @judging_round }
 
     let(:sf_rank) { TeamSubmission.contest_ranks[:semifinalist] }
     let(:qf_round) { SubmissionScore.rounds[:quarterfinals] }
@@ -203,7 +251,10 @@ RSpec.describe FindEligibleSubmissionId do
     it "does not choose quarterfinalist submission" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
-      FactoryGirl.create(:submission, :complete, team: team, contest_rank: TeamSubmission.contest_ranks[:quarterfinalist])
+      FactoryGirl.create(:submission,
+                         :complete,
+                         team: team,
+                         contest_rank: TeamSubmission.contest_ranks[:quarterfinalist])
 
       expect(FindEligibleSubmissionId.(judge)).to be_nil
     end
@@ -211,7 +262,10 @@ RSpec.describe FindEligibleSubmissionId do
     it "chooses semifinalist submission" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
-      submission = FactoryGirl.create(:submission, :complete, team: team, contest_rank: sf_rank)
+      submission = FactoryGirl.create(:submission,
+                                      :complete,
+                                      team: team,
+                                      contest_rank: sf_rank)
 
       expect(FindEligibleSubmissionId.(judge)).to eq(submission.id)
     end
@@ -219,7 +273,10 @@ RSpec.describe FindEligibleSubmissionId do
     it "chooses submissions with fewest semifinals scores" do
       judge1 = FactoryGirl.create(:judge)
       team1 = FactoryGirl.create(:team)
-      sub_with_sf_score = FactoryGirl.create(:submission, :complete, team: team1, contest_rank: sf_rank)
+      sub_with_sf_score = FactoryGirl.create(:submission,
+                                             :complete,
+                                             team: team1,
+                                             contest_rank: sf_rank)
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
         team_submission_id: sub_with_sf_score.id,
@@ -229,7 +286,10 @@ RSpec.describe FindEligibleSubmissionId do
 
       judge2 = FactoryGirl.create(:judge)
       team2 = FactoryGirl.create(:team)
-      sub_without_sf_score = FactoryGirl.create(:submission, :complete, team: team2, contest_rank: sf_rank)
+      sub_without_sf_score = FactoryGirl.create(:submission,
+                                                :complete,
+                                                team: team2,
+                                                contest_rank: sf_rank)
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
         team_submission_id: sub_without_sf_score.id,
@@ -303,7 +363,10 @@ RSpec.describe FindEligibleSubmissionId do
                                                    city: "Los Angeles",
                                                    state_province: "CA",
                                                    division: Division.senior)
-        sub = FactoryGirl.create(:submission, :complete, team: different_region_team, contest_rank: sf_rank)
+        sub = FactoryGirl.create(:submission,
+                                 :complete,
+                                 team: different_region_team,
+                                 contest_rank: sf_rank)
 
         expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
       end
@@ -316,7 +379,10 @@ RSpec.describe FindEligibleSubmissionId do
         judge.teams << judges_team
 
         different_division_team = FactoryGirl.create(:team, division: Division.junior)
-        sub = FactoryGirl.create(:submission, :complete, team: different_division_team, contest_rank: sf_rank)
+        sub = FactoryGirl.create(:submission,
+                                 :complete,
+                                 team: different_division_team,
+                                 contest_rank: sf_rank)
 
         expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
       end
@@ -340,7 +406,10 @@ RSpec.describe FindEligibleSubmissionId do
         judge.teams << judges_team
 
         same_region_division_team = FactoryGirl.create(:team)
-        FactoryGirl.create(:submission, :complete, team: same_region_division_team, contest_rank: sf_rank)
+        FactoryGirl.create(:submission,
+                           :complete,
+                           team: same_region_division_team,
+                           contest_rank: sf_rank)
 
         expect(FindEligibleSubmissionId.(judge)).to be_nil
       end
