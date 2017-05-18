@@ -27,7 +27,7 @@ module FindEligibleSubmissionId
       judge.submission_scores.current_round.incomplete.last.try(:team_submission_id)
     end
 
-    def random_eligible_id(judge, pending_ceiling = 5)
+    def random_eligible_id(judge)
       scored_submissions = judge.submission_scores.pluck(:team_submission_id)
       judge_conflicts = judge.team_region_division_names
       official_rpe_team_ids = if quarterfinals?
@@ -44,11 +44,8 @@ module FindEligibleSubmissionId
           teams: { id: official_rpe_team_ids }
         )
         .where(
-          "(complete_#{current_round}_official_submission_scores_count IS NULL OR
-            complete_#{current_round}_official_submission_scores_count < 3) AND
-
-              (pending_#{current_round}_official_submission_scores_count IS NULL OR
-                pending_#{current_round}_official_submission_scores_count < #{pending_ceiling})"
+          "complete_#{current_round}_official_submission_scores_count IS NULL OR
+            complete_#{current_round}_official_submission_scores_count < 3"
         )
         .select { |sub|
           (sub.complete? and
@@ -64,13 +61,10 @@ module FindEligibleSubmissionId
           y = b.public_send("complete_#{current_round}_official_submission_scores_count") || 0
           x <=> y
         }
+
       sub = candidates.first
 
-      if sub
-        sub.id
-      elsif pending_ceiling <= 50
-        random_eligible_id(judge, pending_ceiling + 2)
-      end
+      sub and sub.id
     end
 
     def current_round
