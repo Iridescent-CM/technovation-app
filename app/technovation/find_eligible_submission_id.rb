@@ -52,19 +52,20 @@ module FindEligibleSubmissionId
             not judge_conflicts.include?(sub.team.region_division_name))
         }
         .sort { |a, b|
-          x = a.public_send("pending_#{current_round}_official_submission_scores_count") || 0
-          y = b.public_send("pending_#{current_round}_official_submission_scores_count") || 0
-          x <=> y
-        }
-        .sort { |a, b|
-          x = a.public_send("complete_#{current_round}_official_submission_scores_count") || 0
-          y = b.public_send("complete_#{current_round}_official_submission_scores_count") || 0
-          x <=> y
+          a_complete = a.public_send("complete_#{current_round}_official_submission_scores_count") || 0
+          b_complete = b.public_send("complete_#{current_round}_official_submission_scores_count") || 0
+          [weighted(a), a_complete] <=> [weighted(b), b_complete]
         }
 
       sub = candidates.first
 
       sub and sub.id
+    end
+
+    def weighted(sub)
+      pending = sub.public_send("pending_#{current_round}_official_submission_scores_count") || 0
+      complete = sub.public_send("complete_#{current_round}_official_submission_scores_count") || 0
+      pending + 2*complete
     end
 
     def current_round
