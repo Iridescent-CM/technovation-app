@@ -54,32 +54,6 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge3)).to be_nil
     end
 
-    it "prefers submissions with less than 5 pending scores" do
-      team = FactoryGirl.create(:team)
-      sub = FactoryGirl.create(:submission, :complete, team: team)
-
-      4.times do
-        j = FactoryGirl.create(:judge)
-        SubmissionScore.create!(
-          judge_profile_id: j.id,
-          team_submission_id: sub.id,
-        )
-      end
-
-      judge = FactoryGirl.create(:judge)
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
-
-      judge2 = FactoryGirl.create(:judge)
-      SubmissionScore.create!(
-        judge_profile_id: judge2.id,
-        team_submission_id: sub.id,
-      )
-
-      judge3 = FactoryGirl.create(:judge)
-      expect(FindEligibleSubmissionId.(judge3)).to be_nil
-    end
-
-
     it "does not reselect previously judged submission" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
