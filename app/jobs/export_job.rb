@@ -285,6 +285,7 @@ class ExportJob < ActiveJob::Base
         Judge\ email
         Judge\ name
         Complete?
+        Official?
         Total\ score
         Mentor?
         Team\ region/divisions
@@ -312,6 +313,7 @@ class ExportJob < ActiveJob::Base
                 account.email,
                 account.full_name,
                 score.complete?,
+                score.official,
                 score.total,
                 account.mentor_profile.present?] + team_region_divisions
       end
