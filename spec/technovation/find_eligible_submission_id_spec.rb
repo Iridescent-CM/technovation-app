@@ -27,11 +27,11 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
     end
 
-    it "prefers submissions with less than 3 complete scores" do
+    it "prefers submissions with less than #{FindEligibleSubmissionId::SCORE_COUNT_LIMIT} complete scores" do
       team = FactoryGirl.create(:team)
       sub = FactoryGirl.create(:submission, :complete, team: team)
 
-      2.times do
+      (FindEligibleSubmissionId::SCORE_COUNT_LIMIT - 1).times do
         j = FactoryGirl.create(:judge)
         SubmissionScore.create!(
           judge_profile_id: j.id,

@@ -1,4 +1,6 @@
 module FindEligibleSubmissionId
+  SCORE_COUNT_LIMIT = 6
+
   class << self
     def call(judge_profile, options = {})
       if quarterfinals? and options[:live] and judge_profile.selected_regional_pitch_event.live?
@@ -45,7 +47,7 @@ module FindEligibleSubmissionId
         )
         .where(
           "complete_#{current_round}_official_submission_scores_count IS NULL OR
-            complete_#{current_round}_official_submission_scores_count < 6"
+            complete_#{current_round}_official_submission_scores_count < #{SCORE_COUNT_LIMIT}"
         )
         .select { |sub|
           (sub.complete? and
