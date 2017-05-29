@@ -45,7 +45,7 @@ module FindEligibleSubmissionId
         )
         .where(
           "complete_#{current_round}_official_submission_scores_count IS NULL OR
-            complete_#{current_round}_official_submission_scores_count < 3"
+            complete_#{current_round}_official_submission_scores_count < 6"
         )
         .select { |sub|
           (sub.complete? and
