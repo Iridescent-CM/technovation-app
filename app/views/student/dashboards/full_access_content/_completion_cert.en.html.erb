@@ -1,0 +1,8 @@
+<% if current_student.certificates.empty? %>
+  <%= form_with url: student_completion_certificates_path do |f| %>
+    <%= f.submit "Generate my completion certificate" %>
+  <% end %>
+<% else %>
+  <%= link_to "Download my Technovation Certificate",
+    current_student.certificates.current.file_url %>
+<% end %>

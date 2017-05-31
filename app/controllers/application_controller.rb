@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   force_ssl if: :ssl_configured?
 
-  helper_method :current_account, :current_team
+  helper_method :current_account, :current_team, :can_generate_certificate?
 
   before_action -> {
     I18n.locale = current_account.locale
@@ -90,6 +90,11 @@ class ApplicationController < ActionController::Base
 
   def ssl_configured?
     !Rails.env.development? && !Rails.env.test?
+  end
+
+  def can_generate_certificate?(user_scope, cert_type)
+    ENV.fetch("CERTIFICATES") { false } and
+      CheckIfCertificateIsAllowed.(send("current_#{user_scope}"), cert_type)
   end
 
   def model_name; end

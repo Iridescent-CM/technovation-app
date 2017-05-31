@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     resources :regional_pitch_events, only: :show
     resources :scores, only: [:show]
 
+    resources :completion_certificates, only: :create
+
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
 
