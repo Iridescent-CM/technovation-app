@@ -1,15 +1,27 @@
 <div class="flex-col-md-8">
   <% if @scores.empty? %>
-    <h3> No Scores Available </h3><br>
-    Unfortunately no scores are available for your team because your team's submission
-    was incomplete. Try sharing the public version with friends and mentors for feedback
-    on how to improve for next year! <br><br>
+    <% if !current_team.submission.complete? %>
+      <h3> No Scores Available </h3><br>
+      Unfortunately no scores are available for your team because your team's submission
+      was incomplete. Try sharing the public version with friends and mentors for feedback
+      on how to improve for next year! <br><br>
 
-    <%= link_to "See the public version",
-        app_path(current_team.submission),
-        class: "appy-button",
-        target: :_blank %>
+      <%= link_to "See the public version",
+          app_path(current_team.submission),
+          class: "appy-button",
+          target: :_blank %>
+    <% else %>
+      <h3> Congratulations!</h3><br>
+      Congratulations on completing the 2017 season of Technovation! Use the
+      feedback you received at your pitch event to help you learn more and make
+      sure to participate in Technovation next year. You should be proud of
+      your work and share your submission with friends and mentors!” <br><br>
 
+      <%= link_to "See the public version",
+          app_path(current_team.submission),
+          class: "appy-button",
+          target: :_blank %>
+    <% end %>
   <% else %>
     <h1>Your Score: <%= current_team.submission.quarterfinals_average_score %></h1>
     <table class="ra-participants-list">
