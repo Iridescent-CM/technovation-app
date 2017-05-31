@@ -10,6 +10,17 @@
     </li>
   <% end %>
 
+  <% if can_generate_certificate?(:mentor, :appreciation) %>
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="certificates">
+        Certificates
+      </button>
+    </li>
+  <% end %>
+
   <li class="tab-link">
     <button
       role="button"

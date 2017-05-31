@@ -74,6 +74,8 @@ Rails.application.routes.draw do
     resources :team_submissions
     resources :team_locations, only: :edit
 
+    resources :certificates, only: :create
+
     resource :technical_checklist, only: [:edit, :update]
     resources :screenshots, only: [:index, :destroy]
 

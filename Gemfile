@@ -57,6 +57,7 @@ gem 'simple_form',
   branch: 'rails-5.1.0'
 
 gem 'countries', '~> 1.2', require: "countries/global"
+gem 'carmen', '~> 1.0'
 
 gem 'country_state_select',
   git: 'https://github.com/arvindvyas/Country-State-Select.git',

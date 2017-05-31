@@ -14,7 +14,7 @@ RSpec.feature "Student certificates" do
 
   scenario "generate a completion cert" do
     student = FactoryGirl.create(:student, :on_team)
-    FactoryGirl.create(:team_submission, :complete, team: student.team)
+    FactoryGirl.create(:team_submission, team: student.team)
 
     sign_in(student)
 

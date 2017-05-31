@@ -3,9 +3,10 @@ module CheckIfCertificateIsAllowed
     def call(user, cert_type)
       return false if user.blank?
 
-      case user.type_name
-      when "student"
-        user.team.submission.complete?
+      if user.student_profile.present?
+        user.team.submission.present?
+      elsif user.mentor_profile.present?
+        user.is_on_team?
       else
         false
       end

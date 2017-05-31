@@ -32,6 +32,7 @@ module TechnovationApp
     config.time_zone = 'Pacific Time (US & Canada)'
 
     config.autoload_paths << Rails.root.join('app', 'models', '**/')
+    config.autoload_paths << Rails.root.join('lib', 'fill_pdfs', '**/')
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

@@ -14,7 +14,7 @@ module FillPdfs
   def self.call(participant, type)
     return unless !!ENV["PDFTK_PATH"]
 
-    case type
+    case type.to_sym
     when :regional_grand_prize
       RegionalGrandPrize.new(participant).generate_certificate
     when :completion

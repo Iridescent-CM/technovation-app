@@ -1,0 +1,23 @@
+<div class="flex-col-sm-12">
+  <center>
+    <h1>Congratulations!</h1>
+
+    <p>You helped your teams compete in the Technovation <%= Season.current.year %> Season!</p>
+
+    <% if current_mentor.certificates.empty? %>
+      <%= form_with url: mentor_certificates_path, local: true do |f| %>
+        <%= f.hidden_field :type, value: :mentor %>
+
+        <p class="standalone-buttons">
+          <%= f.submit "Generate my appreciation certificate", class: "appy-button" %>
+        </p>
+      <% end %>
+    <% else %>
+      <p class="standalone-buttons">
+        <%= link_to "Download my Technovation Certificate",
+          current_mentor.certificates.current.file_url,
+          class: "appy-button" %>
+      </p>
+    <% end %>
+  </center>
+</div>
