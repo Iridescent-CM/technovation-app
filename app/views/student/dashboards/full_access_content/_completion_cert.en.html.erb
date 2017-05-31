@@ -1,15 +1,21 @@
 <div class="flex-col-sm-12">
-  <% if current_student.certificates.empty? %>
-    <%= form_with url: student_completion_certificates_path do |f| %>
+  <center>
+    <h1>Congratulations!</h1>
+
+    <p>You and your team completed the Technovation <%= Season.current.year %> Season!</p>
+
+    <% if current_student.certificates.empty? %>
+      <%= form_with url: student_completion_certificates_path, local: true do |f| %>
+        <p class="standalone-buttons">
+          <%= f.submit "Generate my completion certificate", class: "appy-button" %>
+        </p>
+      <% end %>
+    <% else %>
       <p class="standalone-buttons">
-        <%= f.submit "Generate my completion certificate", class: "appy-button" %>
+        <%= link_to "Download my Technovation Certificate",
+          current_student.certificates.current.file_url,
+          class: "appy-button" %>
       </p>
     <% end %>
-  <% else %>
-    <p class="standalone-buttons">
-      <%= link_to "Download my Technovation Certificate",
-        current_student.certificates.current.file_url,
-        class: "appy-button" %>
-    </p>
-  <% end %>
+  </center>
 </div>

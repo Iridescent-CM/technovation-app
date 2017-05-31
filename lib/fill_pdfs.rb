@@ -26,15 +26,20 @@ module FillPdfs
     end
   end
 
-  attr_reader :participant
+  attr_reader :participant, :account
 
   def initialize(participant)
     @participant = participant
+    @account = Account.find(participant['id'])
   end
 
   def generate_certificate
-    PDFTK.fill_form(pathname, tmp_output, field_values, flatten: true)
-    attach_uploaded_certificate_from_tmp_file_to_account
+    unless account.certificates.current.present?
+      PDFTK.fill_form(pathname, tmp_output, field_values, flatten: true)
+      attach_uploaded_certificate_from_tmp_file_to_account
+    end
+
+    account.certificates.current
   end
 
   private
@@ -51,7 +56,6 @@ module FillPdfs
   end
 
   def attach_uploaded_certificate_from_tmp_file_to_account
-    account = Account.find(participant['id'])
     file = File.new(tmp_output)
 
     account.certificates.create!({
