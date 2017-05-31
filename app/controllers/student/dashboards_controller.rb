@@ -19,7 +19,9 @@ module Student
     private
     def category_average(category)
       sum = @scores.inject(0.0) do |acc, score|
-        acc += score.public_send("#{category}_total")
+        if score.official?
+          acc += score.public_send("#{category}_total")
+        end
       end
       (sum / @scores.count.to_f).round(2)
     end
