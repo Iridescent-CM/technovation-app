@@ -14,9 +14,7 @@ machine:
     NEW_RELIC_LICENSE_KEY: no-matter
     GOOGLE_MAPS_API_KEY: no-matter-in-test
     HOST_DOMAIN: localhost:3000
-    AWS_ACCESS_KEY_ID: test
-    AWS_SECRET_ACCESS_KEY: test
-    AWS_BUCKET_NAME: test
+    AWS_BUCKET_NAME: technovation-attachments-test
     CAMPAIGN_MONITOR_API_KEY: no-matter-in-test
     STUDENT_LIST_ID: no-matter-in-test
     MENTOR_LIST_ID: no-matter-in-test
