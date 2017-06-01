@@ -57,25 +57,11 @@
     </p><br>
 
     <h3> Best category: <%= @best_category  %></h3> <br>
-
-    <table class="ra-participants-list" style="align:center">
-      <thead>
-        <tr>
-          <th>Score</th>
-          <th>Judge Location </th>
-          <th>View</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @scores.each do |score| %>
-          <tr>
-            <td><%= score.total %> </td>
-            <td><%= score.judge_profile.address_details %></td>
-            <td><%= link_to 'View details', student_score_path(score.id) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% if @unofficial_scores %>
+      <%= render 'student/dashboards/full_access_content/unofficial_and_official_scores' %>
+    <% else %>
+      <%= render 'student/dashboards/full_access_content/official_scores' %>
+    <% end %>
   <% end %>
 </div>
 
