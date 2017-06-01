@@ -12,6 +12,7 @@ module Student
           @pitch_average = category_average(:pitch)
           @overall_impression_average = category_average(:overall_impression)
           @best_category = best_category
+          @unofficial_scores = unofficial_scores?
         end
       end
     end
@@ -24,6 +25,17 @@ module Student
         end
       end
       (sum / @scores.count.to_f).round(2)
+    end
+
+    def unofficial_scores?
+      @scores.each do |score|
+        if !score.official?
+          return true
+          break
+        else
+          return false
+        end
+      end
     end
 
     def best_category
