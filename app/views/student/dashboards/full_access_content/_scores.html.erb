@@ -23,45 +23,12 @@
           target: :_blank %>
     <% end %>
   <% else %>
-    <h1>Your Score: <%= current_team.submission.quarterfinals_average_score %></h1>
-    <table class="ra-participants-list">
-      <thead>
-        <tr>
-          <th>Ideation</th>
-          <th>Technical</th>
-          <% if current_team.division.senior? %>
-            <th>Entrepreneurship</th>
-          <% end %>
-          <th>Pitch</th>
-          <th>Overall Impression</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td><%= @ideation_average %></td>
-          <td><%= @technical_average %></td>
-          <td><%= @pitch_average %></td>
-          <% if current_team.division.senior? %>
-            <td><%= @entrepreneurship_average %></td>
-          <% end %>
-          <td><%= @overall_impression_average %></td>
-          <td><strong><%= current_team.submission.quarterfinals_average_score %></strong></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p>
-      <em>You earned <strong><%= @scores.first.total_technical_checklist_verified %> points</strong> from your technical checklist.</em>
-    </p><br>
-
-    <h3> Best category: <%= @best_category  %></h3> <br>
-    <% if @unofficial_scores %>
-      <%= render 'student/dashboards/full_access_content/unofficial_and_official_scores' %>
-    <% else %>
-      <%= render 'student/dashboards/full_access_content/official_scores' %>
+    <% if current_team.submission.contest_rank == "semifinalist"%>
+      <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
+          round: :semifinals %>
     <% end %>
+      <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
+          round: :quarterfinals %>
   <% end %>
 </div>
 
