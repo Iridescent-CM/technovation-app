@@ -18,7 +18,7 @@ RSpec.feature "Student certificates" do
 
     sign_in(student)
 
-    click_button("Generate my completion certificate")
+    click_button("Prepare my certificate")
     expect(page).to have_link("Download my Technovation Certificate",
                               href: student.certificates.current.file_url)
   end

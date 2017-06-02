@@ -17,7 +17,7 @@ RSpec.feature "Mentor certificates" do
 
     sign_in(mentor)
 
-    click_button("Generate my appreciation certificate")
+    click_button("Prepare my certificate")
     expect(page).to have_link("Download my Technovation Certificate",
                               href: mentor.certificates.current.file_url)
   end
