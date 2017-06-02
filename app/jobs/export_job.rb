@@ -271,6 +271,7 @@ class ExportJob < ActiveJob::Base
     Tempfile.open(["score-qf-detail-", ".csv"], "./tmp/") do |fh|
       csv = CSV.new(fh)
       csv << %w{
+        Score\ Database\ ID
         Team\ name
         App\ name
         City
@@ -299,7 +300,8 @@ class ExportJob < ActiveJob::Base
 
         team_region_divisions = account.team_region_division_names.map {|trd| trd.split(',') }.flatten
 
-        csv << [team.name,
+        csv << [score.id,
+                team.name,
                 submission.app_name,
                 team.city,
                 team.state_province,
