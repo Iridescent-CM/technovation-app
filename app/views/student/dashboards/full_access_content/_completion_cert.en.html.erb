@@ -4,14 +4,18 @@
 
     <p>
       You finished the <%= Season.current.year %> Technovation program!
+    </p>
+
+    <p>
       Download a participation certificate you can share with others to
       let them know you finished the Technovation program.
     </p>
 
     <% if current_student.certificates.empty? %>
       <%= form_with url: student_completion_certificates_path, local: true do |f| %>
+        <p>First, we need to prepare your certificate for you.</p>
         <p class="standalone-buttons">
-          <%= f.submit "Generate my certificate", class: "appy-button" %>
+          <%= f.submit "Prepare my certificate", class: "appy-button" %>
         </p>
       <% end %>
     <% else %>

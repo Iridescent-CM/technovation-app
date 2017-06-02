@@ -4,6 +4,9 @@
 
     <p>
       You completed the <%= Season.current.year %> Technovation program!
+    </p>
+
+    <p>
       Download your certificate as proof of your participation as a
       Technovation Mentor.
     </p>
@@ -12,8 +15,10 @@
       <%= form_with url: mentor_certificates_path, local: true do |f| %>
         <%= f.hidden_field :type, value: :mentor %>
 
+        <p>First, we need to prepare your certificate for you.</p>
+
         <p class="standalone-buttons">
-          <%= f.submit "Generate my certificate", class: "appy-button" %>
+          <%= f.submit "Prepare my certificate", class: "appy-button" %>
         </p>
       <% end %>
     <% else %>
