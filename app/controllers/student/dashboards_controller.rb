@@ -1,10 +1,17 @@
 module Student
   class DashboardsController < StudentController
     def show
+      round = round || :quarterfinals
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
 
       if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
-        @scores = current_team.submission.submission_scores.complete.quarterfinals
+
+        if round == :semifinals
+          @scores = current_team.submission.submission_scores.complete.semifinals
+        else
+          @scores = current_team.submission.submission_scores.complete.quarterfinals
+        end
+
         if @scores.any?
           @ideation_average = category_average(:ideation)
           @technical_average = category_average(:technical)
@@ -12,12 +19,15 @@ module Student
           @pitch_average = category_average(:pitch)
           @overall_impression_average = category_average(:overall_impression)
           @best_category = best_category
-          @unofficial_scores = unofficial_scores?
+          if round == :quarterfinals
+            @unofficial_scores = unofficial_scores?
+          end
         end
       end
     end
 
     private
+
     def category_average(category)
       sum = @scores.inject(0.0) do |acc, score|
         if score.official?
