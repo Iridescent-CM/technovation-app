@@ -10,7 +10,6 @@
 <h3> Best Category Comments: <%= best_category %></h3><br>
   <p>
     <% scores.each do |score| %>
-
       <% case "#{best_category}" %>
         <% when "Ideation"%>
           "<em><%= score.ideation_comment %></em>" <br><br>
@@ -23,7 +22,6 @@
         <% when "Overall Impression" %>
           "<em><%= score.overall_comment %></em>" <br><br>
       <% end %>
-
     <% end %>
   </p>
 </div>
