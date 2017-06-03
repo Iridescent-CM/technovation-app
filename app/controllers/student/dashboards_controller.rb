@@ -61,19 +61,19 @@ module Student
     def best_category(round)
       if round == :semifinals
         adjusted_scores = {
-          "Ideation": (@sf_ideation_average * 25/15),
-          "Technical": @sf_technical_average,
-          "Entrepreneurship":  @sf_entrepreneurship_average,
-          "Pitch": @sf_pitch_average,
           "Overall Impression": (@sf_overall_impression_average * 20/25),
+          "Pitch": @sf_pitch_average,
+          "Entrepreneurship":  @sf_entrepreneurship_average,
+          "Technical": @sf_technical_average,
+          "Ideation": (@sf_ideation_average * 25/15)
         }
       else
         adjusted_scores = {
-          "Ideation": (@qf_ideation_average * 25/15),
-          "Technical": @qf_technical_average,
-          "Entrepreneurship":  @qf_entrepreneurship_average,
-          "Pitch": @qf_pitch_average,
           "Overall Impression": (@qf_overall_impression_average * 20/25),
+          "Pitch": @qf_pitch_average,
+          "Entrepreneurship":  @qf_entrepreneurship_average,
+          "Technical": @qf_technical_average,
+          "Ideation": (@qf_ideation_average * 25/15)
         }
       end
       adjusted_scores.max_by { |_,v| v }[0]

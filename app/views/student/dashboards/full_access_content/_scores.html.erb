@@ -27,12 +27,12 @@
         <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
             round: :semifinals,
             scores: @semifinal_scores %>
+        <br>
     <% end %>
     <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
         round: :quarterfinals,
         scores: @quarterfinals_scores %>
   <% end %>
-
 </div>
 
 <% if @quarterfinals_scores.empty? %>
