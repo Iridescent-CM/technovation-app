@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @scores.each do |score| %>
+    <% scores.each do |score| %>
       <% if score.official? %>
       <tr>
         <td><%= score.total %> </td>
@@ -30,7 +30,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @scores.each do |score| %>
+    <% scores.each do |score| %>
       <% if !score.official? %>
       <tr>
         <td><%= score.total %> </td>
