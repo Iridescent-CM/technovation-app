@@ -40,9 +40,9 @@ module Student
         scores = @quarterfinals_scores
       end
       sum = scores.inject(0.0) do |acc, score|
-        if score.official?
+       # if score.official?
           acc += score.public_send("#{category}_total")
-        end
+       # end
       end
       (sum / scores.count.to_f).round(2)
     end
