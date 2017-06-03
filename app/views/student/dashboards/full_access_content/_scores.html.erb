@@ -23,12 +23,17 @@
           target: :_blank %>
     <% end %>
   <% else %>
-    <% if current_team.submission.contest_rank == "semifinalist"%>
+
+  <% if current_team.submission.contest_rank == "semifinalist"%>
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
-          round: :semifinals %>
+          round: :semifinals,
+          cached: false %>
     <% end %>
+      <!--- I want the page to reload the @scores variableand all other variables in the
+      controller at this point so that it has new values !-->
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
-          round: :quarterfinals %>
+          round: :quarterfinals,
+          cached: false %>
   <% end %>
 </div>
 
