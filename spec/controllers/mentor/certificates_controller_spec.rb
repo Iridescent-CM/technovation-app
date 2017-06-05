@@ -7,11 +7,11 @@ RSpec.describe Mentor::CertificatesController, type: :controller do
 
       sign_in(mentor)
 
-      expect(mentor.certificates).to be_empty
+      expect(mentor.certificates.appreciation).to be_empty
 
-      post :create, params: { type: :mentor }
+      post :create, params: { type: :appreciation }
 
-      expect(mentor.certificates).not_to be_empty
+      expect(mentor.certificates.appreciation).not_to be_empty
     end
   end
 end

@@ -15,31 +15,32 @@ module FillPdfs
     return unless !!ENV["PDFTK_PATH"]
 
     case type.to_sym
-    when :regional_grand_prize
-      RegionalGrandPrize.new(participant).generate_certificate
+    when :rpe_winner
+      RegionalGrandPrize.new(participant, type).generate_certificate
     when :completion
-      Completion.new(participant).generate_certificate
-    when :mentor
-      MentorAppreciation.new(participant).generate_certificate
+      Completion.new(participant, type).generate_certificate
+    when :appreciation
+      MentorAppreciation.new(participant, type).generate_certificate
     else
       raise "Unsupported type #{type}"
     end
   end
 
-  attr_reader :participant, :account
+  attr_reader :participant, :account, :type
 
-  def initialize(participant)
+  def initialize(participant, type)
     @participant = participant
+    @type = type
     @account = Account.find(participant['id'])
   end
 
   def generate_certificate
-    unless account.certificates.current.present?
+    unless account.certificates.public_send(type).current.present?
       PDFTK.fill_form(pathname, tmp_output, field_values, flatten: true)
       attach_uploaded_certificate_from_tmp_file_to_account
     end
 
-    account.certificates.current
+    account.certificates.public_send(type).current
   end
 
   private
@@ -61,6 +62,7 @@ module FillPdfs
     account.certificates.create!({
       file: file,
       season: Season.current.year,
+      cert_type: type.to_sym,
     })
   end
 end

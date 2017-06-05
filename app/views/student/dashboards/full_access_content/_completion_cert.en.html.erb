@@ -1,5 +1,40 @@
-<div class="flex-col-sm-12">
-  <center>
+<% if can_generate_certificate?(:student, :rpe_winner) %>
+  <div class="flex-row">
+    <div class="flex-col-md-8">
+      <center id="cert_rpe_winner">
+        <h1>Congratulations!</h1>
+
+        <p>
+          Your team is a Regional Pitch Grand Winner!
+          Download a certificate to showcase your win.
+        </p>
+
+        <% if current_student.certificates.rpe_winner.empty? %>
+          <%= form_with url: student_certificates_path, local: true do |f| %>
+            <%= f.hidden_field :type, value: :rpe_winner %>
+
+            <p>First, we need to prepare your certificate for you.</p>
+
+            <p class="standalone-buttons">
+              <%= f.submit "Prepare my winner's certificate", class: "appy-button" %>
+            </p>
+          <% end %>
+        <% else %>
+          <p class="standalone-buttons">
+            <%= link_to "Download my Regional Pitch Winner's Certificate",
+              current_student.certificates.rpe_winner.current.file_url,
+              class: "appy-button" %>
+          </p>
+        <% end %>
+      </center>
+    </div>
+
+    <div class="flex-col-md-4">
+<% else %>
+  <div class="flex-col-sm-12">
+<% end %>
+
+  <center id="cert_completion">
     <h1>You made it!</h1>
 
     <p>
@@ -11,19 +46,26 @@
       let them know you finished the Technovation program.
     </p>
 
-    <% if current_student.certificates.empty? %>
-      <%= form_with url: student_completion_certificates_path, local: true do |f| %>
+    <% if current_student.certificates.completion.empty? %>
+      <%= form_with url: student_certificates_path, local: true do |f| %>
+        <%= f.hidden_field :type, value: :completion %>
+
         <p>First, we need to prepare your certificate for you.</p>
+
         <p class="standalone-buttons">
-          <%= f.submit "Prepare my certificate", class: "appy-button" %>
+          <%= f.submit "Prepare my participation certificate", class: "appy-button" %>
         </p>
       <% end %>
     <% else %>
       <p class="standalone-buttons">
-        <%= link_to "Download my Technovation Certificate",
-          current_student.certificates.current.file_url,
+        <%= link_to "Download my Participation Certificate",
+          current_student.certificates.completion.current.file_url,
           class: "appy-button" %>
       </p>
     <% end %>
   </center>
 </div>
+
+<% if can_generate_certificate?(:student, :rpe_winner) %>
+  </div>
+<% end %>
