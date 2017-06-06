@@ -1,10 +1,13 @@
 module Student
   class DashboardsController < StudentController
+    helper_method :unofficial_scores?
+
     def show
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
 
       if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
-        @quarterfinals_scores = current_team.submission.submission_scores.complete.quarterfinals
+        @all_scores = current_team.submission.submission_scores.complete
+        @quarterfinals_scores = @all_scores.quarterfinals
 
         if @quarterfinals_scores.any?
           @qf_ideation_average = category_average(:ideation, :quarterfinals)
@@ -13,12 +16,10 @@ module Student
           @qf_pitch_average = category_average(:pitch, :quarterfinals)
           @qf_overall_impression_average = category_average(:overall_impression, :quarterfinals)
           @qf_best_category = best_category(:quarterfinals)
-          @unofficial_scores = unofficial_scores?
         end
 
         if current_team.submission.contest_rank == "semifinalist"
-          @all_scores = current_team.submission.submission_scores.complete
-          @semifinals_scores = current_team.submission.submission_scores.complete.semifinals
+          @semifinals_scores = @all_scores.semifinals
 
           @sf_ideation_average = category_average(:ideation, :semifinals)
           @sf_technical_average = category_average(:technical, :semifinals)
@@ -39,23 +40,14 @@ module Student
       else
         scores = @quarterfinals_scores
       end
-      sum = scores.inject(0.0) do |acc, score|
-       # if score.official?
-          acc += score.public_send("#{category}_total")
-       # end
+      sum = scores.official.inject(0.0) do |acc, score|
+        acc += score.public_send("#{category}_total")
       end
-      (sum / scores.count.to_f).round(2)
+      (sum / scores.official.count.to_f).round(2)
     end
 
     def unofficial_scores?
-      @quarterfinals_scores.each do |score|
-        if !score.official?
-          return true
-          break
-        else
-          return false
-        end
-      end
+      not @quarterfinals_scores.all?(&:official?)
     end
 
     def best_category(round)
@@ -65,7 +57,7 @@ module Student
           "Pitch": @sf_pitch_average,
           "Entrepreneurship":  @sf_entrepreneurship_average,
           "Technical": @sf_technical_average,
-          "Ideation": (@sf_ideation_average * 25/15)
+          "Ideation": (@sf_ideation_average * 20  /15)
         }
       else
         adjusted_scores = {
@@ -73,7 +65,7 @@ module Student
           "Pitch": @qf_pitch_average,
           "Entrepreneurship":  @qf_entrepreneurship_average,
           "Technical": @qf_technical_average,
-          "Ideation": (@qf_ideation_average * 25/15)
+          "Ideation": (@qf_ideation_average * 20/15)
         }
       end
       adjusted_scores.max_by { |_,v| v }[0]

@@ -41,7 +41,7 @@
 </table>
 
 <p>
-  <em>You earned <strong><%= @quarterfinals_scores.first.total_technical_checklist_verified %> points</strong> from your technical checklist.</em>
+  <em>You earned <strong><%= @quarterfinals_scores.first.total_technical_checklist_verified %><%= " point".pluralize %> </strong> from your technical checklist.</em>
 </p><br>
 
 <% if round == :semifinals %>
@@ -50,7 +50,7 @@
   <h3> Best category: <%= @qf_best_category %></h3> <br>
 <% end %>
 
-<% if round == :quarterfinals and @unofficial_scores %>
+<% if round == :quarterfinals and unofficial_scores? %>
   <%= render 'student/dashboards/full_access_content/scores/unofficial_and_official_scores',
       scores: @quarterfinals_scores %>
 <% elsif round == :quarterfinals %>
