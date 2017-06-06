@@ -1,19 +1,36 @@
 <div class="flex-col-md-8">
 
-  <% if @all_scores.empty? and !current_team.submission.complete? %>
-    <h3> No Scores Available </h3><br>
-    Unfortunately no scores are available for your team because your team's submission
-    was incomplete. Try sharing the public version with friends and mentors for feedback
-    on how to improve for next year! <br><br>
+<% case %>
+  <% when @all_scores.empty? %>
 
-    <%= link_to "See the public version",
-        app_path(current_team.submission),
-        class: "appy-button",
-        target: :_blank %>
+    <% if !current_team.submission.complete? or !current_team.submission.present? %>
+      <h3> No Scores Available </h3>
+      <p>
+        Unfortunately no scores are available for your team because your team's submission
+        was incomplete. Try sharing the public version with friends and mentors for feedback
+        on how to improve for next year!
+      </p>
+      <%= link_to "See the public version",
+          app_path(current_team.submission),
+          class: "appy-button",
+          target: :_blank %>
+    <% else %>
+      <h3> Congratulations!</h3>
+      <p>
+        Congratulations on completing the <%= Season.current.year %> season of Technovation! Use the
+        feedback you received at your pitch event to help you learn more and make
+        sure to participate in Technovation next year. You should be proud of
+        your work and share your submission with friends and mentors!”
+      </p>
+      <%= link_to "See the public version",
+          app_path(current_team.submission),
+          class: "appy-button",
+          target: :_blank %>
+    <% end %>
 
-  <% else %>
+  <% when !@all_scores.empty? %>
 
-    <% if current_team.submission.contest_rank == "semifinalist"%>
+    <% if !@semifinals_scores.empty? %>
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
           round: :semifinals,
           scores: @semifinal_scores %>
@@ -24,17 +41,6 @@
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
           round: :quarterfinals,
           scores: @quarterfinals_scores %>
-    <% else %>
-      <h3> Congratulations!</h3><br>
-        Congratulations on completing the <%= Season.current.year %> season of Technovation! Use the
-        feedback you received at your pitch event to help you learn more and make
-        sure to participate in Technovation next year. You should be proud of
-        your work and share your submission with friends and mentors!” <br><br>
-
-        <%= link_to "See the public version",
-            app_path(current_team.submission),
-            class: "appy-button",
-            target: :_blank %>
     <% end %>
 
   <% end %>
