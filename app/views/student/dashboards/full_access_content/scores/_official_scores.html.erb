@@ -11,7 +11,7 @@
     <tr>
       <td><%= score.total %> </td>
       <td><%= score.judge_profile.address_details %></td>
-      <td><%= link_to 'View details', student_score_path(score.id) %></td>
+      <td><%= link_to 'View details', student_score_path(score) %></td>
     </tr>
     <% end %>
   </tbody>
