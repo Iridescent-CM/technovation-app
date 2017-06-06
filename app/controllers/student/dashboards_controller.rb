@@ -57,7 +57,7 @@ module Student
           "Pitch": @sf_pitch_average,
           "Entrepreneurship":  @sf_entrepreneurship_average,
           "Technical": @sf_technical_average,
-          "Ideation": (@sf_ideation_average * 20  /15)
+          "Ideation": (@sf_ideation_average * 20/15)
         }
       else
         adjusted_scores = {
