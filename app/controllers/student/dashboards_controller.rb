@@ -68,7 +68,7 @@ module Student
           "Ideation": (@qf_ideation_average * 20/15)
         }
       end
-      adjusted_scores.max_by { |_,v| v }[0]
+      adjusted_scores.key(adjusted_scores.values.max)
     end
 
   end
