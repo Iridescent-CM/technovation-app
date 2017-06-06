@@ -25,10 +25,51 @@ RSpec.describe CheckIfCertificateIsAllowed do
         expect(CheckIfCertificateIsAllowed.(student, :completion)).to be false
       end
 
-      it "returns false if the student's team's submission is present" do
+      it "returns true if the student's team's submission is present" do
         team.add_student(student)
         team.team_submissions.create!(integrity_affirmed: true)
         expect(CheckIfCertificateIsAllowed.(student, :completion)).to be true
+      end
+    end
+
+    context "regional grand prize" do
+      it "returns false if the student is not on a team" do
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+      end
+
+      it "returns false if the student's team did not submit" do
+        team.add_student(student)
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+      end
+
+      it "returns false if the student's team's submission is not a semifinalist" do
+        team.add_student(student)
+        team.team_submissions.create!(integrity_affirmed: true, contest_rank: :quarterfinalist)
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+      end
+
+      it "returns false if the student's team was not at an official RPE" do
+        team.add_student(student)
+        team.team_submissions.create!(integrity_affirmed: true, contest_rank: :quarterfinalist)
+        rpe = FactoryGirl.create(:rpe, unofficial: true)
+        rpe.teams << team
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+      end
+
+      it 'returns false if the team attended an official RPE and is not a semifinalist' do
+        team.add_student(student)
+        team.team_submissions.create!(integrity_affirmed: true, contest_rank: :quarterfinalist)
+        rpe = FactoryGirl.create(:rpe, unofficial: false)
+        rpe.teams << team
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+      end
+
+      it 'returns true if the team attended an official RPE and is now a semifinalist' do
+        team.add_student(student)
+        team.team_submissions.create!(integrity_affirmed: true, contest_rank: :semifinalist)
+        rpe = FactoryGirl.create(:rpe, unofficial: false)
+        rpe.teams << team
+        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be true
       end
     end
   end
