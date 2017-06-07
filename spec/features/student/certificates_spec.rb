@@ -3,12 +3,18 @@ require "rails_helper"
 RSpec.feature "Student certificates" do
   before do
     @original_certificates = ENV["CERTIFICATES"]
+    @original_scores = ENV["ENABLE_TEAM_SCORES"]
     ENV["CERTIFICATES"] = "a truthy value -- booleans don't work"
+    ENV["ENABLE_TEAM_SCORES"] = "truthy"
   end
 
   after do
     if @original_certificates.blank?
       ENV.delete("CERTIFICATES")
+    end
+
+    if @original_scores.blank?
+      ENV.delete("ENABLE_TEAM_SCORES")
     end
   end
 
