@@ -4,6 +4,9 @@ module Student
 
     def show
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
+      @all_scores = SubmissionScore.none
+      @quarterfinals_scores = SubmissionScore.none
+      @semifinals_scores = SubmissionScore.none
 
       if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
         @all_scores = current_team.submission.submission_scores.complete
