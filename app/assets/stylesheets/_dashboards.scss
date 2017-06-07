@@ -268,3 +268,18 @@
     margin-bottom: 1rem;
   }
 }
+
+.score_breakdown {
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  &:last-child,
+  &:only-child {
+    margin: 0;
+    padding: 0;
+  }
+}

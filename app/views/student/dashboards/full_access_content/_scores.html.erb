@@ -1,48 +1,49 @@
 <div class="flex-col-md-8">
-
-<% case %>
-  <% when @all_scores.empty? %>
-
+  <% if @all_scores.empty? %>
     <% if !current_team.submission.complete? or !current_team.submission.present? %>
-      <h3> No Scores Available </h3>
+      <h3>No Scores Available</h3>
+
       <p>
-        Unfortunately no scores are available for your team because your team's submission
+        Unfortunately, no scores are available for your team because your team's submission
         was incomplete. Try sharing the public version with friends and mentors for feedback
         on how to improve for next year!
       </p>
-      <%= link_to "See the public version",
-          app_path(current_team.submission),
-          class: "appy-button",
-          target: :_blank %>
-    <% else %>
-      <h3> Congratulations!</h3>
-      <p>
-        Congratulations on completing the <%= Season.current.year %> season of Technovation! Use the
-        feedback you received at your pitch event to help you learn more and make
-        sure to participate in Technovation next year. You should be proud of
-        your work and share your submission with friends and mentors!”
+
+      <p class="standalone-buttons">
+        <%= link_to "Open your submission page",
+            app_path(current_team.submission),
+            class: "appy-button",
+            target: :_blank %>
       </p>
-      <%= link_to "See the public version",
-          app_path(current_team.submission),
-          class: "appy-button",
-          target: :_blank %>
+    <% else %>
+      <h3>Congratulations!</h3>
+
+      <p>
+        Congratulations on completing the <%= Season.current.year %> season of Technovation!
+        Use the feedback you received at your pitch event to help you learn more and make
+        sure to participate in Technovation next year. You should be proud of
+        your work and share your submission with friends and mentors!
+      </p>
+
+      <p class="standalone-buttons">
+        <%= link_to "Open your submission page",
+            app_path(current_team.submission),
+            class: "appy-button",
+            target: :_blank %>
+      </p>
     <% end %>
-
-  <% when !@all_scores.empty? %>
-
-    <% if !@semifinals_scores.empty? %>
+  <% elsif @all_scores.any? %>
+    <% if @semifinals_scores.any? %>
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
           round: :semifinals,
           scores: @semifinal_scores %>
-      <br>
     <% end %>
 
-    <% if !@quarterfinals_scores.empty? %>
+    <% if @quarterfinals_scores.any? %>
       <%= render 'student/dashboards/full_access_content/scores/score_breakdown',
           round: :quarterfinals,
           scores: @quarterfinals_scores %>
     <% end %>
-
   <% end %>
 </div>
 
@@ -51,4 +52,3 @@
 <% else %>
   <%= render 'student/dashboards/full_access_content/scores/comments_sidebar' %>
 <% end %>
-

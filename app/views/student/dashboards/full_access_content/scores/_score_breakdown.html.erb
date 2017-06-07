@@ -1,62 +1,100 @@
-<h1>Your <%= round.to_s.titleize %> Score: <%= current_team.submission.public_send("#{round}_average_score") %></h1>
-<table class="ra-participants-list">
-  <thead>
-    <tr>
-      <th>Ideation</th>
-      <th>Technical</th>
-      <% if current_team.division.senior? %>
-        <th>Entrepreneurship</th>
+<div class="score_breakdown">
+  <h1>
+    Your
+    <%= round.to_s.titleize %>
+    Score:
+    <%= current_team.submission.public_send("#{round}_average_score") %>
+  </h1>
+
+  <table class="ra-participants-list">
+    <thead>
+      <tr>
+        <th>Ideation</th>
+        <th>Technical</th>
+
+        <% if current_team.division.senior? %>
+          <th>Business</th>
+        <% end %>
+
+        <th>Pitch</th>
+        <th>Overall Impression</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if round == :semifinals %>
+        <tr>
+          <td><%= @sf_ideation_average %></td>
+          <td><%= @sf_technical_average %></td>
+          <td><%= @sf_pitch_average %></td>
+
+          <% if current_team.division.senior? %>
+            <td><%= @sf_entrepreneurship_average %></td>
+          <% end %>
+
+          <td><%= @sf_overall_impression_average %></td>
+          <td>
+            <strong>
+              <%= current_team.submission.public_send(
+                "#{round}_average_score"
+              ) %>
+            </strong>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td><%= @qf_ideation_average %></td>
+          <td><%= @qf_technical_average %></td>
+          <td><%= @qf_pitch_average %></td>
+
+          <% if current_team.division.senior? %>
+            <td><%= @qf_entrepreneurship_average %></td>
+          <% end %>
+
+          <td><%= @qf_overall_impression_average %></td>
+          <td>
+            <strong>
+              <%= current_team.submission.public_send(
+                "#{round}_average_score"
+              ) %>
+            </strong>
+          </td>
+        </tr>
       <% end %>
-      <th>Pitch</th>
-      <th>Overall Impression</th>
-      <th>Total</th>
-    </tr>
-  </thead>
+    </tbody>
+  </table>
 
-  <tbody>
-    <% if round == :semifinals %>
-      <tr>
-        <td><%= @sf_ideation_average %></td>
-        <td><%= @sf_technical_average %></td>
-        <td><%= @sf_pitch_average %></td>
-        <% if current_team.division.senior? %>
-          <td><%= @sf_entrepreneurship_average %></td>
-        <% end %>
-        <td><%= @sf_overall_impression_average %></td>
-        <td><strong><%= current_team.submission.public_send("#{round}_average_score") %></strong></td>
-      </tr>
-    <% else %>
-      <tr>
-        <td><%= @qf_ideation_average %></td>
-        <td><%= @qf_technical_average %></td>
-        <td><%= @qf_pitch_average %></td>
-        <% if current_team.division.senior? %>
-          <td><%= @qf_entrepreneurship_average %></td>
-        <% end %>
-        <td><%= @qf_overall_impression_average %></td>
-        <td><strong><%= current_team.submission.public_send("#{round}_average_score") %></strong></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <p>
+    <em>
+      You earned
+      <strong>
+        <%= pluralize(
+          @all_scores.first.total_technical_checklist_verified,
+          'point'
+        ) %>
+      </strong>
+      from your technical checklist.
+    </em>
+  </p>
 
-<p>
-  <em>You earned <strong> <%= pluralize(@quarterfinals_scores.first.total_technical_checklist_verified, 'point') %>
-  </strong> from your technical checklist.</em>
-</p><br>
+  <% if round == :semifinals %>
+    <h3>Best <%= round %> category: <%= @sf_best_category %></h3>
+  <% else %>
+    <h3>Best <%= round %> category: <%= @qf_best_category %></h3>
+  <% end %>
 
-<% if round == :semifinals %>
-  <h3> Best category: <%= @sf_best_category %></h3> <br>
-<% else %>
-  <h3> Best category: <%= @qf_best_category %></h3> <br>
-<% end %>
-
-<% if round == :semifinals %>
-    <%= render 'student/dashboards/full_access_content/scores/scores_table',
+  <% if round == :semifinals %>
+    <%= render(
+      'student/dashboards/full_access_content/scores/scores_table',
       scores: @semifinals_scores,
-      round: :semifinals  %>
-<% else %>
-  <%= render 'student/dashboards/full_access_content/scores/scores_table',
+      round: :semifinals
+    ) %>
+  <% else %>
+    <%= render(
+      'student/dashboards/full_access_content/scores/scores_table',
       scores: @quarterfinals_scores,
-      round: :quarterfinals %>
-<% end %>
+      round: :quarterfinals
+    ) %>
+  <% end %>
+</div>
