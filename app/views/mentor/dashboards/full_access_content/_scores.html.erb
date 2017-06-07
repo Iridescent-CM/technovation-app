@@ -1,0 +1,32 @@
+<div class="flex-col-md-8">
+    <div class="flex-row">
+      <div class="flex-col-md-3 tabs tabs-vertical" id="team-scores-team-list">
+        <ul class="tab-menu">
+          <% @teams.each do |team| %>
+            <li class="tab-link">
+              <button
+                role="button"
+                class="tab-button"
+                data-tab-id="team-scores-team-list-team-<%= team.id %>">
+                <%= team.name %>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="flex-col-md-9 content">
+        <% @teams.each do |team| %>
+          <div id="team-scores-team-list-team-<%= team.id %>" class="tab-content">
+
+          <%= team.submission.quarterfinals_average_score %>
+          <%= render 'mentor/dashboards/full_access_content/score_table'
+              current_team: team %>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+</div>
+
+<%= render 'mentor/dashboards/info_sidebar' %>
