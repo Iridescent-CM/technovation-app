@@ -35,17 +35,20 @@ module Student
     end
 
     private
-
     def category_average(category, round)
       if round == :semifinals
         scores = @semifinals_scores
       else
         scores = @quarterfinals_scores
       end
+
       sum = scores.official.inject(0.0) do |acc, score|
         acc += score.public_send("#{category}_total")
       end
-      (sum / scores.official.count.to_f).round(2)
+
+      avg = (sum / scores.official.count.to_f).round(2)
+
+      avg.nan? ? 0 : avg
     end
 
     def unofficial_scores?

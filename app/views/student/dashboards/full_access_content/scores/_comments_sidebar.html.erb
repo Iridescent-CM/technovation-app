@@ -16,7 +16,7 @@
   <% scores.each do |score| %>
     <p class="best-category-comment">
       "<%= score.public_send(
-        "#{best_category.to_s.underscore}_comment"
+        "#{best_category.to_s.parameterize.underscore}_comment"
       ) %>"
     </p>
   <% end %>
