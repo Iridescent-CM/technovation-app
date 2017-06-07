@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Student certificates" do
   before do
     @original_certificates = ENV["CERTIFICATES"]
-    ENV["CERTIFICATES"] = "a present value -- booleans don't work"
+    ENV["CERTIFICATES"] = "a truthy value -- booleans don't work"
   end
 
   after do
@@ -18,7 +18,7 @@ RSpec.feature "Student certificates" do
 
     sign_in(student)
 
-    within("#cert_completion") { click_button("Prepare my participation certificate") }
+    click_button("Prepare my participation certificate")
 
     expect(page).to have_link("Download my Participation Certificate",
                               href: student.certificates.current.file_url)
@@ -34,9 +34,9 @@ RSpec.feature "Student certificates" do
 
     sign_in(student)
 
-    within("#cert_rpe_winner") { click_button("Prepare my winner's certificate") }
+    click_button("Prepare my regional winner's certificate")
 
-    expect(page).to have_link("Download my Regional Pitch Winner's Certificate",
+    expect(page).to have_link("Download my Regional Winner's Certificate",
                               href: student.certificates.rpe_winner.current.file_url)
   end
 end

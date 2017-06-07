@@ -1,27 +1,21 @@
-<% if current_team.submission.contest_rank == "semifinalist"%>
-  <% scores = @all_scores %>
-  <% best_category = @sf_best_category %>
-<% else %>
-  <% scores = @quarterfinals_scores %>
-  <% best_category = @qf_best_category %>
-<% end %>
-
 <div class="flex-col-md-4 dashboard-sidebar border-left">
-<h3> Best Category Comments: <%= best_category %></h3><br>
-  <p>
-    <% scores.each do |score| %>
-      <% case "#{best_category}" %>
-        <% when "Ideation"%>
-          "<em><%= score.ideation_comment %></em>" <br><br>
-        <% when "Technical"%>
-          "<em><%= score.technical_comment %></em>" <br><br>
-        <% when "Entrepreneurship"%>
-          "<em><%= score.entrepreneurship_comment %></em>" <br><br>
-        <% when "Pitch"%>
-          "<em><%= score.pitch_comment %></em>" <br><br>
-        <% when "Overall Impression" %>
-          "<em><%= score.overall_comment %></em>" <br><br>
-      <% end %>
-    <% end %>
-  </p>
+  <%
+    if current_team.submission.contest_rank == "semifinalist"
+      scores = @all_scores
+      best_category = @sf_best_category
+    else
+      scores = @quarterfinals_scores
+      best_category = @qf_best_category
+    end
+  %>
+
+  <h3>Best Category Comments: <%= best_category %></h3>
+
+  <% scores.each do |score| %>
+    <p class="best-category-comment">
+      "<%= score.public_send(
+        "#{best_category.to_s.underscore}_comment"
+      ) %>"
+    </p>
+  <% end %>
 </div>

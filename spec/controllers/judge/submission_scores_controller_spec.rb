@@ -3,8 +3,18 @@ require "rails_helper"
 RSpec.describe Judge::SubmissionScoresController do
   describe "GET #new" do
     it "sets up a score as opened by the judge at current time" do
+      round = ENV.fetch("JUDGING_ROUND") { "QF" }
+      current_rank = if round == "SF"
+                       :semifinalist
+                     else
+                       :quarterfinalist
+                     end
+
       team = FactoryGirl.create(:team)
-      FactoryGirl.create(:submission, :complete, team: team)
+      FactoryGirl.create(:submission,
+                         :complete,
+                         contest_rank: current_rank,
+                         team: team)
 
       now = Time.current
       judge = FactoryGirl.create(:judge)
@@ -13,7 +23,9 @@ RSpec.describe Judge::SubmissionScoresController do
 
       Timecop.freeze(now) { get :new }
 
-      expect(judge.submission_scores.last.team_submission.judge_opened_id).to eq(judge.id)
+      expect(
+        judge.submission_scores.last.team_submission.judge_opened_id
+      ).to eq(judge.id)
 
       expect(
         judge

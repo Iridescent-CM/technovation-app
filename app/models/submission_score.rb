@@ -159,6 +159,10 @@ class SubmissionScore < ActiveRecord::Base
     prefix: false,
     allow_nil: false
 
+  def overall_impression_comment
+    overall_comment
+  end
+
   def name
     [team_submission_app_name,
      team_submission_team_name].join(' by ')

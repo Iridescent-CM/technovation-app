@@ -28,7 +28,6 @@ module Student
           @sf_overall_impression_average = category_average(:overall_impression, :semifinals)
           @sf_best_category = best_category(:semifinals)
         end
-
       end
     end
 
@@ -51,7 +50,9 @@ module Student
     end
 
     def best_category(round)
-      if round == :semifinals
+      adjusted_scores = {}
+
+      if round == :semifinals and @semifinals_scores.any?
         adjusted_scores = {
           "Overall Impression": (@sf_overall_impression_average * 20/25),
           "Pitch": @sf_pitch_average,
@@ -59,7 +60,7 @@ module Student
           "Technical": @sf_technical_average,
           "Ideation": (@sf_ideation_average * 20/15)
         }
-      else
+      elsif @quarterfinals_scores.any?
         adjusted_scores = {
           "Overall Impression": (@qf_overall_impression_average * 20/25),
           "Pitch": @qf_pitch_average,
@@ -68,8 +69,8 @@ module Student
           "Ideation": (@qf_ideation_average * 20/15)
         }
       end
+
       adjusted_scores.key(adjusted_scores.values.max)
     end
-
   end
 end

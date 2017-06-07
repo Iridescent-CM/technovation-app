@@ -3,30 +3,43 @@ module Judge
     helper_method :current_team
 
     def edit
-      @submission_score = current_judge.submission_scores.find(params[:id])
+      @submission_score = current_judge.submission_scores.find(
+        params[:id]
+      )
+
       @current_team_submission = @submission_score.team_submission
-      @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
+
+      if @current_team_submission.technical_checklist.blank?
+        @current_team_submission.build_technical_checklist
+      end
+
       render :new
     end
 
     def new
       if params[:id]
-        @submission_score = current_judge.submission_scores.find(params[:id])
+        @submission_score = current_judge.submission_scores.find(
+          params[:id]
+        )
+
         @current_team_submission = @submission_score.team_submission
       else
         begin
-          @submission_score = current_judge.submission_scores.find_or_create_by!(
-            event_type: params[:event_type],
-            team_submission_id: current_team_submission.id,
-            round: current_round
-          )
+          @submission_score = current_judge.submission_scores
+            .find_or_create_by!(
+              event_type: params[:event_type],
+              team_submission_id: current_team_submission.id,
+              round: current_round
+            )
         rescue ActiveRecord::RecordNotFound
           return redirect_to judge_dashboard_path,
             notice: t("controllers.judge.submission_scores.any.no_submission_found")
         end
       end
 
-      @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
+      if @current_team_submission.technical_checklist.blank?
+        @current_team_submission.build_technical_checklist
+      end
 
       @submission_score.team_submission.update_attributes({
         judge_opened_id: current_judge.id,
@@ -35,7 +48,9 @@ module Judge
     end
 
     def update
-      @submission_score = current_judge.submission_scores.find(params[:id])
+      @submission_score = current_judge.submission_scores.find(
+        params[:id]
+      )
 
       if @submission_score.update_attributes(submission_score_params)
         render json: @submission_score
@@ -80,12 +95,19 @@ module Judge
 
       params[:team_submission_id] = FindEligibleSubmissionId.(
         current_judge,
-        team_submission_id: params[:team_submission_id] || @submission_score.try(:team_submission_id),
+        team_submission_id: params[:team_submission_id] ||
+          @submission_score.try(:team_submission_id),
         live: String(params[:event_type]) != "virtual",
       )
 
-      @current_team_submission = TeamSubmission.find(params[:team_submission_id])
-      @current_team_submission.build_technical_checklist if @current_team_submission.technical_checklist.blank?
+      @current_team_submission = TeamSubmission.find(
+        params[:team_submission_id]
+      )
+
+      if @current_team_submission.technical_checklist.blank?
+        @current_team_submission.build_technical_checklist
+      end
+
       @current_team_submission
     end
 

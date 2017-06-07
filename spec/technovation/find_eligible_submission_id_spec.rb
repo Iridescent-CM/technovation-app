@@ -2,6 +2,9 @@ require "rails_helper"
 
 RSpec.describe FindEligibleSubmissionId do
   context "quarterfinals" do
+    before { set_judging_round("QF") }
+    after { reset_judging_round }
+
     it "does not choose incomplete submission" do
       judge = FactoryGirl.create(:judge)
       team = FactoryGirl.create(:team)
@@ -211,12 +214,8 @@ RSpec.describe FindEligibleSubmissionId do
   end
 
   context "semifinals" do
-    before do
-      @judging_round = ENV["JUDGING_ROUND"]
-      ENV["JUDGING_ROUND"] = "SF"
-    end
-
-    after { ENV["JUDGING_ROUND"] = @judging_round }
+    before { set_judging_round("SF") }
+    after { reset_judging_round }
 
     let(:sf_rank) { TeamSubmission.contest_ranks[:semifinalist] }
     let(:qf_round) { SubmissionScore.rounds[:quarterfinals] }

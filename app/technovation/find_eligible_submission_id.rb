@@ -3,7 +3,9 @@ module FindEligibleSubmissionId
 
   class << self
     def call(judge_profile, options = {})
-      if quarterfinals? and options[:live] and judge_profile.selected_regional_pitch_event.live?
+      if quarterfinals? and
+          options[:live] and
+            judge_profile.selected_regional_pitch_event.live?
         submission_id_from_live_event(
           judge_profile.selected_regional_pitch_event,
           options[:team_submission_id]
@@ -26,18 +28,28 @@ module FindEligibleSubmissionId
     end
 
     def id_for_score_in_progress(judge)
-      judge.submission_scores.current_round.incomplete.last.try(:team_submission_id)
+      judge.submission_scores.current_round.incomplete.last.try(
+        :team_submission_id
+      )
     end
 
     def random_eligible_id(judge)
-      scored_submissions = judge.submission_scores.pluck(:team_submission_id)
+      scored_submissions = judge.submission_scores.pluck(
+        :team_submission_id
+      )
+
       judge_conflicts = judge.team_region_division_names
+
       official_rpe_team_ids = if quarterfinals?
-                                RegionalPitchEvent.official.joins(:teams).pluck(:team_id)
+                                RegionalPitchEvent.official.joins(:teams)
+                                  .pluck(:team_id)
                               else
                                 []
                               end
-      candidates = TeamSubmission.current.public_send(rank_for_current_round)
+
+      candidates = TeamSubmission.current.public_send(
+          rank_for_current_round
+        )
         .where.not(
           id: scored_submissions
         )
@@ -65,9 +77,15 @@ module FindEligibleSubmissionId
     end
 
     def weighted(sub)
-      pending = sub.public_send("pending_#{current_round}_official_submission_scores_count") || 0
-      complete = sub.public_send("complete_#{current_round}_official_submission_scores_count") || 0
-      pending + 2*complete
+      pending = sub.public_send(
+        "pending_#{current_round}_official_submission_scores_count"
+      ) || 0
+
+      complete = sub.public_send(
+        "complete_#{current_round}_official_submission_scores_count"
+      ) || 0
+
+      pending + 2 * complete
     end
 
     def current_round
