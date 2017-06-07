@@ -21,6 +21,17 @@
     </li>
   <% end %>
 
+  <% if current_mentor.is_on_team? %>
+    <li class="tab-link">
+      <button
+        role="button"
+        class="tab-button"
+        data-tab-id="scores">
+        Scores
+      </button>
+    </li>
+  <% end %>
+
   <li class="tab-link">
     <button
       role="button"

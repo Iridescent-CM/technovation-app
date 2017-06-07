@@ -14,6 +14,12 @@
       </div>
     <% end %>
 
+    <% if current_mentor.is_on_team? %>
+      <div class="tab-content flex-row" id="scores">
+        <%= render 'mentor/dashboards/full_access_content/scores' %>
+      </div>
+    <% end %>
+
     <div class="tab-content flex-row" id="submissions">
       <%= render 'mentor/dashboards/full_access_content/submissions' %>
     </div>
