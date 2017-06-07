@@ -1,1 +1,59 @@
-hi hi hi
+<% scores = team.submission.submission_scores.complete.public_send("#{round}") %>
+
+<div class="score_breakdown">
+  <h1>
+    <%= team.name.titleize %>
+  </h1>
+  <h2>
+    <%= round.to_s.titleize %>
+    Score:
+    <%= team.submission.public_send("#{round}_average_score") %>
+  </h2>
+
+  <table class="ra-participants-list" style="align:center">
+    <% if round == :quarterfinals and !scores.all?(&:official?) %>
+      Official Scores - These scores counted
+    <% end %>
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Judge Location </th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% scores.official.each do |score| %>
+        <tr>
+          <td><%= score.total %> </td>
+          <td><%= score.judge_profile.address_details %></td>
+          <td><%= link_to 'View details', mentor_score_path(score),
+                  team: team %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if round == :quarterfinals and !scores.all?(&:official?) %>
+    <br>
+    <table class="ra-participants-list" style="align:center">
+      Unofficial Scores - These scores are from a celebration event
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Judge Location </th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% scores.unofficial.each do |score| %>
+          <tr>
+            <td><%= score.total %> </td>
+            <td><%= score.judge_profile.address_details %></td>
+            <td><%= link_to 'View details', mentor_score_path(score),
+                    team: team %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

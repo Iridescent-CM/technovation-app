@@ -103,6 +103,7 @@ Rails.application.routes.draw do
 
     resource :regional_pitch_event_selection, only: [:new, :show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show
+    resources :scores, only: [:show]
   end
 
   namespace :regional_ambassador do
