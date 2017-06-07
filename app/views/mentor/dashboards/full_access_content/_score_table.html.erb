@@ -1,9 +1,6 @@
 <% scores = team.submission.submission_scores.complete.public_send("#{round}") %>
 
 <div class="score_breakdown">
-  <h1>
-    <%= team.name.titleize %>
-  </h1>
   <h2>
     <%= round.to_s.titleize %>
     Score:
