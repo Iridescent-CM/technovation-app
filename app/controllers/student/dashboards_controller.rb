@@ -1,6 +1,5 @@
 module Student
   class DashboardsController < StudentController
-    helper_method :unofficial_scores?
 
     def show
       @regional_events = RegionalPitchEvent.available_to(current_team.submission)
@@ -49,10 +48,6 @@ module Student
       avg = (sum / scores.official.count.to_f).round(2)
 
       avg.nan? ? 0 : avg
-    end
-
-    def unofficial_scores?
-      not @quarterfinals_scores.all?(&:official?)
     end
 
     def best_category(round)
