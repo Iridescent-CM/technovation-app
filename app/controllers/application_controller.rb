@@ -94,11 +94,14 @@ class ApplicationController < ActionController::Base
 
   def can_generate_certificate?(user_scope, cert_type)
     @can_generate_certificate ||= {}
+
     @can_generate_certificate[cert_type] ||= (
       ENV.fetch("CERTIFICATES") { false } and
-        CheckIfCertificateIsAllowed.(send("current_#{user_scope}"), cert_type)
+        CheckIfCertificateIsAllowed.(
+          send("current_#{user_scope}"),
+          cert_type
+        )
     )
-    @can_generate_certificate[cert_type]
   end
 
   def model_name; end
