@@ -1,5 +1,3 @@
-<% scores = team.submission.submission_scores.complete.public_send("#{round}") %>
-
 <div class="score_breakdown">
   <h2>
     <%= round.to_s.titleize %>
@@ -7,10 +5,11 @@
     <%= team.submission.public_send("#{round}_average_score") %>
   </h2>
 
+  <% if round == :quarterfinals and !scores.all?(&:official?) %>
+  Official Scores - These scores counted
+  <% end %>
+
   <table class="ra-participants-list" style="align:center">
-    <% if round == :quarterfinals and !scores.all?(&:official?) %>
-      Official Scores - These scores counted
-    <% end %>
     <thead>
       <tr>
         <th>Score</th>
