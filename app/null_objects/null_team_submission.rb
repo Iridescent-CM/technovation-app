@@ -4,7 +4,7 @@ class NullTeamSubmission
   end
 
   def screenshots
-    []
+    Screenshot.none
   end
 
   def app_name
@@ -25,6 +25,10 @@ class NullTeamSubmission
 
   def complete?
     false
+  end
+
+  def submission_scores
+    SubmissionScore.none
   end
 
   def technical_checklist
