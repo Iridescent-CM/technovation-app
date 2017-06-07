@@ -8,15 +8,15 @@
       </div>
     <% end %>
 
-    <% if can_generate_certificate?(:student, :completion) %>
-      <div class="tab-content flex-row" id="completion-cert">
-        <%= render 'student/dashboards/full_access_content/completion_cert' %>
-      </div>
-    <% end %>
-
     <% if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"] %>
       <div class="tab-content flex-row" id="scores">
         <%= render 'student/dashboards/full_access_content/scores' %>
+      </div>
+    <% end %>
+
+    <% if can_generate_certificate?(:student, :completion) %>
+      <div class="tab-content flex-row" id="completion-cert">
+        <%= render 'student/dashboards/full_access_content/completion_cert' %>
       </div>
     <% end %>
 
