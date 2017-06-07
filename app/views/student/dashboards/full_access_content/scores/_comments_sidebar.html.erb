@@ -1,4 +1,6 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
+  <%= render 'student/dashboards/full_access_content/certs_sidebar' %>
+
   <%
     if current_team.submission.contest_rank == "semifinalist"
       scores = @all_scores

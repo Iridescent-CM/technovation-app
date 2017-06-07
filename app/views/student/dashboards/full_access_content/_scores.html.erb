@@ -48,7 +48,7 @@
 </div>
 
 <% if @all_scores.empty? %>
-  <%= render 'student/dashboards/info_sidebar' %>
+  <%= render 'student/dashboards/info_sidebar', certs: true %>
 <% else %>
   <%= render 'student/dashboards/full_access_content/scores/comments_sidebar' %>
 <% end %>

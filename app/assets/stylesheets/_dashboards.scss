@@ -283,3 +283,29 @@
     padding: 0;
   }
 }
+
+.best-category-comment {
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+.certs-sidebar {
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 1rem;
+  margin: 0 0 1rem;
+
+  h3 {
+    margin: 1rem 0;
+  }
+
+  input[type="submit"],
+  button,
+  a {
+    background: 0;
+    color: $shamrock;
+    text-transform: uppercase;
+    padding: 0;
+    font-family: "Eagle", sans-serif;
+    font-size: 0.875rem;
+  }
+}

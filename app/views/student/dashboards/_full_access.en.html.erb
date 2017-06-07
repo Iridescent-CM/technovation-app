@@ -14,12 +14,6 @@
       </div>
     <% end %>
 
-    <% if can_generate_certificate?(:student, :completion) %>
-      <div class="tab-content flex-row" id="completion-cert">
-        <%= render 'student/dashboards/full_access_content/completion_cert' %>
-      </div>
-    <% end %>
-
     <div class="tab-content flex-row" id="your-submission">
       <%= render 'student/dashboards/full_access_content/submission' %>
     </div>
