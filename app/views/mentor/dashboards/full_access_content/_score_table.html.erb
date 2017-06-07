@@ -1,5 +1,6 @@
 <div class="score_breakdown">
   <h2>
+    Average
     <%= round.to_s.titleize %>
     Score:
     <%= team.submission.public_send("#{round}_average_score") %>
@@ -30,8 +31,8 @@
 
   <% if round == :quarterfinals and !scores.all?(&:official?) %>
     <br>
+    Unofficial Scores - These scores are from a celebration event
     <table class="ra-participants-list" style="align:center">
-      Unofficial Scores - These scores are from a celebration event
       <thead>
         <tr>
           <th>Score</th>
