@@ -1,8 +1,8 @@
 <% if can_generate_certificate?(:student, :completion) %>
-  <h1>Certificates</h1>
+  <div class="certs-sidebar">
+    <h1>Certificates</h1>
 
-  <% if can_generate_certificate?(:student, :rpe_winner) %>
-    <div class="certs-sidebar">
+    <% if can_generate_certificate?(:student, :rpe_winner) %>
       <h3>Congratulations!</h3>
 
       <p>
