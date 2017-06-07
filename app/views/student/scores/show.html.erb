@@ -17,7 +17,7 @@
     <tr>
       <td><%= @score.ideation_total %></td>
       <td><%= @score.technical_total %></td>
-      <% if @division.senior?  %>
+      <% if @division.senior? %>
         <td><%= @score.entrepreneurship_total %></td>
       <% end %>
       <td><%= @score.pitch_total %></td>
@@ -42,7 +42,7 @@
       <%= render 'student/scores/technical' %>
     </div><hr>
 
-    <% if @division.senior?  %>
+    <% if @division.senior? %>
       <div class="score-section" id="score-section-entrepreneurship">
         <%= render 'student/scores/entrepreneurship' %>
       </div><hr>
