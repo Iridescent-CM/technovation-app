@@ -26,8 +26,7 @@
         <tr>
           <td><%= score.total %> </td>
           <td><%= score.judge_profile.address_details %></td>
-          <td><%= link_to 'View details', mentor_score_path(score),
-                  team: team %></td>
+          <td><%= link_to 'View details', mentor_score_path(score) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -49,8 +48,7 @@
           <tr>
             <td><%= score.total %> </td>
             <td><%= score.judge_profile.address_details %></td>
-            <td><%= link_to 'View details', mentor_score_path(score),
-                    team: team %></td>
+            <td><%= link_to 'View details', mentor_score_path(score) %></td>
           </tr>
         <% end %>
       </tbody>

@@ -1,17 +1,10 @@
 module Mentor
   class ScoresController < MentorController
     def show
-      @teams = current_mentor.teams.current
-      @score = available_scores(params[:id])
-    end
+      submission_ids = TeamSubmission.where(team_id: current_mentor.teams.pluck(:id))
+      @score = SubmissionScore.where(team_submission_id: submission_ids).find(params[:id])
 
-    def available_scores(id)
-      available =[]
-      @teams.each do|team|
-        available.push(team.submission.submission_scores.complete)
-      end
-      score = available.find(id)
-      return score
+      @division = @score.team_submission.team.division
     end
   end
 end
