@@ -4,7 +4,8 @@ task import_scores: :environment do
     ENV.fetch("CSV_SOURCE"),
     SubmissionScore,
     TeamSubmission,
-    Rails.logger)
+    Rails.logger
+  )
 
   importing.import_scores
 end

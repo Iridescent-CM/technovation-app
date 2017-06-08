@@ -21,6 +21,7 @@ RSpec.describe "Tasks: rails import_scores" do
     ENV["CSV_SOURCE"] = "./tmp/test.csv"
     Rake::Task['import_scores'].invoke
 
-    expect(submission.submission_scores.first.sdg_alignment).to eq(4)
+    score = submission.submission_scores.quarterfinals.complete.first
+    expect(score.sdg_alignment).to eq(4)
   end
 end

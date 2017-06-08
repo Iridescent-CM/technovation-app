@@ -160,7 +160,7 @@ class SubmissionScore < ActiveRecord::Base
     allow_nil: false
 
   def self.from_csv(attrs, *args)
-    create(attrs, *args)
+    create!(attrs, *args)
   end
 
   def overall_impression_comment

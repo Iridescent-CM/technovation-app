@@ -18,7 +18,8 @@ class ScoreImporting
       submission_id = @sub_repo.from_param(param).id
       attrs["team_submission_id"] = submission_id
 
-      @score_repo.from_csv(attrs)
+      score = @score_repo.from_csv(attrs)
+      score.complete!
 
       @logger.info(
         "Imported QF score for #{@sub_repo.name}##{submission_id}"
