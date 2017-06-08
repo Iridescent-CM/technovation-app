@@ -1,5 +1,5 @@
-<div class="flex-col-sm-12">
-  <center id="cert_appreciation">
+<% if can_generate_certificate?(:mentor, :appreciation) %>
+  <div id="cert_appreciation" class="certs-sidebar">
     <h1>Thank you!</h1>
 
     <p>
@@ -17,16 +17,11 @@
 
         <p>First, we need to prepare your certificate for you.</p>
 
-        <p class="standalone-buttons">
-          <%= f.submit "Prepare my certificate", class: "appy-button" %>
-        </p>
+        <%= f.submit "Prepare my certificate" %>
       <% end %>
     <% else %>
-      <p class="standalone-buttons">
-        <%= link_to "Download my certificate",
-          current_mentor.certificates.appreciation.current.file_url,
-          class: "appy-button" %>
-      </p>
+      <%= link_to "Download my certificate",
+        current_mentor.certificates.appreciation.current.file_url %>
     <% end %>
-  </center>
-</div>
+  </div>
+<% end %>

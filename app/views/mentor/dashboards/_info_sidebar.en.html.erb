@@ -1,4 +1,8 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
+  <% if certs ||= false %>
+    <%= render 'mentor/dashboards/full_access_content/appreciation_cert' %>
+  <% end %>
+
   <h3>Honor Code</h3>
 
   <%= render 'honor_code_signed', account: current_mentor %>

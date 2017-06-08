@@ -8,12 +8,6 @@
       </div>
     <% end %>
 
-    <% if can_generate_certificate?(:mentor, :appreciation) %>
-      <div class="tab-content flex-row" id="certificates">
-        <%= render 'mentor/dashboards/full_access_content/appreciation_cert' %>
-      </div>
-    <% end %>
-
     <% if current_mentor.is_on_team? %>
       <div class="tab-content flex-row" id="scores">
         <%= render 'mentor/dashboards/full_access_content/scores' %>

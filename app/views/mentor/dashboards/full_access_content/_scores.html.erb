@@ -1,21 +1,22 @@
 <div class="flex-col-md-8">
-
   <% @teams.each do |team| %>
     <% all_scores = team.submission.submission_scores.complete %>
     <% quarterfinals_scores = all_scores.quarterfinals %>
     <% semifinals_scores = all_scores.semifinals %>
-    <div style="padding-top:10px; padding-bottom:10px, padding-left:10px">
-      <h1>
-        <%= team.name.titleize %>
-      </h1>
+
+    <div style="padding: 1rem 0 1rem 1rem; border-bottom: 1px solid #ddd;">
+      <h1><%= team.name.titleize %></h1>
+
       <% if all_scores.empty? %>
         <% if !team.submission.complete? or !team.submission.present? %>
-          <h3>No Scores Available</h3>
+          <h3 style="font-size:1rem;">No Scores Available</h3>
 
           <p>
-            Unfortunately, no scores are available for <%= team.name %> because the submission
-            was incomplete. Give your team some feedback on how to improve for next year!
+            Unfortunately, no scores are available for <%= team.name %>
+            because the submission was incomplete. Give your team some
+            feedback on how to improve for next year!
           </p>
+
           <% if team.submission.present? %>
             <p class="standalone-buttons">
               <%= link_to "Open your submission page",
@@ -28,10 +29,11 @@
           <h3>Congratulations!</h3>
 
           <p>
-            Congratulations on completing the <%= Season.current.year %> season of Technovation!
-            Your team can use the feedback they received at their pitch event to help learn more and
-            to participate in Technovation next year. Your team should be proud of
-            their work and share it with friends and mentors!
+            Congratulations on completing the <%= Season.current.year %>
+            season of Technovation! Your team can use the feedback they
+            received at their pitch event to help learn more and to
+            participate in Technovation next year. Your team should be proud
+            of their work and share it with friends and mentors!
           </p>
 
           <p class="standalone-buttons">
@@ -60,4 +62,4 @@
   <% end %>
 </div>
 
-<%= render 'mentor/dashboards/info_sidebar' %>
+<%= render 'mentor/dashboards/info_sidebar', certs: true %>
