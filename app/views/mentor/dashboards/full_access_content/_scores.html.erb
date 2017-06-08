@@ -4,57 +4,59 @@
     <% all_scores = team.submission.submission_scores.complete %>
     <% quarterfinals_scores = all_scores.quarterfinals %>
     <% semifinals_scores = all_scores.semifinals %>
-    <h1>
-      <%= team.name.titleize %>
-    </h1>
-    <% if all_scores.empty? %>
-      <% if !team.submission.complete? or !team.submission.present? %>
-        <h3>No Scores Available</h3>
+    <div style="padding-top:10px; padding-bottom:10px, padding-left:10px">
+      <h1>
+        <%= team.name.titleize %>
+      </h1>
+      <% if all_scores.empty? %>
+        <% if !team.submission.complete? or !team.submission.present? %>
+          <h3>No Scores Available</h3>
 
-        <p>
-          Unfortunately, no scores are available for <%= team.name %> because the submission
-          was incomplete. Give your team some feedback on how to improve for next year!
-        </p>
-        <% if team.submission.present? %>
+          <p>
+            Unfortunately, no scores are available for <%= team.name %> because the submission
+            was incomplete. Give your team some feedback on how to improve for next year!
+          </p>
+          <% if team.submission.present? %>
+            <p class="standalone-buttons">
+              <%= link_to "Open your submission page",
+                  app_path(team.submission),
+                  class: "appy-button",
+                  target: :_blank %>
+            </p>
+          <% end %>
+        <% else %>
+          <h3>Congratulations!</h3>
+
+          <p>
+            Congratulations on completing the <%= Season.current.year %> season of Technovation!
+            Your team can use the feedback they received at their pitch event to help learn more and
+            to participate in Technovation next year. Your team should be proud of
+            their work and share it with friends and mentors!
+          </p>
+
           <p class="standalone-buttons">
             <%= link_to "Open your submission page",
                 app_path(team.submission),
                 class: "appy-button",
                 target: :_blank %>
           </p>
-        <% end>
-      <% else %>
-        <h3>Congratulations!</h3>
+        <% end %>
+      <% elsif all_scores.any? %>
+        <% if semifinals_scores.any? %>
+          <%= render 'mentor/dashboards/full_access_content/score_table',
+              team: team,
+              round: :semifinals,
+              scores: semifinals_scores %>
+        <% end %>
 
-        <p>
-          Congratulations on completing the <%= Season.current.year %> season of Technovation!
-          Your team can use the feedback they received at their pitch event to help learn more and
-          to participate in Technovation next year. Your team should be proud of
-          their work and share it with friends and mentors!
-        </p>
-
-        <p class="standalone-buttons">
-          <%= link_to "Open your submission page",
-              app_path(team.submission),
-              class: "appy-button",
-              target: :_blank %>
-         </p>
+        <% if quarterfinals_scores.any? %>
+          <%= render 'mentor/dashboards/full_access_content/score_table',
+              team: team,
+              round: :quarterfinals,
+              scores: quarterfinals_scores %>
+        <% end %>
       <% end %>
-    <% elsif all_scores.any? %>
-      <% if semifinals_scores.any? %>
-        <%= render 'mentor/dashboards/full_access_content/score_table',
-            team: team,
-            round: :semifinals,
-            scores: semifinals_scores %>
-      <% end %>
-
-      <% if quarterfinals_scores.any? %>
-        <%= render 'mentor/dashboards/full_access_content/score_table',
-            team: team,
-            round: :quarterfinals,
-            scores: quarterfinals_scores %>
-      <% end %>
-    <% end %>
+    </div>
   <% end %>
 </div>
 
