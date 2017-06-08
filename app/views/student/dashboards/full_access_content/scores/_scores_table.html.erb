@@ -1,45 +1,15 @@
-<% if !scores.all?(&:official?) %>
-  Official Scores - These scores counted
+<% if scores.unofficial.any? %>
+  <p>Official Scores - These scores counted</p>
 <% end %>
 
-<table class="ra-participants-list" style="align:center">
-  <thead>
-    <tr>
-      <th>Score</th>
-      <th>Judge Location </th>
-      <th>View</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% scores.official.each do |score| %>
-      <tr>
-        <td><%= score.total %> </td>
-        <td><%= score.judge_profile.address_details %></td>
-        <td><%= link_to 'View details', send("#{current_account.type_name}_score_path",score) %></td>
-      </tr>
-    <% end <%></%>
-  </tbody>
-</table>
+<%= render 'student/dashboards/full_access_content/scores/table',
+  scores: scores.official %>
 
-<% if !scores.all?(&:official?) %>
-  <br>
-  Unofficial Scores - These scores are from a celebration event
-  <table class="ra-participants-list" style="align:center">
-    <thead>
-      <tr>
-        <th>Score</th>
-        <th>Judge Location </th>
-        <th>View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% scores.unofficial.each do |score| %>
-        <tr>
-          <td><%= score.total %> </td>
-          <td><%= score.judge_profile.address_details %></td>
-          <td><%= link_to 'View details', send("#{current_account.type_name}_score_path",score) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<% if scores.unofficial.any? %>
+  <p>
+    Unofficial Scores - These scores are from a celebration event
+  </p>
+
+  <%= render 'student/dashboards/full_access_content/scores/table',
+    scores: scores.unofficial %>
 <% end %>
