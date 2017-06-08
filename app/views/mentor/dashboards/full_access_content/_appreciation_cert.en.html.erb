@@ -18,12 +18,12 @@
         <p>First, we need to prepare your certificate for you.</p>
 
         <p class="standalone-buttons">
-          <%= f.submit "Prepare my appreciation certificate", class: "appy-button" %>
+          <%= f.submit "Prepare my certificate", class: "appy-button" %>
         </p>
       <% end %>
     <% else %>
       <p class="standalone-buttons">
-        <%= link_to "Download my Appreciation Certificate",
+        <%= link_to "Download my certificate",
           current_mentor.certificates.appreciation.current.file_url,
           class: "appy-button" %>
       </p>

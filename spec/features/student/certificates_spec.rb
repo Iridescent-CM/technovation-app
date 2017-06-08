@@ -24,9 +24,11 @@ RSpec.feature "Student certificates" do
 
     sign_in(student)
 
-    click_button("Prepare my participation certificate")
+    within("#student_completion_cert") {
+      click_button("Prepare my certificate")
+    }
 
-    expect(page).to have_link("Download my Participation Certificate",
+    expect(page).to have_link("Download my certificate",
                               href: student.certificates.current.file_url)
   end
 
@@ -36,13 +38,20 @@ RSpec.feature "Student certificates" do
     rpe = FactoryGirl.create(:rpe)
     rpe.teams << student.team
 
-    student.team.team_submissions.create!(integrity_affirmed: true, contest_rank: :semifinalist)
+    student.team.team_submissions.create!(
+      integrity_affirmed: true,
+      contest_rank: :semifinalist
+    )
 
     sign_in(student)
 
-    click_button("Prepare my regional winner's certificate")
+    within("#student_winner_cert") {
+      click_button("Prepare my certificate")
+    }
 
-    expect(page).to have_link("Download my Regional Winner's Certificate",
-                              href: student.certificates.rpe_winner.current.file_url)
+    expect(page).to have_link(
+      "Download my certificate",
+      href: student.certificates.rpe_winner.current.file_url
+    )
   end
 end

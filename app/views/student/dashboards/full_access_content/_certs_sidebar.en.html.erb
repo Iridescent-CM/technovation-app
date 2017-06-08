@@ -10,19 +10,21 @@
         Download a certificate to showcase your win.
       </p>
 
-      <% if current_student.certificates.rpe_winner.empty? %>
-        <%= form_with url: student_certificates_path,
-                      local: true do |f| %>
-          <%= f.hidden_field :type, value: :rpe_winner %>
+      <div id="student_winner_cert">
+        <% if current_student.certificates.rpe_winner.empty? %>
+          <%= form_with url: student_certificates_path,
+                        local: true do |f| %>
+            <%= f.hidden_field :type, value: :rpe_winner %>
 
-          <p>First, we need to prepare your certificate for you.</p>
+            <p>First, we need to prepare your certificate for you.</p>
 
-          <%= f.submit "Prepare my regional winner's certificate" %>
+            <%= f.submit "Prepare my certificate" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Download my certificate",
+            current_student.certificates.rpe_winner.current.file_url %>
         <% end %>
-      <% else %>
-        <%= link_to "Download my Regional Winner's Certificate",
-          current_student.certificates.rpe_winner.current.file_url %>
-      <% end %>
+      </div>
     <% end %>
 
     <h3>You made it!</h3>
@@ -36,17 +38,19 @@
       let them know you finished the Technovation program.
     </p>
 
-    <% if current_student.certificates.completion.empty? %>
-      <%= form_with url: student_certificates_path, local: true do |f| %>
-        <%= f.hidden_field :type, value: :completion %>
+    <div id="student_completion_cert">
+      <% if current_student.certificates.completion.empty? %>
+        <%= form_with url: student_certificates_path, local: true do |f| %>
+          <%= f.hidden_field :type, value: :completion %>
 
-        <p>First, we need to prepare your certificate for you.</p>
+          <p>First, we need to prepare your certificate for you.</p>
 
-        <%= f.submit "Prepare my participation certificate" %>
+          <%= f.submit "Prepare my certificate" %>
+        <% end %>
+      <% else %>
+        <%= link_to "Download my certificate",
+          current_student.certificates.completion.current.file_url %>
       <% end %>
-    <% else %>
-      <%= link_to "Download my Participation Certificate",
-        current_student.certificates.completion.current.file_url %>
-    <% end %>
+    </div>
   </div>
 <% end %>
