@@ -38,6 +38,7 @@
       <%= render(
         'student/dashboards/full_access_content/scores/score_breakdown',
         round: :semifinals,
+        round_name: "semifinals",
         scores: @semifinal_scores
       ) %>
     <% end %>
@@ -46,6 +47,7 @@
       <%= render(
         'student/dashboards/full_access_content/scores/score_breakdown',
         round: :quarterfinals,
+        round_name: "first round",
         scores: @quarterfinals_scores
       ) %>
     <% end %>
