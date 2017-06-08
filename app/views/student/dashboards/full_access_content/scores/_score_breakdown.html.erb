@@ -1,7 +1,7 @@
 <div class="score_breakdown">
   <h1>
     Average
-    <%= round.to_s.titleize %>
+    <%= round_name.titleize %>
     Score:
     <%= current_team.submission.public_send("#{round}_average_score") %>
   </h1>

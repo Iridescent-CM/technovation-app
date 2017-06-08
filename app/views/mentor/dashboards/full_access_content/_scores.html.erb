@@ -48,6 +48,7 @@
           <%= render 'mentor/dashboards/full_access_content/score_table',
               team: team,
               round: :semifinals,
+              round_name: "semifinals",
               scores: semifinals_scores %>
         <% end %>
 
@@ -55,6 +56,7 @@
           <%= render 'mentor/dashboards/full_access_content/score_table',
               team: team,
               round: :quarterfinals,
+              round_name: "first round",
               scores: quarterfinals_scores %>
         <% end %>
       <% end %>
