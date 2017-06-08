@@ -79,9 +79,9 @@
   </p>
 
   <% if round == :semifinals %>
-    <h3>Best <%= round %> category: <%= @sf_best_category %></h3>
+    <h3>Best <%= round_name %> category: <%= @sf_best_category %></h3>
   <% else %>
-    <h3>Best <%= round %> category: <%= @qf_best_category %></h3>
+    <h3>Best <%= round_name %> category: <%= @qf_best_category %></h3>
   <% end %>
 
   <% if round == :semifinals %>
