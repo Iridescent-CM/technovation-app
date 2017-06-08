@@ -13,24 +13,24 @@
 
         <p>
           Unfortunately, no scores are available for <%= team.name %> because the submission
-          was incomplete. Try sharing the public version with friends and mentors for feedback
-          on how to improve for next year!
+          was incomplete. Give your team some feedback on how to improve for next year!
         </p>
-
-        <p class="standalone-buttons">
-          <%= link_to "Open your submission page",
-              app_path(team.submission),
-              class: "appy-button",
-              target: :_blank %>
-        </p>
+        <% if team.submission.present? %>
+          <p class="standalone-buttons">
+            <%= link_to "Open your submission page",
+                app_path(team.submission),
+                class: "appy-button",
+                target: :_blank %>
+          </p>
+        <% end>
       <% else %>
         <h3>Congratulations!</h3>
 
         <p>
           Congratulations on completing the <%= Season.current.year %> season of Technovation!
-          Use the feedback you received at your pitch event to help you learn more and make
-          sure to participate in Technovation next year. You should be proud of
-          your work and share your submission with friends and mentors!
+          Your team can use the feedback they received at their pitch event to help learn more and
+          participate in Technovation next year. Your team should be proud of
+          their work and share it with friends and mentors!
         </p>
 
         <p class="standalone-buttons">
