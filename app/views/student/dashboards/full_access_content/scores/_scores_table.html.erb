@@ -1,16 +1,18 @@
 <% if scores.unofficial.any? %>
-  <p>
+  <h5>
+    <br>
     Official Scores - These scores counted
-  </p>
+  </h5>
 <% end %>
 
 <%= render 'student/dashboards/full_access_content/scores/table',
   scores: scores.official %>
 
 <% if scores.unofficial.any? %>
-  <p>
+  <h5>
+    <br>
     Unofficial Scores - These scores are from a celebration event
-  </p>
+  </h5>
 
   <%= render 'student/dashboards/full_access_content/scores/table',
     scores: scores.unofficial %>
