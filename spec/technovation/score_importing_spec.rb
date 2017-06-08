@@ -3,10 +3,6 @@ needs "technovation"
 require "score_importing"
 
 RSpec.describe ScoreImporting do
-  def score_mock
-    double(:ScoreMock)
-  end
-
   def csv_path
     "./tmp/test.csv"
   end
@@ -25,19 +21,23 @@ RSpec.describe ScoreImporting do
     end
   end
 
-  it "reads csv headers" do
-    headers = %w{header1 header2}
-    make_csv(headers: headers)
+  it "saves csv data to the score repository" do
+    score_mock = class_spy("ScoreMock")
+    headers = %w{attr_a attr_b}
+    rows = [%w{value_a value_b}, %w{value_a2 value_b2}]
+    make_csv(headers: headers, rows: rows)
+
+    expect(score_mock).to receive(:from_csv).with({
+      "attr_a" => 'value_a',
+      "attr_b" => 'value_b',
+    })
+
+    expect(score_mock).to receive(:from_csv).with({
+      "attr_a" => 'value_a2',
+      "attr_b" => 'value_b2',
+    })
 
     importing = ScoreImporting.new(csv_path, score_mock)
-    expect(importing.headers).to eq(headers)
-  end
-
-  it "reads csv rows" do
-    rows = [%w{itemA itemB}, %w{itemC itemD}]
-    make_csv(rows: rows)
-
-    importing = ScoreImporting.new(csv_path, score_mock)
-    expect(importing.rows).to eq(rows)
+    importing.import_scores
   end
 end

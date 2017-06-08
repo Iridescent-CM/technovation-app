@@ -2,15 +2,13 @@ require 'csv'
 
 class ScoreImporting
   def initialize(file_path, score_repository)
-    @source = CSV.open(file_path).read
+    @io_source = File.open(file_path)
     @repository = score_repository
   end
 
-  def headers
-    @source[0]
-  end
-
-  def rows
-    @source[1..-1]
+  def import_scores
+    CSV.foreach(@io_source, headers: true) do |row|
+      @repository.from_csv(row.to_h)
+    end
   end
 end
