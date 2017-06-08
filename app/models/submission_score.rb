@@ -159,6 +159,10 @@ class SubmissionScore < ActiveRecord::Base
     prefix: false,
     allow_nil: false
 
+  def self.from_csv(attrs, *args)
+    create(attrs, *args)
+  end
+
   def overall_impression_comment
     overall_comment
   end

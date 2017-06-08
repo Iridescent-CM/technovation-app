@@ -102,6 +102,10 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
+  def self.from_param(*args)
+    friendly.find(*args)
+  end
+
   def update_average_scores
     update_quarterfinals_average_score
     update_semifinals_average_score
