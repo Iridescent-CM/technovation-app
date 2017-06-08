@@ -25,32 +25,32 @@
             current_student.certificates.rpe_winner.current.file_url %>
         <% end %>
       </div>
-    <% end %>
+    <% else %>
+      <h3>You made it!</h3>
 
-    <h3>You made it!</h3>
+      <p>
+        You finished the <%= Season.current.year %> Technovation program!
+      </p>
 
-    <p>
-      You finished the <%= Season.current.year %> Technovation program!
-    </p>
+      <p>
+        Download a participation certificate you can share with others to
+        let them know you finished the Technovation program.
+      </p>
 
-    <p>
-      Download a participation certificate you can share with others to
-      let them know you finished the Technovation program.
-    </p>
+      <div id="student_completion_cert">
+        <% if current_student.certificates.completion.empty? %>
+          <%= form_with url: student_certificates_path, local: true do |f| %>
+            <%= f.hidden_field :type, value: :completion %>
 
-    <div id="student_completion_cert">
-      <% if current_student.certificates.completion.empty? %>
-        <%= form_with url: student_certificates_path, local: true do |f| %>
-          <%= f.hidden_field :type, value: :completion %>
+            <p>First, we need to prepare your certificate for you.</p>
 
-          <p>First, we need to prepare your certificate for you.</p>
-
-          <%= f.submit "Prepare my certificate" %>
+            <%= f.submit "Prepare my certificate" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Download my certificate",
+            current_student.certificates.completion.current.file_url %>
         <% end %>
-      <% else %>
-        <%= link_to "Download my certificate",
-          current_student.certificates.completion.current.file_url %>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
