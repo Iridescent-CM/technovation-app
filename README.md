@@ -33,7 +33,7 @@ You **must** install `pdftk`
 
 ```
 Install at
-[https://www.pdflabs.com/tools/pdftk-server/](https://www.pdflabs.com/tools/pdftk-server/)
+(https://www.pdflabs.com/tools/pdftk-server/)[https://www.pdflabs.com/tools/pdftk-server/]
 echo "PDFTK_PATH=`which pdftk`" >> .env
 ```
 
