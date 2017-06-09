@@ -31,10 +31,8 @@ brew install redis
 
 You **must** install `pdftk`
 
-```
 Find your download and install from
 https://www.pdflabs.com/tools/pdftk-server/
-```
 
 ### Setup
 
