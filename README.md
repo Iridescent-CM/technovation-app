@@ -32,6 +32,14 @@ brew update
 brew install redis
 ```
 
+You **must** install `pdftk`
+
+```
+brew update
+brew install pdftk
+echo "PDFTK_PATH=`which pdftk`" >> .env
+```
+
 ### Setup
 
 Set your Ruby version with your favorite ruby version management tool **(RVM, rbenv, chruby, etc)** to:
