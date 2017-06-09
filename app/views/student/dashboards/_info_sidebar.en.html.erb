@@ -1,41 +1,41 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
   <% if certs ||= false %>
     <%= render 'student/dashboards/full_access_content/certs_sidebar' %>
+  <% else %>
+    <h3>Honor Code</h3>
+
+    <%= render 'honor_code_signed', account: current_student %>
+
+    <h3>Curriculum</h3>
+
+    <p>
+      <%= link_to "Open the Technovation Curriculum",
+        "http://www.technovationchallenge.org/curriculum-intro/registered",
+        target: "_blank" %>
+    </p>
+
+    <h3>Google Made With Code</h3>
+
+    <p>
+      <%= link_to "Read the Technovation Primer",
+        "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
+        target: "_blank" %>
+    </p>
+
+    <h3>Submission Guide</h3>
+
+    <p>
+      <%= link_to "Read the Submission Guidelines",
+        "http://www.technovationchallenge.org/submission-guidelines/",
+        target: "_blank" %>
+    </p>
+
+    <h3>Judging Rubric</h3>
+
+    <p>
+      <%= link_to "Read the Judging Rubric",
+        "http://www.technovationchallenge.org/judging-rubric/",
+        target: "_blank" %>
+    </p>
   <% end %>
-
-  <h3>Honor Code</h3>
-
-  <%= render 'honor_code_signed', account: current_student %>
-
-  <h3>Curriculum</h3>
-
-  <p>
-    <%= link_to "Open the Technovation Curriculum",
-      "http://www.technovationchallenge.org/curriculum-intro/registered",
-      target: "_blank" %>
-  </p>
-
-  <h3>Google Made With Code</h3>
-
-  <p>
-    <%= link_to "Read the Technovation Primer",
-      "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
-      target: "_blank" %>
-  </p>
-
-  <h3>Submission Guide</h3>
-
-  <p>
-    <%= link_to "Read the Submission Guidelines",
-      "http://www.technovationchallenge.org/submission-guidelines/",
-      target: "_blank" %>
-  </p>
-
-  <h3>Judging Rubric</h3>
-
-  <p>
-    <%= link_to "Read the Judging Rubric",
-      "http://www.technovationchallenge.org/judging-rubric/",
-      target: "_blank" %>
-  </p>
 </div>
