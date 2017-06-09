@@ -13,7 +13,6 @@ https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-c
 You **must** install `elasticsearch`
 
 ```
-brew update
 brew install elasticsearch
 brew services start elasticsearch
 ```
@@ -21,21 +20,18 @@ brew services start elasticsearch
 You **must** install `postgresql`
 
 ```
-brew update
 brew install postgresql
 ```
 
 You **must** install `redis server`
 
 ```
-brew update
 brew install redis
 ```
 
 You **must** install `pdftk`
 
 ```
-brew update
 brew install pdftk
 echo "PDFTK_PATH=`which pdftk`" >> .env
 ```
