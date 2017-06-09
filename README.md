@@ -32,9 +32,8 @@ brew install redis
 You **must** install `pdftk`
 
 ```
-Install at
-(https://www.pdflabs.com/tools/pdftk-server/)[https://www.pdflabs.com/tools/pdftk-server/]
-echo "PDFTK_PATH=`which pdftk`" >> .env
+Find your download and install from
+https://www.pdflabs.com/tools/pdftk-server/
 ```
 
 ### Setup
@@ -48,7 +47,8 @@ Request sensitive keys from your teammates for the `.env` file.
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
-*** GET THE SENSITIVE INFO FOR .env FILE ***
+*** GET THE SENSITIVE INFO FROM DEV TEAM FOR .env FILE ***
+echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
 ```
 
