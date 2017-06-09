@@ -14,6 +14,12 @@ class ScoreImporting
         "judge_profile_id" => 1836
       }.merge(row.to_h)
 
+      attrs.each do |k, v|
+        unless k.match(/_id/) or k.match(/_comment/)
+          attrs[k] = v.to_i
+        end
+      end
+
       param = attrs.delete("team_submission_id")
       submission_id = @sub_repo.from_param(param).id
       attrs["team_submission_id"] = submission_id
