@@ -35,6 +35,8 @@ module RegionalAmbassador
     end
 
     def show
+      params[:round] ||= "quarterfinals"
+
       @team_submission = TeamSubmission.includes(
         team: :division,
         submission_scores: { judge_profile: :account }
@@ -45,7 +47,7 @@ module RegionalAmbassador
       @event = @team.selected_regional_pitch_event
 
       @scores = @team_submission.submission_scores
-        .quarterfinals
+        .send(params[:round])
         .complete
         .includes(judge_profile: :account)
         .references(:accounts)

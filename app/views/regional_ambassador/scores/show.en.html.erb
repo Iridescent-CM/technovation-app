@@ -1,9 +1,22 @@
 <h1 class="appy-title">Detailed Scores for <%= @team.name %></h1>
 
+<label>
+  Judging round:
+
+  <%= select_tag :round,
+    options_for_select(SubmissionScore.rounds.keys, params[:round]),
+    data: { reload: true } %>
+</label>
+
 <p style="padding: 0; margin: 0 0 1rem;">
-  <strong>Division:</strong> <%= @team.division_name %> |
-  <strong>App:</strong> <%= @team_submission.app_name || "No name" %> |
-  <strong>Average score:</strong> <%= @team_submission.quarterfinals_average_score %>
+  <strong>Division:</strong>
+  <%= @team.division_name %> |
+
+  <strong>App:</strong>
+  <%= @team_submission.app_name || "No name" %> |
+
+  <strong>Average score:</strong>
+  <%= @team_submission.public_send("#{params[:round]}_average_score") %>
 </p>
 
 <p style="padding: 0; margin: 0 0 1rem;">
