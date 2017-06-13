@@ -45,6 +45,7 @@ module RegionalAmbassador
       @event = @team.selected_regional_pitch_event
 
       @scores = @team_submission.submission_scores
+        .quarterfinals
         .complete
         .includes(judge_profile: :account)
         .references(:accounts)
