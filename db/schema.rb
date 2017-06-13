@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605205707) do
+ActiveRecord::Schema.define(version: 20170613141734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,10 +50,7 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
-    t.index ["gender"], name: "index_accounts_on_gender"
     t.index ["password_reset_token"], name: "index_accounts_on_password_reset_token", unique: true
-    t.index ["password_reset_token_sent_at"], name: "index_accounts_on_password_reset_token_sent_at"
-    t.index ["referred_by"], name: "index_accounts_on_referred_by"
   end
 
   create_table "admin_profiles", id: :serial, force: :cascade do |t|
@@ -71,8 +68,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_background_checks_on_account_id"
-    t.index ["candidate_id"], name: "index_background_checks_on_candidate_id"
-    t.index ["report_id"], name: "index_background_checks_on_report_id"
   end
 
   create_table "business_plans", id: :serial, force: :cascade do |t|
@@ -138,8 +133,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "download_token"
-    t.index ["account_id"], name: "index_exports_on_account_id"
-    t.index ["file"], name: "index_exports_on_file"
   end
 
   create_table "honor_code_agreements", id: :serial, force: :cascade do |t|
@@ -169,8 +162,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["accepted_at"], name: "index_join_requests_on_accepted_at"
-    t.index ["declined_at"], name: "index_join_requests_on_declined_at"
     t.index ["joinable_type", "joinable_id"], name: "index_join_requests_on_joinable_type_and_joinable_id"
     t.index ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id"
   end
@@ -214,7 +205,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.integer "expertise_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["expertise_id"], name: "index_mentor_profile_expertises_on_expertise_id"
     t.index ["mentor_profile_id"], name: "index_mentor_profile_expertises_on_mentor_profile_id"
   end
 
@@ -230,8 +220,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.boolean "virtual", default: true, null: false
     t.boolean "connect_with_mentors", default: true, null: false
     t.index ["account_id"], name: "index_mentor_profiles_on_account_id"
-    t.index ["searchable"], name: "index_mentor_profiles_on_searchable"
-    t.index ["virtual"], name: "index_mentor_profiles_on_virtual"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -247,7 +235,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.string "regarding_type"
     t.datetime "sent_at"
     t.datetime "delivered_at"
-    t.index ["regarding_type", "regarding_id"], name: "index_messages_on_regarding_type_and_regarding_id"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
@@ -272,7 +259,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "voided_at"
     t.boolean "newsletter_opt_in"
     t.index ["student_profile_id"], name: "index_parental_consents_on_student_profile_id"
-    t.index ["voided_at"], name: "index_parental_consents_on_voided_at"
   end
 
   create_table "pitch_presentations", id: :serial, force: :cascade do |t|
@@ -294,7 +280,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "updated_at", null: false
     t.text "bio"
     t.index ["account_id"], name: "index_regional_ambassador_profiles_on_account_id"
-    t.index ["ambassador_since_year"], name: "index_regional_ambassador_profiles_on_ambassador_since_year"
     t.index ["status"], name: "index_regional_ambassador_profiles_on_status"
   end
 
@@ -332,7 +317,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sort_position", default: 0, null: false
-    t.index ["sort_position"], name: "index_screenshots_on_sort_position"
     t.index ["team_submission_id"], name: "index_screenshots_on_team_submission_id"
   end
 
@@ -346,7 +330,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.index ["registerable_id"], name: "season_registerable_ids"
     t.index ["registerable_type"], name: "season_registerable_types"
     t.index ["season_id"], name: "index_season_registrations_on_season_id"
-    t.index ["status"], name: "index_season_registrations_on_status"
   end
 
   create_table "seasons", id: :serial, force: :cascade do |t|
@@ -366,11 +349,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.string "pending_token"
     t.string "password_digest"
     t.string "admin_permission_token"
-    t.index ["account_id"], name: "index_signup_attempts_on_account_id"
-    t.index ["activation_token"], name: "index_signup_attempts_on_activation_token"
-    t.index ["email"], name: "index_signup_attempts_on_email"
-    t.index ["pending_token"], name: "index_signup_attempts_on_pending_token"
-    t.index ["signup_token"], name: "index_signup_attempts_on_signup_token"
     t.index ["status"], name: "index_signup_attempts_on_status"
   end
 
@@ -453,7 +431,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.string "invitee_type"
     t.string "inviter_type"
     t.index ["invite_token"], name: "index_team_member_invites_on_invite_token", unique: true
-    t.index ["invitee_type"], name: "index_team_member_invites_on_invitee_type"
     t.index ["status"], name: "index_team_member_invites_on_status"
   end
 
@@ -489,12 +466,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.integer "pending_quarterfinals_submission_scores_count", default: 0, null: false
     t.integer "pending_semifinals_official_submission_scores_count", default: 0, null: false
     t.integer "pending_quarterfinals_official_submission_scores_count", default: 0, null: false
-    t.index ["average_unofficial_score"], name: "index_team_submissions_on_average_unofficial_score"
-    t.index ["judge_opened_at"], name: "index_team_submissions_on_judge_opened_at"
-    t.index ["quarterfinals_average_score"], name: "index_team_submissions_on_quarterfinals_average_score"
-    t.index ["semifinals_average_score"], name: "index_team_submissions_on_semifinals_average_score"
-    t.index ["stated_goal"], name: "index_team_submissions_on_stated_goal"
-    t.index ["submission_scores_count"], name: "index_team_submissions_on_submission_scores_count"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -512,7 +483,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
     t.string "city"
     t.string "state_province"
     t.string "country"
-    t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["legacy_id"], name: "index_teams_on_legacy_id"
   end
 
@@ -566,7 +536,6 @@ ActiveRecord::Schema.define(version: 20170605205707) do
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
-  add_foreign_key "exports", "accounts"
   add_foreign_key "join_requests", "teams", column: "joinable_id"
   add_foreign_key "judge_assignments", "judge_profiles"
   add_foreign_key "judge_assignments", "teams"
