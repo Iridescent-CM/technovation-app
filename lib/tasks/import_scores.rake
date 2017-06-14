@@ -22,8 +22,6 @@ task import_scores: :environment do
     csv_path: ENV.fetch("CSV_SOURCE"),
     judge_id: judge.id,
     judging_round: ENV.fetch("CSV_JUDGING_ROUND"),
-    scores: SubmissionScore,
-    submissions: TeamSubmission,
     logger: logger,
   })
 

@@ -3,10 +3,12 @@ require 'csv'
 class ScoreImporting
   def initialize(import_options)
     @io_source = File.open(import_options.fetch(:csv_path))
-    @judge_id = import_options.fetch(:judge_id)
+
+    @judge_id = import_options.fetch(:judge_id) { nil }
     @judging_round = import_options.fetch(:judging_round) { "quarterfinals" }
-    @score_repo = import_options.fetch(:scores)
-    @sub_repo = import_options.fetch(:submissions)
+    @score_repo = import_options.fetch(:scores) { SubmissionScore }
+    @sub_repo = import_options.fetch(:submissions) { TeamSubmission }
+    @account_repo = import_options.fetch(:accounts) { Account }
     @logger = import_options.fetch(:logger) { Logger.new('/dev/null') }
   end
 
@@ -41,8 +43,7 @@ class ScoreImporting
 
   def find_judge_profile_id(attrs)
     if judge_email = attrs.delete("judge_email")
-      account = Account.find_by(email: judge_email)
-      account.judge_profile.id
+      @account_repo.find_judge_profile_id_by_email(judge_email)
     else
       @judge_id
     end

@@ -112,6 +112,10 @@ class Account < ActiveRecord::Base
     find_by(auth_token: token) || NoAuthFound.new
   end
 
+  def self.find_judge_profile_id_by_email(email)
+    find_by(email: email).judge_profile.id
+  end
+
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
       NoAuthFound.new
