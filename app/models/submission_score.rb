@@ -14,9 +14,8 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   before_create -> {
-    self.event_type ||= judge_profile.selected_regional_pitch_event.live? ? "live" : "virtual"
-  }
-  before_create -> {
+    self.event_type ||= judge_profile.selected_regional_pitch_event.live? ?
+      "live" : "virtual"
     self.official ||= official?
   }
 
@@ -161,6 +160,10 @@ class SubmissionScore < ActiveRecord::Base
 
   def self.from_csv(attrs, *args)
     create!(attrs, *args)
+  end
+
+  def self.judging_round(name)
+    rounds[name]
   end
 
   def overall_impression_comment

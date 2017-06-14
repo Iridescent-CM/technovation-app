@@ -28,29 +28,37 @@ RSpec.describe ScoreImporting do
       .with("friendly-id-2")
       .and_return(sub_instance2)
 
+    expect(score_mock).to receive(:judging_round)
+      .twice
+      .with("semifinals")
+      .and_return(0)
+
     expect(score_mock).to receive(:from_csv).with({
-      "judge_profile_id" => 1836,
+      "judge_profile_id" => 9,
       "attr_a" => 1,
       "attr_b" => 2,
       "team_submission_id" => 1,
+      "round" => 0,
     }).and_return(score_instance)
 
     expect(score_mock).to receive(:from_csv).with({
-      "judge_profile_id" => 1836,
+      "judge_profile_id" => 9,
       "attr_a" => 3,
       "attr_b" => 4,
       "team_submission_id" => 2,
+      "round" => 0,
     }).and_return(score_instance2)
 
     expect(score_instance).to receive(:complete!)
     expect(score_instance2).to receive(:complete!)
 
-    importing = ScoreImporting.new(
-      csv_path,
-      score_mock,
-      sub_mock,
-      Logger.new('/dev/null')
-    )
+    importing = ScoreImporting.new({
+      csv_path: csv_path,
+      judge_id: 9,
+      judging_round: "semifinals",
+      scores: score_mock,
+      submissions: sub_mock,
+    })
 
     importing.import_scores
   end
