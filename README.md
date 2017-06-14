@@ -92,3 +92,21 @@ rails bootstrap
 # Adds the Technovation expertises for mentors to choose for their profile
 # Adds the Technovation admin account
 ```
+
+## Release to production
+
+For current version, see [VERSION](VERSION)
+
+```
+# Release next patch:
+# example: 2.45.5 -> 2.45.6
+rails release
+
+# Release next minor:
+# example: 4.32.8 -> 4.33.0
+rails release minor
+
+# Release next major:
+# example: 2.59.8 -> 3.0.0
+rails release major
+```
