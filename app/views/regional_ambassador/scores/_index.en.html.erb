@@ -1,4 +1,14 @@
-<div class="flex-col-md-6">
+<div class="flex-col-md-4">
+  <label>
+    Judging round:
+
+    <%= select_tag :round,
+      options_for_select(SubmissionScore.rounds.keys, params[:round]),
+      data: { reload: true } %>
+  </label>
+</div>
+
+<div class="flex-col-md-4">
   <label>
     Sort by:
 
@@ -11,7 +21,7 @@
   </label>
 </div>
 
-<div class="flex-col-md-6">
+<div class="flex-col-md-4">
   <label>
     Division
 

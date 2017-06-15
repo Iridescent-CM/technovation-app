@@ -15,16 +15,29 @@
       <% submissions.each do |submission| %>
         <tr>
           <td><%= submission.team.name %></td>
+
           <td>
             <%= link_to submission.app_name,
               app_path(submission),
               target: :_blank %>
           </td>
-          <td><%= submission.submission_scores.quarterfinals.complete.count %></td>
-          <td><%= submission.submission_scores.quarterfinals.incomplete.count %></td>
-          <td><%= submission.quarterfinals_average_score %></td>
-          <td><%= link_to 'View details',
-            send("#{scope}_score_path", submission) %></td>
+
+          <td>
+            <%= submission.submission_scores.send(params[:round]).complete.count %>
+          </td>
+
+          <td>
+            <%= submission.submission_scores.send(params[:round]).incomplete.count %>
+          </td>
+
+          <td>
+            <%= submission.send("#{params[:round]}_average_score") %>
+          </td>
+
+          <td>
+            <%= link_to 'View details',
+              send("#{scope}_score_path", submission, round: params[:round]) %>
+          </td>
         </tr>
       <% end %>
     </tbody>

@@ -5,6 +5,7 @@ module RegionalAmbassador
     def index
       params[:page] ||= 1
       params[:per_page] ||= 15
+      params[:round] ||= "quarterfinals"
 
       @division = params[:division] ||= "senior"
 
@@ -17,16 +18,18 @@ module RegionalAmbassador
         @event = if params[:event] == "virtual"
                   virtual_event
                 else
-                  events.eager_load(teams: { team_submissions: :submission_scores })
-                        .find(params[:event])
+                  events.eager_load(
+                    teams: { team_submissions: :submission_scores }
+                  ).find(params[:event])
                 end
 
         @events = [virtual_event] + events.sort_by(&:name)
       else
         params[:event] ||= events.pluck(:id).sort.first
 
-        @event = events.eager_load(teams: { team_submissions: :submission_scores })
-                       .find(params[:event])
+        @event = events.eager_load(
+          teams: { team_submissions: :submission_scores }
+        ).find(params[:event])
 
         @events = events.sort_by(&:name)
       end
@@ -64,9 +67,11 @@ module RegionalAmbassador
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"
-            b.quarterfinals_average_score <=> a.quarterfinals_average_score
+            b.send("#{params[:round]}_average_score") <=>
+              a.send("#{params[:round]}_average_score")
           when "avg_score_asc"
-            a.quarterfinals_average_score <=> b.quarterfinals_average_score
+            a.send("#{params[:round]}_average_score") <=>
+              b.send("#{params[:round]}_average_score")
           when "team_name"
             a.team.name <=> b.team.name
           end
