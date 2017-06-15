@@ -44,12 +44,6 @@ database 'technovation-app_development' do
     anonymize 'candidate_id', 'report_id'
   end
 
-  table 'certificates' do
-    primary_key 'id' # composite key is also supported
-    anonymize('account_id') { |_| nil }
-    anonymize('file') { |_| nil }
-  end
-
   table 'consent_waivers' do
     primary_key 'id' # composite key is also supported
     anonymize 'electronic_signature'
@@ -67,7 +61,16 @@ database 'technovation-app_development' do
 
   table 'team_member_invites' do
     primary_key 'id' # composite key is also supported
-    anonymize('email') { |f| "inviter-#{f.ar_record.id}@oracle.com" }
+    anonymize('invitee_email') { |f| "invitee-#{f.ar_record.id}@oracle.com" }
+  end
+
+  table 'signup_attempts' do
+    primary_key 'id' # composite key is also supported
+    anonymize 'activation_token',
+      'signup_token',
+      'pending_token',
+      'admin_permission_token'
+    anonymize('email') { |f| "attempt-#{f.ar_record.id}@oracle.com" }
   end
 
   table 'teams' do
