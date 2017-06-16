@@ -70,36 +70,4 @@ RSpec.describe Account do
        "US_CA,senior"]
     )
   end
-
-  it "geocodes when address info changes" do
-    a = FactoryGirl.create(:account) # Chicago by default
-
-    # Sanity
-    expect(a.latitude).to eq(41.50196838)
-    expect(a.longitude).to eq(-87.64051818)
-
-    a.city = "Los Angeles"
-    a.state_province = "CA"
-    a.valid?
-
-    expect(a.latitude).to eq(34.052363)
-    expect(a.longitude).to eq(-118.256551)
-  end
-
-  it "reverse geocodes when coords change" do
-    a = FactoryGirl.create(:account, city: "Los Angeles", state_province: "CA")
-
-    # Sanity
-    expect(a.city).to eq("Los Angeles")
-    expect(a.state_province).to eq("CA")
-    expect(a.latitude).to eq(34.052363)
-    expect(a.longitude).to eq(-118.256551)
-
-    a.latitude = 41.50196838
-    a.longitude = -87.64051818
-    a.valid?
-
-    expect(a.city).to eq("Chicago")
-    expect(a.state_province).to eq("IL")
-  end
 end

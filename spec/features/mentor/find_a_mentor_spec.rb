@@ -1,17 +1,21 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  let!(:find_mentor) { FactoryGirl.create(:mentor, first_name: "Findme") } # City is Chicago
+  let!(:find_mentor) { FactoryGirl.create(:mentor, :geocoded, first_name: "Findme") } # City is Chicago
 
   before do
-    mentor = FactoryGirl.create(:mentor) # City is Chicago
+    mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "browse nearby mentors" do
-    FactoryGirl.create(:mentor, first_name: "Faraway",
-                                city: "Los Angeles",
-                                state_province: "CA")
+    FactoryGirl.create(
+      :mentor,
+      :geocoded,
+      first_name: "Faraway",
+      city: "Los Angeles",
+      state_province: "CA"
+    )
 
     click_link "Connect with mentors"
 

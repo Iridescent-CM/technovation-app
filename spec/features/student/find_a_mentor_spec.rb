@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Students invite mentors to join their team" do
-  let(:student) { FactoryGirl.create(:student, :on_team) }
-  let!(:mentor) { FactoryGirl.create(:mentor) }
+  let(:student) { FactoryGirl.create(:student, :geocoded, :on_team) }
+  let!(:mentor) { FactoryGirl.create(:mentor, :geocoded) }
 
   before do
     sign_in(student)

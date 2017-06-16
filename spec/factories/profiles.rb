@@ -17,6 +17,12 @@ FactoryGirl.define do
       password nil
     end
 
+    trait :geocoded do
+      after(:create) do |s, _|
+        AccountGeocoding.perform(s.account).with_save
+      end
+    end
+
     before(:create) do |s, e|
       if s.parental_consent.nil?
         s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
@@ -68,6 +74,12 @@ FactoryGirl.define do
       country "US"
       email nil
       password nil
+    end
+
+    trait :geocoded do
+      after(:create) do |m, _|
+        AccountGeocoding.perform(m.account).with_save
+      end
     end
 
     before(:create) do |m, e|
@@ -134,6 +146,12 @@ FactoryGirl.define do
       first_name nil
     end
 
+    trait :geocoded do
+      after(:create) do |r, _|
+        AccountGeocoding.perform(r.account).with_save
+      end
+    end
+
     before(:create) do |r, e|
       attrs = FactoryGirl.attributes_for(:account)
 
@@ -178,6 +196,12 @@ FactoryGirl.define do
       first_name nil
       full_access false
       virtual true
+    end
+
+    trait :geocoded do
+      after(:create) do |j, _|
+        AccountGeocoding.perform(j.account).with_save
+      end
     end
 
     before(:create) do |j, e|

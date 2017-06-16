@@ -5,33 +5,16 @@ class Account < ActiveRecord::Base
 
   after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
 
-  after_validation :geocode, if: -> (a) {
-    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
-  }
-
-  after_validation :reverse_geocode, if: ->(a) {
-    a.saved_change_to_latitude? or a.saved_change_to_longitude?
-  }
-
-  after_validation -> {
-    self.location_confirmed = (not city.blank? and not country.blank?)
-  }
-
-  geocoded_by :address_details
-  reverse_geocoded_by :latitude, :longitude do |account, results|
-    if geo = results.first
-      account.city = geo.city
-      account.state_province = geo.state_code
-      country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
-      account.country = country.alpha2
-    end
-  end
-
   index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
+
+  geocoded_by :address_details
+  reverse_geocoded_by :latitude, :longitude do |account, results|
+    Casting.delegating(account => ReverseGeocoder) do
+      account.update_geocoding_from_results(results)
+    end
+  end
 
   attr_accessor :existing_password, :skip_existing_password, :confirm_sentence
 

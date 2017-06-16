@@ -22,25 +22,33 @@ class ProfileUpdating
   end
 
   def perform_callbacks
-    perform_email_changes_callbacks
+    perform_email_changes_updates
+    perform_geolocation_changes_updates
 
     case scope.to_sym
     when :student
-      perform_student_callbacks
+      perform_student_updates
     end
+
+    profile.save
+    profile.account.save
   end
 
   private
-  def perform_student_callbacks
+  def perform_student_updates
     Casting.delegating(profile => TeamDivisionChooser) do
       profile.reconsider_team_division
     end
   end
 
-  def perform_email_changes_callbacks
+  def perform_email_changes_updates
     Casting.delegating(profile.account => EmailListUpdater) do
       profile.account.update_email_list_profile(scope)
     end
+  end
+
+  def perform_geolocation_changes_updates
+    AccountGeocoding.perform(profile.account)
   end
 
   module EmailListUpdater
@@ -56,7 +64,7 @@ class ProfileUpdating
 
   module TeamDivisionChooser
     def reconsider_team_division
-      if team.present? and saved_change_to_date_of_birth?
+      if team.present? and account.saved_change_to_date_of_birth?
         team.update_attributes({
           division_id: Division.for(team).id,
         })
