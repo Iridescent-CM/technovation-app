@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassadors registration" do
   before do
-    token = FactoryGirl.create(:signup_attempt, email: "regional@ambassador.com").signup_token
-    page.driver.browser.set_cookie("signup_token=#{token}")
+    set_signup_token("regional@ambassador.com")
     ActionMailer::Base.deliveries.clear
 
     visit signup_path
@@ -56,7 +55,17 @@ RSpec.feature "Regional Ambassadors registration" do
     select "United States", from: "Country"
     click_button "Save"
 
-    expect(RegionalAmbassadorProfile.last.address_details).to eq("Chicago, IL, United States")
+    expect(
+      RegionalAmbassadorProfile.last.address_details
+    ).to eq("Chicago, IL, United States")
+
     expect(RegionalAmbassadorProfile.last.account).to be_location_confirmed
+  end
+
+  scenario "signup attempt attached" do
+    attempt = SignupAttempt.find_by(
+      account_id: RegionalAmbassadorProfile.last.account_id
+    )
+    expect(attempt).to be_present
   end
 end

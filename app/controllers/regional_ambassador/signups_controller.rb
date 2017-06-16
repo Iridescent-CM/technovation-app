@@ -19,14 +19,7 @@ module RegionalAmbassador
       )
 
       if @regional_ambassador_profile.save
-        AdminMailer.pending_regional_ambassador(@regional_ambassador_profile.account).deliver_later
-
-        cookies.delete(:signup_token)
-
-        SignIn.(@regional_ambassador_profile.account,
-                self,
-                redirect_to: regional_ambassador_dashboard_path,
-                message: t("controllers.signups.create.success"))
+        ProfileCreating.execute(@regional_ambassador_profile, self)
       else
         render :new
       end

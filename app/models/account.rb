@@ -15,8 +15,6 @@ class Account < ActiveRecord::Base
     self.location_confirmed = (not city.blank? and not country.blank?)
   }
 
-  after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
-
   after_commit -> {
     UpdateProfileOnEmailListJob.perform_later(
       id, email_before_last_save, "#{type_name.upcase}_LIST_ID"

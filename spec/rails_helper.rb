@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.fail_fast = true
 
   config.include SigninHelper, type: :feature
+  config.include SignupHelper, type: :feature
   config.include ControllerSigninHelper, type: :controller
   config.include SelectDateHelper, type: :feature
   config.include JudgingHelper

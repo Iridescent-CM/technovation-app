@@ -15,12 +15,7 @@ module Judge
       @judge_profile = JudgeProfile.new(judge_profile_params)
 
       if @judge_profile.save
-        cookies.delete(:signup_token)
-
-        SignIn.(@judge_profile.account,
-                self,
-                redirect_to: judge_dashboard_path,
-                message: t("controllers.signups.create.success"))
+        ProfileCreating.execute(@judge_profile, self, :judge)
       else
         render :new
       end

@@ -17,12 +17,7 @@ module Mentor
       @mentor_profile = MentorProfile.new(mentor_profile_params)
 
       if @mentor_profile.save
-        cookies.delete(:signup_token)
-
-        SignIn.(@mentor_profile.account,
-                self,
-                redirect_to: mentor_dashboard_path,
-                message: t("controllers.signups.create.success"))
+        ProfileCreating.execute(@mentor_profile, self)
       else
         @expertises ||= Expertise.all
         render :new

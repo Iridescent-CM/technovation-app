@@ -14,20 +14,23 @@ module SignIn
                                           context.request.remote_ip,
                                           context.request.user_agent)
 
-    context.redirect_to signin_options[:redirect_to],
-                        success: signin_options[:message]
+    context.redirect_to(
+      (context.remove_cookie(:redirected_from) or
+        context.send(signin_options[:redirect_to])),
+      success: signin_options[:message]
+    )
   end
 
   private
   def self.after_signin_path(signin, context)
     last_profile_used = context.remove_cookie(:last_profile_used)
 
-    if last_profile_used and not signin.public_send("#{last_profile_used}_profile").present?
+    if last_profile_used and
+        not signin.public_send("#{last_profile_used}_profile").present?
       last_profile_used = nil
     end
 
-    context.remove_cookie(:redirected_from) or
-      (last_profile_used && context.public_send("#{last_profile_used}_dashboard_path")) or
-        context.public_send("#{signin.type_name}_dashboard_path")
+    (last_profile_used && "#{last_profile_used}_dashboard_path") or
+        "#{signin.type_name}_dashboard_path"
   end
 end

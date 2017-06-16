@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Register as a judge" do
   before do
-    token = FactoryGirl.create(:signup_attempt, email: "judge@judge.com").signup_token
-    page.driver.browser.set_cookie("signup_token=#{token}")
+    set_signup_token("judge@judge.com")
 
     visit judge_signup_path
 
@@ -38,5 +37,10 @@ RSpec.feature "Register as a judge" do
 
     expect(JudgeProfile.last.address_details).to eq("Chicago, IL, United States")
     expect(JudgeProfile.last.account).to be_location_confirmed
+  end
+
+  scenario "signup attempt attached" do
+    attempt = SignupAttempt.find_by(account_id: JudgeProfile.last.account_id)
+    expect(attempt).to be_present
   end
 end

@@ -31,12 +31,7 @@ module Student
       @student_profile = StudentProfile.new(student_profile_params)
 
       if @student_profile.save
-        cookies.delete(:signup_token)
-        TeamMemberInvite.match_registrant(@student_profile)
-        SignIn.(@student_profile.account,
-                self,
-                redirect_to: student_dashboard_path,
-                message: t("controllers.signups.create.success"))
+        ProfileCreating.execute(@student_profile, self)
       else
         render :new
       end
