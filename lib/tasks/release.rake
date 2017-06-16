@@ -22,6 +22,18 @@ task :release do
   new_minor = new_version.split('.')[1].to_i
   branch = "#{new_major}-#{new_minor}-stable"
 
+  File.open("./VERSION", "wb") do |f|
+    f.puts(new_version)
+  end
+
+  sh("git checkout master")
+  puts "-------------------------"
+  puts ""
+
+  sh "git commit VERSION -m 'Update VERSION to #{new_version}'"
+  puts "-------------------------"
+  puts ""
+
   sh("git checkout -b #{branch}") do |ok, _|
     unless ok
       sh("git checkout #{branch}")
@@ -56,10 +68,6 @@ task :release do
   puts ""
 
   sh "git push --all"
-
-  File.open("./VERSION", "wb") do |f|
-    f.puts(new_version)
-  end
 
   # prevent Rake from running the `updating_version_part` ARG as another task
   exit
