@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 ruby "~> 2.4"
 
 gem 'rails', '~> 5.1'
-gem 'puma', '~> 3.8'
-gem 'pg', '~> 0.20'
+gem 'puma', '~> 3.9'
+gem 'pg', '~> 0.21'
 
 gem 'pdf-forms', '~> 1.1'
 
 gem "paranoia", '~> 2.3'
-gem 'counter_culture', '~> 1.0'
+gem 'counter_culture', '~> 1.7'
 
 gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
@@ -16,7 +16,7 @@ gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
 gem 'sass-rails', "~> 5.0"
 
-gem 'clipboard-rails', "~> 1.6"
+gem 'clipboard-rails', "~> 1.7"
 
 gem 'elasticsearch-model', "~> 0.1"
 gem 'elasticsearch-rails', "~> 0.1"
@@ -25,14 +25,14 @@ gem 'elasticsearch-dsl', "~> 0.1"
 gem 'friendly_id', "~> 5.2"
 
 gem "autoprefixer-rails", "~> 6.7"
-gem 'nokogiri', "~> 1.7"
+gem 'nokogiri', "~> 1.8"
 
 gem 'rails-i18n', "~> 5.0"
 
 gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
 gem 'sidekiq', '~> 4.2'
-gem 'airbrake', '~> 6.0'
+gem 'airbrake', '~> 6.1'
 gem 'createsend', '~> 4.1'
 gem 'newrelic_rpm', '~> 3.18'
 
@@ -72,13 +72,13 @@ gem 'indefinite_article', "~> 0.2"
 
 gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
 
-gem 'browser', "~> 2.3"
+gem 'browser', "~> 2.4"
 gem "oink", "~> 0.10"
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
   gem 'pry-nav', "~> 0.2"
-  gem 'rspec-rails', "~> 3.5"
+  gem 'rspec-rails', "~> 3.6"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
 end
@@ -95,9 +95,9 @@ group :test do
   gem 'timecop', "~> 0.8"
   gem 'vcr', "~> 3.0"
   gem 'webmock', "~> 3.0"
-  gem 'sinatra', '~> 2.0.0.beta'
+  gem 'sinatra', '~> 2.0'
   gem 'capybara-webkit', "~> 1.14"
-  gem 'database_cleaner', "~> 1.5"
+  gem 'database_cleaner', "~> 1.6"
   gem 'rails-controller-testing', "~> 1.0"
 end
 
