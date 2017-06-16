@@ -109,7 +109,7 @@ class Account < ActiveRecord::Base
   end
 
   def self.find_with_token(token)
-    find_by(auth_token: token) || NoAuthFound.new
+    find_by(auth_token: token) || NullAuth.new
   end
 
   def self.find_judge_profile_id_by_email(email)
@@ -118,7 +118,7 @@ class Account < ActiveRecord::Base
 
   def self.find_profile_with_token(token, profile)
     "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
-      NoAuthFound.new
+      NullAuth.new
   end
 
   def profile_valid?
@@ -273,35 +273,8 @@ class Account < ActiveRecord::Base
   end
 
   def address_changed?
-    saved_change_to_city? or saved_change_to_state_province? or saved_change_to_country?
-  end
-
-  class NoAuthFound
-    def authenticated?; false; end
-    def admin?; false; end
-    def present?; false; end
-
-    def type_name; 'application'; end
-    def team; nil; end
-    def teams; []; end
-
-    def locale; I18n.default_locale; end
-
-    def admin_profile; NullProfile.new; end
-    def judge_profile; NullProfile.new; end
-    def mentor_profile; NullProfile.new; end
-    def regional_ambassador_profile; NullProfile.new; end
-    def student_profile; NullProfile.new; end
-
-    class NullProfile
-      def authenticated?; false; end
-      def present?; false; end
-    end
-  end
-
-  class NullConsentWaiver
-    def status; "none"; end
-    def present?; false; end
-    def destroy; end
+    saved_change_to_city? or
+      saved_change_to_state_province? or
+        saved_change_to_country?
   end
 end

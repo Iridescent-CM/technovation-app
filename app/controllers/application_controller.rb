@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
       ],
 
       season_registrations: :season
-    ).find_by(auth_token: cookies.fetch(:auth_token) { "" }) || Account::NoAuthFound.new
+    ).find_by(auth_token: cookies.fetch(:auth_token) { "" }) || NullAuth.new
   end
 
   def current_team
