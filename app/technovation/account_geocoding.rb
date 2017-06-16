@@ -26,6 +26,7 @@ class AccountGeocoding
 
   def with_save
     account.save
+    self
   end
 
   private
