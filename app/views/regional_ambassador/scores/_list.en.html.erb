@@ -23,11 +23,15 @@
           </td>
 
           <td>
-            <%= submission.submission_scores.send(params[:round]).complete.count %>
+            <%= submission.send(
+              "complete_#{params[:round]}_official_submission_scores_count"
+            ) %>
           </td>
 
           <td>
-            <%= submission.submission_scores.send(params[:round]).incomplete.count %>
+            <%= submission.send(
+              "pending_#{params[:round]}_official_submission_scores_count"
+            ) %>
           </td>
 
           <td>
