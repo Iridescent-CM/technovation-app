@@ -9,6 +9,43 @@ class Account < ActiveRecord::Base
         student_profile.team.reconsider_division_with_save
   }, if: :saved_change_to_date_of_birth?
 
+  after_validation :geocode, if: -> (a) {
+    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
+  }
+
+  after_validation :reverse_geocode, if: ->(a) {
+    a.saved_change_to_latitude? or a.saved_change_to_longitude?
+  }
+
+  after_validation -> {
+    self.location_confirmed = (not city.blank? and not country.blank?)
+  }
+
+  after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
+
+  after_commit -> {
+    UpdateProfileOnEmailListJob.perform_later(
+      id, email_before_last_save, "#{type_name.upcase}_LIST_ID"
+    )
+  }, on: :update, if: -> {
+    saved_change_to_first_name? or
+      saved_change_to_last_name? or
+        saved_change_to_email? or
+          address_changed?
+  }
+
+  geocoded_by :address_details
+  reverse_geocoded_by :latitude, :longitude do |account, results|
+    if geo = results.first
+      account.city = geo.city
+      account.state_province = geo.state_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      account.country = country.alpha2
+    end
+  end
+
   index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
@@ -58,32 +95,6 @@ class Account < ActiveRecord::Base
   has_secure_token :password_reset_token
   has_secure_password
 
-  after_validation :geocode, if: -> (a) {
-    a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
-  }
-
-  after_validation :reverse_geocode, if: ->(a) {
-    a.saved_change_to_latitude? or a.saved_change_to_longitude?
-  }
-
-  after_validation -> {
-    self.location_confirmed = (not city.blank? and not country.blank?)
-  }
-
-  after_commit -> { AttachSignupAttemptJob.perform_later(self) }, on: :create
-
-  # See after_validation above
-  after_commit -> {
-    UpdateProfileOnEmailListJob.perform_later(
-      id, email_before_last_save, "#{type_name.upcase}_LIST_ID"
-    )
-  }, on: :update, if: -> {
-    saved_change_to_first_name? or
-      saved_change_to_last_name? or
-        saved_change_to_email? or
-          address_changed?
-  }
-
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
 
@@ -95,18 +106,6 @@ class Account < ActiveRecord::Base
   validates :password, length: { minimum: 8, on: :update, if: :changes_require_password? }
 
   validates :date_of_birth, :first_name, :last_name, presence: true
-
-  geocoded_by :address_details
-  reverse_geocoded_by :latitude, :longitude do |account, results|
-    if geo = results.first
-      account.city = geo.city
-      account.state_province = geo.state_code
-      country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
-      account.country = country.alpha2
-    end
-  end
 
   def self.find_with_token(token)
     find_by(auth_token: token) || NullAuth.new
