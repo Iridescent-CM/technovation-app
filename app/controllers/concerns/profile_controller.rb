@@ -3,6 +3,7 @@ module ProfileController
 
   included do
     helper_method :account, :edit_profile_path
+    # TODO: account is actually profile
 
     before_action -> {
       @uploader = ImageUploader.new
