@@ -101,6 +101,7 @@ GEM
       carrierwave
       fog
       uuidtools
+    casting (0.7.2)
     chartkick (2.2.4)
     checkr-official (1.2.0)
       json (>= 1.8.1)
@@ -577,6 +578,7 @@ DEPENDENCIES
   carmen (~> 1.0)
   carrierwave (~> 1.1)
   carrierwave_direct (~> 0.0)
+  casting (~> 0.7)
   chartkick (~> 2.2)
   checkr-official (~> 1.2)
   chosen-rails (~> 1.5)

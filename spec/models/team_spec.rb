@@ -105,7 +105,10 @@ RSpec.describe Team do
   end
 
   it "registers to past seasons" do
-    team = FactoryGirl.create(:team, created_at: Time.new(2015, 8, 1, 0, 0, 0, "-08:00"))
+    team = FactoryGirl.create(
+      :team,
+      created_at: Time.new(2015, 8, 1, 0, 0, 0, "-08:00")
+    )
     expect(team.seasons.map(&:year)).to eq([2016])
   end
 
@@ -124,7 +127,12 @@ RSpec.describe Team do
     end
 
     it "won't blow up without country" do
-      team = FactoryGirl.create(:team, city: nil, state_province: nil, country: nil)
+      team = FactoryGirl.create(
+        :team,
+        city: nil,
+        state_province: nil,
+        country: nil
+      )
       expect(team.region_division_name).to eq(",senior")
     end
 
@@ -132,9 +140,15 @@ RSpec.describe Team do
       team = FactoryGirl.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
 
-      m = team.members.sample
-      m.date_of_birth = Date.today - 10.years
-      m.save
+      member = team.members.sample
+      profile_updating = ProfileUpdating.new(member)
+      profile_updating.update({
+        account_attributes: {
+          id: member.account_id,
+          date_of_birth: Date.today - 10.years,
+        },
+      })
+
       expect(team.reload.region_division_name).to eq("US_IL,junior")
     end
 

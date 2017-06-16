@@ -31,6 +31,9 @@ module Admin
       @account = @profile.account
 
       if @profile.update_attributes(profile_params)
+        profile_updating = ProfileUpdating.new(@profile)
+        profile_updating.perform_callbacks
+
         if params[:regional_ambassador_profile]
           redirect_to admin_regional_ambassador_path(@account),
             success: "Account information saved"

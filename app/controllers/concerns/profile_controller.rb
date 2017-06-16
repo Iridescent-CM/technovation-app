@@ -24,12 +24,14 @@ module ProfileController
 
   def update
     if account.update_attributes(account_params)
-      redirect_to after_update_path, success: t('controllers.accounts.update.success')
+      profile_updating = ProfileUpdating.new(account)
+      profile_updating.perform_callbacks
+      redirect_to after_update_path,
+        success: t('controllers.accounts.update.success')
     else
       render :edit
     end
   end
-
 
   private
   def account_params

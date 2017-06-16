@@ -1,4 +1,7 @@
 class StudentProfile < ActiveRecord::Base
+  include Casting::Client
+  delegate_missing_methods
+
   scope :full_access, -> {
     joins(:account, :parental_consent)
     .where("accounts.location_confirmed = ?", true)
@@ -36,10 +39,15 @@ class StudentProfile < ActiveRecord::Base
     prefix: true
 
   def method_missing(method_name, *args)
+    # TODO: stop using this strategy
     begin
-      account.public_send(method_name, *args)
+      super
     rescue
-      raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+      begin
+        account.public_send(method_name, *args)
+      rescue
+        raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+      end
     end
   end
 

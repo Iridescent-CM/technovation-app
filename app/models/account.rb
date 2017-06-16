@@ -3,12 +3,6 @@ class Account < ActiveRecord::Base
 
   after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
 
-  after_save -> {
-    student_profile &&
-      student_profile.team.present? &&
-        student_profile.team.reconsider_division_with_save
-  }, if: :saved_change_to_date_of_birth?
-
   after_validation :geocode, if: -> (a) {
     a.latitude.blank? or (not a.city_was.blank? and a.city_changed?)
   }

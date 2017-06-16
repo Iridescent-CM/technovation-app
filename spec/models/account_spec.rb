@@ -75,36 +75,22 @@ RSpec.describe Account do
     expect(account.errors.keys).to include(:email)
   end
 
-  it "tells teams to reconsider division when students on teams chaneg their birthdate" do
-    student = FactoryGirl.create(
-      :student,
-      email: "student@testing.com",
-      date_of_birth: 13.years.ago
-    )
-    team = FactoryGirl.create(:team, members_count: 0)
-    team.add_student(student)
-
-    expect(team.division_name).to eq("junior")
-
-    student.account.reload
-
-    student.update_attributes({
-      account_attributes: {
-        id: student.account_id,
-        date_of_birth: 15.years.ago,
-      },
-    })
-
-    expect(team.reload.division_name).to eq("senior")
-  end
-
   it "re-cache team_region_division_names as account gets added to new teams" do
     account = FactoryGirl.create(:mentor).account
     expect(account.team_region_division_names).to be_empty
+
     account.teams << FactoryGirl.create(:team)
     expect(account.team_region_division_names).to match_array(["US_IL,senior"])
-    account.teams << FactoryGirl.create(:team, city: "Los Angeles", state_province: "CA")
-    expect(account.team_region_division_names).to match_array(["US_IL,senior","US_CA,senior"])
+
+    account.teams << FactoryGirl.create(
+      :team,
+      city: "Los Angeles",
+      state_province: "CA"
+    )
+    expect(account.team_region_division_names).to match_array(
+      ["US_IL,senior",
+       "US_CA,senior"]
+    )
   end
 
   it "geocodes when address info changes" do

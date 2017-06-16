@@ -1,4 +1,8 @@
 FactoryGirl.define do
+  factory :admin_profile, aliases: [:admin] do
+    account
+  end
+
   factory :student_profile, aliases: [:student, :student_account] do
     account
 

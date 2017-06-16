@@ -4,6 +4,7 @@ ruby "~> 2.4"
 gem 'rails', '~> 5.1'
 gem 'puma', '~> 3.9'
 gem 'pg', '~> 0.21'
+gem 'casting', '~> 0.7'
 
 gem 'pdf-forms', '~> 1.1'
 
