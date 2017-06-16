@@ -2,14 +2,10 @@ require "rails_helper"
 
 RSpec.describe Student::SignupsController do
   before do
-    controller.set_cookie(
-      :signup_token,
-      SignupAttempt.create!(
-        email: "invited@thanks.com",
-        password: "secret1234",
-        status: SignupAttempt.statuses[:active]
-      ).signup_token
-    )
+    set_signup_token({
+      email: "invited@thanks.com",
+      password: "secret1234",
+    })
   end
 
   describe "POST #create for invited students" do

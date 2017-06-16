@@ -49,7 +49,10 @@ module Mentor
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
+        attempt = SignupAttempt.find_by!(
+          signup_token: cookies.fetch(:signup_token)
+        )
+
         tapped[:account_attributes][:email] = attempt.email
 
         unless attempt.temporary_password?

@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.include SigninHelper, type: :feature
   config.include SignupHelper, type: :feature
   config.include ControllerSigninHelper, type: :controller
+  config.include ControllerSignupHelper, type: :controller
   config.include SelectDateHelper, type: :feature
   config.include JudgingHelper
   config.include WebMock::API
