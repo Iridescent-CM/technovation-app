@@ -1,5 +1,7 @@
 class Account < ActiveRecord::Base
   include Elasticsearch::Model
+  include Casting::Client
+  delegate_missing_methods
 
   after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
 
@@ -13,17 +15,6 @@ class Account < ActiveRecord::Base
 
   after_validation -> {
     self.location_confirmed = (not city.blank? and not country.blank?)
-  }
-
-  after_commit -> {
-    UpdateProfileOnEmailListJob.perform_later(
-      id, email_before_last_save, "#{type_name.upcase}_LIST_ID"
-    )
-  }, on: :update, if: -> {
-    saved_change_to_first_name? or
-      saved_change_to_last_name? or
-        saved_change_to_email? or
-          address_changed?
   }
 
   geocoded_by :address_details

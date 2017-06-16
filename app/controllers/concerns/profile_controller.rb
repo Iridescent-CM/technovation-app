@@ -23,9 +23,7 @@ module ProfileController
   end
 
   def update
-    if account.update_attributes(account_params)
-      profile_updating = ProfileUpdating.new(account)
-      profile_updating.perform_callbacks
+    if ProfileUpdating.execute(account, account_params)
       redirect_to after_update_path,
         success: t('controllers.accounts.update.success')
     else
@@ -35,6 +33,7 @@ module ProfileController
 
   private
   def account_params
+    # TODO: account_params is actually profile_params
     params.require(account_param_root).permit(
       profile_params,
       account_attributes: [

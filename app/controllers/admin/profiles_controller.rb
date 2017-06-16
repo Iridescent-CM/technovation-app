@@ -30,10 +30,7 @@ module Admin
       @profile = type.camelize.constantize.find(params[:id])
       @account = @profile.account
 
-      if @profile.update_attributes(profile_params)
-        profile_updating = ProfileUpdating.new(@profile)
-        profile_updating.perform_callbacks
-
+      if ProfileUpdating.execute(@profile, profile_params)
         if params[:regional_ambassador_profile]
           redirect_to admin_regional_ambassador_path(@account),
             success: "Account information saved"
