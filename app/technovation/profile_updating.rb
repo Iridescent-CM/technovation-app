@@ -23,7 +23,7 @@ class ProfileUpdating
 
   def perform_callbacks
     perform_email_changes_updates
-    perform_geolocation_changes_updates
+    AccountGeocoding.perform(profile.account)
 
     case scope.to_sym
     when :student
@@ -47,18 +47,25 @@ class ProfileUpdating
     end
   end
 
-  def perform_geolocation_changes_updates
-    AccountGeocoding.perform(profile.account)
-  end
-
   module EmailListUpdater
     def update_email_list_profile(scope)
-      if saved_change_to_first_name? or saved_change_to_last_name? or
-          saved_change_to_email? or address_changed?
+      if email_list_changes_made?
         UpdateProfileOnEmailListJob.perform_later(
           id, email_before_last_save, "#{scope.upcase}_LIST_ID"
         )
       end
+    end
+
+    private
+    def email_list_changes_made?
+      saved_change_to_city? or
+        saved_change_to_state_province? or
+          saved_change_to_country? or
+
+      saved_change_to_first_name? or
+        saved_change_to_last_name? or
+
+      saved_change_to_email?
     end
   end
 

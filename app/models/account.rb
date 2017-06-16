@@ -236,10 +236,4 @@ class Account < ActiveRecord::Base
     !!!skip_existing_password &&
       (persisted? && (email_changed? || password_digest_changed?))
   end
-
-  def address_changed?
-    saved_change_to_city? or
-      saved_change_to_state_province? or
-        saved_change_to_country?
-  end
 end
