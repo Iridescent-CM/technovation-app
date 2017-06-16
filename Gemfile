@@ -89,6 +89,7 @@ group :development do
   gem 'rack-mini-profiler', "~> 0.10"
   gem 'memory_profiler', "~> 0.9"
   gem 'listen', '~> 3.1'
+  gem 'churn', require: false
 end
 
 group :test do
