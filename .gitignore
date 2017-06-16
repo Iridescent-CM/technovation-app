@@ -21,3 +21,4 @@ public/uploads
 .heroku-configs
 *.backup
 .vscode/**/*
+churn*
