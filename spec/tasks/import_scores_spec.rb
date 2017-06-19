@@ -22,7 +22,7 @@ RSpec.describe "Tasks: rails import_scores" do
     ENV["CSV_JUDGE_EMAIL"] = "my@judge.com"
     ENV["CSV_JUDGING_ROUND"] = "semifinals"
     ENV["CSV_LOGGING"] = "none"
-    Rake::Task['import_scores'].invoke
+    Rake::Task['import_scores'].execute
 
     score = submission.submission_scores.semifinals.complete.first
     expect(score.sdg_alignment).to eq(4)
