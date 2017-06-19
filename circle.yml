@@ -41,5 +41,6 @@ deployment:
 
   prod:
     branch: production
-    heroku:
-      appname: technovation
+    commands:
+      - bundle exec rails release:tag
+      - git push git@heroku.com:technovation.git $CIRCLE_SHA1:master
