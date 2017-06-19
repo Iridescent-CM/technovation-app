@@ -48,7 +48,7 @@ class VersionReleasing
   end
 
   def run_command(cmd, options = {})
-    FileUtils.new.sh(cmd) do |ok, _|
+    FileUtils.sh(cmd) do |ok, _|
       if ok
         puts "-------------------------"
         puts ""
