@@ -1,22 +1,23 @@
 class Account < ActiveRecord::Base
-  include Elasticsearch::Model
   include Casting::Client
   delegate_missing_methods
 
-  after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
+  include Elasticsearch::Model
 
   index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
   document_type 'account'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
+  after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
+
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
-    Casting.delegating(account => ReverseGeocoder) do
-      account.update_geocoding_from_results(results)
-    end
+    account.update_address_details_from_reverse_geocoding(results)
   end
 
-  attr_accessor :existing_password, :skip_existing_password, :confirm_sentence
+  attr_accessor :existing_password,
+    :skip_existing_password,
+    :confirm_sentence
 
   has_one :admin_profile, dependent: :destroy
   has_one :student_profile, dependent: :destroy
@@ -29,10 +30,12 @@ class Account < ActiveRecord::Base
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
   has_many :certificates
+
   has_many :void_honor_code_agreements,
     -> { void },
     class_name: "HonorCodeAgreement",
     dependent: :destroy
+
   has_many :void_consent_waivers,
     -> { void },
     class_name: "ConsentWaiver",
@@ -41,11 +44,27 @@ class Account < ActiveRecord::Base
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
-  enum referred_by: %w{Friend Colleague Article Internet Social\ media
-                       Print Web\ search Teacher Parent/family Company\ email
-                       Made\ With\ Code Other}
+  enum referred_by: %w{
+    Friend
+    Colleague
+    Article
+    Internet
+    Social\ media
+    Print
+    Web\ search
+    Teacher
+    Parent/family
+    Company\ email
+    Made\ With\ Code
+    Other
+  }
 
-  enum gender: %w{Female Male Non-binary Prefer\ not\ to\ say}
+  enum gender: %w{
+    Female
+    Male
+    Non-binary
+    Prefer\ not\ to\ say
+  }
 
   scope :current, -> {
     joins(season_registrations: :season)
@@ -64,12 +83,30 @@ class Account < ActiveRecord::Base
   has_many :season_registrations, -> { active }, as: :registerable
   has_many :seasons, through: :season_registrations
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
+  validates :email,
+    presence: true,
+    uniqueness: { case_sensitive: false },
+    email: true
+
   validates :profile_image, verify_cached_file: true
 
-  validates :existing_password, valid_password: true, if: :changes_require_password?
-  validates :password, length: { minimum: 8, on: :create, if: :temporary_password? }
-  validates :password, length: { minimum: 8, on: :update, if: :changes_require_password? }
+  validates :existing_password,
+    valid_password: true,
+    if: :changes_require_password?
+
+  validates :password,
+    length: {
+      minimum: 8,
+      on: :create,
+      if: :temporary_password?
+    }
+
+  validates :password,
+    length: {
+      minimum: 8,
+      on: :update,
+      if: :changes_require_password?
+    }
 
   validates :date_of_birth, :first_name, :last_name, presence: true
 
@@ -82,8 +119,10 @@ class Account < ActiveRecord::Base
   end
 
   def self.find_profile_with_token(token, profile)
-    "#{String(profile).camelize}Account".constantize.find_by(auth_token: token) or
-      NullAuth.new
+    "#{String(profile).camelize}Account".constantize
+      .find_by(
+        auth_token: token
+      ) or NullAuth.new
   end
 
   def profile_valid?
@@ -107,7 +146,11 @@ class Account < ActiveRecord::Base
   end
 
   def address_details
-    [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
+    [
+      city,
+      state_province,
+      Country[country].try(:name)
+    ].reject(&:blank?).join(', ')
   end
 
   def oldest_birth_year
@@ -171,7 +214,9 @@ class Account < ActiveRecord::Base
 
   def temporary_password?
     new_record? and
-      SignupAttempt.temporary_password.where("lower(email) = ?", email.downcase).any?
+      SignupAttempt.temporary_password.where(
+        "lower(email) = ?", email.downcase
+      ).exists?
   end
 
   def type_name(module_name = nil)
@@ -218,16 +263,26 @@ class Account < ActiveRecord::Base
     elsif mentor_profile
       mentor_profile.teams
     else
-      t = Struct.new(:current)
-      def t.current; Team.none; end
-      t
+      NullTeams.new
     end
   end
 
   def team_region_division_names
     team_keys = teams.current.map(&:cache_key).join('/')
+
     Rails.cache.fetch("#{team_keys}/team_region_division_names") do
-      teams.current.map {|t| t.region_division_name }.uniq
+      teams.current.map(&:region_division_name).uniq
+    end
+  end
+
+  def update_address_details_from_reverse_geocoding(results)
+    if geo = results.first
+      self.city = geo.city
+      self.state_province = geo.state_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      self.country = country.alpha2
     end
   end
 
