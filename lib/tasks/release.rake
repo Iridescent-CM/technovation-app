@@ -47,6 +47,7 @@ class VersionReleasing
 
   def initialize(part = "patch")
     @updating_version_part = part || "patch"
+    @current_version = File.read("./VERSION_PENDING")
   end
 
   def run_command(cmd, options = {})
@@ -72,11 +73,11 @@ class VersionReleasing
 
   def promote_pending_version
     FileUtils.cp("./VERSION_PENDING", "./VERSION")
-    run_command("git commit VERSION -m 'Release VERSION at #{current_version} [skip ci]'")
+    run_command("git commit VERSION -m 'Release VERSION at #{@current_version} [skip ci]'")
   end
 
   def tag_promoted_version
-    run_command("git tag #{current_version}")
+    run_command("git tag #{@current_version}")
   end
 
   def commit_pending_version
@@ -84,26 +85,20 @@ class VersionReleasing
       f.puts(new_version)
     end
 
-    sh "git commit VERSION_PENDING -m 'Update VERSION_PENDING to #{new_version}'"
-    puts "-------------------------"
-    puts ""
+    run_command("git commit VERSION_PENDING -m 'Update VERSION_PENDING to #{new_version}'")
   end
 
   private
-  def current_version
-    @current_version ||= File.read("./VERSION_PENDING")
-  end
-
   def current_major
-    @current_major ||= current_version.split('.')[0].to_i
+    @current_major ||= @current_version.split('.')[0].to_i
   end
 
   def current_minor
-    @current_minor ||= current_version.split('.')[1].to_i
+    @current_minor ||= @current_version.split('.')[1].to_i
   end
 
   def current_patch
-    @current_patch ||= current_version.split('.')[2].to_i
+    @current_patch ||= @current_version.split('.')[2].to_i
   end
 
   def new_version
