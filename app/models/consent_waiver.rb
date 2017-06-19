@@ -29,4 +29,13 @@ class ConsentWaiver < ActiveRecord::Base
   def status
     "signed"
   end
+
+  def void!
+    update_attributes(voided_at: Time.current)
+  end
+
+  def voided?
+    !!voided_at
+  end
+  alias void? voided?
 end
