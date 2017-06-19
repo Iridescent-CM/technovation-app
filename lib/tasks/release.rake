@@ -73,7 +73,7 @@ namespace :release do
     version = File.read("./VERSION_PENDING")
     FileUtils.cp("./VERSION_PENDING", "./VERSION")
 
-    sh "git commit VERSION -m 'Update VERSION to #{new_version}'"
+    sh "git commit VERSION -m 'Update VERSION to #{version}'"
     puts "-------------------------"
     puts ""
 
