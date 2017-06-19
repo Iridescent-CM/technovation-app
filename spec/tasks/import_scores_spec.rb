@@ -3,6 +3,8 @@ require 'rake'
 Rails.application.load_tasks
 
 RSpec.describe "Tasks: rails import_scores" do
+  before { SubmissionScore.destroy_all }
+
   it "imports QF scores from the given csv to ScoreSubmission" do
     judge = FactoryGirl.create(:judge, email: "my@judge.com")
     team = FactoryGirl.create(:team, name: "world")
