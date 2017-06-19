@@ -1,6 +1,12 @@
+require "fileutils"
+
 desc "Perform a release"
 task :release do
-  current_version = File.read("./VERSION")
+  sh("git checkout master")
+  puts "-------------------------"
+  puts ""
+
+  current_version = File.read("./VERSION_PENDING")
   updating_version_part = ARGV[1].dup || "patch"
 
   current_major = current_version.split('.')[0].to_i
@@ -22,15 +28,11 @@ task :release do
   new_minor = new_version.split('.')[1].to_i
   branch = "#{new_major}-#{new_minor}-stable"
 
-  File.open("./VERSION", "wb") do |f|
+  File.open("./VERSION_PENDING", "wb") do |f|
     f.puts(new_version)
   end
 
-  sh("git checkout master")
-  puts "-------------------------"
-  puts ""
-
-  sh "git commit VERSION -m 'Update VERSION to #{new_version}'"
+  sh "git commit VERSION_PENDING -m 'Update VERSION_PENDING to #{new_version}'"
   puts "-------------------------"
   puts ""
 
@@ -55,14 +57,6 @@ task :release do
   puts "-------------------------"
   puts ""
 
-  sh "git tag #{new_version}"
-  puts "-------------------------"
-  puts ""
-
-  sh "git push --tags"
-  puts "-------------------------"
-  puts ""
-
   sh "git checkout master"
   puts "-------------------------"
   puts ""
@@ -71,4 +65,24 @@ task :release do
 
   # prevent Rake from running the `updating_version_part` ARG as another task
   exit
+end
+
+namespace :release do
+  desc "Tag the release (auto from passing CI)"
+  task :tag do
+    version = File.read("./VERSION_PENDING")
+    FileUtils.cp("./VERSION_PENDING", "./VERSION")
+
+    sh "git commit VERSION -m 'Update VERSION to #{new_version}'"
+    puts "-------------------------"
+    puts ""
+
+    sh "git tag #{version}"
+    puts "-------------------------"
+    puts ""
+
+    sh "git push --tags"
+    puts "-------------------------"
+    puts ""
+  end
 end
