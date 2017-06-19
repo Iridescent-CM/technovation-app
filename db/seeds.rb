@@ -17,8 +17,8 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
-                                      season_ids: [Season.current.id],
                                     })).valid?
+  SeasonRegistration.register(student.account)
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="
@@ -60,12 +60,13 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
-                                      season_ids: [Season.find_or_create_by(year: past).id],
                                     })).valid?
+  season = Season.find_or_create_by(year: past)
+  SeasonRegistration.register(student.account, season)
   puts ""
   puts "============================================================="
   puts ""
-  puts "Created #{Season.current.year - 1} Student: #{student.email} with password #{student.account.password}"
+  puts "Created #{past} Student: #{student.email} with password #{student.account.password}"
   puts ""
   puts "============================================================="
   puts ""
@@ -86,13 +87,14 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
-                                      season_ids: [Season.find_or_create_by(year: distant_past).id],
                                     })).valid?
+  season = Season.find_or_create_by(year: distant_past)
+  SeasonRegistration.register(student.account, season)
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="
   puts ""
-  puts "Created #{Season.current.year - 2} Student: #{student.email} with password #{student.account.password}"
+  puts "Created #{distant_past} Student: #{student.email} with password #{student.account.password}"
   puts ""
   puts "============================================================="
   puts ""
@@ -109,7 +111,6 @@ if (mentor = MentorProfile.create(
       state_province: "CO",
       country: "US",
       location_confirmed: true,
-      season_ids: [Season.current.id],
 
       background_check_attributes: {
         candidate_id: "SEEDED!",
@@ -121,6 +122,7 @@ if (mentor = MentorProfile.create(
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
   )).valid?
+  SeasonRegistration.register(mentor.account)
   puts "Created Mentor: #{mentor.email} with password #{mentor.account.password}"
   puts ""
   puts "============================================================="
@@ -132,8 +134,8 @@ end
 if mentor
   if (team = Team.create(name: "Fun Times Team",
                          description: "We are fun times havers",
-                         season_ids: [Season.current.id],
                          division: Division.none_assigned_yet)).valid?
+    SeasonRegistration.register(team)
     team.add_mentor(mentor)
     puts "Added mentor to Team: #{team.name}"
     puts ""
@@ -160,13 +162,14 @@ if (mentor = MentorProfile.create(
       state_province: "IL",
       country: "US",
       location_confirmed: true,
-      season_ids: [Season.current.id],
     },
+
     school_company_name: "Boeing",
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
     bio: "Cool chicago mentor",
   )).valid?
+  SeasonRegistration.register(mentor.account)
   mentor.account.update_column(:profile_image, "foo/bar/baz.png")
   mentor.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.account.password}"
@@ -191,7 +194,6 @@ if (ra = RegionalAmbassadorProfile.create(
       state_province: "IL",
       country: "US",
       location_confirmed: true,
-      season_ids: [Season.current.id],
     },
     status: RegionalAmbassadorProfile.statuses[:approved],
     organization_company_name: "Iridescent",
@@ -199,6 +201,7 @@ if (ra = RegionalAmbassadorProfile.create(
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?
+  SeasonRegistration.register(ra.account)
   ra.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created approved RA: #{ra.email} with password #{ra.account.password}"
   puts ""
@@ -217,11 +220,11 @@ if (judge = JudgeProfile.create(
       state_province: "IL",
       country: "US",
       location_confirmed: true,
-      season_ids: [Season.current.id],
     },
     company_name: "Boeing",
     job_title: "Aerospace Engineer",
   )).valid?
+  SeasonRegistration.register(judge.account)
   judge.account.update_column(:profile_image, "foo/bar/baz.png")
   judge.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
   puts "Created Judge: #{judge.email} with password #{judge.account.password}"
