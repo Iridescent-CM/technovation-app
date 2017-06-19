@@ -14,6 +14,10 @@ chdir APP_ROOT do
   # This script is a starting point to setup your application.
   # Add necessary setup steps to this file.
 
+  puts "Have you gotten an updated .env file from your teammates? [Yn]"
+  envfile = gets
+  abort("Ask for the .env file!") if (envfile.strip == "n") or not File.exists?(".env")
+
   puts '== Installing dependencies =='
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
@@ -27,8 +31,7 @@ chdir APP_ROOT do
   # end
 
   puts "\n== Preparing database =="
-  system! "rails db:drop db:create db:migrate"
-  system! "RAILS_ENV=test bin/rails db:drop db:create db:migrate"
+  system! "rails db:setup"
 
   puts "\n== Seeding Development =="
   system! "rails db:seed"

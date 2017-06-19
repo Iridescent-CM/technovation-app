@@ -23,7 +23,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   puts ""
   puts "============================================================="
   puts ""
-  puts "Created Student: #{student.email} with password #{student.account.password}"
+  puts "Created Student: #{student.email} with password #{student.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -66,7 +66,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   puts ""
   puts "============================================================="
   puts ""
-  puts "Created #{past} Student: #{student.email} with password #{student.account.password}"
+  puts "Created #{past} Student: #{student.email} with password #{student.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -94,7 +94,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
   puts ""
   puts "============================================================="
   puts ""
-  puts "Created #{distant_past} Student: #{student.email} with password #{student.account.password}"
+  puts "Created #{distant_past} Student: #{student.email} with password #{student.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -123,7 +123,7 @@ if (mentor = MentorProfile.create(
     expertise_ids: Expertise.pluck(:id)[0..1],
   )).valid?
   SeasonRegistration.register(mentor.account)
-  puts "Created Mentor: #{mentor.email} with password #{mentor.account.password}"
+  puts "Created Mentor: #{mentor.email} with password #{mentor.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -172,7 +172,7 @@ if (mentor = MentorProfile.create(
   SeasonRegistration.register(mentor.account)
   mentor.account.update_column(:profile_image, "foo/bar/baz.png")
   mentor.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
-  puts "Created Mentor: #{mentor.email} with password #{mentor.account.password}"
+  puts "Created Mentor: #{mentor.email} with password #{mentor.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -203,7 +203,7 @@ if (ra = RegionalAmbassadorProfile.create(
   )).valid?
   SeasonRegistration.register(ra.account)
   ra.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
-  puts "Created approved RA: #{ra.email} with password #{ra.account.password}"
+  puts "Created approved RA: #{ra.email} with password #{ra.email}"
   puts ""
   puts "============================================================="
   puts ""
@@ -227,7 +227,7 @@ if (judge = JudgeProfile.create(
   SeasonRegistration.register(judge.account)
   judge.account.update_column(:profile_image, "foo/bar/baz.png")
   judge.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
-  puts "Created Judge: #{judge.email} with password #{judge.account.password}"
+  puts "Created Judge: #{judge.email} with password #{judge.email}"
   puts ""
   puts "============================================================="
   puts ""
