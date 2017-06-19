@@ -85,4 +85,18 @@ namespace :release do
     puts "-------------------------"
     puts ""
   end
+
+  desc "Rollback a pending release"
+  task :rollback do
+    version = File.read("./VERSION")
+    version_pending = File.read("./VERSION_PENDING")
+
+    if version != version_pending
+      FileUtils.cp("./VERSION", "./VERSION_PENDING")
+    end
+
+    sh "git commit VERSION_PENDING -m 'Revert VERSION_PENDING to #{version}'"
+    puts "-------------------------"
+    puts ""
+  end
 end

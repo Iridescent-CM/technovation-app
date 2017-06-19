@@ -1,5 +1,7 @@
 dependencies:
     pre:
+      - git config --global user.email "ci@circleci.com"
+      - git config --global user.name "Circle CI"
       - sudo apt-get update; sudo apt-get install pdftk
 
 machine:
