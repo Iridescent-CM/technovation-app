@@ -1,6 +1,4 @@
 require "rails_helper"
-require "rake"
-Rails.application.load_tasks
 
 RSpec.describe "Resetting consents" do
   let!(:parental_consent) { FactoryGirl.create(:parental_consent) }

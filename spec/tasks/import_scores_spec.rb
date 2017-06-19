@@ -1,10 +1,6 @@
 require "rails_helper"
-require 'rake'
-Rails.application.load_tasks
 
 RSpec.describe "Tasks: rails import_scores" do
-  before { SubmissionScore.destroy_all }
-
   it "imports QF scores from the given csv to ScoreSubmission" do
     judge = FactoryGirl.create(:judge, email: "my@judge.com")
     team = FactoryGirl.create(:team, name: "world")
@@ -24,7 +20,7 @@ RSpec.describe "Tasks: rails import_scores" do
     ENV["CSV_JUDGE_EMAIL"] = "my@judge.com"
     ENV["CSV_JUDGING_ROUND"] = "semifinals"
     ENV["CSV_LOGGING"] = "none"
-    Rake::Task['import_scores'].execute
+    Rake::Task['import_scores'].invoke
 
     score = submission.submission_scores.semifinals.complete.first
     expect(score.sdg_alignment).to eq(4)
