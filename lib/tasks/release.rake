@@ -43,12 +43,14 @@ namespace :release do
 end
 
 class VersionReleasing
+  include FileUtils
+
   def initialize(part = "patch")
     @updating_version_part = part || "patch"
   end
 
   def run_command(cmd, options = {})
-    FileUtils.sh(cmd) do |ok, _|
+    sh(cmd) do |ok, _|
       if ok
         puts "-------------------------"
         puts ""
