@@ -5,49 +5,23 @@ task :release do
   releasing = VersionReleasing.new(ARGV[1])
 
   releasing.run_command("git checkout master")
-  releasing.commit_pending_version
+  releasing.promote_pending_version
+  releasing.tag_promoted_version
   releasing.align_major_branches
   releasing.run_command("git checkout master")
+  releasing.run_command("git push --tags")
   releasing.run_command("git push --all")
 
   # prevent Rake from running the `updating_version_part` ARG as another task
   exit
 end
 
-namespace :release do
-  desc "Tag the release (auto from passing CI)"
-  task :tag do
-    releasing = VersionReleasing.new
-
-    releasing.run_command("git checkout master")
-    releasing.promote_pending_version
-    releasing.align_major_branches
-    releasing.tag_promoted_version
-    releasing.run_command("git push --tags")
-    releasing.run_command("git push --all")
-  end
-
-  desc "Rollback a pending release"
-  task :rollback do
-    version = File.read("./VERSION")
-    version_pending = File.read("./VERSION_PENDING")
-
-    if version != version_pending
-      FileUtils.cp("./VERSION", "./VERSION_PENDING")
-    end
-
-    sh "git commit VERSION_PENDING -m 'Revert VERSION_PENDING to #{version} [skip ci]'"
-    puts "-------------------------"
-    puts ""
-  end
-end
-
 class VersionReleasing
   include FileUtils
 
-  def initialize(part = "patch")
+  def initialize(part)
     @updating_version_part = part || "patch"
-    @current_version = File.read("./VERSION_PENDING")
+    @current_version = File.read("./VERSION")
   end
 
   def run_command(cmd, options = {})
@@ -71,21 +45,16 @@ class VersionReleasing
     run_command("git merge #{stable_branch}")
   end
 
-  def promote_pending_version
-    FileUtils.cp("./VERSION_PENDING", "./VERSION")
-    run_command("git commit VERSION -m 'Release VERSION at #{@current_version} [skip ci]'")
-  end
-
   def tag_promoted_version
     run_command("git tag #{@current_version}")
   end
 
-  def commit_pending_version
-    File.open("./VERSION_PENDING", "wb") do |f|
+  def promote_pending_version
+    File.open("./VERSION", "wb") do |f|
       f.puts(new_version)
     end
 
-    run_command("git commit VERSION_PENDING -m 'Update VERSION_PENDING to #{new_version}'")
+    run_command("git commit VERSION -m 'Release VERSION at #{@current_version}'")
   end
 
   private
