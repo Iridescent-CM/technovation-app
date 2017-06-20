@@ -10,7 +10,7 @@ task :release do
   releasing.tag_promoted_version
 
   releasing.run_command(
-    "git checkout -b #{releasing.etable_branch}",
+    "git checkout -b #{releasing.stable_branch}",
     fallback: "git checkout #{releasing.stable_branch}"
   )
 
