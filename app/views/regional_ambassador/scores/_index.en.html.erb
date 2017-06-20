@@ -3,7 +3,7 @@
     Judging round:
 
     <%= select_tag :round,
-      options_for_select(SubmissionScore.rounds.keys, params[:round]),
+      options_for_select(SubmissionScore.rounds.keys - %w{finals}, params[:round]),
       data: { reload: true } %>
   </label>
 </div>
