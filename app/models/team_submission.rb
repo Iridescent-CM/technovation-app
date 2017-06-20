@@ -15,6 +15,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   after_destroy { IndexModelJob.perform_later("delete", "TeamSubmission", id) }
+  after_commit -> { SeasonRegistration.register(self) }, on: :create
 
   enum stated_goal: %w{
     Poverty
@@ -42,8 +43,6 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   attr_accessor :step
-
-  after_commit -> { SeasonRegistration.register(self) }, on: :create
 
   mount_uploader :source_code, FileProcessor
 
