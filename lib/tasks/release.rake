@@ -71,16 +71,16 @@ class VersionReleasing
   end
 
   def new_version
-    case @updating_version_part
-    when "patch"
-      "#{current_major}.#{current_minor}.#{current_patch + 1}"
-    when "minor"
-      "#{current_major}.#{current_minor + 1}.0"
-    when "major"
-      "#{current_major + 1}.0.0"
-    else
-      raise "Unrecognized version part: #{@updating_version_part}"
-    end
+    @new_version ||= case @updating_version_part
+                     when "patch"
+                       "#{current_major}.#{current_minor}.#{current_patch + 1}"
+                     when "minor"
+                       "#{current_major}.#{current_minor + 1}.0"
+                     when "major"
+                       "#{current_major + 1}.0.0"
+                     else
+                       raise "Unrecognized version part: #{@updating_version_part}"
+                     end
   end
 
   def new_major
