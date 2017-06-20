@@ -10,13 +10,13 @@ task :release do
   releasing.tag_promoted_version
 
   releasing.run_command(
-    "git checkout -b #{stable_branch}",
-    fallback: "git checkout #{stable_branch}"
+    "git checkout -b #{releasing.etable_branch}",
+    fallback: "git checkout #{releasing.stable_branch}"
   )
 
   releasing.run_command("git merge master")
   releasing.run_command("git checkout production")
-  releasing.run_command("git merge #{stable_branch}")
+  releasing.run_command("git merge #{releasing.stable_branch}")
 
   releasing.run_command("git checkout master")
   releasing.run_command("git push --tags")
@@ -29,18 +29,23 @@ end
 class VersionReleasing
   include FileUtils
 
+  attr_reader :stable_branch
+
   def initialize(part)
     @updating_version_part = part || "patch"
     @current_version = File.read("./VERSION")
+    @stable_branch = "#{new_major}-#{new_minor}-stable"
   end
 
   def run_command(cmd, options = {})
-    sh(cmd) do |ok, _|
+    sh(cmd) do |ok, res|
       if ok
         puts "-------------------------"
         puts ""
       elsif options[:fallback]
         run_command(options[:fallback])
+      else
+        sh(cmd)
       end
     end
   end
@@ -89,9 +94,5 @@ class VersionReleasing
 
   def new_minor
     @new_minor ||= new_version.split('.')[1].to_i
-  end
-
-  def stable_branch
-   @stable_branch ||= "#{new_major}-#{new_minor}-stable"
   end
 end
