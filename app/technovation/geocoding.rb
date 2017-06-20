@@ -1,19 +1,19 @@
 class Geocoding
   private
-  attr_reader :account
+  attr_reader :model
 
   public
-  def initialize(account)
-    @account = account
+  def initialize(model)
+    @model = model
   end
 
-  def self.perform(account)
-    new(account).perform
+  def self.perform(model)
+    new(model).perform
   end
 
   def perform
-    Casting.delegating(account => GeocodingUpdater) do
-      account.apply_geocoding_changes
+    Casting.delegating(model => GeocodingUpdater) do
+      model.apply_geocoding_changes
     end
 
     self
@@ -25,7 +25,7 @@ class Geocoding
   end
 
   def with_save
-    account.save
+    model.save
     self
   end
 
