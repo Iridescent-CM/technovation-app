@@ -51,7 +51,7 @@ class VersionReleasing
   end
 
   def tag_promoted_version
-    run_command("git tag #{@current_version}")
+    run_command("git tag #{new_version}")
   end
 
   def promote_pending_version
@@ -59,7 +59,7 @@ class VersionReleasing
       f.puts(new_version)
     end
 
-    run_command("git commit VERSION -m 'Release VERSION at #{@current_version}'")
+    run_command("git commit VERSION -m 'Release VERSION at #{new_version}'")
   end
 
   private
