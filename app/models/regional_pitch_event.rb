@@ -83,7 +83,7 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def self.find(id)
     if id == "virtual"
-      Team::VirtualRegionalPitchEvent.new
+      VirtualRegionalPitchEvent.new
     else
       super
     end

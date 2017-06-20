@@ -10,7 +10,7 @@ module Admin
       @division = params[:division] ||= "senior"
 
       events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
-      virtual_event = Team::VirtualRegionalPitchEvent.new
+      virtual_event = VirtualRegionalPitchEvent.new
 
       @event = if params[:event] == "virtual"
                  virtual_event

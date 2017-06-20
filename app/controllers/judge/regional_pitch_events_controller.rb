@@ -2,7 +2,7 @@ module Judge
   class RegionalPitchEventsController < JudgeController
     def show
       if params[:id] == "virtual"
-        @regional_pitch_event = Team::VirtualRegionalPitchEvent.new
+        @regional_pitch_event = VirtualRegionalPitchEvent.new
         render template: 'regional_pitch_events/virtual'
       else
         @regional_pitch_event = RegionalPitchEvent.find(params[:id])

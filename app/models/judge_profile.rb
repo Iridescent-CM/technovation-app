@@ -70,7 +70,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def selected_regional_pitch_event
-    regional_pitch_events.last or Team::VirtualRegionalPitchEvent.new
+    regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
 
   def selected_regional_pitch_event_name
