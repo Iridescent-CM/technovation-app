@@ -9,7 +9,10 @@ module FriendlySubregion
 
     country = Carmen::Country.coded(record.country)
 
-    return record.state_province if country.subregions.coded(record.state_province).blank?
+    if country.subregions.empty? or
+         country.subregions.coded(record.state_province).blank?
+      return record.state_province.strip
+    end
 
     default_options = {
       prefix: true,
