@@ -7,14 +7,7 @@ class Team < ActiveRecord::Base
 
   geocoded_by :primary_location
   reverse_geocoded_by :latitude, :longitude do |team, results|
-    if geo = results.first
-      team.city = geo.city
-      team.state_province = geo.state_code
-      country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
-      team.country = country.alpha2
-    end
+    team.update_address_details_from_reverse_geocoding(results)
   end
 
   after_validation :geocode, if: -> (t) {
@@ -335,6 +328,17 @@ class Team < ActiveRecord::Base
 
   def assigned_judge_names
     assigned_judges.flat_map(&:full_name)
+  end
+
+  def update_address_details_from_reverse_geocoding(results)
+    if geo = results.first
+      self.city = geo.city
+      self.state_province = geo.state_code
+      country = Country.find_country_by_name(geo.country_code) ||
+                  Country.find_country_by_alpha3(geo.country_code) ||
+                    Country.find_country_by_alpha2(geo.country_code)
+      self.country = country.alpha2
+    end
   end
 
   private
