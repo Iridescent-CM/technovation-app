@@ -19,7 +19,7 @@ FactoryGirl.define do
 
     trait :geocoded do
       after(:create) do |s, _|
-        AccountGeocoding.perform(s.account).with_save
+        Geocoding.perform(s.account).with_save
       end
     end
 
@@ -78,7 +78,7 @@ FactoryGirl.define do
 
     trait :geocoded do
       after(:create) do |m, _|
-        AccountGeocoding.perform(m.account).with_save
+        Geocoding.perform(m.account).with_save
       end
     end
 
@@ -148,7 +148,7 @@ FactoryGirl.define do
 
     trait :geocoded do
       after(:create) do |r, _|
-        AccountGeocoding.perform(r.account).with_save
+        Geocoding.perform(r.account).with_save
       end
     end
 
@@ -200,7 +200,7 @@ FactoryGirl.define do
 
     trait :geocoded do
       after(:create) do |j, _|
-        AccountGeocoding.perform(j.account).with_save
+        Geocoding.perform(j.account).with_save
       end
     end
 

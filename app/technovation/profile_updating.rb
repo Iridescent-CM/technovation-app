@@ -23,7 +23,7 @@ class ProfileUpdating
 
   def perform_callbacks
     perform_email_changes_updates
-    AccountGeocoding.perform(profile.account)
+    Geocoding.perform(profile.account)
 
     case scope.to_sym
     when :student

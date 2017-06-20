@@ -1,4 +1,4 @@
-class AccountGeocoding
+class Geocoding
   private
   attr_reader :account
 
