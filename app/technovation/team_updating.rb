@@ -21,6 +21,25 @@ class TeamUpdating
   end
 
   def perform_callbacks
-    Geocoding.perform(team).with_save
+    Geocoding.perform(team)
+
+    Casting.delegating(team => RegionalPitchEventAttendee) do
+      team.preserve_pitch_event_region
+    end
+
+    team.save
+  end
+
+  module RegionalPitchEventAttendee
+    def preserve_pitch_event_region
+      if us_state_changed? or saved_change_to_country?
+        regional_pitch_events.destroy_all
+      end
+    end
+
+    private
+    def us_state_changed?
+      country == "US" and saved_change_to_state_province?
+    end
   end
 end

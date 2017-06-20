@@ -13,13 +13,6 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
-  after_validation ->(t) {
-    t.regional_pitch_events.destroy_all
-  }, if: -> (t) {
-    (t.country === "US" and t.state_province_changed?) or
-      t.country_changed?
-  }
-
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
 
   after_commit :register_to_season, on: :create

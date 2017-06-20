@@ -210,18 +210,25 @@ RSpec.describe Team do
     team.regional_pitch_events << rpe
     expect(team.reload.selected_regional_pitch_event).to eq(rpe)
 
-    team.state_province = "CA"
-    team.valid?
+    TeamUpdating.execute(team, {
+      city: "Los Angeles",
+      state_province: "CA",
+    })
+
+    team.reload
     expect(team.regional_pitch_events).to be_empty
 
     # Sanity
     team.regional_pitch_events << rpe
     expect(team.reload.selected_regional_pitch_event).to eq(rpe)
 
-    team.city = "Salvador"
-    team.state_province = "Bahia"
-    team.country = "BR"
-    team.valid?
+    TeamUpdating.execute(team, {
+      city: "Salvador",
+      state_province: "Bahia",
+      country: "BR",
+    })
+
+    team.reload
     expect(team.regional_pitch_events).to be_empty
   end
 end
