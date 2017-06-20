@@ -9,7 +9,11 @@ module TeamController
     @team = current_profile.teams.find(params.fetch(:id))
     @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
     @uploader = ImageUploader.new
-    @uploader.success_action_redirect = send("#{current_account.type_name}_team_photo_upload_confirmation_url", team_id: @team.id, back: request.fullpath)
+    @uploader.success_action_redirect = send(
+      "#{current_account.type_name}_team_photo_upload_confirmation_url",
+      team_id: @team.id,
+      back: request.fullpath
+    )
   end
 
   def new
@@ -37,7 +41,7 @@ module TeamController
   def update
     @team = current_profile.teams.find(params.fetch(:id))
 
-    if @team.update_attributes(team_params)
+    if TeamUpdating.execute(@team, team_params)
       redirect_to [account_type, @team],
         success: t("controllers.teams.update.success")
     else

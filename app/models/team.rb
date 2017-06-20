@@ -1,4 +1,7 @@
 class Team < ActiveRecord::Base
+  include Casting::Client
+  delegate_missing_methods
+
   include Elasticsearch::Model
 
   index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_teams"
@@ -9,14 +12,6 @@ class Team < ActiveRecord::Base
   reverse_geocoded_by :latitude, :longitude do |team, results|
     team.update_address_details_from_reverse_geocoding(results)
   end
-
-  after_validation :geocode, if: -> (t) {
-    t.latitude.blank? or (not t.city_was.blank? and t.city_changed?)
-  }
-
-  after_validation :reverse_geocode, if: ->(t) {
-    t.saved_change_to_latitude? or t.saved_change_to_longitude?
-  }
 
   after_validation ->(t) {
     t.regional_pitch_events.destroy_all

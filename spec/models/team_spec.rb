@@ -162,22 +162,29 @@ RSpec.describe Team do
   end
 
   it "geocodes when address info changes" do
-    team = FactoryGirl.create(:team) # Chicago by default
+    team = FactoryGirl.create(:team, :geocoded) # Chicago by default
 
     # Sanity
     expect(team.latitude).to eq(41.50196838)
     expect(team.longitude).to eq(-87.64051818)
 
-    team.city = "Los Angeles"
-    team.state_province = "CA"
-    team.valid?
+    TeamUpdating.execute(team, {
+      city: "Los Angeles",
+      state_province: "CA",
+    })
 
+    team.reload
     expect(team.latitude).to eq(34.052363)
     expect(team.longitude).to eq(-118.256551)
   end
 
   it "reverse geocodes when coords change" do
-    team = FactoryGirl.create(:team, city: "Los Angeles", state_province: "CA")
+    team = FactoryGirl.create(
+      :team,
+      :geocoded,
+      city: "Los Angeles",
+      state_province: "CA"
+    )
 
     # Sanity
     expect(team.city).to eq("Los Angeles")
@@ -185,10 +192,12 @@ RSpec.describe Team do
     expect(team.latitude).to eq(34.052363)
     expect(team.longitude).to eq(-118.256551)
 
-    team.latitude = 41.50196838
-    team.longitude = -87.64051818
-    team.valid?
+    TeamUpdating.execute(team, {
+      latitude: 41.50196838,
+      longitude: -87.64051818,
+    })
 
+    team.reload
     expect(team.city).to eq("Chicago")
     expect(team.state_province).to eq("IL")
   end

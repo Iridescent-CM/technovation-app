@@ -24,18 +24,33 @@ RSpec.describe Student::TeamsController do
       sign_in(student)
 
       expect {
-        post :create, params: { team: { name: "Girl Power", description: "We are a great team" } }
+        post :create, params: {
+          team: {
+            name: "Girl Power",
+            description: "We are a great team",
+          }
+        }
       }.not_to change { Team.count }
 
-      expect(flash[:alert]).to eq("You cannot create a new team if you are already on a team")
+      expect(flash[:alert]).to eq(
+        "You cannot create a new team if you are already on a team"
+      )
     end
 
     it "declines any pending invites" do
       student = FactoryGirl.create(:student)
-      invite = FactoryGirl.create(:team_member_invite, invitee_email: student.email)
+      invite = FactoryGirl.create(
+        :team_member_invite,
+        invitee_email: student.email
+      )
 
       sign_in(student)
-      post :create, params: { team: { name: "Girl Power", description: "We are a great team" } }
+      post :create, params: {
+        team: {
+          name: "Girl Power",
+          description: "We are a great team",
+        }
+      }
 
       expect(invite.reload).to be_declined
     end
@@ -45,7 +60,12 @@ RSpec.describe Student::TeamsController do
       join_request = FactoryGirl.create(:join_request, requestor: student)
 
       sign_in(student)
-      post :create, params: { team: { name: "Girl Power", description: "We are a great team" } }
+      post :create, params: {
+        team: {
+          name: "Girl Power",
+          description: "We are a great team",
+        }
+      }
 
       expect {
         join_request.reload
@@ -59,7 +79,9 @@ RSpec.describe Student::TeamsController do
       sign_in(student)
 
       get :new
-      expect(flash[:alert]).to eq("You cannot create a new team if you are already on a team")
+      expect(flash[:alert]).to eq(
+        "You cannot create a new team if you are already on a team"
+      )
     end
   end
 end

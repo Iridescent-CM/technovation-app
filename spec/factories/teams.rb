@@ -13,6 +13,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :geocoded do
+      after(:create) do |team, _|
+        Geocoding.perform(team).with_save
+      end
+    end
+
     transient do
       members_count 1
     end
