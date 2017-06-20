@@ -24,7 +24,7 @@ module RegionalAmbassador
                 end
 
         @events = [virtual_event] + events.sort_by(&:name)
-      else
+      elsif events.any?
         params[:event] ||= events.pluck(:id).sort.first
 
         @event = events.eager_load(
@@ -32,6 +32,9 @@ module RegionalAmbassador
         ).find(params[:event])
 
         @events = events.sort_by(&:name)
+      else
+        @events = RegionalPitchEvent.none
+        @event = virtual_event
       end
 
       @submissions = get_sorted_paginated_submissions_in_requested_division
