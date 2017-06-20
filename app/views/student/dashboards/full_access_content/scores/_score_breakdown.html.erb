@@ -69,10 +69,7 @@
     <em>
       You earned
       <strong>
-        <%= pluralize(
-          @all_scores.first.total_technical_checklist_verified,
-          'point'
-        ) %>
+        <%= pluralize(current_team.submission.total_technical_checklist, 'point') %>
       </strong>
       from your technical checklist.
     </em>

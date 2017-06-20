@@ -4,8 +4,14 @@ RSpec.describe SubmissionScore do
   it "acts as paranoid" do
     team = FactoryGirl.create(:team)
     judge = FactoryGirl.create(:judge_profile)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
-    score = SubmissionScore.create!(team_submission: team_submission, judge_profile: judge)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
+    score = SubmissionScore.create!(
+      team_submission: team_submission,
+      judge_profile: judge
+    )
 
     score.destroy
 
@@ -15,10 +21,16 @@ RSpec.describe SubmissionScore do
 
   it "cannot be duplicated for the same submission and judge" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
-    second_team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    second_team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     second_judge_profile = FactoryGirl.create(:judge_profile)
 
     SubmissionScore.create!(
@@ -48,7 +60,10 @@ RSpec.describe SubmissionScore do
 
   it "calculates scores" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
     subscore = SubmissionScore.create!({
@@ -84,7 +99,10 @@ RSpec.describe SubmissionScore do
 
   it "calculates total possible score based on division" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
     subscore = SubmissionScore.create!({
@@ -104,7 +122,10 @@ RSpec.describe SubmissionScore do
 
   it "includes tech checklist verification in the score" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
     team_submission.create_technical_checklist!({
@@ -118,8 +139,6 @@ RSpec.describe SubmissionScore do
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
       judge_profile: judge_profile,
-      used_canvas_verified: true,
-      used_lists_verified: true,
     })
 
     expect(subscore.total).to eq(3)
@@ -127,7 +146,10 @@ RSpec.describe SubmissionScore do
 
   it "includes screenshots count as part of tech checklist score" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
     team_submission.create_technical_checklist!({
@@ -144,8 +166,6 @@ RSpec.describe SubmissionScore do
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
       judge_profile: judge_profile,
-      used_canvas_verified: true,
-      used_lists_verified: true,
     })
 
     expect(subscore.total).to eq(3)
@@ -159,7 +179,10 @@ RSpec.describe SubmissionScore do
 
   it "clears the judge opened id/at on complete" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(team_id: team.id, integrity_affirmed: true)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
     judge_profile = FactoryGirl.create(:judge_profile)
 
     team_submission.update_attributes(
@@ -197,10 +220,14 @@ RSpec.describe SubmissionScore do
         )
 
         sub.complete!
-        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(5)
+        expect(
+          team_submission.reload.public_send("#{judging_round}_average_score")
+        ).to eq(5)
 
         sub.update_attributes(sdg_alignment: 4)
-        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(4)
+        expect(
+          team_submission.reload.public_send("#{judging_round}_average_score")
+        ).to eq(4)
 
         judge_profile2 = FactoryGirl.create(:judge_profile)
 
@@ -212,7 +239,9 @@ RSpec.describe SubmissionScore do
         )
 
         sub2.complete!
-        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to eq(3)
+        expect(
+          team_submission.reload.public_send("#{judging_round}_average_score")
+        ).to eq(3)
       end
 
       it "does not update a team submission average score if it is not complete" do
@@ -226,7 +255,9 @@ RSpec.describe SubmissionScore do
           sdg_alignment: 5,
           round: round,
         )
-        expect(team_submission.reload.public_send("#{judging_round}_average_score")).to be_zero
+        expect(
+          team_submission.reload.public_send("#{judging_round}_average_score")
+        ).to be_zero
       end
     end
   end
@@ -310,12 +341,24 @@ RSpec.describe SubmissionScore do
       team_submission: team_submission,
     })
 
-    expect(team_submission.reload.pending_quarterfinals_submission_scores_count).to eq(1)
-    expect(team_submission.reload.complete_quarterfinals_submission_scores_count).to eq(0)
+    team_submission.reload
+    expect(
+      team_submission.pending_quarterfinals_submission_scores_count
+    ).to eq(1)
+
+    expect(
+      team_submission.complete_quarterfinals_submission_scores_count
+    ).to eq(0)
 
     score.complete!
 
-    expect(team_submission.reload.pending_quarterfinals_submission_scores_count).to eq(0)
-    expect(team_submission.reload.complete_quarterfinals_submission_scores_count).to eq(1)
+    team_submission.reload
+    expect(
+      team_submission.pending_quarterfinals_submission_scores_count
+    ).to eq(0)
+
+    expect(
+      team_submission.complete_quarterfinals_submission_scores_count
+    ).to eq(1)
   end
 end

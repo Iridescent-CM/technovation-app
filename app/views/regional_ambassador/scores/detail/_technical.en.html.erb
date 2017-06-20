@@ -21,8 +21,8 @@
   <dd>
     <%= score.team_submission_team_name %>
     earned
-    <%= score.total_technical_checklist_verified %>
-    points from their technical checklist.
+    <%= pluralize(score.total_technical_checklist, 'point') %>
+    from their technical checklist.
   </dd>
 
   <dt>Comment:</dt>

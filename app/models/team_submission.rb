@@ -346,6 +346,51 @@ class TeamSubmission < ActiveRecord::Base
     }
   end
 
+  def total_technical_checklist
+    if technical_checklist.present?
+      total_technical_coding +
+        total_technical_db +
+          total_technical_mobile +
+            total_technical_process
+    else
+      0
+    end
+  end
+
+  def total_technical_coding
+    calculate_technical_total(
+      technical_checklist.technical_components,
+      points_each: 1,
+      points_max:  4
+    )
+  end
+
+  def total_technical_db
+    calculate_technical_total(
+      technical_checklist.database_components,
+      points_each: 1,
+      points_max: 1
+    )
+  end
+
+  def total_technical_mobile
+    calculate_technical_total(
+      technical_checklist.mobile_components,
+      points_each: 2,
+      points_max: 2
+    )
+  end
+
+  def total_technical_process
+    if technical_checklist.pics_of_process.all? { |a|
+        technical_checklist.send(a).present?
+      } and screenshots.count >= 2
+      3
+    else
+      0
+    end
+  end
+
   private
   def business_plan_complete_or_not_required?
     (junior_division? or team_division_name == Division.none_assigned_yet.name) or
@@ -358,5 +403,18 @@ class TeamSubmission < ActiveRecord::Base
 
   def should_generate_new_friendly_id?
     super || team_name_and_app_name.parameterize != slug
+  end
+
+  def calculate_technical_total(components, options)
+    components.reduce(0) do |sum, aspect|
+      if sum == options[:points_max]
+        sum
+      elsif technical_checklist.send(aspect) and
+          not technical_checklist.send("#{aspect}_explanation").blank?
+        sum += options[:points_each]
+      else
+        sum
+      end
+    end
   end
 end

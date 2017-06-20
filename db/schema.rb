@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613141734) do
+ActiveRecord::Schema.define(version: 20170620233704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -391,25 +391,6 @@ ActiveRecord::Schema.define(version: 20170613141734) do
     t.text "pitch_comment"
     t.text "overall_comment"
     t.datetime "completed_at"
-    t.boolean "used_strings_verified"
-    t.boolean "used_numbers_verified"
-    t.boolean "used_variables_verified"
-    t.boolean "used_lists_verified"
-    t.boolean "used_booleans_verified"
-    t.boolean "used_loops_verified"
-    t.boolean "used_conditionals_verified"
-    t.boolean "used_local_db_verified"
-    t.boolean "used_external_db_verified"
-    t.boolean "used_location_sensor_verified"
-    t.boolean "used_camera_verified"
-    t.boolean "used_accelerometer_verified"
-    t.boolean "used_sms_phone_verified"
-    t.boolean "used_sound_verified"
-    t.boolean "used_sharing_verified"
-    t.boolean "paper_prototype_verified"
-    t.boolean "event_flow_chart_verified"
-    t.boolean "used_clock_verified"
-    t.boolean "used_canvas_verified"
     t.string "event_type"
     t.datetime "deleted_at"
     t.integer "round", default: 0, null: false

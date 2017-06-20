@@ -126,11 +126,11 @@ namespace :teams do
           FriendlyCountry.(team),
           team.submission.status,
           team.submission.technical_checklist_started? ? "yes" : "no",
-          score.total_technical_checklist_verified,
-          score.total_coding_verified,
-          score.total_db_verified,
-          score.total_mobile_verified,
-          score.total_process_verified
+          score.total_technical_checklist,
+          team_submission.total_technical_coding,
+          team_submission.total_technical_db,
+          team_submission.total_technical_mobile,
+          team_submission.total_technical_process
         ]
       end
     end

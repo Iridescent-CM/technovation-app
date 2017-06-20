@@ -243,19 +243,11 @@ class SubmissionScore < ActiveRecord::Base
   def technical_total
     app_functional +
       demo_video +
-        total_technical_checklist_verified
-  end
-
-  def total_technical_checklist_verified
-    if team_submission.technical_checklist.present?
-      total_verified
-    else
-      0
-    end
+        total_technical_checklist
   end
 
   def total_technical_checklist
-    total_technical_checklist_verified
+    team_submission.total_technical_checklist
   end
 
   def entrepreneurship_total
@@ -300,81 +292,10 @@ class SubmissionScore < ActiveRecord::Base
     end
   end
 
-  def total_verified
-    total_coding_verified +
-      total_db_verified +
-        total_mobile_verified +
-          total_process_verified
-  end
-
-  def total_coding_verified
-    if team_submission.technical_checklist.present?
-      calculate_total_verified(
-        team_submission.technical_checklist.technical_components,
-        points_each: 1,
-        points_max:  4
-      )
-    else
-      0
-    end
-  end
-
-  def total_db_verified
-    if team_submission.technical_checklist.present?
-      calculate_total_verified(
-        team_submission.technical_checklist.database_components,
-        points_each: 1,
-        points_max: 1
-      )
-    else
-      0
-    end
-  end
-
-  def total_mobile_verified
-    if team_submission.technical_checklist.present?
-      calculate_total_verified(
-        team_submission.technical_checklist.mobile_components,
-        points_each: 2,
-        points_max: 2
-      )
-    else
-      0
-    end
-  end
-
-  def total_process_verified
-    if team_submission.technical_checklist.present?
-      if team_submission.technical_checklist.pics_of_process.all? { |a|
-          team_submission.technical_checklist.send(a).present?
-        } and team_submission.screenshots.count >= 2
-        3
-      else
-        0
-      end
-    else
-      0
-    end
-  end
-
   def official?
     not (quarterfinals? and
          (team.selected_regional_pitch_event == judge_profile.selected_regional_pitch_event and
           team.selected_regional_pitch_event.live? and
           team.selected_regional_pitch_event.unofficial?))
-  end
-
-  private
-  def calculate_total_verified(components, options)
-    components.reduce(0) do |sum, aspect|
-      if sum == options[:points_max]
-        sum
-      elsif team_submission.technical_checklist.send(aspect) and
-          not team_submission.technical_checklist.send("#{aspect}_explanation").blank?
-        sum += options[:points_each]
-      else
-        sum
-      end
-    end
   end
 end
