@@ -27,7 +27,8 @@ machine:
     BONSAI_URL: localhost:9200
     GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
     BING_MAPS_API_KEY: no-matter-in-test
-    ENABLE_SUBMISSION_SCORES: true
+    ENABLE_SUBMISSION_SCORES: yes
+    ENABLE_RA_SCORES: yes
     JUDGING_ROUND: QF
 
 general:
