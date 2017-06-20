@@ -5,9 +5,19 @@ task :release do
   releasing = VersionReleasing.new(ARGV[1])
 
   releasing.run_command("git checkout master")
+
   releasing.promote_pending_version
   releasing.tag_promoted_version
-  releasing.align_major_branches
+
+  releasing.run_command(
+    "git checkout -b #{stable_branch}",
+    fallback: "git checkout #{stable_branch}"
+  )
+
+  releasing.run_command("git merge master")
+  releasing.run_command("git checkout production")
+  releasing.run_command("git merge #{stable_branch}")
+
   releasing.run_command("git checkout master")
   releasing.run_command("git push --tags")
   releasing.run_command("git push --all")
@@ -33,16 +43,6 @@ class VersionReleasing
         run_command(options[:fallback])
       end
     end
-  end
-
-  def align_major_branches
-    run_command(
-      "git checkout -b #{stable_branch}",
-      fallback: "git checkout #{stable_branch}"
-    )
-    run_command("git merge master")
-    run_command("git checkout production")
-    run_command("git merge #{stable_branch}")
   end
 
   def tag_promoted_version
