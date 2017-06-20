@@ -24,8 +24,8 @@ RSpec.describe Team do
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-    team.add_student(older_student)
-    team.add_student(younger_student)
+    TeamRosterManaging.add(team, :student, older_student)
+    TeamRosterManaging.add(team, :student, younger_student)
 
     expect(team.division).to eq(Division.senior)
   end
@@ -35,10 +35,15 @@ RSpec.describe Team do
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-    team.add_student(older_student)
-    team.add_student(younger_student)
+    TeamRosterManaging.add(team, :student, older_student)
+    TeamRosterManaging.add(team, :student, younger_student)
 
-    older_student.account.update_attributes(date_of_birth: 13.years.ago)
+    ProfileUpdating.execute(older_student, {
+      account_attributes: {
+        id: older_student.account_id,
+        date_of_birth: 13.years.ago,
+      },
+    })
 
     expect(team.reload.division).to eq(Division.junior)
   end
@@ -46,12 +51,13 @@ RSpec.describe Team do
   it "reconsiders division when a student leaves the team" do
     team = FactoryGirl.create(:team, members_count: 0)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+    older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
 
-    team.add_student(older_student)
-    team.add_student(younger_student)
-    team.remove_student(older_student)
+    TeamRosterManaging.add(team, :student, older_student)
+    TeamRosterManaging.add(team, :student, younger_student)
+    expect(team.reload.division).to eq(Division.senior)
 
+    TeamRosterManaging.remove(team, :student, older_student)
     expect(team.reload.division).to eq(Division.junior)
   end
 

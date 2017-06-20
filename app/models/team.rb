@@ -252,24 +252,6 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def remove_student(student)
-    membership = Membership.find_by(joinable: self,
-                                    member_type: "StudentProfile",
-                                    member_id: student.id)
-    membership.destroy
-
-    if invite = student.team_member_invites.find_by(team_id: id)
-      invite.deleted!
-    end
-
-    if join_request = student.join_requests.find_by(joinable: self)
-      join_request.deleted!
-    end
-
-    reconsider_division
-    save
-  end
-
   def remove_mentor(mentor)
     membership = Membership.find_by(joinable: self,
                                     member_type: "MentorProfile",

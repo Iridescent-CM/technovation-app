@@ -69,20 +69,26 @@ RSpec.describe TeamSubmission do
     end
 
     it "changes when technical checklist added" do
-      FactoryGirl.create(:technical_checklist, :completed, team_submission: submission)
+      FactoryGirl.create(
+        :technical_checklist,
+        :completed,
+        team_submission: submission
+      )
       expect(submission.cache_key).not_to eq(@before_key)
     end
 
     it "changes when team division changes" do
       team = submission.team
-      team.remove_student(team.students.first)
+      TeamRosterManaging.remove(team, :student, team.students.first)
       expect(submission.reload.cache_key).not_to eq(@before_key)
     end
 
     it "changes when team regional pitch event changes" do
       team = submission.team
       team.regional_pitch_events << RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
+        regional_ambassador_profile: FactoryGirl.create(
+          :regional_ambassador_profile
+        ),
         name: "RPE",
         starts_at: Date.today,
         ends_at: Date.today + 1.day,

@@ -72,7 +72,7 @@ class ProfileUpdating
   module TeamDivisionChooser
     def reconsider_team_division
       if team.present? and account.saved_change_to_date_of_birth?
-        team.update_attributes({
+        TeamUpdating.execute(team, {
           division_id: Division.for(team).id,
         })
       end
