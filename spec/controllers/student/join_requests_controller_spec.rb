@@ -7,7 +7,7 @@ RSpec.describe Student::JoinRequestsController do
       student = FactoryGirl.create(:student)
       mentor = FactoryGirl.create(:mentor)
 
-      team.add_mentor(mentor)
+      TeamRosterManaging.add(team, :mentor, mentor)
 
       sign_in(student)
       request.env["HTTP_REFERER"] = "/somewhere"

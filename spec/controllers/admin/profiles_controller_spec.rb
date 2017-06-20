@@ -13,7 +13,7 @@ RSpec.describe Admin::ProfilesController do
       date_of_birth: 13.years.ago
     )
     team = FactoryGirl.create(:team, members_count: 0)
-    team.add_student(student)
+    TeamRosterManaging.add(team, :student, student)
 
     expect(team.division_name).to eq("junior")
 

@@ -16,13 +16,16 @@ RSpec.feature "Students invite mentors to join their team" do
   end
 
   scenario "Find a mentor on your team" do
-    student.team.add_mentor(mentor)
+    TeamRosterManaging.add(student.team, :mentor, mentor)
     click_link "View Full Profile"
     expect(page).to have_content("#{mentor.first_name} is a mentor on your team.")
   end
 
   scenario "Find a mentor you already invited" do
-    student.team.mentor_invites.create!(invitee_email: mentor.email, inviter: student)
+    student.team.mentor_invites.create!(
+      invitee_email: mentor.email,
+      inviter: student
+    )
     click_link "View Full Profile"
     expect(page).to have_content("Your team has invited #{mentor.first_name}")
   end

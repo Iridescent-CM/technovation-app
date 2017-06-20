@@ -25,7 +25,7 @@ module TeamController
 
     if @team.save
       RegisterToCurrentSeasonJob.perform_later(@team)
-      @team.public_send("add_#{account_type}", current_profile)
+      TeamRosterManaging.add(@team, account_type, current_profile)
 
       redirect_to [account_type, @team],
         success: t("controllers.teams.create.success")

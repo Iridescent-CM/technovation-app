@@ -17,10 +17,6 @@ class Team < ActiveRecord::Base
 
   after_commit :register_to_season, on: :create
 
-  after_save -> {
-    submission.touch if submission.present?
-  }, if: :saved_change_to_division_id?
-
   def as_indexed_json(options = {})
     as_json(
       only: %w{id name description spot_available?},
@@ -209,79 +205,15 @@ class Team < ActiveRecord::Base
     team_member_invites.pending.flat_map(&:invitee_email)
   end
 
-  def add_mentor(mentor)
-    return if !!!mentor
-
-    if invite = mentor.mentor_invites.pending.find_by(team_id: id)
-      invite.accepted!
-      return
-    end
-
-    if join_request = mentor.join_requests.pending.find_by(joinable: self)
-      join_request.approved!
-      return
-    end
-
-    if not mentors.include?(mentor)
-      mentors << mentor
-      save
-    end
-  end
-
-  def add_student(student)
-    return if !!!student
-
-    if invite = student.team_member_invites.pending.find_by(team_id: id)
-      invite.accepted!
-      return
-    end
-
-    if join_request = student.join_requests.pending.find_by(joinable: self)
-      join_request.approved!
-      return
-    end
-
-    if not students.include?(student) and spot_available?
-      students << student
-      reconsider_division
-      save
-    elsif students.include?(student)
-      errors.add(:add_student, "Student is already on this team")
-    elsif not spot_available?
-      errors.add(:add_student, "No spot available to add this student")
-    end
-  end
-
-  def remove_mentor(mentor)
-    membership = Membership.find_by(joinable: self,
-                                    member_type: "MentorProfile",
-                                    member_id: mentor.id)
-    membership.destroy
-
-    if invite = mentor.mentor_invites.find_by(team_id: id)
-      invite.deleted!
-    end
-
-    if join_request = mentor.join_requests.find_by(joinable: self)
-      join_request.deleted!
-    end
-  end
-
-  def reconsider_division_with_save
-    reconsider_division
-    save
-  end
-
-  def reconsider_division
-    self.division = Division.for(self)
-  end
-
   def current?
     seasons.include?(Season.current)
   end
 
   def invited_mentor?(mentor)
-    mentor_invites.pending.where(invitee_id: mentor.id, invitee_type: "MentorProfile").any?
+    mentor_invites.pending.where(
+      invitee_id: mentor.id,
+      invitee_type: "MentorProfile"
+    ).exists?
   end
 
   def submission
@@ -293,7 +225,7 @@ class Team < ActiveRecord::Base
   end
 
   def assigned?
-    judge_assignments.any?
+    judge_assignments.exists?
   end
 
   def assigned_judge_names

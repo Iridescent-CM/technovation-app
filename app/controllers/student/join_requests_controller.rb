@@ -12,8 +12,18 @@ class Student::JoinRequestsController < StudentController
   end
 
   def update
+    status = params.fetch(:status)
+
     join_request = JoinRequest.find(params.fetch(:id))
-    join_request.public_send("#{params.fetch(:status)}!")
+    join_request.public_send("#{status}!")
+
+    if status == "approved"
+      TeamRosterManaging.add(
+        join_request.joinable,
+        join_request.requestor_type_name,
+        join_request.requestor
+      )
+    end
 
     redirect_back fallback_location: student_team_path(current_team),
       success: t("controllers.student.join_requests.update.success",

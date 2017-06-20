@@ -27,6 +27,10 @@ class TeamUpdating
       team.preserve_pitch_event_region
     end
 
+    Casting.delegating(team => DivisionChooser) do
+      team.reconsider_division
+    end
+
     team.save
   end
 

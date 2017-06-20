@@ -237,4 +237,23 @@ RSpec.describe Team do
     team.reload
     expect(team.regional_pitch_events).to be_empty
   end
+
+  it "touches its submission when division changes" do
+    team = FactoryGirl.create(:team, members_count: 0)
+    submission = FactoryGirl.create(:submission, team: team)
+
+    old_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
+    young_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+
+    TeamRosterManaging.add(team, :student, old_student)
+    TeamRosterManaging.add(team, :student, young_student)
+    expect(team).to be_senior
+
+    submission_updated = submission.updated_at
+
+    TeamRosterManaging.remove(team, :student, old_student)
+    expect(team.reload).to be_junior
+
+    expect(submission_updated).to be < submission.reload.updated_at
+  end
 end

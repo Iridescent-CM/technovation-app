@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     trait :with_mentor do
       after(:create) do |team, _|
-        team.add_mentor(FactoryGirl.create(:mentor))
+        TeamRosterManaging.add(team, :mentor, FactoryGirl.create(:mentor))
       end
     end
 

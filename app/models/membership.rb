@@ -4,7 +4,9 @@ class Membership < ActiveRecord::Base
   }
 
   after_destroy -> {
-    joinable.reconsider_division_with_save
+    Casting.delegating(joinable => DivisionChooser) do
+      joinable.reconsider_division_with_save
+    end
   }
 
   belongs_to :member, polymorphic: true

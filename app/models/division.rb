@@ -3,9 +3,10 @@ class Division < ActiveRecord::Base
 
   enum name: [:senior, :junior, :none_assigned_yet]
 
-  validates :name, uniqueness: { case_sensitive: false },
-                   presence: true,
-                   inclusion: { in: names.keys + names.values + names.keys.map(&:to_sym) }
+  validates :name,
+    uniqueness: { case_sensitive: false },
+    presence: true,
+    inclusion: { in: names.keys + names.values + names.keys.map(&:to_sym) }
 
   def self.senior
     find_or_create_by(name: names[:senior])
@@ -45,7 +46,7 @@ class Division < ActiveRecord::Base
   end
 
   def self.division_by_team_ages(team)
-    divisions = team.reload.students.collect { |s| division_by_age(s) }
+    divisions = team.students.collect { |s| division_by_age(s) }
     if divisions.any?
       divisions.flat_map(&:name).include?(senior.name) ? senior : junior
     else

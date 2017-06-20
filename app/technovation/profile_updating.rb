@@ -36,8 +36,12 @@ class ProfileUpdating
 
   private
   def perform_student_updates
-    Casting.delegating(profile => TeamDivisionChooser) do
-      profile.reconsider_team_division
+    team = profile.team
+
+    if team.present? and profile.account.saved_change_to_date_of_birth?
+      Casting.delegating(team => DivisionChooser) do
+        team.reconsider_division_with_save
+      end
     end
   end
 
@@ -66,16 +70,6 @@ class ProfileUpdating
         saved_change_to_last_name? or
 
       saved_change_to_email?
-    end
-  end
-
-  module TeamDivisionChooser
-    def reconsider_team_division
-      if team.present? and account.saved_change_to_date_of_birth?
-        TeamUpdating.execute(team, {
-          division_id: Division.for(team).id,
-        })
-      end
     end
   end
 end
