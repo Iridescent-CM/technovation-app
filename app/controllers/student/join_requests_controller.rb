@@ -18,11 +18,7 @@ class Student::JoinRequestsController < StudentController
     join_request.public_send("#{status}!")
 
     if status == "approved"
-      TeamRosterManaging.add(
-        join_request.joinable,
-        join_request.requestor_type_name,
-        join_request.requestor
-      )
+      TeamRosterManaging.add(join_request.joinable, join_request.requestor)
     end
 
     redirect_back fallback_location: student_team_path(current_team),

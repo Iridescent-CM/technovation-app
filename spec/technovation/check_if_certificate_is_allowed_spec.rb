@@ -4,6 +4,11 @@ RSpec.describe CheckIfCertificateIsAllowed do
   let(:student) { FactoryGirl.create(:student) }
   let(:team) { FactoryGirl.create(:team) }
 
+  def student_on_team
+    TeamRosterManaging.add(team, student)
+    student
+  end
+
   it "returns false for nil user" do
     expect(CheckIfCertificateIsAllowed.(nil, :completion)).to be false
   end
@@ -21,14 +26,16 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns false if the student's team did not submit" do
-        TeamRosterManaging.add(team, :student, student)
-        expect(CheckIfCertificateIsAllowed.(student, :completion)).to be false
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :completion)
+        ).to be false
       end
 
       it "returns true if the student's team's submission is present" do
-        TeamRosterManaging.add(team, :student, student)
         team.team_submissions.create!(integrity_affirmed: true)
-        expect(CheckIfCertificateIsAllowed.(student, :completion)).to be true
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :completion)
+        ).to be true
       end
     end
 
@@ -38,50 +45,55 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns false if the student's team did not submit" do
-        TeamRosterManaging.add(team, :student, student)
-        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
+        ).to be false
       end
 
       it "returns false if the student's team submission is not a semifinalist" do
-        TeamRosterManaging.add(team, :student, student)
         team.team_submissions.create!(
           integrity_affirmed: true,
           contest_rank: :quarterfinalist
         )
-        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
+        ).to be false
       end
 
       it "returns false if the student's team was not at an official RPE" do
-        TeamRosterManaging.add(team, :student, student)
         team.team_submissions.create!(
           integrity_affirmed: true,
           contest_rank: :quarterfinalist
         )
         rpe = FactoryGirl.create(:rpe, unofficial: true)
         rpe.teams << team
-        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
+        ).to be false
       end
 
       it "returns false if team attended an official RPE, isn't a semifinalist" do
-        TeamRosterManaging.add(team, :student, student)
         team.team_submissions.create!(
           integrity_affirmed: true,
           contest_rank: :quarterfinalist
         )
         rpe = FactoryGirl.create(:rpe, unofficial: false)
         rpe.teams << team
-        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be false
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
+        ).to be false
       end
 
       it 'returns true if the team attended official RPE, is a semifinalist' do
-        TeamRosterManaging.add(team, :student, student)
         team.team_submissions.create!(
           integrity_affirmed: true,
           contest_rank: :semifinalist
         )
         rpe = FactoryGirl.create(:rpe, unofficial: false)
         rpe.teams << team
-        expect(CheckIfCertificateIsAllowed.(student, :rpe_winner)).to be true
+        expect(
+          CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
+        ).to be true
       end
     end
   end
@@ -101,7 +113,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns true if the mentor is on a team" do
-        TeamRosterManaging.add(team, :mentor, mentor)
+        TeamRosterManaging.add(team, mentor)
         team.students.destroy_all
         expect(CheckIfCertificateIsAllowed.(mentor, :appreciation)).to be true
       end

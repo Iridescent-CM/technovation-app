@@ -74,7 +74,7 @@ RSpec.describe Student::TeamMemberInvitesController do
 
     it "shows a friendly message if accepting, but already on a team" do
       team = FactoryGirl.create(:team)
-      TeamRosterManaging.add(team, :student, student)
+      TeamRosterManaging.add(team, student)
 
       put :update, params: {
         id: invite.invite_token,

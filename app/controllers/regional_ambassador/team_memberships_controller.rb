@@ -5,9 +5,9 @@ module RegionalAmbassador
       account = Account.find(params.fetch(:account_id))
 
       if account.mentor_profile
-        TeamRosterManaging.remove(team, :mentor, account.mentor_profile)
+        TeamRosterManaging.remove(team, account.mentor_profile)
       else
-        TeamRosterManaging.remove(team, :student, account.student_profile)
+        TeamRosterManaging.remove(team, account.student_profile)
       end
 
       redirect_to regional_ambassador_team_path(team),

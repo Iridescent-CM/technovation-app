@@ -18,7 +18,7 @@ RSpec.feature "Mentors view scores" do
     team = FactoryGirl.create(:team)
     mentor = FactoryGirl.create(:mentor)
 
-    TeamRosterManaging.add(team, :mentor, mentor)
+    TeamRosterManaging.add(team, mentor)
 
     submission = FactoryGirl.create(
       :submission,
@@ -42,7 +42,7 @@ RSpec.feature "Mentors view scores" do
     team = FactoryGirl.create(:team)
     mentor = FactoryGirl.create(:mentor)
 
-    TeamRosterManaging.add(team, :mentor, mentor)
+    TeamRosterManaging.add(team, mentor)
 
     submission = FactoryGirl.create(
       :submission,

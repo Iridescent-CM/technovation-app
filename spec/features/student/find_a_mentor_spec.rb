@@ -16,7 +16,7 @@ RSpec.feature "Students invite mentors to join their team" do
   end
 
   scenario "Find a mentor on your team" do
-    TeamRosterManaging.add(student.team, :mentor, mentor)
+    TeamRosterManaging.add(student.team, mentor)
     click_link "View Full Profile"
     expect(page).to have_content("#{mentor.first_name} is a mentor on your team.")
   end

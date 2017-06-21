@@ -23,8 +23,7 @@ RSpec.describe Division do
       older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
       younger_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-      TeamRosterManaging.add(team, :student, older_student)
-      TeamRosterManaging.add(team, :student, younger_student)
+      TeamRosterManaging.add(team, [older_student, younger_student])
 
       expect(Division.for(team)).to eq(Division.senior)
     end

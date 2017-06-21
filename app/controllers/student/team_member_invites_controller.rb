@@ -28,7 +28,7 @@ module Student
     def apply_chosen_status_to_existing_invite(invite)
       if invite.present? and invite.update_attributes(invite_params)
         if invite.accepted?
-          TeamRosterManaging.add(invite.team, :student, current_student)
+          TeamRosterManaging.add(invite.team, current_student)
         end
 
         redirect_based_on_status(invite)

@@ -9,7 +9,7 @@ RSpec.describe TeamController do
           profile = FactoryGirl.create(scope)
 
           unless scope == "admin"
-            TeamRosterManaging.add(team, scope, profile)
+            TeamRosterManaging.add(team, profile)
           end
 
           sign_in(profile)

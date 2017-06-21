@@ -15,8 +15,7 @@ RSpec.describe "Team Memberships Controllers" do
           date_of_birth: 14.years.ago
         )
 
-        TeamRosterManaging.add(team, :student, younger_student)
-        TeamRosterManaging.add(team, :student, older_student)
+        TeamRosterManaging.add(team, [younger_student, older_student])
 
         expect(team.reload).to be_senior
 
@@ -44,8 +43,7 @@ RSpec.describe "Team Memberships Controllers" do
             date_of_birth: 14.years.ago
           )
 
-          TeamRosterManaging.add(team, :student, younger_student)
-          TeamRosterManaging.add(team, :student, older_student)
+          TeamRosterManaging.add(team, [younger_student, older_student])
 
           expect(team.reload).to be_senior
 

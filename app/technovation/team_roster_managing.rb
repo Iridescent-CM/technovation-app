@@ -1,58 +1,63 @@
 class TeamRosterManaging
   private
-  attr_reader :team, :scope, :profile
+  attr_reader :team, :profiles, :scope, :profile
 
   public
-  def initialize(team, scope, profile)
+  def initialize(team, profiles)
     @team = team
-    @scope = scope
-    @profile = profile
+    @profiles = Array(profiles)
   end
 
-  def self.add(team, scope, profile)
-    new(team, scope, profile).add_member
+  def self.add(team, profiles)
+    new(team, profiles).add_member
   end
 
-  def self.remove(team, scope, member)
-    new(team, scope, member).remove_member
+  def self.remove(team, members)
+    new(team, members).remove_member
   end
 
   def add_member
-    Casting.delegating(team => MembershipsManager) do
-      team.accept_pending_invitation(scope, profile)
-      team.approve_pending_join_request(profile)
+    profiles.each do |profile|
+      @profile = profile
+      @scope = profile.class.name.underscore
 
-      case scope.to_sym
-      when :student
-        team.add_student(profile)
-      when :mentor
-        team.add_mentor(profile)
-      else
-        raise "Unsupported team member scope: #{scope}"
+      Casting.delegating(team => MembershipsManager) do
+        team.send("add_#{scope}", profile)
       end
     end
   end
 
   def remove_member
-    Casting.delegating(team => MembershipsManager) do
-      team.destroy_membership(profile)
-      team.delete_invitations(scope, profile)
-      team.delete_join_requests(scope, profile)
+    profiles.each do |profile|
+      @profile = profile
+      @scope = profile.class.name.underscore
 
-      Casting.delegating(team => DivisionChooser) do
-        team.reconsider_division_with_save
+      Casting.delegating(team => MembershipsManager) do
+        team.send("remove_#{scope}", profile)
+
+        Casting.delegating(team => DivisionChooser) do
+          team.reconsider_division_with_save
+        end
       end
     end
   end
 
   private
   module MembershipsManager
-    def add_student(student)
+    def add_student_profile(student)
       if not students.include?(student) and spot_available?
         students << student
 
         Casting.delegating(self => DivisionChooser) do
           reconsider_division_with_save
+        end
+
+        if invite = student.team_member_invites.pending.find_by(team_id: id)
+          invite.accepted!
+        end
+
+        if join_request = student.join_requests.pending.find_by(joinable: self)
+          join_request.approved!
         end
       elsif students.include?(student)
         errors.add(:add_student, "Student is already on this team")
@@ -61,44 +66,39 @@ class TeamRosterManaging
       end
     end
 
-    def add_mentor(mentor)
+    def add_mentor_profile(mentor)
       mentors << mentor
-      save
-    end
 
-    def destroy_membership(profile)
-      memberships.find_by(member: profile).destroy
-    end
+      if invite = mentor.mentor_invites.pending.find_by(team_id: id)
+        invite.accepted!
+      end
 
-    def delete_invitations(scope, profile)
-      invites_method = scope.to_sym == :student ?
-        :team_member_invites :
-        :mentor_invites
-
-      if invite = profile.send(invites_method).find_by(team_id: id)
-        invite.deleted!
+      if join_request = mentor.join_requests.pending.find_by(joinable: self)
+        join_request.approved!
       end
     end
 
-    def delete_join_requests(scope, profile)
-      if join_request = profile.join_requests.find_by(joinable: self)
+    def remove_student_profile(student)
+      memberships.find_by(member: student).destroy
+
+      if invite = student.team_member_invites.find_by(team_id: id)
+        invite.deleted!
+      end
+
+      if join_request = student.join_requests.find_by(joinable: self)
         join_request.deleted!
       end
     end
 
-    def accept_pending_invitation(scope, profile)
-      invites_method = scope.to_sym == :student ?
-        :team_member_invites :
-        :mentor_invites
+    def remove_mentor_profile(mentor)
+      memberships.find_by(member: mentor).destroy
 
-      if invite = profile.send(invites_method).pending.find_by(team_id: id)
-        invite.accepted!
+      if invite = mentor.mentor_invites.find_by(team_id: id)
+        invite.deleted!
       end
-    end
 
-    def approve_pending_join_request(profile)
-      if join_request = profile.join_requests.pending.find_by(joinable: self)
-        join_request.approved!
+      if join_request = mentor.join_requests.find_by(joinable: self)
+        join_request.deleted!
       end
     end
   end

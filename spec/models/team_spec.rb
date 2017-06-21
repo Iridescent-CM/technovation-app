@@ -24,8 +24,7 @@ RSpec.describe Team do
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-    TeamRosterManaging.add(team, :student, older_student)
-    TeamRosterManaging.add(team, :student, younger_student)
+    TeamRosterManaging.add(team, [older_student, younger_student])
 
     expect(team.division).to eq(Division.senior)
   end
@@ -35,8 +34,7 @@ RSpec.describe Team do
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-    TeamRosterManaging.add(team, :student, older_student)
-    TeamRosterManaging.add(team, :student, younger_student)
+    TeamRosterManaging.add(team, [older_student, younger_student])
 
     ProfileUpdating.execute(older_student, {
       account_attributes: {
@@ -53,11 +51,10 @@ RSpec.describe Team do
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
 
-    TeamRosterManaging.add(team, :student, older_student)
-    TeamRosterManaging.add(team, :student, younger_student)
+    TeamRosterManaging.add(team, [older_student, younger_student])
     expect(team.reload.division).to eq(Division.senior)
 
-    TeamRosterManaging.remove(team, :student, older_student)
+    TeamRosterManaging.remove(team, older_student)
     expect(team.reload.division).to eq(Division.junior)
   end
 
@@ -245,13 +242,12 @@ RSpec.describe Team do
     old_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
     young_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
-    TeamRosterManaging.add(team, :student, old_student)
-    TeamRosterManaging.add(team, :student, young_student)
+    TeamRosterManaging.add(team, [old_student, young_student])
     expect(team).to be_senior
 
     submission_updated = submission.updated_at
 
-    TeamRosterManaging.remove(team, :student, old_student)
+    TeamRosterManaging.remove(team, old_student)
     expect(team.reload).to be_junior
 
     expect(submission_updated).to be < submission.reload.updated_at

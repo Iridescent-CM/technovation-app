@@ -8,10 +8,10 @@ RSpec.describe MentorProfile do
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
-      TeamRosterManaging.add(t1, :mentor, mentor)
+      TeamRosterManaging.add(t1, mentor)
 
       t2 = FactoryGirl.create(:team, division: Division.junior)
-      TeamRosterManaging.add(t2, :mentor, mentor)
+      TeamRosterManaging.add(t2, mentor)
 
       expect(mentor.team_region_division_names).to match_array([
         "US_CA,senior",
@@ -25,13 +25,13 @@ RSpec.describe MentorProfile do
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
-      TeamRosterManaging.add(t1, :mentor, mentor)
+      TeamRosterManaging.add(t1, mentor)
 
       t2 = FactoryGirl.create(:team,
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
-      TeamRosterManaging.add(t2, :mentor, mentor)
+      TeamRosterManaging.add(t2, mentor)
 
       expect(mentor.team_region_division_names).to match_array(["US_CA,senior"])
     end

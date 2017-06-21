@@ -79,7 +79,7 @@ RSpec.describe TeamSubmission do
 
     it "changes when team division changes" do
       team = submission.team
-      TeamRosterManaging.remove(team, :student, team.students.first)
+      TeamRosterManaging.remove(team, team.students.first)
       expect(submission.reload.cache_key).not_to eq(@before_key)
     end
 
