@@ -3,13 +3,17 @@ require "will_paginate/array"
 module Admin
   class ScoresController < AdminController
     def index
+      params[:round] = :quarterfinals
       params[:event] ||= "virtual"
       params[:page] ||= 1
       params[:per_page] ||= 15
 
       @division = params[:division] ||= "senior"
 
-      events = RegionalPitchEvent.eager_load(regional_ambassador_profile: :account).all
+      events = RegionalPitchEvent.eager_load(
+        regional_ambassador_profile: :account
+      ).all
+
       virtual_event = VirtualRegionalPitchEvent.new
 
       @event = if params[:event] == "virtual"
