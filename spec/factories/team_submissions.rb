@@ -4,6 +4,10 @@ FactoryGirl.define do
 
     integrity_affirmed true
 
+    trait :semifinalist do
+      contest_rank :semifinalist
+    end
+
     trait :complete do
       app_name "Submission name"
       app_description "Submission description"

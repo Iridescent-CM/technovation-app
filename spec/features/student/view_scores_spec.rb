@@ -1,6 +1,19 @@
 require "rails_helper"
 
-RSpec.feature "Admins view scores" do
+RSpec.feature "Students view scores" do
+  before do
+    @enable_scores = ENV.fetch("ENABLE_TEAM_SCORES") { false }
+    ENV["ENABLE_TEAM_SCORES"] = "yes"
+  end
+
+  after do
+    if @enable_scores
+      ENV["ENABLE_TEAM_SCORES"] = @enable_scores
+    else
+      ENV.delete("ENABLE_TEAM_SCORES")
+    end
+  end
+
   scenario "view QF scores" do
     submission = FactoryGirl.create(
       :submission,
@@ -13,11 +26,7 @@ RSpec.feature "Admins view scores" do
 
     FactoryGirl.create(:submission_score, :complete, team_submission: submission)
 
-    admin = FactoryGirl.create(:admin)
-    sign_in(admin)
-
-    click_link "Quarterfinals Scores"
-    click_link "View details"
+    sign_in(submission.team.students.sample)
 
     expect(page).to have_content("earned 2 points")
   end
@@ -40,11 +49,7 @@ RSpec.feature "Admins view scores" do
       team_submission: submission
     )
 
-    admin = FactoryGirl.create(:admin)
-    sign_in(admin)
-
-    click_link "Semifinals Scores"
-    click_link "View details"
+    sign_in(submission.team.students.sample)
 
     expect(page).to have_content("earned 2 points")
   end
