@@ -1,5 +1,6 @@
 class NullTechnicalChecklist
   def present?; false; end
+  def new_record?; false; end
   def started?; false; end
   def total_points; 0; end
   def total_technical_components; 0; end
