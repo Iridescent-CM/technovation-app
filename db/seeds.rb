@@ -35,7 +35,7 @@ if student
   if (student_team = Team.create(name: "All Star Team",
                         description: "We are allstars",
                         division: Division.none_assigned_yet)).valid?
-    student_team.add_student(student)
+    TeamRosterManaging.add(student_team, :student, student)
     puts "Added student to Team: #{student_team.name}"
     puts ""
     puts "============================================================="
@@ -136,7 +136,7 @@ if mentor
                          description: "We are fun times havers",
                          division: Division.none_assigned_yet)).valid?
     SeasonRegistration.register(team)
-    team.add_mentor(mentor)
+    TeamRosterManaging.add(team, :mentor, mentor)
     puts "Added mentor to Team: #{team.name}"
     puts ""
     puts "============================================================="
