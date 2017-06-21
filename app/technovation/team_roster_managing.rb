@@ -1,6 +1,6 @@
 class TeamRosterManaging
   private
-  attr_reader :team, :profiles, :scope, :profile
+  attr_reader :team, :profiles
 
   public
   def initialize(team, profiles)
@@ -18,8 +18,7 @@ class TeamRosterManaging
 
   def add_member
     profiles.each do |profile|
-      @profile = profile
-      @scope = profile.class.name.underscore
+      scope = profile.class.name.underscore
 
       Casting.delegating(team => MembershipsManager) do
         team.send("add_#{scope}", profile)
@@ -29,8 +28,7 @@ class TeamRosterManaging
 
   def remove_member
     profiles.each do |profile|
-      @profile = profile
-      @scope = profile.class.name.underscore
+      scope = profile.class.name.underscore
 
       Casting.delegating(team => MembershipsManager) do
         team.send("remove_#{scope}", profile)
