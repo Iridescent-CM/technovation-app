@@ -32,10 +32,6 @@ class TeamRosterManaging
 
       Casting.delegating(team => MembershipsManager) do
         team.send("remove_#{scope}", profile)
-
-        Casting.delegating(team => DivisionChooser) do
-          team.reconsider_division_with_save
-        end
       end
     end
   end
@@ -78,6 +74,10 @@ class TeamRosterManaging
 
     def remove_student_profile(student)
       memberships.find_by(member: student).destroy
+
+      Casting.delegating(self => DivisionChooser) do
+        reconsider_division_with_save
+      end
 
       if invite = student.team_member_invites.find_by(team_id: id)
         invite.deleted!
