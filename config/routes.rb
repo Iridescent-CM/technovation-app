@@ -31,7 +31,9 @@ Rails.application.routes.draw do
 
     resources :team_submission_pitch_presentations, only: [:new, :edit]
 
-    resource :regional_pitch_event_selection, only: [:show, :create, :update, :destroy]
+    resource :regional_pitch_event_selection,
+      only: [:show, :create, :update, :destroy]
+
     resources :regional_pitch_events, only: :show
     resources :scores, only: [:show]
 

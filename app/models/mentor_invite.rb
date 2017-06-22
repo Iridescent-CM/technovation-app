@@ -4,7 +4,7 @@ class MentorInvite < TeamMemberInvite
   delegate :first_name, to: :invitee, prefix: true
 
   def after_accept
-    team.add_mentor(invitee)
+    TeamRosterManaging.add(team, invitee)
   end
 
   private
@@ -21,8 +21,10 @@ class MentorInvite < TeamMemberInvite
 
   # Overwriting parent validation
   def correct_invitee_type
-    if Account.joins(:mentor_profile).where("lower(email) = ?", invitee_email.downcase).empty?
+     unless Account.joins(:mentor_profile)
+       .where("lower(email) = ?", invitee_email.downcase)
+       .exists?
       errors.add(:invitee_email, :is_not_a_mentor)
-    end
+     end
   end
 end

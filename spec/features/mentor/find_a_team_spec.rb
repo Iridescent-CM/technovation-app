@@ -12,15 +12,20 @@ RSpec.feature "Mentors find a team" do
     skip "Doesn't work in post-deadline"
 
     mentored_team = FactoryGirl.create(:team, :with_mentor) # Default is in Chicago
-    faraway_team = FactoryGirl.create(:team,
-                                      city: "Los Angeles",
-                                      state_province: "CA")
+    faraway_team = FactoryGirl.create(
+      :team,
+      city: "Los Angeles",
+      state_province: "CA"
+    )
 
     within('#submissions') { click_link "Join a team" }
 
     expect(page).to have_css(".team-search-result__name", text: available_team.name)
     expect(page).to have_css(".team-search-result__name", text: mentored_team.name)
-    expect(page).not_to have_css(".team-search-result__name", text: faraway_team.name)
+    expect(page).not_to have_css(
+      ".team-search-result__name",
+      text: faraway_team.name
+    )
   end
 
   scenario "request to join a team" do
