@@ -2,18 +2,13 @@ dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install pdftk
 
-  override:
-    - npm install
-    - npm install webpack -g
-    - webpack
-
 machine:
   ruby:
     version:
       2.4.1
 
   node:
-    version: 6.10.1
+    version: 8.1.2
 
   environment:
     PDFTK_PATH: /usr/bin/pdftk
