@@ -35,6 +35,11 @@ general:
       - /.*-stable/
 
 deployment:
+  beta:
+    branch: react
+    heroku:
+      appname: tc-2018
+
   qa:
     branch: qa
     heroku:
