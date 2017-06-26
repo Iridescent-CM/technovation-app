@@ -3,19 +3,17 @@ dependencies:
     - sudo apt-get update; sudo apt-get install pdftk
 
   override:
-    - yarn
-
-  cache_directories:
-    - ~/.cache/yarn
-
-test:
-  override:
-    - yarn test
+    - npm install
+    - npm install webpack -g
+    - webpack
 
 machine:
   ruby:
     version:
       2.4.1
+
+  node:
+    version: 5.10.1
 
   environment:
     PDFTK_PATH: /usr/bin/pdftk
@@ -38,7 +36,6 @@ machine:
     ENABLE_SUBMISSION_SCORES: yes
     ENABLE_RA_SCORES: yes
     JUDGING_ROUND: QF
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 general:
   branches:
