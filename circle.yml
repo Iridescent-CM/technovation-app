@@ -2,6 +2,13 @@ dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install pdftk
 
+  override:
+    - yarn
+
+test:
+  override:
+    - yarn test
+
 machine:
   ruby:
     version:
