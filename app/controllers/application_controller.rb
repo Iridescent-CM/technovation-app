@@ -51,6 +51,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
+    # TODO: address this "optimization
     @current_account ||= Account.eager_load(
       :regional_ambassador_profile,
 
