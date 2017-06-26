@@ -24,6 +24,10 @@ class Team < ActiveRecord::Base
     )
   end
 
+  def link_to_path
+    Rails.application.routes.url_helpers.team_path(self)
+  end
+
   def type_name
     "student" # Needed for RPE selection views that are shared by judges
   end
