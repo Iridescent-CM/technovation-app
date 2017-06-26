@@ -18,7 +18,6 @@ class TeamSearchesController < ActionController::API
     end
 
     def get_team_matches
-      sleep 2
       if @query.blank?
         @teams.none
       else
