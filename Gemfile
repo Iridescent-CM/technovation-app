@@ -12,7 +12,7 @@ gem 'pdf-forms', '~> 1.1'
 gem "paranoia", '~> 2.3'
 gem 'counter_culture', '~> 1.7'
 
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 6.3'
 gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'

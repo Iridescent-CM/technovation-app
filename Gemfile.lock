@@ -617,7 +617,7 @@ DEPENDENCIES
   flag_shih_tzu (~> 0.3)
   fog (~> 1.40)
   font-awesome-rails (~> 4.7)
-  foundation-rails
+  foundation-rails (~> 6.3)
   friendly_id (~> 5.2)
   geocoder (~> 1.4)
   groupdate (~> 3.2)
