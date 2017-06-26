@@ -5,6 +5,9 @@ dependencies:
   override:
     - yarn
 
+  cache_directories:
+    - ~/.cache/yarn
+
 test:
   override:
     - yarn test
@@ -35,6 +38,7 @@ machine:
     ENABLE_SUBMISSION_SCORES: yes
     ENABLE_RA_SCORES: yes
     JUDGING_ROUND: QF
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 general:
   branches:
