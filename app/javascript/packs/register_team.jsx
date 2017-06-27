@@ -3,101 +3,53 @@ import ReactDOM from 'react-dom'
 
 import $ from 'jquery';
 
+import TeamList from './team_list';
+
 class TeamRegistration extends Component {
-   state = {
-     query: "",
-     teams: [],
-     search_cache: [],
-     searching: false,
-     performed_search: false,
-   }
+  state = {
+    query: "",
+    matched_teams: [],
+    cached_results: [],
+    should_search: false,
+    performed_search: false,
+  }
+
+  componentDidUpdate() {
+    if (this.state.should_search)
+      this.performSearch();
+  }
 
   handleChange = (e) => {
-    const searching = e.target.value.length >= 3 ? true : false;
+    const should_search = e.target.value.length >= 3 ? true : false;
 
     this.setState({
-      searching: searching,
+      should_search: should_search,
       performed_search: false,
       query: e.target.value,
     });
   }
 
   performSearch() {
-    if (this.state.teams.length > 0) {
-      const filteredExistingResults = this.state.search_cache.filter((team) => {
-        return team.name.match(new RegExp("^" + this.state.query, "i"));
-      });
-
-      if (filteredExistingResults.length > 0) {
-        this.setState({
-          searching: false,
-          performed_search: true,
-          teams: filteredExistingResults,
-        });
-      } else {
-        this.setState({
-          searching: true,
-          performed_search: false,
-          teams: [],
-        });
-      }
+    if (this.state.matched_teams.length > 0) {
+      this._performLocalSearch();
     } else {
-      $.ajax({
-        method: "GET",
-        url: "/team_search",
-        dataType: "json",
-        contentType: "application/json",
-        data: { q: this.state.query },
-
-        success: (resp) => {
-          this.setState({
-            teams: resp.results,
-            search_cache: resp.results,
-            searching: false,
-            performed_search: true,
-          });
-        },
-
-        error: (err) => {
-          console.log("Error!", err.responseText);
-
-          this.setState({
-            teams: [],
-            search_cache: [],
-            searching: false,
-            performed_search: true,
-          });
-        }
-      });
+      this._performRemoteSearch();
     }
   }
 
   renderTeamList() {
-    if (this.state.teams.length > 0 || this.state.performed_search) {
+    if (this.state.matched_teams.length > 0 || this.state.performed_search) {
       return(
         <div>
-          <p>Found {this.state.teams.length} results!</p>
-
-          <ul>
-            {this.listTeams()}
-          </ul>
+          <p>Found {this.state.matched_teams.length} results!</p>
+          <TeamList teams={this.state.matched_teams} />
         </div>
       );
     }
   }
 
-  listTeams() {
-    return this.state.teams.map((team) => {
-      return(
-        <li key={team.id}>
-          <a href={team.link_to_path}>{team.name}</a>
-        </li>
-      );
-    });
-  }
-
   renderSearchingIndicator() {
-    if (this.state.searching) {
+    if (this.state.should_search) {
       return(
         <div>
           <span className="fa fa-spinner fa-spin" aria-hidden="true"></span>
@@ -105,11 +57,6 @@ class TeamRegistration extends Component {
         </div>
       );
     }
-  }
-
-  componentDidUpdate() {
-    if (this.state.searching)
-      this.performSearch();
   }
 
   render() {
@@ -136,6 +83,60 @@ class TeamRegistration extends Component {
         </div>
       </div>
     );
+  }
+
+  _performLocalSearch() {
+    let should_search, performed_search, matched_teams;
+
+    const filteredExistingResults = this.state.cached_results.filter((team) => {
+      return team.name.match(new RegExp("^" + this.state.query, "i"));
+    });
+
+    if (filteredExistingResults.length > 0) {
+      should_search = false;
+      performed_search = true;
+      matched_teams = filteredExistingResults;
+    } else {
+      should_search = true;
+      performed_search = false;
+      matched_teams = [];
+    }
+
+    this.setState({
+      should_search,
+      performed_search,
+      matched_teams
+    });
+  }
+
+  _performRemoteSearch() {
+    $.ajax({
+      method: "GET",
+      url: "/team_search",
+      dataType: "json",
+      contentType: "application/json",
+      data: { q: this.state.query },
+
+      success: (resp) => {
+        this.setState({
+          matched_teams: resp.results,
+          cached_results: resp.results,
+          should_search: false,
+          performed_search: true,
+        });
+      },
+
+      error: (err) => {
+        console.log("Error!", err.responseText);
+
+        this.setState({
+          matched_teams: [],
+          cached_results: [],
+          should_search: false,
+          performed_search: true,
+        });
+      }
+    });
   }
 }
 
