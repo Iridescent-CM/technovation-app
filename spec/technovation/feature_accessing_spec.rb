@@ -1,4 +1,3 @@
-require "spec_helper"
 needs "technovation"
 require "feature_accessing"
 
