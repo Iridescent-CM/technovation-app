@@ -14,12 +14,12 @@ RSpec.describe SeasonToggles do
       it "reads back a boolean from #student_signup?" do
         (%w{on yes true} + [true]).each do |on|
           SeasonToggles.student_signup = on
-          expect(SeasonToggles).to be_student_signup
+          expect(SeasonToggles.student_signup?).to be true
         end
 
         (%w{off no false} + [false]).each do |off|
           SeasonToggles.student_signup = off
-          expect(SeasonToggles).not_to be_student_signup
+          expect(SeasonToggles.student_signup?).to be false
         end
       end
     end
