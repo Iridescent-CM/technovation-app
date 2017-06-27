@@ -46,7 +46,7 @@ class SeasonToggles
       if VALID_BOOLS.include?(value.to_s.downcase)
         value.to_s.downcase
       else
-        raise_invalid_input_error(actual: value, expected: VALID_BOOLS.join('|'))
+        raise_invalid_input_error(actual: value, expected: VALID_BOOLS.join(' | '))
       end
     end
 
@@ -56,7 +56,7 @@ class SeasonToggles
       else
         raise_invalid_input_error(
           actual: value,
-          expected: VALID_JUDGING_ROUNDS.join('|')
+          expected: VALID_JUDGING_ROUNDS.join(' | ')
         )
       end
     end

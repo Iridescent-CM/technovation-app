@@ -99,7 +99,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: :judging_round,
-          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS.join('|')
+          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS.join(' | ')
         )
       end
     end
@@ -132,7 +132,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: :student_signup,
-          valid_input: SeasonToggles::VALID_BOOLS.join('|')
+          valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
         )
       end
     end
