@@ -7,11 +7,7 @@ class FeatureAccessing
    attr_accessor :student_signup
 
    validates :student_signup,
-     presence: true,
-     inclusion: {
-       in: %w{on off yes no true false} + [true, false],
-       allow_blank: true
-     }
+     inclusion: { in: %w{on off yes no true false} + [true, false] }
 
    def save
      false
