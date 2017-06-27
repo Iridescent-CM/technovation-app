@@ -1,15 +1,17 @@
 require "active_model"
 
 class SeasonToggles
-   include ActiveModel::Model
-   include ActiveModel::Validations
+  VALID_BOOLS = %w{on off yes no true false} + [true, false]
 
-   attr_accessor :student_signup
+  class << self
+    def student_signup=(value)
+      if VALID_BOOLS.include?(value)
+        true
+      else
+        raise InvalidInput, "Use one of: #{VALID_BOOLS}"
+      end
+    end
+  end
 
-   validates :student_signup,
-     inclusion: { in: %w{on off yes no true false} + [true, false] }
-
-   def save
-     false
-   end
+  class InvalidInput < StandardError; end
 end

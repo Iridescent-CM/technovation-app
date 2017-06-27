@@ -6,26 +6,19 @@ RSpec.describe SeasonToggles do
     context "valid input" do
       it "allows a collection of 'boolean' words and booleans" do
         (%w{on off yes no true false} + [true, false]).each do |good|
-          feature_access = SeasonToggles.new(student_signup: good)
-          expect(feature_access).to be_valid
+          expect { SeasonToggles.student_signup = good }.not_to raise_error
         end
       end
     end
 
     context "bad input" do
-      it "refuses to save" do
+      it "rasies an exception" do
         [nil, "", " ", "foo"].each do |bad|
-          feature_access = SeasonToggles.new(student_signup: bad)
-          expect(feature_access.save).to be false
-        end
-      end
-
-      it "adds an error to the attribute" do
-        [nil, "", " ", "foo"].each do |bad|
-          feature_access = SeasonToggles.new(student_signup: bad)
-          feature_access.valid?
-          expect(feature_access.errors[:student_signup]).to eq(
-            ["is not included in the list"]
+          expect {
+            SeasonToggles.student_signup = bad
+          }.to raise_error(
+            SeasonToggles::InvalidInput,
+            "Use one of: #{SeasonToggles::VALID_BOOLS}"
           )
         end
       end
