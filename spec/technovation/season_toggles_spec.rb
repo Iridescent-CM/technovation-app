@@ -1,139 +1,33 @@
-require "fakeredis"
 needs "technovation"
 require "season_toggles"
 
 RSpec.describe SeasonToggles do
-  def expect_bad_input_raises_error(options)
-    [nil, "", " ", "foo"].each do |bad|
-      expect {
-        SeasonToggles.public_send("#{options[:method]}=", bad)
-      }.to raise_error(
-        SeasonToggles::InvalidInput,
-        "No toggle exists for #{bad}. Use one of: #{options[:valid_input]}"
-      )
-    end
-  end
-
-  def expect_good_input_works(options)
-    options[:valid_input].each do |good|
-      expect {
-        SeasonToggles.public_send("#{options[:method]}=", good)
-      }.not_to raise_error
-    end
-  end
-
-  describe "#judging_round=" do
-    context "valid input" do
-      it "allows a specific set of values" do
-        expect_good_input_works(
-          method: :judging_round,
-          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS +
-            %i{QF SF qF Sf QuarteRfinals quaRter_fiNals sEmifinals sEmi_finals oFf}
-        )
-      end
-
-      it "reads back #judging_round" do
-        SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
-          SeasonToggles.judging_round = jr
-          expect(SeasonToggles.judging_round).to eq(jr)
-        end
-      end
-
-      it "aliases #current_judging_round for #judging_round" do
-        SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
-          SeasonToggles.judging_round = jr
-          expect(SeasonToggles.current_judging_round).to eq(jr)
-        end
-      end
-
-      it "reads back from #quarterfinals_judging?" do
-        SeasonToggles.judging_round = :qf
-        expect(SeasonToggles.quarterfinals_judging?).to be true
-
-        SeasonToggles.judging_round = :quaRter_fiNals
-        expect(SeasonToggles.quarterfinals_judging?).to be true
-
-        SeasonToggles.judging_round = :sf
-        expect(SeasonToggles.quarterfinals_judging?).to be false
-
-        SeasonToggles.judging_round = :semi_Finals
-        expect(SeasonToggles.quarterfinals_judging?).to be false
-
-        SeasonToggles.judging_round = :ofF
-        expect(SeasonToggles.quarterfinals_judging?).to be false
-      end
-
-      it "reads back from #semifinals_judging?" do
-        SeasonToggles.judging_round = :sf
-        expect(SeasonToggles.semifinals_judging?).to be true
-
-        SeasonToggles.judging_round = :semI_fiNals
-        expect(SeasonToggles.semifinals_judging?).to be true
-
-        SeasonToggles.judging_round = :qf
-        expect(SeasonToggles.semifinals_judging?).to be false
-
-        SeasonToggles.judging_round = :quarteR_Finals
-        expect(SeasonToggles.semifinals_judging?).to be false
-
-        SeasonToggles.judging_round = :ofF
-        expect(SeasonToggles.semifinals_judging?).to be false
-      end
-
-      it "aliases semifinals? and quarterfinals? appropriately" do
-        SeasonToggles.judging_round = :ofF
-        expect(SeasonToggles.semifinals?).to be false
-        expect(SeasonToggles.quarterfinals?).to be false
-
-        SeasonToggles.judging_round = :qf
-        expect(SeasonToggles.semifinals?).to be false
-        expect(SeasonToggles.quarterfinals?).to be true
-
-        SeasonToggles.judging_round = :sf
-        expect(SeasonToggles.semifinals?).to be true
-        expect(SeasonToggles.quarterfinals?).to be false
-      end
-    end
-
-    context "bad input" do
-      it "raises an exception" do
-        expect_bad_input_raises_error(
-          method: :judging_round,
-          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS.join('|')
-        )
-      end
-    end
-  end
-
   describe "#student_signup=" do
     context "valid input" do
       it "allows a collection of 'boolean' words and booleans" do
-        expect_good_input_works(
-          method: :student_signup,
-          valid_input: SeasonToggles::VALID_BOOLS +
-            %i{On oFf yEs nO tRue fAlse}
-        )
-      end
-
-      it "reads back a boolean from #student_signup?" do
-        SeasonToggles::VALID_TRUTHY.each do |on|
-          SeasonToggles.student_signup = on
-          expect(SeasonToggles.student_signup?).to be true
-        end
-
-        SeasonToggles::VALID_FALSEY.each do |off|
-          SeasonToggles.student_signup = off
-          expect(SeasonToggles.student_signup?).to be false
+        (%w{on off yes no true false} + [true, false]).each do |good|
+          feature_access = SeasonToggles.new(student_signup: good)
+          expect(feature_access).to be_valid
         end
       end
     end
 
     context "bad input" do
-      it "raises an exception" do
-        expect_bad_input_raises_error(
-          method: :student_signup,
-          valid_input: SeasonToggles::VALID_BOOLS.join('|')
-        )
+      it "refuses to save" do
+        [nil, "", " ", "foo"].each do |bad|
+          feature_access = SeasonToggles.new(student_signup: bad)
+          expect(feature_access.save).to be false
+        end
+      end
+
+      it "adds an error to the attribute" do
+        [nil, "", " ", "foo"].each do |bad|
+          feature_access = SeasonToggles.new(student_signup: bad)
+          feature_access.valid?
+          expect(feature_access.errors[:student_signup]).to eq(
+            ["is not included in the list"]
+          )
+        end
       end
     end
   end
