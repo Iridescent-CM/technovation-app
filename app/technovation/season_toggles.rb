@@ -51,7 +51,7 @@ class SeasonToggles
     end
 
     def with_judging_round_validation(value)
-      if !!value and VALID_JUDGING_ROUNDS.include?(value.to_s.downcase)
+      if VALID_JUDGING_ROUNDS.include?(value.to_s.downcase)
         value.to_s.downcase
       else
         raise_invalid_input_error(
