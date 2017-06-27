@@ -1,5 +1,3 @@
-require "active_model"
-
 class SeasonToggles
   VALID_TRUTHY = %w{on yes true} + [true]
   VALID_FALSEY = %w{off no false} + [false]
