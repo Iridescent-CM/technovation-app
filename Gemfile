@@ -101,6 +101,7 @@ group :test do
   gem 'capybara-webkit', "~> 1.14"
   gem 'database_cleaner', "~> 1.6"
   gem 'rails-controller-testing', "~> 1.0"
+  gem "fakeredis", "~> 0.6", require: "fakeredis/rspec"
 end
 
 group :production, :development do
