@@ -24,7 +24,7 @@ class TeamRegistration extends Component {
 
   performSearch() {
     if (this.state.teams.length > 0) {
-      const filteredExistingResults = this.state.teams.filter((team) => {
+      const filteredExistingResults = this.state.search_cache.filter((team) => {
         return team.name.match(new RegExp("^" + this.state.query, "i"));
       });
 
@@ -52,6 +52,7 @@ class TeamRegistration extends Component {
         success: (resp) => {
           this.setState({
             teams: resp.results,
+            search_cache: resp.results,
             searching: false,
             performed_search: true,
           });
@@ -61,6 +62,8 @@ class TeamRegistration extends Component {
           console.log("Error!", err.responseText);
 
           this.setState({
+            teams: [],
+            search_cache: [],
             searching: false,
             performed_search: true,
           });
@@ -70,16 +73,14 @@ class TeamRegistration extends Component {
   }
 
   renderTeamList() {
-    if (this.state.performed_search) {
+    if (this.state.teams.length > 0 || this.state.performed_search) {
       return(
-        <div className="row align-center">
-          <div className="shrink columns">
-            <p>Found {this.state.teams.length} results!</p>
+        <div>
+          <p>Found {this.state.teams.length} results!</p>
 
-            <ul>
-              {this.listTeams()}
-            </ul>
-          </div>
+          <ul>
+            {this.listTeams()}
+          </ul>
         </div>
       );
     }
@@ -98,11 +99,9 @@ class TeamRegistration extends Component {
   renderSearchingIndicator() {
     if (this.state.searching) {
       return(
-        <div className="row align-center">
-          <div className="shrink columns">
-            <span className="fa fa-spinner fa-spin" aria-hidden="true"></span>
-            &nbsp;Searching...
-          </div>
+        <div>
+          <span className="fa fa-spinner fa-spin" aria-hidden="true"></span>
+          &nbsp;Searching...
         </div>
       );
     }
@@ -130,11 +129,11 @@ class TeamRegistration extends Component {
               name="team_name"
               type="text"
               placeholder="Team Name" />
+
+            {this.renderSearchingIndicator()}
+            {this.renderTeamList()}
           </div>
         </div>
-
-        {this.renderSearchingIndicator()}
-        {this.renderTeamList()}
       </div>
     );
   }
