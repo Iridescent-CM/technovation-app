@@ -1,2 +1,24 @@
  @import "foundation_and_overrides";
  @import "font-awesome";
+
+ .container {
+   padding: 1rem 0;
+ }
+
+ .major-focus-box {
+  padding: 5rem 0;
+
+  label {
+    font-size: 2rem;
+  }
+
+  input[type=text] {
+    font-size: 5rem;
+    height: auto;
+
+    &::placeholder {
+      text-align: center;
+      color: #999;
+    }
+  }
+}

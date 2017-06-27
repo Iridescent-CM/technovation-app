@@ -236,7 +236,11 @@ Rails.application.routes.draw do
   resource :token_error, only: :show
   resource :timeout_error, only: :show
 
-  resource :team_search, only: :show
+  resource :team_search, only: %i{new show}
 
-  root to: "application/dashboards#show"
+  if ENV.fetch("APP_VERSION") { 2 }.to_i === 3
+    root to: "team_searches#new"
+  else
+    root to: "application/dashboards#show"
+  end
 end

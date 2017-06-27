@@ -7,8 +7,9 @@ class TeamRegistration extends Component {
    state = {
      query: "",
      teams: [],
+     search_cache: [],
      searching: false,
-     searched: false,
+     performed_search: false,
    }
 
   handleChange = (e) => {
@@ -16,7 +17,7 @@ class TeamRegistration extends Component {
 
     this.setState({
       searching: searching,
-      searched: false,
+      performed_search: false,
       query: e.target.value,
     });
   }
@@ -30,13 +31,13 @@ class TeamRegistration extends Component {
       if (filteredExistingResults.length > 0) {
         this.setState({
           searching: false,
-          searched: true,
+          performed_search: true,
           teams: filteredExistingResults,
         });
       } else {
         this.setState({
           searching: true,
-          searched: false,
+          performed_search: false,
           teams: [],
         });
       }
@@ -52,7 +53,7 @@ class TeamRegistration extends Component {
           this.setState({
             teams: resp.results,
             searching: false,
-            searched: true,
+            performed_search: true,
           });
         },
 
@@ -61,7 +62,7 @@ class TeamRegistration extends Component {
 
           this.setState({
             searching: false,
-            searched: true,
+            performed_search: true,
           });
         }
       });
@@ -69,7 +70,7 @@ class TeamRegistration extends Component {
   }
 
   renderTeamList() {
-    if (this.state.searched) {
+    if (this.state.performed_search) {
       return(
         <div className="row align-center">
           <div className="shrink columns">
@@ -115,14 +116,20 @@ class TeamRegistration extends Component {
   render() {
     return(
       <div className="container">
-        <div className="row">
-          <div className="columns">
+        <div className="row stack align-center">
+          <h1 className="heading1">
+            Welcome to Technovation
+          </h1>
+
+          <div className="medium-7 columns major-focus-box">
+            <label htmlFor="team_name">Register your team</label>
+
             <input
               value={this.state.query}
               onChange={this.handleChange}
-              id="team_name"
+              name="team_name"
               type="text"
-              placeholder="Your team's name" />
+              placeholder="Team Name" />
           </div>
         </div>
 

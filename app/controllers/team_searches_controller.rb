@@ -1,4 +1,4 @@
-class TeamSearchesController < ActionController::API
+class TeamSearchesController < V3::ApplicationController
   def show
     searching = TeamSearching.new(params[:q])
     results = searching.get_team_matches
