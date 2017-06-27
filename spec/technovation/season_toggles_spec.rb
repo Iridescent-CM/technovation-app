@@ -1,3 +1,4 @@
+require "fakeredis"
 needs "technovation"
 require "season_toggles"
 

@@ -5,22 +5,28 @@ class SeasonToggles
 
   class << self
     def student_signup=(value)
-      @@student_signup = convert_to_bool(value)
+      store.set(:student_signup, with_bool_validation(value))
     end
 
     def student_signup?
-      @@student_signup
+      convert_to_bool(store.get(:student_signup))
     end
 
     private
-    def convert_to_bool(value)
-      if VALID_TRUTHY.include?(value)
-        true
-      elsif VALID_FALSEY.include?(value)
-        false
+    def store
+      @@store ||= Redis.new
+    end
+
+    def with_bool_validation(value)
+      if VALID_BOOLS.include?(value)
+        value
       else
         raise InvalidInput, "Use one of: #{VALID_BOOLS}"
       end
+    end
+
+    def convert_to_bool(value)
+      VALID_TRUTHY.include?(value)
     end
   end
 
