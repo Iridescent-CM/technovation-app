@@ -3,9 +3,11 @@ class SeasonToggles
   VALID_FALSEY = %w{off no false}
   VALID_BOOLS = VALID_TRUTHY + VALID_FALSEY
 
-  VALID_JUDGING_ROUNDS = %w{
-    qf sf quarter_finals semi_finals quarterfinals semifinals off
-  }
+  VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
+  VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
+  VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
+                           VALID_SF_JUDGING_ROUNDS +
+                             %w{off}
 
   class << self
     def judging_round=(value)
@@ -15,6 +17,17 @@ class SeasonToggles
     def judging_round
       store.get(:judging_round)
     end
+    alias :current_judging_round :judging_round
+
+    def quarterfinals_judging?
+      VALID_QF_JUDGING_ROUNDS.include?(judging_round)
+    end
+    alias :quarterfinals? :quarterfinals_judging?
+
+    def semifinals_judging?
+      VALID_SF_JUDGING_ROUNDS.include?(judging_round)
+    end
+    alias :semifinals? :semifinals_judging?
 
     def student_signup=(value)
       store.set(:student_signup, with_bool_validation(value))

@@ -32,11 +32,66 @@ RSpec.describe SeasonToggles do
         )
       end
 
-      it "reads back #current_judging_round" do
+      it "reads back #judging_round" do
         SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
           SeasonToggles.judging_round = jr
           expect(SeasonToggles.judging_round).to eq(jr)
         end
+      end
+
+      it "aliases #current_judging_round for #judging_round" do
+        SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
+          SeasonToggles.judging_round = jr
+          expect(SeasonToggles.current_judging_round).to eq(jr)
+        end
+      end
+
+      it "reads back from #quarterfinals_judging?" do
+        SeasonToggles.judging_round = :qf
+        expect(SeasonToggles.quarterfinals_judging?).to be true
+
+        SeasonToggles.judging_round = :quaRter_fiNals
+        expect(SeasonToggles.quarterfinals_judging?).to be true
+
+        SeasonToggles.judging_round = :sf
+        expect(SeasonToggles.quarterfinals_judging?).to be false
+
+        SeasonToggles.judging_round = :semi_Finals
+        expect(SeasonToggles.quarterfinals_judging?).to be false
+
+        SeasonToggles.judging_round = :ofF
+        expect(SeasonToggles.quarterfinals_judging?).to be false
+      end
+
+      it "reads back from #semifinals_judging?" do
+        SeasonToggles.judging_round = :sf
+        expect(SeasonToggles.semifinals_judging?).to be true
+
+        SeasonToggles.judging_round = :semI_fiNals
+        expect(SeasonToggles.semifinals_judging?).to be true
+
+        SeasonToggles.judging_round = :qf
+        expect(SeasonToggles.semifinals_judging?).to be false
+
+        SeasonToggles.judging_round = :quarteR_Finals
+        expect(SeasonToggles.semifinals_judging?).to be false
+
+        SeasonToggles.judging_round = :ofF
+        expect(SeasonToggles.semifinals_judging?).to be false
+      end
+
+      it "aliases semifinals? and quarterfinals? appropriately" do
+        SeasonToggles.judging_round = :ofF
+        expect(SeasonToggles.semifinals?).to be false
+        expect(SeasonToggles.quarterfinals?).to be false
+
+        SeasonToggles.judging_round = :qf
+        expect(SeasonToggles.semifinals?).to be false
+        expect(SeasonToggles.quarterfinals?).to be true
+
+        SeasonToggles.judging_round = :sf
+        expect(SeasonToggles.semifinals?).to be true
+        expect(SeasonToggles.quarterfinals?).to be false
       end
     end
 
