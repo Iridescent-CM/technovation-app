@@ -33,9 +33,6 @@ chdir APP_ROOT do
   puts "\n== Preparing database =="
   system! "rails db:setup"
 
-  puts "\n== Seeding Development =="
-  system! "rails db:seed"
-
   puts "\n== Bootstrapping Technovation =="
   system! "rails bootstrap"
 
