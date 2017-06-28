@@ -22,6 +22,43 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  %w{mentor student}.each do |scope|
+    describe "##{scope}_survey_link=" do
+      it "takes and returns a hash" do
+        SeasonToggles.public_send("#{scope}_survey_link=", {
+          text: "Hello World",
+          url: "https://google.com",
+        })
+
+        expect(SeasonToggles.public_send("#{scope}_survey_link")).to eq({
+          "text" => "Hello World",
+          "url" => "https://google.com",
+        })
+      end
+    end
+
+    describe "##{scope}_survey_link?" do
+      it "returns true if the text and url are present" do
+        SeasonToggles.public_send("#{scope}_survey_link=", {
+          text: "Hello World",
+          url: "https://google.com",
+        })
+
+        expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be true
+      end
+
+      it "returns false if the text or url are blank" do
+        [{ url: "https://google.com" },
+         { text: "Hello, World" },
+         { text: "", url: "https://..." },
+         { text: "hello...", url: "" }].each do |bad|
+          SeasonToggles.public_send("#{scope}_survey_link=", bad)
+          expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be false
+        end
+      end
+    end
+  end
+
   describe "#judging_round=" do
     context "valid input" do
       it "allows a specific set of values" do
