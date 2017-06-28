@@ -23,4 +23,6 @@ public/uploads
 .vscode/**/*
 churn*
 node_modules
-public/packs
+/public/packs
+/public/packs-test
+/node_modules

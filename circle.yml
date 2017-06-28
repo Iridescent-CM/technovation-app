@@ -7,6 +7,9 @@ machine:
     version:
       2.4.1
 
+  node:
+    version: 8.1.2
+
   environment:
     PDFTK_PATH: /usr/bin/pdftk
     AIRBRAKE_PROJECT_ID: n-a
@@ -35,6 +38,11 @@ general:
       - /.*-stable/
 
 deployment:
+  beta:
+    branch: react
+    heroku:
+      appname: tc-2018
+
   qa:
     branch: qa
     heroku:

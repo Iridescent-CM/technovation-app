@@ -111,3 +111,10 @@ Release next major (ex: 2.59.8 -> 3.0.0)
 ```
 rails release major
 ```
+
+## Configure a heroku instance
+
+```
+heroku config:set LD_LIBRARY_PATH=/app/vendor/pdftk/lib --app APPNAME
+heroku config:set PDFTK_PATH: /app/vendor/pdftk/bin/pdftk --app APPNAME
+```

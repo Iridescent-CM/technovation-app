@@ -1,0 +1,7 @@
+<%= content_tag :div,
+  id: "react-register-team-data",
+  data: {
+    team_name: params[:name],
+    url: team_registrations_path,
+  } do %><% end %>
+<%= javascript_pack_tag 'register_team' %>

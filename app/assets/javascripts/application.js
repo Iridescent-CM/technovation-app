@@ -1,5 +1,6 @@
 //= require jquery2
 //= require jquery_ujs
+//= require foundation
 //= require jquery-ui/effect.all
 //= require lodash
 //= require chosen-jquery
@@ -49,3 +50,5 @@
     placeholder_text_single: "Choose a country",
   });
 })();
+
+$(function(){ $(document).foundation(); });

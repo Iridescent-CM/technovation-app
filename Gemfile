@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby "~> 2.4"
 
 gem 'rails', '~> 5.1'
+gem 'webpacker', '~> 2.0'
 gem 'puma', '~> 3.9'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
@@ -11,6 +12,7 @@ gem 'pdf-forms', '~> 1.1'
 gem "paranoia", '~> 2.3'
 gem 'counter_culture', '~> 1.7'
 
+gem 'foundation-rails', '~> 6.3'
 gem 'uglifier', '~> 3.2'
 gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'

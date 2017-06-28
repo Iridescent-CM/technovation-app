@@ -2,6 +2,10 @@ require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
+  get 'team_registrations/new'
+
+  get 'team_searches/show'
+
   mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
   get '/sidekiq' => 'signins#new'
 
@@ -234,5 +238,12 @@ Rails.application.routes.draw do
   resource :token_error, only: :show
   resource :timeout_error, only: :show
 
-  root to: "application/dashboards#show"
+  resource :team_search, only: %i{new show}
+  resources :team_registrations, only: %i{new create}
+
+  if ENV.fetch("APP_VERSION") { 2 }.to_i === 3
+    root to: "team_searches#new"
+  else
+    root to: "application/dashboards#show"
+  end
 end
