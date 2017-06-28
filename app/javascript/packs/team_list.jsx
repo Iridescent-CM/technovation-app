@@ -12,7 +12,7 @@ const TeamList = props => {
   }
 
   return(
-    <ul>
+    <ul className="lists--search-results">
       {renderList()}
     </ul>
   );

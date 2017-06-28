@@ -17,25 +17,6 @@ class Team < ActiveRecord::Base
 
   after_commit :register_to_season, on: :create
 
-  def as_indexed_json(options = {})
-    as_json(
-      only: %w{id name description spot_available?},
-      methods: :spot_available?
-    )
-  end
-
-  def link_to_path
-    Rails.application.routes.url_helpers.team_path(self)
-  end
-
-  def type_name
-    "student" # Needed for RPE selection views that are shared by judges
-  end
-
-  def photo
-    team_photo
-  end
-
   mount_uploader :team_photo, TeamPhotoProcessor
 
   scope :current, -> {
@@ -79,7 +60,7 @@ class Team < ActiveRecord::Base
   has_many :season_registrations, as: :registerable
   has_many :seasons, through: :season_registrations
 
-  belongs_to :division
+  belongs_to :division, optional: true
 
   has_many :team_submissions, dependent: :destroy
   has_many :submission_scores, through: :team_submissions
@@ -116,11 +97,28 @@ class Team < ActiveRecord::Base
   has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
-  validates :description, presence: true
-  validates :division, presence: true
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
+
+  def as_indexed_json(options = {})
+    as_json(
+      only: %w{id name description spot_available?},
+      methods: :spot_available?
+    )
+  end
+
+  def link_to_path
+    Rails.application.routes.url_helpers.team_path(self)
+  end
+
+  def type_name
+    "student" # Needed for RPE selection views that are shared by judges
+  end
+
+  def photo
+    team_photo
+  end
 
   def remove_from_live_event
     team_submissions.flat_map(&:submission_scores).each(&:destroy)
@@ -249,6 +247,7 @@ class Team < ActiveRecord::Base
 
   private
   def register_to_season
+    # TODO: this won't work in the future for re-registering past teams!
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)
     end

@@ -23,3 +23,40 @@
     }
   }
 }
+
+.lists--search-results {
+  border: 1px solid lightgrey;
+  border-radius: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+
+  li {
+    border-bottom: 1px solid lightgrey;
+
+    &:first-child {
+      a {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+      a {
+        border-bottom-right-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+      }
+    }
+
+    a {
+      display: block;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.2s ease-out;
+
+      &:hover {
+        background: lightgrey;
+      }
+    }
+  }
+}

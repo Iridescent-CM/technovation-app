@@ -3,146 +3,86 @@ import ReactDOM from 'react-dom'
 
 import $ from 'jquery';
 
-import TeamList from './team_list';
-
-class TeamRegistration extends Component {
+class TeamRegistrationForm extends Component {
   state = {
-    query: "",
-    matched_teams: [],
-    cached_results: [],
-    should_search: false,
-    performed_search: false,
-  }
-
-  componentDidUpdate() {
-    if (this.state.should_search)
-      this.performSearch();
+    team_name: this.props.teamName,
   }
 
   handleChange = (e) => {
-    const should_search = e.target.value.length >= 3 ? true : false;
-
     this.setState({
-      should_search: should_search,
-      performed_search: false,
-      query: e.target.value,
+      team_name: e.target.value,
     });
   }
 
-  performSearch() {
-    if (this.state.matched_teams.length > 0) {
-      this._performLocalSearch();
-    } else {
-      this._performRemoteSearch();
-    }
-  }
+  handleClick = (e) => {
+    $.ajax({
+      method: "POST",
+      url: this.props.url,
 
-  renderTeamList() {
-    if (this.state.matched_teams.length > 0 || this.state.performed_search) {
-      return(
-        <div>
-          <p>Found {this.state.matched_teams.length} results!</p>
-          <TeamList teams={this.state.matched_teams} />
-        </div>
-      );
-    }
-  }
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader(
+          'X-CSRF-Token',
+          $('meta[name="csrf-token"]').attr('content')
+        );
+      },
 
-  renderSearchingIndicator() {
-    if (this.state.should_search) {
-      return(
-        <div>
-          <span className="fa fa-spinner fa-spin" aria-hidden="true"></span>
-          &nbsp;Searching...
-        </div>
-      );
-    }
+      data: {
+        team: {
+          name: this.state.team_name,
+        },
+      },
+
+      success: (data) => {
+        console.log(data);
+      },
+
+      error: (err) => {
+        console.log(err.responseText);
+      },
+    });
   }
 
   render() {
     return(
       <div className="container">
-        <div className="row stack align-center">
-          <h1 className="heading1">
-            Welcome to Technovation
-          </h1>
+        <div className="row align-center">
+          <div className="columns large-6">
+            <h1>Register your team</h1>
 
-          <div className="medium-7 columns major-focus-box">
-            <label htmlFor="team_name">Register your team</label>
+            <label htmlFor="team_name">
+              First, tell us your team's name
+            </label>
 
-            <input
-              value={this.state.query}
-              onChange={this.handleChange}
-              name="team_name"
-              type="text"
-              placeholder="Team Name" />
+            <div className="input-group">
+              <input
+                className="input-group-field"
+                name="team_name"
+                type="text"
+                value={this.state.team_name}
+                onChange={this.handleChange}
+              />
 
-            {this.renderSearchingIndicator()}
-            {this.renderTeamList()}
+              <div className="input-group-button">
+                <input
+                  type="submit"
+                  className="button"
+                  value="Next"
+                  onClick={this.handleClick}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
-
-  _performLocalSearch() {
-    let should_search, performed_search, matched_teams;
-
-    const filteredExistingResults = this.state.cached_results.filter((team) => {
-      return team.name.match(new RegExp("^" + this.state.query, "i"));
-    });
-
-    if (filteredExistingResults.length > 0) {
-      should_search = false;
-      performed_search = true;
-      matched_teams = filteredExistingResults;
-    } else {
-      should_search = true;
-      performed_search = false;
-      matched_teams = [];
-    }
-
-    this.setState({
-      should_search,
-      performed_search,
-      matched_teams
-    });
-  }
-
-  _performRemoteSearch() {
-    $.ajax({
-      method: "GET",
-      url: "/team_search",
-      dataType: "json",
-      contentType: "application/json",
-      data: { q: this.state.query },
-
-      success: (resp) => {
-        this.setState({
-          matched_teams: resp.results,
-          cached_results: resp.results,
-          should_search: false,
-          performed_search: true,
-        });
-      },
-
-      error: (err) => {
-        console.log("Error!", err.responseText);
-
-        this.setState({
-          matched_teams: [],
-          cached_results: [],
-          should_search: false,
-          performed_search: true,
-        });
-      }
-    });
-  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const data = $('#react-register-team-data').data();
+
   ReactDOM.render(
-    <TeamRegistration />,
+    <TeamRegistrationForm {...data} />,
     document.body.appendChild(document.createElement('div')),
   )
 })
