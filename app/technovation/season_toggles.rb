@@ -10,6 +10,23 @@ class SeasonToggles
                              %w{off}
 
   class << self
+    %w{mentor student}.each do |scope|
+      define_method("#{scope}_survey_link=") do |attrs|
+        store.set("#{scope}_survey_link", attrs.to_json)
+      end
+
+      define_method("#{scope}_survey_link") do
+        JSON.parse(store.get("#{scope}_survey_link"))
+      end
+
+      define_method("#{scope}_survey_link?") do
+        %w{text url}.all? do |key|
+          !!public_send("#{scope}_survey_link")[key] and
+            not public_send("#{scope}_survey_link")[key].empty?
+        end
+      end
+    end
+
     def judging_round=(value)
       store.set(:judging_round, with_judging_round_validation(value))
     end
@@ -29,12 +46,14 @@ class SeasonToggles
     end
     alias :semifinals? :semifinals_judging?
 
-    def student_signup=(value)
-      store.set(:student_signup, with_bool_validation(value))
-    end
+    %w{student mentor judge regional_ambassador}.each do |scope|
+      define_method("#{scope}_signup=") do |value|
+        store.set("#{scope}_signup", with_bool_validation(value))
+      end
 
-    def student_signup?
-      convert_to_bool(store.get(:student_signup))
+      define_method("#{scope}_signup?") do
+        convert_to_bool(store.get("#{scope}_signup"))
+      end
     end
 
     private

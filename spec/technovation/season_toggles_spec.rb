@@ -22,6 +22,43 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  %w{mentor student}.each do |scope|
+    describe "##{scope}_survey_link=" do
+      it "takes and returns a hash" do
+        SeasonToggles.public_send("#{scope}_survey_link=", {
+          text: "Hello World",
+          url: "https://google.com",
+        })
+
+        expect(SeasonToggles.public_send("#{scope}_survey_link")).to eq({
+          "text" => "Hello World",
+          "url" => "https://google.com",
+        })
+      end
+    end
+
+    describe "##{scope}_survey_link?" do
+      it "returns true if the text and url are present" do
+        SeasonToggles.public_send("#{scope}_survey_link=", {
+          text: "Hello World",
+          url: "https://google.com",
+        })
+
+        expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be true
+      end
+
+      it "returns false if the text or url are blank" do
+        [{ url: "https://google.com" },
+         { text: "Hello, World" },
+         { text: "", url: "https://..." },
+         { text: "hello...", url: "" }].each do |bad|
+          SeasonToggles.public_send("#{scope}_survey_link=", bad)
+          expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be false
+        end
+      end
+    end
+  end
+
   describe "#judging_round=" do
     context "valid input" do
       it "allows a specific set of values" do
@@ -105,36 +142,40 @@ RSpec.describe SeasonToggles do
     end
   end
 
-  describe "#student_signup=" do
-    context "valid input" do
-      it "allows a collection of 'boolean' words and booleans" do
-        expect_good_input_works(
-          method: :student_signup,
-          valid_input: SeasonToggles::VALID_BOOLS +
-            %i{On oFf yEs nO tRue fAlse}
-        )
-      end
+  %i(student mentor judge regional_ambassador).each do |scope|
 
-      it "reads back a boolean from #student_signup?" do
-        SeasonToggles::VALID_TRUTHY.each do |on|
-          SeasonToggles.student_signup = on
-          expect(SeasonToggles.student_signup?).to be true
+    describe "##{scope}_signup=" do
+      context "valid input" do
+        it "allows a collection of 'boolean' words and booleans" do
+          expect_good_input_works(
+            method: "#{scope}_signup",
+            valid_input: SeasonToggles::VALID_BOOLS +
+              %i{On oFf yEs nO tRue fAlse}
+          )
         end
 
-        SeasonToggles::VALID_FALSEY.each do |off|
-          SeasonToggles.student_signup = off
-          expect(SeasonToggles.student_signup?).to be false
+        it "reads back a boolean from ##{scope}_signup?" do
+          SeasonToggles::VALID_TRUTHY.each do |on|
+            SeasonToggles.public_send("#{scope}_signup=", on)
+            expect(SeasonToggles.public_send("#{scope}_signup?")).to be true
+          end
+
+          SeasonToggles::VALID_FALSEY.each do |off|
+            SeasonToggles.public_send("#{scope}_signup=", off)
+            expect(SeasonToggles.public_send("#{scope}_signup?")).to be false
+          end
+        end
+      end
+
+      context "bad input" do
+        it "raises an exception" do
+          expect_bad_input_raises_error(
+            method: "#{scope}_signup",
+            valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
+          )
         end
       end
     end
 
-    context "bad input" do
-      it "raises an exception" do
-        expect_bad_input_raises_error(
-          method: :student_signup,
-          valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
-        )
-      end
-    end
   end
 end
