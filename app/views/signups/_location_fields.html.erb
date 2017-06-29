@@ -1,54 +1,69 @@
-<div class="signups__location-fields">
-  <%= simple_form_for current_profile,
-    url: [current_account.type_name(controller_path.split('/').first), :profile],
-    html: { class: "no-simple-form-style" } do |f| %>
+<% provide(
+  :js,
+  javascript_include_tag(
+    "location-details",
+    'data-turbolinks-track' => true
+  )
+) %>
 
-    <div class="while-geocoding">
-      <%= fa_icon "circle-o-notch spin", text: "Detecting your location..." %>
-    </div>
+<%= simple_form_for current_profile, url: [current_scope, :profile] do |f| %>
+  <%= hidden_field_tag :return_to, params[:return] %>
 
-    <%= f.fields_for :account do |a| %>
-      <%= a.input :city,
-        input_html: {
-          id: "account_city",
-          data: {
-            geolocation_url: geolocation_results_path,
-          },
-        } %>
+  <div class="while-geocoding">
+    <%= web_icon "spinner2", class: "spin" %>
+    Detecting your location...
+  </div>
 
-      <%= a.input :state_province,
-        label: t("models.account.state_province"),
-        input_html: {
-          id: "account_state_province",
-        } %>
+  <%= f.fields_for :account do |a| %>
+    <%= a.input :city,
+      input_html: {
+        id: "city",
+        data: {
+          geolocation_url: geolocation_results_path,
+        },
+      } %>
 
-      <%= a.input :country,
-        label: t("models.account.country"),
-        collection: CountryStateSelect.countries_collection,
-        input_html: {
-          id: "account_country",
-          class: "chosen"
-        } %>
+    <%= a.input :state_province,
+      label: t("models.account.state_province"),
+      input_html: {
+        id: "state_province",
+      } %>
 
-      <%= a.input :latitude, as: :hidden,
-        input_html: {
-          id: "account_latitude",
-        } %>
+    <%= a.input :country,
+      label: t("models.account.country"),
+      collection: CountryStateSelect.countries_collection,
+      input_html: {
+        id: "country",
+        class: "chosen"
+      } %>
 
-      <%= a.input :longitude, as: :hidden,
-        input_html: {
-          id: "account_longitude",
-        } %>
+    <%= a.input :latitude, as: :hidden,
+      input_html: {
+        id: "latitude",
+      } %>
 
-      <ul>
-        <li><strong>Double-check</strong> and confirm the information above.</li>
-        <li><strong>Only</strong> change something that is incorrect.</li>
-        <li><strong>Do not</strong> change anything due to formatting.</li>
-      </ul>
-    <% end %>
+    <%= a.input :longitude, as: :hidden,
+      input_html: {
+        id: "longitude",
+      } %>
 
-    <p class="standalone-buttons">
-      <%= f.button :submit, "Save", class: "appy-button" %>
-    </p>
+    <ul>
+      <li>
+        <strong>Double-check</strong>
+        and confirm the information above.
+      </li>
+
+      <li>
+        <strong>Only</strong>
+        change something that is incorrect.
+      </li>
+
+      <li>
+        <strong>Please do not</strong>
+        change anything due to formatting.
+      </li>
+    </ul>
   <% end %>
-</div>
+
+  <%= f.button :submit, "Save", class: "button" %>
+<% end %>

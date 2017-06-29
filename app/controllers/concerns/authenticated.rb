@@ -3,7 +3,8 @@ module Authenticated
 
   included do
     before_action :unauthorized!, if: -> {
-      current_account.authenticated? and current_account.send("#{model_name}_profile").nil?
+      current_account.authenticated? and
+        current_account.send("#{current_scope}_profile").nil?
     }
 
     before_action :unauthenticated!, if: -> {
@@ -20,7 +21,7 @@ module Authenticated
 
   private
   def unauthorized!
-    redirect_to send("#{current_account.type_name}_dashboard_path"),
+    redirect_to send("#{current_account.scope_name}_dashboard_path"),
       error: t("controllers.application.unauthorized") and return
   end
 
@@ -29,7 +30,7 @@ module Authenticated
 
     redirect_to signin_path,
       notice: t("controllers.application.unauthenticated",
-                profile: model_name.indefinitize.humanize.downcase) and return
+                profile: current_scope.indefinitize.humanize.downcase) and return
   end
 
   def interrupt!

@@ -1,0 +1,51 @@
+/*
+ * Colors
+ */
+$doc-bg: #ececec;
+
+$shamrock: #5ABF94;
+$shamrock-mid: #28A880;
+$shamrock-dark: #006540;
+
+$mulberry: #903D54;
+$mulberry-mid: #7C324D;
+$mulberry-dark: #53042D;
+
+$mulberry-translucent: rgba(144, 61, 84, 0.95);
+
+$marine: #4BC2C6;
+$marine-mid: #00ABAD;
+$marine-dark: #006667;
+
+$info: #BDE5F8;
+$info-txt: #00529B;
+
+$alert: #FFBABA;
+$alert-txt: #D8000C;
+
+$success: #DFF2BF;
+$success-txt: #4F8A10;
+
+$grey-translucent: rgba(50, 50, 50, 0.5);
+
+/*
+ * Shadows
+ */
+$shadow-default: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.3);
+$shadow-darker: 0.2rem 0 0.5rem rgba(0, 0, 0, 0.5);
+$shadow-small: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+
+/*
+ * Border-Radius
+ */
+$radius-default: 0.2rem;
+
+/*
+ * z-index levels
+ */
+
+$z-modal: 999999;
+$z-shade: $z-modal - 1;
+$z-under-shade: $z-shade - 1;
+$z-menu: $z-under-shade;
+$z-under-menu: $z-menu - 1;

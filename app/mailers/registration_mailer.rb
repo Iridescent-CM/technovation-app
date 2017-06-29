@@ -6,7 +6,8 @@ class RegistrationMailer < ApplicationMailer
       headers['X-Mailgun-Campaign-Id'] = 'tqylf'
 
       mail to: signup_attempt.email,
-          subject: t("registration_mailer.confirm_email.subject", season_year: Season.current.year)
+        subject: t("registration_mailer.confirm_email.subject",
+                   season_year: Season.current.year)
     else
       raise TokenNotPresent, "SignupAttempt ID: #{signup_attempt.id}"
     end
@@ -34,8 +35,9 @@ class RegistrationMailer < ApplicationMailer
 
     I18n.with_locale(mentor.locale) do
       mail to: mentor.email,
-           from: "Monica Gragg <monica@technovationchallenge.org>",
-           subject: t("registration_mailer.welcome_mentor.subject", season_year: Season.current.year)
+        from: "Monica Gragg <monica@technovationchallenge.org>",
+        subject: t("registration_mailer.welcome_mentor.subject",
+                   season_year: Season.current.year)
     end
   end
 

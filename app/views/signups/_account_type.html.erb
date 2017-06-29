@@ -1,29 +1,36 @@
 <% enabled ||= false %>
 
-<div class="account-type">
+<div class="signup-scope panel">
   <% if enabled %>
-    <%= link_to public_send("#{role}_signup_path"), class: "account-type__img account-type__img--#{role}" do %>
-      <span><%= t("views.signups.new.roles.#{role}") %></span>
+    <%= link_to public_send("#{scope}_signup_path"),
+      class: "signup-scope-img #{scope}" do %>
+      <span><%= t("views.signups.new.scopes.#{scope}") %></span>
     <% end %>
   <% else %>
-    <div class="account-type__img account-type__img--disabled account-type__img--<%= role %>">
+    <div class="signup-scope-img disabled <%= scope %>">
       <span>
-        <%= t("views.signups.new.roles.#{role}") %>
+        <%= t("views.signups.new.scopes.#{scope}") %>
       </span>
     </div>
   <% end %>
 
-  <div class="account-type__description">
+  <div class="signup-scope-desc">
     <% if enabled %>
-      <p><%= t("views.signups.new.descriptions.#{role}") %></p>
-    <% else %>
-      <p><%= t("views.signups.new.descriptions.disabled.#{role}") %></p>
-    <% end %>
+      <p><%= t("views.signups.new.descriptions.#{scope}") %></p>
 
-    <%= link_to t("views.signups.new.signup_link.#{role}"),
-                public_send("#{role}_signup_path"),
-                class: "appy-button",
-                disabled: !enabled %>
+      <p>
+        <%= link_to t("views.signups.new.signup_link.#{scope}"),
+          public_send("#{scope}_signup_path"),
+          class: "button" %>
+      </p>
+    <% else %>
+      <p>
+        <%= t(
+          "views.signups.new.descriptions.disabled.#{scope}",
+          year: Season.current.year
+        ) %>
+      </p>
+    <% end %>
   </div>
 </div>
 

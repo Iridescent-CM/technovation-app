@@ -1,18 +1,19 @@
 <% unless account.honor_code_signed? %>
-  <li class="card">
-    <div class="card__heading">
+  <li>
+    <h1 class="content-heading">
       <%= Season.current.year %> Technovation Honor Code
-      <%= fa_icon("heart", class: "card-heading__flair") %>
-    </div>
+    </h1>
 
-    <div class="card__body">
-      You must agree to the <%= Season.current.year %> Technovation Honor Code<br />
+    <p>
+      You must agree to the
+      <%= Season.current.year %>
+      Technovation Honor Code
+    </p>
 
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Sign the agreement",
-          [:new, account.type_name, :honor_code_agreement],
-          class: "appy-button" %>
-      </div>
+    <div class="step-actions">
+      <%= link_to "Sign the agreement",
+        [:new, current_scope, :honor_code_agreement],
+        class: "button" %>
     </div>
   </li>
 <% end %>

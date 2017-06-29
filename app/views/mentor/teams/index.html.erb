@@ -1,53 +1,51 @@
-<h1 class="appy-title">
-  Regional Pitch Events
-</h1>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
+    <h3><%= t("views.teams.index.current_teams") %></h3>
 
-<div class="card standalone-buttons">
-  <div class="card__heading">
-    Regional Pitch Events
-  </div>
+    <%= render 'mentor/teams/team_list',
+      type: :current,
+      teams: @current_teams %>
 
-  <div class="card__body">
-    <p>
-      You can now select any pitch events in your region for your teams to attend!
-    </p>
+    <% if SeasonToggles.team_building_enabled? %>
+      <p class="buttons">
+        <%= link_to "Find more teams",
+          new_mentor_team_search_path,
+          class: "button" %>
 
-    <p>
-      <%= link_to "Manage your regional pitch events",
-        new_mentor_regional_pitch_event_selection_path,
-        class: "appy-button" %>
-    </p>
+        <%= link_to "Register a new team",
+          new_mentor_team_path,
+          class: "button secondary" %>
+      </p>
+    <% end %>
   </div>
 </div>
-
-<h1 class="appy-title">
-  <%= t("views.teams.index.current_teams") %>
-</h1>
-
-<div class="current-teams">
-  <%= render 'mentor/teams/team_list',
-    type: :current,
-    teams: @current_teams %>
-</div>
-
-<% if SeasonToggles.team_building_enabled? %>
-  <h1 class="appy-title">
-    Find or create a team
-  </h1>
-
-  <p class="standalone-buttons">
-    <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>
-    <%= t("views.application.or") %>
-    <%= link_to t("controllers.teams.new.link"), new_mentor_team_path %>
-  </p>
-<% end %>
 
 <% if @past_teams.any? %>
-  <h1 class="appy-title">
-    <%= t("views.teams.index.past_teams") %>
-  </h1>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-sm-8">
+      <h3><%= t("views.teams.index.past_teams") %></h3>
 
-  <%= render 'mentor/teams/team_list',
-    type: :past,
-    teams: @past_teams %>
+      <%= render 'mentor/teams/team_list',
+        type: :past,
+        teams: @past_teams %>
+    </div>
+  </div>
+<% end %>
+
+<% if SeasonToggles.select_regional_pitch_event? %>
+  <div class="grid grid--justify-space-around">
+    <div class="panel grid__col-sm-8">
+      <h3>Regional Pitch Events</h3>
+
+      <p>
+        You can now select any pitch events in your region for your teams to attend!
+      </p>
+
+      <p>
+        <%= link_to "Manage your regional pitch events",
+          new_mentor_regional_pitch_event_selection_path,
+          class: "button" %>
+      </p>
+    </div>
+  </div>
 <% end %>

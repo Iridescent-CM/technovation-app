@@ -50,7 +50,7 @@
           <% pitch_event.teams.public_send(division).order("teams.name").each do |team| %>
             <tr>
               <td class="primary-col">
-                <%= link_to team.name, [user.type_name, team] %>
+                <%= link_to team.name, [current_scope, team] %>
                 <% if ambassador %>
                   <small class="team-list-action">
                     <%= link_to fa_icon('gavel', text: 'Assign to a judge'),
@@ -108,7 +108,7 @@
                 <td>
                   <%= link_to fa_icon('times', text: 'remove team'),
                     send(
-                      "#{user.type_name}_regional_pitch_event_participation_path",
+                      "#{current_scope}_regional_pitch_event_participation_path",
                       pitch_event,
                       participant_id: team.id,
                       participant_type: "Team",

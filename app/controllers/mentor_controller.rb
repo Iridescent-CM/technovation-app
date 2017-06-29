@@ -33,15 +33,14 @@ class MentorController < ApplicationController
     current_mentor.account
   end
 
+  def current_scope
+    "mentor"
+  end
+
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile
   end
-
-  def model_name
-    "mentor"
-  end
-  alias :user_scope :model_name
 
   def create_judge_mentor_on_dashboard
     # noop

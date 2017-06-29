@@ -1,42 +1,53 @@
-<div class="flex-col-md-4 dashboard-sidebar border-left">
-  <% if certs ||= false %>
-    <%= render 'mentor/dashboards/full_access_content/appreciation_cert' %>
-  <% else %>
-    <h3>Honor Code</h3>
+<div class="grid__col-md-4 grid__col--bleed dashboard-sidebar">
+  <div class="grid__cell">
+    <div class="grid__col-md-12 grid__col-xs-4">
+      <div class="grid__cell">
+        <div class="grid__col-md-12 grid__col-xs-8">
+          <% if certs ||= false %>
+            <%= render 'mentor/dashboards/full_access_content/appreciation_cert' %>
+          <% else %>
+            <h3>Honor Code</h3>
 
-    <%= render 'honor_code_signed', account: current_mentor %>
+            <%= render 'honor_code_signed', account: current_mentor %>
+          <% end %>
+        </div>
 
-    <h3>Curriculum</h3>
+        <div class="grid__col-md-12 grid__col-xs-6">
+          <h3>Curriculum</h3>
 
-    <p>
-      <%= link_to "Open the Technovation Curriculum",
-        "http://www.technovationchallenge.org/curriculum-intro/registered",
-        target: "_blank" %>
-    </p>
+          <p>
+            <%= link_to "Open the Technovation Curriculum",
+              "http://www.technovationchallenge.org/curriculum-intro/registered",
+              target: "_blank" %>
+          </p>
 
-    <h3>Google Made With Code</h3>
+          <h3>Google Made With Code</h3>
 
-    <p>
-      <%= link_to "Read the Technovation Primer",
-        "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
-        target: "_blank" %>
-    </p>
+          <p>
+            <%= link_to "Read the Technovation Primer",
+              "http://www.technovationchallenge.org/curriculum/madewithcodeprimer",
+              target: "_blank" %>
+          </p>
+        </div>
 
-    <h3>Submission Guide</h3>
+        <div class="grid__col-md-12 grid__col-xs-6">
+          <h3>Submission Guide</h3>
 
-    <p>
-      <%= link_to "Read the Submission Guidelines",
-        "http://www.technovationchallenge.org/submission-guidelines/",
-        target: "_blank" %>
-    </p>
+          <p>
+            <%= link_to "Read the Submission Guidelines",
+              "http://www.technovationchallenge.org/submission-guidelines/",
+              target: "_blank" %>
+          </p>
 
-    <h3>Judging Rubric</h3>
+          <h3>Judging Rubric</h3>
 
-    <p>
-      <%= link_to "Read the Judging Rubric",
-        "http://www.technovationchallenge.org/judging-rubric/",
-        target: "_blank" %>
-    </p>
-  <% end %>
+          <p>
+            <%= link_to "Read the Judging Rubric",
+              "http://www.technovationchallenge.org/judging-rubric/",
+              target: "_blank" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-

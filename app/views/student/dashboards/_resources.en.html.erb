@@ -1,29 +1,17 @@
-<div class="resources">
-  <h2 class="resources__heading appy-heading-lg">
-    <%= t("views.application.resources") %>
-  </h2>
+<ul class="reset">
+  <li>
+    <h2 class="content-subheading">Internet Safety</h2>
 
-  <ul class="resources__list">
-    <li class="resources__item-wrapper">
-      <div class="card">
-        <div class="card__heading">
-          Internet Safety
-          <%= fa_icon("lock", class: "card-heading__flair") %>
-        </div>
+    <p>
+      We want you to be safe and well-informed as you participate
+      in online programs! Please take some time right now to learn
+      about internet safety and digital literacy.
+    </p>
 
-        <div class="card__body">
-          <p>
-            Please take some time right now to learn about internet safety and digital literacy.
-            We want you to be safe and well-informed as you participate in online programs!
-          </p>
-
-          <p>
-            <%= link_to "Take the Internet Safety Training",
-              "http://iridescentlearning.org/internet-safety/",
-              target: "_blank" %>
-          </p>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+    <p>
+      <%= link_to "Read about Internet Safety",
+        "http://iridescentlearning.org/internet-safety/",
+        target: "_blank" %>
+    </p>
+  </li>
+</ul>

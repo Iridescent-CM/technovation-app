@@ -1,13 +1,13 @@
-<h4><%= t("views.application.availability") %>:</h4>
+<strong><%= t("views.application.availability") %>:</strong>
 
 <% if mentor.virtual? %>
-  <p><%= t("views.student.mentors.show.virtual", name: mentor.first_name) %></p>
+  <p><%= mentor.first_name %> will mentor teams from anywhere.</p>
 <% else %>
-  <p><%= t("views.student.mentors.show.in_person", location: mentor.address_details,
-                                                    name: mentor.first_name) %></p>
+  <p><%= mentor.first_name %> will only mentor teams from <%= mentor.address_details %>.</p>
 <% end %>
 
 <%= form_for [:student, mentor_invite] do |f| %>
   <%= f.hidden_field :invitee_email, value: mentor.email %>
-  <%= f.submit t("views.mentors.show.invite_to_team", name: mentor.first_name), class: "appy-button" %>
+  <%= f.submit "Ask #{mentor.first_name} to mentor your team",
+    class: "button" %>
 <% end %>

@@ -8,13 +8,13 @@ RSpec.describe Mentor::SignupsController do
       post :create, params: {
         mentor_profile: FactoryGirl.attributes_for(
           :mentor,
-          bio: "Hello, bio"
+          bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
         ).merge(
           account_attributes: FactoryGirl.attributes_for(:account)
         )
       }
 
-      expect(MentorProfile.last.bio).to eq("Hello, bio")
+      expect(MentorProfile.last.bio).to eq("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet.")
     end
   end
 end

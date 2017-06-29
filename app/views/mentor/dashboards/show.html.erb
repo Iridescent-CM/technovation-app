@@ -1,32 +1,38 @@
-<div class="student-dashboard">
-  <div class="flex-row">
-    <div class="flex-col-md-6">
-      <h1 class="appy-title">
+<div class="grid dashboard-notices">
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading">
         <%= t("views.application.mentor_dashboard") %>
 
         <small>
-          <%= link_to fa_icon('refresh', text: "Switch to Judging"),
+          <%= link_to web_icon('refresh', text: "Switch to Judging"),
             judge_dashboard_path %>
-        </small>
-      </h1>
-    </div>
-
-    <div class="flex-col-md-6 align-right">
-      <h1 class="appy-title">
-        <%= SeasonToggles.dashboard_text(:mentor) %>
-
-        <small>
-          <%= render 'program_survey', scope: :mentor %>
         </small>
       </h1>
     </div>
   </div>
 
-  <%= render 'program_survey_modal', scope: :mentor %>
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        <%= SeasonToggles.dashboard_text(:mentor) %>
 
-  <% if current_mentor.full_access_enabled? %>
-    <%= render 'mentor/dashboards/full_access' %>
-  <% else %>
-    <%= render 'mentor/dashboards/to_do' %>
-  <% end %>
+        <small>
+          <%= render 'program_survey' %>
+        </small>
+      </h1>
+    </div>
+  </div>
 </div>
+
+<% if current_mentor.full_access_enabled? %>
+  <%= render 'mentor/dashboards/full_access' %>
+<% else %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-md-8">
+      <%= render 'mentor/dashboards/completion_steps' %>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'program_survey_modal' %>

@@ -5,6 +5,7 @@ class StudentProfile < ActiveRecord::Base
   scope :full_access, -> {
     joins(:account, :parental_consent)
     .where("accounts.location_confirmed = ?", true)
+    .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
   has_many :memberships, as: :member, dependent: :destroy
@@ -46,7 +47,8 @@ class StudentProfile < ActiveRecord::Base
       begin
         account.public_send(method_name, *args)
       rescue
-        raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+        raise NoMethodError,
+          "undefined method `#{method_name}' not found for #{self}"
       end
     end
   end
@@ -170,12 +172,15 @@ class StudentProfile < ActiveRecord::Base
     parental_consent_signed?
   end
 
-  def type_name
+  def scope_name
     "student"
   end
 
   def full_access_enabled?
-    honor_code_signed? and parental_consent_signed? and location_confirmed?
+    account.email_confirmed? and
+      honor_code_signed? and
+        parental_consent_signed? and
+          location_confirmed?
   end
 
   private

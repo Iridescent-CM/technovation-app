@@ -41,16 +41,25 @@ class Division < ActiveRecord::Base
   end
 
   def self.division_by_age(account)
-    year = Season.current.year
-    month = Season.switch_month
-    day = Season.switch_day
-    on_date = Date.new(year, month, day)
+    account.age_by_cutoff < SENIOR_DIVISION_AGE ? junior : senior
+  end
 
-    account.age(on_date) < SENIOR_DIVISION_AGE ? junior : senior
+  def self.cutoff_date
+    Date.new(Season.current.year, cutoff_month, cutoff_day)
+  end
+
+
+  def self.cutoff_month
+    8
+  end
+
+  def self.cutoff_day
+    1
   end
 
   def self.division_by_team_ages(team)
     divisions = team.students.collect { |s| division_by_age(s) }
+
     if divisions.any?
       divisions.flat_map(&:name).include?(senior.name) ? senior : junior
     else

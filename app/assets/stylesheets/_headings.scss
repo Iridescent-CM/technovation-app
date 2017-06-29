@@ -1,0 +1,85 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Eagle", sans-serif;
+  line-height: 1.2;
+
+  &.reset {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0 0.5rem 0.5rem 0;
+
+  &.content-heading {
+    font-size: 1.5rem;
+    padding: 0;
+  }
+
+  &.page-heading {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 1rem;
+
+    &::after {
+      background-color: $shamrock-mid;
+      bottom: 0;
+      content: '';
+      display: block;
+      height: 0.25rem;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+
+    small {
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+
+      a {
+        padding: 0.25rem 0;
+        color: $mulberry;
+
+        &:hover {
+          color: $mulberry-dark;
+        }
+      }
+    }
+  }
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: $shamrock;
+
+  &.content-subheading {
+    font-size: 1.3rem;
+    color: #333;
+    margin: 0;
+  }
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}

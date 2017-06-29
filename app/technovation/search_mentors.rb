@@ -1,6 +1,8 @@
 module SearchMentors
+  EARTH_CIRCUMFERENCE = 24_901
+
   def self.call(filter)
-    mentors = MentorProfile.searchable(filter.user)
+    mentors = MentorProfile.searchable(filter.mentor_account_id)
 
     unless filter.text.blank?
       sanitized_text = sanitize_string_for_elasticsearch_string_query(filter.text)
@@ -65,10 +67,10 @@ module SearchMentors
       mentors = mentors.virtual
     end
 
-    miles = filter.nearby == "anywhere" ? 40_000 : 50
-    nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+    miles = filter.nearby == "anywhere" ? EARTH_CIRCUMFERENCE : 100
+    nearby = filter.nearby == "anywhere" ? filter.location : filter.nearby
 
-    if filter.user.country == "PS"
+    if filter.country == "PS"
       nearby = "Palestine"
     end
 

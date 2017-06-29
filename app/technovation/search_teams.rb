@@ -2,12 +2,12 @@ require 'will_paginate/array'
 require 'elasticsearch/dsl'
 
 module SearchTeams
+  EARTH_CIRCUMFERENCE = 24_901
 
   def self.call(filter)
     teams = Team.current
 
     if use_search_index(filter)
-
       query = Elasticsearch::DSL::Search.search do |q|
         q.query do |qq|
           qq.bool do |bl|
@@ -47,24 +47,23 @@ module SearchTeams
               teams
             end
 
-    teams = case filter.user.class.name
-            when "StudentProfile"
+    teams = case filter.scope
+            when "student"
               teams.accepting_student_requests
-            when "MentorProfile"
+            when "mentor"
               teams.accepting_mentor_requests
             else
               teams
             end
 
-    miles = filter.nearby == "anywhere" ? 40_000 : 50
-    nearby = filter.nearby == "anywhere" ? filter.user.address_details : filter.nearby
+    miles = filter.nearby == "anywhere" ? EARTH_CIRCUMFERENCE : 100
+    nearby = filter.nearby == "anywhere" ? filter.location : filter.nearby
 
-    if filter.user.country == "PS"
+    if filter.country == "PS"
       nearby = "Palestine"
     end
 
-    teams = teams.near(nearby, miles)
-
+    teams.near(nearby, miles)
   end
 
   def self.sanitize_string_for_elasticsearch_string_query(str)
@@ -88,6 +87,6 @@ module SearchTeams
   end
 
   def self.use_search_index(filter)
-    return (!filter.text.blank? or filter.spot_available)
+    not filter.text.blank? or filter.spot_available
   end
 end

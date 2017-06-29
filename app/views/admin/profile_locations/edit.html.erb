@@ -1,6 +1,6 @@
 <h1 class="appy-title">Edit location details</h1>
 
-<h2><%= @account.type_name.titleize %> - <%= @account.full_name %></h2>
+<h2><%= @account.scope_name.titleize %> - <%= @account.full_name %></h2>
 
 <%= simple_form_for @profile, url: admin_profile_path(@profile) do |f| %>
   <%= f.fields_for :account do |a| %>

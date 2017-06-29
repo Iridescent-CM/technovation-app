@@ -1,16 +1,24 @@
-<div class="signin-page">
-  <%= simple_form_for(@password) do |f| %>
-    <h2><%= t("views.passwords.new.title") %></h2>
+<% provide :title, "Reset your password" %>
 
-    <%= f.hidden_field :token %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8 grid__col-md-5">
+    <h1><%= t("views.passwords.new.title") %></h1>
 
-    <%= f.input :password, label: t("models.account.password") %>
+    <%= simple_form_for(@password) do |f| %>
+      <%= f.hidden_field :token %>
 
-    <p class="appy-hint"><%= t("models.account.password_hint") %>
+      <%= f.input :password, label: t("models.account.password") %>
 
-    <%= f.input :password_confirmation,
-                label: t('views.signups.form.confirm_password') %>
+      <p class="hint">
+        <%= t("models.account.password_hint") %>
+      </p>
 
-    <%= f.button :submit, t("views.application.save"), class: "appy-button" %>
-  <% end %>
+      <%= f.input :password_confirmation,
+        label: t('views.signups.form.confirm_password') %>
+
+      <%= f.button :submit,
+        t("views.application.save"),
+        class: "button" %>
+    <% end %>
+  </div>
 </div>

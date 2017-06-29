@@ -1,18 +1,19 @@
-<div class="student-dashboard">
-  <div class="flex-row">
-    <div class="flex-col-md-6">
-      <h1 class="appy-title">
-        <%= t("views.application.student_dashboard") %>
+<div class="grid dashboard-notices">
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        Student Dashboard
+
         <small>
-          <%= render 'program_survey', scope: :student %>
+          <%= render 'program_survey' %>
         </small>
       </h1>
     </div>
+  </div>
 
-<%= render 'program_survey_modal', scope: :student %>
-
-    <div class="flex-col-md-6 align-right">
-      <h1 class="appy-title">
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <h1 class="page-heading">
         <%= SeasonToggles.dashboard_text(:student) %>
 
         <small>
@@ -23,10 +24,16 @@
       </h1>
     </div>
   </div>
-
-  <% if current_student.full_access_enabled? %>
-    <%= render 'student/dashboards/full_access' %>
-  <% else %>
-    <%= render 'student/dashboards/to_do' %>
-  <% end %>
 </div>
+
+<% if current_student.full_access_enabled? %>
+  <%= render 'student/dashboards/full_access' %>
+<% else %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-md-8">
+      <%= render 'completion_steps' %>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'program_survey_modal' %>

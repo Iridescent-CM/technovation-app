@@ -11,9 +11,5 @@ module Mentor
     def current_profile
       current_mentor
     end
-
-    def account_type
-      "mentor"
-    end
   end
 end

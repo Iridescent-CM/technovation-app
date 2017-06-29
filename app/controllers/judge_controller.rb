@@ -19,13 +19,13 @@ class JudgeController < ApplicationController
     current_account
   end
 
+  def current_scope
+    "judge"
+  end
+
   private
   def current_judge
     @current_judge ||= current_account.judge_profile
-  end
-
-  def model_name
-    "judge"
   end
 
   def create_mentor_judge_on_dashboard

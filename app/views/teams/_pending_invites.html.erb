@@ -1,24 +1,23 @@
-<% preview_method ||= :invitee_first_name %>
-
 <% if invites.any? %>
-  <div class="pending-invites">
-    <h6><%= t("views.teams.show.pending_invitees_subheading") %></h6>
+  <div class="grid">
+    <div class="grid__col-auto grid__col--bleed-x">
+      <h3 class="reset">Invites sent</h1>
 
-    <table class="pending_invitees">
-      <% invites.each do |invite| %>
-        <tr>
-          <td><%= invite.public_send(preview_method) %></td>
-          <td>
-            <%= link_to t("controllers.invites.destroy.link"),
-                        [account_type, invite],
-                        data: {
-                          method: :delete,
-                          confirm: t("controllers.invites.destroy.confirm",
-                                    name: invite.invitee_name),
-                        } %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
+      <p class="hint">
+        Your team is waiting for these people to accept your invitations
+      </p>
+
+      <ul class="reset">
+        <% invites.each do |invite| %>
+          <li class="row">
+            <% if invite.invitee %>
+              <%= render 'invites/registered_invitee', invite: invite %>
+            <% else %>
+              <%= render 'invites/unregistered_invitee', invite: invite %>
+            <% end %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>

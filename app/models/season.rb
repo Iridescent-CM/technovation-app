@@ -15,14 +15,14 @@ class Season < ActiveRecord::Base
   end
 
   def self.next
-    season = current
+    nxt = current
 
     unless SeasonToggles.registration_closed? and
              Date.today >= switch_date
-      season.year = current.year + 1
+      nxt.year += 1
     end
 
-    season
+    nxt
   end
 
   def self.for(record)

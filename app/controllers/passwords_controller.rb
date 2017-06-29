@@ -27,7 +27,11 @@ class PasswordsController < ApplicationController
   end
 
   def password_params
-    params.require(:password).permit(:password, :password_confirmation, :token).tap do |p|
+    params.require(:password).permit(
+      :password,
+      :password_confirmation,
+      :token
+    ).tap do |p|
       p[:resetting] = true
     end
   end

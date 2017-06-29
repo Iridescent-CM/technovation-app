@@ -14,7 +14,7 @@ en:
         image_processing: "Your profile photo was uploaded. It is being processed and will update shortly."
       update:
         change_image: "Change image"
-        change_image_hint: "300x300px, only .jpg, .jpeg, .gif, .png"
+        change_image_hint: "Use a size of %{size}, and a format of only .jpg, .jpeg, .gif, or .png"
         success: "You updated your account!"
 
     consent_waivers:
@@ -29,10 +29,10 @@ en:
 
     invites:
       destroy:
-        confirm: "Are you sure you want to revoke your invitation to %{name}?"
-        link: "revoke"
-        not_found: "That invitation was not found. Perhaps it was already revoked."
-        success: "You revoked the invitation to %{name}"
+        confirm: "Are you sure you want to delete your invitation to %{name}?"
+        link: "delete"
+        not_found: "That invitation was not found. Perhaps it was already deleted."
+        success: "You deleted the invitation to %{name}"
       show:
         full_access_needed: "Please finish the items in your To-Do list before reviewing this invitation"
 
@@ -69,7 +69,7 @@ en:
 
       join_requests:
         create:
-          link: "Request to be a mentor for %{name}"
+          link: "Ask to be a mentor for %{name}"
           success: "You have requested to be a mentor for %{name}"
         update:
           success: "%{name} was %{status}"
@@ -123,7 +123,7 @@ en:
     student:
       join_requests:
         create:
-          link: "Request to join %{name}"
+          link: "Ask to join %{name}"
           success: "You have requested to join %{name}"
         update:
           success: "%{name} was %{status}"
@@ -148,7 +148,7 @@ en:
         already_on_team: "You cannot create a new team if you are already on a team"
         success: "Your team has been created! Lookin' good!"
       edit:
-        link: "Edit name & description"
+        link: "Change team name & summary"
       index:
         browse: "browse available teams"
       new:
@@ -159,6 +159,7 @@ en:
       update:
         change_image: "Upload photo"
         change_image_hint: "450x300px, only .jpg, .jpeg, .gif, .png"
+        failure: "There was an error"
         success: "Your team has been updated!"
 
     team_memberships:

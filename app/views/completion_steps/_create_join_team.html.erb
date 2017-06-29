@@ -6,11 +6,11 @@
 
     <div class="card__actions-row card__actions-row--pos-fill">
       <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
-        [:new, account.type_name, :team_search],
+        [:new, current_scope, :team_search],
         class: "appy-button"
       %>
       <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
-        [:new, account.type_name, :team],
+        [:new, current_scope, :team],
         class: "appy-button"
       %>
     </div>

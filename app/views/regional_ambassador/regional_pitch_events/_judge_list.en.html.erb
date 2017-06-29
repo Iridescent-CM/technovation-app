@@ -125,7 +125,7 @@
               <td>
                 <%= link_to fa_icon('times', text: 'remove judge'),
                   send(
-                    "#{user.type_name}_regional_pitch_event_participation_path",
+                    "#{current_scope}_regional_pitch_event_participation_path",
                     pitch_event,
                     participant_id: judge.id,
                     participant_type: "JudgeProfile",

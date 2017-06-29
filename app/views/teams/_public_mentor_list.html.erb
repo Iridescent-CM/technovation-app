@@ -1,11 +1,9 @@
-<div class="module-marine team-members">
-  <div class="module-header">
-    <h5><%= t("views.teams.show.mentors_subheading") %></h5>
-  </div>
+<h3 class="reset"><%= t("views.teams.show.mentors_subheading") %></h3>
 
-  <div class="module-body">
-    <ul class="team_members">
-      <%= render(partial: "teams/public_member", collection: team.mentors) %>
-    </ul>
-  </div>
-</div>
+<% if team.mentors.any? %>
+  <ul class="reset">
+    <%= render partial: "teams/public_member", collection: team.mentors %>
+  </ul>
+<% else %>
+  <p>This team doesn't have any mentors yet!</p>
+<% end %>

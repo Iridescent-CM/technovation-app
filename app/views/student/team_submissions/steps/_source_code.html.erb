@@ -43,7 +43,7 @@
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
 
-  <%= simple_form_for [current_account.type_name, submission],
+  <%= simple_form_for [current_scope, submission],
     html: { class: "no-simple-form-style alternative-form #{url_css}" },
     data: { switch_text: "Upload a file" } do |f| %>
 

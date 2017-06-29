@@ -74,7 +74,7 @@
         <% @accounts.each do |account| %>
           <div class="row">
             <div class="cell">
-              <%= account.type_name %>
+              <%= account.scope_name %>
             </div>
 
             <div class="cell">
@@ -90,7 +90,7 @@
             </div>
 
             <div class="cell">
-              <% if %w{student mentor}.include?(account.type_name) %>
+              <% if %w{student mentor}.include?(account.scope_name) %>
                 <%= account.teams.current.any? ? "yes" : "no" %>
               <% end %>
             </div>

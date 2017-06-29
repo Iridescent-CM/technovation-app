@@ -1,2 +1,2 @@
-<%= render 'teams/show', account: current_student, team: @team %>
-<%= render "teams/manage_team" %>
+<% provide :title, "My team: #{current_team.name}" %>
+<%= render 'teams/show', account: current_student, team: current_team %>

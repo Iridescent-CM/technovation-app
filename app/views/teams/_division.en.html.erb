@@ -1,0 +1,40 @@
+<p>On <%= Division.cutoff_date.strftime("%B %e, %Y") %>:</p>
+
+<ul class="unstyled">
+  <% team.students.each do |s| %>
+    <li>
+      <strong><%= s.full_name %></strong>
+      will be age <%= s.age_by_cutoff %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  which makes <%= team.name %> a
+  <strong><%= team.division_name.humanize %> division</strong>
+  team.
+</p>
+
+<hr />
+
+<ul class="reset">
+  <li>
+    <strong>What makes a junior division team?</strong>
+    <ul class="unstyled">
+      <li>
+        if all students on the team will be age 14 or younger
+        on <%= Division.cutoff_date.strftime("%B %e, %Y") %>
+      </li>
+    </ul>
+  </li>
+
+  <li>
+    <strong>What makes a senior division team?</strong>
+    <ul class="unstyled">
+      <li>
+        if any one student on the team will be age 15 or older
+        on <%= Division.cutoff_date.strftime("%B %e, %Y") %>
+      </li>
+    </ul>
+  </li>
+</ul>

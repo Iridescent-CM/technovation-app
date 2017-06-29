@@ -1,0 +1,45 @@
+<dl>
+  <dt>Your selected pitch event:</dt>
+  <dd><%= attendee.selected_regional_pitch_event_name %></dd>
+
+  <dt>Division:</dt>
+  <dd>
+    <%= attendee.selected_regional_pitch_event.divisions.map(&:name).to_sentence %>
+  </dd>
+
+  <dt>Date / Time:</dt>
+  <dd>
+    <% if attendee.selected_regional_pitch_event.live? %>
+      <%= attendee.selected_regional_pitch_event
+        .starts_at
+        .in_time_zone(attendee.selected_regional_pitch_event.timezone)
+        .strftime("%A, %B %e") %>
+
+      <br />
+
+      <%= attendee.selected_regional_pitch_event
+        .starts_at
+        .in_time_zone(attendee.selected_regional_pitch_event.timezone)
+        .strftime("%-I:%M%P") %>
+
+      &ndash;
+
+      <%= attendee.selected_regional_pitch_event
+        .ends_at
+        .in_time_zone(attendee.selected_regional_pitch_event.timezone)
+        .strftime("%-I:%M%P %Z") %>
+    <% else %>
+      <%= attendee.selected_regional_pitch_event
+        .starts_at
+        .in_time_zone(attendee.selected_regional_pitch_event.timezone)
+        .strftime("%A, %B %e") %>
+
+      through
+
+      <%= attendee.selected_regional_pitch_event
+        .ends_at
+        .in_time_zone(attendee.selected_regional_pitch_event.timezone)
+        .strftime("%A, %B %e") %>
+    <% end %>
+  </dd>
+</dl>
