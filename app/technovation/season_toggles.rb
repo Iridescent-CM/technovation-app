@@ -46,12 +46,14 @@ class SeasonToggles
     end
     alias :semifinals? :semifinals_judging?
 
-    def student_signup=(value)
-      store.set(:student_signup, with_bool_validation(value))
-    end
+    %w{student mentor judge regional_ambassador}.each do |scope|
+      define_method("#{scope}_signup=") do |value|
+        store.set("#{scope}_signup", with_bool_validation(value))
+      end
 
-    def student_signup?
-      convert_to_bool(store.get(:student_signup))
+      define_method("#{scope}_signup?") do
+        convert_to_bool(store.get("#{scope}_signup"))
+      end
     end
 
     private

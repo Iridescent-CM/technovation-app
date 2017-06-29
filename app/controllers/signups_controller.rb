@@ -1,7 +1,7 @@
 class SignupsController < ApplicationController
   before_action :require_unauthenticated
 
-  helper_method :admin_permission?
+  helper_method :admin_permission?, :signup_available?
 
   def new
     if not params[:admin_permission_token].blank? and (attempt = SignupAttempt.find_by(
@@ -17,8 +17,12 @@ class SignupsController < ApplicationController
   end
 
   private
+  def signup_available?(type)
+    SeasonToggles.public_send("#{type}_signup?") or admin_permission?
+  end
+
   def admin_permission?
-    token = cookies.fetch(:admin_permission_token) { "" }
-    ENV["ENABLE_ALL_PROFILE_TYPE_SIGNUPS"] or not token.blank?
+    !!cookies[:admin_permission_token]
+    # TODO: check token validity
   end
 end
