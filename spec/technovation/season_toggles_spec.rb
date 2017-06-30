@@ -47,6 +47,10 @@ RSpec.describe SeasonToggles do
         expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be true
       end
 
+      it "returns false if unset" do
+        expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be false
+      end
+
       it "returns false if the text or url are blank" do
         [{ url: "https://google.com" },
          { text: "Hello, World" },

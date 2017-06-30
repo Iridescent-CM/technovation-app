@@ -12,11 +12,12 @@ class SeasonToggles
   class << self
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
-        store.set("#{scope}_survey_link", attrs.to_json)
+        store.set("#{scope}_survey_link", JSON.generate(attrs))
       end
 
       define_method("#{scope}_survey_link") do
-        JSON.parse(store.get("#{scope}_survey_link"))
+        value = store.get("#{scope}_survey_link") || "{}"
+        JSON.parse(value)
       end
 
       define_method("#{scope}_survey_link?") do

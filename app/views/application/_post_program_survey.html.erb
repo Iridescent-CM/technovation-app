@@ -1,3 +1,5 @@
-<%= link_to "Take the post-program survey",
-            "https://www.surveymonkey.com/r/technovation#{type}postprogram2017",
-            target: "_blank" %>
+<% if SeasonToggles.public_send("#{type}_survey_link?") %>
+  <%= link_to SeasonToggles.public_send("#{type}_survey_link")["text"],
+              SeasonToggles.public_send("#{type}_survey_link")["url"],
+              target: "_blank" %>
+<% end %>
