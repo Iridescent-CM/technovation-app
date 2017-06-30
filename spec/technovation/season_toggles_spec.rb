@@ -3,6 +3,11 @@ needs "technovation"
 require "season_toggles"
 
 RSpec.describe SeasonToggles do
+  before() do
+    redis = Redis.new
+    redis.flushdb
+  end
+
   def expect_bad_input_raises_error(options)
     [nil, "", " ", "foo"].each do |bad|
       expect {
@@ -24,27 +29,29 @@ RSpec.describe SeasonToggles do
 
   %w{mentor student}.each do |scope|
     describe "##{scope}_survey_link=" do
-      it "takes and returns a hash" do
+      it "takes a hash and returns values" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
           url: "https://google.com",
         })
 
-        expect(SeasonToggles.public_send("#{scope}_survey_link")).to eq({
-          "text" => "Hello World",
-          "url" => "https://google.com",
-        })
+        expect(SeasonToggles.survey_link(scope, "text")).to eq("Hello World")
+        expect(SeasonToggles.survey_link(scope, "url")).to eq("https://google.com")
       end
     end
 
-    describe "##{scope}_survey_link?" do
+    describe "#survey_link_available?" do
       it "returns true if the text and url are present" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
           url: "https://google.com",
         })
 
-        expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be true
+        expect(SeasonToggles.survey_link_available?(scope)).to be true
+      end
+
+      it "returns false if unset" do
+        expect(SeasonToggles.survey_link_available?(scope)).to be false
       end
 
       it "returns false if the text or url are blank" do
@@ -53,7 +60,7 @@ RSpec.describe SeasonToggles do
          { text: "", url: "https://..." },
          { text: "hello...", url: "" }].each do |bad|
           SeasonToggles.public_send("#{scope}_survey_link=", bad)
-          expect(SeasonToggles.public_send("#{scope}_survey_link?")).to be false
+          expect(SeasonToggles.survey_link_available?(scope)).to be false
         end
       end
     end
