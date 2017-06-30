@@ -3,7 +3,7 @@ needs "technovation"
 require "season_toggles"
 
 RSpec.describe SeasonToggles do
-  before(:each) do
+  before() do
     redis = Redis.new
     redis.flushdb
   end
