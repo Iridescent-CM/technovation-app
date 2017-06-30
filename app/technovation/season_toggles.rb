@@ -14,18 +14,18 @@ class SeasonToggles
       define_method("#{scope}_survey_link=") do |attrs|
         store.set("#{scope}_survey_link", JSON.generate(attrs))
       end
+    end
 
-      define_method("#{scope}_survey_link") do
-        value = store.get("#{scope}_survey_link") || "{}"
-        JSON.parse(value)
+    def survey_link_available?(scope)
+      %w{text url}.all? do |key|
+        !!survey_link(scope, key) and not survey_link(scope, key).empty?
       end
+    end
 
-      define_method("#{scope}_survey_link?") do
-        %w{text url}.all? do |key|
-          !!public_send("#{scope}_survey_link")[key] and
-            not public_send("#{scope}_survey_link")[key].empty?
-        end
-      end
+    def survey_link(scope, key)
+      value = store.get("#{scope}_survey_link") || "{}"
+      parsed = JSON.parse(value)
+      parsed[key]
     end
 
     def judging_round=(value)

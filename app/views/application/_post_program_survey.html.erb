@@ -1,5 +1,5 @@
-<% if SeasonToggles.public_send("#{type}_survey_link?") %>
-  <%= link_to SeasonToggles.public_send("#{type}_survey_link")["text"],
-              SeasonToggles.public_send("#{type}_survey_link")["url"],
+<% if SeasonToggles.survey_link_available?(type) %>
+  <%= link_to SeasonToggles.survey_link(type, "text"),
+              SeasonToggles.survey_link(type, "url"),
               target: "_blank" %>
 <% end %>
