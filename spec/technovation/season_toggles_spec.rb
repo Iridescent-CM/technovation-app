@@ -43,6 +43,18 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  describe ".team_submissions_editable?" do
+    it "is true when team submissions are editable" do
+      SeasonToggles.team_submissions_editable = "oN"
+      expect(SeasonToggles.team_submissions_editable?).to be true
+    end
+
+    it "is false when team submissions are not editable" do
+      SeasonToggles.team_submissions_editable = "No"
+      expect(SeasonToggles.team_submissions_editable?).to be false
+    end
+  end
+
   %w{mentor student}.each do |scope|
     describe ".#{scope}_survey_link=" do
       it "takes a hash and returns values" do
