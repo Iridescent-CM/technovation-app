@@ -10,6 +10,15 @@ class SeasonToggles
                              %w{off}
 
   class << self
+
+    def select_regional_pitch_event=(value)
+      store.set("select_regional_pitch_event", with_bool_validation(value))
+    end
+
+    def select_regional_pitch_event?
+      convert_to_bool(store.get("select_regional_pitch_event"))
+    end
+
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
         store.set("#{scope}_survey_link", JSON.generate(attrs))
