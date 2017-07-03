@@ -38,6 +38,18 @@
             app_path(current_team.submission),
             target: :_blank %>
         </p>
+
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <p>
+            <%= link_to "Remove #{current_team.name} from this event",
+              student_regional_pitch_event_selection_path,
+              class: "cta-link",
+              data: {
+                method: :delete,
+                confirm: "Are you sure you want to remove your team from the event: #{@regional_pitch_event.name}?",
+              } %>
+          </p>
+        <% end %>
       <% else %>
         <p>
           <strong>
@@ -47,6 +59,20 @@
               student_regional_pitch_event_path(current_team.selected_regional_pitch_event) %>
           </strong>
         </p>
+
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <p>
+            <%= link_to "Select this event instead",
+              student_regional_pitch_event_selection_path(
+               event_id: @regional_pitch_event.id
+              ),
+              class: "cta-link",
+              data: {
+                method: :post,
+                confirm: "Are you sure you want to leave your previous event and select this one?",
+              } %>
+          </p>
+        <% end %>
       <% end %>
     </div>
 
@@ -59,6 +85,18 @@
     <div class="regional-pitch-event-selection-info">
       <% if current_judge.selected_regional_pitch_event == @regional_pitch_event %>
         <p><strong>You are attending this event!</strong></p>
+
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <p>
+            <%= link_to "Remove yourself from this event",
+              judge_regional_pitch_event_selection_path,
+              class: "cta-link",
+              data: {
+                method: :delete,
+                confirm: "Are you sure you want to remove yourself from the event: #{@regional_pitch_event.name}?",
+              } %>
+          </p>
+        <% end %>
       <% else %>
         <p>
           <strong>
@@ -67,6 +105,20 @@
               judge_regional_pitch_event_path(current_judge.selected_regional_pitch_event) %>
           </strong>
         </p>
+
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <p>
+            <%= link_to "Select this event instead",
+              judge_regional_pitch_event_selection_path(
+               event_id: @regional_pitch_event.id
+              ),
+              class: "cta-link",
+              data: {
+                method: :post,
+                confirm: "Are you sure you want to leave your previous event and select this one?",
+              } %>
+          </p>
+        <% end %>
       <% end %>
     </div>
 
