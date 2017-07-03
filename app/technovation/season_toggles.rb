@@ -37,6 +37,10 @@ class SeasonToggles
       parsed[key]
     end
 
+    def team_submissions_editable=(value)
+      store.set(:team_submissions_editable, with_bool_validation(value))
+    end
+
     def judging_round=(value)
       store.set(:judging_round, with_judging_round_validation(value))
     end

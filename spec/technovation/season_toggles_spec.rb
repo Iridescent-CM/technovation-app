@@ -27,6 +27,22 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  describe "##team_submissions_editable" do
+    it "raises exception for bad input" do
+      expect_bad_input_raises_error(
+        method: :team_submissions_editable,
+        valid_input: SeasonToggles::VALID_BOOLS.join(" | ")
+      )
+    end
+
+    it "accepts valid booleans" do
+      expect_good_input_works(
+        valid_input: SeasonToggles::VALID_BOOLS,
+        method: :team_submissions_editable
+      )
+    end
+  end
+
   %w{mentor student}.each do |scope|
     describe "##{scope}_survey_link=" do
       it "takes a hash and returns values" do
