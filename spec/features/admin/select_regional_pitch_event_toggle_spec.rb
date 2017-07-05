@@ -79,10 +79,13 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     let(:path) { judge_dashboard_path(anchor: "live-events") }
 
     before do
+      set_judging_round("qf")
       rpe.judges << user
 
       sign_in(user)
     end
+
+    after { reset_judging_round }
 
     scenario "Toggled on" do
       SeasonToggles.select_regional_pitch_event="on"
