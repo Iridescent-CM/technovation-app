@@ -92,10 +92,15 @@ module Student
                       :development_platform_other,
                       :development_platform,
                       :source_code_file_uploaded,
+                      business_plan_attributes: [
+                        :id,
+                        :remote_file_url,
+                      ],
                       pitch_presentation_attributes: [
                         :id,
                         :remote_file_url,
                       ],
+                      screenshots: [],
                     )
                    else
                     params.require(:team_submission).permit(
@@ -108,6 +113,14 @@ module Student
       sub_params.tap do |tapped|
         if tapped[:pitch_presentation_attributes]
           tapped[:pitch_presentation_attributes][:file_uploaded] = false
+        end
+
+        unless tapped[:source_code_external_url].blank?
+          tapped[:source_code_file_uploaded] = false
+        end
+
+        if tapped[:business_plan_attributes]
+          tapped[:business_plan_attributes][:file_uploaded] = false
         end
       end
     end
