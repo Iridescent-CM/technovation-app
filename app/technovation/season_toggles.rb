@@ -37,6 +37,10 @@ class SeasonToggles
     end
     alias :current_judging_round :judging_round
 
+    def judging_enabled?
+      quarterfinals_judging? or semifinals_judging?
+    end
+
     def quarterfinals_judging?
       VALID_QF_JUDGING_ROUNDS.include?(judging_round)
     end

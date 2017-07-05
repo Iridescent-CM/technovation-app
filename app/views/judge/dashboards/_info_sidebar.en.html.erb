@@ -1,5 +1,5 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
-  <% if ENV["JUDGING_OPEN"] and ENV["ENABLE_SUBMISSION_SCORES"] %>
+  <% if SeasonToggles.judging_enabled? %>
     <h3>Score Submissions</h3>
 
     <% if current_judge.submission_scores.current_round.incomplete.any? %>

@@ -1,18 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
-  before do
-    @judging_open = ENV["JUDGING_OPEN"]
-    ENV["JUDGING_OPEN"] = "present"
-  end
+  before { set_judging_round("QF") }
 
-  after do
-    if @judging_open.present?
-      ENV["JUDGING_OPEN"] = @judging_open
-    else
-      ENV.delete("JUDGING_OPEN")
-    end
-  end
+  after { reset_judging_round }
 
   scenario "Virtual judge notices no difference" do
     vjudge = FactoryGirl.create(:judge, full_access: true)
@@ -28,8 +19,6 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   end
 
   scenario "Live judge sees the invitation" do
-    set_judging_round("QF")
-
     judge = FactoryGirl.create(:judge, full_access: true)
     rpe = FactoryGirl.create(:rpe)
     sub = FactoryGirl.create(:team_submission)
@@ -54,13 +43,9 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
       expect(page).to have_content("Please complete your Live Event scores")
       expect(page).not_to have_link("Start a new score now")
     end
-
-    reset_judging_round
   end
 
   scenario "Live judge finishes their live event scores" do
-    set_judging_round("QF")
-
     judge = FactoryGirl.create(:judge, full_access: true)
     rpe = FactoryGirl.create(:rpe)
     sub = FactoryGirl.create(:team_submission)
@@ -86,7 +71,5 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
         href: new_judge_submission_score_path(event_type: :virtual)
       )
     end
-
-    reset_judging_round
   end
 end
