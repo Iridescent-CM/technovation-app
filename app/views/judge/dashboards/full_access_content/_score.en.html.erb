@@ -15,12 +15,12 @@
     </small>
   </p>
 
-  <% if ENV["JUDGING_OPEN"] and type == :complete %>
+  <% if SeasonToggles.judging_enabled? and type == :complete %>
     <p>
       <%= link_to "Review & Edit this score",
         edit_judge_submission_score_path(score, anchor: :review) %>
     </p>
-  <% elsif ENV["JUDGING_OPEN"] %>
+  <% elsif SeasonToggles.judging_enabled? %>
     <p>
       <%= link_to "Resume scoring #{score.name}",
         edit_judge_submission_score_path(score, anchor: :window) %>

@@ -3,7 +3,7 @@ module FindEligibleSubmissionId
 
   class << self
     def call(judge_profile, options = {})
-      if quarterfinals? and
+      if SeasonToggles.quarterfinals? and
           options[:live] and
             judge_profile.selected_regional_pitch_event.live?
         submission_id_from_live_event(
@@ -40,7 +40,7 @@ module FindEligibleSubmissionId
 
       judge_conflicts = judge.team_region_division_names
 
-      official_rpe_team_ids = if quarterfinals?
+      official_rpe_team_ids = if SeasonToggles.quarterfinals?
                                 RegionalPitchEvent.official.joins(:teams)
                                   .pluck(:team_id)
                               else
@@ -89,25 +89,16 @@ module FindEligibleSubmissionId
     end
 
     def current_round
-      case ENV.fetch("JUDGING_ROUND") { "QF" }
-      when "QF"
+      case SeasonToggles.judging_round
+      when "qf"
         :quarterfinals
-      when "SF"
+      when "sf"
         :semifinals
       end
     end
 
     def rank_for_current_round
-      case current_round
-      when :quarterfinals
-        :quarterfinalist
-      when :semifinals
-        :semifinalist
-      end
-    end
-
-    def quarterfinals?
-      current_round == :quarterfinals
+      current_round.to_s.sub(/s$/, 'ist')
     end
   end
 end

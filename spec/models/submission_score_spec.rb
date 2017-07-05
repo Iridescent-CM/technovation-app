@@ -361,4 +361,28 @@ RSpec.describe SubmissionScore do
       team_submission.complete_quarterfinals_submission_scores_count
     ).to eq(1)
   end
+
+  describe ".current_round" do
+    it "pulls QF scores" do
+      qf = FactoryGirl.create(:score, round: :quarterfinals)
+      FactoryGirl.create(:score, round: :semifinals)
+
+      set_judging_round("QF")
+
+      expect(SubmissionScore.current_round).to eq([qf])
+
+      reset_judging_round
+    end
+
+    it "pulls SF scores" do
+      sf = FactoryGirl.create(:score, round: :semifinals)
+      FactoryGirl.create(:score, round: :quarterfinals)
+
+      set_judging_round("SF")
+
+      expect(SubmissionScore.current_round).to eq([sf])
+
+      reset_judging_round
+    end
+  end
 end
