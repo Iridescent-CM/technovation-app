@@ -149,7 +149,7 @@ RSpec.describe SeasonToggles do
     end
   end
 
-  describe "#select_regional_pitch_event" do
+  describe ".select_regional_pitch_event" do
     context "valid input" do
       it "allows a collection of 'boolean' words and booleans" do
         expect_good_input_works(
@@ -159,7 +159,7 @@ RSpec.describe SeasonToggles do
         )
       end
 
-      it "reads back a boolean from #select_regional_pitch_event?" do
+      it "reads back a boolean from .select_regional_pitch_event?" do
         SeasonToggles::VALID_TRUTHY.each do |on|
           SeasonToggles.select_regional_pitch_event=on
           expect(SeasonToggles.select_regional_pitch_event?).to be true
