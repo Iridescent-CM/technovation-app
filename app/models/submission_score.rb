@@ -111,9 +111,9 @@ class SubmissionScore < ActiveRecord::Base
 
   scope :current_round, -> {
     case SeasonToggles.judging_round
-    when "QF"
+    when "qf"
       current.quarterfinals
-    when "SF"
+    when "sf"
       current.semifinals
     else
       none
