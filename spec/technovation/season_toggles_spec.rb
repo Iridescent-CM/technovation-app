@@ -149,6 +149,39 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  describe ".select_regional_pitch_event" do
+    context "valid input" do
+      it "allows a collection of 'boolean' words and booleans" do
+        expect_good_input_works(
+          method: "select_regional_pitch_event",
+          valid_input: SeasonToggles::VALID_BOOLS +
+            %i{On oFf yEs nO tRue fAlse}
+        )
+      end
+
+      it "reads back a boolean from .select_regional_pitch_event?" do
+        SeasonToggles::VALID_TRUTHY.each do |on|
+          SeasonToggles.select_regional_pitch_event=on
+          expect(SeasonToggles.select_regional_pitch_event?).to be true
+        end
+
+        SeasonToggles::VALID_FALSEY.each do |off|
+          SeasonToggles.select_regional_pitch_event=off
+          expect(SeasonToggles.select_regional_pitch_event?).to be false
+        end
+      end
+    end
+
+    context "bad input" do
+      it "raises an exception" do
+        expect_bad_input_raises_error(
+          method: "select_regional_pitch_event",
+          valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
+        )
+      end
+    end
+  end
+
   %i(student mentor judge regional_ambassador).each do |scope|
 
     describe "##{scope}_signup=" do
