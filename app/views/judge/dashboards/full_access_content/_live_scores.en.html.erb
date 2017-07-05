@@ -7,11 +7,11 @@
       <p><strong>Division:</strong> <%= team.division_name %></p>
       <p><strong>Ages:</strong> <%= team.ages.to_sentence %></p>
 
-      <% if ENV["JUDGING_OPEN"] and current_judge.submission_scores
-                                                 .current_round
-                                                 .incomplete
-                                                 .flat_map(&:team)
-                                                 .include?(team) %>
+      <% if SeasonToggles.judging_enabled? and current_judge.submission_scores
+                                                            .current_round
+                                                            .incomplete
+                                                            .flat_map(&:team)
+                                                            .include?(team) %>
         <p>
           <%= link_to "Resume scoring this submission",
             edit_judge_submission_score_path(
@@ -21,11 +21,11 @@
               anchor: :window
             ) %>
         </p>
-      <% elsif ENV["JUDGING_OPEN"] and current_judge.submission_scores
-                                                    .current_round
-                                                    .complete
-                                                    .flat_map(&:team)
-                                                    .include?(team) %>
+      <% elsif SeasonToggles.judging_enabled? and current_judge.submission_scores
+                                                               .current_round
+                                                               .complete
+                                                               .flat_map(&:team)
+                                                               .include?(team) %>
         <p>
           <%= link_to "Review & edit your score for this submission",
             edit_judge_submission_score_path(
@@ -35,7 +35,7 @@
               anchor: :review
             ) %>
         </p>
-      <% elsif ENV["JUDGING_OPEN"] %>
+      <% elsif SeasonToggles.judging_enabled? %>
         <p>
           <%= link_to "Start scoring this submission",
             new_judge_submission_score_path(

@@ -1,14 +1,14 @@
 module JudgingHelper
   def set_judging_round(round)
-    @original_round =  ENV["JUDGING_ROUND"]
-    ENV["JUDGING_ROUND"] = round
+    @original_round =  SeasonToggles.judging_round
+    SeasonToggles.judging_round = round
   end
 
   def reset_judging_round
     if @original_round.blank?
-      ENV.delete("JUDGING_ROUND")
+      SeasonToggles.judging_round = :off
     else
-      ENV["JUDGING_ROUND"] = @original_round
+      SeasonToggles.judging_round = @original_round
     end
   end
 end

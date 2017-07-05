@@ -110,7 +110,7 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   scope :current_round, -> {
-    case ENV.fetch("JUDGING_ROUND") { "QF" }
+    case SeasonToggles.judging_round
     when "QF"
       current.quarterfinals
     when "SF"

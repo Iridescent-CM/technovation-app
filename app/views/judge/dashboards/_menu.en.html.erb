@@ -1,5 +1,5 @@
 <ul class="tab-menu">
-  <% if ENV["ENABLE_SUBMISSION_SCORES"] %>
+  <% if SeasonToggles.judging_enabled? %>
     <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
       <li class="tab-link">
         <button
