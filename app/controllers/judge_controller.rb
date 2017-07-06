@@ -41,15 +41,15 @@ class JudgeController < ApplicationController
   end
 
   def current_round
-    case ENV.fetch("JUDGING_ROUND") { "QF" }
-    when "QF"
+    case SeasonToggles.judging_round
+    when "qf"
       :quarterfinals
-    when "SF"
+    when "sf"
       :semifinals
     end
   end
 
   def quarterfinals?
-    current_round == :quarterfinals
+    SeasonToggles.quarterfinals?
   end
 end
