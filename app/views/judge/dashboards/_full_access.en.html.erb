@@ -5,19 +5,19 @@
     <% if SeasonToggles.judging_enabled? %>
       <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
         <div class="tab-content flex-row" id="scores">
-          <%= render 'judge/dashboards/full_access_content/scores', event_type: :live %>
+          <%= render 'judge/dashboards/full_access_content/scores',
+            event_type: :live %>
         </div>
       <% end %>
 
       <div class="tab-content flex-row" id="virtual-scores">
-        <%= render 'judge/dashboards/full_access_content/scores', event_type: :virtual %>
+        <%= render 'judge/dashboards/full_access_content/scores',
+          event_type: :virtual %>
       </div>
     <% end %>
 
-    <% if quarterfinals? %>
-      <div class="tab-content flex-row" id="pitch-events">
-        <%= render 'judge/dashboards/full_access_content/events' %>
-      </div>
-    <% end %>
+    <div class="tab-content flex-row" id="pitch-events">
+      <%= render 'judge/dashboards/full_access_content/events' %>
+    </div>
   </div>
 </div>
