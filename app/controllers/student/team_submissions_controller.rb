@@ -4,6 +4,11 @@ module Student
                   :require_current_team
 
     def new
+      unless SeasonToggles.team_submissions_editable?
+        redirect_to student_dashboard_path,
+          alert: "Sorry, the submission deadline has passed."
+      end
+
       @team_submission = if current_team.submission.present?
                            current_team.submission
                          else
