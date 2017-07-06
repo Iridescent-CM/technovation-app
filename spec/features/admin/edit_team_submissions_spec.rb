@@ -33,4 +33,37 @@ RSpec.feature "Toggling editable team submissions" do
       end
     end
   end
+
+  context "as a student" do
+    scenario "editing on" do
+      SeasonToggles.team_submissions_editable = true
+
+      student = FactoryGirl.create(:student)
+      team = FactoryGirl.create(:team)
+
+      TeamRosterManaging.add(team, student)
+      sign_in(student)
+
+      within("#your-submission") do
+        expect(page).to have_link(
+          'Begin your submission',
+          href: new_student_team_submission_path
+        )
+      end
+    end
+
+    scenario "editing off" do
+      SeasonToggles.team_submissions_editable = false
+
+      student = FactoryGirl.create(:student)
+      team = FactoryGirl.create(:team)
+
+      TeamRosterManaging.add(team, student)
+      sign_in(student)
+
+      within("#your-submission") do
+        expect(page).to have_content("The submission deadline has passed.")
+      end
+    end
+  end
 end
