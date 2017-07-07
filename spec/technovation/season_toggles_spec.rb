@@ -27,8 +27,36 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  describe ".team_submissions_editable=" do
+    it "raises exception for bad input" do
+      expect_bad_input_raises_error(
+        method: :team_submissions_editable,
+        valid_input: SeasonToggles::VALID_BOOLS.join(" | ")
+      )
+    end
+
+    it "accepts valid booleans" do
+      expect_good_input_works(
+        valid_input: SeasonToggles::VALID_BOOLS,
+        method: :team_submissions_editable
+      )
+    end
+  end
+
+  describe ".team_submissions_editable?" do
+    it "is true when team submissions are editable" do
+      SeasonToggles.team_submissions_editable = "oN"
+      expect(SeasonToggles.team_submissions_editable?).to be true
+    end
+
+    it "is false when team submissions are not editable" do
+      SeasonToggles.team_submissions_editable = "No"
+      expect(SeasonToggles.team_submissions_editable?).to be false
+    end
+  end
+
   %w{mentor student}.each do |scope|
-    describe "##{scope}_survey_link=" do
+    describe ".#{scope}_survey_link=" do
       it "takes a hash and returns values" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
@@ -40,7 +68,7 @@ RSpec.describe SeasonToggles do
       end
     end
 
-    describe "#survey_link_available?" do
+    describe ".survey_link_available?" do
       it "returns true if the text and url are present" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
@@ -66,7 +94,7 @@ RSpec.describe SeasonToggles do
     end
   end
 
-  describe "#judging_round=" do
+  describe ".judging_round=" do
     context "valid input" do
       it "allows a specific set of values" do
         expect_good_input_works(
@@ -184,7 +212,7 @@ RSpec.describe SeasonToggles do
 
   %i(student mentor judge regional_ambassador).each do |scope|
 
-    describe "##{scope}_signup=" do
+    describe ".#{scope}_signup=" do
       context "valid input" do
         it "allows a collection of 'boolean' words and booleans" do
           expect_good_input_works(

@@ -15,7 +15,7 @@
     <%= t("views.teams.show.division_name", name: team.division_name.humanize) %>
   </p>
 
-  <% if team.current? %>
+  <% if team.current? and SeasonToggles.team_submissions_editable? %>
     <p class="standalone-buttons">
       <% if @team.submission.present? %>
         <%= link_to "Edit this team's submission",

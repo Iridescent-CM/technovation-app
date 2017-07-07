@@ -155,7 +155,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
 
     before do
       team.team_submissions << sub
-      user.teams << team
+      TeamRosterManaging.add(team, user)
 
       sign_in(user)
     end
@@ -190,7 +190,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
 
     before do
       team.team_submissions << sub
-      user.teams << team
+      TeamRosterManaging.add(team, user)
 
       sign_in(user)
     end
