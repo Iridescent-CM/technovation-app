@@ -2,11 +2,18 @@ require "rails_helper"
 
 RSpec.describe Student::TeamSubmissionsController do
   describe "PATCH #update" do
-    it "can handle sorting" do
-      skip "post-deadline this doesn't work"
+    before do
+      @editable_submissions = !!SeasonToggles.team_submissions_editable?
+      SeasonToggles.team_submissions_editable = true
+    end
 
+    after do
+      SeasonToggles.team_submissions_editable = @editable_submissions
+    end
+
+    it "can handle sorting" do
       student = FactoryGirl.create(:student, :on_team)
-      team_submission = student.team.team_submissions.create!(integrity_affirmed: true)
+      team_submission = FactoryGirl.create(:submission, team: student.team)
 
       screenshot1 = team_submission.screenshots.create!
       screenshot2 = team_submission.screenshots.create!

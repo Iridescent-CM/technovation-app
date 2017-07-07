@@ -1,9 +1,10 @@
 <div class="flex-col-md-8">
-  <% if not current_mentor.is_on_team? %>
-    <p>The submission deadline has passed.</p>
-  <% else %>
+  <% if current_mentor.is_on_team? %>
     <div class="flex-row">
-      <div class="flex-col-md-3 tabs tabs-vertical" id="team-submissions-team-list">
+      <div
+        class="flex-col-md-3 tabs tabs-vertical"
+        id="team-submissions-team-list"
+      >
         <ul class="tab-menu">
           <% @teams.each do |team| %>
             <li class="tab-link">
@@ -20,7 +21,10 @@
 
       <div class="flex-col-md-9 content">
         <% @teams.each do |team| %>
-          <div id="team-submission-team-list-team-<%= team.id %>" class="tab-content">
+          <div
+            id="team-submission-team-list-team-<%= team.id %>"
+            class="tab-content"
+          >
             <div class="flex-row">
               <dl class="flex-col-md-6" style="padding: 0;">
                 <dt>Division</dt>
@@ -48,6 +52,8 @@
             <% if team.submission.present? %>
               <%= render 'mentor/dashboards/team_submission_progress',
                 submission: team.submission %>
+            <% elsif SeasonToggles.team_submissions_editable? %>
+              <%= render 'mentor/dashboards/start_team_submission', team: team %>
             <% else %>
               <p>The submission deadline has passed.</p>
             <% end %>
@@ -55,6 +61,8 @@
         <% end %>
       </div>
     </div>
+  <% elsif not SeasonToggles.team_submissions_editable? %>
+    <p>The submission deadline has passed.</p>
   <% end %>
 </div>
 

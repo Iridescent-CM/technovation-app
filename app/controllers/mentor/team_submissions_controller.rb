@@ -3,19 +3,30 @@ module Mentor
     before_action :require_full_access
 
     def new
-      params[:step] = :affirm_integrity if params[:step].blank?
-      @team_submission = current_team.team_submissions.last ||
-        current_team.team_submissions.build(step: params[:step])
+      @team_submission = if current_team.submission.present?
+                           current_team.submission
+                         else
+                           current_team.team_submissions.build
+                         end
+
       render 'student/team_submissions/new'
     end
 
     def create
-      @team_submission = current_team.team_submissions.last ||
-        current_team.team_submissions.build(team_submission_params)
+      @team_submission = if current_team.submission.present?
+                           current_team.submission
+                         else
+                            current_team.team_submissions.build(
+                              team_submission_params
+                            )
+                         end
 
       if @team_submission.save
-        redirect_to mentor_team_submission_path(@team_submission, team_id: current_team.id),
-          success: t("controllers.team_submissions.create.success")
+        redirect_to mentor_team_submission_path(
+          @team_submission,
+          team_id: current_team.id
+        ),
+        success: t("controllers.team_submissions.create.success")
       else
         render 'student/team_submissions/new'
       end
@@ -30,13 +41,43 @@ module Mentor
       end
 
       @pitch_presentation_uploader = FileUploader.new
-      @pitch_presentation_uploader.success_action_redirect = mentor_team_submission_file_upload_confirmation_url(
-        team_id: @team_submission.team_id,
-        file_attribute: :pitch_presentation,
-        back: mentor_team_submission_path(@team_submission, team_id: @team_submission.team_id)
-      )
+      @pitch_presentation_uploader.success_action_redirect =
+        student_team_submission_file_upload_confirmation_url(
+          file_attribute: :pitch_presentation,
+          back: student_team_submission_path(@team_submission)
+        )
 
-      render 'student/team_submissions/show'
+      if SeasonToggles.team_submissions_editable?
+        unless @team_submission.business_plan
+          @team_submission.build_business_plan
+        end
+
+        @business_plan_uploader = FileUploader.new
+        @business_plan_uploader.success_action_redirect =
+          student_team_submission_file_upload_confirmation_url(
+            file_attribute: :business_plan,
+            back: student_team_submission_path(@team_submission)
+          )
+
+
+        @source_code_uploader = FileUploader.new
+        @source_code_uploader.success_action_redirect =
+          student_team_submission_file_upload_confirmation_url(
+            file_attribute: :source_code,
+            back: student_team_submission_path(@team_submission)
+          )
+
+        @team_photo_uploader = ImageUploader.new
+        @team_photo_uploader.success_action_redirect =
+          student_team_photo_upload_confirmation_url(back: request.fullpath)
+
+        @screenshots_uploader = ImageUploader.new
+        @screenshots_uploader.success_action_redirect = ''
+
+        render 'student/team_submissions/edit'
+      else
+        render 'student/team_submissions/show'
+      end
     end
 
     def update
@@ -78,14 +119,49 @@ module Mentor
     end
 
     def team_submission_params
-      params.require(:team_submission).permit(
-        pitch_presentation_attributes: [
-          :id,
-          :remote_file_url,
-        ],
-      ).tap do |tapped|
+      sub_params = if SeasonToggles.team_submissions_editable?
+                    params.require(:team_submission).permit(
+                      :integrity_affirmed,
+                      :source_code,
+                      :source_code_external_url,
+                      :app_description,
+                      :stated_goal,
+                      :stated_goal_explanation,
+                      :app_name,
+                      :demo_video_link,
+                      :pitch_video_link,
+                      :development_platform_other,
+                      :development_platform,
+                      :source_code_file_uploaded,
+                      business_plan_attributes: [
+                        :id,
+                        :remote_file_url,
+                      ],
+                      pitch_presentation_attributes: [
+                        :id,
+                        :remote_file_url,
+                      ],
+                      screenshots: [],
+                    )
+                   else
+                    params.require(:team_submission).permit(
+                      pitch_presentation_attributes: [
+                        :id,
+                        :remote_file_url,
+                      ],
+                    )
+                   end
+      sub_params.tap do |tapped|
         if tapped[:pitch_presentation_attributes]
           tapped[:pitch_presentation_attributes][:file_uploaded] = false
+        end
+
+        unless tapped[:source_code_external_url].blank?
+          tapped[:source_code_file_uploaded] = false
+        end
+
+        if tapped[:business_plan_attributes]
+          tapped[:business_plan_attributes][:file_uploaded] = false
         end
       end
     end
