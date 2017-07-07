@@ -1,7 +1,10 @@
 <div class="flex-col-md-8">
   <% if current_mentor.is_on_team? %>
     <div class="flex-row">
-      <div class="flex-col-md-3 tabs tabs-vertical" id="team-submissions-team-list">
+      <div
+        class="flex-col-md-3 tabs tabs-vertical"
+        id="team-submissions-team-list"
+      >
         <ul class="tab-menu">
           <% @teams.each do |team| %>
             <li class="tab-link">
@@ -18,7 +21,10 @@
 
       <div class="flex-col-md-9 content">
         <% @teams.each do |team| %>
-          <div id="team-submission-team-list-team-<%= team.id %>" class="tab-content">
+          <div
+            id="team-submission-team-list-team-<%= team.id %>"
+            class="tab-content"
+          >
             <div class="flex-row">
               <dl class="flex-col-md-6" style="padding: 0;">
                 <dt>Division</dt>

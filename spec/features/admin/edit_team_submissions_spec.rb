@@ -12,9 +12,21 @@ RSpec.feature "Toggling editable team submissions" do
       sign_in(mentor)
 
       within("#team-submission-team-list-team-#{team.id}") do
+        click_link "Start the submission for this team"
+      end
+
+      check "team_submission[integrity_affirmed]"
+      click_button "Get Started"
+
+      expect(page).to have_css('.appy-button', text: "Edit")
+
+      visit mentor_dashboard_path
+
+      within("#team-submission-team-list-team-#{team.id}") do
+        expect(page).not_to have_content("The submission deadline has passed.")
         expect(page).to have_link(
-          'Start the submission for this team',
-          href: new_mentor_team_submission_path(team_id: team.id)
+          "Edit this team's submission",
+          href: mentor_team_submission_path(team.submission, team_id: team.id)
         )
       end
     end
@@ -24,13 +36,18 @@ RSpec.feature "Toggling editable team submissions" do
 
       mentor = FactoryGirl.create(:mentor)
       team = FactoryGirl.create(:team)
+      FactoryGirl.create(:submission, team: team)
 
       TeamRosterManaging.add(team, mentor)
       sign_in(mentor)
 
       within("#team-submission-team-list-team-#{team.id}") do
         expect(page).to have_content("The submission deadline has passed.")
+        expect(page).not_to have_link("Edit this team's submission")
       end
+
+      visit mentor_team_submission_path(team.submission, team_id: team.id)
+      expect(page).not_to have_css(".appy-button", text: "Edit")
     end
   end
 
@@ -44,10 +61,18 @@ RSpec.feature "Toggling editable team submissions" do
       TeamRosterManaging.add(team, student)
       sign_in(student)
 
+      within("#your-submission") { click_link "Begin your submission" }
+      check "team_submission[integrity_affirmed]"
+      click_button "Get Started"
+
+      expect(page).to have_css('.appy-button', text: "Edit")
+
+      visit student_dashboard_path
       within("#your-submission") do
+        expect(page).not_to have_content("The submission deadline has passed.")
         expect(page).to have_link(
-          'Begin your submission',
-          href: new_student_team_submission_path
+          "Edit your submission",
+          href: student_team_submission_path(team.submission)
         )
       end
     end
@@ -57,13 +82,18 @@ RSpec.feature "Toggling editable team submissions" do
 
       student = FactoryGirl.create(:student)
       team = FactoryGirl.create(:team)
+      FactoryGirl.create(:submission, team: team)
 
       TeamRosterManaging.add(team, student)
       sign_in(student)
 
       within("#your-submission") do
         expect(page).to have_content("The submission deadline has passed.")
+        expect(page).not_to have_link("Edit your submission")
       end
+
+      visit student_team_submission_path(team.submission)
+      expect(page).not_to have_css(".appy-button", text: "Edit")
     end
   end
 end

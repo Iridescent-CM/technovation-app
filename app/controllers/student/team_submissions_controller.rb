@@ -54,6 +54,38 @@ module Student
           file_attribute: :pitch_presentation,
           back: student_team_submission_path(@team_submission)
         )
+
+      if SeasonToggles.team_submissions_editable?
+        unless @team_submission.business_plan
+          @team_submission.build_business_plan
+        end
+
+        @business_plan_uploader = FileUploader.new
+        @business_plan_uploader.success_action_redirect =
+          student_team_submission_file_upload_confirmation_url(
+            file_attribute: :business_plan,
+            back: student_team_submission_path(@team_submission)
+          )
+
+
+        @source_code_uploader = FileUploader.new
+        @source_code_uploader.success_action_redirect =
+          student_team_submission_file_upload_confirmation_url(
+            file_attribute: :source_code,
+            back: student_team_submission_path(@team_submission)
+          )
+
+        @team_photo_uploader = ImageUploader.new
+        @team_photo_uploader.success_action_redirect =
+          student_team_photo_upload_confirmation_url(back: request.fullpath)
+
+        @screenshots_uploader = ImageUploader.new
+        @screenshots_uploader.success_action_redirect = ''
+
+        render 'edit'
+      else
+        render 'show'
+      end
     end
 
     def update

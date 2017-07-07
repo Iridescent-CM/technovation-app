@@ -1,10 +1,10 @@
 <h1>Submission Progress</h1>
 
-<p>
-  The deadline has passed. Good luck!
-</p>
-
 <%# see app/helpers/student_helper for SUBPROG function %>
+
+<% unless SeasonToggles.team_submissions_editable? %>
+  <p>The submission deadline has passed. Good luck!</p>
+<% end %>
 
 <div class="flex-row">
   <div class="flex-col-md-6">
@@ -114,5 +114,15 @@
     app_path(submission),
     target: :_blank %>
 
+  <br />
+
   (you can also share it on social media!)
 </p>
+
+<% if SeasonToggles.team_submissions_editable? %>
+  <p class="standalone-buttons">
+    <%= link_to "Edit your submission",
+      student_team_submission_path(submission),
+      class: "appy-button" %>
+  </p>
+<% end %>
