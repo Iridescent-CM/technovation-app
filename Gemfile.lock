@@ -8,6 +8,16 @@ GIT
       rails
 
 GIT
+  remote: https://github.com/carrierwaveuploader/carrierwave.git
+  revision: 61a961aedf29aa6741dc6528c55dfe6de7f700b4
+  branch: master
+  specs:
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
+
+GIT
   remote: https://github.com/elsurudo/simple_form.git
   revision: a1faca93ed39c0f54055890578307bdbade3de0b
   branch: rails-5.1.0
@@ -93,10 +103,6 @@ GEM
       json
     carmen (1.0.2)
       activesupport (>= 3.0.0)
-    carrierwave (1.1.0)
-      activemodel (>= 4.0.0)
-      activesupport (>= 4.0.0)
-      mime-types (>= 1.16)
     carrierwave_direct (0.0.15)
       carrierwave
       fog
@@ -578,7 +584,7 @@ DEPENDENCIES
   browser (~> 2.4)
   capybara-webkit (~> 1.14)
   carmen (~> 1.0)
-  carrierwave (~> 1.1)
+  carrierwave!
   carrierwave_direct (~> 0.0)
   casting (~> 0.7)
   chartkick (~> 2.2)
