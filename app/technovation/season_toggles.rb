@@ -31,10 +31,24 @@ class SeasonToggles
       end
     end
 
+    %w{mentor student judge}.each do |scope|
+      define_method("#{scope}_dashboard_text=") do |text|
+        store.set("#{scope}_dashboard_text", text)
+      end
+    end
+
     def survey_link(scope, key)
       value = store.get("#{scope}_survey_link") || "{}"
       parsed = JSON.parse(value)
       parsed[key]
+    end
+
+    def dashboard_text_available?(scope)
+      !!dashboard_text(scope) and not dashboard_text(scope).empty?
+    end
+
+    def dashboard_text(scope)
+      store.get("#{scope}_dashboard_text")
     end
 
     def team_submissions_editable=(value)
