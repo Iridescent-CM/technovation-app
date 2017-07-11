@@ -43,10 +43,6 @@ class SeasonToggles
       end
     end
 
-    def dashboard_text_available?(scope)
-      !!dashboard_text(scope) and not dashboard_text(scope).empty?
-    end
-
     def dashboard_text(scope)
       store.get("#{scope}_dashboard_text")
     end
