@@ -44,6 +44,7 @@ RSpec.feature "Toggling editable team submissions" do
       within("#team-submission-team-list-team-#{team.id}") do
         expect(page).to have_content("The submission deadline has passed.")
         expect(page).not_to have_link("Edit this team's submission")
+        expect(page).not_to have_link("Start the submission for this team")
       end
 
       visit mentor_team_submission_path(team.submission, team_id: team.id)
