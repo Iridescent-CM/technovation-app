@@ -77,7 +77,7 @@ RSpec.feature "Toggling editable team submissions" do
       end
     end
 
-    scenario "editing off" do
+    scenario "editing off, submission exists" do
       SeasonToggles.team_submissions_editable = false
 
       student = FactoryGirl.create(:student)
@@ -87,13 +87,24 @@ RSpec.feature "Toggling editable team submissions" do
       TeamRosterManaging.add(team, student)
       sign_in(student)
 
-      within("#your-submission") do
-        expect(page).to have_content("The submission deadline has passed.")
-        expect(page).not_to have_link("Edit your submission")
-      end
+      expect(page).to have_content("The submission deadline has passed.")
+      expect(page).not_to have_link("Edit your submission")
 
       visit student_team_submission_path(team.submission)
       expect(page).not_to have_css(".appy-button", text: "Edit")
+    end
+
+    scenario "editing off, no submission exists" do
+      SeasonToggles.team_submissions_editable = false
+
+      student = FactoryGirl.create(:student)
+      team = FactoryGirl.create(:team)
+
+      TeamRosterManaging.add(team, student)
+      sign_in(student)
+
+      expect(page).to have_content("The submission deadline has passed.")
+      expect(page).not_to have_link("Begin your submission")
     end
   end
 end

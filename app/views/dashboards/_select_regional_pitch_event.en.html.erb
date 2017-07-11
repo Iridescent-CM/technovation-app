@@ -29,9 +29,11 @@
         <div>
           <dt>Your submission:</dt>
           <dd>
-            <p>
-              <%= link_to 'Edit your submission', student_team_submission_path(submission) %>
-            </p>
+            <% if SeasonToggles.team_submissions_editable? %>
+              <p>
+                <%= link_to 'Edit your submission', student_team_submission_path(submission) %>
+              </p>
+            <% end %>
 
             <p>
               <%= link_to 'See how it looks to the judges',
