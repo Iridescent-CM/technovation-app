@@ -8,7 +8,9 @@
   </div>
 
   <div class="card__body">
-    <p>You can now select any pitch events in your region for your teams to attend!</p>
+    <p>
+      You can now select any pitch events in your region for your teams to attend!
+    </p>
 
     <p>
       <%= link_to "Manage your regional pitch events",
@@ -44,6 +46,6 @@
   </h1>
 
   <%= render 'mentor/teams/team_list',
-            type: :past,
-            teams: @past_teams %>
+    type: :past,
+    teams: @past_teams %>
 <% end %>
