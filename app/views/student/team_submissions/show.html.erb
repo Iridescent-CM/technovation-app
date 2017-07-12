@@ -5,17 +5,23 @@
 <div data-team-submissions class="team-submissions">
   <div class="team-submissions__row-left submissions-col">
     <div class="team-submissions__fixed-col">
-      <%= render 'team_submissions/team_photo', submission: @team_submission %>
+      <%= render 'team_submissions/team_photo',
+        submission: @team_submission %>
     </div>
   </div>
 
   <div class="team-submissions__row-center submissions-col">
-    <%= render 'team_submissions/app_description', submission: @team_submission %>
+    <%= render 'team_submissions/app_description',
+      submission: @team_submission %>
+
     <%= render 'team_submissions/sustainable_development_goal',
       submission: @team_submission %>
+
     <%= render 'team_submissions/demo_pitch_videos',
       submission: @team_submission %>
-    <%= render 'team_submissions/screenshots', submission: @team_submission %>
+
+    <%= render 'team_submissions/screenshots',
+      submission: @team_submission %>
   </div>
 
   <div class="team-submissions__row-right submissions-col">
@@ -23,7 +29,8 @@
       <%= render 'team_submissions/development_platform',
         submission: @team_submission %>
 
-      <%= render 'team_submissions/source_code', submission: @team_submission %>
+      <%= render 'team_submissions/source_code',
+        submission: @team_submission %>
 
       <% if Division.for(@team_submission.team).senior? %>
         <%= render 'team_submissions/business_plan',
