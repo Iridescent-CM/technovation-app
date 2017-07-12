@@ -30,3 +30,11 @@ form[data-remote] {
     display: inline;
   }
 }
+
+fieldset {
+  margin: 0;
+
+  p, .inline-checkbox, .inline-radio, input {
+    margin: 0;
+  }
+}

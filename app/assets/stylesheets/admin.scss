@@ -145,3 +145,13 @@
     }
   }
 }
+
+.notice {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+
+  &.warning {
+    background: $warning;
+    color: $warning-txt;
+  }
+}
