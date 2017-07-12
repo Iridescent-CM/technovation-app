@@ -8,7 +8,7 @@
       </div>
     <% end %>
 
-    <% if current_mentor.is_on_team? %>
+    <% if current_mentor.is_on_team? and SeasonToggles.display_scores? %>
       <div class="tab-content flex-row" id="scores">
         <%= render 'mentor/dashboards/full_access_content/scores' %>
       </div>

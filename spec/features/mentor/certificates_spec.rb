@@ -4,6 +4,7 @@ RSpec.feature "Mentor certificates" do
   before do
     @original_certificates = ENV["CERTIFICATES"]
     ENV["CERTIFICATES"] = "any value -- booleans don't work in ENV"
+    SeasonToggles.display_scores="yes"
   end
 
   after do

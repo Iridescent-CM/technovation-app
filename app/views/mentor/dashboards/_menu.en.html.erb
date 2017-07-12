@@ -10,7 +10,7 @@
     </li>
   <% end %>
 
-  <% if current_mentor.is_on_team? %>
+  <% if current_mentor.is_on_team? and SeasonToggles.display_scores? %>
     <li class="tab-link">
       <button
         role="button"
