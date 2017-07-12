@@ -7,7 +7,7 @@ module Student
       @quarterfinals_scores = SubmissionScore.none
       @semifinals_scores = SubmissionScore.none
 
-      if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"]
+      if current_team.submission.present? and SeasonToggles.display_scores?
         @all_scores = current_team.submission.submission_scores.complete
         @quarterfinals_scores = @all_scores.quarterfinals
 

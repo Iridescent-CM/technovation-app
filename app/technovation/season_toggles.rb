@@ -19,6 +19,14 @@ class SeasonToggles
       convert_to_bool(store.get("select_regional_pitch_event"))
     end
 
+    def display_scores=(value)
+      store.set("display_scores", with_bool_validation(value))
+    end
+
+    def display_scores?
+      convert_to_bool(store.get("display_scores"))
+    end
+
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
         store.set("#{scope}_survey_link", JSON.generate(attrs))
