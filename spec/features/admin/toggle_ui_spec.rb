@@ -81,4 +81,23 @@ RSpec.feature "Admin UI for season toggles:" do
 
     expect(SeasonToggles.display_scores?).to be true
   end
+
+  scenario "configure judging rounds" do
+    SeasonToggles.judging_round = :off
+
+    click_link "Season Schedule Settings"
+    choose "Quarterfinals"
+    click_button "Save"
+    expect(SeasonToggles.quarterfinals?).to be true
+
+    click_link "Season Schedule Settings"
+    choose "Semifinals"
+    click_button "Save"
+    expect(SeasonToggles.semifinals?).to be true
+
+    click_link "Season Schedule Settings"
+    choose "Off"
+    click_button "Save"
+    expect(SeasonToggles.judging_enabled?).to be false
+  end
 end

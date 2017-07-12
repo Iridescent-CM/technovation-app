@@ -15,19 +15,29 @@ class SeasonToggles
     end
 
     def select_regional_pitch_event=(value)
-      store.set("select_regional_pitch_event", with_bool_validation(value))
+      if judging_enabled?
+        store.set(:select_regional_pitch_event, false)
+      else
+        store.set(:select_regional_pitch_event, with_bool_validation(value))
+      end
     end
 
     def select_regional_pitch_event?
-      convert_to_bool(store.get("select_regional_pitch_event"))
+      not judging_enabled? and
+        convert_to_bool(store.get(:select_regional_pitch_event))
     end
 
     def display_scores=(value)
-      store.set("display_scores", with_bool_validation(value))
+      if judging_enabled?
+        store.set(:display_scores, false)
+      else
+        store.set(:display_scores, with_bool_validation(value))
+      end
     end
 
     def display_scores?
-      convert_to_bool(store.get("display_scores"))
+      not judging_enabled? and
+        convert_to_bool(store.get("display_scores"))
     end
 
     %w{mentor student}.each do |scope|
@@ -67,19 +77,31 @@ class SeasonToggles
     end
 
     def team_submissions_editable=(value)
-      store.set(:team_submissions_editable, with_bool_validation(value))
+      if judging_enabled?
+        store.set(:team_submissions_editable, false)
+      else
+        store.set(:team_submissions_editable, with_bool_validation(value))
+      end
     end
 
     def team_submissions_editable?
-      convert_to_bool(store.get(:team_submissions_editable))
+      not judging_enabled? and
+        convert_to_bool(store.get(:team_submissions_editable))
     end
 
     def judging_round=(value)
       store.set(:judging_round, with_judging_round_validation(value))
+
+      if value.to_s.downcase != "off"
+        warn "JUDGING ENABLED: Automatically disabling submissions, events, and scores"
+        self.team_submissions_editable = false
+        self.select_regional_pitch_event = false
+        self.display_scores = false
+      end
     end
 
     def judging_round
-      store.get(:judging_round)
+      store.get(:judging_round) || :off
     end
     alias :current_judging_round :judging_round
 
