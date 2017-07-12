@@ -71,4 +71,14 @@ RSpec.feature "Admin UI for season toggles:" do
 
     expect(SeasonToggles.select_regional_pitch_event?).to be true
   end
+
+  scenario "configure scores & certificates" do
+    SeasonToggles.display_scores = false
+    click_link "Season Schedule Settings"
+
+    check "Scores & Certificates Accessible?"
+    click_button "Save"
+
+    expect(SeasonToggles.display_scores?).to be true
+  end
 end

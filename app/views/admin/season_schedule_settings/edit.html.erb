@@ -87,6 +87,14 @@
       <%= f.label :select_regional_pitch_event,
         "Regional Pitch Event Selection Enabled?" %>
     </p>
+
+    <p class="inline-checkbox">
+      <%= f.check_box :display_scores,
+        id: :season_toggles_display_scores,
+        checked: SeasonToggles.display_scores? %>
+
+      <%= f.label :display_scores, "Scores & Certificates Accessible?" %>
+    </p>
   </fieldset>
 
   <div class="notice warning">

@@ -12,6 +12,7 @@ module Admin
         *dashboard_text_scopes,
         :team_submissions_editable,
         :select_regional_pitch_event,
+        :display_scores,
         student_survey_link: [:text, :url],
         mentor_survey_link: [:text, :url],
       )
