@@ -93,7 +93,10 @@ class SeasonToggles
       store.set(:judging_round, with_judging_round_validation(value))
 
       if value.to_s.downcase != "off"
-        warn "JUDGING ENABLED: Automatically disabling submissions, events, and scores"
+        unless Rails.env.test?
+          warn("JUDGING ENABLED: Disables submissions, event selection, and scores")
+        end
+
         self.team_submissions_editable = false
         self.select_regional_pitch_event = false
         self.display_scores = false
