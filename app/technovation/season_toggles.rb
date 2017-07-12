@@ -11,7 +11,7 @@ class SeasonToggles
 
   class << self
     def configure(attrs)
-      attrs.each { |k, v| send("#{k}=", v) }
+      Hash(attrs).each { |k, v| send("#{k}=", v) }
     end
 
     def select_regional_pitch_event=(value)
