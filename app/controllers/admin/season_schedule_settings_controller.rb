@@ -1,9 +1,7 @@
 module Admin
   class SeasonScheduleSettingsController < AdminController
     def update
-      season_toggle_params.each do |key, value|
-        SeasonToggles.public_send("#{key}=", value)
-      end
+      SeasonToggles.configure(season_toggle_params)
       redirect_to admin_dashboard_path, success: "Season schedule saved!"
     end
 
@@ -11,7 +9,9 @@ module Admin
     def season_toggle_params
       params.require(:season_toggles).permit(
         *signup_scopes,
-        *dashboard_text_scopes
+        *dashboard_text_scopes,
+        student_survey_link: [:text, :url],
+        mentor_survey_link: [:text, :url],
       )
     end
 

@@ -33,4 +33,22 @@ RSpec.feature "Admin UI for season toggles:" do
         "#{scope} dashboard text was not set"
     end
   end
+
+  scenario "set the survey links" do
+    %w{student mentor}.each do |scope|
+      SeasonToggles.set_survey_link(scope, nil, nil)
+      click_link "Season Schedule Settings"
+
+      fill_in "season_toggles_#{scope}_survey_link_text", with: "Pre-survey"
+      fill_in "season_toggles_#{scope}_survey_link_url", with: "google.com"
+
+      click_button "Save"
+
+      expect(SeasonToggles.survey_link(scope, :text)).to eq("Pre-survey"),
+        "#{scope} survey link text was not set"
+
+      expect(SeasonToggles.survey_link(scope, :url)).to eq("google.com"),
+        "#{scope} survey link url was not set"
+    end
+  end
 end

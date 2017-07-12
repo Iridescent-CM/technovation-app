@@ -25,8 +25,8 @@
   <fieldset>
     <legend>Dashboard headlines</legend>
 
-    <div class="notice info">
-      <small><em>Keep these short! 3 or 4 words only, please!</em></small>
+    <div class="notice info hint">
+      Keep these short! 3 or 4 words only, please!
     </div>
 
     <% %w{student mentor judge}.each do |scope| %>
@@ -37,6 +37,33 @@
           id: "season_toggles_#{scope}_dashboard_text",
           value: SeasonToggles.dashboard_text(scope) %>
       </p>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Survey links</legend>
+
+    <div class="notice info hint">
+      It's on you to enter a correctly formatted URL.
+      (ex: https://google.com, not google.com)<br />
+      Text *and* URL must both be filled in for the link to appear
+    </div>
+
+
+    <% %w{student mentor}.each do |scope| %>
+      <%= f.fields_for "#{scope}_survey_link" do |s| %>
+        <p>
+          <%= s.label :text, scope.pluralize.capitalize %>
+
+          <%= s.text_field :text,
+            placeholder: "Text",
+            value: SeasonToggles.survey_link(scope, :text) %>
+
+          <%= s.text_field :url,
+            placeholder: "URL",
+            value: SeasonToggles.survey_link(scope, :url) %>
+        </p>
+      <% end %>
     <% end %>
   </fieldset>
 

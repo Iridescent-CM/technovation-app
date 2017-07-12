@@ -10,6 +10,9 @@ class SeasonToggles
                              %w{off}
 
   class << self
+    def configure(attrs)
+      attrs.each { |k, v| send("#{k}=", v) }
+    end
 
     def select_regional_pitch_event=(value)
       store.set("select_regional_pitch_event", with_bool_validation(value))
@@ -29,7 +32,7 @@ class SeasonToggles
 
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
-        store.set("#{scope}_survey_link", JSON.generate(attrs))
+        store.set("#{scope}_survey_link", JSON.generate(attrs.to_h))
       end
     end
 
@@ -39,10 +42,14 @@ class SeasonToggles
       end
     end
 
+    def set_survey_link(scope, text, url)
+      send("#{scope}_survey_link=", { text: text, url: url })
+    end
+
     def survey_link(scope, key)
       value = store.get("#{scope}_survey_link") || "{}"
       parsed = JSON.parse(value)
-      parsed[key]
+      parsed[key.to_s]
     end
 
     %w{mentor student judge}.each do |scope|
