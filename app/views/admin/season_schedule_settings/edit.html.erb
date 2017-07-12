@@ -4,8 +4,8 @@
 <%= form_with(
   scope: :season_toggles,
   url: admin_season_schedule_settings_path,
-  method: :patch,
-  local: true
+  local: true,
+  method: :patch
 ) do |f| %>
 
   <fieldset>
@@ -48,7 +48,6 @@
       (ex: https://google.com, not google.com)<br />
       Text *and* URL must both be filled in for the link to appear
     </div>
-
 
     <% %w{student mentor}.each do |scope| %>
       <%= f.fields_for "#{scope}_survey_link" do |s| %>
