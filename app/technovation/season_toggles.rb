@@ -1,6 +1,6 @@
 class SeasonToggles
-  VALID_TRUTHY = %w{on yes true}
-  VALID_FALSEY = %w{off no false}
+  VALID_TRUTHY = %w{1 on yes true}
+  VALID_FALSEY = %w{0 off no false}
   VALID_BOOLS = VALID_TRUTHY + VALID_FALSEY
 
   VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}

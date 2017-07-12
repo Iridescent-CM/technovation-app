@@ -196,6 +196,8 @@ Rails.application.routes.draw do
     resource :paper_parental_consent, only: :create
 
     resources :exports, only: :create
+
+    resource :season_schedule_settings, only: [:edit, :update]
   end
 
   namespace :application do

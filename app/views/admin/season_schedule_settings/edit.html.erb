@@ -1,0 +1,27 @@
+<h1>Season Schedule Settings</h1>
+
+<%= form_with(
+  scope: :season_toggles,
+  url: admin_season_schedule_settings_path,
+  method: :patch
+) do |f| %>
+
+  <fieldset>
+    <legend>Signups</legend>
+    <% %w{student mentor judge regional_ambassador}.each do |scope| %>
+      <p class="inline-checkbox">
+        <%= f.check_box "#{scope}_signup", id: "season_toggles_#{scope}_signup" %>
+        <%= f.label "#{scope}_signup" %>
+      </p>
+    <% end %>
+  </fieldset>
+
+  <div class="notice warning">
+    The changes you make on this page will affect the experience of end users!<br />
+    Please double check before hitting save!
+  </div>
+
+  <p>
+    <%= f.submit "Save", class: "appy-button" %>
+  </p>
+<% end %>
