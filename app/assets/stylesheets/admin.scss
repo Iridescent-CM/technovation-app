@@ -154,4 +154,9 @@
     background: $warning;
     color: $warning-txt;
   }
+
+  &.info {
+    background: $info;
+    color: $info-txt;
+  }
 }

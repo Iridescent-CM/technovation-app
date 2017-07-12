@@ -10,14 +10,17 @@ module Admin
     private
     def season_toggle_params
       params.require(:season_toggles).permit(
-        *signup_scopes
+        *signup_scopes,
+        *dashboard_text_scopes
       )
     end
 
     def signup_scopes
-      %w{student mentor judge regional_ambassador}.map do |scope|
-        "#{scope}_signup"
-      end
+      %w{student mentor judge regional_ambassador}.map { |s| "#{s}_signup" }
+    end
+
+    def dashboard_text_scopes
+      %w{student mentor judge}.map { |s| "#{s}_dashboard_text" }
     end
   end
 end

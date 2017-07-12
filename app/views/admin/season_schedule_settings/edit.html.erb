@@ -1,19 +1,37 @@
 <h1>Season Schedule Settings</h1>
+<h2>For toggling user features on and off throughout the season</h2>
 
 <%= form_with(
   scope: :season_toggles,
   url: admin_season_schedule_settings_path,
-  method: :patch
+  method: :patch,
+  local: true
 ) do |f| %>
 
   <fieldset>
     <legend>Signups</legend>
+
     <% %w{student mentor judge regional_ambassador}.each do |scope| %>
       <p class="inline-checkbox">
-      <%= f.check_box "#{scope}_signup",
-        id: "season_toggles_#{scope}_signup",
-        checked: SeasonToggles.signup_enabled?(scope) %>
+        <%= f.check_box "#{scope}_signup",
+          id: "season_toggles_#{scope}_signup",
+          checked: SeasonToggles.signup_enabled?(scope) %>
+
         <%= f.label "#{scope}_signup" %>
+      </p>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Dashboard headlines</legend>
+
+    <% %w{student mentor judge}.each do |scope| %>
+      <p>
+        <%= f.label "#{scope}_dashboard_text" %>
+
+        <%= f.text_field "#{scope}_dashboard_text",
+          id: "season_toggles_#{scope}_dashboard_text",
+          value: SeasonToggles.dashboard_text(scope) %>
       </p>
     <% end %>
   </fieldset>
