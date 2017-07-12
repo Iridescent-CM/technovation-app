@@ -25,6 +25,10 @@
   <fieldset>
     <legend>Dashboard headlines</legend>
 
+    <div class="notice info">
+      <small><em>Keep these short! 3 or 4 words only, please!</em></small>
+    </div>
+
     <% %w{student mentor judge}.each do |scope| %>
       <p>
         <%= f.label "#{scope}_dashboard_text" %>
