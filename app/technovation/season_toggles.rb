@@ -96,6 +96,18 @@ class SeasonToggles
       end
     end
 
+    def disable_signup(scope)
+      send("#{scope}_signup=", false)
+    end
+
+    def enable_signup(scope)
+      send("#{scope}_signup=", true)
+    end
+
+    def signup_enabled?(scope)
+      send("#{scope}_signup?")
+    end
+
     private
     def store
       @@store ||= Redis.new

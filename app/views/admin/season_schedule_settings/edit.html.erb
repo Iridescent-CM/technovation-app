@@ -10,7 +10,9 @@
     <legend>Signups</legend>
     <% %w{student mentor judge regional_ambassador}.each do |scope| %>
       <p class="inline-checkbox">
-        <%= f.check_box "#{scope}_signup", id: "season_toggles_#{scope}_signup" %>
+      <%= f.check_box "#{scope}_signup",
+        id: "season_toggles_#{scope}_signup",
+        checked: SeasonToggles.signup_enabled?(scope) %>
         <%= f.label "#{scope}_signup" %>
       </p>
     <% end %>
