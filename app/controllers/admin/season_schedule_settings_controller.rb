@@ -10,6 +10,7 @@ module Admin
       params.require(:season_toggles).permit(
         *signup_scopes,
         *dashboard_text_scopes,
+        :team_submissions_editable,
         student_survey_link: [:text, :url],
         mentor_survey_link: [:text, :url],
       )

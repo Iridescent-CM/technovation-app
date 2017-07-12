@@ -67,6 +67,19 @@
     <% end %>
   </fieldset>
 
+  <fieldset>
+    <legend>Submissions, Events, Judging, & Scores</legend>
+
+    <p class="inline-checkbox">
+      <%= f.check_box :team_submissions_editable,
+        id: :season_toggles_team_submissions_editable,
+        checked: SeasonToggles.team_submissions_editable? %>
+
+      <%= f.label :team_submissions_editable,
+        "Make Team Submissions Editable?" %>
+    </p>
+  </fieldset>
+
   <div class="notice warning">
     The changes you make on this page will affect the experience of end users!<br />
     Please double check before hitting save!

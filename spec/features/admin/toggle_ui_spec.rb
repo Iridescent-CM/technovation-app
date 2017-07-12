@@ -51,4 +51,14 @@ RSpec.feature "Admin UI for season toggles:" do
         "#{scope} survey link url was not set"
     end
   end
+
+  scenario "configure team submissions editable" do
+    SeasonToggles.team_submissions_editable = false
+    click_link "Season Schedule Settings"
+
+    check "Make Team Submissions Editable?"
+    click_button "Save"
+
+    expect(SeasonToggles.team_submissions_editable?).to be true
+  end
 end
