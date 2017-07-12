@@ -126,6 +126,7 @@
 
     <p class="inline-checkbox">
       <%= f.check_box :select_regional_pitch_event,
+        disabled: SeasonToggles.judging_enabled?,
         id: :season_toggles_select_regional_pitch_event,
         checked: SeasonToggles.select_regional_pitch_event? %>
 
@@ -135,6 +136,7 @@
 
     <p class="inline-checkbox">
       <%= f.check_box :display_scores,
+        disabled: SeasonToggles.judging_enabled?,
         id: :season_toggles_display_scores,
         checked: SeasonToggles.display_scores? %>
 
