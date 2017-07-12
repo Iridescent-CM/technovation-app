@@ -37,6 +37,16 @@ class SeasonToggles
       parsed[key]
     end
 
+    %w{mentor student judge}.each do |scope|
+      define_method("#{scope}_dashboard_text=") do |text|
+        store.set("#{scope}_dashboard_text", text)
+      end
+    end
+
+    def dashboard_text(scope)
+      store.get("#{scope}_dashboard_text")
+    end
+
     def team_submissions_editable=(value)
       store.set(:team_submissions_editable, with_bool_validation(value))
     end
