@@ -56,7 +56,7 @@ RSpec.feature "Admin UI for season toggles:" do
     SeasonToggles.team_submissions_editable = false
     click_link "Season Schedule Settings"
 
-    check "Make Team Submissions Editable?"
+    check "Team Submissions Editable?"
     click_button "Save"
 
     expect(SeasonToggles.team_submissions_editable?).to be true
