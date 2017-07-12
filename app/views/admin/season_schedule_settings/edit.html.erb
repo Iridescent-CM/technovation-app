@@ -78,6 +78,15 @@
       <%= f.label :team_submissions_editable,
         "Make Team Submissions Editable?" %>
     </p>
+
+    <p class="inline-checkbox">
+      <%= f.check_box :select_regional_pitch_event,
+        id: :season_toggles_select_regional_pitch_event,
+        checked: SeasonToggles.select_regional_pitch_event? %>
+
+      <%= f.label :select_regional_pitch_event,
+        "Regional Pitch Event Selection Enabled?" %>
+    </p>
   </fieldset>
 
   <div class="notice warning">

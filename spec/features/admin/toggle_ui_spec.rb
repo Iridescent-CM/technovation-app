@@ -61,4 +61,14 @@ RSpec.feature "Admin UI for season toggles:" do
 
     expect(SeasonToggles.team_submissions_editable?).to be true
   end
+
+  scenario "configure regional pitch event selection" do
+    SeasonToggles.select_regional_pitch_event = false
+    click_link "Season Schedule Settings"
+
+    check "Regional Pitch Event Selection Enabled?"
+    click_button "Save"
+
+    expect(SeasonToggles.select_regional_pitch_event?).to be true
+  end
 end

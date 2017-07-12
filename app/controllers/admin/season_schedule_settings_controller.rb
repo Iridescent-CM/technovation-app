@@ -11,6 +11,7 @@ module Admin
         *signup_scopes,
         *dashboard_text_scopes,
         :team_submissions_editable,
+        :select_regional_pitch_event,
         student_survey_link: [:text, :url],
         mentor_survey_link: [:text, :url],
       )
