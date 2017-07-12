@@ -10,7 +10,7 @@
     </li>
   <% end %>
 
-  <% if current_team.submission.present? and ENV["ENABLE_TEAM_SCORES"] %>
+  <% if current_team.submission.present? and SeasonToggles.display_scores? %>
     <li class="tab-link">
       <button
         role="button"

@@ -2,16 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Mentors view scores" do
   before do
-    @enable_scores = ENV.fetch("ENABLE_TEAM_SCORES") { false }
-    ENV["ENABLE_TEAM_SCORES"] = "yes"
-  end
-
-  after do
-    if @enable_scores
-      ENV["ENABLE_TEAM_SCORES"] = @enable_scores
-    else
-      ENV.delete("ENABLE_TEAM_SCORES")
-    end
+    SeasonToggles.display_scores="yes"
   end
 
   scenario "view QF scores" do
