@@ -1,4 +1,4 @@
-unless ENV["USE_DOTENV"].present?
+unless ENV["USE_DOTENV"].present? or Rails.env.development? or Rails.env.test?
   Rails.application.configure do
     config.action_mailer.delivery_method = :smtp
 
