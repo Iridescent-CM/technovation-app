@@ -55,4 +55,5 @@ class StudentController < ApplicationController
   def model_name
     "student"
   end
+  alias :user_scope :model_name
 end
