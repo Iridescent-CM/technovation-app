@@ -61,7 +61,9 @@
         <% end %>
       </div>
     </div>
-  <% elsif not SeasonToggles.team_submissions_editable? %>
+  <% elsif SeasonToggles.team_submissions_editable? %>
+    <%= render 'completion_steps/create_join_team', account: current_mentor %>
+  <% else %>
     <p>The submission deadline has passed.</p>
   <% end %>
 </div>

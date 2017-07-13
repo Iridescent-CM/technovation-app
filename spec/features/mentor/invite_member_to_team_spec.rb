@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Invite a member to a team" do
+  before { SeasonToggles.team_submissions_editable="yes" }
+
   let(:mentor) { FactoryGirl.create(:mentor, :on_team) }
 
   let!(:existing_student) { FactoryGirl.create(:student, email: "some@student.com") }
