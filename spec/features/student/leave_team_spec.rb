@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Students leave their own team" do
+  before { SeasonToggles.team_submissions_editable="yes" }
+
   scenario "leave the team" do
     student = FactoryGirl.create(:student, :on_team)
 

@@ -30,15 +30,17 @@
     teams: @current_teams %>
 </div>
 
-<h1 class="appy-title">
-  Find or create a team
-</h1>
+<% if SeasonToggles.team_submissions_editable? %>
+  <h1 class="appy-title">
+    Find or create a team
+  </h1>
 
-<p class="standalone-buttons">
-  <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>
-  <%= t("views.application.or") %>
-  <%= link_to t("controllers.teams.new.link"), new_mentor_team_path %>
-</p>
+  <p class="standalone-buttons">
+    <%= link_to t("controllers.team_searches.new.link"), new_mentor_team_search_path %>
+    <%= t("views.application.or") %>
+    <%= link_to t("controllers.teams.new.link"), new_mentor_team_path %>
+  </p>
+<% end %>
 
 <% if @past_teams.any? %>
   <h1 class="appy-title">

@@ -1,13 +1,15 @@
-<% if current_mentor.requested_to_join?(@team) %>
-  <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
-<% elsif current_mentor.is_on?(@team) %>
-  <p><%= t("views.mentor.join_requests.new.already_joined") %></p>
-<% else %>
-  <p>
-    <%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
-      mentor_join_requests_path(team_id: @team.id),
-      form_class: "appy-button" %>
-  </p>
+<% if SeasonToggles.team_submissions_editable? %>
+  <% if current_mentor.requested_to_join?(@team) %>
+    <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
+  <% elsif current_mentor.is_on?(@team) %>
+    <p><%= t("views.mentor.join_requests.new.already_joined") %></p>
+  <% else %>
+    <p>
+      <%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
+        mentor_join_requests_path(team_id: @team.id),
+        form_class: "appy-button" %>
+    </p>
+  <% end %>
 <% end %>
 
 <%= render "teams/public_show", team: @team %>
