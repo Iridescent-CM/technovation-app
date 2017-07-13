@@ -1,40 +1,41 @@
 (function() {
-  handleJudgingRoundChanges();
+  const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]');
 
-  function handleJudgingRoundChanges() {
-    const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]');
+  if ($judgingRoundChoices.length === 0) {
+    return;
+  } else {
+    handleJudgingRoundChanges($judgingRoundChoices);
+  }
 
-    if ($judgingRoundChoices.length === 0)
-      return;
-
-    const $container = $judgingRoundChoices.closest('fieldset'),
+  function handleJudgingRoundChanges($choices) {
+    const $container = $choices.closest('fieldset'),
 
           $blockedByJudging = $('[data-blocked-by-judging]'),
           originalTextColor = $blockedByJudging.css('color'),
 
           store = localStorage,
 
-          choices = {
+          validChoices = {
             off: "off",
             qf: "qf",
             sf: "sf",
           },
 
-          selectedChoiceOnLoad = $judgingRoundChoices.filter(function() {
+          selectedChoiceOnLoad = $choices.filter(function() {
             return $(this).prop('checked');
           })[0];
 
     // see comments in storeOriginalValuesLocally();
     var lastChoiceMade = selectedChoiceOnLoad.value;
 
-    if (selectedChoiceOnLoad.value !== choices.off) {
+    if (selectedChoiceOnLoad.value !== validChoices.off) {
       handleJudgingEnabled();
     }
 
-    $judgingRoundChoices.on('change', function(e) {
+    $choices.on('change', function(e) {
       const choice = e.target.value;
 
-      if (choice !== choices.off) {
+      if (choice !== validChoices.off) {
         handleJudgingEnabled();
       } else {
         handleJudgingDisabled();
@@ -77,7 +78,7 @@
       }
 
       function storeOriginalValuesLocally() {
-        if (lastChoiceMade === choices.off) {
+        if (lastChoiceMade === validChoices.off) {
           $blockedByJudging.each(function() {
             const choiceElemId = $(this).prop('id'),
                   isChecked = $(this).prop('checked');

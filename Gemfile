@@ -112,7 +112,6 @@ end
 
 group :production do
   gem 'hiredis', "~> 0.6"
-  gem 'tunemygc', "~> 1.0"
   gem 'scout_apm', "~> 2.1"
   gem "rack-timeout", "~> 0.4"
 end
