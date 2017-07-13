@@ -94,11 +94,6 @@
         $blockedByJudging.prop('checked', false);
       }
 
-      function storeChoiceMade(choice) {
-        const nextChoiceKey = Object.keys(choicesMade).length;
-        choicesMade[nextChoiceKey] = choice;
-      }
-
       function getLastChoiceMade() {
         const lastChoiceKey = Object.keys(choicesMade).length - 1;
         return choicesMade[lastChoiceKey];
@@ -138,6 +133,11 @@
       $blockedByJudging.each(function() {
         store.removeItem($(this).prop('id'));
       });
+    }
+
+    function storeChoiceMade(choice) {
+      const nextChoiceKey = Object.keys(choicesMade).length;
+      choicesMade[nextChoiceKey] = choice;
     }
   }
 })();
