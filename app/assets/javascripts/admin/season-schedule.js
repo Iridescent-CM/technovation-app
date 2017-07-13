@@ -24,6 +24,7 @@
             return $(this).prop('checked');
           })[0];
 
+    // Keep track of each choice made to prevent overwriting stored values
     var choicesMade = {
       0: selectedChoiceOnLoad.value,
     };
@@ -41,7 +42,7 @@
         handleJudgingDisabled();
       }
 
-      choicesMade[Object.keys(choicesMade).length] = choice;
+      storeChoiceMade(choice);
     });
 
     $(window).unload(clearLocalStorage);
@@ -76,16 +77,31 @@
       }
 
       function storeOriginalValuesLocally() {
-        if (choicesMade[Object.keys(choicesMade).length - 1] !== choices.off)
+        // prevent overwriting previously stored values with all false
+        // when simply switching between judging rounds
+        if (getLastChoiceMade() !== choices.off)
           return;
 
         $blockedByJudging.each(function() {
-          store[$(this).prop('id')] = $(this).prop('checked');
+          const id = $(this).prop('id'),
+                checkedValue = $(this).prop('checked');
+
+          store[id] = checkedValue;
         });
       }
 
       function setBlockedSettingsToOff() {
         $blockedByJudging.prop('checked', false);
+      }
+
+      function storeChoiceMade(choice) {
+        const nextChoiceKey = Object.keys(choicesMade).length;
+        choicesMade[nextChoiceKey] = choice;
+      }
+
+      function getLastChoiceMade() {
+        const lastChoiceKey = Object.keys(choicesMade).length - 1;
+        return choicesMade[lastChoiceKey];
       }
     }
 
