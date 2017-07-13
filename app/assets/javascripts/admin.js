@@ -17,6 +17,8 @@
 //= require admin/pitch-events
 //= require admin/buttonless-forms
 
+//= require admin/season-schedule
+
 (function enableAdminUI() {
   $('.chosen').chosen({
     width: '250px',

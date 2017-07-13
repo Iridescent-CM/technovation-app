@@ -92,12 +92,9 @@
   <fieldset>
     <legend>Submissions, Events, & Scores</legend>
 
-    <p class="notice info hint">
-      When judging is on, these settings cannot be on
-    </p>
-
     <p class="inline-checkbox">
       <%= f.check_box :team_submissions_editable,
+        data: { blocked_by_judging: true },
         disabled: SeasonToggles.judging_enabled?,
         id: :season_toggles_team_submissions_editable,
         checked: SeasonToggles.team_submissions_editable? %>
@@ -107,6 +104,7 @@
 
     <p class="inline-checkbox">
       <%= f.check_box :select_regional_pitch_event,
+        data: { blocked_by_judging: true },
         disabled: SeasonToggles.judging_enabled?,
         id: :season_toggles_select_regional_pitch_event,
         checked: SeasonToggles.select_regional_pitch_event? %>
@@ -117,6 +115,7 @@
 
     <p class="inline-checkbox">
       <%= f.check_box :display_scores,
+        data: { blocked_by_judging: true },
         disabled: SeasonToggles.judging_enabled?,
         id: :season_toggles_display_scores,
         checked: SeasonToggles.display_scores? %>
