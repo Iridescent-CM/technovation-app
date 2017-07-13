@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Mentors leave their own team" do
+  before { SeasonToggles.team_submissions_editable="yes" }
+
   scenario "leave the team" do
     mentor = FactoryGirl.create(:mentor, :on_team)
     sign_in(mentor)

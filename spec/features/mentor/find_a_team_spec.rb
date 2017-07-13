@@ -1,19 +1,20 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  let!(:available_team) { FactoryGirl.create(:team) } # Default is in Chicago
+  before { SeasonToggles.team_submissions_editable="yes" }
+
+  let!(:available_team) { FactoryGirl.create(:team, :geocoded) } # Default is in Chicago
 
   before do
-    mentor = FactoryGirl.create(:mentor) # City is Chicago
+    mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "browse nearby teams" do
-    skip "Doesn't work in post-deadline"
-
-    mentored_team = FactoryGirl.create(:team, :with_mentor) # Default is in Chicago
+    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded) # Default is in Chicago
     faraway_team = FactoryGirl.create(
       :team,
+      :geocoded,
       city: "Los Angeles",
       state_province: "CA"
     )
@@ -29,8 +30,6 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    skip "Doesn't work in post-deadline"
-
     within('#submissions') { click_link "Join a team" }
     click_link "View Team"
     click_button "Request to be a mentor for #{available_team.name}"
