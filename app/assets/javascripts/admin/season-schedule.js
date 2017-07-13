@@ -24,10 +24,8 @@
             return $(this).prop('checked');
           })[0];
 
-    // Keep track of each choice made to prevent overwriting stored values
-    var choicesMade = {
-      0: selectedChoiceOnLoad.value,
-    };
+    // see comments in storeOriginalValuesLocally();
+    var choicesMade = [selectedChoiceOnLoad.value];
 
     if (selectedChoiceOnLoad.value !== choices.off) {
       handleJudgingEnabled();
@@ -42,7 +40,8 @@
         handleJudgingDisabled();
       }
 
-      storeChoiceMade(choice);
+      // see comments in storeOriginalValuesLocally();
+      choicesMade.push(choice);
     });
 
     $(window).unload(clearLocalStorage);
@@ -77,26 +76,27 @@
       }
 
       function storeOriginalValuesLocally() {
-        // prevent overwriting previously stored values with all false
-        // when simply switching between judging rounds
-        if (getLastChoiceMade() !== choices.off)
-          return;
+        if (judgingWasOff()) {
+          $blockedByJudging.each(function() {
+            const id = $(this).prop('id'),
+                  checkedValue = $(this).prop('checked');
 
-        $blockedByJudging.each(function() {
-          const id = $(this).prop('id'),
-                checkedValue = $(this).prop('checked');
-
-          store[id] = checkedValue;
-        });
+            store[id] = checkedValue;
+          });
+        }
+        // else
+          // judging had been on, meaning all settings were set to false
+          // and we don't want to store that state
       }
 
       function setBlockedSettingsToOff() {
         $blockedByJudging.prop('checked', false);
       }
 
-      function getLastChoiceMade() {
-        const lastChoiceKey = Object.keys(choicesMade).length - 1;
-        return choicesMade[lastChoiceKey];
+      function judgingWasOff() {
+        const lastChoiceMade = choicesMade[choicesMade.length - 1];
+
+        return lastChoiceMade === choices.off;
       }
     }
 
@@ -133,11 +133,6 @@
       $blockedByJudging.each(function() {
         store.removeItem($(this).prop('id'));
       });
-    }
-
-    function storeChoiceMade(choice) {
-      const nextChoiceKey = Object.keys(choicesMade).length;
-      choicesMade[nextChoiceKey] = choice;
     }
   }
 })();
