@@ -1,11 +1,6 @@
 module Mentor
   class TechnicalChecklistsController < MentorController
-    def edit
-      redirect_to mentor_dashboard_path
-    end
-
-    def update
-      redirect_to mentor_dashboard_path
-    end
+    include TechnicalChecklistController
+    before_action :require_current_team
   end
 end
