@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   add_flash_types :success
   add_flash_types :error
 
-  force_ssl if: :ssl_configured?
-
   helper_method :current_account, :current_team, :can_generate_certificate?
 
   before_action -> {
@@ -86,10 +84,6 @@ class ApplicationController < ActionController::Base
     when "student"; current_account.team
     when "mentor"; current_account.teams.find(params.fetch(:team_id))
     end
-  end
-
-  def ssl_configured?
-    !Rails.env.development? && !Rails.env.test?
   end
 
   def can_generate_certificate?(user_scope, cert_type)

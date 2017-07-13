@@ -1,3 +1,5 @@
+require 'factory_girl_rails'
+
 ActionMailer::Base.perform_deliveries = false
 
 student = Account.find_by(email: "student@student.com").try(:student_profile)
