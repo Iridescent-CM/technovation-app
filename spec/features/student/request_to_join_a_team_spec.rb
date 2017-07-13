@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:method, :host] }, no_es_stub: true do
+  before { SeasonToggles.team_submissions_editable="yes" }
+
   scenario "students already on a team don't see the link" do
     student = FactoryGirl.create(:student, :on_team)
     sign_in(student)

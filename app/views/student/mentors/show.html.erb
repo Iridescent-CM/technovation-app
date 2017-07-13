@@ -12,9 +12,11 @@
   <p><%= t("views.student.mentors.show.no_teams", name: @mentor.first_name) %></p>
 <% end %>
 
-<%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
-           mentor_invite: @mentor_invite,
-           mentor: @mentor,
-           team: current_student.team %>
+<% if SeasonToggles.team_submissions_editable? %>
+  <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
+             mentor_invite: @mentor_invite,
+             mentor: @mentor,
+             team: current_student.team %>
 
-<% # See app/helpers/student_helper.rb %>
+  <% # See app/helpers/student_helper.rb %>
+<% end %>

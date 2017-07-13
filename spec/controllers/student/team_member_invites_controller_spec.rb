@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Student::TeamMemberInvitesController do
+  before { SeasonToggles.team_submissions_editable="yes" }
+
   describe "POST #create" do
     let(:student) { FactoryGirl.create(:student, :on_team) }
 
