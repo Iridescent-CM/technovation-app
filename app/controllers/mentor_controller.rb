@@ -17,7 +17,15 @@ class MentorController < ApplicationController
       redirect_to interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
-    %w{interruptions location_details profiles honor_code_agreements cookies dashboards background_checks}.include?(controller_name)
+    %w{
+      interruptions
+      location_details
+      profiles
+      honor_code_agreements
+      cookies
+      dashboards
+      background_checks
+    }.include?(controller_name)
   }
 
   # For Airbrake Notifier
@@ -33,7 +41,19 @@ class MentorController < ApplicationController
   def model_name
     "mentor"
   end
+  alias :user_scope :model_name
 
   def create_judge_mentor_on_dashboard
+    # noop
+    # implemented on mentor/dashboards controller
+  end
+
+  def require_current_team
+    if current_team.present?
+      true
+    else
+      redirect_to mentor_dashboard_path,
+        notice: t("controllers.application.team_required")
+    end
   end
 end
