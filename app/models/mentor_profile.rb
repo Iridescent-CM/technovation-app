@@ -123,7 +123,11 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def can_join_a_team?
-    honor_code_signed? && consent_signed? && background_check_complete? && bio_complete? && SeasonToggles.team_submissions_editable?
+    honor_code_signed? and
+      consent_signed? and
+        background_check_complete? and
+          bio_complete? and
+            SeasonToggles.team_submissions_editable?
   end
 
   def background_check_complete?

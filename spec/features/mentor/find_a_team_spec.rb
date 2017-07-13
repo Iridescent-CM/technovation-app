@@ -3,27 +3,21 @@ require "rails_helper"
 RSpec.feature "Mentors find a team" do
   before { SeasonToggles.team_submissions_editable="yes" }
 
-  let!(:available_team) {
-    team = FactoryGirl.create(:team) # Default is in Chicago
-    Geocoding.perform(team).with_save
-    team
-  }
+  let!(:available_team) { FactoryGirl.create(:team, :geocoded) } # Default is in Chicago
 
   before do
-    mentor = FactoryGirl.create(:mentor) # City is Chicago
-    Geocoding.perform(mentor.account)
+    mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "browse nearby teams" do
-    mentored_team = FactoryGirl.create(:team, :with_mentor) # Default is in Chicago
+    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded) # Default is in Chicago
     faraway_team = FactoryGirl.create(
       :team,
+      :geocoded,
       city: "Los Angeles",
       state_province: "CA"
     )
-    Geocoding.perform(mentored_team).with_save
-    Geocoding.perform(faraway_team).with_save
 
     within('#submissions') { click_link "Join a team" }
 
