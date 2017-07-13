@@ -50,18 +50,19 @@
       notifyUserOfEffect();
       disableSettingsBlockedByJudging();
       storeOriginalValuesLocally();
-      setBlockedSettingsToOff();
+      $blockedByJudging.prop('checked', false);
 
       function notifyUserOfEffect() {
-        var $notice = $('<div>');
+        if ($container.find('.notice').length === 0) {
+          var $notice = $('<div>');
 
-        $notice.addClass('notice warning');
-        $notice.text(
-          "Turning judging on disables Submissions, Event Selection, and Scores!"
-        );
+          $notice.addClass('notice warning');
+          $notice.text(
+            "Turning judging on disables Submissions, Event Selection, and Scores!"
+          );
 
-        removeUserNotice();
-        $container.append($notice);
+          $container.append($notice);
+        }
       }
 
       function disableSettingsBlockedByJudging() {
@@ -78,23 +79,19 @@
       function storeOriginalValuesLocally() {
         if (lastChoiceMade === choices.off) {
           $blockedByJudging.each(function() {
-            const id = $(this).prop('id'),
-                  checkedValue = $(this).prop('checked');
+            const choiceElemId = $(this).prop('id'),
+                  isChecked = $(this).prop('checked');
 
-            store[id] = checkedValue;
+            store[choiceElemId] = isChecked;
           });
         } // else
         // judging had been on, meaning all the settings were set to false
         // and we don't want to store that state
       }
-
-      function setBlockedSettingsToOff() {
-        $blockedByJudging.prop('checked', false);
-      }
     }
 
     function handleJudgingDisabled() {
-      removeUserNotice();
+      $container.find('.notice').remove();
       enableSettingsBlockedByJudging();
       restoreOriginalValues();
       clearLocalStorage();
@@ -116,10 +113,6 @@
           $(this).prop('checked', originalVal === "true");
         });
       }
-    }
-
-    function removeUserNotice() {
-      $container.find('.notice').remove();
     }
 
     function clearLocalStorage() {
