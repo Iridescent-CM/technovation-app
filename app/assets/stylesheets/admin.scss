@@ -145,3 +145,23 @@
     }
   }
 }
+
+.notice {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+
+  &.hint {
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+
+  &.warning {
+    background: $warning;
+    color: $warning-txt;
+  }
+
+  &.info {
+    background: $info;
+    color: $info-txt;
+  }
+}

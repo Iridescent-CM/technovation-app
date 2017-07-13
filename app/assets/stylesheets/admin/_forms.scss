@@ -30,3 +30,24 @@ form[data-remote] {
     display: inline;
   }
 }
+
+fieldset {
+  margin: 0 0 1rem;
+
+  legend {
+    font-weight: bold;
+    padding: 0 0.5rem;
+  }
+
+  p, .inline-checkbox, .inline-radio {
+    margin: 0 0 1rem;
+    padding: 0;
+    font-weight: normal;
+  }
+
+  label {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+  }
+}
