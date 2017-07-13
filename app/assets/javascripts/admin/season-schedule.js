@@ -24,8 +24,9 @@
             return $(this).prop('checked');
           })[0];
 
-    var choicesMade = {};
-    choicesMade[0] = selectedChoiceOnLoad.value;
+    var choicesMade = {
+      0: selectedChoiceOnLoad.value,
+    };
 
     if (selectedChoiceOnLoad.value !== choices.off) {
       handleJudgingEnabled();
