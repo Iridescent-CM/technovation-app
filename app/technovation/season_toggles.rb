@@ -1,6 +1,6 @@
 class SeasonToggles
-  VALID_TRUTHY = %w{1 on yes true}
-  VALID_FALSEY = %w{0 off no false}
+  VALID_TRUTHY = %w{1 on yes true} + [true]
+  VALID_FALSEY = %w{0 off no false} + [false]
   VALID_BOOLS = VALID_TRUTHY + VALID_FALSEY
 
   VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
@@ -16,6 +16,7 @@ class SeasonToggles
 
     def select_regional_pitch_event=(value)
       if judging_enabled?
+        warn_about_judging_enabled("Events") if convert_to_bool(value)
         store.set(:select_regional_pitch_event, false)
       else
         store.set(:select_regional_pitch_event, with_bool_validation(value))
@@ -29,6 +30,7 @@ class SeasonToggles
 
     def display_scores=(value)
       if judging_enabled?
+        warn_about_judging_enabled("Scores") if convert_to_bool(value)
         store.set(:display_scores, false)
       else
         store.set(:display_scores, with_bool_validation(value))
@@ -78,6 +80,7 @@ class SeasonToggles
 
     def team_submissions_editable=(value)
       if judging_enabled?
+        warn_about_judging_enabled("Submissions") if convert_to_bool(value)
         store.set(:team_submissions_editable, false)
       else
         store.set(:team_submissions_editable, with_bool_validation(value))
@@ -93,9 +96,7 @@ class SeasonToggles
       store.set(:judging_round, with_judging_round_validation(value))
 
       if value.to_s.downcase != "off"
-        unless Rails.env.test?
-          warn("JUDGING ENABLED: Disables submissions, event selection, and scores")
-        end
+        warn_about_judging_enabled
 
         self.team_submissions_editable = false
         self.select_regional_pitch_event = false
@@ -175,6 +176,13 @@ class SeasonToggles
     def raise_invalid_input_error(options)
       raise InvalidInput,
         "No toggle exists for #{options[:actual]}. Use one of: #{options[:expected]}"
+    end
+
+    def warn_about_judging_enabled(topic = nil)
+      unless Rails.env.test?
+        topic ||= "submissions, event selection, and scores"
+        warn("JUDGING IS ENABLED: Setting #{topic} to FALSE")
+      end
     end
   end
 
