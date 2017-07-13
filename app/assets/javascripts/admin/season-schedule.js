@@ -25,7 +25,7 @@
           })[0];
 
     // see comments in storeOriginalValuesLocally();
-    var choicesMade = [selectedChoiceOnLoad.value];
+    var lastChoiceMade = selectedChoiceOnLoad.value;
 
     if (selectedChoiceOnLoad.value !== choices.off) {
       handleJudgingEnabled();
@@ -41,7 +41,7 @@
       }
 
       // see comments in storeOriginalValuesLocally();
-      choicesMade.push(choice);
+      lastChoiceMade = choice;
     });
 
     $(window).unload(clearLocalStorage);
@@ -76,27 +76,20 @@
       }
 
       function storeOriginalValuesLocally() {
-        if (judgingWasOff()) {
+        if (lastChoiceMade === choices.off) {
           $blockedByJudging.each(function() {
             const id = $(this).prop('id'),
                   checkedValue = $(this).prop('checked');
 
             store[id] = checkedValue;
           });
-        }
-        // else
-          // judging had been on, meaning all settings were set to false
-          // and we don't want to store that state
+        } // else
+        // judging had been on, meaning all the settings were set to false
+        // and we don't want to store that state
       }
 
       function setBlockedSettingsToOff() {
         $blockedByJudging.prop('checked', false);
-      }
-
-      function judgingWasOff() {
-        const lastChoiceMade = choicesMade[choicesMade.length - 1];
-
-        return lastChoiceMade === choices.off;
       }
     }
 
