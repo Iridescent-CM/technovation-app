@@ -151,12 +151,12 @@
 
         function appendPanel($heading, $div) {
           var $panel = $('<div class="review-panel">'),
-              $p = $('<p>');
+              $heading = $('<p>');
 
-          $p.addClass('heading');
-          $p.text($heading.text());
+          $heading.addClass('heading');
+          $heading.text($heading.text());
 
-          $p.appendTo($panel);
+          $heading.appendTo($panel);
           $panel.appendTo($div);
 
           return $panel;
@@ -164,42 +164,42 @@
 
         function appendLabels($panel, $labels) {
           $labels.each(function() {
-            var $p = $('<p>');
+            var $label = $('<p>');
 
-            $p.text($(this).text());
+            $label.text($(this).text());
 
-            appendTextValue($panel, $p, $(this).next('input'));
-            appendBooleanValue($panel, $p, $(this).prev('input'));
+            appendTextValue($panel, $label, $(this).next('input'));
+            appendBooleanValue($panel, $label, $(this).prev('input'));
             removePartials($panel);
           });
 
-          function appendTextValue($panel, $p, $input) {
+          function appendTextValue($panel, $label, $input) {
             if ($input.prop('type') === "text") {
-              $p.addClass('has-text-value');
+              $label.addClass('has-text-value');
 
-              if (!$p.appended) {
-                $p.appendTo($panel);
-                $p.appended = true;
+              if (!$label.appended) {
+                $label.appendTo($panel);
+                $label.appended = true;
               }
 
               const $textValueElem = getTextValueElem($input);
               $textValueElem.appendTo($panel);
 
-              appendTextValue($panel, $p, $input.next('input'));
+              appendTextValue($panel, $label, $input.next('input'));
             }
           }
 
-          function appendBooleanValue($panel, $p, $input) {
+          function appendBooleanValue($panel, $label, $input) {
             if ($input.length !== 0) {
               const $booleanValueElem = getBooleanValueElem($input);
 
-              $p.append(" ");
-              $booleanValueElem.appendTo($p);
+              $label.append(" ");
+              $booleanValueElem.appendTo($label);
 
               if ($input.prop('type') === "radio" && $input.prop('checked')) {
-                $p.appendTo($panel);
+                $label.appendTo($panel);
               } else if ($input.prop('type') !== "radio") {
-                $p.appendTo($panel);
+                $label.appendTo($panel);
               }
             }
           }
@@ -226,31 +226,31 @@
               const value = $input.prop('checked'),
                     cssClass = value ? "on" : "off";
 
-              var $strong = $('<strong>');
+              var $value = $('<strong>');
 
-              $strong.addClass(cssClass);
-              $strong.text(value);
+              $value.addClass(cssClass);
+              $value.text(value);
 
-              return $strong;
+              return $value;
             } else {
               return $();
             }
           }
 
           function getTextValueElem($input) {
-            var $p = $('<p>');
+            var $value = $('<p>');
 
             if ($input.data("part-of-many")) {
-              $p.addClass('part-of-many');
-              $p.text($input.val());
+              $value.addClass('part-of-many');
+              $value.text($input.val());
             } else {
-              $p.html(
+              $value.html(
                 $input.val() ||
                   "<p class='hint'>Not filled in, nothing will appear</p>"
               );
             }
 
-            return $p;
+            return $value;
           }
         }
       });
