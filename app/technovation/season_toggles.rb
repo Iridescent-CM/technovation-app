@@ -44,12 +44,13 @@ class SeasonToggles
 
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
+        attrs[:changed_at] = Time.zone.now
         store.set("#{scope}_survey_link", JSON.generate(attrs.to_h))
       end
     end
 
     def survey_link_available?(scope)
-      %w{text url}.all? do |key|
+      %w{text url changed_at}.all? do |key|
         !!survey_link(scope, key) and not survey_link(scope, key).empty?
       end
     end
