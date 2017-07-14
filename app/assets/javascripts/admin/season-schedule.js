@@ -126,7 +126,7 @@
   }
 
   function handleSeasonSettingsReview($form) {
-    const $saveBtn = $('[data-submit-form']);
+    const $saveBtn = $('[data-submit-form]');
     handleSaveBtnClick($saveBtn);
 
     function handleSaveBtnClick($btn) {
