@@ -2,6 +2,7 @@
 <h2>For toggling user features on and off throughout the season</h2>
 
 <%= form_with(
+  id: "season_schedule",
   scope: :season_toggles,
   url: admin_season_schedule_settings_path,
   local: true,
@@ -130,6 +131,31 @@
   </div>
 
   <p>
-    <%= f.submit "Save", class: "appy-button" %>
+    <%= f.submit "Review settings",
+      class: "appy-button",
+      data: { modal_trigger: "schedule-review" } %>
+    or
+    <%= link_to "cancel", admin_dashboard_path %>
   </p>
+
+  <div
+    class="modalify modalify--fixed"
+    data-heading="Review Season Settings"
+    id="schedule-review"
+  >
+
+    <div id="season_review"></div>
+
+    <button
+      class="appy-button"
+      data-submit-form="#season_schedule"
+    >
+      Save these settings
+    </button>
+
+    or
+
+    <%= link_to "cancel", '#', class: "modalify__close" %>
+
+  </div>
 <% end %>

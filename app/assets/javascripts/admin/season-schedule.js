@@ -1,10 +1,12 @@
 (function() {
-  const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]');
+  const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]'),
+        $scheduleForm = $('#season_schedule');
 
   if ($judgingRoundChoices.length === 0) {
     return;
   } else {
     handleJudgingRoundChanges($judgingRoundChoices);
+    handleSeaonsSettingsReview($scheduleForm);
   }
 
   function handleJudgingRoundChanges($choices) {
@@ -119,6 +121,18 @@
     function clearLocalStorage() {
       $blockedByJudging.each(function() {
         store.removeItem($(this).prop('id'));
+      });
+    }
+  }
+
+  function handleSeaonsSettingsReview($form) {
+    const $saveBtn = $('[data-submit-form']);
+    handleSaveBtnClick($saveBtn);
+
+    function handleSaveBtnClick($btn) {
+      $btn.on('click', function() {
+        const formId = $(this).data('submit-form');
+        $(formId).submit();
       });
     }
   }
