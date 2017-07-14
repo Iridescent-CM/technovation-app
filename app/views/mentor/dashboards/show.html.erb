@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <%= render 'post_program_survey_modal', type: :mentor %>
+  <%= render 'program_survey_modal', scope: :mentor %>
 
   <% if current_mentor.full_access_enabled? %>
     <%= render 'mentor/dashboards/full_access' %>
