@@ -1,5 +1,4 @@
-<% if SeasonToggles.survey_link_available?(scope) and
-     cookies[:last_seen_survey_modal] != SeasonToggles.survey_link(scope, "changed_at") %>
+<% if SeasonToggles.show_survey_link_modal?(scope, cookies[:last_seen_survey_modal]) %>
   <div id="survey_interrupt"
         data-heading="<%= t("views.application.survey") %>"
         data-save-close-action-url="<%= public_send("#{scope}_cookies_url",
