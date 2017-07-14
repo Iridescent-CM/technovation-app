@@ -205,8 +205,7 @@
           }
 
           function removePartials($panel) {
-            var $manies = $panel.find('.part-of-many');
-            $manies.each(function() {
+            $panel.find('.part-of-many').each(function() {
               if (
                 $(this).next('.part-of-many').length !== 0 && (
                   $(this).text() === "" ||
