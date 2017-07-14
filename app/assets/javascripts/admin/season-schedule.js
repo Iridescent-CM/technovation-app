@@ -6,7 +6,7 @@
     return;
   } else {
     handleJudgingRoundChanges($judgingRoundChoices);
-    handleSeaonsSettingsReview($scheduleForm);
+    handleSeasonSettingsReview($scheduleForm);
   }
 
   function handleJudgingRoundChanges($choices) {
@@ -125,7 +125,7 @@
     }
   }
 
-  function handleSeaonsSettingsReview($form) {
+  function handleSeasonSettingsReview($form) {
     const $saveBtn = $('[data-submit-form']);
     handleSaveBtnClick($saveBtn);
 
