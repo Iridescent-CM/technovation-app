@@ -126,13 +126,133 @@
   }
 
   function handleSeasonSettingsReview($form) {
-    const $saveBtn = $('[data-submit-form]');
+    const $saveBtn = $('[data-submit-form]'),
+          $reviewDiv = $('#season_review');
+
     handleSaveBtnClick($saveBtn);
+    populateSeasonReview($reviewDiv, $form);
 
     function handleSaveBtnClick($btn) {
       $btn.on('click', function() {
         const formId = $(this).data('submit-form');
         $(formId).submit();
+      });
+    }
+
+    function populateSeasonReview($div, $form) {
+      $form.find('[data-modal-trigger]').on('modalopen', function() {
+        $div.html("");
+
+        $('legend').each(function() {
+          var $panel = appendPanel($(this), $div);
+
+          appendLabels($panel, $(this).closest('fieldset').find('label'));
+        })
+
+        function appendPanel($heading, $div) {
+          var $panel = $('<div class="review-panel">'),
+              $p = $('<p>');
+
+          $p.addClass('heading');
+          $p.text($heading.text());
+
+          $p.appendTo($panel);
+          $panel.appendTo($div);
+
+          return $panel;
+        }
+
+        function appendLabels($panel, $labels) {
+          $labels.each(function() {
+            var $p = $('<p>');
+
+            $p.text($(this).text());
+
+            appendTextValue($panel, $p, $(this).next('input'));
+            appendBooleanValue($panel, $p, $(this).prev('input'));
+            removePartials($panel);
+          });
+
+          function appendTextValue($panel, $p, $input) {
+            if ($input.prop('type') === "text") {
+              $p.addClass('has-text-value');
+
+              if (!$p.appended) {
+                $p.appendTo($panel);
+                $p.appended = true;
+              }
+
+              const $textValueElem = getTextValueElem($input);
+              $textValueElem.appendTo($panel);
+
+              appendTextValue($panel, $p, $input.next('input'));
+            }
+          }
+
+          function appendBooleanValue($panel, $p, $input) {
+            if ($input.length !== 0) {
+              const $booleanValueElem = getBooleanValueElem($input);
+
+              $p.append(" ");
+              $booleanValueElem.appendTo($p);
+
+              if ($input.prop('type') === "radio" && $input.prop('checked')) {
+                $p.appendTo($panel);
+              } else if ($input.prop('type') !== "radio") {
+                $p.appendTo($panel);
+              }
+            }
+          }
+
+          function removePartials($panel) {
+            var $manies = $panel.find('.part-of-many');
+            $manies.each(function() {
+              if (
+                $(this).next('.part-of-many').length !== 0 && (
+                  $(this).text() === "" ||
+                    $(this).next('.part-of-many').text() === ""
+                )
+              ) {
+                $(this).html(
+                  "<p class='hint'>not filled in completely, nothing will appear</p>"
+                );
+                $(this).next().remove();
+              }
+            });
+          }
+
+          function getBooleanValueElem($input) {
+            if ($input.prop('type') !== "radio") {
+              const value = $input.prop('checked'),
+                    cssClass = value ? "on" : "off";
+
+              var $strong = $('<strong>');
+
+              $strong.addClass(cssClass);
+              $strong.text(value);
+
+              return $strong;
+            } else {
+              return $();
+            }
+          }
+
+          function getTextValueElem($input) {
+            var $p = $('<p>');
+
+            if ($input.data("part-of-many")) {
+              $p.addClass('part-of-many');
+              $p.text($input.val());
+            } else {
+              $p.html(
+                $input.val() ||
+                  "<p class='hint'>Not filled in, nothing will appear</p>"
+              );
+            }
+
+            return $p;
+          }
+        }
       });
     }
   }

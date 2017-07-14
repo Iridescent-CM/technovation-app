@@ -10,7 +10,7 @@
 ) do |f| %>
 
   <fieldset>
-    <legend>Signups</legend>
+    <legend>Signups Allowed</legend>
 
     <% %w{student mentor judge regional_ambassador}.each do |scope| %>
       <p class="inline-checkbox">
@@ -18,13 +18,13 @@
           id: "season_toggles_#{scope}_signup",
           checked: SeasonToggles.signup_enabled?(scope) %>
 
-        <%= f.label "#{scope}_signup" %>
+        <%= f.label "#{scope}_signup", scope.humanize.pluralize.titleize %>
       </p>
     <% end %>
   </fieldset>
 
   <fieldset>
-    <legend>Dashboard headlines</legend>
+    <legend>Dashboard Headlines</legend>
 
     <div class="notice info hint">
       Keep these short! 3 or 4 words only, please!
@@ -32,7 +32,7 @@
 
     <% %w{student mentor judge}.each do |scope| %>
       <p>
-        <%= f.label "#{scope}_dashboard_text" %>
+        <%= f.label "#{scope}_dashboard_text", scope.pluralize.capitalize %>
 
         <%= f.text_field "#{scope}_dashboard_text",
           id: "season_toggles_#{scope}_dashboard_text",
@@ -42,7 +42,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Survey links</legend>
+    <legend>Survey Links</legend>
 
     <div class="notice info hint">
       It's on you to enter a correctly formatted URL.
@@ -56,10 +56,12 @@
           <%= s.label :text, scope.pluralize.capitalize %>
 
           <%= s.text_field :text,
+            data: { part_of_many: true },
             placeholder: "Text",
             value: SeasonToggles.survey_link(scope, :text) %>
 
           <%= s.text_field :url,
+            data: { part_of_many: true },
             placeholder: "URL",
             value: SeasonToggles.survey_link(scope, :url) %>
         </p>
@@ -68,7 +70,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Judging</legend>
+    <legend>Judging Round</legend>
 
     <p>
       <%= f.collection_radio_buttons :judging_round, [
