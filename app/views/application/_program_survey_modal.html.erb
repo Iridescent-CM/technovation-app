@@ -1,0 +1,18 @@
+<% if SeasonToggles.show_survey_link_modal?(scope, cookies[:last_seen_survey_modal]) %>
+  <div id="survey_interrupt"
+        data-heading="<%= t("views.application.survey") %>"
+        data-save-close-action-url="<%= public_send("#{scope}_cookies_url",
+                                                    name: :last_seen_survey_modal,
+                                                    value: SeasonToggles.survey_link(scope, "changed_at")) %>"
+        class="modalify modalify-on-page-load">
+    <p>
+      Make your voice heard, help us improve the program!
+    </p>
+
+    <p>
+    <%= link_to SeasonToggles.survey_link(scope, "text"),
+                SeasonToggles.survey_link(scope, "url"),
+                target: "_blank" %>
+    </p>
+  </div>
+<% end %>

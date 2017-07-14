@@ -1,6 +1,6 @@
 (function dashboards() {
   var surveyModals = function() {
-    var surveyModal = document.getElementById("survery_interrupt") ;
+    var surveyModal = document.getElementById("survey_interrupt") ;
 
     if (!surveyModal)
       return;
