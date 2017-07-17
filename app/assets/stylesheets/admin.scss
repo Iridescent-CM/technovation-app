@@ -146,14 +146,14 @@
   }
 }
 
+.hint {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
 .notice {
   margin: 1rem 0;
   padding: 0.5rem 1rem;
-
-  &.hint {
-    font-style: italic;
-    font-size: 0.8rem;
-  }
 
   &.warning {
     background: $warning;
@@ -163,5 +163,41 @@
   &.info {
     background: $info;
     color: $info-txt;
+  }
+}
+
+#season_review {
+  .review-panel {
+    margin: 0 0 1rem;
+
+    p {
+      margin: 1rem 0 0;
+      padding: 0;
+
+      &.heading {
+        border-top: 1px solid #999;
+        padding: 0.5rem;
+        font-weight: bold;
+        background: #ccc;
+      }
+
+      &.has-text-value {
+        font-weight: bold;
+      }
+
+      &.part-of-many {
+        margin: 0;
+      }
+    }
+
+    strong {
+      &.on {
+        color: $success-txt;
+      }
+
+      &.off {
+        color: $error-txt;
+      }
+    }
   }
 }

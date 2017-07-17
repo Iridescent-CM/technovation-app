@@ -2,6 +2,7 @@
 <h2>For toggling user features on and off throughout the season</h2>
 
 <%= form_with(
+  id: "season_schedule",
   scope: :season_toggles,
   url: admin_season_schedule_settings_path,
   local: true,
@@ -9,7 +10,7 @@
 ) do |f| %>
 
   <fieldset>
-    <legend>Signups</legend>
+    <legend>Signups Allowed</legend>
 
     <% %w{student mentor judge regional_ambassador}.each do |scope| %>
       <p class="inline-checkbox">
@@ -17,13 +18,13 @@
           id: "season_toggles_#{scope}_signup",
           checked: SeasonToggles.signup_enabled?(scope) %>
 
-        <%= f.label "#{scope}_signup" %>
+        <%= f.label "#{scope}_signup", scope.humanize.pluralize.titleize %>
       </p>
     <% end %>
   </fieldset>
 
   <fieldset>
-    <legend>Dashboard headlines</legend>
+    <legend>Dashboard Headlines</legend>
 
     <div class="notice info hint">
       Keep these short! 3 or 4 words only, please!
@@ -31,7 +32,7 @@
 
     <% %w{student mentor judge}.each do |scope| %>
       <p>
-        <%= f.label "#{scope}_dashboard_text" %>
+        <%= f.label "#{scope}_dashboard_text", scope.pluralize.capitalize %>
 
         <%= f.text_field "#{scope}_dashboard_text",
           id: "season_toggles_#{scope}_dashboard_text",
@@ -41,7 +42,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Survey links</legend>
+    <legend>Survey Links</legend>
 
     <div class="notice info hint">
       It's on you to enter a correctly formatted URL.
@@ -55,10 +56,12 @@
           <%= s.label :text, scope.pluralize.capitalize %>
 
           <%= s.text_field :text,
+            data: { part_of_many: true },
             placeholder: "Text",
             value: SeasonToggles.survey_link(scope, :text) %>
 
           <%= s.text_field :url,
+            data: { part_of_many: true },
             placeholder: "URL",
             value: SeasonToggles.survey_link(scope, :url) %>
         </p>
@@ -67,7 +70,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Judging</legend>
+    <legend>Judging Round</legend>
 
     <p>
       <%= f.collection_radio_buttons :judging_round, [
@@ -130,6 +133,31 @@
   </div>
 
   <p>
-    <%= f.submit "Save", class: "appy-button" %>
+    <%= f.submit "Review settings",
+      class: "appy-button",
+      data: { modal_trigger: "schedule-review" } %>
+    or
+    <%= link_to "cancel", admin_dashboard_path %>
   </p>
+
+  <div
+    class="modalify modalify--fixed"
+    data-heading="Review Season Settings"
+    id="schedule-review"
+  >
+
+    <div id="season_review"></div>
+
+    <button
+      class="appy-button"
+      data-submit-form="#season_schedule"
+    >
+      Save these settings
+    </button>
+
+    or
+
+    <%= link_to "cancel", '#', class: "modalify__close" %>
+
+  </div>
 <% end %>

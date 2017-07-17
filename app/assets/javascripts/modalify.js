@@ -86,6 +86,10 @@
   }
 
   function showModal(modalId, e) {
+    e.target.dispatchEvent(
+      new CustomEvent('modalopen', {bubbles: true, cancelable: true})
+    );
+
     modalId = modalId || e.target.dataset.modalTrigger;
     var modalToShow = document.getElementById(modalId);
     if (!modalToShow) {
@@ -102,8 +106,9 @@
   window.showModal = showModal;
 
   function fireModalCloseEvent(modal) {
-    var event = new CustomEvent('modalclose', {bubbles: true, cancelable: true});
-    modal.dispatchEvent(event);
+    modal.dispatchEvent(
+      new CustomEvent('modalclose', {bubbles: true, cancelable: true})
+    );
   }
 
   function fixColumnZIndex(modal, zidx) {

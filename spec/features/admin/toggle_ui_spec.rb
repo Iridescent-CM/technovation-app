@@ -11,7 +11,7 @@ RSpec.feature "Admin UI for season toggles:" do
       SeasonToggles.disable_signup(scope)
       click_link "Season Schedule Settings"
 
-      check "#{scope.humanize.capitalize} signup"
+      check "season_toggles_#{scope}_signup"
       click_button "Save"
 
       expect(SeasonToggles.signup_enabled?(scope)).to be(true),
@@ -24,7 +24,7 @@ RSpec.feature "Admin UI for season toggles:" do
       SeasonToggles.set_dashboard_text(scope, "")
       click_link "Season Schedule Settings"
 
-      fill_in "#{scope.humanize.capitalize} dashboard text",
+      fill_in "season_toggles_#{scope}_dashboard_text",
         with: "Something short"
 
       click_button "Save"
