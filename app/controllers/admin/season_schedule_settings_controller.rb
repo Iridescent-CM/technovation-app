@@ -10,6 +10,7 @@ module Admin
       params.require(:season_toggles).permit(
         *signup_scopes,
         *dashboard_text_scopes,
+        :team_building_enabled,
         :team_submissions_editable,
         :select_regional_pitch_event,
         :display_scores,

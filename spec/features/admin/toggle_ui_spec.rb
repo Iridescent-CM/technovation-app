@@ -52,6 +52,16 @@ RSpec.feature "Admin UI for season toggles:" do
     end
   end
 
+  scenario "configure team building enabled" do
+    SeasonToggles.team_building_enabled = false
+    click_link "Season Schedule Settings"
+
+    check "Team Building Enabled?"
+    click_button "Save"
+
+    expect(SeasonToggles.team_building_enabled?).to be true
+  end
+
   scenario "configure team submissions editable" do
     SeasonToggles.team_submissions_editable = false
     click_link "Season Schedule Settings"

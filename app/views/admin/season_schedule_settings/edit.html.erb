@@ -93,6 +93,16 @@
     <legend>Submissions, Events, & Scores</legend>
 
     <p class="inline-checkbox">
+      <%= f.check_box :team_building_enabled,
+        data: { blocked_by_judging: true },
+        disabled: SeasonToggles.judging_enabled?,
+        id: :season_toggles_team_building_enabled,
+        checked: SeasonToggles.team_building_enabled? %>
+
+      <%= f.label :team_building_enabled, "Team Building Enabled?" %>
+    </p>
+
+    <p class="inline-checkbox">
       <%= f.check_box :team_submissions_editable,
         data: { blocked_by_judging: true },
         disabled: SeasonToggles.judging_enabled?,
