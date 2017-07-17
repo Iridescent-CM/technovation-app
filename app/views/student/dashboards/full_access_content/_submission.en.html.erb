@@ -8,7 +8,7 @@
     <div class="student-manage-submission-cta">
       <%= render 'student/dashboards/start_team_submission' %>
     </div>
-  <% elsif SeasonToggles.team_building_enabled? %>
+  <% elsif not current_team.present? and SeasonToggles.team_building_enabled? %>
     <%= render 'student/dashboards/join_create_team' %>
   <% else %>
       The submission deadline has passed.

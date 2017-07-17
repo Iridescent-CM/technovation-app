@@ -97,8 +97,18 @@ class SeasonToggles
         convert_to_bool(store.get(:team_submissions_editable))
     end
 
+    def team_building_enabled=(value)
+      if judging_enabled?
+        warn_about_judging_enabled("Team building") if convert_to_bool(value)
+        store.set(:team_building_enabled, false)
+      else
+        store.set(:team_building_enabled, with_bool_validation(value))
+      end
+    end
+
     def team_building_enabled?
-      return team_submissions_editable?
+      not judging_enabled? and
+        convert_to_bool(store.get(:team_building_enabled))
     end
 
     def judging_round=(value)

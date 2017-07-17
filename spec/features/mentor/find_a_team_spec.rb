@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  before { SeasonToggles.team_submissions_editable="yes" }
+  before { SeasonToggles.team_building_enabled="yes" }
 
   let!(:available_team) { FactoryGirl.create(:team, :geocoded) } # Default is in Chicago
 
