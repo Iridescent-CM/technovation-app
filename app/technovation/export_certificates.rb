@@ -21,10 +21,13 @@ module ExportCertificates
     mentors.each do |mentor|
       mentor_data = {
         'Recipient Name' => mentor.full_name,
-        'Region Name' => "TODO",
+        'Region Name' => [
+            FriendlySubregion.(mentor),
+            FriendlyCountry.(mentor)
+          ].join(', '),
         'id' => mentor.account_id
       }
-      FillPdfJob.perform_later(mentor_data, "mentor")
+      FillPdfJob.perform_later(mentor_data, "appreciation")
     end
   end
 end
