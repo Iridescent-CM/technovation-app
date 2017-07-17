@@ -97,6 +97,10 @@ class SeasonToggles
         convert_to_bool(store.get(:team_submissions_editable))
     end
 
+    def team_building_enabled?
+      return team_submissions_editable?
+    end
+
     def judging_round=(value)
       store.set(:judging_round, with_judging_round_validation(value))
 

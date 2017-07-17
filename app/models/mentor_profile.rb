@@ -127,7 +127,7 @@ class MentorProfile < ActiveRecord::Base
       consent_signed? and
         background_check_complete? and
           bio_complete? and
-            SeasonToggles.team_submissions_editable?
+            SeasonToggles.team_building_enabled?
   end
 
   def background_check_complete?
