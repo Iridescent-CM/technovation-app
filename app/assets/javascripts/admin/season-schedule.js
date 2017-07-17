@@ -147,16 +147,16 @@
           var $panel = appendPanel($(this), $div);
 
           appendLabels($panel, $(this).closest('fieldset').find('label'));
-        })
+        });
 
         function appendPanel($heading, $div) {
           var $panel = $('<div class="review-panel">'),
-              $heading = $('<p>');
+              $wrapper = $('<p>');
 
-          $heading.addClass('heading');
-          $heading.text($heading.text());
+          $wrapper.addClass('heading');
+          $wrapper.text($heading.text());
 
-          $heading.appendTo($panel);
+          $wrapper.appendTo($panel);
           $panel.appendTo($div);
 
           return $panel;
@@ -206,14 +206,18 @@
 
           function removePartials($panel) {
             $panel.find('.part-of-many').each(function() {
-              if (
-                $(this).next('.part-of-many').length !== 0 && (
-                  $(this).text() === "" ||
-                    $(this).next('.part-of-many').text() === ""
-                )
-              ) {
+              const isPartOfMany = $(this).next('.part-of-many').length !== 0,
+
+                    anyPartIsBlank = $(this).text() === "" ||
+                      $(this).next('.part-of-many').text() === "";
+
+              // Only works when many === 2,
+              // but want name to imply that
+              // this could extend
+
+              if (isPartOfMany && anyPartIsBlank) {
                 $(this).html(
-                  "<p class='hint'>not filled in completely, nothing will appear</p>"
+                  "<p class='hint'>Not filled in completely, nothing will appear.</p>"
                 );
                 $(this).next().remove();
               }
