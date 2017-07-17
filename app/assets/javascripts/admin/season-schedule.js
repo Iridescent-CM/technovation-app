@@ -1,10 +1,12 @@
 (function() {
-  const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]');
+  const $judgingRoundChoices = $('[name="season_toggles[judging_round]"]'),
+        $scheduleForm = $('#season_schedule');
 
   if ($judgingRoundChoices.length === 0) {
     return;
   } else {
     handleJudgingRoundChanges($judgingRoundChoices);
+    handleSeasonSettingsReview($scheduleForm);
   }
 
   function handleJudgingRoundChanges($choices) {
@@ -119,6 +121,141 @@
     function clearLocalStorage() {
       $blockedByJudging.each(function() {
         store.removeItem($(this).prop('id'));
+      });
+    }
+  }
+
+  function handleSeasonSettingsReview($form) {
+    const $saveBtn = $('[data-submit-form]'),
+          $reviewDiv = $('#season_review');
+
+    handleSaveBtnClick($saveBtn);
+    populateSeasonReview($reviewDiv, $form);
+
+    function handleSaveBtnClick($btn) {
+      $btn.on('click', function() {
+        const formId = $(this).data('submit-form');
+        $(formId).submit();
+      });
+    }
+
+    function populateSeasonReview($div, $form) {
+      $form.find('[data-modal-trigger]').on('modalopen', function() {
+        $div.html("");
+
+        $('legend').each(function() {
+          var $panel = appendPanel($(this), $div);
+
+          appendLabels($panel, $(this).closest('fieldset').find('label'));
+        });
+
+        function appendPanel($heading, $div) {
+          var $panel = $('<div class="review-panel">'),
+              $headingWrapper = $('<p>');
+
+          $headingWrapper.addClass('heading');
+          $headingWrapper.text($heading.text());
+
+          $headingWrapper.appendTo($panel);
+          $panel.appendTo($div);
+
+          return $panel;
+        }
+
+        function appendLabels($panel, $labels) {
+          $labels.each(function() {
+            var $label = $('<p>');
+
+            $label.text($(this).text());
+
+            appendTextValue($panel, $label, $(this).next('input'));
+            appendBooleanValue($panel, $label, $(this).prev('input'));
+            removePartials($panel);
+          });
+
+          function appendTextValue($panel, $label, $input) {
+            if ($input.prop('type') === "text") {
+              $label.addClass('has-text-value');
+
+              if (!$label.appended) {
+                $label.appendTo($panel);
+                $label.appended = true;
+              }
+
+              const $textValueElem = getTextValueElem($input);
+              $textValueElem.appendTo($panel);
+
+              appendTextValue($panel, $label, $input.next('input'));
+            }
+          }
+
+          function appendBooleanValue($panel, $label, $input) {
+            if ($input.length !== 0) {
+              const $booleanValueElem = getBooleanValueElem($input);
+
+              $label.append(" ");
+              $booleanValueElem.appendTo($label);
+
+              if ($input.prop('type') === "radio" && $input.prop('checked')) {
+                $label.appendTo($panel);
+              } else if ($input.prop('type') !== "radio") {
+                $label.appendTo($panel);
+              }
+            }
+          }
+
+          function removePartials($panel) {
+            $panel.find('.part-of-many').each(function() {
+              const isPartOfMany = $(this).next('.part-of-many').length !== 0,
+
+                    anyPartIsBlank = $(this).text() === "" ||
+                      $(this).next('.part-of-many').text() === "";
+
+              // Only works when many === 2,
+              // but want name to imply that
+              // this could extend
+
+              if (isPartOfMany && anyPartIsBlank) {
+                $(this).html(
+                  "<p class='hint'>Not filled in completely, nothing will appear.</p>"
+                );
+                $(this).next().remove();
+              }
+            });
+          }
+
+          function getBooleanValueElem($input) {
+            if ($input.prop('type') !== "radio") {
+              const value = $input.prop('checked'),
+                    cssClass = value ? "on" : "off";
+
+              var $value = $('<strong>');
+
+              $value.addClass(cssClass);
+              $value.text(value);
+
+              return $value;
+            } else {
+              return $();
+            }
+          }
+
+          function getTextValueElem($input) {
+            var $value = $('<p>');
+
+            if ($input.data("part-of-many")) {
+              $value.addClass('part-of-many');
+              $value.text($input.val());
+            } else {
+              $value.html(
+                $input.val() ||
+                  "<p class='hint'>Not filled in, nothing will appear</p>"
+              );
+            }
+
+            return $value;
+          }
+        }
       });
     }
   }
