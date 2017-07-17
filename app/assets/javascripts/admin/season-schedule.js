@@ -151,12 +151,12 @@
 
         function appendPanel($heading, $div) {
           var $panel = $('<div class="review-panel">'),
-              $wrapper = $('<p>');
+              $headingWrapper = $('<p>');
 
-          $wrapper.addClass('heading');
-          $wrapper.text($heading.text());
+          $headingWrapper.addClass('heading');
+          $headingWrapper.text($heading.text());
 
-          $wrapper.appendTo($panel);
+          $headingWrapper.appendTo($panel);
           $panel.appendTo($div);
 
           return $panel;
