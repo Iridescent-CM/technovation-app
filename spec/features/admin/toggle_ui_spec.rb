@@ -56,7 +56,7 @@ RSpec.feature "Admin UI for season toggles:" do
     SeasonToggles.team_submissions_editable = false
     click_link "Season Schedule Settings"
 
-    check "Team Submissions Editable?"
+    check "season_toggles[team_submissions_editable]"
     click_button "Save"
 
     expect(SeasonToggles.team_submissions_editable?).to be true
@@ -66,7 +66,7 @@ RSpec.feature "Admin UI for season toggles:" do
     SeasonToggles.select_regional_pitch_event = false
     click_link "Season Schedule Settings"
 
-    check "Regional Pitch Event Selection Enabled?"
+    check "season_toggles[select_regional_pitch_event]"
     click_button "Save"
 
     expect(SeasonToggles.select_regional_pitch_event?).to be true
@@ -76,7 +76,7 @@ RSpec.feature "Admin UI for season toggles:" do
     SeasonToggles.display_scores = false
     click_link "Season Schedule Settings"
 
-    check "Scores & Certificates Accessible?"
+    check "season_toggles[display_scores]"
     click_button "Save"
 
     expect(SeasonToggles.display_scores?).to be true
