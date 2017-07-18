@@ -86,7 +86,7 @@
   }
 
   function showModal(modalId, e) {
-    if (e.target)
+    if (e && e.target)
       e.target.dispatchEvent(
         new CustomEvent('modalopen', {bubbles: true, cancelable: true})
       );
