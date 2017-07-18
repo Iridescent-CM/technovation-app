@@ -44,8 +44,15 @@ class SeasonToggles
 
     %w{mentor student}.each do |scope|
       define_method("#{scope}_survey_link=") do |attrs|
-        attrs[:changed_at] = Time.current
-        store.set("#{scope}_survey_link", JSON.generate(attrs.to_h))
+        attrs = attrs.with_indifferent_access
+        changed = %w{text url}.any? do |key|
+          not attrs[key] == survey_link(scope, key)
+        end
+
+        if changed
+          attrs[:changed_at] = Time.current
+          store.set("#{scope}_survey_link", JSON.generate(attrs.to_h))
+        end
       end
     end
 
