@@ -27,7 +27,8 @@
     <legend>Dashboard Headlines</legend>
 
     <div class="notice info hint">
-      Keep these short! 3 or 4 words only, please!
+      Please keep these short!<br />
+      ex: "Submission Deadline: April 26" or "Round One Judging Is Open!"
     </div>
 
     <% %w{student mentor judge}.each do |scope| %>
@@ -45,9 +46,8 @@
     <legend>Survey Links</legend>
 
     <div class="notice info hint">
-      It's on you to enter a correctly formatted URL.
-      (ex: https://google.com, not google.com)<br />
-      Text *and* URL must both be filled in for the link to appear
+      Please use a full URL with correct formatting.<br />
+      (i.e., you must include the "https://" part)
     </div>
 
     <% %w{student mentor}.each do |scope| %>
@@ -65,6 +65,10 @@
             placeholder: "URL",
             value: SeasonToggles.survey_link(scope, :url) %>
         </p>
+
+        <div class="notice info hint">
+          The text *and* URL must both be filled in or nothing will appear.
+        </div>
       <% end %>
     <% end %>
   </fieldset>
