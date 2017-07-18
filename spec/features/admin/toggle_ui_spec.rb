@@ -56,7 +56,7 @@ RSpec.feature "Admin UI for season toggles:" do
     SeasonToggles.team_building_enabled = false
     click_link "Season Schedule Settings"
 
-    check "Team Building Enabled?"
+    check "season_toggles[team_building_enabled]"
     click_button "Save"
 
     expect(SeasonToggles.team_building_enabled?).to be true
