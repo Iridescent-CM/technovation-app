@@ -86,9 +86,10 @@
   }
 
   function showModal(modalId, e) {
-    e.target.dispatchEvent(
-      new CustomEvent('modalopen', {bubbles: true, cancelable: true})
-    );
+    if (e.target)
+      e.target.dispatchEvent(
+        new CustomEvent('modalopen', {bubbles: true, cancelable: true})
+      );
 
     modalId = modalId || e.target.dataset.modalTrigger;
     var modalToShow = document.getElementById(modalId);
