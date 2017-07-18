@@ -63,7 +63,7 @@
     <%= render "teams/mentor_list", team: team %>
   </div>
 
-  <% if SeasonToggles.team_submissions_editable? %>
+  <% if SeasonToggles.team_building_enabled? %>
     <div>
       <% if team.current? && team.spot_available? %>
         <%= render "teams/invite_students" %>

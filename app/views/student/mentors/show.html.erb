@@ -12,7 +12,7 @@
   <p><%= t("views.student.mentors.show.no_teams", name: @mentor.first_name) %></p>
 <% end %>
 
-<% if SeasonToggles.team_submissions_editable? %>
+<% if SeasonToggles.team_building_enabled? %>
   <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
              mentor_invite: @mentor_invite,
              mentor: @mentor,

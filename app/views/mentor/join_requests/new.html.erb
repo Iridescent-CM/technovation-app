@@ -1,4 +1,4 @@
-<% if SeasonToggles.team_submissions_editable? %>
+<% if SeasonToggles.team_building_enabled? %>
   <% if current_mentor.requested_to_join?(@team) %>
     <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
   <% elsif current_mentor.is_on?(@team) %>
