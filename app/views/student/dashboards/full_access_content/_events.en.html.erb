@@ -5,7 +5,7 @@
       events: @regional_events %>
   <% elsif current_team.present? and SeasonToggles.team_submissions_editable? %>
     <%= render 'student/dashboards/start_team_submission' %>
-  <% elsif SeasonToggles.team_submissions_editable? %>
+  <% elsif not current_team.present? and SeasonToggles.team_building_enabled? %>
     <%= render 'student/dashboards/join_create_team' %>
   <% else %>
       The submission deadline has passed.

@@ -123,7 +123,7 @@ class StudentProfile < ActiveRecord::Base
     honor_code_signed? and
       parental_consent_signed? and
         not is_on_team? and
-          SeasonToggles.team_submissions_editable?
+          SeasonToggles.team_building_enabled?
   end
 
   def team
