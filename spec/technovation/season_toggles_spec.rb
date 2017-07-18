@@ -1,6 +1,4 @@
-require "fakeredis"
-needs "technovation"
-require "season_toggles"
+require "rails_helper"
 
 RSpec.describe SeasonToggles do
   before() do
@@ -65,6 +63,40 @@ RSpec.describe SeasonToggles do
 
         expect(SeasonToggles.survey_link(scope, "text")).to eq("Hello World")
         expect(SeasonToggles.survey_link(scope, "url")).to eq("https://google.com")
+      end
+
+      it "sets changed_at when configured" do
+        SeasonToggles.set_survey_link(scope, "Hello World", "https://google.com")
+
+        expect(SeasonToggles.survey_link(scope, "changed_at")).not_to be_nil
+      end
+
+      it "updates changed_at when changed" do
+        Timecop.freeze(Time.current)    # won't register changes faster than 1 second
+        SeasonToggles.set_survey_link(scope, "Hello World", "https://google.com")
+
+        Timecop.freeze(Time.now + 1.second) do
+          last_changed = SeasonToggles.survey_link(scope, "changed_at")
+          SeasonToggles.set_survey_link(scope, "Goodbye World", "https://google.com")
+          expect(SeasonToggles.survey_link(scope, "changed_at")).to be > last_changed
+        end
+
+        Timecop.freeze(Time.now + 2.seconds) do
+          last_changed = SeasonToggles.survey_link(scope, "changed_at")
+          SeasonToggles.set_survey_link(scope, "Goodbye World", "https://yahoo.com")
+          expect(SeasonToggles.survey_link(scope, "changed_at")).to be > last_changed
+        end
+      end
+
+      it "leaves changed_at when not changed" do
+        Timecop.freeze(Time.current)
+        SeasonToggles.set_survey_link(scope, "Hello World", "https://google.com")
+
+        Timecop.freeze(Time.now + 1.second) do
+          last_changed = SeasonToggles.survey_link(scope, "changed_at")
+          SeasonToggles.set_survey_link(scope, "Hello World", "https://google.com")
+          expect(SeasonToggles.survey_link(scope, "changed_at")).to eq(last_changed)
+        end
       end
     end
 
