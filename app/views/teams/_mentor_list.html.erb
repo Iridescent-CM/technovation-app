@@ -5,10 +5,13 @@
 
   <div class="module-body">
     <ul class="team_members">
-      <%= render(partial: "teams/member", collection: team.mentors) or
-          link_to(t("views.#{account_type}.navigation.find_a_mentor"),
-                  send("new_#{account_type}_mentor_search_path"),
-                  class: "transparent-button") %>
+      <% if team.mentors.any? %>
+        <%= render(partial: "teams/member", collection: team.mentors) %>
+      <% elsif SeasonToggles.team_building_enabled? %>
+        <%= link_to(t("views.#{account_type}.navigation.find_a_mentor"),
+                send("new_#{account_type}_mentor_search_path"),
+                class: "transparent-button") %>
+      <% end %>
     </ul>
 
     <%= render "teams/pending_invites", invites: team.pending_mentor_invites %>
