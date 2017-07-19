@@ -203,10 +203,13 @@
 }
 
 #admin-season-schedule {
+  .fa {
+    color: $error-txt;
+  }
+
   .tab-button {
     .fa {
       display: none;
-      color: $error-txt;
     }
 
     &.contains-disabled-items {

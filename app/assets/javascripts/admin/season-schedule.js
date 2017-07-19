@@ -84,7 +84,7 @@
           var $notice = $('<div>');
 
           $notice.addClass('notice info hint');
-          $notice.text("Enabling judging has affected other season features.");
+          $notice.html("<span class='fa fa-exclamation-circle'></span> Enabling judging has affected other season features.");
 
           $container.append($notice);
         }
@@ -95,7 +95,11 @@
           var $notice = $('<div>');
 
           $notice.addClass('notice info hint user-notice');
-          $notice.text("When judging is enabled, " + $(this).data('when-blocked'));
+          $notice.html(
+            "<span class='fa fa-exclamation-circle'></span> " +
+            "When judging is enabled, " +
+            $(this).data('when-blocked')
+          );
 
           $(this).next('label').after($notice);
 
