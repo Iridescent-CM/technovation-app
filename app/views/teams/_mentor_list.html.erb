@@ -5,7 +5,7 @@
 
   <div class="module-body">
     <ul class="team_members">
-      <% if not team.mentors.empty? %>
+      <% if team.mentors.any? %>
         <%= render(partial: "teams/member", collection: team.mentors) %>
       <% elsif SeasonToggles.team_building_enabled? %>
         <%= link_to(t("views.#{account_type}.navigation.find_a_mentor"),
