@@ -201,3 +201,43 @@
     }
   }
 }
+
+#admin-season-schedule {
+  .tab-button {
+    .fa {
+      display: none;
+      color: $error-txt;
+    }
+
+    &.contains-disabled-items {
+     .fa {
+       display: inline;
+     }
+    }
+  }
+
+  .tab-content {
+    margin: 0 0 1rem;
+    padding: 0 1rem;
+    background: white;
+    position: relative;
+    z-index: $z-nuclear;
+
+    h4 {
+      margin: 0 0 1rem;
+      font-weight: bold;
+    }
+
+    p, .inline-checkbox, .inline-radio {
+      margin: 0 0 1rem;
+      padding: 0;
+      font-weight: normal;
+    }
+
+    label {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+  }
+}

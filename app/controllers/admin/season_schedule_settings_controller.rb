@@ -10,11 +10,11 @@ module Admin
       params.require(:season_toggles).permit(
         *signup_scopes,
         *dashboard_text_scopes,
+        :judging_round,
         :team_building_enabled,
         :team_submissions_editable,
         :select_regional_pitch_event,
         :display_scores,
-        :judging_round,
         student_survey_link: [:text, :url],
         mentor_survey_link: [:text, :url],
       )
