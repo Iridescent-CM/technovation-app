@@ -10,12 +10,12 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     SeasonToggles.team_building_enabled = "off"
   end
 
-  context "Student nav bar" do
+  context "Student nav bar, no team" do
     let(:user) { FactoryGirl.create(:student) }
     let(:path) { student_dashboard_path }
 
     before { sign_in(user) }
-    
+
     scenario "Toggle on" do
       toggle_on
       visit path
@@ -31,6 +31,29 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
       within("header.navigation nav") do
         expect(page).not_to have_link("Create a team")
         expect(page).not_to have_link("Join a team")
+      end
+    end
+  end
+
+  context "Student nav bar, with team" do
+    let(:user) { FactoryGirl.create(:student, :on_team) }
+    let(:path) { student_dashboard_path }
+
+    before { sign_in(user) }
+
+    scenario "Toggle on" do
+      toggle_on
+      visit path
+      within("header.navigation nav") do
+        expect(page).to have_link("Find a mentor")
+      end
+    end
+
+    scenario "Toggle off" do
+      toggle_off
+      visit path
+      within("header.navigation nav") do
+        expect(page).not_to have_link("Find a mentor")
       end
     end
   end
@@ -76,13 +99,13 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_css("form[action='#{action}']") 
+      expect(page).to have_css("form[action='#{action}']")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_css("form[action='#{action}']") 
+      expect(page).not_to have_css("form[action='#{action}']")
     end
   end
 
@@ -97,13 +120,15 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_css("form[action='#{action}']") 
+      expect(page).to have_css("form[action='#{action}']")
+      expect(page).to have_link("Find a mentor")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_css("form[action='#{action}']") 
+      expect(page).not_to have_css("form[action='#{action}']")
+      expect(page).not_to have_link("Find a mentor")
     end
   end
 
@@ -204,13 +229,13 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_css("form[action='#{action}']") 
+      expect(page).to have_css("form[action='#{action}']")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_css("form[action='#{action}']") 
+      expect(page).not_to have_css("form[action='#{action}']")
     end
   end
 
@@ -222,19 +247,19 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     before {
       TeamRosterManaging.add(team, user)
-      sign_in(user) 
+      sign_in(user)
     }
 
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_css("form[action='#{action}']") 
+      expect(page).to have_css("form[action='#{action}']")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_css("form[action='#{action}']") 
+      expect(page).not_to have_css("form[action='#{action}']")
     end
   end
 end
