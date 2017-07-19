@@ -235,25 +235,25 @@
     or
     <%= link_to "cancel", admin_dashboard_path %>
   </p>
-<% end %>
 
-<div class="modalify modalify--fixed"
-    data-heading="Review Season Settings"
-    id="schedule-review">
+  <div class="modalify modalify--fixed"
+      data-heading="Review Season Settings"
+      id="schedule-review">
 
-  <div id="season_review"></div>
+    <div id="season_review"></div>
 
-  <div class="notice warning">
-    The changes you make here affect the end-user experience.<br />
-    Please double check everything before saving.
+    <div class="notice warning">
+      The changes you make here affect the end-user experience.<br />
+      Please double check everything before saving.
+    </div>
+
+    <button class="appy-button"
+            data-submit-form="#season_schedule">
+      Save these settings
+    </button>
+
+    or
+
+    <%= link_to "cancel", '#', class: "modalify__close" %>
   </div>
-
-  <button class="appy-button"
-          data-submit-form="#season_schedule">
-    Save these settings
-  </button>
-
-  or
-
-  <%= link_to "cancel", '#', class: "modalify__close" %>
-</div>
+<% end %>
