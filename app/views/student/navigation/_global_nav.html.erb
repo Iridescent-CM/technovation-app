@@ -1,9 +1,11 @@
 <% if current_student.full_access_enabled? %>
   <% if current_student.is_on_team? %>
-    <li class="nav-link <%= al(new_student_mentor_search_path) %>">
-      <%= link_to t('views.student.navigation.find_a_mentor'),
-        new_student_mentor_search_path %>
-    </li>
+    <% if SeasonToggles.team_building_enabled? %>
+      <li class="nav-link <%= al(new_student_mentor_search_path) %>">
+        <%= link_to t('views.student.navigation.find_a_mentor'),
+          new_student_mentor_search_path %>
+      </li>
+    <% end %>
 
     <li class="nav-link <%= al(student_team_path(current_team)) %>">
       <%= link_to t("views.student.navigation.my_team"), student_team_path(current_team) %>
