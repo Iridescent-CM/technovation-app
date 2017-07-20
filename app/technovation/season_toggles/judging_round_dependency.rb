@@ -6,11 +6,8 @@ class SeasonToggles
       @@blocked_by_judging_topics << options[:topic]
 
       define_singleton_method("#{key}=") do |value|
-        if judging_enabled?
-          if convert_to_bool(value)
-            warn_about_judging_enabled(options[:topic])
-          end
-
+        if judging_enabled? and convert_to_bool(value)
+          warn_about_judging_enabled(options[:topic])
           super(false)
         else
           super(value)

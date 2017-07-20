@@ -28,7 +28,7 @@ class SeasonToggles
     end
 
     def with_proper_dependency_order(attrs, &block)
-      tmp_attrs = attrs.with_indifferent_access
+      tmp_attrs = Hash(attrs).with_indifferent_access
       ordered_attrs = {}
 
       judging_value = tmp_attrs.delete(:judging_round)
