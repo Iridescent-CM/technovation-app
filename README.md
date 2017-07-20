@@ -1,11 +1,15 @@
 # Technovation Challenge Platform
 
-## Sample sanitized data for Oracle
+QA: Build: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/qa.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/qa)
 
-[Dropbox
-link](https://www.dropbox.com/s/rz6eeajncjt2veq/sanitized_technovation_psql_data.sql?dl=0)
+Master: Build: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master)
 
-Build: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master)
+Production: Build: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production)
+
+## ORACLE RHoK PARTICIPANTS
+
+Use the [Dropbox
+link](https://www.dropbox.com/s/rz6eeajncjt2veq/sanitized_technovation_psql_data.sql?dl=0) to download the sample, sanitized data
 
 ## Installation and Setup
 
