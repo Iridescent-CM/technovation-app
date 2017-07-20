@@ -51,13 +51,29 @@ Set your Ruby version with your favorite ruby version management tool **(RVM, rb
 
 Request sensitive keys from your teammates for the `.env` file.
 
+### ORACLE RHoK PARTICIPANTS:
+
+Download [this .env.rhok
+file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to
+`.env`
+
+You will need to provide your own info for AWS and possibly other 3rd party
+services
+
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
 *** GET THE SENSITIVE INFO FROM DEV TEAM FOR .env FILE ***
+*** ORACLE: See directly above ***
 echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
 ```
+
+## Turn on/off various user features:
+
+  * Login as the admin
+  * Go to "Season Schedule Settings"
+  * Toggle what you need on or off
 
 ## Drop / recreate / re-seed / re-bootstrap  database
 
