@@ -60,6 +60,8 @@ file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to
 You will need to provide your own info for AWS and possibly other 3rd party
 services
 
+### Install the rails application
+
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
 cd technovation-app
