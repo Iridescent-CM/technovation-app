@@ -89,7 +89,15 @@
           $container.append($notice);
         }
 
-        $('[disabled]:not(.user-notified').each(function() {
+        notifyUserOnEachInputDisabledByJudging()
+      }
+
+      function notifyUserOnEachInputDisabledByJudging() {
+        $('[data-blocked-by-judging]')
+          .add('[disabled]')
+          .not('.user-notified')
+          .each(function() {
+
           const $tab = $(this).closest('.tab-content');
 
           var $notice = $('<div>');
@@ -112,7 +120,6 @@
           $(this).addClass('user-notified');
         });
       }
-
     }
 
     function handleJudgingDisabled() {
@@ -255,8 +262,8 @@
 
           function getBooleanValueElem($input) {
             if ($input.prop('type') !== "radio") {
-              const value = $input.prop('checked'),
-                    cssClass = value ? "on" : "off";
+              const value = $input.prop('checked') ? "yes" : "no",
+                    cssClass = value === "yes" ? "on" : "off";
 
               var $value = $('<strong>');
 
