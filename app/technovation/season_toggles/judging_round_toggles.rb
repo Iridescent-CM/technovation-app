@@ -14,19 +14,8 @@ class SeasonToggles
                            %w{off}
 
     module ClassMethods
-      @@blocked_by_judging_keys = []
-      @@blocked_by_judging_topics = []
-
       def judging_round=(value)
         store.set(:judging_round, with_judging_round_validation(value))
-
-        if value.to_s.downcase != "off"
-          warn_about_judging_enabled
-
-          @@blocked_by_judging_keys.each do |method|
-            self.send("#{method}=", false)
-          end
-        end
       end
 
       def judging_round
@@ -48,27 +37,6 @@ class SeasonToggles
       end
       alias :semifinals? :semifinals_judging?
 
-      def bool_blocked_by_judging(key, options = {})
-        @@blocked_by_judging_keys << key
-        @@blocked_by_judging_topics << options[:topic]
-
-        define_singleton_method("#{key}=") do |value|
-          if judging_enabled?
-            if convert_to_bool(value)
-              warn_about_judging_enabled(options[:topic])
-            end
-
-            store.set(key, false)
-          else
-            store.set(key, with_bool_validation(value))
-          end
-        end
-
-        define_singleton_method("#{key}?") do
-          not judging_enabled? and convert_to_bool(store.get(key))
-        end
-      end
-
       def with_judging_round_validation(value)
         if VALID_JUDGING_ROUNDS.include?(value.to_s.downcase)
           value.to_s.downcase
@@ -77,13 +45,6 @@ class SeasonToggles
             actual: value,
             expected: VALID_JUDGING_ROUNDS.join(' | ')
           )
-        end
-      end
-
-      def warn_about_judging_enabled(topic = nil)
-        unless Rails.env.test?
-          topic ||= @@blocked_by_judging_topics.join(", ")
-          warn("JUDGING IS ENABLED: Setting #{topic} to FALSE")
         end
       end
     end

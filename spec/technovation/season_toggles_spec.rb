@@ -32,7 +32,36 @@ RSpec.describe SeasonToggles do
       SeasonToggles.team_submissions_editable = "No"
       expect(SeasonToggles.team_submissions_editable?).to be false
     end
+
+    it "cannot be true when judging is enabled" do
+      SeasonToggles.configure({
+        team_submissions_editable: true,
+        judging_round: :qf,
+      })
+      expect(SeasonToggles.team_submissions_editable?).to be false
+    end
   end
+
+  describe ".team_building_enabled?" do
+    it "cannot be true when judging is enabled" do
+      SeasonToggles.configure({
+        team_building_enabled: true,
+        judging_round: :qf,
+      })
+      expect(SeasonToggles.team_building_enabled?).to be false
+    end
+  end
+
+  describe ".display_scores?" do
+    it "cannot be true when judging is enabled" do
+      SeasonToggles.configure({
+        display_scores: true,
+        judging_round: :qf,
+      })
+      expect(SeasonToggles.display_scores?).to be false
+    end
+  end
+
 
   %w{mentor student}.each do |scope|
     describe ".#{scope}_survey_link=" do
@@ -210,6 +239,14 @@ RSpec.describe SeasonToggles do
           expect(SeasonToggles.select_regional_pitch_event?).to be false
         end
       end
+
+      it "cannot be true while judging is enabled" do
+        SeasonToggles.configure({
+          select_regional_pitch_event: true,
+          judging_round: :sf,
+        })
+        expect(SeasonToggles.select_regional_pitch_event?).to be false
+      end
     end
 
     context "bad input" do
@@ -223,7 +260,6 @@ RSpec.describe SeasonToggles do
   end
 
   %i(student mentor judge regional_ambassador).each do |scope|
-
     describe ".#{scope}_signup=" do
       context "valid input" do
         it "allows a collection of 'boolean' words and booleans" do
@@ -234,14 +270,21 @@ RSpec.describe SeasonToggles do
         end
 
         it "reads back a boolean from ##{scope}_signup?" do
-          valid_truthy.each do |on|
-            SeasonToggles.public_send("#{scope}_signup=", on)
-            expect(SeasonToggles.public_send("#{scope}_signup?")).to be true
-          end
+          SeasonToggles.enable_signup(scope)
+          expect(SeasonToggles.signup_enabled?(scope)).to be true
 
-          valid_falsey.each do |off|
-            SeasonToggles.public_send("#{scope}_signup=", off)
-            expect(SeasonToggles.public_send("#{scope}_signup?")).to be false
+          SeasonToggles.disable_signup(scope)
+          expect(SeasonToggles.signup_enabled?(scope)).to be false
+        end
+
+        next unless %i{student mentor}.include?(scope)
+        context "student, mentor" do
+          it "cannot be true while judging is enabled" do
+            SeasonToggles.configure({
+              "#{scope}_signup" => true,
+              judging_round: :Qf,
+            })
+            expect(SeasonToggles.signup_enabled?(scope)).to be false
           end
         end
       end

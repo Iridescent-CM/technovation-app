@@ -1,10 +1,15 @@
 require "season_toggles/boolean_toggler"
+require "season_toggles/judging_round_dependency"
 
 class SeasonToggles
   module TeamToggles
     def self.included(base)
-      base.extend ClassMethods
       base.extend BooleanToggler
+      base.extend JudgingRoundDependency
+      base.extend ClassMethods
+
+      base.judging_must_be_off :team_submissions_editable, topic: "Submissions"
+      base.judging_must_be_off :team_building_enabled, topic: "Team building"
     end
 
     module ClassMethods

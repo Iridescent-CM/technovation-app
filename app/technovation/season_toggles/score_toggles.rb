@@ -1,10 +1,14 @@
 require "season_toggles/boolean_toggler"
+require "season_toggles/judging_round_dependency"
 
 class SeasonToggles
   module ScoreToggles
     def self.included(base)
       base.extend BooleanToggler
       base.extend ClassMethods
+
+      base.extend JudgingRoundDependency
+      base.judging_must_be_off :display_scores, topic: "Scores"
     end
 
     module ClassMethods
