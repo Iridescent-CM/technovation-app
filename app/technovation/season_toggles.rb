@@ -17,12 +17,25 @@ class SeasonToggles
 
   class << self
     def configure(attrs)
-      Hash(attrs).each { |k, v| send("#{k}=", v) }
+      with_proper_dependency_order(attrs) do |ordered_attrs|
+        ordered_attrs.each { |k, v| send("#{k}=", v) }
+      end
     end
 
     private
     def store
       @@store ||= Redis.new
+    end
+
+    def with_proper_dependency_order(attrs, &block)
+      tmp_attrs = attrs.with_indifferent_access
+      ordered_attrs = {}
+
+      judging_value = tmp_attrs.delete(:judging_round)
+      ordered_attrs[:judging_round] = judging_value
+      ordered_attrs.merge!(tmp_attrs)
+
+      block.call(ordered_attrs)
     end
   end
 

@@ -6,6 +6,22 @@ RSpec.describe SeasonToggles do
     redis.flushdb
   end
 
+  describe ".configure" do
+    it "fixes the order of attributes for judging round dependency" do
+      # judging is on
+      SeasonToggles.judging_round = :qf
+
+      # judging is turned off, but passed after the dependent setting
+      SeasonToggles.configure({
+        select_regional_pitch_event: true,
+        judging_round: :off,
+      })
+
+      # dependent setting was set correctly
+      expect(SeasonToggles.select_regional_pitch_event?).to be true
+    end
+  end
+
   describe ".team_submissions_editable=" do
     it "raises exception for bad input" do
       expect_bad_input_raises_error(
