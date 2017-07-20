@@ -1,5 +1,10 @@
 # Technovation Challenge Platform
 
+## Sample sanitized data for Oracle
+
+[Dropbox
+link](https://www.dropbox.com/s/rz6eeajncjt2veq/sanitized_technovation_psql_data.sql?dl=0)
+
 Build: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/master)
 
 ## Installation and Setup
