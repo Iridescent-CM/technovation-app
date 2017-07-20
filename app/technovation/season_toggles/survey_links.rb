@@ -1,11 +1,10 @@
 class SeasonToggles
-  module DashboardElementsToggler
-    def self.extended(base)
-      base.extend SurveyLinkMethods
-      base.extend HeadlineMethods
+  module SurveyLinks
+    def self.included(base)
+      base.extend ClassMethods
     end
 
-    module SurveyLinkMethods
+    module ClassMethods
       %w{mentor student}.each do |scope|
         define_method("#{scope}_survey_link=") do |attrs|
           attrs = attrs.with_indifferent_access
@@ -39,22 +38,6 @@ class SeasonToggles
         value = store.get("#{scope}_survey_link") || "{}"
         parsed = JSON.parse(value)
         parsed[key.to_s]
-      end
-    end
-
-    module HeadlineMethods
-      %w{mentor student judge}.each do |scope|
-        define_method("#{scope}_dashboard_text=") do |text|
-          store.set("#{scope}_dashboard_text", text)
-        end
-      end
-
-      def set_dashboard_text(scope, txt)
-        send("#{scope}_dashboard_text=", txt)
-      end
-
-      def dashboard_text(scope)
-        store.get("#{scope}_dashboard_text")
       end
     end
   end

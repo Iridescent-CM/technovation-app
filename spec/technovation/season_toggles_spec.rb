@@ -270,7 +270,7 @@ RSpec.describe SeasonToggles do
   end
 
   def valid_judging_rounds
-    SeasonToggles::JudgingRoundToggler::VALID_JUDGING_ROUNDS
+    SeasonToggles::JudgingRoundToggles::VALID_JUDGING_ROUNDS
   end
 
   def expect_bad_input_raises_error(options)

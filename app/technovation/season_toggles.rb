@@ -1,20 +1,19 @@
-require "season_toggles/signup_toggler"
-require "season_toggles/dashboard_elements_toggler"
-require "season_toggles/judging_round_toggler"
+require "season_toggles/signup_toggles"
+require "season_toggles/dashboard_notices"
+require "season_toggles/survey_links"
+require "season_toggles/team_toggles"
+require "season_toggles/regional_pitch_event_toggles"
+require "season_toggles/judging_round_toggles"
+require "season_toggles/score_toggles"
 
 class SeasonToggles
-  extend SignupToggler
-  extend DashboardElementsToggler
-
-  extend JudgingRoundToggler
-  bool_blocked_by_judging :student_signup, topic: "Student signups"
-  bool_blocked_by_judging :mentor_signup, topic: "Mentor signups"
-
-  bool_blocked_by_judging :team_building_enabled, topic: "Team building"
-  bool_blocked_by_judging :team_submissions_editable, topic: "Submissions"
-
-  bool_blocked_by_judging :select_regional_pitch_event, topic: "Events"
-  bool_blocked_by_judging :display_scores, topic: "Scores"
+  include SignupToggles
+  include DashboardNotices
+  include SurveyLinks
+  include TeamToggles
+  include RegionalPitchEventToggles
+  include JudgingRoundToggles
+  include ScoreToggles
 
   class << self
     def configure(attrs)
