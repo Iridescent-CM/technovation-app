@@ -15,12 +15,11 @@ class SeasonToggles
     end
 
     def select_regional_pitch_event=(value)
-      if judging_enabled?
-        warn_about_judging_enabled("Events") if convert_to_bool(value)
-        store.set(:select_regional_pitch_event, false)
-      else
-        store.set(:select_regional_pitch_event, with_bool_validation(value))
-      end
+      bool_blocked_when_judging_enabled({
+        topic: "Events",
+        key: :select_regional_pitch_event,
+        value: value
+      })
     end
 
     def select_regional_pitch_event?
@@ -29,12 +28,11 @@ class SeasonToggles
     end
 
     def display_scores=(value)
-      if judging_enabled?
-        warn_about_judging_enabled("Scores") if convert_to_bool(value)
-        store.set(:display_scores, false)
-      else
-        store.set(:display_scores, with_bool_validation(value))
-      end
+      bool_blocked_when_judging_enabled({
+        topic: "Scores",
+        key: :display_scores,
+        value: value
+      })
     end
 
     def display_scores?
@@ -91,12 +89,11 @@ class SeasonToggles
     end
 
     def team_submissions_editable=(value)
-      if judging_enabled?
-        warn_about_judging_enabled("Submissions") if convert_to_bool(value)
-        store.set(:team_submissions_editable, false)
-      else
-        store.set(:team_submissions_editable, with_bool_validation(value))
-      end
+      bool_blocked_when_judging_enabled({
+        topic: "Submissions",
+        key: :team_submissions_editable,
+        value: value
+      })
     end
 
     def team_submissions_editable?
@@ -105,12 +102,11 @@ class SeasonToggles
     end
 
     def team_building_enabled=(value)
-      if judging_enabled?
-        warn_about_judging_enabled("Team building") if convert_to_bool(value)
-        store.set(:team_building_enabled, false)
-      else
-        store.set(:team_building_enabled, with_bool_validation(value))
-      end
+      bool_blocked_when_judging_enabled({
+        topic: "Team building",
+        key: :team_building_enabled,
+        value: value
+      })
     end
 
     def team_building_enabled?
@@ -180,6 +176,18 @@ class SeasonToggles
     end
 
     private
+    def bool_blocked_when_judging_enabled(options)
+      if judging_enabled?
+        if convert_to_bool(options[:value])
+          warn_about_judging_enabled(options[:topic])
+        end
+
+        store.set(options[:key], false)
+      else
+        store.set(options[:key], with_bool_validation(options[:value]))
+      end
+    end
+
     def store
       @@store ||= Redis.new
     end
