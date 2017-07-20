@@ -1,12 +1,16 @@
+require "season_toggles/boolean_toggler"
+
 class SeasonToggles
   module JudgingRoundToggler
-    extend BooleanToggler
+    def self.extended(base)
+      base.extend BooleanToggler
+    end
 
     VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
     VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
     VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
-                          VALID_SF_JUDGING_ROUNDS +
-                          %w{off}
+                           VALID_SF_JUDGING_ROUNDS +
+                           %w{off}
 
     @@blocked_by_judging_keys = []
     @@blocked_by_judging_topics = []

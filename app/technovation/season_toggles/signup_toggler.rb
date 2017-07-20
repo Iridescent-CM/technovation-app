@@ -1,5 +1,11 @@
+require "season_toggles/boolean_toggler"
+
 class SeasonToggles
   module SignupToggler
+    def self.extended(base)
+      base.extend BooleanToggler
+    end
+
     # student, mentor signups defined as
     # bool_blocked_by_judging singleton attrs
 

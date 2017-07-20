@@ -19,7 +19,8 @@ class SeasonToggles
 
     def raise_invalid_input_error(options)
       raise InvalidInput,
-        "No toggle exists for #{options[:actual]}. Use one of: #{options[:expected]}"
+        "No toggle exists for #{options[:actual]}. " +
+        "Use one of: #{options[:expected]}"
     end
   end
 end

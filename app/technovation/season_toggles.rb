@@ -1,5 +1,8 @@
+require "season_toggles/signup_toggler"
+require "season_toggles/dashboard_elements_toggler"
+require "season_toggles/judging_round_toggler"
+
 class SeasonToggles
-  extend BooleanToggler
   extend SignupToggler
   extend DashboardElementsToggler
 
