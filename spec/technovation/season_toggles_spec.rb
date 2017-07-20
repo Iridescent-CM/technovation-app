@@ -1,41 +1,22 @@
 require "rails_helper"
 
 RSpec.describe SeasonToggles do
-  before() do
+  before do
     redis = Redis.new
     redis.flushdb
-  end
-
-  def expect_bad_input_raises_error(options)
-    [nil, "", " ", "foo"].each do |bad|
-      expect {
-        SeasonToggles.public_send("#{options[:method]}=", bad)
-      }.to raise_error(
-        SeasonToggles::InvalidInput,
-        "No toggle exists for #{bad}. Use one of: #{options[:valid_input]}"
-      )
-    end
-  end
-
-  def expect_good_input_works(options)
-    options[:valid_input].each do |good|
-      expect {
-        SeasonToggles.public_send("#{options[:method]}=", good)
-      }.not_to raise_error
-    end
   end
 
   describe ".team_submissions_editable=" do
     it "raises exception for bad input" do
       expect_bad_input_raises_error(
         method: :team_submissions_editable,
-        valid_input: SeasonToggles::VALID_BOOLS.join(" | ")
+        valid_input: valid_bools.join(" | ")
       )
     end
 
     it "accepts valid booleans" do
       expect_good_input_works(
-        valid_input: SeasonToggles::VALID_BOOLS,
+        valid_input: valid_bools,
         method: :team_submissions_editable
       )
     end
@@ -131,20 +112,20 @@ RSpec.describe SeasonToggles do
       it "allows a specific set of values" do
         expect_good_input_works(
           method: :judging_round,
-          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS +
+          valid_input: valid_judging_rounds +
             %i{QF SF qF Sf QuarteRfinals quaRter_fiNals sEmifinals sEmi_finals oFf}
         )
       end
 
       it "reads back #judging_round" do
-        SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
+        valid_judging_rounds.each do |jr|
           SeasonToggles.judging_round = jr
           expect(SeasonToggles.judging_round).to eq(jr)
         end
       end
 
       it "aliases #current_judging_round for #judging_round" do
-        SeasonToggles::VALID_JUDGING_ROUNDS.each do |jr|
+        valid_judging_rounds.each do |jr|
           SeasonToggles.judging_round = jr
           expect(SeasonToggles.current_judging_round).to eq(jr)
         end
@@ -203,7 +184,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: :judging_round,
-          valid_input: SeasonToggles::VALID_JUDGING_ROUNDS.join(' | ')
+          valid_input: valid_judging_rounds.join(' | ')
         )
       end
     end
@@ -214,18 +195,17 @@ RSpec.describe SeasonToggles do
       it "allows a collection of 'boolean' words and booleans" do
         expect_good_input_works(
           method: "select_regional_pitch_event",
-          valid_input: SeasonToggles::VALID_BOOLS +
-            %i{On oFf yEs nO tRue fAlse}
+          valid_input: valid_bools + %i{On oFf yEs nO tRue fAlse}
         )
       end
 
       it "reads back a boolean from .select_regional_pitch_event?" do
-        SeasonToggles::VALID_TRUTHY.each do |on|
+        valid_truthy.each do |on|
           SeasonToggles.select_regional_pitch_event=on
           expect(SeasonToggles.select_regional_pitch_event?).to be true
         end
 
-        SeasonToggles::VALID_FALSEY.each do |off|
+        valid_falsey.each do |off|
           SeasonToggles.select_regional_pitch_event=off
           expect(SeasonToggles.select_regional_pitch_event?).to be false
         end
@@ -236,7 +216,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: "select_regional_pitch_event",
-          valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
+          valid_input: valid_bools.join(' | ')
         )
       end
     end
@@ -249,18 +229,17 @@ RSpec.describe SeasonToggles do
         it "allows a collection of 'boolean' words and booleans" do
           expect_good_input_works(
             method: "#{scope}_signup",
-            valid_input: SeasonToggles::VALID_BOOLS +
-              %i{On oFf yEs nO tRue fAlse}
+            valid_input: valid_bools + %i{On oFf yEs nO tRue fAlse}
           )
         end
 
         it "reads back a boolean from ##{scope}_signup?" do
-          SeasonToggles::VALID_TRUTHY.each do |on|
+          valid_truthy.each do |on|
             SeasonToggles.public_send("#{scope}_signup=", on)
             expect(SeasonToggles.public_send("#{scope}_signup?")).to be true
           end
 
-          SeasonToggles::VALID_FALSEY.each do |off|
+          valid_falsey.each do |off|
             SeasonToggles.public_send("#{scope}_signup=", off)
             expect(SeasonToggles.public_send("#{scope}_signup?")).to be false
           end
@@ -271,11 +250,45 @@ RSpec.describe SeasonToggles do
         it "raises an exception" do
           expect_bad_input_raises_error(
             method: "#{scope}_signup",
-            valid_input: SeasonToggles::VALID_BOOLS.join(' | ')
+            valid_input: valid_bools.join(' | ')
           )
         end
       end
     end
+  end
 
+  def valid_bools
+    SeasonToggles::BooleanToggler::VALID_BOOLS
+  end
+
+  def valid_truthy
+    SeasonToggles::BooleanToggler::VALID_TRUTHY
+  end
+
+  def valid_falsey
+    SeasonToggles::BooleanToggler::VALID_FALSEY
+  end
+
+  def valid_judging_rounds
+    SeasonToggles::JudgingRoundToggler::VALID_JUDGING_ROUNDS
+  end
+
+  def expect_bad_input_raises_error(options)
+    [nil, "", " ", "foo"].each do |bad|
+      expect {
+        SeasonToggles.public_send("#{options[:method]}=", bad)
+      }.to raise_error(
+        SeasonToggles::InvalidInput,
+        "No toggle exists for #{bad}. Use one of: #{options[:valid_input]}"
+      )
+    end
+  end
+
+  def expect_good_input_works(options)
+    options[:valid_input].each do |good|
+      expect {
+        SeasonToggles.public_send("#{options[:method]}=", good)
+      }.not_to raise_error
+    end
   end
 end

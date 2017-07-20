@@ -1,5 +1,9 @@
 class SeasonToggles
   module BooleanToggler
+    VALID_TRUTHY = %w{1 on yes true} + [true]
+    VALID_FALSEY = %w{0 off no false} + [false]
+    VALID_BOOLS = VALID_TRUTHY + VALID_FALSEY
+
     private
     def with_bool_validation(value)
       if VALID_BOOLS.include?(value.to_s.downcase)

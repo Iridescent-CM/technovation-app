@@ -1,15 +1,6 @@
 class SeasonToggles
   extend BooleanToggler
-  VALID_TRUTHY = %w{1 on yes true} + [true]
-  VALID_FALSEY = %w{0 off no false} + [false]
-  VALID_BOOLS = VALID_TRUTHY + VALID_FALSEY
-
   extend JudgingRoundToggler
-  VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
-  VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
-  VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
-                         VALID_SF_JUDGING_ROUNDS +
-                         %w{off}
 
   bool_blocked_by_judging :student_signup, topic: "Student signups"
   bool_blocked_by_judging :mentor_signup, topic: "Mentor signups"
