@@ -53,12 +53,9 @@ Request sensitive keys from your teammates for the `.env` file.
 
 ### ORACLE RHoK PARTICIPANTS:
 
-Download [this .env.rhok
-file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to
-`.env`
+Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to `.env`
 
-You will need to provide your own info for AWS and possibly other 3rd party
-services
+You will need to provide your own info for AWS and possibly other 3rd party services
 
 ### Install the rails application
 
@@ -71,9 +68,17 @@ echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
 ```
 
+### ORACLE RHoK PARTICIPANTS:
+
+  * Restore local database with sample, sanitized database
+    * `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U <USERNAME> -d technovation-app_development <PATH_TO_SQLFILE>`
+  * Run `rails bootstrap`
+
 ## Turn on/off various user features:
 
   * Login as the admin
+    * username: `rhok@oracle.com`
+    * password: `rhokdemo`
   * Go to "Season Schedule Settings"
   * Toggle what you need on or off
 
