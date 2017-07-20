@@ -151,11 +151,19 @@ class SeasonToggles
 
     %w{student mentor judge regional_ambassador}.each do |scope|
       define_method("#{scope}_signup=") do |value|
-        store.set("#{scope}_signup", with_bool_validation(value))
+        if judging_enabled? and %w{student mentor}.include?(scope)
+          warn_about_judging_enabled("#{scope}.capitalize signups") if convert_to_bool(value)
+          store.set("#{scope}_signup", false)
+        else
+          store.set("#{scope}_signup", with_bool_validation(value))
+        end
       end
 
       define_method("#{scope}_signup?") do
-        convert_to_bool(store.get("#{scope}_signup"))
+        (%w{student mentor}.include?(scope) and
+          not judging_enabled? and
+            convert_to_bool(store.get("#{scope}_signup"))) or
+              convert_to_bool(store.get("#{scope}_signup"))
       end
     end
 

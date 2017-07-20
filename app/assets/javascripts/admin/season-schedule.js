@@ -10,9 +10,9 @@
   }
 
   function handleJudgingRoundChanges($choices) {
-    const $container = $choices.closest('fieldset'),
+    const $container = $choices.closest('.tab-content'),
 
-          $blockedByJudging = $('[data-blocked-by-judging]'),
+          $blockedByJudging = $('[data-blocked-by-judging=true]'),
           originalTextColor = $blockedByJudging.css('color'),
 
           store = localStorage,
@@ -50,23 +50,10 @@
     $(window).unload(clearLocalStorage);
 
     function handleJudgingEnabled() {
-      notifyUserOfEffect();
       disableSettingsBlockedByJudging();
       storeOriginalValuesLocally();
+      notifyUserOfEffect();
       $blockedByJudging.prop('checked', false);
-
-      function notifyUserOfEffect() {
-        if ($container.find('.notice').length === 0) {
-          var $notice = $('<div>');
-
-          $notice.addClass('notice warning');
-          $notice.text(
-            "Turning judging on disables Submissions, Event Selection, and Scores!"
-          );
-
-          $container.append($notice);
-        }
-      }
 
       function disableSettingsBlockedByJudging() {
         $blockedByJudging.prop('disabled', true);
@@ -91,13 +78,61 @@
         // judging had been on, meaning all the settings were set to false
         // and we don't want to store that state
       }
+
+      function notifyUserOfEffect() {
+        if ($container.find('.notice').length === 0) {
+          var $notice = $('<div>');
+
+          $notice.addClass('notice info hint');
+          $notice.html("<span class='fa fa-exclamation-circle'></span> Enabling judging has affected other season features.");
+
+          $container.append($notice);
+        }
+
+        notifyUserOnEachInputDisabledByJudging()
+      }
+
+      function notifyUserOnEachInputDisabledByJudging() {
+        $('[data-blocked-by-judging=true][disabled]')
+          .not('.user-notified')
+          .each(function() {
+
+          const $tab = $(this).closest('.tab-content');
+
+          var $notice = $('<div>');
+
+          $notice.addClass('notice info hint user-notice');
+          $notice.html(
+            "<span class='fa fa-exclamation-circle'></span> " +
+            "When judging is enabled, " +
+            $(this).data('when-blocked')
+          );
+
+          $(this).next('label').after($notice);
+
+          const $menuItem = $('.tab-menu').find(
+            '[data-tab-id=' + $tab.prop('id') + ']'
+          );
+
+          $menuItem.addClass('contains-disabled-items');
+
+          $(this).addClass('user-notified');
+        });
+      }
     }
 
     function handleJudgingDisabled() {
-      $container.find('.notice').remove();
+      removeUserNotices();
       enableSettingsBlockedByJudging();
       restoreOriginalValues();
       clearLocalStorage();
+
+      function removeUserNotices() {
+        $container.find('.notice').remove();
+        $('.contains-disabled-items').removeClass('contains-disabled-items');
+        $('.user-notice').remove();
+        $('.user-notified').removeClass('user-notified')
+      }
 
       function enableSettingsBlockedByJudging() {
         $blockedByJudging.removeAttr('disabled');
@@ -143,10 +178,10 @@
       $form.find('[data-modal-trigger]').on('modalopen', function() {
         $div.html("");
 
-        $('legend').each(function() {
+        $('h4').each(function() {
           var $panel = appendPanel($(this), $div);
 
-          appendLabels($panel, $(this).closest('fieldset').find('label'));
+          appendLabels($panel, $(this).closest('.tab-content').find('label'));
         });
 
         function appendPanel($heading, $div) {
@@ -226,8 +261,8 @@
 
           function getBooleanValueElem($input) {
             if ($input.prop('type') !== "radio") {
-              const value = $input.prop('checked'),
-                    cssClass = value ? "on" : "off";
+              const value = $input.prop('checked') ? "yes" : "no",
+                    cssClass = value === "yes" ? "on" : "off";
 
               var $value = $('<strong>');
 
