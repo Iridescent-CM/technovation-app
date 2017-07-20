@@ -14,7 +14,7 @@
           role="button"
           class="tab-button"
           data-tab-id="user-reg">
-          Registration
+          <%= fa_icon "exclamation-circle", text: "Registration" %>
         </button>
       </li>
 
@@ -81,6 +81,10 @@
           <p class="inline-checkbox">
             <%= f.check_box "#{scope}_signup",
               id: "season_toggles_#{scope}_signup",
+              data: {
+                blocked_by_judging: scope === "student" || scope === "mentor",
+                when_blocked: scope + "s cannot sign up",
+              },
               checked: SeasonToggles.signup_enabled?(scope) %>
 
             <%= f.label "#{scope}_signup", scope.humanize.pluralize.titleize %>

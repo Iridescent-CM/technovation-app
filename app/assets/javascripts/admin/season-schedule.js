@@ -12,7 +12,7 @@
   function handleJudgingRoundChanges($choices) {
     const $container = $choices.closest('.tab-content'),
 
-          $blockedByJudging = $('[data-blocked-by-judging]'),
+          $blockedByJudging = $('[data-blocked-by-judging=true]'),
           originalTextColor = $blockedByJudging.css('color'),
 
           store = localStorage,
@@ -93,8 +93,7 @@
       }
 
       function notifyUserOnEachInputDisabledByJudging() {
-        $('[data-blocked-by-judging]')
-          .add('[disabled]')
+        $('[data-blocked-by-judging=true][disabled]')
           .not('.user-notified')
           .each(function() {
 
