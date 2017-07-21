@@ -69,6 +69,12 @@ Install rbenv
 brew install rbenv
 ```
 
+```
+export PATH="$HOME/.rbenv/bin:$PATH"
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+eval "$(rbenv init -)"
+```
+
 Install ruby 2.4.1
 
 ```
