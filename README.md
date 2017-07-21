@@ -15,45 +15,67 @@ link](https://www.dropbox.com/s/rz6eeajncjt2veq/sanitized_technovation_psql_data
 
 ### Prerequisites
 
-You **must** install `qt5` for the gem `capybara-webkit` to install:
+Install linuxbrew dependencies
 
-https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
+```
+sudo apt-get install build-essential curl file git python-setuptools ruby
+```
 
-You **must** install `elasticsearch`
+Install linuxbrew
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
+```
+
+```
+PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.bash_profile
+```
+
+Install qt5
+
+```
+sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+```
+
+Intsall elasticsearch
 
 ```
 brew install elasticsearch
 brew services start elasticsearch
 ```
 
-You **must** install `postgresql`
+Install postgresql
 
 ```
 brew install postgresql
 ```
 
-You **must** install `redis server`
+Install redis
 
 ```
 brew install redis
 ```
 
-You **must** install `pdftk`
+Install pdftk
 
-Find your download and install from
-https://www.pdflabs.com/tools/pdftk-server/
+```
+sudo apt-get install pdftk
+```
 
-### Setup
+Install rbenv
 
-Set your Ruby version with your favorite ruby version management tool **(RVM, rbenv, chruby, etc)** to:
+```
+brew install rbenv
+```
 
-`Use Ruby Version: 2.4.1`
+Install ruby 2.4.1
 
-### ORACLE RHoK PARTICIPANTS:
+```
+rbenv install 2.4.1
+```
 
 Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to `.env`
-
-You will need to provide your own info for AWS and possibly other 3rd party services
 
 ### Install the rails application
 
@@ -64,25 +86,41 @@ echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
 ```
 
-### ORACLE RHoK PARTICIPANTS:
+Restore local database with sample, sanitized database
 
-  * Restore local database with sample, sanitized database
-    * `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U <USERNAME> -d technovation-app_development <PATH_TO_SQLFILE>`
-  * Run `rails bootstrap`
+```
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U <USERNAME> -d technovation-app_development <PATH_TO_SQLFILE>
+```
 
-## Turn on/off various user features:
+Seed / bootstrap the DB
+
+```
+rails db:seed bootstrap
+```
+
+## User type logins:
+
+* Student
+  * username: student@student.com
+  * password: student@student.com
+* Mentor
+  * username: mentor@mentor.com
+  * password: mentor@mentor.com
+* Judge
+  * username: judge@judge.com
+  * password: judge@judge.com
+* Regional Ambassador
+  * username: ra@ra.com
+  * password: ra@ra.com
+* Admin
+  * username: rhok@oracle.com
+  * password: rhokdemo
+
+## To turn on/off various user features:
 
   * Login as the admin
-    * username: `rhok@oracle.com`
-    * password: `rhokdemo`
   * Go to "Season Schedule Settings"
   * Toggle what you need on or off
-
-## Drop / recreate / re-seed / re-bootstrap  database
-
-```
-rails db:drop db:create db:migrate && rails db:seed bootstrap
-```
 
 ## Development server
 
@@ -98,17 +136,4 @@ TechnovationApp uses RSpec, and you can run the entire test suite just by enteri
 
 ```
 rake
-```
-
-## Rake tasks
-
-```
-rails db:seed 
-# Seeds with a student, a couple of mentors, and an admin for manual testing
-```
-
-```
-rails bootstrap
-# Adds the Technovation expertises for mentors to choose for their profile
-# Adds the Technovation admin account
 ```
