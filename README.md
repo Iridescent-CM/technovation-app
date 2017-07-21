@@ -103,13 +103,17 @@ Restart bash
 . ~/.bash_profile
 ```
 
-Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to `.env`
 
 ### Install the rails application
 
 ```
 git clone git@gitlab.com:technovationmx/technovation-rails.git
-cp <PATH_TO_RHOK_ENV> technovation-rails
+```
+
+Download [this rhok.env file](https://www.dropbox.com/s/fz0oknm2359f8ff/rhok.env?dl=0)
+
+```
+cp <PATH_TO_RHOK_ENV> technovation-rails/.env
 cd technovation-rails
 rbenv local 2.4.1
 ./bin/setup
