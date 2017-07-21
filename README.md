@@ -81,6 +81,7 @@ Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rh
 
 ```
 git clone git@github.com:Iridescent-CM/technovation-app.git
+cp <PATH_TO_ENV> technovation-app
 cd technovation-app
 echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
