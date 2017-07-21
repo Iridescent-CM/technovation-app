@@ -9,15 +9,15 @@ database 'technovation-app_development' do
 
   table 'accounts' do
     primary_key 'id' # composite key is also supported
-    anonymize 'date_of_birth',
-      'first_name',
-      'last_name',
-      'latitude',
-      'longitude',
+    anonymize(
+      'date_of_birth',
       'auth_token',
       'consent_token',
       'profile_image',
       'last_login_ip'
+    )
+    anonymize('first_name').using FieldStrategy::RandomFirstName.new
+    anonymize('last_name').using FieldStrategy::RandomLastName.new
     anonymize('profile_image') { |_| nil }
     anonymize('email') { |f| "user-#{f.ar_record.id}@oracle.com" }
     anonymize('password_digest') { |_| BCrypt::Password.create("secret1234") }
@@ -76,6 +76,5 @@ database 'technovation-app_development' do
   table 'teams' do
     primary_key 'id' # composite key is also supported
     anonymize('team_photo') { |_| nil }
-    anonymize 'latitude', 'longitude'
   end
 end
