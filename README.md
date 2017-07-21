@@ -28,8 +28,26 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master
 ```
 
 ```
-PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.bash_profile
+echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bash_profile
+. ~/.bash_profile
+```
+
+Install rbenv
+
+```
+brew install rbenv
+```
+
+```
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+. ~/.bash_profile
+```
+
+Install ruby 2.4.1
+
+```
+rbenv install 2.4.1
 ```
 
 Install qt5
@@ -45,16 +63,24 @@ brew install elasticsearch
 brew services start elasticsearch
 ```
 
+Install redis
+
+```
+brew install redis
+```
+
+```
+echo 'redis-server --daemonize yes' >> ~/.bash_profile
+```
+
 Install postgresql
 
 ```
 brew install postgresql
 ```
 
-Install redis
-
 ```
-brew install redis
+echo 'pg_ctl start -D /home/linuxbrew/.linuxbrew/var/postgres -l logfile' >> ~/.bash_profile
 ```
 
 Install pdftk
@@ -69,22 +95,10 @@ Install nodejs
 brew install nodejs
 ```
 
-Install rbenv
+Restart bash
 
 ```
-brew install rbenv
-```
-
-```
-export PATH="$HOME/.rbenv/bin:$PATH"
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-eval "$(rbenv init -)"
-```
-
-Install ruby 2.4.1
-
-```
-rbenv install 2.4.1
+. ~/.bash_profile
 ```
 
 Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rhok?dl=0) and rename it to `.env`
