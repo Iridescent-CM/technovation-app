@@ -63,6 +63,12 @@ Install pdftk
 sudo apt-get install pdftk
 ```
 
+Install nodejs
+
+```
+brew install nodejs
+```
+
 Install rbenv
 
 ```
