@@ -130,6 +130,10 @@ rails db:seed bootstrap
 
 ## User type logins:
 
+(all sanitized database users have had their password reset to `secret1234`)
+
+Seeded users:
+
 * Student
   * username: student@student.com
   * password: student@student.com
