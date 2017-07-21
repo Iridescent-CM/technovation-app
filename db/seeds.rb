@@ -196,6 +196,7 @@ if (ra = RegionalAmbassadorProfile.create(
       state_province: "IL",
       country: "US",
       location_confirmed: true,
+      timezone: "US/Central"
     },
     status: RegionalAmbassadorProfile.statuses[:approved],
     organization_company_name: "Iridescent",
