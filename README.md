@@ -60,7 +60,10 @@ Intsall elasticsearch
 
 ```
 brew install elasticsearch
-brew services start elasticsearch
+```
+
+```
+echo 'elasticsearch -d' >> ~/.bash_profile
 ```
 
 Install redis
