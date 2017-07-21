@@ -81,10 +81,9 @@ Download [this .env.rhok file](https://www.dropbox.com/s/8yih4rf0z68ba9i/.env.rh
 
 ```
 git clone git@gitlab.com:technovationmx/technovation-rails.git
-cp <PATH_TO_ENV> technovation-rails
+cp <PATH_TO_RHOK_ENV> technovation-rails
 cd technovation-rails
 rbenv local 2.4.1
-echo "PDFTK_PATH=`which pdftk`" >> .env
 ./bin/setup
 ```
 
