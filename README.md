@@ -8,8 +8,7 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 
 ## ORACLE RHoK PARTICIPANTS
 
-Use the [Dropbox
-link](https://www.dropbox.com/s/rz6eeajncjt2veq/sanitized_technovation_psql_data.sql?dl=0) to download the sample, sanitized data
+[Download the sanitized production database dump](https://www.dropbox.com/s/qd4thiyxv7xdnua/sanitized_tc_prod.pgsql?dl=0)
 
 ## Installation and Setup
 
@@ -119,13 +118,13 @@ rbenv local 2.4.1
 Restore local database with sample, sanitized database
 
 ```
-pg_restore --verbose --clean --no-acl --no-owner -h localhost -U <USERNAME> -d technovation-app_development <PATH_TO_SQLFILE>
+cat <PATH_TO_SQL_DUMPFILE> | psql -d technovation-app_development
 ```
 
 Seed / bootstrap the DB
 
 ```
-rails db:seed bootstrap
+rails db:seed bootstrap bootstrap_search_engine
 ```
 
 ## User type logins:
