@@ -10,6 +10,10 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 
 [Download the sanitized production database dump](https://www.dropbox.com/s/qd4thiyxv7xdnua/sanitized_tc_prod.pgsql?dl=0)
 
+[Technovation branding
+guidelines](https://www.dropbox.com/s/ghwsxonxso1oea5/Technovation%20Brand%20Guidelines%202016.pdf?dl=0)
+- Color pallette & typography starts on page 10
+
 ## Installation and Setup
 
 ### Prerequisites
