@@ -7,6 +7,25 @@
   max-width: 65ch;
 }
 
+.home-page__off-season {
+  margin: 2rem auto;
+  max-width: 65ch;
+
+  .appy-title {
+    margin: 0;
+  }
+
+  ul {
+    margin: 0.5rem 0;
+    padding: 0;
+
+    li {
+      margin: 0.5rem 0 0.5rem 1rem;
+      padding: 0;
+    }
+  }
+}
+
 /*
  * Sign up form
  */

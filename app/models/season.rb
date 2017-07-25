@@ -14,6 +14,17 @@ class Season < ActiveRecord::Base
     end
   end
 
+  def self.next
+    season = current
+
+    unless SeasonToggles.registration_closed? and
+             Date.today >= switch_date
+      season.year = current.year + 1
+    end
+
+    season
+  end
+
   def self.for(record)
     if record.created_at < switch_date(record.created_at.year)
       find_or_create_by(year: record.created_at.year)
