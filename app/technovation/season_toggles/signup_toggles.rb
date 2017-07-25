@@ -42,6 +42,10 @@ class SeasonToggles
         SCOPES.each { |scope| disable_signup(scope) }
       end
 
+      def enable_signups!
+        SCOPES.each { |scope| enable_signup(scope) }
+      end
+
       def disable_signup(scope)
         send("#{scope}_signup=", false)
       end
