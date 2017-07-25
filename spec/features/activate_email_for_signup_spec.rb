@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Activate your email to sign up" do
+  before { SeasonToggles.enable_signups! }
+
   scenario "input doesn't look like an email" do
     visit root_path
 
