@@ -42,7 +42,11 @@ class Division < ActiveRecord::Base
 
   def self.division_by_age(account)
     year = Season.current.year
-    account.age(Date.new(year, 8, 1)) < SENIOR_DIVISION_AGE ? junior : senior
+    month = Season.switch_month
+    day = Season.switch_day
+    on_date = Date.new(year, month, day)
+
+    account.age(on_date) < SENIOR_DIVISION_AGE ? junior : senior
   end
 
   def self.division_by_team_ages(team)

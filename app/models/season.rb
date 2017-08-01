@@ -34,6 +34,14 @@ class Season < ActiveRecord::Base
   end
 
   def self.switch_date(year = Time.current.year)
-    Date.new(year, 8, 1)
+    Date.new(year, switch_month, switch_day)
+  end
+
+  def self.switch_month
+    10
+  end
+
+  def self.switch_day
+    1
   end
 end

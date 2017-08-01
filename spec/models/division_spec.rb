@@ -7,13 +7,13 @@ RSpec.describe Division do
       expect(Division.for(student.team)).to eq(Division.junior)
     end
 
-    it "is Senior if the student is 15 by Aug 1 of season year" do
+    it "is Senior if the student is 15 by Oct 1 of season year" do
       student = FactoryGirl.create(
         :student,
-        date_of_birth: Date.new(Season.current.year - 15, 8, 1)
+        date_of_birth: Date.new(Season.current.year - 15, 10, 1)
       )
 
-      Timecop.freeze(Date.new(Season.current.year - 1, 9, 1)) do
+      Timecop.freeze(Date.new(Season.current.year - 1, 11, 1)) do
         expect(Division.for(student)).to eq(Division.senior)
       end
     end
