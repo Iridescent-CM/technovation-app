@@ -102,13 +102,6 @@ Download [this rhok.env file](https://www.dropbox.com/s/fz0oknm2359f8ff/rhok.env
 
 ```
 cp <PATH_TO_RHOK_ENV> technovation-rails/.env
-./bin/setup
-```
-
-Restore local database with sample, sanitized database
-
-```
-cat <PATH_TO_SQL_DUMPFILE> | psql -d technovation-app_development
 ```
 
 Seed / bootstrap the DB
