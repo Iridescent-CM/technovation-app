@@ -35,23 +35,7 @@ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bash_profile
 . ~/.bash_profile
 ```
 
-Install rbenv
-
-```
-brew install rbenv
-```
-
-```
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-. ~/.bash_profile
-```
-
 Install ruby 2.4.1
-
-```
-rbenv install 2.4.1
-```
 
 Install qt5
 
@@ -118,8 +102,6 @@ Download [this rhok.env file](https://www.dropbox.com/s/fz0oknm2359f8ff/rhok.env
 
 ```
 cp <PATH_TO_RHOK_ENV> technovation-rails/.env
-cd technovation-rails
-rbenv local 2.4.1
 ./bin/setup
 ```
 
@@ -133,6 +115,10 @@ Seed / bootstrap the DB
 
 ```
 rails db:seed bootstrap bootstrap_search_engine
+```
+
+```
+rails s -b 0.0.0.0
 ```
 
 ## User type logins:
