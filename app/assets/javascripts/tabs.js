@@ -1,97 +1,110 @@
-//=require utils
+// TODO: broken on mentor dashboard
+document.addEventListener("turbolinks:load", function() {
+  $(".tab-content").addClass("tab-content__hiding");
 
-(function tabs() {
-  var tabs = document.querySelectorAll('.tabs');
-
-  if (tabs.length === 0)
-    return;
-
-  revealFirstTabs();
-
-  _.each(tabs, function(tabEl) {
-    var tabSet = {
-      el: tabEl,
-
-      links: document.querySelectorAll('#' + tabEl.id + ' > .tab-menu .tab-link'),
-
-      contents: document.querySelectorAll('#' + tabEl.id + ' > .content > .tab-content'),
-
-      revealTab: function (e) {
-        e.preventDefault();
-        var target = e.target;
-
-        if (!target.dataset.tabId)
-          target = e.target.querySelector('button');
-
-        if (target.dataset.updateHash === "true")
-          window.location.hash = "#" + target.dataset.tabId;
-
-        target.dataset.updateHash = true;
-
-        _.each(this.contents, function(content) {
-          content.classList.remove('tab-content__showing');
-          content.classList.add('tab-content__hiding');
-        });
-
-        _.each(this.links, function(link) {
-          link.classList.remove('active');
-        });
-
-        target.parentElement.classList.add('active');
-
-        var revealEl = document.getElementById(target.dataset.tabId);
-        revealEl.classList.remove('tab-content__hiding');
-        revealEl.classList.add('tab-content__showing');
-
-        var parentTab = closest(this.el, '.tab-content');
-
-        if (parentTab) {
-          var btn = document.querySelector('button[data-tab-id="' + parentTab.id + '"]');
-          btn.dataset.updateHash = false;
-          btn.click();
-        }
-      },
-    };
+  $('.tabs').each(function() {
+    var $links = $(this).find('.tab-menu').first().find('.tab-link'),
+        $contents = $(this).find('.content').first().find('> .tab-content');
 
     // possible tabs-vertical layout
-    if (tabSet.contents.length === 0)
-      tabSet.contents = document.querySelectorAll(
-        '#' + tabSet.el.id + ' + .content .tab-content'
-      );
+    if ($contents.length === 0)
+      $contents = $('#' + $(this).prop('id') + ' + .content .tab-content');
 
-    _.each(tabSet.links, function(link) {
-      var btn = link.querySelector('button');
-      btn.dataset.updateHash = true;
+    $links.filter(":visible").first().addClass("active");
+    $contents.first().removeClass("tab-content__hiding");
 
-      link.addEventListener('click', tabSet.revealTab.bind(tabSet), false);
+    $links.each(function() {
+      var $btn = $(this).find('button').first();
+      $btn.data('update-hash', true);
+
+      $(this).on('click', function() {
+        revealTab($(this), $contents, $links);
+      });
 
       var intendedTab = (window.location.hash).replace('#', '');
 
-      if (btn && intendedTab === btn.dataset.tabId)
-        btn.click();
+      if (intendedTab && $btn && intendedTab === $btn.data('tab-id'))
+        revealTab($btn, $links, $contents);
     });
   });
 
-  function revealFirstTabs() {
-    var tabMenus = document.querySelectorAll('.tab-menu');
+  $(".close-tab-menu").on("click", function() {
+    $(this).hide();
+    closeTabMenu.bind(this)();
+  });
 
-    _.each(tabMenus, function(tabMenu) {
-      var firstItem = tabMenu.querySelector('.tab-link:first-child');
-      firstItem.classList.add('active');
-    });
+  $(".open-tab-menu").on("click", function() {
+    $(this).hide();
+    openTabMenu.bind(this)();
+  });
 
-    var tabContents = document.querySelectorAll('.tab-content');
+  $(".content").on("click", closeTabMenu);
 
-    _.each(tabContents, function(content) {
-      content.classList.add('tab-content__hiding');
-    });
+  function closeTabMenu() {
+    var $menu = $(this).closest(".tabs").find(".tab-menu");
 
-    var contents = document.querySelectorAll('.content');
-
-    _.each(contents, function(content) {
-      var firstItem = content.querySelector('.tab-content');
-      firstItem.classList.remove('tab-content__hiding');
-      firstItem.classList.add('tab-content__showing');
-    });
+    if ($menu.data("open")) {
+      $menu
+        .data("closed", true)
+        .removeData("open")
+        .css({ left: "-100%" })
+        .closest(".tabs")
+        .find(".open-tab-menu")
+        .show();
+    }
   }
-})();
+
+  function openTabMenu() {
+    var $menu = $(this).closest(".tabs").find(".tab-menu");
+
+    if ($menu.data("closed")) {
+      $menu
+        .data("open", true)
+        .removeData("closed")
+        .css({ left: 0 })
+        .closest(".tabs")
+        .find(".close-tab-menu")
+        .show();
+    }
+  }
+
+  function revealTab($_btn, $_contents, $_links) {
+    if (!$_btn.data('tab-id'))
+      $_btn = $_btn.find('button').first();
+
+    if ($_btn.data('update-hash'))
+      window.location.hash = "#" + $_btn.data('tab-id');
+
+    $_btn.data('update-hash', true);
+
+    $_contents.addClass('tab-content__hiding');
+    $_links.removeClass('active');
+
+    $_btn.closest('.tab-link').addClass('active');
+
+    var $revealEl = $('#' + $_btn.data('tab-id'));
+    $revealEl.removeClass('tab-content__hiding');
+
+    var $parentTab = $_btn.closest('.tab-content');
+
+    if ($parentTab.length !== 0) {
+      var $parentBtn = $('[data-tab-id]').filter(function() {
+        return $(this).data('tab-id') == $parentTab.prop('id');
+      }).first();
+
+      $parentBtn.removeData('update-hash');
+
+      revealTab($parentBtn, $_contents, $_links);
+    }
+
+    var $links = $revealEl.find('.tab-menu').first().find('.tab-link'),
+        $contents = $revealEl.find('.content').first().find('> .tab-content');
+
+    // possible tabs-vertical layout
+    if ($contents.length === 0)
+      $contents = $('#' + $revealEl.prop('id') + ' + .content .tab-content');
+
+    $links.filter(":visible").first().addClass("active");
+    $contents.first().removeClass("tab-content__hiding");
+  }
+});

@@ -6,18 +6,24 @@ RSpec.feature "Parental consent" do
     student.parental_consent.destroy
 
     sign_in(student)
-    click_link "Send Email Consent Form"
+    click_link "Enter parent/guardian name & email"
     fill_in "Parent or guardian's email", with: "no-work"
 
     click_button "Send the link"
 
-    expect(page).to have_css('.error', text: "does not appear to be an email address")
+    expect(page).to have_css(
+      '.error',
+      text: "does not appear to be an email address"
+    )
 
     fill_in "Parent or guardian's email", with: "no-work@gmail.com."
 
     click_button "Send the link"
 
-    expect(page).to have_css('.error', text: "does not appear to be an email address")
+    expect(page).to have_css(
+      '.error',
+      text: "does not appear to be an email address"
+    )
   end
 
   scenario "invalid token" do
@@ -34,7 +40,10 @@ RSpec.feature "Parental consent" do
     visit new_parental_consent_path(token: student.consent_token)
     click_button "I agree"
     expect(current_path).to eq(parental_consents_path)
-    expect(page).to have_css('.parental_consent_electronic_signature .error', text: "can't be blank")
+    expect(page).to have_css(
+      '.parental_consent_electronic_signature .error',
+      text: "can't be blank"
+    )
   end
 
   scenario "valid token, valid form" do
@@ -54,7 +63,7 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
 
     sign_in(student)
-    click_link "Send Email Consent Form"
+    click_link "Enter parent/guardian name & email"
 
     fill_in "Parent or guardian's name", with: "Parent name"
     fill_in "Parent or guardian's email", with: "parent@parent.com"
@@ -71,7 +80,7 @@ RSpec.feature "Parental consent" do
     ParentalConsent.destroy_all
 
     sign_in(student)
-    click_link "Send Email Consent Form"
+    click_link "Enter parent/guardian name & email"
 
     fill_in "Parent or guardian's name", with: ""
     fill_in "Parent or guardian's email", with: ""

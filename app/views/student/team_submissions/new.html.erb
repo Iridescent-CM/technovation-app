@@ -28,7 +28,7 @@
 
     <div class="submissions-onboarding-step__footer">
       <button data-next-step class="appy-button">
-        Continue <%= fa_icon "chevron-right" %>
+        Continue <%= web_icon "chevron-right" %>
       </button>
     </div>
   </div>
@@ -57,7 +57,7 @@
 
     <div class="submissions-onboarding-step__footer">
       <button data-next-step class="appy-button">
-        Continue <%= fa_icon "chevron-right" %>
+        Continue <%= web_icon "chevron-right" %>
       </button>
     </div>
   </div>
@@ -72,7 +72,7 @@
       please agree to the Integrity Clause
     </h2>
 
-    <%= simple_form_for [current_account.type_name, @team_submission],
+    <%= simple_form_for [current_scope, @team_submission],
                         html: { class: "no-simple-form-style" } do |f| %>
       <%= render 'errors', record: @team_submission %>
 

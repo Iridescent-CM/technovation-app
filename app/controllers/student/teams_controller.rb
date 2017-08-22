@@ -28,9 +28,5 @@ module Student
     def current_profile
       current_student
     end
-
-    def account_type
-      "student"
-    end
   end
 end

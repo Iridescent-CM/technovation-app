@@ -1,7 +1,23 @@
-<%= render 'honor_code_agreements/honor_code' %>
+<% provide :title, "Honor Code Agreement" %>
 
-<%= simple_form_for @honor_code_agreement, url: [current_account.type_name, @honor_code_agreement] do |f| %>
-  <%= f.input :agreement_confirmed, as: :boolean, label: "I agree to the statement above" %>
-  <%= f.input :electronic_signature %>
-  <%= f.button :submit, "Agree", class: "appy-button" %>
-<% end %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-10 grid__col-md-8">
+    <%= render 'honor_code_agreements/honor_code' %>
+
+    <%= simple_form_for @honor_code_agreement,
+      url: [current_scope, @honor_code_agreement] do |f| %>
+
+      <p>
+        <%= f.input :agreement_confirmed,
+          as: :boolean,
+          label: "I agree to the honor code as stated above" %>
+      </p>
+
+      <p>
+        <%= f.input :electronic_signature %>
+      </p>
+
+      <%= f.button :submit, "Agree", class: "button" %>
+    <% end %>
+  </div>
+</div>

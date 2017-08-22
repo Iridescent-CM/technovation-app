@@ -1,16 +1,29 @@
-<div class="signup-page">
-  <h1 class="appy-title">
-    <%= t("views.signups.new.select_account_type") %>
-  </h1>
+<% provide(:title, "Select your participant type") %>
 
-  <p>
-    <%= t("views.signups.new.already_signed_up") %>
-    <%= link_to t("views.application.signin"), signin_path %>
-    <%= t("views.application.instead") %>.
-  </p>
+<div class="grid grid--justify-center">
+  <div class="grid__col-md-6">
+    <h1><%= t("views.signups.new.select_account_type") %></h1>
 
-  <%= render 'signups/account_type', role: :judge, enabled: signup_available?(:judge) %>
-  <%= render 'signups/account_type', role: :student, enabled: signup_available?(:student) %>
-  <%= render 'signups/account_type', role: :mentor, enabled: signup_available?(:mentor) %>
-  <%= render 'signups/account_type', role: :regional_ambassador, enabled: signup_available?(:regional_ambassador) %>
+    <p>
+      <%= t("views.signups.new.already_signed_up") %>
+      <%= link_to t("views.application.signin"), signin_path %>
+      <%= t("views.application.instead") %>.
+    </p>
+
+    <%= render 'signups/account_type',
+      scope: :student,
+      enabled: signup_available?(:student) %>
+
+    <%= render 'signups/account_type',
+      scope: :mentor,
+      enabled: signup_available?(:mentor) %>
+
+    <%= render 'signups/account_type',
+      scope: :judge,
+      enabled: signup_available?(:judge) %>
+
+    <%= render 'signups/account_type',
+      scope: :regional_ambassador,
+      enabled: signup_available?(:regional_ambassador) %>
+  </div>
 </div>

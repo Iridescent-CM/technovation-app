@@ -1,34 +1,41 @@
 <% if teams.any? %>
-  <ul class="mentor-teams">
+  <ul class="reset">
     <% teams.each do |team| %>
-      <li>
-        <h4><%= link_to team.name, [:mentor, team] %></h4>
-        <p class="team_division">
-        <%= t("views.teams.show.division_name",
-              name: team.division_name.humanize) %>
+      <li class="panel team-preview grid__cell">
+        <%= link_to image_tag(
+          team.team_photo,
+          class: "thumbnail-md grid__cell-img"
+        ), [:mentor, team] %>
+
+        <h4 class="reset"><%= link_to team.name, [:mentor, team] %></h4>
+
+        <p>
+          Division: <%= team.division_name.humanize %>
         </p>
 
         <% if type === :current and team.submission.present? %>
-          <div style="padding: 1rem; margin: 1rem 0; border: 1px solid #ddd;">
-            <p>
-              Submission app name: <strong><%= team.submission.app_name %></strong>
-            </p>
+          <p>
+            Submission app name: <strong><%= team.submission.app_name %></strong>
+          </p>
 
-            <p>
-              <%= link_to "See how it looks to the judges",
-                app_path(team.submission),
-                target: :_blank %>
-            </p>
-          </div>
+          <p>
+            <%= link_to "See how it looks to the judges",
+              app_path(team.submission),
+              target: :_blank %>
+          </p>
         <% elsif type === :current %>
-          <p><%= t("views.teams.index.submission_not_started", name: team.name) %></p>
+          <p>
+            <%= t("views.teams.index.submission_not_started", name: team.name) %>
+          </p>
 
           <% if SeasonToggles.team_submissions_editable? %>
-            <p class="standalone-buttons">
+            <p>
               <%= link_to "Start a submission now",
                 new_mentor_team_submission_path(team_id: team.id),
-                class: "appy-button appy-button--sm" %>
+                class: "button small" %>
             </p>
+          <% else %>
+            <p class="hint">Submissions may not be started at this time.</p>
           <% end %>
         <% end %>
       </li>

@@ -24,7 +24,7 @@
 
                 <div class="card__actions-row card__actions-row--pos-fill">
                   <%= link_to t("views.application.view_team"),
-                    send("#{account.type_name}_#{invite_type}_invite_path", invitation),
+                    send("#{current_scope}_#{invite_type}_invite_path", invitation),
                     class: "appy-button" %>
                 </div>
               </div>

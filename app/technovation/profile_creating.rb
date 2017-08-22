@@ -5,7 +5,7 @@ class ProfileCreating
   public
   def initialize(profile, controller, scope = nil)
     @profile = profile
-    @scope = scope || profile.account.type_name
+    @scope = scope || profile.account.scope_name
     @controller = controller
   end
 

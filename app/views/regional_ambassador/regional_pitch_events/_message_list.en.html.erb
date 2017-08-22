@@ -28,7 +28,7 @@
           <tr>
             <td class="primary-col">
               <%= link_to message.subject.blank? ? "(no subject)" : message.subject,
-                [user.type_name, message] %>
+                [user.scope_name, message] %>
             </td>
 
             <td>

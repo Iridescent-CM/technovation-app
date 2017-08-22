@@ -1,0 +1,14 @@
+.notice {
+  @extend .flash;
+  margin: 0 0 1rem;
+  font-weight: 700;
+
+  &.notice--success {
+    @extend .flash--success;
+  }
+
+  &.notice--error,
+  &.notice--alert {
+    @extend .flash--error;
+  }
+}

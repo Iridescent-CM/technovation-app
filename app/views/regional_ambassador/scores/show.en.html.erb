@@ -33,7 +33,7 @@
 <% end %>
 
 <p style="padding: 0; margin: 0 0 1rem;">
-  <%= link_to 'back', send("#{current_account.type_name}_scores_path",
+  <%= link_to 'back', send("#{current_scope}_scores_path",
                            event: @event.id,
                            division: @team.division_name) %>
 </p>

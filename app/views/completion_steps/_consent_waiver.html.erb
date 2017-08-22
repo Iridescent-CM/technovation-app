@@ -1,18 +1,15 @@
 <% unless account.consent_signed? %>
-  <li class="card">
-    <div class="card__heading">
+  <li>
+    <h1 class="content-heading">
       <%= t("views.profile_requirements.consent_waiver.heading") %>
-      <%= fa_icon "pencil", class: "card-heading__flair" %>
-    </div>
+    </h1>
 
-    <div class="card__body">
-      <%= t("views.profile_requirements.consent_waiver.label") %>
+    <p><%= t("views.profile_requirements.consent_waiver.label") %></p>
 
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
-          new_consent_waiver_path(token: account.account.consent_token),
-          class: "appy-button" %>
-      </div>
+    <div class="step-actions">
+      <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
+        new_consent_waiver_path(token: account.account.consent_token),
+        class: "button" %>
     </div>
   </li>
 <% end %>

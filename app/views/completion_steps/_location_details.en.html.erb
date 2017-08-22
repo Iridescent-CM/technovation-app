@@ -1,42 +1,46 @@
-<% if not account.location_confirmed? and account.address_details.blank? %>
-  <li class="card">
-    <div class="card__heading">
-      Enter your location details
-      <%= fa_icon "compass", class: "card-heading__flair" %>
-    </div>
+<% if not account.location_confirmed? %>
+  <li>
+    <h1 class="content-heading">Enter your location details</h1>
 
-    <div class="card__body">
+    <p>
       <% case controller_path.split('/').first
-        when "judge" %>
+         when "judge" %>
         To match you to eligible team submissions,
       <% when "regional_ambassador" %>
         To match you to your region,
       <% else %>
         To help you find nearby teams and mentors,
       <% end %>
+      you should indicate your city, state, and country.
+    </p>
 
-      we need to know your city, state, and country.
-
-      <div class="card__actions-row card__actions-row--pos-end">
-        <%= link_to "Enter your location now",
-          [account.type_name, :location_details],
-          class: "appy-button" %>
-      </div>
+    <div class="step-actions">
+      <%= link_to "Update your location",
+        [
+          current_scope,
+          :location_details,
+          { return: request.fullpath }
+        ],
+        class: "button" %>
     </div>
   </li>
 <% elsif not account.location_confirmed? %>
-  <div id="location_interrupt"
-        data-heading="Confirm your location"
-        class="modalify modalify-on-page-load">
+  <%= content_tag :div,
+    class: "modal",
+    data: {
+      heading: "Confirm your location",
+      open_on_page_load: true,
+    } do %>
     <p>
-      We're very sorry to inconvenience you, but we've had some trouble with location data.
+      We're very sorry to inconvenience you,
+      but we've had some trouble with user location data.
       Please help us out by confirming your information!
     </p>
 
-    <div class="card__actions-row card__actions-row--pos-end">
+    <div class="modal-actions">
       <%= link_to "Confirm your location details now",
-        [account.type_name, :location_details],
-        class: "appy-button" %>
+        [current_scope, :location_details],
+        class: "button" %>
     </div>
-  </div>
+  <% end %>
 <% end %>

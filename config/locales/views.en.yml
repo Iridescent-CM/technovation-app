@@ -12,7 +12,7 @@ en:
       confirm_approved: "Are you sure you want to approve %{name}?"
       confirm_declined: "Are you sure you want to decline %{name}?"
       continue: "Continue"
-      create: "Create %{thing}"
+      create: "Create this %{thing}"
       curriculum: "Curriculum"
       danger_zone: "Danger Zone"
       dashboard: "My Dashboard"
@@ -21,7 +21,7 @@ en:
       edit: "Edit"
       edit_profile: "Edit your profile"
       filter: "Filter"
-      form_errors: "Whups! Something's not quite right. That's okay. Check for errors in the fields below."
+      form_errors: "Sorry, there was a problem. Check the fields below."
       get_started: "Get Started"
       get_started_judges_only: "Get Started (Judges only!)"
       honor_code: "Honor Code"
@@ -53,6 +53,7 @@ en:
       signup: "Sign up"
       signout: "Logout"
       site_title: "Technovation Challenge"
+      site_title_default: "The world's largest tech entrepreneurship program for girls • Technovation Challenge"
       student_dashboard: "Student Dashboard"
       submission_deliverables: "Submission Deliverables & Guidelines"
       switch_now: "Switch now"
@@ -69,11 +70,11 @@ en:
         existing_password: "Current password"
         existing_password_required: "Required only if you want to change your password"
         new_password: "New password"
-        title: "Edit your account"
+        title: "Edit your profile"
       show:
-        edit: "Edit my profile"
-        edit_location: "Edit my location"
-        title: "Account Info"
+        edit: "Change your profile"
+        edit_location: "Change your location"
+        title: "My Profile"
 
     quick_links:
         my_account: "My Account"
@@ -120,7 +121,7 @@ en:
           needs_team: "Needs a team"
           virtual: "Virtual"
       none_found: "Sorry... we couldn't find any mentors with your criteria."
-      title: "Find a Mentor"
+      title: "Search for Team Mentors"
 
     parental_consents:
       new:
@@ -166,16 +167,16 @@ en:
             text: "Sign Consent Waiver"
 
       create_join_team:
-        heading: "Create or Join a Team"
+        heading: "Register a team"
         labels:
-          mentor: "Create or join a team to get started."
-          student: "Technovation is a more educational, inspirational, and all-around fun experience if approached as a group. Your team can be made up of up to five amazing girls. Join or create a team to get started."
+          mentor: "Register a team to get started."
+          student: "Your team can be made up of up to five amazing girls. Join or create a team to get started."
         links:
           pre_unit:
             text: "This Build a Team Unit"
             postfix: "can help you get started."
           create:
-            text: "Create a team"
+            text: "Register your team"
           join:
             text: "Join a team"
 
@@ -236,20 +237,19 @@ en:
 
       new:
         already_signed_up: "Already have an account from a previous year?"
-        select_account_type: "Select your account type"
+        select_account_type: "Select your participant type"
         create_an: "Create an"
         descriptions:
           disabled:
-            judge: "Judge registration will open in March 2017"
-            mentor: "Mentor registration for 2017 is now closed."
-            regional_ambassador: "Regional Ambassador registration for 2017 is now closed."
-            student: "Student registration for 2017 is now closed."
+            judge: "Judge registration will open in March %{year}"
+            mentor: "Mentor registration for %{year} is closed."
+            regional_ambassador: "Regional Ambassador registration for %{year} is closed."
+            student: "Student registration for %{year} is closed."
           judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
           mentor: "Guide teams as they identify a problem in their community and help them build a real smartphone app to address it."
           regional_ambassador: "Apply now for the opportunity to build and coordinate the Technovation program in your area."
           student: "Assemble a team, connect with mentors, and build a real smartphone app!"
-        role_choice: "I am a..."
-        roles:
+        scopes:
           judge: "Judge"
           mentor: "Mentor"
           regional_ambassador: "Regional Ambassador"
@@ -260,10 +260,10 @@ en:
           profile_details: "Profile details"
           profile_image: "Profile image"
         signup_link:
-          judge: "Judge sign up"
-          mentor: "Mentor sign up"
-          regional_ambassador: "Apply to become a Regional Ambassador"
-          student: "Student sign up"
+          judge: "I am a Judge"
+          mentor: "I am a Mentor"
+          regional_ambassador: "Apply to be a Regional Ambassador"
+          student: "I am a Student"
         title:
           judge: "Sign up as a"
           mentor: "Sign up as a"
@@ -286,7 +286,7 @@ en:
           virtual: "%{name} is open to guiding teams virtually (online) from anywhere."
 
       navigation:
-        create_a_team: "Create a team"
+        create_a_team: "Register your team"
         find_a_mentor: "Find a mentor"
         join_team: "Join a team"
         my_team: "My team"
@@ -296,7 +296,7 @@ en:
         form:
           submit: "Send the link"
         new:
-          title: "Send an electronic consent form to your parent or guardian"
+          title: "Email a consent form to your parent or guardian"
 
       signups:
         new:
@@ -305,7 +305,7 @@ en:
 
     teams:
       edit:
-        title: "Edit your team"
+        title: "Change your team details"
       index:
         current_teams: "Current Teams"
         none: "You don't have any %{type} teams."
@@ -314,11 +314,11 @@ en:
       new:
         intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
         join: "Join a Team"
-        title: "Create a Team"
+        title: "Register your team"
       show:
         add_members: "Add members"
         confirm_leave: "Are you sure you want to REMOVE YOUR MEMBERSHIP the team?"
-        division_name: "Division: %{name}"
+        division_name: "%{name} Division"
         invite: "Invite more students"
         location: "Primary location: %{name}"
         members_full: "Your team can have up to five students. You cannot invite more students while you have a combined total of five members, invitations, and/or join requests."
@@ -337,14 +337,14 @@ en:
         accepted: "You have previously accepted this invite."
         declined: "You previously declined this invite. If you're a student and you accepted an invite from another team, then this one was automatically declined."
         greeting: "You've been invited to join %{name}!"
-        message: "You can accept this invite and join the team, or decline it and be on your way."
+        message: "Review this team and respond below"
         missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was revoked by the team."
 
     team_searches:
       new:
         filter_heading: "Team search options"
         intro: "You are browsing available teams, who are still looking for members / mentors."
-        no_results: "Hmm, sorry, but we didn't find any available teams. Please try again later."
+        no_results: "Sorry, but we didn't find any available teams. Please try again later."
         title: "Find a Team"
         results_heading: "Available Teams:"
         results_link_label: "View Team"

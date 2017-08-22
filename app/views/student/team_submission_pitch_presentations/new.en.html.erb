@@ -6,13 +6,10 @@
   To participate in a live event, you should upload your pitch presentation ahead of time.
 </h3>
 
-<p>
-  <em>
-    You can do this later from 
-    <%= link_to "your submission page",
-      [current_account.type_name, @submission] %> ,
-      but make sure you do this!
-  </em>
+<p class="hint">
+  You can do this later from 
+  <%= link_to "your submission page", [current_scope, @submission] %>,
+  but make sure you do this!
 </p>
 
 <%= render 'student/team_submissions/steps/pitch_presentation',

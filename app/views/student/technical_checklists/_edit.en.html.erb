@@ -25,7 +25,7 @@
 
       <%= simple_form_for @technical_checklist,
         method: :patch,
-        url: [current_account.type_name, :technical_checklist],
+        url: [current_scope, :technical_checklist],
         html: {
           class: "no-simple-form-style",
           id: "student-technical-checklist-form",

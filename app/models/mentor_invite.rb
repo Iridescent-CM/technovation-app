@@ -1,8 +1,6 @@
 class MentorInvite < TeamMemberInvite
   default_scope -> { where(invitee_type: "MentorProfile") }
 
-  delegate :first_name, to: :invitee, prefix: true
-
   def after_accept
     TeamRosterManaging.add(team, invitee)
   end

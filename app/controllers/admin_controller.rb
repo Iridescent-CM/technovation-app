@@ -14,12 +14,12 @@ class AdminController < ApplicationController
     current_admin.account
   end
 
+  def current_scope
+    "admin"
+  end
+
   private
   def current_admin
     @current_admin ||= current_account.admin_profile
-  end
-
-  def model_name
-    "admin"
   end
 end

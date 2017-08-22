@@ -1,5 +1,5 @@
 module Judge
   class ProfileImageUploadConfirmationsController < JudgeController
-    include ProfileImageUploadConfirmationController
+    include PhotoUploadConfirmationController
   end
 end

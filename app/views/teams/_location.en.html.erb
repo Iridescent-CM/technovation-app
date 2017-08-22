@@ -1,0 +1,14 @@
+<dl>
+  <dt>Primary location:</dt>
+  <dd><%= team.primary_location %></dd>
+
+  <% if team.current? %>
+    <p>
+      <%= link_to "Change this team's location",
+        [:edit, current_scope, :team_location],
+        class: "button" %>
+    </p>
+  <% else %>
+    <dd>You cannot change the location of a past team</dd?
+  <% end %>
+</dl>
