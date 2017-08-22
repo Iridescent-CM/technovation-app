@@ -1,0 +1,33 @@
+<% subject = attendee.is_a?(Team) ? "your team" : "yourself" %>
+
+<dl>
+  <% if attendee.selected_regional_pitch_event.live? %>
+    <dt>City:</dt>
+    <dd><%= attendee.selected_regional_pitch_event.city %></dd>
+
+    <dt>Venue address:</dt>
+    <dd><%= attendee.selected_regional_pitch_event.venue_address %></dd>
+  <% end %>
+
+  <% unless attendee.selected_regional_pitch_event.eventbrite_link.blank? %>
+    <dt>Eventbrite link:</dt>
+    <dd>
+      <%= link_to attendee.selected_regional_pitch_event.eventbrite_link,
+        attendee.selected_regional_pitch_event.eventbrite_link,
+        target: :_blank %>
+    </dd>
+  <% end %>
+
+  <% if attendee.selected_regional_pitch_event.live? and
+      SeasonToggles.select_regional_pitch_event? %>
+    <p>
+      <%= link_to "remove #{subject} from this event",
+        [attendee.scope_name, :regional_pitch_event_selection],
+        class: "danger",
+        data: {
+          method: :delete,
+          confirm: "Are you sure you want to remove #{subject} from the event: #{attendee.selected_regional_pitch_event_name}?",
+        } %>
+    </p>
+  <% end %>
+</dl>

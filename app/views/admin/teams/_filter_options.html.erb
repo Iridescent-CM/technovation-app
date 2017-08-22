@@ -28,6 +28,9 @@
   Mentor status:
 
   <%= select_tag :mentor_status,
-    options_for_select(%w{All Has\ mentor(s) Has\ no\ mentor}, params[:mentor_status]),
+    options_for_select(
+      %w{All Has\ mentor(s) Has\ no\ mentor},
+      params[:mentor_status]
+    ),
     data: { reload: true, param: :mentor_status } %>
 </label>

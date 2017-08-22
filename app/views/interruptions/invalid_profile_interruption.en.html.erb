@@ -1,38 +1,39 @@
 <% if current_account.student_profile and
     current_account.student_profile.errors.keys.include?(:parent_guardian_email) %>
-  <div class="notify-banner notify-banner--alert">
-    <p>
-      Hey, wait a moment!
-      We detected a problem with your profile.<br />
-      Your parent/guardian email appears to be invalid.
-      You need to fix this before you can continue.
-    </p>
+  <div class="notice notice--alert">
+    Sorry to bother you...
+    but we detected a problem with your profile.<br />
+    Your parent/guardian email appears to be invalid.
+    You need to fix this before you can continue.
   </div>
 
-  <p class="center">
-    <%= link_to "Update your parent/guardian email address",
-      edit_student_profile_path(anchor: "account-profile-details"),
-      class: "appy-button"%>
-  </p>
+  <center>
+    <p>
+      <%= link_to "Update your parent/guardian email address",
+        edit_student_profile_path(anchor: "account-profile-details"),
+        class: "button"%>
+    </p>
+  </center>
 <% elsif current_account.errors.any? %>
-  <div class="notify-banner notify-banner--alert">
+  <div class="notice notice--alert">
+    Sorry to bother you... but we detected a problem with your profile.
+  </div>
+
+  <center>
     <p>
-      Hey, wait a moment!
-      We detected a problem with your profile.
+      <%= link_to "Fix my profile now",
+        [:edit, current_account.scope_name, :profile],
+        class: "button"%>
     </p>
-  </div>
-
-  <p class="center">
-    <%= link_to "Fix my profile now",
-      [:edit, current_account.type_name, :profile],
-      class: "appy-button"%>
-  </p>
+  </center>
 <% else %>
-  <div class="notify-banner notify-banner--success">
-    <p>Everything's okay, move along!</p>
+  <div class="notice notice--success">
+    Everything's okay, move along!
   </div>
 
-  <p class="center">
-    <%= link_to "Okay", [current_account.type_name, :dashboard], class: "appy-button"%>
-  </p>
+  <center>
+    <%= link_to "Okay",
+      [current_account.scope_name, :dashboard],
+      class: "button"%>
+  </center>
 <% end %>

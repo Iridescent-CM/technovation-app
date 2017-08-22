@@ -1,0 +1,9 @@
+<% if team.description.blank? %>
+  <p>Your team has not given a summary.</p>
+<% else %>
+  <%= simple_format team.description %>
+<% end %>
+
+<%= link_to t("controllers.teams.edit.link"),
+  [:edit, current_scope, team],
+  class: "button small" %>

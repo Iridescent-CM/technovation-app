@@ -9,6 +9,7 @@ class MentorProfile < ActiveRecord::Base
           AND accounts.location_confirmed = ?) OR accounts.country != ?",
       "US", BackgroundCheck.statuses[:clear], true, "US"
     )
+    .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
   scope :by_expertise_ids, ->(ids) {
@@ -24,8 +25,15 @@ class MentorProfile < ActiveRecord::Base
     all_genders = Account.genders.values.sort
 
     if ids == male_female
-      ids = ids + [Account.genders["Prefer not to say"], Account.genders["Non-binary"]]
-      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids.uniq)
+      ids = ids + [
+        Account.genders["Prefer not to say"],
+        Account.genders["Non-binary"]
+      ]
+
+      joins(:account).where(
+        "accounts.gender IN (?) OR accounts.gender IS NULL",
+        ids.uniq
+      )
     elsif ids == all_genders
       joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
     else
@@ -33,10 +41,10 @@ class MentorProfile < ActiveRecord::Base
     end
   }
 
-  scope :searchable, ->(user = nil) {
-    if user and user.type_name == "mentor"
+  scope :searchable, ->(mentor_account_id = nil) {
+    if !!mentor_account_id
       where(connect_with_mentors: true, searchable: true)
-      .where.not(account_id: user.account_id)
+      .where.not(account_id: mentor_account_id)
     else
       where(accepting_team_invites: true, searchable: true)
     end
@@ -74,6 +82,7 @@ class MentorProfile < ActiveRecord::Base
   after_touch { teams.current.find_each(&:touch) }
 
   validates :school_company_name, :job_title, presence: true
+  validates :bio, length: { minimum: 100 }, allow_blank: true, if: :bio_changed?
 
   delegate :submitted?,
            :candidate_id,
@@ -142,7 +151,7 @@ class MentorProfile < ActiveRecord::Base
     true
   end
 
-  def type_name
+  def scope_name
     "mentor"
   end
 
@@ -179,10 +188,11 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    consent_signed? and
-      background_check_complete? and
-        location_confirmed? and
-          not bio.blank?
+    account.email_confirmed? and
+      consent_signed? and
+        background_check_complete? and
+          location_confirmed? and
+            not bio.blank?
   end
 
   private

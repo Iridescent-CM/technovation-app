@@ -21,18 +21,15 @@ RSpec.feature "Mentors find a team" do
 
     within('#submissions') { click_link "Join a team" }
 
-    expect(page).to have_css(".team-search-result__name", text: available_team.name)
-    expect(page).to have_css(".team-search-result__name", text: mentored_team.name)
-    expect(page).not_to have_css(
-      ".team-search-result__name",
-      text: faraway_team.name
-    )
+    expect(page).to have_css(".search-result-head", text: available_team.name)
+    expect(page).to have_css(".search-result-head", text: mentored_team.name)
+    expect(page).not_to have_css(".search-result-head", text: faraway_team.name)
   end
 
   scenario "request to join a team" do
     within('#submissions') { click_link "Join a team" }
-    click_link "View Team"
-    click_button "Request to be a mentor for #{available_team.name}"
+    click_link "Ask to join"
+    click_button "Ask to be a mentor for #{available_team.name}"
 
     join_request = JoinRequest.last
     expect(current_path).to eq(mentor_join_request_path(join_request))

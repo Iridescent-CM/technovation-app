@@ -10,7 +10,7 @@ task bootstrap: :environment do
     end
   end
 
-  email = "rhok@oracle.com"
+  email = ENV.fetch("ADMIN_EMAIL")
 
   if AdminProfile.joins(:account).where("accounts.email = ?", email).any?
     puts "Found Admin: #{email}"

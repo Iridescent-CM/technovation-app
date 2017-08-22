@@ -1,0 +1,68 @@
+<%= content_tag :label,
+  class: 'selected' if team.selected_regional_pitch_event.id == event.id do %>
+  <%= radio_button_tag "team_#{team.id}_events",
+    event.id,
+    team.selected_regional_pitch_event.id == event.id,
+    disabled: !SeasonToggles.select_regional_pitch_event?,
+    id: "team_#{team.id}_event_#{event.id}" %>
+
+  <%= event.name %>
+
+  <%= link_to '(more info)',
+    mentor_regional_pitch_event_path(event),
+    data: {
+      modal_trigger: "team_#{team.id}_event_info_#{event.id}",
+    } %>
+<% end %>
+
+<%= content_tag :div,
+  class: "modal",
+  data: {
+    heading: "#{event.name} Details",
+  },
+  id: "team_#{team.id}_event_info_#{event.id}" do %>
+
+  <% if event.live? %>
+    <p><strong>Division:</strong> <%= event.division_names %></p>
+    <p><strong>City:</strong> <%= event.city %></p>
+    <p><strong>Date / time:</strong> <%= event.date_time %></p>
+    <p><strong>Address:</strong> <%= event.venue_address %></p>
+
+    <% if event.eventbrite_link %>
+      <p>
+        <%= link_to event.eventbrite_link,
+          event.eventbrite_link,
+          target: :_blank %>
+      </p>
+    <% end %>
+  <% else %>
+    <p>
+      By default, all teams with completed submissions are entered
+      into virtual judging.
+    </p>
+
+    <p>
+      Virtual judging is a competition between all teams in the same
+      region and division.
+    </p>
+
+    <p>
+      If you select this event — or you simply do not select any
+      live events — your team's completed submission will be judged
+      online.
+    </p>
+  <% end %>
+
+  <% if SeasonToggles.select_regional_pitch_event? %>
+    <div class="modal-actions">
+      <button
+        class="button modal--close"
+        data-selects="team_<%= team.id %>_event_<%= event.id %>"
+      >
+        Select
+      </button>
+      or
+      <%= link_to 'cancel', '#', class: "modal--close" %>
+    </div>
+  <% end %>
+<% end %>

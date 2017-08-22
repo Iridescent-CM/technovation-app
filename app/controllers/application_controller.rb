@@ -4,11 +4,10 @@ class ApplicationController < ActionController::Base
   add_flash_types :success
   add_flash_types :error
 
-  helper_method :current_account, :current_team, :can_generate_certificate?
-
-  before_action -> {
-    I18n.locale = current_account.locale
-  }
+  helper_method :current_account,
+    :current_team,
+    :current_scope,
+    :can_generate_certificate?
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
@@ -34,6 +33,21 @@ class ApplicationController < ActionController::Base
     cookies.delete(key) or false
   end
 
+  def current_account
+    @current_account ||= Account.find_by(
+      auth_token: cookies.fetch(:auth_token) { "" }
+    ) || NullAuth.new
+  end
+
+  def current_team
+    # TODO: Figure out how to clean up the
+    # requirement of team_id in mentor scope
+    case current_scope
+    when "student"; current_account.team
+    when "mentor"; current_account.teams.find(params.fetch(:team_id))
+    end
+  end
+
   private
   def save_redirected_path
     cookies[:redirected_from] = request.fullpath
@@ -41,62 +55,45 @@ class ApplicationController < ActionController::Base
 
   def require_unauthenticated
     if current_account.authenticated?
-      redirect_to send("#{current_account.type_name}_dashboard_path"),
+      redirect_to send("#{current_account.scope_name}_dashboard_path"),
         notice: t("controllers.application.already_authenticated")
     else
       true
     end
   end
 
-  def current_account
-    @current_account ||= Account.eager_load(
-      :regional_ambassador_profile,
-
-      mentor_profile: [
-        :team_member_invites,
-        teams: [
-          :team_submissions,
-          :division,
-          regional_pitch_events: :regional_ambassador_profile,
-        ],
-      ],
-
-      judge_profile: [
-        :submission_scores,
-        regional_pitch_events: :regional_ambassador_profile,
-      ],
-
-      student_profile: [
-        :team_member_invites,
-        teams: [
-          :team_submissions,
-          :division,
-          regional_pitch_events: :regional_ambassador_profile,
-        ],
-      ],
-
-      season_registrations: :season
-    ).find_by(auth_token: cookies.fetch(:auth_token) { "" }) || NullAuth.new
-  end
-
-  def current_team
-    case model_name
-    when "student"; current_account.team
-    when "mentor"; current_account.teams.find(params.fetch(:team_id))
-    end
-  end
-
-  def can_generate_certificate?(user_scope, cert_type)
+  def can_generate_certificate?(scope, cert_type)
     @can_generate_certificate ||= {}
 
     @can_generate_certificate[cert_type] ||= (
       ENV.fetch("CERTIFICATES") { false } and
         CheckIfCertificateIsAllowed.(
-          send("current_#{user_scope}"),
+          send("current_#{scope}"),
           cert_type
         )
     )
   end
 
-  def model_name; end
+  def setup_valid_profile_from_signup_attempt(scope, token)
+    email = SignupAttempt.find_by!(signup_token: token).email
+
+    @profile = instance_variable_set(
+      "@#{scope}_profile",
+      "#{scope}_profile".camelize.constantize.new(
+        account_attributes: { email: email }
+      )
+    )
+
+    @profile.valid?
+
+    if @profile.errors[:"account.email"]
+      .include?("has already been taken")
+      render "signups/email_taken" and return
+    end
+
+    @profile.errors.clear
+    @profile.account.errors.clear
+  end
+
+  def current_scope; raise NotImplementedError; end
 end

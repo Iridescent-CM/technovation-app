@@ -18,6 +18,10 @@ class RegionalAmbassadorController < ApplicationController
     current_ambassador.account
   end
 
+  def current_scope
+    "regional_ambassador"
+  end
+
   private
   def set_time_zone(&block)
     Time.use_zone(current_ambassador.timezone, &block)
@@ -25,9 +29,5 @@ class RegionalAmbassadorController < ApplicationController
 
   def current_ambassador
     @current_ambassador ||= current_account.regional_ambassador_profile
-  end
-
-  def model_name
-    "regional_ambassador"
   end
 end

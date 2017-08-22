@@ -1,10 +1,19 @@
-<li>
-  <div class="member-image">
-    <%= image_tag public_member.profile_image_url, width: 80, height: 80 %>
+<li class="grid">
+  <div class="grid__col-xs-2 grid__col--bleed-x">
+    <div class="grid__cell">
+      <%= image_tag public_member.profile_image_url, class: "grid__cell-img" %>
+    </div>
   </div>
 
-  <div class="member-info">
-    <h3><%= public_member.first_name %></h3>
+  <div class="grid__col-xs-10">
+    <h3>
+      <% if public_member.mentor_profile %>
+        <%= link_to public_member.first_name,
+          send("#{current_account.scope_name}_mentor_path", public_member) %>
+      <% else %>
+        <%= public_member.first_name %>
+      <% end %>
+    </h3>
 
     <% if public_member.student_profile %>
       <h4>Age <%= public_member.age %></h4>

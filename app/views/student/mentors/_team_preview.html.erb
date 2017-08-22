@@ -1,41 +1,41 @@
 <%
+  # TODO: come on...
   admin ||= false
   ra ||= false
 
-  profile_path_prefix = :student
-  team_path_prefix = nil
   profile_path_name = :mentor
   profile_id = :id
 
   if admin
-    profile_path_prefix = :admin
-    team_path_prefix = :admin
     profile_path_name = :profile
     profile_id = :account_id
   elsif ra
-    profile_path_prefix = :regional_ambassador
-    team_path_prefix = :regional_ambassador
     profile_path_name = :user
     profile_id = :account_id
   end
 %>
 
 <li>
-  <%= link_to team_preview.name, [team_path_prefix, team_preview] %>
+  <div class="grid__cell">
+    <%= link_to team_preview.name, [current_scope, team_preview] %>
+  </div>
 
-  <br />Team Co-mentors:
+  <div class="grid__cell">
+    Co-mentors:
 
-  <% if (mentors = team_preview.mentors - [profile]).any? %>
-    <ul>
-      <% mentors.each do |m| %>
-        <li>
-          <%= link_to m.full_name,
-            send("#{profile_path_prefix}_#{profile_path_name}_path",
-                 m.send(profile_id)) %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    None
-  <% end %>
+    <% if (mentors = team_preview.mentors - [profile]).any? %>
+      <ul class="unstyled">
+        <% mentors.each do |m| %>
+          <li>
+            <%= link_to m.full_name, send(
+              "#{current_scope}_#{profile_path_name}_path",
+              m.send(profile_id)
+            ) %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      None
+    <% end %>
+  </div>
 </li>

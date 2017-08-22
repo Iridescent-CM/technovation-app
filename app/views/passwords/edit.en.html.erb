@@ -1,0 +1,25 @@
+<% provide :title, "Change your password" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8 grid__col-md-5">
+    <h3>Change your password</h3>
+
+    <%= simple_form_for(account) do |f| %>
+      <%= render 'errors', record: account %>
+
+      <%= f.fields_for :account do |a| %>
+        <%= a.input :existing_password,
+          placeholder: "You must enter your current password here first",
+          label: t("views.account.edit.existing_password") %>
+
+        <%= a.input :password, label: t("models.account.change_password") %>
+      <% end %>
+
+      <p class="hint">
+        <%= t("models.account.password_hint") %>
+      </p>
+
+      <%= f.button :submit, t("views.application.save"), class: "button" %>
+    <% end %>
+  </div>
+</div>

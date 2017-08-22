@@ -1,0 +1,38 @@
+<% provide(
+  :js,
+  javascript_include_tag(
+    "text-based-search",
+    'data-turbolinks-track' => true
+  )
+) %>
+
+<% provide(
+  :js,
+  javascript_include_tag(
+    "toggle-based-search",
+    'data-turbolinks-track' => true
+  )
+) %>
+
+<%= form_with url: request.fullpath, method: :get, local: true do |f| %>
+  <label>Search by name</label>
+
+  <%= f.text_field :text, class: "search-by-text", value: params[:text] %>
+  <p class="hint">Press enter after typing</p>
+
+  <%= render 'searches/location_options', account: account %>
+
+  <div class="search-toggles">
+    <h3><%= t("views.application.division") %></h3>
+
+    <% Division.names.each do |name, id| %>
+      <p>
+        <%= check_box_tag "division_enums[]", id,
+          params[:division_enums].map(&:to_i).include?(id),
+          id: "division_#{id}" %>
+
+        <label for="division_<%= id %>"><%= name.humanize %></label>
+      </p>
+    <% end %>
+  </div>
+<% end %>

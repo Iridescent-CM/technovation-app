@@ -65,7 +65,7 @@ FactoryGirl.define do
   factory :mentor_profile, aliases: [:mentor, :mentor_account] do
     school_company_name { "FactoryGirl" }
     job_title { "Engineer" }
-    bio "A complete bio"
+    bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
 
     transient do
       first_name nil

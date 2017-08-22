@@ -1,5 +1,5 @@
 module Mentor
   class ProfileImageUploadConfirmationsController < MentorController
-    include ProfileImageUploadConfirmationController
+    include PhotoUploadConfirmationController
   end
 end

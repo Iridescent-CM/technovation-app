@@ -1,0 +1,24 @@
+<% #TODO Rename this file, it's used for all image uploads %>
+
+<p class="notice notice--info">
+  If you used any format besides .bmp, .jpg, .jpeg, .gif, or .png,
+  your photo will NOT be processed.
+</p>
+
+<center>
+  <p>If you can see your photo below, it will most likely work.</p>
+
+  <%= image_tag @unprocessed_photo_url, width: 233 %>
+
+  <%= render 'image_upload',
+    heading: @heading,
+    size: @size,
+    url: send("#{current_scope}_profile_path"),
+    try_again: true %>
+
+  <p>
+    <%= link_to "It looks good, take me back",
+      params[:back] || send("#{current_account.scope_name}_profile_path"),
+      class: "button small" %>
+  </p>
+</center>

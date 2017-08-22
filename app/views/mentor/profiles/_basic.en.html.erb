@@ -1,0 +1,28 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= current_mentor.full_name %></dd>
+
+  <dt>Age</dt>
+  <dd><%= current_mentor.age %></dd>
+
+  <dt>Gender identity</dt>
+  <dd><%= current_mentor.gender || "Not specified" %></dd>
+
+  <dt>School / Company name</dt>
+  <dd><%= current_mentor.school_company_name %></dd>
+
+  <dt>Job title</dt>
+  <dd><%= current_mentor.job_title %></dd>
+
+  <dt>Expertise(s)</dt>
+  <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
+
+  <dt>Personal summary</dt>
+  <dd><%= simple_format current_mentor.bio %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your basic profile details",
+    edit_profile_path,
+    class: "button" %>
+</p>

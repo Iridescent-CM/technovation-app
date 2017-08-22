@@ -1,19 +1,27 @@
-<div class="form-with-columns">
-  <%= simple_form_for [prefix, @team] do |f| %>
-    <div class="fields-edit">
-      <%= f.input :name %>
-      <%= f.input :description %>
+<%= simple_form_for [current_scope, @team] do |f| %>
+  <div class="fields-edit">
+    <%= f.input :name %>
 
-      <% action = f.object.persisted? ? :save : :create %>
-      <%= f.button :submit, t("views.application.#{action}", thing: t("models.team.class_name")), class: "appy-button" %>
+    <% if f.object.persisted? %>
+      <%= f.input :description, label: t("models.team.description") %>
+    <% end %>
+
+    <% action = f.object.persisted? ? :save : :create %>
+
+    <p>
+      <%= f.button :submit,
+        t("views.application.#{action}",
+          thing: t("models.team.class_name")),
+        class: "button" %>
 
       <%= t("views.application.or") %>
 
       <% if f.object.persisted? %>
-        <%= link_to t("views.application.cancel"), [prefix, @team] %>
+        <%= link_to t("views.application.cancel"), [current_scope, @team] %>
       <% else %>
-        <%= link_to t("controllers.teams.index.browse"), [:new, prefix, :team_search] %>
+        <%= link_to "find a team",
+          [:new, current_scope, :team_search] %>
       <% end %>
-    </div>
-  <% end %>
-</div>
+    </p>
+  </div>
+<% end %>

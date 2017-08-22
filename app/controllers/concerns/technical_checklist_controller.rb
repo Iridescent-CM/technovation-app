@@ -24,7 +24,7 @@ module TechnicalChecklistController
 
     if @technical_checklist.update_attributes(technical_checklist_params)
       redirect_to [
-        user_scope,
+        current_scope,
         current_team.submission,
         team_id: current_team.id
       ],
@@ -79,10 +79,10 @@ module TechnicalChecklistController
   end
 
   def dashboard_path
-    send("#{user_scope}_dashboard_path")
+    send("#{current_scope}_dashboard_path")
   end
 
   def new_team_submission_path
-    send("new_#{user_scope}_team_submission_path", team_id: current_team.id)
+    send("new_#{current_scope}_team_submission_path", team_id: current_team.id)
   end
 end

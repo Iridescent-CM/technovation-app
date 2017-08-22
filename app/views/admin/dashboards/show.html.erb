@@ -1,145 +1,41 @@
-<%
-  method = case params[:days]
-           when 1;  :group_by_hour
-           when 7;  :group_by_day
-           when 14; :group_by_day
-           when 30; :group_by_week
-           else;    :group_by_month
-           end
-
-  range = case params[:days]
-          when 1; 24
-          when 7; 7
-          when 14; 14
-          when 30; 4
-          when 90; 3
-          when 180; 6
-          when 270; 9
-          end
-%>
-
-<div class="admin-dashboard flex-row">
-  <div class="admin-dashboard__column">
-    <div class="admin-dashboard__header">
-      <h1 class="appy-title">Recent activity</h1>
-
-      <label>
-        Show activity in the past
-        <%= select_tag :days,
-          options_for_select(
-            {
-              "Day" => 1,
-              "Week" => 7,
-              "2 weeks" => 14,
-              "Month" => 30,
-              "3 months" => 90,
-              "6 months" => 180,
-              "9 months" => 270,
-            },
-            params[:days]),
-            data: { reload: true }%>
-      </label>
+<%= render(
+  layout: 'account_snapshots',
+  locals: { title: "#{Season.current.year} Snapshot" }
+) do %>
+  <div class="card">
+    <div class="card__heading">
+      Signup Attempts
+      <%= web_icon "group", class: "card-heading__flair" %>
     </div>
 
-    <div class="admin-dashboard__quickviews-wrapper">
-      <div class="quickview card">
-        <div class="card__heading">
-          <%= link_to "Teams", admin_teams_path %> <%= @teams.count %>
-        </div>
+    <div class="card__body">
+      <strong><%= @snapshot_signups.count %></strong> total<br />
 
-        <div class="card__body">
-          <%= line_chart @teams.public_send(method, "teams.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
+      <strong>
+        <%= (
+          @snapshot_signups.temporary_password | @snapshot_signups.pending
+        ).count %>
+      </strong>
+      pending confirmation
+      (<%= number_to_percentage(
+        (@snapshot_signups.temporary_password | @snapshot_signups.pending)
+          .count / @snapshot_signups.count.to_f * 100,
+        precision: 0
+      ) %>)<br />
 
-      <div class="quickview card">
-        <div class="card__heading">
-          <%= link_to "Students", admin_profiles_path(type: "Student") %> <%= @students.count %>
-        </div>
+      <strong><%= @snapshot_signups.active.count %></strong>
+      confirmed, but not signed up
+      (<%= number_to_percentage(
+        @snapshot_signups.active.count / @snapshot_signups.count.to_f * 100,
+        precision: 0
+      ) %>)<br />
 
-        <div class="card__body">
-          <%= line_chart @students.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
-
-      <div class="quickview card">
-        <div class="card__heading">
-          <span>Permitted Students</span> <%= @permitted_students.count %>
-        </div>
-
-        <div class="card__body">
-          <%= line_chart @permitted_students.public_send(method, "parental_consents.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
-
-      <div class="quickview card">
-        <div class="card__heading">
-          <%= link_to "Mentors", admin_profiles_path(type: "Mentor") %> <%= @mentors.count %>
-        </div>
-
-        <div class="card__body">
-          <%= line_chart @mentors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
-
-      <div class="quickview card">
-        <div class="card__heading">
-          <span>Cleared mentors</span> <%= @cleared_mentors.count %>
-        </div>
-
-        <div class="card__body">
-          <%= line_chart @cleared_mentors.public_send(method, "consent_waivers.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
-
-      <div class="quickview card">
-        <div class="card__heading">
-          <%= link_to "RAs", admin_regional_ambassadors_path %> <%= @ambassadors.count %>
-        </div>
-
-        <div class="card__body">
-          <%= line_chart @ambassadors.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
-
-      <div class="quickview card">
-        <div class="card__heading">
-          <%= link_to "Judges", admin_profiles_path(type: "Judge") %> <%= @judges.count %>
-        </div>
-
-        <div class="card__body">
-          <%= line_chart @judges.public_send(method, "accounts.created_at", last: range, current: false).count, width: "100%", height: "150px" %>
-        </div>
-      </div>
+      <strong><%= @snapshot_signups.registered.count %></strong>
+      signed up
+      (<%= number_to_percentage(
+        @snapshot_signups.registered.count / @snapshot_signups.count.to_f * 100,
+        precision: 0
+      ) %>)<br />
     </div>
   </div>
-
-  <div class="admin-dashboard__sidebar">
-    <%= render layout: 'account_snapshots',
-      locals: { title: "#{Season.current.year} Snapshot" } do %>
-      <div class="card">
-        <div class="card__heading">
-          Signup Attempts
-          <%= fa_icon "group", class: "card-heading__flair" %>
-        </div>
-        <div class="card__body">
-          <strong><%= @snapshot_signups.count %></strong> total<br />
-
-          <strong><%= (@snapshot_signups.temporary_password | @snapshot_signups.pending).count %></strong>
-          pending confirmation (<%= number_to_percentage (@snapshot_signups.temporary_password | @snapshot_signups.pending).count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
-
-          <strong><%= @snapshot_signups.active.count %></strong>
-          confirmed, but not signed up (<%= number_to_percentage @snapshot_signups.active.count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
-
-          <strong><%= @snapshot_signups.registered.count %></strong>
-          signed up (<%= number_to_percentage @snapshot_signups.registered.count / @snapshot_signups.count.to_f * 100, precision: 0 %>)<br />
-        </div>
-      </div>
-
-    <% end %>
-  </div>
-</div>
-
-<% provide(:head_js) do %>
-  <%= javascript_include_tag "Chart.bundle", "chartkick" %>
 <% end %>

@@ -1,22 +1,38 @@
-<%= render 'consent' %>
+<% provide :title, "Electronic consent form" %>
 
-<%= render 'errors', record: @parental_consent %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
+    <%= simple_form_for @parental_consent do |f| %>
+      <%= render 'errors', record: @parental_consent %>
 
-<%= simple_form_for @parental_consent do |f| %>
-  <%= f.input :student_profile_consent_token, as: :hidden %>
+      <%= render 'consent' %>
 
-  <%= label_tag t("models.parental_consent.student_name") %>
-  <%= text_field_tag :student_name, f.object.student_profile.full_name, disabled: true %>
+      <%= f.input :student_profile_consent_token, as: :hidden %>
 
-  <%= f.input :electronic_signature,
-    label: t("models.parental_consent.electronic_signature"),
-    input_html: {
-      placeholder: "Please type your name here as electronic consent",
-    } %>
+      <div class="disabled">
+        <center>
+          <%= label_tag t("models.parental_consent.student_name") %>
+          <%= f.object.student_profile.full_name %>
+        </center>
+      </div>
 
-  <%= f.input :newsletter_opt_in,
-    as: :boolean,
-    label: "It's okay to send me a parent/guardian newsletter from Technovation every other month." %>
+      <%= f.input :electronic_signature,
+        label: t("models.parental_consent.electronic_signature"),
+        input_html: {
+          placeholder: "Please type your name here as electronic consent",
+        } %>
 
-  <%= f.button :submit, t("views.parental_consents.new.submit"), class: "appy-button" %>
-<% end %>
+      <p>
+        <%= f.input :newsletter_opt_in,
+          as: :boolean,
+          label: "Technovation may email me (about every two months)." %>
+      </p>
+
+      <p>
+        <%= f.button :submit,
+          t("views.parental_consents.new.submit"),
+          class: "button" %>
+      </p>
+    <% end %>
+  </div>
+</div>

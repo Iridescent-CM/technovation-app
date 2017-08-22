@@ -1,5 +1,5 @@
 module Student
   class ProfileImageUploadConfirmationsController < StudentController
-    include ProfileImageUploadConfirmationController
+    include PhotoUploadConfirmationController
   end
 end

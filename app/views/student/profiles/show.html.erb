@@ -1,1 +1,49 @@
-<%= render 'profiles/show', url: student_profile_path, edit: true %>
+<% provide :title, "My profile" %>
+
+<div class="grid tabs tabs-vertical">
+  <div class="grid__col-sm-3">
+    <div class="hidden-xs hidden-xxs">
+      <h3><%= current_student.full_name %></h3>
+
+      <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+
+      <%= render 'image_upload',
+        modal_id: "image_upload_desktop",
+        heading: "Upload a profile photo",
+        size: "300x300" %>
+    </div>
+
+    <%= render 'student/profiles/menu' %>
+  </div>
+
+  <div class="content grid__col-sm-9">
+    <div class="tab-content" id="basic">
+      <%= render 'student/profiles/basic' %>
+    </div>
+
+    <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
+      <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+
+      <%= render 'image_upload',
+        modal_id: "image_upload_mobile",
+        heading: "Upload a profile photo",
+        size: "300x300" %>
+    </div>
+
+    <div class="tab-content" id="parent">
+      <%= render 'student/profiles/parent' %>
+    </div>
+
+    <div class="tab-content" id="location">
+      <%= render 'student/profiles/location' %>
+    </div>
+
+    <div class="tab-content" id="change-email">
+      <%= render 'student/profiles/email' %>
+    </div>
+
+    <div class="tab-content" id="change-password">
+      <%= render 'student/profiles/password' %>
+    </div>
+  </div>
+</div>

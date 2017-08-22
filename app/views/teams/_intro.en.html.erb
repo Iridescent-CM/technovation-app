@@ -1,0 +1,13 @@
+<%
+  modal_id ||= nil
+  hidden_on ||= []
+%>
+
+<div class="<%= hidden_on.map { |size| "hidden-#{size}" }.join(" ") %>">
+  <%= image_tag team.team_photo_url, class: "grid__cell-img" %>
+
+  <%= render 'image_upload',
+      modal_id: modal_id,
+      heading: "Upload a team photo",
+      size: "450x300" %>
+</div>

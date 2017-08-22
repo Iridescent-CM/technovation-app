@@ -7,7 +7,7 @@
 
     <title><%= t('views.application.site_title') %></title>
 
-    <%= stylesheet_link_tag 'ra', media: 'all' %>
+    <%= stylesheet_link_tag 'regional_ambassador', media: 'all' %>
     <%= csrf_meta_tags %>
 
     <%= yield :head_js %>
@@ -23,6 +23,6 @@
       </div>
     </div>
 
-    <%= javascript_include_tag 'ra' %>
+    <%= javascript_include_tag 'regional_ambassador' %>
   </body>
 </html>

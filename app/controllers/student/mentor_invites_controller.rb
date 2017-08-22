@@ -4,7 +4,7 @@ module Student
       @mentor_invite = MentorInvite.new(mentor_invite_params)
 
       if @mentor_invite.save
-        redirect_to [:student, @mentor_invite.team],
+        redirect_to [:student, @mentor_invite.team, { anchor: "mentors" }],
           success: t("controllers.team_member_invites.create.success")
       else
         redirect_back fallback_location: student_dashboard_path,
@@ -13,8 +13,12 @@ module Student
     end
 
     def destroy
-      @invite = current_student.team.mentor_invites.find_by(invite_token: params.fetch(:id))
+      @invite = current_student.team.mentor_invites.find_by(
+        invite_token: params.fetch(:id)
+      )
+
       @invite.destroy
+
       redirect_back fallback_location: student_dashboard_path,
         success: t("controllers.invites.destroy.success",
                    name: @invite.invitee_name)

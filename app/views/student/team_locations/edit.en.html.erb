@@ -1,23 +1,60 @@
-<h1 class="appy-title">
-  Edit Your Team Location
-</h1>
+<% provide :title, "Change your team location" %>
 
-<h2><%= @team.name %></h2>
+<% provide(
+  :js,
+  javascript_include_tag(
+    "location-details",
+    'data-turbolinks-track' => true
+  )
+) %>
 
-<%= simple_form_for [:student, @team] do |f| %>
-  <%= f.input :city %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-xs-8">
+    <h5>
+      Change team location for:<br />
+      <%= @team.name %>
+    </h5>
 
-  <%= f.input :state_province,
-    label: t("models.account.state_province") %>
+    <%= simple_form_for [current_scope, @team] do |f| %>
+      <div class="while-geocoding">
+        <%= web_icon "spinner2", class: "spin" %>
+        Detecting your location...
+      </div>
 
-  <%= f.input :country,
-    collection: CountryStateSelect.countries_collection,
-    input_html: {
-      class: "chosen",
-      id: "account_country",
-    } %>
+      <%= f.input :city,
+        input_html: {
+          id: "city",
+          data: {
+            geolocation_url: geolocation_results_path,
+          }
+        } %>
 
-  <p class="standalone-buttons">
-    <%= f.submit "Save", class: "appy-button" %>
-  </p>
-<% end %>
+      <%= f.input :state_province,
+        input_html: {
+          id: "state_province",
+        },
+        label: t("models.account.state_province") %>
+
+      <%= f.input :country,
+        collection: CountryStateSelect.countries_collection,
+        input_html: {
+          class: "chosen",
+          id: "country",
+        } %>
+
+      <%= f.input :latitude, as: :hidden,
+        input_html: {
+          id: "latitude",
+        } %>
+
+      <%= f.input :longitude, as: :hidden,
+        input_html: {
+          id: "longitude",
+        } %>
+
+      <p>
+        <%= f.submit "Save", class: "button" %>
+      </p>
+    <% end %>
+  </div>
+</div>

@@ -1,56 +1,63 @@
 <%
-  url ||= false
-  edit ||= false
-  title ||= t("views.accounts.show.title")
-  path ||= edit_profile_path
+  editing ||= false
+  edit_path ||= edit_profile_path
 %>
 
-<div class="dashboard-page-info">
-  <h3><%= title %></h3>
-</div>
-
-<div class="flex-row">
-  <div class="flex-col-sm-3 well profile-avatar">
-    <%= image_tag account.profile_image_url %>
-    <% if url %>
-      <%= render 'profiles/profile_image_upload', url: url %>
-    <% end %>
-  </div>
-
-  <div class="flex-row flex-col-sm-9 account-info">
-    <dl class="flex-col-sm-6 account-basic">
-      <dt><%= t('models.account.full_name') %></dt>
-      <dd><%= account.full_name %></dd>
-
-      <dt><%= t('models.account.email') %></dt>
-      <dd><%= account.email %></dd>
-
-      <dt><%= t('models.account.date_of_birth') %></dt>
-      <dd><%= account.date_of_birth %></dd>
-
-      <% unless account.student_profile.present? %>
-        <dt><%= t('models.account.gender') %></dt>
-        <dd><%= account.gender %></dd>
-      <% end %>
-
-      <dt><%= t('models.account.address') %></dt>
-      <dd><%= account.address_details %></dd>
-
-      <% if edit and not account.type_name == "regional_ambassador" %>
-        <%= link_to t('views.accounts.show.edit_location'), [account.type_name, :location_details] %>
-      <% end %>
-    </dl>
-
-    <div class="flex-col-sm-6 account-special">
-      <dl>
-        <%= render "#{account.type_name}/profiles/profile", account: account %>
-      </dl>
-
-      <% if edit %>
-        <%= link_to t('views.accounts.show.edit'), path %>
-      <% end %>
+<div class="grid">
+  <div class="grid__col-xs-12 grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= account.full_name %></h1>
     </div>
 
-    <%= render "#{account.type_name}/profiles/bio", edit: edit, account: account %>
+    <div class="grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <%= image_tag account.profile_image_url, class: "grid__cell-img" %>
+
+        <% if editing %>
+          <%= render 'image_upload',
+            heading: "Upload a profile photo",
+            size: "300x300" %>
+        <% end %>
+      </div>
+
+      <div class="grid__col-sm-4 gird__col--bleed-y">
+        <dl class="grid__cell grid__cell--padding-sm">
+          <dt><%= t('models.account.age') %></dt>
+          <dd><%= account.age %></dd>
+
+          <%= render "#{account.scope_name}/profiles/profile",
+            editing: editing,
+            edit_path: edit_path,
+            account: account %>
+
+          <% unless account.student_profile.present? %>
+            <dt><%= t('models.account.gender') %></dt>
+            <dd><%= account.gender %></dd>
+          <% end %>
+
+          <dt><%= t('models.account.address') %></dt>
+          <dd><%= account.address_details %></dd>
+
+          <% if editing and not account.scope_name == "regional_ambassador" %>
+            <%= link_to t('views.accounts.show.edit_location'),
+              [account.scope_name, :location_details] %>
+          <% end %>
+        </dl>
+      </div>
+
+      <div class="grid__col-sm-5 gird__col--bleed-y">
+        <div class="grid__cell grid__cell--padding-sm">
+          <dl>
+
+            <dt><%= t('models.account.email') %></dt>
+            <dd><%= account.email %></dd>
+          </dl>
+        </div>
+      </div>
+
+      <%= render "#{account.scope_name}/profiles/bio",
+        editing: editing,
+        account: account %>
+    </div>
   </div>
 </div>

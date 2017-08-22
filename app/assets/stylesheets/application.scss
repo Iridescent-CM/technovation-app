@@ -1,88 +1,59 @@
-// 3rd Party Libs
-@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
-@import "bourbon/bourbon";
-@import "neat/neat";
-@import "refills/tables-minimal";
-@import "refills/pagination";
-@import "refills/button-group";
-@import "refills/badges";
-@import "font-awesome";
+// vendor
+@import "normalize-rails";
+@import "reflex";
 @import "chosen";
-@import "dragula";
-@import "rangeslider";
 
-// Technovation
-@import "partials/animations";
-@import "partials/helpers";
-@import "partials/variables";
-@import "partials/mixins";
-@import "layout/grid-flex";
-@import "base/base";
-@import "base/buttons";
-
-// Component Library
-@import "component-library/ajax-forms";
-@import "component-library/buttons";
-@import "component-library/card";
-@import "component-library/fancy-image-upload";
-@import "component-library/fancy-inputs";
-@import "component-library/flashes";
-@import "component-library/gallerify";
-@import "component-library/media-query-helpers";
-@import "component-library/modalify";
-@import "component-library/notify-banners";
-@import "component-library/scrolly-tables";
-@import "component-library/search-panel-and-results";
-@import "component-library/search-filter-card";
-@import "component-library/text-helpers";
-@import "component-library/tabs";
-@import "component-library/alternative-forms";
-
-@import "accounts";
-@import "containers";
-@import "dashboards";
+// base
+@import "variables";
+@import "base";
+@import "headings";
+@import "lists";
 @import "forms";
-@import "global-nav";
-@import "home-page";
-@import "judging";
-@import "layout";
-@import "mentor_search";
-@import "menus";
-@import "signups";
-@import "sortable";
-@import "team-invitations";
-@import "team-submissions";
-@import "team-submissions-progress";
-@import "team-submissions-complete";
-@import "teams";
-@import "technical-checklist";
-@import "background-checks";
-@import "submission-scores";
-@import "select-pitch-event";
+@import "text_styles";
 
-.small-action-bar {
-  font-size: 0.8rem;
-  display: inline-block;
-  background: lightgrey;
-  padding: 0.1rem 0.3rem;
-  border-radius: 50px;
-  color: grey;
+// layout
+@import "navigation";
+@import "flashes";
+@import "notices";
 
-  a {
-    color: grey;
+// components
+@import "panel";
+@import "button";
+@import "img";
 
-    &:hover {
-      color: black;
-    }
+// font
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
+@import "icomoon";
+
+#site-footer {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.social-links {
+  font-size: 1.5rem;
+}
+
+.chosen-container {
+  font-size: 1.5rem;
+  font-weight: 300;
+
+  .chosen-results li {
+    color: #333;
+    margin: 0 0 0.5rem;
   }
 }
 
-.align-right {
-  text-align: right;
-}
+.chosen-container-single {
+  .chosen-single {
+    color: #333;
+    height: auto;
+    line-height: 1.2;
 
-.border-left {
-  border-left: 1px solid #ddd;
-  margin: 1rem 0;
-  padding: 0 1rem;
+    a {
+      font-weight: 300;
+    }
+  }
 }

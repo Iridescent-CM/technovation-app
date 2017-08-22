@@ -1,0 +1,26 @@
+.progress {
+  @extend .unstyled;
+
+  li {
+    margin: 0 0 1rem;
+  }
+
+  .icon-check-circle {
+    display: none;
+  }
+
+  .complete {
+    color: #999;
+    font-style: italic;
+    text-decoration: line-through;
+
+    .icon-circle-o {
+      display: none;
+    }
+
+    .icon-check-circle {
+      display: inline-block;
+      color: $shamrock-mid;
+    }
+  }
+}

@@ -7,7 +7,7 @@
     <ul>
       <% mentors.each do |m| %>
         <li>
-          <%= link_to m.full_name, mentor_mentor_path(m.id) %>
+          <%= link_to m.full_name, mentor_mentor_path(m) %>
         </li>
       <% end %>
     </ul>

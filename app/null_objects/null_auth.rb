@@ -3,7 +3,7 @@ class NullAuth
   def admin?; false; end
   def present?; false; end
 
-  def type_name; 'application'; end
+  def scope_name; 'application'; end
   def team; nil; end
   def teams; []; end
 

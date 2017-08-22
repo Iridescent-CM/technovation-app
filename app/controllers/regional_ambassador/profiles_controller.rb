@@ -20,9 +20,9 @@ module RegionalAmbassador
 
       case params[:sort]
       when "type asc"
-        @accounts = @accounts.sort { |a, b| a.type_name <=> b.type_name }
+        @accounts = @accounts.sort { |a, b| a.scope_name <=> b.scope_name }
       when "type desc"
-        @accounts = @accounts.sort { |a, b| b.type_name <=> a.type_name }
+        @accounts = @accounts.sort { |a, b| b.scope_name <=> a.scope_name }
       when "division asc"
         @accounts = @accounts.sort { |a, b| a.division <=> b.division }
       when "division desc"

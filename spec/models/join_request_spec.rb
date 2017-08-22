@@ -6,7 +6,7 @@ RSpec.describe JoinRequest do
     approve_me = FactoryGirl.create(:join_request, requestor: student)
     delete_me = FactoryGirl.create(:join_request, requestor: student)
 
-    approve_me.approved!
+    JoinRequestApproved.(approve_me)
 
     expect {
       delete_me.reload
@@ -18,7 +18,7 @@ RSpec.describe JoinRequest do
     approve_me = FactoryGirl.create(:join_request, requestor: mentor)
     still_pending = FactoryGirl.create(:join_request, requestor: mentor)
 
-    approve_me.approved!
+    JoinRequestApproved.(approve_me)
 
     expect(still_pending.reload).to be_pending
   end

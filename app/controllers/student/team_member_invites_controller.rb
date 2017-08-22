@@ -59,10 +59,6 @@ module Student
       params.require(:team_member_invite).permit(:status)
     end
 
-    def account_type
-      "student"
-    end
-
     def current_profile
       current_student
     end
