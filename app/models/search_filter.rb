@@ -4,11 +4,11 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   def expertise_ids
-    filter_options.fetch(:expertise_ids) { [] }.reject(&:blank?).map(&:to_i)
+    from_search_filter(:expertise_ids)
   end
 
   def gender_identities
-    filter_options.fetch(:gender_identities) { [] }.reject(&:blank?).map(&:to_i)
+    from_search_filter(:gender_identities)
   end
 
   def nearby
@@ -23,16 +23,28 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:has_mentor) { :any }
   end
 
-  def user
-    filter_options.fetch(:user) { NoUser.new }
+  def mentor_account_id
+    filter_options.fetch(:mentor_account_id) { nil }
+  end
+
+  def scope
+    filter_options.fetch(:scope) { nil }
+  end
+
+  def country
+    filter_options.fetch(:country) { "" }
+  end
+
+  def location
+    filter_options.fetch(:location) { "" }
   end
 
   def needs_team
-    filter_options.fetch(:needs_team) { false } == "1"
+    filter_options.fetch(:needs_team) { "0" } == "1"
   end
 
   def on_team
-    filter_options.fetch(:on_team) { false } == "1"
+    filter_options.fetch(:needs_team) { "1" } == "0"
   end
 
   def virtual_only
@@ -55,5 +67,12 @@ class SearchFilter < Struct.new(:filter_options)
     end
   end
 
-  class NoUser; end
+  private
+  def from_search_filter(key)
+    filter_options.fetch(:search_filter) {
+      {}
+    }.fetch(key) {
+      []
+    }.reject(&:blank?).map(&:to_i)
+  end
 end

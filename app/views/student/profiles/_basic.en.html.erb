@@ -1,0 +1,25 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= current_student.full_name %></dd>
+
+  <dt>School name</dt>
+  <dd><%= current_student.school_name %></dd>
+
+  <dt>Birthdate</dt>
+  <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
+
+  <dt>Team divisions depend on your age on this date</dt>
+  <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
+
+  <dt>Your age today</dt>
+  <dd><%= current_student.age %></dd>
+
+  <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
+  <dd><%= current_student.age_by_cutoff %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your basic profile details",
+    edit_profile_path,
+    class: "button" %>
+</p>

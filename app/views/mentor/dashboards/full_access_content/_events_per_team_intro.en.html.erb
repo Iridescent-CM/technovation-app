@@ -1,0 +1,19 @@
+<%= image_tag team.team_photo, width: 300, height: 200 %>
+
+<strong><%= team.name %></strong><br />
+<strong>Division:</strong> <%= team.division_name.titleize %><br />
+
+<small>
+  <%= team.primary_location %>
+  <%= link_to "Edit location", edit_mentor_team_location_path(team) %>
+
+  <br />
+
+  <% if team.submission.present? %>
+    <%= link_to 'See how it looks to the judges',
+      app_url(team.submission),
+      target: :_blank %>
+  <% else %>
+    <%= team.name %> has not begun their app submission!
+  <% end %>
+</small>

@@ -28,19 +28,23 @@ RSpec.feature "Register as a judge" do
   end
 
   scenario "Address info is figured out" do
-    click_link "Enter your location now"
+    click_link "Update your location"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
     select "United States", from: "Country"
     click_button "Save"
 
-    expect(JudgeProfile.last.address_details).to eq("Chicago, IL, United States")
+    expect(JudgeProfile.last.address_details).to eq(
+      "Chicago, IL, United States"
+    )
     expect(JudgeProfile.last.account).to be_location_confirmed
   end
 
   scenario "signup attempt attached" do
-    attempt = SignupAttempt.find_by(account_id: JudgeProfile.last.account_id)
+    attempt = SignupAttempt.find_by(
+      account_id: JudgeProfile.last.account_id
+    )
     expect(attempt).to be_present
   end
 end

@@ -9,16 +9,16 @@
     <% end %>
 
     <% if current_mentor.is_on_team? and SeasonToggles.display_scores? %>
-      <div class="tab-content flex-row" id="scores">
+      <div class="tab-content" id="scores">
         <%= render 'mentor/dashboards/full_access_content/scores' %>
       </div>
     <% end %>
 
-    <div class="tab-content flex-row" id="submissions">
+    <div class="tab-content grid" id="submissions">
       <%= render 'mentor/dashboards/full_access_content/submissions' %>
     </div>
 
-    <div class="tab-content flex-row" id="pitch-events">
+    <div class="tab-content grid" id="pitch-events">
       <%= render 'mentor/dashboards/full_access_content/pitch_events' %>
     </div>
   </div>

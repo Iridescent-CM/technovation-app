@@ -10,9 +10,10 @@ en:
         menu:
           accounts: "Users"
           connect_mentors: "Connect with mentors"
+          dashboard: "Dashboard"
           events: "Regional Pitch Events"
           home: "Home"
-          my_account: "My account"
+          my_account: "My profile"
           my_requests: "My requests"
           my_teams: "My teams"
           team_submission: "My team's submission"

@@ -14,6 +14,7 @@ class JudgeProfile < ActiveRecord::Base
   scope :full_access, -> {
     joins(account: :consent_waiver)
       .where("accounts.location_confirmed = ?", true)
+      .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
   scope :current, -> {
@@ -82,10 +83,12 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    consent_signed? and location_confirmed?
+    account.email_confirmed? and
+      consent_signed? and
+        location_confirmed?
   end
 
-  def type_name
+  def scope_name
     "judge"
   end
 

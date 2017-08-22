@@ -22,7 +22,7 @@ class Mentor::JoinRequestsController < MentorController
 
   def update
     join_request = JoinRequest.find(params.fetch(:id))
-    join_request.public_send("#{params.fetch(:status)}!")
+    "join_request_#{status}".camelize.constantize.(join_request)
 
     redirect_back fallback_location: mentor_dashboard_path,
       success: t("controllers.mentor.join_requests.update.success",

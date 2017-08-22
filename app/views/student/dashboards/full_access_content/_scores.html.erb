@@ -1,58 +1,24 @@
-<div class="flex-col-md-8">
-  <% if @all_scores.empty? %>
-    <% if !current_team.submission.complete? or !current_team.submission.present? %>
-      <h3>No Scores Available</h3>
-
-      <p>
-        Unfortunately, no scores are available for your team because your team's
-        submission was incomplete. Try sharing the public version with friends and
-        mentors for feedback on how to improve for next year!
-      </p>
-
-      <p class="standalone-buttons">
-        <%= link_to "Open your submission page",
-            app_path(current_team.submission),
-            class: "appy-button",
-            target: :_blank %>
-      </p>
-    <% else %>
-      <h3>Congratulations!</h3>
-
-      <p>
-        Congratulations on completing the <%= Season.current.year %>
-        season of Technovation! Use the feedback you received at your pitch event
-        to help you learn more and make sure to participate in Technovation next
-        year. You should be proud of your work and share your submission with
-        friends and mentors!
-      </p>
-
-      <p class="standalone-buttons">
-        <%= link_to "Open your submission page",
-            app_path(current_team.submission),
-            class: "appy-button",
-            target: :_blank %>
-      </p>
-    <% end %>
-  <% elsif @all_scores.any? %>
-    <% if @semifinals_scores.any? %>
-      <%= render(
-        'student/dashboards/full_access_content/scores/score_breakdown',
-        round: :semifinals,
-        round_name: "semifinals",
-        scores: @semifinal_scores
-      ) %>
-    <% end %>
-
-    <% if @quarterfinals_scores.any? %>
-      <%= render(
-        'student/dashboards/full_access_content/scores/score_breakdown',
-        round: :quarterfinals,
-        round_name: "first round",
-        scores: @quarterfinals_scores
-      ) %>
-    <% end %>
+<% if @all_scores.empty? %>
+  <%= render 'student/dashboards/full_access_content/empty_scores' %>
+<% else %>
+  <% if @semifinals_scores.any? %>
+    <%= render(
+      'student/dashboards/full_access_content/scores/score_breakdown',
+      round: :semifinals,
+      round_name: "semifinals",
+      scores: @semifinal_scores
+    ) %>
   <% end %>
-</div>
+
+  <% if @quarterfinals_scores.any? %>
+    <%= render(
+      'student/dashboards/full_access_content/scores/score_breakdown',
+      round: :quarterfinals,
+      round_name: "first round",
+      scores: @quarterfinals_scores
+    ) %>
+  <% end %>
+<% end %>
 
 <% if @all_scores.empty? %>
   <%= render 'student/dashboards/info_sidebar', certs: true %>

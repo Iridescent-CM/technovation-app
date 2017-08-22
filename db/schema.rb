@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620233704) do
+ActiveRecord::Schema.define(version: 20170817231444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170620233704) do
     t.string "browser_version"
     t.string "os_name"
     t.string "os_version"
+    t.datetime "email_confirmed_at"
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -447,11 +448,12 @@ ActiveRecord::Schema.define(version: 20170620233704) do
     t.integer "pending_quarterfinals_submission_scores_count", default: 0, null: false
     t.integer "pending_semifinals_official_submission_scores_count", default: 0, null: false
     t.integer "pending_quarterfinals_official_submission_scores_count", default: 0, null: false
+    t.datetime "deleted_at"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
     t.string "name", null: false
-    t.text "description", null: false
+    t.text "description"
     t.integer "division_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -464,6 +466,7 @@ ActiveRecord::Schema.define(version: 20170620233704) do
     t.string "city"
     t.string "state_province"
     t.string "country"
+    t.datetime "deleted_at"
     t.index ["legacy_id"], name: "index_teams_on_legacy_id"
   end
 
@@ -510,6 +513,15 @@ ActiveRecord::Schema.define(version: 20170620233704) do
     t.index ["team_submission_id"], name: "index_technical_checklists_on_team_submission_id"
   end
 
+  create_table "unconfirmed_email_addresses", force: :cascade do |t|
+    t.string "email"
+    t.bigint "account_id"
+    t.string "confirmation_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_unconfirmed_email_addresses_on_account_id"
+  end
+
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
   add_foreign_key "business_plans", "team_submissions"
@@ -536,4 +548,5 @@ ActiveRecord::Schema.define(version: 20170620233704) do
   add_foreign_key "team_submissions", "teams"
   add_foreign_key "teams", "divisions"
   add_foreign_key "technical_checklists", "team_submissions"
+  add_foreign_key "unconfirmed_email_addresses", "accounts"
 end

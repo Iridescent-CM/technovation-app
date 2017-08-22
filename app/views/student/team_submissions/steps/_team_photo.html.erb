@@ -9,7 +9,7 @@
 
         <div class="ts-about-team__edit-photo-text">
           Edit Team Photo
-          <%= fa_icon("camera") %>
+          <%= web_icon("camera") %>
         </div>
       <% end %>
     <% else %>
@@ -20,7 +20,7 @@
 
         <div class="ts-about-team__edit-photo-text">
           Add Team Photo
-          <%= fa_icon("camera") %>
+          <%= web_icon("camera") %>
         </div>
 
       <% end %>
@@ -39,6 +39,6 @@
   </div>
 
   <%= link_to "Go To Your Team Page",
-    send("#{current_account.type_name}_team_path", current_team),
+    send("#{current_scope}_team_path", current_team),
     class: "ts-about-team__team-quick-link" %>
 </div>

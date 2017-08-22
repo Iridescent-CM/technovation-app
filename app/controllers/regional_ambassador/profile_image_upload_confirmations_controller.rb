@@ -1,5 +1,5 @@
 module RegionalAmbassador
   class ProfileImageUploadConfirmationsController < RegionalAmbassadorController
-    include ProfileImageUploadConfirmationController
+    include PhotoUploadConfirmationController
   end
 end

@@ -1,1 +1,6 @@
-<%= render "team_member_invites/show_#{@invite.status}", url: student_team_member_invite_path(@invite) %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-md-8">
+    <%= render "team_member_invites/show_#{@invite.status}",
+      url: student_team_member_invite_path(@invite) %>
+  </div>
+</div>

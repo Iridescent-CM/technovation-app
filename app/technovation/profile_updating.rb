@@ -5,7 +5,7 @@ class ProfileUpdating
   public
   def initialize(profile, scope = nil)
     @profile = profile
-    @scope = scope || profile.account.type_name
+    @scope = scope || profile.account.scope_name
   end
 
   def self.execute(profile, scope = nil, attrs)
@@ -13,7 +13,7 @@ class ProfileUpdating
   end
 
   def update(attributes)
-    if profile.update_attributes(attributes)
+    if profile.update(attributes)
       perform_callbacks
       true
     else
@@ -46,17 +46,26 @@ class ProfileUpdating
   end
 
   def perform_email_changes_updates
-    Casting.delegating(profile.account => EmailListUpdater) do
+    Casting.delegating(profile.account => EmailUpdater) do
       profile.account.update_email_list_profile(scope)
+      profile.account.uncomfirm_changed_email!
     end
   end
 
-  module EmailListUpdater
+  module EmailUpdater
     def update_email_list_profile(scope)
       if email_list_changes_made?
         UpdateProfileOnEmailListJob.perform_later(
           id, email_before_last_save, "#{scope.upcase}_LIST_ID"
         )
+      end
+    end
+
+    def uncomfirm_changed_email!
+      if saved_change_to_email?
+        update(email_confirmed_at: nil)
+        create_unconfirmed_email_address!(email: email)
+        AccountMailer.confirm_changed_email(id).deliver_later
       end
     end
 

@@ -20,7 +20,7 @@
 <% end %>
 
 <p style="padding: 0; margin: 0 0 1rem;">
-  <%= link_to 'back', send("#{current_account.type_name}_scores_path",
+  <%= link_to 'back', send("#{current_account.scope_name}_scores_path",
                            division: @team.division_name) %>
 </p>
 

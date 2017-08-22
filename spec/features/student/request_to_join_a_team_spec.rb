@@ -17,7 +17,7 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
-      click_button "Request to join #{team.name}"
+      click_button "Ask to join #{team.name}"
     end
 
     scenario "students not on a team request to join an available team" do

@@ -25,6 +25,7 @@ class Account < ActiveRecord::Base
   has_one :judge_profile, dependent: :destroy
   has_one :regional_ambassador_profile, dependent: :destroy
   has_one :signup_attempt, dependent: :destroy
+  has_one :unconfirmed_email_address, dependent: :destroy
 
   has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
@@ -73,6 +74,9 @@ class Account < ActiveRecord::Base
            Season.current.year)
   }
 
+  scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
+  scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
+
   mount_uploader :profile_image, ImageProcessor
 
   has_secure_token :auth_token
@@ -105,7 +109,7 @@ class Account < ActiveRecord::Base
     length: {
       minimum: 8,
       on: :update,
-      if: :changes_require_password?
+      if: :changing_password?
     }
 
   validates :date_of_birth, :first_name, :last_name, presence: true
@@ -123,6 +127,14 @@ class Account < ActiveRecord::Base
       .find_by(
         auth_token: token
       ) or NullAuth.new
+  end
+
+  def email_confirmed!
+    update(email_confirmed_at: Time.current)
+  end
+
+  def email_confirmed?
+    !!email_confirmed_at
   end
 
   def profile_valid?
@@ -206,6 +218,10 @@ class Account < ActiveRecord::Base
     now.year - date_of_birth.year - extra_year
   end
 
+  def age_by_cutoff
+    age(Division.cutoff_date)
+  end
+
   def current_season_registration
     season_registrations.joins(:season)
       .where("seasons.year = ?", Season.current.year)
@@ -219,7 +235,15 @@ class Account < ActiveRecord::Base
       ).exists?
   end
 
-  def type_name(module_name = nil)
+  def type_name(*args)
+    ActiveSupport::Deprecation.warn(
+      "Account#type_name is deprecated. Use View helper #current_scope (preferred) or Account#scope_name if absolutely necessary"
+    )
+    scope_name(*args)
+  end
+
+  def scope_name(module_name = nil)
+    # TODO: this doesn't work well for accounts with multiple scopes
     if module_name and module_name === "judge"
       "judge"
     elsif mentor_profile.present?
@@ -289,6 +313,10 @@ class Account < ActiveRecord::Base
   private
   def changes_require_password?
     !!!skip_existing_password &&
-      (persisted? && (email_changed? || password_digest_changed?))
+      (persisted? && (email_changed? || changing_password?))
+  end
+
+  def changing_password?
+    !!!skip_existing_password && (persisted? && password_digest_changed?)
   end
 end

@@ -1,0 +1,17 @@
+.panel {
+  background: white;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: $radius-default;
+  box-shadow: $shadow-default;
+  margin: 0 0 1rem;
+
+  h1,
+  h2 {
+    text-align: center;
+  }
+}
+
+.legend {
+  background: rgba(0, 0, 0, 0.1);
+}

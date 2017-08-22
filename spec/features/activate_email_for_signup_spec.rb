@@ -99,7 +99,7 @@ RSpec.feature "Activate your email to sign up" do
 
     visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
 
-    click_link "Student sign up"
+    click_link I18n.t("views.signups.new.signup_link.student")
 
     fill_in "First name", with: "Student"
     fill_in "Last name", with: "Test"

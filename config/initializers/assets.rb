@@ -13,11 +13,24 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(
   email.css
+
+  public.css
   admin.css
-  ra.css
-  ra.js
+  regional_ambassador.css
+  student.css
+  mentor.css
+  judge.css
+
+  public.js
   admin.js
-  technovation-typeahead.js
-  Chart.bundle.js
-  chartkick.js
+  regional_ambassador.js
+  student.js
+  mentor.js
+  judge.js
+
+  location-details.js
+
+  location-based-search.js
+  text-based-search.js
+  toggle-based-search.js
 )

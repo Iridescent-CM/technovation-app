@@ -1,0 +1,34 @@
+<h5 class="reset">Other pitch events in your region:</h5>
+
+<ul class="list__events">
+  <% events.each do |event| %>
+    <li>
+      <%= event.name %><br />
+      <%= event.city %><br />
+
+      <strong>
+        <%= event.starts_at
+          .in_time_zone(event.timezone)
+          .strftime("%A, %B %e") %>
+      </strong>
+
+      <br />
+
+      <%= event.starts_at
+        .in_time_zone(event.timezone)
+        .strftime("%-I:%M%P") %>
+
+      &ndash;
+
+      <%= event.ends_at
+        .in_time_zone(event.timezone)
+        .strftime("%-I:%M%P %Z") %>
+
+      <br />
+
+      <%= link_to 'view full details',
+        [current_scope, event],
+        class: "button small" %>
+    </li>
+  <% end %>
+</ul>

@@ -22,7 +22,8 @@ en:
         account:
           attributes:
             existing_password:
-              invalid: "is required to change your email address or password"
+              blank: "is required to change your email address or password"
+              invalid: "is incorrect"
 
         honor_code_agreement:
           attributes:

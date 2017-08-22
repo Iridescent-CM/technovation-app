@@ -1,15 +1,33 @@
+<% provide(
+  :js,
+  javascript_include_tag(
+    "location-based-search",
+    'data-turbolinks-track' => true
+  )
+) %>
+
+<% f ||= false %>
+
 <%= label_tag :nearby, t("views.application.search_near") %>
 
-<%= text_field_tag :nearby,
-                   params[:nearby],
-                   id: "geocoded",
-                   data: { location_field: true },
-                   onblur: "ga('send', 'event', 'search', 'geocoded=' + this.value);" %>
+<div class="location-based-search">
+  <% if f # TODO: shim until team search is updated %>
+    <%= f.text_field :nearby,
+      value: params[:nearby],
+      data: { location_field: true } %>
+  <% else %>
+    <%= text_field_tag :nearby,
+      params[:nearby],
+      data: { location_field: true } %>
+  <% end %>
 
-<%= link_to t('views.application.anywhere'), '#',
-  class: "appy-button appy-button--sm",
-  data: { update_location: "anywhere" } %>
+  <p class="buttons">
+    <%= link_to t('views.application.near_me'), '#',
+      class: "button small",
+      data: { update_location: account.address_details } %>
 
-<%= link_to t('views.application.near_me'), '#',
-  class: "appy-button appy-button--sm",
-  data: { update_location: account.address_details } %>
+    <%= link_to t('views.application.anywhere'), '#',
+      class: "button small secondary",
+      data: { update_location: "anywhere" } %>
+  </p>
+</div>

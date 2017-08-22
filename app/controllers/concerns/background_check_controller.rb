@@ -1,7 +1,7 @@
 module BackgroundCheckController
   def new
     if current_profile.background_check_candidate_id.present?
-      redirect_to [current_account.type_name, :background_check, id: current_profile.background_check_candidate_id]
+      redirect_to [current_scope, :background_check, id: current_profile.background_check_candidate_id]
     else
       @candidate = BackgroundCheckCandidate.new(account: current_account)
     end
@@ -23,7 +23,7 @@ module BackgroundCheckController
         candidate_id: @candidate.id,
         report_id: @candidate.report_id
       })
-      redirect_to [current_account.type_name, :dashboard],
+      redirect_to [current_scope, :dashboard],
         success: "Thank you for submitting your background check."
     else
       render :new
@@ -32,10 +32,18 @@ module BackgroundCheckController
 
   private
   def candidate_params
-    params.require(:background_check_candidate)
-      .permit(:first_name, :middle_name, :last_name, :email, :zipcode,
-    :date_of_birth, :ssn, :driver_license_state, :copy_requested).tap do |tapped|
-        tapped[:driver_license_state] = tapped[:driver_license_state].strip.upcase
-      end
+    params.require(:background_check_candidate).permit(
+      :first_name,
+      :middle_name,
+      :last_name,
+      :email,
+      :zipcode,
+      :date_of_birth,
+      :ssn,
+      :driver_license_state,
+      :copy_requested
+    ).tap do |tapped|
+      tapped[:driver_license_state] = tapped[:driver_license_state].strip.upcase
+    end
   end
 end

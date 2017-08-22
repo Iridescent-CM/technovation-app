@@ -41,7 +41,12 @@ class TeamMemberInvite < ActiveRecord::Base
   validate :correct_invitee_type, on: :create
 
   delegate :email, to: :inviter, prefix: true
+
   delegate :name, to: :team, prefix: true
+
+  delegate :first_name,
+           :scope_name,
+    to: :invitee, prefix: true
 
   def to_param
     invite_token

@@ -10,7 +10,7 @@ class MessageMailer < ApplicationMailer
       @regarding_link_text = "View the full details of the event"
 
       @regarding_url = public_send(
-        "#{recipient.type_name}_#{message.regarding_type.underscore}_url",
+        "#{recipient.scope_name}_#{message.regarding_type.underscore}_url",
         message.regarding
       )
     end

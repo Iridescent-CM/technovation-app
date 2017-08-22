@@ -3,9 +3,9 @@ module Student
     before_action :require_unauthenticated
 
     before_action -> {
-      attempt = (SignupAttempt.pending | SignupAttempt.temporary_password).detect do |a|
-        a.activation_token == params[:token]
-      end
+      attempt = (
+        SignupAttempt.pending | SignupAttempt.temporary_password
+      ).detect { |a| a.activation_token == params[:token] }
 
       if !!attempt and attempt.pending?
         attempt.active!
@@ -20,8 +20,7 @@ module Student
 
     def new
       if token = cookies[:signup_token]
-        email = SignupAttempt.find_by!(signup_token: token).email
-        @student_profile = StudentProfile.new(account_attributes: { email: email })
+        setup_valid_profile_from_signup_attempt(:student, token)
       else
         redirect_to root_path
       end
@@ -59,11 +58,15 @@ module Student
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
+        attempt = SignupAttempt.find_by!(
+          signup_token: cookies.fetch(:signup_token)
+        )
+
         tapped[:account_attributes][:email] = attempt.email
 
         unless attempt.temporary_password?
-          tapped[:account_attributes][:password_digest] = attempt.password_digest
+          tapped[:account_attributes][:password_digest] =
+            attempt.password_digest
         end
       end
     end

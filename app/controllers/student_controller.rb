@@ -10,7 +10,8 @@ class StudentController < ApplicationController
       redirect_to interruptions_path(issue: :honor_code)
     end
   }, unless: -> {
-    %w{interruptions
+    %w{
+      interruptions
       location_details
       cookies
       profiles
@@ -23,6 +24,14 @@ class StudentController < ApplicationController
   # For Airbrake Notifier
   def current_user
     current_account
+  end
+
+  def current_scope
+    "student"
+  end
+
+  def current_team
+    current_student.team
   end
 
   private
@@ -47,13 +56,4 @@ class StudentController < ApplicationController
   def current_student
     @current_student ||= current_account.student_profile
   end
-
-  def current_team
-    current_student.team
-  end
-
-  def model_name
-    "student"
-  end
-  alias :user_scope :model_name
 end

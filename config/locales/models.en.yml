@@ -2,8 +2,10 @@ en:
   models:
     account:
       address: "Location"
+      age: "Age"
       class_name: "account"
       change_password: "Change your password"
+      email: "Email"
       first_name: "First name"
       full_name: "Name"
       geocoded: "Postal code -OR- City & State/Province"
@@ -63,6 +65,7 @@ en:
       class_name: "team"
       accepting_student_requests: "Other students can request to join this team."
       accepting_mentor_requests: "Other mentors can request to become mentors of this team."
+      description: "Summary"
 
     team_member_invite:
       invitee_email: "Email"

@@ -1,0 +1,17 @@
+<footer id="site-footer">
+  <p>
+    <%= t("views.application.site_title") %><br />
+
+    <%= link_to t("views.application.terms_of_use"),
+      "http://iridescentlearning.org/terms-of-use/" %>&nbsp;|
+
+    <%= link_to t("views.application.privacy_policy"),
+      "http://iridescentlearning.org/privacy-policy/" %>&nbsp;|
+
+    <%= link_to "Help & Support",
+      "https://iridescentsupport.zendesk.com/hc/en-us",
+      target: :_blank %>
+  </p>
+
+  <%= render 'social_icon_links' %>
+</footer>

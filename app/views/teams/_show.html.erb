@@ -1,77 +1,74 @@
-<div class="dashboard-page-info">
-  <div class="team-photo">
-    <%= image_tag @team.team_photo_url, width: 450, height: 300 %>
+<div class="grid tabs tabs-vertical">
+  <div class="grid__col-sm-3">
+    <%= render 'teams/intro',
+      hidden_on: %w{xs xxs},
+      modal_id: "team_photo_desktop",
+      team: team %>
+
+    <%= render 'teams/edit_menu' %>
   </div>
 
-  <h3 class="team_name"><%= team.name %></h3>
+  <div class="content grid__col-sm-9">
+    <div class="tab-content" id="students">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
 
-  <p>
-    Primary location: <%= @team.primary_location %><br />
-    <%= link_to "Edit team location",
-      send("edit_#{account.type_name}_team_location_path", @team) %>
-  </p>
-
-  <p class="team_division">
-    <%= t("views.teams.show.division_name", name: team.division_name.humanize) %>
-  </p>
-
-  <% if team.current? and SeasonToggles.team_submissions_editable? %>
-    <p class="standalone-buttons">
-      <% if @team.submission.present? %>
-        <%= link_to "Edit this team's submission",
-          [account.type_name, @team.submission, { team_id: @team.id }],
-          class: "appy-button appy-button--sm" %>
-      <% else %>
-        <%= link_to "Start this team's submission now",
-          [:new, account.type_name, :team_submission, { team_id: @team.id }],
-          class: "appy-button appy-button--sm" %>
-      <% end %>
-    </p>
-  <% end %>
-
-  <p class="team_description"><%= team.description %></p>
-
-  <% if team.current? %>
-    <p class="standalone-buttons">
-      <%= link_to t("controllers.teams.edit.link"),
-        [:edit, account.type_name, team],
-        class: "appy-button appy-button--sm" %>
-    </p>
-
-    <p style="margin-top: 2rem;">
-      <%= render 'teams/upload_team_photo',
-        uploader: @uploader,
-        namespace: account.type_name,
-        team: team %>
-    </p>
-
-    <%= simple_form_for [account.type_name, @team],
-      html: { class: "remote_checkboxes" },
-      remote: true do |f| %>
-      <%= f.input :accepting_student_requests,
-        as: :boolean,
-        label: t("models.team.accepting_student_requests") %>
-
-      <%= f.input :accepting_mentor_requests,
-        as: :boolean,
-        label: t("models.team.accepting_mentor_requests") %>
-    <% end %>
-  <% end %>
-
-  <div class="team-memberships">
-    <%= render "teams/member_list", team: team %>
-    <%= render "teams/mentor_list", team: team %>
-  </div>
-
-  <% if SeasonToggles.team_building_enabled? %>
-    <div>
-      <% if team.current? && team.spot_available? %>
-        <%= render "teams/invite_students" %>
-      <% elsif team.spot_available? %>
-        <%= t("views.teams.show.past_team") %>
-      <% else %>
-        <%= t("views.teams.show.members_full") %>
-      <% end %>
+      <%= render 'teams/edit_students', team: team %>
     </div>
-  <% end %>
+
+    <div class="tab-content" id="mentors">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
+
+      <%= render "teams/mentor_list", team: team %>
+    </div>
+
+    <div class="tab-content hidden-md hidden-lg hidden-sm" id="photo">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
+
+      <%= render 'teams/intro',
+        modal_id: "team_photo_mobile",
+        team: team %>
+    </div>
+
+    <div class="tab-content" id="description">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
+
+      <%= render 'teams/edit_description', team: team %>
+    </div>
+
+    <div class="tab-content" id="location">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
+
+      <%= render 'teams/location', team: team %>
+    </div>
+
+    <div class="tab-content" id="division">
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <h1 class="content-heading"><%= team.name %></h1>
+        </div>
+      </div>
+
+      <%= render "teams/division", team: team %>
+    </div>
+  </div>
 </div>

@@ -19,7 +19,7 @@ class TeamMailer < ApplicationMailer
     @ambassador_name = event.regional_ambassador_profile.full_name
     @ambassador_email = event.regional_ambassador_profile.email
 
-    @event_url = send("#{@member.type_name}_regional_pitch_event_url", event)
+    @event_url = send("#{@member.scope_name}_regional_pitch_event_url", event)
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
@@ -43,7 +43,7 @@ class TeamMailer < ApplicationMailer
     @event = event
     @member = member
 
-    @event_url = send("#{@member.type_name}_regional_pitch_event_url", event)
+    @event_url = send("#{@member.scope_name}_regional_pitch_event_url", event)
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
@@ -103,15 +103,15 @@ class TeamMailer < ApplicationMailer
 
   def join_request(recipient, join_request)
     @first_name = join_request.requestor_first_name
-    @role_name = join_request.requestor_type_name
+    @role_name = join_request.requestor_scope_name
     @team_name = join_request.joinable_name
-    @extra = I18n.translate("team_mailer.join_request.extra.#{join_request.requestor_type_name}", name: @first_name)
-    @url = send("#{recipient.type_name}_team_url", join_request.joinable)
+    @extra = I18n.translate("team_mailer.join_request.extra.#{join_request.requestor_scope_name}", name: @first_name)
+    @url = send("#{recipient.scope_name}_team_url", join_request.joinable)
 
     I18n.with_locale(recipient.locale) do
       mail to: recipient.email,
           subject: I18n.translate("team_mailer.join_request.subject",
-                                  role_name: join_request.requestor_type_name)
+                                  role_name: join_request.requestor_scope_name)
     end
   end
 

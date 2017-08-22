@@ -1,14 +1,24 @@
-<div class="flex-row">
-  <div class="flex-col-sm-12">
-    <% if edit %>
+<div class="grid">
+  <div class="grid__col-auto">
+    <% if editing %>
+      <%= simple_form_for account,
+        html: { class: "remote_checkboxes full-size" },
+        remote: true do |f| %>
 
-      <%= simple_form_for account, html: { class: "remote_checkboxes full-size" }, remote: true do |f| %>
-        <%= f.input :accepting_team_invites, as: :boolean, label: t("models.mentor_profile.accepting_team_invites") %>
-        <%= f.input :connect_with_mentors, as: :boolean, label: t("models.mentor_profile.connect_with_mentors") %>
-        <%= f.input :virtual, as: :boolean, label: t("models.mentor_profile.virtual") %>
+        <%= f.input :accepting_team_invites,
+          as: :boolean,
+          label: t("models.mentor_profile.accepting_team_invites") %>
+
+        <%= f.input :connect_with_mentors,
+          as: :boolean,
+          label: t("models.mentor_profile.connect_with_mentors") %>
+
+        <%= f.input :virtual,
+          as: :boolean,
+          label: t("models.mentor_profile.virtual") %>
       <% end %>
-
     <% end %>
+
     <dl>
       <dt><%= t('models.profile.bio') %></dt>
       <dd><%= simple_format account.bio %></dd>

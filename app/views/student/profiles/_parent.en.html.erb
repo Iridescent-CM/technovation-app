@@ -1,0 +1,32 @@
+<% if current_student.parental_consent.present? %>
+  <div class="notice notice--success">
+    Your parent/guardian has given you permission to compete in Technovation!
+  </div>
+
+  <dl>
+    <dt>Parent/guardian name</dt>
+    <dd><%= current_student.parent_guardian_name %></dd>
+
+    <dt>Parent/guardian email</dt>
+    <dd><%= current_student.parent_guardian_email %></dd>
+
+    <dt>Signed on:</dt>
+    <dd><%= current_student.parental_consent.signed_at.strftime("%B %e, %Y") %></dd>
+  </dl>
+
+  <p>
+    <%= link_to "Change your parent/guardian details",
+      new_student_parental_consent_notice_path(
+        back: student_profile_path(anchor: "parent")
+      ),
+      class: "button" %>
+  </p>
+
+  <p class="hint">Changing this email will send and require a new consent.</p>
+<% elsif current_student.parent_guardian_email.blank? %>
+  <%= render "student/dashboards/completion_steps/parental_consent_init" %>
+<% else %>
+  <%= render(
+    "student/dashboards/completion_steps/parental_consent_troubleshoot"
+  ) %>
+<% end %>

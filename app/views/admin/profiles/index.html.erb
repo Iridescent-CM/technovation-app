@@ -21,7 +21,7 @@
         <% @accounts.order('accounts.created_at DESC').each do |account| %>
           <div class="row">
             <div class="cell">
-              <%= account.type_name %>
+              <%= account.scope_name %>
             </div>
 
             <div class="cell">

@@ -9,7 +9,7 @@ class AdminProfile < ActiveRecord::Base
     true
   end
 
-  def type_name
+  def scope_name
     "admin"
   end
 

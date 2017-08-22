@@ -1,0 +1,35 @@
+<% if not current_team.submission.complete? or
+    not current_team.submission.present? %>
+  <h3>No Scores Available</h3>
+
+  <p>
+    Unfortunately, no scores are available for your team because your
+    team's submission was incomplete.
+    Try sharing the public version with friends and
+    mentors for feedback on how to improve for next year!
+  </p>
+
+  <p>
+    <%= link_to "Open your submission page",
+        app_path(current_team.submission),
+        class: "button",
+        target: :_blank %>
+  </p>
+<% else %>
+  <h3>Congratulations!</h3>
+
+  <p>
+    Congratulations on completing the <%= Season.current.year %>
+    season of Technovation! Use the feedback you received at your
+    pitch event to help you learn more and make sure to participate
+    in Technovation next year. You should be proud of your work and
+    share your submission with friends and mentors!
+  </p>
+
+  <p>
+    <%= link_to "Open your submission page",
+        app_path(current_team.submission),
+        class: "button",
+        target: :_blank %>
+  </p>
+<% end %>

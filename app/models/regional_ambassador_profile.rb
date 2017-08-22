@@ -1,5 +1,9 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
-  scope :full_access, -> { approved.joins(:account).where("accounts.location_confirmed = ?", true) }
+  scope :full_access, -> {
+    approved.joins(:account)
+      .where("accounts.location_confirmed = ?", true)
+      .where("accounts.email_confirmed_at IS NOT NULL")
+  }
 
   belongs_to :account
   accepts_nested_attributes_for :account
@@ -56,14 +60,18 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   def full_access_enabled?
-    approved? and consent_signed? and location_confirmed? and background_check_complete?
+    account.email_confirmed? and
+      approved? and
+        consent_signed? and
+          location_confirmed? and
+            background_check_complete?
   end
 
   def authenticated?
     true
   end
 
-  def type_name
+  def scope_name
     "regional_ambassador"
   end
 

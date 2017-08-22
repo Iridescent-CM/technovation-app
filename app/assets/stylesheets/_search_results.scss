@@ -1,0 +1,129 @@
+.search-toggles {
+  margin: 1rem 0 0;
+  border-top: 1px solid #ccc;
+
+  h3 {
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+}
+
+.search-result-foot {
+  width: auto;
+  box-shadow: $shadow-default;
+  padding: 0 1rem 1rem;
+  background: white;
+  position: relative;
+  z-index: $z-under-menu;
+  margin-top: -1px;
+  margin-right: 1rem;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.search-result-head {
+  margin: 1rem 1rem 0 0;
+  height: 100%;
+  position: relative;
+  box-shadow: $shadow-default;
+  padding: 1rem;
+  background: white;
+
+  h3 {
+    margin: 0;
+  }
+
+  p {
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+
+  .badges {
+    padding: 0 0 1rem;
+    -webkit-font-smoothing: antialiased;
+
+    .badge {
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: $radius-default;
+      box-shadow: $shadow-small;
+
+      &.badge-success {
+        background: $success;
+      }
+
+      &.badge-notice {
+        background: $info;
+      }
+    }
+  }
+
+  .flags {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+    z-index: $z-under-shade;
+    -webkit-font-smoothing: antialiased;
+
+    .flag {
+      display: block;
+      margin: 0 0 0.5rem;
+      padding: 0.2rem 0.5rem;
+      text-align: right;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: $shadow-small;
+
+      &.flag-success {
+        background: $mulberry;
+        color: white;
+      }
+
+      &.flag-notice {
+        background: $marine;
+      }
+    }
+  }
+}
+
+.pagination {
+  padding: 1rem 0;
+
+  a,
+  .current {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .current {
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  a {
+    background: white;
+    box-shadow: $shadow-default;
+  }
+
+  .disabled {
+    color: #999;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 479px) {
+  .pagination {
+    a,
+   .current {
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+  }
+}

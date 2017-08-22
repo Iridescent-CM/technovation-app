@@ -1,22 +1,27 @@
-<h1><%= t("views.profile_requirements.create_join_team.heading") %></h1>
+<h1 class="content-heading">
+  <%= t("views.profile_requirements.create_join_team.heading") %>
+</h1>
 
 <p>
   <%= t("views.profile_requirements.create_join_team.labels.student") %>
 </p>
 
-<p>
-  <%= link_to t("views.profile_requirements.create_join_team.links.pre_unit.text"),
-    "http://www.technovationchallenge.org/curriculum/buildateam/",
-    target: "_blank" %>
-  <%= t("views.profile_requirements.create_join_team.links.pre_unit.postfix") %>
-</p>
-
-<p class="standalone-buttons">
+<p class="buttons">
   <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
     [:new, :student, :team_search],
-    class: "appy-button" %>
+    class: "button small" %>
 
   <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
     [:new, :student, :team],
-    class: "appy-button" %>
+    class: "button secondary small" %>
+</p>
+
+<p>
+  Use our
+
+  <%= link_to "guide to team building",
+    "http://www.technovationchallenge.org/curriculum/buildateam/",
+    target: "_blank" %>
+
+  if you need some help to get started.
 </p>

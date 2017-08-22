@@ -1,0 +1,56 @@
+<p>
+  You entered these details for us to send a permission form
+  to your parent or guardian:
+</p>
+
+<dl>
+  <dt>Name:</dt>
+  <dd><%= current_student.parent_guardian_name %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= current_student.parent_guardian_email %></dd>
+</dl>
+
+<p>
+  Ask them to check their email inbox and sign the form
+  so that you can continue.
+</p>
+
+<hr />
+
+<p>
+  <strong>Is there a problem receiving the email?</strong>
+  Try these steps:
+</p>
+
+<ul>
+  <li>
+    <%= link_to "Edit the email address",
+      new_student_parental_consent_notice_path %>
+    that you entered
+  </li>
+
+  <li>
+    Tell them to check their spam folder
+  </li>
+
+  <li>
+    Have them add
+    <span class="ex">mailer@technovationchallenge.org</span>
+    to their email contacts
+  </li>
+
+  <li>
+    <%= link_to "Try re-sending the email",
+      student_parental_consent_notice_path,
+      data: { method: :post } %>
+  </li>
+</ul>
+
+<hr />
+
+<p>
+  In the meantime, please complete
+  any other remaining steps
+  that you may have.
+</p>

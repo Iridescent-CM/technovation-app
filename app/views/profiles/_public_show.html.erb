@@ -1,16 +1,20 @@
 <% title ||= t("views.accounts.show.title") %>
 
-<div class="dashboard-page-info">
-  <h3><%= title %></h3>
+<div class="grid grid--bleed">
+  <div class="grid__col-auto">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= title %></h1>
+    </div>
+  </div>
 </div>
 
-<div class="flex-row">
-  <div class="flex-col-sm-3 well profile-avatar">
-    <%= image_tag account.profile_image_url %>
+<div class="grid grid--bleed">
+  <div class="grid__col-sm-4 grid__cell">
+      <%= image_tag account.profile_image_url, class: "grid__cell-img" %>
   </div>
 
-  <div class="flex-row flex-col-sm-9 account-info">
-    <dl class="flex-col-sm-6 account-basic">
+  <div class="grid__col-sm-4">
+    <dl>
       <dt><%= t('models.account.first_name') %></dt>
       <dd><%= account.first_name %></dd>
 
@@ -22,22 +26,23 @@
       <dt><%= t('models.account.address') %></dt>
       <dd><%= account.address_details %></dd>
     </dl>
+  </div>
 
-    <div class="flex-col-sm-6 account-special">
-      <dl>
-        <%= render "#{account.type_name}/profiles/public_profile", account: account %>
-      </dl>
-    </div>
-
-    <% if account.respond_to?(:bio) %>
-      <div class="flex-row">
-        <div class="flex-col-sm-12">
-          <dl>
-            <dt><%= t('models.profile.bio') %></dt>
-            <dd><%= simple_format account.bio %></dd>
-          </dl>
-        </div>
-      </div>
-    <% end %>
+  <div class="grid__col-sm-4">
+    <dl>
+      <%= render "#{account.scope_name}/profiles/public_profile",
+        account: account %>
+    </dl>
   </div>
 </div>
+
+<% if account.respond_to?(:bio) %>
+  <div class="grid">
+    <div class="grid__col-auto grid__col--bleed-x">
+      <dl>
+        <dt><%= t('models.profile.bio') %></dt>
+        <dd><%= simple_format account.bio %></dd>
+      </dl>
+    </div>
+  </div>
+<% end %>

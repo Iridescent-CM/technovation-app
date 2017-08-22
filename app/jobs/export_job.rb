@@ -32,7 +32,7 @@ class ExportJob < ActiveJob::Base
       account_ids.each do |account_id|
         account = Account.find(account_id)
 
-        csv << [account.type_name, account.created_at, account.first_name, account.last_name,
+        csv << [account.scope_name, account.created_at, account.first_name, account.last_name,
                 account.email, account.teams.current.flat_map(&:name).to_sentence,
                 account.division, "#{account.referred_by} #{account.referred_by_other}",
                 account.get_school_company_name, account.city, account.state_province,

@@ -2,11 +2,12 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassadors registration" do
   before do
+    SeasonToggles.enable_signup(:regional_ambassador)
     set_signup_token("regional@ambassador.com")
     ActionMailer::Base.deliveries.clear
 
     visit signup_path
-    click_link "Apply to become a Regional Ambassador"
+    click_link I18n.t("views.signups.new.signup_link.regional_ambassador")
 
     fill_in "First name", with: "Regional"
     fill_in "Last name", with: "McGee"
@@ -16,7 +17,8 @@ RSpec.feature "Regional Ambassadors registration" do
     fill_in "Organization/company name", with: "John Hughes Inc."
     fill_in "Job title", with: "Engineer"
     fill_in "Tell us about yourself", with: "I am cool"
-    select "I'm new!", from: "In which year did you become a regional ambassador?"
+    select "I'm new!",
+      from: "In which year did you become a regional ambassador?"
 
     select "Other", from: "How did you hear about Technovation?"
     fill_in "regional_ambassador_profile[account_attributes][referred_by_other]",
@@ -38,17 +40,24 @@ RSpec.feature "Regional Ambassadors registration" do
   end
 
   scenario "admins receive an email about it" do
-    expect(ActionMailer::Base.deliveries.count).not_to be_zero, "no email sent"
+    expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+      "no email sent"
+
     emails = ActionMailer::Base.deliveries
-    expect(emails.collect(&:to)).to include(["mailer@technovationchallenge.org"])
+
+    expect(emails.collect(&:to)).to include([
+      "mailer@technovationchallenge.org"
+    ])
   end
 
   scenario "saves profile data" do
-    expect(RegionalAmbassadorProfile.last.ambassador_since_year).to eq("I'm new!")
+    expect(RegionalAmbassadorProfile.last.ambassador_since_year).to eq(
+      "I'm new!"
+    )
   end
 
   scenario "saves location details" do
-    click_link "Enter your location now"
+    click_link "Update your location"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"

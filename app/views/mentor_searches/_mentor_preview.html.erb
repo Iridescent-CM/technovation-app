@@ -1,55 +1,53 @@
-<div class="mentor">
-  <div class="mentor__card">
-    <div class="mentor__avatar">
-      <object data="<%= mentor_preview.profile_image_url %>" type="image/png">
-        <%= image_tag mentor_preview.profile_image_url %>
-      </object>
-    </div>
+<div class="grid__col-sm-4 grid__col--bleed">
+  <div class="search-result-head">
+    <%= image_tag mentor_preview.profile_image_url, class: "grid__cell-img" %>
 
-    <div class="mentor__name">
+    <h3>
       <%= mentor_preview.full_name %>
-    </div>
+    </h3>
 
-    <div class="mentor__location">
-      <%= mentor_preview.address_details %>
-    </div>
+    <p><%= mentor_preview.address_details %></p>
 
-    <div class="mentor__company">
-      <%= mentor_preview.school_company_name %>
-    </div>
+    <p><%= mentor_preview.school_company_name %></p>
 
-    <div class="mentor__expertise">
+    <div class="badges">
       <% mentor_preview.expertises.each do |expertise| %>
-        <span class="badge-<%= @search_filter.badge_css(expertise) %>">
+        <span class="badge badge-<%= @search_filter.badge_css(expertise) %>">
           <%= expertise.name %>
         </span>
       <% end %>
     </div>
 
-    <%= link_to "View Full Profile",
-      send("#{account.type_name}_mentor_path", mentor_preview),
-      class: 'mentor__profile-link appy-button' %>
-
-    <div class="mentor__availability-badges">
+    <div class="flags">
       <% if mentor_preview.is_on_team? %>
-        <span class="mentor__availability-badge badge-notice">
+        <span class="flag flag-notice">
           <%= t("views.mentor_searches.new.mentor_preview.on_team") %>
         </span>
       <% else %>
-        <span class="mentor__availability-badge badge-success">
+        <span class="flag flag-success">
           <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
         </span>
       <% end %>
 
       <% if mentor_preview.virtual? %>
-        <span class="mentor__availability-badge badge-success">
+        <span class="flag flag-success">
           <%= t("views.mentor_searches.new.mentor_preview.virtual") %>
         </span>
       <% else %>
-        <span class="mentor__availability-badge badge-notice">
+        <span class="flag flag-notice">
           <%= t("views.mentor_searches.new.mentor_preview.in_person") %>
         </span>
       <% end %>
     </div>
+  </div>
+
+  <div class="search-result-foot grid--justify-center grid__cell-footer">
+    <%= link_to "Ask #{mentor_preview.first_name} to mentor your team",
+      send(
+        "#{account.scope_name}_mentor_path",
+        mentor_preview,
+        { review_before: true }
+      ),
+      class: 'button' %>
   </div>
 </div>

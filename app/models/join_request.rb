@@ -1,10 +1,11 @@
 class JoinRequest < ActiveRecord::Base
   after_create :notify_requested_joinable
-  after_update :notify_requestor
 
   scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
 
   scope :for_students, -> { where(requestor_type: "StudentProfile") }
+
+  scope :for_mentors, -> { where(requestor_type: "MentorProfile") }
 
   belongs_to :requestor, polymorphic: true
   belongs_to :joinable, polymorphic: true, touch: true
@@ -14,7 +15,7 @@ class JoinRequest < ActiveRecord::Base
     prefix: true
 
   delegate :first_name,
-           :type_name,
+           :scope_name,
            :full_name,
            :email,
            :account_id,
@@ -22,13 +23,9 @@ class JoinRequest < ActiveRecord::Base
     prefix: true
 
   def approved!
-    update_attributes(accepted_at: Time.current)
-
-    if requestor_type_name == 'student'
-      self.class.pending.select { |j|
-        j.requestor_id == requestor_id
-      }.each(&:destroy)
-    end
+    ActiveSupport::Deprecation.warn(
+      "JoinRequest#approved! is deprecated. Please use JoinRequestApproved.(join_request)"
+    )
   end
 
   def approved?
@@ -36,7 +33,9 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def declined!
-    update_attributes(declined_at: Time.current)
+    ActiveSupport::Deprecation.warn(
+      "JoinRequest#declined! is deprecated. Please use JoinRequestDeclined.(join_request)"
+    )
   end
 
   def declined?
@@ -71,12 +70,6 @@ class JoinRequest < ActiveRecord::Base
   def notify_requested_joinable
     joinable.members.each do |recipient|
       TeamMailer.join_request(recipient, self).deliver_later
-    end
-  end
-
-  def notify_requestor
-    if saved_change_to_accepted_at? or saved_change_to_declined_at?
-      TeamMailer.public_send("#{requestor_type_name}_join_request_#{status.underscore}", self).deliver_later
     end
   end
 end

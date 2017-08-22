@@ -1,57 +1,35 @@
-<div class="team-search">
-  <h1 class="appy-title">
-    <%= t("views.team_searches.new.title") %>
-  </h1>
+<% provide :title, "Search for a team" %>
 
-  <p class="appy-subtitle">
-    <%= t("views.team_searches.new.intro") %>
-  </p>
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= t("views.team_searches.new.title") %></h1>
 
-  <div class="search-panel-and-results">
-    <div class="search-panel-and-results__search search-filters">
-      <div class="search-filters__heading">
-        <h4><%= t("views.team_searches.new.filter_heading") %></h4>
-      </div>
+      <p><%= t("views.team_searches.new.intro") %></p>
+    </div>
+  </div>
+</div>
 
-      <div class="search-filters__form-wrapper">
-        <%= form_tag request.fullpath, method: :get do %>
-          <div class="search-filters__text">
-            <%= label_tag :text, "Search by name" %>
+<div class="grid">
+  <div class="grid__col-sm-3">
+    <div class="sidebar">
+      <%= render "team_searches/filter_options", account: account %>
+    </div>
+  </div>
 
-            <%= text_field_tag :text,
-              params[:text],
-              placeholder: "Press enter after typing" %>
-          </div>
+  <div class="grid__col-sm-9">
+    <h3>Available Teams</h3>
 
-          <div class="search-filters__location">
-            <%= render 'searches/location_options', account: account %>
-          </div>
+    <div class="grid">
+      <%= render partial: "team_searches/result", collection: teams %>
 
-          <%= label_tag nil, t("views.application.division") %>
-
-          <% Division.names.each do |name, id| %>
-            <%= label_tag do %>
-              <%= check_box_tag "division_enums[]", id,
-                params[:division_enums].map(&:to_i).include?(id) %>
-              <%= fa_icon "check", class: "pseudo-checkbox" %>
-              <%= name.humanize %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
+      <% if teams.empty? %>
+        <div class="grid__col-auto grid__col--bleed">
+          <%= t("views.team_searches.new.no_results") %>
+        </div>
+      <% end %>
     </div>
 
-    <div class="search-panel-and-results__results">
-      <h2 class="appy-heading-lg">
-        <%= t("views.team_searches.new.results_heading") %>
-      </h2>
-      <div class="team-search__teams-wrapper">
-        <%= render(partial: "team_searches/result",
-                   collection: teams,
-                   locals: { account_type: account.type_name }) or
-              t("views.team_searches.new.no_results") %>
-      </div>
-      <%= will_paginate teams %>
-    </div>
+    <%= will_paginate teams %>
   </div>
 </div>

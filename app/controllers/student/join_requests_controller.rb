@@ -15,13 +15,13 @@ class Student::JoinRequestsController < StudentController
     status = params.fetch(:status)
 
     join_request = JoinRequest.find(params.fetch(:id))
-    join_request.public_send("#{status}!")
+    "join_request_#{status}".camelize.constantize.(join_request)
 
-    if status == "approved"
-      TeamRosterManaging.add(join_request.joinable, join_request.requestor)
-    end
-
-    redirect_back fallback_location: student_team_path(current_team),
+    redirect_back fallback_location: student_team_path(
+      current_team,
+      anchor: join_request.requestor_scope_name.pluralize
+    ),
+      anchor: join_request.requestor_scope_name.pluralize,
       success: t("controllers.student.join_requests.update.success",
                  name: join_request.requestor_first_name,
                  status: params.fetch(:status))

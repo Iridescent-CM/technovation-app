@@ -8,10 +8,12 @@ RSpec.describe Student::MentorInvitesController do
     before do
       sign_in(student)
       request.env['HTTP_REFERER'] = '/'
-      post :create, params: { mentor_invite: {
-                      team_id: student.team_id,
-                      invitee_email: mentor.email,
-                    } }
+      post :create, params: {
+        mentor_invite: {
+          team_id: student.team_id,
+          invitee_email: mentor.email,
+        }
+      }
     end
 
     it "sets an invite for the team and mentor" do
@@ -21,7 +23,9 @@ RSpec.describe Student::MentorInvitesController do
     end
 
     it "redirects to the team page" do
-      expect(response).to redirect_to(student_team_path(student.team))
+      expect(response).to redirect_to(
+        student_team_path(student.team, anchor: "mentors")
+      )
     end
   end
 end

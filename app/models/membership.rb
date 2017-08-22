@@ -15,4 +15,6 @@ class Membership < ActiveRecord::Base
   delegate :address_details, :city, :state_province, :country, :email,
     to: :member,
     prefix: true
+
+  validates :member_id, uniqueness: { scope: [:joinable_id, :member_type] }
 end

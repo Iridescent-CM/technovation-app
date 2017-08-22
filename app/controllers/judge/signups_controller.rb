@@ -4,8 +4,7 @@ module Judge
 
     def new
       if token = cookies[:signup_token]
-        email = SignupAttempt.find_by!(signup_token: token).email
-        @judge_profile = JudgeProfile.new(account_attributes: { email: email })
+        setup_valid_profile_from_signup_attempt(:judge, token)
       else
         redirect_to root_path
       end

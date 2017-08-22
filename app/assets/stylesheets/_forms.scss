@@ -1,240 +1,199 @@
-.button-group {
-  @include clearfix;
-  margin-bottom: 1rem;
-}
-
-select.date {
-  display: inline;
-}
-
-.name_field {
-  @include span-columns(6);
-}
-
-.address_field {
-  @include span-columns(4);
-}
-
-.input {
-  clear: both;
-}
-
-.field_with_errors {
-  label {
-    color: darken($error-color, 60%);
-  }
-
-  .error {
-    background-color: darken($error-color, 60%);
-    color: #fff;
-    padding: 5px;
-    display: block;
-    font-size: 1rem;
-    &:before {
-      content: "!";
-      width: 24px;
-      height: 24px;
-      display: inline-block;
-      text-align: center;
-      font-weight: $heavy-font-weight;
-      background-color: #fff;
-      color: darken($error-color, 60%);
-      margin-right: 5px;
-    }
-  }
-}
-
-.simple_form:not(.no-simple-form-style) {
-  @include span-columns(6);
-
-  @include media($large-screen) {
-    @include span-columns(8);
-  }
-
-  @include media($small-screen) {
-    @include span-columns(10);
-  }
-
-  &.full-size {
-    @include span-columns(12);
-    float: none;
-  }
-
-  p {
-    margin: 15px 0;
-  }
-
-  .input {
-    margin-bottom: $base-spacing;
-  }
-}
-
-form {
-  &.fancy-upload {
-    margin: 0;
-    padding: 0;
-
-    input, label {
-      display: none;
-    }
-
-    .appy-hint {
-      margin-top: 0;;
-    }
-  }
-}
-
-.signin-page {
-  .simple_form {
-    @include shift(3);
-
-    @include media($large-screen) {
-      @include shift(2);
-    }
-
-    @include media($small-screen) {
-      @include shift(1);
-    }
-  }
-}
-
-.module-body .simple_form {
-  align-items: flex-start;
-  display: flex;
-  width: 100%;
-
-  .input {
-    flex-grow: 1;
-  }
-
-  input[type="submit"] {
-    margin-left: 0.5rem;
-  }
-}
-
-.account_dob {
-  width: 30%;
-}
-
-#account_country {
-  width: 100%;
-}
-
-.chosen-container, .chosen-container-single {
-  font-size: 1.5rem;
-
-  .chosen-single {
-    height: 35px;
-
-    span {
-      line-height: 1.3;
-      color: #aaa;
-    }
-  }
-}
-
-select.has-val + .chosen-container span {
-  color: $chalkboard;
-}
-
-.chosen-container .chosen-results li {
-  line-height: 1.5;
-}
-
-.inline-radio, .inline-checkbox {
+label {
   display: block;
-  margin: 1rem 0;
+  cursor: pointer;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
 
-  label {
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+  margin: 0 0.5rem 0 0;
+
+  + label {
+    margin: 0;
     display: inline;
   }
 }
 
-.referred_by_other {
-  display: none;
-}
+input,
+select,
+textarea {
+  display: block;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
 
-.hint {
-  font-size: 1rem;
-}
-
-.form-with-columns {
-  .simple_form {
-    @include span-columns(12);
-  }
-
-  .photo-edit {
-    @include span-columns(3);
-  }
-
-  .fields-edit {
-    @include span-columns(6);
-    @include omega;
+  &[type=file] {
+    font-size: 1em;
   }
 }
 
-.notice {
-  background: $notice-color;
-  padding: 1rem;
+select {
+  background: auto;
 }
 
-.alert {
-  background: $alert-color;
-  padding: 1rem;
-}
+.date {
+  margin-bottom: 1rem;
 
-.location-hidden {
-  display: none;
+  label {
+    margin-bottom: 0.25rem;
+  }
 
-  .chosen-container {
-    width: 100% !important;
+  input,
+  select {
+    display: inline-block;
   }
 }
 
-.currentAjaxMsg {
-  display: none;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  text-align: center;
-  z-index: $z-modal;
+.file-field {
+  input {
+    display: none;
+  }
 }
 
-.form-with-appy-button {
-  input[type="submit"] {
-    @extend .appy-button;
-    margin: 0;
-    font-weight: normal;
+.preview {
+  margin: 0 0 1rem;
 
-    &.secondary-button {
-      color: $shamrock;
-      background-color: white;
-      box-shadow: 0 2px 0 #999;
+  .preview__img {
+    position: relative;
+    width: 100px;
+
+    &:hover {
+      .remove:not(.hidden-sm) {
+        opacity: 1;
+      }
+    }
+
+    .remove {
+      &:not(.hidden-sm) {
+        opacity: 0;
+        transition: opacity 0.5s;
+        background: $grey-translucent;
+        color: white;
+        position: absolute;
+        z-index: $z-modal;
+        width: 100px;
+        height: 100%;
+        text-align: center;
+        cursor: pointer;
+
+        .icon-close {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform:translate(-50%, -50%);
+        }
+      }
+
+      &.hidden-sm {
+        opacity: 1;
+        padding: 0.5rem 0;
+      }
     }
   }
-
-  margin-bottom: 1rem;
 }
 
-.has-danger {
-  .appy-button {
-    margin: 0;
-    font-size: 0.8rem;
-    background-color: #ed5249;
-    box-shadow: 0 2px 0 #bb321f;
+[type='color'],
+[type='date'],
+[type='datetime'],
+[type='datetime-local'],
+[type='email'],
+[type='month'],
+[type='number'],
+[type='password'],
+[type='search'],
+[type='tel'],
+[type='text'],
+[type='time'],
+[type='url'],
+[type='week'],
+input:not([type]),
+textarea,
+select[multiple] {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  margin-bottom: 0.5rem;
+  padding: 0.33333rem;
+  transition: border-color 150ms ease;
+  width: 100%;
+
+  &:hover {
+    border-color: #a3a3a3;
+  }
+
+  &:focus {
+    border-color: $shamrock;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06),0 0 5px rgba(72,184,136,0.7);
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+
+    &:hover {
+      border: 2px solid #ccc;
+    }
   }
 }
 
-.no-simple-form-style {
-  clear: both;
+textarea {
+  resize: vertical;
+  height: 250px;
+}
 
-  hr {
-    padding: 1rem 0 0;
+[type="search"] {
+  appearance: none;
+}
+
+[type="checkbox"],
+[type="radio"] {
+  display: inline;
+  margin-right: 0.25rem;
+}
+
+[type="file"] {
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+select {
+  margin-bottom: 0.5rem;
+  max-width: 100%;
+  width: auto;
+}
+
+.field_with_errors {
+  input,
+  select,
+  textarea {
+    margin-bottom: 0;
+  }
+
+  .error {
+    font-size: 0.9rem;
     display: block;
-    clear: both;
-  }
+    background: $alert;
+    color: $alert-txt;
+    padding: 0.2rem 1rem;
+    margin: 0 0 1rem;
 
-  .appy-button {
-    margin-left: 0;
+    &:before {
+      content: "!";
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      text-align: center;
+      background-color: #fff;
+      color: black;
+      margin-right: 5px;
+    }
   }
 }

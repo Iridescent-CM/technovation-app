@@ -8,6 +8,7 @@ machine:
       2.4.1
 
   environment:
+    HELP_EMAIL: help@technovationchallenge.org
     PDFTK_PATH: /usr/bin/pdftk
     AIRBRAKE_PROJECT_ID: n-a
     AIRBRAKE_PROJECT_KEY: n-a
@@ -33,6 +34,11 @@ general:
       - /.*-stable/
 
 deployment:
+  beta:
+    branch: reset-css-js
+    heroku:
+      appname: tc-2018
+
   qa:
     branch: qa
     heroku:

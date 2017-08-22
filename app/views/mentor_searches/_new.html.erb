@@ -1,22 +1,39 @@
-<div class="mentor-search">
-  <h1 class="appy-title"><%= t("views.mentor_searches.title") %></h1>
-  <p class="appy-subtitle"><%= t("views.mentor_searches.intro") %></p>
+<% provide :title, "Search for mentors" %>
 
-  <div class="mentor-search__feature-wrapper">
-    <div class="mentor-search__filters search-filters">
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= t("views.mentor_searches.title") %></h1>
+
+      <p><%= t("views.mentor_searches.intro") %></p>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-sm-3">
+    <div class="sidebar">
       <%= render "mentor_searches/filter_options", account: account %>
     </div>
+  </div>
 
-    <div class="mentor-search__results">
-      <h2 class="mentor-search__results-heading">Available Mentors</h2>
+  <div class="grid__col-sm-9">
+    <h3>Available Mentors</h3>
 
-      <div class="mentor-search__mentors-wrapper">
-        <%= render(partial: "mentor_searches/mentor_preview",
-                   collection: @mentors,
-                   locals: { account: account }) or
-              t("views.mentor_searches.none_found") %>
-      </div>
-      <%= will_paginate @mentors %>
+    <div class="grid">
+      <%= render(
+        partial: "mentor_searches/mentor_preview",
+        collection: @mentors,
+        locals: { account: account }
+      ) %>
+
+      <% if @mentors.empty? %>
+        <div class="grid__col-auto grid__col--bleed">
+          <%= t("views.mentor_searches.none_found") %>
+        </div>
+      <% end %>
     </div>
+
+    <%= will_paginate @mentors %>
   </div>
 </div>

@@ -1,39 +1,57 @@
 <% if requests.any? %>
-  <div class="pending-requests">
-    <h6><%= t("views.teams.show.pending_requests_subheading") %></h6>
+  <div class="grid grid--bleed">
+    <div class="grid__col-auto">
+      <h3 class="reset">Requests from others</h3>
 
-    <table class="table pending_requests mentors">
-      <thead>
-        <tr>
-          <th><%= t("models.join_request.requestor_name") %></th>
-          <th><%= t("models.join_request.requestor_type") %></th>
-          <th><%= t("views.application.actions") %></th>
-        </tr>
-      </thead>
-      <tbody>
+      <p class="hint">
+        These people are waiting for your team's response
+      </p>
+
+      <ul class="reset">
         <% requests.each do |join_request| %>
-          <tr>
-            <td>
-              <%= link_to join_request.requestor_first_name,
-                          send("#{account_type}_#{join_request.requestor.type_name}_path", join_request.requestor) %>
-            </td>
+          <li class="row">
+            <div class="grid">
+              <div class="grid__col-3 grid__col--bleed-y">
+                <%= image_tag join_request.requestor.profile_image_url,
+                  class: "grid__cell-img" %>
+              </div>
 
-            <td><%= join_request.requestor_type_name %></td>
+              <div class="grid__col-9 grid__col--bleed-y">
+                <div class="grid__cell">
+                  <strong><%= join_request.requestor_first_name %></strong><br />
+                  <small><%= join_request.requestor_scope_name %></small><br />
 
-            <td>
-              <% %i{approved declined}.each.with_index do |action, i| %>
-                <%= link_to t("views.application.#{action}"),
-                            [account_type, join_request, status: action],
-                            data: {
-                              method: :put,
-                              confirm: t("views.application.confirm_#{action}",
-                                        name: join_request.requestor_first_name),
-                            } %><% if i == 0 %>&nbsp;|<% end %>
-              <% end %>
-            </td>
-          </tr>
+                  <%= link_to "view profile",
+                    send(
+                      "#{current_scope}_#{join_request.requestor_scope_name}_path",
+                      join_request.requestor
+                    ) %>
+
+                  <p class="buttons">
+                    <%= link_to t("views.application.approved"),
+                      [current_scope, join_request, status: :approved],
+                      class: "button small",
+                      data: {
+                        method: :put,
+                        confirm: t("views.application.confirm_approved",
+                                  name: join_request.requestor_first_name),
+                      } %>
+
+                    <%= link_to t("views.application.declined"),
+                      [current_scope, join_request, status: :declined],
+                      class: "button small danger",
+                      data: {
+                        method: :put,
+                        confirm: t("views.application.confirm_declined",
+                                  name: join_request.requestor_first_name),
+                      } %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
         <% end %>
-      </tbody>
-    </table>
+      </ul>
+    </div>
   </div>
 <% end %>

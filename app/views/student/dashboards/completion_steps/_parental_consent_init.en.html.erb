@@ -1,0 +1,21 @@
+<p>
+  In order to participate in Technovation, you need your parent
+  or guardian's permission.
+</p>
+
+<p>
+  If your parent or guardian does not have an email address, please
+  <%= mail_to(
+    ENV.fetch("HELP_EMAIL"),
+    "contact us for help",
+    subject: "Parental consent form help"
+  ) %>.
+</p>
+
+<div class="step-actions">
+  <%= link_to(
+    "Enter parent/guardian name & email",
+    new_student_parental_consent_notice_path,
+    class: "button"
+  ) %>
+</div>

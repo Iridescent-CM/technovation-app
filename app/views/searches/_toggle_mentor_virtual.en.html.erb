@@ -1,5 +1,9 @@
-<%= label_tag :virtual_only do %>
-  <%= check_box_tag :virtual_only, 1, params[:virtual_only] == "1" %>
-  <span class="pseudo-checkbox fa fa-check"><!--Fontawesome Checkmark--></span>
-  Virtual Mentors
-<% end %>
+<p class="reset">
+  <%= f.check_box :virtual_only,
+    value: 1,
+    checked: params[:virtual_only] == "1",
+    id: :virtual_only,
+    class: "toggle-based-search" %>
+
+  <%= f.label :virtual_only, "Yes" %>
+</p>

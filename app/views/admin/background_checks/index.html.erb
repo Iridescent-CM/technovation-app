@@ -18,7 +18,7 @@
         <% @background_checks.order('created_at DESC').each do |bg_check| %>
           <div class="row">
             <div class="cell">
-              <%= bg_check.account.type_name %>
+              <%= bg_check.account.scope_name %>
             </div>
 
             <div class="cell">

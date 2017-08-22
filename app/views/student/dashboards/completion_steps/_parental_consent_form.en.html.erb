@@ -1,41 +1,15 @@
 <% unless current_student.parental_consent.present? %>
-  <li class="card">
-    <div class="card__heading">
-      <%= t("views.profile_requirements.parental_consent.heading") %>
-      <span class="card-heading__flair fa fa-exclamation-circle"><!--Fontawesome--></span>
-    </div>
+  <% path_prefix ||= 'student/dashboards/completion_steps' %>
 
-    <div class="card__body">
-      <p><%= t("views.profile_requirements.parental_consent.label") %></p>
+  <li>
+    <h1 class="content-heading">
+      Get your parent or guardian's permission
+    </h1>
 
-      <% if current_student.parent_guardian_email.present? %>
-        <p>
-          <%= t("views.profile_requirements.parental_consent.links.trouble.prefix") %>
-          <%= link_to t("views.profile_requirements.parental_consent.links.trouble.text"),
-            edit_student_profile_path(anchor: "student_profile_school_name") %>
-        </p>
-
-        <p><%= t("views.profile_requirements.parental_consent.links.trouble.postfix").html_safe %></p>
-
-        <div class="card__actions-row card__actions-row--pos-end">
-          <%= link_to t("views.profile_requirements.parental_consent.links.resend.text"),
-            student_parental_consent_notice_path,
-            data: { method: :post },
-            class: "appy-button" %>
-        </div>
-      <% else %>
-        <%= mail_to "info@technovationchallenge.org",
-          t("views.profile_requirements.parental_consent.links.contact_us.text"),
-          subject: "Parental consent form help" %>
-
-        <%= t("views.profile_requirements.parental_consent.links.contact_us.postfix") %>
-
-        <div class="card__actions-row card__actions-row--pos-end">
-          <%= link_to t("views.profile_requirements.parental_consent.links.send_link.text"),
-            new_student_parental_consent_notice_path,
-            class: "appy-button" %>
-        </div>
-      <% end %>
-    </div>
+    <% if current_student.parent_guardian_email.blank? %>
+      <%= render "#{path_prefix}/parental_consent_init" %>
+    <% else %>
+      <%= render "#{path_prefix}/parental_consent_troubleshoot" %>
+    <% end %>
   </li>
 <% end %>

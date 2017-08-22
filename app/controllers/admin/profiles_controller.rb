@@ -46,8 +46,8 @@ module Admin
 
     private
     def profile_params
-      params.require("#{account.type_name}_profile").permit(
-        "#{account.type_name}/profiles_controller"
+      params.require("#{account.scope_name}_profile").permit(
+        "#{account.scope_name}/profiles_controller"
         .camelize
         .constantize
         .new
@@ -77,7 +77,7 @@ module Admin
 
     def account
       @account ||= Account.find(params[:id])
-      @profile ||= @account.send("#{@account.type_name}_profile")
+      @profile ||= @account.send("#{@account.scope_name}_profile")
       @account
     end
   end

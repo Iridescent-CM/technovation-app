@@ -1,0 +1,23 @@
+<div class="grid">
+  <div class="grid__col-3 grid__col--bleed-y">
+    <%= image_tag invite.invitee.profile_image_url, class: "grid__cell-img" %>
+  </div>
+
+  <div class="grid__col-9 grid__col--bleed-y">
+    <div class="grid__cell">
+      <strong><%= invite.invitee_first_name %></strong><br />
+
+      <%= link_to "view profile",
+        [current_scope, invite.invitee_scope_name, { id: invite.invitee_id }] %><br />
+
+      <%= link_to "delete this invitation",
+        [current_scope, invite],
+        class: "danger small",
+        data: {
+          method: :delete,
+          confirm: t("controllers.invites.destroy.confirm",
+                      name: invite.invitee_name),
+        } %>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,21 @@
-<h2><%= t("views.student.parental_consent_notices.new.title") %></h2>
+<% provide :title, "Parental Consent Form" %>
 
-<%= simple_form_for current_student, url: [:student, :parental_consent_notice], method: :post do |f| %>
-  <%= render 'signups/student_profile_parental_fields', f: f %>
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
+    <h3><%= t("views.student.parental_consent_notices.new.title") %></h3>
 
-  <%= f.button :submit, t("views.student.parental_consent_notices.form.submit"), class: "appy-button" %>
-<% end %>
+    <%= simple_form_for current_student,
+      url: [:student, :parental_consent_notice],
+      method: :post do |f| %>
+      <%= render 'signups/student_profile_parental_fields', f: f %>
+
+      <%= f.button :submit,
+        t("views.student.parental_consent_notices.form.submit"),
+        class: "button" %>
+
+      or
+
+      <%= link_to 'cancel', params[:back] || student_dashboard_path %>
+    <% end %>
+  </div>
+</div>

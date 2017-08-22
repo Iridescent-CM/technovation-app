@@ -4,8 +4,10 @@
 
     <div class="card__actions-row card__actions-row--pos-end">
       <%= link_to "Edit Your Technical Checklist",
-        send("edit_#{current_account.type_name}_technical_checklist_path",
-             team_id: @team_submission.team_id),
+        send(
+          "edit_#{current_scope}_technical_checklist_path",
+          team_id: @team_submission.team_id
+        ),
         class: "appy-button" %>
     </div>
   </div>

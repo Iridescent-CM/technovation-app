@@ -1,11 +1,29 @@
-<%= label_tag :needs_team do %>
-  <%= check_box_tag :needs_team, 1, params[:needs_team] == "1" %>
-  <%= fa_icon "check", class: "pseudo-checkbox" %>
-  Only "needs a team"
-<% end %>
+<p class="reset">
+  <%= f.radio_button :needs_team,
+    1,
+    checked: params[:needs_team] == "1",
+    id: :needs_team_1,
+    class: "toggle-based-search" %>
 
-<%= label_tag :on_team do %>
-  <%= check_box_tag :on_team, 1, params[:on_team] == "1" %>
-  <%= fa_icon "check", class: "pseudo-checkbox" %>
-  Only "on a team"
-<% end %>
+  <%= f.label :needs_team_1, "Yes" %>
+</p>
+
+<p class="reset">
+  <%= f.radio_button :needs_team,
+    0,
+    checked: params[:needs_team] == "0",
+    id: :needs_team_0,
+    class: "toggle-based-search" %>
+
+  <%= f.label :needs_team_0, "No" %>
+</p>
+
+<p class="reset">
+  <%= f.radio_button :needs_team,
+    -1,
+    checked: params[:needs_team] == "-1",
+    id: :needs_team_2,
+    class: "toggle-based-search" %>
+
+  <%= f.label :needs_team_2, "Both" %>
+</p>

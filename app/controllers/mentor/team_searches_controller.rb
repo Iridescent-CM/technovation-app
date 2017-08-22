@@ -10,10 +10,12 @@ module Mentor
 
       @search_filter = SearchFilter.new({
         nearby: params.fetch(:nearby),
-        user: current_mentor,
+        scope: current_scope,
         has_mentor: :any,
         text: params[:text],
-        division_enums: params[:division_enums],
+        division_enums: params[:division_enums] || [],
+        country: current_mentor.country,
+        location: current_mentor.address_details,
       })
 
       @teams = SearchTeams.(@search_filter).paginate(page: params[:page])

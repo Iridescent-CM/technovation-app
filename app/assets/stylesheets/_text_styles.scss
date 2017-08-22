@@ -1,0 +1,14 @@
+.ex {
+  display: inline-block;
+  background: $doc-bg;
+  padding: 0.1rem 0.3rem;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(359deg); }
+}

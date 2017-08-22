@@ -3,10 +3,6 @@ module Mentor
     include TeamMemberInviteController
 
     private
-    def account_type
-      "mentor"
-    end
-
     def current_profile
       current_mentor
     end

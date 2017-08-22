@@ -1,32 +1,26 @@
 <%
   url ||= url_for(signup)
-  title ||= t("views.signups.new.title.#{signup.type_name}")
-  editing ||= false
-  password_label = editing ? t("models.account.change_password") :
-                              t("models.account.password")
+  title ||= t("views.signups.new.title.#{signup.scope_name}")
   admin ||= false
 %>
 
-<div class="signup-page">
-  <div class="signup-form simple-card">
-    <h1 class="appy-title">
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 panel">
+    <h1>
       <%= title %>
       <% unless signup.persisted? %>
-        <%= t("views.signups.new.roles.#{signup.type_name}") %>
+        <%= t("views.signups.new.roles.#{signup.scope_name}") %>
       <% end %>
     </h1>
 
-    <%= simple_form_for(signup,
-                        url: url,
-                        html: { class: "no-simple-form-style" }) do |f| %>
-
+    <%= simple_form_for(signup, url: url) do |f| %>
       <%= render 'errors', record: signup %>
 
       <% if admin %>
         <%= f.fields_for :account do |a| %>
           <%= a.input :email %>
         <% end %>
-      <% else %>
+      <% elsif signup.new_record? %>
         <p>
           <strong>
             <%= t("views.signups.form.signing_up_email", email: signup.email) %>
@@ -34,51 +28,46 @@
         </p>
       <% end %>
 
-      <% if not signup.valid? and signup.errors[:"account.email"].include?("has already been taken") %>
-        <p>Email <%= signup.errors[:"account.email"].to_sentence %></p>
-        <p>Have you tried to <%= link_to "sign in", signin_path(email: signup.email) %> or <%= link_to "reset your password", new_password_reset_path(email: signup.email) %> instead?</p>
+      <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
+
+      <%= render "signups/#{signup.scope_name}_profile_fields", f: f %>
+
+      <% if signup.account.temporary_password? %>
+        <h6 class="signup-section"><%= t("models.account.password") %></h6>
+
+        <%= f.fields_for :account do |a| %>
+          <%= a.input :password, label: t("models.account.password") %>
+        <% end %>
+
+        <p class="hint"><%= t("models.account.password_hint") %></p>
+      <% end %>
+
+      <% if f.object.persisted? %>
+        <%= yield(f) %>
       <% else %>
-        <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
+        <%= f.fields_for :account do |a| %>
+          <%= a.input :referred_by,
+            collection: Account.referred_bies.keys,
+            label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
+            input_html: {
+              data: {
+                toggle: true,
+                toggle_value: "Other",
+                toggle_reveal: ".referred_by_other",
+              },
+              class: 'sign-up-referred-by'
+            } %>
 
-        <%= render "signups/#{signup.type_name}_profile_fields", f: f %>
-
-        <% if editing or signup.account.temporary_password? %>
-          <h6 class="signup-section"><%= password_label %></h6>
-
-          <%= f.fields_for :account do |a| %>
-            <%= a.input :password, label: password_label %>
-          <% end %>
-
-          <p class="appy-hint"><%= t("models.account.password_hint") %></p>
+          <div class="referred_by_other">
+            <%= a.input :referred_by_other,
+              label: false,
+              placeholder: t("models.account.referred_by_other") %>
+          </div>
         <% end %>
 
-        <% if f.object.persisted? %>
-          <%= yield(f) %>
-        <% else %>
-          <%= f.fields_for :account do |a| %>
-            <%= a.input :referred_by,
-              collection: Account.referred_bies.keys,
-              label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
-              input_html: {
-                data: {
-                  toggle: true,
-                  toggle_value: "Other",
-                  toggle_reveal: ".referred_by_other",
-                },
-                class: 'sign-up-referred-by'
-              } %>
-
-            <div class="referred_by_other">
-              <%= a.input :referred_by_other,
-                label: false,
-                placeholder: t("models.account.referred_by_other") %>
-            </div>
-          <% end %>
-
-          <%= f.button :submit,
-            t('views.signups.form.create_account'),
-            class: 'appy-button' %>
-        <% end %>
+        <%= f.button :submit,
+          t('views.signups.form.create_account'),
+          class: 'button' %>
       <% end %>
     <% end %>
   </div>

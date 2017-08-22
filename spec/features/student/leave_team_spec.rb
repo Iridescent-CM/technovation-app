@@ -9,8 +9,8 @@ RSpec.feature "Students leave their own team" do
     sign_in(student)
     click_link "My team"
 
-    click_link "Remove your membership from #{student.team_name}"
+    click_link "remove this member"
     expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_link("Create a team")
+    expect(page).to have_link("Register your team")
   end
 end

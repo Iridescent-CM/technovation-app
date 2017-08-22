@@ -4,9 +4,10 @@ class SignupsController < ApplicationController
   helper_method :admin_permission?, :signup_available?
 
   def new
-    if not params[:admin_permission_token].blank? and (attempt = SignupAttempt.find_by(
-        admin_permission_token: params[:admin_permission_token]
-      ))
+    if not params[:admin_permission_token].blank? and
+        (attempt = SignupAttempt.find_by(
+          admin_permission_token: params[:admin_permission_token]
+        ))
       cookies[:signup_token] = attempt.signup_token
       cookies[:admin_permission_token] = attempt.admin_permission_token
     end

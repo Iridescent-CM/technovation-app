@@ -21,19 +21,23 @@ RSpec.feature "Register as a student" do
   end
 
   scenario "saves location details" do
-    click_link "Enter your location now"
+    click_link "Update your location"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
     select "United States", from: "Country"
     click_button "Save"
 
-    expect(StudentProfile.last.address_details).to eq("Chicago, IL, United States")
+    expect(StudentProfile.last.address_details).to eq(
+      "Chicago, IL, United States"
+    )
     expect(StudentProfile.last.account).to be_location_confirmed
   end
 
   scenario "signup attempt attached" do
-    attempt = SignupAttempt.find_by(account_id: StudentProfile.last.account_id)
+    attempt = SignupAttempt.find_by(
+      account_id: StudentProfile.last.account_id
+    )
     expect(attempt).to be_present
   end
 end

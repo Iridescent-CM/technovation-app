@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  acts_as_paranoid
+
   include Casting::Client
   delegate_missing_methods
 
@@ -8,7 +10,7 @@ class Team < ActiveRecord::Base
   document_type 'team'
   settings index: { number_of_shards: 1, number_of_replicas: 1 }
 
-  geocoded_by :primary_location
+  geocoded_by :geolocation_str
   reverse_geocoded_by :latitude, :longitude do |team, results|
     team.update_address_details_from_reverse_geocoding(results)
   end
@@ -24,7 +26,7 @@ class Team < ActiveRecord::Base
     )
   end
 
-  def type_name
+  def scope_name
     "student" # Needed for RPE selection views that are shared by judges
   end
 
@@ -96,9 +98,22 @@ class Team < ActiveRecord::Base
   has_many :mentor_invites, dependent: :destroy
   has_many :join_requests, as: :joinable, dependent: :destroy
 
-  has_many :pending_student_invites, -> { pending.for_students }, class_name: "TeamMemberInvite"
-  has_many :pending_mentor_invites, -> { pending }, class_name: "MentorInvite"
-  has_many :pending_requests, -> { pending }, class_name: "JoinRequest", as: :joinable
+  has_many :pending_student_invites,
+    -> { pending.for_students },
+    class_name: "TeamMemberInvite"
+
+  has_many :pending_mentor_invites,
+    -> { pending },
+    class_name: "MentorInvite"
+
+  has_many :pending_requests,
+    -> { pending },
+    class_name: "JoinRequest",
+    as: :joinable
+
+  has_many :pending_mentor_join_requests, -> { pending.for_mentors },
+    class_name: "JoinRequest",
+    as: :joinable
 
   has_many :pending_student_join_requests, -> { pending.for_students },
     class_name: "JoinRequest",
@@ -112,7 +127,6 @@ class Team < ActiveRecord::Base
   has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
 
   validates :name, uniqueness: { case_sensitive: false }, presence: true
-  validates :description, presence: true
   validates :division, presence: true
   validates :team_photo, verify_cached_file: true
 
@@ -198,7 +212,11 @@ class Team < ActiveRecord::Base
   end
 
   def primary_location
-    [city, state_province, Country[country].try(:name)].reject(&:blank?).join(', ')
+    if geolocation_str.empty?
+      "No location has been set"
+    else
+      geolocation_str
+    end
   end
 
   def pending_invitee_emails
@@ -248,5 +266,14 @@ class Team < ActiveRecord::Base
     if season_ids.empty?
       RegisterToSeasonJob.perform_later(self)
     end
+  end
+
+  def geolocation_str
+    [
+      city,
+      state_province,
+      Country[country].try(:name)
+    ].reject(&:blank?)
+     .join(', ')
   end
 end

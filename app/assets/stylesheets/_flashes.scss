@@ -1,0 +1,43 @@
+#flash {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 1rem;
+  z-index: $z-modal;
+
+  .flash {
+    width: 80%;
+    display: none;
+    margin: 1rem auto 0;
+    display: block;
+    box-shadow: $shadow-default;
+  }
+}
+
+.flash {
+  position:relative;
+  padding: 1rem;
+  margin: 1rem;
+  background: $info;
+  color: $info-txt;
+
+  &.flash--success {
+    background: $success;
+    color: $success-txt;
+  }
+
+  &.flash--error,
+  &.flash--alert {
+    background: $alert;
+    color: $alert-txt;
+  }
+
+  .icon-close {
+    color: black;
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+}

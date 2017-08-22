@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Team do
+  before { Timecop.travel(Division.cutoff_date - 1.day) }
+  after { Timecop.return }
+
   it "deals okay with funky region name input" do
     team = FactoryGirl.create(:team)
 
@@ -22,7 +25,10 @@ RSpec.describe Team do
   it "assigns to the B division if all students are in Division B" do
     team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+    older_student = FactoryGirl.create(
+      :student,
+      date_of_birth: Division.cutoff_date - 15.years
+    )
 
     TeamRosterManaging.add(team, [older_student, younger_student])
 

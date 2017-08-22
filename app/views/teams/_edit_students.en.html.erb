@@ -1,0 +1,50 @@
+<ul class="reset">
+  <%= render partial: "teams/member", collection: team.students %>
+</ul>
+
+<%= render "teams/pending_invites",
+  preview_method: :invitee_email,
+  invites: team.pending_student_invites %>
+
+<%= render "teams/pending_requests",
+  requests: team.pending_student_join_requests %>
+
+<div class="grid grid--bleed">
+  <div class="grid__col-auto">
+    <% if SeasonToggles.team_building_enabled? %>
+      <% if team.current? && team.spot_available? %>
+        <%= render "team_member_invites/form" %>
+
+        <%= form_with model: team,
+          data: { submit_on_change: true },
+          url: [current_scope, team, { format: :json }],
+          method: :patch do |f| %>
+
+          <p>
+            <%= f.check_box :accepting_student_requests,
+              id: :team_accepting_student_requests %>
+
+            <%= f.label :accepting_student_requests,
+              "Allow other students to find our team and request to join us" %>
+          </p>
+        <% end %>
+      <% elsif not team.current? %>
+        <%= t("views.teams.show.past_team") %>
+      <% else %>
+        <p>
+          Your team can have up to five students.
+        </p>
+
+        <p class="hint">
+          You cannot invite more students while you have
+          a combined total of five members, invitations,
+          and/or join requests.
+        </p>
+      <% end %>
+    <% else %>
+      <p class="hint">
+        Team building is not enabled at this time, so your team cannot add students.
+      </p>
+    <% end %>
+  </div>
+</div>

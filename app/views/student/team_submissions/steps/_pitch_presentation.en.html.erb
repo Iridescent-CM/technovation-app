@@ -47,7 +47,7 @@
     <%= f.submit t("views.application.upload"), class: "appy-button" %>
   <% end %>
 
-  <%= simple_form_for [current_account.type_name, submission],
+  <%= simple_form_for [current_scope, submission],
     html: {
       class: "alternative-form no-simple-form-style #{url_css}",
       data: { switch_text: "Upload a PPT or PDF" },

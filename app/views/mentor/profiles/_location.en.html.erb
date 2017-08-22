@@ -1,0 +1,10 @@
+<dl>
+  <dt>Your location</dt>
+  <dd><%= current_mentor.address_details %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your location",
+    mentor_location_details_path,
+    class: "button" %>
+</p>

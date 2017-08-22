@@ -29,7 +29,7 @@ class RegionalExportJob < ActiveJob::Base
         account = Account.find(account_id)
 
         csv << [account.created_at.to_date, account.updated_at.to_date,
-                account.type_name, account.first_name, account.last_name,
+                account.scope_name, account.first_name, account.last_name,
                 account.email, account.parent_email,
                 account.teams.current.flat_map(&:name).to_sentence,
                 account.get_school_company_name, account.division, account.city,

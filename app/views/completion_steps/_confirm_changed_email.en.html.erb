@@ -1,0 +1,18 @@
+<% unless account.email_confirmed? %>
+  <li>
+    <h1 class="content-heading">
+      Check your email inbox!
+    </h1>
+
+    <p>You changed your email address and now you need to confirm it.</p>
+
+    <p>
+      We sent a link for you to do this at your new email address.
+      Please go look for it in your inbox.
+    </p>
+
+    <p>
+      Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need help!
+    </p>
+  </li>
+<% end %>

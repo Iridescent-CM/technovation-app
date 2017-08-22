@@ -1,13 +1,17 @@
 <%= direct_upload_form_for @screenshots_uploader,
   html: {
-    id: "team_submission_screenshots",
-    class: "fancy-image-upload",
-    data: {
-      process_images_url: send("#{current_account.type_name}_image_process_jobs_url",
-                               team_id: current_team.id),
-      screenshots_url: send("#{current_account.type_name}_screenshots_url",
-                            team_id: current_team.id)
-    }
+  id: "team_submission_screenshots",
+  class: "fancy-image-upload",
+  data: {
+    process_images_url: send(
+      "#{current_scope}_image_process_jobs_url",
+      team_id: current_team.id
+    ),
+    screenshots_url: send(
+      "#{current_scope}_screenshots_url",
+      team_id: current_team.id
+    )
+  }
 } do |f| %>
   <%= f.label :screenshots, t("models.team_submission.screenshots") %>
   <%= f.file_field :screenshots, multiple: true %>

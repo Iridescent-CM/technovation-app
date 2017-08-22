@@ -1,9 +1,18 @@
-<%= render 'profiles/privileged_show', title: t("views.mentor.mentors.show.title"), account: @mentor %>
+<%= render 'profiles/privileged_show',
+  title: t("views.mentor.mentors.show.title"),
+  account: @mentor %>
 
-<h4><%= t("views.mentor.mentors.show.teams", name: @mentor.first_name) %></h4>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 panel">
+    <h3 class="reset">
+      <%= t("views.mentor.mentors.show.teams",
+            name: @mentor.first_name) %>
+    </h3>
 
-<ul class="mentor_teams_list">
-  <%= render partial: 'mentor/mentors/team_preview',
-             collection: @mentor.teams.current,
-             locals: { profile: @mentor } %>
-</ul>
+    <ul class="reset team-list">
+      <%= render partial: 'mentor/mentors/team_preview',
+        collection: @mentor.teams.current,
+        locals: { profile: @mentor } %>
+    </ul>
+  </div>
+</div>

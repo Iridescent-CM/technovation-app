@@ -1,44 +1,70 @@
-<div class="search-filters__heading">
-  <h4><%= t("views.mentor_searches.filter_options") %></h4>
-</div>
+<% provide(
+  :js,
+  javascript_include_tag(
+    "text-based-search",
+    'data-turbolinks-track' => true
+  )
+) %>
 
-<div class="search-filters__form-wrapper">
-  <%= form_tag request.fullpath, method: :get do %>
+<% provide(
+  :js,
+  javascript_include_tag(
+    "toggle-based-search",
+    'data-turbolinks-track' => true
+  )
+) %>
 
-    <div class="search-filters__text">
-      <label>Search by name</label>
-      <%= text_field_tag :text, params[:text], placeholder: "Press enter after typing" %>
-    </div>
+<h3><%= t("views.mentor_searches.filter_options") %></h3>
 
-    <div class="search-filters__location">
-      <%= render 'searches/location_options', account: account %>
-    </div>
+<%= form_with url: request.fullpath, method: :get, local: true do |f| %>
+  <label>Search by name</label>
 
-    <%= render 'searches/toggle_mentor_needs_team', account: account %>
-    <%= render 'searches/toggle_mentor_virtual' %>
+  <%= f.text_field :text, class: "search-by-text", value: params[:text] %>
+  <p class="hint">(press enter/return after typing)</p>
 
-    <label>Gender Identity</label>
+  <%= render 'searches/location_options', account: account, f: f %>
+
+  <div class="search-toggles">
+    <h3>Needs a team?</h3>
+
+    <%= render 'searches/toggle_mentor_needs_team', account: account, f: f %>
+
+    <h3>Only virtual mentors?</h3>
+
+    <%= render 'searches/toggle_mentor_virtual', f: f %>
+
+    <h3>Gender Identity</h3>
+
     <%= collection_check_boxes :search_filter, :gender_identities,
       @gender_identities, :second, :first do |b| %>
-      <%= b.label do %>
-        <%= b.check_box %>
-        <%= fa_icon "check", class: "pseudo-checkbox" %>
-        <%= b.text %>
-      <% end %>
+      <p>
+        <%= b.check_box(
+          id: "gender_#{b.value}",
+          class: "toggle-based-search",
+          checked: params[:search_filter][:gender_identities].map(&:to_i).include?(
+            b.value
+          )
+        ) %>
+
+        <%= b.label text: b.text, for: "gender_#{b.value}" %>
+      </p>
     <% end %>
 
-    <label>Expertise</label>
+    <h3>Expertise</h3>
+
     <%= collection_check_boxes :search_filter,
       :expertise_ids, @expertises, :id, :name do |b| %>
-      <%= b.label do %>
-        <%= b.check_box %>
-        <%= fa_icon "check", class: "pseudo-checkbox" %>
-        <%= b.text %>
-      <% end %>
-    <% end %>
+      <p>
+        <%= b.check_box(
+          id: "expertise_#{b.value}",
+          class: "toggle-based-search",
+          checked: params[:search_filter][:expertise_ids].map(&:to_i).include?(
+            b.value
+          )
+        ) %>
 
-    <div class="search-filters__button-wrapper">
-      <%= button_tag t('views.application.filter'), class: "appy-button appy-button--sm" %>
-    </div>
-  <% end %>
-</div>
+        <%= b.label text: b.text, for: "expertise_#{b.value}" %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

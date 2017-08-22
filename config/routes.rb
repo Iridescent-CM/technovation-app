@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :bio, only: [:edit, :update]
 
     resources :cookies, only: :create
 
@@ -218,6 +219,8 @@ Rails.application.routes.draw do
 
   resources :signup_attempts, only: [:create, :show, :update]
   resources :signup_attempt_confirmations, only: :new
+
+  resources :email_confirmations, only: :new
 
   resource :locale_switch, only: :create
 

@@ -21,7 +21,7 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "start and edit new submission" do
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within("#team-submission-team-list-team-#{team.id}") do
+        within("#submissions-team-#{team.id}") do
           click_link "Start the submission for this team"
         end
 
@@ -32,8 +32,10 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit mentor_dashboard_path
 
-        within("#team-submission-team-list-team-#{team.id}") do
-          expect(page).not_to have_content("The submission deadline has passed.")
+        within("#submissions-team-#{team.id}") do
+          expect(page).not_to have_content(
+            "Starting a submission is not currently enabled."
+          )
           expect(page).to have_link(
             "Edit this team's submission",
             href: mentor_team_submission_path(team.submission, team_id: team.id)
@@ -44,7 +46,7 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "edit technical checklist" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within("#team-submission-team-list-team-#{team.id}") do
+        within("#submissions-team-#{team.id}") do
           click_link("Edit this team's submission")
         end
 
@@ -68,8 +70,10 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit existing submission" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within("#team-submission-team-list-team-#{team.id}") do
-          expect(page).to have_content("The submission deadline has passed.")
+        within("#submissions-team-#{team.id}") do
+          expect(page).to have_content(
+            "Starting a submission is not available at this time."
+          )
           expect(page).not_to have_link("Edit this team's submission")
         end
 
@@ -84,8 +88,7 @@ RSpec.feature "Toggling editable team submissions" do
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within("#team-submission-team-list-team-#{team.id}") do
-          expect(page).to have_content("The submission deadline has passed.")
+        within("#submissions-team-#{team.id}") do
           expect(page).not_to have_link("Start the submission for this team")
         end
 
@@ -123,7 +126,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit student_dashboard_path
         within("#your-submission") do
-          expect(page).not_to have_content("The submission deadline has passed.")
+          expect(page).not_to have_content("submissions are not editable")
           expect(page).to have_link(
             "Edit your submission",
             href: student_team_submission_path(team.submission)
@@ -155,7 +158,7 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit an existing submission" do
         create_authenticated_user_on_team(:student, submission: true)
 
-        expect(page).to have_content("The submission deadline has passed.")
+        expect(page).to have_content("submissions are not editable")
         expect(page).not_to have_link("Edit your submission")
 
         visit student_team_submission_path(team.submission)
@@ -169,7 +172,7 @@ RSpec.feature "Toggling editable team submissions" do
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:student, submission: false)
 
-        expect(page).to have_content("The submission deadline has passed.")
+        expect(page).to have_content("Starting a submission is not available")
         expect(page).not_to have_link("Begin your submission")
 
         visit student_team_path(team)

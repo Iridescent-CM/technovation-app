@@ -1,15 +1,27 @@
-<% if SeasonToggles.team_building_enabled? %>
-  <% if current_mentor.requested_to_join?(@team) %>
-    <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
-  <% elsif current_mentor.is_on?(@team) %>
-    <p><%= t("views.mentor.join_requests.new.already_joined") %></p>
-  <% else %>
-    <p>
-      <%= button_to t("controllers.mentor.join_requests.create.link", name: @team.name),
-        mentor_join_requests_path(team_id: @team.id),
-        form_class: "appy-button" %>
-    </p>
-  <% end %>
-<% end %>
-
 <%= render "teams/public_show", team: @team %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8 grid__col--bleed-y">
+    <% if SeasonToggles.team_building_enabled? %>
+      <% if current_mentor.requested_to_join?(@team) %>
+        <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
+      <% elsif current_mentor.is_on?(@team) %>
+        <p><%= t("views.mentor.join_requests.new.already_joined") %></p>
+      <% else %>
+        <p>
+          <%= button_to(
+            t("controllers.mentor.join_requests.create.link",
+              name: @team.name),
+            mentor_join_requests_path(team_id: @team.id),
+            class: "button"
+          ) %>
+        </p>
+      <% end %>
+    <% else %>
+      <p>
+        You cannot send requests to join teams at this time,
+        because Technovation has not enabled team building.
+      </p>
+    <% end %>
+  </div>
+</div>

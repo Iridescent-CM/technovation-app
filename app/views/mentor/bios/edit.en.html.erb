@@ -1,0 +1,33 @@
+<% provide :title, "Update your personal summary" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
+    <h3>Add your personal summary</h3>
+
+    <%= render 'errors', record: current_mentor %>
+
+    <%= form_with model: current_mentor, url: mentor_bio_path, local: true do |f| %>
+      <%= f.label :bio, "Tell the students about yourself" %>
+      <%= f.text_area :bio, id: "mentor_profile_bio" %>
+
+      <% if f.object.errors.any? %>
+        <div class="field_with_errors">
+          <span class="error"><%= f.object.errors[:bio][0] %></span>
+        </div>
+      <% end %>
+
+      <%= content_tag :p, data: { keep_count_of: "#mentor_profile_bio" } do %>
+        <span><%= (f.object.bio || "").length %></span>
+        <span><%= "character".pluralize((f.object.bio || "").length) %></span>
+      <% end %>
+
+      <p class="hint">
+        Please provide at least 100 characters, or about 15 words
+      </p>
+
+      <p>
+        <%= f.submit "Save", class: "button" %>
+      </p>
+    <% end %>
+  </div>
+</div>

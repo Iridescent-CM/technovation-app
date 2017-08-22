@@ -1,0 +1,59 @@
+<%
+  try_again ||= false
+  cta ||= "Change image"
+  modal_id ||= "profile-image-upload"
+%>
+
+<%= direct_upload_form_for @uploader do |f| %>
+  <p>
+    <% if try_again %>
+      <%= link_to "Try a different image", '#',
+        data: {
+          opens_modal: modal_id,
+        },
+        class: "button secondary" %>
+    <% else %>
+      <%= link_to cta, '#',
+        data: {
+          opens_modal: modal_id,
+        },
+        class: "button secondary small" %>
+    <% end %>
+  </p>
+
+  <%= content_tag :div,
+    class: "modal",
+    id: modal_id,
+    data: {
+      heading: heading,
+    } do %>
+
+    <label class="file-field" for="<%= modal_id %>_file_field">
+      <div class="button secondary">Choose an image</div>
+      <%= f.file_field :image, id: "#{modal_id}_file_field" %>
+    </label>
+
+    <p class="hint">
+      <%= t("controllers.accounts.update.change_image_hint", size: size) %>
+    </p>
+
+    <div class="preview hidden">
+      <small>Preview:</small>
+
+      <div class="preview__img">
+        <div class="remove hidden-xs hidden-xxs">
+          <%= web_icon "close" %>
+        </div>
+
+        <img />
+
+        <div class="danger remove hidden-sm hidden-md hidden-lg">
+          remove
+        </div>
+      </div>
+    </div>
+
+    <%= f.submit t("views.application.upload"),
+      class: "submit button small hidden" %>
+  <% end %>
+<% end %>

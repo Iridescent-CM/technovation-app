@@ -1,0 +1,52 @@
+<% standalone ||= false %>
+
+<% if standalone %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-sm-8 panel">
+<% end %>
+
+<h3>Change your email</h3>
+
+<%= render 'errors', record: current_student %>
+
+<p class="hint">
+  If you change your email address, we will send a message
+  to your inbox to confirm that you own the address.
+</p>
+
+<p class="hint">
+  You <strong>must</strong> use the link in that message
+  to confirm your new email address and restore full access to this site.
+</p>
+
+<%= form_with model: current_student, local: true do |f| %>
+  <%= f.fields_for :account do |a| %>
+    <%= a.label :existing_password, "Current password" %>
+    <%= a.password_field :existing_password,
+      placeholder: "Enter your password first" %>
+
+    <% unless a.object.errors[:existing_password].empty? %>
+      <div class="field_with_errors">
+        <span class="error"><%= a.object.errors[:existing_password][0] %></span>
+      </div>
+    <% end %>
+
+    <%= a.label :email %>
+    <%= a.email_field :email %>
+
+    <% unless a.object.errors[:email].empty? %>
+      <div class="field_with_errors">
+        <span class="error"><%= a.object.errors[:email].to_sentence %></span>
+      </div>
+    <% end %>
+  <% end %>
+
+  <p>
+    <%= f.submit "Change email", class: "button" %>
+  </p>
+<% end %>
+
+<% if standalone %>
+  </div>
+</div>
+<% end %>

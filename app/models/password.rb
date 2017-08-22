@@ -1,7 +1,13 @@
 class Password
   include ActiveModel::Model
 
-  attr_accessor :email, :expires_at, :password, :password_confirmation, :token, :resetting
+  attr_accessor :email,
+    :expires_at,
+    :password,
+    :password_confirmation,
+    :token,
+    :resetting
+
   attr_reader :account
 
   validates :email, exists: true
@@ -15,18 +21,22 @@ class Password
   end
 
   def perform
-    account.update_attributes(skip_existing_password: true,
-                              password_reset_token: nil,
-                              password_reset_token_sent_at: nil,
-                              password: password,
-                              password_confirmation: password_confirmation)
+    account.update_attributes({
+      skip_existing_password: true,
+      password_reset_token: nil,
+      password_reset_token_sent_at: nil,
+      password: password,
+      password_confirmation: password_confirmation
+    })
   end
 
   def self.find_by(attributes)
     if account = Account.find_by(password_reset_token: attributes.fetch(:token))
-      new(token: account.password_reset_token,
-          email: account.email,
-          expires_at: account.password_reset_token_sent_at + 2.hours)
+      new({
+        token: account.password_reset_token,
+        email: account.email,
+        expires_at: account.password_reset_token_sent_at + 2.hours
+      })
     else
       new
     end

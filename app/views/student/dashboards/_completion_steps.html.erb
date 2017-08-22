@@ -1,17 +1,24 @@
-<div class="to-do">
-  <% unless current_student.full_access_enabled? %>
-    <h2 class="to-do__heading appy-heading-lg">
-      <%= t("views.application.to_do") %>
-    </h2>
-  <% end %>
-
-  <ul class="to-do__list">
-    <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
-    <%= render 'completion_steps/location_details', account: current_student %>
-    <%= render 'completion_steps/honor_code', account: current_student %>
-
-    <% if current_student.full_access_enabled? %>
-      <%= render 'student/dashboards/completion_steps/build_a_team' %>
-    <% end %>
-  </ul>
+<div class="grid__cell">
+  <%= image_tag current_student.profile_image_url,
+    class: "thumbnail grid__cell-img" %>
+  <h3 class="reset"><%= current_student.full_name %></h3>
+  <%= link_to "View your profile", student_profile_path %>
 </div>
+
+<h1 class="content-heading">Complete your registration</h1>
+
+<p>
+  To be eligible for the competition, please complete these steps:
+</p>
+
+<ul class="steps">
+  <%= render(
+    'student/dashboards/completion_steps/parental_consent_form'
+  ) %>
+
+  <%= render 'completion_steps/location_details', account: current_student %>
+
+  <%= render 'completion_steps/honor_code', account: current_student %>
+
+  <%= render 'completion_steps/confirm_changed_email', account: current_student %>
+</ul>

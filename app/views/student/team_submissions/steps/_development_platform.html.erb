@@ -4,9 +4,11 @@
   data: {
     ajax_form: true,
     object_name: "team_submission",
-    update_url: send("#{current_account.type_name}_team_submission_path",
-                     submission,
-                     team_id: current_team.id),
+    update_url: send(
+      "#{current_scope}_team_submission_path",
+      submission,
+      team_id: current_team.id
+    ),
   } do %>
 
   <div class="card__heading submission-step__code">
@@ -34,8 +36,10 @@
 
     <div class="ajax-form-helper__edit-mode">
       <%= select_tag :development_platform,
-        options_for_select(TeamSubmission.development_platforms.keys,
-                           submission.development_platform),
+        options_for_select(
+          TeamSubmission.development_platforms.keys,
+          submission.development_platform
+        ),
         data: {
           toggle: true,
           toggle_value: "Other",

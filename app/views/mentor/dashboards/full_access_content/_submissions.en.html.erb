@@ -1,71 +1,72 @@
-<div class="flex-col-md-8">
-  <% if current_mentor.is_on_team? %>
-    <div class="flex-row">
-      <div
-        class="flex-col-md-3 tabs tabs-vertical"
-        id="team-submissions-team-list"
-      >
-        <ul class="tab-menu">
-          <% @teams.each do |team| %>
-            <li class="tab-link">
-              <button
-                role="button"
-                class="tab-button"
-                data-tab-id="team-submission-team-list-team-<%= team.id %>">
-                <%= team.name %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
-      <div class="flex-col-md-9 content">
-        <% @teams.each do |team| %>
-          <div
-            id="team-submission-team-list-team-<%= team.id %>"
-            class="tab-content"
-          >
-            <div class="flex-row">
-              <dl class="flex-col-md-6" style="padding: 0;">
-                <dt>Division</dt>
-                <dd><%= team.division_name.humanize %></dd>
-
-                <dt>Region</dt>
-                <dd>
-                  <%= team.region_name %>
-                  <small>
-                    <%= link_to "Edit location",
-                      edit_mentor_team_location_path(team) %>
-                  </small>
-                </dd>
-              </dl>
-
-              <dl class="flex-col-md-6" style="padding: 0;">
-                <dt>Pitch Event</dt>
-                <dd><%= team.selected_regional_pitch_event_name %></dd>
-
-                <dt>Submission</dt>
-                <dd><%= team.submission.app_name || "no name given" %></dd>
-              </dl>
-            </div>
-
-            <% if team.submission.present? %>
-              <%= render 'mentor/dashboards/team_submission_progress',
-                submission: team.submission %>
-            <% elsif SeasonToggles.team_submissions_editable? %>
-              <%= render 'mentor/dashboards/start_team_submission', team: team %>
-            <% else %>
-              <p>The submission deadline has passed.</p>
+<div class="grid__col-md-8">
+  <div class="grid__cell">
+    <% if current_mentor.is_on_team? %>
+      <div class="grid">
+        <div
+          class="gird__col-sm-3 tabs tabs-vertical"
+          id="team-submissions-team-list"
+        >
+          <ul class="tab-menu">
+            <% @teams.each do |team| %>
+              <li class="tab-link">
+                <button
+                  role="button"
+                  class="tab-button"
+                  data-tab-id="submissions-team-<%= team.id %>">
+                  <%= team.name %>
+                </button>
+              </li>
             <% end %>
-          </div>
-        <% end %>
+          </ul>
+        </div>
+
+        <div class="grid__col-sm-9 content">
+          <% @teams.each do |team| %>
+            <div
+              id="submissions-team-<%= team.id %>"
+              class="tab-content"
+            >
+              <div class="grid">
+                <dl class="grid__col-sm-6">
+                  <dt>Division</dt>
+                  <dd><%= team.division_name.humanize %></dd>
+
+                  <dt>Region</dt>
+                  <dd>
+                    <%= team.region_name %>
+                    <small>
+                      <%= link_to "Edit location",
+                        edit_mentor_team_location_path(team) %>
+                    </small>
+                  </dd>
+                </dl>
+
+                <dl class="grid__col-sm-6">
+                  <dt>Pitch Event</dt>
+                  <dd><%= team.selected_regional_pitch_event_name %></dd>
+
+                  <dt>Submission</dt>
+                  <dd><%= team.submission.app_name || "no name given" %></dd>
+                </dl>
+              </div>
+
+              <% if team.submission.present? %>
+                <%= render 'mentor/dashboards/team_submission_progress',
+                  submission: team.submission %>
+              <% elsif SeasonToggles.team_submissions_editable? %>
+                <%= render 'mentor/dashboards/start_team_submission', team: team %>
+                <p>Starting submissions is not currently enabled.</p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    </div>
-  <% elsif SeasonToggles.team_building_enabled? %>
-    <%= render 'completion_steps/create_join_team', account: current_mentor %>
-  <% else %>
-    <p>The submission deadline has passed.</p>
-  <% end %>
+    <% elsif SeasonToggles.team_building_enabled? %>
+      <%= render 'completion_steps/create_join_team', account: current_mentor %>
+    <% else %>
+      <p>Team building is not currently enabled.</p>
+    <% end %>
+  </div>
 </div>
 
 <%= render 'mentor/dashboards/info_sidebar' %>

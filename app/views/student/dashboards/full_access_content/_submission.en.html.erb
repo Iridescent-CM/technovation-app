@@ -1,18 +1,23 @@
-<div class="flex-col-md-8">
-  <% if current_team.present? and current_team.submission.present? %>
-    <div class="student-manage-submission-cta">
+<div class="grid__col-md-8">
+  <div class="grid__cell">
+    <% if current_team.present? and current_team.submission.present? %>
       <%= render 'student/dashboards/team_submission_progress',
         submission: current_team.submission %>
-    </div>
-  <% elsif current_team.present? and SeasonToggles.team_submissions_editable? %>
-    <div class="student-manage-submission-cta">
+    <% elsif current_team.present? and SeasonToggles.team_submissions_editable? %>
       <%= render 'student/dashboards/start_team_submission' %>
-    </div>
-  <% elsif not current_team.present? and SeasonToggles.team_building_enabled? %>
-    <%= render 'student/dashboards/join_create_team' %>
-  <% else %>
-      The submission deadline has passed.
-  <% end %>
+    <% elsif not current_team.present? and SeasonToggles.team_building_enabled? %>
+      <p>You must be on a team to start your submission.</p>
+      <%= render 'student/dashboards/join_create_team' %>
+    <% else %>
+      <p>Starting a submission is not available at this time.</p>
+
+      <p>
+        Contact
+        <%= mail_to ENV.fetch("HELP_EMAIL") %>
+        if you have questions.
+      </p>
+    <% end %>
+  </div>
 </div>
 
 <%= render 'student/dashboards/info_sidebar' %>

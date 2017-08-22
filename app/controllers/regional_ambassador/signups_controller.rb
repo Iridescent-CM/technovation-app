@@ -4,10 +4,7 @@ module RegionalAmbassador
 
     def new
       if token = cookies[:signup_token]
-        email = SignupAttempt.find_by!(signup_token: token).email
-        @regional_ambassador_profile = RegionalAmbassadorProfile.new(
-          account_attributes: { email: email }
-        )
+        setup_valid_profile_from_signup_attempt(:regional_ambassador, token)
       else
         redirect_to root_path
       end

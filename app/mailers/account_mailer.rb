@@ -1,4 +1,18 @@
 class AccountMailer < ApplicationMailer
+  def confirm_changed_email(account_id)
+    account = Account.find(account_id)
+    token = account.unconfirmed_email_address.confirmation_token
+
+    if not token.blank?
+      @url = new_email_confirmation_url(token: token)
+      I18n.with_locale(account.locale) do
+        mail to: account.email
+      end
+    else
+      raise TokenNotPresent, "Account ID: #{account_id}"
+    end
+  end
+
   def password_reset(account_id)
     account = Account.find(account_id)
     @first_name = account.first_name
@@ -26,7 +40,7 @@ class AccountMailer < ApplicationMailer
 
   def background_check_clear(account)
     @name = account.first_name
-    @url = send("#{account.type_name}_dashboard_url")
+    @url = send("#{account.scope_name}_dashboard_url")
 
     I18n.with_locale(account.locale) do
       mail to: account.email

@@ -1,0 +1,32 @@
+<dl>
+  <dt>Your team:</dt>
+  <dd><%= team.name %></dd>
+
+  <dt>Division:</dt>
+  <dd><%= team.division_name %></dd>
+
+  <dt>Region:</dt>
+  <dd>
+    <%= team.region_name %>
+    <small>
+      <%= link_to "Edit location",
+        edit_student_team_location_path(team) %>
+    </small>
+  </dd>
+
+  <dt>Your submission:</dt>
+  <dd>
+    <% if SeasonToggles.team_submissions_editable? %>
+      <p>
+        <%= link_to 'Edit your submission',
+          student_team_submission_path(submission) %>
+      </p>
+    <% end %>
+
+    <p>
+      <%= link_to 'See how it looks to the judges',
+          app_path(submission),
+          target: :_blank %>
+    </p>
+  </dd>
+</dl>

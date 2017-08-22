@@ -1,6 +1,10 @@
 <dt><%= t('models.student_profile.school_name') %></dt>
 <dd><%= account.school_name %></dd>
 
+<% if editing %>
+  <%= link_to t('views.accounts.show.edit'), edit_path %>
+<% end %>
+
 <dt><%= t('models.student_profile.parent_guardian_name') %></dt>
 <dd><%= account.parent_guardian_name %></dd>
 

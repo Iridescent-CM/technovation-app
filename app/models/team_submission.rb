@@ -1,6 +1,8 @@
 require 'json'
 
 class TeamSubmission < ActiveRecord::Base
+  acts_as_paranoid
+
   extend FriendlyId
   friendly_id :team_name_and_app_name, use: :slugged
 

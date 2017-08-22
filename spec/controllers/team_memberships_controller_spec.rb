@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Team Memberships Controllers" do
+  before { Timecop.travel(Division.cutoff_date - 1.day) }
+  after { Timecop.return }
+
   describe Student::TeamMembershipsController do
     describe "DELETE #destroy" do
       it "reconsiders divisions" do

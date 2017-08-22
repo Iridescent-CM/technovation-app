@@ -1,2 +1,7 @@
-<h1><%= @join_request.joinable_name %></h1>
-<p><%= @join_request.status %></p>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-md-8 panel">
+    <h1><%= @join_request.joinable_name %></h1>
+    <p>This join request is <%= @join_request.status %></p>
+    <p><%= link_to 'Go back', :back, class: "button" %>
+  </div>
+</div>

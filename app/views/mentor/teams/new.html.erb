@@ -1,4 +1,9 @@
-<div class="well clearfix">
-  <h3><%= t("views.teams.new.title") %></h3>
-  <%= render 'teams/form', prefix: :mentor %>
+<% provide :title, t("views.teams.new.title") %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
+    <h3><%= t("views.teams.new.title") %></h3>
+
+    <%= render 'teams/form' %>
+  </div>
 </div>

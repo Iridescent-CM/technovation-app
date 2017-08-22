@@ -1,7 +1,7 @@
 <%# see app/helpers/student_helper for SUBPROG function %>
 
 <% unless SeasonToggles.team_submissions_editable? %>
-  <p>The submission deadline has passed. Good luck!</p>
+  <p>Starting a submission is not available at this time.</p>
 <% end %>
 
 <div class="flex-row">
@@ -14,32 +14,32 @@
   <div class="flex-col-md-6" style="padding: 0;">
     <ul class="progress-list">
       <li class="<%= subprog(submission, "team-photo") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Team photo</span>
       </li>
 
       <li class="<%= subprog(submission, "app-info") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Name & description</span>
       </li>
 
       <li class="<%= subprog(submission, "sdg") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Sustainable development goal</span>
       </li>
 
       <li class="<%= subprog(submission, "pitch") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Pitch video</span>
       </li>
 
       <li class="<%= subprog(submission, "demo") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Demo video</span>
       </li>
     </ul>
@@ -52,8 +52,8 @@
 
           <ul class="progress-list">
             <li class="<%= subprog(submission, "business-plan") %>">
-              <%= fa_icon('circle-o') %>
-              <%= fa_icon('check-circle') %>
+              <%= web_icon('circle-o') %>
+              <%= web_icon('check-circle') %>
               <span>Business plan</span>
             </li>
           </ul>
@@ -64,8 +64,8 @@
 
           <ul class="progress-list">
             <li class="standalone-buttons <%= subprog(submission, "pitch-presentation") %>">
-              <%= fa_icon('circle-o') %>
-              <%= fa_icon('check-circle') %>
+              <%= web_icon('circle-o') %>
+              <%= web_icon('check-circle') %>
               <span>Pitch presentation</span><br />
 
               <%= link_to 'Edit the pitch presentation',
@@ -85,26 +85,26 @@
   <div class="flex-col-md-6" style="padding: 0 0 0 1em;">
     <ul class="progress-list">
       <li class="<%= subprog(submission, "screenshots") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>At least 2 screenshots</span>
       </li>
 
       <li class="<%= subprog(submission, "source-code") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Source code</span>
       </li>
 
       <li class="<%= subprog(submission, "development-platform") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Development platform</span>
       </li>
 
       <li class="<%= subprog(submission, "technical-checklist") %>">
-        <%= fa_icon('check-circle') %>
-        <%= fa_icon('circle-o') %>
+        <%= web_icon('check-circle') %>
+        <%= web_icon('circle-o') %>
         <span>Technical checklist</span><br />
         <small>
           The checklist does not have to be complete,

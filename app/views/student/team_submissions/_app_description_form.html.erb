@@ -1,4 +1,4 @@
-<%= simple_form_for send("#{current_account.type_name}_team_submission_path",
+<%= simple_form_for send("#{current_scope}_team_submission_path",
                          submission) do |f| %>
   <%= hidden_field_tag :team_id, current_team.id %>
 

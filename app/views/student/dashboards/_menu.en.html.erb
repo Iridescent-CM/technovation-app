@@ -10,7 +10,8 @@
     </li>
   <% end %>
 
-  <% if current_team.submission.present? and SeasonToggles.display_scores? %>
+  <% if current_team.submission.present? and
+      SeasonToggles.display_scores? %>
     <li class="tab-link">
       <button
         role="button"
@@ -38,5 +39,4 @@
       Pitch Events
     </button>
   </li>
-
 </ul>
