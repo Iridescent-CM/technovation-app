@@ -4,15 +4,47 @@
       Check your email inbox!
     </h1>
 
-    <p>You changed your email address and now you need to confirm it.</p>
-
     <p>
-      We sent a link for you to do this at your new email address.
-      Please go look for it in your inbox.
+      You changed your email address and now you need to confirm it.
     </p>
 
     <p>
-      Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need help!
+      We sent a link to
+      <strong><%= current_account.email %></strong>
+      for you to confirm that it's yours.
     </p>
+
+    <p>
+      Please look for it in your email inbox.
+    </p>
+
+    <hr />
+
+    <p>
+      <strong>Is there a problem receiving the email?</strong>
+      Try these steps:
+    </p>
+
+    <ul>
+      <li>
+        <%= link_to "Edit the email address",
+          public_send("#{current_scope}_profile_path", anchor: "!change-email") %>
+        that you entered
+      </li>
+
+      <li>
+        Check your spam folder
+      </li>
+
+      <li>
+        Add
+        <span class="ex">mailer@technovationchallenge.org</span>
+        to your email contacts
+      </li>
+
+      <li>
+        Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need more help!
+      </li>
+    </ul>
   </li>
 <% end %>
