@@ -36,7 +36,10 @@ class Geocoding
         geocode
       end
 
-      if saved_change_to_latitude? or saved_change_to_longitude?
+      if saved_change_to_latitude? or
+          saved_change_to_longitude? or
+            latitude_changed? or
+              longitude_changed?
         reverse_geocode
       end
 

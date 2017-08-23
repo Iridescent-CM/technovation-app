@@ -7,7 +7,7 @@ RSpec.describe "Team Memberships Controllers" do
   describe Student::TeamMembershipsController do
     describe "DELETE #destroy" do
       it "reconsiders divisions" do
-        team = FactoryGirl.create(:team, members_count: 0)
+        team = FactoryGirl.create(:team)
 
         older_student = FactoryGirl.create(
           :student,
@@ -35,7 +35,7 @@ RSpec.describe "Team Memberships Controllers" do
     describe "#{scope.camelize}::TeamMembershipsController".constantize do
       describe "DELETE #destroy" do
         it "reconsiders divisions" do
-          team = FactoryGirl.create(:team, members_count: 0)
+          team = FactoryGirl.create(:team)
 
           older_student = FactoryGirl.create(
             :student,

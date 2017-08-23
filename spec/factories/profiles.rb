@@ -48,7 +48,7 @@ FactoryGirl.define do
 
     trait :on_team do
       after(:create) do |s|
-        team = FactoryGirl.create(:team, members_count: 0)
+        team = FactoryGirl.create(:team)
         FactoryGirl.create(:team_membership, member_type: "StudentProfile",
                                              member_id: s.id,
                                              joinable: team)
@@ -56,6 +56,7 @@ FactoryGirl.define do
     end
 
     trait :full_profile do
+      geocoded
       parent_guardian_email "example@example.com"
       parent_guardian_name "Parenty McGee"
       school_name "My school"

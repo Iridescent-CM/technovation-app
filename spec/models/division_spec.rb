@@ -26,7 +26,7 @@ RSpec.describe Division do
 
     it "is Senior if any team student is in Senior" do
       Timecop.freeze(Division.cutoff_date - 1.day) do
-        team = FactoryGirl.create(:team, members_count: 0)
+        team = FactoryGirl.create(:team)
         older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
         younger_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 

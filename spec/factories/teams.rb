@@ -28,6 +28,7 @@ FactoryGirl.define do
         FactoryGirl.create(:student)
       }
       team.student_ids = members.map(&:id)
+      TeamCreating.execute(team, team.students.first)
     end
   end
 
