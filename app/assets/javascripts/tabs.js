@@ -1,7 +1,5 @@
 // TODO: broken on mentor dashboard
 document.addEventListener("turbolinks:load", function() {
-  $(".tab-content").addClass("tab-content__hiding");
-
   $('.tabs').each(function() {
     var $links = $(this).find('.tab-menu').first().find('.tab-link'),
         $contents = $(this).find('.content').first().find('> .tab-content');
@@ -11,7 +9,13 @@ document.addEventListener("turbolinks:load", function() {
       $contents = $('#' + $(this).prop('id') + ' + .content .tab-content');
 
     $links.filter(":visible").first().addClass("active");
-    $contents.first().removeClass("tab-content__hiding");
+    $contents.first().removeClass("hidden");
+
+    var intendedTab = (window.location.hash).replace(/#!?/, '');
+    if (intendedTab.length === 0)
+      intendedTab = $links.filter(":visible").first()
+        .find(".tab-button")
+        .data("tab-id");
 
     $links.each(function() {
       var $btn = $(this).find('button').first();
@@ -21,10 +25,8 @@ document.addEventListener("turbolinks:load", function() {
         revealTab($(this), $contents, $links);
       });
 
-      var intendedTab = (window.location.hash).replace('#', '');
-
-      if (intendedTab && $btn && intendedTab === $btn.data('tab-id'))
-        revealTab($btn, $links, $contents);
+      if ($btn && intendedTab === $btn.data('tab-id'))
+        revealTab($btn, $contents, $links);
     });
   });
 
@@ -69,21 +71,22 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   function revealTab($_btn, $_contents, $_links) {
+    console.log($_contents);
     if (!$_btn.data('tab-id'))
       $_btn = $_btn.find('button').first();
 
     if ($_btn.data('update-hash'))
-      window.location.hash = "#" + $_btn.data('tab-id');
+      window.location.hash = "#!" + $_btn.data('tab-id');
 
     $_btn.data('update-hash', true);
 
-    $_contents.addClass('tab-content__hiding');
+    $_contents.addClass('hidden');
     $_links.removeClass('active');
 
     $_btn.closest('.tab-link').addClass('active');
 
     var $revealEl = $('#' + $_btn.data('tab-id'));
-    $revealEl.removeClass('tab-content__hiding');
+    $revealEl.removeClass('hidden');
 
     var $parentTab = $_btn.closest('.tab-content');
 
@@ -105,6 +108,6 @@ document.addEventListener("turbolinks:load", function() {
       $contents = $('#' + $revealEl.prop('id') + ' + .content .tab-content');
 
     $links.filter(":visible").first().addClass("active");
-    $contents.first().removeClass("tab-content__hiding");
+    $contents.first().removeClass("hidden");
   }
 });
