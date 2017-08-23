@@ -26,8 +26,8 @@
 
   <p style="font-weight: bold;">
     If this keeps happening, contact us at
-    <%= mail_to "info@technovationchallenge.org",
-      "info@technovationchallenge.org",
+    <%= mail_to ENV.fetch("HELP_EMAIL"),
+      ENV.fetch("HELP_EMAIL"),
       subject: "Page timing out",
       body: "This URL is timing out: https://#{ENV['HOST_DOMAIN']}#{params[:back]}" %>
   </p>

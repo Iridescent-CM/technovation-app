@@ -17,8 +17,8 @@
   <li><%= link_to "Go back to the homepage", root_path %>, and retry your actions from the very beginning.</li>
   <li>
     If you continue to get the error, please forward any recent email you received from us to
-    <%= mail_to "info@technovationchallenge.org",
-      "info@technovationchallenge.org",
+    <%= mail_to ENV.fetch("HELP_EMAIL"),
+      ENV.fetch("HELP_EMAIL"),
       subject: "Token missing error" %>
     and give us as much detail as you can about what you were trying to do.
   </li>

@@ -34,7 +34,7 @@
           <% if submission.pitch_video_link %>
             <% if judge_note %>
               <p class="judge-note">
-                <%= mail_to "info@technovationchallenge.org",
+                <%= mail_to ENV.fetch("HELP_EMAIL"),
                   "Contact Technovation",
                   subject: "Submission problem for Team: #{submission.team_name}",
                   body: "There is a problem with the pitch video" %>
@@ -60,7 +60,7 @@
           <% if submission.demo_video_link %>
             <% if judge_note %>
               <p class="judge-note">
-                <%= mail_to "info@technovationchallenge.org",
+                <%= mail_to ENV.fetch("HELP_EMAIL"),
                   "Contact Technovation",
                   subject: "Submission problem for Team: #{submission.team_name}",
                   body: "There is a problem with the demo video" %>
