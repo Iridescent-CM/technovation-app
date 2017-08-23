@@ -13,7 +13,7 @@ RSpec.describe Admin::ProfilesController do
         email: "student@testing.com",
         date_of_birth: 13.years.ago
       )
-      team = FactoryGirl.create(:team, members_count: 0)
+      team = FactoryGirl.create(:team)
       TeamRosterManaging.add(team, student)
 
       expect(team.division_name).to eq("junior")

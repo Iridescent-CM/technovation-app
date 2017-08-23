@@ -27,8 +27,7 @@ module TeamController
     @team = Team.new(team_params)
 
     if @team.save
-      RegisterToCurrentSeasonJob.perform_later(@team)
-      TeamRosterManaging.add(@team, current_profile)
+      TeamCreating.execute(@team, current_profile)
 
       redirect_to [current_scope, @team],
         success: t("controllers.teams.create.success")

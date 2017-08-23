@@ -17,8 +17,6 @@ class Team < ActiveRecord::Base
 
   after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
 
-  after_commit :register_to_season, on: :create
-
   def as_indexed_json(options = {})
     as_json(
       only: %w{id name description spot_available?},
@@ -262,12 +260,6 @@ class Team < ActiveRecord::Base
   end
 
   private
-  def register_to_season
-    if season_ids.empty?
-      RegisterToSeasonJob.perform_later(self)
-    end
-  end
-
   def geolocation_str
     [
       city,
