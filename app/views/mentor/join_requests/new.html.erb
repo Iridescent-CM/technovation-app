@@ -1,7 +1,7 @@
 <%= render "teams/public_show", team: @team %>
 
 <div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8 grid__col--bleed-y">
+  <div class="grid__col-sm-8 grid__col--bleed-y">
     <% if SeasonToggles.team_building_enabled? %>
       <% if current_mentor.requested_to_join?(@team) %>
         <p><%= t("views.mentor.join_requests.new.already_requested") %></p>
