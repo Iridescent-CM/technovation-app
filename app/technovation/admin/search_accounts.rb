@@ -19,7 +19,7 @@ module Admin
 
       accounts = klass.joins(season_registrations: :season)
         .where("season_registrations.season_id = ?", season.id)
-        .where.not(email: "info@technovationchallenge.org")
+        .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
       unless params[:text].blank?
         results = accounts.search(

@@ -9,7 +9,7 @@
       season. Check back in the Fall for details about the
       <%= Season.next.year %>
       season. Feel free to email
-      <%= mail_to "info@technovationchallenge.org" %>
+      <%= mail_to ENV.fetch("ADMIN_EMAIL") %>
       or check out our
       <%= link_to "FAQ page", "http://www.technovationchallenge.org/faq/" %>
       for more information.

@@ -14,6 +14,6 @@
 <p><%= link_to "Email a Regional Ambassador in your area", "http://www.technovationchallenge.org/chapters/" %></p>
 <p>Review the <%= link_to "Chapters webpage", "http://www.technovationchallenge.org/chapters/" %> to see if there is a Regional Ambassador in your area already. Reach out to see how you might support their efforts.</p>
 
-<p>If you have any questions, please reply to this email or email the Technovation Team at <%= mail_to "info@technovationchallenge.org", nil, subject: "RA Follow-up Request" %> and someone will be in touch shortly.</p>
+<p>If you have any questions, please reply to this email or email the Technovation Team at <%= mail_to ENV.fetch("ADMIN_EMAIL"), nil, subject: "RA Follow-up Request" %> and someone will be in touch shortly.</p>
 
 <p>Thank you for supporting young women in technology.</p>

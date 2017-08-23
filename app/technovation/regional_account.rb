@@ -9,7 +9,7 @@ module RegionalAccount
     accounts = account.includes(:seasons)
       .references(:seasons)
       .where("seasons.year = ?", params[:season])
-      .where.not(email: "info@technovationchallenge.org")
+      .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
     unless params[:text].blank?
       results = accounts.search(
