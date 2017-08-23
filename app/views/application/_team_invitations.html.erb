@@ -19,7 +19,9 @@
                 </div>
 
                 <div class="team-invitations__team-description">
-                  <%= invitation.team.description %>
+                  <%= invitation.team.description.blank? ?
+                    "This team has not written a summary." :
+                    invitation.team.description %>
                 </div>
 
                 <div class="card__actions-row card__actions-row--pos-fill">

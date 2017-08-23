@@ -35,7 +35,9 @@
   </div>
 
   <div class="ts-about-team__description">
-    <%= current_team.description %>
+    <%= current_team.description.blank? ?
+      "This team has not written a summary." :
+      current_team.description %>
   </div>
 
   <%= link_to "Go To Your Team Page",
