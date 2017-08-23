@@ -104,7 +104,9 @@ FactoryGirl.define do
       end
 
       unless m.honor_code_signed?
-        m.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
+        m.account.build_honor_code_agreement(
+          FactoryGirl.attributes_for(:honor_code_agreement)
+        )
       end
     end
 
@@ -130,7 +132,12 @@ FactoryGirl.define do
     end
   end
 
-  factory :regional_ambassador_profile, aliases: [:ambassador, :regional_ambassador, :ambassador_account, :regional_ambassador_account] do
+  factory :regional_ambassador_profile, aliases: [
+    :ambassador,
+    :regional_ambassador,
+    :ambassador_account,
+    :regional_ambassador_account
+  ] do
     organization_company_name { "FactoryGirl" }
     job_title { "Engineer" }
     ambassador_since_year { Time.current.year }
