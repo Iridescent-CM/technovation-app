@@ -40,4 +40,9 @@ RSpec.feature "Register as a student" do
     )
     expect(attempt).to be_present
   end
+
+  scenario "email is confirmed on signup" do
+    visit student_dashboard_path
+    expect(page).not_to have_content("You changed your email address")
+  end
 end
