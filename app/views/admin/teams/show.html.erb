@@ -16,7 +16,7 @@
 
     <p><%= link_to "Edit team location", edit_admin_team_location_path(@team) %></p>
 
-    <p class="team_description"><%= @team.description %></p>
+    <p class="team_description"><%= @team.description.blank? ? "This team has not provided a summary" : @team.description %></p>
 
     <p><%= link_to t("controllers.teams.edit.link"), edit_admin_team_path(@team) %></p>
   </div>

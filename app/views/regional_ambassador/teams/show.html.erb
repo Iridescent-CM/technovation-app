@@ -14,7 +14,7 @@
       <%= t("views.teams.show.location", name: @team.primary_location) %>
     </p>
 
-    <p class="team_description"><%= @team.description %></p>
+    <p class="team_description"><%= @team.description.blank? ? "This team has not written a summary." : @team.description %></p>
   </div>
 
   <div class="team-memberships">

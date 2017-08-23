@@ -19,7 +19,11 @@
 
       <div class="clear">
         <strong>Summary:</strong>
-        <%= simple_format team.description %>
+        <% if team.description.blank? %>
+          <p>This team has not written a summary.</p>
+        <% else %>
+          <%= simple_format team.description %>
+        <% end %>
       </div>
     </div>
   </div>
