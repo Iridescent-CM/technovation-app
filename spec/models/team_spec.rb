@@ -36,7 +36,7 @@ RSpec.describe Team do
   end
 
   it "assigns to the correct division if a student updates their birthdate" do
-    team = FactoryGirl.create(:team, members_count: 0)
+    team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
 
@@ -53,7 +53,7 @@ RSpec.describe Team do
   end
 
   it "reconsiders division when a student leaves the team" do
-    team = FactoryGirl.create(:team, members_count: 0)
+    team = FactoryGirl.create(:team)
     younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
     older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
 
@@ -250,7 +250,7 @@ RSpec.describe Team do
   end
 
   it "touches its submission when division changes" do
-    team = FactoryGirl.create(:team, members_count: 0)
+    team = FactoryGirl.create(:team)
     submission = FactoryGirl.create(:submission, team: team)
 
     old_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)

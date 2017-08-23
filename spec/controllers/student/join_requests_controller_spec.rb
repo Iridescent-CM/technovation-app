@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Student::JoinRequestsController do
   describe "POST #create" do
     it "emails all members" do
-      team = FactoryGirl.create(:team, members_count: 0)
+      team = FactoryGirl.create(:team)
       student = FactoryGirl.create(:student)
       mentor = FactoryGirl.create(:mentor)
 
