@@ -19,6 +19,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
+                                      email_confirmed_at: Time.current,
                                     })).valid?
   SeasonRegistration.register(student.account)
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
@@ -62,6 +63,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
+                                      email_confirmed_at: Time.current,
                                     })).valid?
   season = Season.find_or_create_by(year: past)
   SeasonRegistration.register(student.account, season)
@@ -89,6 +91,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       state_province: "IL",
                                       country: "US",
                                       location_confirmed: true,
+                                      email_confirmed_at: Time.current,
                                     })).valid?
   season = Season.find_or_create_by(year: distant_past)
   SeasonRegistration.register(student.account, season)
@@ -113,6 +116,7 @@ if (mentor = MentorProfile.create(
       state_province: "CO",
       country: "US",
       location_confirmed: true,
+      email_confirmed_at: Time.current,
 
       background_check_attributes: {
         candidate_id: "SEEDED!",
@@ -150,6 +154,7 @@ if (mentor = MentorProfile.create(
     account_attributes: {
       email: "mentor+chi@mentor.com",
       password: "mentor+chi@mentor.com",
+      email_confirmed_at: Time.current,
 
       background_check_attributes: {
         candidate_id: "SEEDED!",
@@ -183,6 +188,7 @@ end
 if (ra = RegionalAmbassadorProfile.create(
     account_attributes: {
       email: "ra@ra.com",
+      email_confirmed_at: Time.current,
       password: "ra@ra.com",
       background_check_attributes: {
         candidate_id: "SEEDED!",
@@ -215,6 +221,7 @@ end
 if (judge = JudgeProfile.create(
     account_attributes: {
       email: "judge@judge.com",
+      email_confirmed_at: Time.current,
       password: "judge@judge.com",
       first_name: "Judgey",
       last_name: "McGee",
