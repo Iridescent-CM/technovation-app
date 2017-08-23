@@ -14,6 +14,7 @@ class ProfileCreating
   end
 
   def execute
+    profile.account.email_confirmed!
     controller.remove_cookie(:signup_token)
     AttachSignupAttemptJob.perform_later(profile.account)
 
