@@ -34,7 +34,7 @@
 
       <tr>
         <td class="content-block">
-          If you have any questions, or you cannot use the link above, reply to this email immediately, which is <%= mail_to "info@technovationchallenge.org" %>.
+          If you have any questions, or you cannot use the link above, reply to this email immediately, which is <%= mail_to ENV.fetch("HELP_EMAIL") %>.
         </td>
       </tr>
 
