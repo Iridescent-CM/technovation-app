@@ -99,17 +99,6 @@ class InitSchema < ActiveRecord::Migration[5.1]
       t.integer "regional_pitch_event_id"
     end
 
-    create_table "events", id: :serial, force: :cascade do |t|
-      t.string "name", null: false
-      t.text "description", null: false
-      t.string "location", null: false
-      t.datetime "starts_at", null: false
-      t.integer "organizer_id", null: false
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
-      t.index ["organizer_id"], name: "index_events_on_organizer_id"
-    end
-
     create_table "expertises", id: :serial, force: :cascade do |t|
       t.string "name", null: false
       t.datetime "created_at", null: false
