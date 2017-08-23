@@ -5,7 +5,6 @@ class AttachSignupAttemptJob < ActiveJob::Base
     if attempt = SignupAttempt.find_by(email: account.email)
       attempt.update_column(:account_id, account.id)
       attempt.registered!
-      attempt.account.email_confirmed!
     end
   end
 end
