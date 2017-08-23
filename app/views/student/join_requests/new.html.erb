@@ -1,6 +1,8 @@
-<% if SeasonToggles.team_building_enabled? %>
-  <div class="grid">
-    <div class="grid__col-auto grid__col--bleed-y">
+<%= render "teams/public_show", team: @team %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 grid__col--bleed">
+    <% if SeasonToggles.team_building_enabled? %>
       <% if current_student.requested_to_join?(@team) %>
         <p><%= t("views.student.join_requests.new.already_requested") %></p>
       <% elsif current_student.is_on?(@team) %>
@@ -26,8 +28,11 @@
           ) %>
         </p>
       <% end %>
-    </div>
+    <% else %>
+      <p>
+        You cannot send requests to join teams at this time,
+        because Technovation has not enabled team building.
+      </p>
+    <% end %>
   </div>
-<% end %>
-
-<%= render "teams/public_show", team: @team %>
+</div>
