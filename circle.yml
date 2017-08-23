@@ -9,6 +9,7 @@ machine:
 
   environment:
     HELP_EMAIL: help@technovationchallenge.org
+    ADMIN_EMAIL: info@technovationchallenge.org
     PDFTK_PATH: /usr/bin/pdftk
     AIRBRAKE_PROJECT_ID: n-a
     AIRBRAKE_PROJECT_KEY: n-a
