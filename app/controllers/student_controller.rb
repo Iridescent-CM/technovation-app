@@ -4,23 +4,6 @@ class StudentController < ApplicationController
   layout "student"
   helper_method :current_student, :current_team
 
-  before_action -> {
-    unless current_student.honor_code_signed?
-      save_redirected_path
-      redirect_to interruptions_path(issue: :honor_code)
-    end
-  }, unless: -> {
-    %w{
-      interruptions
-      location_details
-      cookies
-      profiles
-      honor_code_agreements
-      dashboards
-      parental_consent_notices
-    }.include?(controller_name)
-  }
-
   # For Airbrake Notifier
   def current_user
     current_account
