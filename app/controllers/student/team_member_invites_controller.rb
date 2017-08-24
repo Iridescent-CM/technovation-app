@@ -45,7 +45,12 @@ module Student
 
     def redirect_based_on_status(invite)
       if invite.accepted?
-        @path = student_team_path(invite.team)
+        if current_student.full_access_enabled?
+          @path = student_team_path(invite.team)
+        else
+          @path = student_dashboard_path
+        end
+
         @msg = t("controllers.team_member_invites.update.success")
       else
         @path = student_dashboard_path
