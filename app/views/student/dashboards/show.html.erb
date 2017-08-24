@@ -31,6 +31,9 @@
 <% else %>
   <div class="grid grid--justify-space-around">
     <div class="grid__col-md-8">
+      <%= render 'student/dashboards/invitations',
+        invites: current_student.team_member_invites.pending %>
+
       <%= render 'completion_steps' %>
     </div>
   </div>
