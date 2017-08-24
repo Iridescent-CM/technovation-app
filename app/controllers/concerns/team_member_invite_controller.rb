@@ -2,14 +2,9 @@ module TeamMemberInviteController
   extend ActiveSupport::Concern
 
   def show
-    if current_profile.full_access_enabled?
-      @invite = current_profile.team_member_invites.find_by(
-        invite_token: params.fetch(:id)
-      ) || NullInvite.new
-    else
-      redirect_to [current_scope, :dashboard],
-        error: t("controllers.invites.show.full_access_needed") and return
-    end
+    @invite = current_profile.team_member_invites.find_by(
+      invite_token: params.fetch(:id)
+    ) || NullInvite.new
 
     case current_scope
     when "mentor"

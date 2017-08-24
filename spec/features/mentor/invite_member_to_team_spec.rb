@@ -5,7 +5,13 @@ RSpec.feature "Invite a member to a team" do
 
   let(:mentor) { FactoryGirl.create(:mentor, :on_team) }
 
-  let!(:existing_student) { FactoryGirl.create(:student, email: "some@student.com") }
+  let!(:existing_student) {
+    FactoryGirl.create(
+      :student,
+      skip_onboarding: true,
+      email: "some@student.com"
+    )
+  }
 
   before do
     sign_in(mentor)
