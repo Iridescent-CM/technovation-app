@@ -15,6 +15,7 @@ FactoryGirl.define do
       date_of_birth Date.today - 15.years
       email nil
       password nil
+      skip_onboarding false
     end
 
     trait :geocoded do
@@ -24,7 +25,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |s, e|
-      if s.parental_consent.nil?
+      if s.parental_consent.nil? and not e.skip_onboarding
         s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
       end
 
@@ -39,7 +40,9 @@ FactoryGirl.define do
         password: e.password || attrs[:password],
       ))
 
-      s.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
+      unless e.skip_onboarding
+        s.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
+      end
     end
 
     after(:create) do |s, e|
