@@ -54,28 +54,10 @@ class TeamMailer < ApplicationMailer
   def invite_member(invite)
     @greeting = I18n.translate("team_mailer.invite_member.greeting.student", name: invite.team_name)
 
-    if invite.invitee && invite.invitee.can_join_a_team?
-      @url = student_team_member_invite_url(invite)
-      @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
-      @link_text = "Review this invitation"
-    elsif invite.invitee
-      @url = student_dashboard_url
-      @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
-      @link_text = "Complete your profile"
+    if !!invite.invitee
+      invite_existing_student(invite)
     else
-      attempt = SignupAttempt.create!(
-        email: invite.invitee_email,
-        password: SecureRandom.hex(17),
-        status: SignupAttempt.statuses[:temporary_password],
-      )
-
-      if token = attempt.activation_token
-        @url = student_signup_url(token: token)
-        @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
-        @link_text = "Signup to join this team"
-      else
-        raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
-      end
+      invite_new_student(invite)
     end
 
     I18n.with_locale(invite.inviter.locale) do
@@ -157,4 +139,27 @@ class TeamMailer < ApplicationMailer
         template_name: "join_request_#{status}"
     end
   end
+
+  def invite_existing_student(invite)
+    @url = student_team_member_invite_url(invite)
+    @intro = I18n.translate("team_mailer.invite_member.intro.existing_profile")
+    @link_text = "Review this invitation"
+  end
+
+  def invite_new_student(invite)
+    attempt = SignupAttempt.create!(
+      email: invite.invitee_email,
+      password: SecureRandom.hex(17),
+      status: SignupAttempt.statuses[:temporary_password],
+    )
+
+    if token = attempt.activation_token
+      @url = student_signup_url(token: token)
+      @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+      @link_text = "Signup to join this team"
+    else
+      raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
+    end
+  end
+
 end
