@@ -1,7 +1,7 @@
 <% provide :title, t("views.student.mentors.show.title") %>
 
-<div class="grid">
-  <div class="grid__col-auto">
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
     <% if params[:review_before] %>
       <div class="grid__cell">
         <%= link_to :back, class: "button secondary" do %>
@@ -36,7 +36,7 @@
       </p>
     <% end %>
 
-    <% if SeasonToggles.team_building_enabled? %>
+    <% if current_team.present? and SeasonToggles.team_building_enabled? %>
       <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
         mentor_invite: @mentor_invite,
         mentor: @mentor,
