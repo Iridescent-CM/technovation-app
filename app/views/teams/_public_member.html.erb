@@ -1,11 +1,12 @@
 <li class="grid">
-  <div class="grid__col-xs-2 grid__col--bleed-x">
+  <div class="grid__col-3 grid__col--bleed-x">
     <div class="grid__cell">
-      <%= image_tag public_member.profile_image_url, class: "grid__cell-img" %>
+      <%= image_tag public_member.profile_image_url,
+        class: "thumbnail-md grid__cell-img" %>
     </div>
   </div>
 
-  <div class="grid__col-xs-10">
+  <div class="grid__col-9">
     <h3>
       <% if public_member.mentor_profile %>
         <%= link_to public_member.first_name,
