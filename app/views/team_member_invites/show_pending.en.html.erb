@@ -1,8 +1,7 @@
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
     <h3>
-      <%= t("views.team_member_invites.show.greeting",
-            name: @invite.team_name) %>
+      <%= t("views.team_member_invites.show.greeting", name: @invite.team_name) %>
     </h3>
 
     <p><%= t("views.team_member_invites.show.message") %></p>
@@ -11,32 +10,36 @@
 
 <%= render 'teams/public_show', team: @invite.team %>
 
-<div class="grid">
-  <div class="grid__col-sm-6">
-    <%= button_to t("controllers.team_member_invites.update.accept",
-                    name: @invite.team_name),
-                    url,
-                    class: "button small",
-                    params: {
-                      "team_member_invite[status]" => :accepted,
-                    },
-                    method: :put,
-                    data: {
-                      confirm: t("views.team_member_invites.form.confirm_accept"),
-                    } %>
-  </div>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 grid__col--bleed">
+    <div class="grid">
+      <%= button_to(
+        t("controllers.team_member_invites.update.accept", name: @invite.team_name),
+        [current_scope, @invite],
+        class: "button small",
+        params: {
+          "team_member_invite[status]" => :accepted,
+        },
+        method: :put,
+        data: {
+          confirm: t("views.team_member_invites.form.confirm_accept"),
+        },
+        form_class: "grid__col-sm-6 grid__col--bleed-x grid--align-center"
+      ) %>
 
-  <div class="grid__col-sm-6 grid--align-end">
-    <%= button_to t("controllers.team_member_invites.update.decline",
-                    name: @invite.team_name),
-                    url,
-                    class: "button secondary small",
-                    params: {
-                      "team_member_invite[status]" => :declined,
-                    },
-                    method: :put,
-                    data: {
-                      confirm: t("views.team_member_invites.form.confirm_decline"),
-                    } %>
+      <%= button_to(
+        t("controllers.team_member_invites.update.decline", name: @invite.team_name),
+        [current_scope, @invite],
+        class: "button danger small",
+        params: {
+          "team_member_invite[status]" => :declined,
+        },
+        method: :put,
+        data: {
+          confirm: t("views.team_member_invites.form.confirm_decline"),
+        },
+        form_class: "grid__col-sm-6 grid__col--bleed-x grid--align-center"
+      ) %>
+    </div>
   </div>
 </div>

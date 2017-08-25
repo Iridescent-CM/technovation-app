@@ -1,34 +1,35 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-auto">
-    <h1 class="content-heading">Team Invitations</h1>
+<% if invites.pending.any? %>
+  <div class="grid grid--justify-space-around">
+    <div class="panel grid__col-auto">
+      <h3>You have been invited!</h3>
 
-    <% if current_scope === "student" and invites.pending.many? %>
-      <p class="hint">You can only accept one!</p>
-    <% end %>
-
-    <% invites.pending.each do |invite| %>
-      <%= content_tag :div, id: dom_id(invite) do %>
-        <div class="grid">
-          <div class="grid__col-auto grid__col--bleed-x">
-            An invitation is waiting for you!
-          </div>
-        </div>
-
-        <div class="grid grid--bleed">
-          <div class="grid__col-sm-2 grid__cell">
-            <%= image_tag invite.team.team_photo, class: "grid__cell-img" %>
-          </div>
-
-          <div class="grid__col-sm-10 grid__cell">
-            <strong>From team: <%= invite.team_name %></strong>
-
-            <p>
-              <%= link_to "View invitation",
-                send("#{current_scope}_team_member_invite_path", invite) %>
-            </p>
-          </div>
-        </div>
+      <% if current_scope === "student" and invites.pending.many? %>
+        <p class="hint">You can only accept one!</p>
       <% end %>
-    <% end %>
+
+      <% invites.pending.each do |invite| %>
+        <%= content_tag :div, id: dom_id(invite) do %>
+          <div class="grid grid--bleed">
+            <div class="grid__col-4">
+              <div class="grid__cell">
+                <%= image_tag invite.team.team_photo,
+                  class: "thumbnail-md grid__cell-img" %>
+              </div>
+            </div>
+
+            <div class="grid__col-8">
+              <div class="grid__cell">
+                <strong>From team: <%= invite.team_name %></strong>
+
+                <p>
+                  <%= link_to "Open this invitation",
+                    send("#{current_scope}_team_member_invite_path", invite) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
