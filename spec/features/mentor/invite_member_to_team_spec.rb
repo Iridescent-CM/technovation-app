@@ -8,7 +8,7 @@ RSpec.feature "Invite a member to a team" do
   let!(:incomplete_student) {
     FactoryGirl.create(
       :student,
-      skip_onboarding: true,
+      not_onboarded: true,
       email: "incomplete@student.com"
     )
   }
