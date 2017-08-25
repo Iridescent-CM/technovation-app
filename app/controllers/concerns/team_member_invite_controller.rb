@@ -6,12 +6,7 @@ module TeamMemberInviteController
       invite_token: params.fetch(:id)
     ) || NullInvite.new
 
-    case current_scope
-    when "mentor"
-      render template: "mentor/mentor_invites/show"
-    when "student"
-      render template: "team_member_invites/show"
-    end
+    render template: "team_member_invites/show_#{@invite.status}"
   end
 
   def create
