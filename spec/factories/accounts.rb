@@ -15,13 +15,6 @@ FactoryGirl.define do
       RegisterToCurrentSeasonJob.perform_now(a)
       a.update_column(:profile_image, "foo/bar/baz.png")
 
-      unless a.honor_code_signed?
-        a.create_honor_code_agreement!(
-          agreement_confirmed: true,
-          electronic_signature: "Agreement Poodle"
-        )
-      end
-
       unless a.student_profile.present? or a.consent_signed?
         a.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
       end
