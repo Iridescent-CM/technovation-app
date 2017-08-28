@@ -16,13 +16,13 @@ RSpec.describe Mentor::JoinRequestsController do
       expect(mails.flat_map(&:to)).to match_array(team.students.map(&:email))
 
       expect(mails.map(&:subject).sample).to eq(
-        "A mentor has requested to join your team!"
+        "A mentor has asked to join your team!"
       )
 
       bodies = mails.map(&:body)
 
       expect(bodies.sample.to_s).to include(
-        "#{mentor.first_name} has requested to join your Technovation team as a mentor"
+        "#{mentor.first_name} has asked to join your Technovation team as a mentor"
       )
 
       expect(bodies.sample.to_s).to include("Review This Request")
