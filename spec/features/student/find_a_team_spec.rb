@@ -34,7 +34,27 @@ RSpec.feature "Students find a team" do
     click_button "Ask to join #{available_team.name}"
 
     join_request = JoinRequest.last
-    expect(current_path).to eq(new_student_join_request_path)
+
+    expect(current_path).to eq(student_dashboard_path)
+    expect(page).to have_content(join_request.joinable_name)
+    expect(page).to have_content("You have asked to join")
+  end
+
+  scenario "onboarded student sees pending requests" do
+    sign_out
+
+    onboarded = FactoryGirl.create(:student, :geocoded)
+
+    sign_in(onboarded)
+
+    within(".navigation") { click_link "Join a team" }
+
+    click_link "Ask to join"
+    click_button "Ask to join #{available_team.name}"
+
+    join_request = JoinRequest.last
+
+    expect(current_path).to eq(student_dashboard_path)
     expect(page).to have_content(join_request.joinable_name)
     expect(page).to have_content("You have asked to join")
   end

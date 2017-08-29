@@ -7,14 +7,14 @@ RSpec.feature "Students request to join a team",
   before { SeasonToggles.team_building_enabled! }
 
   scenario "students already on a team don't see the link" do
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryGirl.create(:student, :on_team, not_onboarded: true)
     sign_in(student)
     expect(page).not_to have_link("Join a team")
   end
 
   context "a valid student requestor" do
     let!(:team) { FactoryGirl.create(:team) } # Default is in Chicago
-    let!(:student) { FactoryGirl.create(:student) } # Default Chicago
+    let!(:student) { FactoryGirl.create(:student, not_onboarded: true) } # Default Chicago
 
     before do
       ActionMailer::Base.deliveries.clear
@@ -28,6 +28,18 @@ RSpec.feature "Students request to join a team",
         "No join request email was sent"
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq("A student has asked to join your team!")
+    end
+
+    scenario "the requesting student can see their pending request" do
+      within('.join_request') do
+        expect(page).to have_content("You have asked to join a team")
+        expect(page).to have_content(team.name)
+        expect(page).to have_content(team.primary_location)
+        expect(page).to have_content(team.division_name.humanize)
+        expect(page).to have_css("img.thumbnail-md[src*='#{team.team_photo_url}']")
+      end
+
+      expect(page).not_to have_link("Join a team")
     end
 
     scenario "student accepts the request" do

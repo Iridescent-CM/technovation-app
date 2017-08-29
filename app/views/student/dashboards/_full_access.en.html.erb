@@ -2,6 +2,13 @@
   <%= render 'student/dashboards/menu' %>
 
   <div class="content">
+    <% if current_student.join_requests.pending.any? %>
+      <div class="tab-content" id="join_requests">
+        <%= render partial: 'dashboards/join_request',
+          collection: current_student.join_requests.pending %>
+      </div>
+    <% end %>
+
     <% if current_student.team_member_invites.pending.any? %>
       <div class="tab-content" id="invitations">
         <%= render 'dashboards/invitations',
