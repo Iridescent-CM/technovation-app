@@ -132,11 +132,10 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def can_join_a_team?
-    honor_code_signed? and
-      consent_signed? and
-        background_check_complete? and
-          bio_complete? and
-            SeasonToggles.team_building_enabled?
+    consent_signed? and
+      background_check_complete? and
+        bio_complete? and
+          SeasonToggles.team_building_enabled?
   end
 
   def background_check_complete?
@@ -153,10 +152,6 @@ class MentorProfile < ActiveRecord::Base
 
   def scope_name
     "mentor"
-  end
-
-  def void_honor_code_agreement!
-    honor_code_agreement.void!
   end
 
   def pending_team_invitations

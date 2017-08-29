@@ -27,15 +27,9 @@ class Account < ActiveRecord::Base
   has_one :signup_attempt, dependent: :destroy
   has_one :unconfirmed_email_address, dependent: :destroy
 
-  has_one :honor_code_agreement, -> { nonvoid }, dependent: :destroy
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
   has_many :certificates
-
-  has_many :void_honor_code_agreements,
-    -> { void },
-    class_name: "HonorCodeAgreement",
-    dependent: :destroy
 
   has_many :void_consent_waivers,
     -> { void },
@@ -259,10 +253,6 @@ class Account < ActiveRecord::Base
     else
       "application"
     end
-  end
-
-  def honor_code_signed?
-    honor_code_agreement.present?
   end
 
   def consent_signed?

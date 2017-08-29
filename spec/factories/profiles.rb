@@ -39,10 +39,6 @@ FactoryGirl.define do
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
       ))
-
-      unless e.not_onboarded
-        s.account.build_honor_code_agreement(FactoryGirl.attributes_for(:honor_code_agreement))
-      end
     end
 
     after(:create) do |s, e|
@@ -104,12 +100,6 @@ FactoryGirl.define do
 
       unless m.consent_signed?
         m.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
-      end
-
-      unless m.honor_code_signed?
-        m.account.build_honor_code_agreement(
-          FactoryGirl.attributes_for(:honor_code_agreement)
-        )
       end
     end
 

@@ -158,10 +158,6 @@ class StudentProfile < ActiveRecord::Base
     !!parental_consent && parental_consent.void!
   end
 
-  def void_honor_code_agreement!
-    !!honor_code_agreement && honor_code_agreement.void!
-  end
-
   def authenticated?
     true
   end
@@ -176,9 +172,8 @@ class StudentProfile < ActiveRecord::Base
 
   def full_access_enabled?
     account.email_confirmed? and
-      honor_code_signed? and
-        parental_consent_signed? and
-          location_confirmed?
+      parental_consent_signed? and
+        location_confirmed?
   end
 
   private

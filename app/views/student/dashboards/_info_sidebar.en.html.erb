@@ -13,10 +13,6 @@
   <div class="grid__col-md-12 grid__col-xs-8">
     <% if certs ||= false %>
       <%= render 'student/dashboards/full_access_content/certs_sidebar' %>
-    <% else %>
-      <h3>Honor Code</h3>
-
-      <%= render 'honor_code_signed', account: current_student %>
     <% end %>
   </div>
 
