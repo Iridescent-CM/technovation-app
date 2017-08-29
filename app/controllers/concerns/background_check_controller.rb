@@ -8,7 +8,7 @@ module BackgroundCheckController
   end
 
   def show
-    BackgroundChecking.new(current_profile.background_check).execute()
+    BackgroundChecking.new(current_profile.background_check).execute
     @status = current_profile.background_check.status
   end
 
