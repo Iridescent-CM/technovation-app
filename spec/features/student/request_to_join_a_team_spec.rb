@@ -24,7 +24,7 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request email was sent"
       mail = ActionMailer::Base.deliveries.last
-      expect(mail.subject).to eq("A student has requested to join your team!")
+      expect(mail.subject).to eq("A student has asked to join your team!")
     end
 
     scenario "student accepts the request" do
