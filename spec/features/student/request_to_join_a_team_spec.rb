@@ -1,7 +1,10 @@
 require "rails_helper"
 
-RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:method, :host] }, no_es_stub: true do
-  before { SeasonToggles.team_building_enabled="yes" }
+RSpec.feature "Students request to join a team",
+  vcr: { match_requests_on: [:method, :host] },
+  no_es_stub: true do
+
+  before { SeasonToggles.team_building_enabled! }
 
   scenario "students already on a team don't see the link" do
     student = FactoryGirl.create(:student, :on_team)
@@ -41,7 +44,9 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
       expect(mail.body.to_s).to include("Hi #{JoinRequest.last.requestor_first_name}!")
-      expect(mail.body.to_s).to include("#{team.name} accepted your request to be a member!")
+      expect(mail.body.to_s).to include(
+        "#{team.name} accepted your request to be a member!"
+      )
 
       url = student_team_url(team,
                              host: ENV["HOST_DOMAIN"],
@@ -58,12 +63,16 @@ RSpec.feature "Students request to join a team", vcr: { match_requests_on: [:met
       click_link "My team"
       click_link "decline"
 
-      expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request decline email was sent"
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+        "No join request decline email was sent"
+
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was declined")
       expect(mail.body).to include("Hi #{JoinRequest.last.requestor_first_name},")
-      expect(mail.body).to include("#{team.name} has declined your request to be a member.")
+      expect(mail.body).to include(
+        "#{team.name} has declined your request to be a member."
+      )
     end
   end
 end

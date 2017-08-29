@@ -3,15 +3,18 @@ require "rails_helper"
 RSpec.feature "Students find a team" do
   before { SeasonToggles.team_building_enabled! }
 
-  let!(:available_team) { FactoryGirl.create(:team, :geocoded) } # Default is in Chicago
+  let!(:available_team) { FactoryGirl.create(:team, :geocoded) }
+    # Default is in Chicago
 
   before do
-    student = FactoryGirl.create(:student, :geocoded, not_onboarded: true) # City is Chicago
+    student = FactoryGirl.create(:student, :geocoded, not_onboarded: true)
+      # City is Chicago
     sign_in(student)
   end
 
   scenario "browse nearby teams" do
     team = FactoryGirl.create(:team, :geocoded) # Default is in Chicago
+
     faraway_team = FactoryGirl.create(
       :team,
       :geocoded,
