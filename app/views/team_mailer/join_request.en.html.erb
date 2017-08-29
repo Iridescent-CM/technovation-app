@@ -9,7 +9,7 @@
       </tr>
       <tr>
         <td class="content-block">
-          <%= @first_name %> has requested to join your Technovation team as a <%= @role_name %>.
+          <%= @first_name %> has asked to join your Technovation team as a <%= @role_name %>.
         </td>
       </tr>
 
@@ -22,8 +22,15 @@
       <% end %>
 
       <tr>
-        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-          <%= link_to "Review This Request", @url, class: "btn-primary", itemprop: "url" %>
+        <td
+          class="content-block"
+          itemprop="handler"
+          itemscope
+          itemtype="http://schema.org/HttpActionHandler"
+        >
+          <%= link_to "Review This Request", @url,
+            class: "btn-primary",
+            itemprop: "url" %>
         </td>
       </tr>
       <tr>

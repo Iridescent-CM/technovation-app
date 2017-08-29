@@ -95,7 +95,7 @@ en:
           title: "My requests"
         new:
           already_joined: "You are on this team."
-          already_requested: "You have requested to join this team"
+          already_requested: "You have asked to join this team"
 
       mentors:
         show:
@@ -106,7 +106,7 @@ en:
       show:
         already_invited: "Your team has invited %{name} to be a mentor."
         already_on_team: "%{name} is a mentor on your team."
-        already_requested: "%{name} has requested to mentor your team."
+        already_requested: "%{name} has asked to mentor your team."
         invite_to_team: "Invite %{name} to mentor your team"
         manage_team: "Manage your team's join requests"
 
@@ -274,7 +274,7 @@ en:
         new:
           already_invited: "You have been invited to join this team. %{link}"
           already_joined: "You are on this team."
-          already_requested: "You have requested to join this team"
+          already_requested: "You have asked to join this team"
 
       mentors:
         show:
