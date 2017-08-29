@@ -53,8 +53,6 @@ Rails.application.routes.draw do
     resources :mentor_searches, except: [:index, :destroy]
 
     resource :parental_consent_notice, only: [:new, :create]
-    resources :honor_code_agreements, only: [:new, :create]
-    resource :honor_code_agreement, only: :show
   end
 
   namespace :mentor do
@@ -101,8 +99,6 @@ Rails.application.routes.draw do
     resources :students, only: :show
 
     resources :background_checks, only: [:new, :create, :show]
-    resources :honor_code_agreements, only: [:new, :create]
-    resource :honor_code_agreement, only: :show
 
     resource :regional_pitch_event_selection, only: [:new, :show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show

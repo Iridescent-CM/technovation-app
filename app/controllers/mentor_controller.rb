@@ -11,23 +11,6 @@ class MentorController < ApplicationController
     end
   }
 
-  before_action -> {
-    unless current_mentor.honor_code_signed?
-      save_redirected_path
-      redirect_to interruptions_path(issue: :honor_code)
-    end
-  }, unless: -> {
-    %w{
-      interruptions
-      location_details
-      profiles
-      honor_code_agreements
-      cookies
-      dashboards
-      background_checks
-    }.include?(controller_name)
-  }
-
   # For Airbrake Notifier
   def current_user
     current_mentor.account
