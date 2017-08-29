@@ -40,7 +40,7 @@
         <%= link_to "View your profile", student_profile_path %>
       </div>
 
-      <%= render 'student/dashboards/invitations',
+      <%= render 'dashboards/invitations',
         invites: current_student.team_member_invites.pending %>
 
       <% unless current_student.is_on_team? %>
