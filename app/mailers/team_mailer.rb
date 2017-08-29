@@ -34,7 +34,7 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-           subject: "#{@team.name} has left the regional pitch event: #{@event.name}"
+        subject: "#{@team.name} has left the regional pitch event: #{@event.name}"
     end
   end
 
@@ -47,12 +47,15 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-           subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
+        subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
     end
   end
 
   def invite_member(invite)
-    @greeting = I18n.translate("team_mailer.invite_member.greeting.student", name: invite.team_name)
+    @greeting = I18n.translate(
+      "team_mailer.invite_member.greeting.student",
+      name: invite.team_name
+    )
 
     if !!invite.invitee
       invite_existing_student(invite)
@@ -66,7 +69,10 @@ class TeamMailer < ApplicationMailer
   end
 
   def invite_mentor(invite)
-    @greeting = I18n.translate("team_mailer.invite_member.greeting.mentor", name: invite.team_name)
+    @greeting = I18n.translate(
+      "team_mailer.invite_member.greeting.mentor",
+      name: invite.team_name
+    )
 
     if invite.invitee.full_access_enabled?
       @url = mentor_mentor_invite_url(invite)
@@ -87,7 +93,10 @@ class TeamMailer < ApplicationMailer
     @first_name = join_request.requestor_first_name
     @role_name = join_request.requestor_scope_name
     @team_name = join_request.joinable_name
-    @extra = I18n.translate("team_mailer.join_request.extra.#{join_request.requestor_scope_name}", name: @first_name)
+    @extra = I18n.translate(
+      "team_mailer.join_request.extra.#{join_request.requestor_scope_name}",
+      name: @first_name
+    )
     @url = send("#{recipient.scope_name}_team_url", join_request.joinable)
 
     I18n.with_locale(recipient.locale) do
@@ -124,7 +133,9 @@ class TeamMailer < ApplicationMailer
     end
 
     if status == :declined
-      @extra = I18n.translate("team_mailer.#{type}_join_request_status.declined_extra")
+      @extra = I18n.translate(
+        "team_mailer.#{type}_join_request_status.declined_extra"
+      )
       @url = send("new_#{type}_team_search_url")
 
       if type == :student
@@ -134,8 +145,10 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(join_request.requestor.locale) do
       mail to: join_request.requestor_email,
-        subject: I18n.translate("team_mailer.#{type}_join_request_status.#{status}_subject",
-                                name: join_request.joinable_name),
+        subject: I18n.translate(
+          "team_mailer.#{type}_join_request_status.#{status}_subject",
+          name: join_request.joinable_name
+        ),
         template_name: "join_request_#{status}"
     end
   end
@@ -161,5 +174,4 @@ class TeamMailer < ApplicationMailer
       raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
     end
   end
-
 end
