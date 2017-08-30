@@ -6,7 +6,7 @@ module TeamMemberInviteController
       invite_token: params.fetch(:id)
     ) || NullInvite.new
 
-    if current_profile.nil? or not current_profile == @invite.invitee
+    unless @invite.invitee == current_profile
       signin = @invite.invitee.account
       SignIn.(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
     else
