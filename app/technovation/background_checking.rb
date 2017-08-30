@@ -1,8 +1,8 @@
 class BackgroundChecking
-  def initialize(bg_check, report: nil, logger: nil)
+  def initialize(bg_check, options={})
     @bg_check = bg_check
-    @report = report || BackgroundCheck::Report.retrieve(bg_check.report_id)
-    @logger = logger || Logger.new('/dev/null')
+    @report = options.fetch(:report) { BackgroundCheck::Report.retrieve(bg_check.report_id) }
+    @logger = options.fetch(:logger) { Logger.new('/dev/null') }
   end
 
   def execute
