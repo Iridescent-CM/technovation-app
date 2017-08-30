@@ -450,6 +450,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-doc (0.11.1)
+      pry (~> 0.9)
+      yard (~> 0.9)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
     pry-rails (0.3.6)
@@ -597,6 +600,7 @@ GEM
     xml-simple (1.1.5)
     xpath (2.1.0)
       nokogiri (~> 1.3)
+    yard (0.9.9)
 
 PLATFORMS
   ruby
@@ -655,9 +659,10 @@ DEPENDENCIES
   pdf-forms (~> 1.1)
   pg (~> 0.21)
   premailer-rails (~> 1.9)
+  pry-doc (~> 0.11)
   pry-nav (~> 0.2)
   pry-rails (~> 0.3)
-  puma (~> 3.9)
+  puma (~> 3.10)
   rack-mini-profiler (~> 0.10)
   rack-rewrite (~> 1.5)
   rack-timeout (~> 0.4)

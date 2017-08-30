@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "~> 2.4"
 
 gem 'rails', '~> 5.1'
-gem 'puma', '~> 3.9'
+gem 'puma', '~> 3.10'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
@@ -78,6 +78,7 @@ gem "oink", "~> 0.10"
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
+  gem 'pry-doc', "~> 0.11"
   gem 'pry-nav', "~> 0.2"
   gem 'rspec-rails', "~> 3.6"
   gem 'launchy', "~> 2.4"
