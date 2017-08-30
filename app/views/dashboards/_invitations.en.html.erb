@@ -1,13 +1,13 @@
-<% if invites.pending.any? %>
+<% if invites.any? %>
   <div class="grid grid--justify-space-around">
     <div class="panel grid__col-auto">
       <h3>You have been invited!</h3>
 
-      <% if current_scope === "student" and invites.pending.many? %>
+      <% if current_scope === "student" and invites.many? %>
         <p class="hint">You can only accept one!</p>
       <% end %>
 
-      <% invites.pending.each do |invite| %>
+      <% invites.each do |invite| %>
         <%= content_tag :div, id: dom_id(invite) do %>
           <div class="grid grid--bleed">
             <div class="grid__col-4">

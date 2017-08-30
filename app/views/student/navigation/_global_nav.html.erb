@@ -11,7 +11,7 @@
     <%= link_to t("views.student.navigation.my_team"),
       student_team_path(current_team),
       class: al(student_team_path(current_team)) %>
-  <% elsif current_student.can_join_a_team? %>
+  <% elsif current_student.can_search_teams? %>
     <%= link_to t("views.student.navigation.create_a_team"),
       new_student_team_path,
       class: al(new_student_team_path) %>

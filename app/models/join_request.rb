@@ -11,6 +11,9 @@ class JoinRequest < ActiveRecord::Base
   belongs_to :joinable, polymorphic: true, touch: true
 
   delegate :name,
+           :team_photo_url,
+           :division_name,
+           :primary_location,
     to: :joinable,
     prefix: true
 

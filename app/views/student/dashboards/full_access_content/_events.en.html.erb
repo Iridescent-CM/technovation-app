@@ -16,13 +16,12 @@
 
     <%= render 'student/dashboards/start_team_submission' %>
 
-  <% elsif not current_team.present? and
-    SeasonToggles.team_building_enabled? %>
+  <% elsif current_student.can_search_teams? %>
     <p>Before you can access regional pitch events, you need to be on a team.</p>
 
     <%= render 'student/dashboards/join_create_team' %>
 
-  <% elsif not current_team.present? %>
+  <% elsif not SeasonToggles.team_building_enabled? %>
     <p>
       In order to select a live pitch event, you must be on a team.
     </p>
@@ -45,6 +44,14 @@
     <p>
       <strong>But at this time</strong>, starting submissions is not enabled.
     </p>
+
+    <p>
+      Contact
+      <%= mail_to ENV.fetch("HELP_EMAIL") %>
+      if you have questions.
+    </p>
+  <% else %>
+    <p>You cannot select a pitch event at this time.</p>
 
     <p>
       Contact

@@ -101,6 +101,13 @@ class StudentProfile < ActiveRecord::Base
     parental_consent.present?
   end
 
+  def can_search_teams?
+    SeasonToggles.team_building_enabled? and
+      not is_on_team? and
+        not team_member_invites.pending.any? and
+          not join_requests.pending.any?
+  end
+
   def is_on_team?
     teams.current.any?(&:present?)
   end
