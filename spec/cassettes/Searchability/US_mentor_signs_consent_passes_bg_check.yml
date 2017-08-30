@@ -1,0 +1,166 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/candidates
+    body:
+      encoding: UTF-8
+      string: first_name=Factory&middle_name=&no_middle_name=true&last_name=Account&email=account2%40example.com&phone&zipcode=60622&dob=1986-08-28&ssn=111-11-2001&driver_license_number&driver_license_state=CA&previous_driver_license_number&previous_driver_license_state&copy_requested=false&custom_id&reports&geos&documents=%7B%0A++%22object%22%3A+%22list%22%2C%0A++%22data%22%3A+%5B%0A%0A++%5D%0A%7D&id&object&uri&created_at
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.2.0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.2.0","lang":"ruby","lang_version":"2.4.0 p0 (2016-12-24)","platform":"x86_64-darwin16","publisher":"checkr","uname":"Darwin
+        Mikes-MacBook-Pro-2.local 16.7.0 Darwin Kernel Version 16.7.0: Thu Jun 15
+        17:36:27 PDT 2017; root:xnu-3789.70.16~2/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic YzhmMDg3OWU4M2UzOGY1YTk5ZTM1ZmZhYTM2NWUyMDVmODI5Nzc0Yzo=
+      Content-Length:
+      - '412'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 29 Aug 2017 01:55:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '575'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=de8614fcf4006f523f7c3f146071934561503971756; expires=Wed, 29-Aug-18
+        01:55:56 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Request-Id:
+      - 2cfd08ae4085849c6b1477565e249d76
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 395be414cef056d5-IAD
+    body:
+      encoding: UTF-8
+      string: '{"id":"2e21f17ba05d69f23048a12d","object":"test_candidate","uri":"/v1/candidates/2e21f17ba05d69f23048a12d","created_at":"2017-08-29T01:55:56Z","first_name":"Factory","last_name":"Account","middle_name":"","mother_maiden_name":null,"dob":"1986-08-28","ssn":"XXX-XX-2001","email":"account2@example.com","zipcode":"60622","phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":true,"report_ids":[],"geo_ids":[]}'
+    http_version:
+  recorded_at: Tue, 29 Aug 2017 01:55:57 GMT
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/reports
+    body:
+      encoding: UTF-8
+      string: package=tasker_standard&candidate_id=2e21f17ba05d69f23048a12d
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.2.0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.2.0","lang":"ruby","lang_version":"2.4.0 p0 (2016-12-24)","platform":"x86_64-darwin16","publisher":"checkr","uname":"Darwin
+        Mikes-MacBook-Pro-2.local 16.7.0 Darwin Kernel Version 16.7.0: Thu Jun 15
+        17:36:27 PDT 2017; root:xnu-3789.70.16~2/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic YzhmMDg3OWU4M2UzOGY1YTk5ZTM1ZmZhYTM2NWUyMDVmODI5Nzc0Yzo=
+      Content-Length:
+      - '61'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 29 Aug 2017 01:55:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '891'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d481ff0cdeae0411fb3ce97c42217cce81503971756; expires=Wed, 29-Aug-18
+        01:55:56 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Request-Id:
+      - 55ea3bd129f6957d0f2c665febcb0c8d
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 395be415fed25777-IAD
+    body:
+      encoding: UTF-8
+      string: '{"id":"a294c1d139ebc5bf343dfe8a","object":"test_report","uri":"/v1/reports/a294c1d139ebc5bf343dfe8a","status":"pending","created_at":"2017-08-29T01:55:56Z","completed_at":null,"revised_at":null,"upgraded_at":null,"turnaround_time":null,"due_time":"2017-09-06T01:55:56Z","package":"tasker_standard","tags":[],"adjudication":null,"candidate_id":"2e21f17ba05d69f23048a12d","county_criminal_search_ids":[],"document_ids":[],"federal_criminal_search_id":null,"global_watchlist_search_id":"59a4c9ac983645001de5103a","motor_vehicle_report_id":null,"national_criminal_search_id":"59a4c9ac983645001de51038","personal_reference_verification_ids":[],"professional_reference_verification_ids":[],"sex_offender_search_id":"59a4c9ac983645001de51039","ssn_trace_id":"59a4c9ac983645001de51032","state_criminal_search_ids":[],"terrorist_watchlist_search_id":"59a4c9ac983645001de5103a","facis_search_id":null}'
+    http_version:
+  recorded_at: Tue, 29 Aug 2017 01:55:57 GMT
+- request:
+    method: get
+    uri: https://api.checkr.com/v1/reports/a294c1d139ebc5bf343dfe8a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.2.0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.2.0","lang":"ruby","lang_version":"2.4.0 p0 (2016-12-24)","platform":"x86_64-darwin16","publisher":"checkr","uname":"Darwin
+        Mikes-MacBook-Pro-2.local 16.7.0 Darwin Kernel Version 16.7.0: Thu Jun 15
+        17:36:27 PDT 2017; root:xnu-3789.70.16~2/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic YzhmMDg3OWU4M2UzOGY1YTk5ZTM1ZmZhYTM2NWUyMDVmODI5Nzc0Yzo=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Aug 2017 01:56:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d7771a1c153d1724bc70092eed7a0bbac1503971767; expires=Wed, 29-Aug-18
+        01:56:07 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Request-Id:
+      - d53ccaef7cccea7721e0764adbcab372
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 395be457cfb157a1-IAD
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA5SSTY7bMAyF78K1g0j+SSyfo6sWA4EWqUQzthRQctqi6N0Lpx50pmjSdini0yP5Hr9BIBgAa9M6TboxPLpu9E3bkOceoYI0PrMrMEDhXKzwJUmBChYJMMD+qvc/S3n/QCMXLEuGAdzEKFCBE8bCZHEVrpU+7lS/q80HpYeuG7rDx5VJ82XiB5RZKeFryBsTl2mqYLmcBOldqSwSUdISyZYwMwxNBbTw9tikzU4d3g1wQfeCpxUomF9YbC4YCYWggoKnDMOnpwqQnhcKDktI8bWfw0iBsLC9uVtzrb0+jqg6OhhfN6rtUdd0W3KJ5at1EuYQcbKZUdzZBtrUKbll5li2CqBWfYfKNb72NLZHp83x4JjhqQLPxILTH8Re5zpNacTJfsbizlPI5S0BncHWGXSmbw5tp5Qm7rRq1vzmVJLYK5+Dm3i7gTey8bb8nc73dPvVYZZ8+yjsWTg6tleW4Dc7f9lwkeQ55/BPcOYvNnnPkdbM/j6JWS80R1sEHT8k6+2W+X5ghUWSrN7+t8seXci/h/b9BwAAAP//AwCpr5pmogMAAA==
+    http_version:
+  recorded_at: Tue, 29 Aug 2017 01:56:08 GMT
+recorded_with: VCR 3.0.3
