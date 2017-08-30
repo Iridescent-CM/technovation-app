@@ -111,26 +111,6 @@ ActiveRecord::Schema.define(version: 20170831151122) do
     t.integer "regional_pitch_event_id"
   end
 
-  create_table "event_attendances", force: :cascade do |t|
-    t.bigint "event_id"
-    t.string "attendee_type"
-    t.bigint "attendee_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["attendee_type", "attendee_id"], name: "index_event_attendances_on_attendee_type_and_attendee_id"
-    t.index ["event_id"], name: "index_event_attendances_on_event_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.integer "creator_id"
-    t.string "title"
-    t.string "place"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "expertises", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
