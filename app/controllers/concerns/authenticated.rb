@@ -4,22 +4,29 @@ module Authenticated
   included do
     before_action :unauthorized!, if: -> {
       current_account.authenticated? and
-        current_account.send("#{current_scope}_profile").nil?
+        current_account.send("#{current_scope}_profile").nil? and
+          not authenticated_exceptions.include?("#{controller_name}##{action_name}")
     }
 
     before_action :unauthenticated!, if: -> {
-      not current_account.authenticated?
+      not current_account.authenticated? and
+        not authenticated_exceptions.include?("#{controller_name}##{action_name}")
     }
 
     before_action :interrupt!, unless: -> {
       current_account.admin? or
-      (%w{interruptions profiles}.include?(controller_name) or
-        (current_account.valid? and
-          current_account.profile_valid?))
+        authenticated_exceptions.include?("#{controller_name}##{action_name}") or
+          (%w{interruptions profiles}.include?(controller_name) or
+            (current_account.valid? and
+              current_account.profile_valid?))
     }
   end
 
   private
+  def authenticated_exceptions
+    []
+  end
+
   def unauthorized!
     redirect_to send("#{current_account.scope_name}_dashboard_path"),
       error: t("controllers.application.unauthorized") and return
