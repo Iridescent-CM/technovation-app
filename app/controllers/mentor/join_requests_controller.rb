@@ -5,8 +5,11 @@ class Mentor::JoinRequestsController < MentorController
 
   def create
     @team = Team.find(params.fetch(:team_id))
-    join_request = JoinRequest.new(requestor: current_mentor,
-                                   joinable: @team)
+    join_request = JoinRequest.new(
+      requestor: current_mentor,
+      team: @team
+    )
+
     if join_request.save
       redirect_to [:mentor, join_request],
                   success: t("controllers.mentor.join_requests.create.success",

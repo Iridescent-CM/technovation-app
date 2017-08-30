@@ -6,12 +6,12 @@
 
       <h5 class="reset">You have asked to join a team</h5>
 
-      <%= image_tag join_request.joinable_team_photo_url, class: 'thumbnail-md' %>
+      <%= image_tag join_request.team_team_photo_url, class: 'thumbnail-md' %>
 
       <p>
-        <%= join_request.joinable_name %><br />
-        Division: <%= join_request.joinable_division_name.humanize %><br />
-        <%= join_request.joinable_primary_location %>
+        <%= join_request.team_name %><br />
+        Division: <%= join_request.team_division_name.humanize %><br />
+        <%= join_request.team_primary_location %>
       </p>
 
     <% end %>

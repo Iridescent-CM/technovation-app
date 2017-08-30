@@ -33,7 +33,7 @@ RSpec.feature "Mentors find a team" do
 
     join_request = JoinRequest.last
     expect(current_path).to eq(mentor_join_request_path(join_request))
-    expect(page).to have_content(join_request.joinable_name)
+    expect(page).to have_content(join_request.team_name)
     expect(page).to have_content("Pending review")
   end
 end
