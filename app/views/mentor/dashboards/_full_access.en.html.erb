@@ -4,7 +4,8 @@
   <div class="content">
     <% if current_mentor.mentor_invites.pending.any? %>
       <div class="tab-content" id="invitations">
-        <%= render 'mentor/dashboards/full_access_content/invitations' %>
+        <%= render 'dashboards/invitations',
+          invites: current_mentor.mentor_invites.pending %>
       </div>
     <% end %>
 
