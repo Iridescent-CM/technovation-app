@@ -266,4 +266,14 @@ RSpec.describe Team do
 
     expect(submission_updated).to be < submission.reload.updated_at
   end
+
+  it "deletes itself when the membership count decrements to zero" do
+    team = FactoryGirl.create(:team)
+
+    team.members.each do |m|
+      TeamRosterManaging.remove(team, m)
+    end
+
+    expect(team).to be_deleted
+  end
 end

@@ -34,6 +34,8 @@ class TeamRosterManaging
         team.send("remove_#{scope}", profile)
       end
     end
+
+    team.destroy if team.reload.members.none?
   end
 
   private
