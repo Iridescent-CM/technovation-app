@@ -52,13 +52,13 @@ RSpec.describe ScoreImporting do
     expect(score_instance).to receive(:complete!)
     expect(score_instance2).to receive(:complete!)
 
-    importing = ScoreImporting.new({
+    importing = ScoreImporting.new(
       csv_path: csv_path,
       judge_id: 9,
       judging_round: "semifinals",
       scores: score_mock,
       submissions: sub_mock,
-    })
+    )
 
     importing.import_scores
   end

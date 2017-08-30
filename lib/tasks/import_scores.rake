@@ -18,12 +18,12 @@ task import_scores: :environment do
     logger = Rails.logger
   end
 
-  importing = ScoreImporting.new({
+  importing = ScoreImporting.new(
     csv_path: ENV.fetch("CSV_SOURCE"),
     judge_id: judge.id,
     judging_round: ENV.fetch("CSV_JUDGING_ROUND"),
     logger: logger,
-  })
+  )
 
   importing.import_scores
 end

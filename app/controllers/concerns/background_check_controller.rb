@@ -8,11 +8,8 @@ module BackgroundCheckController
   end
 
   def show
-    @report = BackgroundCheck::Report.retrieve(current_profile.background_check_report_id)
-
-    if @report.present?
-      current_profile.background_check.send("#{@report.status}!")
-    end
+    BackgroundChecking.new(current_profile.background_check).execute
+    @status = current_profile.background_check.status
   end
 
   def create

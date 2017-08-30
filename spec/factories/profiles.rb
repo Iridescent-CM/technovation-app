@@ -74,6 +74,7 @@ FactoryGirl.define do
       country "US"
       email nil
       password nil
+      not_onboarded false
     end
 
     trait :geocoded do
@@ -94,11 +95,11 @@ FactoryGirl.define do
         password: e.password || attrs[:password],
       ))
 
-      unless m.background_check.present?
+      unless m.background_check.present? or e.not_onboarded
         m.account.build_background_check(FactoryGirl.attributes_for(:background_check))
       end
 
-      unless m.consent_signed?
+      unless m.consent_signed? or e.not_onboarded
         m.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
       end
     end
