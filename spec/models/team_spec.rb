@@ -267,6 +267,15 @@ RSpec.describe Team do
     expect(submission_updated).to be < submission.reload.updated_at
   end
 
+  it "validates unique names only on undeleted teams" do
+    fring = FactoryGirl.create(:team, name: "Say My Name")
+    fring.destroy
+
+    heisenberg = FactoryGirl.create(:team, name: "Say My Name")
+    expect(heisenberg).to be_valid
+    expect(heisenberg.reload.id).not_to be_nil
+  end
+
   it "deletes itself when the membership count decrements to zero" do
     team = FactoryGirl.create(:team)
 
