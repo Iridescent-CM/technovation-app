@@ -7,7 +7,7 @@ class Student::JoinRequestsController < StudentController
     team = Team.find(params.fetch(:team_id))
     current_student.join_requests.create!(joinable: team)
 
-    redirect_back fallback_location: student_team_path(team),
+    redirect_to student_dashboard_path,
       success: t("controllers.student.join_requests.create.success", name: team.name)
   end
 
