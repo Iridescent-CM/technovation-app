@@ -35,7 +35,7 @@ class TeamRosterManaging
       end
     end
 
-    team.destroy if team.reload.members.none?
+    team.destroy if Membership.where(joinable_id: team.id).count.zero?
   end
 
   private
