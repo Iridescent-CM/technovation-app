@@ -337,7 +337,7 @@ en:
         declined: "You previously declined this invite. If you're a student and you accepted an invite from another team, then this one was automatically declined."
         greeting: "You've been invited to join %{name}!"
         message: "Review this team and respond below"
-        missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was revoked by the team."
+        missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was removed by the team."
 
     team_searches:
       new:
