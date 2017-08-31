@@ -1,22 +1,75 @@
-<p>Your background check status is: <span class="bg_check_status <%= @status %>"><%= @status %></span>.</p>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
+    <div class="panel">
+      <p>
+        Your background check status is:
+        <strong><%= @status %></strong>.
+      </p>
 
-<hr />
+      <h5>Possible status values:</h5>
 
-<p>Based on historical data, <%= link_to "Checkr reports", "http://checkr.com" %> are usually completed within 4-7 business days.</p>
+      <dl>
+        <dt>Pending</dt>
+        <dd>
+          Your report hasn't completed yet.
+          Refresh this page later to check again.
+        </dd>
 
-<p>You will receive an email you when your background check has cleared.</p>
+        <dt>Consider</dt>
+        <dd>
+          Your background check has issues.
+          Technovation staff will look into your report,
+          and may be in contact with you to clear things up.
+        </dd>
 
-<p>You can always use the <%= link_to "Checkr Applicant Portal", "//applicant.checkr.com", target: "_blank" %> to get status updates on your report and to download a copy when it's complete.</p>
+        <dt>Clear</dt>
+        <dd>
+          Your background check has cleared,
+          and you will gain further access to the site.
+        </dd>
+      </dl>
 
-<p>Possible status values:</p>
+      <h5>While your background check is being processed:</h5>
 
-<dl>
-  <dt>Pending</dt>
-  <dd>Your report hasn't completed yet. Refresh this page later to check again.</dd>
+      <p>
+        Based on historical data,
+        <%= link_to "Checkr reports",
+        "http://checkr.com" %>
+        are usually completed within 4-7 business days.
+      </p>
 
-  <dt>Consider</dt>
-  <dd>Your background check has issues. Technovation staff will look into your report, and may be in contact with you to clear things up.</dd>
+      <p>
+        <strong>Checkr may email you</strong>
+        for your help with identity verification to complete your report.
+      </p>
 
-  <dt>Clear</dt>
-  <dd>Your background check has cleared, and you will gain further access to the site.</dd>
-</dl>
+      <p>
+        For example, Checkr has asked previous mentors to provide a scan
+        of their driver's licence. Technovation cannot offer help with this,
+        and you should consult the staff at Checkr.
+      </p>
+
+      <p>
+        You can use the
+        <%= link_to "Checkr Applicant Portal",
+          "//applicant.checkr.com",
+          target: "_blank" %>
+        to get status updates on your report
+        and to download a copy when it's complete.
+      </p>
+
+      <h5>After your background check is complete:</h5>
+
+      <p>
+        You will receive an <strong>email from us</strong>
+        only if your background check has cleared.
+      </p>
+
+      <p>
+        If you checked the box for a report from Checkr,
+        you will receive an <strong>email from Checkr</strong>
+        regardless of the status of your background check.
+      </p>
+    </div>
+  </div>
+</div>

@@ -41,6 +41,11 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     country != "US" or !!background_check && background_check.clear?
   end
 
+  def requires_background_check?
+    country == "US" and
+      not background_check_complete?
+  end
+
   def profile_complete?
     bio_complete?
   end
