@@ -1,6 +1,10 @@
 class StudentController < ApplicationController
   include Authenticated
 
+  def authenticated_exceptions
+    ['team_member_invites#show']
+  end
+
   layout "student"
   helper_method :current_student, :current_team
 
