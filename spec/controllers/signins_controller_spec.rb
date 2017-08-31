@@ -2,6 +2,23 @@ require "rails_helper"
 
 RSpec.describe SigninsController do
   describe "POST #create" do
+    it "records the account's login time" do
+      student = FactoryGirl.create(:student)
+
+      time = Time.new(2009, 1, 20, 9, 0, 0)
+
+      Timecop.freeze(time) do
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: "secret1234",
+          },
+        }
+
+        expect(student.reload.last_logged_in_at).to eq(time)
+      end
+    end
+
     it "is case-insenstive for email" do
       FactoryGirl.create(:student, email: "CapiTalLettERS@gmail.com")
 

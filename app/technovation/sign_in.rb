@@ -10,9 +10,17 @@ module SignIn
     context.remove_cookie(:admin_permission_token)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
-    RecordBrowserDetailsJob.perform_later(signin.id,
-                                          context.request.remote_ip,
-                                          context.request.user_agent)
+
+    RecordBrowserDetailsJob.perform_later(
+      signin.id,
+      context.request.remote_ip,
+      context.request.user_agent
+    )
+
+    RecordLoginTimeJob.perform_later(
+      signin.id,
+      Time.current.to_i
+    )
 
     context.redirect_to(
       (context.remove_cookie(:redirected_from) or
