@@ -2,9 +2,10 @@ module Mentor
   class TeamMembershipsController < MentorController
     def destroy
       team = current_mentor.teams.find(params.fetch(:id))
-      membership = Membership.find_by(joinable: team,
-                                      member_type: "MentorProfile",
-                                      member_id: current_mentor.id)
+      membership = Membership.find_by(
+        team: team,
+        member: current_mentor
+      )
 
       membership.destroy
 

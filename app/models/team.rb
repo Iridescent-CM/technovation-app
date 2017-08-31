@@ -51,7 +51,7 @@ class Team < ActiveRecord::Base
   }
 
   scope :without_mentor, -> {
-    where.not(id: Membership.where(member_type: "MentorProfile").map(&:joinable_id))
+    where.not(id: Membership.where(member_type: "MentorProfile").map(&:team_id))
   }
 
   scope :for_ambassador, ->(ambassador) {
@@ -80,7 +80,7 @@ class Team < ActiveRecord::Base
   has_many :team_submissions, dependent: :destroy
   has_many :submission_scores, through: :team_submissions
 
-  has_many :memberships, as: :joinable, dependent: :destroy
+  has_many :memberships, dependent: :destroy
 
   has_many :students, -> { order("memberships.created_at") },
     through: :memberships,
@@ -94,7 +94,7 @@ class Team < ActiveRecord::Base
 
   has_many :team_member_invites, dependent: :destroy
   has_many :mentor_invites, dependent: :destroy
-  has_many :join_requests, as: :joinable, dependent: :destroy
+  has_many :join_requests, dependent: :destroy
 
   has_many :pending_student_invites,
     -> { pending.for_students },
@@ -106,16 +106,15 @@ class Team < ActiveRecord::Base
 
   has_many :pending_requests,
     -> { pending },
-    class_name: "JoinRequest",
-    as: :joinable
+    class_name: "JoinRequest"
 
-  has_many :pending_mentor_join_requests, -> { pending.for_mentors },
-    class_name: "JoinRequest",
-    as: :joinable
+  has_many :pending_mentor_join_requests,
+    -> { pending.for_mentors },
+    class_name: "JoinRequest"
 
-  has_many :pending_student_join_requests, -> { pending.for_students },
-    class_name: "JoinRequest",
-    as: :joinable
+  has_many :pending_student_join_requests,
+    -> { pending.for_students },
+    class_name: "JoinRequest"
 
   has_and_belongs_to_many :regional_pitch_events, -> { distinct },
     after_add: :update_submission,

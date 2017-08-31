@@ -19,7 +19,7 @@ es-MX:
         invalid: "no es válido"
 
     join_request:
-      joinable_name: "Nombre"
+      team_name: "Nombre"
       requestor_name: "Nombre de quien solicita"
       requestor_type: "Tipo de miembro"
       status: "Estado de la solicitud"

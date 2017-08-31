@@ -46,11 +46,11 @@ class TeamRosterManaging
           reconsider_division_with_save
         end
 
-        if invite = student.team_member_invites.pending.find_by(team_id: id)
+        if invite = student.team_member_invites.pending.find_by(team: self)
           invite.accepted!
         end
 
-        if join_request = student.join_requests.pending.find_by(joinable: self)
+        if join_request = student.join_requests.pending.find_by(team: self)
           join_request.approved!
         end
       elsif students.include?(student)
@@ -63,11 +63,11 @@ class TeamRosterManaging
     def add_mentor_profile(mentor)
       mentors << mentor
 
-      if invite = mentor.mentor_invites.pending.find_by(team_id: id)
+      if invite = mentor.mentor_invites.pending.find_by(team: self)
         invite.accepted!
       end
 
-      if join_request = mentor.join_requests.pending.find_by(joinable: self)
+      if join_request = mentor.join_requests.pending.find_by(team: self)
         join_request.approved!
       end
     end
@@ -79,11 +79,11 @@ class TeamRosterManaging
         reconsider_division_with_save
       end
 
-      if invite = student.team_member_invites.find_by(team_id: id)
+      if invite = student.team_member_invites.find_by(team: self)
         invite.deleted!
       end
 
-      if join_request = student.join_requests.find_by(joinable: self)
+      if join_request = student.join_requests.find_by(team: self)
         join_request.deleted!
       end
     end
@@ -91,11 +91,11 @@ class TeamRosterManaging
     def remove_mentor_profile(mentor)
       memberships.find_by(member: mentor).destroy
 
-      if invite = mentor.mentor_invites.find_by(team_id: id)
+      if invite = mentor.mentor_invites.find_by(team: self)
         invite.deleted!
       end
 
-      if join_request = mentor.join_requests.find_by(joinable: self)
+      if join_request = mentor.join_requests.find_by(team: self)
         join_request.deleted!
       end
     end

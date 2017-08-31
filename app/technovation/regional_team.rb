@@ -29,11 +29,11 @@ module RegionalTeam
     case params[:mentor_status]
     when "With Mentor(s)"
       teams.where("teams.id IN (
-        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
+        SELECT memberships.team_id FROM memberships WHERE memberships.member_type = ?
       )", "MentorProfile").distinct
     when "Without Mentor"
       teams.where("teams.id NOT IN (
-        SELECT memberships.joinable_id FROM memberships WHERE memberships.member_type = ?
+        SELECT memberships.team_id FROM memberships WHERE memberships.member_type = ?
       )", "MentorProfile").distinct
     else
       teams

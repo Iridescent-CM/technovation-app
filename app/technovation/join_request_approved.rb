@@ -7,7 +7,7 @@ module JoinRequestApproved
       others.each(&:destroy)
     end
 
-    TeamRosterManaging.add(join_request.joinable, join_request.requestor)
+    TeamRosterManaging.add(join_request.team, join_request.requestor)
 
     TeamMailer.public_send(
       "#{join_request.requestor_scope_name}_join_request_accepted",

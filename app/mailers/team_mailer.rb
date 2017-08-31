@@ -92,12 +92,12 @@ class TeamMailer < ApplicationMailer
   def join_request(recipient, join_request)
     @first_name = join_request.requestor_first_name
     @role_name = join_request.requestor_scope_name
-    @team_name = join_request.joinable_name
+    @team_name = join_request.team_name
     @extra = I18n.translate(
       "team_mailer.join_request.extra.#{join_request.requestor_scope_name}",
       name: @first_name
     )
-    @url = send("#{recipient.scope_name}_team_url", join_request.joinable)
+    @url = send("#{recipient.scope_name}_team_url", join_request.team)
 
     I18n.with_locale(recipient.locale) do
       mail to: recipient.email,
@@ -125,11 +125,11 @@ class TeamMailer < ApplicationMailer
   private
   def join_request_status(status, type, join_request)
     @first_name = join_request.requestor_first_name
-    @team_name = join_request.joinable_name
+    @team_name = join_request.team_name
     @role_name = I18n.translate("team_mailer.#{type}_join_request_status.role_name")
 
     if status == :accepted
-      @url = send("#{type}_team_url", join_request.joinable)
+      @url = send("#{type}_team_url", join_request.team)
     end
 
     if status == :declined
@@ -147,7 +147,7 @@ class TeamMailer < ApplicationMailer
       mail to: join_request.requestor_email,
         subject: I18n.translate(
           "team_mailer.#{type}_join_request_status.#{status}_subject",
-          name: join_request.joinable_name
+          name: join_request.team_name
         ),
         template_name: "join_request_#{status}"
     end

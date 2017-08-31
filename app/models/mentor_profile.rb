@@ -67,7 +67,7 @@ class MentorProfile < ActiveRecord::Base
   has_many :expertises, through: :mentor_profile_expertises
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
+  has_many :teams, through: :memberships
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id
@@ -175,7 +175,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def requested_to_join?(team)
-    join_requests.pending.flat_map(&:joinable).include?(team)
+    join_requests.pending.flat_map(&:team).include?(team)
   end
 
   def is_on?(team)
