@@ -43,8 +43,7 @@ module RegionalAccount
         accounts = accounts.where("student_profiles.id IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'StudentProfile'
-                                        AND memberships.joinable_type = 'Team'
-                                        AND memberships.joinable_id IN
+                                        AND memberships.team_id IN
 
               (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
 
@@ -55,8 +54,7 @@ module RegionalAccount
         accounts = accounts.where("student_profiles.id NOT IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'StudentProfile'
-                                        AND memberships.joinable_type = 'Team'
-                                        AND memberships.joinable_id IN
+                                        AND memberships.team_id IN
 
               (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
 
@@ -72,8 +70,7 @@ module RegionalAccount
         accounts = accounts.where("mentor_profiles.id IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'MentorProfile'
-                                        AND memberships.joinable_type = 'Team'
-                                        AND memberships.joinable_id IN
+                                        AND memberships.team_id IN
 
               (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
 
@@ -84,8 +81,7 @@ module RegionalAccount
         accounts = accounts.where("mentor_profiles.id NOT IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'MentorProfile'
-                                        AND memberships.joinable_type = 'Team'
-                                        AND memberships.joinable_id IN
+                                        AND memberships.team_id IN
 
               (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
 

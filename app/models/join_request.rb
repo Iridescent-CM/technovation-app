@@ -1,5 +1,5 @@
 class JoinRequest < ActiveRecord::Base
-  after_create :notify_requested_joinable
+  after_create :notify_requested_team
 
   scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
 
@@ -8,13 +8,13 @@ class JoinRequest < ActiveRecord::Base
   scope :for_mentors, -> { where(requestor_type: "MentorProfile") }
 
   belongs_to :requestor, polymorphic: true
-  belongs_to :joinable, polymorphic: true, touch: true
+  belongs_to :team, touch: true
 
   delegate :name,
            :team_photo_url,
            :division_name,
            :primary_location,
-    to: :joinable,
+    to: :team,
     prefix: true
 
   delegate :first_name,
@@ -70,8 +70,8 @@ class JoinRequest < ActiveRecord::Base
   end
 
   private
-  def notify_requested_joinable
-    joinable.members.each do |recipient|
+  def notify_requested_team
+    team.members.each do |recipient|
       TeamMailer.join_request(recipient, self).deliver_later
     end
   end

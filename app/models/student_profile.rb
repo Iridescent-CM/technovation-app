@@ -9,7 +9,7 @@ class StudentProfile < ActiveRecord::Base
   }
 
   has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships, source: :joinable, source_type: "Team"
+  has_many :teams, through: :memberships
   has_many :mentor_invites, foreign_key: :inviter_id
 
   has_many :join_requests, as: :requestor, dependent: :destroy
@@ -63,7 +63,7 @@ class StudentProfile < ActiveRecord::Base
 
   def self.has_requested_to_join?(team, email)
     if record = joins(:account).where("lower(accounts.email) = ?", email.downcase).first
-      record.join_requests.pending.flat_map(&:joinable).include?(team)
+      record.join_requests.pending.flat_map(&:team).include?(team)
     else
       false
     end
@@ -117,7 +117,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def requested_to_join?(team)
-    join_requests.pending.flat_map(&:joinable).include?(team)
+    join_requests.pending.flat_map(&:team).include?(team)
   end
 
   def is_invited_to_join?(team)

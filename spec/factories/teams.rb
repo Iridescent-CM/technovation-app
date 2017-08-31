@@ -34,6 +34,6 @@ FactoryGirl.define do
 
   factory :team_membership, class: "Membership" do
     association(:member) { FactoryGirl.create(:student) }
-    association(:joinable) { FactoryGirl.create(:team) }
+    association(:team)
   end
 end

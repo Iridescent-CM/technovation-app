@@ -34,7 +34,7 @@ RSpec.feature "Students invite mentors to join their team" do
   end
 
   scenario "Find a mentor who already requested" do
-    mentor.join_requests.create!(joinable: student.team)
+    mentor.join_requests.create!(team: student.team)
     click_link "Ask"
     expect(page).to have_content(
       "#{mentor.first_name} has asked to mentor your team"
