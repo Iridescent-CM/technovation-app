@@ -6,13 +6,11 @@ module TeamMemberInviteController
       invite_token: params.fetch(:id)
     ) || NullInvite.new
 
-    if @invite.invitee and @invite.invitee == current_profile
-      render template: "team_member_invites/show_#{@invite.status}"
-    elsif @invite.invitee
+    if @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account
       SignIn.(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
     else
-      head :not_found
+      render template: "team_member_invites/show_#{@invite.status}"
     end
   end
 
