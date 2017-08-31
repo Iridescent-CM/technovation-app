@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830205237) do
+ActiveRecord::Schema.define(version: 20170831151122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,17 +111,6 @@ ActiveRecord::Schema.define(version: 20170830205237) do
     t.integer "regional_pitch_event_id"
   end
 
-  create_table "events", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description", null: false
-    t.string "location", null: false
-    t.datetime "starts_at", null: false
-    t.integer "organizer_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organizer_id"], name: "index_events_on_organizer_id"
-  end
-
   create_table "expertises", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -154,17 +143,16 @@ ActiveRecord::Schema.define(version: 20170830205237) do
   end
 
   create_table "join_requests", id: :serial, force: :cascade do |t|
-    t.integer "requestor_id", null: false
     t.string "requestor_type", null: false
-    t.integer "joinable_id", null: false
-    t.string "joinable_type", null: false
+    t.integer "requestor_id", null: false
+    t.integer "team_id", null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["joinable_type", "joinable_id"], name: "index_join_requests_on_joinable_type_and_joinable_id"
     t.index ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id"
+    t.index ["team_id"], name: "index_join_requests_on_team_id"
   end
 
   create_table "judge_assignments", id: :serial, force: :cascade do |t|
@@ -191,14 +179,13 @@ ActiveRecord::Schema.define(version: 20170830205237) do
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
-    t.integer "member_id", null: false
     t.string "member_type", null: false
-    t.integer "joinable_id", null: false
-    t.string "joinable_type", null: false
+    t.integer "member_id", null: false
+    t.integer "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["joinable_type", "joinable_id"], name: "index_memberships_on_joinable_type_and_joinable_id"
     t.index ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id"
+    t.index ["team_id"], name: "index_memberships_on_team_id"
   end
 
   create_table "mentor_profile_expertises", id: :serial, force: :cascade do |t|
@@ -232,17 +219,17 @@ ActiveRecord::Schema.define(version: 20170830205237) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "regarding_id"
     t.string "regarding_type"
+    t.integer "regarding_id"
     t.datetime "sent_at"
     t.datetime "delivered_at"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
-    t.integer "sender_id", null: false
     t.string "sender_type", null: false
-    t.integer "regarding_id", null: false
+    t.integer "sender_id", null: false
     t.string "regarding_type", null: false
+    t.integer "regarding_id", null: false
     t.hstore "recipients", null: false
     t.string "subject"
     t.text "body", null: false
@@ -323,8 +310,8 @@ ActiveRecord::Schema.define(version: 20170830205237) do
 
   create_table "season_registrations", id: :serial, force: :cascade do |t|
     t.integer "season_id", null: false
-    t.integer "registerable_id", null: false
     t.string "registerable_type", null: false
+    t.integer "registerable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 1, null: false
@@ -463,10 +450,10 @@ ActiveRecord::Schema.define(version: 20170830205237) do
     t.boolean "accepting_mentor_requests", default: true, null: false
     t.float "latitude"
     t.float "longitude"
+    t.datetime "deleted_at"
     t.string "city"
     t.string "state_province"
     t.string "country"
-    t.datetime "deleted_at"
     t.index ["legacy_id"], name: "index_teams_on_legacy_id"
   end
 
@@ -530,7 +517,7 @@ ActiveRecord::Schema.define(version: 20170830205237) do
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
   add_foreign_key "exports", "accounts"
-  add_foreign_key "join_requests", "teams", column: "joinable_id"
+  add_foreign_key "join_requests", "teams"
   add_foreign_key "judge_assignments", "judge_profiles"
   add_foreign_key "judge_assignments", "teams"
   add_foreign_key "mentor_profile_expertises", "expertises"

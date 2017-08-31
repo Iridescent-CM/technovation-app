@@ -39,7 +39,7 @@ module Admin
       when "Has no mentor"
         teams.eager_load(:memberships)
           .where("teams.id NOT IN
-            (SELECT DISTINCT(joinable_id)
+            (SELECT DISTINCT(team_id)
                     FROM memberships
                     WHERE memberships.member_type = 'MentorProfile')")
       end

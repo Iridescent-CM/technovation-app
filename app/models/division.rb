@@ -58,7 +58,10 @@ class Division < ActiveRecord::Base
   end
 
   def self.division_by_team_ages(team)
-    divisions = team.students.collect { |s| division_by_age(s) }
+    divisions = Membership.where(
+      team: team,
+      member_type: "StudentProfile"
+    ).map(&:member).collect { |m| division_by_age(m) }
 
     if divisions.any?
       divisions.flat_map(&:name).include?(senior.name) ? senior : junior

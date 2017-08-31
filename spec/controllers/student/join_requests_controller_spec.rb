@@ -28,9 +28,13 @@ RSpec.describe Student::JoinRequestsController do
   describe "PUT #update" do
     let(:team) { FactoryGirl.create(:team, members_count: 2) }
     let(:mentor) { FactoryGirl.create(:mentor) }
-    let(:join_request) { FactoryGirl.create(:join_request,
-                                            joinable: team,
-                                            requestor: mentor) }
+    let(:join_request) {
+      FactoryGirl.create(
+        :join_request,
+        team: team,
+        requestor: mentor
+      )
+    }
 
     before do
       sign_in(team.students.sample)
