@@ -2,11 +2,17 @@ module TeamMemberInviteController
   extend ActiveSupport::Concern
 
   def show
-    @invite = current_profile.team_member_invites.find_by(
+    @invite = TeamMemberInvite.find_by(
       invite_token: params.fetch(:id)
     ) || NullInvite.new
 
-    render template: "team_member_invites/show_#{@invite.status}"
+    unless @invite.invitee == current_profile
+      signin = @invite.invitee.account
+      SignIn.(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
+    else
+      render template: "team_member_invites/show_#{@invite.status}"
+    end
+
   end
 
   def create
