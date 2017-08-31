@@ -34,6 +34,8 @@ class TeamRosterManaging
         team.send("remove_#{scope}", profile)
       end
     end
+
+    team.destroy if Membership.where(team: team).count.zero?
   end
 
   private
