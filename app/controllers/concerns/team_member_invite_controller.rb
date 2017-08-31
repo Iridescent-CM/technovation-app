@@ -10,7 +10,7 @@ module TeamMemberInviteController
       signin = @invite.invitee.account
       SignIn.(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
     else
-      render template: "team_member_invites/show_#{@invite.status}", layout: "public"
+      render template: "team_member_invites/show_#{@invite.status}"
     end
   end
 
