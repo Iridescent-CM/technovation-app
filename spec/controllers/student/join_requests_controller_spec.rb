@@ -26,7 +26,7 @@ RSpec.describe Student::JoinRequestsController do
       expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
 
-    it "redirects to existing join request on dupe" do
+    it "redirects gracefully on dupe" do
       expect {
         post :create, params: { team_id: team.id }
         post :create, params: { team_id: team.id }
