@@ -5,7 +5,9 @@ class Student::JoinRequestsController < StudentController
 
   def create
     team = Team.find(params.fetch(:team_id))
-    current_student.join_requests.create!(team: team)
+
+    current_student.join_requests.find_by(team: team) ||
+      current_student.join_requests.create!(team: team)
 
     redirect_to student_dashboard_path,
       success: t("controllers.student.join_requests.create.success", name: team.name)
