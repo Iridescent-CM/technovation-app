@@ -1,7 +1,5 @@
 (function() {
   document.addEventListener("turbolinks:load", function() {
-    fadeOutExistingFlashes();
-
     $(document).on('click', '.flash .icon-close', function() {
       $(this).closest('.flash').fadeOut('easeout', function() {
         $(this).remove();
@@ -26,16 +24,6 @@
       $flash.hide();
       $("#flash").html($flash);
       $flash.fadeIn();
-
-      fadeOutExistingFlashes();
     }
   });
-
-  function fadeOutExistingFlashes() {
-    setTimeout(function() {
-      $("#flash .flash").fadeOut(function() {
-        $(this).remove();
-      })
-    }, 5000);
-  }
 })();

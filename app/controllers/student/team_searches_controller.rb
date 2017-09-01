@@ -1,6 +1,11 @@
 module Student
   class TeamSearchesController < StudentController
     def new
+      if current_student.latitude.blank?
+        redirect_to student_location_details_path(return_to: request.fullpath),
+          notice: "Please save your location so that you can search for nearby teams"
+      end
+
       @search_filter = SearchFilter.new(search_params)
       @teams = SearchTeams.(@search_filter).paginate(page: search_params[:page])
     end
