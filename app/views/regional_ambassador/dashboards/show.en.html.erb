@@ -8,8 +8,12 @@
   </p>
 <% end %>
 
-<% if current_ambassador.full_access_enabled? %>
-  <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_show" %>
-<% else %>
-  <%= render 'regional_ambassador/dashboards/completion_steps' %>
-<% end %>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-md-8">
+    <% if current_ambassador.full_access_enabled? %>
+      <%= render "regional_ambassador/dashboards/#{current_ambassador.status}_show" %>
+    <% else %>
+      <%= render 'regional_ambassador/dashboards/completion_steps' %>
+    <% end %>
+  </div>
+</div>

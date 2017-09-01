@@ -2,16 +2,12 @@
             current_ambassador.background_check_complete? and
                current_ambassador.location_confirmed? and
                  current_ambassador.profile_complete? %>
-  <div class="to-do">
-    <h2 class="to-do__heading appy-heading-lg">
-      <%= t("views.application.complete_your_profile") %>
-    </h2>
+  <h1 class="content-heading">Complete your registration</h1>
 
-    <ul class="to-do__list">
-      <%= render 'completion_steps/consent_waiver', account: current_ambassador %>
-      <%= render 'completion_steps/background_check', profile: current_ambassador %>
-      <%= render 'completion_steps/location_details', account: current_ambassador %>
-      <%= render 'completion_steps/complete_profile', account: current_ambassador %>
-    </ul>
-  </div>
+  <ul class="steps">
+    <%= render 'completion_steps/consent_waiver', account: current_ambassador %>
+    <%= render 'completion_steps/background_check', profile: current_ambassador %>
+    <%= render 'completion_steps/location_details', account: current_ambassador %>
+    <%= render 'completion_steps/complete_profile', account: current_ambassador %>
+  </ul>
 <% end %>
