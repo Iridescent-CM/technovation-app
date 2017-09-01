@@ -62,6 +62,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def force_logout
+    remove_cookie(:auth_token)
+  end
+
   def can_generate_certificate?(scope, cert_type)
     @can_generate_certificate ||= {}
 
