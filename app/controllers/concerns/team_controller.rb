@@ -27,10 +27,7 @@ module TeamController
     @team = Team.new(team_params)
 
     if @team.save
-      TeamCreating.execute(@team, current_profile)
-
-      redirect_to [current_scope, @team],
-        success: t("controllers.teams.create.success")
+      TeamCreating.execute(@team, current_profile, self)
     else
       render :new
     end
@@ -43,7 +40,7 @@ module TeamController
   def update
     @team = current_profile.teams.find(params.fetch(:id))
 
-    if TeamUpdating.execute(@team, team_params)
+    if TeamUpdating.execute(@team, team_params, current_account)
       respond_to do |format|
         format.json {
           render json: {
