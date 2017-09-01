@@ -1,9 +1,6 @@
 #flash {
   width: 100%;
-  position: fixed;
-  left: 0;
-  bottom: 1rem;
-  z-index: $z-modal;
+  margin: 0 0 1rem;
 
   .flash {
     width: 80%;
