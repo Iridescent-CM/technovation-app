@@ -8,7 +8,7 @@ class TeamUpdating
     @updater = updater
   end
 
-  def self.execute(team, attrs, updater)
+  def self.execute(team, attrs, updater = nil)
     new(team, updater).update(attrs)
   end
 
@@ -24,7 +24,7 @@ class TeamUpdating
   def perform_callbacks
     Geocoding.perform(team)
 
-    if updater.latitude.blank? or updater.longitude.blank?
+    if updater.present? and (updater.latitude.blank? or updater.longitude.blank?)
       updater.latitude = team.latitude
       updater.longitude = team.longitude
       Geocoding.perform(updater).with_save
