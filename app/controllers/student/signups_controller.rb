@@ -1,6 +1,7 @@
 module Student
   class SignupsController < ApplicationController
-    before_action :require_unauthenticated
+    before_action :require_unauthenticated, except: :new
+    before_action :force_logout, only: :new
 
     before_action -> {
       attempt = (

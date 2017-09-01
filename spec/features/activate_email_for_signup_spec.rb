@@ -113,24 +113,4 @@ RSpec.feature "Activate your email to sign up" do
     expect(signup_attempt.reload).to be_registered
     expect(signup_attempt.account.email).to eq("joe@joesak.com")
   end
-
-  scenario "Register after team invite" do
-    team = FactoryGirl.create(:team)
-    email = "Student@test.com"
-
-    team.team_member_invites.create!(
-      inviter: team.students.first,
-      invitee_email: email,
-    )
-
-    visit student_signup_path(
-      token: SignupAttempt.find_by(email: email).activation_token
-    )
-
-    click_button "Create Your Account"
-
-    within(".student_profile_account_password") {
-      expect(page).to have_css('.error', text: "can't be blank")
-    }
-  end
 end
