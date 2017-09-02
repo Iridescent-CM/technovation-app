@@ -1,4 +1,6 @@
 <% if requests.any? %>
+  <hr />
+
   <div class="grid grid--bleed">
     <div class="grid__col-auto">
       <h3 class="reset">Requests from others</h3>
@@ -11,12 +13,12 @@
         <% requests.each do |join_request| %>
           <li class="row">
             <div class="grid">
-              <div class="grid__col-3 grid__col--bleed-y">
+              <div class="grid__col-2 grid__col--bleed-y">
                 <%= image_tag join_request.requestor.profile_image_url,
-                  class: "grid__cell-img" %>
+                  class: "thumbnail-sm grid__cell-img" %>
               </div>
 
-              <div class="grid__col-9 grid__col--bleed-y">
+              <div class="grid__col-10 grid__col--bleed-y">
                 <div class="grid__cell">
                   <strong><%= join_request.requestor_first_name %></strong><br />
                   <small><%= join_request.requestor_scope_name %></small><br />

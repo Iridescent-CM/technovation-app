@@ -1,9 +1,10 @@
 <div class="grid">
-  <div class="grid__col-3 grid__col--bleed-y">
-    <%= image_tag invite.invitee.profile_image_url, class: "grid__cell-img" %>
+  <div class="grid__col-2 grid__col--bleed-y">
+    <%= image_tag invite.invitee.profile_image_url,
+      class: "thumbnail-sm grid__cell-img" %>
   </div>
 
-  <div class="grid__col-9 grid__col--bleed-y">
+  <div class="grid__col-10 grid__col--bleed-y">
     <div class="grid__cell">
       <strong><%= invite.invitee_first_name %></strong><br />
 
