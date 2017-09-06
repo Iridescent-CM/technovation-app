@@ -10,6 +10,16 @@ RSpec.describe Mentor::JoinRequestsController do
       post :create, params: { team_id: team.id }
     end
 
+    it "redirects gracefully on dupe" do
+      join_request = JoinRequest.last
+
+      expect {
+        post :create, params: { team_id: team.id }
+      }.not_to change { JoinRequest.count }
+
+      expect(response).to redirect_to(mentor_join_request_path(join_request))
+    end
+
     it "sends the correct email to all members" do
       mails = ActionMailer::Base.deliveries.last(2)
 

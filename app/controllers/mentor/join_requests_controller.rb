@@ -5,18 +5,12 @@ class Mentor::JoinRequestsController < MentorController
 
   def create
     @team = Team.find(params.fetch(:team_id))
-    join_request = JoinRequest.new(
-      requestor: current_mentor,
-      team: @team
-    )
 
-    if join_request.save
-      redirect_to [:mentor, join_request],
-                  success: t("controllers.mentor.join_requests.create.success",
-                             name: @team.name)
-    else
-      render :new
-    end
+    join_request = current_mentor.join_requests.find_or_create_by!(team: @team)
+
+    redirect_to mentor_join_request_path(join_request),
+      success: t("controllers.mentor.join_requests.create.success",
+                 name: @team.name)
   end
 
   def show

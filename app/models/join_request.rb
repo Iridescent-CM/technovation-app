@@ -7,6 +7,8 @@ class JoinRequest < ActiveRecord::Base
 
   scope :for_mentors, -> { where(requestor_type: "MentorProfile") }
 
+  validates :team, uniqueness: { scope: [:requestor_type, :requestor_id] }
+
   belongs_to :requestor, polymorphic: true
   belongs_to :team, touch: true
 
