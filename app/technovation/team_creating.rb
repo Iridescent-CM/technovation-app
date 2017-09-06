@@ -1,6 +1,8 @@
 class TeamCreating
   def self.execute(team, profile, context)
-    IndexModelJob.perform_later("index", "Team", team.id)
+    if ENV.fetch("SEARCH_INDEX_TIMING") { "delayed" } == "realtime"
+      IndexModelJob.perform_later("index", "Team", team.id)
+    end
 
     if team.season_ids.empty?
       RegisterToSeasonJob.perform_later(team)
