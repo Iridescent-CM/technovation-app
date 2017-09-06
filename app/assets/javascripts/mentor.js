@@ -3,6 +3,9 @@
 //= require modals
 //= require tabs
 //= require image-uploaders
+//= require location-based-search
+//= require text-based-search
+//= require toggle-based-search
 
 document.addEventListener("turbolinks:load", function() {
   $("[data-keep-count-of]").each(function() {
