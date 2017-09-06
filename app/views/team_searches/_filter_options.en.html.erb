@@ -1,11 +1,3 @@
-<% provide(
-  :js,
-  javascript_include_tag(
-    "toggle-based-search",
-    'data-turbolinks-track' => true
-  )
-) %>
-
 <%= form_with url: request.fullpath, method: :get, local: true do |f| %>
   <label>Search by name</label>
 

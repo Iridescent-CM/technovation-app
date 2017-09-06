@@ -1,5 +1,3 @@
-document.addEventListener("turbolinks:load", function(e) {
-  $(".toggle-based-search").on("change", function() {
-    $(this).closest("form").submit();
-  });
+$(document).on("change", ".toggle-based-search", function(e) {
+  $(this).closest("form").submit();
 });

@@ -12,6 +12,7 @@
 //= require flash-msgs
 //= require location-based-search
 //= require text-based-search
+//= require toggle-based-search
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
