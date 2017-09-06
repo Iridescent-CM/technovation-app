@@ -169,7 +169,7 @@ en:
         heading: "Register a team"
         labels:
           mentor: "Register a team to get started."
-          student: "Your team can be made up of up to five amazing girls. Join or create a team to get started."
+          student: "Your team can have up to five amazing girls. Join a team or register a new one to get started."
         links:
           pre_unit:
             text: "This Build a Team Unit"

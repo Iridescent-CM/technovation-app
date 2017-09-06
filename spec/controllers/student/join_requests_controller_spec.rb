@@ -2,15 +2,17 @@ require "rails_helper"
 
 RSpec.describe Student::JoinRequestsController do
   describe "POST #create" do
-    it "emails all members" do
-      team = FactoryGirl.create(:team)
-      student = FactoryGirl.create(:student)
-      mentor = FactoryGirl.create(:mentor)
+    let(:team) { FactoryGirl.create(:team) }
+    let(:student) { FactoryGirl.create(:student) }
+    let(:mentor) { FactoryGirl.create(:mentor) }
 
+    before do
       TeamRosterManaging.add(team, mentor)
-
       sign_in(student)
       request.env["HTTP_REFERER"] = "/somewhere"
+    end
+
+    it "emails all members" do
       post :create, params: { team_id: team.id }
 
       mail = ActionMailer::Base.deliveries.last
@@ -22,6 +24,15 @@ RSpec.describe Student::JoinRequestsController do
                             port: ENV["HOST_DOMAIN"].split(":")[1])
 
       expect(mail.body.to_s).to include("href=\"#{url}\"")
+    end
+
+    it "redirects gracefully on dupe" do
+      expect {
+        post :create, params: { team_id: team.id }
+        post :create, params: { team_id: team.id }
+      }.to change { JoinRequest.count }.by(1)
+
+      expect(response).to redirect_to(student_dashboard_path)
     end
   end
 
