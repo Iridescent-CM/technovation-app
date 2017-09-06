@@ -1,4 +1,6 @@
-$(document).on("keyup", ".search-by-text", function(e) {
-  if (e.keyCode === 13)
-    $(this).closest('form').submit();
+document.addEventListener("turbolinks:load", function() {
+  $(document).on("keyup", ".search-by-text", function(e) {
+    if (e.keyCode === 13)
+      $(this).closest('form').submit();
+  });
 });

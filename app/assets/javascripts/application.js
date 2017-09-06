@@ -10,6 +10,8 @@
 //= require navigation
 //= require chosen-init
 //= require flash-msgs
+//= require location-based-search
+//= require text-based-search
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
