@@ -4,3 +4,4 @@
 //= require tabs
 //= require image-uploaders
 //= require forms
+//= require search

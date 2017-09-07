@@ -1,11 +1,3 @@
-<% provide(
-  :js,
-  javascript_include_tag(
-    "location-based-search",
-    'data-turbolinks-track' => true
-  )
-) %>
-
 <% f ||= false %>
 
 <%= label_tag :nearby, t("views.application.search_near") %>
@@ -13,13 +5,16 @@
 <div class="location-based-search">
   <% if f # TODO: shim until team search is updated %>
     <%= f.text_field :nearby,
+      class: "search-by-text",
       value: params[:nearby],
       data: { location_field: true } %>
   <% else %>
     <%= text_field_tag :nearby,
       params[:nearby],
+      class: "search-by-text",
       data: { location_field: true } %>
   <% end %>
+  <p class="hint">Press enter after typing</p>
 
   <p class="buttons">
     <%= link_to t('views.application.near_me'), '#',
