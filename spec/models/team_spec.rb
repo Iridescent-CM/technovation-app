@@ -276,13 +276,24 @@ RSpec.describe Team do
     expect(heisenberg.reload.id).not_to be_nil
   end
 
-  it "deletes itself when the membership count decrements to zero" do
+  it "deletes itself and pending join requests/invites when membership decrements to zero" do
     team = FactoryGirl.create(:team)
+
+    team.team_member_invites.create!(
+      invitee_email: "will@delete.com",
+      inviter: FactoryGirl.create(:mentor),
+    )
+
+    team.join_requests.create!(
+      requestor: FactoryGirl.create(:student),
+    )
 
     team.members.each do |m|
       TeamRosterManaging.remove(team, m)
     end
 
     expect(team).to be_deleted
+    expect(team.team_member_invites).to be_empty
+    expect(team.join_requests).to be_empty
   end
 end

@@ -2,11 +2,16 @@ module Student
   class TeamMembershipsController < StudentController
     def destroy
       team = current_student.teams.find(params.fetch(:id))
-      TeamRosterManaging.remove(team, current_student)
+      member = current_student.team.students.find(params.fetch(:member_id))
+      TeamRosterManaging.remove(team, member)
 
-      redirect_to student_dashboard_path,
-        success: t("controllers.team_memberships.destroy.success",
-                   name: team.name)
+      if member == current_student
+        redirect_to student_dashboard_path,
+          success: "You have removed yourself from #{team.name}"
+      else
+        redirect_to student_team_path(team),
+          success: "#{member.full_name} has been removed from #{team.name}"
+      end
     end
   end
 end

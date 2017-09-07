@@ -86,11 +86,5 @@ ol {
         padding-right: 0;
       }
     }
-
-    &:hover {
-      [class*="grid__col-"] {
-        background: #ddd;
-      }
-    }
   }
 }

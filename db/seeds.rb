@@ -22,6 +22,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       email_confirmed_at: Time.current,
                                     })).valid?
   SeasonRegistration.register(student.account)
+  Geocoding.perform(student).with_save
   student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="

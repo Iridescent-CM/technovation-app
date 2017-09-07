@@ -4,11 +4,10 @@ module RegionalAmbassador
       team = Team.find(params.fetch(:id))
       account = Account.find(params.fetch(:account_id))
 
-      if account.mentor_profile
-        TeamRosterManaging.remove(team, account.mentor_profile)
-      else
-        TeamRosterManaging.remove(team, account.student_profile)
-      end
+      TeamRosterManaging.remove(
+        team,
+        account.mentor_profile || account.student_profile
+      )
 
       redirect_to regional_ambassador_team_path(team),
         success: "You have removed #{account.full_name} from this team"

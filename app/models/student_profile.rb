@@ -4,8 +4,19 @@ class StudentProfile < ActiveRecord::Base
 
   scope :full_access, -> {
     joins(:account, :parental_consent)
-    .where("accounts.location_confirmed = ?", true)
-    .where("accounts.email_confirmed_at IS NOT NULL")
+      .where("accounts.location_confirmed = ?", true)
+      .where("accounts.email_confirmed_at IS NOT NULL")
+  }
+
+  scope :onboarded, -> { full_access }
+  scope :onboarding, -> {
+    left_outer_joins(:account, :parental_consent)
+      .where(
+        "parental_consents.id IS NULL OR
+          accounts.location_confirmed = ? OR
+            accounts.email_confirmed_at IS NULL",
+        false
+      )
   }
 
   has_many :memberships, as: :member, dependent: :destroy
@@ -177,10 +188,29 @@ class StudentProfile < ActiveRecord::Base
     "student"
   end
 
-  def full_access_enabled?
+  def onboarding?
+    not onboarded?
+  end
+
+  def onboarded?
     account.email_confirmed? and
       parental_consent_signed? and
         location_confirmed?
+  end
+
+  def actions_needed
+    actions = []
+    actions << "Confirm their new email address" unless account.email_confirmed?
+    actions << "Get their parent or guardian's permission to compete" unless parental_consent_signed?
+    actions << "Enter their location details" unless location_confirmed?
+    actions
+  end
+
+  def full_access_enabled?
+    ActiveSupport::Deprecation.warn(
+      "#full_access_enabled? is deprecated. Please use #onboarded?"
+    )
+    onboarded?
   end
 
   private
