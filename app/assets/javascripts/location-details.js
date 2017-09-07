@@ -1,8 +1,11 @@
-$(function() {
-  if ("geolocation" in navigator) {
-    var $hideWhileGeocoding = $('form').children().not('.while-geocoding');
+if ("geolocation" in navigator) {
+  document.addEventListener("turbolinks:load", function() {
+    var $form = $('form.geocoding');
+    if ($form.length === 0) return;
 
-    $hideWhileGeocoding.fadeOut(function() {
+    var $hideWhileGeocoding = $form.children().not('.while-geocoding');
+
+    $.when($hideWhileGeocoding.fadeOut()).then(function() {
       navigator.geolocation.getCurrentPosition(function(position) {
         var lat = position.coords.latitude,
             lng = position.coords.longitude,
@@ -38,5 +41,5 @@ $(function() {
         $hideWhileGeocoding.fadeIn();
       }
     });
-  }
-});
+  });
+}

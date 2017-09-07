@@ -14,16 +14,18 @@
           $flashText = $("<span>"),
           $flashClose = $("<span>");
 
-      $flash.addClass("flash flash--success");
-      $flashClose.addClass("icon-close");
-      $flashText.text(res.flash.success);
+      if (res.flash) {
+        $flash.addClass("flash flash--success");
+        $flashClose.addClass("icon-close");
+        $flashText.text(res.flash.success);
 
-      $flash.append($flashText);
-      $flash.append($flashClose);
+        $flash.append($flashText);
+        $flash.append($flashClose);
 
-      $flash.hide();
-      $("#flash").html($flash);
-      $flash.fadeIn();
+        $flash.hide();
+        $("#flash").html($flash);
+        $flash.fadeIn();
+      }
     }
   });
 })();
