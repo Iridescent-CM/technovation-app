@@ -24,7 +24,7 @@ RSpec.describe "Team Memberships Controllers" do
 
         sign_in(older_student)
 
-        delete :destroy, params: { id: team.id }
+        delete :destroy, params: { id: team.id, member_id: older_student.id }
 
         expect(team.reload).to be_junior
       end

@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<% if current_student.full_access_enabled? %>
+<% if current_student.onboarded? %>
   <%= render 'student/dashboards/full_access' %>
 <% else %>
   <div class="grid grid--justify-space-around">

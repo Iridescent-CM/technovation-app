@@ -188,12 +188,23 @@ class MentorProfile < ActiveRecord::Base
     teams.include? team
   end
 
-  def full_access_enabled?
+  def onboarding?
+    not onboarded?
+  end
+
+  def onboarded?
     account.email_confirmed? and
       consent_signed? and
         background_check_complete? and
           location_confirmed? and
             not bio.blank?
+  end
+
+  def full_access_enabled?
+    ActiveSupport::Deprecation.warn(
+      "#full_access_enabled? is deprecated. Please use #onboarded?"
+    )
+    onboarded?
   end
 
   private

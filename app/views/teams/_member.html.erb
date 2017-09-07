@@ -1,4 +1,5 @@
 <% admin ||= false %>
+
 <% #TODO: fix this admin/profile/user/account stuff %>
 <% path_name = current_scope == "admin" ? "profile" : "user" %>
 
@@ -23,7 +24,7 @@
 
     <% if CanRemoveTeamMember.(current_account, member) %>
       <%= link_to "remove this member",
-        [current_scope, @team, :membership, { account_id: member.account_id }],
+        [current_scope, @team, :membership, { member_id: member.id }],
         data: {
           method: :delete,
           confirm: t("views.teams.show.confirm_leave"),

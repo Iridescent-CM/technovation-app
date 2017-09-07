@@ -1,6 +1,22 @@
 <ul class="reset">
-  <%= render partial: "teams/member", collection: team.students %>
+  <%= render partial: "teams/member",
+    collection: team.students.onboarded %>
 </ul>
+
+<% if team.students.onboarding.any? %>
+  <hr />
+
+  <h3 class="reset">Pending students</h3>
+
+  <p class="hint">
+    These students are listed on your team, but are not yet eligible to compete.
+  </p>
+
+  <ul class="reset">
+    <%= render partial: "teams/onboarding_member",
+      collection: team.students.onboarding %>
+  </ul>
+<% end %>
 
 <%= render "teams/pending_invites",
   preview_method: :invitee_email,

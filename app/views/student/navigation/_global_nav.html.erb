@@ -6,7 +6,7 @@
   student_dashboard_path,
   class: al(student_dashboard_path) %>
 
-<% if current_student.full_access_enabled? %>
+<% if current_student.onboarded? %>
   <% if current_student.is_on_team? %>
     <%= link_to t("views.student.navigation.my_team"),
       student_team_path(current_team),
