@@ -1,12 +1,8 @@
-<% provide(
-  :js,
-  javascript_include_tag(
-    "location-details",
-    'data-turbolinks-track' => true
-  )
-) %>
-
-<%= simple_form_for current_profile, url: [current_scope, :profile] do |f| %>
+<%= simple_form_for current_profile,
+  url: [current_scope, :profile],
+  html: {
+    class: "geocoding"
+  } do |f| %>
   <%= hidden_field_tag :return_to, params[:return_to] %>
 
   <div class="while-geocoding">

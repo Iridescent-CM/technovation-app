@@ -5,3 +5,4 @@
 //= require image-uploaders
 //= require forms
 //= require search
+//= require location-details
