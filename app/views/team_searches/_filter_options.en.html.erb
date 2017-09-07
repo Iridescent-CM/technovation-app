@@ -13,6 +13,7 @@
       <p>
         <%= check_box_tag "division_enums[]", id,
           params[:division_enums].map(&:to_i).include?(id),
+          class: "toggle-based-search",
           id: "division_#{id}" %>
 
         <label for="division_<%= id %>"><%= name.humanize %></label>
