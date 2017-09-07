@@ -28,6 +28,7 @@ machine:
     GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
     BING_MAPS_API_KEY: no-matter-in-test
     ENABLE_RA_SCORES: yes
+    SEARCH_INDEX_TIMING: realtime
 
 general:
   branches:

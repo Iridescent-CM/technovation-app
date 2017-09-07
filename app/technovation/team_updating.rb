@@ -1,14 +1,15 @@
 class TeamUpdating
   private
-  attr_reader :team
+  attr_reader :team, :updater
 
   public
-  def initialize(team)
+  def initialize(team, updater)
     @team = team
+    @updater = updater
   end
 
-  def self.execute(team, attrs)
-    new(team).update(attrs)
+  def self.execute(team, attrs, updater = nil)
+    new(team, updater).update(attrs)
   end
 
   def update(attrs)
@@ -22,6 +23,12 @@ class TeamUpdating
 
   def perform_callbacks
     Geocoding.perform(team)
+
+    if updater.present? and (updater.latitude.blank? or updater.longitude.blank?)
+      updater.latitude = team.latitude
+      updater.longitude = team.longitude
+      Geocoding.perform(updater).with_save
+    end
 
     Casting.delegating(team => RegionalPitchEventAttendee) do
       team.preserve_pitch_event_region

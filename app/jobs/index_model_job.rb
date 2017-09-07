@@ -18,9 +18,16 @@ class IndexModelJob < ActiveJob::Base
       when /index/
         record = klass.find(id)
 
-        Client.index index: klass.index_name, type: klass.document_type, id: record.id, body: record.as_indexed_json, refresh: @@force_refresh
+        Client.index index: klass.index_name,
+          type: klass.document_type,
+          id: record.id,
+          body: record.as_indexed_json,
+          refresh: @@force_refresh
       when /delete/
-        Client.delete index: klass.index_name, type: klass.document_type, id: id, refresh: @@force_refresh
+        Client.delete index: klass.index_name,
+          type: klass.document_type,
+          id: id,
+          refresh: @@force_refresh
       else raise ArgumentError, "Unknown operation '#{operation}'"
     end
   end
