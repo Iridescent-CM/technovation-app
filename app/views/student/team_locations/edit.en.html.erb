@@ -1,13 +1,5 @@
 <% provide :title, "Change your team location" %>
 
-<% provide(
-  :js,
-  javascript_include_tag(
-    "location-details",
-    'data-turbolinks-track' => true
-  )
-) %>
-
 <div class="grid grid--justify-space-around">
   <div class="panel grid__col-xs-8">
     <h5>
@@ -15,7 +7,10 @@
       <%= @team.name %>
     </h5>
 
-    <%= simple_form_for [current_scope, @team] do |f| %>
+    <%= simple_form_for [current_scope, @team],
+      html: {
+        class: "geocoding"
+      } do |f| %>
       <div class="while-geocoding">
         <%= web_icon "spinner2", class: "spin" %>
         Detecting your location...
