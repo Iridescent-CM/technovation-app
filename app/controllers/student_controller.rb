@@ -6,7 +6,7 @@ class StudentController < ApplicationController
   end
 
   layout "student"
-  helper_method :current_student, :current_team
+  helper_method :current_student, :current_team, :current_profile
 
   # For Airbrake Notifier
   def current_user
@@ -42,5 +42,9 @@ class StudentController < ApplicationController
 
   def current_student
     @current_student ||= current_account.student_profile
+  end
+
+  def current_profile
+    current_student
   end
 end

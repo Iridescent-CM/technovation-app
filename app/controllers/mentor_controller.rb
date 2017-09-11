@@ -3,7 +3,7 @@ class MentorController < ApplicationController
   include Authenticated
 
   layout "mentor"
-  helper_method :current_mentor
+  helper_method :current_mentor, :current_profile
 
   before_action -> {
     if "mentor" != cookies[:last_profile_used]
@@ -23,6 +23,10 @@ class MentorController < ApplicationController
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile
+  end
+
+  def current_profile
+    current_mentor
   end
 
   def create_judge_mentor_on_dashboard

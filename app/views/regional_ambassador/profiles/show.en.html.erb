@@ -1,11 +1,11 @@
 <% provide :title, "My profile" %>
 
-<div id="student-profile-tabs" class="grid tabs tabs-vertical">
+<div id="ra-profile-tabs" class="grid tabs tabs-vertical">
   <div class="grid__col-sm-3">
     <div class="hidden-xs hidden-xxs">
-      <h3><%= current_student.full_name %></h3>
+      <h3><%= current_ambassador.full_name %></h3>
 
-      <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+      <%= image_tag current_ambassador.profile_image_url, class: "grid__cell-img" %>
 
       <%= render 'image_upload',
         modal_id: "image_upload_desktop",
@@ -13,16 +13,16 @@
         size: "300x300" %>
     </div>
 
-    <%= render 'student/profiles/menu' %>
+    <%= render 'regional_ambassador/profiles/menu' %>
   </div>
 
   <div class="content grid__col-sm-9">
     <div class="tab-content" id="basic">
-      <%= render 'student/profiles/basic' %>
+      <%= render 'regional_ambassador/profiles/basic' %>
     </div>
 
     <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
-      <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+      <%= image_tag current_ambassador.profile_image_url, class: "grid__cell-img" %>
 
       <%= render 'image_upload',
         modal_id: "image_upload_mobile",
@@ -30,20 +30,16 @@
         size: "300x300" %>
     </div>
 
-    <div class="tab-content" id="parent">
-      <%= render 'student/profiles/parent' %>
-    </div>
-
     <div class="tab-content" id="location">
-      <%= render 'student/profiles/location' %>
+      <%= render 'regional_ambassador/profiles/location' %>
     </div>
 
     <div class="tab-content" id="change-email">
-      <%= render 'profiles/email' %>
+      <%= render 'regional_ambassador/profiles/email' %>
     </div>
 
     <div class="tab-content" id="change-password">
-      <%= render 'profiles/password' %>
+      <%= render 'regional_ambassador/profiles/password' %>
     </div>
   </div>
 </div>

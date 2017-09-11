@@ -1,0 +1,9 @@
+<h3>Your location</h3>
+
+<p><%= current_ambassador.address_details %></p>
+
+<p class="hint">
+  Regional Ambassadors cannot edit their own location.
+  <br />
+  Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
+</p>
