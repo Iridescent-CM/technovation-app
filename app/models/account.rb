@@ -58,6 +58,14 @@ class Account < ActiveRecord::Base
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
 
+  scope :in_region, ->(ambassador) {
+    if ambassador.country == "US"
+      where("country = 'US' AND state_province = ?", ambassador.state_province)
+    else
+      where("country = ?", ambassador.country)
+    end
+  }
+
   mount_uploader :profile_image, ImageProcessor
 
   has_secure_token :auth_token

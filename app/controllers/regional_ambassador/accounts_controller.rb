@@ -1,17 +1,13 @@
 module RegionalAmbassador
   class AccountsController < RegionalAmbassadorController
-    def update
-      current_ambassador.account.update_attributes(account_params)
-
-      redirect_to regional_ambassador_dashboard_path,
-        notice: "Your account settings were saved"
+    def index
+      @accounts_grid = AccountsGrid.new(params[:accounts_grid]) do |scope|
+        scope.in_region(current_ambassador).page(params[:page])
+      end
     end
 
-    private
-    def account_params
-      params.require(:account).permit(
-        :timezone,
-      )
+    def show
+      @account = Account.find(params[:id])
     end
   end
 end

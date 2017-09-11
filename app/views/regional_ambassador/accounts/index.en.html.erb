@@ -1,0 +1,5 @@
+Total: <%= @accounts_grid.assets.count %>
+
+<%= datagrid_table(@accounts_grid) %>
+
+<%= will_paginate @accounts_grid.assets %>

@@ -115,8 +115,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :edit, :update]
     resource :account, only: :update
 
-    resources :profiles, only: :index
-    resources :users, only: :show
+    resources :accounts, only: [:index, :show, :edit, :update]
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: :destroy

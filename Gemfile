@@ -26,6 +26,7 @@ gem 'normalize-rails', "~> 4.1"
 gem 'rails-i18n', "~> 5.0"
 gem 'clipboard-rails', "~> 1.7"
 gem 'will_paginate', '~> 3.1'
+gem 'datagrid'
 gem 'simple_form',
   git: 'https://github.com/elsurudo/simple_form.git',
   branch: 'rails-5.1.0'
