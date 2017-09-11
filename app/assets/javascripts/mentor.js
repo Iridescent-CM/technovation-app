@@ -1,10 +1,6 @@
 //= require application
 
-//= require modals
-//= require tabs
-//= require image-uploaders
 //= require search
-//= require location-details
 
 document.addEventListener("turbolinks:load", function() {
   $("[data-keep-count-of]").each(function() {
