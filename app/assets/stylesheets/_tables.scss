@@ -1,0 +1,15 @@
+.datagrid {
+  background: white;
+  border-collapse: collapse;
+  box-shadow: $shadow-default;
+
+  td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #999;
+    transition: background 0.2s;
+  }
+
+  tr:hover td {
+    background: #ddd;
+  }
+}

@@ -8,7 +8,16 @@ class AccountsGrid
   column :first_name
   column :last_name
   column :email
-  column :created_at do
-    self.created_at.to_date
+
+  column :scope_name, header: "Profile" do
+    scope_name.titleize
+  end
+
+  column :age
+  column :city
+  column :state_province, header: "State"
+
+  column :created_at, header: "Signed up" do
+    created_at.strftime("%b %e")
   end
 end
