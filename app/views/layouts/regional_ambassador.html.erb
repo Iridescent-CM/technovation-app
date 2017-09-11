@@ -2,27 +2,35 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    >
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title><%= t('views.application.site_title') %></title>
 
-    <%= stylesheet_link_tag 'regional_ambassador', media: 'all' %>
+    <%= stylesheet_link_tag :regional_ambassador, media: 'all' %>
+
     <%= csrf_meta_tags %>
 
-    <%= yield :head_js %>
+    <%= stylesheet_link_tag(
+      '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css',
+      media: :all
+    ) %>
+
+    <%= javascript_include_tag :regional_ambassador,
+      'data-turbolinks-track' => true %>
   </head>
 
-  <body>
-    <%= render 'regional_ambassador/navigation/global_nav' %>
-
-    <div class="container">
-      <%= render 'flash_messages' %>
-      <div class="main-content">
-        <%= yield %>
-      </div>
+  <body class="grid">
+    <div class="grid__col-sm-3">
+      <%= render 'regional_ambassador/navigation/global_nav' %>
     </div>
 
-    <%= javascript_include_tag 'regional_ambassador' %>
+    <div class="grid__col-sm-9">
+      <%= render 'flash_messages' %>
+      <%= yield %>
+    </div>
   </body>
 </html>
