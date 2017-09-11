@@ -1,7 +1,6 @@
 .datagrid {
-  background: white;
+  width: 100%;
   border-collapse: collapse;
-  box-shadow: $shadow-default;
 
   td {
     padding: 0.5rem;
@@ -11,5 +10,54 @@
 
   tr:hover td {
     background: #ddd;
+  }
+
+  th {
+    position: relative;
+    text-align: left;
+
+    &:hover {
+      .menu {
+        opacity: 1;
+      }
+    }
+
+    .menu {
+      opacity: 0;
+      transition: opacity 0.2s;
+      float: left;
+      margin-right: 0.5rem;
+
+      &:hover {
+        .order {
+          opacity: 1;
+        }
+      }
+    }
+
+    .order {
+      transition: opacity 0.2s;
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      font-size: 0.8rem;
+      background: white;
+      z-index: $z-menu;
+      box-shadow: $shadow-small;
+      border-bottom-right-radius: $radius-default;
+      border-bottom-left-radius: $radius-default;
+      width: 125px;
+
+      a {
+        padding: 0.5rem;
+        display: block;
+        color: #666;
+
+        &:hover {
+          background: #666;
+          color: white;
+        }
+      }
+    }
   }
 }

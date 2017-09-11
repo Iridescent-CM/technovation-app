@@ -1,5 +1,9 @@
-Total: <%= @accounts_grid.assets.count %>
+<div class="grid">
+  <div class="panel grid__col-auto">
+    Total: <%= @accounts_grid.assets.count %>
 
-<%= datagrid_table(@accounts_grid) %>
+    <%= datagrid_table(@accounts_grid) %>
 
-<%= will_paginate @accounts_grid.assets %>
+    <%= will_paginate @accounts_grid.assets %>
+  </div>
+</div>

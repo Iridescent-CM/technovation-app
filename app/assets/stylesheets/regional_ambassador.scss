@@ -2,24 +2,3 @@
 
 @import "dashboards";
 @import "tables";
-
-.logo {
-  padding: 0.5rem;
-  background: $mulberry;
-  margin: 0 0 1rem;
-}
-
-.main-nav {
-  a {
-    display: block;
-    color: black;
-    padding: 1rem;
-    border-bottom: 1px solid #999;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-
-    &:hover, &.active {
-      opacity: 1;
-    }
-  }
-}
