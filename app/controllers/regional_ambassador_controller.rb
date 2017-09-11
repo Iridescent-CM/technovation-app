@@ -5,9 +5,20 @@ class RegionalAmbassadorController < ApplicationController
   helper_method :current_ambassador, :current_profile
 
   before_action -> {
-    if current_ambassador.timezone.blank? and current_ambassador.location_confirmed?
-      current_ambassador.account.update_column(:timezone, Timezone.lookup(current_ambassador.latitude, current_ambassador.longitude).name)
+    # TODO: move ambassador timezone setting to ProfileUpdating probably
+    if current_ambassador.timezone.blank? and
+      current_ambassador.location_confirmed?
+
+      current_ambassador.account.update_column(
+        :timezone,
+        Timezone.lookup(
+          current_ambassador.latitude,
+          current_ambassador.longitude
+        ).name
+      )
     end
+
+    # TODO: we are permitting all params in RA controllers!
     params.permit!
   }
 

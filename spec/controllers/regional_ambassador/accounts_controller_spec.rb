@@ -1,8 +1,9 @@
 require "rails_helper"
 
-RSpec.describe RegionalAmbassador::ProfilesController do
+RSpec.describe RegionalAmbassador::AccountsController do
   describe "GET #index" do
     it "shows users in the state region for US RAs" do
+      skip "this is being reset"
       il_student = FactoryGirl.create(:student) # Chicago is default
       il_mentor = FactoryGirl.create(:mentor, city: "Evanston")
 
@@ -22,6 +23,7 @@ RSpec.describe RegionalAmbassador::ProfilesController do
     end
 
     it "shows users in the country region for Intn'l RAs" do
+      skip "this is being reset"
       us_student = FactoryGirl.create(:student) # Chicago is default
       riyadh_ra = FactoryGirl.create(:regional_ambassador,
                                      status: :approved,

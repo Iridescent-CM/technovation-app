@@ -23,14 +23,30 @@
       'data-turbolinks-track' => true %>
   </head>
 
-  <body class="grid">
-    <div class="grid__col-sm-3">
-      <%= render 'regional_ambassador/navigation/global_nav' %>
+  <body>
+    <div class="grid">
+      <div class="grid__col-sm-3">
+        <%= render 'regional_ambassador/navigation/global_nav' %>
+      </div>
+
+      <div class="grid__col-sm-9">
+        <%= render 'flash_messages' %>
+        <%= yield %>
+      </div>
     </div>
 
-    <div class="grid__col-sm-9">
-      <%= render 'flash_messages' %>
-      <%= yield %>
-    </div>
+    <%= render 'footer' %>
+
+    <div id="modal-shade"></div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-4055471-6', 'auto');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>
