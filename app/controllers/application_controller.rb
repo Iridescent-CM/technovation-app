@@ -92,7 +92,10 @@ class ApplicationController < ActionController::Base
 
     if @profile.errors[:"account.email"]
       .include?("has already been taken")
-      render "signups/email_taken" and return
+      render "signups/email_taken",
+        locals: {
+          email: @profile.email
+        } and return
     end
 
     @profile.errors.clear
