@@ -37,15 +37,23 @@ class AccountsGrid
     where("accounts.email ilike '%#{value}%'")
   end
 
-  filter :city do |value|
+  filter(:city, if: ->(g) { g.ambassador.country != "US" }) do |value|
     where("accounts.city ilike '%#{value}%'")
   end
+
+  filter :city,
+    :enum,
+    select: ->(g) {
+      CS.cities(g.ambassador.state_province, :us)
+    },
+    if: ->(g) { g.ambassador.country == "US" }
+
 
   filter :state_province,
     :enum,
     header: "State / Province",
     select: ->(g) {
-      CS.states(g.ambassador.country).collect { |p| [ p[1], p[0] ] }.compact
+      CS.states(g.ambassador.country).map { |p| [p[1], p[0]] }.compact
     },
     if: ->(g) { g.ambassador.country != "US" }
 
