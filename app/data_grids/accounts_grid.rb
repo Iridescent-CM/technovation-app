@@ -1,6 +1,8 @@
 class AccountsGrid
   include Datagrid
 
+  attr_accessor :ambassador
+
   scope do
     Account.left_outer_joins([
       :student_profile,
@@ -22,4 +24,42 @@ class AccountsGrid
   column :created_at, header: "Signed up" do
     created_at.strftime("%b %e")
   end
+
+  filter :name do |value|
+    names = value.split(' ')
+    where(
+      "accounts.first_name ilike '%#{names.first}%' OR
+       accounts.last_name ilike '%#{names.last}%'"
+    )
+  end
+
+  filter :email do |value|
+    where("accounts.email ilike '%#{value}%'")
+  end
+
+  filter :city do |value|
+    where("accounts.city ilike '%#{value}%'")
+  end
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.states(g.ambassador.country).collect { |p| [ p[1], p[0] ] }.compact
+    },
+    if: ->(g) { g.ambassador.country != "US" }
+
+  filter :scope_names,
+    :enum,
+    header: "Profile type",
+    select: [
+      ['Students', 'student'],
+      ['Mentors', 'mentor'],
+      ['Judges', 'judge'],
+      ['Regional Ambassadors', 'regional_ambassador'],
+    ],
+    checkboxes: true do |values|
+      clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
+      where(clauses.join(' AND '))
+    end
 end

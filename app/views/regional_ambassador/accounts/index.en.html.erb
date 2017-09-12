@@ -2,6 +2,9 @@
 
 <div class="grid">
   <div class="panel grid__col-auto">
+    <%= datagrid_form_for @accounts_grid,
+      url: regional_ambassador_accounts_path %>
+
     Total: <%= @accounts_grid.assets.count %>
 
     <%= datagrid_table(@accounts_grid) %>
