@@ -60,9 +60,12 @@ class Account < ActiveRecord::Base
 
   scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
-      where("country = 'US' AND state_province = ?", ambassador.state_province)
+      where(
+        "accounts.country = 'US' AND accounts.state_province = ?",
+        ambassador.state_province
+      )
     else
-      where("country = ?", ambassador.country)
+      where("accounts.country = ?", ambassador.country)
     end
   }
 

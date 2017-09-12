@@ -17,38 +17,35 @@
     position: relative;
     text-align: left;
 
-    &:hover {
+    span {
+      &:hover {
+        .order {
+          display: block;
+        }
+      }
+
       .order {
-        display: block;
-      }
-    }
-
-    .order {
-      display: none;
-      position: absolute;
-      left: 0;
-      font-size: 0.9rem;
-      background: #666;
-      color: white;
-      z-index: $z-menu;
-      box-shadow: $shadow-small;
-      border-bottom-right-radius: $radius-default;
-      border-bottom-left-radius: $radius-default;
-      width: 125px;
-
-      span {
-        padding: 0.5rem;
-        display: block;
-      }
-
-      a {
-        padding: 0.5rem;
-        display: block;
+        display: none;
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+        background: #666;
         color: white;
+        z-index: $z-menu;
+        box-shadow: $shadow-small;
+        border-bottom-right-radius: $radius-default;
+        border-bottom-left-radius: $radius-default;
+        width: 125px;
 
-        &:hover {
-          background: #eee;
-          color: #666;
+        a {
+          padding: 0.5rem;
+          display: block;
+          color: white;
+
+          &:hover {
+            background: #eee;
+            color: #666;
+          }
         }
       }
     }

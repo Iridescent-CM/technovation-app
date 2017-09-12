@@ -1,8 +1,9 @@
 .navigation {
   background: #903D54 image-url('header-background.png') repeat-x;
-  margin: 0 0 1.5rem;
+  margin: 0;
   padding: 0;
   overflow: visible;
+  font-size: 0;
 
   .icon-navicon {
     position: absolute;
@@ -60,6 +61,18 @@
         transition: height 0.15s;
         width: 100%;
       }
+    }
+  }
+}
+
+.subnav {
+  a {
+    color: black;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+
+    &:hover, &.active {
+      opacity: 1;
     }
   }
 }

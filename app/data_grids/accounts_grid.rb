@@ -2,18 +2,20 @@ class AccountsGrid
   include Datagrid
 
   scope do
-    Account.order(created_at: :desc)
+    Account.left_outer_joins([
+      :student_profile,
+      :mentor_profile,
+      :judge_profile,
+      :regional_ambassador_profile,
+    ])
+      .order("accounts.created_at desc")
   end
 
   column :first_name
   column :last_name
   column :email
 
-  column :scope_name, header: "Profile" do
-    scope_name.titleize
-  end
-
-  column :age
+  column :age, order: "accounts.date_of_birth desc"
   column :city
   column :state_province, header: "State"
 
