@@ -166,10 +166,10 @@ en:
             text: "Sign Consent Waiver"
 
       create_join_team:
-        heading: "Register a team"
+        heading: "Form a team"
         labels:
           mentor: "Register a team to get started."
-          student: "Your team can have up to five amazing girls. Join a team or register a new one to get started."
+          student: "Your team can have up to five amazing girls. Find a team, register a new one, or accept an invitation to get started."
         links:
           pre_unit:
             text: "This Build a Team Unit"

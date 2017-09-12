@@ -1,0 +1,29 @@
+<h3>You have been invited!</h3>
+
+<% if invites.many? %>
+  <p class="hint">You can only accept one!</p>
+<% end %>
+
+<% invites.each do |invite| %>
+  <%= content_tag :div, id: dom_id(invite) do %>
+    <div class="grid grid--bleed">
+      <div class="grid__col-4">
+        <div class="grid__cell">
+          <%= image_tag invite.team.team_photo,
+            class: "thumbnail-md grid__cell-img" %>
+        </div>
+      </div>
+
+      <div class="grid__col-8">
+        <div class="grid__cell">
+          <strong>From team: <%= invite.team_name %></strong>
+
+          <p>
+            <%= link_to "Open this invitation",
+              send("#{current_scope}_team_member_invite_path", invite) %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

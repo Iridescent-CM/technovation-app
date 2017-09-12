@@ -1,0 +1,19 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-auto">
+    <%= content_tag :div,
+      class: "grid__cell join_request",
+      id: dom_id(join_request) do %>
+
+      <h5 class="reset">You have asked to join a team</h5>
+
+      <%= image_tag join_request.team_team_photo_url, class: 'thumbnail-md' %>
+
+      <p>
+        <%= join_request.team_name %><br />
+        Division: <%= join_request.team_division_name.humanize %><br />
+        <%= join_request.team_primary_location %>
+      </p>
+
+    <% end %>
+  </div>
+</div>

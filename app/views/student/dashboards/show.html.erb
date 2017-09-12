@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<% if current_student.onboarded? %>
+<% if current_student.onboarded?  and current_student.is_on_team? %>
   <%= render 'student/dashboards/full_access' %>
 <% else %>
   <div class="grid grid--justify-space-around">
@@ -39,22 +39,6 @@
 
         <%= link_to "View your profile", student_profile_path %>
       </div>
-
-      <% if current_student.join_requests.pending.any? %>
-        <div class="panel">
-          <%= render partial: 'dashboards/join_request',
-            collection: current_student.join_requests.pending %>
-        </div>
-      <% end %>
-
-      <%= render 'dashboards/invitations',
-        invites: current_student.team_member_invites.pending %>
-
-      <% if current_student.can_search_teams? %>
-        <div class="panel">
-          <%= render 'student/dashboards/join_create_team' %>
-        </div>
-      <% end %>
 
       <%= render 'completion_steps' %>
     </div>
