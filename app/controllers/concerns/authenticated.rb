@@ -12,14 +12,6 @@ module Authenticated
       not current_account.authenticated? and
         not authenticated_exceptions.include?("#{controller_name}##{action_name}")
     }
-
-    before_action :interrupt!, unless: -> {
-      current_account.admin? or
-        authenticated_exceptions.include?("#{controller_name}##{action_name}") or
-          (%w{interruptions profiles}.include?(controller_name) or
-            (current_account.valid? and
-              current_account.profile_valid?))
-    }
   end
 
   private
@@ -38,9 +30,5 @@ module Authenticated
     redirect_to signin_path,
       notice: t("controllers.application.unauthenticated",
                 profile: current_scope.indefinitize.humanize.downcase) and return
-  end
-
-  def interrupt!
-    redirect_to interruptions_path(issue: :invalid_profile) and return
   end
 end
