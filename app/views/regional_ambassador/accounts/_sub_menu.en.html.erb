@@ -4,27 +4,28 @@
       <li>
         <%= link_to 'Students',
           regional_ambassador_accounts_path(scope: :student),
-          class: al(regional_ambassador_accounts_path(scope: :student)) %>
+          class: al(["scope=student", "accounts_grid[scope_names][]=student"]) %>
       </li>
 
       <li>
         <%= link_to 'Mentors',
           regional_ambassador_accounts_path(scope: :mentor),
-          class: al(regional_ambassador_accounts_path(scope: :mentor)) %>
+          class: al(["scope=mentor", "accounts_grid[scope_names][]=mentor"]) %>
       </li>
 
       <li>
         <%= link_to 'Judges',
           regional_ambassador_accounts_path(scope: :judge),
-          class: al(regional_ambassador_accounts_path(scope: :judge)) %>
+          class: al(["scope=judge", "accounts_grid[scope_names][]=judge"]) %>
       </li>
 
       <li>
         <%= link_to 'Regional Ambassadors',
           regional_ambassador_accounts_path(scope: :regional_ambassador),
-          class: al(
-            regional_ambassador_accounts_path(scope: :regional_ambassador)
-          ) %>
+          class: al([
+            "scope=regional_ambassador",
+            "accounts_grid[scope_names][]=regional_ambassador",
+          ]) %>
       </li>
     </ul>
   </div>
