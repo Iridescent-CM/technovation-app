@@ -3,6 +3,6 @@ class RegisterToSeasonJob < ActiveJob::Base
 
   def perform(record)
     season = Season.for(record)
-    SeasonRegistration.register(record, season)
+    record.update(seasons: (record.seasons << season.year))
   end
 end

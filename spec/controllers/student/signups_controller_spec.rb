@@ -51,7 +51,7 @@ RSpec.describe Student::SignupsController do
     end
 
     it "registers the student to the current season" do
-      expect(Account.last.seasons).to eq([Season.current])
+      expect(Account.last.seasons).to eq([Season.current.year])
     end
   end
 end

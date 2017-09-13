@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  include Seasoned
+
   include Casting::Client
   delegate_missing_methods
 
@@ -61,13 +63,6 @@ class Account < ActiveRecord::Base
     Prefer\ not\ to\ say
   }
 
-  scope :current, -> {
-    joins(season_registrations: :season)
-    .where("season_registrations.status = ? AND seasons.year = ?",
-           SeasonRegistration.statuses[:active],
-           Season.current.year)
-  }
-
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
 
@@ -77,9 +72,6 @@ class Account < ActiveRecord::Base
   has_secure_token :consent_token
   has_secure_token :password_reset_token
   has_secure_password
-
-  has_many :season_registrations, -> { active }, as: :registerable
-  has_many :seasons, through: :season_registrations
 
   validates :email,
     presence: true,
@@ -214,12 +206,6 @@ class Account < ActiveRecord::Base
 
   def age_by_cutoff
     age(Division.cutoff_date)
-  end
-
-  def current_season_registration
-    season_registrations.joins(:season)
-      .where("seasons.year = ?", Season.current.year)
-      .last
   end
 
   def temporary_password?

@@ -1,6 +1,8 @@
 require 'json'
 
 class TeamSubmission < ActiveRecord::Base
+  include Seasoned
+
   acts_as_paranoid
 
   extend FriendlyId
@@ -17,7 +19,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   after_destroy { IndexModelJob.perform_later("delete", "TeamSubmission", id) }
-  after_commit -> { SeasonRegistration.register(self) }, on: :create
+  after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) }, on: :create
 
   enum stated_goal: %w{
     Poverty
@@ -48,10 +50,6 @@ class TeamSubmission < ActiveRecord::Base
 
   mount_uploader :source_code, FileProcessor
 
-  scope :current, -> {
-    joins(season_registrations: :season).where("seasons.year = ?", Season.current.year)
-  }
-
   scope :for_ambassador, ->(ambassador) {
     if ambassador.country == "US"
       joins(:team).where("teams.state_province = ? AND teams.country = 'US'", ambassador.state_province)
@@ -80,9 +78,6 @@ class TeamSubmission < ActiveRecord::Base
 
   has_one :technical_checklist, dependent: :destroy
   accepts_nested_attributes_for :technical_checklist
-
-  has_many :season_registrations, dependent: :destroy, as: :registerable
-  has_many :seasons, through: :season_registrations
 
   has_many :submission_scores, dependent: :destroy
 
