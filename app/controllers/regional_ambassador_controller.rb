@@ -1,7 +1,6 @@
 class RegionalAmbassadorController < ApplicationController
   include Authenticated
 
-  layout "regional_ambassador"
   helper_method :current_ambassador, :current_profile
 
   before_action -> {
