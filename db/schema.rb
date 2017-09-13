@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913163542) do
+ActiveRecord::Schema.define(version: 20170913190935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,24 +310,6 @@ ActiveRecord::Schema.define(version: 20170913163542) do
     t.index ["team_submission_id"], name: "index_screenshots_on_team_submission_id"
   end
 
-  create_table "season_registrations", id: :serial, force: :cascade do |t|
-    t.integer "season_id", null: false
-    t.integer "registerable_id", null: false
-    t.string "registerable_type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "status", default: 1, null: false
-    t.index ["registerable_id"], name: "season_registerable_ids"
-    t.index ["registerable_type"], name: "season_registerable_types"
-    t.index ["season_id"], name: "index_season_registrations_on_season_id"
-  end
-
-  create_table "seasons", id: :serial, force: :cascade do |t|
-    t.integer "year", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "signup_attempts", id: :serial, force: :cascade do |t|
     t.string "email", null: false
     t.string "activation_token", null: false
@@ -532,7 +514,6 @@ ActiveRecord::Schema.define(version: 20170913163542) do
   add_foreign_key "regional_pitch_events_teams", "regional_pitch_events"
   add_foreign_key "regional_pitch_events_teams", "teams"
   add_foreign_key "screenshots", "team_submissions"
-  add_foreign_key "season_registrations", "seasons"
   add_foreign_key "signup_attempts", "accounts"
   add_foreign_key "submission_scores", "judge_profiles"
   add_foreign_key "submission_scores", "team_submissions"
