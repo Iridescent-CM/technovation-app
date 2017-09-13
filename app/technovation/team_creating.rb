@@ -4,7 +4,7 @@ class TeamCreating
       IndexModelJob.perform_later("index", "Team", team.id)
     end
 
-    if team.season_ids.empty?
+    if team.seasons.empty?
       RegisterToSeasonJob.perform_later(team)
     end
 

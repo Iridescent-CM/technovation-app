@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  include Seasoned
+
   acts_as_paranoid
 
   include Casting::Client
@@ -34,21 +36,11 @@ class Team < ActiveRecord::Base
 
   mount_uploader :team_photo, TeamPhotoProcessor
 
-  scope :current, -> {
-    joins(season_registrations: :season)
-    .where("seasons.year = ?", Season.current.year)
-  }
-
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(:division).where("divisions.name = ?", Division.names[division_name])
     }
   end
-
-  scope :past, -> {
-    eager_load(season_registrations: :season)
-    .where.not(id: current.map(&:id).uniq)
-  }
 
   scope :without_mentor, -> {
     where.not(id: Membership.where(member_type: "MentorProfile").map(&:team_id))
@@ -71,9 +63,6 @@ class Team < ActiveRecord::Base
   scope :accepting_mentor_requests, -> { where(accepting_mentor_requests: true) }
 
   scope :accepting_student_requests, -> { where(accepting_student_requests: true) }
-
-  has_many :season_registrations, as: :registerable
-  has_many :seasons, through: :season_registrations
 
   belongs_to :division
 
@@ -221,7 +210,7 @@ class Team < ActiveRecord::Base
   end
 
   def current?
-    seasons.include?(Season.current)
+    seasons.include?(Season.current.year)
   end
 
   def invited_mentor?(mentor)

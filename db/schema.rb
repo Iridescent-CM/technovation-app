@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831151122) do
+ActiveRecord::Schema.define(version: 20170913163542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.string "email", null: false
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170831151122) do
     t.string "os_version"
     t.datetime "email_confirmed_at"
     t.datetime "last_logged_in_at"
+    t.text "seasons", default: [], array: true
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -143,8 +145,8 @@ ActiveRecord::Schema.define(version: 20170831151122) do
   end
 
   create_table "join_requests", id: :serial, force: :cascade do |t|
-    t.string "requestor_type", null: false
     t.integer "requestor_id", null: false
+    t.string "requestor_type", null: false
     t.integer "team_id", null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
@@ -179,8 +181,8 @@ ActiveRecord::Schema.define(version: 20170831151122) do
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
-    t.string "member_type", null: false
     t.integer "member_id", null: false
+    t.string "member_type", null: false
     t.integer "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -219,17 +221,17 @@ ActiveRecord::Schema.define(version: 20170831151122) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "regarding_type"
     t.integer "regarding_id"
+    t.string "regarding_type"
     t.datetime "sent_at"
     t.datetime "delivered_at"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
-    t.string "sender_type", null: false
     t.integer "sender_id", null: false
-    t.string "regarding_type", null: false
+    t.string "sender_type", null: false
     t.integer "regarding_id", null: false
+    t.string "regarding_type", null: false
     t.hstore "recipients", null: false
     t.string "subject"
     t.text "body", null: false
@@ -310,8 +312,8 @@ ActiveRecord::Schema.define(version: 20170831151122) do
 
   create_table "season_registrations", id: :serial, force: :cascade do |t|
     t.integer "season_id", null: false
-    t.string "registerable_type", null: false
     t.integer "registerable_id", null: false
+    t.string "registerable_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 1, null: false
@@ -436,6 +438,7 @@ ActiveRecord::Schema.define(version: 20170831151122) do
     t.integer "pending_semifinals_official_submission_scores_count", default: 0, null: false
     t.integer "pending_quarterfinals_official_submission_scores_count", default: 0, null: false
     t.datetime "deleted_at"
+    t.text "seasons", default: [], array: true
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -454,6 +457,7 @@ ActiveRecord::Schema.define(version: 20170831151122) do
     t.string "state_province"
     t.string "country"
     t.datetime "deleted_at"
+    t.text "seasons", default: [], array: true
     t.index ["legacy_id"], name: "index_teams_on_legacy_id"
   end
 
