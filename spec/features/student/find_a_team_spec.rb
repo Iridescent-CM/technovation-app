@@ -37,7 +37,7 @@ RSpec.feature "Students find a team" do
 
     expect(current_path).to eq(student_dashboard_path)
     expect(page).to have_content(join_request.team_name)
-    expect(page).to have_content("You have requested to join")
+    expect(page).to have_content("You have asked to join")
   end
 
   scenario "onboarded student sees pending requests" do
@@ -56,6 +56,6 @@ RSpec.feature "Students find a team" do
 
     expect(current_path).to eq(student_dashboard_path)
     expect(page).to have_content(join_request.team_name)
-    expect(page).to have_content("You have requested to join")
+    expect(page).to have_content("You have asked to join")
   end
 end

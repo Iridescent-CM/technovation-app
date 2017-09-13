@@ -2,7 +2,7 @@
   <h1 class="content-heading">Join a team</h1>
 
   <% if requests.any? %>
-    <p>You have requested to join a team!</p>
+    <p>You have asked to join a team!</p>
 
     <% requests.each do |join_request| %>
       <%= content_tag :div,
@@ -30,7 +30,7 @@
     <% end %>
   <% else %>
     <p>
-      Use our team search to find a team and request to join them!
+      Use our team search to find a team and ask to join them!
     </p>
 
     <div class="step-actions">
