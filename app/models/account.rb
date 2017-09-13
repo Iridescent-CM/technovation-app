@@ -4,6 +4,8 @@ class Account < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  include PublicActivity::Model
+  tracked
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
     account.update_address_details_from_reverse_geocoding(results)
