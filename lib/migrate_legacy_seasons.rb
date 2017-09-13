@@ -2,6 +2,8 @@ module MigrateLegacySeasons
   def self.call(model_name, logger = Logger.new("/dev/null"))
     klass = model_name.to_s.camelize.constantize
 
+    klass.reset_column_information
+
     klass.find_each do |record|
       logger.info(
         "================================================================"
