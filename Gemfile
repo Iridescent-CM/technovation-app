@@ -8,6 +8,7 @@ gem 'casting', '~> 0.7'
 
 gem 'pdf-forms', '~> 1.1'
 
+gem 'public_activity', "~> 1.5"
 gem "paranoia", '~> 2.3'
 gem 'counter_culture', '~> 1.8'
 
