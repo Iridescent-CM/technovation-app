@@ -1,16 +1,15 @@
-class Season < ActiveRecord::Base
-  has_many :registrations, class_name: "SeasonRegistration"
+class Season
+  attr_accessor :year
 
-  validates :year,
-    presence: true,
-    numericality: true,
-    uniqueness: { case_sensitive: false }
+  def initialize(year)
+    @year = year
+  end
 
   def self.current
     if Date.today < switch_date
-      find_or_create_by(year: Date.today.year)
+      new(Date.today.year)
     else
-      find_or_create_by(year: Date.today.year + 1)
+      new(Date.today.year + 1)
     end
   end
 
@@ -27,9 +26,9 @@ class Season < ActiveRecord::Base
 
   def self.for(record)
     if record.created_at < switch_date(record.created_at.year)
-      find_or_create_by(year: record.created_at.year)
+      new(record.created_at.year)
     else
-      find_or_create_by(year: record.created_at.year + 1)
+      new(record.created_at.year + 1)
     end
   end
 

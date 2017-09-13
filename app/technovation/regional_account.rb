@@ -6,9 +6,8 @@ module RegionalAccount
                 Account.joins("#{params[:type].underscore}_profile".to_sym)
               end
 
-    accounts = account.includes(:seasons)
-      .references(:seasons)
-      .where("seasons.year = ?", params[:season])
+    accounts = account
+      .where("'#{Season.current.year}' = ALL (accounts.seasons)")
       .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
     unless params[:text].blank?
@@ -45,22 +44,14 @@ module RegionalAccount
                                         WHERE memberships.member_type = 'StudentProfile'
                                         AND memberships.team_id IN
 
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+              (SELECT DISTINCT(id) FROM teams WHERE '#{Season.current.year}' = ALL (teams.seasons))")
       when "No team"
         accounts = accounts.where("student_profiles.id NOT IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'StudentProfile'
                                         AND memberships.team_id IN
 
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+              (SELECT DISTINCT(id) FROM teams WHERE '#{Season.current.year}' = ALL (teams.seasons))")
       end
     end
 
@@ -72,22 +63,14 @@ module RegionalAccount
                                         WHERE memberships.member_type = 'MentorProfile'
                                         AND memberships.team_id IN
 
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+              (SELECT DISTINCT(id) FROM teams WHERE '#{Season.current.year}' = ALL (teams.seasons))")
       when "No team"
         accounts = accounts.where("mentor_profiles.id NOT IN
             (SELECT DISTINCT(member_id) FROM memberships
                                         WHERE memberships.member_type = 'MentorProfile'
                                         AND memberships.team_id IN
 
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", Season.current.id)
+              (SELECT DISTINCT(id) FROM teams WHERE '#{Season.current.year}' = ALL (teams.seasons))")
       end
 
       case params[:cleared_status]

@@ -37,10 +37,8 @@ RSpec.describe SigninsController do
                                    :full_profile,
                                    password: "secret1234",
                                    parent_guardian_email: "parent2@parent2.com")
-      student.season_registrations.destroy_all
 
-      season = Season.create!(year: Season.current.year - 1)
-      SeasonRegistration.register(student.account, season)
+      student.account.update(seasons: [Season.current.year - 1])
 
       student.parental_consent.void!
       ActionMailer::Base.deliveries.clear

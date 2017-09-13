@@ -102,7 +102,7 @@ RSpec.describe Team do
 
     past_team = FactoryGirl.create(:team, created_at: past_date)
 
-    SeasonRegistration.register(current_team, past_team.seasons.last)
+    current_team.update(seasons: (current_team.seasons << past_team.seasons.last))
 
     expect(Team.past).not_to include(current_team)
   end
@@ -126,7 +126,7 @@ RSpec.describe Team do
         "-08:00"
       )
     )
-    expect(team.seasons.map(&:year)).to eq([2016])
+    expect(team.reload.seasons).to eq([2016])
   end
 
   describe ".region_division_name" do

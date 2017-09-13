@@ -105,8 +105,8 @@ class SubmissionScore < ActiveRecord::Base
   scope :unofficial, -> { where(official: false) }
 
   scope :current, -> {
-    joins(team_submission: { team: { season_registrations: :season } })
-    .where("seasons.year = ?", Season.current.year)
+    joins(:team_submission)
+      .where("'#{Season.current.year}' = ANY (team_submissions.seasons)")
   }
 
   scope :current_round, -> {

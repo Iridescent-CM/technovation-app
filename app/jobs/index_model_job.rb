@@ -24,10 +24,15 @@ class IndexModelJob < ActiveJob::Base
           body: record.as_indexed_json,
           refresh: @@force_refresh
       when /delete/
-        Client.delete index: klass.index_name,
-          type: klass.document_type,
-          id: id,
-          refresh: @@force_refresh
+        begin
+          Client.delete index: klass.index_name,
+            type: klass.document_type,
+            id: id,
+            refresh: @@force_refresh
+        rescue Elasticsearch::Transport::Transport::Error => e
+          logger.error(e)
+          Airbrake.notify(e)
+        end
       else raise ArgumentError, "Unknown operation '#{operation}'"
     end
   end
