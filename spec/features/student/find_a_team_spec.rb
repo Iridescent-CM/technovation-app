@@ -47,7 +47,7 @@ RSpec.feature "Students find a team" do
 
     sign_in(onboarded)
 
-    within(".navigation") { click_link "Join a team" }
+    click_link "Join a team"
 
     click_link "Ask to join"
     click_button "Ask to join #{available_team.name}"

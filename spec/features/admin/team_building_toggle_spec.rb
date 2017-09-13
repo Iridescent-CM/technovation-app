@@ -10,31 +10,6 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     SeasonToggles.team_building_enabled = "off"
   end
 
-  context "Student nav bar, no team" do
-    let(:user) { FactoryGirl.create(:student) }
-    let(:path) { student_dashboard_path }
-
-    before { sign_in(user) }
-
-    scenario "Toggle on" do
-      toggle_on
-      visit path
-      within("header.navigation nav") do
-        expect(page).to have_link("Register your team")
-        expect(page).to have_link("Join a team")
-      end
-    end
-
-    scenario "Toggle off" do
-      toggle_off
-      visit path
-      within("header.navigation nav") do
-        expect(page).not_to have_link("Register your team")
-        expect(page).not_to have_link("Join a team")
-      end
-    end
-  end
-
   context "Student team page, with team" do
     let(:user) { FactoryGirl.create(:student, :on_team) }
     let(:path) { student_team_path(user.team) }
@@ -51,36 +26,6 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
       toggle_off
       visit path
       expect(page).not_to have_link("Add a mentor")
-    end
-  end
-
-  context "Student dashboard" do
-    let(:user) { FactoryGirl.create(:student) }
-    let(:path) { student_dashboard_path }
-
-    before { sign_in(user) }
-
-    scenario "Toggle on" do
-      toggle_on
-      visit path
-
-      within("#your-submission") do
-        expect(page).to have_link("Join a team")
-        expect(page).to have_link("Register your team")
-      end
-
-      within("#live-events") do
-        expect(page).to have_link("Join a team")
-        expect(page).to have_link("Register your team")
-      end
-    end
-
-    scenario "Toggle off" do
-      toggle_off
-      visit path
-
-      expect(page).not_to have_link("Join a team")
-      expect(page).not_to have_link("Register your team")
     end
   end
 
