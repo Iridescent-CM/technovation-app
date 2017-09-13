@@ -1,17 +1,73 @@
-<h1 class="content-heading">Complete your registration</h1>
+<h1 class="content-heading">1. Complete your registration</h1>
 
-<p>
-  To be eligible for the competition, please complete these steps:
-</p>
+<% if not current_student.onboarded? %>
+  <p>
+    To be eligible for the competition, please complete these steps:
+  </p>
 
-<ul class="steps">
-  <%= render(
-    'student/dashboards/completion_steps/parental_consent_form'
-  ) %>
+  <ul class="steps">
+    <%= render(
+      'student/dashboards/completion_steps/parental_consent_form'
+    ) %>
 
-  <%= render 'completion_steps/location_details', account: current_student %>
+    <%= render 'completion_steps/location_details', account: current_student %>
 
-  <%= render 'completion_steps/confirm_changed_email', account: current_student %>
+    <%= render 'completion_steps/confirm_changed_email', account: current_student %>
 
-  <%= render 'student/dashboards/completion_steps/form_a_team' %>
-</ul>
+  </ul>
+<% else %>
+  <p>
+    Your registration is complete!
+  </p>
+<% end %>
+
+<h1 class="content-heading">
+  2. <%= t("views.profile_requirements.create_join_team.heading") %>
+</h1>
+
+<% if not current_student.is_on_team? %>
+  <p>
+    <%= t("views.profile_requirements.create_join_team.labels.student") %>
+  </p>
+
+  <ul class="steps">
+    <%= render "student/dashboards/completion_steps/create_team" %>
+
+    <%= render "student/dashboards/completion_steps/join_requests",
+      requests: current_student.join_requests.pending %>
+
+    <%= render "student/dashboards/completion_steps/invitations",
+      invites: current_student.team_member_invites.pending %>
+  </ul>
+
+  <p>
+    Use our
+
+    <%= link_to "guide to team building",
+      "http://www.technovationchallenge.org/curriculum/buildateam/",
+      target: "_blank" %>
+
+    if you need some help to get started.
+  </p>
+<% else %>
+  <p>
+    You are on a team!
+  </p>
+
+  <ul class="steps">
+    <li>
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-md-12">
+          <div class="grid__cell">
+            <%= image_tag current_student.team.team_photo_url,
+              class: "thumbnail grid__cell-img" %>
+
+            <h3 class="reset"><%= current_student.team.name %></h3>
+
+            <%= link_to "Manage your team", student_team_path(current_student.team) %>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+<% end %>
