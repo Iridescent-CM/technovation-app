@@ -31,6 +31,7 @@ class IndexModelJob < ActiveJob::Base
             refresh: @@force_refresh
         rescue Elasticsearch::Transport::Transport::Error => e
           logger.error(e)
+          Airbrake.notify(e)
         end
       else raise ArgumentError, "Unknown operation '#{operation}'"
     end
