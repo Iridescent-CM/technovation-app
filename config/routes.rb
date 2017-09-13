@@ -201,8 +201,6 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
   end
 
-  resources :interruptions, only: :index
-
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 
