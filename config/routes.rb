@@ -117,7 +117,10 @@ Rails.application.routes.draw do
     resource :account, only: :update
 
     resources :accounts, only: [:index, :show, :edit, :update]
+
     resources :unmatched_students, only: :index
+    resources :unmatched_mentors, only: :index
+    resources :unmatched_teams, only: :index
 
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]

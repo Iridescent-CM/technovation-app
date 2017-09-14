@@ -23,6 +23,7 @@
 
 .preview-list {
   padding: 0;
+  box-shadow: none;
 
   .content-heading {
     padding: 0.5rem;
@@ -40,6 +41,10 @@
       font-size: 0.9rem;
       overflow: ellipsis;
       margin: 0.5rem 0;
+
+      .detail {
+        display: block;
+      }
     }
   }
 

@@ -37,7 +37,7 @@ general:
 
 deployment:
   beta:
-    branch: reset-css-js
+    branch: ra-ui
     heroku:
       appname: tc-2018
 

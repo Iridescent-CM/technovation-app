@@ -5,6 +5,8 @@ class StudentProfile < ActiveRecord::Base
   scope :unmatched, -> {
     select("DISTINCT student_profiles.*")
       .joins(:current_account)
+      .includes(:account)
+      .references(:accounts)
       .left_outer_joins(:current_teams)
       .where("teams.id IS NULL")
   }

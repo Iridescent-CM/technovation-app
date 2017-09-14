@@ -2,54 +2,58 @@
 
 <div class="grid">
   <div class="grid__col-sm-6">
-    <div class="panel preview-list">
-      <h1 class="content-heading">Students without a team</h1>
-
-      <div class="grid grid--bleed previews">
-        <% @unmatched_students.each do |student| %>
-          <div class="grid__col-2" id=<%= dom_id(student) %>>
-            <div class="grid__cell">
-              <%= image_tag student.profile_image_url,
-                class: "thumbnail-sm grid__cell-img" %>
-            </div>
-          </div>
-
-          <div class="grid__col-5">
-            <%= student.full_name %><br />
-            <%= student.email %><br />
-            <%= student.address_details %>
-          </div>
-
-          <div class="grid__col-5">
-            invites<br />
-            requests<br />
-            last activity: 3 days ago...
-          </div>
-        <% end %>
-      </div>
-
-      <div class="preview-list-footer">
-        Showing the most recent 15 students without a team.
-        <%= link_to 'view all', regional_ambassador_unmatched_students_path %>
-      </div>
-    </div>
+    <%= render "regional_ambassador/preview_list",
+      model: "Student",
+      condition: "without a team",
+      view_all_path: regional_ambassador_unmatched_students_path,
+      image_method_name: :profile_image_url,
+      details: [
+        :full_name,
+        :email,
+        :address_details,
+      ],
+      collection: @unmatched_students %>
   </div>
 
   <div class="grid__col-sm-6">
-    <div class="panel">
-      <h1 class="content-heading">Mentors without a team</h1>
-    </div>
+    <%= render "regional_ambassador/preview_list",
+      model: "Mentor",
+      condition: "without a team",
+      view_all_path: regional_ambassador_unmatched_mentors_path,
+      image_method_name: :profile_image_url,
+      details: [
+        :full_name,
+        :email,
+        :address_details,
+      ],
+      collection: @unmatched_mentors %>
   </div>
 
   <div class="grid__col-sm-6">
-    <div class="panel">
-      <h1 class="content-heading">Teams without a mentor</h1>
-    </div>
+    <%= render "regional_ambassador/preview_list",
+      model: "Team",
+      condition: "without a mentor",
+      view_all_path: regional_ambassador_unmatched_teams_path(without: :mentors),
+      image_method_name: :team_photo_url,
+      details: [
+        :name,
+        :division_name,
+        :primary_location,
+      ],
+      collection: @teams_without_mentors %>
   </div>
 
   <div class="grid__col-sm-6">
-    <div class="panel">
-      <h1 class="content-heading">Teams without students</h1>
-    </div>
+    <%= render "regional_ambassador/preview_list",
+      model: "Team",
+      condition: "without students",
+      view_all_path: regional_ambassador_unmatched_teams_path(without: :students),
+      image_method_name: :team_photo_url,
+      details: [
+        :name,
+        :division_name,
+        :primary_location,
+      ],
+      collection: @teams_without_students %>
   </div>
 </div>

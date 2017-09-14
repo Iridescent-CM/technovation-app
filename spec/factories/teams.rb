@@ -28,7 +28,7 @@ FactoryGirl.define do
         FactoryGirl.create(:student)
       }
       team.student_ids = members.map(&:id)
-      TeamCreating.execute(team, team.students.first, FakeController.new)
+      TeamCreating.execute(team, team.members.first, FakeController.new)
     end
   end
 

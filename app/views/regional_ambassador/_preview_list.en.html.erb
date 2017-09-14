@@ -1,0 +1,53 @@
+<div class="panel preview-list">
+  <h1 class="content-heading">
+    <%= model.pluralize.capitalize %>
+    <%= condition %>
+  </h1>
+
+  <div class="grid grid--bleed previews">
+    <% collection.each do |item| %>
+      <div class="grid__col-2" id=<%= dom_id(item) %>>
+        <div class="grid__cell">
+          <%= image_tag item.public_send(image_method_name),
+            class: "thumbnail-sm grid__cell-img" %>
+        </div>
+      </div>
+
+      <div class="grid__col-5">
+        <% details.each do |method_name| %>
+          <span class="detail">
+            <%= item.public_send(method_name) %>
+          </span>
+        <% end %>
+      </div>
+
+      <div class="grid__col-5">
+        <span class="detail">
+          <%= pluralize(
+            item.team_member_invites.pending.count,
+            "pending invitation"
+          ) %>
+        </span>
+
+        <span class="detail">
+          <%= pluralize(
+            item.team_member_invites.pending.count,
+            "pending join request"
+          ) %>
+        </span>
+
+        <span class="detail">
+          last active: <%= time_ago_in_words(item.updated_at) %> ago
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="preview-list-footer">
+    Showing the
+    <%= pluralize(collection.size, "most recent #{model.downcase}") %>
+    <%= condition %>
+
+    <%= link_to 'view all', view_all_path %>
+  </div>
+</div>

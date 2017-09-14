@@ -5,6 +5,21 @@ module RegionalAmbassador
         .in_region(current_ambassador)
         .order(created_at: :desc)
         .limit(15)
+
+      @unmatched_mentors = MentorProfile.unmatched
+        .in_region(current_ambassador)
+        .order(created_at: :desc)
+        .limit(15)
+
+      @teams_without_students = Team.unmatched(:students)
+        .in_region(current_ambassador)
+        .order(created_at: :desc)
+        .limit(15)
+
+      @teams_without_mentors = Team.unmatched(:mentors)
+        .in_region(current_ambassador)
+        .order(created_at: :desc)
+        .limit(15)
     end
 
     def show
