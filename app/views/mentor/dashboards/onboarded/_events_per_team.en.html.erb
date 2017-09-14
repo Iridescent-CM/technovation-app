@@ -1,9 +1,9 @@
 <% @teams.each do |team| %>
-  <%= render 'mentor/dashboards/full_access_content/events_per_team_intro',
+  <%= render 'mentor/dashboards/onboarded/events_per_team_intro',
     team: team %>
 
   <% if team.submission.present? %>
-    <%= render 'mentor/dashboards/full_access_content/events_per_team_selection',
+    <%= render 'mentor/dashboards/onboarded/events_per_team_selection',
       team: team %>
 
     <% if SeasonToggles.select_regional_pitch_event? %>

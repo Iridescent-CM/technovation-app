@@ -3,7 +3,7 @@
 <ul class="unstyled">
   <% team.eligible_events.each do |event| %>
     <li>
-      <%= render 'mentor/dashboards/full_access_content/events_per_team_option',
+      <%= render 'mentor/dashboards/onboarded/events_per_team_option',
         event: event,
         team: team %>
     </li>

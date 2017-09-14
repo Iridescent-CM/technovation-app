@@ -74,7 +74,7 @@ class TeamMailer < ApplicationMailer
       name: invite.team_name
     )
 
-    if invite.invitee.full_access_enabled?
+    if invite.invitee.onboarded?
       @url = mentor_mentor_invite_url(invite)
       @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
       @link_text = "Review this invitation"

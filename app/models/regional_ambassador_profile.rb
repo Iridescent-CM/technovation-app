@@ -5,13 +5,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
-  scope :full_access, -> {
-    ActiveSupport::Deprecation.warn(
-      ".full_access is deprecated. Please use .onboarded"
-    )
-    onboarded
-  }
-
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
@@ -77,13 +70,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
         consent_signed? and
           location_confirmed? and
             background_check_complete?
-  end
-
-  def full_access_enabled?
-    ActiveSupport::Deprecation.warn(
-      "#full_access_enabled? is deprecated. Please use #onboarded?"
-    )
-    onboarded?
   end
 
   def authenticated?

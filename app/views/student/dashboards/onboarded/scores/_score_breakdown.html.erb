@@ -83,13 +83,13 @@
 
   <% if round == :semifinals %>
     <%= render(
-      'student/dashboards/full_access_content/scores/scores_table',
+      'student/dashboards/onboarded/scores/scores_table',
       scores: @semifinals_scores,
       round: :semifinals
     ) %>
   <% else %>
     <%= render(
-      'student/dashboards/full_access_content/scores/scores_table',
+      'student/dashboards/onboarded/scores/scores_table',
       scores: @quarterfinals_scores,
       round: :quarterfinals
     ) %>

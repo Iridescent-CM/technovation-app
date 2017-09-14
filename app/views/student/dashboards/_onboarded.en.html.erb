@@ -18,16 +18,16 @@
 
     <% if current_team.submission.present? and SeasonToggles.display_scores? %>
       <div class="tab-content" id="scores">
-        <%= render 'student/dashboards/full_access_content/scores' %>
+        <%= render 'student/dashboards/onboarded/scores' %>
       </div>
     <% end %>
 
     <div class="tab-content grid" id="your-submission">
-      <%= render 'student/dashboards/full_access_content/submission' %>
+      <%= render 'student/dashboards/onboarded/submission' %>
     </div>
 
     <div class="tab-content grid" id="live-events">
-      <%= render 'student/dashboards/full_access_content/events' %>
+      <%= render 'student/dashboards/onboarded/events' %>
     </div>
   </div>
 </div>

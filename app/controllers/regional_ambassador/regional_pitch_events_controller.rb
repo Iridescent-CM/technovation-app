@@ -27,7 +27,7 @@ module RegionalAmbassador
 
       @judge_participants = JudgeProfile.current
         .includes(:judge_assignments)
-        .full_access
+        .onboarded
         .for_ambassador(current_ambassador)
         .not_attending_live_event
         .sort { |j1, j2| j1.first_name.downcase <=> j2.first_name.downcase }

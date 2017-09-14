@@ -1,5 +1,5 @@
 class MentorProfile < ActiveRecord::Base
-  scope :full_access, -> {
+  scope :onboarded, -> {
     joins(account: :consent_waiver)
     .includes(account: :background_check)
     .references(:accounts, :background_checks)
@@ -198,13 +198,6 @@ class MentorProfile < ActiveRecord::Base
         background_check_complete? and
           location_confirmed? and
             not bio.blank?
-  end
-
-  def full_access_enabled?
-    ActiveSupport::Deprecation.warn(
-      "#full_access_enabled? is deprecated. Please use #onboarded?"
-    )
-    onboarded?
   end
 
   private

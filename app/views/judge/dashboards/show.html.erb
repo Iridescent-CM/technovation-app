@@ -27,8 +27,8 @@
     </div>
   </div>
 
-  <% if current_judge.full_access_enabled? %>
-    <%= render 'judge/dashboards/full_access' %>
+  <% if current_judge.onboarded? %>
+    <%= render 'judge/dashboards/onboarded' %>
   <% else %>
     <%= render 'judge/dashboards/to_do' %>
   <% end %>

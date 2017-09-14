@@ -91,7 +91,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'judge/dashboards/full_access_content/score',
+        <%= render partial: 'judge/dashboards/onboarded/score',
           collection: current_judge.submission_scores
                                    .public_send(event_type)
                                    .current_round
@@ -101,11 +101,11 @@
 
       <% if event_type == :live and quarterfinals? %>
         <div class="tab-content" id="senior-submissions">
-          <%= render 'judge/dashboards/full_access_content/live_scores', division: :senior %>
+          <%= render 'judge/dashboards/onboarded/live_scores', division: :senior %>
         </div>
 
         <div class="tab-content" id="junior-submissions">
-          <%= render 'judge/dashboards/full_access_content/live_scores', division: :junior %>
+          <%= render 'judge/dashboards/onboarded/live_scores', division: :junior %>
         </div>
       <% end %>
 
@@ -155,7 +155,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'judge/dashboards/full_access_content/score',
+        <%= render partial: 'judge/dashboards/onboarded/score',
           collection: current_judge.submission_scores
                                    .public_send(event_type)
                                    .current_round

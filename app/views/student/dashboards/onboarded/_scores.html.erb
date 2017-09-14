@@ -1,9 +1,9 @@
 <% if @all_scores.empty? %>
-  <%= render 'student/dashboards/full_access_content/empty_scores' %>
+  <%= render 'student/dashboards/onboarded/empty_scores' %>
 <% else %>
   <% if @semifinals_scores.any? %>
     <%= render(
-      'student/dashboards/full_access_content/scores/score_breakdown',
+      'student/dashboards/onboarded/scores/score_breakdown',
       round: :semifinals,
       round_name: "semifinals",
       scores: @semifinal_scores
@@ -12,7 +12,7 @@
 
   <% if @quarterfinals_scores.any? %>
     <%= render(
-      'student/dashboards/full_access_content/scores/score_breakdown',
+      'student/dashboards/onboarded/scores/score_breakdown',
       round: :quarterfinals,
       round_name: "first round",
       scores: @quarterfinals_scores
@@ -24,6 +24,6 @@
   <%= render 'student/dashboards/info_sidebar', certs: true %>
 <% else %>
   <%= render(
-    'student/dashboards/full_access_content/scores/comments_sidebar'
+    'student/dashboards/onboarded/scores/comments_sidebar'
   ) %>
 <% end %>

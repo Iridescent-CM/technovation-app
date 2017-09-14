@@ -1,13 +1,12 @@
 class JudgeProfile < ActiveRecord::Base
-  scope :full_access, -> {
+  scope :onboarded, -> {
     joins(account: :consent_waiver)
       .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
   scope :current, -> {
-    joins(account: :seasons)
-    .where("seasons.year = ?", Season.current.year)
+    joins(:current_account)
   }
 
   scope :for_ambassador, ->(ambassador) {
@@ -30,6 +29,9 @@ class JudgeProfile < ActiveRecord::Base
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
+
+  belongs_to :current_account, -> { current },
+    required: false
 
   has_many :submission_scores
 
@@ -70,7 +72,7 @@ class JudgeProfile < ActiveRecord::Base
     true
   end
 
-  def full_access_enabled?
+  def onboarded?
     account.email_confirmed? and
       consent_signed? and
         location_confirmed?

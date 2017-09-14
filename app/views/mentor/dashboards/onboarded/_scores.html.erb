@@ -43,7 +43,7 @@
     <% end %>
   <% elsif all_scores.any? %>
     <% if semifinals_scores.any? %>
-      <%= render 'mentor/dashboards/full_access_content/score_table',
+      <%= render 'mentor/dashboards/onboarded/score_table',
           team: team,
           round: :semifinals,
           round_name: "semifinals",
@@ -51,7 +51,7 @@
     <% end %>
 
     <% if quarterfinals_scores.any? %>
-      <%= render 'mentor/dashboards/full_access_content/score_table',
+      <%= render 'mentor/dashboards/onboarded/score_table',
           team: team,
           round: :quarterfinals,
           round_name: "first round",

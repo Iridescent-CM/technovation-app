@@ -23,13 +23,6 @@ class StudentProfile < ActiveRecord::Base
     end
   }
 
-  scope :full_access, -> {
-    ActiveSupport::Deprecation.warn(
-      ".full_access is deprecated, please use .onboarded"
-    )
-    onboarded
-  }
-
   scope :onboarded, -> {
     joins(:account, :parental_consent)
       .where("accounts.location_confirmed = ?", true)
@@ -240,13 +233,6 @@ class StudentProfile < ActiveRecord::Base
     actions << "Get their parent or guardian's permission to compete" unless parental_consent_signed?
     actions << "Enter their location details" unless location_confirmed?
     actions
-  end
-
-  def full_access_enabled?
-    ActiveSupport::Deprecation.warn(
-      "#full_access_enabled? is deprecated. Please use #onboarded?"
-    )
-    onboarded?
   end
 
   private

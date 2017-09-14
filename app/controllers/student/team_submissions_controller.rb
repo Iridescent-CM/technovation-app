@@ -1,6 +1,6 @@
 module Student
   class TeamSubmissionsController < StudentController
-    before_action :require_full_access,
+    before_action :require_onboarded,
                   :require_current_team
 
     def new
