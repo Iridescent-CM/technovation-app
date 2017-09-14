@@ -4,14 +4,6 @@ class Account < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
-  include Elasticsearch::Model
-
-  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_accounts"
-  document_type 'account'
-  settings index: { number_of_shards: 1, number_of_replicas: 1 }
-
-  after_destroy { IndexModelJob.perform_later("delete", "Account", id) }
-
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
     account.update_address_details_from_reverse_geocoding(results)
@@ -133,10 +125,6 @@ class Account < ActiveRecord::Base
     elsif judge_profile
       judge_profile.valid?
     end
-  end
-
-  def as_indexed_json(options = {})
-    as_json(only: %w{id email first_name last_name})
   end
 
   def full_name

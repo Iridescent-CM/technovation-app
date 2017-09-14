@@ -10,10 +10,6 @@ if ENV["USE_DOTENV"]
   Dotenv.load
 end
 
-if ENV["ES_INSTRUMENTATION"]
-  require 'elasticsearch/rails/instrumentation'
-end
-
 Bundler.require(*Rails.groups)
 
 module TechnovationApp
