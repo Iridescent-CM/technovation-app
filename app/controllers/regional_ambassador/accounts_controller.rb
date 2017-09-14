@@ -3,22 +3,26 @@ module RegionalAmbassador
     def index
       @unmatched_students = StudentProfile.unmatched
         .in_region(current_ambassador)
-        .order(created_at: :desc)
+        .includes(:team_member_invites, :join_requests)
+        .order(updated_at: :desc)
         .limit(15)
 
       @unmatched_mentors = MentorProfile.unmatched
         .in_region(current_ambassador)
-        .order(created_at: :desc)
+        .includes(:mentor_invites, :join_requests)
+        .order(updated_at: :desc)
         .limit(15)
 
       @teams_without_students = Team.unmatched(:students)
         .in_region(current_ambassador)
-        .order(created_at: :desc)
+        .includes(:team_member_invites, :join_requests)
+        .order(updated_at: :desc)
         .limit(15)
 
       @teams_without_mentors = Team.unmatched(:mentors)
         .in_region(current_ambassador)
-        .order(created_at: :desc)
+        .includes(:team_member_invites, :join_requests)
+        .order(updated_at: :desc)
         .limit(15)
     end
 
