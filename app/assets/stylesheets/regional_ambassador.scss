@@ -20,3 +20,36 @@
     }
   }
 }
+
+.preview-list {
+  padding: 0;
+
+  .content-heading {
+    padding: 0.5rem;
+    box-shadow: $shadow-btm;
+  }
+
+  .previews {
+    height: 300px;
+    padding: 0 1rem;
+    overflow-y: scroll;
+    position: relative;
+
+
+    [class^=grid__col-] {
+      font-size: 0.9rem;
+      overflow: ellipsis;
+      margin: 0.5rem 0;
+    }
+  }
+
+  .preview-list-footer {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    box-shadow: $shadow-top;
+
+    a {
+      float: right;
+    }
+  }
+}

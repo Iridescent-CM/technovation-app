@@ -2,13 +2,40 @@ class StudentProfile < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  scope :unmatched, -> {
+    select("DISTINCT student_profiles.*")
+      .joins(:current_account)
+      .left_outer_joins(:current_teams)
+      .where("teams.id IS NULL")
+  }
+
+  scope :in_region, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(:account)
+        .where(
+          "accounts.country = ? AND accounts.state_province = ?",
+          "US",
+          ambassador.state_province
+        )
+    else
+      joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+    end
+  }
+
   scope :full_access, -> {
+    ActiveSupport::Deprecation.warn(
+      ".full_access is deprecated, please use .onboarded"
+    )
+    onboarded
+  }
+
+  scope :onboarded, -> {
     joins(:account, :parental_consent)
       .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
-  scope :onboarded, -> { full_access }
   scope :onboarding, -> {
     left_outer_joins(:account, :parental_consent)
       .where(
@@ -21,14 +48,23 @@ class StudentProfile < ActiveRecord::Base
 
   has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships
-  has_many :mentor_invites, foreign_key: :inviter_id
 
+  has_many :current_teams, -> { current },
+    through: :memberships,
+    source: :team
+
+  has_many :mentor_invites, foreign_key: :inviter_id
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :team_member_invites, as: :invitee, dependent: :destroy
 
   belongs_to :account, touch: true
   accepts_nested_attributes_for :account
   validates_associated :account
+
+  belongs_to :current_account, -> { current },
+    foreign_key: :account_id,
+    class_name: "Account",
+    required: false
 
   has_one :parental_consent, -> { nonvoid }, dependent: :destroy
   has_many :void_parental_consents,
@@ -38,8 +74,8 @@ class StudentProfile < ActiveRecord::Base
 
   after_update :reset_parent
 
-  after_save { teams.current.find_each(&:touch) }
-  after_touch { teams.current.find_each(&:touch) }
+  after_save { team.touch }
+  after_touch { team.touch }
 
   validates :school_name, presence: true
 
@@ -120,7 +156,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def is_on_team?
-    teams.current.any?(&:present?)
+    team.present?
   end
 
   def team_has_mentor?
@@ -145,7 +181,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def team
-    teams.current.first or NullTeam.new
+    current_teams.first or NullTeam.new
   end
 
   def team_ids
@@ -161,7 +197,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def team_names
-    teams.current.collect(&:name)
+    [team_name]
   end
 
   def oldest_birth_year

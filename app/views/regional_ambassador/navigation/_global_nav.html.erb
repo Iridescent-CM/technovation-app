@@ -1,6 +1,6 @@
 <% if current_ambassador.onboarded? %>
   <%= link_to "Participants",
-    regional_ambassador_accounts_path(scope: :student),
+    regional_ambassador_accounts_path,
     class: al(regional_ambassador_accounts_path) %>
 
   <%= link_to "Teams",

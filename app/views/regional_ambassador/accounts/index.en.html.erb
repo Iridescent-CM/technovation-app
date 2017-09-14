@@ -1,14 +1,55 @@
 <%= render 'regional_ambassador/accounts/sub_menu' %>
 
 <div class="grid">
-  <div class="panel grid__col-auto">
-    <%= datagrid_form_for @accounts_grid,
-      url: regional_ambassador_accounts_path %>
+  <div class="grid__col-sm-6">
+    <div class="panel preview-list">
+      <h1 class="content-heading">Students without a team</h1>
 
-    Total: <%= @accounts_grid.assets.count %>
+      <div class="grid grid--bleed previews">
+        <% @unmatched_students.each do |student| %>
+          <div class="grid__col-2" id=<%= dom_id(student) %>>
+            <div class="grid__cell">
+              <%= image_tag student.profile_image_url,
+                class: "thumbnail-sm grid__cell-img" %>
+            </div>
+          </div>
 
-    <%= datagrid_table(@accounts_grid) %>
+          <div class="grid__col-5">
+            <%= student.full_name %><br />
+            <%= student.email %><br />
+            <%= student.address_details %>
+          </div>
 
-    <%= will_paginate @accounts_grid.assets %>
+          <div class="grid__col-5">
+            invites<br />
+            requests<br />
+            last activity: 3 days ago...
+          </div>
+        <% end %>
+      </div>
+
+      <div class="preview-list-footer">
+        Showing the most recent 15 students without a team.
+        <%= link_to 'view all', regional_ambassador_unmatched_students_path %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <div class="panel">
+      <h1 class="content-heading">Mentors without a team</h1>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <div class="panel">
+      <h1 class="content-heading">Teams without a mentor</h1>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <div class="panel">
+      <h1 class="content-heading">Teams without students</h1>
+    </div>
   </div>
 </div>
