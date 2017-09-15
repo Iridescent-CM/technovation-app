@@ -90,19 +90,23 @@
     </div>
 
     <div class="preview-list-footer">
-      <%= link_to 'Show', '#',
-        class: "accordion-toggle accordion-closed",
-        data: {
-          accordion: "#accordion-#{id}",
-        } %>
+      <% if collection.any? %>
+        <%= link_to 'Show', '#',
+          class: "accordion-toggle accordion-closed",
+          data: {
+            accordion: "#accordion-#{id}",
+          } %>
 
-      <span class="accordion-open">Showing</span>
+        <span class="accordion-open">Showing</span>
 
-      the
-      <%= pluralize(collection.size, "most recently active #{model.downcase}") %>
-      <%= condition %>
+        the
+        <%= pluralize(collection.size, "most recently active #{model.downcase}") %>
+        <%= condition %>
 
-      <%= link_to 'view all', view_all_path, class: "footer-action" %>
+        <%= link_to 'view all', view_all_path, class: "footer-action" %>
+      <% else %>
+        Well done! You don't have any <%= model.downcase.pluralize %> <%= condition %>!
+      <% end %>
     </div>
   </div>
 <% else %>
