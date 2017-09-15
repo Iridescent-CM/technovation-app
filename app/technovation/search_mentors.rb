@@ -4,6 +4,14 @@ module SearchMentors
   def self.call(filter)
     mentors = MentorProfile.searchable(filter.mentor_account_id)
 
+    unless filter.text.blank?
+      names = filter.text.split(' ')
+      mentors = mentors.joins(:account).where(
+        "accounts.first_name ilike '%#{names.first}%' OR
+        accounts.last_name ilike '%#{names.last}%'"
+      )
+    end
+
     if filter.expertise_ids.any?
       mentors = mentors.by_expertise_ids(filter.expertise_ids)
     end

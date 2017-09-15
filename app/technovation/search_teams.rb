@@ -6,6 +6,10 @@ module SearchTeams
   def self.call(filter)
     teams = Team.current
 
+    unless filter.text.blank?
+      teams = teams.where("name ilike '%#{filter.text}%'")
+    end
+
     divisions = Division.where(name: filter.division_enums)
     teams = teams.where(division: divisions)
 
