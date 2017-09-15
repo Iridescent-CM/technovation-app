@@ -6,24 +6,9 @@ class Team < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
-  include Elasticsearch::Model
-
-  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_teams"
-  document_type 'team'
-  settings index: { number_of_shards: 1, number_of_replicas: 1 }
-
   geocoded_by :geolocation_str
   reverse_geocoded_by :latitude, :longitude do |team, results|
     team.update_address_details_from_reverse_geocoding(results)
-  end
-
-  after_destroy { IndexModelJob.perform_later("delete", "Team", id) }
-
-  def as_indexed_json(options = {})
-    as_json(
-      only: %w{id name description spot_available?},
-      methods: :spot_available?
-    )
   end
 
   def scope_name

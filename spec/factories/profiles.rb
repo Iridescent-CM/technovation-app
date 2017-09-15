@@ -71,6 +71,7 @@ FactoryGirl.define do
 
     transient do
       first_name nil
+      last_name nil
       city "Chicago"
       state_province "IL"
       country "US"
@@ -93,6 +94,7 @@ FactoryGirl.define do
         state_province: e.state_province || attrs[:state_province] || "IL",
         country: e.country || attrs[:country],
         first_name: e.first_name || attrs[:first_name],
+        last_name: e.last_name || attrs[:last_name],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
       ))

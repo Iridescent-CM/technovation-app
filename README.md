@@ -6,14 +6,6 @@ Master: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree
 
 Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production)
 
-## ORACLE RHoK PARTICIPANTS
-
-[Download the sanitized production database dump](https://www.dropbox.com/s/qd4thiyxv7xdnua/sanitized_tc_prod.pgsql?dl=0)
-
-[Technovation branding
-guidelines](https://www.dropbox.com/s/ghwsxonxso1oea5/Technovation%20Brand%20Guidelines%202016.pdf?dl=0)
-- Color pallette & typography starts on page 10
-
 ## Installation and Setup
 
 ### Prerequisites
@@ -41,16 +33,6 @@ Install qt5
 
 ```
 sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-```
-
-Intsall elasticsearch
-
-```
-brew install elasticsearch
-```
-
-```
-echo 'elasticsearch -d' >> ~/.bash_profile
 ```
 
 Install redis
@@ -98,12 +80,6 @@ Restart bash
 git clone git@gitlab.com:technovationmx/technovation-rails.git
 ```
 
-Download [this rhok.env file](https://www.dropbox.com/s/fz0oknm2359f8ff/rhok.env?dl=0)
-
-```
-cp <PATH_TO_RHOK_ENV> technovation-rails/.env
-```
-
 Seed / bootstrap the DB
 
 ```
@@ -133,8 +109,8 @@ Seeded users:
   * username: ra@ra.com
   * password: ra@ra.com
 * Admin
-  * username: rhok@oracle.com
-  * password: rhokdemo
+  * username: info@technovationchallenge.org
+  * password: <in lastpass/.env>
 
 ## To turn on/off various user features:
 

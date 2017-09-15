@@ -1,9 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  before { SeasonToggles.team_building_enabled="yes" }
+  before { SeasonToggles.team_building_enabled! }
 
-  let!(:available_team) { FactoryGirl.create(:team, :geocoded) } # Default is in Chicago
+  let!(:available_team) { FactoryGirl.create(:team, :geocoded) }
+    # Default is in Chicago
 
   before do
     mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
@@ -11,7 +12,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "browse nearby teams" do
-    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded) # Default is in Chicago
+    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded)
     faraway_team = FactoryGirl.create(
       :team,
       :geocoded,
@@ -24,6 +25,29 @@ RSpec.feature "Mentors find a team" do
     expect(page).to have_css(".search-result-head", text: available_team.name)
     expect(page).to have_css(".search-result-head", text: mentored_team.name)
     expect(page).not_to have_css(".search-result-head", text: faraway_team.name)
+  end
+
+  scenario "search for a team by name" do
+    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded)
+
+    FactoryGirl.create(
+      :team,
+      :geocoded,
+      name: "faraway",
+      city: "Los Angeles",
+      state_province: "CA"
+    )
+
+    within('#submissions') { click_link "Join a team" }
+
+    fill_in "text", with: "araw" # partial match
+    fill_in "nearby", with: "anywhere"
+    page.find("form").submit_form!
+
+    expect(page).to have_css(".search-result-head", text: "faraway")
+
+    expect(page).not_to have_css(".search-result-head", text: available_team.name)
+    expect(page).not_to have_css(".search-result-head", text: mentored_team.name)
   end
 
   scenario "request to join a team" do
