@@ -1,29 +1,19 @@
 module RegionalAmbassador
   class AccountsController < RegionalAmbassadorController
     def index
-      @unmatched_students = StudentProfile.unmatched
-        .in_region(current_ambassador)
+      @students = StudentProfile.in_region(current_ambassador)
         .includes(:team_member_invites, :join_requests)
-        .order(updated_at: :desc)
-        .limit(15)
 
-      @unmatched_mentors = MentorProfile.unmatched
-        .in_region(current_ambassador)
+      @unmatched_students = @students.unmatched
+        .order(updated_at: :desc)
+        .limit(5)
+
+      @mentors = MentorProfile.in_region(current_ambassador)
         .includes(:mentor_invites, :join_requests)
-        .order(updated_at: :desc)
-        .limit(15)
 
-      @teams_without_students = Team.unmatched(:students)
-        .in_region(current_ambassador)
-        .includes(:team_member_invites, :join_requests)
+      @unmatched_mentors = @mentors.unmatched
         .order(updated_at: :desc)
-        .limit(15)
-
-      @teams_without_mentors = Team.unmatched(:mentors)
-        .in_region(current_ambassador)
-        .includes(:team_member_invites, :join_requests)
-        .order(updated_at: :desc)
-        .limit(15)
+        .limit(5)
     end
 
     def show

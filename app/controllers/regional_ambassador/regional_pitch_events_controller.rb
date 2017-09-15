@@ -13,14 +13,14 @@ module RegionalAmbassador
 
       @senior_team_participants = Team.current
         .senior
-        .for_ambassador(current_ambassador)
+        .in_region(current_ambassador)
         .not_attending_live_event
         .distinct
         .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
 
       @junior_team_participants = Team.current
         .junior
-        .for_ambassador(current_ambassador)
+        .in_region(current_ambassador)
         .not_attending_live_event
         .distinct
         .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
@@ -28,7 +28,7 @@ module RegionalAmbassador
       @judge_participants = JudgeProfile.current
         .includes(:judge_assignments)
         .onboarded
-        .for_ambassador(current_ambassador)
+        .in_region(current_ambassador)
         .not_attending_live_event
         .sort { |j1, j2| j1.first_name.downcase <=> j2.first_name.downcase }
     end

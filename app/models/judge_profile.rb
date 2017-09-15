@@ -9,7 +9,7 @@ class JudgeProfile < ActiveRecord::Base
     joins(:current_account)
   }
 
-  scope :for_ambassador, ->(ambassador) {
+  scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
       joins(:account)
       .where("accounts.country = 'US' AND accounts.state_province = ?",

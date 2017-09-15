@@ -4,7 +4,7 @@ module RegionalAmbassador
       params[:division] = "all" if params[:division].blank?
 
       submissions = TeamSubmission.joins(team: [:division, :memberships])
-        .where("teams.id IN (?)", Team.for_ambassador(ambassador).pluck(:id))
+        .where("teams.id IN (?)", Team.in_region(ambassador).pluck(:id))
         .distinct
 
       case params[:division]

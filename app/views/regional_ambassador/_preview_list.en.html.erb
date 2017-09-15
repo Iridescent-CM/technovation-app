@@ -1,53 +1,136 @@
-<div class="panel preview-list">
-  <h1 class="content-heading">
-    <%= model.pluralize.capitalize %>
-    <%= condition %>
-  </h1>
+<% if master.any? %>
+  <%
+    collection_ratio = collection.size / master.size.to_f
+    collection_deg = collection_ratio * 180
+    total_deg = 180 - collection_deg
+    id = "#{model.parameterize}__#{condition.parameterize}"
+  %>
 
-  <div class="grid grid--bleed previews">
-    <% collection.each do |item| %>
-      <div class="grid__col-2" id=<%= dom_id(item) %>>
-        <div class="grid__cell">
-          <%= image_tag item.public_send(image_method_name),
-            class: "thumbnail-sm grid__cell-img" %>
+  <style>
+    #chart-participants-<%= id %> li:nth-child(1) {
+      animation-name: rotate-one-<%= id %>;
+    }
+
+    #chart-participants-<%= id %> li:nth-child(2) {
+      animation-name: rotate-two-<%= id %>;
+    }
+
+    @keyframes rotate-one-<%= id %> {
+      100% {
+        transform: rotate(<%= total_deg %>deg);
+      }
+    }
+
+    @keyframes rotate-two-<%= id %> {
+      0% {
+        transform: rotate(<%= total_deg %>deg);
+      }
+      100% {
+        transform: rotate(<%= total_deg + collection_deg %>deg);
+      }
+    }
+  </style>
+
+  <div class="panel preview-list">
+    <ul
+      id="chart-participants-<%= id %>"
+      class="chart-participants"
+    >
+      <li>&nbsp;</li>
+
+      <li>&nbsp;</li>
+    </ul>
+
+    <h1 class="content-heading">
+      <%= model.pluralize.capitalize %>
+      <%= condition %>
+      <span>(<%= (collection_ratio * 100).round %>%)</span>
+    </h1>
+
+    <div
+      id="accordion-<%= id %>"
+      class="grid grid--bleed accordion previews"
+    >
+      <% collection.each do |item| %>
+        <div class="grid__col-2" id=<%= dom_id(item) %>>
+          <div class="grid__cell">
+            <%= image_tag item.public_send(image_method_name),
+              class: "thumbnail-sm grid__cell-img" %>
+          </div>
         </div>
-      </div>
 
-      <div class="grid__col-5">
-        <% details.each do |method_name| %>
+        <div class="grid__col-5">
+          <% details.each do |method_name| %>
+            <span class="detail">
+              <%= item.public_send(method_name) %>
+            </span>
+          <% end %>
+        </div>
+
+        <div class="grid__col-5">
           <span class="detail">
-            <%= item.public_send(method_name) %>
+            <%= pluralize(
+              item.team_member_invites.pending.count,
+              "pending invitation"
+            ) %>
           </span>
-        <% end %>
-      </div>
 
-      <div class="grid__col-5">
-        <span class="detail">
-          <%= pluralize(
-            item.team_member_invites.pending.count,
-            "pending invitation"
-          ) %>
-        </span>
+          <span class="detail">
+            <%= pluralize(
+              item.team_member_invites.pending.count,
+              "pending join request"
+            ) %>
+          </span>
 
-        <span class="detail">
-          <%= pluralize(
-            item.team_member_invites.pending.count,
-            "pending join request"
-          ) %>
-        </span>
+          <span class="detail">
+            last active: <%= time_ago_in_words(item.updated_at) %> ago
+          </span>
+        </div>
+      <% end %>
+    </div>
 
-        <span class="detail">
-          last active: <%= time_ago_in_words(item.updated_at) %> ago
-        </span>
-      </div>
-    <% end %>
+    <div class="preview-list-footer">
+      <%= link_to 'Show', '#',
+        class: "accordion-toggle accordion-closed",
+        data: {
+          accordion: "#accordion-#{id}",
+        } %>
+
+      <span class="accordion-open">Showing</span>
+
+      the
+      <%= pluralize(collection.size, "most recently active #{model.downcase}") %>
+      <%= condition %>
+
+      <%= link_to 'view all', view_all_path, class: "footer-action" %>
+    </div>
   </div>
+<% else %>
+  <div class="panel preview-list">
+    <h1 class="content-heading">
+      <%= model.pluralize.capitalize %>
+      <%= condition %>
+    </h1>
 
-  <div class="preview-list-footer">
-    Showing the
-    <%= pluralize(collection.size, "most recently active #{model.downcase}") %>
-    <%= condition %>
+    <p>
+      Your region does not yet have any
+      <%= model.downcase.pluralize %>
+      registered for the <%= Season.current.year %> season.
+    </p>
 
-    <%= link_to 'view all', view_all_path %>
+    <p>
+      Remember that
+      <strong>
+        all returning <%= model.downcase.pluralize %> must log in
+      </strong>
+      and complete this season's onboarding steps!
+    </p>
+
+    <p>
+      Otherwise, get out there and recruit!
+      If you need help or advice, you can chat with our staff
+      and your fellow ambassadors in
+      <%= link_to "the Technovation slack group", ENV.fetch("RA_SLACK_URL") %>!
+    </p>
   </div>
-</div>
+<% end %>

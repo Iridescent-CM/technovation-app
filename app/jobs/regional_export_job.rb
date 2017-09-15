@@ -110,7 +110,7 @@ class RegionalExportJob < ActiveJob::Base
   end
 
   def export_scores(ambassador, params)
-    score_ids = SubmissionScore.current.quarterfinals.for_ambassador(ambassador).pluck(:id)
+    score_ids = SubmissionScore.current.quarterfinals.in_region(ambassador).pluck(:id)
 
     filepath = "./tmp/#{Season.current.year}-#{ambassador.region_name}-Scores.csv"
 

@@ -1,0 +1,31 @@
+<div class="grid">
+  <div class="grid__col-sm-6">
+    <%= render "regional_ambassador/preview_list",
+      model: "Team",
+      condition: "without a mentor",
+      view_all_path: regional_ambassador_unmatched_teams_path(without: :mentors),
+      image_method_name: :team_photo_url,
+      details: [
+        :name,
+        :division_name,
+        :primary_location,
+      ],
+      collection: @teams_without_mentors,
+      master: @teams %>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <%= render "regional_ambassador/preview_list",
+      model: "Team",
+      condition: "without students",
+      view_all_path: regional_ambassador_unmatched_teams_path(without: :students),
+      image_method_name: :team_photo_url,
+      details: [
+        :name,
+        :division_name,
+        :primary_location,
+      ],
+      collection: @teams_without_students,
+      master: @teams %>
+  </div>
+</div>

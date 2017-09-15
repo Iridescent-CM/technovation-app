@@ -12,7 +12,8 @@
         :email,
         :address_details,
       ],
-      collection: @unmatched_students %>
+      collection: @unmatched_students,
+      master: @students %>
   </div>
 
   <div class="grid__col-sm-6">
@@ -26,34 +27,7 @@
         :email,
         :address_details,
       ],
-      collection: @unmatched_mentors %>
-  </div>
-
-  <div class="grid__col-sm-6">
-    <%= render "regional_ambassador/preview_list",
-      model: "Team",
-      condition: "without a mentor",
-      view_all_path: regional_ambassador_unmatched_teams_path(without: :mentors),
-      image_method_name: :team_photo_url,
-      details: [
-        :name,
-        :division_name,
-        :primary_location,
-      ],
-      collection: @teams_without_mentors %>
-  </div>
-
-  <div class="grid__col-sm-6">
-    <%= render "regional_ambassador/preview_list",
-      model: "Team",
-      condition: "without students",
-      view_all_path: regional_ambassador_unmatched_teams_path(without: :students),
-      image_method_name: :team_photo_url,
-      details: [
-        :name,
-        :division_name,
-        :primary_location,
-      ],
-      collection: @teams_without_students %>
+      collection: @unmatched_mentors,
+      master: @mentors %>
   </div>
 </div>
