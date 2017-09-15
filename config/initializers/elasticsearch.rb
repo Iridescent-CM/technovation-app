@@ -1,1 +1,0 @@
-Hashie.logger = Logger.new('/dev/null') # until elasticsearch-rails 0.1.10 is out

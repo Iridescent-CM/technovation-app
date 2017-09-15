@@ -33,10 +33,6 @@ gem 'country_state_select',
   git: 'https://github.com/arvindvyas/Country-State-Select.git',
   branch: 'master'
 
-gem 'elasticsearch-model', "~> 0.1"
-gem 'elasticsearch-rails', "~> 0.1"
-gem 'elasticsearch-dsl', "~> 0.1"
-
 gem 'nokogiri', "~> 1.8"
 
 gem 'friendly_id', "~> 5.2"

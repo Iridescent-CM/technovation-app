@@ -1,5 +1,3 @@
-require 'json'
-
 class TeamSubmission < ActiveRecord::Base
   include Seasoned
 
@@ -8,17 +6,6 @@ class TeamSubmission < ActiveRecord::Base
   extend FriendlyId
   friendly_id :team_name_and_app_name, use: :slugged
 
-  include Elasticsearch::Model
-
-  index_name "#{ENV.fetch("ES_RAILS_ENV") { Rails.env }}_submissions"
-  document_type 'submission'
-  settings index: { number_of_shards: 1, number_of_replicas: 1 } do
-    mappings do
-      indexes :region_division_name, index: "not_analyzed"
-    end
-  end
-
-  after_destroy { IndexModelJob.perform_later("delete", "TeamSubmission", id) }
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) }, on: :create
 
   enum stated_goal: %w{
@@ -332,15 +319,6 @@ class TeamSubmission < ActiveRecord::Base
       judge_opened_at: nil,
       judge_opened_id: nil
     })
-  end
-
-  def as_indexed_json(options = {})
-    {
-      "id" => id,
-      "regional_pitch_event_id" => team.selected_regional_pitch_event.id,
-      "region_division_name" => team.region_division_name,
-      "sdg" => stated_goal
-    }
   end
 
   def total_technical_checklist
