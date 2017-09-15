@@ -1,0 +1,42 @@
+<li>
+  <h1 class="content-heading">Join a team</h1>
+
+  <% if requests.any? %>
+    <p>You have asked to join a team!</p>
+
+    <% requests.each do |join_request| %>
+      <%= content_tag :div,
+        class: "join_request",
+        id: dom_id(join_request) do %>
+        <div class="grid grid--bleed">
+          <div class="grid__col-4">
+            <div class="grid__cell">
+              <%= image_tag join_request.team_team_photo_url,
+                class: 'thumbnail-md grid__cell-img' %>
+            </div>
+          </div>
+
+          <div class="grid__col-8">
+            <div class="grid__cell">
+              <p>
+                <%= join_request.team_name %><br />
+                Division: <%= join_request.team_division_name.humanize %><br />
+                <%= join_request.team_primary_location %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>
+      Use our team search to find a team and ask to join them!
+    </p>
+
+    <div class="step-actions">
+      <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
+        [:new, :student, :team_search],
+        class: "button" %>
+    </div>
+  <% end %>
+</li>

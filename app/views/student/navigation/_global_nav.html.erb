@@ -6,34 +6,25 @@
   student_dashboard_path,
   class: al(student_dashboard_path) %>
 
-<% if current_student.onboarded? %>
-  <% if current_student.is_on_team? %>
-    <%= link_to t("views.student.navigation.my_team"),
-      student_team_path(current_team),
-      class: al(student_team_path(current_team)) %>
-  <% elsif current_student.can_search_teams? %>
-    <%= link_to t("views.student.navigation.create_a_team"),
-      new_student_team_path,
-      class: al(new_student_team_path) %>
+<% if current_student.is_on_team? %>
+  <%= link_to t("views.student.navigation.my_team"),
+    student_team_path(current_team),
+    class: al(student_team_path(current_team)) %>
 
-    <%= link_to t("views.student.navigation.join_team"),
-      new_student_team_search_path,
-      class: al(new_student_team_search_path) %>
-  <% end %>
+  <% if current_student.onboarded? %>
+    <% if current_team.submission.present? %>
 
-  <% if current_student.is_on_team? and current_team.submission.present? %>
+      <%= link_to t("views.application.dashboards.menu.team_submission"),
+        student_team_submission_path(current_team.submission),
+        class: al(student_team_submission_path(current_team.submission)) %>
 
-    <%= link_to t("views.application.dashboards.menu.team_submission"),
-      student_team_submission_path(current_team.submission),
-      class: al(student_team_submission_path(current_team.submission)) %>
+    <% elsif SeasonToggles.team_submissions_editable? %>
 
-  <% elsif current_student.is_on_team? and
-    SeasonToggles.team_submissions_editable? %>
+      <%= link_to t("views.application.dashboards.menu.team_submission"),
+        new_student_team_submission_path,
+        class: al(new_student_team_submission_path) %>
 
-    <%= link_to t("views.application.dashboards.menu.team_submission"),
-      new_student_team_submission_path,
-      class: al(new_student_team_submission_path) %>
-
+    <% end %>
   <% end %>
 <% end %>
 
