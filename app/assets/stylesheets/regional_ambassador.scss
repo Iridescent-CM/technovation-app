@@ -66,6 +66,7 @@
 }
 
 .chart-participants {
+  @extend reset;
   position: relative;
   width: 150px;
   height: 75px;
