@@ -29,6 +29,7 @@ machine:
     BING_MAPS_API_KEY: no-matter-in-test
     ENABLE_RA_SCORES: yes
     SEARCH_INDEX_TIMING: realtime
+    RA_SLACK_URL: no-matter-in-test
 
 general:
   branches:
