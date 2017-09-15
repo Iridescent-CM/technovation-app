@@ -39,6 +39,6 @@ module SignIn
     end
 
     (last_profile_used && "#{last_profile_used}_dashboard_path") or
-        "#{signin.scope_name}_dashboard_path"
+      "#{signin.scope_name}_dashboard_path"
   end
 end

@@ -2,6 +2,7 @@ class NullAuth
   def authenticated?; false; end
   def admin?; false; end
   def present?; false; end
+  def can_be_a_mentor?; false; end
 
   def scope_name; 'application'; end
   def team; nil; end

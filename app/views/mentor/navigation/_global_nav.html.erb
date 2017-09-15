@@ -2,6 +2,11 @@
   mentor_dashboard_path,
   class: al(mentor_dashboard_path) %>
 
+<% if current_mentor.is_an_ambassador? %>
+  <%= link_to "RA mode",
+    regional_ambassador_dashboard_path %>
+<% end %>
+
 <% if current_mentor.onboarded? %>
   <%= link_to t("views.application.dashboards.menu.my_teams"),
     mentor_teams_path,
