@@ -75,7 +75,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   end
 
   context "Judge dashboard" do
-    let(:user) { FactoryGirl.create(:judge, full_access: true) }
+    let(:user) { FactoryGirl.create(:judge, onboarded: true) }
     let(:rpe) { FactoryGirl.create(:rpe) }
     let(:path) { judge_dashboard_path(anchor: "live-events") }
 

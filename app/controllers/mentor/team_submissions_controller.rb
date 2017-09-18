@@ -1,6 +1,6 @@
 module Mentor
   class TeamSubmissionsController < MentorController
-    before_action :require_full_access
+    before_action :require_onboarded
 
     def new
       @team_submission = if current_team.submission.present?
@@ -109,12 +109,12 @@ module Mentor
     end
 
     private
-    def require_full_access
-      if current_mentor.full_access_enabled?
+    def require_onboarded
+      if current_mentor.onboarded?
         true
       else
         redirect_to mentor_dashboard_path,
-          notice: t("controllers.application.full_access_required")
+          notice: t("controllers.application.onboarding_required")
       end
     end
 

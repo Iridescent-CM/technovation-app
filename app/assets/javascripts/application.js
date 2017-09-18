@@ -10,6 +10,10 @@
 //= require navigation
 //= require chosen-init
 //= require flash-msgs
+//= require modals
+//= require tabs
+//= require image-uploaders
+//= require location-details
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(

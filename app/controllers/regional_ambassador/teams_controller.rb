@@ -1,18 +1,16 @@
 module RegionalAmbassador
   class TeamsController < RegionalAmbassadorController
     def index
-      params[:division] ||= "All"
-      params[:per_page] = 15 if params[:per_page].blank?
-      params[:page] = 1 if params[:page].blank?
+      @teams = Team.in_region(current_ambassador)
+        .includes(:team_member_invites, :join_requests)
 
-      @teams = RegionalTeam.(current_ambassador, params)
-        .distinct
-        .page(params[:page].to_i)
-        .per_page(params[:per_page].to_i)
+      @teams_without_students = @teams.unmatched(:students)
+        .order(updated_at: :desc)
+        .limit(5)
 
-      if @teams.empty?
-        @teams = @teams.page(1)
-      end
+      @teams_without_mentors = @teams.unmatched(:mentors)
+        .order(updated_at: :desc)
+        .limit(5)
     end
 
     def show

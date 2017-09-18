@@ -1,4 +1,4 @@
-<% unless current_mentor.full_access_enabled? %>
+<% unless current_mentor.onboarded? %>
   <h1 class="content-heading">Complete your registration</h1>
 
   <p>
@@ -11,5 +11,5 @@
   <%= render 'completion_steps/consent_waiver', account: current_mentor %>
   <%= render 'completion_steps/background_check', profile: current_mentor %>
   <%= render 'completion_steps/complete_profile', account: current_mentor %>
-  <%= render 'completion_steps/confirm_changed_email', account: current_mentor %>
+  <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
 </ul>

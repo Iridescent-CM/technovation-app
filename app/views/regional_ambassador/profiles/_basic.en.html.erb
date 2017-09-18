@@ -1,0 +1,29 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= current_ambassador.full_name %></dd>
+
+  <dt>Region</dt>
+  <dd><%= current_ambassador.region_name %></dd>
+
+  <dt>Occupation</dt>
+
+  <dd>
+    <%= current_ambassador.job_title %> at 
+    <%= current_ambassador.organization_company_name %>
+  </dd>
+
+  <dt>Age</dt>
+  <dd><%= current_ambassador.age %></dd>
+
+  <dt>Gender identity</dt>
+  <dd><%= current_ambassador.gender || "Not specified" %></dd>
+
+  <dt>Personal summary</dt>
+  <dd><%= simple_format current_ambassador.bio %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your basic profile details",
+    edit_profile_path,
+    class: "button" %>
+</p>

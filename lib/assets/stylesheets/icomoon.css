@@ -63,6 +63,21 @@
 .icon-navicon:before {
   content: "\f0c9";
 }
+.icon-sort-desc:before {
+  content: "\f0dd";
+}
+.icon-sort-down:before {
+  content: "\f0dd";
+}
+.icon-sort-asc:before {
+  content: "\f0de";
+}
+.icon-sort-up:before {
+  content: "\f0de";
+}
+.icon-reorder:before {
+  content: "\f0c9";
+}
 .icon-green {
   color: $shamrock-mid;
 }

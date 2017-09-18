@@ -1,0 +1,18 @@
+<% @teams.each do |team| %>
+  <%= render 'mentor/dashboards/onboarded/events_per_team_intro',
+    team: team %>
+
+  <% if team.submission.present? %>
+    <%= render 'mentor/dashboards/onboarded/events_per_team_selection',
+      team: team %>
+
+    <% if SeasonToggles.select_regional_pitch_event? %>
+      <%= content_tag :button,
+        "Save selection",
+        class: "button",
+        data: {
+          url: mentor_regional_pitch_event_selection_path,
+        } %>
+    <% end %>
+  <% end %>
+<% end %>

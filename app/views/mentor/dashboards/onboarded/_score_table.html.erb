@@ -1,0 +1,13 @@
+<div class="score_breakdown">
+  <h3>
+    Average
+    <%= round_name.titleize %>
+    Score:
+    <%= team.submission.public_send("#{round}_average_score") %>
+  </h3>
+
+  <%= render 'student/dashboards/onboarded/scores/scores_table',
+    team: team,
+    round: round,
+    scores: scores %>
+</div>

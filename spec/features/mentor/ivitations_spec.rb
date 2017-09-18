@@ -18,6 +18,6 @@ RSpec.feature "Mentors and invitations" do
 
     click_button "Accept"
 
-    expect(team.mentors).to eq([mentor])
+    expect(team.reload.mentors).to eq([mentor])
   end
 end

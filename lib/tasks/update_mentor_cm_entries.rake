@@ -1,6 +1,6 @@
 desc "Update mentor Campaign Monitor list info"
 task update_mentor_cm_info: :environment do
-  MentorProfile.current.full_access.each do |mentor|
+  MentorProfile.current.onboarded.each do |mentor|
     auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
     subscriber = CreateSend::Subscriber.new(auth, ENV.fetch("MENTOR_LIST_ID"), mentor.email.strip)
     fields = [{ Key: 'City', Value: mentor.city },

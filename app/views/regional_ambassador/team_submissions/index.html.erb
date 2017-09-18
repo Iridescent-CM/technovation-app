@@ -1,76 +1,13 @@
-<h1><%= current_ambassador.region_name %> Team Submissions</h1>
+<%= render 'regional_ambassador/teams/sub_menu' %>
 
-<div class="flex-row">
-  <label class="flex-col-md-6">
-    Team name:<br />
-    <%= text_field_tag :team_name,
-    params[:team_name],
-    placeholder: "Press enter after typing",
-    data: { reload: true } %>
-</label>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
+    <div class="panel">
+      <h1>Hey there!</h1>
 
-  <label class="flex-col-md-3">
-    Status:<br />
-    <%= select_tag :status,
-      options_for_select([["All", "all"],
-                          ["Complete", "complete"],
-                          ["Incomplete", "incomplete"]],
-                         params.fetch(:status) { "all" }),
-      data: { reload: true } %>
-  </label>
-
-  <label class="flex-col-md-3">
-    Division:<br />
-    <%= select_tag :division,
-      options_for_select([['All', 'all'],
-                          ['Senior', 'senior'],
-                          ['Junior', 'junior']],
-                        params.fetch(:division) { "all" }),
-      data: { reload: true } %>
-  </label>
+      <p>
+        Our development team is working hard at improving this section, and we will let you know when it's ready!
+      </p>
+    </div>
+  </div>
 </div>
-
-<table class="ra-participants-list">
-  <thead>
-    <tr>
-      <th>Team Name</th>
-      <th>Division</th>
-      <th>City</th>
-      <% unless current_ambassador.country == "US" %>
-        <th>State/Province</th>
-      <% end %>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @team_submissions.each do |submission| %>
-      <% submission.app_name = "(no name yet)" if submission.app_name.blank? %>
-
-      <tr>
-        <td><%= submission.team_name %></td>
-        <td><%= submission.team_division_name %></td>
-        <td><%= submission.team_city %></td>
-
-        <% unless current_ambassador.country == "US" %>
-          <td><%= submission.team_state_province %></td>
-        <% end %>
-
-        <td>
-          <%= submission.status %>
-        </td>
-
-        <td>
-          <%= link_to "View details", regional_ambassador_team_submission_path(submission) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= render 'regional_ambassador/team_submissions/footer' %>
-
-<%= form_tag regional_ambassador_exports_path(params.merge(class: "team_submissions")) do %>
-  <%= button_tag "Email CSV Report", class: "appy-button" %>
-<% end %>

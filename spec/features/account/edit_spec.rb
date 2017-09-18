@@ -69,16 +69,25 @@ RSpec.feature "Edit account spec" do
     expect(page).to have_content("New School")
   end
 
-  scenario "edit bio" do
-    sign_out
-    account = FactoryGirl.create(%i{mentor regional_ambassador}.sample)
+  %i{mentor regional_ambassador}.each do |scope|
+    scenario "edit #{scope} bio" do
+      sign_out
+      profile = FactoryGirl.create(scope)
 
-    sign_in(account)
-    visit send("edit_#{account.scope_name}_profile_path")
+      sign_in(profile)
+      visit send("#{scope}_profile_path")
 
-    fill_in "#{account.scope_name}_profile[bio]", with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
-    click_button "Save"
+      click_link "Change your basic profile details"
 
-    expect(page).to have_css('dd', text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet.")
+      fill_in "#{scope}_profile[bio]",
+        with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
+
+      click_button "Save"
+
+      expect(page).to have_css(
+        'dd',
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
+      )
+    end
   end
 end

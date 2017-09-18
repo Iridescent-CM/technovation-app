@@ -1,9 +1,0 @@
-<div class="grid__col-md-8">
-  <% if not current_mentor.is_on_team? %>
-    <%= render 'completion_steps/create_join_team', account: current_mentor %>
-  <% else %>
-    <%= render 'mentor/dashboards/full_access_content/events_per_team' %>
-  <% end %>
-</div>
-
-<%= render 'mentor/dashboards/info_sidebar' %>

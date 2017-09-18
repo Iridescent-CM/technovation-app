@@ -1,0 +1,11 @@
+<strong>Select a Regional Pitch Event:</strong>
+
+<ul class="unstyled">
+  <% team.eligible_events.each do |event| %>
+    <li>
+      <%= render 'mentor/dashboards/onboarded/events_per_team_option',
+        event: event,
+        team: team %>
+    </li>
+  <% end %>
+</ul>

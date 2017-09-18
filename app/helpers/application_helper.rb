@@ -18,8 +18,14 @@ module ApplicationHelper
     end
   end
 
-  def al(path)
-    request.fullpath.include?(path) ? "active" : ""
+  def al(identifiers)
+    decoded_path = URI::decode(request.fullpath)
+
+    if Array(identifiers).any? { |i| decoded_path.include?(i) }
+      "active"
+    else
+      ""
+    end
   end
 
   def locale_names

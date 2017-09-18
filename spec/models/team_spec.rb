@@ -107,12 +107,6 @@ RSpec.describe Team do
     expect(Team.past).not_to include(current_team)
   end
 
-  it "has a no mentor scope" do
-    team = FactoryGirl.create(:team)
-    FactoryGirl.create(:team, :with_mentor)
-    expect(Team.without_mentor).to eq([team])
-  end
-
   it "registers to past seasons" do
     team = FactoryGirl.create(
       :team,
@@ -295,5 +289,76 @@ RSpec.describe Team do
     expect(team).to be_deleted
     expect(team.team_member_invites).to be_empty
     expect(team.join_requests).to be_empty
+  end
+
+  describe ".unmatched(scope)" do
+    it "lists teams without a mentor" do
+      mentored = FactoryGirl.create(:team)
+      mentor = FactoryGirl.create(:mentor)
+      TeamRosterManaging.add(mentored, mentor)
+
+      unmatched = FactoryGirl.create(:team)
+      expect(Team.unmatched(:mentors)).to eq([unmatched])
+    end
+
+    it "lists teams without students" do
+      FactoryGirl.create(:team)
+
+      unmatched = FactoryGirl.create(:team)
+      mentor = FactoryGirl.create(:mentor)
+      TeamRosterManaging.add(unmatched, mentor)
+      TeamRosterManaging.remove(unmatched, unmatched.students.first)
+
+      expect(Team.unmatched(:students)).to eq([unmatched])
+    end
+
+    it "only considers current teams" do
+      past_unmatched = FactoryGirl.create(:team)
+      past_unmatched.update(seasons: [Season.current.year - 1])
+
+      unmatched = FactoryGirl.create(:team)
+
+      expect(Team.unmatched(:mentors)).to eq([unmatched])
+    end
+  end
+
+  describe ".in_region" do
+    it "scopes to the given US ambassador's state" do
+      FactoryGirl.create(
+        :team,
+        city: "Los Angeles",
+        state_province: "CA",
+        country: "US"
+      )
+
+      il_team = FactoryGirl.create(:team)
+      il_ambassador = FactoryGirl.create(:ambassador)
+
+      expect(
+        Team.in_region(il_ambassador)
+      ).to eq([il_team])
+    end
+
+    it "scopes to the given Int'l ambassador's country" do
+      FactoryGirl.create(:team)
+
+      intl_team = FactoryGirl.create(
+        :team,
+        city: "Salvador",
+        state_province: "Bahia",
+        country: "Brazil"
+      )
+
+      intl_ambassador = FactoryGirl.create(
+        :ambassador,
+        city: "Salvador",
+        state_province: "Bahia",
+        country: "Brazil"
+      )
+
+      expect(
+        Team.in_region(intl_ambassador)
+      ).to eq([intl_team])
+    end
   end
 end

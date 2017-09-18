@@ -428,6 +428,7 @@ class InitSchema < ActiveRecord::Migration[4.2]
       t.boolean  "accepting_mentor_requests",  default: true, null: false
       t.float    "latitude"
       t.float    "longitude"
+      t.text     "seasons", array: true, default: []
       t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
       t.index ["legacy_id"], name: "index_teams_on_legacy_id", using: :btree
     end

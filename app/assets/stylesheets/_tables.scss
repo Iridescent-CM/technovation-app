@@ -1,0 +1,53 @@
+.datagrid {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #999;
+    transition: background 0.2s;
+  }
+
+  tr:hover td {
+    background: #ddd;
+  }
+
+  th {
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    text-align: left;
+
+    span {
+      &:hover {
+        .order {
+          display: block;
+        }
+      }
+
+      .order {
+        display: none;
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+        background: #666;
+        color: white;
+        z-index: $z-menu;
+        box-shadow: $shadow-small;
+        border-bottom-right-radius: $radius-default;
+        border-bottom-left-radius: $radius-default;
+        width: 125px;
+
+        a {
+          padding: 0.5rem;
+          display: block;
+          color: white;
+
+          &:hover {
+            background: #eee;
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+}

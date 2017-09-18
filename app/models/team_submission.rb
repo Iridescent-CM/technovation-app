@@ -37,7 +37,7 @@ class TeamSubmission < ActiveRecord::Base
 
   mount_uploader :source_code, FileProcessor
 
-  scope :for_ambassador, ->(ambassador) {
+  scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
       joins(:team).where("teams.state_province = ? AND teams.country = 'US'", ambassador.state_province)
     else
