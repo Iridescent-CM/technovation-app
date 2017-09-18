@@ -1,4 +1,8 @@
 class NullTeam
+  def touch
+    # noop
+  end
+
   def has_mentor?
     false
   end

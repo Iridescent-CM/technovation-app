@@ -29,6 +29,7 @@ machine:
     BING_MAPS_API_KEY: no-matter-in-test
     ENABLE_RA_SCORES: yes
     SEARCH_INDEX_TIMING: realtime
+    RA_SLACK_URL: no-matter-in-test
 
 general:
   branches:
@@ -37,7 +38,7 @@ general:
 
 deployment:
   beta:
-    branch: reset-css-js
+    branch: ra-ui
     heroku:
       appname: tc-2018
 

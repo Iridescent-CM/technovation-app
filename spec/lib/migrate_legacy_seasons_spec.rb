@@ -2,6 +2,13 @@ require "rails_helper"
 require "./lib/migrate_legacy_seasons"
 
 RSpec.describe MigrateLegacySeasons do
+  before(:all) do
+    @verbose = ActiveRecord::Migration.verbose
+    ActiveRecord::Migration.verbose = false
+  end
+
+  after(:all) { ActiveRecord::Migration.verbose = @verbose }
+
   describe ".call" do
     it "converts Team seasons" do
       MigrateLegacySeasons::TestSetup.(:team)

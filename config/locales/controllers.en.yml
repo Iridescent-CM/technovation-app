@@ -2,7 +2,7 @@ en:
   controllers:
     application:
       already_authenticated: "You are already signed in."
-      full_access_required: "You need to complete your To-Do's before going there"
+      onoboarding_required: "You need to complete your To-Do's before going there"
       general_error: "Sorry, but something went wrong. Please go and try again."
       generic_unauthenticated: "You must be signed in to go there!"
       team_required: "You need to be on a team to access that page"
@@ -34,7 +34,7 @@ en:
         not_found: "That invitation was not found. Perhaps it was already deleted."
         success: "You deleted the invitation to %{name}"
       show:
-        full_access_needed: "Please finish the items in your To-Do list before reviewing this invitation"
+        onoboarding_required: "Please finish the items in your To-Do list before reviewing this invitation"
 
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."

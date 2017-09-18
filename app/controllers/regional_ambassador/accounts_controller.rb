@@ -1,17 +1,28 @@
 module RegionalAmbassador
   class AccountsController < RegionalAmbassadorController
-    def update
-      current_ambassador.account.update_attributes(account_params)
+    def index
+      @students = StudentProfile.in_region(current_ambassador)
+        .includes(:team_member_invites, :join_requests)
 
-      redirect_to regional_ambassador_dashboard_path,
-        notice: "Your account settings were saved"
+      @unmatched_students = @students.unmatched
+        .order(updated_at: :desc)
+        .limit(5)
+
+      @mentors = MentorProfile.in_region(current_ambassador)
+        .includes(:mentor_invites, :join_requests)
+
+      @unmatched_mentors = @mentors.unmatched
+        .order(updated_at: :desc)
+        .limit(5)
+    end
+
+    def show
+      @account = Account.find(params[:id])
     end
 
     private
-    def account_params
-      params.require(:account).permit(
-        :timezone,
-      )
+    def accounts_grid_params
+      params.fetch(:accounts_grid) { {} }.merge(ambassador: current_ambassador)
     end
   end
 end

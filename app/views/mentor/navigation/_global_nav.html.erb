@@ -2,7 +2,7 @@
   mentor_dashboard_path,
   class: al(mentor_dashboard_path) %>
 
-<% if current_mentor.full_access_enabled? %>
+<% if current_mentor.onboarded? %>
   <%= link_to t("views.application.dashboards.menu.my_teams"),
     mentor_teams_path,
     class: al(mentor_teams_path) %>

@@ -1,5 +1,5 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
-  scope :full_access, -> {
+  scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
@@ -64,7 +64,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     end
   end
 
-  def full_access_enabled?
+  def onboarded?
     account.email_confirmed? and
       approved? and
         consent_signed? and

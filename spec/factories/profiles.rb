@@ -202,7 +202,7 @@ FactoryGirl.define do
     transient do
       email nil
       first_name nil
-      full_access false
+      onboarded false
       virtual true
     end
 
@@ -215,7 +215,7 @@ FactoryGirl.define do
     before(:create) do |j, e|
       attrs = {}
 
-      if e.full_access
+      if e.onboarded
         attrs = {
           city: "Chicago",
           state_province: "IL",
@@ -231,7 +231,7 @@ FactoryGirl.define do
         first_name: e.first_name || act_attrs[:first_name],
       ))
 
-      if e.full_access
+      if e.onboarded
         j.account.build_consent_waiver({
           electronic_signature: "test",
         })

@@ -1,8 +1,4 @@
 class Membership < ActiveRecord::Base
-  scope :current, ->(account) {
-    where("team_id IN (?)", account.teams.current.pluck(:id))
-  }
-
   after_destroy -> {
     Casting.delegating(team => DivisionChooser) do
       team.reconsider_division_with_save

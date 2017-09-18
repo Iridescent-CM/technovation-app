@@ -1,0 +1,33 @@
+<%= render 'regional_ambassador/accounts/sub_menu' %>
+
+<div class="grid">
+  <div class="grid__col-sm-6">
+    <%= render "regional_ambassador/preview_list",
+      model: "Student",
+      condition: "without a team",
+      view_all_path: regional_ambassador_unmatched_students_path,
+      image_method_name: :profile_image_url,
+      details: [
+        :full_name,
+        :email,
+        :address_details,
+      ],
+      collection: @unmatched_students,
+      master: @students %>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <%= render "regional_ambassador/preview_list",
+      model: "Mentor",
+      condition: "without a team",
+      view_all_path: regional_ambassador_unmatched_mentors_path,
+      image_method_name: :profile_image_url,
+      details: [
+        :full_name,
+        :email,
+        :address_details,
+      ],
+      collection: @unmatched_mentors,
+      master: @mentors %>
+  </div>
+</div>

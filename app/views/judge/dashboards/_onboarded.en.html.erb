@@ -1,0 +1,23 @@
+<div id="judge-dashboard-menu" class="tabs">
+  <%= render 'judge/dashboards/menu' %>
+
+  <div class="content">
+    <% if SeasonToggles.judging_enabled? %>
+      <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
+        <div class="tab-content flex-row" id="scores">
+          <%= render 'judge/dashboards/onboarded/scores',
+            event_type: :live %>
+        </div>
+      <% end %>
+
+      <div class="tab-content flex-row" id="virtual-scores">
+        <%= render 'judge/dashboards/onboarded/scores',
+          event_type: :virtual %>
+      </div>
+    <% end %>
+
+    <div class="tab-content flex-row" id="pitch-events">
+      <%= render 'judge/dashboards/onboarded/events' %>
+    </div>
+  </div>
+</div>

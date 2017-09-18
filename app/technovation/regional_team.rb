@@ -1,7 +1,7 @@
 module RegionalTeam
   def self.call(ambassador, params = {})
     teams = Team.current
-                .for_ambassador(ambassador)
+                .in_region(ambassador)
                 .order('teams.created_at DESC')
 
     unless params[:text].blank?

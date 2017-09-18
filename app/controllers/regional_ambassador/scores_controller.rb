@@ -12,7 +12,7 @@ module RegionalAmbassador
       events = RegionalPitchEvent.in_region_of(current_ambassador)
       virtual_event = VirtualRegionalPitchEvent.new
 
-      if virtual_event.teams.for_ambassador(current_ambassador).any?
+      if virtual_event.teams.in_region(current_ambassador).any?
         params[:event] ||= "virtual"
 
         @event = if params[:event] == "virtual"
@@ -64,7 +64,7 @@ module RegionalAmbassador
     def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
       submissions = @event.team_submissions
         .includes(:submission_scores, team: :regional_pitch_events)
-        .for_ambassador(current_ambassador)
+        .in_region(current_ambassador)
         .public_send(params[:division])
         .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
         .sort { |a, b|

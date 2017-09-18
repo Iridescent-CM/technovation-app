@@ -1,11 +1,11 @@
 #flash {
   width: 100%;
-  margin: 0 0 1rem;
+  margin: 0;
 
   .flash {
     width: 80%;
     display: none;
-    margin: 1rem auto 0;
+    margin: 1rem auto;
     display: block;
     box-shadow: $shadow-default;
   }

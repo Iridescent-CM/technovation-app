@@ -100,7 +100,8 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: [:new, :create, :show]
 
-    resource :regional_pitch_event_selection, only: [:new, :show, :create, :update, :destroy]
+    resource :regional_pitch_event_selection,
+      only: [:new, :show, :create, :update, :destroy]
     resources :regional_pitch_events, only: :show
     resources :scores, only: [:show]
   end
@@ -115,8 +116,12 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :edit, :update]
     resource :account, only: :update
 
-    resources :profiles, only: :index
-    resources :users, only: :show
+    resources :accounts, only: [:index, :show, :edit, :update]
+
+    resources :unmatched_students, only: :index
+    resources :unmatched_mentors, only: :index
+    resources :unmatched_teams, only: :index
+
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: :destroy

@@ -27,11 +27,13 @@ class Team < ActiveRecord::Base
     }
   end
 
-  scope :without_mentor, -> {
-    where.not(id: Membership.where(member_type: "MentorProfile").map(&:team_id))
+  scope :unmatched, ->(member_scope) {
+    current
+      .left_outer_joins(member_scope)
+      .where("memberships.member_id IS NULL")
   }
 
-  scope :for_ambassador, ->(ambassador) {
+  scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
       where("state_province = ? AND country = 'US'", ambassador.state_province)
     else

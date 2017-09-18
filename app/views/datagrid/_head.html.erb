@@ -1,0 +1,13 @@
+<tr>
+  <% grid.html_columns(*options[:columns]).each do |column| %>
+    <th class="<%= datagrid_column_classes(grid, column) %>">
+      <span>
+        <%= column.header %>
+
+        <% if column.supports_order? && options[:order] %>
+          <%= datagrid_order_for(grid, column, options) %>
+        <% end %>
+      </span>
+    </th>
+  <% end %>
+</tr>

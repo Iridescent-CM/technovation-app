@@ -7,7 +7,7 @@ module RegionalAmbassador
       when "Team"
         @participants = Team.current
           .public_send(params.fetch(:division))
-          .for_ambassador(current_ambassador)
+          .in_region(current_ambassador)
           .not_attending_live_event
       end
     end

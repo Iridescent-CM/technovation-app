@@ -4,6 +4,8 @@ class Account < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  include PublicActivity::Model
+  tracked
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
     account.update_address_details_from_reverse_geocoding(results)
@@ -57,6 +59,17 @@ class Account < ActiveRecord::Base
 
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
+
+  scope :in_region, ->(ambassador) {
+    if ambassador.country == "US"
+      where(
+        "accounts.country = 'US' AND accounts.state_province = ?",
+        ambassador.state_province
+      )
+    else
+      where("accounts.country = ?", ambassador.country)
+    end
+  }
 
   mount_uploader :profile_image, ImageProcessor
 

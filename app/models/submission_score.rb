@@ -120,7 +120,7 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
-  scope :for_ambassador, ->(ambassador) {
+  scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
       joins(team_submission: :team)
       .where(

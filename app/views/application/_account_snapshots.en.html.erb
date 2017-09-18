@@ -26,7 +26,7 @@
     </div>
     <div class="card__body">
       <strong><%= @snapshot_mentors.count %></strong> total<br />
-      <strong><%= @snapshot_mentors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
+      <strong><%= @snapshot_mentors.onboarded.count %></strong> with consent waiver, cleared background check (US only) on file
     </div>
   </div>
 
@@ -37,7 +37,7 @@
     </div>
     <div class="card__body">
       <strong><%= @snapshot_ambassadors.count %></strong> total<br />
-      <strong><%= @snapshot_ambassadors.full_access.count %></strong> with consent waiver, cleared background check (US only) on file
+      <strong><%= @snapshot_ambassadors.onboarded.count %></strong> with consent waiver, cleared background check (US only) on file
     </div>
   </div>
 
@@ -48,7 +48,7 @@
     </div>
     <div class="card__body">
       <strong><%= @snapshot_judges.count %></strong> total<br />
-      <strong><%= @snapshot_judges.full_access.count %></strong> with consent waiver on file
+      <strong><%= @snapshot_judges.onboarded.count %></strong> with consent waiver on file
     </div>
   </div>
 

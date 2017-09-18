@@ -1,0 +1,97 @@
+<div class="score_breakdown">
+  <h1>
+    Average
+    <%= round_name.titleize %>
+    Score:
+    <%= current_team.submission.public_send("#{round}_average_score") %>
+  </h1>
+
+  <table class="ra-participants-list">
+    <thead>
+      <tr>
+        <th>Ideation</th>
+        <th>Technical</th>
+
+        <% if current_team.division.senior? %>
+          <th>Business</th>
+        <% end %>
+
+        <th>Pitch</th>
+        <th>Overall</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if round == :semifinals %>
+        <tr>
+          <td><%= @sf_ideation_average %></td>
+          <td><%= @sf_technical_average %></td>
+          <td><%= @sf_pitch_average %></td>
+
+          <% if current_team.division.senior? %>
+            <td><%= @sf_entrepreneurship_average %></td>
+          <% end %>
+
+          <td><%= @sf_overall_impression_average %></td>
+          <td>
+            <strong>
+              <%= current_team.submission.public_send(
+                "#{round}_average_score"
+              ) %>
+            </strong>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td><%= @qf_ideation_average %></td>
+          <td><%= @qf_technical_average %></td>
+          <td><%= @qf_pitch_average %></td>
+
+          <% if current_team.division.senior? %>
+            <td><%= @qf_entrepreneurship_average %></td>
+          <% end %>
+
+          <td><%= @qf_overall_impression_average %></td>
+          <td>
+            <strong>
+              <%= current_team.submission.public_send(
+                "#{round}_average_score"
+              ) %>
+            </strong>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p>
+    <em>
+      You earned
+      <strong>
+        <%= pluralize(current_team.submission.total_technical_checklist, 'point') %>
+      </strong>
+      from your technical checklist.
+    </em>
+  </p>
+
+  <% if round == :semifinals %>
+    <h3>Best <%= round_name %> category: <%= @sf_best_category %></h3>
+  <% else %>
+    <h3>Best <%= round_name %> category: <%= @qf_best_category %></h3>
+  <% end %>
+
+  <% if round == :semifinals %>
+    <%= render(
+      'student/dashboards/onboarded/scores/scores_table',
+      scores: @semifinals_scores,
+      round: :semifinals
+    ) %>
+  <% else %>
+    <%= render(
+      'student/dashboards/onboarded/scores/scores_table',
+      scores: @quarterfinals_scores,
+      round: :quarterfinals
+    ) %>
+  <% end %>
+</div>

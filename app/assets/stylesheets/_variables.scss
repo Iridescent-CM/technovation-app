@@ -35,6 +35,11 @@ $shadow-default: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.3);
 $shadow-darker: 0.2rem 0 0.5rem rgba(0, 0, 0, 0.5);
 $shadow-small: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
 
+$shadow-btm: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+$shadow-top: 0 -0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+
+$shadow-sm: $shadow-small;
+
 /*
  * Border-Radius
  */

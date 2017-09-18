@@ -1,7 +1,7 @@
 module RegionalAmbassador
   class JudgeAssignmentsController < RegionalAmbassadorController
     def new
-      @team = Team.for_ambassador(current_ambassador)
+      @team = Team.in_region(current_ambassador)
         .includes(:judge_assignments)
         .find(params.fetch(:team_id))
 
@@ -17,7 +17,7 @@ module RegionalAmbassador
     end
 
     def create
-      @team = Team.for_ambassador(current_ambassador).find(assignment_params.fetch(:team_id))
+      @team = Team.in_region(current_ambassador).find(assignment_params.fetch(:team_id))
       event = @team.selected_regional_pitch_event
 
       assignment_params.fetch(:judge_profile_id).reject(&:blank?).each do |id|

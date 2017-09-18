@@ -1,0 +1,23 @@
+<div class="grid grid--bleed grid--justify-space-around">
+  <div class="grid__col-auto">
+    <ul class="menu horizontal subnav">
+      <li>
+        <%= link_to 'All teams',
+          regional_ambassador_teams_path,
+          class: al(regional_ambassador_teams_path) %>
+      </li>
+
+      <li>
+        <%= link_to 'Team Submissions',
+          regional_ambassador_team_submissions_path,
+          class: al(regional_ambassador_team_submissions_path) %>
+      </li>
+
+      <li>
+        <%= link_to 'Scores',
+          regional_ambassador_scores_path,
+          class: al(regional_ambassador_scores_path) %>
+      </li>
+    </ul>
+  </div>
+</div>

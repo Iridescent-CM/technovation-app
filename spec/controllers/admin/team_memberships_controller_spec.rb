@@ -17,7 +17,7 @@ RSpec.describe Admin::TeamMembershipsController do
         account_id: mentor.account_id,
       }
 
-      expect(team.mentors).to eq([mentor])
+      expect(team.reload.mentors).to eq([mentor])
     end
 
     it "can add students" do

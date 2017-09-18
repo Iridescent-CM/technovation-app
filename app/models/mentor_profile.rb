@@ -1,5 +1,28 @@
 class MentorProfile < ActiveRecord::Base
-  scope :full_access, -> {
+  scope :unmatched, -> {
+    select("DISTINCT #{table_name}.*")
+      .joins(:current_account)
+      .includes(:account)
+      .references(:accounts)
+      .left_outer_joins(:current_teams)
+      .where("teams.id IS NULL")
+  }
+
+  scope :in_region, ->(ambassador) {
+    if ambassador.country == "US"
+      joins(:account)
+        .where(
+          "accounts.country = ? AND accounts.state_province = ?",
+          "US",
+          ambassador.state_province
+        )
+    else
+      joins(:account)
+        .where("accounts.country = ?", ambassador.country)
+    end
+  }
+
+  scope :onboarded, -> {
     joins(account: :consent_waiver)
     .includes(account: :background_check)
     .references(:accounts, :background_checks)
@@ -53,21 +76,28 @@ class MentorProfile < ActiveRecord::Base
   scope :virtual, -> { where("mentor_profiles.virtual = ?", true) }
 
   scope :current, -> {
-    joins(account: { season_registrations: :season })
-    .where("season_registrations.status = ? AND seasons.year = ?",
-           SeasonRegistration.statuses[:active],
-           Season.current.year)
+    joins(:current_account)
   }
 
   belongs_to :account, touch: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
+  belongs_to :current_account, -> { current },
+    foreign_key: :account_id,
+    class_name: "Account",
+    required: false
+
   has_many :mentor_profile_expertises, dependent: :destroy
   has_many :expertises, through: :mentor_profile_expertises
 
   has_many :memberships, as: :member, dependent: :destroy
   has_many :teams, through: :memberships
+
+  has_many :current_teams, -> { current },
+    through: :memberships,
+    source: :team
+
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id
@@ -198,13 +228,6 @@ class MentorProfile < ActiveRecord::Base
         background_check_complete? and
           location_confirmed? and
             not bio.blank?
-  end
-
-  def full_access_enabled?
-    ActiveSupport::Deprecation.warn(
-      "#full_access_enabled? is deprecated. Please use #onboarded?"
-    )
-    onboarded?
   end
 
   private
