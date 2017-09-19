@@ -25,9 +25,7 @@
         <%= b.check_box(
           id: "gender_#{b.value}",
           class: "toggle-based-search",
-          checked: params[:search_filter][:gender_identities].map(&:to_i).include?(
-            b.value
-          )
+          checked: gender_identity_params.include?(b.value),
         ) %>
 
         <%= b.label text: b.text, for: "gender_#{b.value}" %>

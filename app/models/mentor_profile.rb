@@ -58,7 +58,10 @@ class MentorProfile < ActiveRecord::Base
         ids.uniq
       )
     elsif ids == all_genders
-      joins(:account).where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
+      joins(:account)
+        .where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
+    elsif ids.empty?
+      where()
     else
       joins(:account).where("accounts.gender IN (?)", ids)
     end
