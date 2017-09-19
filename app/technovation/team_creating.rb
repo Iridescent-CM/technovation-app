@@ -1,7 +1,7 @@
 class TeamCreating
   def self.execute(team, profile, context)
     if team.seasons.empty?
-      RegisterToSeasonJob.perform_later(team)
+      RegisterToSeasonJob.perform_now(team)
     end
 
     TeamRosterManaging.add(team, profile)
