@@ -1,0 +1,19 @@
+<h1>Season checklist</h1>
+<%= render partial: "student/dashboards/checklist/complete_registration",
+  locals: { complete: current_student.onboarded? }
+%>
+
+<%= render partial: "student/dashboards/checklist/form_a_team",
+  locals: { complete: current_student.is_on_team? }
+%>
+
+<%= render partial: "student/dashboards/checklist/complete_submission",
+  locals: {
+    complete: current_student.team.submission.complete?,
+    unlocked: (
+      current_student.onboarded? and
+        current_student.is_on_team? and
+          SeasonToggles.team_submissions_editable?
+    )
+  }
+%>

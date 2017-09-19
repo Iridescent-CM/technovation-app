@@ -1,9 +1,8 @@
 .navigation {
   background: #903D54 image-url('header-background.png') repeat-x;
-  margin: 0;
+  margin: 0 0 1.5rem;
   padding: 0;
   overflow: visible;
-  font-size: 0;
 
   .icon-navicon {
     position: absolute;
@@ -26,10 +25,8 @@
 
   .logo {
     display: block;
-    background: image-url("tc-logo-white-tm.png") no-repeat;
-    width: 193px;
-    height: 44px;
-    margin: 0.5rem 1rem;
+    width: 230px;
+    padding: 0.5rem 1rem;
   }
 
   .menu {
@@ -63,18 +60,6 @@
         transition: height 0.15s;
         width: 100%;
       }
-    }
-  }
-}
-
-.subnav {
-  a {
-    color: black;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-
-    &:hover, &.active {
-      opacity: 1;
     }
   }
 }

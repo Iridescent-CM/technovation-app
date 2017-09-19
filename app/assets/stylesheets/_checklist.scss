@@ -1,0 +1,39 @@
+.checklist-heading {
+  font-size: 1.5rem;
+  margin-top: 0.6em;
+  padding: 0;
+
+  & > span {
+    vertical-align: middle;
+  }
+
+  .icon-check-circle {
+    display: none;
+  }
+
+  .icon-lock {
+    display: none;
+  }
+
+  .locked {
+    .icon-circle-o {
+      display: none;
+    }
+
+    .icon-lock {
+      display: inline-block;
+    }
+  }
+
+  .complete {
+    .icon-circle-o {
+      display: none;
+    }
+
+    .icon-check-circle {
+      display: inline-block;
+      color: $shamrock-mid;
+    }
+  }
+}
+

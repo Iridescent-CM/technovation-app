@@ -1,0 +1,16 @@
+<h1 class="checklist-heading">
+  <span class="<%= 'complete' if complete %>">
+    <%= web_icon('check-circle') %>
+    <%= web_icon('circle-o') %>
+  </span>
+  Complete your registration
+</h1>
+<% if complete %>
+  <p>
+    Your registration is complete!
+  </p>
+<% else %>
+  <p>
+    To be eligible for the competition, please complete your registration. 
+  </p>
+<% end %>

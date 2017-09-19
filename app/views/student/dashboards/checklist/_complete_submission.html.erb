@@ -1,0 +1,39 @@
+<h1 class="checklist-heading">
+  <span class="<%= 'locked' unless unlocked %> <%= 'complete' if complete %>">
+    <%= web_icon('lock') %>
+    <%= web_icon('check-circle') %>
+    <%= web_icon('circle-o') %>
+  </span>
+  Complete your team submission
+</h1>
+<% if complete %>
+  Woo!
+<% else %>
+  <% if SeasonToggles.team_submissions_editable? %>
+    <% if current_team.present? and current_student.onboarded? %>
+      <p>
+        Work as a team to complete your submission for the competition.
+      </p>
+    <% else %>
+      <p>
+        Before you can start your submission, you have to:
+      </p>
+      <ul>
+        <% if not current_team.present? %>
+          <li>Create or join a team.</li>
+        <% end %>
+        <% if current_student.onboarding? %>
+          <li>Finish all registration steps.</li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% else %>
+    <p>Starting a submission is not available at this time.</p>
+
+    <p>
+      Contact
+      <%= mail_to ENV.fetch("HELP_EMAIL") %>
+      if you have questions.
+    </p>
+  <% end %>
+<% end %>

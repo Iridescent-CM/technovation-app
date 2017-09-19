@@ -1,0 +1,19 @@
+<% if SeasonToggles.team_submissions_editable? and
+     current_team.present? and
+     current_student.onboarded?
+%>
+  <li>
+    <div class="flags">
+      <span class="flag flag-success">
+        Submission
+      </span>
+    </div>
+
+    <% if current_team.submission.present? %>
+      <%= render 'student/dashboards/completion_steps/team_submission_progress',
+        submission: current_team.submission %>
+    <% else %>
+      <%= render 'student/dashboards/completion_steps/start_team_submission' %>
+    <% end %>
+  </li>
+<% end %>

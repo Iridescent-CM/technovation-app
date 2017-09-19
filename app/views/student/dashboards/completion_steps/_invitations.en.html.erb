@@ -1,0 +1,47 @@
+<% if not current_student.is_on_team? %>
+  <li>
+    <div class="flags">
+      <span class="flag flag-success">
+        Form a team
+      </span>
+    </div>
+
+    <h1 class="content-heading">Team invitations</h1>
+    <% if invites.any? %>
+      <p>You have been invited!</p>
+
+      <% if invites.many? %>
+        <p class="hint">You can only accept one!</p>
+      <% end %>
+
+      <% invites.each do |invite| %>
+        <%= content_tag :div, id: dom_id(invite) do %>
+          <div class="grid grid--bleed">
+            <div class="grid__col-4">
+              <div class="grid__cell">
+                <%= image_tag invite.team.team_photo,
+                  class: "thumbnail-md grid__cell-img" %>
+              </div>
+            </div>
+
+            <div class="grid__col-8">
+              <div class="grid__cell">
+                <strong>From team: <%= invite.team_name %></strong>
+
+                <p>
+                  <%= link_to "Open this invitation",
+                    send("#{current_scope}_team_member_invite_path", invite) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>
+        You have no pending invitations. When a team invites you to join,
+        you will see the invitation here.
+      </p>
+    <% end %>
+  </li>
+<% end %>

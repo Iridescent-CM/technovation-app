@@ -1,0 +1,25 @@
+<h1 class="checklist-heading">
+  <span class="<%= 'complete' if complete %>">
+    <%= web_icon('check-circle') %>
+    <%= web_icon('circle-o') %>
+  </span>
+  <%= t("views.profile_requirements.create_join_team.heading") %>
+</h1>
+<% if complete %>
+  <p>
+    You are on a team!
+  </p>
+<% else %>
+  <p>
+    <%= t("views.profile_requirements.create_join_team.labels.student") %>
+  </p>
+  <p>
+    Use our
+
+    <%= link_to "guide to team building",
+      "http://www.technovationchallenge.org/curriculum/buildateam/",
+      target: "_blank" %>
+
+    if you need some help to get started.
+  </p>
+<% end %>

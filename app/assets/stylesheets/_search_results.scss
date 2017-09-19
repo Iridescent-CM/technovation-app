@@ -62,31 +62,41 @@
       }
     }
   }
+}
 
-  .flags {
-    position: absolute;
-    top: 1rem;
-    right: 0;
-    z-index: $z-under-shade;
-    -webkit-font-smoothing: antialiased;
+.pagination {
+  padding: 1rem 0;
 
-    .flag {
-      display: block;
-      margin: 0 0 0.5rem;
-      padding: 0.2rem 0.5rem;
-      text-align: right;
-      font-size: 0.9rem;
-      font-weight: 700;
-      box-shadow: $shadow-small;
+  a,
+  .current {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 
-      &.flag-success {
-        background: $mulberry;
-        color: white;
-      }
+  .current {
+    font-weight: 700;
+    font-style: normal;
+  }
 
-      &.flag-notice {
-        background: $marine;
-      }
+  a {
+    background: white;
+    box-shadow: $shadow-default;
+  }
+
+  .disabled {
+    color: #999;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 479px) {
+  .pagination {
+    a,
+   .current {
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
     }
   }
 }

@@ -1,0 +1,21 @@
+<% if not current_student.is_on_team? %>
+  <li>
+    <div class="flags">
+      <span class="flag flag-success">
+        Form a team
+      </span>
+    </div>
+
+    <h1 class="content-heading">Register a new team</h1>
+
+    <p>
+      Create your own team and then invite your other team members, or let team members find you.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to t("views.profile_requirements.create_join_team.links.create.text"),
+        [:new, :student, :team],
+        class: "button" %>
+    </div>
+  </li>
+<% end %>
