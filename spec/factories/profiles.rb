@@ -77,6 +77,7 @@ FactoryGirl.define do
       country "US"
       email nil
       password nil
+      date_of_birth nil
       not_onboarded false
     end
 
@@ -90,6 +91,7 @@ FactoryGirl.define do
       attrs = FactoryGirl.attributes_for(:account)
 
       m.build_account(attrs.merge(
+        date_of_birth: e.date_of_birth || attrs[:date_of_birth],
         city: e.city || attrs[:city] || "Chicago",
         state_province: e.state_province || attrs[:state_province] || "IL",
         country: e.country || attrs[:country],
@@ -99,7 +101,7 @@ FactoryGirl.define do
         password: e.password || attrs[:password],
       ))
 
-      unless m.background_check.present? or e.not_onboarded
+      if m.requires_background_check? and not e.not_onboarded # TODO: not not_onboarded :/
         m.account.build_background_check(FactoryGirl.attributes_for(:background_check))
       end
 

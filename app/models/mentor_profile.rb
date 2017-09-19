@@ -169,13 +169,16 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def background_check_complete?
-    # TODO got a repeat check in this and the next method
-    country != "US" or (background_check.present? and background_check.clear?)
+    return true if not requires_background_check?
+
+    background_check.present? and
+      background_check.clear?
   end
 
   def requires_background_check?
-    country == "US" and
-      not background_check_complete?
+    age >= 18 and
+      country == "US" and
+        not (background_check.present? and background_check.clear?)
   end
 
   def bio_complete?
