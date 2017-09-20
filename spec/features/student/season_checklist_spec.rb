@@ -56,7 +56,7 @@ RSpec.feature "Dashboard season checklist" do
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_content("Working on your submission is not allowed")
+    expect(page).to have_content("Working on your app submission is not allowed")
     within(".checklist__submission") {
       expect(page).to have_css(".icon-lock")
       expect(page).to have_css(".icon-circle-o", visible: false)
@@ -71,7 +71,7 @@ RSpec.feature "Dashboard season checklist" do
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_content("Before you can start your submission")
+    expect(page).to have_content("Before you can start your app submission")
     within(".checklist__submission") {
       expect(page).to have_css(".icon-lock")
       expect(page).to have_css(".icon-circle-o", visible: false)
