@@ -39,6 +39,7 @@ RSpec.describe Student::SignupsController do
 
     it "redirects to the student dashboard" do
       expect(response).to redirect_to(student_dashboard_path)
+      expect(flash[:success]).to eq("Welcome to Technovation!")
     end
 
     it "emails the welcome email to the student" do
