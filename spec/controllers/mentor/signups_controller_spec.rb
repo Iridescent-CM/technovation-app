@@ -14,6 +14,7 @@ RSpec.describe Mentor::SignupsController do
         )
       }
 
+      expect(flash[:success]).to eq("Welcome to Technovation!")
       expect(MentorProfile.last.bio).to eq("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet.")
     end
   end
