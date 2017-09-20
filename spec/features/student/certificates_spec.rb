@@ -14,6 +14,8 @@ RSpec.feature "Student certificates" do
   end
 
   scenario "generate a completion cert" do
+    skip "Rebuilding student dashboard: certs not back yet"
+
     student = FactoryGirl.create(:student, :on_team)
     FactoryGirl.create(:team_submission, team: student.team)
 
@@ -28,6 +30,8 @@ RSpec.feature "Student certificates" do
   end
 
   scenario "generate a regional grand prize cert" do
+    skip "Rebuilding student dashboard: certs not back yet"
+
     student = FactoryGirl.create(:student, :on_team)
 
     rpe = FactoryGirl.create(:rpe)

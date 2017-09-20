@@ -1,8 +1,7 @@
-<% if SeasonToggles.team_submissions_editable? and
-     current_team.present? and
+<% if current_team.present? and
      current_student.onboarded?
 %>
-  <li>
+  <li id="your-submission">
     <div class="flags">
       <span class="flag flag-success">
         Submission

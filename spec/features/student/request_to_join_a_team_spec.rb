@@ -31,7 +31,7 @@ RSpec.feature "Students request to join a team",
     end
 
     scenario "the requesting student can see their pending request" do
-      within('.join_request') do
+      within('.steps') do
         expect(page).to have_content("You have asked to join a team")
         expect(page).to have_content(team.name)
         expect(page).to have_content(team.primary_location)

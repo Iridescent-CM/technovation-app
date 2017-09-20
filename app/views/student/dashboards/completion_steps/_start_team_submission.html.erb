@@ -1,13 +1,25 @@
-<h1>Start Submitting Today!</h1>
+<% if SeasonToggles.team_submissions_editable? %>
+  <h1>Start Your Team Submission</h1>
+  <p>
+    You and your teammates can begin submitting your app now!
+    As you work through the curriculum, you can upload it in parts.
+    You can also edit as much as you need to until the deadline!
+  </p>
 
-<p>
-  You and your teammates can begin submitting your app now!
-  As you work through the curriculum, you can upload it in parts.
-  You can also edit as much as you need to until the deadline!
-</p>
-
-<p>
-  <%= link_to 'Begin your submission',
-    new_student_team_submission_path,
-    class: "button" %>
-</p>
+  <p>
+    <%= link_to 'Begin your submission',
+      new_student_team_submission_path,
+      class: "button" %>
+  </p>
+<% else %>
+  <h1>Your Team Submission</h1>
+  <p>
+  Submissions are currently locked. Starting a submission
+  is not available at this time.
+  </p>
+  <p>
+    Contact
+    <%= mail_to ENV.fetch("HELP_EMAIL") %>
+    if you have questions.
+  </p>
+<% end %>

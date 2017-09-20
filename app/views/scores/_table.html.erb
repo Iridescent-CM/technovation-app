@@ -1,0 +1,21 @@
+<table class="ra-participants-list" style="align:center">
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Judge Location</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% scores.each do |score| %>
+      <tr>
+        <td><%= score.total %> </td>
+        <td><%= score.judge_profile.address_details %></td>
+        <td>
+          <%= link_to 'View details',
+            send("#{current_scope}_score_path", score) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

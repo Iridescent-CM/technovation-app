@@ -17,12 +17,16 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
+      skip "Rebuilding student dashboard: RPE selection not back yet"
+
       SeasonToggles.select_regional_pitch_event="on"
       visit path
       expect(page).to have_link("remove your team from this event")
     end
 
     scenario "Toggled off" do
+      skip "Rebuilding student dashboard: RPE selection not back yet"
+
       SeasonToggles.select_regional_pitch_event="off"
       visit path
       expect(page).not_to have_link("remove your team from this event")

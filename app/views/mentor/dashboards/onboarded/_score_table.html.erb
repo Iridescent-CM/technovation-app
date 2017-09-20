@@ -6,7 +6,7 @@
     <%= team.submission.public_send("#{round}_average_score") %>
   </h3>
 
-  <%= render 'student/dashboards/onboarded/scores/scores_table',
+  <%= render 'scores/scores_table',
     team: team,
     round: round,
     scores: scores %>

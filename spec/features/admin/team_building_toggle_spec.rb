@@ -64,18 +64,15 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
       toggle_on
       visit path
 
-      within("#your-submission") do
-        expect(page).to have_link("Join a team")
-        expect(page).to have_link("Register your team")
-      end
-
-      within("#live-events") do
+      within(".steps") do
         expect(page).to have_link("Join a team")
         expect(page).to have_link("Register your team")
       end
     end
 
     scenario "Toggle off" do
+      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
+
       toggle_off
       visit path
 
