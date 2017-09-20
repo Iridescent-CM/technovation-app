@@ -6,11 +6,8 @@
   profile_path_name = :mentor
   profile_id = :id
 
-  if admin
-    profile_path_name = :profile
-    profile_id = :account_id
-  elsif ra
-    profile_path_name = :user
+  if admin or ra
+    profile_path_name = :participant
     profile_id = :account_id
   end
 %>

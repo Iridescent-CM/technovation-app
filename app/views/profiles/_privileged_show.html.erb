@@ -1,7 +1,8 @@
 <%
   title ||= t("views.accounts.show.title")
-  edit ||= false
+  editing ||= false
   admin ||= false
+  edit_path ||= ""
 %>
 
 <% provide :title, title %>
@@ -11,27 +12,32 @@
     <div class="grid__cell">
       <h3><%= title %></h3>
 
-      <%= image_tag account.profile_image_url,
+      <%= image_tag profile.profile_image_url,
         class: "thumbnail-lg grid__cell-img" %>
+
+      <% if admin %>
+        <%= link_to "Login as #{profile.full_name}",
+          admin_participant_session_path(profile.account) %>
+      <% end %>
 
       <dl>
         <dt><%= t('models.account.full_name') %></dt>
-        <dd><%= account.full_name %></dd>
+        <dd><%= profile.full_name %></dd>
 
         <dt><%= t('models.account.email') %></dt>
-        <dd><%= mail_to account.email %></dd>
+        <dd><%= mail_to profile.email %></dd>
 
         <dt><%= t('models.account.age') %></dt>
-        <dd><%= account.age %></dd>
+        <dd><%= profile.age %></dd>
 
-        <% unless account.student_profile.present? %>
+        <% unless profile.student_profile.present? %>
           <dt><%= t('models.account.gender') %></dt>
-          <dd><%= account.gender %></dd>
+          <dd><%= profile.gender %></dd>
         <% end %>
 
         <dt><%= t('models.account.address') %></dt>
         <dd>
-          <%= account.address_details %>
+          <%= profile.address_details %>
           <% if admin %>
             <p>
               <%= link_to "Edit location", location_edit_path %>
@@ -39,17 +45,19 @@
           <% end %>
         </dd>
 
-        <%= render "#{current_scope}/profiles/profile",
-          account: account.public_send("#{account.scope_name}_profile") %>
+        <%= render "#{profile.scope_name}/profiles/profile",
+          edit_path: edit_path,
+          editing: editing,
+          account: profile.public_send("#{profile.scope_name}_profile") %>
 
-        <% if account.respond_to?(:bio) %>
+        <% if profile.respond_to?(:bio) %>
           <dt><%= t('models.profile.bio') %></dt>
-          <dd><%= simple_format account.bio %></dd>
+          <dd><%= simple_format profile.bio %></dd>
         <% end %>
       </dl>
 
-      <% if edit %>
-        <%= link_to 'Edit', path %>
+      <% if editing %>
+        <%= link_to 'Edit', edit_path %>
       <% end %>
     </div>
   </div>

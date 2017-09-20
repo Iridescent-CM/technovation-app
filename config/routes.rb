@@ -170,9 +170,10 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :show
 
-    resources :profiles
+    resources :participants
+    resources :participant_sessions, only: [:show, :destroy]
+
     resources :profile_locations, only: :edit
-    resources :regional_ambassadors, only: [:index, :show, :update]
 
     resources :teams, except: :destroy
     resources :team_submissions, except: :destroy
@@ -192,7 +193,6 @@ Rails.application.routes.draw do
     resources :scores, only: [:index, :show]
     resources :semifinals_scores, only: [:index, :show]
     resources :submission_score_restorations, only: :update
-
 
     resource :mentor_drop_out, only: :create
     resource :paper_parental_consent, only: :create

@@ -3,13 +3,16 @@ module Admin
     def self.call(params)
       params[:type] = "All" if params[:type].blank?
       params[:how_heard] = "All" if params[:how_heard].blank?
-      params[:parental_consent_status] = "All" if params[:parental_consent_status].blank?
       params[:team_status] = "All" if params[:team_status].blank?
       params[:cleared_status] = "All" if params[:cleared_status].blank?
       params[:season] = Season.current.year if params[:season].blank?
       params[:country] = "All" if params[:country].blank?
 
-      season = Season.find_by(year: params[:season])
+      if params[:parental_consent_status].blank?
+        params[:parental_consent_status] = "All" 
+      end
+
+      season = Season.new(params[:season])
 
       klass = if params[:type] == "All"
                 Account
@@ -17,25 +20,22 @@ module Admin
                 Account.joins("#{params[:type].underscore}_profile".to_sym)
               end
 
-      accounts = klass.joins(season_registrations: :season)
-        .where("season_registrations.season_id = ?", season.id)
+      accounts = klass.by_season(season)
         .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
       unless params[:text].blank?
-        results = accounts.search(
-          query: {
-            query_string: {
-              query: params[:text]
-            }
-          },
-          from: 0,
-          size: 10_000,
-        ).results
-        accounts = accounts.where(id: results.flat_map { |r| r._source.id })
+        names = filter.text.split(' ')
+        accounts = accounts.where(
+          "accounts.first_name ilike '%#{names.first}%' OR
+          accounts.last_name ilike '%#{names.last}%' OR
+          accounts.email ilike '%#{names.first}%'"
+        )
       end
 
       unless params[:how_heard] == "All"
-        accounts = accounts.where(referred_by: Account.referred_bies[params[:how_heard]])
+        accounts = accounts.where(
+          referred_by: Account.referred_bies[params[:how_heard]]
+        )
       end
 
       unless params[:country] == "All"
@@ -48,67 +48,22 @@ module Admin
           accounts = accounts.joins(student_profile: :parental_consent)
         when "Sent"
           accounts = accounts.includes(student_profile: :parental_consent)
-                             .references(:parental_consents)
-                             .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NOT NULL")
+            .references(:parental_consents)
+            .where(
+              "parental_consents.id IS NULL AND
+               student_profiles.parent_guardian_email IS NOT NULL"
+            )
         when "No Info Entered"
           accounts = accounts.includes(student_profile: :parental_consent)
-                             .references(:parental_consents)
-                             .where("parental_consents.id IS NULL AND student_profiles.parent_guardian_email IS NULL")
+            .references(:parental_consents)
+            .where(
+              "parental_consents.id IS NULL AND
+              student_profiles.parent_guardian_email IS NULL"
+            )
         end
-
-        case params[:team_status]
-        when "On a team"
-          accounts = accounts.where("student_profiles.id IN
-            (SELECT DISTINCT(member_id) FROM memberships
-                                        WHERE memberships.member_type = 'StudentProfile'
-                                        AND memberships.team_id IN
-
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", season.id)
-        when "No team"
-          accounts = accounts.where("student_profiles.id NOT IN
-            (SELECT DISTINCT(member_id) FROM memberships
-                                        WHERE memberships.member_type = 'StudentProfile'
-                                        AND memberships.team_id IN
-
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", season.id)
-        end
-
       end
 
       if params[:type] == "Mentor"
-        case params[:team_status]
-        when "On a team"
-          accounts = accounts.where("mentor_profiles.id IN
-            (SELECT DISTINCT(member_id) FROM memberships
-                                        WHERE memberships.member_type = 'MentorProfile'
-                                        AND memberships.team_id IN
-
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", season.id)
-        when "No team"
-          accounts = accounts.where("mentor_profiles.id NOT IN
-            (SELECT DISTINCT(member_id) FROM memberships
-                                        WHERE memberships.member_type = 'MentorProfile'
-                                        AND memberships.team_id IN
-
-              (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-                (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                                  WHERE season_registrations.registerable_type = 'Team'
-                                                  AND season_registrations.season_id = ?)))", season.id)
-        end
-
         case params[:cleared_status]
         when "Clear"
           accounts = accounts.joins(:consent_waiver)
@@ -128,6 +83,14 @@ module Admin
             .where("consent_waivers.id IS NULL OR
                     consent_waivers.voided_at IS NOT NULL")
         end
+      end
+
+      case params[:team_status]
+      when "On a team"
+        accounts = accounts.joins(:current_teams)
+      when "No team"
+        accounts = accounts.left_outer_joins(:current_teams)
+          .where("teams.id IS NULL")
       end
 
       accounts.distinct
