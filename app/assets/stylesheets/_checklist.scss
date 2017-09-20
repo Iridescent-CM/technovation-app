@@ -1,39 +1,42 @@
-.checklist-heading {
-  font-size: 1.5rem;
-  margin-top: 0.6em;
-  padding: 0;
+.checklist {
+  li {
+    h1 {
+      font-size: 1.5rem;
+      margin-top: 0.6em;
+      padding: 0;
 
-  & > span {
-    vertical-align: middle;
-  }
+      & > span {
+        vertical-align: middle;
+      }
 
-  .icon-check-circle {
-    display: none;
-  }
+      .icon-check-circle {
+        display: none;
+      }
 
-  .icon-lock {
-    display: none;
-  }
+      .icon-lock {
+        display: none;
+      }
 
-  .locked {
-    .icon-circle-o {
-      display: none;
-    }
+      .locked {
+        .icon-circle-o {
+          display: none;
+        }
 
-    .icon-lock {
-      display: inline-block;
-    }
-  }
+        .icon-lock {
+          display: inline-block;
+        }
+      }
 
-  .complete {
-    .icon-circle-o {
-      display: none;
-    }
+      .complete {
+        .icon-circle-o {
+          display: none;
+        }
 
-    .icon-check-circle {
-      display: inline-block;
-      color: $shamrock-mid;
+        .icon-check-circle {
+          display: inline-block;
+          color: $shamrock-mid;
+        }
+      }
     }
   }
 }
-

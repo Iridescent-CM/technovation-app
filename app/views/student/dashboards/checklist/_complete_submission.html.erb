@@ -1,22 +1,22 @@
-<h1 class="checklist-heading">
+<h1>
   <span class="<%= 'locked' unless unlocked %> <%= 'complete' if complete %>">
     <%= web_icon('lock') %>
     <%= web_icon('check-circle') %>
     <%= web_icon('circle-o') %>
   </span>
-  Complete your team submission
+  Submit your app
 </h1>
 <% if complete %>
-  Woo!
+  <%# TODO %>
 <% else %>
   <% if SeasonToggles.team_submissions_editable? %>
     <% if current_team.present? and current_student.onboarded? %>
       <p>
-        Work as a team to complete your submission for the competition.
+        Work as a team to complete your app submission for the competition.
       </p>
     <% else %>
       <p>
-        Before you can start your submission, you have to:
+        Before you can start your app submission, you have to:
       </p>
       <ul>
         <% if not current_team.present? %>
@@ -28,6 +28,6 @@
       </ul>
     <% end %>
   <% else %>
-    <p>Working on your submission is not allowed at this time.</p>
+    <p>Working on your app submission is not allowed at this time.</p>
   <% end %>
 <% end %>
