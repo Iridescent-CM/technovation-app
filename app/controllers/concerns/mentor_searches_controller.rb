@@ -1,6 +1,10 @@
 module MentorSearchesController
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :gender_identity_params
+  end
+
   def new
     @search_filter = SearchFilter.new(search_params)
 
@@ -62,5 +66,11 @@ module MentorSearchesController
       h[:country] = current_account.country
       h[:location] = current_account.address_details
     end
+  end
+
+  def gender_identity_params
+    params[:search_filter][:gender_identities]
+      .reject(&:blank?)
+      .map(&:to_i)
   end
 end
