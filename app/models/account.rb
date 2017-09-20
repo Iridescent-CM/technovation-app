@@ -6,6 +6,7 @@ class Account < ActiveRecord::Base
 
   include PublicActivity::Model
   tracked
+
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
     account.update_address_details_from_reverse_geocoding(results)
@@ -76,6 +77,7 @@ class Account < ActiveRecord::Base
   has_secure_token :auth_token
   has_secure_token :consent_token
   has_secure_token :password_reset_token
+  has_secure_token :session_token
   has_secure_password
 
   validates :email,

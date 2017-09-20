@@ -7,8 +7,7 @@
         <% if current_judge.mentor_profile or
             current_judge.created_at < Date.new(2017, 3, 8) %>
           <small>
-            <%= link_to fa_icon('refresh', text: "Switch to Mentoring"),
-              mentor_dashboard_path %>
+            <%= link_to "Switch to Mentoring", mentor_dashboard_path %>
           </small>
         <% end %>
       </h1>
@@ -19,7 +18,7 @@
         <%= SeasonToggles.dashboard_text(:judge) %>
 
         <small>
-          <%= link_to fa_icon('gavel', text: 'Complete Judge Training'),
+          <%= link_to 'Complete Judge Training',
             'http://technovationchallenge.org/judge-training/',
             target: :_blank %>
         </small>

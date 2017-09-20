@@ -25,7 +25,8 @@ class JudgeController < ApplicationController
 
   private
   def current_judge
-    @current_judge ||= current_account.judge_profile
+    @current_judge ||= current_account.judge_profile ||
+      current_session.judge_profile
   end
 
   def create_mentor_judge_on_dashboard

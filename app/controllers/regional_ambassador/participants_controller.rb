@@ -1,5 +1,5 @@
 module RegionalAmbassador
-  class AccountsController < RegionalAmbassadorController
+  class ParticipantsController < RegionalAmbassadorController
     def index
       @students = StudentProfile.in_region(current_ambassador)
         .includes(:team_member_invites, :join_requests)
@@ -17,7 +17,7 @@ module RegionalAmbassador
     end
 
     def show
-      @account = Account.find(params[:id])
+      @participant = Account.in_region(current_ambassador).find(params[:id])
     end
 
     private

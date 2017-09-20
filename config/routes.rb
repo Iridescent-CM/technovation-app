@@ -114,9 +114,9 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
-    resource :account, only: :update
 
-    resources :accounts, only: [:index, :show, :edit, :update]
+    resources :participants, only: [:index, :show, :edit, :update]
+    resources :participant_sessions, only: [:show, :destroy]
 
     resources :unmatched_students, only: :index
     resources :unmatched_mentors, only: :index

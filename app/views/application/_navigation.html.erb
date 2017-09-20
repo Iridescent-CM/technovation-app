@@ -1,3 +1,16 @@
+<% if current_session.authenticated? %>
+  <div class="notice notice--top">
+    You are logged in as <%= current_session.full_name %> |
+
+    <%= link_to "return to RA mode",
+      regional_ambassador_participant_session_path(current_session),
+      data: {
+        method: :delete,
+        turbolinks: 'false',
+      } %>
+
+  </div>
+<% end %>
 <header
   class="grid grid--bleed navigation <%= "logged-in" if current_account.authenticated? %>"
 >
