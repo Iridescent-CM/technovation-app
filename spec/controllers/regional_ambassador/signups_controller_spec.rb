@@ -14,6 +14,7 @@ RSpec.describe RegionalAmbassador::SignupsController do
         account_attributes: FactoryGirl.attributes_for(:account),
       ) }
 
+      expect(flash[:success]).to eq("Welcome to Technovation!")
       expect(RegionalAmbassadorProfile.last.bio).to eq("Hello, bio")
     end
   end

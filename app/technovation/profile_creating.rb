@@ -28,7 +28,8 @@ class ProfileCreating
     SignIn.(
       profile.account,
       controller,
-      redirect_to: "#{scope}_dashboard_path"
+      message: "Welcome to Technovation!",
+      redirect_to: "#{scope}_dashboard_path",
     )
   end
 end
