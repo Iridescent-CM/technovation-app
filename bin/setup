@@ -32,9 +32,6 @@ chdir APP_ROOT do
   puts "\n== Bootstrapping Technovation =="
   system! "rails bootstrap"
 
-  puts "\n== Bootstrapping the Search Engine =="
-  system! "rails bootstrap_search_engine"
-
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
 

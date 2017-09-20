@@ -1,5 +1,5 @@
 <div class="grid">
-  <div class="grid__col-sm-8 grid__col--bleed">
+  <div class="grid__col-sm-12 grid__col--bleed">
     <h3>Submission Progress</h3>
 
     <% unless SeasonToggles.team_submissions_editable? %>
@@ -17,8 +17,8 @@
 
 <%# see app/helpers/student_helper for SUBPROG function %>
 
-<div class="grid grid--bleed">
-  <div class="grid__col-sm-6">
+<div class="grid">
+  <div class="grid__col-sm-6 grid__col--bleed-x">
     <ul class="progress">
       <li class="<%= subprog(submission, "team-photo") %>">
         <%= web_icon('check-circle') %>
@@ -88,7 +88,7 @@
     <% end %>
   </div>
 
-  <div class="grid__col-sm-6">
+  <div class="grid__col-sm-6 grid__col--bleed-x">
     <ul class="progress">
       <li class="<%= subprog(submission, "screenshots") %>">
         <%= web_icon('check-circle') %>
