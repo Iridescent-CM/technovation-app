@@ -120,6 +120,18 @@ class Account < ActiveRecord::Base
       ) or NullAuth.new
   end
 
+  def can_be_a_mentor?
+    judge_profile.present? or regional_ambassador_profile.present?
+  end
+
+  def is_not_a_mentor?
+    not mentor_profile.present?
+  end
+
+  def is_an_ambassador?
+    regional_ambassador_profile.present?
+  end
+
   def email_confirmed!
     update(email_confirmed_at: Time.current)
   end
@@ -227,10 +239,10 @@ class Account < ActiveRecord::Base
     # TODO: this doesn't work well for accounts with multiple scopes
     if module_name and module_name === "judge"
       "judge"
-    elsif mentor_profile.present?
-      "mentor"
     elsif regional_ambassador_profile.present?
       "regional_ambassador"
+    elsif mentor_profile.present?
+      "mentor"
     elsif student_profile.present?
       "student"
     elsif judge_profile.present?

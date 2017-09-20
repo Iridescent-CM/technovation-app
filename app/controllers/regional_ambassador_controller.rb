@@ -17,6 +17,10 @@ class RegionalAmbassadorController < ApplicationController
       )
     end
 
+    if "regional_ambassador" != cookies[:last_profile_used]
+      cookies[:last_profile_used] = "regional_ambassador"
+    end
+
     # TODO: we are permitting all params in RA controllers!
     params.permit!
   }
