@@ -1,4 +1,4 @@
-<% if not account.location_confirmed? %>
+<% if not profile.location_confirmed? %>
   <li>
     <h1 class="content-heading">Enter your location details</h1>
 
@@ -24,7 +24,7 @@
         class: "button" %>
     </div>
   </li>
-<% elsif not account.location_confirmed? %>
+<% elsif not profile.location_confirmed? %>
   <%= content_tag :div,
     class: "modal",
     data: {
