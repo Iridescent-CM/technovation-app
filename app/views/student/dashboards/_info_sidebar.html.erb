@@ -1,0 +1,44 @@
+<div class="grid grid--align-content-start">
+
+  <% if certs ||= false %>
+    <div class="grid__col-xs-12">
+      <%= render 'student/dashboards/onboarded/certs_sidebar' %>
+    </div>
+  <% end %>
+
+  <div class="grid__col-md-12 grid__col-xs-6">
+    <h3>Curriculum</h3>
+
+    <p>
+      <%= link_to "Open the Technovation Curriculum",
+        "https://www.technovationchallenge.org/curriculum-intro/registered",
+        target: "_blank" %>
+    </p>
+
+    <h3>Google Made With Code</h3>
+
+    <p>
+      <%= link_to "Read the Technovation Primer",
+        "https://www.technovationchallenge.org/curriculum/madewithcodeprimer",
+        target: "_blank" %>
+    </p>
+  </div>
+
+  <div class="grid__col-md-12 grid__col-xs-6">
+    <h3>Submission Guide</h3>
+
+    <p>
+      <%= link_to "Read the Submission Guidelines",
+        "https://www.technovationchallenge.org/submission-guidelines/",
+        target: "_blank" %>
+    </p>
+
+    <h3>Judging Rubric</h3>
+
+    <p>
+      <%= link_to "Read the Judging Rubric",
+        "https://www.technovationchallenge.org/judging-rubric/",
+        target: "_blank" %>
+    </p>
+  </div>
+</div>
