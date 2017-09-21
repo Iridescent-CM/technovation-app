@@ -19,11 +19,13 @@ RSpec.describe Student::JoinRequestsController do
       expect(mail).to be_present, "no join request email sent"
       expect(mail.to).to eq([mentor.email])
 
-      url = mentor_team_url(team,
-                            host: ENV["HOST_DOMAIN"],
-                            port: ENV["HOST_DOMAIN"].split(":")[1])
+      url = mentor_join_request_url(
+        JoinRequest.last,
+        host: ENV["HOST_DOMAIN"],
+        port: ENV["HOST_DOMAIN"].split(":")[1]
+      )
 
-      expect(mail.body.to_s).to include("href=\"#{url}\"")
+      expect(mail.body.to_s).to include("href=\"#{url}")
     end
 
     it "redirects gracefully on dupe" do
@@ -55,7 +57,10 @@ RSpec.describe Student::JoinRequestsController do
     context "accepting the request" do
       before do
         ActionMailer::Base.deliveries.clear
-        put :update, params: { id: join_request.id, status: :approved }
+        put :update, params: {
+          id: join_request.review_token,
+          join_request: { status: :approved },
+        }
       end
 
       it "adds the mentor to the team" do
@@ -80,7 +85,10 @@ RSpec.describe Student::JoinRequestsController do
     context "declining the request" do
       before do
         ActionMailer::Base.deliveries.clear
-        put :update, params: { id: join_request.id, status: :declined }
+        put :update, params: {
+          id: join_request.review_token,
+          join_request: { status: :declined },
+        }
       end
 
       it "does not add the mentor to the team" do

@@ -37,13 +37,12 @@ RSpec.describe Mentor::JoinRequestsController do
 
       expect(bodies.sample.to_s).to include("Review This Request")
 
-      url = student_team_url(
-        team,
+      url = student_join_request_url(JoinRequest.last,
         host: ENV["HOST_DOMAIN"],
         port: ENV["HOST_DOMAIN"].split(":")[1]
       )
 
-      expect(bodies.sample.to_s).to include("href=\"#{url}\"")
+      expect(bodies.sample.to_s).to include("href=\"#{url}")
     end
   end
 end

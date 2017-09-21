@@ -221,7 +221,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def is_on?(team)
-    teams.include? team
+    teams.include?(team)
   end
 
   def onboarding?

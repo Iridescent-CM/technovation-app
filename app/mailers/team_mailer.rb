@@ -90,7 +90,11 @@ class TeamMailer < ApplicationMailer
       "team_mailer.join_request.extra.#{join_request.requestor_scope_name}",
       name: @first_name
     )
-    @url = send("#{recipient.scope_name}_team_url", join_request.team)
+    @url = send(
+      "#{recipient.scope_name}_join_request_url",
+      join_request,
+      email: recipient.email
+    )
 
     I18n.with_locale(recipient.locale) do
       mail to: recipient.email,

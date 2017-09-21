@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920161533) do
+ActiveRecord::Schema.define(version: 20170921152527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.string "email", null: false
@@ -130,17 +129,6 @@ ActiveRecord::Schema.define(version: 20170920161533) do
     t.integer "regional_pitch_event_id"
   end
 
-  create_table "events", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description", null: false
-    t.string "location", null: false
-    t.datetime "starts_at", null: false
-    t.integer "organizer_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organizer_id"], name: "index_events_on_organizer_id"
-  end
-
   create_table "expertises", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -173,14 +161,15 @@ ActiveRecord::Schema.define(version: 20170920161533) do
   end
 
   create_table "join_requests", id: :serial, force: :cascade do |t|
-    t.integer "requestor_id", null: false
     t.string "requestor_type", null: false
+    t.integer "requestor_id", null: false
     t.integer "team_id", null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "review_token"
     t.index ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id"
     t.index ["team_id"], name: "index_join_requests_on_team_id"
   end
@@ -209,8 +198,8 @@ ActiveRecord::Schema.define(version: 20170920161533) do
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
-    t.integer "member_id", null: false
     t.string "member_type", null: false
+    t.integer "member_id", null: false
     t.integer "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -249,17 +238,17 @@ ActiveRecord::Schema.define(version: 20170920161533) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "regarding_id"
     t.string "regarding_type"
+    t.integer "regarding_id"
     t.datetime "sent_at"
     t.datetime "delivered_at"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
-    t.integer "sender_id", null: false
     t.string "sender_type", null: false
-    t.integer "regarding_id", null: false
+    t.integer "sender_id", null: false
     t.string "regarding_type", null: false
+    t.integer "regarding_id", null: false
     t.hstore "recipients", null: false
     t.string "subject"
     t.text "body", null: false

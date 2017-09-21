@@ -39,6 +39,12 @@ en:
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
 
+    join_requests:
+      update:
+        accept: "Approve request from %{name}"
+        decline: "Decline this request"
+        not_accepted: "Someone already declined that join request."
+
     judge:
       dashboards:
         show:

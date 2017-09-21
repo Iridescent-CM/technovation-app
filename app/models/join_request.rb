@@ -27,6 +27,16 @@ class JoinRequest < ActiveRecord::Base
     to: :requestor,
     prefix: true
 
+  has_secure_token :review_token
+
+  def to_param
+    review_token
+  end
+
+  def requestor_name
+    requestor_full_name
+  end
+
   def approved!
     ActiveSupport::Deprecation.warn(
       "JoinRequest#approved! is deprecated. Please use JoinRequestApproved.(join_request)"
@@ -61,13 +71,13 @@ class JoinRequest < ActiveRecord::Base
 
   def status
     if deleted?
-      "Removed from team"
+      :deleted
     elsif approved?
-      "Accepted"
+      :accepted
     elsif declined?
-      "Declined"
+      :declined
     else
-      "Pending review"
+      :pending
     end
   end
 
