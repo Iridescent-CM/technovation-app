@@ -19,7 +19,9 @@ RSpec.feature "Admin / RA logging in as a user" do
       expect(current_path).to eq(student_team_path(student.team))
 
       click_link "return to RA mode"
-      expect(current_path).to eq(regional_ambassador_participant_path(student.account))
+      expect(current_path).to eq(
+        regional_ambassador_participant_path(student.account)
+      )
     end
 
     scenario "RA logging in as a mentor" do
@@ -35,7 +37,9 @@ RSpec.feature "Admin / RA logging in as a user" do
       expect(current_path).to eq(mentor_team_path(mentor.teams.first))
 
       click_link "return to RA mode"
-      expect(current_path).to eq(regional_ambassador_participant_path(mentor.account))
+      expect(current_path).to eq(
+        regional_ambassador_participant_path(mentor.account)
+      )
     end
 
     scenario "RA logging in as a judge" do
@@ -50,7 +54,9 @@ RSpec.feature "Admin / RA logging in as a user" do
       expect(current_path).to eq(judge_profile_path)
 
       click_link "return to RA mode"
-      expect(current_path).to eq(regional_ambassador_participant_path(judge.account))
+      expect(current_path).to eq(
+        regional_ambassador_participant_path(judge.account)
+      )
     end
   end
 
