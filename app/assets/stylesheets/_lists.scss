@@ -49,6 +49,7 @@ ol {
       margin: 0 0 1rem;
       box-shadow: $shadow-default;
       border: 1px solid #ccc;
+      position: relative;
 
       .step-actions {
         text-align: right;
