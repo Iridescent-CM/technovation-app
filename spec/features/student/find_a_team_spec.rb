@@ -22,14 +22,14 @@ RSpec.feature "Students find a team" do
       state_province: "CA"
     )
 
-    click_link "Join a team"
+    within(".navigation") { click_link "Join a team" }
 
     expect(page).to have_css(".search-result-head", text: team.name)
     expect(page).not_to have_css(".search-result-head", text: faraway_team.name)
   end
 
   scenario "request to join a team" do
-    click_link "Join a team"
+    within (".navigation") { click_link "Join a team" }
     click_link "Ask to join"
     click_button "Ask to join #{available_team.name}"
 
