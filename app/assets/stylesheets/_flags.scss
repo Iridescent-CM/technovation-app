@@ -1,0 +1,26 @@
+.flags {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  z-index: $z-under-shade;
+  -webkit-font-smoothing: antialiased;
+
+  .flag {
+    display: block;
+    margin: 0 0 0.5rem;
+    padding: 0.2rem 0.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: $shadow-small;
+
+    &.flag-success {
+      background: $mulberry;
+      color: white;
+    }
+
+    &.flag-notice {
+      background: $marine;
+    }
+  }
+}

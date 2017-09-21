@@ -1,13 +1,13 @@
 <h1>Complete your registration</h1>
 
 <ul class="steps">
-  <%= render 'completion_steps/consent_waiver', account: current_ambassador %>
+  <%= render 'completion_steps/consent_waiver', profile: current_ambassador %>
 
   <%= render 'completion_steps/background_check', profile: current_ambassador %>
 
-  <%= render 'completion_steps/location_details', account: current_ambassador %>
+  <%= render 'completion_steps/location_details', profile: current_ambassador %>
 
-  <%= render 'completion_steps/complete_profile', account: current_ambassador %>
+  <%= render 'completion_steps/complete_profile', profile: current_ambassador %>
 
   <%= render 'completion_steps/confirm_changed_email',
     profile: current_ambassador %>

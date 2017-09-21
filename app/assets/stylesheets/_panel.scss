@@ -10,6 +10,13 @@
   h2 {
     text-align: center;
   }
+
+  &.panel--left {
+    h1,
+    h2 {
+      text-align: left;
+    }
+  }
 }
 
 .legend {
