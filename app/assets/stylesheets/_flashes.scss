@@ -2,6 +2,12 @@
   width: 100%;
   margin: 0;
 
+  &.fixed {
+    position: fixed;
+    top: 1rem;
+    z-index: $z-modal;
+  }
+
   .flash {
     width: 80%;
     display: none;
