@@ -2,6 +2,7 @@
   document.addEventListener("turbolinks:load", function() {
     $(document).on('click', '.flash .icon-close', function() {
       $(this).closest('.flash').fadeOut('easeout', function() {
+        $("#flash").removeClass("fixed");
         $(this).remove();
       });
     });
@@ -23,7 +24,7 @@
         $flash.append($flashClose);
 
         $flash.hide();
-        $("#flash").html($flash);
+        $("#flash").addClass("fixed").html($flash);
         $flash.fadeIn();
       }
     }
