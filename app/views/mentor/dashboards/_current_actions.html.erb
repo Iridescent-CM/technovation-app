@@ -1,0 +1,13 @@
+<ul class="steps">
+  <%= render 'completion_steps/location_details', profile: current_mentor %>
+  <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
+  <%= render 'completion_steps/background_check', profile: current_mentor %>
+  <%= render 'completion_steps/complete_profile', profile: current_mentor %>
+  <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
+  <%= render "completion_steps/create_team" %>
+  <%= render "completion_steps/join_requests",
+    allow_many: true,
+    requests: current_mentor.join_requests.pending %>
+  <%= render "completion_steps/invitations",
+    invites: current_mentor.team_member_invites.pending %>
+</ul>
