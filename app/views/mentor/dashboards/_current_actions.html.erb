@@ -4,6 +4,7 @@
   <%= render 'completion_steps/background_check', profile: current_mentor %>
   <%= render 'completion_steps/complete_profile', profile: current_mentor %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
+  <%= render "mentor/dashboards/current_teams" %>
   <%= render "completion_steps/create_team" %>
   <%= render "completion_steps/join_requests",
     allow_many: true,

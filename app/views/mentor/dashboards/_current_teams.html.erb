@@ -1,0 +1,7 @@
+<% current_mentor.current_teams.each do |team| %>
+  <li>
+    <%= render "mentor/teams/team_list_item_content",
+      team: team,
+      type: :current %>
+  </li>
+<% end %>
