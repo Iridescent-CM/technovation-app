@@ -5,6 +5,10 @@ class Season
     @year = year
   end
 
+  def self.years
+    (2015..Season.current.year).to_a
+  end
+
   def self.current
     if Date.today < switch_date
       new(Date.today.year)

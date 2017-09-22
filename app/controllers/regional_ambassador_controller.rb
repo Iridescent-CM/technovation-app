@@ -46,6 +46,7 @@ class RegionalAmbassadorController < ApplicationController
   end
 
   def current_ambassador
-    @current_ambassador ||= current_account.regional_ambassador_profile
+    @current_ambassador ||= current_account.regional_ambassador_profile ||
+      current_session.regional_ambassador_profile
   end
 end

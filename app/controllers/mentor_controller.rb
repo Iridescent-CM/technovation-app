@@ -22,7 +22,8 @@ class MentorController < ApplicationController
 
   private
   def current_mentor
-    @current_mentor ||= current_account.mentor_profile
+    @current_mentor ||= current_account.mentor_profile ||
+      current_session.mentor_profile
   end
 
   def current_profile

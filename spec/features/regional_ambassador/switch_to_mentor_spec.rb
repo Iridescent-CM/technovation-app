@@ -27,7 +27,7 @@ RSpec.feature "RAs switch to mentor mode" do
     click_link "Mentor mode"
     click_link "RA mode"
 
-    expect(current_path).to eq(regional_ambassador_accounts_path)
+    expect(current_path).to eq(regional_ambassador_participants_path)
   end
 
   scenario "a mentor without an RA profile cannot switch to RA mode" do
