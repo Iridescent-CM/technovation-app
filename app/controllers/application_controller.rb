@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_account,
     :current_team,
     :current_scope,
+    :current_session,
     :can_generate_certificate?
 
   rescue_from "ActionController::ParameterMissing" do |e|
@@ -39,6 +40,12 @@ class ApplicationController < ActionController::Base
     ) || NullAuth.new
   end
 
+  def current_session
+    @current_session ||= Account.find_by(
+      session_token: cookies.fetch(:session_token) { "" }
+    ) || NullAuth.new
+  end
+
   def current_team
     # TODO: Figure out how to clean up the
     # requirement of team_id in mentor scope
@@ -64,6 +71,7 @@ class ApplicationController < ActionController::Base
 
   def force_logout
     remove_cookie(:auth_token)
+    remove_cookie(:session_token)
   end
 
   def can_generate_certificate?(scope, cert_type)

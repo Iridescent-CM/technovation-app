@@ -41,7 +41,8 @@ class StudentController < ApplicationController
   end
 
   def current_student
-    @current_student ||= current_account.student_profile
+    @current_student ||= current_account.student_profile ||
+      current_session.student_profile
   end
 
   def current_profile

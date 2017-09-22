@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913190935) do
+ActiveRecord::Schema.define(version: 20170920161533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170913190935) do
     t.datetime "email_confirmed_at"
     t.datetime "last_logged_in_at"
     t.text "seasons", default: [], array: true
+    t.string "session_token"
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -127,6 +128,17 @@ ActiveRecord::Schema.define(version: 20170913190935) do
   create_table "divisions_regional_pitch_events", id: false, force: :cascade do |t|
     t.integer "division_id"
     t.integer "regional_pitch_event_id"
+  end
+
+  create_table "events", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "location", null: false
+    t.datetime "starts_at", null: false
+    t.integer "organizer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organizer_id"], name: "index_events_on_organizer_id"
   end
 
   create_table "expertises", id: :serial, force: :cascade do |t|

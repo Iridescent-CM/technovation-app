@@ -8,7 +8,7 @@
 <label>
   Season:
   <%= select_tag :season,
-    options_for_select(Season.pluck(:year).sort.reverse, params[:season]),
+    options_for_select(Season.years.sort.reverse, params[:season]),
     data: { reload: true, param: :season } %>
 </label>
 

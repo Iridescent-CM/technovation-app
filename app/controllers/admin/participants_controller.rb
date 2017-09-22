@@ -1,5 +1,5 @@
 module Admin
-  class ProfilesController < AdminController
+  class ParticipantsController < AdminController
     helper_method :account
 
     def index
@@ -31,13 +31,8 @@ module Admin
       @account = @profile.account
 
       if ProfileUpdating.execute(@profile, profile_params)
-        if params[:regional_ambassador_profile]
-          redirect_to admin_regional_ambassador_path(@account),
-            success: "Account information saved"
-        else
-          redirect_to admin_profile_path(@account),
-            success: "Account information saved"
-        end
+        redirect_to admin_participant_path(@account),
+          success: "Account information saved"
       else
         @expertises ||= Expertise.all
         render :edit

@@ -3,6 +3,23 @@
   margin: 0 0 1rem;
   font-weight: 700;
 
+  &.notice--top {
+    margin: 0;
+    padding: 0.5rem;
+    font-weight: normal;
+    font-size: 0.9rem;
+    clear: both;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: $mulberry;
+    }
+  }
+
   &.notice--success {
     @extend .flash--success;
   }

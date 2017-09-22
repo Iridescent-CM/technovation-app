@@ -16,7 +16,7 @@ module Admin
               { alert: "An error occurred." }
             end
 
-      redirect_to admin_profile_path(account), msg
+      redirect_to admin_participant_path(account), msg
     end
 
     def destroy

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Admin::ProfilesController do
+RSpec.describe Admin::ParticipantsController do
   before do
     admin = FactoryGirl.create(:admin)
     sign_in(admin)
