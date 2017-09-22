@@ -1,5 +1,11 @@
 <% if profile.requires_background_check? %>
   <li>
+    <div class="flags">
+      <span class="flag flag-registration">
+        Registration
+      </span>
+    </div>
+
     <h1 class="content-heading">
       <%= t("views.profile_requirements.background_check.label") %>
     </h1>

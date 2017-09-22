@@ -22,5 +22,12 @@
     &.flag-notice {
       background: $marine;
     }
+
+    &.flag-registration,
+    &.flag-submission,
+    &.flag-team {
+      background: $mulberry;
+      color: white;
+    }
   }
 }
