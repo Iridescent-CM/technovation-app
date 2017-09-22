@@ -21,8 +21,8 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "start and edit new submission" do
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within("#submissions-team-#{team.id}") do
-          click_link "Start the submission for this team"
+        within("#team-#{team.id}") do
+          click_link "Start a submission now"
         end
 
         check "team_submission[integrity_affirmed]"
@@ -32,7 +32,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit mentor_dashboard_path
 
-        within("#submissions-team-#{team.id}") do
+        within("#team-#{team.id}") do
           expect(page).not_to have_content(
             "Starting a submission is not currently enabled."
           )
