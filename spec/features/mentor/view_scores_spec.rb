@@ -6,6 +6,8 @@ RSpec.feature "Mentors view scores" do
   end
 
   scenario "view QF scores" do
+    skip "Rebuilding mentor dashboard, scores not back yet"
+
     team = FactoryGirl.create(:team)
     mentor = FactoryGirl.create(:mentor)
 
@@ -30,6 +32,8 @@ RSpec.feature "Mentors view scores" do
   end
 
   scenario "view SF scores" do
+    skip "Rebuilding mentor dashboard, scores not back yet"
+
     team = FactoryGirl.create(:team)
     mentor = FactoryGirl.create(:mentor)
 
