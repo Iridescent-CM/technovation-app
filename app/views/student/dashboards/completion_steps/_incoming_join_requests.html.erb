@@ -1,0 +1,25 @@
+<% if requests.any? %>
+  <li>
+    <div class="flags">
+      <span class="flag flag-team">
+        Form a team
+      </span>
+    </div>
+
+    <h1 class="content-heading"><%= scope.to_s.titleize %> join requests</h1>
+
+    <p>A <%= scope %> wants to join your team!</p>
+
+    <p>
+      You have <strong><%= requests.count %> <%= scope %> request<%= "s" if requests.count > 1 %></strong>
+      waiting for you and your team members.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to "Manage #{scope} requests",
+        student_team_path(current_team, anchor: "!#{scope}s"),
+        class: "button" %>
+    </div>
+  </li>
+<% end %>
+

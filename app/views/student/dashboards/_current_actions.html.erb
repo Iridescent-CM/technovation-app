@@ -14,4 +14,12 @@
     invites: current_student.team_member_invites.pending %>
 
   <%= render "student/dashboards/completion_steps/team_submission" %>
+
+  <%= render "student/dashboards/completion_steps/incoming_join_requests",
+    requests: current_student.team.pending_student_join_requests,
+    scope: :student %>
+
+  <%= render "student/dashboards/completion_steps/incoming_join_requests",
+    requests: current_student.team.pending_mentor_join_requests,
+    scope: :mentor %>
 </ul>

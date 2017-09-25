@@ -26,4 +26,16 @@ class NullTeam
   def submission
     NullTeamSubmission.new
   end
+
+  def pending_requests
+    []
+  end
+
+  def pending_student_join_requests
+    []
+  end
+
+  def pending_mentor_join_requests
+    []
+  end
 end
