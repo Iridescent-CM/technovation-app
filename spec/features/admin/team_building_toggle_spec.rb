@@ -153,6 +153,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     before { sign_in(user) }
 
     scenario "Toggle on" do
+      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
       toggle_on
       visit path
       within("#pitch-events") do
@@ -162,6 +163,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
 
     scenario "Toggle off" do
+      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
+      toggle_on
       toggle_off
       visit path
       expect(page).not_to have_link("Join a team")

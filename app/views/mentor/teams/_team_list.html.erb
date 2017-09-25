@@ -1,7 +1,7 @@
 <% if teams.any? %>
   <ul class="reset">
     <% teams.each do |team| %>
-      <li class="panel team-preview grid__cell">
+      <li class="panel team-preview grid__cell" id="team-<%= team.id %>">
         <%= render "mentor/teams/team_list_item_content",
           team: team,
           type: type %>

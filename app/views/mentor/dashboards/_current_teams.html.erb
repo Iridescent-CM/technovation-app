@@ -1,7 +1,19 @@
-<% current_mentor.current_teams.each do |team| %>
-  <li id="team-<%= team.id %>">
-    <%= render "mentor/teams/team_list_item_content",
-      team: team,
-      type: :current %>
+<% if current_mentor.is_on_team? %>
+  <li>
+    <h1 class="content-heading">My teams</h1>
+
+    <p>
+      You're mentoring
+      <strong><%= current_mentor.current_teams.count %>
+      team<%= "s" if current_mentor.current_teams.count > 1 %></strong>.
+      See how they're doing and help them complete their app submissions.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to "See my teams",
+        mentor_teams_path,
+        class: "button"
+      %>
+  </div>
   </li>
 <% end %>

@@ -196,6 +196,8 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
+      skip "Rebuilding mentor dashboard: RPE selection not back yet"
+
       SeasonToggles.select_regional_pitch_event="on"
       visit path
       expect(page).to have_button("Save selection")
@@ -211,6 +213,8 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled off" do
+      skip "Rebuilding mentor dashboard: RPE selection not back yet"
+
       SeasonToggles.select_regional_pitch_event="off"
       visit path
       expect(page).not_to have_button("Save changes")
