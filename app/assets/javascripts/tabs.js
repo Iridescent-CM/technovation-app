@@ -71,7 +71,6 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   function revealTab($_btn, $_contents, $_links) {
-    console.log($_contents);
     if (!$_btn.data('tab-id'))
       $_btn = $_btn.find('button').first();
 
