@@ -10,5 +10,5 @@
     allow_many: true,
     requests: current_mentor.join_requests.pending %>
   <%= render "completion_steps/invitations",
-    invites: current_mentor.team_member_invites.pending %>
+    invites: current_mentor.mentor_invites.pending %>
 </ul>
