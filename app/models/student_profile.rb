@@ -48,6 +48,10 @@ class StudentProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
+  has_many :past_teams, -> { past },
+    through: :memberships,
+    source: :team
+
   has_many :mentor_invites, foreign_key: :inviter_id
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :team_member_invites, as: :invitee, dependent: :destroy
