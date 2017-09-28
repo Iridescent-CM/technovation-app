@@ -73,16 +73,9 @@ class TeamMailer < ApplicationMailer
       "team_mailer.invite_member.greeting.mentor",
       name: invite.team_name
     )
-
-    if invite.invitee.onboarded?
-      @url = mentor_mentor_invite_url(invite)
-      @intro = I18n.translate("team_mailer.invite_member.intro.complete_profile")
-      @link_text = "Review this invitation"
-    else
-      @url = mentor_dashboard_url
-      @intro = I18n.translate("team_mailer.invite_member.intro.incomplete_profile")
-      @link_text = "Complete your profile"
-    end
+    @url = mentor_mentor_invite_url(invite)
+    @intro = I18n.translate("team_mailer.invite_member.intro.existing_profile")
+    @link_text = "Review this invitation"
 
     I18n.with_locale(invite.inviter.locale) do
       mail to: invite.invitee_email, template_name: :invite_member
