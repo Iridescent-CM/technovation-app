@@ -20,7 +20,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within('#submissions') { click_link "Join a team" }
+    within('.steps') { click_link "Join a team" }
 
     expect(page).to have_css(".search-result-head", text: available_team.name)
     expect(page).to have_css(".search-result-head", text: mentored_team.name)
@@ -38,7 +38,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within('#submissions') { click_link "Join a team" }
+    within('.steps') { click_link "Join a team" }
 
     fill_in "text", with: "araw" # partial match
     fill_in "nearby", with: "anywhere"
@@ -51,7 +51,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    within('#submissions') { click_link "Join a team" }
+    within('.steps') { click_link "Join a team" }
     click_link "Ask to join"
     click_button "Ask to be a mentor for #{available_team.name}"
 

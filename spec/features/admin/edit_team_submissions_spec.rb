@@ -19,10 +19,13 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(true) }
 
       scenario "start and edit new submission" do
+        skip "Rebuilding mentor dashboard, submission editing not back yet"
+
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within("#submissions-team-#{team.id}") do
-          click_link "Start the submission for this team"
+        within(".navigation") { click_link("My teams") }
+        within("#team-#{team.id}") do
+          click_link "Start a submission now"
         end
 
         check "team_submission[integrity_affirmed]"
@@ -30,9 +33,9 @@ RSpec.feature "Toggling editable team submissions" do
 
         expect(page).to have_css('.appy-button', text: "Edit")
 
-        visit mentor_dashboard_path
+        visit mentor_teams_path
 
-        within("#submissions-team-#{team.id}") do
+        within("#team-#{team.id}") do
           expect(page).not_to have_content(
             "Starting a submission is not currently enabled."
           )
@@ -44,9 +47,12 @@ RSpec.feature "Toggling editable team submissions" do
       end
 
       scenario "edit technical checklist" do
+        skip "Rebuilding mentor dashboard, submission editing not back yet"
+
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within("#submissions-team-#{team.id}") do
+        within(".navigation") { click_link("My teams") }
+        within("#team-#{team.id}") do
           click_link("Edit this team's submission")
         end
 
@@ -68,11 +74,14 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(false) }
 
       scenario "try to edit existing submission" do
+        skip "Rebuilding mentor dashboard, submission editing not back yet"
+
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within("#submissions-team-#{team.id}") do
+        within(".navigation") { click_link("My teams") }
+        within("#team-#{team.id}") do
           expect(page).to have_content(
-            "Starting a submission is not available at this time."
+            "Submissions may not be started at this time"
           )
           expect(page).not_to have_link("Edit this team's submission")
         end
@@ -88,8 +97,10 @@ RSpec.feature "Toggling editable team submissions" do
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within("#submissions-team-#{team.id}") do
-          expect(page).not_to have_link("Start the submission for this team")
+        within(".navigation") { click_link("My teams") }
+        within("#team-#{team.id}") do
+          expect(page).not_to have_link("Start a submission now")
+          expect(page).to have_content("Submissions may not be started at this time")
         end
 
         visit mentor_team_path(team)

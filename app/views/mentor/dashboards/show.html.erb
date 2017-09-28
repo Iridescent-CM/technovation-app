@@ -25,14 +25,25 @@
   </div>
 </div>
 
-<% if current_mentor.onboarded? %>
-  <%= render 'mentor/dashboards/onboarded' %>
-<% else %>
-  <div class="grid grid--justify-space-around">
-    <div class="grid__col-md-8">
-      <%= render 'mentor/dashboards/completion_steps' %>
+<div class="grid">
+  <div class="grid__col-md-3">
+    <div class="grid__cell">
+      <div class="panel">
+        <%= image_tag current_mentor.profile_image_url,
+          class: "thumbnail grid__cell-img" %>
+
+        <h3 class="reset"><%= current_mentor.full_name %></h3>
+
+        <%= link_to "View your profile", mentor_profile_path %>
+      </div>
     </div>
   </div>
-<% end %>
+
+  <div class="grid__col-md-6">
+    <div class="grid__cell">
+      <%= render 'mentor/dashboards/current_actions' %>
+    </div>
+  </div>
+</div>
 
 <%= render 'program_survey_modal' %>

@@ -1,4 +1,4 @@
-<% if not current_student.is_on_team? %>
+<% unless hidden ||= false %>
   <li>
     <div class="flags">
       <span class="flag flag-team">
