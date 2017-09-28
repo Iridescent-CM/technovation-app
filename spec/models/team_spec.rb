@@ -261,6 +261,13 @@ RSpec.describe Team do
     expect(submission_updated).to be < submission.reload.updated_at
   end
 
+  it "validates unique names" do
+    fring = FactoryGirl.create(:team, name: "Say My Name")
+    heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+    expect(heisenberg).not_to be_valid
+    expect(heisenberg.save).to be false
+  end
+
   it "validates unique names only on undeleted teams" do
     fring = FactoryGirl.create(:team, name: "Say My Name")
     fring.destroy
@@ -268,6 +275,34 @@ RSpec.describe Team do
     heisenberg = FactoryGirl.create(:team, name: "Say My Name")
     expect(heisenberg).to be_valid
     expect(heisenberg.reload.id).not_to be_nil
+  end
+
+  it "validates unique names across seasons" do
+    fring = FactoryGirl.create(:team, name: "Say My Name")
+    fring.update(seasons: [Season.current.year - 1])
+
+    heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+    expect(heisenberg).not_to be_valid
+    expect(heisenberg.save).to be false
+  end
+
+  it "validates unique names with past team name exceptions" do
+    past_team = FactoryGirl.create(:team, name: "Old Name")
+    past_team.update(seasons: [Season.current.year - 1])
+
+    new_team = FactoryGirl.build(:team, name: "Old Name")
+    new_team.name_uniqueness_exceptions = ["Old Name", "Something Else"]
+
+    expect(new_team).to be_valid
+    expect(new_team.save).to be true
+
+    new_team.update(seasons: [Season.current.year])
+
+    newest_team = FactoryGirl.build(:team, name: "Old Name")
+    newest_team.name_uniqueness_exceptions = ["Old Name"]
+
+    expect(newest_team).not_to be_valid
+    expect(newest_team.save).to be false
   end
 
   it "deletes itself and pending join requests/invites when membership decrements to zero" do
