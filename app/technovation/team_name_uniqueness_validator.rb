@@ -8,7 +8,7 @@ class TeamNameUniquenessValidator < ActiveModel::Validator
       .where("lower(name) = ?", record.name.downcase)
       .where.not(id: record.id)
 
-    if record.name_uniqueness_exceptions.try(:any?)
+    if record.name_uniqueness_exceptions.any?
       past_conflicts = past_conflicts.where.not(name: record.name_uniqueness_exceptions)
     end
 
