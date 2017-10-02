@@ -12,7 +12,7 @@ FactoryGirl.define do
       city "Chicago"
       state_province "IL"
       country "US"
-      date_of_birth Date.today - 15.years
+      date_of_birth Date.today - 14.years
       email nil
       password nil
       not_onboarded false
