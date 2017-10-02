@@ -25,6 +25,7 @@ gem 'sass-rails', "~> 5.0"
 gem 'normalize-rails', "~> 4.1"
 
 gem 'rails-i18n', "~> 5.0"
+gem 'i18n-tasks', '~> 0.9.18'
 gem 'clipboard-rails', "~> 1.7"
 gem 'will_paginate', '~> 3.1'
 gem 'datagrid', "~> 1.5"
