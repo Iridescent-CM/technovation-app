@@ -2,7 +2,7 @@ class StudentController < ApplicationController
   include Authenticated
 
   def authenticated_exceptions
-    ['team_member_invites#show']
+    ['team_member_invites#show', 'join_requests#show']
   end
 
   layout "student"
@@ -42,7 +42,8 @@ class StudentController < ApplicationController
 
   def current_student
     @current_student ||= current_account.student_profile ||
-      current_session.student_profile
+      current_session.student_profile ||
+        NullProfile.new
   end
 
   def current_profile

@@ -20,10 +20,15 @@ class MentorController < ApplicationController
     "mentor"
   end
 
+  def authenticated_exceptions
+    ['join_requests#show']
+  end
+
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile ||
-      current_session.mentor_profile
+      current_session.mentor_profile ||
+        NullProfile.new
   end
 
   def current_profile

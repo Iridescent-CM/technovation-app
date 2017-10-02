@@ -13,7 +13,7 @@ RSpec.feature "Students request to join a team",
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team) } # Default is in Chicago
+    let!(:team) { FactoryGirl.create(:team, :with_mentor) } # Default is in Chicago
     let!(:student) { FactoryGirl.create(:student, not_onboarded: true) } # Default Chicago
 
     before do
@@ -46,9 +46,9 @@ RSpec.feature "Students request to join a team",
       ActionMailer::Base.deliveries.clear
 
       sign_out
-      sign_in(team.students.sample)
-      click_link "My team"
-      click_link "approve"
+      student = team.students.sample
+      visit student_join_request_path(JoinRequest.last, email: student.email)
+      click_button "Approve"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
@@ -67,13 +67,28 @@ RSpec.feature "Students request to join a team",
       expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
 
+    scenario "mentor accepts the request" do
+      ActionMailer::Base.deliveries.clear
+
+      sign_out
+      mentor = team.mentors.sample
+      visit mentor_join_request_path(JoinRequest.last, email: mentor.email)
+      click_button "Approve"
+
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+        "No join request approval email was sent"
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq([JoinRequest.last.requestor_email])
+      expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
+    end
+
     scenario "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_out
-      sign_in(team.students.sample)
-      click_link "My team"
-      click_link "decline"
+      student = team.students.sample
+      visit student_join_request_path(JoinRequest.last, email: student.email)
+      click_button "Decline"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
@@ -85,6 +100,22 @@ RSpec.feature "Students request to join a team",
       expect(mail.body).to include(
         "#{team.name} has declined your request to be a member."
       )
+    end
+
+    scenario "mentor declines the request" do
+      ActionMailer::Base.deliveries.clear
+
+      sign_out
+      mentor = team.mentors.sample
+      visit mentor_join_request_path(JoinRequest.last, email: mentor.email)
+      click_button "Decline"
+
+      expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+        "No join request decline email was sent"
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq([JoinRequest.last.requestor_email])
+      expect(mail.subject).to eq("Your request to join #{team.name} was declined")
     end
   end
 end

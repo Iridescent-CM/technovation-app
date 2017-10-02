@@ -2,6 +2,6 @@
   <div class="grid__col-md-8 panel">
     <h1><%= @join_request.team_name %></h1>
     <p>This join request is <%= @join_request.status %></p>
-    <p><%= link_to 'Go back', :back, class: "button" %>
+    <p><%= link_to 'Return to dashboard', mentor_dashboard_path, class: "button" %>
   </div>
 </div>

@@ -89,6 +89,15 @@ en:
       new:
         title: "Pass a background check"
 
+    join_requests:
+      form:
+        confirm_accept: "You are about to approve the join request."
+        confirm_decline: "You are about to decline the join request."
+      show:
+        accepted: "This join request has already been approved."
+        greeting: "%{name} has requested to join your team: %{team_name}"
+        message: "Review their profile and respond below"
+
     mentor:
       join_requests:
         index:
