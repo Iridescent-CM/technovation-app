@@ -2,12 +2,10 @@ class TeamNameUniquenessValidator < ActiveModel::Validator
   def validate(record)
     current_conflicts = Team.current
       .where("lower(name) = ?", record.name.downcase)
-      .where(deleted_at: nil)
       .where.not(id: record.id)
 
     past_conflicts = Team.past
       .where("lower(name) = ?", record.name.downcase)
-      .where(deleted_at: nil)
       .where.not(id: record.id)
 
     if record.name_uniqueness_exceptions.try(:any?)

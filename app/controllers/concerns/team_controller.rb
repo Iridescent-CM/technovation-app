@@ -26,7 +26,7 @@ module TeamController
   def create
     @team = Team.new(team_params)
     @team.name_uniqueness_exceptions =
-      current_profile.try(:past_teams).try(:pluck, :name)
+      current_profile.past_teams.pluck(:name)
 
     if @team.save
       TeamCreating.execute(@team, current_profile, self)
@@ -42,7 +42,7 @@ module TeamController
   def update
     @team = current_profile.teams.find(params.fetch(:id))
     @team.name_uniqueness_exceptions =
-      current_profile.try(:past_teams).try(:pluck, :name)
+      current_profile.past_teams.pluck(:name)
 
     if TeamUpdating.execute(@team, team_params, current_account)
       respond_to do |format|
