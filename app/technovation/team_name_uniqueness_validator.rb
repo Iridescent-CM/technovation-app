@@ -13,7 +13,7 @@ class TeamNameUniquenessValidator < ActiveModel::Validator
     end
 
     if current_conflicts.exists? || past_conflicts.exists?
-      record.errors.add(:name, "has already been taken")
+      record.errors.add(:name, :taken)
     end
   end
 end
