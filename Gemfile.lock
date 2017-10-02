@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/carrierwaveuploader/carrierwave.git
-  revision: c0ae645fe8c0dc9169b312eb84cd963d79885e77
+  revision: 63b9396960d7bbaa41f642c9ccd5519218c61103
   branch: master
   specs:
-    carrierwave (1.1.0)
+    carrierwave (1.2.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
@@ -81,21 +81,21 @@ GEM
     after_commit_action (1.1.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    airbrake (6.2.1)
-      airbrake-ruby (~> 2.3, >= 2.3.1)
-    airbrake-ruby (2.3.2)
+    airbrake (6.3.0)
+      airbrake-ruby (~> 2.4)
+    airbrake-ruby (2.4.0)
     arel (8.0.0)
     arrayfields (4.9.2)
     ast (2.3.0)
     autoprefixer-rails (6.7.7.2)
       execjs
-    aws-sdk (2.10.46)
-      aws-sdk-resources (= 2.10.46)
-    aws-sdk-core (2.10.46)
+    aws-sdk (2.10.55)
+      aws-sdk-resources (= 2.10.55)
+    aws-sdk-core (2.10.55)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.46)
-      aws-sdk-core (= 2.10.46)
+    aws-sdk-resources (2.10.55)
+      aws-sdk-core (= 2.10.55)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     browser (2.5.1)
@@ -150,7 +150,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
-    counter_culture (1.8.1)
+    counter_culture (1.8.2)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
       after_commit_action (~> 1.0)
@@ -159,6 +159,7 @@ GEM
       i18n_data (~> 0.7.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    crass (1.0.2)
     createsend (4.1.1)
       hashie (~> 3.0)
       httparty (~> 0.14)
@@ -184,7 +185,7 @@ GEM
     erubi (1.6.1)
     excon (0.59.0)
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_girl (4.8.1)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
@@ -196,7 +197,7 @@ GEM
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     flag_shih_tzu (0.3.19)
-    fog (1.41.0)
+    fog (1.42.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
       fog-aws (>= 0.6.0)
@@ -213,6 +214,7 @@ GEM
       fog-json
       fog-local
       fog-openstack
+      fog-ovirt
       fog-powerdns (>= 0.1.1)
       fog-profitbricks
       fog-rackspace
@@ -229,7 +231,7 @@ GEM
       fog-xenserver
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
-      json (>= 1.8, < 2.0)
+      json (~> 2.0)
     fog-aliyun (0.2.0)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
@@ -291,6 +293,11 @@ GEM
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
+    fog-ovirt (0.1.1)
+      fog-core (~> 1.45)
+      fog-json
+      fog-xml (~> 0.1.1)
+      rbovirt (~> 0.1.4)
     fog-powerdns (0.1.1)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
@@ -332,7 +339,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.12.0)
+    fog-vsphere (1.13.1)
       fog-core
       rbvmomi (~> 1.9)
     fog-xenserver (0.3.0)
@@ -344,7 +351,7 @@ GEM
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     formatador (0.2.5)
-    friendly_id (5.2.2)
+    friendly_id (5.2.3)
       activerecord (>= 4.0.0)
     geocoder (1.4.4)
     globalid (0.4.0)
@@ -385,7 +392,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.6)
+    json (2.1.0)
     json_pure (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -397,7 +404,8 @@ GEM
       ruby_dep (~> 1.2)
     lodash-rails (4.17.4)
       railties (>= 3.1)
-    loofah (2.0.3)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
@@ -414,7 +422,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_magick (4.8.0)
-    mini_portile2 (2.2.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
     multi_xml (0.6.0)
@@ -422,8 +430,8 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.18.1.330)
     nio4r (2.1.0)
-    nokogiri (1.8.0)
-      mini_portile2 (~> 2.2.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     normalize-rails (4.1.1)
     oink (0.10.1)
       activerecord
@@ -442,9 +450,9 @@ GEM
       cliver (~> 0.3.2)
       safe_shell (>= 1.0.3, < 2.0)
     pg (0.21.0)
-    premailer (1.10.4)
+    premailer (1.11.0)
       addressable
-      css_parser (>= 1.4.10)
+      css_parser (>= 1.6.0)
       htmlentities (>= 4.0.0)
     premailer-rails (1.9.7)
       actionmailer (>= 3, < 6)
@@ -517,12 +525,15 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rbovirt (0.1.4)
+      nokogiri
+      rest-client (> 1.7.0)
     rbvmomi (1.11.3)
       builder (~> 3.0)
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
-    redis (3.3.3)
+    redis (3.3.5)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -621,7 +632,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_query_trace (~> 1.5)
-  airbrake (~> 6.2)
+  airbrake (~> 6.3)
   autoprefixer-rails (~> 6.7)
   aws-sdk (~> 2.10)
   bcrypt (~> 3.1)
@@ -646,14 +657,14 @@ DEPENDENCIES
   factory_girl_rails (~> 4.8)
   fakeredis (~> 0.6)
   flag_shih_tzu (~> 0.3)
-  fog (~> 1.41)
+  fog-aws (~> 1.4)
   font-awesome-rails (~> 4.7)
   friendly_id (~> 5.2)
   geocoder (~> 1.4)
   has_secure_token (~> 1.0)
   heroku-deflater!
   hiredis (~> 0.6)
-  i18n-tasks (~> 0.9.18)
+  i18n-tasks (~> 0.9)
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
   jquery-ui-rails (~> 6.0)

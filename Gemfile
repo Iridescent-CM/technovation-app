@@ -25,7 +25,7 @@ gem 'sass-rails', "~> 5.0"
 gem 'normalize-rails', "~> 4.1"
 
 gem 'rails-i18n', "~> 5.0"
-gem 'i18n-tasks', '~> 0.9.18'
+gem 'i18n-tasks', '~> 0.9'
 gem 'clipboard-rails', "~> 1.7"
 gem 'will_paginate', '~> 3.1'
 gem 'datagrid', "~> 1.5"
@@ -47,7 +47,7 @@ gem 'sidekiq', '~> 4.2'
 
 gem 'createsend', '~> 4.1'
 
-gem 'airbrake', '~> 6.2'
+gem 'airbrake', '~> 6.3'
 gem 'newrelic_rpm', '~> 3.18'
 
 gem 'dalli', "~> 2.7"
@@ -60,7 +60,7 @@ gem 'carrierwave',
   branch: :master
 
 gem "mini_magick", "~> 4.8"
-gem "fog", "~> 1.41"
+gem "fog-aws", "~> 1.4"
 gem 'carrierwave_direct', "~> 0.0"
 
 gem 'checkr-official', "~> 1.2", require: "checkr"
