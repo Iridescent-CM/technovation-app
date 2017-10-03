@@ -10,6 +10,15 @@
       locals: { complete: current_student.is_on_team? }
     %>
   </li>
+  <li class="checklist__mentor">
+    <%= render partial: "student/dashboards/checklist/find_a_mentor",
+      locals: {
+        unlocked: current_student.is_on_team?,
+        complete: current_student.team.mentors.any?,
+        mentors: current_student.team.mentors
+      }
+    %>
+  </li>
   <li class="checklist__submission">
     <%= render partial: "student/dashboards/checklist/complete_submission",
       locals: {
