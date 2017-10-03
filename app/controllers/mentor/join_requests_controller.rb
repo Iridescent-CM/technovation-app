@@ -22,7 +22,7 @@ module Mentor
       if reviewer_needs_to_sign_in?
         mentor = @join_request.team.mentors
           .joins(:account)
-          .find_by("accounts.email = ?", params.fetch(:email))
+          .find_by("accounts.mailer_token = ?", params.fetch(:mailer_token))
 
         SignIn.(
           mentor.account,
@@ -60,8 +60,8 @@ module Mentor
     end
 
     def reviewer_needs_to_sign_in?
-      email = params.fetch(:email) { false }
-      email and current_mentor.email != email
+      mailer_token = params.fetch(:mailer_token) { false }
+      mailer_token and current_mentor.mailer_token != mailer_token
     end
 
     def reviewer_is_unauthorized?(join_request)

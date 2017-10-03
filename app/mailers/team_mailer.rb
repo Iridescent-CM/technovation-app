@@ -93,7 +93,7 @@ class TeamMailer < ApplicationMailer
     @url = send(
       "#{recipient.scope_name}_join_request_url",
       join_request,
-      email: recipient.email
+      mailer_token: recipient.mailer_token
     )
 
     I18n.with_locale(recipient.locale) do
