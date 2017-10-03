@@ -101,6 +101,10 @@ class MentorProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
+  has_many :past_teams, -> { past },
+    through: :memberships,
+    source: :team
+
   has_many :join_requests, as: :requestor, dependent: :destroy
   has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
   has_many :team_member_invites, foreign_key: :inviter_id

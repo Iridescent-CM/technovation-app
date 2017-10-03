@@ -19,6 +19,12 @@ class Team < ActiveRecord::Base
     team_photo
   end
 
+  attr_accessor :name_uniqueness_exceptions
+
+  def name_uniqueness_exceptions
+    @name_uniqueness_exceptions ||= []
+  end
+
   mount_uploader :team_photo, TeamPhotoProcessor
 
   Division.names.keys.each do |division_name|
@@ -99,7 +105,7 @@ class Team < ActiveRecord::Base
   has_many :judge_assignments
   has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
 
-  validates :name, uniqueness: { case_sensitive: false }, presence: true
+  validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
   validates :team_photo, verify_cached_file: true
 

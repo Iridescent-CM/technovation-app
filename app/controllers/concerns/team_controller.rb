@@ -25,6 +25,9 @@ module TeamController
 
   def create
     @team = Team.new(team_params)
+    #TODO: this belongs in TeamCreating, but has to come before @team.save
+    @team.name_uniqueness_exceptions =
+      current_profile.past_teams.pluck(:name)
 
     if @team.save
       TeamCreating.execute(@team, current_profile, self)
@@ -39,6 +42,9 @@ module TeamController
 
   def update
     @team = current_profile.teams.find(params.fetch(:id))
+    #TODO: this belongs in TeamUpdating, but needs the current_profile
+    @team.name_uniqueness_exceptions =
+      current_profile.past_teams.pluck(:name)
 
     if TeamUpdating.execute(@team, team_params, current_account)
       respond_to do |format|

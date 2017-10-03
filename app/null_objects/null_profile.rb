@@ -4,4 +4,5 @@ class NullProfile
   def onboarded?; false; end
   def email; nil; end
   def is_an_ambassador?; false; end
+  def past_teams; Team.none; end
 end

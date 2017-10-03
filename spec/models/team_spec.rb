@@ -261,13 +261,51 @@ RSpec.describe Team do
     expect(submission_updated).to be < submission.reload.updated_at
   end
 
-  it "validates unique names only on undeleted teams" do
-    fring = FactoryGirl.create(:team, name: "Say My Name")
-    fring.destroy
+  context "unique name validation" do
+    it "ensures uniqueness within season" do
+      fring = FactoryGirl.create(:team, name: "Say My Name")
+      heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+      expect(heisenberg).not_to be_valid
+      expect(heisenberg.save).to be false
+    end
 
-    heisenberg = FactoryGirl.create(:team, name: "Say My Name")
-    expect(heisenberg).to be_valid
-    expect(heisenberg.reload.id).not_to be_nil
+    it "ensures uniqueness across seasons" do
+      fring = FactoryGirl.create(:team, name: "Say My Name")
+      fring.update(seasons: [Season.current.year - 1])
+
+      heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+      expect(heisenberg).not_to be_valid
+      expect(heisenberg.save).to be false
+    end
+
+    it "allows reuse of deleted team names" do
+      fring = FactoryGirl.create(:team, name: "Say My Name")
+      fring.destroy
+
+      heisenberg = FactoryGirl.create(:team, name: "Say My Name")
+      expect(heisenberg).to be_valid
+      expect(heisenberg.reload.id).not_to be_nil
+    end
+
+    it "allows exceptions for past names" do
+      past_team = FactoryGirl.create(:team, name: "Old Name")
+      past_team.update(seasons: [Season.current.year - 1])
+
+      new_team = FactoryGirl.build(:team, name: "Old Name")
+      new_team.name_uniqueness_exceptions = ["Old Name", "Something Else"]
+
+      expect(new_team).to be_valid
+      expect(new_team.save).to be true
+    end
+
+    it "doesn't allow exceptions for current names" do
+      team1 = FactoryGirl.create(:team, name: "Team Name")
+      team2 = FactoryGirl.build(:team, name: "Team Name")
+      team2.name_uniqueness_exceptions = ["Team Name"]
+
+      expect(team2).not_to be_valid
+      expect(team2.save).to be false
+    end
   end
 
   it "deletes itself and pending join requests/invites when membership decrements to zero" do
