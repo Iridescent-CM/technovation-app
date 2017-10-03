@@ -41,8 +41,12 @@ class StudentProfile < ActiveRecord::Base
       )
   }
 
-  has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships
+  has_many :memberships,
+    as: :member,
+    dependent: :destroy
+
+  has_many :teams,
+    through: :memberships
 
   has_many :current_teams, -> { current },
     through: :memberships,
@@ -52,9 +56,25 @@ class StudentProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
-  has_many :mentor_invites, foreign_key: :inviter_id
-  has_many :join_requests, as: :requestor, dependent: :destroy
-  has_many :team_member_invites, as: :invitee, dependent: :destroy
+  has_many :mentor_invites,
+    foreign_key: :inviter_id
+
+  has_many :team_member_invites,
+    as: :invitee,
+    dependent: :destroy
+
+  has_many :join_requests,
+    as: :requestor,
+    dependent: :destroy
+
+  has_many :declined_join_requests, -> { declined },
+    as: :requestor,
+    class_name: "JoinRequest"
+
+  has_many :teams_that_declined,
+    through: :declined_join_requests,
+    as: :requestor,
+    source: :team
 
   belongs_to :account, touch: true
   accepts_nested_attributes_for :account

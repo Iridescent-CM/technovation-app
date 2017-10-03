@@ -45,12 +45,6 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each) do |example|
-    unless example.metadata[:no_es_stub]
-      stub_request(:any, /localhost:9200/).to_rack(FakeBonsai)
-    end
-  end
-
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
   end

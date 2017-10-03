@@ -1,7 +1,8 @@
 class JoinRequest < ActiveRecord::Base
   after_create :notify_requested_team
 
-  scope :pending, -> { where('accepted_at IS NULL and declined_at IS NULL') }
+  scope :pending, -> { where(accepted_at: nil, declined_at: nil) }
+  scope :declined, -> { where(accepted_at: nil).where.not(declined_at: nil) }
 
   scope :for_students, -> { where(requestor_type: "StudentProfile") }
 
