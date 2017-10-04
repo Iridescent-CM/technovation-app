@@ -1,4 +1,4 @@
-<div class="grid__col-sm-4 grid__col--bleed">
+<div class="grid__col-sm-4 grid__col--bleed search-result">
   <div class="search-result-head">
     <%= image_tag result.team_photo_url, class: "grid__cell-img" %>
 
@@ -15,9 +15,13 @@
 
   <div class="search-result-foot grid--justify-center grid__cell-footer">
     <p>
-      <%= link_to "Ask to join this team",
-        [:new, current_scope, :join_request, { team_id: result.id }],
-        class: 'button' %>
+      <% if current_profile.teams_that_declined.include?(result) %>
+        You asked to join <%= result.name %>, and they declined.
+      <% else %>
+        <%= link_to "Ask to join this team",
+          [:new, current_scope, :join_request, { team_id: result.id }],
+          class: 'button' %>
+      <% end %>
     </p>
   </div>
 </div>

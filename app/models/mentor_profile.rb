@@ -91,11 +91,18 @@ class MentorProfile < ActiveRecord::Base
     class_name: "Account",
     required: false
 
-  has_many :mentor_profile_expertises, dependent: :destroy
-  has_many :expertises, through: :mentor_profile_expertises
+  has_many :mentor_profile_expertises,
+    dependent: :destroy
 
-  has_many :memberships, as: :member, dependent: :destroy
-  has_many :teams, through: :memberships
+  has_many :expertises,
+    through: :mentor_profile_expertises
+
+  has_many :memberships,
+    as: :member,
+    dependent: :destroy
+
+  has_many :teams,
+    through: :memberships
 
   has_many :current_teams, -> { current },
     through: :memberships,
@@ -105,9 +112,25 @@ class MentorProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
-  has_many :join_requests, as: :requestor, dependent: :destroy
-  has_many :mentor_invites, foreign_key: :invitee_id, dependent: :destroy
-  has_many :team_member_invites, foreign_key: :inviter_id
+  has_many :join_requests,
+    as: :requestor,
+    dependent: :destroy
+
+  has_many :mentor_invites,
+    foreign_key: :invitee_id,
+    dependent: :destroy
+
+  has_many :team_member_invites,
+    foreign_key: :inviter_id
+
+  has_many :declined_join_requests, -> { declined },
+    as: :requestor,
+    class_name: "JoinRequest"
+
+  has_many :teams_that_declined,
+    through: :declined_join_requests,
+    as: :requestor,
+    source: :team
 
   reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 

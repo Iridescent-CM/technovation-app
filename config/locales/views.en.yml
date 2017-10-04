@@ -95,8 +95,10 @@ en:
         confirm_decline: "You are about to decline the join request."
       show:
         accepted: "This join request has already been approved."
+        declined: "This join request has already been declined."
         greeting: "%{name} has requested to join your team: %{team_name}"
         message: "Review their profile and respond below"
+        missing: "Sorry, but this request appears to be missing."
 
     mentor:
       join_requests:

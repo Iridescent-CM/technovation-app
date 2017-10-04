@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Students request to join a team",
-  vcr: { match_requests_on: [:method, :host] },
-  no_es_stub: true do
+  vcr: { match_requests_on: [:method, :host] } do
 
   before { SeasonToggles.team_building_enabled! }
 
@@ -10,6 +9,29 @@ RSpec.feature "Students request to join a team",
     student = FactoryGirl.create(:student, :on_team, not_onboarded: true)
     sign_in(student)
     expect(page).not_to have_link("Join a team")
+  end
+
+  %i{mentor student}.each do |scope|
+    scenario "#{scope} searches after their request is declined" do
+      user = FactoryGirl.create(scope, :geocoded)
+      team = FactoryGirl.create(:team, :geocoded)
+
+      user.join_requests.create!(
+        team: team,
+        declined_at: Time.current
+      )
+
+      sign_in(user)
+
+      visit send("new_#{scope}_team_search_path")
+
+      within(".search-result") do
+        expect(page).to have_content(team.name)
+        expect(page).to have_content(
+          "You asked to join #{team.name}, and they declined."
+        )
+      end
+    end
   end
 
   context "a valid student requestor" do
