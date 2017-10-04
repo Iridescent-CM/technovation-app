@@ -78,6 +78,7 @@ class Account < ActiveRecord::Base
   has_secure_token :consent_token
   has_secure_token :password_reset_token
   has_secure_token :session_token
+  has_secure_token :mailer_token
   has_secure_password
 
   validates :email,

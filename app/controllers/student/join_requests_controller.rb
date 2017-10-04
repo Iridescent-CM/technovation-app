@@ -12,7 +12,7 @@ module Student
       if reviewer_needs_to_sign_in?
         student = @join_request.team.students
           .joins(:account)
-          .find_by("accounts.email = ?", params.fetch(:email))
+          .find_by("accounts.mailer_token = ?", params.fetch(:mailer_token))
 
         SignIn.(
           student.account,
@@ -65,8 +65,8 @@ module Student
     end
 
     def reviewer_needs_to_sign_in?
-      email = params.fetch(:email) { false }
-      email and current_student.email != email
+      mailer_token = params.fetch(:mailer_token) { false }
+      mailer_token and current_student.mailer_token != mailer_token
     end
 
     def reviewer_is_requestor?(join_request)
