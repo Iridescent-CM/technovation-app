@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Toggle available user types for registration" do
-  %w{student mentor judge}.each do |scope|
+  %w{student mentor}.each do |scope|
     scenario "#{scope} registration is toggled on" do
       SeasonToggles.enable_signup(scope)
 

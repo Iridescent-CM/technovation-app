@@ -1,0 +1,48 @@
+<div class="grid dashboard-notices">
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        Judge Dashboard
+      </h1>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        <%= SeasonToggles.dashboard_text(:judge) %>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-md-3">
+    <div class="grid__cell">
+      <div class="panel">
+        <%= image_tag current_judge.profile_image_url,
+          class: "thumbnail grid__cell-img" %>
+
+        <h3 class="reset"><%= current_judge.full_name %></h3>
+
+        <%= link_to "View your profile", judge_profile_path %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-md-6">
+    <div class="grid__cell">
+      <h1>The judging section is not currently available.</h1>
+
+      <p>Technovation is changing how we are doing judging this year.</p>
+
+      <p>
+        Judges will be required to apply or be invited by Regional Ambassadors.
+      </p>
+
+      <p>
+        We will email you when the updates to judging are ready, and you can apply
+      </p>
+    </div>
+  </div>
+</div>

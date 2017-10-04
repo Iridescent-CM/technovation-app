@@ -4,9 +4,10 @@ class JudgeController < ApplicationController
 
   layout "judge"
   helper_method :current_judge,
-                :assigned_teams,
-                :current_round,
-                :quarterfinals?
+    :current_profile,
+    :assigned_teams,
+    :current_round,
+    :quarterfinals?
 
   before_action -> {
     if "judge" != cookies[:last_profile_used]
@@ -27,6 +28,10 @@ class JudgeController < ApplicationController
   def current_judge
     @current_judge ||= current_account.judge_profile ||
       current_session.judge_profile
+  end
+
+  def current_profile
+    current_judge
   end
 
   def create_mentor_judge_on_dashboard

@@ -89,12 +89,16 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="on"
       visit path
       expect(page).to have_link("remove yourself from this event")
     end
 
     scenario "Toggled off" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="off"
       visit path
       expect(page).not_to have_link("remove yourself from this event")
@@ -112,12 +116,16 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="on"
       visit path
       expect(page).to have_link("Remove yourself from this event")
     end
 
     scenario "Toggled off" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="off"
       visit path
       expect(page).not_to have_link("Remove yourself from this event")
@@ -134,12 +142,16 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="on"
       visit path
       expect(page).to have_link("Select this event instead")
     end
 
     scenario "Toggled off" do
+      skip "Disabled while judging is being re-built"
+
       SeasonToggles.select_regional_pitch_event="off"
       visit path
       expect(page).not_to have_link("Select this event instead")
