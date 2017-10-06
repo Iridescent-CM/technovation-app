@@ -1,5 +1,5 @@
 <div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
+  <div class="grid__col-sm-6 grid__col--bleed-y">
     <div class="grid__cell">
       <h1 class="page-heading">
         Student Dashboard
@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end">
+  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
     <div class="grid__cell">
       <h1 class="page-heading">
         <%= SeasonToggles.dashboard_text(:student) %>
@@ -27,11 +27,10 @@
 </div>
 
 <div class="grid">
-  <div class="grid__col-md-3">
-    <div class="grid__cell">
+  <div class="grid__col-md-3 grid__col--bleed-y">
+    <div class="col--sticky">
       <div class="panel">
-        <%= image_tag current_student.profile_image_url,
-          class: "thumbnail grid__cell-img" %>
+        <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
 
         <h3 class="reset"><%= current_student.full_name %></h3>
 
@@ -41,28 +40,27 @@
       <% if current_student.is_on_team? %>
         <div class="panel">
           <%= image_tag current_student.team.team_photo_url,
-            class: "thumbnail grid__cell-img" %>
+            class: "grid__cell-img" %>
 
           <h3 class="reset"><%= current_student.team.name %></h3>
 
           <%= link_to "Manage your team", student_team_path(current_student.team) %>
         </div>
       <% end %>
-
-      <div class="panel panel--left">
-        <%= render "student/dashboards/season_checklist" %>
-      </div>
     </div>
   </div>
 
   <div class="grid__col-md-6">
-    <div class="grid__cell">
+    <div class="col--sticky">
       <%= render "student/dashboards/current_actions" %>
     </div>
   </div>
 
   <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    <%= render "student/dashboards/info_sidebar" %>
+    <div class="col--sticky">
+      <%= render "student/dashboards/season_checklist" %>
+      <%= render "student/dashboards/info_sidebar" %>
+    </div>
   </div>
 </div>
 

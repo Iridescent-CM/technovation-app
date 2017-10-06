@@ -1,58 +1,70 @@
-<h1>Season checklist</h1>
-<ul class="reset checklist">
-  <li class="checklist__registration">
-    <%= render partial: "student/dashboards/checklist/complete_registration",
-      locals: { complete: current_student.onboarded? }
-    %>
-  </li>
-  <li class="checklist__team">
-    <%= render partial: "student/dashboards/checklist/form_a_team",
-      locals: { complete: current_student.is_on_team? }
-    %>
-  </li>
-  <li class="checklist__mentor">
-    <%= render partial: "student/dashboards/checklist/find_a_mentor",
-      locals: {
-        unlocked: current_student.is_on_team?,
-        complete: current_student.team.mentors.any?,
-        mentors: current_student.team.mentors
-      }
-    %>
-  </li>
-  <li class="checklist__submission">
-    <%= render partial: "student/dashboards/checklist/complete_submission",
-      locals: {
-        complete: current_student.team.submission.complete?,
-        unlocked: (
-          current_student.onboarded? and
-            current_student.is_on_team? and
-              SeasonToggles.team_submissions_editable?
-        )
-      }
-    %>
-  </li>
-  <li class="checklist__pitch-event">
-    <h1>
-      <span class="locked">
-        <%= web_icon('lock') %>
-      </span>
-      Register for a pitch event
-    </h1>
-    <p>
-      Pitch your app at a live event, or get virtual feedback on how you did.
-      Event registration will open later in the season.
-    </p>
-  </li>
-  <li class="checklist__scores">
-    <h1>
-      <span class="locked">
-        <%= web_icon('lock') %>
-      </span>
-      See your scores
-    </h1>
-    <p>
-      Once you have scores, you will see your judge feedback here.
-      And don't forget to get your season certificate!
-    </p>
-  </li>
-</ul>
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>Season checklist</h3>
+
+    <ul class="reset checklist">
+      <li class="checklist__registration">
+        <%= render partial: "student/dashboards/checklist/complete_registration",
+          locals: { complete: current_student.onboarded? }
+        %>
+      </li>
+
+      <li class="checklist__team">
+        <%= render partial: "student/dashboards/checklist/form_a_team",
+          locals: { complete: current_student.is_on_team? }
+        %>
+      </li>
+
+      <li class="checklist__mentor">
+        <%= render partial: "student/dashboards/checklist/find_a_mentor",
+          locals: {
+            unlocked: current_student.is_on_team?,
+            complete: current_student.team.mentors.any?,
+            mentors: current_student.team.mentors
+          }
+        %>
+      </li>
+
+      <li class="checklist__submission">
+        <%= render partial: "student/dashboards/checklist/complete_submission",
+          locals: {
+            complete: current_student.team.submission.complete?,
+            unlocked: (
+              current_student.onboarded? and
+                current_student.is_on_team? and
+                  SeasonToggles.team_submissions_editable?
+            )
+          }
+        %>
+      </li>
+
+      <li class="checklist__pitch-event">
+        <h4 class="locked">
+          <span>
+            <%= web_icon('lock') %>
+          </span>
+          Register for a pitch event
+        </h4>
+
+        <p>
+          Pitch your app at a live event, or get virtual feedback on how you did.
+          Event registration will open later in the season.
+        </p>
+      </li>
+
+      <li class="checklist__scores">
+        <h4 class="locked">
+          <span>
+            <%= web_icon('lock') %>
+          </span>
+          See your scores
+        </h4>
+
+        <p>
+          Once you have scores, you will see your judge feedback here.
+          And don't forget to get your season certificate!
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
