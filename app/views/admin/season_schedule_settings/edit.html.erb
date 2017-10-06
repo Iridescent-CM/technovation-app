@@ -77,7 +77,7 @@ h1>Season Schedule Settings</h1>
       <div class="tab-content" id="user-reg">
         <h4>User Registrations</h4>
 
-        <% %w{student mentor judge}.each do |scope| %>
+        <% %w{student mentor}.each do |scope| %>
           <p class="inline-checkbox">
             <%= f.check_box "#{scope}_signup",
               id: "season_toggles_#{scope}_signup",
