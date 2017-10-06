@@ -6,3 +6,9 @@
 @import "search_results";
 @import "flags";
 @import "checklist";
+
+.col--sticky {
+  &.is_stuck {
+    margin: 1rem 0 0;
+  }
+}
