@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Students request to join a team",
   vcr: { match_requests_on: [:method, :host] } do
+  include ActionView::RecordIdentifier
 
   before { SeasonToggles.team_building_enabled! }
 
@@ -89,6 +90,32 @@ RSpec.feature "Students request to join a team",
       expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
 
+    scenario "student accepts from team page" do
+      sign_out
+      sign_in(team.students.sample)
+
+      visit student_team_path(team)
+
+      expect {
+        within("#" + dom_id(JoinRequest.last)) do
+          click_link "approve"
+        end
+      }.not_to raise_error
+    end
+
+    scenario "student declines from team page" do
+      sign_out
+      sign_in(team.students.sample)
+
+      visit student_team_path(team)
+
+      expect {
+        within("#" + dom_id(JoinRequest.last)) do
+          click_link "decline"
+        end
+      }.not_to raise_error
+    end
+
     scenario "mentor accepts the request" do
       ActionMailer::Base.deliveries.clear
 
@@ -102,6 +129,32 @@ RSpec.feature "Students request to join a team",
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
+    end
+
+    scenario "mentor accepts from team page" do
+      sign_out
+      sign_in(team.mentors.sample)
+
+      visit mentor_team_path(team)
+
+      expect {
+        within("#" + dom_id(JoinRequest.last)) do
+          click_link "approve"
+        end
+      }.not_to raise_error
+    end
+
+    scenario "mentor declines from team page" do
+      sign_out
+      sign_in(team.mentors.sample)
+
+      visit mentor_team_path(team)
+
+      expect {
+        within("#" + dom_id(JoinRequest.last)) do
+          click_link "decline"
+        end
+      }.not_to raise_error
     end
 
     scenario "student declines the request" do

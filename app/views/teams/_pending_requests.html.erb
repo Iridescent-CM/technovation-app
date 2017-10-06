@@ -11,7 +11,7 @@
 
       <ul class="reset">
         <% requests.each do |join_request| %>
-          <li class="row">
+          <%= content_tag :li, id: dom_id(join_request), class: "row" do %>
             <div class="grid">
               <div class="grid__col-2 grid__col--bleed-y">
                 <%= image_tag join_request.requestor.profile_image_url,
@@ -31,7 +31,11 @@
 
                   <p class="buttons">
                     <%= link_to t("views.application.approved"),
-                      [current_scope, join_request, status: :approved],
+                      [
+                        current_scope,
+                        join_request,
+                        join_request: { status: :approved },
+                      ],
                       class: "button small",
                       data: {
                         method: :put,
@@ -40,7 +44,11 @@
                       } %>
 
                     <%= link_to t("views.application.declined"),
-                      [current_scope, join_request, status: :declined],
+                      [
+                        current_scope,
+                        join_request,
+                        join_request: { status: :declined },
+                      ],
                       class: "button small danger",
                       data: {
                         method: :put,
@@ -51,7 +59,7 @@
                 </div>
               </div>
             </div>
-          </li>
+          <% end %>
         <% end %>
       </ul>
     </div>
