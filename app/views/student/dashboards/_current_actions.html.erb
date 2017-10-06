@@ -15,6 +15,9 @@
     hidden: current_student.is_on_team?,
     invites: current_student.team_member_invites.pending %>
 
+  <%= render "student/dashboards/completion_steps/find_a_mentor",
+    hidden: current_student.team.mentors.any? %>
+
   <%= render "student/dashboards/completion_steps/team_submission" %>
 
   <%= render "student/dashboards/completion_steps/incoming_join_requests",

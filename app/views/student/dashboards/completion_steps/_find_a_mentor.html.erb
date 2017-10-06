@@ -1,0 +1,23 @@
+<% unless current_team.present? and current_team.mentors.any? %>
+  <li>
+    <div class="flags">
+      <span class="flag flag-mentor">
+        Mentor
+      </span>
+    </div>
+
+    <h1 class="content-heading">Find a mentor</h1>
+
+    <p>
+      Add one or more mentors to your team. Mentors guide you in completing your
+      submission. You can ask someone you know to sign up as a mentor and join
+      your team, or you can search for a mentor online.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to "Search for mentors",
+        new_student_mentor_search_path,
+        class: "button" %>
+    </div>
+  </li>
+<% end %>
