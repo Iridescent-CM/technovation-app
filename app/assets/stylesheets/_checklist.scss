@@ -7,7 +7,7 @@ ul.checklist, ul.reset.checklist {
       margin: 0.6rem 0 0;
       padding: 0;
 
-      & > span {
+      > span {
         vertical-align: middle;
       }
 
@@ -19,7 +19,9 @@ ul.checklist, ul.reset.checklist {
         display: none;
       }
 
-      .locked {
+      &.locked {
+        color: $grey-translucent;
+
         .icon-circle-o {
           display: none;
         }
@@ -29,7 +31,10 @@ ul.checklist, ul.reset.checklist {
         }
       }
 
-      .complete {
+      &.complete {
+        font-style: italic;
+        color: $grey-translucent;
+
         .icon-circle-o {
           display: none;
         }
