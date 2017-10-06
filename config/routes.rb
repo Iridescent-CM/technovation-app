@@ -154,17 +154,6 @@ Rails.application.routes.draw do
     resource :profile_image_upload_confirmation, only: :show
 
     resource :dashboard, only: :show
-
-    resource :mentor_profile
-
-    resources :submission_scores, only: [:new, :edit, :update]
-
-    resources :team_submissions, only: [] do
-      resources :technical_checklist_verifications, only: [:new, :create]
-    end
-
-    resource :regional_pitch_event_selection, only: [:show, :create, :update, :destroy]
-    resources :regional_pitch_events, only: :show
   end
 
   namespace :admin do

@@ -8,6 +8,8 @@ RSpec.describe Judge::SubmissionScoresController do
         after { reset_judging_round }
 
         it "sets up a score as opened by the judge at current time" do
+          skip "Judging section is disabled"
+
           current_rank = if SeasonToggles.semifinals?
                           :semifinalist
                         else

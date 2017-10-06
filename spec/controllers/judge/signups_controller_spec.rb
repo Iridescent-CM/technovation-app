@@ -17,7 +17,7 @@ RSpec.describe Judge::SignupsController do
       }
     end
 
-    it "redirects to the judge dashboard" do
+    it "redirects to the judge splash page" do
       expect(response).to redirect_to(judge_dashboard_path)
       expect(flash[:success]).to eq("Welcome to Technovation!")
     end

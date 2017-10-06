@@ -6,6 +6,8 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   after { reset_judging_round }
 
   scenario "Virtual judge notices no difference" do
+    skip "Disabled while judging is rebuilding"
+
     vjudge = FactoryGirl.create(:judge, onboarded: true)
     FactoryGirl.create(:team)
     sign_in(vjudge)
@@ -19,6 +21,8 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   end
 
   scenario "Live judge sees the invitation" do
+    skip "Disabled while judging is rebuilding"
+
     judge = FactoryGirl.create(:judge, onboarded: true)
     rpe = FactoryGirl.create(:rpe)
     sub = FactoryGirl.create(:team_submission)
@@ -46,6 +50,8 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   end
 
   scenario "Live judge finishes their live event scores" do
+    skip "Disabled while judging is rebuilding"
+
     judge = FactoryGirl.create(:judge, onboarded: true)
     rpe = FactoryGirl.create(:rpe)
     sub = FactoryGirl.create(:team_submission)

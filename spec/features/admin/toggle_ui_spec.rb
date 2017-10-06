@@ -7,7 +7,7 @@ RSpec.feature "Admin UI for season toggles:" do
   end
 
   scenario "toggle user signups" do
-    %w{student mentor judge}.each do |scope|
+    %w{student mentor}.each do |scope|
       SeasonToggles.disable_signup(scope)
       click_link "Season Schedule Settings"
 

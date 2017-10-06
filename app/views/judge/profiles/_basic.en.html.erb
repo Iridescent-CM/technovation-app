@@ -1,0 +1,22 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= current_judge.full_name %></dd>
+
+  <dt>Gender identity</dt>
+  <dd><%= current_judge.gender || "Not specified" %></dd>
+
+  <dt>Age</dt>
+  <dd><%= current_judge.age %></dd>
+
+  <dt>Company name</dt>
+  <dd><%= current_judge.company_name %></dd>
+
+  <dt>Job title</dt>
+  <dd><%= current_judge.job_title %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your basic profile details",
+    edit_profile_path,
+    class: "button" %>
+</p>
