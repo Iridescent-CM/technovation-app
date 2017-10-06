@@ -8,7 +8,7 @@
 </h1>
 <% if complete %>
   <p>
-    Your team has <%= mentors.count %> mentor<%= "s" if mentors.count > 1 %>.
+    Your team has <%= pluralize(mentors.count, 'mentor') %>.
   </p>
 <% else %>
   <p>
