@@ -157,19 +157,6 @@ h1>Season Schedule Settings</h1>
 
           <%= f.label :team_building_enabled, "Forming teams allowed" %>
         </p>
-
-        <p class="inline-checkbox">
-          <%= f.check_box :team_submissions_editable,
-            data: {
-              blocked_by_judging: true,
-              when_blocked: "team submissions cannot be editable",
-            },
-            disabled: SeasonToggles.judging_enabled?,
-            id: :season_toggles_team_submissions_editable,
-            checked: SeasonToggles.team_submissions_editable? %>
-
-          <%= f.label :team_submissions_editable, "Editing submissions allowed" %>
-        </p>
       </div>
 
       <div class="tab-content" id="events">

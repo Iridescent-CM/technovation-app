@@ -30,6 +30,8 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Confirm submission deliverables are created solely by team students" do
+    skip "Rebuilding submissions, submission editing not back yet"
+
     student = FactoryGirl.create(:student, :on_team)
     sign_in(student)
 

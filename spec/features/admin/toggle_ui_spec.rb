@@ -63,6 +63,8 @@ RSpec.feature "Admin UI for season toggles:" do
   end
 
   scenario "configure team submissions editable" do
+    skip "Rebuilding submissions, submission editing not back yet"
+
     SeasonToggles.team_submissions_editable = false
     click_link "Season Schedule Settings"
 
