@@ -30,7 +30,7 @@ h1 {
   &.page-heading {
     display: inline-block;
     position: relative;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 
     &::after {
       background-color: $shamrock-mid;

@@ -1,16 +1,14 @@
-<h1>
+<h4>
   <span class="<%= 'complete' if complete %>">
     <%= web_icon('check-circle') %>
     <%= web_icon('circle-o') %>
   </span>
+
   Complete your registration
-</h1>
+</h4>
+
 <% if complete %>
-  <p>
-    Your registration is complete!
-  </p>
+  <p>Your registration is complete!</p>
 <% else %>
-  <p>
-    To be eligible for the competition, please complete your registration. 
-  </p>
+  <p>To be eligible for the competition, please complete your registration.</p>
 <% end %>

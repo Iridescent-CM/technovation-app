@@ -1,18 +1,16 @@
-<h1>
+<h4>
   <span class="<%= 'complete' if complete %>">
     <%= web_icon('check-circle') %>
     <%= web_icon('circle-o') %>
   </span>
-  Team up
-</h1>
+  Join a team
+</h4>
+
 <% if complete %>
-  <p>
-    You are on a team!
-  </p>
+  <p>You are on a team!</p>
 <% else %>
-  <p>
-    <%= t("views.profile_requirements.create_join_team.labels.student") %>
-  </p>
+  <p><%= t("views.profile_requirements.create_join_team.labels.student") %></p>
+
   <p>
     Use our
 
