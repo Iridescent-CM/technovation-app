@@ -1,4 +1,4 @@
-.button {
+.button, .swal-button--confirm {
   outline: 0;
   border: 0;
   user-select: none;
@@ -53,7 +53,7 @@
     padding: 0.25rem 0.5rem;
   }
 
-  &.danger {
+  &.danger, &.swal-button--danger {
     color: white;
     background: darken($alert-txt, 10);
     box-shadow: 0 2px 0 darken($alert-txt, 15);
@@ -61,6 +61,7 @@
     &:active,
     &:hover,
     &:focus {
+      color: white;
       background-color: darken($alert-txt, 15);
     }
 

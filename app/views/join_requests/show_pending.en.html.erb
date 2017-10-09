@@ -67,30 +67,45 @@
   <div class="grid__col-sm-8 grid__col--bleed">
     <div class="grid">
       <%= button_to(
-        t("controllers.join_requests.update.accept", name: @join_request.requestor_name),
+        t("controllers.join_requests.update.accept",
+          name: @join_request.requestor_name),
+
         [current_scope, @join_request],
+
         class: "button small",
+
         params: {
           join_request: { status: :approved },
         },
+
         method: :put,
+
         data: {
           confirm: t("views.join_requests.form.confirm_accept"),
+          positive: true,
         },
+
         form_class: "grid__col-sm-6 grid__col--bleed-x grid--align-center"
       ) %>
 
       <%= button_to(
-        t("controllers.join_requests.update.decline", name: @join_request.requestor_name),
+        t("controllers.join_requests.update.decline",
+          name: @join_request.requestor_name),
+
         [current_scope, @join_request],
+
         class: "button danger small",
+
         params: {
           join_request: { status: :declined },
         },
+
         method: :put,
+
         data: {
           confirm: t("views.join_requests.form.confirm_decline"),
         },
+
         form_class: "grid__col-sm-6 grid__col--bleed-x grid--align-center"
       ) %>
     </div>
