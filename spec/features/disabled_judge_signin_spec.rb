@@ -15,11 +15,11 @@ RSpec.feature "Disabled judge sign-ins" do
     )
 
     expect(page).to have_content(
-      "Judges will be required to apply or be invited by Regional Ambassadors."
+      "Stay tuned for more details."
     )
 
     expect(page).to have_content(
-      "We will email you when the updates to judging are ready, and you can apply"
+      "We will email you when updates are ready, and you can apply to be a judge."
     )
 
     expect(page).to have_link("My profile", judge_profile_path)
