@@ -293,6 +293,8 @@ ActiveRecord::Schema.define(version: 20171019230800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "bio"
+    t.text "intro_summary"
+    t.jsonb "links", default: []
     t.index ["account_id"], name: "index_regional_ambassador_profiles_on_account_id"
     t.index ["status"], name: "index_regional_ambassador_profiles_on_status"
   end

@@ -1,6 +1,6 @@
 <%= link_to "Mentor mode", mentor_dashboard_path, data: { turbolinks: false } %>
 
-<% if false %> <%# current_ambassador.onboarded? %>
+<% if current_ambassador.onboarded? %>
   <%= link_to "Participants",
     regional_ambassador_participants_path,
     class: al(regional_ambassador_participants_path) %>

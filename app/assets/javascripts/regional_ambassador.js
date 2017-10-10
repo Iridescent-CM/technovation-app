@@ -1,4 +1,5 @@
 //= require application
+//= require char-counter
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({

@@ -1,4 +1,6 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
+  store_accessor :links
+
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.location_confirmed = ?", true)
@@ -35,6 +37,14 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     rescue
       raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
     end
+  end
+
+  def self.link_types
+    %i{twitter}
+  end
+
+  def links
+    Links.new(self[:links])
   end
 
   def background_check_complete?
@@ -87,6 +97,49 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
       SubscribeEmailListJob.perform_later(
         account.email, account.full_name, "REGIONAL_AMBASSADOR_LIST_ID"
       )
+    end
+  end
+
+  class Links
+    include Enumerable
+
+    def initialize(links)
+      @links = Array(links)
+    end
+
+    def each(&block)
+      @links.each { |link| block.call(Link.new(link)) }
+    end
+
+    class Link
+      def initialize(link)
+        @link = link
+      end
+
+      def icon
+        case type
+        when "twitter"
+          'twitter-square'
+        end
+      end
+
+      def url
+        case type
+        when "twitter"
+          "https://twitter.com/#{@link["value"]}"
+        end
+      end
+
+      def value
+        case type
+        when "twitter"
+          "@#{@link["value"]}"
+        end
+      end
+
+      def type
+        @link["type"]
+      end
     end
   end
 end

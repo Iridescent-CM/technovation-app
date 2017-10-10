@@ -1,0 +1,67 @@
+<div class="grid dashboard-notices">
+  <div class="grid__col-sm-6 grid__col-auto grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        <%= t("views.application.regional_ambassador_dashboard") %>
+
+        <small>
+          <%= link_to "Switch to Mentor Mode", mentor_dashboard_path %>
+        </small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6 grid__col-auto grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-md-3">
+    <div class="grid__cell">
+      <div class="ra-info--dashboard-intro panel">
+        <h4 class="reset">Your introduction</h4>
+
+        <p class="hint">
+          Participants in your region can see this on their dashboards.
+        </p>
+
+        <%= image_tag current_ambassador.profile_image_url,
+          class: "grid__cell-img" %>
+
+        <%= render 'image_upload',
+          heading: "Upload a profile photo",
+          size: "300x300" %>
+
+        <h3 class="reset"><%= current_ambassador.full_name %></h3>
+
+        <%= simple_format current_ambassador.intro_summary %>
+
+        <ul class="reset">
+          <% current_ambassador.links.each do |link| %>
+            <li><%= link_to web_icon(link.icon, text: link.value),
+              link.url,
+              target: :_blank %></li>
+          <% end %>
+        </ul>
+
+        <%= link_to "Edit your introduction",
+          edit_regional_ambassador_introduction_path %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-md-6">
+    <div class="grid__cell">
+      Something to go here soon...
+    </div>
+  </div>
+
+  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
+    Something else to go here soon, too...
+  </div>
+</div>
