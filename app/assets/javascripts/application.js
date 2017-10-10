@@ -4,7 +4,7 @@
 //= require jquery3
 //= require jquery_ujs
 //= require chosen-jquery
-//= require sweetalert.min
+//= require sweetalert2
 
 // ******** APP
 //
@@ -39,20 +39,47 @@ $.rails.confirmed = function(link){
 
 //Display the confirmation dialog
 $.rails.showConfirmationDialog = function(link){
-  var positive = link.data("positive") || false;
+  var positive = link.data("positive");
 
   swal({
     text: link.data("confirm"),
+    cancelButtonText: "No, go back",
+    confirmButtonText: "Yes, do it",
+    confirmButtonColor: positive ? "#5ABF94" : "#D8000C",
+    showCancelButton: true,
+    reverseButtons: true,
+    focusCancel: true,
+  }).then(
+    function() { $.rails.confirmed(link); },
+    function() { return; }
+  );
+}
 
-    dangerMode: !positive,
+document.addEventListener("turbolinks:load", function() {
+  $("[data-opens-modal]").on("click", function(e) {
+    e.preventDefault();
 
-    buttons: {
-      cancel: "No, go back",
-      confirm: "Yes, do it",
-    },
-  }).then(function(confirmed) {
-    if (confirmed) {
-      $.rails.confirmed(link);
+    var modal = $('#' + $(this).data("opensModal"));
+
+    swal({
+      html: modal.find(".modal-content"),
+      title: modal.data("heading") || "",
+      showCloseButton: true,
+      showConfirmButton: false,
+      onOpen: makeFileFieldUnique,
+    })
+
+    function makeFileFieldUnique(modal) {
+      var $form = $(modal).find("form"),
+          $label = $form.find("label"),
+          $field = $form.find("input[type=file]"),
+          newId = Math.random()
+            .toString(36)
+            .replace(/[^a-z]+/g, '')
+            .substr(0, 7);
+
+      $field.prop("id", newId);
+      $label.prop("for", newId);
     }
   });
-}
+});
