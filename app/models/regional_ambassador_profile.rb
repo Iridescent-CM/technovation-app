@@ -40,7 +40,18 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   def self.link_types
-    %i{twitter}
+    %i{twitter facebook instagram snapchat whatsapp web}
+  end
+
+  def self.link_type_placeholders
+    {
+      placeholder_twitter: "@username",
+      placeholder_facebook: "https://facebook.com/page-url",
+      placeholder_instagram: "@username",
+      placeholder_snapchat: "@username",
+      placeholder_whatsapp: "+52 1 33 23 10 69 05",
+      placeholder_web: "https://www.example.com",
+    }
   end
 
   def links
