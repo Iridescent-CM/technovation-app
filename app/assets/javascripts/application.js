@@ -14,6 +14,7 @@
 //= require tabs
 //= require image-uploaders
 //= require location-details
+//= require modals
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
@@ -23,22 +24,22 @@ $(document).ajaxSend(function(_, xhr) {
 });
 
 //Override the default confirm dialog by rails
-$.rails.allowAction = function(link){
-  if (link.data("confirm") == undefined){
+$.rails.allowAction = function(link) {
+  if (link.data("confirm") == undefined)
     return true;
-  }
+
   $.rails.showConfirmationDialog(link);
   return false;
 }
 
 //User click confirm button
-$.rails.confirmed = function(link){
+$.rails.confirmed = function(link) {
   link.data("confirm", null);
   link.trigger("click.rails");
 }
 
 //Display the confirmation dialog
-$.rails.showConfirmationDialog = function(link){
+$.rails.showConfirmationDialog = function(link) {
   var positive = link.data("positive");
 
   swal({
@@ -54,35 +55,3 @@ $.rails.showConfirmationDialog = function(link){
     function() { return; }
   );
 }
-
-document.addEventListener("turbolinks:load", function() {
-  $("[data-opens-modal]").on("click", function(e) {
-    e.preventDefault();
-
-    var modal = $('#' + $(this).data("opensModal"));
-
-    swal({
-      html: modal.find(".modal-content"),
-      title: modal.data("heading") || "",
-      showCloseButton: true,
-      showConfirmButton: false,
-      onOpen: makeClonedImageUploaderUnique,
-    })
-
-    function makeClonedImageUploaderUnique(modal) {
-      var $form = $(modal).find(".new_image_uploader");
-
-      if ($form.length > 0) {
-        var $label = $form.find("label"),
-            $field = $form.find("input[type=file]"),
-            newId = Math.random()
-              .toString(36)
-              .replace(/[^a-z]+/g, '')
-              .substr(0, 7);
-
-        $field.prop("id", newId);
-        $label.prop("for", newId);
-      }
-    }
-  });
-});

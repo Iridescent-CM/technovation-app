@@ -2,7 +2,7 @@ module Student
   class CookiesController < StudentController
     def create
       cookies.permanent[params.fetch(:name)] = params.fetch(:value)
-      head 200
+      render json: {}
     end
   end
 end
