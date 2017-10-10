@@ -66,20 +66,23 @@ document.addEventListener("turbolinks:load", function() {
       title: modal.data("heading") || "",
       showCloseButton: true,
       showConfirmButton: false,
-      onOpen: makeFileFieldUnique,
+      onOpen: makeClonedImageUploaderUnique,
     })
 
-    function makeFileFieldUnique(modal) {
-      var $form = $(modal).find("form"),
-          $label = $form.find("label"),
-          $field = $form.find("input[type=file]"),
-          newId = Math.random()
-            .toString(36)
-            .replace(/[^a-z]+/g, '')
-            .substr(0, 7);
+    function makeClonedImageUploaderUnique(modal) {
+      var $form = $(modal).find(".new_image_uploader");
 
-      $field.prop("id", newId);
-      $label.prop("for", newId);
+      if ($form.length > 0) {
+        var $label = $form.find("label"),
+            $field = $form.find("input[type=file]"),
+            newId = Math.random()
+              .toString(36)
+              .replace(/[^a-z]+/g, '')
+              .substr(0, 7);
+
+        $field.prop("id", newId);
+        $label.prop("for", newId);
+      }
     }
   });
 });
