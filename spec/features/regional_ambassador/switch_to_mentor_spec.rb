@@ -6,7 +6,7 @@ RSpec.feature "RAs switch to mentor mode" do
     CreateMentorProfile.(ra)
 
     sign_in(ra)
-    click_link "Mentor mode"
+    click_link "Switch to Mentor Mode"
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
@@ -15,7 +15,7 @@ RSpec.feature "RAs switch to mentor mode" do
     ra = FactoryGirl.create(:regional_ambassador, :approved)
 
     sign_in(ra)
-    click_link "Mentor mode"
+    click_link "Switch to Mentor Mode"
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
@@ -24,7 +24,7 @@ RSpec.feature "RAs switch to mentor mode" do
     ra = FactoryGirl.create(:regional_ambassador, :approved)
 
     sign_in(ra)
-    click_link "Mentor mode"
+    click_link "Switch to Mentor Mode"
     click_link "RA mode"
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)

@@ -17,8 +17,8 @@ RSpec.feature "Approved regional ambassadors" do
     click_link "Edit your introduction"
 
     fill_in "Short summary", with: "Something that is 280 characters or less"
-    select "Twitter", from: "Social link"
-    fill_in "Username", with: "technomx"
+    select "twitter", from: "regional_ambassador_profile_links[][type]"
+    fill_in "regional_ambassador_profile_links_0_value", with: "technomx"
 
     click_button "Save"
 
