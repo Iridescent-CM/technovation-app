@@ -40,4 +40,17 @@ RSpec.feature "Students invite mentors to join their team" do
       "#{mentor.first_name} has asked to mentor your team"
     )
   end
+
+  scenario "Student is not yet on a team" do
+    student.memberships.destroy_all
+
+    visit student_dashboard_path
+
+    within(".completion-step__find-mentor .step-actions") do
+      expect(page).not_to have_link("Search for mentors")
+      expect(page).to have_content(
+        "When you are on a team, you will be able to search for mentors"
+      )
+    end
+  end
 end

@@ -1,5 +1,5 @@
 <% unless current_team.present? and current_team.mentors.any? %>
-  <li>
+  <li class="completion-step completion-step__find-mentor">
     <div class="flags">
       <span class="flag flag-mentor">
         Mentor
@@ -15,9 +15,13 @@
     </p>
 
     <div class="step-actions">
-      <%= link_to "Search for mentors",
-        new_student_mentor_search_path,
-        class: "button" %>
+      <% if current_team.present? %>
+        <%= link_to "Search for mentors",
+          new_student_mentor_search_path,
+          class: "button" %>
+      <% else %>
+        <p>When you are on a team, you will be able to search for mentors.</p>
+      <% end %>
     </div>
   </li>
 <% end %>
