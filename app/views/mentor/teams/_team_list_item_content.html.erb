@@ -1,30 +1,33 @@
-<%= link_to image_tag(
-  team.team_photo,
-  class: "thumbnail-md grid__cell-img"
-), [:mentor, team] %>
+<% if type === :current %>
+  <%= link_to image_tag(
+    team.team_photo,
+    class: "thumbnail-md grid__cell-img"
+  ), [:mentor, team] %>
 
-<h4 class="reset"><%= link_to team.name, [:mentor, team] %></h4>
+  <h4 class="reset"><%= link_to team.name, [:mentor, team] %></h4>
 
-<p>
-  Division: <%= team.division_name.humanize %>
-</p>
-
-<% if type === :current and team.submission.present? %>
   <p>
-    Submission app name: <strong><%= team.submission.app_name %></strong>
+    Division: <%= team.division_name.humanize %>
   </p>
 
   <p>
-    <%= link_to "See how it looks to the judges",
-      app_path(team.submission),
-      target: :_blank %>
-  </p>
-<% elsif type === :current %>
-  <p>
-    <%= t("views.teams.index.submission_not_started", name: team.name) %>
+    <%= link_to "Manage this team", [:mentor, team] %>
   </p>
 
-  <% if SeasonToggles.team_submissions_editable? %>
+  <% if team.submission.present? %>
+    <p>
+      Submission app name: <strong><%= team.submission.app_name %></strong>
+    </p>
+
+    <p>
+      <%= link_to "See how it looks to the judges",
+        app_path(team.submission),
+        target: :_blank %>
+    </p>
+    <p>
+      <%= t("views.teams.index.submission_not_started", name: team.name) %>
+    </p>
+  <% elsif SeasonToggles.team_submissions_editable? %>
     <p>
       <%= link_to "Start a submission now",
         new_mentor_team_submission_path(team_id: team.id),
@@ -33,4 +36,15 @@
   <% else %>
     <p class="hint">Submissions may not be started at this time.</p>
   <% end %>
+<% else %>
+  <%= link_to image_tag(
+    team.team_photo,
+    class: "thumbnail-md grid__cell-img"
+  ), team %>
+
+  <h4 class="reset"><%= link_to team.name, team %></h4>
+
+  <p>
+    Division: <%= team.division_name.humanize %>
+  </p>
 <% end %>

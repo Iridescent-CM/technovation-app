@@ -62,6 +62,9 @@ class Team < ActiveRecord::Base
   has_many :team_submissions, dependent: :destroy
   has_many :submission_scores, through: :team_submissions
 
+  has_one :submission, -> { current },
+    class_name: "TeamSubmission"
+
   has_many :memberships, dependent: :destroy
 
   has_many :students, -> { order("memberships.created_at") },
@@ -110,6 +113,10 @@ class Team < ActiveRecord::Base
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
+
+  def submission
+    super || NullTeamSubmission.new
+  end
 
   def remove_from_live_event
     team_submissions.flat_map(&:submission_scores).each(&:destroy)
@@ -211,10 +218,6 @@ class Team < ActiveRecord::Base
       invitee_id: mentor.id,
       invitee_type: "MentorProfile"
     ).exists?
-  end
-
-  def submission
-    team_submissions.current.last or NullTeamSubmission.new
   end
 
   def unassigned?
