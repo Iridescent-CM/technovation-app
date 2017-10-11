@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003154750) do
+ActiveRecord::Schema.define(version: 20171011180054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.string "email", null: false
@@ -54,7 +55,9 @@ ActiveRecord::Schema.define(version: 20171003154750) do
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
+    t.index ["mailer_token"], name: "index_accounts_on_mailer_token", unique: true
     t.index ["password_reset_token"], name: "index_accounts_on_password_reset_token", unique: true
+    t.index ["session_token"], name: "index_accounts_on_session_token", unique: true
   end
 
   create_table "activities", id: :serial, force: :cascade do |t|
@@ -162,8 +165,8 @@ ActiveRecord::Schema.define(version: 20171003154750) do
   end
 
   create_table "join_requests", id: :serial, force: :cascade do |t|
-    t.string "requestor_type", null: false
     t.integer "requestor_id", null: false
+    t.string "requestor_type", null: false
     t.integer "team_id", null: false
     t.datetime "accepted_at"
     t.datetime "declined_at"
@@ -172,6 +175,7 @@ ActiveRecord::Schema.define(version: 20171003154750) do
     t.datetime "deleted_at"
     t.string "review_token"
     t.index ["requestor_type", "requestor_id"], name: "index_join_requests_on_requestor_type_and_requestor_id"
+    t.index ["review_token"], name: "index_join_requests_on_review_token", unique: true
     t.index ["team_id"], name: "index_join_requests_on_team_id"
   end
 
@@ -199,8 +203,8 @@ ActiveRecord::Schema.define(version: 20171003154750) do
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
-    t.string "member_type", null: false
     t.integer "member_id", null: false
+    t.string "member_type", null: false
     t.integer "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -239,17 +243,17 @@ ActiveRecord::Schema.define(version: 20171003154750) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "regarding_type"
     t.integer "regarding_id"
+    t.string "regarding_type"
     t.datetime "sent_at"
     t.datetime "delivered_at"
   end
 
   create_table "multi_messages", id: :serial, force: :cascade do |t|
-    t.string "sender_type", null: false
     t.integer "sender_id", null: false
-    t.string "regarding_type", null: false
+    t.string "sender_type", null: false
     t.integer "regarding_id", null: false
+    t.string "regarding_type", null: false
     t.hstore "recipients", null: false
     t.string "subject"
     t.text "body", null: false
