@@ -7,7 +7,7 @@ document.addEventListener("turbolinks:load", function() {
     var $source = $($(this).data('keep-count-of')),
         $that = $(this);
 
-    $source.on("keyup", function() {
+    $source.on("input", function() {
       var numChars = $(this).val().length,
           counted = "character";
 

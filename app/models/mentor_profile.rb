@@ -136,7 +136,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { self.searchable = can_enable_searchable? },
     on: :update,
-    if: -> { account.country_changed? }
+    if: -> { account.country_changed? or bio_changed? }
 
   after_save { teams.current.find_each(&:touch) }
   after_touch { teams.current.find_each(&:touch) }
@@ -172,9 +172,9 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def enable_searchability
-    update_attributes(searchable: can_enable_searchable?)
+    update_column(:searchable, can_enable_searchable?)
 
-    if can_enable_searchable?
+    if searchable?
       RegistrationMailer.welcome_mentor(account).deliver_later
       SubscribeEmailListJob.perform_later(
         account.email,
@@ -259,12 +259,11 @@ class MentorProfile < ActiveRecord::Base
     account.email_confirmed? and
       consent_signed? and
         background_check_complete? and
-          location_confirmed? and
             not bio.blank?
   end
 
   private
   def can_enable_searchable?
-    consent_signed? and background_check_complete?
+    onboarded? and location_confirmed?
   end
 end
