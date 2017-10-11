@@ -1,1 +1,3 @@
-<%= render "profiles/public_show", account: @student %>
+<%= render "profiles/public_show",
+  title: @student.first_name,
+  account: @student %>
