@@ -1,74 +1,78 @@
 <div class="grid tabs tabs-vertical">
   <div class="grid__col-sm-3">
-    <%= render 'teams/intro',
-      hidden_on: %w{xs xxs},
-      modal_id: "team_photo_desktop",
-      team: team %>
+    <div class="col--sticky">
+      <%= render 'teams/intro',
+        hidden_on: %w{xs xxs},
+        modal_id: "team_photo_desktop",
+        team: team %>
 
-    <%= render 'teams/edit_menu' %>
+      <%= render 'teams/edit_menu' %>
+    </div>
   </div>
 
   <div class="content grid__col-sm-9">
-    <div class="tab-content" id="students">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+    <div class="col--sticky">
+      <div class="tab-content" id="students">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
+
+        <%= render 'teams/edit_students', team: team %>
       </div>
 
-      <%= render 'teams/edit_students', team: team %>
-    </div>
-
-    <div class="tab-content" id="mentors">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+      <div class="tab-content" id="mentors">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
+
+        <%= render "teams/mentor_list", team: team %>
       </div>
 
-      <%= render "teams/mentor_list", team: team %>
-    </div>
-
-    <div class="tab-content hidden-md hidden-lg hidden-sm" id="photo">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+      <div class="tab-content hidden-md hidden-lg hidden-sm" id="photo">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
+
+        <%= render 'teams/intro',
+          modal_id: "team_photo_mobile",
+          team: team %>
       </div>
 
-      <%= render 'teams/intro',
-        modal_id: "team_photo_mobile",
-        team: team %>
-    </div>
-
-    <div class="tab-content" id="description">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+      <div class="tab-content" id="description">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
+
+        <%= render 'teams/edit_description', team: team %>
       </div>
 
-      <%= render 'teams/edit_description', team: team %>
-    </div>
-
-    <div class="tab-content" id="location">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+      <div class="tab-content" id="location">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
+
+        <%= render 'teams/location', team: team %>
       </div>
 
-      <%= render 'teams/location', team: team %>
-    </div>
-
-    <div class="tab-content" id="division">
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
-          <h1 class="content-heading"><%= team.name %></h1>
+      <div class="tab-content" id="division">
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
+            <h1 class="content-heading"><%= team.name %></h1>
+          </div>
         </div>
-      </div>
 
-      <%= render "teams/division", team: team %>
+        <%= render "teams/division", team: team %>
+      </div>
     </div>
   </div>
 </div>

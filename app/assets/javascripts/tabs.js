@@ -4,6 +4,11 @@ document.addEventListener("turbolinks:load", function() {
     var $links = $(this).find('.tab-menu').first().find('.tab-link'),
         $contents = $(this).find('.content').first().find('> .tab-content');
 
+    // possible col--sticky
+    if ($contents.length === 0)
+      $contents = $(this).find('.content .col--sticky').first()
+        .find('> .tab-content');
+
     // possible tabs-vertical layout
     if ($contents.length === 0)
       $contents = $('#' + $(this).prop('id') + ' + .content .tab-content');

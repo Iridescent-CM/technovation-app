@@ -5,6 +5,7 @@
 //= require jquery_ujs
 //= require chosen-jquery
 //= require sweetalert2
+//= require jquery.sticky-kit.min
 
 // ******** APP
 //
@@ -55,3 +56,7 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
+
+document.addEventListener("turbolinks:load", function() {
+  $(".col--sticky").stick_in_parent();
+});
