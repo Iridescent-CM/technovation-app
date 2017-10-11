@@ -1,11 +1,7 @@
 <ul class="steps">
-  <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
-
-  <%= render 'completion_steps/location_details', profile: current_student %>
-
-  <%= render 'completion_steps/confirm_changed_email', profile: current_student %>
-
-  <%= render "completion_steps/create_team", hidden: current_student.is_on_team? %>
+  <%= render "student/dashboards/completion_steps/incoming_join_requests",
+    requests: current_team.pending_requests,
+    scope: :student %>
 
   <%= render "completion_steps/join_requests",
     hidden: current_student.is_on_team?,
@@ -15,16 +11,16 @@
     hidden: current_student.is_on_team?,
     invites: current_student.team_member_invites.pending %>
 
+  <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
+
+  <%= render 'completion_steps/location_details', profile: current_student %>
+
+  <%= render 'completion_steps/confirm_changed_email', profile: current_student %>
+
+  <%= render "completion_steps/create_team", hidden: current_student.is_on_team? %>
+
   <%= render "student/dashboards/completion_steps/find_a_mentor",
     hidden: current_student.team.mentors.any? %>
 
   <%= render "student/dashboards/completion_steps/team_submission" %>
-
-  <%= render "student/dashboards/completion_steps/incoming_join_requests",
-    requests: current_student.team.pending_student_join_requests,
-    scope: :student %>
-
-  <%= render "student/dashboards/completion_steps/incoming_join_requests",
-    requests: current_student.team.pending_mentor_join_requests,
-    scope: :mentor %>
 </ul>

@@ -12,7 +12,7 @@ class NullTeam
   end
 
   def mentors
-    []
+    MentorProfile.none
   end
 
   def selected_regional_pitch_event
@@ -28,14 +28,14 @@ class NullTeam
   end
 
   def pending_requests
-    []
+    JoinRequest.none
   end
 
   def pending_student_join_requests
-    []
+    JoinRequest.none
   end
 
   def pending_mentor_join_requests
-    []
+    JoinRequest.none
   end
 end
