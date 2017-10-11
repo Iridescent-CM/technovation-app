@@ -4,10 +4,12 @@
       <h1 class="page-heading">
         <%= t("views.application.mentor_dashboard") %>
 
-        <small>
-          <%= link_to web_icon('refresh', text: "Switch to Judging"),
-            judge_dashboard_path %>
-        </small>
+        <% if SeasonToggles.signup_enabled?(:judge) %>
+          <small>
+            <%= link_to web_icon('refresh', text: "Switch to Judging"),
+              judge_dashboard_path %>
+          </small>
+        <% end %>
       </h1>
     </div>
   </div>
