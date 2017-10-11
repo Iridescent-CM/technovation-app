@@ -1,71 +1,48 @@
-const Modal = {
-  open: function($_modal_or_modal_id) {
-    var $_modal;
-
-    if ($_modal_or_modal_id instanceof jQuery) {
-      $_modal = $_modal_or_modal_id;
-    } else {
-      $_modal = $("#" + $_modal_or_modal_id);
-    }
-
-    $('#modal-shade').fadeIn();
-    $_modal.fadeIn();
-  },
-
-  close: function($_modal) {
-    $_modal.fadeOut(function() {
-      const onCloseUrl = $(this).data('on-close');
-
-      if (onCloseUrl)
-        $.post(onCloseUrl);
-    });
-
-    $('#modal-shade').fadeOut();
-  },
-};
-
 document.addEventListener("turbolinks:load", function() {
-  $('[data-opens-modal]').on('click', function(e) {
+  $("[data-opens-modal]").on("click", function(e) {
     e.preventDefault();
-    Modal.open($(this).data('opens-modal'));
+
+    const modal = $('#' + $(this).data("opensModal"));
+
+    swal({
+      html: modal.find(".modal-content"),
+      title: modal.data("heading") || "",
+      showCloseButton: true,
+      showConfirmButton: false,
+      onOpen: makeClonedImageUploaderUnique,
+    })
+
+    function makeClonedImageUploaderUnique(modal) {
+      const $form = $(modal).find(".new_image_uploader");
+
+      if ($form.length > 0) {
+        const $label = $form.find("label"),
+              $field = $form.find("input[type=file]"),
+              newId = Math.random()
+                .toString(36)
+                .replace(/[^a-z]+/g, '')
+                .substr(0, 7);
+
+        $field.prop("id", newId);
+        $label.prop("for", newId);
+      }
+    }
   });
 
-  $('.modal').each(function() {
-    var $modal = $(this);
-
-    attachHeading($modal);
-    attachShade($modal);
-
-    triggerPageLoadModals($modal);
-
-    function attachHeading($_modal) {
-      var $heading = $('<div>');
-
-      $heading.addClass('modal-heading');
-      $heading.text($_modal.data("heading"));
-
-      $_modal.prepend($heading);
-      attachCloseButton($_modal);
-    }
-
-    function attachCloseButton($_modal) {
-      var $closeBtn = $('<span>');
-
-      $closeBtn.addClass("icon-close");
-      $closeBtn.on('click', function() { Modal.close($_modal) });
-
-      $_modal.find(".modal-heading").append($closeBtn);
-    }
-
-    function attachShade($_modal) {
-      $('#modal-shade').on('click', function() {
-        Modal.close($_modal);
-      });
-    }
-
-    function triggerPageLoadModals($_modal) {
-      if ($_modal.data('open-on-page-load'))
-        Modal.open($_modal);
-    }
+  $("[data-open-on-page-load]").each(function(_, modal) {
+    swal({
+      html: $(modal).find(".modal-content"),
+      title: $(modal).data("heading"),
+      showCloseButton: true,
+      showConfirmButton: false,
+      onClose: function(m) {
+        const onCloseUrl = $(modal).data('onClose');
+        if (onCloseUrl)
+          $.post(onCloseUrl);
+      },
+    }).then(
+      function(confirm) { },
+      function(dismiss) { }
+    );
   });
 });

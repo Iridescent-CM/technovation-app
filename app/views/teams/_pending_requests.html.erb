@@ -36,11 +36,14 @@
                         join_request,
                         join_request: { status: :approved },
                       ],
+
                       class: "button small",
+
                       data: {
                         method: :put,
                         confirm: t("views.application.confirm_approved",
                                   name: join_request.requestor_first_name),
+                        positive: true,
                       } %>
 
                     <%= link_to t("views.application.declined"),
@@ -49,7 +52,9 @@
                         join_request,
                         join_request: { status: :declined },
                       ],
+
                       class: "button small danger",
+
                       data: {
                         method: :put,
                         confirm: t("views.application.confirm_declined",

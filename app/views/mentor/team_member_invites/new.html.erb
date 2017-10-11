@@ -1,2 +1,8 @@
-<h1>Invite another student by email</h1>
-<%= render "team_member_invites/form" %>
+<% provide :title, "Invite a student to your team" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-8">
+    <h1>Invite a student by email</h1>
+    <%= render "team_member_invites/form" %>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 document.addEventListener("turbolinks:load", function() {
-  $(".file-field input").on('change', function() {
-    var $preview = $(this).closest('form').find('.preview');
+  $(document).on("change", ".file-field input", function() {
+    var $form = $(this).closest('form'),
+        $preview = $form.find('.preview');
 
-    $(this).closest('form').find('.submit.hidden').removeClass('hidden');
+    $form.find('.submit.hidden').removeClass('hidden');
 
     var reader = new FileReader();
 
@@ -16,8 +17,11 @@ document.addEventListener("turbolinks:load", function() {
     reader.readAsDataURL($(this).prop('files')[0]);
   });
 
-  $(".preview__img .remove").on("click", function() {
-    $(this).closest(".preview").addClass("hidden");
-    $(this).closest('form').find('.submit').addClass('hidden');
+  $(document).on("click", ".preview__img .remove", function() {
+    var $form = $(this).closest('form');
+
+    $form.find(".preview").addClass("hidden");
+    $form.find('.submit').addClass('hidden');
+    $form.find('input[type=file]').val('');
   });
 });
