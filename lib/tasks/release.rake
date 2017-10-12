@@ -4,7 +4,7 @@ desc "Perform a release"
 task :release do
   releasing = VersionReleasing.new(ARGV[1])
 
-  releasing.run_command("git checkout master")
+  releasing.run_command("git checkout qa")
 
   releasing.promote_pending_version
   releasing.tag_promoted_version
@@ -14,11 +14,12 @@ task :release do
     fallback: "git checkout #{releasing.stable_branch}"
   )
 
-  releasing.run_command("git merge master")
-  releasing.run_command("git checkout production")
-  releasing.run_command("git merge #{releasing.stable_branch}")
-
   releasing.run_command("git checkout master")
+  releasing.run_command("git merge #{releasing.stable_branch}")
+  releasing.run_command("git checkout production")
+  releasing.run_command("git merge master")
+
+  releasing.run_command("git checkout qa")
   releasing.run_command("git push --tags")
   releasing.run_command("git push --all")
 
