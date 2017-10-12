@@ -115,7 +115,6 @@ group :production do
   gem 'hiredis', "~> 0.6"
   gem 'scout_apm', "~> 2.1"
   gem "rack-timeout", "~> 0.4"
-  gem 'rails_12factor', "~> 0.0"
   gem 'heroku-deflater',
     git: 'https://github.com/romanbsd/heroku-deflater.git',
     branch: 'master'
