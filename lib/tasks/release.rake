@@ -14,6 +14,7 @@ task :release do
     fallback: "git checkout #{releasing.stable_branch}"
   )
 
+  releasing.run_command("git merge qa")
   releasing.run_command("git checkout master")
   releasing.run_command("git merge #{releasing.stable_branch}")
   releasing.run_command("git checkout production")
