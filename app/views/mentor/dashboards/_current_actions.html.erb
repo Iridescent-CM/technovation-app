@@ -4,11 +4,17 @@
   <%= render 'completion_steps/background_check', profile: current_mentor %>
   <%= render 'completion_steps/complete_profile', profile: current_mentor %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
+
   <%= render "mentor/dashboards/current_teams" %>
-  <%= render "completion_steps/create_team" %>
+
+  <%= render "completion_steps/create_team",
+    hidden: current_mentor.onboarding? %>
+
   <%= render "completion_steps/join_requests",
+    hidden: current_mentor.onboarding?,
     allow_many: true,
     requests: current_mentor.join_requests.pending %>
+
   <%= render "completion_steps/invitations",
     invites: current_mentor.mentor_invites.pending %>
 </ul>

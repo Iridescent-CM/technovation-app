@@ -1,6 +1,11 @@
 module Mentor
   class TeamSearchesController < MentorController
     def new
+      if current_mentor.latitude.blank?
+        redirect_to mentor_location_details_path(return_to: request.fullpath),
+          notice: "Please save your location so that you can search for nearby teams"
+      end
+
       params[:nearby] = current_mentor.address_details if params[:nearby].blank?
       params[:division_enums] ||= Division.names.values
 

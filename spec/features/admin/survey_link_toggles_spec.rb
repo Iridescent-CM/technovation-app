@@ -6,10 +6,8 @@ RSpec.feature "Set survey links and link text" do
       let(:user) { FactoryGirl.create(scope) }
 
       before do
-        SeasonToggles.public_send("#{scope}_survey_link=", {
-          :text => "link text",
-          :url => "google.com"
-        })
+        SeasonToggles.set_dashboard_text(scope, "this is a dependency")
+        SeasonToggles.set_survey_link(scope, "link text", "google.com")
       end
 
       scenario "with modal" do

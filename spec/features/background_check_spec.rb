@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "background checks" do
   %i{mentor regional_ambassador}.each do |account|
     scenario "Complete a #{account} background check", :vcr do
-      a = FactoryGirl.create(account, country: "US")
+      a = FactoryGirl.create(account, :geocoded)
       a.background_check.destroy
       sign_in(a)
       click_link "Submit Background Check"
@@ -19,7 +19,7 @@ RSpec.feature "background checks" do
 
   [16, 17].each do |age|
     scenario "mentors age #{age} do not need to complete one" do
-      mentor = FactoryGirl.create(:mentor, date_of_birth: age.years.ago)
+      mentor = FactoryGirl.create(:mentor, :geocoded, date_of_birth: age.years.ago)
 
       sign_in(mentor)
 
@@ -29,6 +29,7 @@ RSpec.feature "background checks" do
     scenario "mentors age #{age} still become searchable" do
       mentor = FactoryGirl.create(
         :mentor,
+        :geocoded,
         not_onboarded: true,
         date_of_birth: age.years.ago,
         bio: "",

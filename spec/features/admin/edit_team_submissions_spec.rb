@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Toggling editable team submissions" do
+  include ActionView::RecordIdentifier
+
   let(:team) { FactoryGirl.create(:team) }
 
   def set_editable_team_submissions(bool)
@@ -24,7 +26,7 @@ RSpec.feature "Toggling editable team submissions" do
         create_authenticated_user_on_team(:mentor, submission: false)
 
         within(".navigation") { click_link("My teams") }
-        within("#team-#{team.id}") do
+        within("##{dom_id(team)}") do
           click_link "Start a submission now"
         end
 
@@ -35,7 +37,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit mentor_teams_path
 
-        within("#team-#{team.id}") do
+        within("##{dom_id(team)}") do
           expect(page).not_to have_content(
             "Starting a submission is not currently enabled."
           )
@@ -52,7 +54,7 @@ RSpec.feature "Toggling editable team submissions" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
         within(".navigation") { click_link("My teams") }
-        within("#team-#{team.id}") do
+        within("##{dom_id(team)}") do
           click_link("Edit this team's submission")
         end
 
@@ -79,7 +81,7 @@ RSpec.feature "Toggling editable team submissions" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
         within(".navigation") { click_link("My teams") }
-        within("#team-#{team.id}") do
+        within("##{dom_id(team)}") do
           expect(page).to have_content(
             "Submissions may not be started at this time"
           )
@@ -98,7 +100,7 @@ RSpec.feature "Toggling editable team submissions" do
         create_authenticated_user_on_team(:mentor, submission: false)
 
         within(".navigation") { click_link("My teams") }
-        within("#team-#{team.id}") do
+        within("##{dom_id(team)}") do
           expect(page).not_to have_link("Start a submission now")
           expect(page).to have_content("Submissions may not be started at this time")
         end

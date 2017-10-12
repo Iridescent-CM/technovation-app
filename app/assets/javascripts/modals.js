@@ -10,7 +10,10 @@ document.addEventListener("turbolinks:load", function() {
       showCloseButton: true,
       showConfirmButton: false,
       onOpen: makeClonedImageUploaderUnique,
-    })
+    }).then(
+      function(confirm) { },
+      function(dismiss) { }
+    );
 
     function makeClonedImageUploaderUnique(modal) {
       const $form = $(modal).find(".new_image_uploader");

@@ -1,5 +1,5 @@
 <div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
+  <div class="grid__col-sm-6 grid__col--bleed-y">
     <div class="grid__cell">
       <h1 class="page-heading">
         <%= t("views.application.mentor_dashboard") %>
@@ -14,25 +14,26 @@
     </div>
   </div>
 
-  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= SeasonToggles.dashboard_text(:mentor) %>
+  <% unless SeasonToggles.dashboard_text(:mentor).blank? %>
+    <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
+      <div class="grid__cell">
+        <h1 class="page-heading">
+          <%= SeasonToggles.dashboard_text(:mentor) %>
 
-        <small>
-          <%= render 'program_survey' %>
-        </small>
-      </h1>
+          <small>
+            <%= render 'program_survey' %>
+          </small>
+        </h1>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <div class="grid">
-  <div class="grid__col-md-3">
-    <div class="grid__cell">
+  <div class="grid__col-sm-3 grid__col--bleed-y">
+    <div class="col--sticky">
       <div class="panel">
-        <%= image_tag current_mentor.profile_image_url,
-          class: "thumbnail grid__cell-img" %>
+        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
 
         <h3 class="reset"><%= current_mentor.full_name %></h3>
 
@@ -41,14 +42,16 @@
     </div>
   </div>
 
-  <div class="grid__col-md-6">
-    <div class="grid__cell">
+  <div class="grid__col-md-6 grid__col-sm-9">
+    <div class="col--sticky">
       <%= render 'mentor/dashboards/current_actions' %>
     </div>
   </div>
 
   <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    <%= render "mentor/dashboards/info_sidebar" %>
+    <div class="col--sticky">
+      <%= render "mentor/dashboards/info_sidebar" %>
+    </div>
   </div>
 </div>
 
