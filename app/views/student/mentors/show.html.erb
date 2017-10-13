@@ -37,10 +37,12 @@
     <% end %>
 
     <% if current_team.present? and SeasonToggles.team_building_enabled? %>
-      <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
+      <%= render(
+        "student/mentors/#{mentor_invitation_template(current_team, @mentor)}",
         mentor_invite: @mentor_invite,
         mentor: @mentor,
-        team: current_student.team %>
+        team: current_team
+      ) %>
 
       <% # #mentor_invitation_template defined in app/helpers/student_helper.rb %>
     <% end %>
