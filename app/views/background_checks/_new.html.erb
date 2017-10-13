@@ -107,7 +107,12 @@
 
         <%= f.input :date_of_birth, placeholder: "YYYY-MM-DD" %>
 
-        <%= f.input :ssn, as: :password, placeholder: '123-45-6789' %>
+        <div class="show-hide show-hide--input">
+          <%= link_to 'Hide', '#',
+            data: { state: :showing },
+            class: "button small secondary" %>
+          <%= f.input :ssn, input_html: { placeholder: '___-__-____' } %>
+        </div>
 
         <%= f.input :driver_license_state, placeholder: "XX" %>
 
