@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "RAs switch to mentor mode" do
   scenario "an RA switches to mentor mode with a mentor profile" do
+    skip "Not there yet"
     ra = FactoryGirl.create(:regional_ambassador, :approved)
     CreateMentorProfile.(ra)
 
@@ -12,6 +13,7 @@ RSpec.feature "RAs switch to mentor mode" do
   end
 
   scenario "an RA switches to mentor mode without a mentor profile" do
+    skip "Not there yet"
     ra = FactoryGirl.create(:regional_ambassador, :approved)
 
     sign_in(ra)
@@ -21,6 +23,7 @@ RSpec.feature "RAs switch to mentor mode" do
   end
 
   scenario "an RA switches back to RA mode from mentor mode" do
+    skip "Not there yet"
     ra = FactoryGirl.create(:regional_ambassador, :approved)
 
     sign_in(ra)
@@ -31,6 +34,7 @@ RSpec.feature "RAs switch to mentor mode" do
   end
 
   scenario "a mentor without an RA profile cannot switch to RA mode" do
+    skip "Not there yet"
     mentor = FactoryGirl.create(:mentor)
     sign_in(mentor)
     expect(page).not_to have_link("RA mode")
