@@ -49,14 +49,13 @@ module Student
         NullJoinRequest.new
       "join_request_#{status}".camelize.constantize.(join_request)
 
-      redirect_back fallback_location: student_team_path(
+      redirect_to params[:back] || student_team_path(
         current_team,
         anchor: join_request.requestor_scope_name.pluralize
       ),
-        anchor: join_request.requestor_scope_name.pluralize,
-        success: t("controllers.student.join_requests.update.success",
-                  name: join_request.requestor_first_name,
-                  status: status)
+      success: t("controllers.student.join_requests.update.success",
+                 name: join_request.requestor_first_name,
+                 status: status)
     end
 
     private

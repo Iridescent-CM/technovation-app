@@ -48,10 +48,13 @@ module Mentor
 
       "join_request_#{status}".camelize.constantize.(join_request)
 
-      redirect_back fallback_location: mentor_dashboard_path,
-        success: t("controllers.mentor.join_requests.update.success",
-                  name: join_request.requestor_first_name,
-                  status: status)
+      redirect_to params[:back] || mentor_team_path(
+        join_request.team,
+        anchor: join_request.requestor_scope_name.pluralize
+      ),
+      success: t("controllers.mentor.join_requests.update.success",
+                 name: join_request.requestor_first_name,
+                 status: status)
     end
 
     private
