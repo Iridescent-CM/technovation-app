@@ -10,6 +10,15 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8 panel">
     <div class="grid__cell">
+      <% if params[:review_before] || params[:back] %>
+        <div class="grid__cell">
+          <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+            <span class="back-btn"></span>
+            <%= params[:back_title] ||= "Search results" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <h3><%= title %></h3>
 
       <%= image_tag profile.profile_image_url,
