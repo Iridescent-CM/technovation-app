@@ -21,7 +21,10 @@ class MentorController < ApplicationController
   end
 
   def authenticated_exceptions
-    ['join_requests#show']
+    [
+      'join_requests#show',
+      'mentor_invites#show',
+    ]
   end
 
   private
