@@ -5,3 +5,14 @@
 @import "search_results";
 @import "flags";
 @import "teams";
+
+.show-hide--input {
+  position: relative;
+
+  a {
+    margin: 0;
+    position: absolute;
+    top: 1.8rem;
+    right: 0.5rem;
+  }
+}

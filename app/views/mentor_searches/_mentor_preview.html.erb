@@ -42,12 +42,14 @@
   </div>
 
   <div class="search-result-foot grid--justify-center grid__cell-footer">
-    <%= link_to "Ask #{mentor_preview.first_name} to mentor your team",
-      send(
-        "#{account.scope_name}_mentor_path",
-        mentor_preview,
-        { review_before: true }
-      ),
-      class: 'button' %>
+    <% if current_scope == "mentor" %>
+      <%= link_to "Connect with #{mentor_preview.first_name}",
+        mentor_mentor_path(mentor_preview, review_before: true),
+        class: 'button' %>
+    <% else %>
+      <%= link_to "Ask #{mentor_preview.first_name} to mentor your team",
+        student_mentor_path(mentor_preview, review_before: true),
+        class: 'button' %>
+    <% end %>
   </div>
 </div>
