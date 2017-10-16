@@ -76,10 +76,16 @@ brew install nodejs
 git clone git@github.com:Iridescent-CM/technovation-app.git
 ```
 
-Run bin/setup
+Copy the `.env` file that your team should have given you Dropbox access to
 
 ```
 cd technovation-app
+cp <PATH-TO-.ENV-FILE> .
+```
+
+Run the rails setup file
+
+```
 ./bin/setup
 ```
 
