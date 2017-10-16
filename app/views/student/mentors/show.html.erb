@@ -23,7 +23,7 @@
                 name: @mentor.first_name) %>
         </p>
       <% end %>
-      
+
       <% if current_team.present? and SeasonToggles.team_building_enabled? %>
         <%= render(
           "student/mentors/#{mentor_invitation_template(current_team, @mentor)}",
@@ -32,7 +32,8 @@
           team: current_team
         ) # `mentor_invitation_template`
           # is defined in 
-          # app/helpers/student_helper.rb %>
+          # app/helpers/student_helper.rb
+        %>
       <% end %>
     </div>
   </div>
