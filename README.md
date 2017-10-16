@@ -25,11 +25,12 @@ brew install rbenv
 rbenv install 2.4.1
 ```
 
-Install qt5
-
-Make sure that you have xcode installed.
+Make sure XCode is installed.
 
 Under Xcode preferences locations, make sure there is a version set.
+
+Install qt5
+
 
 ```
 brew install qt@5.5
