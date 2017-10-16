@@ -10,29 +10,41 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 
 ### Prerequisites
 
-Install linuxbrew dependencies
+#### macOS
+
+Install homebrew
 
 ```
-sudo apt-get install build-essential curl file git python-setuptools ruby
-```
-
-Install linuxbrew
-
-```
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
-```
-
-```
-echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bash_profile
-. ~/.bash_profile
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 Install ruby 2.4.1
 
+```
+brew install rbenv
+rbenv install 2.4.1
+```
+
 Install qt5
 
+Make sure that you have xcode installed.
+
+Under Xcode preferences locations, make sure there is a version set.
+
 ```
-sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+brew install qt@5.5
+echo 'export PATH="$(brew --prefix qt@5.5)/bin:$PATH"' >> ~/.bashrc
+```
+
+After running this command:
+
+```
+which qmake
+```
+
+...you should get the following output:
+```
+/usr/local/bin/qmake
 ```
 
 Install redis
@@ -41,36 +53,20 @@ Install redis
 brew install redis
 ```
 
-```
-echo 'redis-server --daemonize yes' >> ~/.bash_profile
-```
-
 Install postgresql
 
 ```
 brew install postgresql
 ```
 
-```
-echo 'pg_ctl start -D /home/linuxbrew/.linuxbrew/var/postgres -l logfile' >> ~/.bash_profile
-```
-
 Install pdftk
 
-```
-sudo apt-get install pdftk
-```
+[https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.6-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.6-setup.pkg)
 
 Install nodejs
 
 ```
 brew install nodejs
-```
-
-Restart bash
-
-```
-. ~/.bash_profile
 ```
 
 
@@ -80,37 +76,51 @@ Restart bash
 git clone git@gitlab.com:technovationmx/technovation-rails.git
 ```
 
-Seed / bootstrap the DB
+Run bin/setup
 
 ```
-rails db:seed bootstrap bootstrap_search_engine
+cd technovation-rails
+./bin/setup
 ```
 
+Ensure the test suite can run without errors:
+
 ```
-rails s -b 0.0.0.0
+rake
 ```
+
+Run the local server
+
+```
+rails s
+```
+
+Navigate to [http://localhost:3000](http://localhost:3000)
+
 
 ## User type logins:
-
-(all sanitized database users have had their password reset to `secret1234`)
 
 Seeded users:
 
 * Student
   * username: student@student.com
   * password: student@student.com
+  
 * Mentor
   * username: mentor@mentor.com
   * password: mentor@mentor.com
+  
 * Judge
   * username: judge@judge.com
   * password: judge@judge.com
+  
 * Regional Ambassador
   * username: ra@ra.com
   * password: ra@ra.com
+  
 * Admin
   * username: info@technovationchallenge.org
-  * password: <in lastpass/.env>
+  * password: <check in lastpass/.env>
 
 ## To turn on/off various user features:
 
@@ -118,17 +128,10 @@ Seeded users:
   * Go to "Season Schedule Settings"
   * Toggle what you need on or off
 
-## Development server
-
-```
-rails s
-```
-
-**Visit http://localhost:3000 in your favorite web browser**
 
 ## Tests
 
-TechnovationApp uses RSpec, and you can run the entire test suite just by entering the command `rake`
+Technovation uses RSpec, and you can run the entire test suite just by entering the command `rake`
 
 ```
 rake
