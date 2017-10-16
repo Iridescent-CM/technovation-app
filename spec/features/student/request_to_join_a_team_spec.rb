@@ -121,7 +121,10 @@ RSpec.feature "Students request to join a team",
 
       sign_out
       mentor = team.mentors.sample
-      visit mentor_join_request_path(JoinRequest.last, mailer_token: mentor.mailer_token)
+      visit mentor_join_request_path(
+        JoinRequest.last,
+        mailer_token: mentor.mailer_token
+      )
       click_button "Approve"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,

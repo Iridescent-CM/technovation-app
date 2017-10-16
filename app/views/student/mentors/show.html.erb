@@ -1,48 +1,37 @@
 <% provide :title, t("views.student.mentors.show.title") %>
 
+<%= render 'profiles/public_show',
+  title: t("views.student.mentors.show.title"),
+  account: @mentor %>
+
 <div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <% if params[:review_before] %>
-      <div class="grid__cell">
-        <%= link_to :back, class: "button secondary" do %>
-          <span class="back-btn"></span>
-          Search results
-        <% end %>
+  <div class="grid__col-sm-8 grid__col--bleed-y">
+    <div class="panel">
+      <strong>
+        <%= t("views.student.mentors.show.teams", name: @mentor.first_name) %>
+      </strong>
 
+      <% if @mentor.teams.current.any? %>
+        <ul class="unstyled">
+          <%= render partial: 'student/mentors/team_preview',
+            collection: @mentor.teams.current,
+            locals: { profile: @mentor } %>
+        </ul>
+      <% else %>
         <p>
-          Review this mentor's profile before asking them to join your team below.
+          <%= t("views.student.mentors.show.no_teams",
+                name: @mentor.first_name) %>
         </p>
-      </div>
-    <% end %>
+      <% end %>
 
-    <%= render 'profiles/public_show',
-      title: t("views.student.mentors.show.title"),
-      account: @mentor %>
+      <% if current_team.present? and SeasonToggles.team_building_enabled? %>
+        <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
+          mentor_invite: @mentor_invite,
+          mentor: @mentor,
+          team: current_student.team %>
 
-    <strong>
-      <%= t("views.student.mentors.show.teams", name: @mentor.first_name) %>
-    </strong>
-
-    <% if @mentor.teams.current.any? %>
-      <ul class="unstyled">
-        <%= render partial: 'student/mentors/team_preview',
-          collection: @mentor.teams.current,
-          locals: { profile: @mentor } %>
-      </ul>
-    <% else %>
-      <p>
-        <%= t("views.student.mentors.show.no_teams",
-              name: @mentor.first_name) %>
-      </p>
-    <% end %>
-
-    <% if current_team.present? and SeasonToggles.team_building_enabled? %>
-      <%= render "student/mentors/#{mentor_invitation_template(current_student.team, @mentor)}",
-        mentor_invite: @mentor_invite,
-        mentor: @mentor,
-        team: current_student.team %>
-
-      <% # #mentor_invitation_template defined in app/helpers/student_helper.rb %>
-    <% end %>
+        <% # #mentor_invitation_template defined in app/helpers/student_helper.rb %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -26,7 +26,13 @@
                   <%= link_to "view profile",
                     send(
                       "#{current_scope}_#{join_request.requestor_scope_name}_path",
-                      join_request.requestor
+                      join_request.requestor,
+                      back_title: "Back to your team",
+                      back: send(
+                        "#{current_scope}_team_path",
+                        team,
+                        anchor: join_request.requestor_scope_name.pluralize
+                      )
                     ) %>
 
                   <p class="buttons">

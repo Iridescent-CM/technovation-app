@@ -1,11 +1,16 @@
 module Mentor
   class MentorInvitesController < MentorController
     def show
-      @invite = current_mentor.mentor_invites.find_by(
+      @invite = MentorInvite.find_by(
         invite_token: params.fetch(:id)
       ) || NullInvite.new
 
-      render template: "team_member_invites/show_#{@invite.status}"
+      if @invite.invitee and @invite.invitee != current_profile
+        signin = @invite.invitee.account
+        SignIn.(signin, self, redirect_to: [:mentor_mentor_invite_path, @invite])
+      else
+        render template: "team_member_invites/show_#{@invite.status}"
+      end
     end
 
     def update

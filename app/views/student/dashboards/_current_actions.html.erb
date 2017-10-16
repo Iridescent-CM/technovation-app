@@ -1,7 +1,6 @@
 <ul class="steps">
   <%= render "student/dashboards/completion_steps/incoming_join_requests",
-    requests: current_team.pending_requests,
-    scope: :student %>
+    requests: current_team.pending_requests %>
 
   <%= render "completion_steps/join_requests",
     hidden: current_student.is_on_team?,
