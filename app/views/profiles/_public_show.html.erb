@@ -1,8 +1,17 @@
 <% title ||= t("views.accounts.show.title") %>
 
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
+  <div class="grid__col-sm-8 grid__col--bleed-y">
     <div class="panel">
+      <% if params[:review_before] || params[:back] %>
+        <div class="grid__cell">
+          <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+            <span class="back-btn"></span>
+            <%= params[:back_title] ||= "Search results" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="grid grid--bleed">
         <div class="grid__col-auto">
           <div class="grid__cell">

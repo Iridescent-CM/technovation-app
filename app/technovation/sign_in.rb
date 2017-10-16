@@ -24,7 +24,7 @@ module SignIn
 
     context.redirect_to(
       (context.remove_cookie(:redirected_from) or
-        context.send(signin_options[:redirect_to])),
+        context.send(*Array(signin_options[:redirect_to]))),
       success: signin_options[:message]
     )
   end

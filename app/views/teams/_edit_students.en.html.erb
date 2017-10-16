@@ -23,6 +23,7 @@
   invites: team.pending_student_invites %>
 
 <%= render "teams/pending_requests",
+  team: team,
   requests: team.pending_student_join_requests %>
 
 <div class="grid grid--bleed">
