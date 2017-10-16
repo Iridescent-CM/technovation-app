@@ -73,13 +73,13 @@ brew install nodejs
 ### Install the rails application
 
 ```
-git clone git@gitlab.com:technovationmx/technovation-rails.git
+git clone git@github.com:Iridescent-CM/technovation-app.git
 ```
 
 Run bin/setup
 
 ```
-cd technovation-rails
+cd technovation-app
 ./bin/setup
 ```
 
