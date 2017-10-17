@@ -9,18 +9,7 @@ module Student
         review_token: params.fetch(:id)
       ) || NullJoinRequest.new
 
-      if reviewer_needs_to_sign_in?
-        student = @join_request.team.students
-          .joins(:account)
-          .find_by("accounts.mailer_token = ?", params.fetch(:mailer_token))
-
-        SignIn.(
-          student.account,
-          self,
-          message: false,
-          redirect_to: "#{current_scope}_join_request_path"
-        )
-      elsif reviewer_is_requestor?(@join_request)
+      if reviewer_is_requestor?(@join_request)
         render template: "join_requests/show_requestor_#{@join_request.status}"
       elsif reviewer_is_unauthorized?(@join_request)
         redirect_to student_dashboard_path,
@@ -61,11 +50,6 @@ module Student
     private
     def join_request_params
       params.require(:join_request).permit(:status)
-    end
-
-    def reviewer_needs_to_sign_in?
-      mailer_token = params.fetch(:mailer_token) { false }
-      mailer_token and current_student.mailer_token != mailer_token
     end
 
     def reviewer_is_requestor?(join_request)

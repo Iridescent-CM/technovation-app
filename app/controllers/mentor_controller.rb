@@ -20,13 +20,6 @@ class MentorController < ApplicationController
     "mentor"
   end
 
-  def authenticated_exceptions
-    [
-      'join_requests#show',
-      'mentor_invites#show',
-    ]
-  end
-
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile ||
