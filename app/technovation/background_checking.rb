@@ -34,7 +34,7 @@ class BackgroundChecking
     AccountMailer.background_check_clear(account).deliver_later
 
     if account.mentor_profile.present?
-      account.mentor_profile.enable_searchability
+      account.mentor_profile.enable_searchability_with_save
     end
   end
 end

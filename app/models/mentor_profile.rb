@@ -134,12 +134,12 @@ class MentorProfile < ActiveRecord::Base
 
   reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
-  after_validation -> { self.searchable = can_enable_searchable? },
+  after_validation -> { enable_searchability },
     on: :update,
     if: -> { account.country_changed? or bio_changed? }
 
-  after_save { teams.current.find_each(&:touch) }
-  after_touch { teams.current.find_each(&:touch) }
+  after_save { current_teams.find_each(&:touch) }
+  after_touch { current_teams.find_each(&:touch) }
 
   validates :school_company_name, :job_title, presence: true
   validates :bio, length: { minimum: 100 }, allow_blank: true, if: :bio_changed?
@@ -172,7 +172,9 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def enable_searchability
-    update_column(:searchable, can_enable_searchable?)
+    self.searchable = can_enable_searchable?
+
+    yield(self) if block_given?
 
     if searchable?
       RegistrationMailer.welcome_mentor(account).deliver_later
@@ -185,6 +187,10 @@ class MentorProfile < ActiveRecord::Base
          { Key: 'Country', Value: FriendlyCountry.(self, prefix: false) }]
       )
     end
+  end
+
+  def enable_searchability_with_save
+    enable_searchability(&:save)
   end
 
   def disable_searchability
@@ -232,11 +238,11 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def is_on_team?
-    teams.current.any?
+    current_teams.any?
   end
 
   def team_ids
-    teams.current.collect(&:id)
+    current_teams.collect(&:id)
   end
 
   def team_names

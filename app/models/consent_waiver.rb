@@ -10,7 +10,7 @@ class ConsentWaiver < ActiveRecord::Base
 
   after_commit -> {
     if account.mentor_profile.present?
-      account.mentor_profile.enable_searchability
+      account.mentor_profile.enable_searchability_with_save
     end
 
     if account.judge_profile
