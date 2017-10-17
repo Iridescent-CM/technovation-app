@@ -30,6 +30,7 @@ machine:
     ENABLE_RA_SCORES: yes
     SEARCH_INDEX_TIMING: realtime
     RA_SLACK_URL: no-matter-in-test
+    MENTOR_SLACK_SIGNUP_URL: no-matter-in-test
 
 general:
   branches:
