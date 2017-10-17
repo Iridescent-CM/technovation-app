@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
 
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
-  has_many :certificates
+  has_many :certificates, dependent: :destroy
 
   has_many :void_consent_waivers,
     -> { void },

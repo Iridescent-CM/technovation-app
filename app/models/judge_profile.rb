@@ -1,4 +1,6 @@
 class JudgeProfile < ActiveRecord::Base
+  acts_as_paranoid
+
   scope :onboarded, -> {
     joins(account: :consent_waiver)
       .where("accounts.location_confirmed = ?", true)
@@ -33,7 +35,7 @@ class JudgeProfile < ActiveRecord::Base
   belongs_to :current_account, -> { current },
     required: false
 
-  has_many :submission_scores
+  has_many :submission_scores, dependent: :destroy
 
   has_and_belongs_to_many :regional_pitch_events, -> { distinct }
   has_many :judge_assignments
