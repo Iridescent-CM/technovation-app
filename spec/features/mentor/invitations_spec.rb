@@ -14,7 +14,7 @@ RSpec.feature "Mentors and invitations" do
     )
 
     sign_in(mentor)
-    visit mentor_mentor_invite_path(id: invite.invite_token)
+    visit mentor_mentor_invite_path(invite, mailer_token: mentor.mailer_token)
 
     click_button "Accept"
 

@@ -73,7 +73,10 @@ class TeamMailer < ApplicationMailer
       "team_mailer.invite_member.greeting.mentor",
       name: invite.team_name
     )
-    @url = mentor_mentor_invite_url(invite)
+    @url = mentor_mentor_invite_url(
+      invite,
+      mailer_token: invite.invitee_mailer_token
+    )
     @intro = I18n.translate("team_mailer.invite_member.intro.existing_profile")
     @link_text = "Review this invitation"
 
@@ -126,14 +129,22 @@ class TeamMailer < ApplicationMailer
     @role_name = I18n.translate("team_mailer.#{type}_join_request_status.role_name")
 
     if status == :accepted
-      @url = send("#{type}_team_url", join_request.team)
+      @url = send(
+        "#{type}_team_url",
+        join_request.team,
+        mailer_token: join_request.requestor_mailer_token
+      )
     end
 
     if status == :declined
       @extra = I18n.translate(
         "team_mailer.#{type}_join_request_status.declined_extra"
       )
-      @url = send("new_#{type}_team_search_url")
+
+      @url = send(
+        "new_#{type}_team_search_url",
+        mailer_token: join_request.requestor_mailer_token
+      )
 
       if type == :student
         @extra_url = "http://www.technovationchallenge.org/curriculum/buildateam/"
@@ -151,7 +162,10 @@ class TeamMailer < ApplicationMailer
   end
 
   def invite_existing_student(invite)
-    @url = student_team_member_invite_url(invite)
+    @url = student_team_member_invite_url(
+      invite,
+      mailer_token: invite.invitee_mailer_token
+    )
     @intro = I18n.translate("team_mailer.invite_member.intro.existing_profile")
     @link_text = "Review this invitation"
   end

@@ -21,6 +21,7 @@ RSpec.describe Student::JoinRequestsController do
 
       url = mentor_join_request_url(
         JoinRequest.last,
+        mailer_token: mentor.mailer_token,
         host: ENV["HOST_DOMAIN"],
         port: ENV["HOST_DOMAIN"].split(":")[1]
       )
@@ -68,15 +69,27 @@ RSpec.describe Student::JoinRequestsController do
       end
 
       it "emails the mentor acceptance email" do
-        expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request approval email was sent"
-        mail = ActionMailer::Base.deliveries.last
-        expect(mail.to).to eq([JoinRequest.last.requestor_email])
-        expect(mail.subject).to eq("Your request to mentor #{team.name} was accepted!")
-        expect(mail.body.to_s).to include("#{team.name} accepted your request to be their mentor!")
+        expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+          "No join request approval email was sent"
 
-        url = mentor_team_url(team,
-                              host: ENV["HOST_DOMAIN"],
-                              port: ENV["HOST_DOMAIN"].split(":")[1])
+        mail = ActionMailer::Base.deliveries.last
+
+        expect(mail.to).to eq([JoinRequest.last.requestor_email])
+
+        expect(mail.subject).to eq(
+          "Your request to mentor #{team.name} was accepted!"
+        )
+
+        expect(mail.body.to_s).to include(
+          "#{team.name} accepted your request to be their mentor!"
+        )
+
+        url = mentor_team_url(
+          team,
+          mailer_token: mentor.mailer_token,
+          host: ENV["HOST_DOMAIN"],
+          port: ENV["HOST_DOMAIN"].split(":")[1]
+        )
 
         expect(mail.body.to_s).to include("href=\"#{url}\"")
       end
@@ -96,11 +109,20 @@ RSpec.describe Student::JoinRequestsController do
       end
 
       it "emails the mentor declined email" do
-        expect(ActionMailer::Base.deliveries.count).not_to be_zero, "No join request decline email was sent"
+        expect(ActionMailer::Base.deliveries.count).not_to be_zero,
+          "No join request decline email was sent"
+
         mail = ActionMailer::Base.deliveries.last
+
         expect(mail.to).to eq([JoinRequest.last.requestor_email])
-        expect(mail.subject).to eq("Your request to mentor #{team.name} was declined")
-        expect(mail.body.to_s).to include("#{team.name} has declined your request to be their mentor.")
+
+        expect(mail.subject).to eq(
+          "Your request to mentor #{team.name} was declined"
+        )
+
+        expect(mail.body.to_s).to include(
+          "#{team.name} has declined your request to be their mentor."
+        )
       end
     end
   end

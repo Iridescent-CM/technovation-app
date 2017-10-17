@@ -46,6 +46,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   delegate :first_name,
            :scope_name,
+           :mailer_token,
     to: :invitee, prefix: true
 
   def to_param

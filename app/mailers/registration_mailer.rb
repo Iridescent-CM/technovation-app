@@ -29,9 +29,17 @@ class RegistrationMailer < ApplicationMailer
 
   def welcome_mentor(mentor)
     @first_name = mentor.first_name
-    @infographic_url = "https://infograph.venngage.com/infograph/publish/02844b99-420b-4016-8c13-1426fc29fbe7"
-    @edit_account_url = edit_mentor_profile_url
-    @root_url = root_url
+
+    @orientation_url =
+      "https://infograph.venngage.com/publish/02844b99-420b-4016-8c13-1426fc29fbe7"
+
+    @timeline_url =
+      "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
+
+    @root_url = mentor_dashboard_url(mailer_token: mentor.mailer_token)
+
+    @ebook_url =
+      "https://iridescentlearning.atavist.com/technovation-mentor-training"
 
     I18n.with_locale(mentor.locale) do
       mail to: mentor.email,

@@ -5,25 +5,36 @@ module Authenticated
     before_action :unauthorized!, if: -> {
       not current_session.authenticated? and
         current_account.authenticated? and
-          current_account.send("#{current_scope}_profile").nil? and
-            not authenticated_exceptions.include?("#{controller_name}##{action_name}")
+          current_account.send("#{current_scope}_profile").nil?
     }
 
     before_action :unauthenticated!, if: -> {
+      not !!params.fetch(:mailer_token) { false } and
+        not current_session.authenticated? and
+          not current_account.authenticated?
+    }
+
+    before_action :attempt_tokenized_signin!, if: -> {
       not current_session.authenticated? and
         not current_account.authenticated? and
-          not authenticated_exceptions.include?("#{controller_name}##{action_name}")
+          !!params.fetch(:mailer_token) { false }
     }
   end
 
   private
-  def authenticated_exceptions
-    []
-  end
-
   def unauthorized!
     redirect_to send("#{current_account.scope_name}_dashboard_path"),
       error: t("controllers.application.unauthorized") and return
+  end
+
+  def attempt_tokenized_signin!
+    save_redirected_path
+
+    if account = Account.find_by(mailer_token: params[:mailer_token])
+      SignIn.(account, self)
+    else
+      unauthenticated!
+    end
   end
 
   def unauthenticated!

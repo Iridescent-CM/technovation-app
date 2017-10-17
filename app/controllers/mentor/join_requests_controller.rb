@@ -19,18 +19,7 @@ module Mentor
         review_token: params.fetch(:id)
       ) || NullJoinRequest.new
 
-      if reviewer_needs_to_sign_in?
-        mentor = @join_request.team.mentors
-          .joins(:account)
-          .find_by("accounts.mailer_token = ?", params.fetch(:mailer_token))
-
-        SignIn.(
-          mentor.account,
-          self,
-          message: false,
-          redirect_to: "#{current_scope}_join_request_path"
-        )
-      elsif reviewer_is_requestor?(@join_request)
+      if reviewer_is_requestor?(@join_request)
         render template: "join_requests/show_requestor_#{@join_request.status}"
       elsif reviewer_is_unauthorized?(@join_request)
         redirect_to mentor_dashboard_path,
@@ -60,11 +49,6 @@ module Mentor
     private
     def reviewer_is_requestor?(join_request)
       current_mentor.authenticated? and current_mentor == join_request.requestor
-    end
-
-    def reviewer_needs_to_sign_in?
-      mailer_token = params.fetch(:mailer_token) { false }
-      mailer_token and current_mentor.mailer_token != mailer_token
     end
 
     def reviewer_is_unauthorized?(join_request)

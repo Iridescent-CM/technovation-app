@@ -36,8 +36,11 @@ RSpec.feature "Students request to join a team",
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team, :with_mentor) } # Default is in Chicago
-    let!(:student) { FactoryGirl.create(:student, not_onboarded: true) } # Default Chicago
+    let!(:team) { FactoryGirl.create(:team, :with_mentor) }
+      # Default is in Chicago
+
+    let!(:student) { FactoryGirl.create(:student, not_onboarded: true) }
+      # Default Chicago
 
     before do
       ActionMailer::Base.deliveries.clear
@@ -49,7 +52,9 @@ RSpec.feature "Students request to join a team",
     scenario "students not on a team request to join an available team" do
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request email was sent"
+
       mail = ActionMailer::Base.deliveries.last
+
       expect(mail.subject).to eq("A student has asked to join your team!")
     end
 
@@ -70,22 +75,35 @@ RSpec.feature "Students request to join a team",
 
       sign_out
       student = team.students.sample
-      visit student_join_request_path(JoinRequest.last, mailer_token: student.mailer_token)
+
+      visit student_join_request_path(
+        JoinRequest.last,
+        mailer_token: student.mailer_token
+      )
+
       click_button "Approve"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
+
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to).to eq([JoinRequest.last.requestor_email])
       expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
-      expect(mail.body.to_s).to include("Hi #{JoinRequest.last.requestor_first_name}!")
+
+      expect(mail.body.to_s).to include(
+        "Hi #{JoinRequest.last.requestor_first_name}!"
+      )
+
       expect(mail.body.to_s).to include(
         "#{team.name} accepted your request to be a member!"
       )
 
-      url = student_team_url(team,
-                             host: ENV["HOST_DOMAIN"],
-                             port: ENV["HOST_DOMAIN"].split(':')[1])
+      url = student_team_url(
+        team,
+        mailer_token: JoinRequest.last.requestor_mailer_token,
+        host: ENV["HOST_DOMAIN"],
+        port: ENV["HOST_DOMAIN"].split(':')[1]
+      )
 
       expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
@@ -165,7 +183,12 @@ RSpec.feature "Students request to join a team",
 
       sign_out
       student = team.students.sample
-      visit student_join_request_path(JoinRequest.last, mailer_token: student.mailer_token)
+
+      visit student_join_request_path(
+        JoinRequest.last,
+        mailer_token: student.mailer_token
+      )
+
       click_button "Decline"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
@@ -185,7 +208,12 @@ RSpec.feature "Students request to join a team",
 
       sign_out
       mentor = team.mentors.sample
-      visit mentor_join_request_path(JoinRequest.last, mailer_token: mentor.mailer_token)
+
+      visit mentor_join_request_path(
+        JoinRequest.last,
+        mailer_token: mentor.mailer_token
+      )
+
       click_button "Decline"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,

@@ -25,6 +25,11 @@ en:
               blank: "is required to change your email address or password"
               invalid: "is incorrect"
 
+        mentor_invite:
+          attributes:
+            invitee_email:
+              is_not_a_mentor: "does not belong to a mentor"
+
         signup_attempt:
           attributes:
             email:
