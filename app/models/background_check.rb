@@ -5,7 +5,7 @@ class BackgroundCheck < ActiveRecord::Base
 
   after_destroy -> {
     account.mentor_profile.disable_searchability
-  }, if: -> { account.mentor_profile.present? }
+  }, if: -> { MentorProfile.exists?(account.mentor_profile.id) }
 
   def submitted?
     pending?
