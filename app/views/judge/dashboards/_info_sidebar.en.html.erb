@@ -43,7 +43,7 @@
     target: "_blank" %>
   </p>
 
-  <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(2017, 3, 8) %>
+  <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(Season.current.year, 3, 8) %>
     <h3>Mentor Dashboard</h3>
 
     <p>

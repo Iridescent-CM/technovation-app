@@ -37,11 +37,11 @@ class VirtualRegionalPitchEvent
   end
 
   def starts_at
-    DateTime.new(2017, 5, 1, 7, 0, 0).in_time_zone(timezone)
+    DateTime.new(Season.current.year, 5, 1, 7, 0, 0).in_time_zone(timezone)
   end
 
   def ends_at
-    DateTime.new(2017, 5, 16, 6, 59, 59).in_time_zone(timezone)
+    DateTime.new(Season.current.year, 5, 16, 6, 59, 59).in_time_zone(timezone)
   end
 
   def divisions
