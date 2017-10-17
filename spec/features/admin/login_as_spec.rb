@@ -8,6 +8,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "RA logging in as a student" do
+      skip "Blocked for RAs"
       student = FactoryGirl.create(:student, :geocoded, :on_team)
 
       visit regional_ambassador_participant_path(student.account)
@@ -25,6 +26,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "RA logging in as a mentor" do
+      skip "Blocked for RAs"
       mentor = FactoryGirl.create(:mentor, :geocoded, :on_team)
 
       visit regional_ambassador_participant_path(mentor.account)
@@ -43,6 +45,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "RA logging in as a judge" do
+      skip "Blocked for RAs"
       judge = FactoryGirl.create(:judge, :geocoded)
 
       visit regional_ambassador_participant_path(judge.account)
