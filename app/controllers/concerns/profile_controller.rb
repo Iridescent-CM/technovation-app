@@ -25,8 +25,21 @@ module ProfileController
 
   def update
     if ProfileUpdating.execute(account, account_params)
-      redirect_to after_update_path,
-        success: t('controllers.accounts.update.success')
+      respond_to do |format|
+        format.json {
+          render json: {
+            flash: {
+              success: t("controllers.accounts.update.success"),
+            },
+          },
+          status: 200
+        }
+
+        format.html {
+          redirect_to after_update_path,
+            success: t('controllers.accounts.update.success')
+        }
+      end
     elsif account.errors[:password] || account.errors[:existing_password]
       if account.email_changed?
         render 'email_addresses/edit'

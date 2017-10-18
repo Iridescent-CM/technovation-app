@@ -1,6 +1,7 @@
 //= require application
 //= require jquery.maskedinput
 
+//= require forms
 //= require search
 
 document.addEventListener("turbolinks:load", function() {

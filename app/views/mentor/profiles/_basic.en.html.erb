@@ -21,6 +21,35 @@
   <dd><%= simple_format current_mentor.bio %></dd>
 </dl>
 
+<%= form_with model: current_mentor,
+  data: { submit_on_change: true },
+  url: mentor_profile_path(format: :json),
+  method: :patch do |f| %>
+
+  <p>
+    <%= f.check_box :accepting_team_invites,
+      id: :mentor_profile_accepting_team_invites %>
+
+    <%= f.label :accepting_team_invites,
+      "Allow teams to find you in search results and invite you to join" %>
+  </p>
+
+  <p>
+    <%= f.check_box :virtual, id: :mentor_profile_virtual %>
+
+    <%= f.label :virtual,
+      "Indicate to teams that you can be an online, remote mentor" %>
+  </p>
+
+  <p>
+    <%= f.check_box :connect_with_mentors,
+      id: :mentor_profile_connect_with_mentors %>
+
+    <%= f.label :connect_with_mentors,
+      "Allow other mentors to find you in search results and connect via email" %>
+  </p>
+<% end %>
+
 <p>
   <%= link_to "Change your basic profile details",
     edit_profile_path,
