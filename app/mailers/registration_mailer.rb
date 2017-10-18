@@ -29,7 +29,6 @@ class RegistrationMailer < ApplicationMailer
 
   def welcome_mentor(account_id)
     account = Account.joins(:mentor_profile).find(account_id)
-    mentor = account.mentor_profile
 
     @first_name = account.first_name
 
@@ -52,8 +51,6 @@ class RegistrationMailer < ApplicationMailer
         subject: t("registration_mailer.welcome_mentor.subject",
                    season_year: Season.current.year)
     end
-
-    mentor.update(welcomed_at: Time.current)
   end
 
   def welcome_student(student)

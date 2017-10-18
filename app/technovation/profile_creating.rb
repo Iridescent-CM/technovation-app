@@ -23,6 +23,8 @@ class ProfileCreating
       TeamMemberInvite.match_registrant(profile)
     when :regional_ambassador
       AdminMailer.pending_regional_ambassador(profile.account).deliver_later
+    when :mentor
+      RegistrationMailer.welcome_mentor(profile.account_id).deliver_later
     end
 
     SignIn.(
