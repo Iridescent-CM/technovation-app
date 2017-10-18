@@ -27,8 +27,11 @@ class RegistrationMailer < ApplicationMailer
     end
   end
 
-  def welcome_mentor(mentor)
-    @first_name = mentor.first_name
+  def welcome_mentor(account_id)
+    account = Account.joins(:mentor_profile).find(account_id)
+    mentor = account.mentor_profile
+
+    @first_name = account.first_name
 
     @orientation_url =
       "https://infograph.venngage.com/publish/02844b99-420b-4016-8c13-1426fc29fbe7"
@@ -36,17 +39,21 @@ class RegistrationMailer < ApplicationMailer
     @timeline_url =
       "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
 
-    @root_url = mentor_dashboard_url(mailer_token: mentor.mailer_token)
+    @root_url = mentor_dashboard_url(mailer_token: account.mailer_token)
 
     @ebook_url =
       "https://iridescentlearning.atavist.com/technovation-mentor-training"
 
-    I18n.with_locale(mentor.locale) do
-      mail to: mentor.email,
+    @season_year = Season.current.year
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
         from: "Monica Gragg <monica@technovationchallenge.org>",
         subject: t("registration_mailer.welcome_mentor.subject",
                    season_year: Season.current.year)
     end
+
+    mentor.update(welcomed_at: Time.current)
   end
 
   def welcome_student(student)

@@ -176,8 +176,8 @@ class MentorProfile < ActiveRecord::Base
 
     yield(self) if block_given?
 
-    if searchable?
-      RegistrationMailer.welcome_mentor(account).deliver_later
+    if searchable? and not welcomed?
+      RegistrationMailer.welcome_mentor(account_id).deliver_later
       SubscribeEmailListJob.perform_later(
         account.email,
         account.full_name,
@@ -187,6 +187,14 @@ class MentorProfile < ActiveRecord::Base
          { Key: 'Country', Value: FriendlyCountry.(self, prefix: false) }]
       )
     end
+  end
+
+  def welcomed?
+    not welcomed_at.blank?
+  end
+
+  def reset_welcomed!
+    update(welcomed_at: nil)
   end
 
   def enable_searchability_with_save

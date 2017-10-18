@@ -4,5 +4,6 @@ task reset_consents: :environment do
       Date.today.day == Season.switch_day
     ParentalConsent.nonvoid.find_each(&:void!)
     ConsentWaiver.nonvoid.find_each(&:void!)
+    MentorProfile.find_each(&:reset_welcomed!)
   end
 end
