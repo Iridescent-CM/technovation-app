@@ -28,4 +28,15 @@ class ParentMailer < ApplicationMailer
       mail to: consent.student_profile.parent_guardian_email
     end
   end
+
+  def thank_you(consent_id)
+    profile = ParentalConsent.find(consent_id).student_profile
+    @name = profile.parent_guardian_name
+    @technovation_url = "http://technovationchallenge.org/about/"
+    @newsletter_url = "https://confirmsubscription.com/h/d/C9D08C6FF3FA972C"
+
+    I18n.with_locale(profile.account.locale) do
+      mail to: profile.parent_guardian_email
+    end
+  end
 end
