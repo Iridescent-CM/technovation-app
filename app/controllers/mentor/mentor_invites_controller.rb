@@ -17,7 +17,7 @@ module Mentor
       if invite = current_mentor.mentor_invites.pending.find_by(
                     invite_token: params.fetch(:id)
                   )
-        invite.update_attributes(invite_params)
+        invite.update(invite_params)
         redirect_based_on_status(invite)
       else
         redirect_to mentor_dashboard_path,
@@ -55,12 +55,6 @@ module Mentor
 
     def invite_params
       params.require(:team_member_invite).permit(:status)
-    end
-
-    class NullInvite
-      def status
-        "missing"
-      end
     end
   end
 end
