@@ -21,35 +21,16 @@ module SearchMentors
     end
 
     if filter.needs_team
-      profile_ids = MentorProfile.where("mentor_profiles.id NOT IN
-        (SELECT DISTINCT(member_id) FROM memberships
-                                    WHERE memberships.member_type = 'MentorProfile'
-                                    AND memberships.team_id IN
-
-          (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-            (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                              WHERE season_registrations.registerable_type = 'Team'
-                                              AND season_registrations.season_id = ?)))", Season.current.id)
+      profile_ids = MentorProfile.eager_load(:current_teams)
+        .references(:teams)
+        .where("teams.id IS NULL")
         .pluck(:id)
 
       mentors = mentors.where(id: profile_ids)
     end
 
     if filter.on_team
-      profile_ids = MentorProfile.where("mentor_profiles.id IN
-        (SELECT DISTINCT(member_id) FROM memberships
-                                    WHERE memberships.member_type = 'MentorProfile'
-                                    AND memberships.team_id IN
-
-          (SELECT DISTINCT(id) FROM teams WHERE teams.id IN
-
-            (SELECT DISTINCT(registerable_id) FROM season_registrations
-                                              WHERE season_registrations.registerable_type = 'Team'
-                                              AND season_registrations.season_id = ?)))", Season.current.id)
-        .pluck(:id)
-
-      mentors = mentors.where(id: profile_ids)
+      mentors = mentors.where(id: MentorProfile.joins(:current_teams).pluck(:id))
     end
 
     if filter.virtual_only

@@ -55,7 +55,7 @@ class ParentalConsent < ActiveRecord::Base
     end
 
     ParentMailer.confirm_consent_finished(id).deliver_later
-    unless Rails.env.test?
+    if Rails.env.production?
       # TODO: entire test suite requires rewrite due to "wait: 3.days"
       ParentMailer.thank_you(id).deliver_later(wait: 3.days)
     end
