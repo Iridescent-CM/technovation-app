@@ -51,25 +51,16 @@ class RegistrationMailer < ApplicationMailer
 
   def welcome_student(student)
     @season_year = Season.current.year
-    @signin_url = signin_url
-    @root_url = root_url
-    @dashboard_url = student_dashboard_url
+    @root_url = root_url(mailer_token: student.mailer_token)
+    @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
     @safety_url = "http://iridescentlearning.org/internet-safety/"
+    @timeline_url =
+      "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
 
     I18n.with_locale(student.locale) do
       mail to: student.email,
-          subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+        subject: t("registration_mailer.welcome_student.subject",
+                   season_year: @season_year)
     end
-  end
-
-  def welcome_made_with_code_student(student)
-    @dashboard_url = student_dashboard_url
-    @safety_url = "http://iridescentlearning.org/internet-safety/"
-    @lesson_url = "http://www.technovationchallenge.org/curriculum/MadeWithCodePrimer"
-    @root_url = root_url
-    @root_host = ENV.fetch("HOST_DOMAIN")
-
-    mail to: student.email,
-         subject: t("registration_mailer.welcome_student.subject", season_year: Season.current.year)
   end
 end

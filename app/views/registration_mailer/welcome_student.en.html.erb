@@ -4,58 +4,94 @@
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
-          Welcome to Technovation <%= @season_year %>!
+          We're so glad you're joining Technovation for the <%= @season_year %>
+          season! We can't wait to hear how you want to change your community with
+          technology, but first things first, a few reminders and important
+          deadlines. 
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          We're thrilled to have you join the Technovation community for the
-          <%= @season_year %> season! We can't wait to hear more from you about
-          the types of issues you want to address using technology, and see the
-          amazing ideas you bring to life.
+          <strong>Parent/Guardian Permission:</strong>
+
+          Make sure that your parent or guardian has given you permission to
+          participate! There are instructions on how to send a permission form on
+          <%= link_to "your dashboard", @dashboard_url %>.
+          Once the consent form is signed, you'll be ready to participate in
+          Technovation.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Technovation is a learning journey! Congratulations on taking the first
-          step in this journey. The Technovation experience is aimed to build
-          your curiosity and persistence and support the development of several
-          personal and professional skills. We hope that you find this experience
-          inspiring and rewarding.
+          <strong>Internet safety and digital literacy:</strong>
+
+          Technovation is an online program, and we want to make sure you know
+          how to be safe online. Technovation will connect you with an adult
+          mentor to support you as you develop your app. We trust our mentors.
+          They have been pre-approved to support your team, but we still recommend
+          that you take a few minutes to
+          <%= link_to "learn how to keep yourself safe", @safety_url %>
+          when collaborating online.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          First things first:
+          <strong>Rules and Honor Code:</strong>
 
-          <ol>
+          When you registered, you signed an honor code promising that the work
+          you submit at the end of the program will be completed entirely by
+          students, and that you are not submitting previously created work as
+          part of your submission. This is also a rule of the competition.
+          If you are found breaking this rule, your team will not be eligible
+          to participate.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <%= link_to "Key Dates", @timeline_url %><br />
+          <strong>
+            Write these dates on your calendar! All deadlines are firm.
+          </strong>
+
+          <ul>
             <li>
-              Make sure that your parent or guardian has given you permission
-              to participate! There are instructions on how to send a permission
-              form on <%= link_to "your dashboard", @dashboard_url %>.
-              Once the consent form is signed, you'll be ready to participate
-              in Technovation.
+              <strong>
+                October 18, <%= @season_year - 1 %>:
+                Registration Opens: 
+              </strong>
+
+              Updated curriculum available
             </li>
 
             <li>
-              Please take some time right now to
-              <%= link_to "learn about internet safety and digital literacy",
-                @safety_url %>
-              We want you to be safe and well-informed as you participate in
-              online programs!
+              <strong>
+                January 10, <%= @season_year %>:
+                Official start of <%= @season_year %> Season!
+              </strong>
             </li>
 
             <li>
-              Connect with a mentor: You can find a mentor in your community or
-              on the Technovation platform. An adult mentor will support you
-              as you develop your app ideas. The Mentors who register on our
-              platform have been pre-approved to support your team, but we still
-              recommend that you
-              <%= link_to "take a few minutes to learn how to keep yourself safe when collaborating online",
-                @safety_url %>.
+              <strong>
+                March 7, <%= @season_year %>:
+                Team Registration Deadline
+              </strong>
+
+              All members of your team must have
+              registered and joined your team by this date
+            </li>
+
+            <li>
+              <strong>
+                April 25, <%= @season_year %>:
+                Submission Deadline
+              </strong>
+
+               All parts of your project must be submitted on
+              <%= link_to @root_url, @root_url %>
             </li>
           </ol>
         </td>
@@ -63,10 +99,16 @@
 
       <tr>
         <td class="content-block">
-          When you're ready, you can get started on the Technovation curriculum by
-          <%= link_to "logging into your account", @signin_url %>
-          on
-          <%= link_to @root_url, @root_url %>
+          If you have questions, be sure to check our FAQ! You can also reach out
+          to us at <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          When you are ready, you can get started on the Technovation curriculum
+          by <%= link_to "logging back into your account", @dashboard_url %>
+          on <%= link_to @root_url, @root_url %>
         </td>
       </tr>
 
