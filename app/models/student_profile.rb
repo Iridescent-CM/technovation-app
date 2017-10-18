@@ -91,7 +91,7 @@ class StudentProfile < ActiveRecord::Base
     class_name: "ParentalConsent",
     dependent: :destroy
 
-  after_update :reset_parent
+  after_commit :reset_parent, on: :update
 
   after_save { team.touch }
   after_touch { team.touch }

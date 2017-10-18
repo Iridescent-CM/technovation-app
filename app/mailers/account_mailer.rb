@@ -31,7 +31,10 @@ class AccountMailer < ApplicationMailer
 
   def confirm_next_steps(consent)
     @name = consent.student_profile_first_name
-    @url = student_dashboard_url
+
+    @url = student_dashboard_url(
+      mailer_token: consent.student_profile.mailer_token
+    )
 
     I18n.with_locale(consent.student_profile_locale) do
       mail to: consent.student_profile_email
@@ -40,7 +43,11 @@ class AccountMailer < ApplicationMailer
 
   def background_check_clear(account)
     @name = account.first_name
-    @url = send("#{account.scope_name}_dashboard_url")
+
+    @url = send(
+      "#{account.scope_name}_dashboard_url",
+      mailer_token: account.mailer_token
+    )
 
     I18n.with_locale(account.locale) do
       mail to: account.email

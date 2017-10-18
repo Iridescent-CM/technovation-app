@@ -11,14 +11,19 @@ class Student::ParentalConsentNoticesController < StudentController
       ParentMailer.consent_notice(current_student.id).deliver_later
     end
 
-    flash[:success] = t("controllers.student.parental_consent_notices.create.success")
+    flash[:success] =
+      t("controllers.student.parental_consent_notices.create.success")
+
     redirect_to student_dashboard_path
   end
 
   private
   def profile_params
     if params.fetch(:student_profile) { false }
-      params.require(:student_profile).permit(:parent_guardian_email, :parent_guardian_name)
+      params.require(:student_profile).permit(
+        :parent_guardian_email,
+        :parent_guardian_name
+      )
     end
   end
 end
