@@ -91,7 +91,7 @@
               </strong>
 
                All parts of your project must be submitted on
-              <%= link_to @root_url, @root_url %>
+              <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
             </li>
           </ol>
         </td>
@@ -108,7 +108,7 @@
         <td class="content-block">
           When you are ready, you can get started on the Technovation curriculum
           by <%= link_to "logging back into your account", @dashboard_url %>
-          on <%= link_to @root_url, @root_url %>
+          on <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
         </td>
       </tr>
 
