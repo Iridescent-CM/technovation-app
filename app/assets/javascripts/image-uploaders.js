@@ -31,9 +31,8 @@ document.addEventListener("turbolinks:load", function() {
 
       selectedIconSrc: $(".icon-picker .selected").attr("src"),
 
-      updateSelection: function(src) {
-        imageSrc = src || window.iconPicker.imageSrc;
-        iconSrc = src || window.iconPicker.selectedIconSrc;
+      updateSelection: function(iconSrc, imageSrc) {
+        imageSrc = imageSrc || iconSrc;
 
         $("#profile-image").attr("src", imageSrc);
 
@@ -43,7 +42,10 @@ document.addEventListener("turbolinks:load", function() {
       },
 
       resetSelection: function() {
-        window.iconPicker.updateSelection();
+        window.iconPicker.updateSelection(
+          window.iconPicker.selectedIconSrc,
+          window.iconPicker.imageSrc
+        );
       },
 
       onModalClose: function() {
