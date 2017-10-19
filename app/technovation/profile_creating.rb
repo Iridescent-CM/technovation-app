@@ -19,7 +19,7 @@ class ProfileCreating
                   ""
                 else
                   ActionController::Base.helpers.asset_path(
-                    "placeholders/avatars/#{rand(1..20)}.png"
+                    "placeholders/avatars/#{rand(1..20)}.svg"
                   )
                 end
 

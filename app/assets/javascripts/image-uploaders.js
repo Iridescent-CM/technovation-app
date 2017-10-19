@@ -56,11 +56,11 @@ document.addEventListener("turbolinks:load", function() {
 
   $(document).on("click", ".icon-picker img", function() {
     window.iconPicker.updateSelection($(this).attr("src"));
-    $(this).closest(".icon-picker").next(".save-icon").fadeIn();
+    $(this).closest(".icon-picker").siblings(".save-icon").fadeIn();
   });
 
   $(document).on("click", ".save-icon", function() {
-    const $picker = $(this).prev(".icon-picker"),
+    const $picker = $(this).siblings(".icon-picker"),
           paramRoot = $picker.data("update-param-root"),
           paramChild = $picker.data("update-param-child"),
           selectedIconSrc = $picker.find(".selected").attr("src");

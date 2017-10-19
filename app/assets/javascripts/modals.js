@@ -34,6 +34,7 @@ document.addEventListener("turbolinks:load", function() {
 
         $field.prop("id", newId);
         $label.prop("for", newId);
+        $("a").blur();
       }
     }
   });
