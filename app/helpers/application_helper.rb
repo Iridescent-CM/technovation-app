@@ -37,7 +37,7 @@ module ApplicationHelper
   def web_icon(icon, options = {})
     content_tag(:span) do
       content_tag(:span, nil, class: "icon-#{icon} #{options[:class]}") +
-        options[:text]
+        content_tag(:span, options[:text], class: "web-icon-text")
     end
   end
 

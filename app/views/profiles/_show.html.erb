@@ -11,10 +11,13 @@
 
     <div class="grid grid--bleed">
       <div class="grid__col-sm-3">
-        <%= image_tag account.profile_image_url, class: "grid__cell-img" %>
+        <%= image_tag account.profile_image_url,
+          id: "profile-image",
+          class: "grid__cell-img" %>
 
         <% if editing %>
           <%= render 'image_upload',
+            choose_from_defaults: true,
             heading: "Upload a profile photo",
             size: "300x300" %>
         <% end %>

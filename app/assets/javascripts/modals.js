@@ -9,7 +9,13 @@ document.addEventListener("turbolinks:load", function() {
       title: modal.data("heading") || "",
       showCloseButton: true,
       showConfirmButton: false,
+
       onOpen: makeClonedImageUploaderUnique,
+
+      onClose: function(m) {
+        if (window.iconPicker !== undefined)
+          window.iconPicker.onModalClose();
+      },
     }).then(
       function(confirm) { },
       function(dismiss) { }
@@ -28,6 +34,7 @@ document.addEventListener("turbolinks:load", function() {
 
         $field.prop("id", newId);
         $label.prop("for", newId);
+        $("a").blur();
       }
     }
   });

@@ -2,6 +2,13 @@
   try_again ||= false
   cta ||= "Change image"
   modal_id ||= "profile-image-upload"
+  image_id ||= "profile-image"
+  param_root ||= "#{current_scope}_profile"
+  param_child ||= "account_attributes"
+  param_child_id ||= current_account.id
+  update_url ||= send("#{current_scope}_profile_path")
+  choose_from_defaults ||= false
+  current_image_path ||= nil
 %>
 
 <p>
@@ -30,7 +37,8 @@
   <div class="modal-content">
     <%= direct_upload_form_for @uploader do |f| %>
       <label class="file-field" for="<%= modal_id %>_file_field">
-        <div class="button secondary">Choose an image</div>
+        <div class="button secondary">Choose from your computer</div>
+
         <%= f.file_field :image, id: "#{modal_id}_file_field" %>
       </label>
 
@@ -56,6 +64,46 @@
 
       <%= f.submit t("views.application.upload"),
         class: "submit button small hidden" %>
+
+      <% if choose_from_defaults %>
+        <hr />
+
+        or choose from our icon set...
+
+        <%= content_tag :div,
+          class: "icon-picker",
+          data: {
+            update_url: update_url,
+            update_image: image_id,
+            update_param_root: param_root,
+            update_param_child: param_child,
+            update_param_child_id: param_child_id,
+          } do %>
+
+          <% (1..20).each do |n| %>
+            <% src = "placeholders/avatars/#{n}.svg" %>
+            <%= image_tag src,
+              class: ('selected' if current_image_path == image_path(src)) %>
+          <% end %>
+        <% end %>
+
+        <p>
+          <small>
+            Icons designed by
+            <%= link_to "Icon Pond",
+              "//www.flaticon.com/authors/popcorns-arts",
+              target: :_blank %>
+            and
+            <%= link_to "Freepik",
+              "//www.flaticon.com/authors/freepik",
+              target: :_blank %>
+            at
+            <%= link_to "Flaticon", "//www.flaticon.com", target: :_blank %>
+          </small>
+        </p>
+
+        <div style="display: none;" class="button save-icon">Save your icon</div>
+      <% end %>
     <% end %>
   </div>
 <% end %>

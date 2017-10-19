@@ -70,6 +70,7 @@ module ProfileController
         :country,
         :latitude,
         :longitude,
+        :icon_path,
       ],
     )
   end

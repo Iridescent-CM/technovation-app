@@ -23,6 +23,7 @@ class ProfileUpdating
 
   def perform_callbacks
     perform_email_changes_updates
+    perform_avatar_changes_updates
     Geocoding.perform(profile.account)
 
     case scope.to_sym
@@ -42,6 +43,14 @@ class ProfileUpdating
       Casting.delegating(team => DivisionChooser) do
         team.reconsider_division_with_save
       end
+    end
+  end
+
+  def perform_avatar_changes_updates
+    if profile.account.saved_change_to_profile_image?
+      profile.account.update_column(:icon_path, nil)
+    elsif profile.account.saved_change_to_icon_path?
+      profile.account.update_column(:profile_image, nil)
     end
   end
 

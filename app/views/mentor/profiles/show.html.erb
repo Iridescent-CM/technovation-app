@@ -6,9 +6,15 @@
       <div class="hidden-xs hidden-xxs">
         <h3><%= current_mentor.full_name %></h3>
 
-        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
+        <%= image_tag current_mentor.profile_image_url,
+          id: "profile-image",
+          class: "grid__cell-img" %>
 
         <%= render 'image_upload',
+          choose_from_defaults: (
+            not current_account.regional_ambassador_profile.present?
+          ),
+          current_image_path: current_mentor.profile_image_url,
           modal_id: "image_upload_desktop",
           heading: "Upload a profile photo",
           size: "300x300" %>

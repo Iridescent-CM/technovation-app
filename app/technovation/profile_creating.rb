@@ -14,8 +14,22 @@ class ProfileCreating
   end
 
   def execute
-    profile.account.email_confirmed!
+    icon_path = case scope.to_sym
+                when :regional_ambassador
+                  ""
+                else
+                  ActionController::Base.helpers.asset_path(
+                    "placeholders/avatars/#{rand(1..20)}.svg"
+                  )
+                end
+
+    profile.account.update({
+      email_confirmed_at: Time.current,
+      icon_path: icon_path,
+    })
+
     controller.remove_cookie(:signup_token)
+
     AttachSignupAttemptJob.perform_later(profile.account)
 
     case scope.to_sym

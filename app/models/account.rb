@@ -123,6 +123,10 @@ class Account < ActiveRecord::Base
       ) or NullAuth.new
   end
 
+  def profile_image_url
+    icon_path.blank? ? super : icon_path
+  end
+
   def can_be_a_mentor?
     judge_profile.present? or regional_ambassador_profile.present?
   end
