@@ -22,7 +22,7 @@ module Admin
         .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
       unless params[:text].blank?
-        names = filter.text.split(' ')
+        names = params[:text].split(' ')
         accounts = accounts.where(
           "accounts.first_name ilike '%#{names.first}%' OR
           accounts.last_name ilike '%#{names.last}%' OR
