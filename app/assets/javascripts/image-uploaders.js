@@ -54,7 +54,7 @@ document.addEventListener("turbolinks:load", function() {
 
   $(document).on("click", ".icon-picker img", function() {
     window.iconPicker.updateSelection($(this).attr("src"));
-    $(".save-icon").fadeIn();
+    $(this).closest(".icon-picker").next(".save-icon").fadeIn();
   });
 
   $(document).on("click", ".save-icon", function() {
