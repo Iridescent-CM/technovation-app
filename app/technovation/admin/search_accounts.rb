@@ -12,15 +12,13 @@ module Admin
         params[:parental_consent_status] = "All" 
       end
 
-      season = Season.new(params[:season])
-
       klass = if params[:type] == "All"
                 Account
               else
                 Account.joins("#{params[:type].underscore}_profile".to_sym)
               end
 
-      accounts = klass.by_season(season)
+      accounts = klass.by_season(params[:season])
         .where.not(email: ENV.fetch("ADMIN_EMAIL"))
 
       unless params[:text].blank?
@@ -66,12 +64,13 @@ module Admin
       if params[:type] == "Mentor"
         case params[:cleared_status]
         when "Clear"
-          accounts = accounts.joins(:consent_waiver)
-            .includes(:background_check)
+          accounts = accounts.includes(:background_check)
             .references(:background_checks)
-            .where("country != 'US' OR
-                    background_checks.status = ?",
-                   BackgroundCheck.statuses[:clear])
+            .where(
+              "country != 'US' OR
+              background_checks.status = ?",
+              BackgroundCheck.statuses[:clear]
+            )
         when "Needs background check"
           accounts = accounts.includes(:background_check)
             .references(:background_checks)
