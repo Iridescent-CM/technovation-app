@@ -24,4 +24,62 @@ document.addEventListener("turbolinks:load", function() {
     $form.find('.submit').addClass('hidden');
     $form.find('input[type=file]').val('');
   });
+
+  if ($(".icon-picker").length > 0) {
+    window.iconPicker = {
+      imageSrc: $("#profile-image").attr("src"),
+
+      selectedIconSrc: $(".icon-picker .selected").attr("src"),
+
+      updateSelection: function(src) {
+        imageSrc = src || window.iconPicker.imageSrc;
+        iconSrc = src || window.iconPicker.selectedIconSrc;
+
+        $("#profile-image").attr("src", imageSrc);
+
+        $(".icon-picker .selected").removeClass("selected");
+
+        $(".icon-picker img[src='" + iconSrc + "']").addClass("selected");
+      },
+
+      resetSelection: function() {
+        window.iconPicker.updateSelection();
+      },
+
+      onModalClose: function() {
+        window.iconPicker.resetSelection();
+      },
+    };
+  }
+
+  $(document).on("click", ".icon-picker img", function() {
+    window.iconPicker.updateSelection($(this).attr("src"));
+    $(".save-icon").fadeIn();
+  });
+
+  $(document).on("click", ".save-icon", function() {
+    const $picker = $(this).prev(".icon-picker"),
+          paramRoot = $picker.data("update-param-root"),
+          paramChild = $picker.data("update-param-child"),
+          selectedIconSrc = $picker.find(".selected").attr("src");
+
+    var data = {};
+
+    data[paramRoot] = {};
+    data[paramRoot][paramChild] = {
+      id: $picker.data("update-param-child-id"),
+      icon_path: selectedIconSrc,
+    };
+
+    $.ajax({
+      method: "PATCH",
+      url: $picker.data("update-url"),
+      data: data,
+      success: function() {
+        window.iconPicker.imageSrc = selectedIconSrc;
+        window.iconPicker.selectedIconSrc = selectedIconSrc;
+        swal.close();
+      },
+    });
+  });
 });

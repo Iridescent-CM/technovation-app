@@ -68,3 +68,31 @@
 .swal2-content form {
   text-align: left;
 }
+
+.icon-picker {
+  max-height: 250px;
+  overflow-y: scroll;
+
+  img {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 0.5rem 0.5rem 0;
+    padding: 0.5rem;
+    max-width: 100px;
+    border: 4px solid white;
+    transition: 0.2s border, 0.2s box-shadow;
+
+    &:hover {
+      border-color: $grey-translucent;
+    }
+
+    &.selected {
+      border: 4px solid $shamrock;
+      box-shadow: $shadow-default;
+    }
+  }
+}
+
+.save-icon {
+  margin: 0.5rem 0;
+}
