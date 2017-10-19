@@ -11,6 +11,11 @@ class ProcessUploadJob < ActiveJob::Base
       record.source_code_file_uploaded = true
     end
 
+    case klass
+    when "Account"
+      record.icon_path = nil
+    end
+
     record.save!
   end
 end
