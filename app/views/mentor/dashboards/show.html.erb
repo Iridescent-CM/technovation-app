@@ -10,6 +10,13 @@
               judge_dashboard_path %>
           </small>
         <% end %>
+
+        <% if current_mentor.is_an_ambassador? %>
+          <small>
+            <%= link_to "Switch to RA mode",
+              regional_ambassador_dashboard_path %>
+          </small>
+        <% end %>
       </h1>
     </div>
   </div>
