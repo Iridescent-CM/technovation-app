@@ -1,6 +1,4 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
-  store_accessor :links
-
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.location_confirmed = ?", true)
@@ -24,6 +22,12 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
+  has_many :regional_links, dependent: :destroy
+
+  accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
+    attrs.values.any?(&:blank?)
+  }
+
   delegate :submitted?,
            :candidate_id,
            :report_id,
@@ -37,25 +41,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     rescue
       raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
     end
-  end
-
-  def self.link_types
-    %i{twitter facebook instagram snapchat whatsapp web}
-  end
-
-  def self.link_type_placeholders
-    {
-      placeholder_twitter: "@username",
-      placeholder_facebook: "https://facebook.com/page-url",
-      placeholder_instagram: "@username",
-      placeholder_snapchat: "@username",
-      placeholder_whatsapp: "+52 1 33 23 10 69 05",
-      placeholder_web: "https://www.example.com",
-    }
-  end
-
-  def links
-    Links.new(self[:links])
   end
 
   def background_check_complete?
@@ -108,49 +93,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
       SubscribeEmailListJob.perform_later(
         account.email, account.full_name, "REGIONAL_AMBASSADOR_LIST_ID"
       )
-    end
-  end
-
-  class Links
-    include Enumerable
-
-    def initialize(links)
-      @links = Array(links)
-    end
-
-    def each(&block)
-      @links.each { |link| block.call(Link.new(link)) }
-    end
-
-    class Link
-      def initialize(link)
-        @link = link
-      end
-
-      def icon
-        case type
-        when "twitter"
-          'twitter-square'
-        end
-      end
-
-      def url
-        case type
-        when "twitter"
-          "https://twitter.com/#{@link["value"]}"
-        end
-      end
-
-      def value
-        case type
-        when "twitter"
-          "@#{@link["value"]}"
-        end
-      end
-
-      def type
-        @link["type"]
-      end
     end
   end
 end
