@@ -18,19 +18,22 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  display: inline-block;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*
 .web-icon-text {
   display: inline-block;
-  padding: 0;
-  margin: -0.3rem 0 0 0.3rem;
+  padding: 0 0 0 0.3rem;
+  margin: 0;
 }
-*/
+
+.navigation .web-icon-text {
+  padding: 0;
+}
 
 .icon-twitter-square:before {
   content: "\f081";
@@ -91,6 +94,9 @@
 }
 .icon-exclamation-circle:before {
   content: "\f06a";
+}
+.icon-whatsapp:before {
+  content: "\f232";
 }
 .icon-green {
   color: $shamrock-mid;
