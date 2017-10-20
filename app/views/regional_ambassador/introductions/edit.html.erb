@@ -32,27 +32,22 @@
         Use up to 280 characters, or about the length of two tweets.
       </p>
 
-      <div class="grid grid--bleed">
-        <div class="grid__col-4">
-          <%= select :regional_ambassador_profile,
-            "links[][type]",
-            RegionalAmbassadorProfile.link_types,
-            {
-              prompt: "Choose a link type...",
-            },
-            data: {
-              affect_placeholder_of: "regional_ambassador_profile_links_0_value",
-            } %>
-        </div>
+      <%= f.simple_fields_for :regional_links do |r| %>
+        <div class="placeholder-updaters grid grid--bleed">
+          <div class="grid__col-4">
+            <%= r.input :name,
+              label: "Type",
+              collection: RegionalLink.names.keys,
+              prompt: "Choose a link type..." %>
+          </div>
 
-        <div class="grid__col-auto">
-          <%= text_field :regional_ambassador_profile,
-            "links[][value]",
-            id: "regional_ambassador_profile_links_0_value",
-            style: "display: inline-block;",
-            data: RegionalAmbassadorProfile.link_type_placeholders %>
+          <div class="grid__col-auto">
+            <%= r.input :value, input_html: {
+              data: RegionalLink.link_name_placeholders
+            } %>
+          </div>
         </div>
-      </div>
+      <% end %>
 
       <p>
         <%= f.submit "Save", class: "button" %>

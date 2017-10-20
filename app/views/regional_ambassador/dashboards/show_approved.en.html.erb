@@ -41,11 +41,14 @@
 
         <%= simple_format current_ambassador.intro_summary %>
 
-        <ul class="reset">
-          <% current_ambassador.links.each do |link| %>
-            <li><%= link_to web_icon(link.icon, text: link.value),
-              link.url,
-              target: :_blank %></li>
+        <ul class="regional-links reset">
+          <% current_ambassador.regional_links.each do |link| %>
+            <li>
+              <%= link_to web_icon(link.icon, text: link.display_text),
+                link.url,
+                title: link.name,
+                target: :_blank %>
+            </li>
           <% end %>
         </ul>
 

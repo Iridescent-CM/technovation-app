@@ -1,5 +1,9 @@
 module RegionalAmbassador
   class IntroductionsController < RegionalAmbassadorController
+    def edit
+      current_ambassador.regional_links.build
+    end
+
     def update
       if ProfileUpdating.execute(current_ambassador, nil, introduction_params)
         redirect_to regional_ambassador_dashboard_path,
@@ -13,7 +17,7 @@ module RegionalAmbassador
     def introduction_params
       params.require(:regional_ambassador_profile).permit(
         :intro_summary,
-        links: [:type, :value],
+        regional_links_attributes: [:id, :name, :value],
       )
     end
   end

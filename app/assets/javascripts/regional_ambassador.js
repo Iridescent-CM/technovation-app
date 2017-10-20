@@ -16,10 +16,11 @@ document.addEventListener("turbolinks:load", function() {
     $(this).hide().next(".accordion-open").show();
   });
 
-  $("[data-affect-placeholder-of]").on("change", function() {
-    const $field = $("#" + $(this).data("affect-placeholder-of")),
-          value = $(this).val(),
-          placeholder = $field.data("placeholder-" + value);
+  $(".placeholder-updaters select").on("change", function() {
+    const value = $(this).val(),
+          $field = $(this).closest(".placeholder-updaters")
+                          .find("[data-" + value + "]"),
+          placeholder = $field.data(value);
 
     $field.prop("placeholder", "example: " + placeholder);
   });
