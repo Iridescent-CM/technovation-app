@@ -17,15 +17,22 @@ RSpec.feature "Approved regional ambassadors" do
     click_link "Edit your introduction"
 
     fill_in "Short summary", with: "Something that is 280 characters or less"
-    select "twitter", from: "regional_ambassador_profile_links[][type]"
-    fill_in "regional_ambassador_profile_links_0_value", with: "technomx"
+
+    select "twitter",
+      from: "regional_ambassador_profile_regional_links_attributes_0_name"
+
+    fill_in "regional_ambassador_profile_regional_links_attributes_0_value",
+      with: "technomx"
 
     click_button "Save"
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)
 
     within(".ra-info--dashboard-intro") do
-      expect(page).to have_link("@technomx", href: "https://twitter.com/technomx")
+      expect(page).to have_link(
+        "@technomx",
+        href: "https://www.twitter.com/technomx"
+      )
       expect(page).to have_content("Something that is 280 characters or less")
     end
   end
