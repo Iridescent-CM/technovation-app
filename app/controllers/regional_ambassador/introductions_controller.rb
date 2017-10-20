@@ -17,7 +17,12 @@ module RegionalAmbassador
     def introduction_params
       params.require(:regional_ambassador_profile).permit(
         :intro_summary,
-        regional_links_attributes: [:id, :name, :value],
+        regional_links_attributes: [
+          :id,
+          :_destroy,
+          :name,
+          :value,
+        ],
       )
     end
   end

@@ -24,4 +24,14 @@ document.addEventListener("turbolinks:load", function() {
 
     $field.prop("placeholder", "example: " + placeholder);
   });
+
+  $("[data-mark-for-destroy]").on("click", function(e) {
+    e.preventDefault();
+
+    const $destroyField = $("#" + $(this).data("mark-for-destroy"));
+
+    $destroyField.val("1");
+
+    $destroyField.closest(".destroyable").fadeOut();
+  });
 });

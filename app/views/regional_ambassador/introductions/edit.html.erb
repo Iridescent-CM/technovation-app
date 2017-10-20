@@ -33,7 +33,7 @@
       </p>
 
       <%= f.simple_fields_for :regional_links do |r| %>
-        <div class="placeholder-updaters grid grid--bleed">
+        <div class="destroyable placeholder-updaters grid grid--bleed">
           <div class="grid__col-4">
             <%= r.input :name,
               label: "Type",
@@ -46,6 +46,17 @@
               data: RegionalLink.link_name_placeholders
             } %>
           </div>
+
+          <%= r.input :_destroy,
+            as: :hidden,
+            input_html: {
+              id: "regional_link_#{r.object.id}_destroy",
+            } %>
+
+          <%= link_to web_icon("close", class: "icon-red"), '#',
+            data: {
+              mark_for_destroy: "regional_link_#{r.object.id}_destroy",
+            } %>
         </div>
       <% end %>
 

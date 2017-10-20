@@ -101,3 +101,7 @@
 .icon-green {
   color: $shamrock-mid;
 }
+.icon-red {
+  font-weight: bold;
+  color: $alert-txt;
+}

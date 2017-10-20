@@ -26,7 +26,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
     attrs.values.any?(&:blank?)
-  }
+  }, allow_destroy: true
 
   delegate :submitted?,
            :candidate_id,
