@@ -6,6 +6,9 @@ class Team < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  include PublicActivity::Model
+  tracked
+
   geocoded_by :geolocation_str
   reverse_geocoded_by :latitude, :longitude do |team, results|
     team.update_address_details_from_reverse_geocoding(results)
