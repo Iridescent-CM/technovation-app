@@ -16,7 +16,7 @@ RSpec.feature "Admins view scores" do
     admin = FactoryGirl.create(:admin)
     sign_in(admin)
 
-    click_link "Quarterfinals Scores"
+    visit admin_scores_path
     click_link "View details"
 
     expect(page).to have_content("earned 2 points")
@@ -43,7 +43,7 @@ RSpec.feature "Admins view scores" do
     admin = FactoryGirl.create(:admin)
     sign_in(admin)
 
-    click_link "Semifinals Scores"
+    visit admin_semifinals_scores_path
     click_link "View details"
 
     expect(page).to have_content("earned 2 points")

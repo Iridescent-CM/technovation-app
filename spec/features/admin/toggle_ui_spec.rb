@@ -1,15 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "Admin UI for season toggles:" do
-  before do
-    sign_in(FactoryGirl.create(:admin))
-    click_link "Season Schedule Settings"
-  end
+  before { sign_in(FactoryGirl.create(:admin)) }
 
   scenario "toggle user signups" do
     %w{student mentor}.each do |scope|
       SeasonToggles.disable_signup(scope)
-      click_link "Season Schedule Settings"
+      visit edit_admin_season_schedule_settings_path
 
       check "season_toggles_#{scope}_signup"
       click_button "Save"
@@ -22,7 +19,7 @@ RSpec.feature "Admin UI for season toggles:" do
   scenario "set dashboard headlines" do
     %w{student mentor judge}.each do |scope|
       SeasonToggles.set_dashboard_text(scope, "")
-      click_link "Season Schedule Settings"
+      visit edit_admin_season_schedule_settings_path
 
       fill_in "season_toggles_#{scope}_dashboard_text",
         with: "Something short"
@@ -37,7 +34,7 @@ RSpec.feature "Admin UI for season toggles:" do
   scenario "set the survey links" do
     %w{student mentor}.each do |scope|
       SeasonToggles.set_survey_link(scope, nil, nil)
-      click_link "Season Schedule Settings"
+      visit edit_admin_season_schedule_settings_path
 
       fill_in "season_toggles_#{scope}_survey_link_text", with: "Pre-survey"
       fill_in "season_toggles_#{scope}_survey_link_url", with: "google.com"
@@ -54,7 +51,7 @@ RSpec.feature "Admin UI for season toggles:" do
 
   scenario "configure team building enabled" do
     SeasonToggles.team_building_enabled = false
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
 
     check "season_toggles[team_building_enabled]"
     click_button "Save"
@@ -66,7 +63,7 @@ RSpec.feature "Admin UI for season toggles:" do
     skip "Rebuilding submissions, submission editing not back yet"
 
     SeasonToggles.team_submissions_editable = false
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
 
     check "season_toggles[team_submissions_editable]"
     click_button "Save"
@@ -76,7 +73,7 @@ RSpec.feature "Admin UI for season toggles:" do
 
   scenario "configure regional pitch event selection" do
     SeasonToggles.select_regional_pitch_event = false
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
 
     check "season_toggles[select_regional_pitch_event]"
     click_button "Save"
@@ -86,7 +83,7 @@ RSpec.feature "Admin UI for season toggles:" do
 
   scenario "configure scores & certificates" do
     SeasonToggles.display_scores = false
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
 
     check "season_toggles[display_scores]"
     click_button "Save"
@@ -97,17 +94,17 @@ RSpec.feature "Admin UI for season toggles:" do
   scenario "configure judging rounds" do
     SeasonToggles.judging_round = :off
 
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
     choose "Quarterfinals"
     click_button "Save"
     expect(SeasonToggles.quarterfinals?).to be true
 
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
     choose "Semifinals"
     click_button "Save"
     expect(SeasonToggles.semifinals?).to be true
 
-    click_link "Season Schedule Settings"
+    visit edit_admin_season_schedule_settings_path
     choose "Off"
     click_button "Save"
     expect(SeasonToggles.judging_enabled?).to be false
