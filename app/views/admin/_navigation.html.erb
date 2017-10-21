@@ -1,66 +1,34 @@
-<header class="navigation" role="banner">
-  <div class="container">
-    <div class="navigation__content-wrapper">
-      <%= link_to "Technovation",
-        admin_dashboard_path,
-        class: "logo" %>
+<% if false %>
+  <%= link_to "Technovation",
+    admin_dashboard_path,
+    class: "logo" %>
 
-      <nav>
-        <ul class="navigation__links-list">
-          <li class="nav-link <%= al(admin_dashboard_path) %>">
-            <%= link_to "Dashboard", admin_dashboard_path %>
-          </li>
+  <nav>
+    <%= link_to "Dashboard", admin_dashboard_path %>
 
-          <li class="nav-link <%= al(edit_admin_season_schedule_settings_path) %>">
-            <%= link_to "Season Schedule Settings",
-              edit_admin_season_schedule_settings_path %>
-          </li>
+    <%= link_to "Season Schedule Settings",
+      edit_admin_season_schedule_settings_path %>
 
-          <li class="nav-divider"></li>
 
-          <li class="nav-link <%= al(admin_participants_path) %>">
-            <%= link_to "Accounts", admin_participants_path %>
-          </li>
+    <%= link_to "Accounts", admin_participants_path %>
 
-          <li class="nav-link <%= al(admin_background_checks_path) %>">
-            <%= link_to "Background Checks", admin_background_checks_path %>
-          </li>
+    <%= link_to "Background Checks", admin_background_checks_path %>
 
-          <li class="nav-link <%= al(admin_signup_attempts_path) %>">
-            <%= link_to "Signup attempts", admin_signup_attempts_path %>
-          </li>
+    <%= link_to "Signup attempts", admin_signup_attempts_path %>
 
-          <li class="nav-divider"></li>
 
-          <li class="nav-link <%= al(admin_teams_path) %>">
-            <%= link_to "Teams", admin_teams_path %>
-          </li>
+    <%= link_to "Teams", admin_teams_path %>
 
-          <li class="nav-link <%= al(admin_team_submissions_path) %>">
-            <%= link_to "Team Submissions", admin_team_submissions_path %>
-          </li>
+    <%= link_to "Team Submissions", admin_team_submissions_path %>
 
-          <li class="nav-divider"></li>
 
-          <li class="nav-link <%= al(admin_regional_pitch_events_path) %>">
-            <%= link_to "Regional Pitch Events", admin_regional_pitch_events_path %>
-          </li>
+    <%= link_to "Regional Pitch Events", admin_regional_pitch_events_path %>
 
-          <li class="nav-link <%= al(admin_scores_path) %>">
-            <%= link_to "Quarterfinals Scores", admin_scores_path %>
-          </li>
+    <%= link_to "Quarterfinals Scores", admin_scores_path %>
 
-          <li class="nav-link <%= al(admin_semifinals_scores_path) %>">
-            <%= link_to "Semifinals Scores", admin_semifinals_scores_path %>
-          </li>
+    <%= link_to "Semifinals Scores", admin_semifinals_scores_path %>
 
-          <li class="nav-divider"></li>
 
-          <li class="nav-link logout">
-            <%= link_to "Logout", logout_path, data: { method: :delete } %>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</header>
+    <%= link_to "Logout", logout_path, data: { method: :delete } %>
+  </nav>
+<% end %>

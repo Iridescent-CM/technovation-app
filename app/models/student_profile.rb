@@ -2,6 +2,10 @@ class StudentProfile < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  scope :current, -> {
+    joins(:current_account)
+  }
+
   scope :unmatched, -> {
     select("DISTINCT student_profiles.*")
       .joins(:current_account)

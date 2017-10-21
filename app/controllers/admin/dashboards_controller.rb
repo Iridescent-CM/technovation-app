@@ -1,55 +1,41 @@
 module Admin
   class DashboardsController < AdminController
     def show
-      execute_search
-      execute_snapshot
-    end
+      @students = StudentProfile.current
 
-    private
-    def execute_snapshot
-      @snapshot_accounts = Account.current
-      @snapshot_teams = Team.current
+      @mentors = MentorProfile.current
 
-      @snapshot_students = StudentProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
-      @snapshot_mentors = MentorProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
-      @snapshot_ambassadors = RegionalAmbassadorProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
-      @snapshot_judges = JudgeProfile.where(account_id: @snapshot_accounts.pluck(:id)).distinct
-
-      @snapshot_signups = SignupAttempt.all
-    end
-
-    def execute_search
-      params[:days] = 7 if params[:days].blank?
-      params[:days] = params[:days].to_i
-
-      accounts = Account.current.where("season_registrations.created_at > ?", params[:days].days.ago)
-
-      @students = accounts.joins(:student_profile)
-      @permitted_students = Account.current
-        .joins(student_profile: :parental_consent)
-        .where("parental_consents.created_at > ?", params[:days].days.ago)
-
-      @mentors = accounts.joins(:mentor_profile)
-      @cleared_mentors = Account.current
-        .joins(:mentor_profile, :consent_waiver)
-        .includes(:background_check)
-        .references(:background_checks)
+      @cleared_mentors = MentorProfile
+        .left_outer_joins(current_account: [:consent_waiver, :background_check])
         .where(
-          "(accounts.country = ? AND background_checks.status = ? AND background_checks.created_at > ?)
-          OR
-          (accounts.country != ? AND consent_waivers.created_at > ?)",
-          "US",
-          BackgroundCheck.statuses[:clear],
-          params[:days].days.ago,
-          "US",
-          params[:days].days.ago
+          "consent_waivers.id IS NOT NULL AND
+            (accounts.country != 'US' OR
+              (background_checks.id IS NOT NULL AND
+                background_checks.status = ?))",
+          BackgroundCheck.statuses[:clear]
         )
 
-      @ambassadors = accounts.joins(:regional_ambassador_profile)
+      @permitted_students = @students.joins(:parental_consent)
 
-      @judges = accounts.joins(:judge_profile)
+      @new_students = @students.where(
+        "accounts.created_at > ?",
+        Date.new(Season.current.year - 1, 10, 18)
+      )
 
-      @teams = Team.current.where("season_registrations.created_at > ?", params[:days].days.ago)
+      @returning_students = @students.where(
+        "accounts.created_at < ?",
+        Date.new(Season.current.year - 1, 10, 18)
+      )
+
+      @new_mentors = @mentors.where(
+        "accounts.created_at > ?",
+        Date.new(Season.current.year - 1, 10, 18)
+      )
+
+      @returning_mentors = @mentors.where(
+        "accounts.created_at < ?",
+        Date.new(Season.current.year - 1, 10, 18)
+      )
     end
   end
 end

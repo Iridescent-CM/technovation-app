@@ -1,0 +1,28 @@
+// vendor
+@import "normalize-rails";
+@import "reflex";
+@import "chosen";
+@import "sweetalert2";
+
+// base
+@import "variables";
+@import "base";
+@import "headings";
+@import "lists";
+@import "forms";
+@import "text_styles";
+
+// layout
+@import "flashes";
+@import "notices";
+@import "pagination";
+
+// components
+@import "panel";
+@import "button";
+@import "img";
+@import "tabs";
+
+// font
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
+@import "icomoon";
