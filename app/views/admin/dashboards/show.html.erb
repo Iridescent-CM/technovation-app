@@ -1,31 +1,27 @@
 <% provide :title, "Admin dashboard" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <h1>Technovation <%= Season.current.year %></h1>
+<h1>Technovation <%= Season.current.year %></h1>
 
-    <div class="panel">
-      <h3>Students</h3>
+<div class="panel">
+  <h3>Students</h3>
 
-      <dl>
-        <dt>Total:</dt>
-        <dd><%= @students.count %></dd>
+  <dl>
+    <dt>Total:</dt>
+    <dd><%= @students.count %></dd>
 
-        <dt>With parental permission:</dt>
-        <dd><%= @permitted_students.count %></dd>
-      </dl>
-    </div>
+    <dt>With parental permission:</dt>
+    <dd><%= @permitted_students.count %></dd>
+  </dl>
+</div>
 
-    <div class="panel">
-      <h3>Mentors</h3>
+<div class="panel">
+  <h3>Mentors</h3>
 
-      <dl>
-        <dt>Total:</dt>
-        <dd><%= @mentors.count %></dd>
+  <dl>
+    <dt>Total:</dt>
+    <dd><%= @mentors.count %></dd>
 
-        <dt>With consent waiver and background check, if required:</dt>
-        <dd><%= @cleared_mentors.count %></dd>
-      </dl>
-    </div>
-  </div>
+    <dt>With consent waiver and background check, if required:</dt>
+    <dd><%= @cleared_mentors.count %></dd>
+  </dl>
 </div>

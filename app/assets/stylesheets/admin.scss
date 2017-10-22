@@ -26,3 +26,19 @@
 // font
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
 @import "icomoon";
+
+nav {
+  a {
+    display: block;
+    color: black;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid $grey-translucent;
+
+    &[data-method] {
+      padding-left: 0;
+      color: $alert-txt;
+      border: 0;
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-h1>Season Schedule Settings</h1>
+<h1>Season Schedule Settings</h1>
 <h2>Toggle user features on and off throughout the season</h2>
 
 
@@ -7,8 +7,8 @@ h1>Season Schedule Settings</h1>
               url: admin_season_schedule_settings_path,
               local: true,
               method: :patch) do |f| %>
-  <div class="tabs tabs-vertical flex-row" id="admin-season-schedule">
-    <ul class="tab-menu flex-col-md-4">
+  <div class="tabs tabs-vertical grid" id="admin-season-schedule">
+    <ul class="tab-menu grid__col-4">
       <li class="tab-link">
         <button
           role="button"
@@ -73,7 +73,7 @@ h1>Season Schedule Settings</h1>
       </li>
     </ul>
 
-    <div class="content flex-col-md-8">
+    <div class="content grid__col-8">
       <div class="tab-content" id="user-reg">
         <h4>User Registrations</h4>
 

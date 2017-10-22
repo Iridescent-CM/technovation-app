@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <%= render 'meta' %>
 
-    <title><%= t('views.application.site_title') %></title>
+    <title>
+      <%= content_for?(:title) ?
+        "#{yield(:title)} • #{t("views.application.site_title")}" :
+        t("views.application.site_title_default") %>
+    </title>
 
     <%= stylesheet_link_tag 'admin', media: 'all' %>
+
+    <%= stylesheet_link_tag(
+      '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css',
+      media: :all
+    ) %>
+
     <%= csrf_meta_tags %>
 
-    <%= yield :head_js %>
+    <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
   </head>
 
   <body>
-    <%= render 'admin/navigation' %>
+    <div class="grid">
+      <div class="grid__col-3">
+        <%= render 'admin/navigation' %>
+      </div>
 
-    <div class="container">
-      <%= render 'flash_messages' %>
-      <div class="main-content">
+      <div class="grid__col-9">
+        <%= render 'flash_messages' %>
+
         <%= yield %>
       </div>
     </div>
 
-    <%= javascript_include_tag 'admin' %>
   </body>
 </html>
