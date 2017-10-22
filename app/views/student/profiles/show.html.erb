@@ -29,9 +29,14 @@
       </div>
 
       <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
-        <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+        <%= image_tag current_student.profile_image_url,
+          id: "profile-image-xs",
+          class: "grid__cell-img" %>
 
         <%= render 'image_upload',
+          choose_from_defaults: true,
+          current_image_path: current_student.profile_image_url,
+          image_id: "profile-image-xs",
           modal_id: "image_upload_mobile",
           heading: "Upload a profile photo",
           size: "300x300" %>

@@ -26,15 +26,18 @@ document.addEventListener("turbolinks:load", function() {
   });
 
   if ($(".icon-picker").length > 0) {
+    const imageId = $('.icon-picker').data("updateImage"),
+          $img = $("#" + imageId);
+
     window.iconPicker = {
-      imageSrc: $("#profile-image").attr("src"),
+      imageSrc: $img.attr("src"),
 
       selectedIconSrc: $(".icon-picker .selected").attr("src"),
 
       updateSelection: function(iconSrc, imageSrc) {
         imageSrc = imageSrc || iconSrc;
 
-        $("#profile-image").attr("src", imageSrc);
+        $img.attr("src", imageSrc);
 
         $(".icon-picker .selected").removeClass("selected");
 
