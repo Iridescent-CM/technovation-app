@@ -43,6 +43,12 @@ nav {
       color: black;
     }
 
+    &.small {
+      padding: 1rem 0 0 0;
+      font-size: 0.9rem;
+      border: 0;
+    }
+
     &[data-method] {
       padding-left: 0;
       color: $alert-txt;

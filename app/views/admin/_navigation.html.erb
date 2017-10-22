@@ -29,5 +29,10 @@
   <%= link_to "Semifinals Scores", admin_semifinals_scores_path %>
 <% end %>
 
+<%= link_to "Background job monitor (advanced)",
+  "/sidekiq",
+  data: { turbolinks: false },
+  class: "small" %>
+
   <%= link_to "Logout", logout_path, data: { method: :delete } %>
 </nav>
