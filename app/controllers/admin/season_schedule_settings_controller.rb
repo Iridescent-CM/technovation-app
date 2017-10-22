@@ -2,7 +2,8 @@ module Admin
   class SeasonScheduleSettingsController < AdminController
     def update
       SeasonToggles.configure(season_toggle_params)
-      redirect_to admin_dashboard_path, success: "Season schedule saved!"
+      redirect_to edit_admin_season_schedule_settings_path,
+        success: "Season schedule saved!"
     end
 
     private

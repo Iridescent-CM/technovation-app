@@ -1,0 +1,65 @@
+#admin-season-schedule {
+  [class^="icon-"], [class*=" icon-"] {
+    color: $alert-txt;
+  }
+
+  .tab-button {
+    [class^="icon-"], [class*=" icon-"] {
+      display: none;
+    }
+
+    &.contains-disabled-items {
+      [class^="icon-"], [class*=" icon-"] {
+        display: inline;
+      }
+    }
+  }
+
+  .tab-content {
+    margin: 0 0 1rem;
+    padding: 0 1rem;
+    background: white;
+    position: relative;
+    z-index: $z-under-shade;;
+
+    h4 {
+      margin: 0 0 1rem;
+      font-weight: bold;
+    }
+
+    p, .inline-checkbox, .inline-radio {
+      margin: 0 0 1rem;
+      padding: 0;
+      font-weight: normal;
+    }
+
+    label {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+  }
+}
+
+#season_review, .notice {
+  text-align: left;
+}
+
+#season_review {
+  .review-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    &:last-child, + p {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .on {
+    color: $shamrock-mid;
+  }
+
+  .off {
+    color: $alert-txt;
+  }
+}

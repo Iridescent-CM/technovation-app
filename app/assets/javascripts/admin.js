@@ -14,6 +14,7 @@
 //= require tabs
 //= require image-uploaders
 //= require modals
+//= require season-schedule
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
