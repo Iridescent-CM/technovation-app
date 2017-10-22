@@ -690,9 +690,9 @@ DEPENDENCIES
   rails (~> 5.1)
   rails-controller-testing (~> 1.0)
   rails-i18n (~> 5.0)
-  rspec-rails (~> 3.6)
+  rspec-rails (~> 3.7)
   sass-rails (~> 5.0)
-  scout_apm (~> 2.1)
+  scout_apm (~> 2.3)
   sidekiq (~> 4.2)
   simple_form!
   sinatra (~> 2.0)
@@ -701,7 +701,7 @@ DEPENDENCIES
   turbolinks (~> 5.0)
   uglifier (~> 3.2)
   vcr (~> 3.0)
-  webmock (~> 3.0)
+  webmock (~> 3.1)
   will_paginate (~> 3.1)
 
 RUBY VERSION
