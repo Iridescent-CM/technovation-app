@@ -70,6 +70,8 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a student" do
+      skip "admin UI is being rebuilt"
+
       student = FactoryGirl.create(:student, :geocoded, :on_team)
 
       visit admin_participant_path(student.account)
@@ -85,6 +87,8 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a mentor" do
+      skip "admin UI is being rebuilt"
+
       mentor = FactoryGirl.create(:mentor, :geocoded, :on_team)
 
       visit admin_participant_path(mentor.account)
@@ -101,6 +105,8 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a judge" do
+      skip "admin UI is being rebuilt"
+
       judge = FactoryGirl.create(:judge, :geocoded)
 
       visit admin_participant_path(judge.account)
@@ -116,6 +122,8 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as an RA" do
+      skip "admin UI is being rebuilt"
+
       ra = FactoryGirl.create(:ambassador)
 
       visit admin_participant_path(ra.account)
