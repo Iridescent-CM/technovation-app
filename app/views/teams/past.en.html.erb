@@ -1,0 +1,18 @@
+<% provide :title, "Past team: #{@team.name}" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
+    <div class="panel">
+      <h3 class="reset"><%= @team.name %></h1>
+
+      <p>This is a team from a past season.</p>
+
+      <p>
+        You can't access this team anymore, but you can
+        <%= link_to "register a new team with the same name",
+          send("new_#{current_scope}_team_path", name: @team.name) %>
+        if you want to.
+      </p>
+    </div>
+  </div>
+</div>

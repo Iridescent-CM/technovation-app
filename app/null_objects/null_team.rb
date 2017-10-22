@@ -11,6 +11,14 @@ class NullTeam
     false
   end
 
+  def current?
+    false
+  end
+
+  def past?
+    false
+  end
+
   def mentors
     MentorProfile.none
   end

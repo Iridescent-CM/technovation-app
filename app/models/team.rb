@@ -216,6 +216,10 @@ class Team < ActiveRecord::Base
     seasons.include?(Season.current.year)
   end
 
+  def past?
+    not current?
+  end
+
   def invited_mentor?(mentor)
     mentor_invites.pending.where(
       invitee_id: mentor.id,

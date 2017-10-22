@@ -74,6 +74,18 @@ RSpec.describe Student::TeamsController do
   end
 
   describe "GET #new" do
+    it "shows a past_team page for past teams" do
+      student = FactoryGirl.create(:student)
+      past_team = FactoryGirl.create(:team, seasons: [Season.current.year - 1])
+      TeamRosterManaging.add(past_team, student)
+
+      sign_in(student)
+
+      get :show, params: { id: past_team.id }
+
+      expect(response).to render_template("teams/past")
+    end
+
     it "doesn't allow a student on a team to visit" do
       student = FactoryGirl.create(:student, :on_team)
       sign_in(student)

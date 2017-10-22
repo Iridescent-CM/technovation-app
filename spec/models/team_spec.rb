@@ -4,6 +4,16 @@ RSpec.describe Team do
   before { Timecop.travel(Division.cutoff_date - 1.day) }
   after { Timecop.return }
 
+  it "knows when it's a past or current team" do
+    team = FactoryGirl.create(:team)
+    expect(team).to be_current
+    expect(team).not_to be_past
+
+    team.seasons = [Season.current.year - 1]
+    expect(team).not_to be_current
+    expect(team).to be_past
+  end
+
   it "deals okay with funky region name input" do
     team = FactoryGirl.create(:team)
 

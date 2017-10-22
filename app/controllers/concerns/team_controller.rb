@@ -10,17 +10,22 @@ module TeamController
 
   def show
     @team = current_profile.teams.find(params.fetch(:id))
-    @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
-    @uploader = ImageUploader.new
-    @uploader.success_action_redirect = send(
-      "#{current_scope}_team_photo_upload_confirmation_url",
-      team_id: @team.id,
-      back: request.fullpath
-    )
+
+    if @team.current?
+      @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
+      @uploader = ImageUploader.new
+      @uploader.success_action_redirect = send(
+        "#{current_scope}_team_photo_upload_confirmation_url",
+        team_id: @team.id,
+        back: request.fullpath
+      )
+    elsif @team.past?
+      render 'teams/past'
+    end
   end
 
   def new
-    @team = Team.new
+    @team = Team.new(name: params[:name])
   end
 
   def create
