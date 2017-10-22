@@ -2,10 +2,13 @@ document.addEventListener("turbolinks:load", function() {
   $("[data-opens-modal]").on("click", function(e) {
     e.preventDefault();
 
+    $(this).trigger("modals.beforeOpen");
+
     const modal = $('#' + $(this).data("opensModal"));
 
     swal({
       html: modal.find(".modal-content"),
+      width: modal.data("width"),
       title: modal.data("heading") || "",
       showCloseButton: true,
       showConfirmButton: false,
