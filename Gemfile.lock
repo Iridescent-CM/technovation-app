@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/carrierwaveuploader/carrierwave.git
-  revision: 63b9396960d7bbaa41f642c9ccd5519218c61103
+  revision: e9f3be59e6e6b5d41a9b379df92cad6be16e7f84
   branch: master
   specs:
-    carrierwave (1.2.0)
+    carrierwave (1.2.1)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
@@ -28,7 +28,7 @@ GIT
 
 GIT
   remote: https://github.com/romanbsd/heroku-deflater.git
-  revision: 41645205533cc17bd5097d7823b0f084c735a285
+  revision: f4d5b4cc2440027fd8bd7b279768d0f6ff344fdb
   branch: master
   specs:
     heroku-deflater (0.6.3)
@@ -83,19 +83,19 @@ GEM
       activesupport (>= 3.0.0)
     airbrake (6.3.0)
       airbrake-ruby (~> 2.4)
-    airbrake-ruby (2.4.0)
+    airbrake-ruby (2.5.0)
     arel (8.0.0)
     arrayfields (4.9.2)
     ast (2.3.0)
     autoprefixer-rails (6.7.7.2)
       execjs
-    aws-sdk (2.10.55)
-      aws-sdk-resources (= 2.10.55)
-    aws-sdk-core (2.10.55)
+    aws-sdk (2.10.69)
+      aws-sdk-resources (= 2.10.69)
+    aws-sdk-core (2.10.69)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.55)
-      aws-sdk-core (= 2.10.55)
+    aws-sdk-resources (2.10.69)
+      aws-sdk-core (= 2.10.69)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     browser (2.5.1)
@@ -169,7 +169,7 @@ GEM
     currencies (0.4.2)
     dalli (2.7.6)
     database_cleaner (1.6.1)
-    datagrid (1.5.4)
+    datagrid (1.5.5)
       rails (>= 4.0)
     diff-lcs (1.3)
     domain_name (0.5.20170404)
@@ -182,7 +182,7 @@ GEM
       json
       thread
       thread_safe
-    erubi (1.6.1)
+    erubi (1.7.0)
     excon (0.59.0)
     execjs (2.7.0)
     factory_girl (4.8.1)
@@ -289,7 +289,7 @@ GEM
       multi_json (~> 1.10)
     fog-local (0.4.0)
       fog-core (~> 1.27)
-    fog-openstack (0.1.21)
+    fog-openstack (0.1.22)
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
@@ -358,7 +358,7 @@ GEM
       activesupport (>= 4.2.0)
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
-    hashdiff (0.3.6)
+    hashdiff (0.3.7)
     hashie (3.5.6)
     highline (1.7.8)
     hirb (0.7.3)
@@ -369,7 +369,8 @@ GEM
       domain_name (~> 0.5)
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
-    i18n (0.8.6)
+    i18n (0.9.0)
+      concurrent-ruby (~> 1.0)
     i18n-tasks (0.9.18)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
@@ -533,30 +534,30 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rspec-core (3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-expectations (3.6.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-mocks (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-rails (3.6.1)
+      rspec-support (~> 3.7.0)
+    rspec-rails (3.7.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.6.0)
-      rspec-expectations (~> 3.6.0)
-      rspec-mocks (~> 3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-support (3.6.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.0)
     ruby_dep (1.5.0)
     ruby_parser (3.10.1)
       sexp_processor (~> 4.9)
     rubyzip (1.2.1)
     safe_shell (1.1.0)
     safe_yaml (1.0.4)
-    sass (3.5.1)
+    sass (3.5.2)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -567,7 +568,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    scout_apm (2.1.32)
+    scout_apm (2.3.1)
     sexp_processor (4.10.0)
     sidekiq (4.2.10)
       concurrent-ruby (~> 1.0)
@@ -609,7 +610,7 @@ GEM
     unicode-display_width (1.3.0)
     uuidtools (2.1.5)
     vcr (3.0.3)
-    webmock (3.0.1)
+    webmock (3.1.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -707,4 +708,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.0.pre.2
+   1.16.0.pre.3
