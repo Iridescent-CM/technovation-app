@@ -79,7 +79,7 @@ group :development, :test do
   gem 'pry-rails', "~> 0.3"
   gem 'pry-doc', "~> 0.11"
   gem 'pry-nav', "~> 0.2"
-  gem 'rspec-rails', "~> 3.6"
+  gem 'rspec-rails', "~> 3.7"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
 end
@@ -96,7 +96,7 @@ end
 group :test do
   gem 'timecop', "~> 0.9"
   gem 'vcr', "~> 3.0"
-  gem 'webmock', "~> 3.0"
+  gem 'webmock', "~> 3.1"
   gem 'sinatra', '~> 2.0'
   gem 'capybara-webkit', "~> 1.14"
   gem 'database_cleaner', "~> 1.6"
@@ -113,7 +113,7 @@ end
 
 group :production do
   gem 'hiredis', "~> 0.6"
-  gem 'scout_apm', "~> 2.1"
+  gem 'scout_apm', "~> 2.3"
   gem "rack-timeout", "~> 0.4"
   gem 'heroku-deflater',
     git: 'https://github.com/romanbsd/heroku-deflater.git',
