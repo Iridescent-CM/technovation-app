@@ -26,7 +26,8 @@ document.addEventListener("turbolinks:load", function() {
       var $btn = $(this).find('button').first();
       $btn.data('update-hash', true);
 
-      $(this).on('click', function() {
+      $(this).on('click', function(e) {
+        e.preventDefault();
         revealTab($(this), $contents, $links);
       });
 

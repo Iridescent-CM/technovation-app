@@ -1,6 +1,5 @@
 <h1>Season Schedule Settings</h1>
-<h2>Toggle user features on and off throughout the season</h2>
-
+<h3>Toggle user features on and off throughout the season</h3>
 
 <%= form_with(id: "season_schedule",
               scope: :season_toggles,
@@ -221,30 +220,35 @@
 
   <p>
     <%= f.submit "Review settings",
-      class: "appy-button",
-      data: { modal_trigger: "schedule-review" } %>
+      class: "button",
+      data: { opens_modal: "schedule-review" } %>
     or
     <%= link_to "cancel", admin_dashboard_path %>
   </p>
 
-  <div class="modalify modalify--fixed"
-      data-heading="Review Season Settings"
-      id="schedule-review">
+  <%= content_tag :div,
+    class: "modal",
+    id: "schedule-review",
+    data: {
+      heading: "Review Season Settings",
+    } do %>
 
-    <div id="season_review"></div>
+    <div class="modal-content">
+      <div id="season_review"></div>
 
-    <div class="notice warning">
-      The changes you make here affect the end-user experience.<br />
-      Please double check everything before saving.
+      <div class="notice warning">
+        The changes you make here affect the end-user experience.<br />
+        Please double check everything before saving.
+      </div>
+
+      <button class="button" data-submit-form="#season_schedule">
+        Save these settings
+      </button>
+
+      or
+
+      <%= link_to "cancel", '#', class: "close" %>
     </div>
 
-    <button class="appy-button"
-            data-submit-form="#season_schedule">
-      Save these settings
-    </button>
-
-    or
-
-    <%= link_to "cancel", '#', class: "modalify__close" %>
-  </div>
+  <% end %>
 <% end %>
