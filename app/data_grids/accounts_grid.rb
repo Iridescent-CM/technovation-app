@@ -1,7 +1,7 @@
 class AccountsGrid
   include Datagrid
 
-  attr_accessor :ambassador, :admin
+  attr_accessor :admin
 
   scope do
     Account.left_outer_joins([
@@ -41,31 +41,6 @@ class AccountsGrid
     where("accounts.email ilike '%#{value}%'")
   end
 
-  filter(:city, if: ->(g) { g.admin || g.ambassador.country != "US" }) do |value|
-    where("accounts.city ilike '%#{value}%'")
-  end
-
-  filter :city,
-    :enum,
-    select: ->(g) {
-      CS.cities(g.ambassador.state_province, :us)
-    },
-    if: ->(g) { g.ambassador && g.ambassador.country == "US" }
-
-  filter(:state_province,
-    header: "State / Province",
-    if: ->(g) { g.admin }) do |value|
-    where("accounts.state_province ilike '%#{value}%'")
-  end
-
-  filter :state_province,
-    :enum,
-    header: "State / Province",
-    select: ->(g) {
-      CS.states(g.ambassador.country).map { |p| [p[1], p[0]] }.compact
-    },
-    if: ->(g) { g.ambassador && g.ambassador.country != "US" }
-
   filter :country,
     :enum,
     header: "Country",
@@ -73,6 +48,21 @@ class AccountsGrid
       CountryStateSelect.countries_collection
     },
     if: ->(g) { g.admin }
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.states(g.country).map { |p| [p[1], p[0]] }.compact
+    },
+    if: ->(g) { g.country != "" && CS.states(g.country).any? }
+
+  filter :city,
+    :enum,
+    select: ->(g) {
+      CS.cities(g.state_province, g.country)
+    },
+    if: ->(g) { g.state_province != "" }
 
   filter :scope_names,
     :enum,
