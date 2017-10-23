@@ -25,6 +25,10 @@ class AccountsGrid
     created_at.strftime("%b %e")
   end
 
+  column :actions, html: true do |account|
+    link_to "view", admin_participant_path(account)
+  end
+
   filter :name do |value|
     names = value.split(' ')
     where(
