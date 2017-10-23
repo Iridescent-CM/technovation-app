@@ -16,6 +16,18 @@
 //= require modals
 //= require season-schedule
 
+document.addEventListener("turbolinks:load", function() {
+  $(".accordion-toggle").on("click", function(e) {
+    e.preventDefault();
+
+    $accordion = $($(this).data("accordion"));
+
+    $accordion.addClass('open');
+
+    $(this).hide().next(".accordion-open").show();
+  });
+});
+
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
     'X-CSRF-Token',

@@ -1,4 +1,5 @@
 <div class="panel">
-  This page is not ready yet.
-  You do not need to inform the dev team about this message.
+  <%= datagrid_form_for @accounts_grid, url: admin_participants_path %>
+  <%= datagrid_table(@accounts_grid) %>
+  <%= will_paginate @accounts_grid.assets %>
 </div>
