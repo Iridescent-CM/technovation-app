@@ -29,7 +29,14 @@ class ParentalConsent < ActiveRecord::Base
   end
 
   def void!
-    update_attributes(voided_at: Time.current)
+    update(voided_at: Time.current)
+
+    if student_profile.parent_guardian_email == "ON FILE"
+      student_profile.update_columns(
+        parent_guardian_email: nil,
+        parent_guardian_name: nil
+      )
+    end
   end
 
   def voided?
