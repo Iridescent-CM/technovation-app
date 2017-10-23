@@ -55,14 +55,14 @@ class AccountsGrid
     select: ->(g) {
       CS.states(g.country).map { |p| [p[1], p[0]] }.compact
     },
-    if: ->(g) { g.country != "" && CS.states(g.country).any? }
+    if: ->(g) { g.country && CS.states(g.country).any? }
 
   filter :city,
     :enum,
     select: ->(g) {
       CS.cities(g.state_province, g.country)
     },
-    if: ->(g) { g.state_province != "" }
+    if: ->(g) { g.state_province && CS.cities(g.state_province).any? }
 
   filter :scope_names,
     :enum,
