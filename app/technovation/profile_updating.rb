@@ -26,16 +26,22 @@ class ProfileUpdating
     perform_avatar_changes_updates
     Geocoding.perform(profile.account)
 
-    case scope.to_sym
-    when :student
-      perform_student_updates
-    end
+    send("perform_#{scope}_updates")
 
     profile.save
     profile.account.save
   end
 
   private
+  def perform_mentor_updates
+  end
+
+  def perform_judge_updates
+  end
+
+  def perform_regional_ambassador_updates
+  end
+
   def perform_student_updates
     team = profile.team
 
