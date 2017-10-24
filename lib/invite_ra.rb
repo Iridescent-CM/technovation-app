@@ -11,6 +11,7 @@ module InviteRA
     )
 
     if account = Account.find_by(email: attrs[:email])
+      background_check = account.background_check
       account.destroy
     end
 
@@ -27,6 +28,14 @@ module InviteRA
       skip_existing_password: true,
     )
 
+    if background_check.present?
+      account.create_background_check!({
+        candidate_id: background_check.candidate_id,
+        report_id: background_check.report_id,
+        status: background_check.status,
+      })
+    end
+
     account.create_regional_ambassador_profile!(
       organization_company_name: attrs[:organization_company_name],
       job_title: attrs[:job_title],
@@ -34,8 +43,6 @@ module InviteRA
       ambassador_since_year: "I'm new!",
       status: :approved,
     )
-
-    RegistrationMailer.admin_permission(attempt.id).deliver_now
 
     attempt
   end
