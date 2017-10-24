@@ -8,7 +8,7 @@ class EmailConfirmationsController < ApplicationController
       unconfirmed_email.destroy
       SignIn.(account, self, message: "You have confirmed your new email address!")
     else
-      raise ActionController::RoutingError.new(
+      raise ActiveRecord::RecordNotFound.new(
         'Confirmation token not found. Maybe it was already used.'
       )
     end
