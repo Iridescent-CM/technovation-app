@@ -71,7 +71,7 @@
 
 <% if @account.student_profile and @account.parental_consent.nil? %>
   <%= link_to "Paper parental consent on file",
-    admin_paper_parental_consent_path(id: @profile.id),
+    admin_paper_parental_consent_path(id: @account.student_profile.id),
     class: "appy-button",
     data: {
       method: :post,
