@@ -7,12 +7,7 @@ task invite_ras: :environment do
       headers: true,
       header_converters: :symbol
     ) do |row|
-      next if (
-        row[:date_of_birth].blank? ||
-          row[:bio].blank? ||
-            RegionalAmbassadorProfile.joins(:account)
-              .find_by("accounts.email = ?", row[:email])
-      )
+      next if row[:date_of_birth].blank? || row[:bio].blank?
 
       row[:date_of_birth] = Date.strptime(row[:date_of_birth], "%m/%d/%Y")
 
