@@ -1,20 +1,21 @@
 module InviteRA
   def self.call(attrs)
-    attempt = SignupAttempt.find_by(email: attrs[:email]) ||
-      SignupAttempt.create!(
-        email: attrs[:email],
-        password: SecureRandom.hex(17),
-        status: SignupAttempt.statuses[:temporary_password],
-      )
+    if attempt = SignupAttempt.find_by(email: attrs[:email])
+      attempt.destroy
+    end
 
-    account = Account.find_by(email: attrs[:email]) || attempt.build_account(
+    attempt = SignupAttempt.create!(
       email: attrs[:email],
+      password: SecureRandom.hex(17),
+      status: SignupAttempt.statuses[:temporary_password],
     )
 
+    if account = Account.find_by(email: attrs[:email])
+      account.destroy
+    end
 
-    account.signup_attempt = attempt
-
-    account.update(
+    account = attempt.create_account!(
+      email: attrs[:email],
       first_name: attrs[:first_name],
       last_name: attrs[:last_name],
       city: attrs[:city],
@@ -34,11 +35,7 @@ module InviteRA
       status: :approved,
     )
 
-    if account.student_profile.present?
-      account.student_profile.destroy
-    end
-
-    attempt.regenerate_admin_permission_token
+    RegistrationMailer.admin_permission(attempt.id).deliver_now
 
     attempt
   end
