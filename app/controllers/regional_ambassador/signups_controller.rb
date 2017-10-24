@@ -1,7 +1,5 @@
 module RegionalAmbassador
   class SignupsController < ApplicationController
-    before_action :require_unauthenticated
-
     def new
       if token = cookies[:signup_token]
         setup_valid_profile_from_signup_attempt(:regional_ambassador, token)

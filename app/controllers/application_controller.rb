@@ -89,25 +89,28 @@ class ApplicationController < ActionController::Base
   def setup_valid_profile_from_signup_attempt(scope, token)
     email = SignupAttempt.find_by!(signup_token: token).email
 
-    @profile = instance_variable_set(
-      "@#{scope}_profile",
-      "#{scope}_profile".camelize.constantize.new(
-        account_attributes: { email: email }
+    if account = Account.find_by(email: email) and
+        account.regional_ambassador_profile.present?
+      @regional_ambassador_profile = account.regional_ambassador_profile
+    else
+      @profile = instance_variable_set(
+        "@#{scope}_profile",
+        "#{scope}_profile".camelize.constantize.new(
+          account_attributes: { email: email }
+        )
       )
-    )
 
-    @profile.valid?
-
-    if @profile.errors[:"account.email"]
-      .include?("has already been taken")
-      render "signups/email_taken",
-        locals: {
-          email: @profile.email
-        } and return
+      if not @profile.valid? and
+          @profile.errors[:"account.email"].include?("has already been taken")
+        render "signups/email_taken",
+          locals: {
+            email: @profile.email
+          } and return
+      else
+        @profile.errors.clear
+        @profile.account.errors.clear
+      end
     end
-
-    @profile.errors.clear
-    @profile.account.errors.clear
   end
 
   def current_scope; raise NotImplementedError; end

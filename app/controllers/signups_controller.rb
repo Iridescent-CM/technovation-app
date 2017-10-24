@@ -12,7 +12,11 @@ class SignupsController < ApplicationController
       cookies[:admin_permission_token] = attempt.admin_permission_token
     end
 
-    unless cookies[:signup_token].present?
+    if attempt.present? and
+        attempt.account.present? and
+          attempt.account.regional_ambassador_profile.present?
+      redirect_to regional_ambassador_signup_path
+    elsif not cookies[:signup_token].present?
       redirect_to root_path
     end
   end

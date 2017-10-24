@@ -110,6 +110,8 @@ Rails.application.routes.draw do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
+    resource :profile_details_confirmation, only: :update
+
     resource :location_details, only: :show
 
     resource :dashboard, only: :show

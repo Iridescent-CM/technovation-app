@@ -272,12 +272,12 @@ en:
         signup_link:
           judge: "I am a Judge"
           mentor: "I am a Mentor"
-          regional_ambassador: "Apply to be a Regional Ambassador"
+          regional_ambassador: "Confirm your Regional Ambassador account"
           student: "I am a Student"
         title:
           judge: "Sign up as a"
           mentor: "Sign up as a"
-          regional_ambassador: "Apply to become a"
+          regional_ambassador: "Confirm your Regional Ambassador account"
           student: "Sign up as a"
 
     student:
