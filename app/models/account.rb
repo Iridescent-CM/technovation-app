@@ -103,7 +103,7 @@ class Account < ActiveRecord::Base
     length: {
       minimum: 8,
       on: :update,
-      if: :changing_password?
+      if: :changing_password_or_temporary_password?
     }
 
   validates :date_of_birth, :first_name, :last_name, presence: true
@@ -313,5 +313,9 @@ class Account < ActiveRecord::Base
 
   def changing_password?
     !!!skip_existing_password && (persisted? && password_digest_changed?)
+  end
+
+  def changing_password_or_temporary_password?
+    changing_password? || temporary_password?
   end
 end
