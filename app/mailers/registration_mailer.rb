@@ -13,7 +13,9 @@ class RegistrationMailer < ApplicationMailer
     end
   end
 
-  def admin_permission(signup_attempt)
+  def admin_permission(signup_attempt_id)
+    signup_attempt = SignupAttempt.find(signup_attempt_id)
+
     if token = signup_attempt.admin_permission_token
       @url = signup_url(admin_permission_token: token)
 

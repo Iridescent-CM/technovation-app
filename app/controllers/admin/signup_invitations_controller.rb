@@ -18,7 +18,7 @@ module Admin
 
       attempt.regenerate_admin_permission_token
 
-      RegistrationMailer.admin_permission(attempt).deliver_later
+      RegistrationMailer.admin_permission(attempt.id).deliver_later
 
       redirect_back fallback_location: admin_signup_attempts_path,
         success: "#{attempt.email} was sent a special signup inivitation!"
