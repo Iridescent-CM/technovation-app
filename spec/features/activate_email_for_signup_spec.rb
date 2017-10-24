@@ -32,7 +32,11 @@ RSpec.feature "Activate your email to sign up" do
   end
 
   scenario "Use an email that is awaiting activation" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
+    signup_attempt = SignupAttempt.create!(
+      email: "joe@joesak.com",
+      password: "secret1234"
+    )
+
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"
@@ -45,7 +49,11 @@ RSpec.feature "Activate your email to sign up" do
   end
 
   scenario "Use an email that has already activated" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
+    signup_attempt = SignupAttempt.create!(
+      email: "joe@joesak.com",
+      password: "secret1234"
+    )
+
     signup_attempt.active!
 
     ActionMailer::Base.deliveries.clear
@@ -83,21 +91,35 @@ RSpec.feature "Activate your email to sign up" do
   end
 
   scenario "Activate your email for signing up" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
+    signup_attempt = SignupAttempt.create!(
+      email: "joe@joesak.com",
+      password: "secret1234"
+    )
+
     ActionMailer::Base.deliveries.clear
 
-    visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
+    visit new_signup_attempt_confirmation_path(
+      token: signup_attempt.activation_token
+    )
+
     expect(signup_attempt.reload).to be_active
     expect(ActionMailer::Base.deliveries).to be_empty
 
     expect(current_path).to eq(signup_path)
-    expect(page).to have_content("Thank you! Your email is confirmed and you are ready to sign up!")
+    expect(page).to have_content(
+      "Thank you! Your email is confirmed and you are ready to sign up!"
+    )
   end
 
   scenario "Register the signup attempt on sign up" do
-    signup_attempt = SignupAttempt.create!(email: "joe@joesak.com", password: "secret1234")
+    signup_attempt = SignupAttempt.create!(
+      email: "joe@joesak.com",
+      password: "secret1234"
+    )
 
-    visit new_signup_attempt_confirmation_path(token: signup_attempt.activation_token)
+    visit new_signup_attempt_confirmation_path(
+      token: signup_attempt.activation_token
+    )
 
     click_link I18n.t("views.signups.new.signup_link.student")
 
