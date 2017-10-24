@@ -67,9 +67,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? and
       approved? and
-        consent_signed? and
-          location_confirmed? and
-            background_check_complete?
+        location_confirmed? and
+          background_check_complete?
   end
 
   def authenticated?
