@@ -22,7 +22,7 @@ RSpec.feature "Disabled judge sign-ins" do
       "We will email you when updates are ready, and you can apply to be a judge."
     )
 
-    expect(page).to have_link("My profile", judge_profile_path)
-    expect(page).to have_link("Logout", logout_path)
+    expect(page).to have_link("My profile", href: judge_profile_path)
+    expect(page).to have_link("Logout", href: logout_path)
   end
 end
