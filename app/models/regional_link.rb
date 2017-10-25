@@ -36,6 +36,8 @@ class RegionalLink < ApplicationRecord
     case name
     when "twitter", "linkedin", "facebook"
       "#{name}-square"
+    when "website"
+      "earth"
     else
       name
     end
@@ -44,9 +46,11 @@ class RegionalLink < ApplicationRecord
   def display_text
     case name
     when "twitter", "instagram", "snapchat"
-      "@#{value}"
-    else
+      detect_page_name_from_url(value, prefix: "@")
+    when "website"
       value
+    else
+      detect_page_name_from_url(value)
     end
   end
 
@@ -79,5 +83,19 @@ class RegionalLink < ApplicationRecord
       whatsapp: "api.whatsapp.com/send?phone=",
       website: "",
     }.with_indifferent_access
+  end
+
+  def detect_page_name_from_url(value, passed_options = {})
+    default_options = {
+      prefix: "",
+    }
+
+    options = default_options.merge(passed_options)
+
+    if match = value.match(/\w+\/(.+)$/)
+      options[:prefix] + match[1]
+    else
+      options[:prefix] + value
+    end
   end
 end

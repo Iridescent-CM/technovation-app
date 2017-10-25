@@ -1,0 +1,19 @@
+<div class="grid grid--bleed nested-fields placeholder-updaters">
+  <div class="grid__col-4">
+    <%= f.input :name,
+      label: "Type",
+      collection: RegionalLink.names.keys,
+      prompt: "Choose a site type..." %>
+  </div>
+
+  <div class="grid__col-auto">
+    <%= f.input :value, input_html: {
+      data: RegionalLink.link_name_placeholders
+    } %>
+  </div>
+
+  <%= link_to_remove_association(
+    web_icon("close", class: "icon-red"), f,
+    class: "destroyable-link--destroy"
+  ) %>
+</div>

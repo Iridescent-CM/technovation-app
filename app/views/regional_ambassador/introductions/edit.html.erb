@@ -6,63 +6,6 @@
       Change your dashboard introduction
     </h5>
 
-    <%= simple_form_for current_ambassador,
-      url: regional_ambassador_introduction_path do |f| %>
-      <%= f.input :intro_summary,
-        label: "Short summary",
-        as: :text,
-        input_html: {
-          rows: 3,
-        } %>
-
-      <%= content_tag :p,
-        data: {
-          keep_count_of: "#regional_ambassador_profile_intro_summary",
-          down_from: 280,
-        } do %>
-        <span><%= (f.object.intro_summary || "").length %></span>
-
-        <span>
-          <%= "character".pluralize((f.object.intro_summary || "").length) %>
-        </span>
-      <% end %>
-
-      <p class="hint">
-        Give your participants a short introduction to your regional program.
-        Use up to 280 characters, or about the length of two tweets.
-      </p>
-
-      <%= f.simple_fields_for :regional_links do |r| %>
-        <div class="destroyable placeholder-updaters grid grid--bleed">
-          <div class="grid__col-4">
-            <%= r.input :name,
-              label: "Type",
-              collection: RegionalLink.names.keys,
-              prompt: "Choose a link type..." %>
-          </div>
-
-          <div class="grid__col-auto">
-            <%= r.input :value, input_html: {
-              data: RegionalLink.link_name_placeholders
-            } %>
-          </div>
-
-          <%= r.input :_destroy,
-            as: :hidden,
-            input_html: {
-              id: "regional_link_#{r.object.id}_destroy",
-            } %>
-
-          <%= link_to web_icon("close", class: "icon-red"), '#',
-            data: {
-              mark_for_destroy: "regional_link_#{r.object.id}_destroy",
-            } %>
-        </div>
-      <% end %>
-
-      <p>
-        <%= f.submit "Save", class: "button" %>
-      </p>
-    <% end %>
+    <%= render "regional_ambassador/introductions/form" %>
   </div>
 </div>
