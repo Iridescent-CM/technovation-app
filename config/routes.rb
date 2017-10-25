@@ -117,12 +117,10 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
 
+    resource :introduction, only: [:edit, :update]
+
     resources :participants, only: [:index, :show, :edit, :update]
     resources :participant_sessions, only: [:show, :destroy]
-
-    resources :unmatched_students, only: :index
-    resources :unmatched_mentors, only: :index
-    resources :unmatched_teams, only: :index
 
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]

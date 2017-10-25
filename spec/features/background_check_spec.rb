@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.feature "background checks" do
   %i{mentor regional_ambassador}.each do |account|
     scenario "Complete a #{account} background check", :vcr do
+      if account == :regional_ambassador
+        skip "Awaiting updates on RA features"
+      end
+
       a = FactoryGirl.create(account, :geocoded)
       a.background_check.destroy
       sign_in(a)

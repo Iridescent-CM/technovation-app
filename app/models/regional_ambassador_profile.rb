@@ -22,6 +22,12 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
+  has_many :regional_links, dependent: :destroy
+
+  accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
+    attrs.values.any?(&:blank?)
+  }, allow_destroy: true
+
   delegate :submitted?,
            :candidate_id,
            :report_id,

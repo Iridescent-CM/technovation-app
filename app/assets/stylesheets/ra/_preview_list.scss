@@ -1,0 +1,43 @@
+.preview-list {
+  padding: 0;
+  box-shadow: none;
+
+  .content-heading {
+    padding: 0.5rem;
+    box-shadow: $shadow-btm;
+
+    span {
+      color: $mulberry;
+      font-size: 0.9rem;
+    }
+  }
+
+  p {
+    padding: 1rem;
+  }
+
+  .previews {
+    padding: 0 1rem;
+
+
+    [class^=grid__col-] {
+      font-size: 0.9rem;
+      overflow: ellipsis;
+      margin: 0.5rem 0;
+
+      .detail {
+        display: block;
+      }
+    }
+  }
+
+  .preview-list-footer {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    box-shadow: $shadow-top;
+
+    .footer-action {
+      float: right;
+    }
+  }
+}

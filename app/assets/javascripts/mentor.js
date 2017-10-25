@@ -3,25 +3,10 @@
 
 //= require forms
 //= require search
+//= require char-counter
+
 
 document.addEventListener("turbolinks:load", function() {
-  $("[data-keep-count-of]").each(function() {
-    var $source = $($(this).data('keep-count-of')),
-        $that = $(this);
-
-    $source.on("input", function() {
-      var numChars = $(this).val().length,
-          counted = "character";
-
-      $that.find('span:first-child').text(numChars);
-
-      if (numChars !== 1)
-        counted += "s";
-
-      $that.find('span:last-child').text(counted);
-    });
-  });
-
   $("#background_check_candidate_ssn").mask("999-99-9999?");
 
   $(".show-hide").on("click", "a", function(e) {

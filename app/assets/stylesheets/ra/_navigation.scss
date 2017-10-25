@@ -1,0 +1,17 @@
+.navigation {
+  padding: 0 1rem;
+
+  .logo {
+    height: 35px;
+    width: 35px;
+    background: image-url("tc-logo-solo.png") no-repeat;
+  }
+
+  .menu {
+    a {
+      padding: 0.25rem;
+      font-size: 0.9rem;
+      margin: 25px 0 0 1rem;
+    }
+  }
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171019230800) do
+ActiveRecord::Schema.define(version: 20171020135709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,8 +293,18 @@ ActiveRecord::Schema.define(version: 20171019230800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "bio"
+    t.text "intro_summary"
     t.index ["account_id"], name: "index_regional_ambassador_profiles_on_account_id"
     t.index ["status"], name: "index_regional_ambassador_profiles_on_status"
+  end
+
+  create_table "regional_links", force: :cascade do |t|
+    t.bigint "regional_ambassador_profile_id"
+    t.integer "name"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["regional_ambassador_profile_id"], name: "index_regional_links_on_regional_ambassador_profile_id"
   end
 
   create_table "regional_pitch_events", id: :serial, force: :cascade do |t|
@@ -534,6 +544,7 @@ ActiveRecord::Schema.define(version: 20171019230800) do
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"
   add_foreign_key "parental_consents", "student_profiles"
+  add_foreign_key "regional_links", "regional_ambassador_profiles"
   add_foreign_key "regional_pitch_events", "divisions"
   add_foreign_key "regional_pitch_events_teams", "regional_pitch_events"
   add_foreign_key "regional_pitch_events_teams", "teams"

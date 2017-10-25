@@ -29,7 +29,9 @@ RSpec.feature "Consent waivers" do
   scenario "valid token, valid form" do
     mentor = FactoryGirl.create(:mentor)
     mentor.consent_waiver.destroy
+
     sign_in(mentor)
+
     visit mentor_dashboard_path
     click_link "Sign Consent Waiver"
 
