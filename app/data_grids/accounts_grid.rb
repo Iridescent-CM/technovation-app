@@ -26,7 +26,7 @@ class AccountsGrid
   end
 
   column :actions, mandatory: true, html: true do |account|
-    link_to "view", admin_participant_path(account)
+    link_to "view", send("#{current_scope}_participant_path", account)
   end
 
   filter :name do |value|

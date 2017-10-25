@@ -16,7 +16,7 @@ module RegionalAmbassador
     end
 
     def show
-      @participant = Account.in_region(current_ambassador).find(params[:id])
+      @account = Account.in_region(current_ambassador).find(params[:id])
     end
   end
 end

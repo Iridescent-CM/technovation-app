@@ -1,5 +1,24 @@
 module RegionalAmbassador
   class TeamMembershipsController < RegionalAmbassadorController
+    def create
+      team = Team.find(params.fetch(:team_id))
+      account = Account.find(params.fetch(:account_id))
+
+      profile = account.mentor_profile || account.student_profile
+
+      TeamRosterManaging.add(team, profile)
+
+      msg = if team.members.include?(profile)
+              { success: "You have added #{account.full_name} to #{team.name}" }
+            elsif account.student_profile
+              { alert: team.errors[:add_student][0] }
+            else
+              { alert: "An error occurred." }
+            end
+
+      redirect_to regional_ambassador_participant_path(account), msg
+    end
+
     def destroy
       team = Team.find(params.fetch(:id))
       account = Account.find(params.fetch(:account_id))
