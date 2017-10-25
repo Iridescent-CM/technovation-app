@@ -11,6 +11,12 @@
 
     <dt>With parental permission:</dt>
     <dd><%= @permitted_students.count %></dd>
+
+    <dt>Returning students:</dt>
+    <dd><%= @returning_students.count %></dd>
+
+    <dt>New students:</dt>
+    <dd><%= @new_students.count %></dd>
   </dl>
 </div>
 
@@ -23,5 +29,11 @@
 
     <dt>With consent waiver and background check, if required:</dt>
     <dd><%= @cleared_mentors.count %></dd>
+
+    <dt>Returning mentors:</dt>
+    <dd><%= @returning_mentors.count %></dd>
+
+    <dt>New mentors:</dt>
+    <dd><%= @new_mentors.count %></dd>
   </dl>
 </div>
