@@ -98,6 +98,9 @@
 .icon-whatsapp:before {
   content: "\f232";
 }
+.icon-earth:before {
+  content: "\e9ca";
+}
 .icon-green {
   color: $shamrock-mid;
 }
