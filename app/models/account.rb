@@ -229,9 +229,13 @@ class Account < ActiveRecord::Base
   end
 
   def temporary_password?
-    SignupAttempt.temporary_password.where(
-      "lower(email) = ?", email.downcase
-    ).exists?
+    if new_record?
+      SignupAttempt.temporary_password.where(
+        "lower(email) = ?", email.downcase
+      ).exists?
+    else
+      signup_attempt.present? and signup_attempt.temporary_password?
+    end
   end
 
   def type_name(*args)
