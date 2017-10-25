@@ -1,7 +1,12 @@
 module Admin
   class ParticipantsController < AdminController
     def index
-      grid_params = (params[:accounts_grid] ||= {}).merge(admin: true)
+      grid_params = (params[:accounts_grid] ||= {}).merge(
+        admin: true,
+        country: params[:accounts_grid][:country] || [],
+        state_province: params[:accounts_grid][:state_province] || [],
+        season: params[:accounts_grid][:season] || Season.current.year,
+      )
 
       @accounts_grid = AccountsGrid.new(grid_params) do |scope|
         scope.page(params[:page])

@@ -20,6 +20,9 @@ class AccountsGrid
   column :age, order: "accounts.date_of_birth desc"
   column :city
   column :state_province, header: "State"
+  column :country do
+    Carmen::Country.coded(country).name
+  end
 
   column :created_at, header: "Signed up" do
     created_at.strftime("%Y-%m-%d")
@@ -54,7 +57,11 @@ class AccountsGrid
     select: ->(g) {
       CountryStateSelect.countries_collection
     },
-    if: ->(g) { g.admin }
+    multiple: true,
+    if: ->(g) { g.admin } do |values|
+      clauses = values.map { |v| "country = '#{v}'" }
+      where(clauses.join(' OR '))
+    end
 
   filter :state_province,
     :enum,
