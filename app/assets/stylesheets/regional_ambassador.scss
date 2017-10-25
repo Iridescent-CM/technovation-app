@@ -6,6 +6,7 @@
 @import "accordion";
 
 @import "datagrid";
+@import "debugging";
 
 @import "ra/navigation";
 @import "ra/regional_links";
@@ -13,12 +14,4 @@
 .toggle-display-buttons {
   float: right;
   padding: 0 0 1rem;
-}
-
-.debug {
-  margin: 0 0 2rem;
-
-  h6 {
-    margin: 1rem 0 0;
-  }
 }
