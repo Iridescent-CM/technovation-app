@@ -10,13 +10,22 @@
     <dd><%= @students.count %></dd>
 
     <dt>With parental permission:</dt>
-    <dd><%= @permitted_students.count %></dd>
+    <dd>
+      <%= @permitted_students.count %>
+      <%= show_percentage(@permitted_students, @students) %>
+    </dd>
 
     <dt>Returning students:</dt>
-    <dd><%= @returning_students.count %></dd>
+    <dd>
+      <%= @returning_students.count %>
+      <%= show_percentage(@returning_students, @students) %>
+    </dd>
 
     <dt>New students:</dt>
-    <dd><%= @new_students.count %></dd>
+    <dd>
+      <%= @new_students.count %>
+      <%= show_percentage(@new_students, @students) %>
+    </dd>
   </dl>
 </div>
 
@@ -28,12 +37,21 @@
     <dd><%= @mentors.count %></dd>
 
     <dt>With consent waiver and background check, if required:</dt>
-    <dd><%= @cleared_mentors.count %></dd>
+    <dd>
+      <%= @cleared_mentors.count %>
+      <%= show_percentage(@cleared_mentors, @mentors) %>
+    </dd>
 
     <dt>Returning mentors:</dt>
-    <dd><%= @returning_mentors.count %></dd>
+    <dd>
+      <%= @returning_mentors.count %>
+      <%= show_percentage(@returning_mentors, @mentors) %>
+    </dd>
 
     <dt>New mentors:</dt>
-    <dd><%= @new_mentors.count %></dd>
+    <dd>
+      <%= @new_mentors.count %>
+      <%= show_percentage(@new_mentors, @mentors) %>
+    </dd>
   </dl>
 </div>
