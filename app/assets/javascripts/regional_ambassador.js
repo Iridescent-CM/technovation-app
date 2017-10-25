@@ -1,4 +1,5 @@
 //= require application
+//= require cocoon
 //= require char-counter
 
 document.addEventListener("turbolinks:load", function() {
