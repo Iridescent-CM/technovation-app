@@ -21,6 +21,8 @@ gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.5"
 
+gem "cocoon", "~> 1.2"
+
 gem 'sass-rails', "~> 5.0"
 gem 'normalize-rails', "~> 4.1"
 
