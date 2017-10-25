@@ -1,28 +1,22 @@
 module RegionalAmbassador
   class ParticipantsController < RegionalAmbassadorController
     def index
-      @students = StudentProfile.in_region(current_ambassador)
-        .includes(:team_member_invites, :join_requests)
+      grid_params = (params[:accounts_grid] ||= {}).merge(
+        country: current_ambassador.country,
+        state_province: (
+          params[:accounts_grid][:state_province] ||
+            current_ambassador.state_province
+        ),
+        season: params[:accounts_grid][:season] || Season.current.year,
+      )
 
-      @unmatched_students = @students.unmatched
-        .order(updated_at: :desc)
-        .limit(5)
-
-      @mentors = MentorProfile.in_region(current_ambassador)
-        .includes(:mentor_invites, :join_requests)
-
-      @unmatched_mentors = @mentors.unmatched
-        .order(updated_at: :desc)
-        .limit(5)
+      @accounts_grid = AccountsGrid.new(grid_params) do |scope|
+        scope.page(params[:page])
+      end
     end
 
     def show
       @participant = Account.in_region(current_ambassador).find(params[:id])
-    end
-
-    private
-    def accounts_grid_params
-      params.fetch(:accounts_grid) { {} }.merge(ambassador: current_ambassador)
     end
   end
 end

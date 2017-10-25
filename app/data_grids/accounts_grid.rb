@@ -22,7 +22,7 @@ class AccountsGrid
   column :state_province, header: "State"
 
   column :created_at, header: "Signed up" do
-    created_at.strftime("%b %e")
+    created_at.strftime("%Y-%m-%d")
   end
 
   column :actions, html: true do |account|
@@ -41,6 +41,13 @@ class AccountsGrid
     where("accounts.email ilike '%#{value}%'")
   end
 
+  filter :season,
+    :enum,
+    select: (2015..Season.current.year).to_a.reverse,
+    multiple: true do |value|
+    by_season(value)
+  end
+
   filter :country,
     :enum,
     header: "Country",
@@ -52,17 +59,29 @@ class AccountsGrid
   filter :state_province,
     :enum,
     header: "State / Province",
-    select: ->(g) {
-      CS.states(g.country).map { |p| [p[1], p[0]] }.compact
-    },
-    if: ->(g) { g.country && CS.states(g.country).any? }
+    select: ->(g) { CS.get(g.country).map { |s| [s[1], s[0]] } },
+    multiple: true,
+    if: ->(g) {
+      g.country && CS.get(g.country).any?
+    } do |values, scope, grid|
+      clauses = values.map { |v| "lower(state_province) like '#{v.downcase}%'" }
+
+      scope.where(country: grid.country)
+        .where(clauses.join(' OR '))
+    end
 
   filter :city,
     :enum,
-    select: ->(g) {
-      CS.cities(g.state_province, g.country)
-    },
-    if: ->(g) { g.state_province && CS.cities(g.state_province).any? }
+    select: ->(g) { CS.get(g.country, g.state_province[0]) },
+    multiple: true,
+    if: ->(g) {
+      g.state_province.one? && CS.get(g.country, g.state_province[0]).any?
+    } do |values, scope, grid|
+      clauses = values.map { |v| "city = '#{v}'" }
+
+      scope.where(state_province: grid.state_province[0])
+        .where(clauses.join(' OR '))
+    end
 
   filter :scope_names,
     :enum,
@@ -73,7 +92,7 @@ class AccountsGrid
       ['Judges', 'judge'],
       ['Regional Ambassadors', 'regional_ambassador'],
     ],
-    checkboxes: true do |values|
+    multiple: true do |values|
       clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
       where(clauses.join(' AND '))
     end
