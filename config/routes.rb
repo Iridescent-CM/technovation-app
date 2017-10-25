@@ -124,7 +124,7 @@ Rails.application.routes.draw do
 
     resources :teams, only: [:show, :index]
     resources :team_submissions, only: [:index, :show]
-    resources :team_memberships, only: :destroy
+    resources :team_memberships, only: [:create, :destroy]
 
     resources :exports, only: :create
 

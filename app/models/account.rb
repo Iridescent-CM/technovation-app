@@ -286,6 +286,16 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def current_teams
+    if student_profile
+      student_profile.current_teams
+    elsif mentor_profile
+      mentor_profile.current_teams
+    else
+      NullTeams.new
+    end
+  end
+
   def team_region_division_names
     team_keys = teams.current.map(&:cache_key).join('/')
 

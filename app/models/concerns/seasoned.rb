@@ -10,8 +10,12 @@ module Seasoned
       where.not("'#{Season.current.year}' = ANY (#{table_name}.seasons)")
     }
 
-    scope :by_season, ->(year) {
-      where("'#{year}' = ANY (#{table_name}.seasons)")
+    scope :by_season, ->(*years) {
+      clauses = years.flatten.map do |year|
+        "'#{year}' = ANY (#{table_name}.seasons)"
+      end
+
+      where(clauses.join(' AND '))
     }
 
     def seasons

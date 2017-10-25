@@ -1,33 +1,24 @@
+<% filters_open = params[:accounts_grid].values.any? %>
+
 <%= render 'regional_ambassador/participants/sub_menu' %>
 
-<div class="grid">
-  <div class="grid__col-sm-6">
-    <%= render "regional_ambassador/preview_list",
-      model: "Student",
-      condition: "without a team",
-      view_all_path: regional_ambassador_unmatched_students_path,
-      image_method_name: :profile_image_url,
-      details: [
-        :full_name,
-        :email,
-        :address_details,
-      ],
-      collection: @unmatched_students,
-      master: @students %>
-  </div>
+<div class="panel">
+  <% if false %>
+    <div class="toggle-display-buttons">
+      <%= link_to "Show filters", "#",
+        class: "accordion-toggle button small #{'hidden' if filters_open}",
+        data: { accordion: ".datagrid-form" } %>
 
-  <div class="grid__col-sm-6">
-    <%= render "regional_ambassador/preview_list",
-      model: "Mentor",
-      condition: "without a team",
-      view_all_path: regional_ambassador_unmatched_mentors_path,
-      image_method_name: :profile_image_url,
-      details: [
-        :full_name,
-        :email,
-        :address_details,
-      ],
-      collection: @unmatched_mentors,
-      master: @mentors %>
-  </div>
+      <%= link_to "Hide filters", "#",
+        class: "accordion-toggle button small #{'hidden' unless filters_open}",
+        data: { accordion: ".datagrid-form" } %>
+    </div>
+  <% end %>
+
+  <%= datagrid_form_for @accounts_grid,
+    html: { class: "datagrid-form #{'open' if filters_open}" },
+    url: regional_ambassador_participants_path %>
+
+  <%= datagrid_table(@accounts_grid) %>
+  <%= will_paginate @accounts_grid.assets %>
 </div>

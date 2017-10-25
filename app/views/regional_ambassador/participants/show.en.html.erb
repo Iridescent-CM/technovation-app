@@ -1,5 +1,59 @@
+<%= render 'regional_ambassador/participants/sub_menu' %>
+
 <% if false %>
   <%= link_to "Login as #{@participant.full_name}",
     regional_ambassador_participant_session_path(@participant),
     data: { turbolinks: 'false' } %>
 <% end %>
+
+<%= render 'profiles/privileged_show', account: @account %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 grid__col--bleed-x">
+    <div class="panel">
+      <% if @account.student_profile %>
+        <%= render 'admin/participants/student_debugging',
+          profile: @account.student_profile %>
+      <% end %>
+
+      <% if @account.regional_ambassador_profile %>
+        <%= render 'admin/participants/ra_debugging',
+          profile: @account.regional_ambassador_profile %>
+      <% end %>
+
+      <% if @account.judge_profile %>
+        <%= render 'admin/participants/judge_debugging',
+          profile: @account.judge_profile %>
+      <% end %>
+
+      <% if @account.mentor_profile %>
+        <%= render 'admin/participants/mentor_debugging',
+          profile: @account.mentor_profile %>
+      <% end %>
+    </div>
+
+    <div class="panel">
+      <% if @account.mentor_profile || @account.student_profile %>
+        <h4>
+          <%= t("views.student.mentors.show.teams",
+                name: @account.first_name) %>
+        </h4>
+
+        <% if @account.current_teams.any? %>
+          <ul class="reset">
+            <%= render partial: 'student/mentors/team_preview',
+              collection: @account.current_teams,
+              locals: {
+                profile: @account.mentor_profile || @account.student_profile
+              } %>
+          </ul>
+        <% else %>
+          <p>
+            <%= t("views.student.mentors.show.no_teams",
+                  name: @account.first_name) %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

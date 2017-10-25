@@ -14,7 +14,8 @@
         <% if current_mentor.is_an_ambassador? %>
           <small>
             <%= link_to "Switch to RA mode",
-              regional_ambassador_dashboard_path %>
+              regional_ambassador_dashboard_path,
+              data: { turbolinks: false } %>
           </small>
         <% end %>
       </h1>

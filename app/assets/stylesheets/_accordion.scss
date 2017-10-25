@@ -1,13 +1,10 @@
 .accordion {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 1s;
+  transition: none;
 
   &.open {
+    transition: 1s max-height;
     max-height: 1000px;
   }
-}
-
-.accordion-open {
-  display: none;
 }

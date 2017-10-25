@@ -1,4 +1,4 @@
-<div class="student-debug">
+<div class="debug student-debug">
   <h3>Student Profile debugging info</h3>
 
   <p>
@@ -14,27 +14,23 @@
          profile.os_version].compact.join(' - ') %>
   </p>
 
-  <% if not profile.team.present? and profile.onboarded? %>
-    <%= form_tag(admin_team_memberships_path) do %>
+  <% if not profile.team.present? %>
+    <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
       <%= hidden_field_tag :account_id, profile.account_id %>
+
+      <h6>Add <%= profile.full_name %> to a team</h6>
+
       <p>
-        <strong> Add this student to a team </strong> <br>
         <%= select_tag "team_id",
             options_from_collection_for_select(Team.current, "id", "name"),
-            include_blank: true,
+            prompt: "Select a team",
             required: true,
             class: "chosen" %>
-        <%= submit_tag 'Add', class: "appy-button" %>
+      </p>
+
+      <p>
+        <%= submit_tag 'Add', class: "button" %>
       </p>
     <% end %>
-  <% elsif profile.team.present? %>
-    <p>
-      This student is already on a team.
-    </p>
-  <% elsif not profile.onboarded? %>
-    <p>
-      This student cannot be added to a team until
-      they get full access to the platform.
-    </p>
   <% end %>
 </div>

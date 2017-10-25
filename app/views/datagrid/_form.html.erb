@@ -8,6 +8,7 @@
 
   <div class="datagrid-actions">
     <%= f.submit I18n.t("datagrid.form.search").html_safe, class: "button" %>
-    <%= link_to I18n.t('datagrid.form.reset').html_safe, url_for(grid.to_param => {}) %>
+    <%= link_to I18n.t('datagrid.form.reset').html_safe,
+      url_for(grid.to_param => {}) %>
   </div>
 <% end -%>

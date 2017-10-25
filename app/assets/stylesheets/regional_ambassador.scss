@@ -3,6 +3,43 @@
 @import "dashboards";
 @import "flags";
 @import "tables";
+@import "accordion";
 
 @import "ra/navigation";
 @import "ra/regional_links";
+
+.filter {
+  .chosen-container {
+    margin: 0 0 1rem;
+  }
+}
+
+.datagrid-form {
+  clear: both;
+  &.open {
+    padding: 0 0 2rem;
+  }
+}
+
+.datagrid-filter {
+  float: left;
+  width: 40%;
+  margin-right: 5%;
+}
+
+.datagrid-actions {
+  clear: both;
+}
+
+.toggle-display-buttons {
+  float: right;
+  padding: 0 0 1rem;
+}
+
+.debug {
+  margin: 0 0 2rem;
+
+  h6 {
+    margin: 1rem 0 0;
+  }
+}

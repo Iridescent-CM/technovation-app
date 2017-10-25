@@ -5,7 +5,9 @@
         <%= t("views.application.regional_ambassador_dashboard") %>
 
         <small>
-          <%= link_to "Switch to Mentor Mode", mentor_dashboard_path %>
+          <%= link_to "Switch to Mentor Mode",
+            mentor_dashboard_path,
+            data: { turbolinks: false } %>
         </small>
       </h1>
     </div>
