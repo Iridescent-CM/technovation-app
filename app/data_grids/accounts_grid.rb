@@ -13,9 +13,9 @@ class AccountsGrid
       .order("accounts.created_at desc")
   end
 
-  column :first_name
-  column :last_name
-  column :email
+  column :first_name, mandatory: true
+  column :last_name, mandatory: true
+  column :email, mandatory: true
 
   column :age, order: "accounts.date_of_birth desc"
   column :city
@@ -25,7 +25,7 @@ class AccountsGrid
     created_at.strftime("%Y-%m-%d")
   end
 
-  column :actions, html: true do |account|
+  column :actions, mandatory: true, html: true do |account|
     link_to "view", admin_participant_path(account)
   end
 
@@ -96,4 +96,6 @@ class AccountsGrid
       clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
       where(clauses.join(' AND '))
     end
+
+  column_names_filter(header: "More columns", multiple: true)
 end
