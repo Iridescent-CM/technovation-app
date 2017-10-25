@@ -1,0 +1,22 @@
+.regional-links {
+  li {
+    max-width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.regional_ambassador_profile_regional_links_value {
+  padding-right: 1rem;
+}
+
+.destroyable-link--destroy {
+  padding: 2rem 0.5rem;
+  opacity: 0.5;
+  transition: 0.2s opacity;
+
+  &:hover {
+    opacity: 1;
+  }
+}

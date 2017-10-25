@@ -1,0 +1,50 @@
+.chart-participants {
+  list-style: none;
+  position: relative;
+  width: 150px;
+  height: 75px;
+  overflow: hidden;
+  margin: 1rem auto;
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: inherit;
+    height: inherit;
+    border: 15px solid rgba(211,211,211,0.3);
+    border-bottom: none;
+    border-top-left-radius: 400px;
+    border-top-right-radius: 400px;
+  }
+
+  li {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border: 15px solid;
+    border-top: none;
+    border-bottom-left-radius: 400px;
+    border-bottom-right-radius: 400px;
+    transform-origin: 50% 0;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+
+    animation-fill-mode: forwards;
+    animation-duration: .4s;
+    animation-timing-function: linear;
+
+    &:nth-child(1) {
+      z-index: 4;
+      border-width: 16px;
+      border-color: $shamrock;
+    }
+
+    &:nth-child(2) {
+      z-index: 3;
+      border-color: $mulberry;
+      animation-delay: 0.4s;
+    }
+  }
+}
