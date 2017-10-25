@@ -8,15 +8,15 @@ class SignupsController < ApplicationController
         (attempt = SignupAttempt.find_by(
           admin_permission_token: params[:admin_permission_token]
         ))
-      cookies[:signup_token] = attempt.signup_token
-      cookies[:admin_permission_token] = attempt.admin_permission_token
+      set_cookie(:signup_token, attempt.signup_token)
+      set_cookie(:admin_permission_token, attempt.admin_permission_token)
     end
 
     if attempt.present? and
         attempt.account.present? and
           attempt.account.regional_ambassador_profile.present?
       redirect_to regional_ambassador_signup_path
-    elsif not cookies[:signup_token].present?
+    elsif not !!get_cookie(:signup_token)
       redirect_to root_path
     end
   end
@@ -27,7 +27,7 @@ class SignupsController < ApplicationController
   end
 
   def admin_permission?
-    !!cookies[:admin_permission_token]
+    !!get_cookie(:admin_permission_token)
     # TODO: check token validity
   end
 end

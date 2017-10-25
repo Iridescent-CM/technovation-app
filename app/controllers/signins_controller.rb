@@ -12,7 +12,7 @@ class SigninsController < ApplicationController
     ).first
 
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
-      SignIn.(@signin, self)
+      SignIn.(@signin, self, permanent: params[:remember_me] == "1")
     else
       @signin = Account.new
       flash.now[:error] = t('controllers.signins.create.error')
@@ -21,8 +21,8 @@ class SigninsController < ApplicationController
   end
 
   def destroy
-    cookies.delete(:auth_token)
-    cookies.delete(:session_token)
+    remove_cookie(:auth_token)
+    remove_cookie(:session_token)
     redirect_to root_path, success: t('controllers.signins.destroy.success')
   end
 

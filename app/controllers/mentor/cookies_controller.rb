@@ -1,8 +1,13 @@
 module Mentor
   class CookiesController < MentorController
     def create
-      cookies.permanent[params.fetch(:name)] = params.fetch(:value)
-      head 200
+      set_cookie(
+        params.fetch(:name),
+        params.fetch(:value),
+        permanent: true
+      )
+
+      render json: {}
     end
   end
 end

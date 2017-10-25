@@ -6,8 +6,8 @@ class MentorController < ApplicationController
   helper_method :current_mentor, :current_profile
 
   before_action -> {
-    if "mentor" != cookies[:last_profile_used]
-      cookies[:last_profile_used] = "mentor"
+    if "mentor" != get_cookie(:last_profile_used)
+      set_cookie(:last_profile_used, "mentor")
     end
   }
 

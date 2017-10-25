@@ -3,7 +3,7 @@ module Application
     def show
       if current_account.authenticated?
         redirect_to(
-          cookies.delete(:redirected_from) ||
+          remove_cookie(:redirected_from) ||
             last_used_scope_dashboard_path ||
               user_scope_dashbaord_path
         )
@@ -14,7 +14,7 @@ module Application
 
     private
     def last_used_scope_dashboard_path
-      last_scope_used = cookies.delete(:last_profile_used)
+      last_scope_used = remove_cookie(:last_profile_used)
       !!last_scope_used && public_send("#{last_scope_used}_dashboard_path")
     end
 

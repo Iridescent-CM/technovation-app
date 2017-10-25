@@ -8,6 +8,11 @@
       <%= f.input :email %>
       <%= f.input :password %>
 
+      <p>
+        <%= check_box_tag :remember_me %>
+        <%= label_tag nil, "Remember me for future visits", for: :remember_me %>
+      </p>
+
       <%= f.button :submit,
         t('views.signins.form.signin'),
         class: "button" %>

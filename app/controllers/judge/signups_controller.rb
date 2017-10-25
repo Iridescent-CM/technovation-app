@@ -3,7 +3,7 @@ module Judge
     before_action :require_unauthenticated
 
     def new
-      if token = cookies[:signup_token]
+      if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:judge, token)
       else
         redirect_to root_path
@@ -43,7 +43,7 @@ module Judge
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
+          attempt = SignupAttempt.find_by!(signup_token: get_cookie(:signup_token))
         tapped[:account_attributes][:email] = attempt.email
 
         unless attempt.temporary_password?

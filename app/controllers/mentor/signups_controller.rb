@@ -5,7 +5,7 @@ module Mentor
     def new
       @expertises ||= Expertise.all
 
-      if token = cookies[:signup_token]
+      if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:mentor, token)
       else
         redirect_to root_path
@@ -49,7 +49,7 @@ module Mentor
         ],
       ).tap do |tapped|
         attempt = SignupAttempt.find_by!(
-          signup_token: cookies.fetch(:signup_token)
+          signup_token: get_cookie(:signup_token)
         )
 
         tapped[:account_attributes][:email] = attempt.email

@@ -6,7 +6,12 @@ class AdminController < ApplicationController
   helper_method :current_admin
 
   before_action -> {
-    cookies.permanent[:export_email] ||= ENV.fetch("ADMIN_EMAIL")
+    set_cookie(
+      :export_email,
+      get_cookie(:export_email) || ENV.fetch("ADMIN_EMAIL"),
+      permanent: true
+    )
+
     params.permit!
   }
 

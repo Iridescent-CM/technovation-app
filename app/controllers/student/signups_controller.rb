@@ -15,12 +15,12 @@ module Student
       end
 
       if !!attempt
-        cookies[:signup_token] = attempt.signup_token
+        set_cookie(:signup_token, attempt.signup_token)
       end
     }, only: :new
 
     def new
-      if token = cookies[:signup_token]
+      if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:student, token)
       else
         redirect_to root_path
@@ -60,7 +60,7 @@ module Student
         ],
       ).tap do |tapped|
         attempt = SignupAttempt.find_by!(
-          signup_token: cookies.fetch(:signup_token)
+          signup_token: get_cookie(:signup_token)
         )
 
         tapped[:account_attributes][:email] = attempt.email

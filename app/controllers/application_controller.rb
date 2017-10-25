@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
     :current_team,
     :current_scope,
     :current_session,
-    :can_generate_certificate?
+    :can_generate_certificate?,
+    :get_cookie
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
@@ -22,27 +23,39 @@ class ApplicationController < ActionController::Base
     redirect_to timeout_error_path(back: request.fullpath)
   end
 
-  def set_cookie(key, value)
-    cookies[key] = value
+  def set_cookie(key, value, passed_options  = {})
+    default_options = {
+      permanent: false,
+    }
+
+    options = default_options.merge(passed_options)
+
+    if options[:permanent]
+      cookies.permanent.signed[key] = value
+    else
+      cookies.signed[key] = value
+    end
   end
 
   def get_cookie(key)
-    cookies.fetch(key) { false }
+    cookies.signed[key] || false
   end
 
   def remove_cookie(key)
-    cookies.delete(key) or false
+    value = get_cookie(key)
+    set_cookie(key, nil)
+    value
   end
 
   def current_account
     @current_account ||= Account.find_by(
-      auth_token: cookies.fetch(:auth_token) { "" }
+      auth_token: get_cookie(:auth_token)
     ) || NullAuth.new
   end
 
   def current_session
     @current_session ||= Account.find_by(
-      session_token: cookies.fetch(:session_token) { "" }
+      session_token: get_cookie(:session_token)
     ) || NullAuth.new
   end
 
@@ -57,7 +70,7 @@ class ApplicationController < ActionController::Base
 
   private
   def save_redirected_path
-    cookies[:redirected_from] = request.fullpath
+    set_cookie(:redirected_from, request.fullpath)
   end
 
   def require_unauthenticated

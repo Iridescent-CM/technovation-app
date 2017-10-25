@@ -1,6 +1,6 @@
 <% if SeasonToggles.show_survey_link_modal?(
     current_scope,
-    cookies[:last_seen_survey_modal]
+    get_cookie(:last_seen_survey_modal)
 ) %>
   <%= content_tag :div,
     class: "modal",

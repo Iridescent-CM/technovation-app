@@ -2,7 +2,7 @@ module Admin
   class ExportsController < AdminController
     def create
       ExportJob.perform_later(current_admin, params.to_unsafe_h)
-      cookies.permanent[:export_email] = params[:export_email]
+      set_cookie(:export_email, params[:export_email], permanent: true)
       redirect_back fallback_location: admin_dashboard_path,
         success: t("controllers.exports.create.success")
     end

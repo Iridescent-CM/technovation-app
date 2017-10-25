@@ -21,7 +21,7 @@
   <%= form_tag admin_exports_path(params.merge(class: "regional_ambassador")) do %>
     <%= button_tag "Email CSV Report to:", class: "appy-button" %>
     <%= text_field_tag :export_email,
-      cookies[:export_email],
+      get_cookie(:export_email),
       class: "export-to-email" %>
   <% end %>
 </div>

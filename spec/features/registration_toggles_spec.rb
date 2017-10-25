@@ -33,8 +33,6 @@ RSpec.feature "Toggle available user types for registration" do
 
       set_signup_and_permission_token("user@example.com")
 
-      visit signup_path
-
       href = public_send("#{scope}_signup_path")
       links = page.all(:css, "a[href='#{href}']")
 

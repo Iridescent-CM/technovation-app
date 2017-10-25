@@ -115,7 +115,7 @@
         <%= label_tag(:type_detail, "Detail") %>
       </span>
       <%= button_tag "Email CSV Summary Report to:", class: "appy-button" %>
-      <%= email_field_tag :export_email, cookies[:export_email], class: "export-to-email" %>
+      <%= email_field_tag :export_email, get_cookie(:export_email), class: "export-to-email" %>
     <% end %>
   </div>
 </div>

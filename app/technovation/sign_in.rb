@@ -3,9 +3,15 @@ module SignIn
     signin_options = {
       message: I18n.translate('controllers.signins.create.success'),
       redirect_to: after_signin_path(signin, context),
+      permanent: false,
     }.merge(options)
 
-    context.set_cookie(:auth_token, signin.auth_token)
+    context.set_cookie(
+      :auth_token,
+      signin.auth_token,
+      permanent: options[:permanent]
+    )
+
     context.remove_cookie(:signup_token)
     context.remove_cookie(:admin_permission_token)
 

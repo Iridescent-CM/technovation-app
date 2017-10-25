@@ -1,7 +1,7 @@
 module RegionalAmbassador
   class SignupsController < ApplicationController
     def new
-      if token = cookies[:signup_token]
+      if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:regional_ambassador, token)
       else
         redirect_to root_path
@@ -45,7 +45,7 @@ module RegionalAmbassador
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(signup_token: cookies.fetch(:signup_token))
+        attempt = SignupAttempt.find_by!(signup_token: get_cookie(:signup_token))
         tapped[:account_attributes][:email] = attempt.email
 
         unless attempt.temporary_password?

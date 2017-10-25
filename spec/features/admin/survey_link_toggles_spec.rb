@@ -10,7 +10,7 @@ RSpec.feature "Set survey links and link text" do
         SeasonToggles.set_survey_link(scope, "link text", "google.com")
       end
 
-      scenario "with modal" do
+      scenario "when they have not seen it yet" do
         sign_in(user)
 
         expect(current_path).to eq(public_send("#{scope}_dashboard_path"))
@@ -21,10 +21,9 @@ RSpec.feature "Set survey links and link text" do
         end
       end
 
-      scenario "without modal" do
-        page.driver.browser.set_cookie(
-          "last_seen_survey_modal=#{SeasonToggles.survey_link(scope, "changed_at")}"
-        )
+      scenario "when they have seen it" do
+        allow(SeasonToggles).to receive(:show_survey_link_modal?)
+          .and_return(false)
 
         sign_in(user)
 
