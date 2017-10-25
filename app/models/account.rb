@@ -14,7 +14,8 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_password,
     :skip_existing_password,
-    :confirm_sentence
+    :confirm_sentence,
+    :admin_making_changes
 
   has_one :admin_profile, dependent: :destroy
   has_one :student_profile, dependent: :destroy

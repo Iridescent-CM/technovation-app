@@ -3,76 +3,86 @@
   editing ||= false
   admin ||= false
   edit_path ||= ""
+  grid_col ||= "sm-8"
 %>
 
 <% provide :title, title %>
 
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8 panel">
+  <div class="grid__col-<%= grid_col %>">
     <div class="grid__cell">
-      <% if params[:review_before] || params[:back] %>
-        <div class="grid__cell">
-          <%= link_to params[:back] ||= :back, class: "button secondary" do %>
-            <span class="back-btn"></span>
-            <%= params[:back_title] ||= "Search results" %>
-          <% end %>
-        </div>
-      <% end %>
-
-      <h3><%= title %></h3>
-
-      <%= image_tag account.profile_image_url,
-        class: "thumbnail-lg grid__cell-img" %>
-
-      <% if admin %>
-        <%= link_to "Login as #{account.full_name}",
-          admin_participant_session_path(account) %>
-      <% end %>
-
-      <dl>
-        <dt><%= t('models.account.full_name') %></dt>
-        <dd><%= account.full_name %></dd>
-
-        <dt><%= t('models.account.email') %></dt>
-        <dd><%= mail_to account.email %></dd>
-
-        <dt><%= t('models.account.age') %></dt>
-        <dd><%= account.age %></dd>
-
-        <% unless account.student_profile.present? %>
-          <dt><%= t('models.account.gender') %></dt>
-          <dd><%= account.gender %></dd>
+      <div class="panel">
+        <% if params[:review_before] || params[:back] %>
+          <div class="grid__cell">
+            <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+              <span class="back-btn"></span>
+              <%= params[:back_title] ||= "Search results" %>
+            <% end %>
+          </div>
         <% end %>
 
-        <dt><%= t('models.account.address') %></dt>
-        <dd>
-          <%= account.address_details %>
-          <% if admin %>
-            <p>
-              <%= link_to "Edit location", location_edit_path %>
-            </p>
+        <h3><%= title %></h3>
+
+        <%= image_tag account.profile_image_url,
+          class: "thumbnail-lg grid__cell-img" %>
+
+        <% if admin %>
+          <p>
+            <%= link_to "Login as #{account.full_name}",
+              admin_participant_session_path(account),
+              class: "button secondary small" %>
+          </p>
+        <% end %>
+
+        <dl>
+          <dt><%= t('models.account.full_name') %></dt>
+          <dd><%= account.full_name %></dd>
+
+          <dt><%= t('models.account.email') %></dt>
+          <dd><%= mail_to account.email %></dd>
+
+          <dt><%= t('models.account.age') %></dt>
+          <dd><%= account.age %></dd>
+
+          <% unless account.student_profile.present? %>
+            <dt><%= t('models.account.gender') %></dt>
+            <dd><%= account.gender %></dd>
           <% end %>
-        </dd>
 
-        <%= render "#{account.scope_name}/profiles/profile",
-          edit_path: edit_path,
-          editing: editing,
-          account: account.public_send("#{account.scope_name}_profile") %>
-
-        <% if account.regional_ambassador_profile || account.mentor_profile %>
-          <dt><%= t('models.profile.bio') %></dt>
-
+          <dt><%= t('models.account.address') %></dt>
           <dd>
-            <%= simple_format (
-              account.regional_ambassador_profile || account.mentor_profile
-            ).bio %>
+            <%= account.address_details %>
+            <% if admin %>
+              <p>
+                <%= link_to "Edit location",
+                  location_edit_path,
+                  class: "button secondary small" %>
+              </p>
+            <% end %>
           </dd>
-        <% end %>
-      </dl>
 
-      <% if editing %>
-        <%= link_to 'Edit', edit_path %>
-      <% end %>
+          <%= render "#{account.scope_name}/profiles/profile",
+            edit_path: edit_path,
+            editing: editing,
+            account: account.public_send("#{account.scope_name}_profile") %>
+
+          <% if account.regional_ambassador_profile || account.mentor_profile %>
+            <dt><%= t('models.profile.bio') %></dt>
+
+            <dd>
+              <%= simple_format (
+                account.regional_ambassador_profile || account.mentor_profile
+              ).bio %>
+            </dd>
+          <% end %>
+        </dl>
+
+        <% if editing %>
+          <%= link_to 'Edit participant',
+            edit_path,
+            class: "button secondary small" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,80 +1,89 @@
 <%= render 'profiles/privileged_show',
+  grid_col: "auto",
   admin: true,
   editing: true,
   account: @account,
+  title: "Viewing #{@account.scope_name.titleize} — #{@account.full_name}",
   location_edit_path: edit_admin_profile_location_path(@account),
   edit_path: edit_admin_participant_path(@account) %>
 
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-auto grid__col--bleed-x">
+    <div class="panel">
+      <% if @account.student_profile %>
+        <%= render 'admin/participants/student_debugging',
+          profile: @account.student_profile %>
+      <% end %>
 
-<%= simple_form_for @account,
-  url: admin_participant_path(@account),
-  html: { data: { remote: true } } do |f| %>
-  <%= f.input :location_confirmed, as: :boolean %>
-<% end %>
+      <% if @account.regional_ambassador_profile %>
+        <%= render 'admin/participants/ra_debugging',
+          profile: @account.regional_ambassador_profile %>
+      <% end %>
 
-<% if @account.student_profile %>
-  <%= render 'admin/participants/student_debugging',
-    profile: @account.student_profile %>
-<% end %>
+      <% if @account.judge_profile %>
+        <%= render 'admin/participants/judge_debugging',
+          profile: @account.judge_profile %>
+      <% end %>
 
-<% if @account.regional_ambassador_profile %>
-  <%= render 'admin/participants/ra_debugging',
-    profile: @account.regional_ambassador_profile %>
-<% end %>
+      <% if @account.mentor_profile %>
+        <%= render 'admin/participants/mentor_debugging',
+          profile: @account.mentor_profile %>
+      <% end %>
 
-<% if @account.judge_profile %>
-  <%= render 'admin/participants/judge_debugging',
-    profile: @account.judge_profile %>
-<% end %>
+      <%= simple_form_for @account,
+        url: admin_participant_path(@account),
+        html: { data: { remote: true } } do |f| %>
+        <%= f.input :location_confirmed, as: :boolean %>
+      <% end %>
+    </div>
 
-<% if @account.mentor_profile %>
-  <%= render 'admin/participants/mentor_debugging',
-    profile: @account.mentor_profile %>
-<% end %>
-
-<% if @account.mentor_profile || @account.student_profile %>
-  <div class="flex-row">
-    <div class="flex-col-sm-12">
-      <h3>
-        <%= t("views.student.mentors.show.teams",
-              name: @account.first_name) %>
-      </h3>
-
-      <% if @account.teams.current.any? %>
-        <ul>
-          <%= render partial: 'student/mentors/team_preview',
-            collection: @account.teams.current,
-            locals: {
-              admin: true,
-              profile: @account.mentor_profile || @account.student_profile
-            } %>
-        </ul>
-      <% else %>
-        <p>
-          <%= t("views.student.mentors.show.no_teams",
+    <div class="panel">
+      <% if @account.mentor_profile || @account.student_profile %>
+        <h6>
+          <%= t("views.student.mentors.show.teams",
                 name: @account.first_name) %>
-        </p>
+        </h6>
+
+        <% if @account.current_teams.any? %>
+          <ul class="reset">
+            <%= render partial: 'student/mentors/team_preview',
+              collection: @account.current_teams,
+              locals: {
+                admin: true,
+                profile: @account.mentor_profile || @account.student_profile
+              } %>
+          </ul>
+        <% else %>
+          <p>
+            <%= t("views.student.mentors.show.no_teams",
+                  name: @account.first_name) %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="panel">
+      <% if @account.mentor_profile %>
+        <%= link_to(
+          "Drop #{@account.first_name} out of Season #{Season.current.year}",
+          admin_mentor_drop_out_path(id: @account.mentor_profile.id),
+          class: "button danger",
+          data: {
+            method: :post,
+            confirm: "Are you sure you want to DROP #{@account.first_name} OUT from Season #{Season.current.year}?",
+          }
+        ) %>
+      <% end %>
+
+      <% if @account.student_profile and @account.parental_consent.nil? %>
+        <%= link_to "Indicate that a paper parental consent on file",
+          admin_paper_parental_consent_path(id: @account.student_profile.id),
+          class: "button secondary",
+          data: {
+            method: :post,
+            confirm: "You are marking #{@account.full_name} as having a paper parental consent on file.",
+          } %>
       <% end %>
     </div>
   </div>
-<% end %>
-
-<% if @account.mentor_profile %>
-  <%= link_to "Drop #{@account.first_name} out of Season #{Season.current.year}",
-    admin_mentor_drop_out_path(id: @account.mentor_profile.id),
-    class: "appy-button",
-    data: {
-      method: :post,
-      confirm: "Are you sure you want to DROP #{@account.first_name} OUT from Season #{Season.current.year}?",
-    } %>
-<% end %>
-
-<% if @account.student_profile and @account.parental_consent.nil? %>
-  <%= link_to "Paper parental consent on file",
-    admin_paper_parental_consent_path(id: @account.student_profile.id),
-    class: "appy-button",
-    data: {
-      method: :post,
-      confirm: "You are marking #{@account.full_name} as having a paper parental consent on file.",
-    } %>
-<% end %>
+</div>

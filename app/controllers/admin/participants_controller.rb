@@ -68,6 +68,7 @@ module Admin
             .profile_params,
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
+        tapped[:admin_making_changes] = true
       end
     end
   end

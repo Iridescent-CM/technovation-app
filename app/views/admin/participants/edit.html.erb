@@ -1,5 +1,44 @@
-<%= render 'profiles/form',
-  admin: true,
-  title: "Edit your profile",
-  account: @profile,
-  url: admin_profile_path(@profile) %>
+<div class="panel">
+  <%= form_with model: @account,
+    url: admin_participant_path(@account),
+    local: true do |f| %>
+
+    <p>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+    </p>
+
+    <p>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </p>
+
+    <p>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :date_of_birth %>
+      <%= f.date_select :date_of_birth,
+        {
+          prompt: true,
+          start_year: f.object.youngest_birth_year,
+          end_year: f.object.oldest_birth_year,
+        },
+        class: "chosen dob_field" %>
+    </p>
+
+    <p>
+      <%= f.label :gender,
+        "#{t('models.account.gender')} #{t('views.application.optional')}" %>
+
+      <%= f.select :gender,
+        collection: Account.genders.keys %>
+    </p>
+
+    <p>
+      <%= f.submit "Save changes", class: "button" %>
+    </p>
+  <% end %>
+</div>

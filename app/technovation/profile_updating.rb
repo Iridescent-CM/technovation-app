@@ -62,8 +62,14 @@ class ProfileUpdating
 
   def perform_email_changes_updates
     Casting.delegating(profile.account => EmailUpdater) do
+      # TODO: order of operations dependency
       profile.account.update_email_list_profile(scope)
-      profile.account.uncomfirm_changed_email!
+
+      if profile.admin_making_changes
+        profile.account.confirm_changed_email!
+      else
+        profile.account.unconfirm_changed_email!
+      end
     end
   end
 
@@ -76,11 +82,17 @@ class ProfileUpdating
       end
     end
 
-    def uncomfirm_changed_email!
+    def unconfirm_changed_email!
       if saved_change_to_email?
         update(email_confirmed_at: nil)
         create_unconfirmed_email_address!(email: email)
         AccountMailer.confirm_changed_email(id).deliver_later
+      end
+    end
+
+    def confirm_changed_email!
+      if saved_change_to_email?
+        email_confirmed!
       end
     end
 
