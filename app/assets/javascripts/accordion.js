@@ -1,11 +1,9 @@
-document.addEventListener("turbolinks:load", function() {
-  $(document).on(".accordion-toggle", "click", function(e) {
-    e.preventDefault();
+$(document).on("click", ".accordion-toggle", function(e) {
+  e.preventDefault();
 
-    $accordion = $($(this).data("accordion"));
+  const $accordion = $($(this).data("accordion"));
 
-    $accordion.addClass('open');
+  $accordion.toggleClass('open');
 
-    $(this).hide().next(".accordion-open").show();
-  });
+  $(".accordion-toggle").toggleClass("hidden");
 });
