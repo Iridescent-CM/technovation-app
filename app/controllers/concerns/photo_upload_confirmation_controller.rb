@@ -6,7 +6,8 @@ module PhotoUploadConfirmationController
       upload.model_id,
       upload.model_name,
       upload.field_name,
-      params.fetch(:key)
+      params.fetch(:key),
+      current_account.id,
     )
 
     flash.now[:success] = upload.success_msg

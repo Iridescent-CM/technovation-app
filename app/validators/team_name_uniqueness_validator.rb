@@ -9,7 +9,9 @@ class TeamNameUniquenessValidator < ActiveModel::Validator
       .where.not(id: record.id)
 
     if record.name_uniqueness_exceptions.any?
-      past_conflicts = past_conflicts.where.not(name: record.name_uniqueness_exceptions)
+      past_conflicts = past_conflicts.where.not(
+        name: record.name_uniqueness_exceptions
+      )
     end
 
     if current_conflicts.exists? || past_conflicts.exists?

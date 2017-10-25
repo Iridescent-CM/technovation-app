@@ -296,11 +296,21 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def past_teams
+    if student_profile
+      student_profile.past_teams
+    elsif mentor_profile
+      mentor_profile.past_teams
+    else
+      NullTeams.new
+    end
+  end
+
   def team_region_division_names
-    team_keys = teams.current.map(&:cache_key).join('/')
+    team_keys = current_teams.map(&:cache_key).join('/')
 
     Rails.cache.fetch("#{team_keys}/team_region_division_names") do
-      teams.current.map(&:region_division_name).uniq
+      current_teams.map(&:region_division_name).uniq
     end
   end
 
