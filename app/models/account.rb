@@ -307,10 +307,10 @@ class Account < ActiveRecord::Base
   end
 
   def team_region_division_names
-    team_keys = current_teams.map(&:cache_key).join('/')
+    team_keys = teams.current.map(&:cache_key).join('/')
 
     Rails.cache.fetch("#{team_keys}/team_region_division_names") do
-      current_teams.map(&:region_division_name).uniq
+      teams.current.map(&:region_division_name).uniq
     end
   end
 
