@@ -1,17 +1,19 @@
 <%= link_to "Dashboard", regional_ambassador_dashboard_path %>
 
-<% if current_ambassador.onboarded? %>
-  <%= link_to "Participants",
-    regional_ambassador_participants_path,
-    class: al(regional_ambassador_participants_path) %>
+<% if false %>
+  <% if current_ambassador.onboarded? %>
+    <%= link_to "Participants",
+      regional_ambassador_participants_path,
+      class: al(regional_ambassador_participants_path) %>
 
-  <%= link_to "Teams",
-    regional_ambassador_teams_path,
-    class: al(regional_ambassador_teams_path) %>
+    <%= link_to "Teams",
+      regional_ambassador_teams_path,
+      class: al(regional_ambassador_teams_path) %>
 
-  <%= link_to "Events",
-    regional_ambassador_regional_pitch_events_path,
-    class: al(regional_ambassador_regional_pitch_events_path) %>
+    <%= link_to "Events",
+      regional_ambassador_regional_pitch_events_path,
+      class: al(regional_ambassador_regional_pitch_events_path) %>
+  <% end %>
 <% end %>
 
 <%= link_to "My Account",
