@@ -87,6 +87,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'pp_sql', "~> 0.2"
   gem 'active_record_query_trace', "~> 1.5"
   gem "letter_opener", "~> 1.4"
   gem 'rack-mini-profiler', "~> 0.10"
