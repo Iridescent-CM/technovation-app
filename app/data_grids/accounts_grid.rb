@@ -68,12 +68,12 @@ class AccountsGrid
   filter :state_province,
     :enum,
     header: "State / Province",
-    select: ->(g) { CS.get(g.country).map { |s| [s[1], s[0]] } },
+    select: ->(g) { CS.get(g.country[0]).map { |s| [s[1], s[0]] } },
     multiple: true,
     if: ->(g) {
-      g.country && CS.get(g.country).any?
+      g.country.one? && CS.get(g.country[0]).any?
     } do |values, scope, grid|
-      clauses = values.map { |v| "lower(state_province) like '#{v.downcase}%'" }
+      clauses = values.map { |v| "lower(accounts.state_province) like '#{v.downcase}%'" }
 
       scope.where(country: grid.country)
         .where(clauses.join(' OR '))
@@ -81,12 +81,12 @@ class AccountsGrid
 
   filter :city,
     :enum,
-    select: ->(g) { CS.get(g.country, g.state_province[0]) },
+    select: ->(g) { CS.get(g.country[0], g.state_province[0]) },
     multiple: true,
     if: ->(g) {
-      g.state_province.one? && CS.get(g.country, g.state_province[0]).any?
+      g.state_province.one? && CS.get(g.country[0], g.state_province[0]).any?
     } do |values, scope, grid|
-      clauses = values.map { |v| "city = '#{v}'" }
+      clauses = values.map { |v| "accounts.city = '#{v}'" }
 
       scope.where(state_province: grid.state_province[0])
         .where(clauses.join(' OR '))
