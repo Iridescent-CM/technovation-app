@@ -35,10 +35,10 @@ class AccountsGrid
   end
 
   filter :name do |value|
-    names = value.split(' ')
+    names = value.downcase.split(' ').map { |n| I18n.transliterate(n) }
     where(
-      "accounts.first_name ilike '%#{names.first}%' OR
-       accounts.last_name ilike '%#{names.last}%'"
+      "unaccent(lower(accounts.first_name)) ilike '%#{names.first}%' OR
+       unaccent(lower(accounts.last_name)) ilike '%#{names.last}%'"
     )
   end
 
