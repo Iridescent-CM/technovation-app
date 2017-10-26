@@ -10,6 +10,23 @@ RSpec.feature "Mentors find a team" do
     sign_in(mentor)
   end
 
+  scenario "only see current mentors" do
+    FactoryGirl.create(:mentor, :geocoded)
+    past = FactoryGirl.create(
+      :mentor,
+      :geocoded,
+      first_name: "Not me"
+    )
+
+    past.account.update(
+      seasons: [Season.current.year - 1]
+    )
+
+    click_link "Connect with mentors"
+
+    expect(page).not_to have_content("Not me")
+  end
+
   scenario "browse nearby mentors" do
     FactoryGirl.create(
       :mentor,

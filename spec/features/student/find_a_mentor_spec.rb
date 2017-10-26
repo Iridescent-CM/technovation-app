@@ -12,6 +12,22 @@ RSpec.feature "Students invite mentors to join their team" do
     click_link "Add a mentor"
   end
 
+  scenario "only see current mentors" do
+    past = FactoryGirl.create(
+      :mentor,
+      :geocoded,
+      first_name: "Not me"
+    )
+
+    past.account.update(
+      seasons: [Season.current.year - 1]
+    )
+
+    visit new_student_mentor_search_path
+
+    expect(page).not_to have_content("Not me")
+  end
+
   scenario "Invite an available mentor" do
     click_link "Ask"
     click_button "Ask #{mentor.first_name}"

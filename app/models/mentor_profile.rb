@@ -69,10 +69,10 @@ class MentorProfile < ActiveRecord::Base
 
   scope :searchable, ->(mentor_account_id = nil) {
     if !!mentor_account_id
-      where(connect_with_mentors: true, searchable: true)
-      .where.not(account_id: mentor_account_id)
+      current.where(connect_with_mentors: true, searchable: true)
+        .where.not(account_id: mentor_account_id)
     else
-      where(accepting_team_invites: true, searchable: true)
+      current.where(accepting_team_invites: true, searchable: true)
     end
   }
 
