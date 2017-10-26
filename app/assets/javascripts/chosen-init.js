@@ -1,5 +1,7 @@
 document.addEventListener("turbolinks:load", function() {
-  $(".chosen, select.enum_filter").chosen();
+  $(".chosen, select.enum_filter").chosen({
+    allow_single_deselect: true,
+  });
 
   $(".chosen").not(".dob_field")
     .next('.chosen-container')
