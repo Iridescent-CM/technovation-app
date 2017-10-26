@@ -1,7 +1,9 @@
 <% provide :title, "Admin • Participants" %>
 
 <div class="panel">
-  <%= datagrid_form_for @accounts_grid, url: admin_participants_path %>
+  <%= datagrid_form_for @accounts_grid,
+    data: { turbolinks: false },
+    url: admin_participants_path %>
 
   <h6><%= pluralize(@accounts_grid.assets.count, "account") %> found</h6>
 
