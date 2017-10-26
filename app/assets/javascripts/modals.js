@@ -8,7 +8,7 @@ document.addEventListener("turbolinks:load", function() {
 
     swal({
       html: modal.find(".modal-content"),
-      width: modal.data("width"),
+      width: modal.data("width") || "500px",
       title: modal.data("heading") || "",
       showCloseButton: true,
       showConfirmButton: false,
