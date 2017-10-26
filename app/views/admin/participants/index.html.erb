@@ -1,5 +1,9 @@
 <div class="panel">
   <%= datagrid_form_for @accounts_grid, url: admin_participants_path %>
+
+  <h6><%= pluralize(@accounts_grid.assets.count, "account") %> found</h6>
+
   <%= datagrid_table(@accounts_grid) %>
+
   <%= will_paginate @accounts_grid.assets %>
 </div>
