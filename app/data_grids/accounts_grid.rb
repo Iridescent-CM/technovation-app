@@ -106,5 +106,15 @@ class AccountsGrid
       where(clauses.join(' AND '))
     end
 
+  filter :team_matching,
+    :enum,
+    select: [
+      ['Matched with a team', 'matched'],
+      ['Unmatched', 'unmatched'],
+    ],
+    if: ->(g) { (%w{judge regional_ambassador} & (g.scope_names || [])).empty? } do |value|
+      send(value)
+    end
+
   column_names_filter(header: "More columns", multiple: true)
 end
