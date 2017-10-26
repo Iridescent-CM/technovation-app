@@ -1,6 +1,4 @@
-document.addEventListener("turbolinks:load", function() {
-  // Assumes a remote enabled form
-  $("[data-submit-on-change]").on("change", "input", function() {
-    $(this).submit();
-  });
+// Assumes a remote enabled form
+$(document).on("change", "[data-submit-on-change] input", function() {
+  $(this).submit();
 });

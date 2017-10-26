@@ -74,17 +74,21 @@ class Account < ActiveRecord::Base
   }
 
   scope :matched, -> {
-    left_outer_joins(
-      mentor_profile: :current_teams,
-      student_profile: :current_teams
-    ).where("teams.id IS NOT NULL")
+    distinct
+      .left_outer_joins(
+        mentor_profile: :current_teams,
+        student_profile: :current_teams
+      )
+      .where("teams.id IS NOT NULL")
   }
 
   scope :unmatched, -> {
-    left_outer_joins(
-      mentor_profile: :current_teams,
-      student_profile: :current_teams
-    ).where("teams.id IS NULL")
+    distinct
+      .left_outer_joins(
+        mentor_profile: :current_teams,
+        student_profile: :current_teams
+      )
+      .where("teams.id IS NULL")
   }
 
   mount_uploader :profile_image, ImageProcessor

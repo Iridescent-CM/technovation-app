@@ -1,11 +1,78 @@
-<%= render 'profiles/privileged_show',
-  grid_col: "auto",
-  admin: true,
-  editing: true,
-  account: @account,
-  title: "Viewing #{@account.scope_name.titleize} — #{@account.full_name}",
-  location_edit_path: edit_admin_profile_location_path(@account),
-  edit_path: edit_admin_participant_path(@account) %>
+<% provide :title, "Viewing #{@account.scope_name.titleize}" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-auto">
+    <div class="grid__cell">
+      <div class="panel">
+        <% if params[:review_before] || params[:back] %>
+          <div class="grid__cell">
+            <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+              <span class="back-btn"></span>
+              <%= params[:back_title] ||= "Search results" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <h3><%= @account.scope_name.titleize %> &mdash; <%= @account.full_name %></h3>
+
+        <%= image_tag @account.profile_image_url,
+          class: "thumbnail-lg grid__cell-img" %>
+
+        <p>
+          <%= link_to "Login as #{@account.full_name}",
+            admin_participant_session_path(@account),
+            class: "button secondary small" %>
+        </p>
+
+        <dl>
+          <dt><%= t('models.account.full_name') %></dt>
+          <dd><%= @account.full_name %></dd>
+
+          <dt><%= t('models.account.email') %></dt>
+          <dd><%= mail_to @account.email %></dd>
+
+          <dt><%= t('models.account.age') %></dt>
+          <dd><%= @account.age %></dd>
+
+          <% unless @account.student_profile.present? %>
+            <dt><%= t('models.account.gender') %></dt>
+            <dd><%= @account.gender %></dd>
+          <% end %>
+
+          <dt><%= t('models.account.address') %></dt>
+          <dd>
+            <%= @account.address_details %>
+
+            <p>
+              <%= link_to "Edit location",
+                edit_admin_profile_location_path(@account),
+                class: "button secondary small" %>
+            </p>
+          </dd>
+
+          <%= render "#{@account.scope_name}/profiles/profile",
+            edit_path: edit_admin_participant_path(@account),
+            editing: true,
+            account: @account.public_send("#{@account.scope_name}_profile") %>
+
+          <% if @account.regional_ambassador_profile || @account.mentor_profile %>
+            <dt><%= t('models.profile.bio') %></dt>
+
+            <dd>
+              <%= simple_format (
+                @account.regional_ambassador_profile || @account.mentor_profile
+              ).bio %>
+            </dd>
+          <% end %>
+        </dl>
+
+        <%= link_to 'Edit participant',
+          edit_admin_participant_path(@account),
+          class: "button secondary small" %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="grid grid--justify-space-around">
   <div class="grid__col-auto grid__col--bleed-x">
@@ -28,12 +95,6 @@
       <% if @account.mentor_profile %>
         <%= render 'admin/participants/mentor_debugging',
           profile: @account.mentor_profile %>
-      <% end %>
-
-      <%= simple_form_for @account,
-        url: admin_participant_path(@account),
-        html: { data: { remote: true } } do |f| %>
-        <%= f.input :location_confirmed, as: :boolean %>
       <% end %>
     </div>
 
