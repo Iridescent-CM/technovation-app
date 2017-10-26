@@ -30,7 +30,11 @@ gem 'rails-i18n', "~> 5.0"
 gem 'i18n-tasks', '~> 0.9'
 gem 'clipboard-rails', "~> 1.7"
 gem 'will_paginate', '~> 3.1'
-gem 'datagrid', "~> 1.5"
+
+gem 'datagrid',
+  git: "https://github.com/joemsak/datagrid.git",
+  branch: "filter-groups"
+
 gem 'simple_form',
   git: 'https://github.com/elsurudo/simple_form.git',
   branch: 'rails-5.1.0'
