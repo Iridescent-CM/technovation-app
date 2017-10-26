@@ -30,7 +30,7 @@ module ProfileController
             success: t('controllers.accounts.update.success')
         }
       end
-    elsif account.errors[:password] || account.errors[:existing_password]
+    elsif account.errors[:password].any? || account.errors[:existing_password].any?
       if account.email_changed?
         render 'email_addresses/edit'
       else
