@@ -6,6 +6,7 @@ module Admin
         country: params[:accounts_grid][:country] || [],
         state_province: params[:accounts_grid][:state_province] || [],
         season: params[:accounts_grid][:season] || Season.current.year,
+        column_names: detect_extra_columns,
       )
 
       @accounts_grid = AccountsGrid.new(grid_params) do |scope|
@@ -70,6 +71,24 @@ module Admin
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
       end
+    end
+
+    def detect_extra_columns
+      columns = params[:accounts_grid][:column_names] ||= []
+
+      if (params[:accounts_grid][:country] || []).any?
+        columns << :country
+      end
+
+      if (params[:accounts_grid][:state_province] || []).any?
+        columns << :state_province
+      end
+
+      if (params[:accounts_grid][:city] || []).any?
+        columns << :city
+      end
+
+      columns
     end
   end
 end
