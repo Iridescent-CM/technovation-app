@@ -63,6 +63,7 @@ class AccountsGrid
     select: ->(g) {
       CountryStateSelect.countries_collection
     },
+    filter_group: "location_data",
     multiple: true,
     if: ->(g) { g.admin } do |values|
       clauses = values.map { |v| "accounts.country = '#{v}'" }
@@ -73,6 +74,7 @@ class AccountsGrid
     :enum,
     header: "State / Province",
     select: ->(g) { CS.get(g.country[0]).map { |s| [s[1], s[0]] } },
+    filter_group: "location_data",
     multiple: true,
     if: ->(g) {
       g.country.one? && CS.get(g.country[0]).any?
@@ -86,6 +88,7 @@ class AccountsGrid
   filter :city,
     :enum,
     select: ->(g) { CS.get(g.country[0], g.state_province[0]) },
+    filter_group: "location_data",
     multiple: true,
     if: ->(g) {
       g.state_province.one? && CS.get(g.country[0], g.state_province[0]).any?
