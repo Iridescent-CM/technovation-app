@@ -10,9 +10,7 @@ class JudgeController < ApplicationController
     :quarterfinals?
 
   before_action -> {
-    if "judge" != get_cookie(:last_profile_used)
-      set_cookie(:last_profile_used, "judge")
-    end
+    set_last_profile_used("judge")
   }
 
   # For Airbrake Notifier

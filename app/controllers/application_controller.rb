@@ -126,5 +126,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_last_profile_used(scope)
+    return if current_session.authenticated?
+
+    if scope != get_cookie(:last_profile_used)
+      set_cookie(:last_profile_used, scope)
+    end
+  end
+
   def current_scope; raise NotImplementedError; end
 end

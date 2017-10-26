@@ -17,9 +17,7 @@ class RegionalAmbassadorController < ApplicationController
       )
     end
 
-    if "regional_ambassador" != get_cookie(:last_profile_used)
-      set_cookie(:last_profile_used, "regional_ambassador")
-    end
+    set_last_profile_used("regional_ambassador")
   }
 
   around_action :set_time_zone, if: -> { current_ambassador.authenticated? }
