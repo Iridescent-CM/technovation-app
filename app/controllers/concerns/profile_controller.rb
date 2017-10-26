@@ -13,16 +13,6 @@ module ProfileController
     }, only: :show
   end
 
-  def edit
-    if not account.valid? and
-        account.account.errors.keys.include?(:geocoded)
-      account.geocoded = nil
-      account.city = nil
-      account.state_province = nil
-      account.country = nil
-    end
-  end
-
   def update
     if ProfileUpdating.execute(account, account_params)
       respond_to do |format|
