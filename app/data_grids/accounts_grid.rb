@@ -21,7 +21,9 @@ class AccountsGrid
   column :city
   column :state_province, header: "State"
   column :country do
-    Carmen::Country.coded(country).name
+    if found_country = Carmen::Country.coded(country)
+      found_country.name
+    end
   end
 
   column :created_at, header: "Signed up" do
@@ -59,7 +61,7 @@ class AccountsGrid
     },
     multiple: true,
     if: ->(g) { g.admin } do |values|
-      clauses = values.map { |v| "country = '#{v}'" }
+      clauses = values.map { |v| "accounts.country = '#{v}'" }
       where(clauses.join(' OR '))
     end
 
