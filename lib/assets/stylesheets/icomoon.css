@@ -101,6 +101,9 @@
 .icon-earth:before {
   content: "\e9ca";
 }
+.icon-envelope-o:before {
+  content: "\f003";
+}
 .icon-green {
   color: $shamrock-mid;
 }
