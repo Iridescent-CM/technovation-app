@@ -25,6 +25,8 @@ document.addEventListener("turbolinks:load", function() {
     );
 
     function makeClonedImageUploaderUnique(modal) {
+      $("a, button").blur();
+
       const $form = $(modal).find(".new_image_uploader");
 
       if ($form.length > 0) {
@@ -37,7 +39,6 @@ document.addEventListener("turbolinks:load", function() {
 
         $field.prop("id", newId);
         $label.prop("for", newId);
-        $("a").blur();
       }
     }
   });
