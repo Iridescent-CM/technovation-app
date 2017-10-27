@@ -35,7 +35,8 @@ RSpec.feature "Consent waivers" do
     visit mentor_dashboard_path
     click_link "Sign Consent Waiver"
 
-    fill_in "Electronic signature", with: "Mentor McGee"
+    fill_in "Type your name as a form of electronic signature",
+      with: "Mentor McGee"
     click_button "I agree"
 
     expect(current_path).to eq(mentor_dashboard_path)

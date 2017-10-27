@@ -9,7 +9,8 @@ RSpec.feature "Searchability" do
     visit mentor_dashboard_path
     click_link "Sign Consent Waiver"
 
-    fill_in "Electronic signature", with: "Mentor McGee"
+    fill_in "Type your name as a form of electronic signature",
+      with: "Mentor McGee"
     click_button "I agree"
 
     expect(mentor.reload).to be_searchable
@@ -23,7 +24,8 @@ RSpec.feature "Searchability" do
     visit mentor_dashboard_path
     click_link "Sign Consent Waiver"
 
-    fill_in "Electronic signature", with: "Mentor McGee"
+    fill_in "Type your name as a form of electronic signature",
+      with: "Mentor McGee"
     click_button "I agree"
 
     expect(mentor.reload).not_to be_searchable
@@ -59,7 +61,8 @@ RSpec.feature "Searchability" do
     visit mentor_dashboard_path
     click_link "Sign Consent Waiver"
 
-    fill_in "Electronic signature", with: "Mentor McGee"
+    fill_in "Type your name as a form of electronic signature",
+      with: "Mentor McGee"
     click_button "I agree"
 
     expect(mentor.reload).to be_searchable
