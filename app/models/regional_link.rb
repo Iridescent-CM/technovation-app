@@ -6,6 +6,7 @@ class RegionalLink < ApplicationRecord
     linkedin
     instagram
     snapchat
+    email
     whatsapp
     website
   }
@@ -27,6 +28,7 @@ class RegionalLink < ApplicationRecord
       linkedin: "https://linkedin.com/in/username",
       instagram: "@username",
       snapchat: "@username",
+      email: "hello@technovation-region.org",
       whatsapp: "52 1 33 23 10 69 05",
       website: "https://www.example.org",
     }
@@ -38,6 +40,8 @@ class RegionalLink < ApplicationRecord
       "#{name}-square"
     when "website"
       "earth"
+    when "email"
+      "envelope-o"
     else
       name
     end
@@ -47,7 +51,7 @@ class RegionalLink < ApplicationRecord
     case name
     when "twitter", "instagram", "snapchat"
       detect_page_name_from_url(value, prefix: "@")
-    when "website"
+    when "website", "email"
       value
     else
       detect_page_name_from_url(value)
@@ -56,7 +60,7 @@ class RegionalLink < ApplicationRecord
 
   def url
     case value
-    when /^https/
+    when /^https/, /@/
       value
     else
       urlify(value)
@@ -80,6 +84,7 @@ class RegionalLink < ApplicationRecord
       linkedin: "www.linkedin.com/in/",
       instagram: "www.instagram.com/",
       snapchat: "www.snapchat.com/add/",
+      email: "",
       whatsapp: "api.whatsapp.com/send?phone=",
       website: "",
     }.with_indifferent_access

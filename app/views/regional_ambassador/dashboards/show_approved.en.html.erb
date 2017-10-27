@@ -1,49 +1,3 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <% if current_ambassador.onboarded? %>
-      <div class="panel">
-        <h4>
-          <%= current_ambassador.full_name %> &ndash;
-          <%= current_ambassador.region_name %>
-          <%= Season.current.year %>
-        </h4>
-
-        <p>
-          We are working hard on a brand new Regional Ambassador
-          design with updated features.
-        </p>
-
-        <p>
-          Technovation will email you as updates are released!
-        </p>
-        <p>
-          <%= link_to "Switch to Mentor Mode",
-            mentor_dashboard_path,
-            class: "button",
-            data: { turbolinks: false } %>
-        </p>
-      </div>
-    <% else %>
-      <h1>Complete your registration</h1>
-
-      <ul class="steps">
-        <%= render 'completion_steps/background_check',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/location_details',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/complete_profile',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/confirm_changed_email',
-          profile: current_ambassador %>
-      </ul>
-    <% end %>
-  </div>
-</div>
-
-<% if false %>
 <div class="grid dashboard-notices">
   <div class="grid__col-sm-6 grid__col-auto grid__col--bleed-y">
     <div class="grid__cell">
@@ -72,30 +26,46 @@
   <div class="grid__col-md-3">
     <div class="grid__cell">
       <div class="ra-info--dashboard-intro panel">
-        <h4 class="reset">Your introduction</h4>
-
-        <p class="hint">
-          Participants in your region can see this on their dashboards.
-        </p>
-
         <%= image_tag current_ambassador.profile_image_url,
           class: "grid__cell-img" %>
 
-        <%= render 'image_upload',
-          heading: "Upload a profile photo",
-          size: "300x300" %>
-
         <h3 class="reset"><%= current_ambassador.full_name %></h3>
+
+        <%= link_to "View your profile", regional_ambassador_profile_path %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-md-6">
+    <div class="grid__cell">
+      <% if current_ambassador.intro_summary.blank? %>
+        <div class="panel">
+          <h4>
+            New this year: Introduce your region to your program!
+            <small>
+              <%= link_to 'what is this?', '#',
+                data: { opens_modal: "explain-intro" } %>
+            </small>
+          </h4>
+          <%= render "regional_ambassador/introductions/form" %>
+        </div>
+      <% else %>
+        <%= render "regional_ambassador/dashboards/quick_view" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
+    <% unless current_ambassador.intro_summary.blank? %>
+      <div class="panel">
+        <h6 class="reset">Your program introduction</h6>
 
         <%= simple_format current_ambassador.intro_summary %>
 
-        <ul class="regional-links reset">
+        <ul class="reset">
           <% current_ambassador.regional_links.each do |link| %>
             <li>
-              <%= link_to web_icon(link.icon, text: link.display_text),
-                link.url,
-                title: link.name,
-                target: :_blank %>
+              <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
             </li>
           <% end %>
         </ul>
@@ -103,20 +73,23 @@
         <p>
           <%= link_to "Edit your introduction",
             edit_regional_ambassador_introduction_path,
-            class: "button small" %>
+            class: "button secondary small" %>
         </p>
       </div>
-    </div>
-  </div>
-
-  <div class="grid__col-md-6">
-    <div class="grid__cell">
-      Something to go here soon...
-    </div>
-  </div>
-
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    Something else to go here soon, too...
+    <% end %>
   </div>
 </div>
+
+<%= content_tag :div, class: "modal",
+  id: "explain-intro",
+  data: {
+    heading: "New this year: Introduce your region to your program!",
+  } do %>
+  <div class="modal-content">
+    <p>
+      Tell the participants in your region about yourself and your regional program!
+      Add links to your various social sites, your whatsapp number, website,
+      and email so they can get to know you better.
+    </p>
+  </div>
 <% end %>

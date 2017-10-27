@@ -16,5 +16,5 @@ $(document).on("change", ".placeholder-updaters select", function() {
                         .find("[data-" + value + "]"),
         placeholder = $field.data(value);
 
-  $field.prop("placeholder", "example: " + placeholder);
+  $field.prop("placeholder", "ex: " + placeholder);
 });
