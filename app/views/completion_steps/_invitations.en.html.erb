@@ -10,7 +10,7 @@
     <% if invites.any? %>
       <p>You have been invited!</p>
 
-      <% if invites.many? %>
+      <% if current_scope == :student and invites.many? %>
         <p class="hint">You can only accept one!</p>
       <% end %>
 

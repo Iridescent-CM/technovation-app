@@ -10,7 +10,7 @@
     <h3>
       <% if current_account.authenticated? and public_member.mentor_profile %>
         <%= link_to public_member.first_name,
-          send("#{current_account.scope_name}_mentor_path", public_member) %>
+          send("#{current_scope}_mentor_path", public_member) %>
       <% else %>
         <%= public_member.first_name %>
       <% end %>
