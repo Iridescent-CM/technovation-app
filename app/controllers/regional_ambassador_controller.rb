@@ -18,6 +18,8 @@ class RegionalAmbassadorController < ApplicationController
     end
 
     set_last_profile_used("regional_ambassador")
+
+    params.permit!
   }
 
   around_action :set_time_zone, if: -> { current_ambassador.authenticated? }

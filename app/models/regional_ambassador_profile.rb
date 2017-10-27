@@ -11,7 +11,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   belongs_to :current_account, -> { current },
     class_name: "Account",
-    foreign_key: "account_id"
+    foreign_key: "account_id",
+    required: false
 
   after_update :after_status_changed, if: :saved_change_to_status?
 

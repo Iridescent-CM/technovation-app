@@ -1,24 +1,15 @@
-<% filters_open = params[:accounts_grid].values.any? %>
+<% provide :title, "RA Data • Participants" %>
 
 <%= render 'regional_ambassador/participants/sub_menu' %>
 
 <div class="panel">
-  <% if false %>
-    <div class="toggle-display-buttons">
-      <%= link_to "Show filters", "#",
-        class: "accordion-toggle button small #{'hidden' if filters_open}",
-        data: { accordion: ".datagrid-form" } %>
-
-      <%= link_to "Hide filters", "#",
-        class: "accordion-toggle button small #{'hidden' unless filters_open}",
-        data: { accordion: ".datagrid-form" } %>
-    </div>
-  <% end %>
-
   <%= datagrid_form_for @accounts_grid,
-    html: { class: "datagrid-form #{'open' if filters_open}" },
+    data: { turbolinks: false },
     url: regional_ambassador_participants_path %>
 
+  <h6><%= pluralize(@accounts_grid.assets.count, "account") %> found</h6>
+
   <%= datagrid_table(@accounts_grid) %>
+
   <%= will_paginate @accounts_grid.assets %>
 </div>
