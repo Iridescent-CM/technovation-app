@@ -1,0 +1,17 @@
+<% if current_ambassador.intro_summary.blank? %>
+  <div class="panel">
+    <h4>
+      New this year: Introduce your region to your program!
+
+      <small>
+        <%= link_to 'what is this?', '#',
+          data: { opens_modal: "explain-intro" } %>
+      </small>
+    </h4>
+
+    <%= render "regional_ambassador/introductions/form",
+      ra_dashboard: true %>
+  </div>
+<% else %>
+  <%= render "regional_ambassador/dashboards/quick_view" %>
+<% end %>

@@ -74,3 +74,17 @@
 .save-icon {
   margin: 0.5rem 0;
 }
+
+.ra-intro {
+  img {
+    margin: 0 0 1rem;
+  }
+
+  .reset li {
+    margin: 0 0 1rem;
+    max-width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

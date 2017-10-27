@@ -1,49 +1,3 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <% if current_ambassador.onboarded? %>
-      <div class="panel">
-        <h4>
-          <%= current_ambassador.full_name %> &ndash;
-          <%= current_ambassador.region_name %>
-          <%= Season.current.year %>
-        </h4>
-
-        <p>
-          We are working hard on a brand new Regional Ambassador
-          design with updated features.
-        </p>
-
-        <p>
-          Technovation will email you as updates are released!
-        </p>
-        <p>
-          <%= link_to "Switch to Mentor Mode",
-            mentor_dashboard_path,
-            class: "button",
-            data: { turbolinks: false } %>
-        </p>
-      </div>
-    <% else %>
-      <h1>Complete your registration</h1>
-
-      <ul class="steps">
-        <%= render 'completion_steps/background_check',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/location_details',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/complete_profile',
-          profile: current_ambassador %>
-
-        <%= render 'completion_steps/confirm_changed_email',
-          profile: current_ambassador %>
-      </ul>
-    <% end %>
-  </div>
-</div>
-
-<% if false %>
 <div class="grid dashboard-notices">
   <div class="grid__col-sm-6 grid__col-auto grid__col--bleed-y">
     <div class="grid__cell">
@@ -69,9 +23,9 @@
 </div>
 
 <div class="grid">
-  <div class="grid__col-md-3">
-    <div class="grid__cell">
-      <div class="ra-info--dashboard-intro panel">
+  <div class="grid__col-sm-3">
+    <div class="col--sticky">
+      <div class="panel">
         <%= image_tag current_ambassador.profile_image_url,
           class: "grid__cell-img" %>
 
@@ -82,54 +36,35 @@
     </div>
   </div>
 
-  <div class="grid__col-md-6">
-    <div class="grid__cell">
-      <% if current_ambassador.intro_summary.blank? %>
-        <div class="panel">
-          <h4>
-            New this year: Introduce your region to your program!
-            <small>
-              <%= link_to 'what is this?', '#',
-                data: { opens_modal: "explain-intro" } %>
-            </small>
-          </h4>
-          <%= render "regional_ambassador/introductions/form" %>
-        </div>
+  <div class="grid__col-sm-6">
+    <div class="col--sticky">
+      <% if current_ambassador.onboarded? %>
+        <%= render "regional_ambassador/dashboards/onboarded" %>
       <% else %>
-        <%= render "regional_ambassador/dashboards/quick_view" %>
+        <%= render "regional_ambassador/dashboards/onboarding" %>
       <% end %>
     </div>
   </div>
 
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    <% unless current_ambassador.intro_summary.blank? %>
-      <div class="panel">
-        <h6 class="reset">Your program introduction</h6>
+  <div class="grid__col-sm-3 grid__col--bleed dashboard-sidebar">
+    <div class="col--sticky">
+      <%= render "dashboards/ra_intro", ra_dashboard: true %>
 
-        <%= simple_format current_ambassador.intro_summary %>
-
-        <ul class="reset">
-          <% current_ambassador.regional_links.each do |link| %>
-            <li>
-              <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
-            </li>
-          <% end %>
-        </ul>
-
+      <% unless current_ambassador.intro_summary.blank? %>
         <p>
           <%= link_to "Edit your introduction",
             edit_regional_ambassador_introduction_path,
             class: "button secondary small" %>
         </p>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
 
 <%= content_tag :div, class: "modal",
   id: "explain-intro",
   data: {
-    heading: "New this year: Introduce your region to your program!",
+    width: "750px",
   } do %>
   <div class="modal-content">
     <p>
@@ -137,6 +72,7 @@
       Add links to your various social sites, your whatsapp number, website,
       and email so they can get to know you better.
     </p>
+
+    <%= image_tag "ra-intro-explained.png", width: 650 %>
   </div>
-<% end %>
 <% end %>

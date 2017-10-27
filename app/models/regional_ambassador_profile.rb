@@ -9,6 +9,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   accepts_nested_attributes_for :account
   validates_associated :account
 
+  belongs_to :current_account, -> { current },
+    class_name: "Account",
+    foreign_key: "account_id"
+
   after_update :after_status_changed, if: :saved_change_to_status?
 
   enum status: %i{pending approved declined spam}

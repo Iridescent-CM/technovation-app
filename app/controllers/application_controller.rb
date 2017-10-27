@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
     :current_scope,
     :current_session,
     :can_generate_certificate?,
-    :get_cookie
+    :get_cookie,
+    :regional_ambassador
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
@@ -69,6 +70,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def regional_ambassador
+    @regional_ambassador ||= RegionalAmbassadorProfile.approved
+      .joins(:current_account)
+      .find_by({ "accounts.country" => current_account.country }.merge(
+        current_account.country == "US" ?
+          { "accounts.state_province" => current_account.state_province } : {}
+      )) || NullRegionalAmbassador.new
+  end
+
   def save_redirected_path
     set_cookie(:redirected_from, request.fullpath)
   end

@@ -1,3 +1,5 @@
+<% ra_dashboard ||= false %>
+
 <%= simple_form_for current_ambassador,
   url: regional_ambassador_introduction_path do |f| %>
   <%= f.input :intro_summary,
@@ -41,7 +43,9 @@
 
   <p>
     <%= f.submit "Save", class: "button" %>
-    or
-    <%= link_to 'cancel', regional_ambassador_dashboard_path %>
+    <% unless ra_dashboard %>
+      or
+      <%= link_to 'cancel', regional_ambassador_dashboard_path %>
+    <% end %>
   </p>
 <% end %>
