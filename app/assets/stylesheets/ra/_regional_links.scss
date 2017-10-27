@@ -7,16 +7,16 @@
   }
 }
 
-.regional_ambassador_profile_regional_links_value {
-  padding-right: 1rem;
-}
-
 .destroyable-link--destroy {
-  padding: 2rem 0.5rem;
+  padding: 2rem 0.3rem 0;
   opacity: 0.5;
   transition: 0.2s opacity;
 
   &:hover {
     opacity: 1;
   }
+}
+
+.add_fields {
+  margin: 0 0 2rem;
 }
