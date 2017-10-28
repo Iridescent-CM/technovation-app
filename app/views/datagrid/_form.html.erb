@@ -58,7 +58,7 @@
         url: send("#{current_scope}_saved_searches_path") do |f| %>
         <%= f.hidden_field :param_root, value: options[:as] %>
         <%= f.hidden_field :search_string,
-          value: URI.encode_www_form(params[options[:as]].to_h) %>
+          value: URI.encode_www_form(params.to_unsafe_h[options[:as]]) %>
 
         <p>
           <%= f.label :name %>

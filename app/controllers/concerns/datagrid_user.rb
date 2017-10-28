@@ -17,15 +17,15 @@ module DatagridUser
     columns = Array(params[:accounts_grid][:column_names])
 
     if Array(params[:accounts_grid][:country]).any?
-      columns << :country
+      columns = columns | [:country]
     end
 
     if Array(params[:accounts_grid][:state_province]).any?
-      columns << :state_province
+      columns = columns | [:state_province]
     end
 
     if Array(params[:accounts_grid][:city]).any?
-      columns << :city
+      columns = columns | [:city]
     end
 
     columns

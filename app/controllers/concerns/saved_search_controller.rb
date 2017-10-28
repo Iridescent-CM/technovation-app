@@ -10,9 +10,7 @@ module SavedSearchController
 
     redirect_to send(
       "#{current_scope}_participants_path",
-      @saved_search.param_root => Rack::Utils.parse_nested_query(
-        @saved_search.search_string
-      )
+      @saved_search.param_root => @saved_search.to_search_params
     )
   end
 

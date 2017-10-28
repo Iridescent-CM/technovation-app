@@ -10,7 +10,7 @@ module RegionalAmbassador
           if current_ambassador.country == "US"
             [current_ambassador.state_province]
           else
-            params[:accounts_grid][:state_province] || []
+            Array(params[:accounts_grid][:state_province])
           end
         ),
         season: params[:accounts_grid][:season] || Season.current.year,

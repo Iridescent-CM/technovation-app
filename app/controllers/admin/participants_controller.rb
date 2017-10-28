@@ -5,8 +5,8 @@ module Admin
     def index
       grid_params = (params[:accounts_grid] ||= {}).merge(
         admin: true,
-        country: params[:accounts_grid][:country] || [],
-        state_province: params[:accounts_grid][:state_province] || [],
+        country: Array(params[:accounts_grid][:country]),
+        state_province: Array(params[:accounts_grid][:state_province]),
         season: params[:accounts_grid][:season] || Season.current.year,
         column_names: detect_extra_columns,
       )
