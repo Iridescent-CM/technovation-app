@@ -14,6 +14,7 @@
 //= require tabs
 //= require image-uploaders
 //= require modals
+//= require forms
 //= require season-schedule
 
 document.addEventListener("turbolinks:load", function() {

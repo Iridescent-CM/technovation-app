@@ -1,11 +1,8 @@
 module RegionalAmbassador
   class ParticipantsController < RegionalAmbassadorController
+    include DatagridUser
+
     def index
-      @saved_searches = current_ambassador.saved_searches
-        .for_param_root(:accounts_grid)
-
-      @saved_search = current_ambassador.saved_searches.build
-
       grid_params = (params[:accounts_grid] ||= {}).merge(
         admin: false,
         country: [current_ambassador.country],
@@ -27,25 +24,6 @@ module RegionalAmbassador
 
     def show
       @account = Account.in_region(current_ambassador).find(params[:id])
-    end
-
-    private
-    def detect_extra_columns
-      columns = params[:accounts_grid][:column_names] ||= []
-
-      if (params[:accounts_grid][:country] || []).any?
-        columns << :country
-      end
-
-      if (params[:accounts_grid][:state_province] || []).any?
-        columns << :state_province
-      end
-
-      if (params[:accounts_grid][:city] || []).any?
-        columns << :city
-      end
-
-      columns
     end
   end
 end

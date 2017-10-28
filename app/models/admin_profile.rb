@@ -3,6 +3,8 @@ class AdminProfile < ActiveRecord::Base
   accepts_nested_attributes_for :account
   validates_associated :account
 
+  has_many :saved_searches, as: :searcher
+
   has_many :exports, foreign_key: :account_id, dependent: :destroy
 
   def authenticated?

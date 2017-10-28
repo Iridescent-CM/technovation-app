@@ -1,2 +1,2 @@
-<%= link_to saved_search.name, [:regional_ambassador, saved_search],
+<%= link_to saved_search.name, [current_scope, saved_search],
   class: "badge saved-search #{'active' if saved_search.search_string_matches_params?(params[:accounts_grid])}" %>

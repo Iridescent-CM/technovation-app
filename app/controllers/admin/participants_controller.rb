@@ -1,5 +1,7 @@
 module Admin
   class ParticipantsController < AdminController
+    include DatagridUser
+
     def index
       grid_params = (params[:accounts_grid] ||= {}).merge(
         admin: true,
@@ -71,24 +73,6 @@ module Admin
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
       end
-    end
-
-    def detect_extra_columns
-      columns = params[:accounts_grid][:column_names] ||= []
-
-      if (params[:accounts_grid][:country] || []).any?
-        columns << :country
-      end
-
-      if (params[:accounts_grid][:state_province] || []).any?
-        columns << :state_province
-      end
-
-      if (params[:accounts_grid][:city] || []).any?
-        columns << :city
-      end
-
-      columns
     end
   end
 end

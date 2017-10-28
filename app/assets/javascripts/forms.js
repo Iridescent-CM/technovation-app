@@ -17,7 +17,7 @@ $(document).on("ajax:success", "form[data-remote]", function(e, xhr) {
     $(".badge.saved-search.active").removeClass("active");
     var $filterBadge = $("<a>");
     $filterBadge.text(xhr.name);
-    $filterBadge.prop("href", "/regional_ambassador/saved_searches/" + xhr.id)
+    $filterBadge.prop("href", $(this).prop("action") + "/" + xhr.id)
     $filterBadge.addClass("badge saved-search active")
     $('.saved-searches').append($filterBadge);
   }

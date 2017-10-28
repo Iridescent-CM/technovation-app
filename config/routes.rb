@@ -161,6 +161,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :show
 
+    resources :saved_searches, only: [:show, :create, :update, :destroy]
+
     resources :participants
     resources :participant_sessions, only: [:show, :destroy]
 

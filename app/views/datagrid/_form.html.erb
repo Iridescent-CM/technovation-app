@@ -40,7 +40,8 @@
         <% if @saved_searches.any? %>
           <h6>Saved searches:</h6>
 
-          <%= render @saved_searches %>
+          <%= render partial: "saved_searches/saved_search",
+            collection: @saved_searches %>
         <% end %>
       </div>
     </div>

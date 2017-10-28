@@ -27,4 +27,8 @@ class AdminController < ApplicationController
   def current_admin
     @current_admin ||= current_account.admin_profile
   end
+
+  def current_profile
+    current_admin
+  end
 end
