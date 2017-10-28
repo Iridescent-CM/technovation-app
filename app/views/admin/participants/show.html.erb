@@ -13,7 +13,9 @@
           </div>
         <% end %>
 
-        <h3><%= @account.scope_name.titleize %> &mdash; <%= @account.full_name %></h3>
+        <h3>
+          <%= @account.scope_name.titleize %> &mdash; <%= @account.full_name %>
+        </h3>
 
         <%= image_tag @account.profile_image_url,
           class: "thumbnail-lg grid__cell-img" %>

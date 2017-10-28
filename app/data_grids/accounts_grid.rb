@@ -53,9 +53,25 @@ class AccountsGrid
   filter :season,
     :enum,
     select: (2015..Season.current.year).to_a.reverse,
+    filter_group: "and-or",
     multiple: true do |value|
     by_season(value)
   end
+
+  filter :scope_names,
+    :enum,
+    header: "Profile type",
+    select: [
+      ['Students', 'student'],
+      ['Mentors', 'mentor'],
+      ['Judges', 'judge'],
+      ['Regional Ambassadors', 'regional_ambassador'],
+    ],
+    filter_group: "and-or",
+    multiple: true do |values|
+      clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
+      where(clauses.join(' AND '))
+    end
 
   filter :country,
     :enum,
@@ -79,7 +95,9 @@ class AccountsGrid
     if: ->(g) {
       g.country.one? && CS.get(g.country[0]).any?
     } do |values, scope, grid|
-      clauses = values.map { |v| "lower(accounts.state_province) like '#{v.downcase}%'" }
+      clauses = values.map do |v|
+        "lower(accounts.state_province) like '#{v.downcase}%'"
+      end
 
       scope.where(country: grid.country)
         .where(clauses.join(' OR '))
@@ -99,33 +117,20 @@ class AccountsGrid
         .where(clauses.join(' OR '))
     end
 
-  filter :scope_names,
-    :enum,
-    header: "Profile type",
-    select: [
-      ['Students', 'student'],
-      ['Mentors', 'mentor'],
-      ['Judges', 'judge'],
-      ['Regional Ambassadors', 'regional_ambassador'],
-    ],
-    multiple: true do |values|
-      clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
-      where(clauses.join(' AND '))
-    end
-
   filter :team_matching,
     :enum,
     select: [
       ['Matched with a team', 'matched'],
       ['Unmatched', 'unmatched'],
     ],
-    if: ->(g) { (%w{judge regional_ambassador} & (g.scope_names || [])).empty? } do |value|
-      send(value)
-    end
+    filter_group: "advanced",
+    if: ->(g) {
+      (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
+    } { |value| send(value) }
 
   column_names_filter(
     header: "More columns",
-    filter_group: "extra-columns",
+    filter_group: "advanced",
     multiple: true
   )
 end
