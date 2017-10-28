@@ -50,7 +50,7 @@
     <div class="col--sticky">
       <%= render "dashboards/ra_intro", ra_dashboard: true %>
 
-      <% unless current_ambassador.intro_summary.blank? %>
+      <% if current_ambassador.provided_intro? %>
         <p>
           <%= link_to "Edit your introduction",
             edit_regional_ambassador_introduction_path,

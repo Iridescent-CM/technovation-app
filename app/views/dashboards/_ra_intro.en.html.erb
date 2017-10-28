@@ -1,6 +1,6 @@
 <% ra_dashboard ||= false %>
 
-<% unless regional_ambassador.intro_summary.blank? %>
+<% if regional_ambassador.provided_intro? %>
   <div class="panel ra-intro">
     <% if ra_dashboard %>
       <h5 class="reset">

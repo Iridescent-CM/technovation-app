@@ -48,6 +48,21 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     end
   end
 
+  def self.staff_test_account_ids
+    [
+      20980,
+    ]
+  end
+
+  def provided_intro?
+    not intro_summary.blank?
+  end
+
+  def needs_intro_prompt?
+    not self.class.staff_test_account_ids.include?(account_id) and
+      intro_summary.blank?
+  end
+
   def background_check_complete?
     country != "US" or !!background_check && background_check.clear?
   end

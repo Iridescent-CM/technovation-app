@@ -1,7 +1,7 @@
 module RegionalAmbassador
   class DashboardsController < RegionalAmbassadorController
     def show
-      if current_ambassador.intro_summary.blank?
+      if current_ambassador.needs_intro_prompt?
         current_ambassador.regional_links.build
       else
         @students = StudentProfile.current.in_region(current_ambassador)

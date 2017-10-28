@@ -1,6 +1,6 @@
 class NullRegionalAmbassador
-  def intro_summary
-    ""
+  def provided_intro?
+    false
   end
 
   def present?
