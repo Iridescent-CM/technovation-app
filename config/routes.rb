@@ -119,6 +119,8 @@ Rails.application.routes.draw do
 
     resource :introduction, only: [:edit, :update]
 
+    resources :saved_searches, only: [:show, :create, :update, :destroy]
+
     resources :participants, only: [:index, :show, :edit, :update]
     resources :participant_sessions, only: [:show, :destroy]
 

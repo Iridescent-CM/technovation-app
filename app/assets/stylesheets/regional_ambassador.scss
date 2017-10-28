@@ -15,3 +15,20 @@
   float: right;
   padding: 0 0 1rem;
 }
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem;
+  font-size: 0.9rem;
+  margin: 0 0.5rem 0.5rem 0;
+  background: $marine-dark;
+  color: white;
+  border-radius: 0.2rem;
+  opacity: 0.5;
+  transition: 0.2s opacity;
+
+  &:hover, &.active {
+    opacity: 1;
+    color: white;
+  }
+}

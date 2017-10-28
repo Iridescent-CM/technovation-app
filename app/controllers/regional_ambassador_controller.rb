@@ -1,7 +1,9 @@
 class RegionalAmbassadorController < ApplicationController
   include Authenticated
 
-  helper_method :current_ambassador, :current_profile
+  helper_method :current_ambassador,
+    :current_profile,
+    :default_or_saved_search_params?
 
   before_action -> {
     # TODO: move ambassador timezone setting to ProfileUpdating probably
@@ -34,6 +36,10 @@ class RegionalAmbassadorController < ApplicationController
   end
 
   private
+  def default_or_saved_search_params?
+    SavedSearch.default_or_saved_search_params?(params, current_ambassador)
+  end
+
   def set_time_zone(&block)
     Time.use_zone(current_ambassador.timezone, &block)
   end

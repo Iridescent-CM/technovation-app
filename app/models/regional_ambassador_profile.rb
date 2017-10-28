@@ -21,6 +21,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   validates :organization_company_name, :ambassador_since_year, :job_title, :bio,
     presence: true
 
+  has_many :saved_searches, as: :searcher
+
   has_many :exports, foreign_key: :account_id, dependent: :destroy
   has_many :regional_pitch_events
 

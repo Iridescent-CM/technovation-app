@@ -20,9 +20,52 @@
 
   <div class="datagrid-actions grid__col-6">
     <div class="grid__cell">
+      <% unless default_or_saved_search_params? %>
+        <p style="float:right;">
+          <%= link_to "Save this search", "#",
+            data: { opens_modal: "search-saver" },
+            class: "button secondary small" %>
+        </p>
+      <% end %>
+
       <%= f.submit I18n.t("datagrid.form.search").html_safe, class: "button" %>
       <%= link_to I18n.t('datagrid.form.reset').html_safe,
         url_for(grid.to_param => {}) %>
     </div>
   </div>
+
+  <div class="grid__col-6">
+    <div class="grid__cell">
+      <div class="saved-searches">
+        <% if @saved_searches.any? %>
+          <h6>Saved searches:</h6>
+
+          <%= render @saved_searches %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end -%>
+
+<% unless default_or_saved_search_params? %>
+  <%= content_tag :div, class: "modal",
+    id: "search-saver" do %>
+    <div class="modal-content">
+      Save your current search filter
+
+      <%= form_with model: @saved_search,
+        url: send("#{current_scope}_saved_searches_path") do |f| %>
+        <%= f.hidden_field :param_root, value: options[:as] %>
+        <%= f.hidden_field :search_string,
+          value: URI.encode_www_form(params[options[:as]].to_h) %>
+
+        <p>
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </p>
+
+        <%= f.submit "Save", class: "button" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

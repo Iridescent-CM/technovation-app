@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026165624) do
+ActiveRecord::Schema.define(version: 20171028162512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -334,6 +334,17 @@ ActiveRecord::Schema.define(version: 20171026165624) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "saved_searches", force: :cascade do |t|
+    t.string "searcher_type", null: false
+    t.bigint "searcher_id", null: false
+    t.string "name", null: false
+    t.string "search_string", null: false
+    t.string "param_root", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searcher_type", "searcher_id"], name: "index_saved_searches_on_searcher_type_and_searcher_id"
   end
 
   create_table "screenshots", id: :serial, force: :cascade do |t|

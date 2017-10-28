@@ -1,6 +1,11 @@
 module RegionalAmbassador
   class ParticipantsController < RegionalAmbassadorController
     def index
+      @saved_searches = current_ambassador.saved_searches
+        .for_param_root(:accounts_grid)
+
+      @saved_search = current_ambassador.saved_searches.build
+
       grid_params = (params[:accounts_grid] ||= {}).merge(
         admin: false,
         country: [current_ambassador.country],

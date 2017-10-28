@@ -3,6 +3,7 @@
 
 //= require accordion
 //= require char-counter
+//= require forms
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({
