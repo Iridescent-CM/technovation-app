@@ -1,15 +1,74 @@
-<%= render 'regional_ambassador/participants/sub_menu' %>
-
-<% if false %>
-  <%= link_to "Login as #{@participant.full_name}",
-    regional_ambassador_participant_session_path(@participant),
-    data: { turbolinks: 'false' } %>
-<% end %>
-
-<%= render 'profiles/privileged_show', account: @account %>
+<% provide :title, "Viewing #{@account.scope_name.titleize}" %>
 
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8 grid__col--bleed-x">
+  <div class="grid__col-auto">
+    <div class="grid__cell">
+      <div class="panel">
+        <% if params[:review_before] || params[:back] %>
+          <div class="grid__cell">
+            <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+              <span class="back-btn"></span>
+              <%= params[:back_title] ||= "Search results" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <h3>
+          <%= @account.scope_name.titleize %> &mdash; <%= @account.full_name %>
+        </h3>
+
+        <%= image_tag @account.profile_image_url,
+          class: "thumbnail-lg grid__cell-img" %>
+
+        <% if false %>
+          <p>
+            <%= link_to "Login as #{@account.full_name}",
+              regional_ambassador_participant_session_path(@account),
+              class: "button secondary small" %>
+          </p>
+        <% end %>
+
+        <dl>
+          <dt><%= t('models.account.full_name') %></dt>
+          <dd><%= @account.full_name %></dd>
+
+          <dt><%= t('models.account.email') %></dt>
+          <dd><%= mail_to @account.email %></dd>
+
+          <dt><%= t('models.account.age') %></dt>
+          <dd><%= @account.age %></dd>
+
+          <% unless @account.student_profile.present? %>
+            <dt><%= t('models.account.gender') %></dt>
+            <dd><%= @account.gender %></dd>
+          <% end %>
+
+          <dt><%= t('models.account.address') %></dt>
+          <dd>
+            <%= @account.address_details %>
+          </dd>
+
+          <%= render "#{@account.scope_name}/profiles/profile",
+            editing: false,
+            account: @account.public_send("#{@account.scope_name}_profile") %>
+
+          <% if @account.regional_ambassador_profile || @account.mentor_profile %>
+            <dt><%= t('models.profile.bio') %></dt>
+
+            <dd>
+              <%= simple_format (
+                @account.regional_ambassador_profile || @account.mentor_profile
+              ).bio %>
+            </dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-auto grid__col--bleed-x">
     <div class="panel">
       <% if @account.student_profile %>
         <%= render 'admin/participants/student_debugging',
@@ -34,16 +93,17 @@
 
     <div class="panel">
       <% if @account.mentor_profile || @account.student_profile %>
-        <h4>
+        <h6>
           <%= t("views.student.mentors.show.teams",
                 name: @account.first_name) %>
-        </h4>
+        </h6>
 
         <% if @account.current_teams.any? %>
           <ul class="reset">
             <%= render partial: 'student/mentors/team_preview',
               collection: @account.current_teams,
               locals: {
+                ra: true,
                 profile: @account.mentor_profile || @account.student_profile
               } %>
           </ul>
@@ -53,7 +113,7 @@
                   name: @account.first_name) %>
           </p>
         <% end %>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
