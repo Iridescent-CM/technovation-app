@@ -14,10 +14,12 @@ class RegionalLink < ApplicationRecord
   belongs_to :regional_ambassador_profile
 
   before_save -> {
-    self.value = value.gsub('@', '')
-      .gsub(/^\+/, '')
-      .sub('http:', 'https:')
-      .strip
+    unless name == "email"
+      self.value = value.gsub('@', '')
+        .gsub(/^\+/, '')
+        .sub('http:', 'https:')
+        .strip
+    end
   }
 
   def self.link_name_placeholders
