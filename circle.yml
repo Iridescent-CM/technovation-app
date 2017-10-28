@@ -36,6 +36,7 @@ general:
   branches:
     ignore:
       - /.*-stable/
+      - master
 
 deployment:
   beta:
