@@ -14,7 +14,7 @@ module DatagridUser
 
   private
   def detect_extra_columns
-    columns = Array(params[:accounts_grid][:column_names])
+    columns = Array(params[:accounts_grid][:column_names]).flatten.map(&:to_sym)
 
     if Array(params[:accounts_grid][:country]).any?
       columns = columns | [:country]
