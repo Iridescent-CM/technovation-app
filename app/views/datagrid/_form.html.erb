@@ -38,12 +38,17 @@
 
   <div class="grid__col-6">
     <div class="grid__cell">
+      <h6 class="reset">Saved searches:</h6>
+
       <div class="saved-searches">
         <% if @saved_searches.any? %>
-          <h6>Saved searches:</h6>
-
           <%= render partial: "saved_searches/saved_search",
             collection: @saved_searches %>
+        <% else %>
+          <p class="hint reset">
+            You don't have any saved searches.
+            Perform a custom search and save it for repeated use.
+          </p>
         <% end %>
       </div>
     </div>
@@ -57,6 +62,7 @@
       Save your current search filter
 
       <%= form_with model: @saved_search,
+        html: { class: "saved-searches-form" },
         url: send("#{current_scope}_saved_searches_path") do |f| %>
         <%= f.hidden_field :param_root, value: options[:as] %>
         <%= f.hidden_field :search_string,

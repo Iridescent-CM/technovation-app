@@ -10,19 +10,6 @@ $(document).on("ajax:beforeSend", "form[data-remote]", function() {
     .remove();
 })
 
-$(document).on("ajax:success", "form[data-remote]", function(e, xhr) {
-  swal.close();
-
-  if (xhr['search_string']) {
-    $(".badge.saved-search.active").removeClass("active");
-    var $filterBadge = $("<a>");
-    $filterBadge.text(xhr.name);
-    $filterBadge.prop("href", $(this).prop("action") + "/" + xhr.id)
-    $filterBadge.addClass("badge saved-search active")
-    $('.saved-searches').append($filterBadge);
-  }
-});
-
 $(document).on(
   "ajax:error",
   "form[data-remote]",

@@ -1,2 +1,18 @@
-<%= link_to saved_search.name, [current_scope, saved_search],
-  class: "badge saved-search #{'active' if saved_search.search_string_matches_params?(params[:accounts_grid])}" %>
+<%
+  active = if saved_search.matches_params?(params[:accounts_grid])
+             'active'
+           end
+%>
+
+<%= content_tag :div, class: "saved-search", id: dom_id(saved_search) do %>
+  <%= link_to saved_search.name,
+    [current_scope, saved_search],
+    class: "badge #{active}" %>
+
+  <%= link_to web_icon('close', class: "icon-red"),
+    [current_scope, saved_search],
+    data: {
+      method: :delete,
+      remote: true,
+    } %>
+<% end %>

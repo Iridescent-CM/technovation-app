@@ -16,6 +16,7 @@
 //= require modals
 //= require forms
 //= require season-schedule
+//= require saved-searches
 
 document.addEventListener("turbolinks:load", function() {
   $(".accordion-toggle").on("click", function(e) {

@@ -4,18 +4,43 @@
   }
 }
 
+.saved-search {
+  display: inline-block;
+
+  &:hover {
+    [data-remote] {
+      opacity: 0.3;
+    }
+
+    .badge:not(.active) {
+      opacity: 0.7;
+      color: white;
+    }
+  }
+
+  [data-remote] {
+    padding: 0 0.5rem 0 0;
+    opacity: 0;
+    transition: 0.2s opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 .badge {
   display: inline-block;
   padding: 0.3rem;
   font-size: 0.9rem;
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 0 0.5rem;
   background: $marine-dark;
   color: white;
   border-radius: 0.2rem;
-  opacity: 0.5;
+  opacity: 0.3;
   transition: 0.2s opacity;
 
-  &:hover, &.active {
+  &.active {
     opacity: 1;
     color: white;
   }

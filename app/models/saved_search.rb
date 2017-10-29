@@ -64,7 +64,7 @@ class SavedSearch < ApplicationRecord
     fixed
   end
 
-  def search_string_matches_params?(params)
+  def matches_params?(params)
     mine = to_search_params.values.flatten.sort
     theirs = params.values.flatten.sort
     mine == theirs

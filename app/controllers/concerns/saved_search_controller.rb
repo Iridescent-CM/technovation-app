@@ -18,10 +18,22 @@ module SavedSearchController
     @saved_search = current_profile.saved_searches.build(saved_search_params)
 
     if @saved_search.save
-      render json: @saved_search
+      render partial: "saved_searches/saved_search",
+        locals: {
+          saved_search: @saved_search,
+          params: {
+            accounts_grid: @saved_search.to_search_params,
+          },
+        }
     else
       render json: @saved_search.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @saved_search = current_profile.saved_searches.find(params[:id])
+    @saved_search.destroy
+    render json: { }
   end
 
   private
