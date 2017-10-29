@@ -11,8 +11,21 @@ module Admin
         column_names: detect_extra_columns,
       )
 
-      @accounts_grid = AccountsGrid.new(grid_params) do |scope|
-        scope.page(params[:page])
+      respond_to do |f|
+        f.html do
+          @accounts_grid = AccountsGrid.new(grid_params) do |scope|
+            scope.page(params[:page])
+          end
+        end
+
+        f.csv do
+          @accounts_grid = AccountsGrid.new(grid_params)
+
+          send_data @accounts_grid.to_csv,
+            type: "text/csv",
+            disposition: 'inline',
+            filename: "technovation-participants-#{Time.current}.csv"
+        end
       end
     end
 
