@@ -12,7 +12,8 @@
       <% filters.each do |filter| %>
         <div class="datagrid-filter filter">
           <%= f.datagrid_label filter %>
-          <%= f.datagrid_filter filter, { partials: options[:partials] }.merge(filter.options) %>
+          <%= f.datagrid_filter filter,
+            { partials: options[:partials] }.merge(filter.options) %>
         </div>
       <% end %>
     </div>

@@ -55,7 +55,13 @@ class SavedSearch < ApplicationRecord
     #   FROM [{"foo" => "bar"}, {"baz => "qux"}, {"baz" => "quux"}]
     #   TO { "foo" => "bar", "baz" => ["qux", "quux"] }
     #
-    hash_pairs.inject { |a, b| a.merge(b) { |*i| i[1, 2] } }
+    fixed = hash_pairs.inject { |a, b| a.merge(b) { |*i| i[1, 2] } }
+
+    fixed.each do |k, v|
+      fixed[k] = v.is_a?(Array) ? v.flatten: v
+    end
+
+    fixed
   end
 
   def search_string_matches_params?(params)

@@ -69,7 +69,7 @@ class AccountsGrid
     ],
     filter_group: "and-or",
     multiple: true do |values|
-      clauses = values.map { |v| "#{v}_profiles.id IS NOT NULL" }
+      clauses = values.flatten.map { |v| "#{v}_profiles.id IS NOT NULL" }
       where(clauses.join(' AND '))
     end
 
@@ -85,7 +85,7 @@ class AccountsGrid
       placeholder: "Select or start typing...",
     },
     if: ->(g) { g.admin } do |values|
-      clauses = values.map { |v| "accounts.country = '#{v}'" }
+      clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
       where(clauses.join(' OR '))
     end
 
@@ -101,7 +101,7 @@ class AccountsGrid
     if: ->(g) {
       g.country.one? && CS.get(g.country[0]).any?
     } do |values, scope, grid|
-      clauses = values.map do |v|
+      clauses = values.flatten.map do |v|
         "lower(accounts.state_province) like '#{v.downcase}%'"
       end
 
@@ -120,7 +120,7 @@ class AccountsGrid
     if: ->(g) {
       g.state_province.one? && CS.get(g.country[0], g.state_province[0]).any?
     } do |values, scope, grid|
-      clauses = values.map { |v| "accounts.city = '#{v}'" }
+      clauses = values.flatten.map { |v| "accounts.city = '#{v}'" }
 
       scope.where(state_province: grid.state_province[0])
         .where(clauses.join(' OR '))
