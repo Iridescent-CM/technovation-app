@@ -81,6 +81,9 @@ class AccountsGrid
     },
     filter_group: "location-data",
     multiple: true,
+    data: {
+      placeholder: "Select or start typing...",
+    },
     if: ->(g) { g.admin } do |values|
       clauses = values.map { |v| "accounts.country = '#{v}'" }
       where(clauses.join(' OR '))
@@ -92,6 +95,9 @@ class AccountsGrid
     select: ->(g) { CS.get(g.country[0]).map { |s| [s[1], s[0]] } },
     filter_group: "location-data",
     multiple: true,
+    data: {
+      placeholder: "Select or start typing...",
+    },
     if: ->(g) {
       g.country.one? && CS.get(g.country[0]).any?
     } do |values, scope, grid|
@@ -108,6 +114,9 @@ class AccountsGrid
     select: ->(g) { CS.get(g.country[0], g.state_province[0]) },
     filter_group: "location-data",
     multiple: true,
+    data: {
+      placeholder: "Select or start typing...",
+    },
     if: ->(g) {
       g.state_province.one? && CS.get(g.country[0], g.state_province[0]).any?
     } do |values, scope, grid|
