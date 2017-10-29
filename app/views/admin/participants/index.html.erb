@@ -8,7 +8,7 @@
   <h6><%= pluralize(@accounts_grid.assets.count, "account") %> found</h6>
 
   <p>
-    <%= link_to "Export current table to CSV",
+    <%= link_to "Export current results to CSV",
       url_for(format: 'csv', accounts_grid: params[:accounts_grid].to_unsafe_h),
       class: "button secondary small" %>
   </p>
