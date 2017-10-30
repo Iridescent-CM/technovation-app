@@ -71,7 +71,8 @@ class ApplicationController < ActionController::Base
 
   private
   def regional_ambassador
-    @regional_ambassador ||= RegionalAmbassadorProfile.approved
+    @regional_ambassador ||= RegionalAmbassadorProfile.not_staff
+      .approved
       .joins(:current_account)
       .find_by({ "accounts.country" => current_account.country }.merge(
         current_account.country == "US" ?

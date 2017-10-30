@@ -5,6 +5,13 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
+  scope :not_staff, -> {
+    joins(:account)
+      .where.not("accounts.email ILIKE ?", "%joesak%")
+      .where.not("accounts.email ILIKE ?", "%iridescentlearning.org%")
+      .where.not("accounts.email ILIKE ?", "%@technovationchallenge.org%")
+  }
+
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account

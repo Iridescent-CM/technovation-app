@@ -47,4 +47,8 @@ class RegionalAmbassadorController < ApplicationController
     @current_ambassador ||= current_account.regional_ambassador_profile ||
       current_session.regional_ambassador_profile
   end
+
+  def regional_ambassador
+    current_ambassador
+  end
 end
