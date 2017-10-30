@@ -8,11 +8,13 @@ RSpec.describe RegionalAmbassador::SignupsController do
         password: "secret1234",
       })
 
-      post :create, params: { regional_ambassador_profile: FactoryGirl.attributes_for(
-        :regional_ambassador,
-        bio: "Hello, bio",
-        account_attributes: FactoryGirl.attributes_for(:account),
-      ) }
+      post :create, params: {
+        regional_ambassador_profile: FactoryGirl.attributes_for(
+          :regional_ambassador,
+          bio: "Hello, bio",
+          account_attributes: FactoryGirl.attributes_for(:account),
+        )
+      }
 
       expect(flash[:success]).to eq("Welcome to Technovation!")
       expect(RegionalAmbassadorProfile.last.bio).to eq("Hello, bio")
