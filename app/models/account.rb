@@ -79,6 +79,7 @@ class Account < ActiveRecord::Base
       mentor_profile: :current_teams,
       student_profile: :current_teams
     )
+    .where("mentor_profiles.id IS NOT NULL OR student_profiles.id IS NOT NULL")
     .where("teams.id is not null")
   }
 
@@ -88,6 +89,7 @@ class Account < ActiveRecord::Base
       mentor_profile: :current_teams,
       student_profile: :current_teams
     )
+    .where("mentor_profiles.id IS NOT NULL OR student_profiles.id IS NOT NULL")
     .where("teams.id is null")
   }
 
