@@ -9,10 +9,12 @@
 
   <%= link_to "Participants",
     admin_participants_path,
+    data: { turbolinks: false },
     class: al(admin_participants_path) %>
 
   <%= link_to "Teams",
     admin_teams_path,
+    data: { turbolinks: false },
     class: al(admin_teams_path) %>
 
 <% if false %>

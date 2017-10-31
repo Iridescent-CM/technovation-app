@@ -3,10 +3,12 @@
 <% if current_ambassador.onboarded? %>
   <%= link_to "Participants",
     regional_ambassador_participants_path,
+    data: { turbolinks: false },
     class: al(regional_ambassador_participants_path) %>
 
   <%= link_to "Teams",
     regional_ambassador_teams_path,
+    data: { turbolinks: false },
     class: al(regional_ambassador_teams_path) %>
 
   <% if false %>
