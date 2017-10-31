@@ -21,6 +21,14 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :team_division do
+    if student_profile.present?
+      Division.for(self).name.humanize
+    else
+      "_not_a_student_"
+    end
+  end
+
   column :background_check, if: ->(g) { g.admin or Array(g.country)[0] == "US" } do
     if country == "US" and mentor_profile.present?
       background_check.present? ? background_check.status : "not submitted"
@@ -86,6 +94,14 @@ class AccountsGrid
     filter_group: "and-or",
     multiple: true do |value|
     by_season(value)
+  end
+
+  filter :division,
+    :enum,
+    header: "Division (students only)",
+    select: [["Senior", "senior"], ["Junior", "junior"]],
+    filter_group: "and-or" do |value|
+    by_division(value)
   end
 
   filter :scope_names,

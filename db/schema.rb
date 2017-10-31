@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171028162512) do
+ActiveRecord::Schema.define(version: 20171031184604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,10 @@ ActiveRecord::Schema.define(version: 20171028162512) do
     t.string "session_token"
     t.string "mailer_token"
     t.string "icon_path"
+    t.bigint "division_id"
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
+    t.index ["division_id"], name: "index_accounts_on_division_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["mailer_token"], name: "index_accounts_on_mailer_token", unique: true
     t.index ["password_reset_token"], name: "index_accounts_on_password_reset_token", unique: true
@@ -541,6 +543,7 @@ ActiveRecord::Schema.define(version: 20171028162512) do
     t.index ["account_id"], name: "index_unconfirmed_email_addresses_on_account_id"
   end
 
+  add_foreign_key "accounts", "divisions"
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
   add_foreign_key "business_plans", "team_submissions"

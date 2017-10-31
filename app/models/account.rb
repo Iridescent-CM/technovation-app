@@ -27,6 +27,8 @@ class Account < ActiveRecord::Base
 
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
 
+  belongs_to :division, required: false
+
   has_many :certificates, dependent: :destroy
 
   has_many :void_consent_waivers,
@@ -157,6 +159,11 @@ class Account < ActiveRecord::Base
       .where("mentor_profiles.id IS NOT NULL")
       .where("background_checks.id IS NOT NULL")
       .where("background_checks.status = ?", BackgroundCheck.statuses[:suspended])
+  }
+
+  scope :by_division, ->(division) {
+    joins(:division)
+      .where("divisions.name = ?", Division.names[division])
   }
 
   mount_uploader :profile_image, ImageProcessor
@@ -293,10 +300,6 @@ class Account < ActiveRecord::Base
     if student_profile
       student_profile.parental_consent
     end
-  end
-
-  def division
-    Division.for(student_profile).name.humanize
   end
 
   def age(now = Time.current.to_date)

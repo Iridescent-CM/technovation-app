@@ -26,6 +26,7 @@ class ProfileCreating
     profile.account.update({
       email_confirmed_at: Time.current,
       icon_path: icon_path,
+      division: Division.for(profile.account),
     })
 
     controller.remove_cookie(:signup_token)

@@ -45,9 +45,15 @@ class ProfileUpdating
   def perform_student_updates
     team = profile.team
 
-    if team.present? and profile.account.saved_change_to_date_of_birth?
-      Casting.delegating(team => DivisionChooser) do
-        team.reconsider_division_with_save
+    if profile.account.saved_change_to_date_of_birth?
+      Casting.delegating(profile.account => DivisionChooser) do
+        profile.account.reconsider_division_with_save
+      end
+
+      if team.present?
+        Casting.delegating(team => DivisionChooser) do
+          team.reconsider_division_with_save
+        end
       end
     end
   end
