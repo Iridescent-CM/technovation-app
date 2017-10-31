@@ -21,6 +21,16 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :background_check, if: ->(g) { g.admin or g.country == "US" } do
+    if country == "US" and mentor_profile.present?
+      background_check.present? ? background_check.status : "not submitted"
+    elsif mentor_profile.present?
+      "_international_"
+    else
+      "_not_a_mentor_"
+    end
+  end
+
   column :age, order: "accounts.date_of_birth desc"
   column :city
   column :state_province, header: "State"
