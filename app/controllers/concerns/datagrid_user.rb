@@ -31,6 +31,11 @@ module DatagridUser
       columns = columns | [:city]
     end
 
+    if Array(grid_params[:profile_type]).many? or
+        grid_params[:team_matching].present?
+      columns = columns | [:profile_type]
+    end
+
     columns
   end
 

@@ -13,6 +13,10 @@ class AccountsGrid
       .order("accounts.created_at desc")
   end
 
+  column :profile_type do
+    scope_name
+  end
+
   column :first_name, mandatory: true
   column :last_name, mandatory: true
   column :email, mandatory: true
