@@ -13,18 +13,21 @@ module DatagridUser
   end
 
   private
-  def detect_extra_columns
-    columns = Array(params[:accounts_grid][:column_names]).flatten.map(&:to_sym)
+  def detect_extra_columns(grid_params)
+    columns = Array(grid_params[:column_names]).flatten.map(&:to_sym)
 
-    if Array(params[:accounts_grid][:country]).any?
+    if Array(grid_params[:country]).many?
       columns = columns | [:country]
     end
 
-    if Array(params[:accounts_grid][:state_province]).any?
+    if not Array(grid_params[:state_province]).one? and
+        (Array(grid_params[:state_province]).many? or
+          Array(grid_params[:country]).one?)
       columns = columns | [:state_province]
     end
 
-    if Array(params[:accounts_grid][:city]).any?
+    if Array(grid_params[:city]).any? or
+        Array(grid_params[:state_province]).one?
       columns = columns | [:city]
     end
 

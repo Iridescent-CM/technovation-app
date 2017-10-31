@@ -3,14 +3,6 @@ module Admin
     include DatagridUser
 
     def index
-      grid_params = (params[:accounts_grid] ||= {}).merge(
-        admin: true,
-        country: Array(params[:accounts_grid][:country]),
-        state_province: Array(params[:accounts_grid][:state_province]),
-        season: params[:accounts_grid][:season] || Season.current.year,
-        column_names: detect_extra_columns,
-      )
-
       respond_to do |f|
         f.html do
           @accounts_grid = AccountsGrid.new(grid_params) do |scope|
@@ -58,6 +50,19 @@ module Admin
     end
 
     private
+    def grid_params
+      grid = (params[:accounts_grid] ||= {}).merge(
+        admin: true,
+        country: Array(params[:accounts_grid][:country]),
+        state_province: Array(params[:accounts_grid][:state_province]),
+        season: params[:accounts_grid][:season] || Season.current.year,
+      )
+
+      grid.merge(
+        column_names: detect_extra_columns(grid),
+      )
+    end
+
     def account_params
       params.require(:account).permit(
         :id,

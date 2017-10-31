@@ -1,7 +1,7 @@
 class AccountsGrid
   include Datagrid
 
-  attr_accessor :admin
+  attr_accessor :admin, :allow_state_search
 
   scope do
     Account.left_outer_joins([
@@ -92,16 +92,21 @@ class AccountsGrid
   filter :state_province,
     :enum,
     header: "State / Province",
-    select: ->(g) { CS.get(g.country[0]).map { |s| [s[1], s[0]] } },
+    select: ->(g) {
+      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
+    },
     filter_group: "location-data",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
     },
     if: ->(g) {
-      g.country.one? && CS.get(g.country[0]).any?
+      (g.admin or g.allow_state_search) and
+        g.country.one? and
+          CS.get(g.country[0]).any?
     } do |values, scope, grid|
       clauses = values.flatten.map do |v|
+        v = v === "DIF" ? "CDMX" : v
         "lower(accounts.state_province) like '#{v.downcase}%'"
       end
 
@@ -111,18 +116,30 @@ class AccountsGrid
 
   filter :city,
     :enum,
-    select: ->(g) { CS.get(g.country[0], g.state_province[0]) },
+    select: ->(g) {
+      country = g.country[0]
+      state = g.state_province[0]
+      CS.get(country, state)
+    },
     filter_group: "location-data",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
     },
     if: ->(g) {
-      g.state_province.one? && CS.get(g.country[0], g.state_province[0]).any?
+      country = g.country[0]
+      state = g.state_province[0]
+      g.state_province.one? && CS.get(country, state).any?
     } do |values, scope, grid|
-      clauses = values.flatten.map { |v| "accounts.city = '#{v}'" }
+      clauses = values.flatten.map do |v|
+        v = v === "Mexico City" ? "Ciudad de México" : v
+        "accounts.city = '#{v}'"
+      end
 
-      scope.where(state_province: grid.state_province[0])
+      state = grid.state_province[0]
+      state = state === "DIF" ? "CDMX" : state
+
+      scope.where(state_province: state)
         .where(clauses.join(' OR '))
     end
 
