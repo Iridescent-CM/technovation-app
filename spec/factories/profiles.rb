@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :admin_profile, aliases: [:admin] do
     account
   end
@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :student_profile, aliases: [:student, :student_account] do
     account
 
-    school_name { "FactoryGirl High" }
+    school_name { "FactoryBot High" }
 
     transient do
       city "Chicago"
@@ -26,10 +26,10 @@ FactoryGirl.define do
 
     before(:create) do |s, e|
       if s.parental_consent.nil? and not e.not_onboarded
-        s.build_parental_consent(FactoryGirl.attributes_for(:parental_consent))
+        s.build_parental_consent(FactoryBot.attributes_for(:parental_consent))
       end
 
-      attrs = FactoryGirl.attributes_for(:account)
+      attrs = FactoryBot.attributes_for(:account)
 
       s.build_account(attrs.merge(
         city: e.city,
@@ -47,8 +47,8 @@ FactoryGirl.define do
 
     trait :on_team do
       after(:create) do |s|
-        team = FactoryGirl.create(:team)
-        FactoryGirl.create(
+        team = FactoryBot.create(:team)
+        FactoryBot.create(
           :team_membership,
           member: s,
           team: team
@@ -65,7 +65,7 @@ FactoryGirl.define do
   end
 
   factory :mentor_profile, aliases: [:mentor, :mentor_account] do
-    school_company_name { "FactoryGirl" }
+    school_company_name { "FactoryBot" }
     job_title { "Engineer" }
     bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
 
@@ -88,7 +88,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |m, e|
-      attrs = FactoryGirl.attributes_for(:account)
+      attrs = FactoryBot.attributes_for(:account)
 
       m.build_account(attrs.merge(
         date_of_birth: e.date_of_birth || attrs[:date_of_birth],
@@ -102,11 +102,11 @@ FactoryGirl.define do
       ))
 
       if m.requires_background_check? and not e.not_onboarded # TODO: not not_onboarded :/
-        m.account.build_background_check(FactoryGirl.attributes_for(:background_check))
+        m.account.build_background_check(FactoryBot.attributes_for(:background_check))
       end
 
       unless m.consent_signed? or e.not_onboarded
-        m.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+        m.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
     end
 
@@ -117,15 +117,15 @@ FactoryGirl.define do
     trait :with_expertises do
       after(:create) do |m|
         2.times do
-          FactoryGirl.create(:expertise, mentor_profile_ids: m.id)
+          FactoryBot.create(:expertise, mentor_profile_ids: m.id)
         end
       end
     end
 
     trait :on_team do
       after(:create) do |m|
-        team = FactoryGirl.create(:team)
-        FactoryGirl.create(
+        team = FactoryBot.create(:team)
+        FactoryBot.create(
           :team_membership,
           member: m,
           team: team
@@ -140,7 +140,7 @@ FactoryGirl.define do
     :ambassador_account,
     :regional_ambassador_account
   ] do
-    organization_company_name { "FactoryGirl" }
+    organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
     ambassador_since_year { Time.current.year }
     bio "A complete bio"
@@ -163,7 +163,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |r, e|
-      attrs = FactoryGirl.attributes_for(:account)
+      attrs = FactoryBot.attributes_for(:account)
 
       r.build_account(attrs.merge(
         city: e.city,
@@ -175,11 +175,11 @@ FactoryGirl.define do
       ))
 
       unless r.background_check.present?
-        r.account.build_background_check(FactoryGirl.attributes_for(:background_check))
+        r.account.build_background_check(FactoryBot.attributes_for(:background_check))
       end
 
       unless r.consent_signed?
-        r.account.build_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+        r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
     end
 
@@ -198,7 +198,7 @@ FactoryGirl.define do
   end
 
   factory :judge_profile, aliases: [:judge, :judge_account] do
-    company_name { "FactoryGirl" }
+    company_name { "FactoryBot" }
     job_title { "Engineer" }
 
     transient do
@@ -226,7 +226,7 @@ FactoryGirl.define do
         }
       end
 
-      act_attrs = FactoryGirl.attributes_for(:account).merge(attrs)
+      act_attrs = FactoryBot.attributes_for(:account).merge(attrs)
 
       j.build_account(act_attrs.merge(
         email: e.email || act_attrs[:email],

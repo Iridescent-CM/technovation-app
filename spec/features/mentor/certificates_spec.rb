@@ -16,7 +16,7 @@ RSpec.feature "Mentor certificates" do
   scenario "generate an appreciation cert" do
     skip "Rebuilding mentor dashboard, certificates not back yet"
 
-    mentor = FactoryGirl.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :on_team)
 
     sign_in(mentor)
 

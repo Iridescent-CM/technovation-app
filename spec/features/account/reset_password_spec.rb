@@ -4,7 +4,7 @@ RSpec.feature "Reset your forgotten password" do
   before do
     scope = %i{mentor student regional_ambassador}.sample
 
-    FactoryGirl.create(
+    FactoryBot.create(
       scope,
       email: "Find@me.com",
       password: "oldforgotten"

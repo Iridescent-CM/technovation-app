@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe SubmissionScore do
   it "acts as paranoid" do
-    team = FactoryGirl.create(:team)
-    judge = FactoryGirl.create(:judge_profile)
+    team = FactoryBot.create(:team)
+    judge = FactoryBot.create(:judge_profile)
     team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true
@@ -25,13 +25,13 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     second_team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true
     )
-    second_judge_profile = FactoryGirl.create(:judge_profile)
+    second_judge_profile = FactoryBot.create(:judge_profile)
 
     SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
@@ -64,7 +64,7 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
@@ -103,7 +103,7 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     subscore = SubmissionScore.create!({
       team_submission: team_submission,
@@ -126,7 +126,7 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     team_submission.create_technical_checklist!({
       used_canvas: true,
@@ -150,7 +150,7 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     team_submission.create_technical_checklist!({
       used_canvas: true,
@@ -183,7 +183,7 @@ RSpec.describe SubmissionScore do
       team_id: team.id,
       integrity_affirmed: true
     )
-    judge_profile = FactoryGirl.create(:judge_profile)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     team_submission.update_attributes(
       judge_opened_at: Time.current,
@@ -208,9 +208,9 @@ RSpec.describe SubmissionScore do
       let(:round) { SubmissionScore.rounds[judging_round] }
 
       it "udpates team submission average on save when complete" do
-        team = FactoryGirl.create(:team)
-        team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-        judge_profile = FactoryGirl.create(:judge_profile)
+        team = FactoryBot.create(:team)
+        team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+        judge_profile = FactoryBot.create(:judge_profile)
 
         sub = SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
@@ -229,7 +229,7 @@ RSpec.describe SubmissionScore do
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(4)
 
-        judge_profile2 = FactoryGirl.create(:judge_profile)
+        judge_profile2 = FactoryBot.create(:judge_profile)
 
         sub2 = SubmissionScore.create!(
           judge_profile_id: judge_profile2.id,
@@ -245,9 +245,9 @@ RSpec.describe SubmissionScore do
       end
 
       it "does not update a team submission average score if it is not complete" do
-        team = FactoryGirl.create(:team)
-        team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-        judge_profile = FactoryGirl.create(:judge_profile)
+        team = FactoryBot.create(:team)
+        team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+        judge_profile = FactoryBot.create(:judge_profile)
 
         SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
@@ -263,9 +263,9 @@ RSpec.describe SubmissionScore do
   end
 
   it "sets the event_type to virtual for virtual judges" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+    team = FactoryBot.create(:team)
+    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     score = SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
@@ -276,12 +276,12 @@ RSpec.describe SubmissionScore do
   end
 
   it "sets the event_type to live for RPE judges" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+    team = FactoryBot.create(:team)
+    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
+      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
@@ -302,12 +302,12 @@ RSpec.describe SubmissionScore do
   end
 
   it "does not re-set the event type if the judge changes" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+    team = FactoryBot.create(:team)
+    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
+      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
@@ -332,9 +332,9 @@ RSpec.describe SubmissionScore do
   end
 
   it "only counts itself on the submission when it's complete" do
-    team = FactoryGirl.create(:team)
-    team_submission = FactoryGirl.create(:team_submission, :complete, team: team)
-    judge_profile = FactoryGirl.create(:judge_profile)
+    team = FactoryBot.create(:team)
+    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    judge_profile = FactoryBot.create(:judge_profile)
 
     score = SubmissionScore.create!({
       judge_profile: judge_profile,
@@ -364,8 +364,8 @@ RSpec.describe SubmissionScore do
 
   describe ".current_round" do
     it "pulls QF scores" do
-      qf = FactoryGirl.create(:score, round: :quarterfinals)
-      FactoryGirl.create(:score, round: :semifinals)
+      qf = FactoryBot.create(:score, round: :quarterfinals)
+      FactoryBot.create(:score, round: :semifinals)
 
       set_judging_round("QF")
 
@@ -375,8 +375,8 @@ RSpec.describe SubmissionScore do
     end
 
     it "pulls SF scores" do
-      sf = FactoryGirl.create(:score, round: :semifinals)
-      FactoryGirl.create(:score, round: :quarterfinals)
+      sf = FactoryBot.create(:score, round: :semifinals)
+      FactoryBot.create(:score, round: :quarterfinals)
 
       set_judging_round("SF")
 

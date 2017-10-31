@@ -4,7 +4,7 @@ RSpec.feature "Student creates a team" do
   scenario "Location is set automatically" do
     SeasonToggles.team_building_enabled!
 
-    student = FactoryGirl.create(:student, :full_profile)
+    student = FactoryBot.create(:student, :full_profile)
 
     sign_in(student)
 
@@ -19,7 +19,7 @@ RSpec.feature "Student creates a team" do
   scenario "Location is a requirement when it hasn't been set on the student" do
     SeasonToggles.team_building_enabled!
 
-    student = FactoryGirl.create(
+    student = FactoryBot.create(
       :student,
       city: nil,
       state_province: nil,
@@ -54,8 +54,8 @@ RSpec.feature "Student creates a team" do
   scenario "Re-using a past team name" do
     SeasonToggles.team_building_enabled!
 
-    student = FactoryGirl.create(:student, :full_profile)
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    student = FactoryBot.create(:student, :full_profile)
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
     TeamRosterManaging.add(old_team, student)
 
@@ -72,8 +72,8 @@ RSpec.feature "Student creates a team" do
   scenario "Re-using someone else's past team name" do
     SeasonToggles.team_building_enabled!
 
-    student = FactoryGirl.create(:student, :full_profile)
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    student = FactoryBot.create(:student, :full_profile)
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
 
     sign_in(student)

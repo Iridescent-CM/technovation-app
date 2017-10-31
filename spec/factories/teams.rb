@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :team do
     sequence(:name) { |n| "Go Team Factory Girl #{n}!" }
-    description { "Made with <3 by FactoryGirl" }
+    description { "Made with <3 by FactoryBot" }
     division { Division.senior }
     city "Chicago"
     state_province "IL"
@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     trait :with_mentor do
       after(:create) do |team, _|
-        TeamRosterManaging.add(team, FactoryGirl.create(:mentor))
+        TeamRosterManaging.add(team, FactoryBot.create(:mentor))
       end
     end
 
@@ -25,7 +25,7 @@ FactoryGirl.define do
 
     after(:create) do |team, evaluator|
       members = evaluator.members_count.times.collect {
-        FactoryGirl.create(:student)
+        FactoryBot.create(:student)
       }
       team.student_ids = members.map(&:id)
       TeamCreating.execute(team, team.members.first, FakeController.new)
@@ -33,7 +33,7 @@ FactoryGirl.define do
   end
 
   factory :team_membership, class: "Membership" do
-    association(:member) { FactoryGirl.create(:student) }
+    association(:member) { FactoryBot.create(:student) }
     association(:team)
   end
 end

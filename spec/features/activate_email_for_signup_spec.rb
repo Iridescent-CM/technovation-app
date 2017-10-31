@@ -20,7 +20,7 @@ RSpec.feature "Activate your email to sign up" do
   scenario "Use an email that exists" do
     ActionMailer::Base.deliveries.clear
 
-    FactoryGirl.create(:judge, email: "joe@joesak.com")
+    FactoryBot.create(:judge, email: "joe@joesak.com")
     visit root_path
 
     fill_in "Email address", with: "joe@joesak.com"

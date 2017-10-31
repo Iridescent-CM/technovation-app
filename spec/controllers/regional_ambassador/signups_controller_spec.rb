@@ -9,10 +9,10 @@ RSpec.describe RegionalAmbassador::SignupsController do
       })
 
       post :create, params: {
-        regional_ambassador_profile: FactoryGirl.attributes_for(
+        regional_ambassador_profile: FactoryBot.attributes_for(
           :regional_ambassador,
           bio: "Hello, bio",
-          account_attributes: FactoryGirl.attributes_for(:account),
+          account_attributes: FactoryBot.attributes_for(:account),
         )
       }
 

@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.feature "Mentors and invitations" do
   scenario "A mentor accepts an invitation" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
 
-    mentor = FactoryGirl.create(:mentor)
+    mentor = FactoryBot.create(:mentor)
 
-    invite = FactoryGirl.create(
+    invite = FactoryBot.create(
       :mentor_invite,
       team: team,
       invitee: mentor,

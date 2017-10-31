@@ -4,8 +4,8 @@ require "./lib/invite_ra"
 RSpec.feature "Invited RAs confirm their details" do
   let(:attempt) {
     InviteRA.(
-      FactoryGirl.attributes_for(:account).merge(
-        FactoryGirl.attributes_for(:ambassador)
+      FactoryBot.attributes_for(:account).merge(
+        FactoryBot.attributes_for(:ambassador)
       )
     )
   }

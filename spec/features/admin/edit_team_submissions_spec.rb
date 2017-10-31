@@ -3,16 +3,16 @@ require "rails_helper"
 RSpec.feature "Toggling editable team submissions" do
   include ActionView::RecordIdentifier
 
-  let(:team) { FactoryGirl.create(:team) }
+  let(:team) { FactoryBot.create(:team) }
 
   def set_editable_team_submissions(bool)
     SeasonToggles.team_submissions_editable = bool
   end
 
   def create_authenticated_user_on_team(scope, options)
-    user = FactoryGirl.create(scope)
+    user = FactoryBot.create(scope)
     TeamRosterManaging.add(team, user)
-    FactoryGirl.create(:submission, team: team) if options[:submission]
+    FactoryBot.create(:submission, team: team) if options[:submission]
     sign_in(user)
   end
 

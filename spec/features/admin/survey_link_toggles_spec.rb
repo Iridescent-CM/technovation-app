@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Set survey links and link text" do
   %w{student mentor}.each do |scope|
     context "#{scope} survey link is configured" do
-      let(:user) { FactoryGirl.create(scope) }
+      let(:user) { FactoryBot.create(scope) }
 
       before do
         SeasonToggles.set_dashboard_text(scope, "this is a dependency")

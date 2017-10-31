@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Student::TeamsController do
   describe 'POST #create' do
     it "creates teams for students not on a team" do
-      student = FactoryGirl.create(:student)
+      student = FactoryBot.create(:student)
       sign_in(student)
 
       expect {
@@ -20,7 +20,7 @@ RSpec.describe Student::TeamsController do
     end
 
     it "does not create teams for students already on a team" do
-      student = FactoryGirl.create(:student, :on_team)
+      student = FactoryBot.create(:student, :on_team)
       sign_in(student)
 
       expect {
@@ -38,8 +38,8 @@ RSpec.describe Student::TeamsController do
     end
 
     it "declines any pending invites" do
-      student = FactoryGirl.create(:student)
-      invite = FactoryGirl.create(
+      student = FactoryBot.create(:student)
+      invite = FactoryBot.create(
         :team_member_invite,
         invitee_email: student.email
       )
@@ -56,8 +56,8 @@ RSpec.describe Student::TeamsController do
     end
 
     it "deletes any pending join requests" do
-      student = FactoryGirl.create(:student)
-      join_request = FactoryGirl.create(:join_request, requestor: student)
+      student = FactoryBot.create(:student)
+      join_request = FactoryBot.create(:join_request, requestor: student)
 
       sign_in(student)
       post :create, params: {
@@ -75,8 +75,8 @@ RSpec.describe Student::TeamsController do
 
   describe "GET #new" do
     it "shows a past_team page for past teams" do
-      student = FactoryGirl.create(:student)
-      past_team = FactoryGirl.create(:team, seasons: [Season.current.year - 1])
+      student = FactoryBot.create(:student)
+      past_team = FactoryBot.create(:team, seasons: [Season.current.year - 1])
       TeamRosterManaging.add(past_team, student)
 
       sign_in(student)
@@ -87,7 +87,7 @@ RSpec.describe Student::TeamsController do
     end
 
     it "doesn't allow a student on a team to visit" do
-      student = FactoryGirl.create(:student, :on_team)
+      student = FactoryBot.create(:student, :on_team)
       sign_in(student)
 
       get :new

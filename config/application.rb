@@ -41,8 +41,8 @@ module TechnovationApp
       g.routes false
       g.assets false
       g.helper false
-      g.factory_girl false
-      g.factory_girl dir: 'spec/factories'
+      g.factory_bot false
+      g.factory_bot dir: 'spec/factories'
     end
 
     require "#{Rails.root}/lib/cloud_flare_middleware"

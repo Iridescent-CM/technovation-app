@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.feature "Admin / RA logging in as a user" do
   context "as an RA" do
     before do
-      ra = FactoryGirl.create(:ambassador)
+      ra = FactoryBot.create(:ambassador)
       sign_in(ra)
     end
 
     scenario "RA logging in as a student" do
       skip "Blocked for RAs"
-      student = FactoryGirl.create(:student, :geocoded, :on_team)
+      student = FactoryBot.create(:student, :geocoded, :on_team)
 
       visit regional_ambassador_participant_path(student.account)
 
@@ -27,7 +27,7 @@ RSpec.feature "Admin / RA logging in as a user" do
 
     scenario "RA logging in as a mentor" do
       skip "Blocked for RAs"
-      mentor = FactoryGirl.create(:mentor, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :geocoded, :on_team)
 
       visit regional_ambassador_participant_path(mentor.account)
 
@@ -46,7 +46,7 @@ RSpec.feature "Admin / RA logging in as a user" do
 
     scenario "RA logging in as a judge" do
       skip "Blocked for RAs"
-      judge = FactoryGirl.create(:judge, :geocoded)
+      judge = FactoryBot.create(:judge, :geocoded)
 
       visit regional_ambassador_participant_path(judge.account)
 
@@ -65,12 +65,12 @@ RSpec.feature "Admin / RA logging in as a user" do
 
   context "as an Admin" do
     before do
-      admin = FactoryGirl.create(:admin)
+      admin = FactoryBot.create(:admin)
       sign_in(admin)
     end
 
     scenario "Admin logging in as a student" do
-      student = FactoryGirl.create(:student, :geocoded, :on_team)
+      student = FactoryBot.create(:student, :geocoded, :on_team)
 
       visit admin_participant_path(student.account)
 
@@ -85,7 +85,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a mentor" do
-      mentor = FactoryGirl.create(:mentor, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :geocoded, :on_team)
 
       visit admin_participant_path(mentor.account)
 
@@ -101,7 +101,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a judge" do
-      judge = FactoryGirl.create(:judge, :geocoded)
+      judge = FactoryBot.create(:judge, :geocoded)
 
       visit admin_participant_path(judge.account)
 
@@ -116,7 +116,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as an RA" do
-      ra = FactoryGirl.create(:ambassador)
+      ra = FactoryBot.create(:ambassador)
 
       visit admin_participant_path(ra.account)
 

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :team_submission, aliases: [:submission] do
     team 
 

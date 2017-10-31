@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe Student::JoinRequestsController do
   describe "POST #create" do
-    let(:team) { FactoryGirl.create(:team) }
-    let(:student) { FactoryGirl.create(:student) }
-    let(:mentor) { FactoryGirl.create(:mentor) }
+    let(:team) { FactoryBot.create(:team) }
+    let(:student) { FactoryBot.create(:student) }
+    let(:mentor) { FactoryBot.create(:mentor) }
 
     before do
       TeamRosterManaging.add(team, mentor)
@@ -40,10 +40,10 @@ RSpec.describe Student::JoinRequestsController do
   end
 
   describe "PUT #update" do
-    let(:team) { FactoryGirl.create(:team, members_count: 2) }
-    let(:mentor) { FactoryGirl.create(:mentor) }
+    let(:team) { FactoryBot.create(:team, members_count: 2) }
+    let(:mentor) { FactoryBot.create(:mentor) }
     let(:join_request) {
-      FactoryGirl.create(
+      FactoryBot.create(
         :join_request,
         team: team,
         requestor: mentor

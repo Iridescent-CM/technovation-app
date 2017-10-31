@@ -4,7 +4,7 @@ RSpec.describe BackgroundCheck do
   describe "#clear!" do
     %i{mentor regional_ambassador}.each do |scope|
       it "emails the #{scope}" do
-        account = FactoryGirl.create(scope, :geocoded)
+        account = FactoryBot.create(scope, :geocoded)
 
         account.background_check.pending!
 

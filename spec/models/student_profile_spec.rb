@@ -3,16 +3,16 @@ require "rails_helper"
 RSpec.describe StudentProfile do
   describe ".unmatched" do
     it "lists students without a team" do
-      FactoryGirl.create(:student, :on_team)
-      unmatched_student = FactoryGirl.create(:student)
+      FactoryBot.create(:student, :on_team)
+      unmatched_student = FactoryBot.create(:student)
       expect(StudentProfile.unmatched).to eq([unmatched_student])
     end
 
     it "only considers current students" do
-      past = FactoryGirl.create(:student)
+      past = FactoryBot.create(:student)
       past.account.update(seasons: [Season.current.year - 1])
 
-      current_unmatched_student = FactoryGirl.create(:student)
+      current_unmatched_student = FactoryBot.create(:student)
 
       expect(StudentProfile.unmatched).to eq([current_unmatched_student])
     end
@@ -21,7 +21,7 @@ RSpec.describe StudentProfile do
       current_unmatched_student = nil
 
       Timecop.freeze(Date.new(Season.current.year - 1, 10, 2)) do
-        current_unmatched_student = FactoryGirl.create(:student)
+        current_unmatched_student = FactoryBot.create(:student)
 
         current_unmatched_student.teams.create!({
           division: Division.for(current_unmatched_student),
@@ -39,7 +39,7 @@ RSpec.describe StudentProfile do
       student = nil
 
       Timecop.freeze(Date.new(Season.current.year - 1, 10, 2)) do
-        student = FactoryGirl.create(:student)
+        student = FactoryBot.create(:student)
 
         student.teams.create!({
           division: Division.for(student),
@@ -66,15 +66,15 @@ RSpec.describe StudentProfile do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryGirl.create(
+      FactoryBot.create(
         :student,
         city: "Los Angeles",
         state_province: "CA",
         country: "US"
       )
 
-      il_student = FactoryGirl.create(:student)
-      il_ambassador = FactoryGirl.create(:ambassador)
+      il_student = FactoryBot.create(:student)
+      il_ambassador = FactoryBot.create(:ambassador)
 
       expect(
         StudentProfile.in_region(il_ambassador)
@@ -82,16 +82,16 @@ RSpec.describe StudentProfile do
     end
 
     it "scopes to the given Int'l ambassador's country" do
-      FactoryGirl.create(:student)
+      FactoryBot.create(:student)
 
-      intl_student = FactoryGirl.create(
+      intl_student = FactoryBot.create(
         :student,
         city: "Salvador",
         state_province: "Bahia",
         country: "Brazil"
       )
 
-      intl_ambassador = FactoryGirl.create(
+      intl_ambassador = FactoryBot.create(
         :ambassador,
         city: "Salvador",
         state_province: "Bahia",
@@ -105,8 +105,8 @@ RSpec.describe StudentProfile do
   end
 
   it "at least wants parent/guardian email to look like an email" do
-    FactoryGirl.create(:student, email: "noway@jose.com")
-    profile = FactoryGirl.build(
+    FactoryBot.create(:student, email: "noway@jose.com")
+    profile = FactoryBot.build(
       :student_profile,
       parent_guardian_email: "nowayjose.com"
     )
@@ -121,7 +121,7 @@ RSpec.describe StudentProfile do
   end
 
   it "allows ON FILE as the email ONLY by admin action" do
-    profile = FactoryGirl.build(:student_profile, parent_guardian_email: "ON FILE")
+    profile = FactoryBot.build(:student_profile, parent_guardian_email: "ON FILE")
     expect(profile).not_to be_valid
 
     profile.parent_guardian_email = nil
@@ -137,8 +137,8 @@ RSpec.describe StudentProfile do
   end
 
   it "doesn't allow a student email to be used as parent email" do
-    FactoryGirl.create(:student, email: "noway@jose.com")
-    profile = FactoryGirl.build(
+    FactoryBot.create(:student, email: "noway@jose.com")
+    profile = FactoryBot.build(
       :student_profile,
       parent_guardian_email: "noway@jose.com"
     )
@@ -150,7 +150,7 @@ RSpec.describe StudentProfile do
   end
 
   it "re-sends the parental consent on update of parent email" do
-    FactoryGirl.create(:student_profile)
+    FactoryBot.create(:student_profile)
                .update_attributes(parent_guardian_email: "something@else.com")
 
     mail = ActionMailer::Base.deliveries.last
@@ -160,9 +160,9 @@ RSpec.describe StudentProfile do
   end
 
   it "voids the original parental consent on update of parent email" do
-    profile = FactoryGirl.create(:student_profile)
+    profile = FactoryBot.create(:student_profile)
     consent = profile.reload.create_parental_consent(
-      FactoryGirl.attributes_for(:parental_consent)
+      FactoryBot.attributes_for(:parental_consent)
     )
 
     profile.update_attributes(parent_guardian_email: "something@else.com")
@@ -171,7 +171,7 @@ RSpec.describe StudentProfile do
   end
 
   it "re-subscribes new email addresses" do
-    profile = FactoryGirl.create(:student_profile)
+    profile = FactoryBot.create(:student_profile)
 
     expect(UpdateEmailListJob).to receive(:perform_later)
       .with(profile.parent_guardian_email, "new@parent-email.com",

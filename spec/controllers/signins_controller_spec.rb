@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SigninsController do
   describe "POST #create" do
     it "records the account's login time" do
-      student = FactoryGirl.create(:student)
+      student = FactoryBot.create(:student)
 
       time = Time.new(2009, 1, 20, 9, 0, 0)
 
@@ -20,7 +20,7 @@ RSpec.describe SigninsController do
     end
 
     it "is case-insenstive for email" do
-      FactoryGirl.create(:student, email: "CapiTalLettERS@gmail.com")
+      FactoryBot.create(:student, email: "CapiTalLettERS@gmail.com")
 
       post :create, params: {
         account: {
@@ -33,7 +33,7 @@ RSpec.describe SigninsController do
     end
 
     it "sends parent emails for past students registering for this season" do
-      student = FactoryGirl.create(:student,
+      student = FactoryBot.create(:student,
                                    :full_profile,
                                    password: "secret1234",
                                    parent_guardian_email: "parent2@parent2.com")

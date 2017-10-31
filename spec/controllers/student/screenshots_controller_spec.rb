@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Student::ScreenshotsController do
   describe "DELETE #destroy" do
     it "destroys screenshots by id" do
-      student = FactoryGirl.create(:student, :on_team)
+      student = FactoryBot.create(:student, :on_team)
       team_submission = student.team.team_submissions.create!(
         integrity_affirmed: true
       )
@@ -17,13 +17,13 @@ RSpec.describe Student::ScreenshotsController do
     end
 
     it "does not destroy screenshots that don't belong to the student" do
-      student = FactoryGirl.create(:student, :on_team)
+      student = FactoryBot.create(:student, :on_team)
       team_submission = student.team.team_submissions.create!(
         integrity_affirmed: true
       )
       team_submission.screenshots.create!
 
-      other_team = FactoryGirl.create(:team)
+      other_team = FactoryBot.create(:team)
       other_sub = other_team.team_submissions.create!(integrity_affirmed: true)
       other = Screenshot.create!(team_submission: other_sub)
 

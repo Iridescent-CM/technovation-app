@@ -4,7 +4,7 @@ RSpec.feature "Regional Ambassador views scores" do
   before do
     @ra_scores_enabled = ENV.fetch("ENABLE_RA_SCORES") { false }
     ENV["ENABLE_RA_SCORES"] = "yes"
-    ra = FactoryGirl.create(:regional_ambassador, :approved)
+    ra = FactoryBot.create(:regional_ambassador, :approved)
     sign_in(ra)
   end
 
@@ -24,7 +24,7 @@ RSpec.feature "Regional Ambassador views scores" do
 
   scenario "view QF scores" do
     skip "please excuse the mess: rebuilding RA UI"
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       technical_checklist_attributes: {
@@ -33,7 +33,7 @@ RSpec.feature "Regional Ambassador views scores" do
       }
     )
 
-    FactoryGirl.create(:submission_score, :complete, team_submission: submission)
+    FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     click_link "Teams"
     click_link "Scores"
@@ -44,7 +44,7 @@ RSpec.feature "Regional Ambassador views scores" do
 
   scenario "view SF scores" do
     skip "please excuse the mess: rebuilding RA UI"
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       :semifinalist,
@@ -54,7 +54,7 @@ RSpec.feature "Regional Ambassador views scores" do
       }
     )
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :score,
       :complete,
       round: :semifinals,

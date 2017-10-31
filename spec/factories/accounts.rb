@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :account do
     sequence(:email) { |n| "account#{n}@example.com" }
     password { "secret1234" }
@@ -16,11 +16,11 @@ FactoryGirl.define do
       a.update_column(:profile_image, "foo/bar/baz.png")
 
       unless a.student_profile.present? or a.consent_signed?
-        a.create_consent_waiver(FactoryGirl.attributes_for(:consent_waiver))
+        a.create_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
 
       unless a.background_check.present?
-        a.create_background_check!(FactoryGirl.attributes_for(:background_check))
+        a.create_background_check!(FactoryBot.attributes_for(:background_check))
       end
     end
   end

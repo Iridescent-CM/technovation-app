@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe RegionalAmbassadorProfile do
   it "emails on decline" do
-    ambassador = FactoryGirl.create(:regional_ambassador)
+    ambassador = FactoryBot.create(:regional_ambassador)
 
     ambassador.declined!
 

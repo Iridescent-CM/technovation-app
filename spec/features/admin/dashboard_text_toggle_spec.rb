@@ -14,7 +14,7 @@ RSpec.feature "Configurable dashboard text per user type" do
         "Some sort of user message"
       )
 
-      user = FactoryGirl.create(scope)
+      user = FactoryBot.create(scope)
       sign_in(user)
 
       visit public_send("#{scope}_dashboard_path")

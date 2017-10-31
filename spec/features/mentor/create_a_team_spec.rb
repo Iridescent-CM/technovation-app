@@ -4,8 +4,8 @@ RSpec.feature "Mentor creates a team" do
   scenario "Re-using a past team name" do
     SeasonToggles.team_building_enabled!
 
-    mentor = FactoryGirl.create(:mentor, :geocoded)
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    mentor = FactoryBot.create(:mentor, :geocoded)
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
     TeamRosterManaging.add(old_team, mentor)
 
@@ -23,8 +23,8 @@ RSpec.feature "Mentor creates a team" do
   scenario "Re-using someone else's past team name" do
     SeasonToggles.team_building_enabled!
 
-    mentor = FactoryGirl.create(:mentor)
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    mentor = FactoryBot.create(:mentor)
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
 
     sign_in(mentor)

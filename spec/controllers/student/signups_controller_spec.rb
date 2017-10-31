@@ -10,14 +10,14 @@ RSpec.describe Student::SignupsController do
 
   describe "POST #create for invited students" do
     it "assigns the invite to the new account by email" do
-      invite = FactoryGirl.create(
+      invite = FactoryBot.create(
         :team_member_invite,
         invitee_email: "invited@thanks.com"
       )
 
       post :create, params: {
-        student_profile: FactoryGirl.attributes_for(:student).merge(
-          account_attributes: FactoryGirl.attributes_for(
+        student_profile: FactoryBot.attributes_for(:student).merge(
+          account_attributes: FactoryBot.attributes_for(
             :account,
             email: "invited@thanks.com"
           )
@@ -31,8 +31,8 @@ RSpec.describe Student::SignupsController do
   describe "POST #create" do
     before do
       post :create, params: {
-        student_profile: FactoryGirl.attributes_for(:student).merge(
-          account_attributes: FactoryGirl.attributes_for(:account)
+        student_profile: FactoryBot.attributes_for(:student).merge(
+          account_attributes: FactoryBot.attributes_for(:account)
         )
       }
     end

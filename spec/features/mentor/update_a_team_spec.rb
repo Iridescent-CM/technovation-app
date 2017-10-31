@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Mentor updates a team" do
-  let!(:mentor) { FactoryGirl.create(:mentor, :geocoded) }
-  let!(:team) { FactoryGirl.create(:team) }
+  let!(:mentor) { FactoryBot.create(:mentor, :geocoded) }
+  let!(:team) { FactoryBot.create(:team) }
 
   before do
     SeasonToggles.team_building_enabled!
@@ -10,7 +10,7 @@ RSpec.feature "Mentor updates a team" do
   end
 
   scenario "Re-using a past team name" do
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
     TeamRosterManaging.add(old_team, mentor)
 
@@ -24,7 +24,7 @@ RSpec.feature "Mentor updates a team" do
   end
 
   scenario "Re-using someone else's past team name" do
-    old_team = FactoryGirl.create(:team, name: "Awesomest Saucesests")
+    old_team = FactoryBot.create(:team, name: "Awesomest Saucesests")
     old_team.update(seasons: [Season.current.year - 1])
 
     sign_in(mentor)

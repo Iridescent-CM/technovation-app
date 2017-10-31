@@ -3,16 +3,16 @@ require "rails_helper"
 RSpec.describe MentorProfile do
   describe ".unmatched" do
     it "lists mentors without a team" do
-      FactoryGirl.create(:mentor, :on_team)
-      unmatched_mentor = FactoryGirl.create(:mentor)
+      FactoryBot.create(:mentor, :on_team)
+      unmatched_mentor = FactoryBot.create(:mentor)
       expect(MentorProfile.unmatched).to eq([unmatched_mentor])
     end
 
     it "only considers current mentors" do
-      past = FactoryGirl.create(:mentor)
+      past = FactoryBot.create(:mentor)
       past.account.update(seasons: [Season.current.year - 1])
 
-      current_unmatched_mentor = FactoryGirl.create(:mentor)
+      current_unmatched_mentor = FactoryBot.create(:mentor)
 
       expect(MentorProfile.unmatched).to eq([current_unmatched_mentor])
     end
@@ -21,7 +21,7 @@ RSpec.describe MentorProfile do
       current_unmatched_mentor = nil
 
       Timecop.freeze(Date.new(Season.current.year - 1, 10, 2)) do
-        current_unmatched_mentor = FactoryGirl.create(:mentor)
+        current_unmatched_mentor = FactoryBot.create(:mentor)
 
         current_unmatched_mentor.teams.create!({
           division: Division.for(current_unmatched_mentor),
@@ -39,7 +39,7 @@ RSpec.describe MentorProfile do
       mentor = nil
 
       Timecop.freeze(Date.new(Season.current.year - 1, 10, 2)) do
-        mentor = FactoryGirl.create(:mentor)
+        mentor = FactoryBot.create(:mentor)
 
         mentor.teams.create!({
           division: Division.for(mentor),
@@ -66,15 +66,15 @@ RSpec.describe MentorProfile do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryGirl.create(
+      FactoryBot.create(
         :mentor,
         city: "Los Angeles",
         state_province: "CA",
         country: "US"
       )
 
-      il_mentor = FactoryGirl.create(:mentor)
-      il_ambassador = FactoryGirl.create(:ambassador)
+      il_mentor = FactoryBot.create(:mentor)
+      il_ambassador = FactoryBot.create(:ambassador)
 
       expect(
         MentorProfile.in_region(il_ambassador)
@@ -82,16 +82,16 @@ RSpec.describe MentorProfile do
     end
 
     it "scopes to the given Int'l ambassador's country" do
-      FactoryGirl.create(:mentor)
+      FactoryBot.create(:mentor)
 
-      intl_mentor = FactoryGirl.create(
+      intl_mentor = FactoryBot.create(
         :mentor,
         city: "Salvador",
         state_province: "Bahia",
         country: "Brazil"
       )
 
-      intl_ambassador = FactoryGirl.create(
+      intl_ambassador = FactoryBot.create(
         :ambassador,
         city: "Salvador",
         state_province: "Bahia",

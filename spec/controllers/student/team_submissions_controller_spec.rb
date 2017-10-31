@@ -12,8 +12,8 @@ RSpec.describe Student::TeamSubmissionsController do
     end
 
     it "can handle sorting" do
-      student = FactoryGirl.create(:student, :on_team)
-      team_submission = FactoryGirl.create(:submission, team: student.team)
+      student = FactoryBot.create(:student, :on_team)
+      team_submission = FactoryBot.create(:submission, team: student.team)
 
       screenshot1 = team_submission.screenshots.create!
       screenshot2 = team_submission.screenshots.create!

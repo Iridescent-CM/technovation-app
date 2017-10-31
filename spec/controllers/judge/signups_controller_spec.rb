@@ -11,8 +11,8 @@ RSpec.describe Judge::SignupsController do
   describe "POST #create" do
     before do
       post :create, params: {
-        judge_profile: FactoryGirl.attributes_for(:judge).merge(
-          account_attributes: FactoryGirl.attributes_for(:account)
+        judge_profile: FactoryBot.attributes_for(:judge).merge(
+          account_attributes: FactoryBot.attributes_for(:account)
         )
       }
     end

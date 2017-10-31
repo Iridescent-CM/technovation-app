@@ -2,18 +2,18 @@ require "rails_helper"
 
 RSpec.describe Admin::ParticipantsController do
   before do
-    admin = FactoryGirl.create(:admin)
+    admin = FactoryBot.create(:admin)
     sign_in(admin)
   end
 
   it "sends a message to student's team to reconsider division on dob change" do
     Timecop.freeze(Division.cutoff_date - 1.day) do
-      student = FactoryGirl.create(
+      student = FactoryBot.create(
         :student,
         email: "student@testing.com",
         date_of_birth: 13.years.ago
       )
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       TeamRosterManaging.add(team, student)
 
       expect(team.division_name).to eq("junior")
@@ -31,7 +31,7 @@ RSpec.describe Admin::ParticipantsController do
 
   %w{student mentor judge regional_ambassador}.each do |scope|
     it "updates #{scope} newsletters with a change to the email address" do
-      profile = FactoryGirl.create(scope, email: "old@oldtime.com")
+      profile = FactoryBot.create(scope, email: "old@oldtime.com")
 
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
@@ -47,7 +47,7 @@ RSpec.describe Admin::ParticipantsController do
     end
 
     it "updates newsletters with a change to the address" do
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
@@ -64,7 +64,7 @@ RSpec.describe Admin::ParticipantsController do
     end
 
     it "updates #{scope} newsletters with changes to first name" do
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
@@ -80,7 +80,7 @@ RSpec.describe Admin::ParticipantsController do
     end
 
     it "updates #{scope} newsletters with changes to last name" do
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 

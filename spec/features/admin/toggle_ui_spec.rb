@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Admin UI for season toggles:" do
-  before { sign_in(FactoryGirl.create(:admin)) }
+  before { sign_in(FactoryBot.create(:admin)) }
 
   scenario "toggle user signups" do
     %w{student mentor}.each do |scope|

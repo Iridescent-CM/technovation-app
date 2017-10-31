@@ -3,19 +3,19 @@ require "rails_helper"
 RSpec.feature "Students find a team" do
   before { SeasonToggles.team_building_enabled! }
 
-  let!(:available_team) { FactoryGirl.create(:team, :geocoded) }
+  let!(:available_team) { FactoryBot.create(:team, :geocoded) }
     # Default is in Chicago
 
   before do
-    student = FactoryGirl.create(:student, :geocoded, not_onboarded: true)
+    student = FactoryBot.create(:student, :geocoded, not_onboarded: true)
       # City is Chicago
     sign_in(student)
   end
 
   scenario "browse nearby teams" do
-    team = FactoryGirl.create(:team, :geocoded) # Default is in Chicago
+    team = FactoryBot.create(:team, :geocoded) # Default is in Chicago
 
-    faraway_team = FactoryGirl.create(
+    faraway_team = FactoryBot.create(
       :team,
       :geocoded,
       city: "Los Angeles",
@@ -43,7 +43,7 @@ RSpec.feature "Students find a team" do
   scenario "onboarded student sees pending requests" do
     sign_out
 
-    onboarded = FactoryGirl.create(:student, :geocoded)
+    onboarded = FactoryBot.create(:student, :geocoded)
 
     sign_in(onboarded)
 

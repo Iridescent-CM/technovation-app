@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Screenshot do
-	let(:sub) { FactoryGirl.create(:team_submission) }
+	let(:sub) { FactoryBot.create(:team_submission) }
 
   it "sets sort position before creating" do
     screenshot1 = sub.screenshots.create!

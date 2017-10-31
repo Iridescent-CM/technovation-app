@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :submission_score, aliases: [:score] do
     judge_profile
     team_submission

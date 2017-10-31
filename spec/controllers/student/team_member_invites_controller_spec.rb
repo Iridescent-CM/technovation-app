@@ -4,7 +4,7 @@ RSpec.describe Student::TeamMemberInvitesController do
   before { SeasonToggles.team_building_enabled="yes" }
 
   describe "POST #create" do
-    let(:student) { FactoryGirl.create(:student, :on_team) }
+    let(:student) { FactoryBot.create(:student, :on_team) }
 
     let(:invite) { TeamMemberInvite.last }
 
@@ -37,7 +37,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "sets the invitee to an existing account" do
-      existing = FactoryGirl.create(:student)
+      existing = FactoryBot.create(:student)
 
       post :create, params: { team_member_invite: {
         invitee_email: existing.email,
@@ -49,8 +49,8 @@ RSpec.describe Student::TeamMemberInvitesController do
   end
 
   describe "PUT #update" do
-    let(:student) { FactoryGirl.create(:student) }
-    let!(:invite) { FactoryGirl.create(:team_member_invite, invitee: student) }
+    let(:student) { FactoryBot.create(:student) }
+    let!(:invite) { FactoryBot.create(:team_member_invite, invitee: student) }
 
     before do
       sign_in(student)
@@ -75,7 +75,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "shows a friendly message if accepting, but already on a team" do
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       TeamRosterManaging.add(team, student)
 
       put :update, params: {

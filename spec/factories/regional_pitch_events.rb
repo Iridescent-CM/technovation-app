@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :rpe, class: RegionalPitchEvent do
     regional_ambassador_profile
 

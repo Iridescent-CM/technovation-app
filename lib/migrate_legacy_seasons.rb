@@ -49,7 +49,7 @@ module MigrateLegacySeasons
       LegacySeason.create!(year: 2016)
       LegacySeason.create!(year: 2017)
 
-      registerable = FactoryGirl.create(model)
+      registerable = FactoryBot.create(model)
 
       LegacySeason.all.each do |season|
         LegacySeasonRegistration.create!({

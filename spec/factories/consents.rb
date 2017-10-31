@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :parental_consent do
     student_profile
     electronic_signature "Parenty McGee"

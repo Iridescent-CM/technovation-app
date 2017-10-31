@@ -49,7 +49,7 @@ end
 
 RSpec.feature "Register from team invite" do
   let(:email) { "Student@test.com" }
-  let(:team) { FactoryGirl.create(:team) }
+  let(:team) { FactoryBot.create(:team) }
   let(:inviter) { team.students.first }
 
   before do

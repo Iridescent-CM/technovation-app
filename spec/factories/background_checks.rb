@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :background_check do
     account
     status BackgroundCheck.statuses[:clear]

@@ -7,7 +7,7 @@ RSpec.feature "background checks" do
         skip "Awaiting updates on RA features"
       end
 
-      a = FactoryGirl.create(account, :geocoded)
+      a = FactoryBot.create(account, :geocoded)
       a.background_check.destroy
       sign_in(a)
       click_link "Submit Background Check"
@@ -23,7 +23,7 @@ RSpec.feature "background checks" do
 
   [16, 17].each do |age|
     scenario "mentors age #{age} do not need to complete one" do
-      mentor = FactoryGirl.create(:mentor, :geocoded, date_of_birth: age.years.ago)
+      mentor = FactoryBot.create(:mentor, :geocoded, date_of_birth: age.years.ago)
 
       sign_in(mentor)
 
@@ -31,7 +31,7 @@ RSpec.feature "background checks" do
     end
 
     scenario "mentors age #{age} still become searchable" do
-      mentor = FactoryGirl.create(
+      mentor = FactoryBot.create(
         :mentor,
         :geocoded,
         not_onboarded: true,

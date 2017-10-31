@@ -16,14 +16,14 @@ RSpec.describe Judge::SubmissionScoresController do
                           :quarterfinalist
                         end
 
-          team = FactoryGirl.create(:team)
-          FactoryGirl.create(:submission,
+          team = FactoryBot.create(:team)
+          FactoryBot.create(:submission,
                             :complete,
                             contest_rank: current_rank,
                             team: team)
 
           now = Time.current
-          judge = FactoryGirl.create(:judge)
+          judge = FactoryBot.create(:judge)
 
           sign_in(judge)
 

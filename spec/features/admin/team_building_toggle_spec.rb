@@ -11,7 +11,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Student nav bar, no team" do
-    let(:user) { FactoryGirl.create(:student) }
+    let(:user) { FactoryBot.create(:student) }
     let(:path) { student_dashboard_path }
 
     before { sign_in(user) }
@@ -36,7 +36,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Student team page, with team" do
-    let(:user) { FactoryGirl.create(:student, :on_team) }
+    let(:user) { FactoryBot.create(:student, :on_team) }
     let(:path) { student_team_path(user.team) }
 
     before { sign_in(user) }
@@ -55,7 +55,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Student dashboard" do
-    let(:user) { FactoryGirl.create(:student) }
+    let(:user) { FactoryBot.create(:student) }
     let(:path) { student_dashboard_path }
 
     before { sign_in(user) }
@@ -82,8 +82,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing team as student" do
-    let(:user) { FactoryGirl.create(:student) }
-    let(:team) { FactoryGirl.create(:team) }
+    let(:user) { FactoryBot.create(:student) }
+    let(:team) { FactoryBot.create(:team) }
     let(:path) { new_student_join_request_path(team_id: team.id) }
     let(:action) { student_join_requests_path(team_id: team.id) }
 
@@ -103,7 +103,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing current team as student" do
-    let(:user) { FactoryGirl.create(:student, :on_team) }
+    let(:user) { FactoryBot.create(:student, :on_team) }
     let(:team) { user.team }
     let(:path) { student_team_path(team) }
     let(:action) { student_team_member_invites_path }
@@ -126,8 +126,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing mentor profile as student" do
-    let(:user) { FactoryGirl.create(:student, :on_team) }
-    let(:mentor) { FactoryGirl.create(:mentor) }
+    let(:user) { FactoryBot.create(:student, :on_team) }
+    let(:mentor) { FactoryBot.create(:mentor) }
     let(:path) { student_mentor_path(mentor) }
     let(:action) { student_mentor_invites_path }
 
@@ -147,7 +147,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Mentor dashboard" do
-    let(:user) { FactoryGirl.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor) }
     let(:path) { mentor_dashboard_path }
 
     before { sign_in(user) }
@@ -173,7 +173,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Mentor my teams page" do
-    let(:user) { FactoryGirl.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor) }
     let(:path) { mentor_teams_path }
 
     before { sign_in(user) }
@@ -194,8 +194,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing team as mentor" do
-    let(:user) { FactoryGirl.create(:mentor) }
-    let(:team) { FactoryGirl.create(:team) }
+    let(:user) { FactoryBot.create(:mentor) }
+    let(:team) { FactoryBot.create(:team) }
     let(:path) { new_mentor_join_request_path(team_id: team.id) }
     let(:action) { mentor_join_requests_path(team_id: team.id) }
 
@@ -215,8 +215,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing current team as mentor" do
-    let(:user) { FactoryGirl.create(:mentor) }
-    let(:team) { FactoryGirl.create(:team) }
+    let(:user) { FactoryBot.create(:mentor) }
+    let(:team) { FactoryBot.create(:team) }
     let(:path) { mentor_team_path(team) }
     let(:action) { mentor_team_member_invites_path }
 

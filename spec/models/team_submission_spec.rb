@@ -39,7 +39,7 @@ RSpec.describe TeamSubmission do
     subject(:submission) {
       TeamSubmission.create!({
         integrity_affirmed: true,
-        team: FactoryGirl.create(:team)
+        team: FactoryBot.create(:team)
       })
     }
 
@@ -69,7 +69,7 @@ RSpec.describe TeamSubmission do
     end
 
     it "changes when technical checklist added" do
-      FactoryGirl.create(
+      FactoryBot.create(
         :technical_checklist,
         :completed,
         team_submission: submission
@@ -86,7 +86,7 @@ RSpec.describe TeamSubmission do
     it "changes when team regional pitch event changes" do
       team = submission.team
       team.regional_pitch_events << RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryGirl.create(
+        regional_ambassador_profile: FactoryBot.create(
           :regional_ambassador_profile
         ),
         name: "RPE",
@@ -102,21 +102,21 @@ RSpec.describe TeamSubmission do
   end
 
   it "can be #complete?" do
-    team = FactoryGirl.create(:team)
-    sub = FactoryGirl.create(:submission, :complete, team: team)
+    team = FactoryBot.create(:team)
+    sub = FactoryBot.create(:submission, :complete, team: team)
     expect(sub.reload.complete?).to be true
   end
 
   it "only averages scores that count" do
-    team = FactoryGirl.create(:team)
-    sub = FactoryGirl.create(:submission, :complete, team: team)
+    team = FactoryBot.create(:team)
+    sub = FactoryBot.create(:submission, :complete, team: team)
 
-    live_judge = FactoryGirl.create(:judge_profile)
-    virtual_judge = FactoryGirl.create(:judge_profile)
+    live_judge = FactoryBot.create(:judge_profile)
+    virtual_judge = FactoryBot.create(:judge_profile)
 
 
     rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryGirl.create(:regional_ambassador_profile),
+      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,

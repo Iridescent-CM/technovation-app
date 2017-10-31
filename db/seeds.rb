@@ -1,4 +1,4 @@
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 
 ActionMailer::Base.perform_deliveries = false
 
@@ -23,7 +23,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       seasons: [Season.current.year],
                                     })).valid?
   Geocoding.perform(student).with_save
-  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="
   puts ""
@@ -90,7 +90,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       email_confirmed_at: Time.current,
                                       seasons: [Season.current.year - 2],
                                     })).valid?
-  student.create_parental_consent!(FactoryGirl.attributes_for(:parental_consent))
+  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent))
   puts ""
   puts "============================================================="
   puts ""
@@ -173,7 +173,7 @@ if (mentor = MentorProfile.create(
     bio: "Cool chicago mentor",
   )).valid?
   mentor.account.update_column(:profile_image, "foo/bar/baz.png")
-  mentor.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
+  mentor.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
   puts "Created Mentor: #{mentor.email} with password #{mentor.email}"
   puts ""
   puts "============================================================="
@@ -206,7 +206,7 @@ if (ra = RegionalAmbassadorProfile.create(
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?
-  ra.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
+  ra.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
   puts "Created approved RA: #{ra.email} with password #{ra.email}"
   puts ""
   puts "============================================================="
@@ -231,7 +231,7 @@ if (judge = JudgeProfile.create(
     job_title: "Aerospace Engineer",
   )).valid?
   judge.account.update_column(:profile_image, "foo/bar/baz.png")
-  judge.account.create_consent_waiver!(FactoryGirl.attributes_for(:consent_waiver))
+  judge.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
   puts "Created Judge: #{judge.email} with password #{judge.email}"
   puts ""
   puts "============================================================="

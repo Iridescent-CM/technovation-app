@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Disabled judge sign-ins" do
   scenario "an existing judge sees a splash page about applying coming soon" do
-    judge = FactoryGirl.create(:judge)
+    judge = FactoryBot.create(:judge)
 
     sign_in(judge)
 

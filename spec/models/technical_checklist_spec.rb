@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe TechnicalChecklist do
   it "should be completed" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
 
     sub = TeamSubmission.create!({
       integrity_affirmed: true,
@@ -11,7 +11,7 @@ RSpec.describe TechnicalChecklist do
 
     2.times { sub.screenshots.create! }
 
-    checklist = FactoryGirl.create(:technical_checklist,
+    checklist = FactoryBot.create(:technical_checklist,
                                    :completed,
                                    team_submission: sub)
 

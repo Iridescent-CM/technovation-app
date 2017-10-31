@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Student::MentorSearchesController do
   describe "GET #new" do
     it "displays nearby mentors" do
-      mentor = FactoryGirl.create(:mentor, :geocoded, :with_expertises)
-      student = FactoryGirl.create(:student, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :geocoded, :with_expertises)
+      student = FactoryBot.create(:student, :geocoded, :on_team)
 
       sign_in(student)
 
@@ -14,8 +14,8 @@ RSpec.describe Student::MentorSearchesController do
     end
 
     it "does not display unsearchable mentors" do
-      mentor = FactoryGirl.create(:mentor, :geocoded, :with_expertises)
-      student = FactoryGirl.create(:student, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :geocoded, :with_expertises)
+      student = FactoryBot.create(:student, :geocoded, :on_team)
 
       mentor.account.reload
       mentor.background_check.destroy
@@ -28,7 +28,7 @@ RSpec.describe Student::MentorSearchesController do
     end
 
     it "filters mentors who are in-person only" do
-      FactoryGirl.create(
+      FactoryBot.create(
         :mentor,
         :geocoded,
         virtual: false,
@@ -36,7 +36,7 @@ RSpec.describe Student::MentorSearchesController do
         state_province: "CA",
       )
 
-      sign_in(FactoryGirl.create(:student, :geocoded, :on_team))
+      sign_in(FactoryBot.create(:student, :geocoded, :on_team))
 
       get :new, params: { nearby: "anywhere", virtual_only: 1 }
 

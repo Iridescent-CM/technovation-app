@@ -4,7 +4,7 @@ RSpec.feature "Students leave their own team" do
   before { SeasonToggles.team_building_enabled="yes" }
 
   scenario "leave the team" do
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
 
     sign_in(student)
     click_link "My team"

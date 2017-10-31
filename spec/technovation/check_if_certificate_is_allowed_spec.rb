@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe CheckIfCertificateIsAllowed do
-  let(:student) { FactoryGirl.create(:student) }
-  let(:team) { FactoryGirl.create(:team) }
+  let(:student) { FactoryBot.create(:student) }
+  let(:team) { FactoryBot.create(:team) }
 
   def student_on_team
     TeamRosterManaging.add(team, student)
@@ -65,7 +65,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
           integrity_affirmed: true,
           contest_rank: :quarterfinalist
         )
-        rpe = FactoryGirl.create(:rpe, unofficial: true)
+        rpe = FactoryBot.create(:rpe, unofficial: true)
         rpe.teams << team
         expect(
           CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
@@ -77,7 +77,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
           integrity_affirmed: true,
           contest_rank: :quarterfinalist
         )
-        rpe = FactoryGirl.create(:rpe, unofficial: false)
+        rpe = FactoryBot.create(:rpe, unofficial: false)
         rpe.teams << team
         expect(
           CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
@@ -89,7 +89,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
           integrity_affirmed: true,
           contest_rank: :semifinalist
         )
-        rpe = FactoryGirl.create(:rpe, unofficial: false)
+        rpe = FactoryBot.create(:rpe, unofficial: false)
         rpe.teams << team
         expect(
           CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
@@ -99,7 +99,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
   end
 
   context "mentor" do
-    let(:mentor) { FactoryGirl.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor) }
 
     [nil, "", " ", "no-such-type"].each do |type|
       it "returns false for #{type} cert_type" do

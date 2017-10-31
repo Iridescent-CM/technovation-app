@@ -8,8 +8,8 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   scenario "Virtual judge notices no difference" do
     skip "Disabled while judging is rebuilding"
 
-    vjudge = FactoryGirl.create(:judge, onboarded: true)
-    FactoryGirl.create(:team)
+    vjudge = FactoryBot.create(:judge, onboarded: true)
+    FactoryBot.create(:team)
     sign_in(vjudge)
 
     within("#virtual-scores") do
@@ -23,10 +23,10 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   scenario "Live judge sees the invitation" do
     skip "Disabled while judging is rebuilding"
 
-    judge = FactoryGirl.create(:judge, onboarded: true)
-    rpe = FactoryGirl.create(:rpe)
-    sub = FactoryGirl.create(:team_submission)
-    team = FactoryGirl.create(:team, team_submissions: [sub])
+    judge = FactoryBot.create(:judge, onboarded: true)
+    rpe = FactoryBot.create(:rpe)
+    sub = FactoryBot.create(:team_submission)
+    team = FactoryBot.create(:team, team_submissions: [sub])
 
     rpe.teams << team
     rpe.save
@@ -52,10 +52,10 @@ RSpec.feature "Judges who score at RPEs are invited to virtual judge" do
   scenario "Live judge finishes their live event scores" do
     skip "Disabled while judging is rebuilding"
 
-    judge = FactoryGirl.create(:judge, onboarded: true)
-    rpe = FactoryGirl.create(:rpe)
-    sub = FactoryGirl.create(:team_submission)
-    team = FactoryGirl.create(:team, team_submissions: [sub])
+    judge = FactoryBot.create(:judge, onboarded: true)
+    rpe = FactoryBot.create(:rpe)
+    sub = FactoryBot.create(:team_submission)
+    team = FactoryBot.create(:team, team_submissions: [sub])
 
     rpe.teams << team
     judge.regional_pitch_events << rpe

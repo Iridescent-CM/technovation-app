@@ -2,17 +2,17 @@ require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
   let!(:find_mentor) {
-    FactoryGirl.create(:mentor, :geocoded, first_name: "Findme")
+    FactoryBot.create(:mentor, :geocoded, first_name: "Findme")
   } # City is Chicago
 
   before do
-    mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
+    mentor = FactoryBot.create(:mentor, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "only see current mentors" do
-    FactoryGirl.create(:mentor, :geocoded)
-    past = FactoryGirl.create(
+    FactoryBot.create(:mentor, :geocoded)
+    past = FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Not me"
@@ -28,7 +28,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "browse nearby mentors" do
-    FactoryGirl.create(
+    FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Faraway",
@@ -45,7 +45,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "search for a mentor by first name" do
-    FactoryGirl.create(
+    FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Faraway",
@@ -65,7 +65,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "search for a mentor by last name" do
-    FactoryGirl.create(
+    FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Faraway",
@@ -85,7 +85,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "search for a mentor by first and last name" do
-    FactoryGirl.create(
+    FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Traditional Mexican",

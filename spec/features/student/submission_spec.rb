@@ -12,8 +12,8 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Be on a team to see submission link" do
-    student = FactoryGirl.create(:student)
-    team_student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student)
+    team_student = FactoryBot.create(:student, :on_team)
 
     sign_in(student)
     expect(page).not_to have_link(
@@ -32,7 +32,7 @@ RSpec.feature "Student team submissions" do
   scenario "Confirm submission deliverables are created solely by team students" do
     skip "Rebuilding submissions, submission editing not back yet"
 
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
     click_link "My team's submission"

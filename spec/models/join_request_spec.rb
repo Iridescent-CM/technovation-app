@@ -2,19 +2,19 @@ require "rails_helper"
 
 RSpec.describe JoinRequest do
   it "cannot be duplicated" do
-    student = FactoryGirl.create(:student)
-    team = FactoryGirl.create(:team)
+    student = FactoryBot.create(:student)
+    team = FactoryBot.create(:team)
 
-    FactoryGirl.create(:join_request, team: team, requestor: student)
+    FactoryBot.create(:join_request, team: team, requestor: student)
 
-    dupe = FactoryGirl.build(:join_request, team: team, requestor: student)
+    dupe = FactoryBot.build(:join_request, team: team, requestor: student)
     expect(dupe).not_to be_valid
   end
 
   it "deletes other student requests upon acceptance" do
-    student = FactoryGirl.create(:student)
-    approve_me = FactoryGirl.create(:join_request, requestor: student)
-    delete_me = FactoryGirl.create(:join_request, requestor: student)
+    student = FactoryBot.create(:student)
+    approve_me = FactoryBot.create(:join_request, requestor: student)
+    delete_me = FactoryBot.create(:join_request, requestor: student)
 
     JoinRequestApproved.(approve_me)
 
@@ -24,9 +24,9 @@ RSpec.describe JoinRequest do
   end
 
   it "does not mess with pending mentor join requests on approval" do
-    mentor = FactoryGirl.create(:mentor)
-    approve_me = FactoryGirl.create(:join_request, requestor: mentor)
-    still_pending = FactoryGirl.create(:join_request, requestor: mentor)
+    mentor = FactoryBot.create(:mentor)
+    approve_me = FactoryBot.create(:join_request, requestor: mentor)
+    still_pending = FactoryBot.create(:join_request, requestor: mentor)
 
     JoinRequestApproved.(approve_me)
 

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Auto-login to the site with your mailer token" do
   %i{student mentor}.each do |scope|
     scenario "#{scope} on their dashboard" do
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
       visit send("#{scope}_dashboard_path", mailer_token: profile.mailer_token)
 
@@ -16,7 +16,7 @@ RSpec.feature "Auto-login to the site with your mailer token" do
     end
 
     scenario "#{scope} on their team page" do
-      profile = FactoryGirl.create(scope, :on_team)
+      profile = FactoryBot.create(scope, :on_team)
 
       visit send(
         "#{scope}_team_path",
@@ -33,8 +33,8 @@ RSpec.feature "Auto-login to the site with your mailer token" do
     end
 
     scenario "#{scope} on join request review" do
-      profile = FactoryGirl.create(scope, :on_team)
-      join_request = FactoryGirl.create(:join_request, team: profile.teams.first)
+      profile = FactoryBot.create(scope, :on_team)
+      join_request = FactoryBot.create(:join_request, team: profile.teams.first)
 
       visit send(
         "#{scope}_join_request_path",
@@ -53,9 +53,9 @@ RSpec.feature "Auto-login to the site with your mailer token" do
     scenario "#{scope} on invite review" do
       invite_type = scope == :student ? "team_member" : "mentor"
 
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
-      invite = FactoryGirl.create(
+      invite = FactoryBot.create(
         "#{invite_type}_invite",
         invitee_email: profile.email
       )

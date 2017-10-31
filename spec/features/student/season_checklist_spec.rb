@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Dashboard season checklist" do
   scenario "Registration incomplete" do
-    student = FactoryGirl.create(:student, not_onboarded: true)
+    student = FactoryBot.create(:student, not_onboarded: true)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -14,7 +14,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "Registration complete" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -26,7 +26,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "Not on a team" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -38,7 +38,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "On a team" do
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -52,7 +52,7 @@ RSpec.feature "Dashboard season checklist" do
   scenario "Submission locked from toggle" do
     SeasonToggles.team_submissions_editable = false
 
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -67,7 +67,7 @@ RSpec.feature "Dashboard season checklist" do
   scenario "Submission locked from prerequisites" do
     SeasonToggles.team_submissions_editable = true
 
-    student = FactoryGirl.create(:student, not_onboarded: true)
+    student = FactoryBot.create(:student, not_onboarded: true)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -82,7 +82,7 @@ RSpec.feature "Dashboard season checklist" do
   scenario "Submission started" do
     SeasonToggles.team_submissions_editable = true
 
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)

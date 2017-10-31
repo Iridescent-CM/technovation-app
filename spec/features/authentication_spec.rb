@@ -7,7 +7,7 @@ RSpec.feature "Authentication" do
     regional_ambassador: %i{judge student admin} }.each do |type, not_types|
       not_types.each do |not_type|
         scenario "A #{type} tries to visit a #{not_type} path" do
-          account = FactoryGirl.create(type)
+          account = FactoryBot.create(type)
 
           sign_in(account)
           visit send("#{not_type}_dashboard_path")

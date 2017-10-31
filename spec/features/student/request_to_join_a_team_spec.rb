@@ -7,15 +7,15 @@ RSpec.feature "Students request to join a team",
   before { SeasonToggles.team_building_enabled! }
 
   scenario "students already on a team don't see the link" do
-    student = FactoryGirl.create(:student, :on_team, not_onboarded: true)
+    student = FactoryBot.create(:student, :on_team, not_onboarded: true)
     sign_in(student)
     expect(page).not_to have_link("Join a team")
   end
 
   %i{mentor student}.each do |scope|
     scenario "#{scope} searches after their request is declined" do
-      user = FactoryGirl.create(scope, :geocoded)
-      team = FactoryGirl.create(:team, :geocoded)
+      user = FactoryBot.create(scope, :geocoded)
+      team = FactoryBot.create(:team, :geocoded)
 
       user.join_requests.create!(
         team: team,
@@ -36,10 +36,10 @@ RSpec.feature "Students request to join a team",
   end
 
   context "a valid student requestor" do
-    let!(:team) { FactoryGirl.create(:team, :with_mentor) }
+    let!(:team) { FactoryBot.create(:team, :with_mentor) }
       # Default is in Chicago
 
-    let!(:student) { FactoryGirl.create(:student, not_onboarded: true) }
+    let!(:student) { FactoryBot.create(:student, not_onboarded: true) }
       # Default Chicago
 
     before do

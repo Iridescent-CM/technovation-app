@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Admin::TeamMembershipsController do
-  let(:team) { FactoryGirl.create(:team) }
+  let(:team) { FactoryBot.create(:team) }
 
   before do
-    admin = FactoryGirl.create(:admin)
+    admin = FactoryBot.create(:admin)
     sign_in(admin)
   end
 
   describe "POST #create" do
     it "can add mentors" do
-      mentor = FactoryGirl.create(:mentor)
+      mentor = FactoryBot.create(:mentor)
 
       post :create, params: {
         team_id: team.id,
@@ -21,7 +21,7 @@ RSpec.describe Admin::TeamMembershipsController do
     end
 
     it "can add students" do
-      student = FactoryGirl.create(:student)
+      student = FactoryBot.create(:student)
 
       post :create, params: {
         team_id: team.id,

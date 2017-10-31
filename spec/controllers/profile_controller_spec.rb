@@ -2,7 +2,7 @@ require "rails_helper"
 
 %w{student mentor judge regional_ambassador}.each do |scope|
   RSpec.describe "#{scope.camelize}::ProfilesController".safe_constantize do
-    let(:profile) { FactoryGirl.create(scope, :geocoded, email: "old@oldtime.com") }
+    let(:profile) { FactoryBot.create(scope, :geocoded, email: "old@oldtime.com") }
 
     before do
       sign_in(profile)

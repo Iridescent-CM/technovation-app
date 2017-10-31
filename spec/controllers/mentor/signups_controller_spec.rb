@@ -6,11 +6,11 @@ RSpec.describe Mentor::SignupsController do
       set_signup_token
 
       post :create, params: {
-        mentor_profile: FactoryGirl.attributes_for(
+        mentor_profile: FactoryBot.attributes_for(
           :mentor,
           bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
         ).merge(
-          account_attributes: FactoryGirl.attributes_for(:account)
+          account_attributes: FactoryBot.attributes_for(:account)
         )
       }
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Admins view scores" do
   scenario "view QF scores" do
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       technical_checklist_attributes: {
@@ -11,9 +11,9 @@ RSpec.feature "Admins view scores" do
       }
     )
 
-    FactoryGirl.create(:submission_score, :complete, team_submission: submission)
+    FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
-    admin = FactoryGirl.create(:admin)
+    admin = FactoryBot.create(:admin)
     sign_in(admin)
 
     visit admin_scores_path
@@ -23,7 +23,7 @@ RSpec.feature "Admins view scores" do
   end
 
   scenario "view SF scores" do
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       :semifinalist,
@@ -33,14 +33,14 @@ RSpec.feature "Admins view scores" do
       }
     )
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :score,
       :complete,
       round: :semifinals,
       team_submission: submission
     )
 
-    admin = FactoryGirl.create(:admin)
+    admin = FactoryBot.create(:admin)
     sign_in(admin)
 
     visit admin_semifinals_scores_path

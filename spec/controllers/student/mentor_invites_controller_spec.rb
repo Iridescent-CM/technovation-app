@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe Student::MentorInvitesController do
   describe "POST #create" do
-    let(:mentor) { FactoryGirl.create(:mentor) }
-    let(:student) { FactoryGirl.create(:student, :on_team) }
+    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:student) { FactoryBot.create(:student, :on_team) }
 
     before do
       sign_in(student)

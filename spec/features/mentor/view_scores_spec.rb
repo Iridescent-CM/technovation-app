@@ -8,12 +8,12 @@ RSpec.feature "Mentors view scores" do
   scenario "view QF scores" do
     skip "Rebuilding mentor dashboard, scores not back yet"
 
-    team = FactoryGirl.create(:team)
-    mentor = FactoryGirl.create(:mentor)
+    team = FactoryBot.create(:team)
+    mentor = FactoryBot.create(:mentor)
 
     TeamRosterManaging.add(team, mentor)
 
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       team: team,
@@ -23,7 +23,7 @@ RSpec.feature "Mentors view scores" do
       }
     )
 
-    FactoryGirl.create(:submission_score, :complete, team_submission: submission)
+    FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     sign_in(mentor)
     click_link("View details")
@@ -34,12 +34,12 @@ RSpec.feature "Mentors view scores" do
   scenario "view SF scores" do
     skip "Rebuilding mentor dashboard, scores not back yet"
 
-    team = FactoryGirl.create(:team)
-    mentor = FactoryGirl.create(:mentor)
+    team = FactoryBot.create(:team)
+    mentor = FactoryBot.create(:mentor)
 
     TeamRosterManaging.add(team, mentor)
 
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       :semifinalist,
@@ -50,7 +50,7 @@ RSpec.feature "Mentors view scores" do
       }
     )
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :score,
       :complete,
       round: :semifinals,

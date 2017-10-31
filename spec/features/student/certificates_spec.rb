@@ -16,8 +16,8 @@ RSpec.feature "Student certificates" do
   scenario "generate a completion cert" do
     skip "Rebuilding student dashboard: certs not back yet"
 
-    student = FactoryGirl.create(:student, :on_team)
-    FactoryGirl.create(:team_submission, team: student.team)
+    student = FactoryBot.create(:student, :on_team)
+    FactoryBot.create(:team_submission, team: student.team)
 
     sign_in(student)
 
@@ -32,9 +32,9 @@ RSpec.feature "Student certificates" do
   scenario "generate a regional grand prize cert" do
     skip "Rebuilding student dashboard: certs not back yet"
 
-    student = FactoryGirl.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team)
 
-    rpe = FactoryGirl.create(:rpe)
+    rpe = FactoryBot.create(:rpe)
     rpe.teams << student.team
 
     student.team.team_submissions.create!(

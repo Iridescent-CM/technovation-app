@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe Mentor::JoinRequestsController do
   describe "POST #create" do
-    let(:team) { FactoryGirl.create(:team, members_count: 2) }
-    let(:mentor) { FactoryGirl.create(:mentor) }
+    let(:team) { FactoryBot.create(:team, members_count: 2) }
+    let(:mentor) { FactoryBot.create(:mentor) }
 
     before do
       sign_in(mentor)

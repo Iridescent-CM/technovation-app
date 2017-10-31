@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.feature "Students invite mentors to join their team" do
   before { SeasonToggles.team_building_enabled="yes" }
 
-  let(:student) { FactoryGirl.create(:student, :geocoded, :on_team) }
-  let!(:mentor) { FactoryGirl.create(:mentor, :geocoded) }
+  let(:student) { FactoryBot.create(:student, :geocoded, :on_team) }
+  let!(:mentor) { FactoryBot.create(:mentor, :geocoded) }
 
   before do
     sign_in(student)
@@ -13,7 +13,7 @@ RSpec.feature "Students invite mentors to join their team" do
   end
 
   scenario "only see current mentors" do
-    past = FactoryGirl.create(
+    past = FactoryBot.create(
       :mentor,
       :geocoded,
       first_name: "Not me"

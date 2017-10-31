@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Edit account spec" do
   before do
-    student = FactoryGirl.create(
+    student = FactoryBot.create(
       :student,
       email: "original@email.com",
       password: "secret1234"
@@ -72,7 +72,7 @@ RSpec.feature "Edit account spec" do
   %i{mentor regional_ambassador}.each do |scope|
     scenario "edit #{scope} bio" do
       sign_out
-      profile = FactoryGirl.create(scope)
+      profile = FactoryBot.create(scope)
 
       sign_in(profile)
       visit send("#{scope}_profile_path")

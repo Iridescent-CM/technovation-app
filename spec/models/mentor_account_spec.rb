@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe MentorProfile do
   describe "#team_region_division_names" do
     it "should include all teams" do
-      mentor = FactoryGirl.create(:mentor)
-      t1 = FactoryGirl.create(:team,
+      mentor = FactoryBot.create(:mentor)
+      t1 = FactoryBot.create(:team,
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
       TeamRosterManaging.add(t1, mentor)
 
-      t2 = FactoryGirl.create(:team, division: Division.junior)
+      t2 = FactoryBot.create(:team, division: Division.junior)
       TeamRosterManaging.add(t2, mentor)
 
       expect(mentor.team_region_division_names).to match_array([
@@ -20,14 +20,14 @@ RSpec.describe MentorProfile do
     end
 
     it "should not contain duplicates" do
-      mentor = FactoryGirl.create(:mentor)
-      t1 = FactoryGirl.create(:team,
+      mentor = FactoryBot.create(:mentor)
+      t1 = FactoryBot.create(:team,
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
       TeamRosterManaging.add(t1, mentor)
 
-      t2 = FactoryGirl.create(:team,
+      t2 = FactoryBot.create(:team,
                               city: "Los Angeles",
                               state_province: "CA",
                               division: Division.senior)
@@ -38,7 +38,7 @@ RSpec.describe MentorProfile do
   end
 
   it "changes searchability when country changes" do
-    mentor = FactoryGirl.create(:mentor) # Default in US
+    mentor = FactoryBot.create(:mentor) # Default in US
 
     # Sanity
     mentor.background_check.destroy

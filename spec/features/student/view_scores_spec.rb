@@ -8,7 +8,7 @@ RSpec.feature "Students view scores" do
   scenario "view QF scores" do
     skip "Rebuilding student dashboard: scores not back yet"
 
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       technical_checklist_attributes: {
@@ -17,7 +17,7 @@ RSpec.feature "Students view scores" do
       }
     )
 
-    FactoryGirl.create(:submission_score, :complete, team_submission: submission)
+    FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     sign_in(submission.team.students.sample)
 
@@ -27,7 +27,7 @@ RSpec.feature "Students view scores" do
   scenario "view SF scores" do
     skip "Rebuilding student dashboard: scores not back yet"
 
-    submission = FactoryGirl.create(
+    submission = FactoryBot.create(
       :submission,
       :complete,
       :semifinalist,
@@ -37,7 +37,7 @@ RSpec.feature "Students view scores" do
       }
     )
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :score,
       :complete,
       round: :semifinals,

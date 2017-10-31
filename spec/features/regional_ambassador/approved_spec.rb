@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Approved regional ambassadors" do
   scenario "updating their dashboard blurb" do
     skip "disabled right now - ra introduction"
-    ambassador = FactoryGirl.create(:regional_ambassador, :approved)
+    ambassador = FactoryBot.create(:regional_ambassador, :approved)
 
     sign_in(ambassador)
 

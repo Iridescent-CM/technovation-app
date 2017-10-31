@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe Student::ProfilesController do
   it "sends a message to student's team to reconsider division on dob change" do
     Timecop.freeze(Division.cutoff_date - 1.day) do
-      student = FactoryGirl.create(
+      student = FactoryBot.create(
         :student,
         email: "student@testing.com",
         date_of_birth: 13.years.ago
       )
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       TeamRosterManaging.add(team, student)
 
       expect(team.division_name).to eq("junior")

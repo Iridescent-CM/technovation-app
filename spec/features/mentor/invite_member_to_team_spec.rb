@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.feature "Invite a member to a team" do
   before { SeasonToggles.team_building_enabled="yes" }
 
-  let(:mentor) { FactoryGirl.create(:mentor, :on_team) }
+  let(:mentor) { FactoryBot.create(:mentor, :on_team) }
 
   let!(:incomplete_student) {
-    FactoryGirl.create(
+    FactoryBot.create(
       :student,
       not_onboarded: true,
       email: "incomplete@student.com"
@@ -14,7 +14,7 @@ RSpec.feature "Invite a member to a team" do
   }
 
   let!(:complete_student) {
-    FactoryGirl.create(:student, email: "complete@student.com")
+    FactoryBot.create(:student, email: "complete@student.com")
   }
 
   before do

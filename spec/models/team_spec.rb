@@ -5,7 +5,7 @@ RSpec.describe Team do
   after { Timecop.return }
 
   it "knows when it's a past or current team" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
     expect(team).to be_current
     expect(team).not_to be_past
 
@@ -15,7 +15,7 @@ RSpec.describe Team do
   end
 
   it "deals okay with funky region name input" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
 
     allow(team).to receive(:state_province) { " NY " }
 
@@ -23,7 +23,7 @@ RSpec.describe Team do
   end
 
   it "fixes funky brasil/brazil region issue" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
 
     allow(team).to receive(:state_province) { "Brasil" }
     expect(team.region_name).to eq("Brazil")
@@ -33,9 +33,9 @@ RSpec.describe Team do
   end
 
   it "assigns to the B division if all students are in Division B" do
-    team = FactoryGirl.create(:team)
-    younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryGirl.create(
+    team = FactoryBot.create(:team)
+    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    older_student = FactoryBot.create(
       :student,
       date_of_birth: Division.cutoff_date - 15.years
     )
@@ -46,9 +46,9 @@ RSpec.describe Team do
   end
 
   it "assigns to the correct division if a student updates their birthdate" do
-    team = FactoryGirl.create(:team)
-    younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+    team = FactoryBot.create(:team)
+    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    older_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
 
     TeamRosterManaging.add(team, [older_student, younger_student])
 
@@ -63,9 +63,9 @@ RSpec.describe Team do
   end
 
   it "reconsiders division when a student leaves the team" do
-    team = FactoryGirl.create(:team)
-    younger_student = FactoryGirl.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
+    team = FactoryBot.create(:team)
+    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    older_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
 
     TeamRosterManaging.add(team, [older_student, younger_student])
     expect(team.reload.division).to eq(Division.senior)
@@ -75,7 +75,7 @@ RSpec.describe Team do
   end
 
   it "scopes to past seasons" do
-    FactoryGirl.create(:team) # current season by default
+    FactoryBot.create(:team) # current season by default
 
     past_date = if Season.switch_date.year === Time.current.year
                   Season.switch_date - 367.days
@@ -83,13 +83,13 @@ RSpec.describe Team do
                   Season.switch_date - 1.day
                 end
 
-    past_team = FactoryGirl.create(:team, created_at: past_date)
+    past_team = FactoryBot.create(:team, created_at: past_date)
 
     expect(Team.past).to eq([past_team])
   end
 
   it "scopes to the current season" do
-    current_team = FactoryGirl.create(:team) # current season by default
+    current_team = FactoryBot.create(:team) # current season by default
 
     past_date = if Season.switch_date.year === Time.current.year
                   Season.switch_date - 367.days
@@ -97,12 +97,12 @@ RSpec.describe Team do
                   Season.switch_date - 1.day
                 end
 
-    FactoryGirl.create(:team, created_at: past_date)
+    FactoryBot.create(:team, created_at: past_date)
     expect(Team.current).to eq([current_team])
   end
 
   it "excludes current season teams from the past scope" do
-    current_team = FactoryGirl.create(:team) # current season by default
+    current_team = FactoryBot.create(:team) # current season by default
 
     past_date = if Season.switch_date.year === Time.current.year
                   Season.switch_date - 367.days
@@ -110,7 +110,7 @@ RSpec.describe Team do
                   Season.switch_date - 1.day
                 end
 
-    past_team = FactoryGirl.create(:team, created_at: past_date)
+    past_team = FactoryBot.create(:team, created_at: past_date)
 
     current_team.update(seasons: (current_team.seasons << past_team.seasons.last))
 
@@ -118,7 +118,7 @@ RSpec.describe Team do
   end
 
   it "registers to past seasons" do
-    team = FactoryGirl.create(
+    team = FactoryBot.create(
       :team,
       created_at: Time.new(
         2015,
@@ -135,12 +135,12 @@ RSpec.describe Team do
 
   describe ".region_division_name" do
     it "includes state in US" do
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
     end
 
     it "uses only country outside the US" do
-      team = FactoryGirl.create(:team,
+      team = FactoryBot.create(:team,
                                 city: "Salvador",
                                 state_province: "Bahia",
                                 country: "BR")
@@ -148,7 +148,7 @@ RSpec.describe Team do
     end
 
     it "won't blow up without country" do
-      team = FactoryGirl.create(
+      team = FactoryBot.create(
         :team,
         city: nil,
         state_province: nil,
@@ -158,7 +158,7 @@ RSpec.describe Team do
     end
 
     it "should re-cache if member details change" do
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
 
       member = team.members.sample
@@ -174,7 +174,7 @@ RSpec.describe Team do
     end
 
     it "should re-cache if membership changes" do
-      team = FactoryGirl.create(:team)
+      team = FactoryBot.create(:team)
       expect(team.region_division_name).to eq("US_IL,senior")
 
       team.memberships.each(&:destroy)
@@ -183,7 +183,7 @@ RSpec.describe Team do
   end
 
   it "geocodes when address info changes" do
-    team = FactoryGirl.create(:team, :geocoded) # Chicago by default
+    team = FactoryBot.create(:team, :geocoded) # Chicago by default
 
     # Sanity
     expect(team.latitude).to eq(41.50196838)
@@ -200,7 +200,7 @@ RSpec.describe Team do
   end
 
   it "reverse geocodes when coords change" do
-    team = FactoryGirl.create(
+    team = FactoryBot.create(
       :team,
       :geocoded,
       city: "Los Angeles",
@@ -224,8 +224,8 @@ RSpec.describe Team do
   end
 
   it "removes associated RPEs when address info changes" do
-    team = FactoryGirl.create(:team)
-    rpe = FactoryGirl.create(:rpe)
+    team = FactoryBot.create(:team)
+    rpe = FactoryBot.create(:rpe)
 
     # Sanity
     team.regional_pitch_events << rpe
@@ -254,11 +254,11 @@ RSpec.describe Team do
   end
 
   it "touches its submission when division changes" do
-    team = FactoryGirl.create(:team)
-    submission = FactoryGirl.create(:submission, team: team)
+    team = FactoryBot.create(:team)
+    submission = FactoryBot.create(:submission, team: team)
 
-    old_student = FactoryGirl.create(:student, date_of_birth: 15.years.ago)
-    young_student = FactoryGirl.create(:student, date_of_birth: 14.years.ago)
+    old_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
+    young_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
 
     TeamRosterManaging.add(team, [old_student, young_student])
     expect(team).to be_senior
@@ -273,35 +273,35 @@ RSpec.describe Team do
 
   context "unique name validation" do
     it "ensures uniqueness within season" do
-      fring = FactoryGirl.create(:team, name: "Say My Name")
-      heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+      fring = FactoryBot.create(:team, name: "Say My Name")
+      heisenberg = FactoryBot.build(:team, name: "Say My Name")
       expect(heisenberg).not_to be_valid
       expect(heisenberg.save).to be false
     end
 
     it "ensures uniqueness across seasons" do
-      fring = FactoryGirl.create(:team, name: "Say My Name")
+      fring = FactoryBot.create(:team, name: "Say My Name")
       fring.update(seasons: [Season.current.year - 1])
 
-      heisenberg = FactoryGirl.build(:team, name: "Say My Name")
+      heisenberg = FactoryBot.build(:team, name: "Say My Name")
       expect(heisenberg).not_to be_valid
       expect(heisenberg.save).to be false
     end
 
     it "allows reuse of deleted team names" do
-      fring = FactoryGirl.create(:team, name: "Say My Name")
+      fring = FactoryBot.create(:team, name: "Say My Name")
       fring.destroy
 
-      heisenberg = FactoryGirl.create(:team, name: "Say My Name")
+      heisenberg = FactoryBot.create(:team, name: "Say My Name")
       expect(heisenberg).to be_valid
       expect(heisenberg.reload.id).not_to be_nil
     end
 
     it "allows exceptions for past names" do
-      past_team = FactoryGirl.create(:team, name: "Old Name")
+      past_team = FactoryBot.create(:team, name: "Old Name")
       past_team.update(seasons: [Season.current.year - 1])
 
-      new_team = FactoryGirl.build(:team, name: "Old Name")
+      new_team = FactoryBot.build(:team, name: "Old Name")
       new_team.name_uniqueness_exceptions = ["Old Name", "Something Else"]
 
       expect(new_team).to be_valid
@@ -309,8 +309,8 @@ RSpec.describe Team do
     end
 
     it "doesn't allow exceptions for current names" do
-      team1 = FactoryGirl.create(:team, name: "Team Name")
-      team2 = FactoryGirl.build(:team, name: "Team Name")
+      team1 = FactoryBot.create(:team, name: "Team Name")
+      team2 = FactoryBot.build(:team, name: "Team Name")
       team2.name_uniqueness_exceptions = ["Team Name"]
 
       expect(team2).not_to be_valid
@@ -319,15 +319,15 @@ RSpec.describe Team do
   end
 
   it "deletes itself and pending join requests/invites when membership decrements to zero" do
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
 
     team.team_member_invites.create!(
       invitee_email: "will@delete.com",
-      inviter: FactoryGirl.create(:mentor),
+      inviter: FactoryBot.create(:mentor),
     )
 
     team.join_requests.create!(
-      requestor: FactoryGirl.create(:student),
+      requestor: FactoryBot.create(:student),
     )
 
     team.members.each do |m|
@@ -341,19 +341,19 @@ RSpec.describe Team do
 
   describe ".unmatched(scope)" do
     it "lists teams without a mentor" do
-      mentored = FactoryGirl.create(:team)
-      mentor = FactoryGirl.create(:mentor)
+      mentored = FactoryBot.create(:team)
+      mentor = FactoryBot.create(:mentor)
       TeamRosterManaging.add(mentored, mentor)
 
-      unmatched = FactoryGirl.create(:team)
+      unmatched = FactoryBot.create(:team)
       expect(Team.unmatched(:mentors)).to eq([unmatched])
     end
 
     it "lists teams without students" do
-      FactoryGirl.create(:team)
+      FactoryBot.create(:team)
 
-      unmatched = FactoryGirl.create(:team)
-      mentor = FactoryGirl.create(:mentor)
+      unmatched = FactoryBot.create(:team)
+      mentor = FactoryBot.create(:mentor)
       TeamRosterManaging.add(unmatched, mentor)
       TeamRosterManaging.remove(unmatched, unmatched.students.first)
 
@@ -361,10 +361,10 @@ RSpec.describe Team do
     end
 
     it "only considers current teams" do
-      past_unmatched = FactoryGirl.create(:team)
+      past_unmatched = FactoryBot.create(:team)
       past_unmatched.update(seasons: [Season.current.year - 1])
 
-      unmatched = FactoryGirl.create(:team)
+      unmatched = FactoryBot.create(:team)
 
       expect(Team.unmatched(:mentors)).to eq([unmatched])
     end
@@ -372,15 +372,15 @@ RSpec.describe Team do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryGirl.create(
+      FactoryBot.create(
         :team,
         city: "Los Angeles",
         state_province: "CA",
         country: "US"
       )
 
-      il_team = FactoryGirl.create(:team)
-      il_ambassador = FactoryGirl.create(:ambassador)
+      il_team = FactoryBot.create(:team)
+      il_ambassador = FactoryBot.create(:ambassador)
 
       expect(
         Team.in_region(il_ambassador)
@@ -388,16 +388,16 @@ RSpec.describe Team do
     end
 
     it "scopes to the given Int'l ambassador's country" do
-      FactoryGirl.create(:team)
+      FactoryBot.create(:team)
 
-      intl_team = FactoryGirl.create(
+      intl_team = FactoryBot.create(
         :team,
         city: "Salvador",
         state_province: "Bahia",
         country: "Brazil"
       )
 
-      intl_ambassador = FactoryGirl.create(
+      intl_ambassador = FactoryBot.create(
         :ambassador,
         city: "Salvador",
         state_province: "Bahia",

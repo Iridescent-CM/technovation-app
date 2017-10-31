@@ -5,8 +5,8 @@ RSpec.describe TeamController do
     describe "#{scope.capitalize}::TeamsController".constantize do
       describe "PATCH #update" do
         it "geocodes teams on city/state/country changes" do
-          team = FactoryGirl.create(:team, :geocoded)
-          profile = FactoryGirl.create(scope)
+          team = FactoryBot.create(:team, :geocoded)
+          profile = FactoryBot.create(scope)
 
           unless scope == "admin"
             TeamRosterManaging.add(team, profile)

@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Student::MentorsController do
   describe "GET #show" do
     it "assigns the mentor" do
-      mentor = FactoryGirl.create(:mentor)
-      student = FactoryGirl.create(:student, :on_team)
+      mentor = FactoryBot.create(:mentor)
+      student = FactoryBot.create(:student, :on_team)
 
       sign_in(student)
       get :show, params: { id: mentor.id }

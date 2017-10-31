@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Mentor::CertificatesController, type: :controller do
   describe "POST #create" do
     it "generates an appreciation cert for the current mentor" do
-      mentor = FactoryGirl.create(:mentor)
+      mentor = FactoryBot.create(:mentor)
 
       sign_in(mentor)
 

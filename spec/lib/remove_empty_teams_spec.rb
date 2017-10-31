@@ -4,10 +4,10 @@ require "./lib/remove_empty_teams"
 RSpec.describe RemoveEmptyTeams do
   describe ".call" do
     it "only deletes empty teams" do
-      empty_team = FactoryGirl.create(:team)
+      empty_team = FactoryBot.create(:team)
       empty_team.memberships.destroy_all
 
-      team_with_members = FactoryGirl.create(:team) # has members by default
+      team_with_members = FactoryBot.create(:team) # has members by default
 
       RemoveEmptyTeams.()
 

@@ -128,7 +128,7 @@ group :production do
 end
 
 group :test, :development do
-  gem 'factory_girl_rails', "~> 4.8"
+  gem 'factory_bot_rails', "~> 4.8"
 end
 
 group :legacy do

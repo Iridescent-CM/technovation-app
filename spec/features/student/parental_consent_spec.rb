@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Parental consent" do
   scenario "sort of invalid email" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     student.parental_consent.destroy
 
     sign_in(student)
@@ -35,7 +35,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "valid token, invalid signature form" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     student.parental_consent.destroy
     visit new_parental_consent_path(token: student.consent_token)
     click_button "I agree"
@@ -47,7 +47,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "valid token, valid form" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     ParentalConsent.destroy_all
     visit new_parental_consent_path(token: student.reload.consent_token)
 
@@ -59,7 +59,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "fill it out on dashboard steps" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     ParentalConsent.destroy_all
 
     sign_in(student)
@@ -76,7 +76,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "validate parental consent info" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     ParentalConsent.destroy_all
 
     sign_in(student)

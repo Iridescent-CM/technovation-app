@@ -7,13 +7,13 @@ RSpec.describe "Team Memberships Controllers" do
   describe Student::TeamMembershipsController do
     describe "DELETE #destroy" do
       it "reconsiders divisions" do
-        team = FactoryGirl.create(:team)
+        team = FactoryBot.create(:team)
 
-        older_student = FactoryGirl.create(
+        older_student = FactoryBot.create(
           :student,
           date_of_birth: 15.years.ago
         )
-        younger_student = FactoryGirl.create(
+        younger_student = FactoryBot.create(
           :student,
           date_of_birth: 14.years.ago
         )
@@ -35,13 +35,13 @@ RSpec.describe "Team Memberships Controllers" do
     describe "#{scope.camelize}::TeamMembershipsController".constantize do
       describe "DELETE #destroy" do
         it "reconsiders divisions" do
-          team = FactoryGirl.create(:team)
+          team = FactoryBot.create(:team)
 
-          older_student = FactoryGirl.create(
+          older_student = FactoryBot.create(
             :student,
             date_of_birth: 15.years.ago
           )
-          younger_student = FactoryGirl.create(
+          younger_student = FactoryBot.create(
             :student,
             date_of_birth: 14.years.ago
           )
@@ -50,7 +50,7 @@ RSpec.describe "Team Memberships Controllers" do
 
           expect(team.reload).to be_senior
 
-          profile = FactoryGirl.create(scope)
+          profile = FactoryBot.create(scope)
           sign_in(profile)
 
           delete :destroy, params: {

@@ -3,17 +3,17 @@ require "rails_helper"
 RSpec.feature "Mentors find a team" do
   before { SeasonToggles.team_building_enabled! }
 
-  let!(:available_team) { FactoryGirl.create(:team, :geocoded) }
+  let!(:available_team) { FactoryBot.create(:team, :geocoded) }
     # Default is in Chicago
 
   before do
-    mentor = FactoryGirl.create(:mentor, :geocoded) # City is Chicago
+    mentor = FactoryBot.create(:mentor, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "browse nearby teams" do
-    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded)
-    faraway_team = FactoryGirl.create(
+    mentored_team = FactoryBot.create(:team, :with_mentor, :geocoded)
+    faraway_team = FactoryBot.create(
       :team,
       :geocoded,
       city: "Los Angeles",
@@ -28,9 +28,9 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "search for a team by name" do
-    mentored_team = FactoryGirl.create(:team, :with_mentor, :geocoded)
+    mentored_team = FactoryBot.create(:team, :with_mentor, :geocoded)
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :team,
       :geocoded,
       name: "faraway",

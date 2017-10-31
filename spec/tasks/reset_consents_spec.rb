@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Resetting consents" do
-  let!(:parental_consent) { FactoryGirl.create(:parental_consent) }
-  let!(:consent_waiver) { FactoryGirl.create(:consent_waiver) }
+  let!(:parental_consent) { FactoryBot.create(:parental_consent) }
+  let!(:consent_waiver) { FactoryBot.create(:consent_waiver) }
 
   it "does nothing on days other than switch date" do
     Timecop.freeze(Time.new(2009, Season.switch_month - 1, 28)) do

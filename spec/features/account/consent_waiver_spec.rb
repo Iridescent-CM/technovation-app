@@ -10,7 +10,7 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, invalid signature form" do
-    mentor = FactoryGirl.create(:mentor)
+    mentor = FactoryBot.create(:mentor)
     mentor.consent_waiver.destroy
 
     sign_in(mentor)
@@ -27,7 +27,7 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, valid form" do
-    mentor = FactoryGirl.create(:mentor)
+    mentor = FactoryBot.create(:mentor)
     mentor.consent_waiver.destroy
 
     sign_in(mentor)
