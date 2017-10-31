@@ -21,11 +21,27 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
-  column :background_check, if: ->(g) { g.admin or g.country == "US" } do
+  column :background_check, if: ->(g) { g.admin or Array(g.country)[0] == "US" } do
     if country == "US" and mentor_profile.present?
       background_check.present? ? background_check.status : "not submitted"
     elsif mentor_profile.present?
       "_international_"
+    else
+      "_not_a_mentor_"
+    end
+  end
+
+  column :parental_consent do
+    if student_profile.present?
+      parental_consent.present? ? "signed" : "not signed"
+    else
+      "_not_a_student_"
+    end
+  end
+
+  column :consent_waiver do
+    if mentor_profile.present?
+      consent_waiver.present? ? "signed" : "not signed"
     else
       "_not_a_mentor_"
     end
