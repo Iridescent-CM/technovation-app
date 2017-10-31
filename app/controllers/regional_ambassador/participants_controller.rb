@@ -47,5 +47,9 @@ module RegionalAmbassador
         column_names: detect_extra_columns(grid),
       )
     end
+
+    def param_root
+      :accounts_grid
+    end
   end
 end

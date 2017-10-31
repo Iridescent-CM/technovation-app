@@ -8,10 +8,17 @@ module SavedSearchController
   def show
     @saved_search = current_profile.saved_searches.find(params[:id])
 
-    redirect_to send(
-      "#{current_scope}_participants_path",
-      @saved_search.param_root => @saved_search.to_search_params
-    )
+    path_name = case @saved_search.param_root
+                when "accounts_grid"
+                  "#{current_scope}_participants_path"
+                when "teams_grid"
+                  "#{current_scope}_teams_path"
+                else
+                  raise "Param root #{@saved_search.param_root} not supported"
+                end
+
+    redirect_to send(path_name,
+      @saved_search.param_root => @saved_search.to_search_params)
   end
 
   def create

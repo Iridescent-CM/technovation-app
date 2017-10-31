@@ -16,25 +16,26 @@ class SavedSearch < ApplicationRecord
     self.search_string = search_string.gsub('&&', '')
   }
 
-  def self.default_or_saved_search_params?(params, searcher)
-    accounts_grid = params.dup.to_unsafe_h[:accounts_grid] || {}
+  def self.default_or_saved_search_params?(params, root, searcher)
+    grid = params.dup.to_unsafe_h[root] || {}
 
-    accounts_grid[:season] ||= []
-    accounts_grid[:scope_names] ||= []
+    grid[:season] ||= []
+    grid[:scope_names] ||= []
+    grid[:column_names] ||= []
 
     existing_values = searcher.saved_searches
-      .for_param_root(:accounts_grid)
+      .for_param_root(root)
       .map(&:to_search_params)
       .map { |h| h.values.flatten.sort }
 
-    existing_values.include?(accounts_grid.values.flatten.sort) or (
-      accounts_grid[:season] = (
-        Array(accounts_grid[:season]) - [Season.current.year.to_s]
+    existing_values.include?(grid.values.flatten.sort) or (
+      grid[:season] = (
+        Array(grid[:season]) - [Season.current.year.to_s]
       )
 
-      accounts_grid[:scope_names].clear if accounts_grid[:scope_names].one?
+      grid[:scope_names].clear if grid[:scope_names].one?
 
-      accounts_grid.values.all? { |v| v.empty? }
+      grid.values.all? { |v| v.empty? }
     )
   end
 

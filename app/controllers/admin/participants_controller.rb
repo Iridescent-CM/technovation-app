@@ -92,5 +92,9 @@ module Admin
         tapped[:admin_making_changes] = true
       end
     end
+
+    def param_root
+      :accounts_grid
+    end
   end
 end

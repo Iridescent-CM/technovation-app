@@ -2,11 +2,12 @@ module DatagridUser
   extend ActiveSupport::Concern
 
   included do
-    helper_method :default_or_saved_search_params?
+    helper_method :default_or_saved_search_params?,
+      :param_root
 
     before_action -> {
       @saved_searches = current_profile.saved_searches
-        .for_param_root(:accounts_grid)
+        .for_param_root(param_root)
 
       @saved_search = current_profile.saved_searches.build
     }, only: :index
@@ -40,6 +41,10 @@ module DatagridUser
   end
 
   def default_or_saved_search_params?
-    SavedSearch.default_or_saved_search_params?(params, current_profile)
+    SavedSearch.default_or_saved_search_params?(params, param_root, current_profile)
+  end
+
+  def param_root
+    raise "Your controller must define the `#param_root` method"
   end
 end
