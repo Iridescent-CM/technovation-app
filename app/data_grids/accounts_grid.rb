@@ -73,6 +73,71 @@ class AccountsGrid
       where(clauses.join(' AND '))
     end
 
+  filter :team_matching,
+    :enum,
+    header: "Team matchng (students & mentors only)",
+    select: [
+      ['Matched with a team', 'matched'],
+      ['Unmatched', 'unmatched'],
+    ],
+    filter_group: "advanced",
+    if: ->(g) {
+      (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
+    } { |value| send(value) }
+
+  filter :parental_consent,
+    :enum,
+    header: "Parental consent (students only)",
+    select: [
+      ['Has parental consent', 'parental_consented'],
+      ['No parental consent', 'not_parental_consented'],
+    ],
+    filter_group: "advanced",
+    if: ->(g) {
+      (%w{judge regional_ambassador mentor} & (g.scope_names || [])).empty?
+    } { |value| send(value) }
+
+  filter :consent_waiver,
+    :enum,
+    header: "Consent waiver (mentors only)",
+    select: [
+      ['Signed consent waiver', 'consent_signed'],
+      ['Has not signed', 'consent_not_signed'],
+    ],
+    filter_group: "advanced",
+    if: ->(g) {
+      (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
+    } { |value| send(value) }
+
+  filter :background_check,
+    :enum,
+    header: "Background check (mentors only)",
+    select: ->(g) {
+      if g.admin
+        [
+          ['Has not submitted (US only)', 'bg_check_unsubmitted'],
+          ['Has submitted, is waiting (US only)', 'bg_check_submitted'],
+          ['Clear (US only) or not required (International)', 'bg_check_clear'],
+          ['Consider (US only)', 'bg_check_consider'],
+          ['Suspended (US only)', 'bg_check_suspended'],
+        ]
+      else
+        [
+          ['Has not submitted', 'bg_check_unsubmitted'],
+          ['Has submitted, is waiting', 'bg_check_submitted'],
+          ['Clear', 'bg_check_clear'],
+          ['Consider', 'bg_check_consider'],
+          ['Suspended', 'bg_check_suspended'],
+        ]
+      end
+    },
+    filter_group: "advanced",
+    if: ->(g) {
+      g.country.empty? or
+        g.country[0] == "US" and
+          (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
+    } { |value| send(value) }
+
   filter :country,
     :enum,
     header: "Country",
@@ -143,74 +208,9 @@ class AccountsGrid
         .where(clauses.join(' OR '))
     end
 
-  filter :team_matching,
-    :enum,
-    header: "Team matchng (students & mentors only)",
-    select: [
-      ['Matched with a team', 'matched'],
-      ['Unmatched', 'unmatched'],
-    ],
-    filter_group: "advanced",
-    if: ->(g) {
-      (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
-
-  filter :parental_consent,
-    :enum,
-    header: "Parental consent (students only)",
-    select: [
-      ['Has parental consent', 'parental_consented'],
-      ['No parental consent', 'not_parental_consented'],
-    ],
-    filter_group: "advanced",
-    if: ->(g) {
-      (%w{judge regional_ambassador mentor} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
-
-  filter :consent_waiver,
-    :enum,
-    header: "Consent waiver (mentors only)",
-    select: [
-      ['Signed consent waiver', 'consent_signed'],
-      ['Has not signed', 'consent_not_signed'],
-    ],
-    filter_group: "advanced",
-    if: ->(g) {
-      (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
-
-  filter :background_check,
-    :enum,
-    header: "Background check (mentors only)",
-    select: ->(g) {
-      if g.admin
-        [
-          ['Has not submitted (US only)', 'bg_check_unsubmitted'],
-          ['Has submitted, is waiting (US only)', 'bg_check_submitted'],
-          ['Clear (US only) or not required (International)', 'bg_check_clear'],
-          ['Consider (US only)', 'bg_check_consider'],
-          ['Suspended (US only)', 'bg_check_suspended'],
-        ]
-      else
-        [
-          ['Has not submitted', 'bg_check_unsubmitted'],
-          ['Has submitted, is waiting', 'bg_check_submitted'],
-          ['Clear', 'bg_check_clear'],
-          ['Consider', 'bg_check_consider'],
-          ['Suspended', 'bg_check_suspended'],
-        ]
-      end
-    },
-    filter_group: "advanced",
-    if: ->(g) {
-      g.country.empty? or
-        g.country[0] == "US" and
-          (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
-
   column_names_filter(
     header: "More columns",
-    filter_group: "advanced",
+    filter_group: "location-data",
     multiple: true
   )
 end
