@@ -75,20 +75,86 @@ class Account < ActiveRecord::Base
 
   scope :matched, -> {
     distinct
-      .left_outer_joins(
-        mentor_profile: :current_teams,
-        student_profile: :current_teams
-      )
-      .where("teams.id IS NOT NULL")
+    .left_outer_joins(
+      mentor_profile: :current_teams,
+      student_profile: :current_teams
+    )
+    .where("teams.id is not null")
   }
 
   scope :unmatched, -> {
     distinct
-      .left_outer_joins(
-        mentor_profile: :current_teams,
-        student_profile: :current_teams
+    .left_outer_joins(
+      mentor_profile: :current_teams,
+      student_profile: :current_teams
+    )
+    .where("teams.id is null")
+  }
+
+  scope :parental_consented, -> {
+    left_outer_joins(student_profile: :parental_consent)
+      .where("parental_consents.id IS NOT NULL")
+  }
+
+  scope :not_parental_consented, -> {
+    left_outer_joins(student_profile: :parental_consent)
+      .where("student_profiles.id IS NOT NULL")
+      .where("parental_consents.id IS NULL")
+  }
+
+  scope :consent_signed, -> {
+    left_outer_joins(:mentor_profile, :consent_waiver)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("consent_waivers.id IS NOT NULL")
+  }
+
+  scope :consent_not_signed, -> {
+    left_outer_joins(:mentor_profile, :consent_waiver)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("consent_waivers.id IS NULL")
+  }
+
+  scope :bg_check_unsubmitted, -> {
+    left_outer_joins(:mentor_profile, :background_check)
+      .where("accounts.country = 'US'")
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("background_checks.id IS NULL")
+  }
+
+  scope :bg_check_submitted, -> {
+    left_outer_joins(:mentor_profile, :background_check)
+      .where("accounts.country = 'US'")
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("background_checks.id IS NOT NULL")
+      .where("background_checks.status = ?", BackgroundCheck.statuses[:pending])
+  }
+
+  scope :bg_check_clear, -> {
+    left_outer_joins(:mentor_profile, :background_check)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where(
+        "accounts.country != 'US' OR (
+          accounts.country = 'US' AND
+            background_checks.id IS NOT NULL AND
+              background_checks.status = ?)",
+        BackgroundCheck.statuses[:clear]
       )
-      .where("teams.id IS NULL")
+  }
+
+  scope :bg_check_consider, -> {
+    left_outer_joins(:mentor_profile, :background_check)
+      .where("accounts.country = 'US'")
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("background_checks.id IS NOT NULL")
+      .where("background_checks.status = ?", BackgroundCheck.statuses[:consider])
+  }
+
+  scope :bg_check_suspended, -> {
+    left_outer_joins(:mentor_profile, :background_check)
+      .where("accounts.country = 'US'")
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("background_checks.id IS NOT NULL")
+      .where("background_checks.status = ?", BackgroundCheck.statuses[:suspended])
   }
 
   mount_uploader :profile_image, ImageProcessor
