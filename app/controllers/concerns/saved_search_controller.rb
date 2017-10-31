@@ -29,7 +29,7 @@ module SavedSearchController
         locals: {
           saved_search: @saved_search,
           params: {
-            accounts_grid: @saved_search.to_search_params,
+            @saved_search.param_root => @saved_search.to_search_params,
           },
         }
     else
