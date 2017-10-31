@@ -1,11 +1,19 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <div class="panel">
-      <h1>Hey there!</h1>
+<% provide :title, "RA Data • Teams" %>
 
-      <p>
-        Our development team is working hard at improving this section, and we will let you know when it's ready!
-      </p>
-    </div>
-  </div>
+<div class="panel">
+  <%= datagrid_form_for @teams_grid,
+    data: { turbolinks: false },
+    url: regional_ambassador_teams_path %>
+
+  <h6><%= pluralize(@teams_grid.assets.count, "team") %> found</h6>
+
+  <p>
+    <%= link_to "Export current results to CSV",
+      url_for(format: 'csv', teams_grid: params[:teams_grid].to_unsafe_h),
+      class: "button secondary small" %>
+  </p>
+
+  <%= datagrid_table(@teams_grid) %>
+
+  <%= will_paginate @teams_grid.assets %>
 </div>

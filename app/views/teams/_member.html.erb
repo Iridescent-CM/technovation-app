@@ -1,8 +1,5 @@
 <% admin ||= false %>
 
-<% #TODO: fix this admin/profile/user/account stuff %>
-<% path_name = current_scope == "admin" ? "profile" : "user" %>
-
 <li class="grid">
   <div class="grid__col-3 grid__col--bleed-x">
     <%= image_tag member.profile_image_url, class: "grid__cell-img" %>
@@ -11,10 +8,7 @@
   <div class="grid__col-9">
     <% if admin %>
       <h5 class="reset">
-        <%= link_to member.full_name, send(
-          "#{current_scope}_#{path_name}_path",
-          member.account_id
-        ) %>
+        <%= link_to member.full_name, admin_participant_path(member.account) %>
       </h5>
     <% else %>
       <h5 class="reset"><%= member.full_name %></h5>

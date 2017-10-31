@@ -1,55 +1,53 @@
-<%
-  options[:html] ||= {}
-  options[:html][:class] ||= ""
-  options[:html][:class] += " grid"
-%>
-
 <%= form_for grid, options do |f| -%>
-  <% grid.filters.group_by(&:filter_group).each do |group, filters| %>
-    <div
-      class="datagrid-filter-group <%= group %> grid__col-sm-6 grid__col--bleed-y"
-    >
-      <% filters.each do |filter| %>
-        <div class="datagrid-filter filter">
-          <%= f.datagrid_label filter %>
-          <%= f.datagrid_filter filter,
-            { partials: options[:partials] }.merge(filter.options) %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="datagrid-actions grid__col-6">
-    <div class="grid__cell">
-      <% unless default_or_saved_search_params? %>
-        <p style="float:right;">
-          <%= link_to "Save this search", "#",
-            data: { opens_modal: "search-saver" },
-            class: "button secondary small" %>
-        </p>
-      <% end %>
-
-      <%= f.submit I18n.t("datagrid.form.search").html_safe, class: "button" %>
-
-      <%= link_to I18n.t('datagrid.form.reset').html_safe,
-        url_for(grid.to_param => {}) %>
-    </div>
+  <div class="grid">
+    <% grid.filters.group_by(&:filter_group).each do |group, filters| %>
+      <div
+        class="datagrid-filter-group <%= group %> grid__col-sm-6 grid__col--bleed-y"
+      >
+        <% filters.each do |filter| %>
+          <div class="datagrid-filter filter">
+            <%= f.datagrid_label filter %>
+            <%= f.datagrid_filter filter,
+              { partials: options[:partials] }.merge(filter.options) %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="grid__col-6">
-    <div class="grid__cell">
-      <h6 class="reset">Saved searches:</h6>
-
-      <div class="saved-searches">
-        <% if @saved_searches.any? %>
-          <%= render partial: "saved_searches/saved_search",
-            collection: @saved_searches %>
-        <% else %>
-          <p class="hint reset">
-            You don't have any saved searches.
-            Perform a custom search and save it for repeated use.
+  <div class="grid">
+    <div class="datagrid-actions grid__col-6">
+      <div class="grid__cell">
+        <% unless default_or_saved_search_params? %>
+          <p style="float:right;">
+            <%= link_to "Save this search", "#",
+              data: { opens_modal: "search-saver" },
+              class: "button secondary small" %>
           </p>
         <% end %>
+
+        <%= f.submit I18n.t("datagrid.form.search").html_safe, class: "button" %>
+
+        <%= link_to I18n.t('datagrid.form.reset').html_safe,
+          url_for(grid.to_param => {}) %>
+      </div>
+    </div>
+
+    <div class="grid__col-6">
+      <div class="grid__cell">
+        <h6 class="reset">Saved searches:</h6>
+
+        <div class="saved-searches">
+          <% if @saved_searches.any? %>
+            <%= render partial: "saved_searches/saved_search",
+              collection: @saved_searches %>
+          <% else %>
+            <p class="hint reset">
+              You don't have any saved searches.
+              Perform a custom search and save it for repeated use.
+            </p>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

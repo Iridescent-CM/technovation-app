@@ -162,7 +162,9 @@ class Account < ActiveRecord::Base
   }
 
   scope :by_division, ->(division) {
-    joins(:division)
+    left_outer_joins(:division,:student_profile)
+      .where("student_profiles.id IS NOT NULL")
+      .where("divisions.id IS NOT NULL")
       .where("divisions.name = ?", Division.names[division])
   }
 

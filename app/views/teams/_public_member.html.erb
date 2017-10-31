@@ -8,12 +8,7 @@
 
   <div class="grid__col-9">
     <h3>
-      <% if current_account.authenticated? and public_member.mentor_profile %>
-        <%= link_to public_member.first_name,
-          send("#{current_scope}_mentor_path", public_member) %>
-      <% else %>
-        <%= public_member.first_name %>
-      <% end %>
+      <%= public_member.first_name %>
     </h3>
 
     <% if public_member.student_profile %>

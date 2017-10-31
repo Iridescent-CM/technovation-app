@@ -1,7 +1,24 @@
 module Admin
   class TeamsController < AdminController
+    include DatagridUser
+
     def index
-      @teams = Team.none
+      respond_to do |f|
+        f.html do
+          @teams_grid = TeamsGrid.new(grid_params) do |scope|
+            scope.page(params[:page])
+          end
+        end
+
+        f.csv do
+          @teams_grid = TeamsGrid.new(grid_params)
+
+          send_data @teams_grid.to_csv,
+            type: "text/csv",
+            disposition: 'inline',
+            filename: "technovation-teams-#{Time.current}.csv"
+        end
+      end
     end
 
     def show
@@ -31,6 +48,23 @@ module Admin
         :state_province,
         :country
       )
+    end
+
+    def grid_params
+      grid = (params[:teams_grid] ||= {}).merge(
+        admin: true,
+        country: Array(params[:teams_grid][:country]),
+        state_province: Array(params[:teams_grid][:state_province]),
+        season: params[:teams_grid][:season] || Season.current.year,
+      )
+
+      grid.merge(
+        column_names: detect_extra_columns(grid),
+      )
+    end
+
+    def param_root
+      :teams_grid
     end
   end
 end

@@ -1,20 +1,55 @@
 module RegionalAmbassador
   class TeamsController < RegionalAmbassadorController
+    include DatagridUser
+
     def index
-      @teams = Team.in_region(current_ambassador)
-        .includes(:team_member_invites, :join_requests)
+      respond_to do |f|
+        f.html do
+          @teams_grid = TeamsGrid.new(grid_params) do |scope|
+            scope.in_region(current_ambassador).page(params[:page])
+          end
+        end
 
-      @teams_without_students = @teams.unmatched(:students)
-        .order(updated_at: :desc)
-        .limit(5)
+        f.csv do
+          @teams_grid = TeamsGrid.new(grid_params) do |scope|
+            scope.in_region(current_ambassador)
+          end
 
-      @teams_without_mentors = @teams.unmatched(:mentors)
-        .order(updated_at: :desc)
-        .limit(5)
+          send_data @teams_grid.to_csv,
+            type: "text/csv",
+            disposition: 'inline',
+            filename: "technovation-teams-#{Time.current}.csv"
+        end
+      end
     end
 
     def show
-      @team = Team.find(params[:id])
+      @team = Team.in_region(current_ambassador).find(params[:id])
+    end
+
+    private
+    def grid_params
+      grid = (params[:teams_grid] ||= {}).merge(
+        admin: false,
+        allow_state_search: current_ambassador.country != "US",
+        country: [current_ambassador.country],
+        state_province: (
+          if current_ambassador.country == "US"
+            [current_ambassador.state_province]
+          else
+            Array(params[:teams_grid][:state_province])
+          end
+        ),
+        season: params[:teams_grid][:season] || Season.current.year,
+      )
+
+      grid.merge(
+        column_names: detect_extra_columns(grid),
+      )
+    end
+
+    def param_root
+      :teams_grid
     end
   end
 end

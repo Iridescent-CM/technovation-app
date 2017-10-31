@@ -50,6 +50,11 @@ class Team < ActiveRecord::Base
     end
   }
 
+  scope :by_division, ->(division) {
+    joins(:division)
+      .where("divisions.name = ?", Division.names[division])
+  }
+
   scope :not_attending_live_event, -> {
     includes(:regional_pitch_events)
       .references(:regional_pitch_events)
