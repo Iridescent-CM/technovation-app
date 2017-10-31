@@ -28,6 +28,7 @@ module SavedSearchController
       render partial: "saved_searches/saved_search",
         locals: {
           saved_search: @saved_search,
+          param_root: @saved_search.param_root,
           params: {
             @saved_search.param_root => @saved_search.to_search_params,
           },
