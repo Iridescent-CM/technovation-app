@@ -57,6 +57,11 @@ $.rails.showConfirmationDialog = function(link) {
   );
 }
 
-document.addEventListener("turbolinks:load", function() {
+var stickyCols;
+
+stickyCols = function() {
   $(".col--sticky").stick_in_parent();
-});
+}
+
+$(document).ready(stickyCols);
+$(document).on("turbolinks:load", stickyCols);
