@@ -9,6 +9,8 @@ module AdminHelper
   end
 
   def get_percentage(num_collection, denom_collection, passed_opts = {})
+    return 0 if denom_collection.count.zero?
+
     options = {
       round: 0,
     }.merge(passed_opts)
