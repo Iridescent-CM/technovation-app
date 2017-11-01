@@ -6,7 +6,9 @@ module RegionalAmbassador
       else
         @students = StudentProfile.current.in_region(current_ambassador)
 
-        @mentors = MentorProfile.current.in_region(current_ambassador)
+        @mentors = Account.current.in_region(current_ambassador)
+          .left_outer_joins(:mentor_profile)
+          .where("mentor_profiles.id IS NOT NULL")
 
         if current_ambassador.country == "US"
           init_us_mentor_data
@@ -49,57 +51,21 @@ module RegionalAmbassador
 
     private
     def init_intl_mentor_data
-      @consenting_mentors = @mentors.eager_load(account: :consent_waiver)
+      @consenting_mentors = @mentors.eager_load(:consent_waiver)
         .where("consent_waivers.id IS NOT NULL")
 
-      @unconsenting_mentors = @mentors.eager_load(account: :consent_waiver)
+      @unconsenting_mentors = @mentors.eager_load(:consent_waiver)
         .where("consent_waivers.id IS NULL")
     end
 
     def init_us_mentor_data
-      @cleared_mentors = MentorProfile
-        .current
-        .in_region(current_ambassador)
-        .eager_load(account: [:consent_waiver, :background_check])
-        .where(
-          "consent_waivers.id IS NOT NULL AND
-            background_checks.id IS NOT NULL AND
-              background_checks.status = ?",
-          BackgroundCheck.statuses[:clear]
-        )
+      @cleared_mentors = @mentors.bg_check_clear.consent_signed
 
-      @signed_consent_mentors = MentorProfile
-        .current
-        .in_region(current_ambassador)
-        .eager_load(account: [:consent_waiver, :background_check])
-        .where(
-          "consent_waivers.id IS NOT NULL AND
-            (background_checks.id IS NULL OR
-              background_checks.status != ?)",
-          BackgroundCheck.statuses[:clear]
-        )
+      @signed_consent_mentors = @mentors.bg_check_submitted.consent_signed
 
-      @cleared_bg_check_mentors = MentorProfile
-        .current
-        .in_region(current_ambassador)
-        .eager_load(account: [:consent_waiver, :background_check])
-        .where(
-          "consent_waivers.id IS NULL AND
-            background_checks.id IS NOT NULL AND
-              background_checks.status = ?",
-          BackgroundCheck.statuses[:clear]
-        )
+      @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
 
-      @niether_mentors = MentorProfile
-        .current
-        .in_region(current_ambassador)
-        .eager_load(account: [:consent_waiver, :background_check])
-        .where(
-          "consent_waivers.id IS NULL AND
-            background_checks.id IS NULL OR
-              background_checks.status != ?",
-          BackgroundCheck.statuses[:clear]
-        )
+      @niether_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
     end
   end
 end

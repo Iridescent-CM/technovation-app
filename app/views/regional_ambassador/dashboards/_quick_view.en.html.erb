@@ -10,8 +10,10 @@
     <dd><%= @students.count %></dd>
   </dl>
 
+  <h3>Parental permission</h3>
+
   <%= content_tag :canvas, nil,
-    class: "quickview-charts quickview-charts--clickable quickview-charts--students-permitted",
+    class: "quickview-charts quickview-charts--students-permitted",
     data: {
       chart_data: {
         labels: [
@@ -50,6 +52,10 @@
         ],
       },
     } %>
+</div>
+
+<div class="panel">
+  <h3>New vs. Returning</h3>
 
   <%= content_tag :canvas, nil,
     class: "quickview-charts quickview-charts--students-returning",
@@ -92,6 +98,10 @@
   <% else %>
     <%= render "regional_ambassador/dashboards/quick_view/international_mentors" %>
   <% end %>
+</div>
+
+<div class="panel">
+  <h3>New vs. Returning</h3>
 
   <%= content_tag :canvas, nil,
     class: "quickview-charts quickview-charts--mentors-returning",

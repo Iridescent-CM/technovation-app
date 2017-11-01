@@ -1,11 +1,13 @@
+<h3>Background check / consent waivers</h3>
+
 <%= content_tag :canvas, nil,
   class: "quickview-charts quickview-charts--mentors",
   data: {
     chart_data: {
       labels: [
-        "Signed consent & cleared a background check, if required – #{show_percentage(@cleared_mentors, @mentors)}",
+        "Signed consent & cleared a background check – #{show_percentage(@cleared_mentors, @mentors)}",
         "Only signed consent – #{show_percentage(@signed_consent_mentors, @mentors)}",
-        "Only cleared bg check, if required – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
+        "Only cleared bg check – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
         "Have done niether – #{show_percentage(@niether_mentors, @mentors)}",
       ],
       datasets: [
@@ -27,6 +29,36 @@
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)',
+          ],
+          urls: [
+            regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["mentor"],
+                background_check: "bg_check_clear",
+                consent_waiver: "consent_signed",
+              }
+            ),
+            regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["mentor"],
+                background_check: "bg_check_submitted",
+                consent_waiver: "consent_signed",
+              }
+            ),
+            regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["mentor"],
+                background_check: "bg_check_clear",
+                consent_waiver: "consent_not_signed",
+              }
+            ),
+            regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["mentor"],
+                background_check: "bg_check_unsubmitted",
+                consent_waiver: "consent_not_signed",
+              }
+            ),
           ],
         },
       ],
