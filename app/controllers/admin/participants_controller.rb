@@ -81,8 +81,8 @@ module Admin
         :profile_image_cache,
         :password,
         :location_confirmed,
-        "#{@account.scope_name}_profile_attributes" =>
-          "#{@account.scope_name}/profiles_controller"
+        "#{@account.scope_name.sub(/^\w+_regional/, "regional")}_profile_attributes" =>
+          "#{@account.scope_name.sub(/^\w+_regional/, "regional")}/profiles_controller"
             .camelize
             .constantize
             .new

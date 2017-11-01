@@ -17,11 +17,19 @@ class Account < ActiveRecord::Base
     :confirm_sentence,
     :admin_making_changes
 
-  has_one :admin_profile, dependent: :destroy
   has_one :student_profile, dependent: :destroy
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
+
   has_one :regional_ambassador_profile, dependent: :destroy
+  RegionalAmbassadorProfile.statuses.keys.each do |status|
+    has_one "#{status}_regional_ambassador_profile".to_sym, -> { send(status) },
+      class_name: "RegionalAmbassadorProfile",
+      dependent: :destroy
+  end
+
+  has_one :admin_profile, dependent: :destroy
+
   has_one :signup_attempt, dependent: :destroy
   has_one :unconfirmed_email_address, dependent: :destroy
 
@@ -341,7 +349,8 @@ class Account < ActiveRecord::Base
     # TODO: this doesn't work well for accounts with multiple scopes
     if module_name and module_name === "judge"
       "judge"
-    elsif regional_ambassador_profile.present?
+    elsif regional_ambassador_profile.present? and
+            regional_ambassador_profile.approved?
       "regional_ambassador"
     elsif mentor_profile.present?
       "mentor"
@@ -351,6 +360,8 @@ class Account < ActiveRecord::Base
       "judge"
     elsif admin_profile.present?
       "admin"
+    elsif regional_ambassador_profile.present?
+      "#{regional_ambassador_profile.status}_regional_ambassador"
     else
       "application"
     end

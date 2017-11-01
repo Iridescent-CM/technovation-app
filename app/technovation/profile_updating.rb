@@ -5,7 +5,7 @@ class ProfileUpdating
   public
   def initialize(profile, scope = nil)
     @profile = profile
-    @scope = scope || profile.account.scope_name
+    @scope = (scope || profile.account.scope_name).to_s.sub(/^\w+_r/, "r")
   end
 
   def self.execute(profile, scope = nil, attrs)
@@ -83,7 +83,9 @@ class ProfileUpdating
     def update_email_list_profile(scope)
       if email_list_changes_made?
         UpdateProfileOnEmailListJob.perform_later(
-          id, email_before_last_save, "#{scope.upcase}_LIST_ID"
+          id,
+          email_before_last_save,
+          "#{scope.sub(/^\w+_regional/, "regional").upcase}_LIST_ID"
         )
       end
     end

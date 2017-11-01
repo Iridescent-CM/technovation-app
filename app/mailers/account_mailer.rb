@@ -45,7 +45,7 @@ class AccountMailer < ApplicationMailer
     @name = account.first_name
 
     @url = send(
-      "#{account.scope_name}_dashboard_url",
+      "#{account.scope_name.sub(/^\w+_r/, "r")}_dashboard_url",
       mailer_token: account.mailer_token
     )
 

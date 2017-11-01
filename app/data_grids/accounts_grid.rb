@@ -115,7 +115,16 @@ class AccountsGrid
     ],
     filter_group: "and-or",
     multiple: true do |values|
-      clauses = values.flatten.map { |v| "#{v}_profiles.id IS NOT NULL" }
+      clauses = values.flatten.map do |v|
+        sql_str = "#{v}_profiles.id IS NOT NULL"
+
+        if v == "regional_ambassador"
+          sql_str += " AND regional_ambassador_profiles.status = #{
+            RegionalAmbassadorProfile.statuses[:approved]
+          }"
+        end
+      end
+
       where(clauses.join(' AND '))
     end
 

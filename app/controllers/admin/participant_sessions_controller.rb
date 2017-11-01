@@ -4,7 +4,10 @@ module Admin
       participant = Account.find(params[:id])
       participant.regenerate_session_token
       set_cookie(:session_token, participant.session_token)
-      redirect_to send("#{participant.scope_name}_dashboard_path")
+
+      redirect_to send(
+        "#{participant.scope_name.sub(/^\w+_r/, "r")}_dashboard_path"
+      )
     end
 
     def destroy

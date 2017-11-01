@@ -52,7 +52,7 @@
             </p>
           </dd>
 
-          <%= render "#{@account.scope_name}/profiles/profile",
+          <%= render "#{@account.scope_name.sub(/^\w+_r/, "r")}/profiles/profile",
             edit_path: edit_admin_participant_path(@account),
             editing: true,
             account: @account.public_send("#{@account.scope_name}_profile") %>

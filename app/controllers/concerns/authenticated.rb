@@ -23,7 +23,9 @@ module Authenticated
 
   private
   def unauthorized!
-    redirect_to send("#{current_account.scope_name}_dashboard_path"),
+    redirect_to send(
+      "#{current_account.scope_name.sub(/^\w+_r/, "r")}_dashboard_path"
+    ),
       error: t("controllers.application.unauthorized") and return
   end
 

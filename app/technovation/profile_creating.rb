@@ -5,7 +5,7 @@ class ProfileCreating
   public
   def initialize(profile, controller, scope = nil)
     @profile = profile
-    @scope = scope || profile.account.scope_name
+    @scope = (scope || profile.account.scope_name).to_s.sub(/^\w+_reg/, "reg")
     @controller = controller
   end
 

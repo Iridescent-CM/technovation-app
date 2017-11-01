@@ -48,7 +48,7 @@
             <%= @account.address_details %>
           </dd>
 
-          <%= render "#{@account.scope_name}/profiles/profile",
+          <%= render "#{@account.scope_name.sub(/^\w+_r/, "r")}/profiles/profile",
             editing: false,
             account: @account.public_send("#{@account.scope_name}_profile") %>
 

@@ -45,6 +45,8 @@ module SignIn
     end
 
     (last_profile_used && "#{last_profile_used}_dashboard_path") or
-      "#{signin.scope_name}_dashboard_path"
+      "#{signin.scope_name.sub(/^\w+_regional/, "regional")}_dashboard_path"
+    # TODO --- root out this pending regional ambassador stuff into something
+    # sensible
   end
 end
