@@ -6,6 +6,7 @@
 //= require char-counter
 //= require forms
 //= require saved-searches
+//= require charts
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({

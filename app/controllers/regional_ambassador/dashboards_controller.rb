@@ -8,19 +8,15 @@ module RegionalAmbassador
 
         @mentors = MentorProfile.current.in_region(current_ambassador)
 
-        @cleared_mentors = MentorProfile
-          .current
-          .in_region(current_ambassador)
-          .eager_load(account: [:consent_waiver, :background_check])
-          .where(
-            "consent_waivers.id IS NOT NULL AND
-              (accounts.country != 'US' OR
-                (background_checks.id IS NOT NULL AND
-                  background_checks.status = ?))",
-            BackgroundCheck.statuses[:clear]
-          )
+        if current_ambassador.country == "US"
+          init_us_mentor_data
+        else
+          init_intl_mentor_data
+        end
 
         @permitted_students = @students.joins(:parental_consent)
+        @unpermitted_students = @students.left_outer_joins(:parental_consent)
+          .where("parental_consents.id IS NULL")
 
         @new_students = @students.where(
           "accounts.created_at > ?",
@@ -49,6 +45,61 @@ module RegionalAmbassador
           back: regional_ambassador_dashboard_path
         )
       render "regional_ambassador/dashboards/show_#{current_ambassador.status}"
+    end
+
+    private
+    def init_intl_mentor_data
+      @consenting_mentors = @mentors.eager_load(account: :consent_waiver)
+        .where("consent_waivers.id IS NOT NULL")
+
+      @unconsenting_mentors = @mentors.eager_load(account: :consent_waiver)
+        .where("consent_waivers.id IS NULL")
+    end
+
+    def init_us_mentor_data
+      @cleared_mentors = MentorProfile
+        .current
+        .in_region(current_ambassador)
+        .eager_load(account: [:consent_waiver, :background_check])
+        .where(
+          "consent_waivers.id IS NOT NULL AND
+            background_checks.id IS NOT NULL AND
+              background_checks.status = ?",
+          BackgroundCheck.statuses[:clear]
+        )
+
+      @signed_consent_mentors = MentorProfile
+        .current
+        .in_region(current_ambassador)
+        .eager_load(account: [:consent_waiver, :background_check])
+        .where(
+          "consent_waivers.id IS NOT NULL AND
+            (background_checks.id IS NULL OR
+              background_checks.status != ?)",
+          BackgroundCheck.statuses[:clear]
+        )
+
+      @cleared_bg_check_mentors = MentorProfile
+        .current
+        .in_region(current_ambassador)
+        .eager_load(account: [:consent_waiver, :background_check])
+        .where(
+          "consent_waivers.id IS NULL AND
+            background_checks.id IS NOT NULL AND
+              background_checks.status = ?",
+          BackgroundCheck.statuses[:clear]
+        )
+
+      @niether_mentors = MentorProfile
+        .current
+        .in_region(current_ambassador)
+        .eager_load(account: [:consent_waiver, :background_check])
+        .where(
+          "consent_waivers.id IS NULL AND
+            background_checks.id IS NULL OR
+              background_checks.status != ?",
+          BackgroundCheck.statuses[:clear]
+        )
     end
   end
 end

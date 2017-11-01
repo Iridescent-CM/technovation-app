@@ -63,5 +63,4 @@ stickyCols = function() {
   $(".col--sticky").stick_in_parent();
 }
 
-$(document).ready(stickyCols);
-$(document).on("turbolinks:load", stickyCols);
+$(document).on("ready turbolinks:load", stickyCols);
