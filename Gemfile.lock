@@ -126,6 +126,8 @@ GEM
       fog
       uuidtools
     casting (0.7.2)
+    chart-js-rails (0.1.4)
+      railties (> 3.1)
     checkr-official (1.2.1)
       json (>= 1.8.1)
       rest-client (>= 1.4)
@@ -649,6 +651,7 @@ DEPENDENCIES
   carrierwave!
   carrierwave_direct (~> 0.0)
   casting (~> 0.7)
+  chart-js-rails (~> 0.1)
   checkr-official (~> 1.2)
   chosen-rails (~> 1.5)
   churn (~> 1.0)

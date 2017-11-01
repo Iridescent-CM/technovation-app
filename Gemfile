@@ -20,6 +20,7 @@ gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.5"
+gem 'chart-js-rails', "~> 0.1"
 
 gem "cocoon", "~> 1.2"
 

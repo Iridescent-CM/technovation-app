@@ -1,5 +1,6 @@
 //= require application
 //= require cocoon
+//= require Chart.min
 
 //= require accordion
 //= require char-counter
