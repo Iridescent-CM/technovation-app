@@ -1,12 +1,19 @@
 module AdminHelper
   def show_percentage(num_collection, denom_collection)
-    content_tag :small do
-        "(" +
-          number_to_percentage(
-            (num_collection.count / denom_collection.count.to_f) * 100,
-            precision: 0
-          ) +
-        ")"
-    end
+    "(" +
+      number_to_percentage(
+        get_percentage(num_collection, denom_collection),
+        precision: 0
+      ) +
+    ")"
+  end
+
+  def get_percentage(num_collection, denom_collection, passed_opts = {})
+    options = {
+      round: 0,
+    }.merge(passed_opts)
+
+    ((num_collection.count / denom_collection.count.to_f) * 100)
+      .round(options[:round])
   end
 end

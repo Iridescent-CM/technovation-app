@@ -6,6 +6,7 @@
 //= require chosen-jquery
 //= require sweetalert2
 //= require jquery.sticky-kit.min
+//= require Chart.min
 
 // ******** APP
 //
@@ -17,6 +18,7 @@
 //= require forms
 //= require season-schedule
 //= require saved-searches
+//= require charts
 
 document.addEventListener("turbolinks:load", function() {
   $(".accordion-toggle").on("click", function(e) {
@@ -69,4 +71,3 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
-

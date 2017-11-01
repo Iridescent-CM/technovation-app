@@ -8,25 +8,75 @@
   <dl>
     <dt>Total:</dt>
     <dd><%= @students.count %></dd>
-
-    <dt>With parental permission:</dt>
-    <dd>
-      <%= @permitted_students.count %>
-      <%= show_percentage(@permitted_students, @students) %>
-    </dd>
-
-    <dt>Returning students:</dt>
-    <dd>
-      <%= @returning_students.count %>
-      <%= show_percentage(@returning_students, @students) %>
-    </dd>
-
-    <dt>New students:</dt>
-    <dd>
-      <%= @new_students.count %>
-      <%= show_percentage(@new_students, @students) %>
-    </dd>
   </dl>
+
+  <%= content_tag :canvas, nil,
+    class: "quickview-charts quickview-charts--clickable quickview-charts--students-permitted",
+    data: {
+      chart_data: {
+        labels: [
+          "With parental permission – #{show_percentage(@permitted_students, @students)}",
+          "Without parental permission – #{show_percentage(@unpermitted_students, @students)}",
+        ],
+        datasets: [
+          {
+            data: [
+              @permitted_students.count,
+              @unpermitted_students.count,
+            ],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 99, 132, 0.7)',
+            ],
+            hoverBackgroundColor: [
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 99, 132, 1)',
+            ],
+            urls: [
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["student"],
+                  parental_consent: "parental_consented",
+                }
+              ),
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["student"],
+                  parental_consent: "not_parental_consented",
+                }
+              ),
+            ],
+          },
+        ],
+      },
+    } %>
+
+  <%= content_tag :canvas, nil,
+    class: "quickview-charts quickview-charts--students-returning",
+    data: {
+      chart_data: {
+        labels: [
+          "Returning students – #{show_percentage(@returning_students, @students)}",
+          "New students – #{show_percentage(@new_students, @students)}",
+        ],
+        datasets: [
+          {
+            data: [
+              @returning_students.count,
+              @new_students.count,
+            ],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+            ],
+            hoverBackgroundColor: [
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+            ],
+          },
+        ],
+      },
+    } %>
 </div>
 
 <div class="panel">
@@ -35,23 +85,97 @@
   <dl>
     <dt>Total:</dt>
     <dd><%= @mentors.count %></dd>
-
-    <dt>With consent waiver and background check, if required:</dt>
-    <dd>
-      <%= @cleared_mentors.count %>
-      <%= show_percentage(@cleared_mentors, @mentors) %>
-    </dd>
-
-    <dt>Returning mentors:</dt>
-    <dd>
-      <%= @returning_mentors.count %>
-      <%= show_percentage(@returning_mentors, @mentors) %>
-    </dd>
-
-    <dt>New mentors:</dt>
-    <dd>
-      <%= @new_mentors.count %>
-      <%= show_percentage(@new_mentors, @mentors) %>
-    </dd>
   </dl>
+
+  <%= content_tag :canvas, nil,
+    class: "quickview-charts quickview-charts--mentors",
+    data: {
+      chart_data: {
+        labels: [
+          "Signed consent & cleared a background check, if required – #{show_percentage(@cleared_mentors, @mentors)}",
+          "Only signed consent – #{show_percentage(@signed_consent_mentors, @mentors)}",
+          "Only cleared bg check, if required – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
+          "Have done niether – #{show_percentage(@niether_mentors, @mentors)}",
+        ],
+        datasets: [
+          {
+            data: [
+              @cleared_mentors.count,
+              @signed_consent_mentors.count,
+              @cleared_bg_check_mentors.count,
+              @niether_mentors.count,
+            ],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 206, 86, 0.7)',
+              'rgba(75, 192, 192, 0.7)',
+            ],
+            hoverBackgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+            ],
+            urls: [
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["mentor"],
+                  background_check: "bg_check_clear",
+                  consent_waiver: "consent_signed",
+                }
+              ),
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["mentor"],
+                  background_check: "bg_check_submitted",
+                  consent_waiver: "consent_signed",
+                }
+              ),
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["mentor"],
+                  background_check: "bg_check_clear",
+                  consent_waiver: "consent_not_signed",
+                }
+              ),
+              admin_participants_path(
+                accounts_grid: {
+                  scope_names: ["mentor"],
+                  background_check: "bg_check_unsubmitted",
+                  consent_waiver: "consent_not_signed",
+                }
+              ),
+            ],
+          },
+        ],
+      },
+    } %>
+
+  <%= content_tag :canvas, nil,
+    class: "quickview-charts quickview-charts--mentors-returning",
+    data: {
+      chart_data: {
+        labels: [
+          "Returning mentors – #{show_percentage(@returning_mentors, @mentors)}",
+          "New mentors – #{show_percentage(@new_mentors, @mentors)}",
+        ],
+        datasets: [
+          {
+            data: [
+              @returning_mentors.count,
+              @new_mentors.count,
+            ],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+            ],
+            hoverBackgroundColor: [
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+            ],
+          },
+        ],
+      },
+    } %>
 </div>

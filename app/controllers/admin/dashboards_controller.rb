@@ -3,19 +3,12 @@ module Admin
     def show
       @students = StudentProfile.current
 
-      @mentors = MentorProfile.current
-
-      @cleared_mentors = MentorProfile
-        .left_outer_joins(current_account: [:consent_waiver, :background_check])
-        .where(
-          "consent_waivers.id IS NOT NULL AND
-            (accounts.country != 'US' OR
-              (background_checks.id IS NOT NULL AND
-                background_checks.status = ?))",
-          BackgroundCheck.statuses[:clear]
-        )
+      @mentors = Account.current.left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
 
       @permitted_students = @students.joins(:parental_consent)
+      @unpermitted_students = @students.left_outer_joins(:parental_consent)
+        .where("parental_consents.id IS NULL")
 
       @new_students = @students.where(
         "accounts.created_at > ?",
@@ -36,6 +29,14 @@ module Admin
         "accounts.created_at < ?",
         Date.new(Season.current.year - 1, 10, 18)
       )
+
+      @cleared_mentors = @mentors.bg_check_clear.consent_signed
+
+      @signed_consent_mentors = @mentors.bg_check_submitted.consent_signed
+
+      @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
+
+      @niether_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
     end
   end
 end
