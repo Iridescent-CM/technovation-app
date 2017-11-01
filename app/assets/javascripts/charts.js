@@ -7,10 +7,13 @@ charts = function() {
           ctx = $chartEl.get(0).getContext("2d"),
           data = $chartEl.data("chartData");
 
-    new Chart(ctx, {
+    var chart = new Chart(ctx, {
       type: 'pie',
       data: data,
       options: {
+        legend: {
+          position: 'bottom',
+        },
         onClick: function(evt, els) {
           const urls = $chartEl.data("chartData").datasets[0].urls,
                 i = els[0]._index;
