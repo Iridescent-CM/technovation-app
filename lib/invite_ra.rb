@@ -1,6 +1,24 @@
 module InviteRA
-  def self.call(attrs)
+  def self.call(attrs, logger = "/dev/null")
+    @logger = Logger.new(logger)
+
+    @logger.info("============================================================")
+
+    if attrs.respond_to?(:symbolize_keys!)
+      attrs.symbolize_keys!
+    end
+
+    account = Account.find_by(email: attrs[:email])
+
+    if account && account.approved_regional_ambassador_profile
+      @logger.info("SKIPPING #{attrs[:email]} - Approved RA profile already found!")
+      return
+    end
+
+    @logger.info("CREATING Approved RA for #{attrs[:email]}")
+
     if attempt = SignupAttempt.find_by(email: attrs[:email])
+      @logger.info("DESTROYING found SignupAttempt for #{attrs[:email]}")
       attempt.destroy
     end
 
@@ -12,6 +30,7 @@ module InviteRA
 
     if account = Account.find_by(email: attrs[:email])
       background_check = account.background_check
+      @logger.info("DESTROYING found Account for #{attrs[:email]}")
       account.destroy
     end
 
@@ -29,6 +48,7 @@ module InviteRA
     )
 
     if background_check.present?
+      @logger.info("CREATING found BackgroundCheck for #{attrs[:email]}")
       account.create_background_check!({
         candidate_id: background_check.candidate_id,
         report_id: background_check.report_id,
@@ -44,6 +64,7 @@ module InviteRA
       status: :approved,
     )
 
+    @logger.info("READY to invite Approved RA: #{account.reload.email}")
     attempt
   end
 end

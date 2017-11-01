@@ -14,14 +14,14 @@ task invite_ras: :environment do
       row[:date_of_birth] = Date.strptime(row[:date_of_birth], "%m/%d/%Y")
 
       begin
-        attempts << InviteRA.(row)
+        attempts << InviteRA.(row, $stdout)
       rescue => e
         attempts = []
         raise e
       end
     end
 
-    attempts.each do |attempt|
+    attempts.compact.each do |attempt|
       RegistrationMailer.admin_permission(attempt.id).deliver_now
     end
   end
