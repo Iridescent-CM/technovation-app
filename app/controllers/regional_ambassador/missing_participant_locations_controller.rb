@@ -3,6 +3,8 @@ module RegionalAmbassador
     def edit
       @account = Account.find(params[:id])
 
+      @account.city = nil
+
       if current_ambassador.country == "US"
         @account.state_province = current_ambassador.state_province
       end
