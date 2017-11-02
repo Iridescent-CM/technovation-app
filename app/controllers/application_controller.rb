@@ -71,12 +71,19 @@ class ApplicationController < ActionController::Base
 
   private
   def regional_ambassador
+    region_account = if current_session.authenticated?
+                       current_session
+                     else
+                       current_account
+                     end
+
     @regional_ambassador ||= RegionalAmbassadorProfile.not_staff
       .approved
       .joins(:current_account)
-      .find_by({ "accounts.country" => current_account.country }.merge(
-        current_account.country == "US" ?
-          { "accounts.state_province" => current_account.state_province } : {}
+      .where("intro_summary IS NOT NULL")
+      .find_by({ "accounts.country" => region_account.country }.merge(
+        region_account.country == "US" ?
+          { "accounts.state_province" => region_account.state_province } : {}
       )) || NullRegionalAmbassador.new
   end
 
