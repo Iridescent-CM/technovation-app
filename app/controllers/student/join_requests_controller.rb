@@ -11,6 +11,8 @@ module Student
 
       if reviewer_is_requestor?(@join_request)
         render template: "join_requests/show_requestor_#{@join_request.status}"
+      elsif @join_request.missing?
+        render template: "join_requests/show_missing"
       elsif reviewer_is_unauthorized?(@join_request)
         redirect_to student_dashboard_path,
           alert: "You do not have permission to visit that page"

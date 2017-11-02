@@ -83,6 +83,10 @@ class JoinRequest < ActiveRecord::Base
     end
   end
 
+  def missing?
+    false
+  end
+
   private
   def notify_requested_team
     team.members.each do |recipient|
