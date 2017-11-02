@@ -49,11 +49,24 @@
     <%= form_with(
       method: :get,
       local: true,
-      url: url_for(
-        format: 'csv',
-        teams_grid: params[:teams_grid].to_unsafe_h
-      )
+      url: url_for(format: 'csv')
     ) do |f| %>
+
+      <% @teams_grid.attributes.each do |name, value| %>
+        <% next if value.blank? %>
+
+        <% if Array(value).many? %>
+          <%= f.select "teams_grid[#{name}]", nil, {},
+            class: "hidden",
+            multiple: true do %>
+            <% Array(value).each do |v| %>
+              <%= content_tag :option, v, selected: true %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= f.hidden_field "teams_grid[#{name}]", value: value %>
+        <% end %>
+      <% end %>
 
       <%= f.label :filename, "Customize the filename (optional)" %>
       <%= f.text_field :filename, placeholder: default_export_filename(:csv) %>
