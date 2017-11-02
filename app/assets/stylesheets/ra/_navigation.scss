@@ -25,4 +25,21 @@
   width: 100%;
   background: $doc-bg;
   box-shadow: $shadow-btm;
+
+  .subnav--help-link {
+    opacity: 1;
+    float: right;
+    margin: 0.4rem 0.5rem 0 0;
+    background-color: $mulberry-mid;
+    box-shadow: 0 2px 0 darken($mulberry-mid, 5);
+    color: white;
+    font-size: 0.8rem;
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: darken($mulberry-mid, 5);
+      color: white;
+    }
+  }
 }
