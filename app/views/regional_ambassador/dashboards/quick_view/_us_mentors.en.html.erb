@@ -8,7 +8,7 @@
         "Signed consent & cleared a background check – #{show_percentage(@cleared_mentors, @mentors)}",
         "Only signed consent – #{show_percentage(@signed_consent_mentors, @mentors)}",
         "Only cleared bg check – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
-        "Have done niether – #{show_percentage(@niether_mentors, @mentors)}",
+        "Have done neither – #{show_percentage(@neither_mentors, @mentors)}",
       ],
       datasets: [
         {
@@ -16,7 +16,7 @@
             @cleared_mentors.count,
             @signed_consent_mentors.count,
             @cleared_bg_check_mentors.count,
-            @niether_mentors.count,
+            @neither_mentors.count,
           ],
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',

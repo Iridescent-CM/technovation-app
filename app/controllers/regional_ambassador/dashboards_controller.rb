@@ -65,7 +65,7 @@ module RegionalAmbassador
 
       @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
 
-      @niether_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
+      @neither_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
     end
   end
 end
