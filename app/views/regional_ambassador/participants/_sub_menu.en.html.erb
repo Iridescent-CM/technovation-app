@@ -1,40 +1,28 @@
-<div class="grid grid--bleed grid--justify-space-around">
-  <div class="grid__col-auto">
-    <ul class="menu horizontal subnav">
-      <li>
-        <%= link_to 'Students',
-          regional_ambassador_participants_path(
-            accounts_grid: { scope_names: [:student] }
-          ),
-          class: al(["scope=student", "accounts_grid[scope_names][]=student"]) %>
-      </li>
+<div class="menu horizontal subnav">
+  <%= link_to 'Students',
+    regional_ambassador_participants_path(
+      accounts_grid: { scope_names: [:student] }
+    ),
+    class: al(["scope=student", "accounts_grid[scope_names][]=student"]) %>
 
-      <li>
-        <%= link_to 'Mentors',
-          regional_ambassador_participants_path(
-            accounts_grid: { scope_names: [:mentor] }
-          ),
-          class: al(["scope=mentor", "accounts_grid[scope_names][]=mentor"]) %>
-      </li>
+  <%= link_to 'Mentors',
+    regional_ambassador_participants_path(
+      accounts_grid: { scope_names: [:mentor] }
+    ),
+    class: al(["scope=mentor", "accounts_grid[scope_names][]=mentor"]) %>
 
-      <li>
-        <%= link_to 'Judges',
-          regional_ambassador_participants_path(
-            accounts_grid: { scope_names: [:judge] }
-          ),
-          class: al(["scope=judge", "accounts_grid[scope_names][]=judge"]) %>
-      </li>
+  <%= link_to 'Judges',
+    regional_ambassador_participants_path(
+      accounts_grid: { scope_names: [:judge] }
+    ),
+    class: al(["scope=judge", "accounts_grid[scope_names][]=judge"]) %>
 
-      <li>
-        <%= link_to 'Regional Ambassadors',
-          regional_ambassador_participants_path(
-            accounts_grid: { scope_names: [:regional_ambassador] }
-          ),
-          class: al([
-            "scope=regional_ambassador",
-            "accounts_grid[scope_names][]=regional_ambassador",
-          ]) %>
-      </li>
-    </ul>
-  </div>
+  <%= link_to 'Regional Ambassadors',
+    regional_ambassador_participants_path(
+      accounts_grid: { scope_names: [:regional_ambassador] }
+    ),
+    class: al([
+      "scope=regional_ambassador",
+      "accounts_grid[scope_names][]=regional_ambassador",
+    ]) %>
 </div>

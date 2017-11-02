@@ -88,3 +88,13 @@
     white-space: nowrap;
   }
 }
+
+.header-container {
+  z-index: $z-under-shade;
+}
+
+.col--sticky {
+  &.is_stuck:not(.header-container) {
+    margin: 92px 0 0;
+  }
+}

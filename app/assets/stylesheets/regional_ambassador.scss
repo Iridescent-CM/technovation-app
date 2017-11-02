@@ -16,5 +16,8 @@
   padding: 0 0 1rem;
 }
 
-canvas[data-chart-data-datasets-urls] {
+.col--sticky {
+  &.is_stuck:not(.header-container) {
+    margin: 51px 0 0;
+  }
 }

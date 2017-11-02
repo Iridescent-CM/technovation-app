@@ -1,28 +1,9 @@
-<% if current_session.authenticated? %>
-  <div class="notice notice--top">
-    You are logged in as <%= current_session.full_name %> |
+<%
+  navbar_css = ""
+  navbar_css += "logged-in " if current_account.authenticated?
+%>
 
-    <% if current_account.admin? %>
-      <%= link_to "return to Admin mode",
-        admin_participant_session_path(current_session),
-        data: {
-          method: :delete,
-          turbolinks: 'false',
-        } %>
-    <% else %>
-      <%= link_to "return to RA mode",
-        regional_ambassador_participant_session_path(current_session),
-        data: {
-          method: :delete,
-          turbolinks: 'false',
-        } %>
-    <% end %>
-  </div>
-<% end %>
-
-<header
-  class="grid grid--bleed navigation <%= "logged-in" if current_account.authenticated? %>"
->
+<header class="grid grid--bleed navigation <%= navbar_css %>">
   <%= web_icon("navicon") %>
 
   <div class="grid__col-9 grid__col-sm-3">

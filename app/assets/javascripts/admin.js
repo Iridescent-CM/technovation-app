@@ -71,3 +71,11 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
+
+var stickyCols;
+
+stickyCols = function() {
+  $(".col--sticky").stick_in_parent();
+}
+
+$(document).on("ready turbolinks:load", stickyCols);

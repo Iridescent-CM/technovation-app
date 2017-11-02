@@ -1,6 +1,6 @@
 <% provide :title, "RA Data • Participants" %>
 
-<%= render 'regional_ambassador/participants/sub_menu' %>
+<% provide :subnav, render('regional_ambassador/participants/sub_menu') %>
 
 <div class="panel">
   <%= datagrid_form_for @accounts_grid,
