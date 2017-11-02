@@ -2,20 +2,7 @@ module Admin
   class TeamsController < AdminController
     include DatagridUser
 
-    def index
-      respond_to do |f|
-        f.html do
-          @teams_grid = TeamsGrid.new(grid_params) do |scope|
-            scope.page(params[:page])
-          end
-        end
-
-        f.csv do
-          @teams_grid = TeamsGrid.new(grid_params)
-          send_export(@teams_grid, :csv)
-        end
-      end
-    end
+    use_datagrid with: TeamsGrid
 
     def show
       @team = Team.find(params[:id])
@@ -57,10 +44,6 @@ module Admin
       grid.merge(
         column_names: detect_extra_columns(grid),
       )
-    end
-
-    def param_root
-      :teams_grid
     end
   end
 end

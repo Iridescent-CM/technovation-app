@@ -1,0 +1,81 @@
+<div class="panel">
+  <%= datagrid_form_for grid, data: { turbolinks: false }, url: form_url %>
+
+  <h6>
+    <%= number_with_delimiter(
+      pluralize(grid.assets.count, model_name)
+    ) %> found
+  </h6>
+
+  <% unless grid.assets.empty? %>
+    <p>
+      <%= link_to "Export current results to CSV", "#",
+        data: {
+          opens_modal: "export_csv",
+        },
+        class: "button secondary small" %>
+    </p>
+  <% end %>
+
+  <%= datagrid_table(grid) %>
+
+  <%= will_paginate grid.assets %>
+</div>
+
+<%= content_tag :div, class: "modal", id: "export_csv" do %>
+  <div class="modal-content">
+    <div style="text-align: left;">
+      <h5 class="reset">Current export settings:</h5>
+
+      <p class="hint">
+        Make sure you performed the search to get the desired settings!
+      </p>
+    </div>
+
+    <dl style="text-align: left;">
+      <% grid.attributes.each do |name, value| %>
+        <% next if value.blank? %>
+        <% filter = grid.filters.detect { |f| f.name == name } %>
+        <% next unless filter.present? %>
+
+        <dt><%= filter.header %></dt>
+        <dd><%= Array(value).to_sentence %></dd>
+      <% end %>
+
+      <dt>Total accounts</dt>
+      <dd><%= grid.assets.count %></dd>
+    </dl>
+
+    <%= form_with(
+      method: :get,
+      local: true,
+      url: url_for(format: 'csv')
+    ) do |f| %>
+
+      <% grid.attributes.each do |name, value| %>
+        <% next if value.blank? %>
+
+        <% if Array(value).many? %>
+          <%= f.select "#{param_root}[#{name}]", nil, {},
+            class: "hidden",
+            multiple: true do %>
+            <% Array(value).each do |v| %>
+              <%= content_tag :option, v, selected: true %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= f.hidden_field "#{param_root}[#{name}]", value: value %>
+        <% end %>
+      <% end %>
+
+      <%= f.label :filename, "Customize the filename (optional)" %>
+      <%= f.text_field :filename, placeholder: default_export_filename(:csv) %>
+
+      <p>
+        <%= f.submit "Export now", class: "button" %>
+        or
+        <%= link_to 'cancel', '#', class: "close" %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

@@ -2,20 +2,7 @@ module Admin
   class ParticipantsController < AdminController
     include DatagridUser
 
-    def index
-      respond_to do |f|
-        f.html do
-          @accounts_grid = AccountsGrid.new(grid_params) do |scope|
-            scope.page(params[:page])
-          end
-        end
-
-        f.csv do
-          @accounts_grid = AccountsGrid.new(grid_params)
-          send_export(@accounts_grid, :csv)
-        end
-      end
-    end
+    use_datagrid with: AccountsGrid
 
     def show
       @account = Account.find(params.fetch(:id))
@@ -77,8 +64,8 @@ module Admin
         :profile_image_cache,
         :password,
         :location_confirmed,
-        "#{@account.scope_name.sub(/^\w+_regional/, "regional")}_profile_attributes" =>
-          "#{@account.scope_name.sub(/^\w+_regional/, "regional")}/profiles_controller"
+        "#{@account.scope_name.sub(/^\w+_r/, "r")}_profile_attributes" =>
+          "#{@account.scope_name.sub(/^\w+_r/, "r")}/profiles_controller"
             .camelize
             .constantize
             .new
@@ -87,10 +74,6 @@ module Admin
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
       end
-    end
-
-    def param_root
-      :accounts_grid
     end
   end
 end

@@ -123,6 +123,8 @@ class AccountsGrid
             RegionalAmbassadorProfile.statuses[:approved]
           }"
         end
+
+        sql_str
       end
 
       where(clauses.join(' AND '))

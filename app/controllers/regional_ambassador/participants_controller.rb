@@ -2,22 +2,13 @@ module RegionalAmbassador
   class ParticipantsController < RegionalAmbassadorController
     include DatagridUser
 
-    def index
-      respond_to do |f|
-        f.html do
-          @accounts_grid = AccountsGrid.new(grid_params) do |scope|
-            scope.in_region(current_ambassador).page(params[:page])
-          end
-        end
-
-        f.csv do
-          @accounts_grid = AccountsGrid.new(grid_params) do |scope|
-            scope.in_region(current_ambassador)
-          end
-          send_export(@accounts_grid, :csv)
-        end
-      end
-    end
+    use_datagrid with: AccountsGrid,
+      html_scope: ->(scope, user, params) {
+        scope.in_region(user).page(params[:page])
+      },
+      csv_scope: ->(scope, user, params) {
+        scope.in_region(user)
+      }
 
     def show
       @account = Account.in_region(current_ambassador).find(params[:id])
@@ -42,10 +33,6 @@ module RegionalAmbassador
       grid.merge(
         column_names: detect_extra_columns(grid),
       )
-    end
-
-    def param_root
-      :accounts_grid
     end
   end
 end
