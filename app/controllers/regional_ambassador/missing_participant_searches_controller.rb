@@ -16,7 +16,9 @@ module RegionalAmbassador
         end
       end
 
-      @account = Account.where(clauses.join(" AND ")).first
+      if clauses.any?
+        @account = Account.where(clauses.join(" AND ")).first
+      end
     end
 
     def create
