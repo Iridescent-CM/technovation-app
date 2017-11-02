@@ -48,8 +48,8 @@
 
     <%= form_with(
       method: :get,
-      local: true,
-      url: url_for(format: 'csv')
+      data: { wait_for_jobs: true },
+      url: url_for(format: 'js')
     ) do |f| %>
 
       <% grid.attributes.each do |name, value| %>
@@ -77,5 +77,11 @@
         <%= link_to 'cancel', '#', class: "close" %>
       </p>
     <% end %>
+
+    <div class="while-waiting">
+      <%= web_icon("spinner2 spin") %>
+      <p>Exporting your CSV now...</p>
+      <p>Larger datasets take more time, thank you for your patience!</p>
+    </div>
   </div>
 <% end %>

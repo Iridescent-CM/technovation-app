@@ -6,9 +6,7 @@ module RegionalAmbassador
       html_scope: ->(scope, user, params) {
         scope.in_region(user).page(params[:page])
       },
-      csv_scope: ->(scope, user, params) {
-        scope.in_region(user)
-      }
+      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
 
     def show
       @account = Account.in_region(current_ambassador).find(params[:id])

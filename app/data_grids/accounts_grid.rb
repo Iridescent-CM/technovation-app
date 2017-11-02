@@ -3,6 +3,8 @@ class AccountsGrid
 
   attr_accessor :admin, :allow_state_search
 
+  self.batch_size = 10
+
   scope do
     Account.left_outer_joins([
       :student_profile,

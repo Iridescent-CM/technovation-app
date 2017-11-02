@@ -197,3 +197,25 @@ select {
     }
   }
 }
+
+.while-waiting {
+  transition: 0.2s opacity;
+  opacity: 0;
+  text-align: center;
+}
+
+form[data-remote] {
+  transition: 0.2s opacity;
+
+  &.waiting {
+    opacity: 0;
+
+    + .while-waiting {
+      opacity: 1;
+    }
+  }
+
+  &.complete {
+    opacity: 0;
+  }
+}

@@ -119,6 +119,8 @@ Rails.application.routes.draw do
 
     resource :introduction, only: [:edit, :update]
 
+    resources :job_statuses, only: :show
+
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
     resources :participants, only: [:index, :show, :edit, :update]
@@ -163,6 +165,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resource :dashboard, only: :show
+
+    resources :job_statuses, only: :show
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 

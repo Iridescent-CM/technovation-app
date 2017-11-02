@@ -3,7 +3,7 @@ $(document).on("click", ".modal-content .close", function(e) {
   swal.close();
 });
 
-$(document).on("submit", ".modal-content form", function() {
+$(document).on("submit", ".modal-content form:not([data-remote])", function() {
   swal.close();
 });
 

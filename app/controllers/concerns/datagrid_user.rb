@@ -30,9 +30,8 @@ module DatagridUser
         scope.page(params[:page])
       }
 
-      @csv_scope_modifier = opts[:csv_scope] || ->(scope, user, params) {
-        scope
-      }
+      @csv_scope_modifier = opts[:csv_scope] ||
+        "->(scope, user, params) { scope }"
     end
   end
 
@@ -45,6 +44,30 @@ module DatagridUser
             modify_html_scope(scope)
           }
         )
+      end
+
+      f.js do
+        passed_filename = params[:filename].sub(".csv", "")
+
+        filename = if passed_filename.blank?
+                    default_export_filename(:csv)
+                  else
+                    "#{passed_filename}.csv"
+                  end
+
+        job = ExportJob.perform_later(
+          current_profile,
+          grid_klass.name,
+          grid_params.to_unsafe_h,
+          self.class.name,
+          self.class.csv_scope_modifier.to_s,
+          filename,
+          "csv"
+        )
+
+        render json: {
+          status_url: send("#{current_scope}_job_status_url", job.job_id)
+        }
       end
 
       f.csv do
@@ -70,26 +93,26 @@ module DatagridUser
   end
 
   def detect_extra_columns(grid_params)
-    columns = Array(grid_params[:column_names]).flatten.map(&:to_sym)
+    columns = Array(grid_params[:column_names]).flatten.map(&:to_s)
 
     if Array(grid_params[:country]).many?
-      columns = columns | [:country]
+      columns = columns | ["country"]
     end
 
     if not Array(grid_params[:state_province]).one? and
         (Array(grid_params[:state_province]).many? or
           Array(grid_params[:country]).one?)
-      columns = columns | [:state_province]
+      columns = columns | ["state_province"]
     end
 
     if Array(grid_params[:city]).any? or
         Array(grid_params[:state_province]).one?
-      columns = columns | [:city]
+      columns = columns | ["city"]
     end
 
     if Array(grid_params[:profile_type]).many? or
         grid_params[:team_matching].present?
-      columns = columns | [:profile_type]
+      columns = columns | ["profile_type"]
     end
 
     columns
