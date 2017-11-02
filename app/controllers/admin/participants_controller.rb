@@ -12,11 +12,7 @@ module Admin
 
         f.csv do
           @accounts_grid = AccountsGrid.new(grid_params)
-
-          send_data @accounts_grid.to_csv,
-            type: "text/csv",
-            disposition: 'inline',
-            filename: "technovation-participants-#{Time.current}.csv"
+          send_export(@accounts_grid, :csv)
         end
       end
     end

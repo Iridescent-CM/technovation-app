@@ -14,11 +14,7 @@ module RegionalAmbassador
           @accounts_grid = AccountsGrid.new(grid_params) do |scope|
             scope.in_region(current_ambassador)
           end
-
-          send_data @accounts_grid.to_csv,
-            type: "text/csv",
-            disposition: 'inline',
-            filename: "technovation-participants-#{Time.current}.csv"
+          send_export(@accounts_grid, :csv)
         end
       end
     end

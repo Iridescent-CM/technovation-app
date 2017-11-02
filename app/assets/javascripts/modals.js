@@ -1,4 +1,13 @@
-document.addEventListener("turbolinks:load", function() {
+$(document).on("click", ".modal-content .close", function(e) {
+  e.preventDefault();
+  swal.close();
+});
+
+$(document).on("submit", ".modal-content form", function() {
+  swal.close();
+});
+
+$(document).on("ready turbolinks:load", function() {
   $("[data-opens-modal]").on("click", function(e) {
     e.preventDefault();
 

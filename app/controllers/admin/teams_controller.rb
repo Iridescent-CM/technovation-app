@@ -12,11 +12,7 @@ module Admin
 
         f.csv do
           @teams_grid = TeamsGrid.new(grid_params)
-
-          send_data @teams_grid.to_csv,
-            type: "text/csv",
-            disposition: 'inline',
-            filename: "technovation-teams-#{Time.current}.csv"
+          send_export(@teams_grid, :csv)
         end
       end
     end

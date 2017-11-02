@@ -3,6 +3,7 @@ module DatagridUser
 
   included do
     helper_method :default_or_saved_search_params?,
+      :default_export_filename,
       :param_root
 
     before_action -> {
@@ -46,5 +47,29 @@ module DatagridUser
 
   def param_root
     raise "Your controller must define the `#param_root` method"
+  end
+
+  def send_export(collection, format)
+    passed_filename = params[:filename].sub(".#{format}", "")
+
+    filename = if passed_filename.blank?
+                 default_export_filename(format)
+               else
+                 "#{passed_filename}.#{format}"
+               end
+
+    send_data collection.public_send("to_#{format}"),
+      type: "text/csv",
+      disposition: 'inline',
+      filename: filename
+  end
+
+  def default_export_filename(format)
+    case param_root
+    when :accounts_grid
+      "technovation-participants-#{Time.current}.#{format}"
+    when :teams_grid
+      "technovation-teams-#{Time.current}.#{format}"
+    end
   end
 end

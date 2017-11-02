@@ -14,11 +14,7 @@ module RegionalAmbassador
           @teams_grid = TeamsGrid.new(grid_params) do |scope|
             scope.in_region(current_ambassador)
           end
-
-          send_data @teams_grid.to_csv,
-            type: "text/csv",
-            disposition: 'inline',
-            filename: "technovation-teams-#{Time.current}.csv"
+          send_export(@teams_grid, :csv)
         end
       end
     end
