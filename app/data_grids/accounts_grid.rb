@@ -129,7 +129,7 @@ class AccountsGrid
         sql_str
       end
 
-      where(clauses.join(' AND '))
+      where(clauses.join(' OR '))
     end
 
   filter :team_matching,

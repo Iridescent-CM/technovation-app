@@ -15,7 +15,7 @@ module Seasoned
         "'#{year}' = ANY (#{table_name}.seasons)"
       end
 
-      where(clauses.join(' AND '))
+      where(clauses.join(' OR '))
     }
 
     def seasons
