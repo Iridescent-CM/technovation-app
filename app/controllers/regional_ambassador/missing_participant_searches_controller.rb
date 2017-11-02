@@ -12,7 +12,7 @@ module RegionalAmbassador
       clauses = []
       search_params.each do |k, v|
         unless v.blank?
-          clauses.push("lower(unaccent(#{k})) = '#{v.downcase}'")
+          clauses.push("lower(unaccent(#{k})) = '#{v.downcase.strip}'")
         end
       end
 
