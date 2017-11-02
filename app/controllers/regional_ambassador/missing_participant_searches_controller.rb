@@ -9,13 +9,14 @@ module RegionalAmbassador
     end
 
     def show
-      searched_params = {}
-
+      clauses = []
       search_params.each do |k, v|
-        searched_params[k] = v unless v.blank?
+        unless v.blank?
+          clauses.push("lower(unaccent(#{k})) = '#{v.downcase}'")
+        end
       end
 
-      @account = Account.find_by(searched_params)
+      @account = Account.where(clauses.join(" AND ")).first
     end
 
     def create
