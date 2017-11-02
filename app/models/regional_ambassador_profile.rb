@@ -8,8 +8,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   scope :not_staff, -> {
     joins(:account)
       .where.not("accounts.email ILIKE ?", "%joesak%")
-      .where.not("accounts.email ILIKE ?", "%iridescentlearning.org%")
-      .where.not("accounts.email ILIKE ?", "%@technovationchallenge.org%")
   }
 
   belongs_to :account
