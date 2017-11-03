@@ -62,6 +62,7 @@ class RegistrationMailer < ApplicationMailer
     @safety_url = "http://iridescentlearning.org/internet-safety/"
     @timeline_url =
       "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
+    @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
 
     I18n.with_locale(student.locale) do
       mail to: student.email,

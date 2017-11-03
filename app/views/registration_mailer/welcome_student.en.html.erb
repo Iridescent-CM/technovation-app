@@ -124,8 +124,10 @@
 
       <tr>
         <td class="content-block">
-          If you have questions, be sure to check our FAQ! You can also reach out
-          to us at <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+          If you have questions, be sure to
+          <%= link_to "check our FAQ", @faq_url %>!
+          You can also reach out to us at
+          <%= mail_to ENV.fetch("HELP_EMAIL") %>.
         </td>
       </tr>
 
