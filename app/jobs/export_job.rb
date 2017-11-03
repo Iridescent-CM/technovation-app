@@ -21,7 +21,7 @@ class ExportJob < ActiveJob::Base
     filename,
     format
   )
-    filepath = "./tmp/#{filename}"
+    filepath = "./tmp/#{filename.parameterize}.#{format}"
 
     context_klass = context_name.constantize
 

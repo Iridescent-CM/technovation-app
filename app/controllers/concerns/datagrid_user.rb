@@ -47,12 +47,12 @@ module DatagridUser
       end
 
       f.js do
-        passed_filename = params[:filename].sub(".csv", "")
+        passed_filename = params[:filename]
 
         filename = if passed_filename.blank?
-                    default_export_filename(:csv)
+                    default_export_filename
                   else
-                    "#{passed_filename}.csv"
+                    "#{passed_filename}"
                   end
 
         job = ExportJob.perform_later(
@@ -61,7 +61,7 @@ module DatagridUser
           grid_params.to_unsafe_h,
           self.class.name,
           self.class.csv_scope_modifier.to_s,
-          filename,
+          filename.sub(".csv", ""),
           "csv"
         )
 
@@ -145,12 +145,12 @@ module DatagridUser
       filename: filename
   end
 
-  def default_export_filename(format)
+  def default_export_filename(format = nil)
     case param_root
     when "accounts_grid"
-      "technovation-participants-#{Time.current}.#{format}"
+      "technovation-participants-#{Time.current}#{'.' + format.to_s if format}"
     when "teams_grid"
-      "technovation-teams-#{Time.current}.#{format}"
+      "technovation-teams-#{Time.current}#{'.' + format.to_s if format}"
     end
   end
 end
