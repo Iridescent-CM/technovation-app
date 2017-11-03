@@ -30,6 +30,7 @@ module InviteRA
 
     if account = Account.find_by(email: attrs[:email])
       background_check = account.background_check
+      mentor_profile = account.mentor_profile
       @logger.info("DESTROYING found Account for #{attrs[:email]}")
       account.destroy
     end
@@ -47,8 +48,16 @@ module InviteRA
       skip_existing_password: true,
     )
 
+    if mentor_profile.present?
+      @logger.info("ADDING found MentorProfile for #{attrs[:email]}")
+      mentor_attrs = mentor_profile.attributes.reject do |k, _|
+        %w{id account_id}.include?(k.to_s)
+      end
+      account.create_mentor_profile!(mentor_attrs)
+    end
+
     if background_check.present?
-      @logger.info("CREATING found BackgroundCheck for #{attrs[:email]}")
+      @logger.info("ADDING found BackgroundCheck for #{attrs[:email]}")
       account.create_background_check!({
         candidate_id: background_check.candidate_id,
         report_id: background_check.report_id,

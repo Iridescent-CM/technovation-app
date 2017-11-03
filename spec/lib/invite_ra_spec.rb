@@ -11,8 +11,8 @@ RSpec.describe InviteRA do
     expect(invited).to be_nil
   end
 
-  it "replaces any other type of account found" do
-    %w{mentor student judge}.each do |scope|
+  it "replaces any student or judge account found" do
+    %w{student judge}.each do |scope|
       existing = FactoryBot.create(scope).account
 
       account = FactoryBot.build(:account, email: existing.email)
@@ -30,6 +30,17 @@ RSpec.describe InviteRA do
       expect(invited.account_id).not_to be_nil
       expect(invited.account_id).not_to eq(existing.id)
     end
+  end
+
+  it "re-assigns existing mentor profiles" do
+    mentor = FactoryBot.create(:mentor, job_title: "Custom job title")
+    account = FactoryBot.build(:account, email: mentor.email)
+
+    invited = InviteRA.(
+      account.attributes.merge(FactoryBot.attributes_for(:ambassador))
+    )
+
+    expect(invited.account.mentor_profile.job_title).to eq("Custom job title")
   end
 
   it "re-assigns existing background checks" do
