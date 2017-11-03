@@ -99,9 +99,10 @@
           ex: "Submission Deadline: April 26" or "Round One Judging Is Open!"
         </div>
 
-        <% %w{student mentor judge}.each do |scope| %>
+        <% %w{student mentor judge regional_ambassador}.each do |scope| %>
           <p>
-            <%= f.label "#{scope}_dashboard_text", scope.pluralize.capitalize %>
+            <%= f.label "#{scope}_dashboard_text",
+              scope.humanize.pluralize.capitalize %>
 
             <%= f.text_field "#{scope}_dashboard_text",
               id: "season_toggles_#{scope}_dashboard_text",

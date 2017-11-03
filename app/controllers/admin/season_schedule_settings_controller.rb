@@ -26,7 +26,7 @@ module Admin
     end
 
     def dashboard_text_scopes
-      %w{student mentor judge}.map { |s| "#{s}_dashboard_text" }
+      %w{student mentor judge regional_ambassador}.map { |s| "#{s}_dashboard_text" }
     end
   end
 end
