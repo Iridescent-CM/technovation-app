@@ -73,6 +73,8 @@ class RegionalLink < ApplicationRecord
   def urlify(value)
     if value.include?(name)
       "https://#{value}"
+    elsif name == "whatsapp"
+      "https://#{url_formats[name]}#{value.gsub(/\s/, "")}"
     else
       "https://#{url_formats[name]}#{value}"
     end
