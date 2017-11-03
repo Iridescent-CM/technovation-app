@@ -23,11 +23,47 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :parent_guardian_name do
+    if student_profile.present?
+      student_profile.parent_guardian_name
+    else
+      "-"
+    end
+  end
+
+  column :parent_guardian_email do
+    if student_profile.present?
+      student_profile.parent_guardian_email
+    else
+      "-"
+    end
+  end
+
+  column :school_name do
+    if student_profile.present?
+      student_profile.school_name
+    else
+      "-"
+    end
+  end
+
+  column :company_name do
+    if student_profile.present?
+      "-"
+    elsif regional_ambassador_profile.present?
+      regional_ambassador_profile.organization_company_name
+    elsif mentor_profile.present?
+      mentor_profile.school_company_name
+    else
+      judge_profile.company_name
+    end
+  end
+
   column :team_division do
     if student_profile.present?
       Division.for(self).name.humanize
     else
-      "_not_a_student_"
+      "-"
     end
   end
 
@@ -35,9 +71,9 @@ class AccountsGrid
     if country == "US" and mentor_profile.present?
       background_check.present? ? background_check.status : "not submitted"
     elsif mentor_profile.present?
-      "_international_"
+      "-"
     else
-      "_not_a_mentor_"
+      "-"
     end
   end
 
@@ -45,7 +81,7 @@ class AccountsGrid
     if student_profile.present?
       parental_consent.present? ? "signed" : "not signed"
     else
-      "_not_a_student_"
+      "-"
     end
   end
 
@@ -53,7 +89,7 @@ class AccountsGrid
     if mentor_profile.present?
       consent_waiver.present? ? "signed" : "not signed"
     else
-      "_not_a_mentor_"
+      "-"
     end
   end
 
