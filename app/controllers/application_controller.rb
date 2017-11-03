@@ -71,20 +71,39 @@ class ApplicationController < ActionController::Base
 
   private
   def regional_ambassador
+    return @regional_ambassador if defined?(@regional_ambassador)
+
     region_account = if current_session.authenticated?
                        current_session
                      else
                        current_account
                      end
 
-    @regional_ambassador ||= RegionalAmbassadorProfile.not_staff
+    intnl_find_by = {
+      "accounts.country" => region_account.country
+    }
+
+    find_by = intnl_find_by.merge({
+      "accounts.state_province" => region_account.state_province
+    })
+
+    @regional_ambassador = RegionalAmbassadorProfile.not_staff
       .approved
       .joins(:current_account)
-      .where("intro_summary IS NOT NULL")
-      .find_by({ "accounts.country" => region_account.country }.merge(
-        region_account.country == "US" ?
-          { "accounts.state_province" => region_account.state_province } : {}
-      )) || NullRegionalAmbassador.new
+      .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
+      .find_by(find_by) || NullRegionalAmbassador.new
+
+    if @regional_ambassador.present?
+      @regional_ambassador
+    elsif region_account.country != "US"
+      @regional_ambassador = RegionalAmbassadorProfile.not_staff
+        .approved
+        .joins(:current_account)
+        .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
+        .find_by(intnl_find_by) || NullRegionalAmbassador.new
+    else
+      @regional_ambassador
+    end
   end
 
   def save_redirected_path
