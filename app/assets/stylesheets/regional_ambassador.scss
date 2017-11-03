@@ -21,3 +21,23 @@
     margin: 51px 0 0;
   }
 }
+
+ul, ol {
+  &.feed {
+    @extend .reset;
+
+    .feed--item {
+      clear: both;
+      margin: 0 0 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.2rem;
+      background: white;
+      box-shadow: $shadow-default;
+
+      img {
+        margin: 0 0.5rem 0.5rem 0;
+        text-indent: -10000px;
+      }
+    }
+  }
+}

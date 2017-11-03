@@ -1,0 +1,22 @@
+<h5 class="reset">
+  Inactive participants and teams
+</h5>
+
+<ul class="feed">
+  <% @top_inactive.each do |inactive| %>
+    <li class="feed--item">
+      <%= image_tag inactive.photo_url, class: "thumbnail-xs" %>
+      <%= link_to inactive.name, [:regional_ambassador, inactive] %>
+      hasn't been active for
+      <%= time_ago_in_words(inactive.updated_at) %>
+    </li>
+  <% end %>
+</ul>
+
+<h5 class="reset">
+  <%= current_ambassador.region_name %> <%= Season.current.year %> Activity
+</h5>
+
+<ul class="feed">
+  <%= render_activities(@activities) %>
+</ul>

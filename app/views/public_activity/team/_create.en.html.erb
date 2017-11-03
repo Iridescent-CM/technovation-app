@@ -1,0 +1,9 @@
+<li class="feed--item">
+  <% if activity.trackable %>
+    Team <%= link_to activity.trackable.name, [current_scope, activity.trackable] %>
+    was created
+    <%= time_ago_in_words(activity.created_at) %> ago
+  <% else %>
+    - sorry, this team has been deleted -
+  <% end %>
+</li>

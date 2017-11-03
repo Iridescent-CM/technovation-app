@@ -122,6 +122,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def photo_url
+    team_photo_url
+  end
+
   def submission
     super || NullTeamSubmission.new
   end

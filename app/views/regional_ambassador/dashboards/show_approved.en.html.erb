@@ -33,21 +33,7 @@
 
         <%= link_to "View your profile", regional_ambassador_profile_path %>
       </div>
-    </div>
-  </div>
 
-  <div class="grid__col-sm-6">
-    <div class="col--sticky">
-      <% if current_ambassador.onboarded? %>
-        <%= render "regional_ambassador/dashboards/onboarded" %>
-      <% else %>
-        <%= render "regional_ambassador/dashboards/onboarding" %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="grid__col-sm-3 grid__col--bleed dashboard-sidebar">
-    <div class="col--sticky">
       <%= render "dashboards/ra_intro", ra_dashboard: true %>
 
       <% if current_ambassador.provided_intro? %>
@@ -56,6 +42,16 @@
             edit_regional_ambassador_introduction_path,
             class: "button secondary small" %>
         </p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-9">
+    <div class="col--sticky">
+      <% if current_ambassador.onboarded? %>
+        <%= render "regional_ambassador/dashboards/onboarded" %>
+      <% else %>
+        <%= render "regional_ambassador/dashboards/onboarding" %>
       <% end %>
     </div>
   </div>

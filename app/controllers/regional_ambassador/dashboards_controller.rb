@@ -4,6 +4,46 @@ module RegionalAmbassador
       if current_ambassador.needs_intro_prompt?
         current_ambassador.regional_links.build
       else
+        trackable_user_ids = Account.current
+          .not_staff
+          .in_region(current_ambassador)
+          .pluck(:id) - [current_ambassador.account_id]
+
+        trackable_team_ids = Team.current
+          .in_region(current_ambassador)
+          .pluck(:id)
+
+        user_activities = PublicActivity::Activity.where(
+          trackable_id: trackable_user_ids,
+          trackable_type: "Account"
+        )
+         .order("created_at desc")
+         .first(7)
+
+        team_activities = PublicActivity::Activity.where(
+          trackable_id: trackable_team_ids,
+          trackable_type: "Team"
+        )
+         .order("created_at desc")
+         .first(7)
+
+        @activities = (user_activities + team_activities).sort do |a, b|
+          b.created_at <=> a.created_at
+        end
+
+        inactive_users = Account.current
+          .not_staff
+          .in_region(current_ambassador)
+          .order("accounts.updated_at asc")
+          .first(5)
+
+        inactive_teams = Team.current
+          .in_region(current_ambassador)
+          .order("teams.updated_at asc")
+          .first(5)
+
+        @top_inactive = (inactive_teams + inactive_users).sort_by(&:updated_at)
+
         @students = StudentProfile.current.in_region(current_ambassador)
 
         @mentors = Account.current.in_region(current_ambassador)

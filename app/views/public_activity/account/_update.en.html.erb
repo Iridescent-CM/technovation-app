@@ -1,0 +1,10 @@
+<li class="feed--item">
+  <% if activity.trackable %>
+    <%= image_tag activity.trackable.profile_image_url, class: "thumbnail-xs" %>
+    <%= link_to activity.trackable.full_name, [current_scope, activity.trackable] %>
+    updated their profile
+    <%= time_ago_in_words(activity.created_at) %> ago
+  <% else %>
+    - sorry, this account has been deleted -
+  <% end %>
+</li>

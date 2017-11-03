@@ -69,6 +69,10 @@ class Account < ActiveRecord::Base
     Prefer\ not\ to\ say
   }
 
+  scope :not_staff, -> {
+    where.not("accounts.email ILIKE ?", "%joesak%")
+  }
+
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
 
@@ -261,6 +265,14 @@ class Account < ActiveRecord::Base
     elsif judge_profile
       judge_profile.valid?
     end
+  end
+
+  def photo_url
+    profile_image_url
+  end
+
+  def name
+    full_name
   end
 
   def full_name
