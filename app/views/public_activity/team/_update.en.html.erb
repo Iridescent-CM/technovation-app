@@ -3,8 +3,11 @@
     <%= image_tag activity.trackable.team_photo_url, class: "thumbnail-xs" %>
     Team <%= link_to activity.trackable.name, [current_scope, activity.trackable] %>
     was updated
-    <%= time_ago_in_words(activity.created_at) %> ago
   <% else %>
     - sorry, this team has been deleted -
   <% end %>
+
+  <div class="feed-item--time">
+    <%= time_ago_in_words(activity.created_at) %> ago
+  </div>
 </li>

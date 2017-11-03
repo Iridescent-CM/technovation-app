@@ -4,6 +4,10 @@ class TeamCreating
       RegisterToSeasonJob.perform_now(team)
     end
 
+    team.create_activity(
+      key: "team.create"
+    )
+
     TeamRosterManaging.add(team, profile)
 
     if profile.longitude.present? and profile.latitude.present?

@@ -42,6 +42,10 @@ class ProfileCreating
       RegistrationMailer.welcome_mentor(profile.account_id).deliver_later
     end
 
+    profile.account.create_activity(
+      key: "account.create"
+    )
+
     SignIn.(
       profile.account,
       controller,

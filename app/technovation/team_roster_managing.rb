@@ -55,6 +55,11 @@ class TeamRosterManaging
         if join_request = student.join_requests.pending.find_by(team: self)
           join_request.approved!
         end
+
+        student.account.create_activity(
+          key: "account.join_team",
+          recipient: self,
+        )
       elsif students.include?(student)
         errors.add(:add_student, "Student is already on this team")
       elsif not spot_available?
@@ -72,6 +77,11 @@ class TeamRosterManaging
       if join_request = mentor.join_requests.pending.find_by(team: self)
         join_request.approved!
       end
+
+      mentor.account.create_activity(
+        key: "account.join_team",
+        recipient: self,
+      )
     end
 
     def remove_student_profile(student)
@@ -88,6 +98,11 @@ class TeamRosterManaging
       if join_request = student.join_requests.find_by(team: self)
         join_request.deleted!
       end
+
+      student.account.create_activity(
+        key: "account.leave_team",
+        recipient: self,
+      )
     end
 
     def remove_mentor_profile(mentor)
@@ -100,6 +115,11 @@ class TeamRosterManaging
       if join_request = mentor.join_requests.find_by(team: self)
         join_request.deleted!
       end
+
+      mentor.account.create_activity(
+        key: "account.leave_team",
+        recipient: self,
+      )
     end
   end
 end

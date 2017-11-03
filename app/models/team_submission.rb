@@ -1,6 +1,8 @@
 class TeamSubmission < ActiveRecord::Base
   include Seasoned
 
+  include PublicActivity::Common
+
   acts_as_paranoid
 
   extend FriendlyId

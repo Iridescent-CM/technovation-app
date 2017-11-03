@@ -2,8 +2,11 @@
   <% if activity.trackable %>
     <%= link_to activity.trackable.full_name, [current_scope, activity.trackable] %>
     signed up
-    <%= time_ago_in_words(activity.created_at) %> ago
   <% else %>
     - sorry, this account has been deleted -
   <% end %>
+
+  <div class="feed-item--time">
+    <%= time_ago_in_words(activity.created_at) %> ago
+  </div>
 </li>

@@ -1,3 +1,7 @@
+<ul class="feed">
+  <%= render_activities(@activities) %>
+</ul>
+
 <h5 class="reset">
   Inactive participants and teams
 </h5>
@@ -11,12 +15,4 @@
       <%= time_ago_in_words(inactive.updated_at) %>
     </li>
   <% end %>
-</ul>
-
-<h5 class="reset">
-  <%= current_ambassador.region_name %> <%= Season.current.year %> Activity
-</h5>
-
-<ul class="feed">
-  <%= render_activities(@activities) %>
 </ul>

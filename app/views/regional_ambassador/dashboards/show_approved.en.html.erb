@@ -47,13 +47,11 @@
   </div>
 
   <div class="grid__col-sm-9">
-    <div class="col--sticky">
-      <% if current_ambassador.onboarded? %>
-        <%= render "regional_ambassador/dashboards/onboarded" %>
-      <% else %>
-        <%= render "regional_ambassador/dashboards/onboarding" %>
-      <% end %>
-    </div>
+    <% if current_ambassador.onboarded? %>
+      <%= render "regional_ambassador/dashboards/onboarded" %>
+    <% else %>
+      <%= render "regional_ambassador/dashboards/onboarding" %>
+    <% end %>
   </div>
 </div>
 

@@ -39,6 +39,9 @@ class TeamUpdating
     end
 
     team.save
+    team.create_activity(
+      key: "team.update"
+    )
   end
 
   module RegionalPitchEventAttendee

@@ -13,6 +13,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
           ParentMailer.consent_notice(profile.id).deliver_later
         end
       end
+
+      record.create_activity(
+        key: "#{record.class.name.underscore}.register_current_season"
+      )
     end
   end
 end

@@ -30,6 +30,9 @@ class ProfileUpdating
 
     profile.save
     profile.account.save
+    profile.account.create_activity(
+      key: "account.update"
+    )
   end
 
   private

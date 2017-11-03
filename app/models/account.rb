@@ -4,8 +4,7 @@ class Account < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
-  include PublicActivity::Model
-  tracked
+  include PublicActivity::Common
 
   geocoded_by :address_details
   reverse_geocoded_by :latitude, :longitude do |account, results|
