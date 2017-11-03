@@ -1,7 +1,9 @@
 <li class="feed--item">
   <% if activity.trackable %>
     <%= image_tag activity.trackable.team_photo_url, class: "thumbnail-xs" %>
-    <%= link_to activity.trackable.name, [current_scope, activity.trackable] %>
+    <%= link_to activity.trackable.name,
+      [current_scope, activity.trackable],
+      data: { turbolinks: false } %>
     registered for the <%= Season.current.year %> season
   <% else %>
     - sorry, this team has been deleted -

@@ -1,11 +1,17 @@
 <li class="feed--item">
   <% if activity.trackable %>
     <%= image_tag activity.trackable.profile_image_url, class: "thumbnail-xs" %>
-    <%= link_to activity.trackable.full_name, [current_scope, activity.trackable] %>
+
+    <%= link_to activity.trackable.full_name,
+      [current_scope, activity.trackable],
+      data: { turbolinks: false } %>
+
     left
 
     <% if activity.recipient %>
-      <%= link_to activity.recipient.name, [current_scope, activity.recipient] %>
+      <%= link_to activity.recipient.name,
+        [current_scope, activity.recipient],
+        data: { turbolinks: false } %>
     <% else %>
         a team that is now deleted
     <% end %>
