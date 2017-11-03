@@ -27,14 +27,6 @@ GIT
       activemodel (> 4, < 5.2)
 
 GIT
-  remote: https://github.com/joemsak/datagrid.git
-  revision: 313906a4b49cc4784ce7151481a27f6aa06efcfa
-  branch: filter-groups
-  specs:
-    datagrid (1.5.7)
-      rails (>= 4.0)
-
-GIT
   remote: https://github.com/romanbsd/heroku-deflater.git
   revision: f4d5b4cc2440027fd8bd7b279768d0f6ff344fdb
   branch: master
@@ -98,13 +90,13 @@ GEM
     ast (2.3.0)
     autoprefixer-rails (6.7.7.2)
       execjs
-    aws-sdk (2.10.74)
-      aws-sdk-resources (= 2.10.74)
-    aws-sdk-core (2.10.74)
+    aws-sdk (2.10.76)
+      aws-sdk-resources (= 2.10.76)
+    aws-sdk-core (2.10.76)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.74)
-      aws-sdk-core (= 2.10.74)
+    aws-sdk-resources (2.10.76)
+      aws-sdk-core (= 2.10.76)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     browser (2.5.2)
@@ -181,6 +173,8 @@ GEM
     currencies (0.4.2)
     dalli (2.7.6)
     database_cleaner (1.6.2)
+    datagrid (1.5.7)
+      rails (>= 4.0)
     diff-lcs (1.3)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
@@ -381,7 +375,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.9.0)
       concurrent-ruby (~> 1.0)
-    i18n-tasks (0.9.18)
+    i18n-tasks (0.9.19)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       easy_translate (>= 0.5.0)
@@ -418,8 +412,8 @@ GEM
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.6.6)
-      mime-types (>= 1.16, < 4)
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
     main (6.2.2)
       arrayfields (~> 4.7, >= 4.7.4)
       chronic (~> 0.6, >= 0.6.2)
@@ -433,6 +427,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_magick (4.8.0)
+    mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
@@ -663,7 +658,7 @@ DEPENDENCIES
   createsend (~> 4.1)
   dalli (~> 2.7)
   database_cleaner (~> 1.6)
-  datagrid!
+  datagrid (~> 1.5)
   dotenv-rails (~> 2.2)
   factory_bot_rails (~> 4.8)
   fakeredis (~> 0.6)

@@ -1,6 +1,8 @@
 <%= form_for grid, options do |f| -%>
   <div class="grid">
-    <% grid.filters.group_by(&:filter_group).each do |group, filters| %>
+    <% grid.filters
+           .group_by { |filter| filter.options[:filter_group] }
+           .each do |group, filters| %>
       <div
         class="datagrid-filter-group <%= group %> grid__col-sm-6 grid__col--bleed-y"
       >
