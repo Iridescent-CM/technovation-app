@@ -52,7 +52,7 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   def text
-    filter_options.fetch(:text) { "" }
+    filter_options.fetch(:text) { "" }.to_s.gsub("'", "''")
   end
 
   def division_enums
