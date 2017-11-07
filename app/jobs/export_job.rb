@@ -1,39 +1,31 @@
 require 'uri'
 
 class ExportJob < ActiveJob::Base
+  include Rails.application.routes.url_helpers
+
   queue_as :default
 
   before_enqueue do |job|
+    profile = job.arguments.first
+
     db_job = Job.create!(
-      owner: job.arguments.first.account,
+      owner: profile,
       job_id: job.job_id,
       status: "queued"
     )
-    ActionCable.server.broadcast(
-      "jobs:#{job.arguments.first.account_id}",
-      { status: db_job.status }
-    )
+
+    broadcast(db_job, profile)
   end
 
   after_perform do |job|
     db_job = Job.find_by(job_id: job.job_id)
     db_job.update_column(:status, "complete")
 
-    user = job.arguments.first
-    export = user.exports.find_by(job_id: job.job_id)
-
-    ActionCable.server.broadcast(
-      "jobs:#{job.arguments.first.account_id}",
-      {
-        status: db_job.status,
-        filename: export["file"],
-        url: export.file_url,
-      }
-    )
+    broadcast(db_job, job.arguments.first)
   end
 
   def perform(
-    user,
+    profile,
     grid_klass,
     params,
     context_name,
@@ -46,7 +38,7 @@ class ExportJob < ActiveJob::Base
     context_klass = context_name.constantize
 
     grid = grid_klass.constantize.new(params) do |scope|
-      context_klass.class_eval(scope_modifier).call(scope, user, params)
+      context_klass.class_eval(scope_modifier).call(scope, profile, params)
     end
 
     csv = grid.public_send("to_#{format}")
@@ -56,9 +48,33 @@ class ExportJob < ActiveJob::Base
       f.close
     end
 
-    user.exports.create!(
+    profile.exports.create!(
       file: File.open(filepath),
       job_id: job_id
     )
+  end
+
+  private
+  def broadcast(job, profile)
+    channel = "jobs:#{profile.class.name}:#{profile.id}"
+    data = {
+      status: job.status,
+      job_id: job.job_id,
+    }
+
+    if job.status == "complete"
+      export = profile.exports.find_by(job_id: job.job_id)
+
+      data.merge!({
+        filename: export["file"],
+        url: export.file_url,
+        update_url: send(
+          "#{profile.account.scope_name}_export_download_path",
+          export
+        ),
+      })
+    end
+
+    ActionCable.server.broadcast(channel, data)
   end
 end

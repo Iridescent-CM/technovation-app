@@ -42,4 +42,8 @@ class MentorController < ApplicationController
         notice: t("controllers.application.team_required")
     end
   end
+
+  def current_profile_type
+    "MentorProfile"
+  end
 end

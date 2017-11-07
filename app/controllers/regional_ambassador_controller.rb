@@ -51,4 +51,8 @@ class RegionalAmbassadorController < ApplicationController
   def regional_ambassador
     current_ambassador
   end
+
+  def current_profile_type
+    "RegionalAmbassadorProfile"
+  end
 end

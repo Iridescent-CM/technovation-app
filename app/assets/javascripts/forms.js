@@ -44,5 +44,4 @@ $(document).on(
 
 $(document).on("ajax:beforeSend", "form[data-wait-for-jobs]", function() {
   swal.close();
-  $("#queued-jobs").removeClass("ready").addClass("waiting");
 });

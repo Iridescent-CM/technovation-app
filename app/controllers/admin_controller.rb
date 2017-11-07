@@ -31,4 +31,8 @@ class AdminController < ApplicationController
   def current_profile
     current_admin
   end
+
+  def current_profile_type
+    "AdminProfile"
+  end
 end

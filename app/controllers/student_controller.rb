@@ -45,4 +45,8 @@ class StudentController < ApplicationController
   def current_profile
     current_student
   end
+
+  def current_profile_type
+    "StudentProfile"
+  end
 end

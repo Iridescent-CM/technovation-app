@@ -136,7 +136,7 @@ Rails.application.routes.draw do
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: [:create, :destroy]
 
-    resources :exports, only: :create
+    resources :export_downloads, only: :update
 
     resource :profile_image_upload_confirmation, only: :show
 
@@ -200,7 +200,7 @@ Rails.application.routes.draw do
     resource :mentor_drop_out, only: :create
     resource :paper_parental_consent, only: :create
 
-    resources :exports, only: :create
+    resources :export_downloads, only: :update
 
     resource :season_schedule_settings, only: [:edit, :update]
   end

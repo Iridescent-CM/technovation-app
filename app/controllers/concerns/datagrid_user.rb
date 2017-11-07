@@ -55,7 +55,7 @@ module DatagridUser
                     "#{passed_filename}"
                   end
 
-        job = ExportJob.perform_later(
+        ExportJob.perform_later(
           current_profile,
           grid_klass.name,
           grid_params.to_unsafe_h,
@@ -65,7 +65,7 @@ module DatagridUser
           "csv"
         )
 
-        render json: { job_id: job.job_id }
+        render json: {}
       end
 
       f.csv do

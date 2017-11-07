@@ -7,6 +7,7 @@
 //= require forms
 //= require saved-searches
 //= require charts
+//= require jobs
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({

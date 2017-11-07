@@ -29,7 +29,8 @@
 
 <%= content_tag :meta, nil,
   data: {
-    current_account_id: current_account.id
+    current_profile_id: current_profile.id,
+    current_profile_type: current_profile_type,
   } %>
 
 <%= csrf_meta_tags %>

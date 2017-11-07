@@ -56,4 +56,8 @@ class JudgeController < ApplicationController
   def quarterfinals?
     SeasonToggles.quarterfinals?
   end
+
+  def current_profile_type
+    "JudgeProfile"
+  end
 end

@@ -1,4 +1,5 @@
 class NullProfile
+  def id; nil; end
   def authenticated?; false; end
   def present?; false; end
   def onboarded?; false; end

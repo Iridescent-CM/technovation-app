@@ -28,7 +28,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   has_many :saved_searches, as: :searcher
 
-  has_many :exports, foreign_key: :account_id, dependent: :destroy
+  has_many :exports, as: :owner, dependent: :destroy
   has_many :regional_pitch_events
 
   has_many :messages, as: :sender

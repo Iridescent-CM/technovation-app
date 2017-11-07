@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_account,
     :current_team,
     :current_scope,
+    :current_profile,
+    :current_profile_type,
     :current_session,
     :can_generate_certificate?,
     :get_cookie,
@@ -171,5 +173,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_scope; raise NotImplementedError; end
+  def current_profile
+    NullProfile.new
+  end
+
+  def current_scope
+    "NO_SCOPE_DEFINED_HERE"
+  end
+
+  def current_profile_type
+    "NO_PROFILE_TYPE_DEFINED_HERE"
+  end
 end

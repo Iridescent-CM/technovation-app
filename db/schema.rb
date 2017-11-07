@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107174332) do
+ActiveRecord::Schema.define(version: 20171107233018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,12 +144,14 @@ ActiveRecord::Schema.define(version: 20171107174332) do
   end
 
   create_table "exports", id: :serial, force: :cascade do |t|
-    t.integer "account_id", null: false
+    t.integer "owner_id", null: false
     t.string "file", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "download_token"
     t.string "job_id"
+    t.boolean "downloaded", default: false, null: false
+    t.string "owner_type"
   end
 
   create_table "honor_code_agreements", id: :serial, force: :cascade do |t|
@@ -555,7 +557,7 @@ ActiveRecord::Schema.define(version: 20171107174332) do
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
-  add_foreign_key "exports", "accounts"
+  add_foreign_key "exports", "accounts", column: "owner_id"
   add_foreign_key "join_requests", "teams"
   add_foreign_key "judge_assignments", "judge_profiles"
   add_foreign_key "judge_assignments", "teams"

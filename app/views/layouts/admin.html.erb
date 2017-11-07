@@ -36,18 +36,6 @@
       </div>
     </div>
 
-    <div id="queued-jobs">
-      <div class="while-waiting">
-        <%= web_icon(
-          "spinner2 spin",
-          text: "
-            You have an export waiting, and
-            a download link will appear here soon.
-            You may do other things while you wait.
-          ") %>
-      </div>
-
-      <div class="when-ready"></div>
-    </div>
+    <%= render 'application/queued_jobs' %>
   </body>
 </html>

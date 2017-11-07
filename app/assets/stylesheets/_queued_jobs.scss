@@ -1,0 +1,39 @@
+#queued-jobs {
+  position: fixed;
+  bottom: 0;
+  right: 25px;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  background: white;
+  border-top: 5px solid $mulberry;
+  box-shadow: $shadow-top;
+  opacity: 0;
+  transition: 0.2s opacity;
+
+  p {
+    margin: 1rem 0;
+    padding: 0;
+  }
+
+  .while-waiting, .when-ready {
+    opacity: 1;
+    display: none;
+  }
+
+  &.waiting, &.ready {
+    opacity: 1;
+  }
+
+  &.waiting {
+    .while-waiting {
+      display: block;
+    }
+  }
+
+  &.ready {
+    .when-ready {
+      display: block;
+      padding-bottom: 1rem;
+    }
+  }
+}
