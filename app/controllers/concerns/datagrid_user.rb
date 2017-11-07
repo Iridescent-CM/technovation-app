@@ -46,7 +46,7 @@ module DatagridUser
         )
       end
 
-      f.js do
+      f.json do
         passed_filename = params[:filename]
 
         filename = if passed_filename.blank?
@@ -65,9 +65,7 @@ module DatagridUser
           "csv"
         )
 
-        render json: {
-          status_url: send("#{current_scope}_job_status_url", job.job_id)
-        }
+        render json: { job_id: job.job_id }
       end
 
       f.csv do

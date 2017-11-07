@@ -43,35 +43,21 @@ $(document).on(
 );
 
 $(document).on("ajax:beforeSend", "form[data-wait-for-jobs]", function() {
-  $(this).addClass("waiting")
-    .css({ height: 0 });
+  $(this).addClass("waiting").css({ height: 0 });
 }).on("ajax:success", "form[data-wait-for-jobs]", function(e, res) {
-  var checkJobStatus,
-      $form = $(this);
+  window.App.cable.subscriptions.create("JobChannel",
+    {
+      received: function(data) {
+        console.log(data);
+      },
 
-  checkJobStatus = function(url) {
-    $.ajax({
-      method: "GET",
-      url: url,
-      success: function(json) {
-        if (json.status !== "complete") {
-          setTimeout(checkJobStatus(url), 1000);
-        } else {
-          var $link = $("<a>");
+      connected: function() {
+        console.log("Job Channel CONNECTED");
+      },
 
-          $link.prop("href", json.download_url);
-          $link.addClass("button");
-          $link.text("Download now");
-          $link.on("click", function() { swal.close(); });
-
-          $form.removeClass("waiting")
-            .addClass("complete")
-            .after($link)
-            .remove();
-        }
-      }
-    });
-  }
-
-  checkJobStatus(JSON.parse(res).status_url);
+      disconnected: function() {
+        console.log("Job Channel DISCONNECTED");
+      },
+    }
+  );
 });

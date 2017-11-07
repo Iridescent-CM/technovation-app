@@ -63,7 +63,7 @@
 
       <%= form_with model: @saved_search,
         html: { class: "saved-searches-form" },
-        url: send("#{current_scope}_saved_searches_path") do |f| %>
+        url: send("#{current_scope}_saved_searches_path", format: :json) do |f| %>
         <%= f.hidden_field :param_root, value: options[:as] %>
         <%= f.hidden_field :search_string,
           value: URI.encode_www_form(params.to_unsafe_h[options[:as]]) %>

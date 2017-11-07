@@ -49,7 +49,7 @@
     <%= form_with(
       method: :get,
       data: { wait_for_jobs: true },
-      url: url_for(format: 'js')
+      url: url_for(format: 'json')
     ) do |f| %>
 
       <% grid.attributes.each do |name, value| %>

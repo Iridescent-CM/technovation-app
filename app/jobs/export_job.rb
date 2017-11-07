@@ -4,12 +4,20 @@ class ExportJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    Job.create!(job_id: job.job_id, status: "queued")
+    db_job = Job.create!(job_id: job.job_id, status: "queued")
+    ActionCable.server.broadcast(
+      "job_#{db_job.job_id}",
+      { status: db_job.status }
+    )
   end
 
   after_perform do |job|
     db_job = Job.find_by(job_id: job.job_id)
     db_job.update_column(:status, "complete")
+    ActionCable.server.broadcast(
+      "job_#{db_job.job_id}",
+      { status: db_job.status }
+    )
   end
 
   def perform(

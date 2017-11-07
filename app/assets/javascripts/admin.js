@@ -10,6 +10,7 @@
 
 // ******** APP
 //
+//= require cable
 //= require chosen-init
 //= require flash-msgs
 //= require tabs
@@ -72,7 +73,8 @@ $.rails.showConfirmationDialog = function(link) {
   );
 }
 
-var stickyCols;
+var stickyCols,
+    checkJobStatus;
 
 stickyCols = function() {
   $(".col--sticky").stick_in_parent();
