@@ -34,7 +34,7 @@ RSpec.describe InviteRA do
 
   it "re-assigns existing mentor profiles" do
     mentor = FactoryBot.create(:mentor, job_title: "Custom job title")
-    account = FactoryBot.build(:account, email: mentor.email)
+    account = FactoryBot.build(:account, email: mentor.email.upcase)
 
     invited = InviteRA.(
       account.attributes.merge(FactoryBot.attributes_for(:ambassador))

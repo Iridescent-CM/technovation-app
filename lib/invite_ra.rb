@@ -28,7 +28,7 @@ module InviteRA
       status: SignupAttempt.statuses[:temporary_password],
     )
 
-    if account = Account.find_by(email: attrs[:email])
+    if account = Account.where("lower(email) = ?", attrs[:email].downcase).first
       background_check = account.background_check
       mentor_profile = account.mentor_profile
       @logger.info("DESTROYING found Account for #{attrs[:email]}")
