@@ -4,9 +4,13 @@ class ExportJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    db_job = Job.create!(job_id: job.job_id, status: "queued")
+    db_job = Job.create!(
+      owner: job.arguments.first.account,
+      job_id: job.job_id,
+      status: "queued"
+    )
     ActionCable.server.broadcast(
-      "job_#{db_job.job_id}",
+      "jobs:#{job.arguments.first.account_id}",
       { status: db_job.status }
     )
   end
@@ -14,9 +18,17 @@ class ExportJob < ActiveJob::Base
   after_perform do |job|
     db_job = Job.find_by(job_id: job.job_id)
     db_job.update_column(:status, "complete")
+
+    user = job.arguments.first
+    export = user.exports.find_by(job_id: job.job_id)
+
     ActionCable.server.broadcast(
-      "job_#{db_job.job_id}",
-      { status: db_job.status }
+      "jobs:#{job.arguments.first.account_id}",
+      {
+        status: db_job.status,
+        filename: export["file"],
+        url: export.file_url,
+      }
     )
   end
 
@@ -44,6 +56,9 @@ class ExportJob < ActiveJob::Base
       f.close
     end
 
-    user.exports.create!(file: File.open(filepath))
+    user.exports.create!(
+      file: File.open(filepath),
+      job_id: job_id
+    )
   end
 end

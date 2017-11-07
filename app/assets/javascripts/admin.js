@@ -78,6 +78,43 @@ var stickyCols,
 
 stickyCols = function() {
   $(".col--sticky").stick_in_parent();
+  window.App.cable.subscriptions.create(
+    {
+      channel: "JobChannel",
+      current_account_id: $("[data-current-account-id]").data("currentAccountId"),
+    },
+    {
+      received: function(data) {
+        const $jobsToast = $("#queued-jobs"),
+              $whenReady = $jobsToast.find(".when-ready");
+
+        $jobsToast.removeClass("ready");
+        $whenReady.html("");
+
+        if (data.status === "complete") {
+          $jobsToast
+            .removeClass("waiting")
+            .addClass("ready");
+
+          var $link = $("<a>");
+
+          $link.prop("href", data.url);
+          $link.text("Download " + data.filename);
+          $link.addClass("button small");
+
+          $whenReady
+            .html("<p>Your file is ready!</p>")
+            .append($link);
+        }
+      },
+    }
+  );
 }
 
 $(document).on("ready turbolinks:load", stickyCols);
+
+$(document).on("click", "#queued-jobs .button", function() {
+  $("#queued-jobs").removeClass("ready waiting")
+    .find(".when-ready")
+    .html("");
+});

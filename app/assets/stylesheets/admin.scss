@@ -74,3 +74,43 @@ nav {
 .modal-content {
   text-align: left;
 }
+
+#queued-jobs {
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  background: white;
+  border-top: 5px solid $shamrock;
+  box-shadow: $shadow-top;
+  opacity: 0;
+  transition: 0.2s opacity;
+
+  p {
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+
+  .while-waiting, .when-ready {
+    opacity: 1;
+    display: none;
+  }
+
+  &.waiting, &.ready {
+    opacity: 1;
+  }
+
+  &.waiting {
+    .while-waiting {
+      display: block;
+    }
+  }
+
+  &.ready {
+    .when-ready {
+      display: block;
+      padding-bottom: 1rem;
+    }
+  }
+}

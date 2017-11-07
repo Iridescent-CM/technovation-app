@@ -27,5 +27,10 @@
   content="<%= asset_url "social-sharing-preview-image.png" %>"
 />
 
+<%= content_tag :meta, nil,
+  data: {
+    current_account_id: current_account.id
+  } %>
+
 <%= csrf_meta_tags %>
 <%= action_cable_meta_tag %>

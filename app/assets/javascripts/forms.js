@@ -43,21 +43,6 @@ $(document).on(
 );
 
 $(document).on("ajax:beforeSend", "form[data-wait-for-jobs]", function() {
-  $(this).addClass("waiting").css({ height: 0 });
-}).on("ajax:success", "form[data-wait-for-jobs]", function(e, res) {
-  window.App.cable.subscriptions.create("JobChannel",
-    {
-      received: function(data) {
-        console.log(data);
-      },
-
-      connected: function() {
-        console.log("Job Channel CONNECTED");
-      },
-
-      disconnected: function() {
-        console.log("Job Channel DISCONNECTED");
-      },
-    }
-  );
+  swal.close();
+  $("#queued-jobs").removeClass("ready").addClass("waiting");
 });
