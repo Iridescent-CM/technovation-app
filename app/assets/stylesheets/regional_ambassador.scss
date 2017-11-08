@@ -50,3 +50,12 @@ ul, ol {
     }
   }
 }
+
+.profile-info {
+  dt, dd {
+    max-width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

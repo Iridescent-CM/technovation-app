@@ -1,20 +1,61 @@
-<div class="debug student-debug">
-  <h3>Student Profile debugging info</h3>
+<div class="panel">
+  <h4 class="reset">Required onboarding steps:</h4>
 
-  <p>
-    <strong>Parental consent</strong>
-    <%= profile.consent_signed? ? 'signed' : 'not signed' %>
+  <p class="hint">
+    Students must do these things to be eligible to compete
   </p>
 
-  <p>
-    <strong>Browser / OS Info</strong>
-    <%= [profile.browser_name,
-         profile.browser_version,
-         profile.os_name,
-         profile.os_version].compact.join(' - ') %>
-  </p>
+  <dl>
+    <dt>Parental consent</dt>
+    <dd>
+      <% if profile.consent_signed? %>
+        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red", text: "Not signed... boo...") %>
+      <% end %>
+    </dd>
 
-  <% if not profile.team.present? %>
+    <dt>Parent information</dt>
+    <dd>
+      <% if profile.parent_guardian_email.blank? %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Not filled in... boo..."
+        ) %>
+      <% else %>
+        <%= web_icon("check-circle icon-green", text: "Filled in! Yay!") %>
+      <% end %>
+    </dd>
+
+    <dt>Location</dt>
+    <dd>
+      <% if profile.address_details.empty? %>
+        <%= web_icon("exclamation-circle icon-red", text: "Must be filled in") %>
+      <% else %>
+        <%= web_icon("check-circle icon-green", text: "Has been filled in") %>
+      <% end %>
+    </dd>
+  </dl>
+</div>
+
+<h4 class="reset">Environment information</h4>
+
+<div class="panel">
+  <dl>
+    <dt>Browser / Operating System Info</dt>
+    <dd>
+      <%= [profile.browser_name,
+          profile.browser_version,
+          profile.os_name,
+          profile.os_version].compact.join(' - ') %>
+    </dd>
+  </dl>
+</div>
+
+<% if not profile.team.present? %>
+  <h4 class="reset">Help them with their team matching</h4>
+
+  <div class="panel">
     <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
       <%= hidden_field_tag :account_id, profile.account_id %>
 
@@ -32,5 +73,5 @@
         <%= submit_tag 'Add', class: "button" %>
       </p>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

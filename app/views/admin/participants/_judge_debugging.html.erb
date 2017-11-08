@@ -1,21 +1,33 @@
-<div class="debug judge-debug">
-  <h3>Judge Profile debugging info</h3>
-
-  <p>
-    <strong>Has mentor profile?</strong>
-    <%= profile.account.mentor_profile.present? ? "yes" : "no" %>
+<div class="panel">
+  <p class="hint">
+    This person has a judge profile.
+    Here are some common issues related to judge profiles:
   </p>
 
-  <p>
-    <strong>Consent signed?</strong>
-    <%= profile.account.consent_waiver.present? ? "yes" : "no" %>
-  </p>
-
-  <p>
-    <strong>Browser / OS Info</strong>
-    <%= [profile.browser_name,
-         profile.browser_version,
-         profile.os_name,
-         profile.os_version].compact.join(' - ') %>
-  </p>
+  <dl>
+    <dt>Consent signed?</dt>
+    <dd>
+      <% if profile.consent_signed? %>
+        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red", text: "Not signed... boo...") %>
+      <% end %>
+    </dd>
+  </dl>
 </div>
+
+<% unless profile.mentor_profile.present? %>
+  <h4 class="reset">Environment information</h4>
+
+  <div class="panel">
+    <dl>
+      <dt>Browser / Operating System Info</dt>
+      <dd>
+        <%= [profile.browser_name,
+            profile.browser_version,
+            profile.os_name,
+            profile.os_version].compact.join(' - ') %>
+      </dd>
+    </dl>
+  </div>
+<% end %>

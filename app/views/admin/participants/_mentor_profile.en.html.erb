@@ -1,0 +1,10 @@
+<dl class="profile-info">
+  <dt><%= t('models.mentor_profile.school_company_name') %></dt>
+  <dd><%= profile.school_company_name %></dd>
+
+  <dt><%= t('models.mentor_profile.job_title') %></dt>
+  <dd><%= profile.job_title %></dd>
+
+  <dt><%= t('models.mentor_profile.expertise_names') %></dt>
+  <dd><%= profile.expertise_names.to_sentence %></dd>
+</dl>

@@ -1,49 +1,109 @@
-<div class="debug mentor-debug">
-  <dl>
-    <dt>Has judge profile?</dt>
-    <dd><%= profile.account.judge_profile.present? ? "yes" : "no" %></dd>
+<div class="panel">
+  <p class="hint">
+    This person has a mentor profile.
+    Here are some common issues to check with mentors:
+  </p>
 
+  <h4 class="reset">Required onboarding steps:</h4>
+
+  <p class="hint">
+    Mentors must do these things to be searchable and join teams
+  </p>
+
+  <dl>
     <dt>Consent waiver</dt>
-    <dd><%= profile.consent_signed? ? 'signed' : 'not signed' %></dd>
+    <dd>
+      <% if profile.consent_signed? %>
+        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red", text: "Not signed... boo...") %>
+      <% end %>
+    </dd>
 
     <dt>Background check</dt>
     <dd>
       <% if profile.background_check %>
-        <%= profile.background_check.status %>
+        <% if profile.background_check.clear? %>
+          <%= web_icon(
+            "check-circle icon-green",
+            text: profile.background_check.status
+          ) %>
+        <% else %>
+          <%= web_icon(
+            "check-circle",
+            text: profile.background_check.status
+          ) %>
+        <% end %>
       <% elsif profile.country != "US" %>
-        International mentor! No BG Check needed
+        <%= web_icon(
+          "check-circle icon-green",
+          text: "International mentor! No BG Check needed"
+        ) %>
       <% else %>
-        Not submitted
+        <%= web_icon("exclamation-circle icon-red", text: "Not submitted") %>
       <% end %>
     </dd>
 
-    <dt>Browser / OS Info</dt>
+    <dt>Location</dt>
+    <dd>
+      <% if profile.address_details.empty? %>
+        <%= web_icon("exclamation-circle icon-red", text: "Must be filled in") %>
+      <% else %>
+        <%= web_icon("check-circle icon-green", text: "Has been filled in") %>
+      <% end %>
+    </dd>
+
+    <dt>Bio</dt>
+    <dd>
+      <% if profile.bio.to_s.empty? %>
+        <%= web_icon("exclamation-circle icon-red", text: "Must be filled in") %>
+      <% else %>
+        <%= web_icon("check-circle icon-green", text: "Has been filled in") %>
+      <% end %>
+    </dd>
+  </dl>
+</div>
+
+<h4 class="reset">Environment information</h4>
+
+<div class="panel">
+  <dl>
+    <dt>Browser / Operating System Info</dt>
     <dd>
       <%= [profile.browser_name,
           profile.browser_version,
           profile.os_name,
           profile.os_version].compact.join(' - ') %>
     </dd>
+  </dl>
+</div>
 
+<h4 class="reset">Settings mentors can change on their profile page</h4>
+<p class="hint reset">
+  (once they have finished onboarding, they can change these settings)
+</p>
+
+<div class="panel">
+  <dl>
     <dt>Searchable to students?</dt>
 
     <dd>
       <% if profile.searchable? %>
         <%= profile.accepting_team_invites? ? 'yes' : 'no' %>
 
-        <span class="hint">
+        <p class="hint">
           To change this, mentors should toggle 
           <strong>
             Allow teams to find you in search results and invite you to join
           </strong>
           on their profile page
-        </span>
+        </p>
       <% else %>
         no
 
-        <span class="hint">
+        <p class="hint">
           Mentors can change this setting themselves when they finish onboarding
-        </span>
+        </p>
       <% end %>
     </dd>
 
@@ -53,20 +113,20 @@
       <% if profile.searchable? %>
         <%= profile.connect_with_mentors? ? 'yes' : 'no' %>
 
-        <span class="hint">
+        <p class="hint">
           To change this, mentor should toggle
           <strong>
             Allow other mentors to find you in search
             results and connect via email
           </strong>
           on their profile page
-        </span>
+        </p>
       <% else %>
         no
 
-        <span class="hint">
+        <p class="hint">
           Mentors can change this setting themselves when they finish onboarding
-        </span>
+        </p>
       <% end %>
     </dd>
 
@@ -75,17 +135,21 @@
     <dd>
       <%= profile.virtual? ? 'yes' : 'no' %>
 
-      <span class="hint">
+      <p class="hint">
         To change this, mentors should toggle
         <strong>
           Indicate to teams that you can be an online, remote mentor
         </strong>
         on their profile page
-      </span>
+      </p>
     </dd>
   </dl>
+</div>
 
-  <%= form_tag(admin_team_memberships_path) do %>
+<h4 class="reset">Help them with their team matching</h4>
+
+<div class="panel">
+  <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
     <%= hidden_field_tag :account_id, profile.account_id %>
 
     <h6>Add <%= profile.full_name %> to a team</h6>
