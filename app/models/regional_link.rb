@@ -60,7 +60,7 @@ class RegionalLink < ApplicationRecord
     when "website", "email"
       value
     when "whatsapp_group"
-      "Join our whatsapp group"
+      custom_label
     else
       detect_page_name_from_url(value)
     end

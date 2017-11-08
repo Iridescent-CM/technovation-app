@@ -1,15 +1,29 @@
-<div class="grid grid--bleed nested-fields placeholder-updaters">
+<div
+  class="grid grid--bleed nested-fields regional-links-fields placeholder-updaters"
+>
   <div class="grid__col-4">
     <%= f.input :name,
       label: "Type",
-      collection: RegionalLink.names.keys,
+      collection: RegionalLink.names.keys.map { |k| [k.humanize, k] },
       prompt: "Choose type..." %>
   </div>
 
   <div class="grid__col-auto">
-    <%= f.input :value, input_html: {
-      data: RegionalLink.link_name_placeholders
-    } %>
+    <%= f.input :value,
+      label: "URL or username",
+      input_html: {
+        data: RegionalLink.link_name_placeholders
+      } %>
+
+    <%= f.input :custom_label,
+      label: false,
+      wrapper_html: {
+        class: "custom_label",
+        style: "#{'display: none;' if f.object.custom_label.blank?}",
+      },
+      input_html: {
+        placeholder: "Display text; ex: Join the mentor whatsapp group!",
+      } %>
   </div>
 
   <%= link_to_remove_association(
@@ -17,3 +31,5 @@
     class: "destroyable-link--destroy"
   ) %>
 </div>
+
+<hr />

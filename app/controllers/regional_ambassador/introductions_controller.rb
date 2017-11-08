@@ -22,6 +22,7 @@ module RegionalAmbassador
           :_destroy,
           :name,
           :value,
+          :custom_label,
         ],
       )
     end
