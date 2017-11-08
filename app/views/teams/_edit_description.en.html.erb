@@ -4,6 +4,8 @@
   <%= simple_format team.description %>
 <% end %>
 
-<%= link_to t("controllers.teams.edit.link"),
-  [:edit, current_scope, team],
-  class: "button small" %>
+<% unless current_scope == "regional_ambassador" %>
+  <%= link_to t("controllers.teams.edit.link"),
+    [:edit, current_scope, team],
+    class: "button small" %>
+<% end %>

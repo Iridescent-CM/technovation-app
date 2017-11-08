@@ -1,3 +1,5 @@
+<% admin_ra ||= false %>
+
 <% if team.mentors.any? %>
   <ul class="reset">
     <%= render partial: "teams/member", collection: team.mentors %>
@@ -13,29 +15,31 @@
 <div class="grid grid--bleed">
   <div class="grid__col-auto">
     <% if SeasonToggles.team_building_enabled? %>
-      <p>
-        You can add as many mentors as your team needs!
-      </p>
-
-      <p>
-        <%= link_to(
-          "Add a mentor",
-          send("new_#{current_scope}_mentor_search_path"),
-          class: "button secondary"
-        ) %>
-      </p>
-
-      <%= form_with model: team,
-        data: { submit_on_change: true },
-        url: [current_scope, team, { format: :json }],
-        method: :patch do |f| %>
+      <% unless admin_ra %>
         <p>
-          <%= f.check_box :accepting_mentor_requests,
-            id: :team_accepting_mentor_requests %>
-
-          <%= f.label :accepting_mentor_requests,
-            "Allow other mentors to find our team and request to join us" %>
+          You can add as many mentors as your team needs!
         </p>
+
+        <p>
+          <%= link_to(
+            "Add a mentor",
+            send("new_#{current_scope}_mentor_search_path"),
+            class: "button secondary"
+          ) %>
+        </p>
+
+        <%= form_with model: team,
+          data: { submit_on_change: true },
+          url: [current_scope, team, { format: :json }],
+          method: :patch do |f| %>
+          <p>
+            <%= f.check_box :accepting_mentor_requests,
+              id: :team_accepting_mentor_requests %>
+
+            <%= f.label :accepting_mentor_requests,
+              "Allow other mentors to find our team and request to join us" %>
+          </p>
+        <% end %>
       <% end %>
     <% else %>
       <p>

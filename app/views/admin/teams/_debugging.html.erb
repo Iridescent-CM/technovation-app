@@ -1,70 +1,109 @@
-<div class="team-debug">
-  <h3>Admin debug info</h3>
+<h3 class="reset">Team debugging</h3>
 
+<div class="panel">
   <p>
     <strong>Searchable to students?</strong>
+
     <%= team.accepting_student_requests? ? "Yes" : "No" %>
-    <span class="hint">
+
+    <p class="hint">
       To change this, a team member should toggle
-      <strong>Other students can request to join this team</strong>
-      on their team page
-    </span>
+      <br />
+      <strong>
+        Allow other students to find our team and request to join us
+      </strong>
+      <br />
+      on the students tab of their team page
+    </p>
   </p>
 
   <p>
     <strong>Searchable to mentors?</strong>
+
     <%= team.accepting_mentor_requests? ? 'Yes' : 'No' %>
 
-    <span class="hint">
+    <p class="hint">
       To change this, a team member should toggle
-      <strong>Other mentors can request to become mentors of this team</strong>
-      on their team page
-    </span>
+      <br />
+      <strong>
+        Allow other mentors to find our team and request to join us
+      </strong>
+      <br />
+      on the mentors tab of their team page
+    </p>
   </p>
+</div>
 
-  <h4>Team Member Invites FROM the team TO users</h4>
-  <table class="invites-debug">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+<h4 class="reset">Team Member Invites</h4>
+<p class="hint reset">
+  Invites go <strong>from the team</strong> to a student or mentor
+</p>
 
-    <tbody>
-      <% team.team_member_invites.each do |i| %>
+<div class="panel">
+  <% if team.team_member_invites.any? %>
+    <table class="datagrid">
+      <thead>
         <tr>
-          <td><%= i.id %></td>
-          <td><%= i.invitee_email %></td>
-          <td><%= i.status %></td>
+          <th>ID</th>
+          <th>Email</th>
+          <th>User type</th>
+          <th>Status</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
 
-  <h4>Join Requests FROM users TO the team</h4>
-  <table class="join-requests-debug">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Account Type</th>
-        <th>Account ID</th>
-        <th>Name</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+      <tbody>
+        <% team.team_member_invites.each do |i| %>
+          <tr>
+            <td><%= i.id %></td>
+            <td><%= i.invitee_email %></td>
 
-    <tbody>
-      <% team.join_requests.each do |j| %>
+            <% if i.invitee %>
+              <td><%= i.invitee_type %></td>
+            <% else %>
+              <td>Not yet registered</td>
+            <% end %>
+
+            <td><%= i.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>None</p>
+  <% end %>
+</div>
+
+<h4 class="reset">Join Requests</h4>
+<p class="hint reset">
+  Join Requests go <strong>from a student or mentor</strong> to the team
+</p>
+
+<div class="panel">
+  <% if team.join_requests.any? %>
+    <table class="datagrid">
+      <thead>
         <tr>
-          <td><%= j.id %></td>
-          <td><%= j.requestor_scope_name %></td>
-          <td><%= j.requestor_account_id %></td>
-          <td><%= j.requestor_full_name %></td>
-          <td><%= j.status %></td>
+          <th>ID</th>
+          <th>Account Type</th>
+          <th>Account ID</th>
+          <th>Name</th>
+          <th>Status</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% team.join_requests.each do |j| %>
+          <tr>
+            <td><%= j.id %></td>
+            <td><%= j.requestor_scope_name %></td>
+            <td><%= j.requestor_account_id %></td>
+            <td><%= j.requestor_full_name %></td>
+            <td><%= j.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>None</p>
+  <% end %>
 </div>

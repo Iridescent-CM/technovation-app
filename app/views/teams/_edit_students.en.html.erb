@@ -1,3 +1,5 @@
+<% admin_ra ||= false %>
+
 <ul class="reset">
   <%= render partial: "teams/member",
     collection: team.students.onboarded %>
@@ -18,18 +20,20 @@
   </ul>
 <% end %>
 
-<%= render "teams/pending_invites",
-  preview_method: :invitee_email,
-  invites: team.pending_student_invites %>
+<% unless admin_ra %>
+  <%= render "teams/pending_invites",
+    preview_method: :invitee_email,
+    invites: team.pending_student_invites %>
 
-<%= render "teams/pending_requests",
-  team: team,
-  requests: team.pending_student_join_requests %>
+  <%= render "teams/pending_requests",
+    team: team,
+    requests: team.pending_student_join_requests %>
+<% end %>
 
 <div class="grid grid--bleed">
   <div class="grid__col-auto">
     <% if SeasonToggles.team_building_enabled? %>
-      <% if team.current? && team.spot_available? %>
+      <% if !admin_ra && team.current? && team.spot_available? %>
         <%= render "team_member_invites/form" %>
 
         <%= form_with model: team,
