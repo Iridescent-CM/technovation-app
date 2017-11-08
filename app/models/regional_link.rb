@@ -9,6 +9,7 @@ class RegionalLink < ApplicationRecord
     email
     whatsapp
     website
+    whatsapp_group
   }
 
   belongs_to :regional_ambassador_profile
@@ -33,6 +34,7 @@ class RegionalLink < ApplicationRecord
       email: "hello@technovation-region.org",
       whatsapp: "52 1 33 23 10 69 05",
       website: "https://www.example.org",
+      whatsapp_group: "https://chat.whatsapp.com/[INVITE-CODE]",
     }
   end
 
@@ -44,6 +46,8 @@ class RegionalLink < ApplicationRecord
       "earth"
     when "email"
       "envelope-o"
+    when "whatsapp_group"
+      "whatsapp"
     else
       name
     end
@@ -55,6 +59,8 @@ class RegionalLink < ApplicationRecord
       detect_page_name_from_url(value, prefix: "@")
     when "website", "email"
       value
+    when "whatsapp_group"
+      custom_label
     else
       detect_page_name_from_url(value)
     end
@@ -91,6 +97,7 @@ class RegionalLink < ApplicationRecord
       email: "",
       whatsapp: "api.whatsapp.com/send?phone=",
       website: "",
+      whatsapp_group: "",
     }.with_indifferent_access
   end
 
