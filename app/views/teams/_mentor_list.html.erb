@@ -49,9 +49,11 @@
   </div>
 </div>
 
-<%= render "teams/pending_invites",
-  invites: team.pending_mentor_invites %>
+<% unless admin_ra %>
+  <%= render "teams/pending_invites",
+    invites: team.pending_mentor_invites %>
 
-<%= render 'teams/pending_requests',
-  team: team,
-  requests: team.pending_mentor_join_requests %>
+  <%= render 'teams/pending_requests',
+    team: team,
+    requests: team.pending_mentor_join_requests %>
+<% end %>
