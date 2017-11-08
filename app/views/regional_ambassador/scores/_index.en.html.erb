@@ -58,17 +58,6 @@
   <% end %>
 </div>
 
-<% if scope == :regional_ambassador %>
-  <div class="flex-col-md-6">
-    <%= form_tag regional_ambassador_exports_path(params.merge(class: "scores")) do %>
-      <div class="standalone-buttons">
-        <%= button_tag "Email CSV Report", class: "appy-button" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
-
 <div class="flex-col-md-12">
   <%= render 'regional_ambassador/scores/list',
     division: division,
