@@ -4,31 +4,42 @@ class ParentalConsentsController < ApplicationController
   end
 
   def new
-    if valid_token?
+    if student.present? and not student.consent_signed?
       @parental_consent = ParentalConsent.new(
         student_profile_consent_token: params.fetch(:token),
         newsletter_opt_in: true,
       )
+    elsif student.present? and student.consent_signed?
+      redirect_to parental_consent_path(student.parental_consent),
+        success: t("controllers.parental_consents.create.success")
     else
       redirect_to application_dashboard_path,
-                  alert: t("controllers.parental_consents.new.unauthorized")
+        alert: t("controllers.parental_consents.new.unauthorized")
     end
   end
 
   def create
+    token = parental_consent_params[:student_profile_consent_token]
+    if student(token: token).present? and student.consent_signed?
+      redirect_to parental_consent_path(student.parental_consent),
+        success: t("controllers.parental_consents.create.success") and return
+    end
+
     @parental_consent = ParentalConsent.new(parental_consent_params)
 
     if @parental_consent.save
       redirect_to parental_consent_path(@parental_consent),
-                  success: t("controllers.parental_consents.create.success")
+        success: t("controllers.parental_consents.create.success")
     else
       render :new
     end
   end
 
   private
-  def valid_token?
-    Account.joins(:student_profile).exists?(consent_token: params.fetch(:token) { "" })
+  def student(opts = {})
+    opts[:token] ||= params.fetch(:token) { "" }
+    @student ||= StudentProfile.joins(:account)
+      .find_by("accounts.consent_token = ?", opts[:token])
   end
 
   def parental_consent_params
