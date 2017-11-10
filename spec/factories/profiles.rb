@@ -62,6 +62,13 @@ FactoryBot.define do
       parent_guardian_name "Parenty McGee"
       school_name "My school"
     end
+
+    trait :onboarding do
+      not_onboarded true
+    end
+
+    factory :onboarded_student, traits: [:full_profile]
+    factory :onboarding_student, traits: [:onboarding]
   end
 
   factory :mentor_profile, aliases: [:mentor, :mentor_account] do

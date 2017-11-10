@@ -1,6 +1,35 @@
 require "rails_helper"
 
 RSpec.describe StudentProfile do
+  describe ".onboarded" do
+    it "lists only students with location, parental consent, and email confirmed" do
+      expect {
+        FactoryBot.create(:onboarding_student)
+      }.not_to change {
+        StudentProfile.onboarded.count
+      }
+
+      team = FactoryBot.build(:team, members_count: 0)
+      team.save!
+
+      past_team = FactoryBot.build(:team, members_count: 0)
+      past_team.seasons = [Season.current.year - 1]
+      past_team.save!
+
+      expect {
+        onboarded = FactoryBot.create(:onboarded_student)
+        onboarded.account.update_column(
+          :seasons,
+          [Season.current.year - 1, Season.current.year]
+        )
+        TeamCreating.execute(past_team, onboarded, FakeController.new)
+        TeamCreating.execute(team, onboarded, FakeController.new)
+      }.to change {
+        team.students.onboarded.count
+      }.by(1)
+    end
+  end
+
   describe ".unmatched" do
     it "lists students without a team" do
       FactoryBot.create(:student, :on_team)
