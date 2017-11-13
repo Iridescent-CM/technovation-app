@@ -113,59 +113,16 @@ class AccountsGrid
     )
   end
 
-  filter :name, filter_group: "text-search" do |value|
-    names = value.downcase.split(' ').map { |n| I18n.transliterate(n) }
-    where(
-      "unaccent(lower(accounts.first_name)) ilike '%#{names.first}%' OR
-       unaccent(lower(accounts.last_name)) ilike '%#{names.last}%'"
-    )
-  end
-
-  filter :email, filter_group: "text-search" do |value|
-    where("accounts.email ilike '%#{value}%'")
-  end
-
-  filter :season,
-    :enum,
-    select: (2015..Season.current.year).to_a.reverse,
-    filter_group: "and-or",
-    multiple: true do |value|
-    by_season(value)
-  end
-
   filter :division,
     :enum,
     header: "Division (students only)",
     select: [["Senior", "senior"], ["Junior", "junior"]],
-    filter_group: "and-or" do |value|
+    filter_group: "common",
+    html: {
+      class: "and-or-field",
+    } do |value|
     by_division(value)
   end
-
-  filter :scope_names,
-    :enum,
-    header: "Profile type",
-    select: [
-      ['Students', 'student'],
-      ['Mentors', 'mentor'],
-      ['Judges', 'judge'],
-      ['Regional Ambassadors', 'regional_ambassador'],
-    ],
-    filter_group: "and-or",
-    multiple: true do |values|
-      clauses = values.flatten.map do |v|
-        sql_str = "#{v}_profiles.id IS NOT NULL"
-
-        if v == "regional_ambassador"
-          sql_str += " AND regional_ambassador_profiles.status = #{
-            RegionalAmbassadorProfile.statuses[:approved]
-          }"
-        end
-
-        sql_str
-      end
-
-      where(clauses.join(' OR '))
-    end
 
   filter :team_matching,
     :enum,
@@ -174,7 +131,7 @@ class AccountsGrid
       ['Matched with a team', 'matched'],
       ['Unmatched', 'unmatched'],
     ],
-    filter_group: "advanced",
+    filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
     } { |value| send(value) }
@@ -186,10 +143,11 @@ class AccountsGrid
       ['Has parental consent', 'parental_consented'],
       ['No parental consent', 'not_parental_consented'],
     ],
-    filter_group: "advanced",
+    filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador mentor} & (g.scope_names || [])).empty?
     } { |value| send(value) }
+
 
   filter :consent_waiver,
     :enum,
@@ -198,7 +156,7 @@ class AccountsGrid
       ['Signed consent waiver', 'consent_signed'],
       ['Has not signed', 'consent_not_signed'],
     ],
-    filter_group: "advanced",
+    filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
     } { |value| send(value) }
@@ -225,12 +183,62 @@ class AccountsGrid
         ]
       end
     },
-    filter_group: "advanced",
+    filter_group: "common",
     if: ->(g) {
       g.country.empty? or
         g.country[0] == "US" and
           (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
     } { |value| send(value) }
+
+  filter :name_email, header: "Name or Email", filter_group: "more-specific" do |value|
+    names = value.strip.downcase.split(' ').map { |n| I18n.transliterate(n) }
+    fuzzy_search({
+      first_name: names.first,
+      last_name: names.last || names.first,
+      email: names.first,
+    }, false)
+  end
+
+  filter :season,
+    :enum,
+    select: (2015..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field",
+    },
+    multiple: true do |value|
+    by_season(value)
+  end
+
+  filter :scope_names,
+    :enum,
+    header: "Profile type",
+    select: [
+      ['Students', 'student'],
+      ['Mentors', 'mentor'],
+      ['Judges', 'judge'],
+      ['Regional Ambassadors', 'regional_ambassador'],
+    ],
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field",
+    },
+    multiple: true do |values|
+      clauses = values.flatten.map do |v|
+        sql_str = "#{v}_profiles.id IS NOT NULL"
+
+        if v == "regional_ambassador"
+          sql_str += " AND regional_ambassador_profiles.status = #{
+            RegionalAmbassadorProfile.statuses[:approved]
+          }"
+        end
+
+        sql_str
+      end
+
+      where(clauses.join(' OR '))
+    end
+
 
   filter :country,
     :enum,
@@ -238,7 +246,7 @@ class AccountsGrid
     select: ->(g) {
       CountryStateSelect.countries_collection
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -254,7 +262,7 @@ class AccountsGrid
     select: ->(g) {
       CS.get(g.country[0]).map { |s| [s[1], s[0]] }
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -280,7 +288,7 @@ class AccountsGrid
       state = g.state_province[0]
       CS.get(country, state)
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -298,13 +306,13 @@ class AccountsGrid
       state = grid.state_province[0]
       state = state === "DIF" ? "CDMX" : state
 
-      scope.where(state_province: state)
+      scope.where("lower(accounts.state_province) like '#{state.downcase}%'")
         .where(clauses.join(' OR '))
     end
 
   column_names_filter(
     header: "More columns",
-    filter_group: "location-data",
+    filter_group: "more-columns",
     multiple: true
   )
 end
