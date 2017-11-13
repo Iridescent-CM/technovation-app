@@ -75,6 +75,20 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
+      - deploy:
+          name: Deploy QA to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "qa" ]; then
+              git push git@heroku.com:technovation-qa.git qa:master
+            fi
+
+      - deploy:
+          name: Deploy Production to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "production" ]; then
+              git push git@heroku.com:technovation.git production:master
+            fi
+
 dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install pdftk
