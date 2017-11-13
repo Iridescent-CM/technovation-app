@@ -60,15 +60,11 @@ class TeamsGrid
     header: "Has a mentor?",
     select: [["Yes, has a mentor", "yes"],
              ["No mentor matched yet", "no"]],
-    filter_group: "common" do |value, scope, grid|
+    filter_group: "common" do |value|
     if value == "yes"
-      if grid.student_match == "yes"
-        scope.matched(:students, :mentors)
-      else
-        scope.matched(:mentors)
-      end
+      matched(:mentor)
     else
-      scope.unmatched(:mentors)
+      unmatched(:mentor)
     end
   end
 
@@ -77,15 +73,11 @@ class TeamsGrid
     header: "Has students?",
     select: [["Yes, has students", "yes"],
              ["No students matched yet", "no"]],
-    filter_group: "common" do |value, scope, grid|
+    filter_group: "common" do |value|
     if value == "yes"
-      if grid.mentor_match == "yes"
-        scope.matched(:students, :mentors)
-      else
-        scope.matched(:students)
-      end
+      matched(:students)
     else
-      scope.unmatched(:students)
+      unmatched(:students)
     end
   end
 

@@ -60,6 +60,8 @@ class TeamRosterManaging
           key: "account.join_team",
           recipient: self,
         )
+
+        update_column(:has_students, true)
       elsif students.include?(student)
         errors.add(:add_student, "Student is already on this team")
       elsif not spot_available?
@@ -82,6 +84,8 @@ class TeamRosterManaging
         key: "account.join_team",
         recipient: self,
       )
+
+      update_column(:has_mentor, true)
     end
 
     def remove_student_profile(student)
@@ -103,6 +107,8 @@ class TeamRosterManaging
         key: "account.leave_team",
         recipient: self,
       )
+
+      update_column(:has_students, students.reload.any?)
     end
 
     def remove_mentor_profile(mentor)
@@ -120,6 +126,8 @@ class TeamRosterManaging
         key: "account.leave_team",
         recipient: self,
       )
+
+      update_column(:has_mentor, mentors.reload.any?)
     end
   end
 end

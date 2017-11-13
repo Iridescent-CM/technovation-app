@@ -27,8 +27,12 @@ FactoryBot.define do
       members = evaluator.members_count.times.collect {
         FactoryBot.create(:student)
       }
-      team.student_ids = members.map(&:id)
-      TeamCreating.execute(team, team.members.first, FakeController.new)
+
+      TeamCreating.execute(team, members.first, FakeController.new)
+
+      members.drop(1).each do |m|
+        TeamRosterManaging.add(team, m)
+      end
     end
   end
 

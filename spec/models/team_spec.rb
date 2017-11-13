@@ -348,7 +348,7 @@ RSpec.describe Team do
       expect {
         FactoryBot.create(:team)
       }.to change {
-        Team.unmatched(:mentors).count
+        Team.unmatched(:mentor).count
       }.from(0).to(1)
     end
 
@@ -379,7 +379,7 @@ RSpec.describe Team do
       expect {
         TeamRosterManaging.add(mentored, mentor)
       }.to change {
-        Team.matched(:mentors).count
+        Team.matched(:mentor).count
       }.from(0).to(1)
     end
 
@@ -398,7 +398,7 @@ RSpec.describe Team do
       }.from(0).to(1)
     end
 
-    it "combines nicely" do
+    it "counts correctly when both are requested" do
       FactoryBot.create(:team) # only has students
 
       matched = FactoryBot.create(:team)
@@ -408,8 +408,8 @@ RSpec.describe Team do
       expect {
         TeamRosterManaging.add(matched, mentor)
       }.to change {
-        Team.matched(:students, :mentors).count
-      }.from(1).to(2)
+        Team.matched(:students).matched(:mentor).count
+      }.from(0).to(1)
     end
   end
 
@@ -451,5 +451,24 @@ RSpec.describe Team do
         Team.in_region(intl_ambassador)
       ).to eq([intl_team])
     end
+  end
+
+  it "keeps track of having students and mentors" do
+    team = FactoryBot.create(:team) # student by default in factory
+    expect(team).to be_has_students
+
+    mentor = FactoryBot.create(:mentor)
+    TeamRosterManaging.add(team, mentor)
+    expect(team).to be_has_mentor
+
+    team.students.each do |s|
+      TeamRosterManaging.remove(team, s)
+    end
+    expect(team.reload).not_to be_has_students
+
+    team.mentors.each do |m|
+      TeamRosterManaging.remove(team, m)
+    end
+    expect(team.reload).not_to be_has_mentor
   end
 end

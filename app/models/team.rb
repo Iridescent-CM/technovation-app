@@ -36,18 +36,11 @@ class Team < ActiveRecord::Base
   end
 
   scope :unmatched, ->(member_scope) {
-    left_outer_joins(member_scope)
-      .where("memberships.member_id IS NULL")
+    where("has_#{member_scope} = ?", false)
   }
 
-  scope :matched, ->(*member_scopes) {
-    clauses = Array(member_scopes).map do |m_scope|
-      "(memberships.member_type = '#{m_scope.to_s.singularize.capitalize}Profile'
-      AND memberships.member_id IS NOT NULL)"
-    end
-
-    joins(:memberships)
-      .where(clauses.join(" OR "))
+  scope :matched, ->(member_scope) {
+    where("has_#{member_scope} = ?", true)
   }
 
   scope :in_region, ->(ambassador) {
@@ -129,14 +122,6 @@ class Team < ActiveRecord::Base
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
-
-  def has_mentor?
-    mentors.any?
-  end
-
-  def has_students?
-    students.any?
-  end
 
   def photo_url
     team_photo_url
