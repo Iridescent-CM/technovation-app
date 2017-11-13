@@ -318,7 +318,7 @@ RSpec.describe Team do
     end
   end
 
-  it "deletes itself and pending join requests/invites when membership decrements to zero" do
+  it "deletes itself, pending requests/invites when membership decrements to zero" do
     team = FactoryBot.create(:team)
 
     team.team_member_invites.create!(
@@ -345,8 +345,11 @@ RSpec.describe Team do
       mentor = FactoryBot.create(:mentor)
       TeamRosterManaging.add(mentored, mentor)
 
-      unmatched = FactoryBot.create(:team)
-      expect(Team.unmatched(:mentors)).to eq([unmatched])
+      expect {
+        FactoryBot.create(:team)
+      }.to change {
+        Team.unmatched(:mentors).count
+      }.from(0).to(1)
     end
 
     it "lists teams without students" do
@@ -355,18 +358,12 @@ RSpec.describe Team do
       unmatched = FactoryBot.create(:team)
       mentor = FactoryBot.create(:mentor)
       TeamRosterManaging.add(unmatched, mentor)
-      TeamRosterManaging.remove(unmatched, unmatched.students.first)
 
-      expect(Team.unmatched(:students)).to eq([unmatched])
-    end
-
-    it "only considers current teams" do
-      past_unmatched = FactoryBot.create(:team)
-      past_unmatched.update(seasons: [Season.current.year - 1])
-
-      unmatched = FactoryBot.create(:team)
-
-      expect(Team.unmatched(:mentors)).to eq([unmatched])
+      expect {
+        TeamRosterManaging.remove(unmatched, unmatched.students.first)
+      }.to change {
+        Team.unmatched(:students).count
+      }.from(0).to(1)
     end
   end
 

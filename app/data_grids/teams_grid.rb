@@ -15,6 +15,14 @@ class TeamsGrid
     division.name.humanize
   end
 
+  column :mentor_matched, header: "Has mentor?" do
+    has_mentor? ? "yes" : "no"
+  end
+
+  column :student_matched, header: "Has students?" do
+    has_students? ? "yes" : "no"
+  end
+
   column :city
 
   column :state_province, header: "State"
@@ -37,24 +45,53 @@ class TeamsGrid
     )
   end
 
-  filter :name, filter_group: "text-search"
-
-  filter :season,
-    :enum,
-    select: (2015..Season.current.year).to_a.reverse,
-    filter_group: "and-or",
-    multiple: true do |value|
-    by_season(value)
-  end
-
   filter :division,
     :enum,
     header: "Division",
     select: Division.names.keys.map { |n|
       [n.humanize, n]
     },
-    filter_group: "and-or" do |value|
+    filter_group: "common" do |value|
     by_division(value)
+  end
+
+  filter :mentor_match,
+    :enum,
+    header: "Has a mentor?",
+    select: [["Yes, has a mentor", "yes"],
+             ["No mentor matched yet", "no"]],
+    filter_group: "common" do |value|
+    if value == "yes"
+      matched(:mentors)
+    else
+      unmatched(:mentors)
+    end
+  end
+
+  filter :student_match,
+    :enum,
+    header: "Has students?",
+    select: [["Yes, has students", "yes"],
+             ["No students matched yet", "no"]],
+    filter_group: "common" do |value|
+    if value == "yes"
+      matched(:students)
+    else
+      unmatched(:students)
+    end
+  end
+
+  filter :name, filter_group: "more-specific"
+
+  filter :season,
+    :enum,
+    select: (2015..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field",
+    },
+    multiple: true do |value|
+    by_season(value)
   end
 
   filter :country,
@@ -63,7 +100,7 @@ class TeamsGrid
     select: ->(g) {
       CountryStateSelect.countries_collection
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -79,7 +116,7 @@ class TeamsGrid
     select: ->(g) {
       CS.get(g.country[0]).map { |s| [s[1], s[0]] }
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -105,7 +142,7 @@ class TeamsGrid
       state = g.state_province[0]
       CS.get(country, state)
     },
-    filter_group: "location-data",
+    filter_group: "more-specific",
     multiple: true,
     data: {
       placeholder: "Select or start typing...",
@@ -129,7 +166,7 @@ class TeamsGrid
 
   column_names_filter(
     header: "More columns",
-    filter_group: "location-data",
+    filter_group: "more-columns",
     multiple: true
   )
 end

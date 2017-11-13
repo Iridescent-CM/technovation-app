@@ -36,9 +36,13 @@ class Team < ActiveRecord::Base
   end
 
   scope :unmatched, ->(member_scope) {
-    current
-      .left_outer_joins(member_scope)
-      .where("memberships.member_id IS NULL")
+    left_outer_joins(member_scope)
+    .where("memberships.member_id IS NULL")
+  }
+
+  scope :matched, ->(member_scope) {
+    left_outer_joins(member_scope)
+    .where("memberships.member_id IS NOT NULL")
   }
 
   scope :in_region, ->(ambassador) {
@@ -120,6 +124,14 @@ class Team < ActiveRecord::Base
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
+
+  def has_mentor?
+    mentors.any?
+  end
+
+  def has_students?
+    students.any?
+  end
 
   def photo_url
     team_photo_url
