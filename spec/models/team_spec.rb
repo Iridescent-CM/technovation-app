@@ -136,7 +136,7 @@ RSpec.describe Team do
   describe ".region_division_name" do
     it "includes state in US" do
       team = FactoryBot.create(:team)
-      expect(team.region_division_name).to eq("US_IL,senior")
+      expect(team.region_division_name).to eq("US_IL,junior")
     end
 
     it "uses only country outside the US" do
@@ -144,7 +144,7 @@ RSpec.describe Team do
                                 city: "Salvador",
                                 state_province: "Bahia",
                                 country: "BR")
-      expect(team.region_division_name).to eq("BR,senior")
+      expect(team.region_division_name).to eq("BR,junior")
     end
 
     it "won't blow up without country" do
@@ -154,28 +154,28 @@ RSpec.describe Team do
         state_province: nil,
         country: nil
       )
-      expect(team.region_division_name).to eq(",senior")
+      expect(team.region_division_name).to eq(",junior")
     end
 
     it "should re-cache if member details change" do
       team = FactoryBot.create(:team)
-      expect(team.region_division_name).to eq("US_IL,senior")
+      expect(team.region_division_name).to eq("US_IL,junior")
 
       member = team.members.sample
       profile_updating = ProfileUpdating.new(member)
       profile_updating.update({
         account_attributes: {
           id: member.account_id,
-          date_of_birth: Date.today - 10.years,
+          date_of_birth: Date.today - 15.years,
         },
       })
 
-      expect(team.reload.region_division_name).to eq("US_IL,junior")
+      expect(team.reload.region_division_name).to eq("US_IL,senior")
     end
 
     it "should re-cache if membership changes" do
       team = FactoryBot.create(:team)
-      expect(team.region_division_name).to eq("US_IL,senior")
+      expect(team.region_division_name).to eq("US_IL,junior")
 
       team.memberships.each(&:destroy)
       expect(team.reload.region_division_name).to eq("US_IL,none_assigned_yet")
@@ -256,12 +256,13 @@ RSpec.describe Team do
   it "touches its submission when division changes" do
     team = FactoryBot.create(:team)
     submission = FactoryBot.create(:submission, team: team)
+    team.reload
 
     old_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
     young_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
 
     TeamRosterManaging.add(team, [old_student, young_student])
-    expect(team).to be_senior
+    expect(team.reload).to be_senior
 
     submission_updated = submission.updated_at
 
