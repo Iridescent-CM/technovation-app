@@ -81,7 +81,9 @@ class TeamsGrid
     end
   end
 
-  filter :name, filter_group: "more-specific"
+  filter :name, filter_group: "more-specific" do |value|
+    fuzzy_search(name: value)
+  end
 
   filter :season,
     :enum,

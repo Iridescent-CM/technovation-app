@@ -2399,6 +2399,13 @@ CREATE INDEX trgm_last_name_indx ON accounts USING gist (last_name gist_trgm_ops
 
 
 --
+-- Name: trgm_team_name_indx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX trgm_team_name_indx ON teams USING gist (name gist_trgm_ops);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2705,6 +2712,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171113170115'),
 ('20171113170150'),
 ('20171113215850'),
-('20171113221502');
+('20171113221502'),
+('20171113232015');
 
 
