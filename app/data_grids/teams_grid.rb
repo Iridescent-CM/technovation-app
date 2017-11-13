@@ -160,7 +160,7 @@ class TeamsGrid
       state = grid.state_province[0]
       state = state === "DIF" ? "CDMX" : state
 
-      scope.where(state_province: state)
+      scope.where("lower(teams.state_province) like '#{state.downcase}%'")
         .where(clauses.join(' OR '))
     end
 
