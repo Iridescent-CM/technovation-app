@@ -11,6 +11,30 @@ jobs:
           PGUSER: root
       - image: circleci/postgres:9.6.2-alpine
         environment:
+          HELP_EMAIL: help@technovationchallenge.org
+          ADMIN_EMAIL: info@technovationchallenge.org
+          PDFTK_PATH: /usr/bin/pdftk
+          AIRBRAKE_PROJECT_ID: n-a
+          AIRBRAKE_PROJECT_KEY: n-a
+          NEW_RELIC_LICENSE_KEY: n-a
+          GOOGLE_MAPS_API_KEY: n-a
+          HOST_DOMAIN: localhost:3000
+          AWS_BUCKET_NAME: technovation-attachments-test
+          CAMPAIGN_MONITOR_API_KEY: n-a
+          STUDENT_LIST_ID: n-a
+          MENTOR_LIST_ID: n-a
+          JUDGE_LIST_ID: n-a
+          REGIONAL_AMBASSADOR_LIST_ID: n-a
+          PARENT_LIST_ID: n-a
+          REDIS_URL: redis://127.0.0.1:6379/0
+          BONSAI_URL: localhost:9200
+          GOOGLE_TIMEZONE_API_KEY: n-a
+          BING_MAPS_API_KEY: n-a
+          ENABLE_RA_SCORES: yes
+          SEARCH_INDEX_TIMING: realtime
+          RA_SLACK_URL: n-a
+          MENTOR_SLACK_SIGNUP_URL: n-a
+          STUDENT_SLACK_SIGNUP_URL: n-a
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
     steps:
@@ -54,37 +78,6 @@ jobs:
 dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install pdftk
-
-machine:
-  ruby:
-    version:
-      2.4.1
-
-  environment:
-    HELP_EMAIL: help@technovationchallenge.org
-    ADMIN_EMAIL: info@technovationchallenge.org
-    PDFTK_PATH: /usr/bin/pdftk
-    AIRBRAKE_PROJECT_ID: n-a
-    AIRBRAKE_PROJECT_KEY: n-a
-    NEW_RELIC_LICENSE_KEY: no-matter
-    GOOGLE_MAPS_API_KEY: no-matter-in-test
-    HOST_DOMAIN: localhost:3000
-    AWS_BUCKET_NAME: technovation-attachments-test
-    CAMPAIGN_MONITOR_API_KEY: no-matter-in-test
-    STUDENT_LIST_ID: no-matter-in-test
-    MENTOR_LIST_ID: no-matter-in-test
-    JUDGE_LIST_ID: no-matter-in-test
-    REGIONAL_AMBASSADOR_LIST_ID: no-matter-in-test
-    PARENT_LIST_ID: no-matter-in-test
-    REDIS_URL: redis://127.0.0.1:6379/0
-    BONSAI_URL: localhost:9200
-    GOOGLE_TIMEZONE_API_KEY: no-matter-in-test
-    BING_MAPS_API_KEY: no-matter-in-test
-    ENABLE_RA_SCORES: yes
-    SEARCH_INDEX_TIMING: realtime
-    RA_SLACK_URL: no-matter-in-test
-    MENTOR_SLACK_SIGNUP_URL: no-matter-in-test
-    STUDENT_SLACK_SIGNUP_URL: no-matter-in-test
 
 general:
   branches:
