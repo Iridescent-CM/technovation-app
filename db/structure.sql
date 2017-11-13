@@ -1382,7 +1382,9 @@ CREATE TABLE teams (
     state_province character varying,
     country character varying,
     deleted_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    has_students boolean DEFAULT false NOT NULL,
+    has_mentor boolean DEFAULT false NOT NULL
 );
 
 
@@ -2701,6 +2703,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171108140911'),
 ('20171110224550'),
 ('20171113170115'),
-('20171113170150');
+('20171113170150'),
+('20171113215850'),
+('20171113221502');
 
 
