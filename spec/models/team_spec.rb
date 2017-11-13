@@ -274,7 +274,7 @@ RSpec.describe Team do
 
   context "unique name validation" do
     it "ensures uniqueness within season" do
-      fring = FactoryBot.create(:team, name: "Say My Name")
+      FactoryBot.create(:team, name: "Say My Name")
       heisenberg = FactoryBot.build(:team, name: "Say My Name")
       expect(heisenberg).not_to be_valid
       expect(heisenberg.save).to be false
