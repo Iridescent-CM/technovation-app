@@ -34,4 +34,8 @@ class NullTeamSubmission
   def technical_checklist
     NullTechnicalChecklist.new
   end
+
+  def touch
+    false
+  end
 end

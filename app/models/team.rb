@@ -138,7 +138,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_submission(team)
-    submission.touch if submission.present?
+    submission.touch
   end
 
   def eligible_events

@@ -3,9 +3,8 @@ module DivisionChooser
     self.division_id = Division.for(self).id
 
     if respond_to?(:submission) and
-        submission.present? and
-            (saved_change_to_division_id? or
-              division_id_changed?)
+        (saved_change_to_division_id? or
+          division_id_changed?)
       submission.touch
     end
   end
