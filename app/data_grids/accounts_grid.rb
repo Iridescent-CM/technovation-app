@@ -12,7 +12,6 @@ class AccountsGrid
       :judge_profile,
       :regional_ambassador_profile,
     ])
-      .order("accounts.created_at desc")
   end
 
   column :profile_type do
