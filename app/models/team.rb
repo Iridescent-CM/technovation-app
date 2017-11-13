@@ -37,12 +37,17 @@ class Team < ActiveRecord::Base
 
   scope :unmatched, ->(member_scope) {
     left_outer_joins(member_scope)
-    .where("memberships.member_id IS NULL")
+      .where("memberships.member_id IS NULL")
   }
 
-  scope :matched, ->(member_scope) {
-    left_outer_joins(member_scope)
-    .where("memberships.member_id IS NOT NULL")
+  scope :matched, ->(*member_scopes) {
+    clauses = Array(member_scopes).map do |m_scope|
+      "(memberships.member_type = '#{m_scope.to_s.singularize.capitalize}Profile'
+      AND memberships.member_id IS NOT NULL)"
+    end
+
+    joins(:memberships)
+      .where(clauses.join(" OR "))
   }
 
   scope :in_region, ->(ambassador) {

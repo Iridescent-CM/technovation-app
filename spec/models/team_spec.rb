@@ -360,10 +360,56 @@ RSpec.describe Team do
       TeamRosterManaging.add(unmatched, mentor)
 
       expect {
-        TeamRosterManaging.remove(unmatched, unmatched.students.first)
+        unmatched.students.each do |student|
+          TeamRosterManaging.remove(unmatched, student)
+        end
       }.to change {
         Team.unmatched(:students).count
       }.from(0).to(1)
+    end
+  end
+
+  describe ".matched(scope)" do
+    it "lists teams with a mentor" do
+      FactoryBot.create(:team)
+
+      mentored = FactoryBot.create(:team)
+      mentor = FactoryBot.create(:mentor)
+
+      expect {
+        TeamRosterManaging.add(mentored, mentor)
+      }.to change {
+        Team.matched(:mentors).count
+      }.from(0).to(1)
+    end
+
+    it "lists teams with students" do
+      matched = FactoryBot.create(:team)
+      student = matched.students.first
+
+      TeamRosterManaging.remove(matched, student)
+      matched.update_column(:deleted_at, nil)
+      matched.reload
+
+      expect {
+        TeamRosterManaging.add(matched, student)
+      }.to change {
+        Team.matched(:students).count
+      }.from(0).to(1)
+    end
+
+    it "combines nicely" do
+      FactoryBot.create(:team) # only has students
+
+      matched = FactoryBot.create(:team)
+      matched.memberships.destroy_all
+      mentor = FactoryBot.create(:mentor)
+
+      expect {
+        TeamRosterManaging.add(matched, mentor)
+      }.to change {
+        Team.matched(:students, :mentors).count
+      }.from(1).to(2)
     end
   end
 
