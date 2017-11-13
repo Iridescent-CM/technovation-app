@@ -26,6 +26,7 @@ module SavedSearchController
 
     if @saved_search.save
       render partial: "saved_searches/saved_search",
+        formats: [:html],
         locals: {
           saved_search: @saved_search,
           param_root: @saved_search.param_root,
