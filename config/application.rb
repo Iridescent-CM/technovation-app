@@ -52,5 +52,7 @@ module TechnovationApp
       r301 '/users/sign_up', '/signup'
       r301 '/users/sign_in', '/signin'
     end
+
+    config.active_record.schema_format = :sql
   end
 end
