@@ -75,6 +75,14 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
+      - run:
+          name: Run setup script
+          command: bash .circleci/setup-heroku.sh
+
+      - add_ssh_keys:
+          fingerprints:
+            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+
       - deploy:
           name: Deploy QA to Heroku
           command: |
