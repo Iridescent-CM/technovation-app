@@ -178,10 +178,18 @@ RSpec.describe FindEligibleSubmissionId do
         judge = FactoryBot.create(:judge)
         judge.account.mentor_profile = FactoryBot.create(:mentor)
 
-        judges_team = FactoryBot.create(:team, division: Division.senior)
+        judges_team = FactoryBot.create(:team)
+
+        judges_team.students.each do |s|
+          ProfileUpdating.execute(s, account_attributes: {
+              id: s.account_id,
+              date_of_birth: 15.years.ago,
+          })
+        end
+
         judge.teams << judges_team
 
-        different_division_team = FactoryBot.create(:team, division: Division.junior)
+        different_division_team = FactoryBot.create(:team) # junior by default
         sub = FactoryBot.create(:submission, :complete, team: different_division_team)
 
         expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
@@ -348,10 +356,18 @@ RSpec.describe FindEligibleSubmissionId do
         judge = FactoryBot.create(:judge)
         judge.account.mentor_profile = FactoryBot.create(:mentor)
 
-        judges_team = FactoryBot.create(:team, division: Division.senior)
+        judges_team = FactoryBot.create(:team)
+
+        judges_team.students.each do |s|
+          ProfileUpdating.execute(s, account_attributes: {
+              id: s.account_id,
+              date_of_birth: 15.years.ago,
+          })
+        end
+
         judge.teams << judges_team
 
-        different_division_team = FactoryBot.create(:team, division: Division.junior)
+        different_division_team = FactoryBot.create(:team)
         sub = FactoryBot.create(:submission,
                                  :complete,
                                  team: different_division_team,
