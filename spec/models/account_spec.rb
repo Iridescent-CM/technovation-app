@@ -71,7 +71,7 @@ RSpec.describe Account do
     expect(account.team_region_division_names).to be_empty
 
     account.teams << FactoryBot.create(:team)
-    expect(account.team_region_division_names).to match_array(["US_IL,senior"])
+    expect(account.team_region_division_names).to match_array(["US_IL,junior"])
 
     account.teams << FactoryBot.create(
       :team,
@@ -79,8 +79,8 @@ RSpec.describe Account do
       state_province: "CA"
     )
     expect(account.team_region_division_names).to match_array(
-      ["US_IL,senior",
-       "US_CA,senior"]
+      ["US_IL,junior",
+       "US_CA,junior"]
     )
   end
 end
