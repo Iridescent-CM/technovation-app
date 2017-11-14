@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get '/sidekiq' => 'signins#new'
 
+  resource :survey_completion, only: :show
+
   namespace :student do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"

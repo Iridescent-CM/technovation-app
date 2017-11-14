@@ -230,6 +230,14 @@ class Account < ActiveRecord::Base
       ) or NullAuth.new
   end
 
+  def took_survey!
+    update_column(:survey_completed_at, Time.current)
+  end
+
+  def took_survey?
+    !!survey_completed_at
+  end
+
   def profile_image_url
     icon_path.blank? ? super : icon_path
   end

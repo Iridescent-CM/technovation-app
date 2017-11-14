@@ -124,7 +124,8 @@ CREATE TABLE accounts (
     session_token character varying,
     mailer_token character varying,
     icon_path character varying,
-    division_id bigint
+    division_id bigint,
+    survey_completed_at timestamp without time zone
 );
 
 
@@ -2713,6 +2714,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171113170150'),
 ('20171113215850'),
 ('20171113221502'),
-('20171113232015');
+('20171113232015'),
+('20171114163826');
 
 
