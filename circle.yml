@@ -49,6 +49,8 @@ jobs:
       # Bundle install dependencies
       - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 
+      - run: - sudo apt-get update; sudo apt-get install pdftk
+
       - run:
           name: Install dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
@@ -96,10 +98,6 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "production" ]; then
               git push git@heroku.com:technovation.git production:master
             fi
-
-dependencies:
-  pre:
-    - sudo apt-get update; sudo apt-get install pdftk
 
 general:
   branches:
