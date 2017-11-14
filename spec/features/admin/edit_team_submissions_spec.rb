@@ -115,7 +115,7 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit technical checklist" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        visit mentor_team_submission_path(team.submission, team_id: team.id)
+        visit mentor_team_submission_path(team.reload.submission, team_id: team.id)
         expect(page).not_to have_link("Edit Your Technical Checklist")
 
         visit edit_mentor_technical_checklist_path(team_id: team.id)

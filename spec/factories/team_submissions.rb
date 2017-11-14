@@ -1,11 +1,15 @@
 FactoryBot.define do
   factory :team_submission, aliases: [:submission] do
-    team 
+    team
 
     integrity_affirmed true
 
     trait :semifinalist do
       contest_rank :semifinalist
+    end
+
+    after(:create) do |sub|
+      RegisterToCurrentSeasonJob.perform_now(sub)
     end
 
     trait :complete do
