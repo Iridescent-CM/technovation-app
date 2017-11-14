@@ -26,6 +26,8 @@ if !!defined?(Dotenv)
     CSV_JUDGE_EMAIL
     CSV_JUDGING_ROUND
     LD_LIBRARY_PATH
+    SIDEKIQ_CLIENT_SIZE
+    NEW_RELIC_AGENT_ENABLED
   }
 
   RSpec.describe "Circle CI config" do
@@ -33,7 +35,7 @@ if !!defined?(Dotenv)
       env = Dotenv.load
 
       circle_src = File.read("./circle.yml")
-      circle_env = YAML.load(circle_src)["machine"]["environment"]
+      circle_env = YAML.load(circle_src)["jobs"]["build"]["docker"][0]["environment"]
 
       keys_needed =
         env.keys - KEYS_IN_CIRCLE_PROJECT_SETTINGS - KEYS_NOT_NEEDED_IN_TESTS
