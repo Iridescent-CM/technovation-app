@@ -3,10 +3,15 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
   def perform(record)
     unless record.seasons.include?(Season.current.year)
-      record.update_columns(
-        seasons: (record.seasons << Season.current.year),
-        season_registered_at: Time.current,
-      )
+      update_data = {
+        seasons: (record.seasons << Season.current.year)
+      }
+
+      if record.respond_to?(:season_registered_at)
+        update_data = update_data.merge({ season_registered_at: Time.current })
+      end
+
+      record.update_columns(update_data)
 
       if record.respond_to?(:student_profile) and
           (profile = record.student_profile).present?
