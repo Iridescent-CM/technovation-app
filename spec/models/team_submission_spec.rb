@@ -85,6 +85,7 @@ RSpec.describe TeamSubmission do
 
     it "changes when team regional pitch event changes" do
       team = submission.team
+      team.reload
       team.regional_pitch_events << RegionalPitchEvent.create!({
         regional_ambassador_profile: FactoryBot.create(
           :regional_ambassador_profile
