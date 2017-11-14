@@ -22,7 +22,7 @@ require "rails_helper"
           }.from(0).to(1)
         end
 
-        expect(user.account.reminded_about_survey_at).to eq(time)
+        expect(user.account.reminded_about_survey_at.to_i).to eq(time.to_i)
       end
     end
   end

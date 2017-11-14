@@ -15,7 +15,7 @@ RSpec.describe SigninsController do
           },
         }
 
-        expect(student.reload.last_logged_in_at).to eq(time)
+        expect(student.reload.last_logged_in_at.to_i).to eq(time.to_i)
       end
     end
 

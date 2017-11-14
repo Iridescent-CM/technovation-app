@@ -19,7 +19,7 @@ RSpec.describe SurveyCompletionsController do
         end
 
         expect(user.reload.account).to be_took_survey
-        expect(user.account.survey_completed_at).to eq(time)
+        expect(user.account.survey_completed_at.to_i).to eq(time.to_i)
       end
 
       it "redirects to their dashboard" do
