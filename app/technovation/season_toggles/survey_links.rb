@@ -25,9 +25,10 @@ class SeasonToggles
         end
       end
 
-      def show_survey_link_modal?(scope, last_shown)
-        survey_link_available?(scope) and
-          not survey_link(scope, "changed_at") == last_shown
+      def show_survey_link_modal?(scope, account)
+        not account.took_survey? and
+          survey_link_available?(scope) and
+            account.needs_survey_reminder?
       end
 
       def set_survey_link(scope, text, url)

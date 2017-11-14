@@ -1,8 +1,6 @@
-<% if SeasonToggles.show_survey_link_modal?(
-    current_scope,
-    get_cookie(:last_seen_survey_modal)
-) %>
+<% if SeasonToggles.show_survey_link_modal?(current_scope, current_account) %>
   <%= content_tag :div,
+    id: "survey-modal",
     class: "modal",
     data: {
       heading: t("views.application.survey"),

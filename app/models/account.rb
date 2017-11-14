@@ -238,6 +238,23 @@ class Account < ActiveRecord::Base
     !!survey_completed_at
   end
 
+  def needs_survey_reminder?
+    if reminded_about_survey_at.blank?
+      !!season_registered_at and
+        season_registered_at < self.class.survey_reminder_period
+    else
+      reminded_about_survey_count < self.class.survey_reminder_max_times and
+        reminded_about_survey_at <= self.class.survey_reminder_period
+    end
+  end
+
+  def reminded_about_survey!
+    update_columns(
+      reminded_about_survey_at: Time.current,
+      reminded_about_survey_count: reminded_about_survey_count + 1,
+    )
+  end
+
   def profile_image_url
     icon_path.blank? ? super : icon_path
   end
@@ -452,6 +469,14 @@ class Account < ActiveRecord::Base
   end
 
   private
+  def self.survey_reminder_max_times
+    2
+  end
+
+  def self.survey_reminder_period
+    2.weeks.ago
+  end
+
   def changes_require_password?
     !!!skip_existing_password &&
       (persisted? && (email_changed? || changing_password?))
