@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
 
     resources :cookies, only: :create
+    resource :survey_reminder, only: :create
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     resource :bio, only: [:edit, :update]
 
     resources :cookies, only: :create
+    resource :survey_reminder, only: :create
 
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
