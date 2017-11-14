@@ -11,6 +11,9 @@ RSpec.feature "Set survey links and link text" do
       end
 
       scenario "when they have not seen it yet" do
+        allow(SeasonToggles).to receive(:show_survey_link_modal?)
+          .and_return(true)
+
         sign_in(user)
 
         expect(current_path).to eq(public_send("#{scope}_dashboard_path"))
