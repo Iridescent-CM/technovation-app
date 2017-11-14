@@ -23,6 +23,8 @@ RSpec.feature "Admins view scores" do
   end
 
   scenario "view SF scores" do
+    skip "This is under construction"
+
     submission = FactoryBot.create(
       :submission,
       :complete,
