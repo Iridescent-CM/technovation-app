@@ -50,9 +50,13 @@ module InviteRA
 
     if mentor_profile.present?
       @logger.info("ADDING found MentorProfile for #{attrs[:email]}")
+
       mentor_attrs = mentor_profile.attributes.reject do |k, _|
         %w{id account_id}.include?(k.to_s)
       end
+
+      mentor_attrs = mentor_attrs.merge(bio: attrs[:bio])
+
       account.create_mentor_profile!(mentor_attrs)
     end
 
