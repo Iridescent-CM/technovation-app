@@ -4,6 +4,10 @@ class SignupAttempt < ActiveRecord::Base
   enum status: %i{pending active registered temporary_password}
   belongs_to :account, required: false
 
+  before_validation -> {
+    self.email = email.strip.downcase
+  }
+
   validates :email, presence: true, email: true
   validates :password, length: { minimum: 8, on: :create }
 
