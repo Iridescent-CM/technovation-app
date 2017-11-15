@@ -31,13 +31,9 @@ module RegionalAmbassador
           b.created_at <=> a.created_at
         end
 
-        @top_inactive = Account.current
-          .not_staff
-          .in_region(current_ambassador)
-          .joins(:mentor_profile)
-          .joins(:activities)
-          .order("activities.created_at asc")
-          .first(10)
+        @top_inactive = Account.in_region(current_ambassador)
+          .inactive_mentors
+          .limit(10)
 
         @students = StudentProfile.current.in_region(current_ambassador)
 

@@ -83,4 +83,25 @@ RSpec.describe Account do
        "US_CA,junior"]
     )
   end
+
+  describe ".inactive_mentors" do
+    it "pulls mentors with no new activities since 3 weeks ago" do
+      active = FactoryBot.create(:mentor)
+      inactive = FactoryBot.create(:mentor)
+
+      active.activities.destroy_all
+      inactive.activities.destroy_all
+
+      active.account.create_activity({
+        key: "account.update"
+      })
+
+      inactive.account.create_activity({
+        key: "account.update",
+        created_at: 22.days.ago
+      })
+
+      expect(Account.inactive_mentors).to eq([inactive.account])
+    end
+  end
 end

@@ -12,7 +12,7 @@
       <%= image_tag inactive.photo_url, class: "thumbnail-xs" %>
       <%= link_to inactive.name, [:regional_ambassador, inactive] %>
       hasn't been active for
-      <%= time_ago_in_words(inactive.updated_at) %>
+      <%= time_ago_in_words(inactive.activities.last.created_at) %>
     </li>
   <% end %>
 </ul>
