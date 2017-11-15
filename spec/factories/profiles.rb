@@ -150,7 +150,7 @@ FactoryBot.define do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
     ambassador_since_year { Time.current.year }
-    bio "A complete bio"
+    bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
 
     account
 
