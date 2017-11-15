@@ -1,5 +1,18 @@
 module RegionalAmbassador
   class ProfileDetailsConfirmationsController < ApplicationController
+    def create
+      @regional_ambassador_profile = RegionalAmbassadorProfile.new(
+        regional_ambassador_profile_params
+      )
+
+      if @regional_ambassador_profile.save
+        remove_cookie(:admin_permission_token)
+        ProfileCreating.execute(@regional_ambassador_profile, self)
+      else
+        render "regional_ambassador/signups/new"
+      end
+    end
+
     def update
       @regional_ambassador_profile = RegionalAmbassadorProfile.find(
         regional_ambassador_profile_params.fetch(:id)
