@@ -6,7 +6,7 @@ RSpec.feature "Reset your forgotten password" do
 
     FactoryBot.create(
       scope,
-      email: "Find@me.com",
+      email: "find@me.com",
       password: "oldforgotten"
     )
 
@@ -43,7 +43,7 @@ RSpec.feature "Reset your forgotten password" do
     email = ActionMailer::Base.deliveries.last
     expect(account.password_reset_token).not_to be_blank
     expect(account.password_reset_token_sent_at).not_to be_blank
-    expect(email.to).to eq(["Find@me.com"])
+    expect(email.to).to eq(["find@me.com"])
     expect(email.subject).to eq("Reset your Technovation password")
 
     url = "http://#{ENV["HOST_DOMAIN"]}/passwords/new?token=#{account.password_reset_token}"
