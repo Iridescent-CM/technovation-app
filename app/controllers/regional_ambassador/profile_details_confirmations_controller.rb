@@ -57,6 +57,7 @@ module RegionalAmbassador
           :password,
         ]
       ).tap do |tapped|
+        tapped[:status] = :approved
         tapped[:account_attributes][:skip_existing_password] = true
       end
     end
