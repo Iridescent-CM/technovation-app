@@ -59,9 +59,11 @@ module RegionalAmbassador
       ).tap do |tapped|
         tapped[:status] = :approved
         tapped[:account_attributes][:skip_existing_password] = true
-        tapped[:account_attributes][:email] = UserInvitation.find_by!(
-          admin_permission_token: get_cookie(:admin_permission_token)
-        ).email
+        if action_name == "create"
+          tapped[:account_attributes][:email] = UserInvitation.find_by!(
+            admin_permission_token: get_cookie(:admin_permission_token)
+          ).email
+        end
       end
     end
   end
