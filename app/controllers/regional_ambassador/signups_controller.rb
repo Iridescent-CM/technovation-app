@@ -3,6 +3,9 @@ module RegionalAmbassador
     def new
       if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:regional_ambassador, token)
+      elsif token = params[:admin_permission_token]
+        setup_valid_profile_from_invitation(:regional_ambassador, token)
+        @profile.ambassador_since_year = "I'm new!"
       else
         redirect_to root_path
       end

@@ -22,6 +22,8 @@ module Student
     def new
       if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:student, token)
+      elsif token = params[:admin_permission_token]
+        setup_valid_profile_from_invitation(:student, token)
       else
         redirect_to root_path
       end
@@ -59,8 +61,10 @@ module Student
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(
+        attempt = SignupAttempt.find_by(
           signup_token: get_cookie(:signup_token)
+        ) || UserInvitation.find_by!(
+          admin_permission_token: get_cookie(:admin_permission_token)
         )
 
         tapped[:account_attributes][:email] = attempt.email

@@ -1,0 +1,30 @@
+<div class="grid">
+  <div class="grid__col-auto">
+    <h1>Invited Users</h1>
+
+    <div class="panel">
+      <table class="datagrid">
+        <thead>
+          <tr>
+            <th>Profile type</th>
+            <th>Email</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @user_invitations.each do |invitation| %>
+            <tr>
+              <%= render "admin/user_invitations/user_invitation_row",
+                invitation: invitation %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= will_paginate(@user_invitations) %>
+    </div>
+  </div>
+</div>

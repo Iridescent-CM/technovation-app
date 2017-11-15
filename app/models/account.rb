@@ -368,7 +368,7 @@ class Account < ActiveRecord::Base
     if new_record?
       SignupAttempt.temporary_password.where(
         "lower(email) = ?", email.downcase
-      ).exists?
+      ).exists? or UserInvitation.exists?(email: email)
     else
       signup_attempt.present? and signup_attempt.temporary_password?
     end

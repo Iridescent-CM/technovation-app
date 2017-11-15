@@ -1512,6 +1512,41 @@ ALTER SEQUENCE unconfirmed_email_addresses_id_seq OWNED BY unconfirmed_email_add
 
 
 --
+-- Name: user_invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE user_invitations (
+    id bigint NOT NULL,
+    admin_permission_token character varying NOT NULL,
+    email character varying NOT NULL,
+    account_id integer,
+    profile_type integer NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: user_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_invitations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_invitations_id_seq OWNED BY user_invitations.id;
+
+
+--
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1761,6 +1796,13 @@ ALTER TABLE ONLY technical_checklists ALTER COLUMN id SET DEFAULT nextval('techn
 --
 
 ALTER TABLE ONLY unconfirmed_email_addresses ALTER COLUMN id SET DEFAULT nextval('unconfirmed_email_addresses_id_seq'::regclass);
+
+
+--
+-- Name: user_invitations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_invitations ALTER COLUMN id SET DEFAULT nextval('user_invitations_id_seq'::regclass);
 
 
 --
@@ -2057,6 +2099,14 @@ ALTER TABLE ONLY technical_checklists
 
 ALTER TABLE ONLY unconfirmed_email_addresses
     ADD CONSTRAINT unconfirmed_email_addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_invitations user_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_invitations
+    ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2722,6 +2772,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171114175205'),
 ('20171114182734'),
 ('20171114183901'),
-('20171114185301');
+('20171114185301'),
+('20171115152731');
 
 

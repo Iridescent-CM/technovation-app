@@ -50,3 +50,8 @@ en:
               invalid: "does not appear to be an email address"
               is_not_a_student: "is not a student."
               taken: "has already been invited by your team."
+
+        user_invitation:
+          attributes:
+            email:
+              taken_by_account: "An account already exists with that email"

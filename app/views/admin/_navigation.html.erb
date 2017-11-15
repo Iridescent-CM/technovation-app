@@ -33,6 +33,10 @@
   <%= link_to "Semifinals Scores", admin_semifinals_scores_path %>
 <% end %>
 
+<%= link_to "Invite users",
+  new_admin_user_invitation_path,
+  class: "#{al(new_admin_user_invitation_path)} small" %>
+
 <%= link_to "Background job monitor (advanced)",
   "/sidekiq",
   data: { turbolinks: false },

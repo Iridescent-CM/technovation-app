@@ -13,19 +13,22 @@ class RegistrationMailer < ApplicationMailer
     end
   end
 
-  def admin_permission(signup_attempt_id)
-    signup_attempt = SignupAttempt.find(signup_attempt_id)
+  def admin_permission(user_invitation_id)
+    invitation = UserInvitation.find(user_invitation_id)
 
-    if token = signup_attempt.admin_permission_token
-      @url = signup_url(admin_permission_token: token)
+    if token = invitation.admin_permission_token
+      @url = send(
+        "#{invitation.profile_type}_signup_url",
+        admin_permission_token: token
+      )
 
-      mail to: signup_attempt.email,
+      mail to: invitation.email,
            subject: t("registration_mailer.admin_permission.subject",
                       season_year: Season.current.year) do |f|
         f.html { render :confirm_email }
       end
     else
-      raise AdminPermissionTokenNotPresent, "SignupAttempt ID: #{signup_attempt.id}"
+      raise AdminPermissionTokenNotPresent, "UserInvitation ID: #{invitation.id}"
     end
   end
 

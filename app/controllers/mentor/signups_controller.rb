@@ -1,12 +1,12 @@
 module Mentor
   class SignupsController < ApplicationController
-    before_action :require_unauthenticated
-
     def new
       @expertises ||= Expertise.all
 
       if token = get_cookie(:signup_token)
         setup_valid_profile_from_signup_attempt(:mentor, token)
+      elsif token = params[:admin_permission_token]
+        setup_valid_profile_from_invitation(:mentor, token)
       else
         redirect_to root_path
       end
@@ -48,8 +48,10 @@ module Mentor
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(
+        attempt = SignupAttempt.find_by(
           signup_token: get_cookie(:signup_token)
+        ) || UserInvitation.find_by!(
+          admin_permission_token: get_cookie(:admin_permission_token)
         )
 
         tapped[:account_attributes][:email] = attempt.email

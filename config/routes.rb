@@ -179,6 +179,8 @@ Rails.application.routes.draw do
 
     resources :participants
     resources :participant_sessions, only: [:show, :destroy]
+    resources :user_invitations, only: [:new, :create, :index]
+    resources :user_invitation_emails, only: :create
 
     resources :profile_locations, only: :edit
 

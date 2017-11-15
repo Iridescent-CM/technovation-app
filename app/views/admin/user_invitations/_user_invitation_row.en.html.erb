@@ -1,0 +1,20 @@
+<td><%= invitation.profile_type.titleize %></td>
+<td><%= invitation.email %></td>
+<td>
+  <% if invitation.account %>
+    <%= link_to invitation.account_name, admin_participant_path(invitation.account) %>
+  <% else %>
+    –
+  <% end %>
+</td>
+<td><%= invitation.status %></td>
+<td>
+  <% if invitation.sent? %>
+    <%= link_to 'Re-send',
+      admin_user_invitation_emails_path(invitation_id: invitation.id),
+      data: { method: :post },
+      class: "small secondary button" %>
+  <% else %>
+    cannot resend <%= invitation.status %> invitation
+  <% end %>
+</td>

@@ -165,6 +165,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def setup_valid_profile_from_invitation(scope, token)
+    invite = UserInvitation.find_by!(admin_permission_token: token)
+    invite.opened!
+
+    @profile = instance_variable_set(
+      "@#{scope}_profile",
+      "#{scope}_profile".camelize.constantize.new(
+        account_attributes: { email: invite.email }
+      )
+    )
+
+    remove_cookie(:auth_token)
+    set_cookie(:admin_permission_token, token)
+  end
+
   def set_last_profile_used(scope)
     return if current_session.authenticated?
 
