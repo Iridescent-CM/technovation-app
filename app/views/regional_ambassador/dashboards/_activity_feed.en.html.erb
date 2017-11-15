@@ -6,6 +6,10 @@
   Inactive mentors
 </h5>
 
+<% if @top_inactive.empty? %>
+  <p>All your mentors have been active recently. Yay!</p>
+<% end %>
+
 <ul class="feed">
   <% @top_inactive.each do |inactive| %>
     <li class="feed--item">
