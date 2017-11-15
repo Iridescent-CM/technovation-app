@@ -26,6 +26,9 @@ module RegionalAmbassador
 
         @regional_ambassador_profile.account.signup_attempt.registered!
 
+        remove_cookie(:admin_permission_token)
+        remove_cookie(:signup_token)
+
         SignIn.(
           @regional_ambassador_profile.account,
           self,
