@@ -84,8 +84,9 @@ class TeamMemberInvite < ActiveRecord::Base
 
   private
   def set_invitee
+    self.invitee_email = invitee_email.strip.downcase
     if student = StudentProfile.joins(:account)
-                   .where("lower(accounts.email) = ?", invitee_email.downcase)
+                   .where("lower(trim(both ' ' from accounts.email)) = ?", invitee_email)
                    .first
       self.invitee = student
     end

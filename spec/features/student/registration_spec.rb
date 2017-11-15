@@ -61,7 +61,7 @@ RSpec.feature "Register from team invite" do
 
   scenario "No user logged in" do
     visit student_signup_path(
-      token: SignupAttempt.find_by(email: email).activation_token
+      token: SignupAttempt.find_by(email: email.strip.downcase).activation_token
     )
     expect_profile_creation_page(email)
   end
@@ -69,7 +69,7 @@ RSpec.feature "Register from team invite" do
   scenario "Other user logged in" do
     sign_in(inviter)
     visit student_signup_path(
-      token: SignupAttempt.find_by(email: email).activation_token
+      token: SignupAttempt.find_by(email: email.strip.downcase).activation_token
     )
     expect_profile_creation_page(email)
   end
@@ -79,7 +79,7 @@ RSpec.feature "Register from team invite" do
       expect(page).to have_link("Sign in")
     }
     within(".new_student_profile") {
-      expect(page).to have_content("Your email address: #{email}")
+      expect(page).to have_content("Your email address: #{email.strip.downcase}")
     }
   end
 end
