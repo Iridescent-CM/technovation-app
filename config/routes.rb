@@ -191,9 +191,6 @@ Rails.application.routes.draw do
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
 
-    resources :signup_attempts, only: :index
-    resources :signup_invitations, only: :create
-
     resources :regional_pitch_events, only: [:index, :show, :update]
     resources :regional_pitch_event_participations, only: :destroy
 
