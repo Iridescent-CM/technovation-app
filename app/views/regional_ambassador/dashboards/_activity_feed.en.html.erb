@@ -11,7 +11,7 @@
 <% end %>
 
 <ul class="feed">
-  <% @top_inactive.each do |inactive| %>
+  <% @top_inactive.sort { |a, b| a.activities.last.created_at <=> b.activities.last.created_at }.each do |inactive| %>
     <li class="feed--item">
       <%= image_tag inactive.photo_url, class: "thumbnail-xs" %>
       <%= link_to inactive.name, [:regional_ambassador, inactive] %>

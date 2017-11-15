@@ -81,7 +81,6 @@ class Account < ActiveRecord::Base
         AND activities.created_at > '#{3.weeks.ago}'"
       )
       .where("activities.id IS NULL")
-      .order("activities.created_at")
   }
 
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
