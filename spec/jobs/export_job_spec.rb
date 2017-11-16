@@ -13,6 +13,7 @@ RSpec.describe ExportJob do
       allow(AccountsGrid).to receive(:new).and_return(double(:grid).as_null_object)
       allow(Job).to receive(:find_by).and_return(double(:job).as_null_object)
       allow(ActionCable).to receive(:server).and_return(double(:server).as_null_object)
+      allow(ra).to receive(:exports).and_return(double(:exports).as_null_object)
 
       ExportJob.perform_now(
         ra,
