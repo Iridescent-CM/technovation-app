@@ -251,3 +251,18 @@ if student_team
     puts ""
   end
 end
+
+if admin = AdminProfile.create(
+  account_attributes: {
+    first_name: "QA",
+    last_name: "Admin",
+    email: "admin@admin.com",
+    password: "admin@admin.com",
+    city: "Los Angeles",
+    state_province: "CA.",
+    country: "US",
+    date_of_birth: 100.years.ago,
+  }
+)
+  puts "Created Admin: #{admin.email}"
+end

@@ -126,8 +126,8 @@ Seeded users:
   * password: ra@ra.com
   
 * Admin
-  * username: info@technovationchallenge.org
-  * password: <check in lastpass/.env>
+  * username: admin@admin.com
+  * password: admin@admin.com
 
 ## To turn on/off various user features:
 
