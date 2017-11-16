@@ -37,6 +37,14 @@ class ExportJob < ActiveJob::Base
 
     context_klass = context_name.constantize
 
+    params.each do |k, v|
+      if v.is_a?(Array)
+        params[k] = v.reject(&:blank?)
+      else
+        params[k] = v
+      end
+    end
+
     grid = grid_klass.constantize.new(params) do |scope|
       context_klass.class_eval(scope_modifier).call(scope, profile, params)
     end
