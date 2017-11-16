@@ -2,6 +2,15 @@ require "rails_helper"
 
 RSpec.describe RegionalAmbassador::ParticipantsController do
   describe "GET #index" do
+    it "is okay with empty params" do
+      ra = FactoryBot.create(:ambassador)
+      sign_in(ra)
+
+      expect {
+        get :index
+      }.not_to raise_error
+    end
+
     it "hoists legacy params" do
       ra = FactoryBot.create(:ambassador)
       sign_in(ra)
