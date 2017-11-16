@@ -16,8 +16,8 @@ module Admin
         :select_regional_pitch_event,
         :display_scores,
         :judging_round,
-        student_survey_link: [:text, :url],
-        mentor_survey_link: [:text, :url],
+        student_survey_link: [:text, :long_desc, :url],
+        mentor_survey_link: [:text, :long_desc, :url],
       )
     end
 

@@ -8,9 +8,7 @@
       on_close: public_send("#{current_scope}_survey_reminder_url"),
     } do %>
     <div class="modal-content">
-      <p>
-        Make your voice heard, help us improve the program!
-      </p>
+      <%= simple_format SeasonToggles.survey_link(current_scope, "long_desc") %>
 
       <p>
         <%= link_to SeasonToggles.survey_link(current_scope, "text"),

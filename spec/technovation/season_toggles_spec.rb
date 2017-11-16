@@ -84,10 +84,14 @@ RSpec.describe SeasonToggles do
       it "takes a hash and returns values" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
+          long_desc: "Longer description for modal content",
           url: "https://google.com",
         })
 
         expect(SeasonToggles.survey_link(scope, "text")).to eq("Hello World")
+        expect(SeasonToggles.survey_link(scope, "long_desc")).to eq(
+          "Longer description for modal content"
+        )
         expect(SeasonToggles.survey_link(scope, "url")).to eq("https://google.com")
       end
 

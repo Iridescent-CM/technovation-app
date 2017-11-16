@@ -128,13 +128,20 @@
 
               <%= s.text_field :text,
                 data: { part_of_many: true },
-                placeholder: "Text",
+                placeholder: "Headline call to action (keep it short)",
                 value: SeasonToggles.survey_link(scope, :text) %>
 
               <%= s.text_field :url,
                 data: { part_of_many: true },
                 placeholder: "URL",
                 value: SeasonToggles.survey_link(scope, :url) %>
+
+            <p>
+              <%= s.label :long_desc, "(optional popup modal text)", data: { subset: true } %>
+
+              <%= s.text_area :long_desc,
+                value: SeasonToggles.survey_link(scope, :long_desc),
+                placeholder: "Add more text that appears only in the popup modal" %>
             </p>
 
             <div class="notice info hint">

@@ -192,19 +192,23 @@ document.addEventListener("turbolinks:load", function() {
       }
 
       function appendLabels($panel, $labels) {
-        $labels.each(function() {
+        $labels.each(function(idx, label) {
           var $label = $('<p>');
 
-          $label.addClass("review-label");
+          if (label.dataset["subset"]) {
+            $label.addClass("review-label-subset");
+          } else {
+            $label.addClass("review-label");
+          }
           $label.text($(this).text());
 
-          appendTextValue($panel, $label, $(this).next('input'));
+          appendTextValue($panel, $label, $(this).next('input, textarea'));
           appendBooleanValue($panel, $label, $(this).prev('input'));
           removePartials($panel);
         });
 
         function appendTextValue($panel, $label, $input) {
-          if ($input.prop('type') === "text") {
+          if ($input.is("textarea") || $input.prop('type') === "text") {
             $label.addClass('has-text-value');
 
             if (!$label.appended) {
