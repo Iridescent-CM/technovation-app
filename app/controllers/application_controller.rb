@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
     elsif region_account.country != "US" and
             not region_account.address_details.blank?
 
-      account = Account.current
+      if account = Account.current
         .joins(:approved_regional_ambassador_profile)
         .where.not("accounts.email ILIKE ?", "%joesak%")
         .where(
@@ -114,7 +114,10 @@ class ApplicationController < ActionController::Base
         )
         .first
 
-      @regional_ambassador = account.regional_ambassador_profile
+        @regional_ambassador = account.regional_ambassador_profile
+      else
+        @regional_ambassador = NullRegionalAmbassador.new
+      end
 
     elsif region_account.country != "US"
       @regional_ambassador = RegionalAmbassadorProfile.not_staff

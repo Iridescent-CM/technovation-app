@@ -2,7 +2,14 @@ require "rails_helper"
 
 RSpec.feature "Searchability" do
   scenario "non-US mentor signs consent" do
-    mentor = FactoryBot.create(:mentor, country: "BR", not_onboarded: true)
+    mentor = FactoryBot.create(
+      :mentor,
+      city: "Salvador",
+      state_province: "Bahia",
+      country: "BR",
+      not_onboarded: true
+    )
+
     expect(mentor).not_to be_searchable
 
     sign_in(mentor)
