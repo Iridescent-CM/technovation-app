@@ -97,6 +97,25 @@ class ApplicationController < ActionController::Base
 
     if @regional_ambassador.present?
       @regional_ambassador
+    elsif region_account.country != "US" and
+            not region_account.address_details.blank?
+
+      account = Account.current
+        .joins(:approved_regional_ambassador_profile)
+        .where.not("accounts.email ILIKE ?", "%joesak%")
+        .where(
+          "regional_ambassador_profiles.intro_summary NOT IN ('')
+          AND regional_ambassador_profiles.intro_summary IS NOT NULL"
+        )
+        .where(intnl_find_by)
+        .near(
+          region_account.address_details,
+          SearchMentors::EARTH_CIRCUMFERENCE
+        )
+        .first
+
+      @regional_ambassador = account.regional_ambassador_profile
+
     elsif region_account.country != "US"
       @regional_ambassador = RegionalAmbassadorProfile.not_staff
         .approved
