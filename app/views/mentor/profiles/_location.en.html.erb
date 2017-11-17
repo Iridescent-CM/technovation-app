@@ -1,10 +1,31 @@
-<dl>
-  <dt>Your location</dt>
-  <dd><%= current_mentor.address_details %></dd>
-</dl>
+<% if current_mentor.account.scope_name == "regional_ambassador" %>
+  <% if current_mentor.address_details.blank? %>
+    <p>
+      <%= link_to "Set your location",
+        mentor_location_details_path,
+        class: "button" %>
+    </p>
+  <% else %>
+    <dl>
+      <dt>Your location</dt>
+      <dd><%= current_mentor.address_details %></dd>
+    </dl>
 
-<p>
-  <%= link_to "Change your location",
-    mentor_location_details_path,
-    class: "button" %>
-</p>
+    <p class="hint">
+      Regional Ambassadors cannot edit their own location.
+      <br />
+      Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
+    </p>
+  <% end %>
+<% else %>
+  <dl>
+    <dt>Your location</dt>
+    <dd><%= current_mentor.address_details %></dd>
+  </dl>
+
+  <p>
+    <%= link_to "Change your location",
+      mentor_location_details_path,
+      class: "button" %>
+  </p>
+<% end %>

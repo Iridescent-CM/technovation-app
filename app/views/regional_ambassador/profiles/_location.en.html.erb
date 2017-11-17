@@ -1,9 +1,17 @@
 <h3>Your location</h3>
 
-<p><%= current_ambassador.address_details %></p>
+<% if current_ambassador.address_details.blank? %>
+  <p>
+    <%= link_to "Set your location",
+      regional_ambassador_location_details_path,
+      class: "button" %>
+  </p>
+<% else %>
+  <p><%= current_ambassador.address_details %></p>
 
-<p class="hint">
-  Regional Ambassadors cannot edit their own location.
-  <br />
-  Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
-</p>
+  <p class="hint">
+    Regional Ambassadors cannot edit their own location.
+    <br />
+    Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
+  </p>
+<% end %>
