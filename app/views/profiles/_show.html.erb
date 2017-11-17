@@ -6,12 +6,12 @@
 <div class="grid">
   <div class="grid__col-xs-12 grid__col--bleed-y">
     <div class="grid__cell">
-      <h1 class="page-heading"><%= account.full_name %></h1>
+      <h1 class="page-heading"><%= profile.full_name %></h1>
     </div>
 
     <div class="grid grid--bleed">
       <div class="grid__col-sm-3">
-        <%= image_tag account.profile_image_url,
+        <%= image_tag profile.profile_image_url,
           id: "profile-image",
           class: "grid__cell-img" %>
 
@@ -26,24 +26,25 @@
       <div class="grid__col-sm-4 gird__col--bleed-y">
         <dl class="grid__cell grid__cell--padding-sm">
           <dt><%= t('models.account.age') %></dt>
-          <dd><%= account.age %></dd>
+          <dd><%= profile.age %></dd>
 
-          <%= render "#{account.scope_name}/profiles/profile",
+          <%= render "#{profile.class.name.underscore.sub("_profile", "")}/profiles/profile",
             editing: editing,
             edit_path: edit_path,
-            account: account %>
+            profile: profile %>
 
-          <% unless account.student_profile.present? %>
+          <% unless profile.class.name == "StudentProfile" %>
             <dt><%= t('models.account.gender') %></dt>
-            <dd><%= account.gender %></dd>
+            <dd><%= profile.gender %></dd>
           <% end %>
 
           <dt><%= t('models.account.address') %></dt>
-          <dd><%= account.address_details %></dd>
+          <dd><%= profile.address_details %></dd>
 
-          <% if editing and not account.scope_name == "regional_ambassador" %>
+          <% if editing and
+                  not profile.class.name.underscore.sub("_profile", "") == "regional_ambassador" %>
             <%= link_to t('views.accounts.show.edit_location'),
-              [account.scope_name, :location_details] %>
+              [profile.class.name.underscore.sub("_profile", ""), :location_details] %>
           <% end %>
         </dl>
       </div>
@@ -53,14 +54,14 @@
           <dl>
 
             <dt><%= t('models.account.email') %></dt>
-            <dd><%= account.email %></dd>
+            <dd><%= profile.email %></dd>
           </dl>
         </div>
       </div>
 
-      <%= render "#{account.scope_name}/profiles/bio",
+      <%= render "#{profile.class.name.underscore.sub("_profile", "")}/profiles/bio",
         editing: editing,
-        account: account %>
+        profile: profile %>
     </div>
   </div>
 </div>

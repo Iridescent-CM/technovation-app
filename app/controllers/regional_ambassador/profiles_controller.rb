@@ -12,7 +12,7 @@ module RegionalAmbassador
     end
 
     private
-    def account
+    def profile
       current_ambassador
     end
 
@@ -20,7 +20,7 @@ module RegionalAmbassador
       edit_regional_ambassador_profile_path
     end
 
-    def account_param_root
+    def profile_param_root
       :regional_ambassador_profile
     end
   end

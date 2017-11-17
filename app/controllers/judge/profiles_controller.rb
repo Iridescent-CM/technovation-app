@@ -10,7 +10,7 @@ module Judge
     end
 
     private
-    def account
+    def profile
       current_judge
     end
 
@@ -18,7 +18,7 @@ module Judge
       edit_judge_profile_path
     end
 
-    def account_param_root
+    def profile_param_root
       :judge_profile
     end
   end

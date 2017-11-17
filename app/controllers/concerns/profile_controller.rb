@@ -2,19 +2,18 @@ module ProfileController
   extend ActiveSupport::Concern
 
   included do
-    helper_method :account, :edit_profile_path
-    # TODO: account is actually profile
+    helper_method :profile, :edit_profile_path
 
     before_action -> {
       @uploader = ImageUploader.new
       @uploader.success_action_redirect = send(
-        "#{account.scope_name}_profile_image_upload_confirmation_url"
+        "#{profile.class.name.underscore}_image_upload_confirmation_url"
       )
     }, only: :show
   end
 
   def update
-    if ProfileUpdating.execute(account, account_params)
+    if ProfileUpdating.execute(profile, permitted_params)
       respond_to do |format|
         format.json {
           render json: {
@@ -30,9 +29,9 @@ module ProfileController
             success: t('controllers.accounts.update.success')
         }
       end
-    elsif account.errors["account.password"].any? or
-      account.errors["account.existing_password"].any?
-      if account.email_changed?
+    elsif profile.errors["account.password"].any? or
+      profile.errors["account.existing_password"].any?
+      if profile.account.email_changed?
         render 'email_addresses/edit'
       else
         render "passwords/edit"
@@ -43,9 +42,8 @@ module ProfileController
   end
 
   private
-  def account_params
-    # TODO: account_params is actually profile_params
-    params.require(account_param_root).permit(
+  def permitted_params
+    params.require(profile_param_root).permit(
       profile_params,
       account_attributes: [
         :id,
@@ -66,7 +64,7 @@ module ProfileController
     )
   end
 
-  def account_param_root
+  def profile_param_root
     :account
   end
 
@@ -78,7 +76,7 @@ module ProfileController
     if not params[:return_to].blank?
       params[:return_to]
     else
-      [account.scope_name, :profile]
+      [profile.class.name.underscore.sub("_profile", ""), :profile]
     end
   end
 end

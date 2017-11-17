@@ -17,7 +17,7 @@ module Mentor
     end
 
     private
-    def account
+    def profile
       current_mentor
     end
 
@@ -29,7 +29,7 @@ module Mentor
       edit_mentor_profile_path
     end
 
-    def account_param_root
+    def profile_param_root
       :mentor_profile
     end
   end

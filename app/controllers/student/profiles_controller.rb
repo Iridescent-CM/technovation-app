@@ -11,7 +11,7 @@ module Student
     end
 
     private
-    def account
+    def profile
       current_student
     end
 
@@ -19,7 +19,7 @@ module Student
       edit_student_profile_path
     end
 
-    def account_param_root
+    def profile_param_root
       :student_profile
     end
   end
