@@ -497,6 +497,10 @@ class Account < ActiveRecord::Base
       (persisted? && (email_changed? || changing_password?))
   end
 
+  def email_changed?
+    email_was.strip.downcase != email.strip.downcase and super
+  end
+
   def changing_password?
     !!!skip_existing_password && (persisted? && password_digest_changed?)
   end

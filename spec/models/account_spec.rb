@@ -66,6 +66,16 @@ RSpec.describe Account do
     expect(account.errors.keys).to include(:email)
   end
 
+  it "does not require a password for email case changing" do
+    account = FactoryBot.build(:account, email: "caSE@change.COM")
+    account.save(validate: false)
+
+    account.reload
+
+    expect(account.save).to be true
+    expect(account.reload.email).to eq("case@change.com")
+  end
+
   it "re-cache team_region_division_names as account gets added to new teams" do
     account = FactoryBot.create(:mentor).account
     expect(account.team_region_division_names).to be_empty
