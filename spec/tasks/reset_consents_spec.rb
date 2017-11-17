@@ -1,13 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Resetting consents" do
-  let!(:parental_consent) { FactoryBot.create(:parental_consent) }
   let!(:consent_waiver) { FactoryBot.create(:consent_waiver) }
 
   it "does nothing on days other than switch date" do
     Timecop.freeze(Time.new(2009, Season.switch_month - 1, 28)) do
       Rake::Task["reset_consents"].execute
-      expect(parental_consent.reload).not_to be_voided
       expect(consent_waiver.reload).not_to be_voided
     end
   end
@@ -15,7 +13,6 @@ RSpec.describe "Resetting consents" do
   it "voids all nonvoid consents on switch date" do
     Timecop.freeze(Time.new(2009, Season.switch_month, Season.switch_day)) do
       Rake::Task["reset_consents"].execute
-      expect(parental_consent.reload).to be_voided
       expect(consent_waiver.reload).to be_voided
     end
   end
