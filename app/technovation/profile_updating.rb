@@ -72,12 +72,18 @@ class ProfileUpdating
   def perform_email_changes_updates
     Casting.delegating(profile.account => EmailUpdater) do
       # TODO: order of operations dependency
-      profile.account.update_email_list_profile(scope)
+      account = profile.account
 
-      if profile.admin_making_changes
-        profile.account.confirm_changed_email!
+      account.update_email_list_profile(scope)
+
+      if account.admin_making_changes
+        account.confirm_changed_email!
       else
-        profile.account.unconfirm_changed_email!
+        account.unconfirm_changed_email!
+      end
+
+      if account.signup_attempt
+        account.signup_attempt.update_column(:email, account.email)
       end
     end
   end
