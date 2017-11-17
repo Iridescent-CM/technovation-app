@@ -483,6 +483,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def email_changed?
+    email_was.strip.downcase != email.strip.downcase and super
+  end
+
   private
   def self.survey_reminder_max_times
     2
@@ -495,10 +499,6 @@ class Account < ActiveRecord::Base
   def changes_require_password?
     !!!skip_existing_password &&
       (persisted? && (email_changed? || changing_password?))
-  end
-
-  def email_changed?
-    email_was.strip.downcase != email.strip.downcase and super
   end
 
   def changing_password?
