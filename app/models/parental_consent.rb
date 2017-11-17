@@ -1,8 +1,10 @@
 class ParentalConsent < ActiveRecord::Base
+  include Seasoned
+
   belongs_to :student_profile
 
-  scope :nonvoid, -> { where('voided_at IS NULL') }
-  scope :void, -> { where('voided_at IS NOT NULL') }
+  scope :nonvoid, -> { current }
+  scope :void, -> { past }
 
   validates :electronic_signature, presence: true
 
@@ -13,6 +15,10 @@ class ParentalConsent < ActiveRecord::Base
            :locale,
     to: :student_profile,
     prefix: true
+
+  before_validation -> {
+    self.seasons = [Season.current.year]
+  }, on: :create
 
   after_commit -> {
     after_create_student_actions
@@ -28,19 +34,8 @@ class ParentalConsent < ActiveRecord::Base
     created_at
   end
 
-  def void!
-    update(voided_at: Time.current)
-
-    if student_profile.parent_guardian_email == "ON FILE"
-      student_profile.update_columns(
-        parent_guardian_email: nil,
-        parent_guardian_name: nil
-      )
-    end
-  end
-
   def voided?
-    !!voided_at
+    seasons != [Season.current.year]
   end
   alias void? voided?
 

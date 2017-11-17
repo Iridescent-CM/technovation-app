@@ -40,7 +40,7 @@ RSpec.describe SigninsController do
 
       student.account.update(seasons: [Season.current.year - 1])
 
-      student.parental_consent.void!
+      student.parental_consent.destroy
       ActionMailer::Base.deliveries.clear
 
       post :create, params: {

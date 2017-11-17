@@ -117,15 +117,25 @@ class Account < ActiveRecord::Base
     .where("teams.id is null")
   }
 
-  scope :parental_consented, -> {
-    left_outer_joins(student_profile: :parental_consent)
+  scope :parental_consented, ->(seasons) {
+    season_clauses = seasons.flatten.map do |season|
+      "'#{season}' = ANY (parental_consents.seasons)"
+    end
+
+    left_outer_joins(student_profile: :parental_consents)
       .where("parental_consents.id IS NOT NULL")
+      .where(season_clauses.join(' AND '))
   }
 
-  scope :not_parental_consented, -> {
+  scope :not_parental_consented, ->(seasons) {
+    season_clauses = seasons.flatten.map do |season|
+      "'#{season}' = ANY (parental_consents.seasons)"
+    end
+
     left_outer_joins(student_profile: :parental_consent)
       .where("student_profiles.id IS NOT NULL")
       .where("parental_consents.id IS NULL")
+      .where(season_clauses.join(' AND '))
   }
 
   scope :consent_signed, -> {

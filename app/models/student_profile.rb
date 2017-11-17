@@ -89,9 +89,11 @@ class StudentProfile < ActiveRecord::Base
     class_name: "Account",
     required: false
 
-  has_one :parental_consent, -> { nonvoid }, dependent: :destroy
-  has_many :void_parental_consents,
-    -> { void },
+  has_many :parental_consents, dependent: :destroy
+  has_one :parental_consent, -> { current }, dependent: :destroy
+
+  has_many :past_parental_consents,
+    -> { past },
     class_name: "ParentalConsent",
     dependent: :destroy
 
@@ -231,10 +233,6 @@ class StudentProfile < ActiveRecord::Base
     Date.today.year - 8
   end
 
-  def void_parental_consent!
-    !!parental_consent && parental_consent.void!
-  end
-
   def authenticated?
     true
   end
@@ -284,7 +282,7 @@ class StudentProfile < ActiveRecord::Base
 
   def reset_parent
     if saved_change_to_parent_guardian_email? and parent_guardian_email.present?
-      void_parental_consent!
+      parental_consent.destroy if parental_consent.present?
       ParentMailer.consent_notice(id).deliver_later
     end
 

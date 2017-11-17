@@ -146,8 +146,9 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador mentor} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
-
+    } do |value, scope, grid|
+      scope.send(value, grid.season)
+    end
 
   filter :consent_waiver,
     :enum,

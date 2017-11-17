@@ -848,8 +848,8 @@ CREATE TABLE parental_consents (
     student_profile_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    voided_at timestamp without time zone,
-    newsletter_opt_in boolean
+    newsletter_opt_in boolean,
+    seasons text[] DEFAULT '{}'::text[]
 );
 
 
@@ -2773,6 +2773,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171114182734'),
 ('20171114183901'),
 ('20171114185301'),
-('20171115152731');
+('20171115152731'),
+('20171117134239'),
+('20171117142253'),
+('20171117150649');
 
 

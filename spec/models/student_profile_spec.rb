@@ -188,7 +188,7 @@ RSpec.describe StudentProfile do
     expect(mail.subject).to include("Your daughter")
   end
 
-  it "voids the original parental consent on update of parent email" do
+  it "destroys the original parental consent on update of parent email" do
     profile = FactoryBot.create(:student_profile)
     consent = profile.reload.create_parental_consent(
       FactoryBot.attributes_for(:parental_consent)
@@ -196,7 +196,7 @@ RSpec.describe StudentProfile do
 
     profile.update_attributes(parent_guardian_email: "something@else.com")
 
-    expect(consent).to be_voided
+    expect(profile.reload.parental_consent).to be_nil
   end
 
   it "re-subscribes new email addresses" do
