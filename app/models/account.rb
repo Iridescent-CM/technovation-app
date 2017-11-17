@@ -117,8 +117,8 @@ class Account < ActiveRecord::Base
     .where("teams.id is null")
   }
 
-  scope :parental_consented, ->(seasons) {
-    season_clauses = seasons.flatten.map do |season|
+  scope :parental_consented, ->(*seasons) {
+    season_clauses = Array(seasons).flatten.map do |season|
       "'#{season}' = ANY (parental_consents.seasons)"
     end
 
@@ -127,8 +127,8 @@ class Account < ActiveRecord::Base
       .where(season_clauses.join(' AND '))
   }
 
-  scope :not_parental_consented, ->(seasons) {
-    season_clauses = seasons.flatten.map do |season|
+  scope :not_parental_consented, ->(*seasons) {
+    season_clauses = Array(seasons).flatten.map do |season|
       "'#{season}' = ANY (parental_consents.seasons)"
     end
 
