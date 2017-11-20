@@ -31,6 +31,7 @@ class StudentProfile < ActiveRecord::Base
 
   scope :onboarded, -> {
     joins(:account, :parental_consent)
+      .where("parental_consents.status = ?", ParentalConsent.statuses[:signed])
       .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
@@ -39,8 +40,10 @@ class StudentProfile < ActiveRecord::Base
     left_outer_joins(:account, :parental_consent)
       .where(
         "parental_consents.id IS NULL OR
-          accounts.location_confirmed = ? OR
-            accounts.email_confirmed_at IS NULL",
+           parental_consents.status = ? OR
+             accounts.location_confirmed = ? OR
+               accounts.email_confirmed_at IS NULL",
+        ParentalConsent.statuses[:pending],
         false
       )
   }

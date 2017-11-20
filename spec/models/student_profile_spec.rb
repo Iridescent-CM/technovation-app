@@ -196,7 +196,7 @@ RSpec.describe StudentProfile do
 
     profile.update_attributes(parent_guardian_email: "something@else.com")
 
-    expect(profile.reload.parental_consent).to be_nil
+    expect(profile.reload.parental_consent).to be_pending
   end
 
   it "re-subscribes new email addresses" do
