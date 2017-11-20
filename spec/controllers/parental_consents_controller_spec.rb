@@ -5,7 +5,7 @@ RSpec.describe ParentalConsentsController do
     it "preserves the token on a validation error" do
       student = FactoryBot.create(:onboarding_student)
 
-      patch :update, params: {
+      patch :update, params: { id: student.parental_consent.id,
         parental_consent: {
           student_profile_consent_token: student.consent_token
         }
@@ -23,7 +23,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty2"
       )
 
-      patch :update, params: {
+      patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -43,7 +43,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty3"
       )
 
-      patch :update, params: {
+      patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -69,7 +69,7 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeEmailListJob).to receive(:perform_later)
 
-      patch :update, params: {
+      patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -90,7 +90,7 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeEmailListJob).to receive(:perform_later)
 
-      patch :update, params: {
+      patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -109,7 +109,7 @@ RSpec.describe ParentalConsentsController do
       student = FactoryBot.create(:onboarded_student)
 
       expect {
-        patch :update, params: {
+        patch :update, params: { id: student.parental_consent.id,
           parental_consent: FactoryBot.attributes_for(
             :parental_consent,
             student_profile_consent_token: student.consent_token
