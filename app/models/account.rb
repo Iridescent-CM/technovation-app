@@ -98,17 +98,23 @@ class Account < ActiveRecord::Base
   }
 
   scope :matched, -> {
-    mentor_ids = unscoped.joins(mentor_profile: :current_teams).pluck(:id)
-    student_ids = unscoped.joins(student_profile: :current_teams).pluck(:id)
+    mentor_ids = unscoped.distinct
+      .joins(mentor_profile: :current_teams).pluck(:id)
+
+    student_ids = unscoped.distinct
+      .joins(student_profile: :current_teams).pluck(:id)
+
     where(id: mentor_ids + student_ids)
   }
 
   scope :unmatched, -> {
-    mentor_ids = unscoped.left_outer_joins(mentor_profile: :current_teams)
+    mentor_ids = unscoped.distinct
+      .left_outer_joins(mentor_profile: :current_teams)
       .where("mentor_profiles.id IS NOT NULL")
       .where("teams.id IS NULL").pluck(:id)
 
-    student_ids = unscoped.left_outer_joins(student_profile: :current_teams)
+    student_ids = unscoped.distinct
+      .left_outer_joins(student_profile: :current_teams)
       .where("student_profiles.id IS NOT NULL")
       .where("teams.id IS NULL").pluck(:id)
 
