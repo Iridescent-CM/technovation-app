@@ -1,4 +1,4 @@
-<% if current_student.parental_consent.present? %>
+<% if current_student.parental_consent.signed? %>
   <div class="notice notice--success">
     Your parent/guardian has given you permission to compete in Technovation!
   </div>

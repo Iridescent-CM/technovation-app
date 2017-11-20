@@ -1,4 +1,4 @@
-<% unless current_student.parental_consent.present? %>
+<% unless current_student.parental_consent.signed? %>
   <% path_prefix ||= 'student/dashboards/completion_steps' %>
 
   <li>

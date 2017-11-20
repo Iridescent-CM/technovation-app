@@ -1,12 +1,18 @@
 class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
+  enum status: %i{
+    pending
+    signed
+    voided
+  }
+
   belongs_to :student_profile
 
   scope :nonvoid, -> { current }
   scope :void, -> { past }
 
-  validates :electronic_signature, presence: true
+  validates :electronic_signature, presence: true, if: :signed?
 
   delegate :email,
            :first_name,

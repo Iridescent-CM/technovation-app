@@ -5,10 +5,9 @@ class ParentalConsentsController < ApplicationController
 
   def new
     if student.present? and not student.consent_signed?
-      @parental_consent = ParentalConsent.new(
-        student_profile_consent_token: params.fetch(:token),
-        newsletter_opt_in: true,
-      )
+      @parental_consent = student.parental_consent
+      @parental_consent.student_profile_consent_token = params.fetch(:token)
+      @parental_consent.newsletter_opt_in = true
     elsif student.present? and student.consent_signed?
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success")
@@ -20,14 +19,15 @@ class ParentalConsentsController < ApplicationController
 
   def create
     token = parental_consent_params[:student_profile_consent_token]
+
     if student(token: token).present? and student.consent_signed?
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success") and return
     end
 
-    @parental_consent = ParentalConsent.new(parental_consent_params)
+    @parental_consent = student.parental_consent
 
-    if @parental_consent.save
+    if @parental_consent.update(parental_consent_params)
       redirect_to parental_consent_path(@parental_consent),
         success: t("controllers.parental_consents.create.success")
     else
@@ -47,6 +47,8 @@ class ParentalConsentsController < ApplicationController
       :student_profile_consent_token,
       :electronic_signature,
       :newsletter_opt_in,
-    )
+    ).tap do |tapped|
+      tapped[:status] = :signed
+    end
   end
 end

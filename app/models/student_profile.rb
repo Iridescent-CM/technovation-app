@@ -170,7 +170,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def parental_consent_signed?
-    parental_consent.present?
+    parental_consent.signed?
   end
 
   def can_search_teams?
@@ -282,7 +282,7 @@ class StudentProfile < ActiveRecord::Base
 
   def reset_parent
     if saved_change_to_parent_guardian_email? and parent_guardian_email.present?
-      parental_consent.destroy if parental_consent.present?
+      parental_consent.pending!
       ParentMailer.consent_notice(id).deliver_later
     end
 

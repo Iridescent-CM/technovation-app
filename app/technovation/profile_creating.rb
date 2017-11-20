@@ -36,6 +36,7 @@ class ProfileCreating
 
     case scope.to_sym
     when :student
+      profile.parental_consents.create! # pending by default
       TeamMemberInvite.match_registrant(profile)
     when :mentor
       RegistrationMailer.welcome_mentor(profile.account_id).deliver_later
