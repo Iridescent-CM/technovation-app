@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Parental consent" do
   scenario "sort of invalid email" do
-    student = FactoryBot.create(:student)
-    student.parental_consent.destroy
+    student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
     click_link "Enter parent/guardian name & email"
@@ -28,18 +27,20 @@ RSpec.feature "Parental consent" do
 
   scenario "invalid token" do
     [{ }, { token: "bad" }].each do |bad_token_params|
-      visit new_parental_consent_path(bad_token_params)
+      visit edit_parental_consent_path(bad_token_params)
       expect(current_path).to eq(application_dashboard_path)
       expect(page).to have_content("Sorry, that consent token was invalid.")
     end
   end
 
   scenario "valid token, invalid signature form" do
-    student = FactoryBot.create(:student)
-    student.parental_consent.destroy
-    visit new_parental_consent_path(token: student.consent_token)
+    student = FactoryBot.create(:onboarding_student)
+
+    visit edit_parental_consent_path(token: student.consent_token)
+
     click_button "I agree"
-    expect(current_path).to eq(parental_consents_path)
+
+    expect(current_path).to eq(parental_consent_path(student.parental_consent))
     expect(page).to have_css(
       '.parental_consent_electronic_signature .error',
       text: "can't be blank"
@@ -47,9 +48,8 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "valid token, valid form" do
-    student = FactoryBot.create(:student)
-    ParentalConsent.destroy_all
-    visit new_parental_consent_path(token: student.reload.consent_token)
+    student = FactoryBot.create(:onboarding_student)
+    visit edit_parental_consent_path(token: student.reload.consent_token)
 
     fill_in "Your name", with: "Parent M. McGee"
     click_button "I agree"
@@ -59,8 +59,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "fill it out on dashboard steps" do
-    student = FactoryBot.create(:student)
-    ParentalConsent.destroy_all
+    student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
     click_link "Enter parent/guardian name & email"
@@ -76,8 +75,7 @@ RSpec.feature "Parental consent" do
   end
 
   scenario "validate parental consent info" do
-    student = FactoryBot.create(:student)
-    ParentalConsent.destroy_all
+    student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
     click_link "Enter parent/guardian name & email"

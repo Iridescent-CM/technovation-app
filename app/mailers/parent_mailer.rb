@@ -5,7 +5,7 @@ class ParentMailer < ApplicationMailer
     @student_name = profile.full_name
 
     if token = profile.account.consent_token
-      @url = new_parental_consent_url(token: token)
+      @url = edit_parental_consent_url(token: token)
 
       I18n.with_locale(profile.account.locale) do
         mail to: profile.parent_guardian_email

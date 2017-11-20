@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe ParentalConsentsController do
-  describe "POST #create" do
+  describe "PATCH #update" do
     it "preserves the token on a validation error" do
       student = FactoryBot.create(:onboarding_student)
 
-      post :create, params: {
+      patch :update, params: {
         parental_consent: {
           student_profile_consent_token: student.consent_token
         }
@@ -23,7 +23,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty2"
       )
 
-      post :create, params: {
+      patch :update, params: {
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -43,7 +43,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty3"
       )
 
-      post :create, params: {
+      patch :update, params: {
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -69,7 +69,7 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeEmailListJob).to receive(:perform_later)
 
-      post :create, params: {
+      patch :update, params: {
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -90,7 +90,7 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeEmailListJob).to receive(:perform_later)
 
-      post :create, params: {
+      patch :update, params: {
         parental_consent: FactoryBot.attributes_for(
           :parental_consent,
           student_profile_consent_token: student.consent_token
@@ -109,7 +109,7 @@ RSpec.describe ParentalConsentsController do
       student = FactoryBot.create(:onboarded_student)
 
       expect {
-        post :create, params: {
+        patch :update, params: {
           parental_consent: FactoryBot.attributes_for(
             :parental_consent,
             student_profile_consent_token: student.consent_token
@@ -125,11 +125,11 @@ RSpec.describe ParentalConsentsController do
     end
   end
 
-  describe "GET #new" do
+  describe "GET #edit" do
     it "assigns the student to the consent" do
       student = FactoryBot.create(:onboarding_student)
 
-      get :new, params: { token: student.consent_token }
+      get :edit, params: { token: student.consent_token }
 
       expect(assigns[:parental_consent].student_profile_consent_token).to eq(
         student.consent_token
@@ -139,7 +139,7 @@ RSpec.describe ParentalConsentsController do
     it "shows the existing parental consent if a repeat visit is made" do
       student = FactoryBot.create(:onboarded_student)
 
-      get :new, params: { token: student.consent_token }
+      get :edit, params: { token: student.consent_token }
 
       expect(response).to redirect_to(
         parental_consent_path(student.parental_consent)

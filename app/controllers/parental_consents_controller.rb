@@ -5,6 +5,18 @@ class ParentalConsentsController < ApplicationController
 
   def new
     if student.present? and not student.consent_signed?
+      redirect_to edit_parental_consent_path(student.parental_consent)
+    elsif student.present? and student.consent_signed?
+      redirect_to parental_consent_path(student.parental_consent),
+        success: t("controllers.parental_consents.create.success")
+    else
+      redirect_to application_dashboard_path,
+        alert: t("controllers.parental_consents.new.unauthorized")
+    end
+  end
+
+  def edit
+    if student.present? and not student.consent_signed?
       @parental_consent = student.parental_consent
       @parental_consent.student_profile_consent_token = params.fetch(:token)
       @parental_consent.newsletter_opt_in = true
@@ -17,7 +29,7 @@ class ParentalConsentsController < ApplicationController
     end
   end
 
-  def create
+  def update
     token = parental_consent_params[:student_profile_consent_token]
 
     if student(token: token).present? and student.consent_signed?
@@ -31,7 +43,7 @@ class ParentalConsentsController < ApplicationController
       redirect_to parental_consent_path(@parental_consent),
         success: t("controllers.parental_consents.create.success")
     else
-      render :new
+      render :edit
     end
   end
 

@@ -217,7 +217,9 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 
-  resources :parental_consents, only: [:new, :create, :show]
+  resource :parental_consent, only: [:new, :edit]
+  resources :parental_consents, only: [:show, :update]
+
   resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
