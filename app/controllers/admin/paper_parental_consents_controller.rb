@@ -8,18 +8,22 @@ module Admin
 
       sql = ActiveRecord::Base.send(
         :sanitize_sql_array,
-        ["INSERT INTO parental_consents
-           (student_profile_id, electronic_signature, created_at, updated_at)
-             VALUES (?, ?, ?, ?)",
-         student.id,
+        [
+          "UPDATE parental_consents
+           SET (status, electronic_signature, created_at, updated_at)
+             VALUES (?, ?, ?, ?)
+               WHERE parental_consents.student_profile_id = ?",
+         ParentalConsent.statuses[:signed],
          'ON FILE',
          Time.current,
-         Time.current]
+         Time.current,
+         student.id,
+        ]
       )
 
       ActiveRecord::Base.connection.execute(sql)
 
-      ParentalConsent.last.after_create_student_actions
+      ParentalConsent.last.after_signed_student_actions
 
       redirect_to admin_profile_path(student.account),
         success: "#{student.full_name} has their paper parental consent on file."
