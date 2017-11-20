@@ -7,8 +7,8 @@ class SigninsController < ApplicationController
 
   def create
     @signin = Account.where(
-      "lower(email) = ?",
-      signin_params.fetch(:email).downcase
+      "lower(trim(both ' ' from accounts.email)) = ?",
+      signin_params.fetch(:email).strip.downcase
     ).first
 
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
