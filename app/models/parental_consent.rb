@@ -23,13 +23,15 @@ class ParentalConsent < ActiveRecord::Base
     prefix: true
 
   before_validation -> {
-    self.seasons = [Season.current.year]
+    if Array(seasons).empty?
+      self.seasons = [Season.current.year]
+    end
   }, on: :create
 
   after_commit -> {
-    after_create_student_actions
-    after_create_parent_actions
-  }, on: :create
+    after_signed_student_actions
+    after_signed_parent_actions
+  }, on: :update, if: :signed?
 
   def student_profile_consent_token=(token)
     self.student_profile = StudentProfile.joins(:account)
@@ -45,7 +47,7 @@ class ParentalConsent < ActiveRecord::Base
   end
   alias void? voided?
 
-  def after_create_student_actions
+  def after_signed_student_actions
     SubscribeEmailListJob.perform_later(
       student_profile_email,
       student_profile_full_name,
@@ -55,14 +57,17 @@ class ParentalConsent < ActiveRecord::Base
     AccountMailer.confirm_next_steps(self).deliver_later
   end
 
-  def after_create_parent_actions
+  def after_signed_parent_actions
     if newsletter_opt_in?
-      SubscribeEmailListJob.perform_later(student_profile.parent_guardian_email,
-                                          student_profile.parent_guardian_name,
-                                          "PARENT_LIST_ID")
+      SubscribeEmailListJob.perform_later(
+        student_profile.parent_guardian_email,
+        student_profile.parent_guardian_name,
+        "PARENT_LIST_ID"
+      )
     end
 
     ParentMailer.confirm_consent_finished(id).deliver_later
+
     if Rails.env.production?
       # TODO: entire test suite requires rewrite due to "wait: 3.days"
       ParentMailer.thank_you(id).deliver_later(wait: 3.days)
