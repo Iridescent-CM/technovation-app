@@ -33,14 +33,15 @@ RSpec.describe SigninsController do
     end
 
     it "sends parent emails for past students registering for this season" do
-      student = FactoryBot.create(:student,
-                                   :full_profile,
-                                   password: "secret1234",
-                                   parent_guardian_email: "parent2@parent2.com")
+      student = FactoryBot.create(
+        :onboarded_student,
+        password: "secret1234",
+        parent_guardian_email: "parent2@parent2.com"
+      )
 
       student.account.update(seasons: [Season.current.year - 1])
+      student.parental_consent.update(seasons: [Season.current.year - 1])
 
-      student.parental_consent.destroy
       ActionMailer::Base.deliveries.clear
 
       post :create, params: {
