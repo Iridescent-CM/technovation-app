@@ -1,10 +1,17 @@
 module RegionalAmbassador
   class SignupsController < ApplicationController
     def new
-      if token = get_cookie(:signup_token)
-        setup_valid_profile_from_signup_attempt(:regional_ambassador, token)
-      elsif token = params[:admin_permission_token]
-        setup_valid_profile_from_invitation(:regional_ambassador, token)
+      signup_token = get_cookie(:signup_token)
+
+      invite_token = params[:admin_permission_token]
+      invite = UserInvitation.find_by(admin_permission_token: invite_token)
+
+      if !!signup_token
+        setup_valid_profile_from_signup_attempt(:regional_ambassador, signup_token)
+      elsif !!invite_token && !!invite && invite.registered?
+        SignIn.(invite.account, self, permanent: true)
+      elsif !!invite_token
+        setup_valid_profile_from_invitation(:regional_ambassador, invite_token)
         @profile.ambassador_since_year = "I'm new!"
       else
         redirect_to root_path

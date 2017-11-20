@@ -96,5 +96,33 @@ RSpec.feature "Admins invite users to signup" do
         expect(RegionalAmbassadorProfile.last).to be_approved
       end
     end
+
+    scenario "#{scope} uses the invite link a second time" do
+      email = "#{scope}@example.com"
+
+      invite = UserInvitation.create!(
+        profile_type: scope,
+        email: email,
+      )
+
+      profile = FactoryBot.create(scope, email: email)
+
+      invite.update(
+        account: profile.account,
+        status: :registered,
+      )
+
+      token = invite.admin_permission_token
+
+      url = send(
+        "#{scope}_signup_url",
+        admin_permission_token: token,
+        host: ENV.fetch("HOST_DOMAIN")
+      )
+
+      visit url
+
+      expect(current_path).to eq(send("#{scope}_dashboard_path"))
+    end
   end
 end

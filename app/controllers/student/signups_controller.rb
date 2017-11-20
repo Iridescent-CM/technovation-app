@@ -20,10 +20,17 @@ module Student
     }, only: :new
 
     def new
-      if token = get_cookie(:signup_token)
-        setup_valid_profile_from_signup_attempt(:student, token)
-      elsif token = params[:admin_permission_token]
-        setup_valid_profile_from_invitation(:student, token)
+      signup_token = get_cookie(:signup_token)
+
+      invite_token = params[:admin_permission_token]
+      invite = UserInvitation.find_by(admin_permission_token: invite_token)
+
+      if !!signup_token
+        setup_valid_profile_from_signup_attempt(:student, signup_token)
+      elsif !!invite_token && !!invite && invite.registered?
+        SignIn.(invite.account, self, permanent: true)
+      elsif !!invite_token
+        setup_valid_profile_from_invitation(:student, invite_token)
       else
         redirect_to root_path
       end
