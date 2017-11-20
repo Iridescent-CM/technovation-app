@@ -22,7 +22,7 @@ class ParentMailer < ApplicationMailer
     @name = consent.student_profile.parent_guardian_name
     @student_name = consent.student_profile_full_name
     @signature = consent.electronic_signature
-    @signed_date = consent.created_at.strftime("%B %e, %Y")
+    @signed_date = consent.updated_at.strftime("%B %e, %Y")
 
     I18n.with_locale(consent.student_profile_locale) do
       mail to: consent.student_profile.parent_guardian_email
