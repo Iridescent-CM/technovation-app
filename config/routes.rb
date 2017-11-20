@@ -182,6 +182,8 @@ Rails.application.routes.draw do
     resources :user_invitations, only: [:new, :create, :index]
     resources :user_invitation_emails, only: :create
 
+    resources :regional_ambassador_status, only: :update
+
     resources :profile_locations, only: :edit
 
     resources :teams, except: :destroy
