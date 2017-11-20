@@ -114,12 +114,21 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   private
   def after_status_changed
-    AmbassadorMailer.public_send(status, account).deliver_later
-
     if approved?
       SubscribeEmailListJob.perform_later(
         account.email, account.full_name, "REGIONAL_AMBASSADOR_LIST_ID"
       )
+    else
+      begin
+        auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
+        CreateSend::Subscriber.new(
+          auth,
+          ENV.fetch("REGIONAL_AMBASSADOR_LIST_ID"),
+          account.email
+        ).delete
+      rescue
+        false
+      end
     end
   end
 end

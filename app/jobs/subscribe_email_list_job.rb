@@ -7,7 +7,14 @@ class SubscribeEmailListJob < ActiveJob::Base
     auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
 
     begin
-      CreateSend::Subscriber.add(auth, ENV.fetch(list_env_key), email, name, custom_fields, true)
+      CreateSend::Subscriber.add(
+        auth,
+        ENV.fetch(list_env_key),
+        email,
+        name,
+        custom_fields,
+        true
+      )
     rescue CreateSend::BadRequest => br
       p "Error: #{br}"
     end
