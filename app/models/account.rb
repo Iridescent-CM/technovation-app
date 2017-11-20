@@ -120,20 +120,22 @@ class Account < ActiveRecord::Base
       "'#{season}' = ANY (parental_consents.seasons)"
     end
 
-    left_outer_joins(student_profile: :parental_consents)
-      .where("parental_consents.id IS NOT NULL")
+    distinct
+      .left_outer_joins(student_profile: :parental_consents)
+      .where("student_profiles.id IS NOT NULL")
       .where(season_clauses.join(' AND '))
+      .where("parental_consents.id IS NOT NULL")
   }
 
   scope :not_parental_consented, ->(*seasons) {
     season_clauses = Array(seasons).flatten.map do |season|
-      "'#{season}' != ANY (parental_consents.seasons)"
+      "('#{season}' != ANY (parental_consents.seasons) OR parental_consents.id IS NULL)"
     end
 
-    left_outer_joins(student_profile: :parental_consent)
+    distinct
+      .left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
-      .where("parental_consents.id IS NULL")
-      .where(season_clauses.join(' AND '))
+      .where(season_clauses.join(' OR '))
   }
 
   scope :consent_signed, -> {
