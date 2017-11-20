@@ -76,9 +76,9 @@ class AccountsGrid
     end
   end
 
-  column :parental_consent do
-    if student_profile.present?
-      parental_consent.present? ? "signed" : "not signed"
+  column :parental_consent do |account, grid|
+    if account.student_profile.present?
+      account.parental_consent(grid.season).status
     else
       "-"
     end
