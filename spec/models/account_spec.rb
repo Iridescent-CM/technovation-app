@@ -114,4 +114,72 @@ RSpec.describe Account do
       expect(Account.inactive_mentors).to eq([inactive.account])
     end
   end
+
+  describe ".matched" do
+    it "returns students with current teams" do
+      judge = FactoryBot.create(:judge)
+      unmatched_student = FactoryBot.create(:student)
+
+      past_student = FactoryBot.create(:student, :on_team)
+      past_student.team.update_column(:seasons, [Season.current.year - 1])
+
+      matched_student = FactoryBot.create(:student, :on_team)
+
+      expect(Account.matched).to include(matched_student.account)
+
+      expect(Account.matched).not_to include(judge.account)
+      expect(Account.matched).not_to include(past_student.account)
+      expect(Account.matched).not_to include(unmatched_student.account)
+    end
+
+    it "includes mentors with current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor)
+      matched_mentor = FactoryBot.create(:mentor, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :on_team)
+
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.matched).to include(matched_mentor.account)
+
+      expect(Account.matched).not_to include(unmatched_mentor.account)
+      expect(Account.matched).not_to include(past_mentor.account)
+    end
+  end
+
+  describe ".unmatched" do
+    it "returns students without current teams" do
+      judge = FactoryBot.create(:judge)
+      unmatched_student = FactoryBot.create(:student)
+
+      past_student = FactoryBot.create(:student, :on_team)
+      past_student.team.update_column(:seasons, [Season.current.year - 1])
+
+      matched_student = FactoryBot.create(:student, :on_team)
+
+      expect(Account.unmatched).to include(past_student.account)
+      expect(Account.unmatched).to include(unmatched_student.account)
+
+      expect(Account.unmatched).not_to include(matched_student.account)
+      expect(Account.unmatched).not_to include(judge.account)
+    end
+
+    it "includes mentors without current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor)
+      matched_mentor = FactoryBot.create(:mentor, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :on_team)
+
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.unmatched).to include(unmatched_mentor.account)
+      expect(Account.unmatched).to include(past_mentor.account)
+
+      expect(Account.unmatched).not_to include(matched_mentor.account)
+    end
+  end
 end

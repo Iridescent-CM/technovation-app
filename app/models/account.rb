@@ -98,23 +98,21 @@ class Account < ActiveRecord::Base
   }
 
   scope :matched, -> {
-    distinct
-    .left_outer_joins(
-      mentor_profile: :current_teams,
-      student_profile: :current_teams
-    )
-    .where("mentor_profiles.id IS NOT NULL OR student_profiles.id IS NOT NULL")
-    .where("teams.id is not null")
+    mentor_ids = unscoped.joins(mentor_profile: :current_teams).pluck(:id)
+    student_ids = unscoped.joins(student_profile: :current_teams).pluck(:id)
+    where(id: mentor_ids + student_ids)
   }
 
   scope :unmatched, -> {
-    distinct
-    .left_outer_joins(
-      mentor_profile: :current_teams,
-      student_profile: :current_teams
-    )
-    .where("mentor_profiles.id IS NOT NULL OR student_profiles.id IS NOT NULL")
-    .where("teams.id is null")
+    mentor_ids = unscoped.left_outer_joins(mentor_profile: :current_teams)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where("teams.id IS NULL").pluck(:id)
+
+    student_ids = unscoped.left_outer_joins(student_profile: :current_teams)
+      .where("student_profiles.id IS NOT NULL")
+      .where("teams.id IS NULL").pluck(:id)
+
+    where(id: mentor_ids + student_ids)
   }
 
   scope :parental_consented, ->(*seasons) {
@@ -129,7 +127,7 @@ class Account < ActiveRecord::Base
 
   scope :not_parental_consented, ->(*seasons) {
     season_clauses = Array(seasons).flatten.map do |season|
-      "'#{season}' = ANY (parental_consents.seasons)"
+      "'#{season}' != ANY (parental_consents.seasons)"
     end
 
     left_outer_joins(student_profile: :parental_consent)
