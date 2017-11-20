@@ -1,0 +1,22 @@
+<% if invitation.present? %>
+  <h6>Existing invitation:</h6>
+
+  <table class="datagrid">
+    <thead>
+      <tr>
+        <th>Profile type</th>
+        <th>Email</th>
+        <th>Account</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <%= render "admin/user_invitations/user_invitation_row",
+          invitation: invitation %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

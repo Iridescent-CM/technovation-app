@@ -1,0 +1,30 @@
+<%= form_with model: [:admin, invitation], local: true do |f| %>
+  <% if invitation.errors.any? %>
+    <div class="notice notice--error">
+      <ul class="reset">
+        <% invitation.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :profile_type %>
+    <%= f.select :profile_type,
+      UserInvitation.profile_types.keys.map { |k| [k.titleize, k] },
+      {},
+      id: "user_invitation_profile_type" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, id: "user_invitation_email" %>
+  </div>
+
+  <div class="actions">
+    <p>
+      <%= f.submit "Send invitation", class: "button" %>
+    </p>
+  </div>
+<% end %>

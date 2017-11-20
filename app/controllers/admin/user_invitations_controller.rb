@@ -1,6 +1,7 @@
 module Admin
   class UserInvitationsController < AdminController
     def index
+      @user_invitation = UserInvitation.new
       @user_invitations = UserInvitation.order('created_at desc').page(params[:page])
     end
 
@@ -16,6 +17,10 @@ module Admin
         redirect_to admin_user_invitations_path,
           success: "You invited #{@user_invitation.profile_type.titleize}: #{@user_invitation.email} to sign up"
       else
+        if @user_invitation.errors[:email].any? { |e| e.include?("taken") }
+          @existing = UserInvitation.find_by(email: @user_invitation.email)
+        end
+
         render :new
       end
     end
