@@ -844,12 +844,13 @@ ALTER SEQUENCE multi_messages_id_seq OWNED BY multi_messages.id;
 
 CREATE TABLE parental_consents (
     id integer NOT NULL,
-    electronic_signature character varying NOT NULL,
+    electronic_signature character varying,
     student_profile_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     newsletter_opt_in boolean,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    status integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2776,6 +2777,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171115152731'),
 ('20171117134239'),
 ('20171117142253'),
-('20171117150649');
+('20171117150649'),
+('20171120200105'),
+('20171120200239');
 
 
