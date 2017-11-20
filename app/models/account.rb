@@ -371,9 +371,9 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def parental_consent
+  def parental_consent(season = Season.current.year)
     if student_profile
-      student_profile.parental_consent
+      student_profile.parental_consents.by_season(season).first
     end
   end
 
