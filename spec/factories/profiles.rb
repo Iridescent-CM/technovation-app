@@ -25,8 +25,14 @@ FactoryBot.define do
     end
 
     before(:create) do |s, e|
-      if s.parental_consent.nil? and not e.not_onboarded
-        s.build_parental_consent(FactoryBot.attributes_for(:parental_consent))
+      if e.not_onboarded
+        s.build_parental_consent(
+          FactoryBot.attributes_for(:parental_consent).merge(status: :pending)
+        )
+      else
+        s.build_parental_consent(
+          FactoryBot.attributes_for(:parental_consent).merge(status: :signed)
+        )
       end
 
       attrs = FactoryBot.attributes_for(:account)

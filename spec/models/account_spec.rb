@@ -182,4 +182,146 @@ RSpec.describe Account do
       expect(Account.unmatched).not_to include(matched_mentor.account)
     end
   end
+
+  describe ".parental_consented" do
+    it "returns students with current signed parental consents" do
+      judge = FactoryBot.create(:judge)
+      mentor = FactoryBot.create(:mentor)
+      ra = FactoryBot.create(:ambassador)
+
+      unconsented_student = FactoryBot.create(:onboarding_student)
+
+      past_consented_student = FactoryBot.create(:onboarded_student)
+      past_consented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_consented_student.parental_consent.update(
+        seasons: [Season.current.year - 1]
+      )
+
+      consented_student = FactoryBot.create(:onboarded_student)
+
+      expect(Account.parental_consented).to include(consented_student.account)
+
+      expect(Account.parental_consented).not_to include(judge.account)
+      expect(Account.parental_consented).not_to include(mentor.account)
+      expect(Account.parental_consented).not_to include(ra.account)
+
+      expect(Account.parental_consented).not_to include(past_consented_student.account)
+      expect(Account.parental_consented).not_to include(unconsented_student.account)
+    end
+
+    it "returns students by season with signed parental consents" do
+      judge = FactoryBot.create(:judge)
+      mentor = FactoryBot.create(:mentor)
+      ra = FactoryBot.create(:ambassador)
+
+      unconsented_student = FactoryBot.create(:onboarding_student)
+
+      past_consented_student = FactoryBot.create(:onboarded_student)
+      past_consented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_consented_student.parental_consent.update(
+        seasons: [Season.current.year - 1]
+      )
+
+      past_unconsented_student = FactoryBot.create(:onboarded_student)
+      past_unconsented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_unconsented_student.parental_consent.update(
+        seasons: [Season.current.year - 1],
+        status: :pending
+      )
+
+      consented_student = FactoryBot.create(:onboarded_student)
+
+      results = Account.parental_consented(Season.current.year - 1)
+
+      expect(results).to include(past_consented_student.account)
+
+      expect(results).not_to include(judge.account)
+      expect(results).not_to include(mentor.account)
+      expect(results).not_to include(ra.account)
+
+      expect(results).not_to include(consented_student.account)
+      expect(results).not_to include(unconsented_student.account)
+      expect(results).not_to include(past_unconsented_student.account)
+    end
+  end
+
+  describe ".not_parental_consented" do
+    it "returns current students without signed parental consents" do
+      judge = FactoryBot.create(:judge)
+      mentor = FactoryBot.create(:mentor)
+      ra = FactoryBot.create(:ambassador)
+
+      unconsented_student = FactoryBot.create(:onboarding_student)
+
+      past_consented_student = FactoryBot.create(:onboarded_student)
+      past_consented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_consented_student.parental_consent.update(
+        seasons: [Season.current.year - 1]
+      )
+
+      past_unconsented_student = FactoryBot.create(:onboarding_student)
+      past_unconsented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+
+      consented_student = FactoryBot.create(:onboarded_student)
+
+      results = Account.not_parental_consented
+      expect(results).to include(unconsented_student.account)
+
+      expect(results).not_to include(judge.account)
+      expect(results).not_to include(mentor.account)
+      expect(results).not_to include(ra.account)
+
+      expect(results).not_to include(consented_student.account)
+      expect(results).not_to include(past_consented_student.account)
+      expect(results.current).not_to include(past_unconsented_student.account)
+    end
+
+    it "returns students by season without signed parental consents" do
+      judge = FactoryBot.create(:judge)
+      mentor = FactoryBot.create(:mentor)
+      ra = FactoryBot.create(:ambassador)
+
+      unconsented_student = FactoryBot.create(:onboarding_student)
+
+      past_consented_student = FactoryBot.create(:onboarded_student)
+      past_consented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_consented_student.parental_consent.update(
+        seasons: [Season.current.year - 1]
+      )
+
+      past_unconsented_student = FactoryBot.create(:onboarded_student)
+      past_unconsented_student.account.update(
+        seasons: [Season.current.year - 1]
+      )
+      past_unconsented_student.parental_consent.update(
+        seasons: [Season.current.year - 1],
+        status: :pending
+      )
+
+      consented_student = FactoryBot.create(:onboarded_student)
+
+      results = Account.not_parental_consented(Season.current.year - 1)
+
+      expect(results).to include(past_unconsented_student.account)
+
+      expect(results).not_to include(judge.account)
+      expect(results).not_to include(mentor.account)
+      expect(results).not_to include(ra.account)
+
+      expect(results).not_to include(past_consented_student.account)
+      expect(results).not_to include(unconsented_student.account)
+    end
+  end
 end
