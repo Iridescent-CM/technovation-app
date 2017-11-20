@@ -2,9 +2,9 @@
   <%= datagrid_form_for grid, data: { turbolinks: false }, url: form_url %>
 
   <h6>
-    <%= number_with_delimiter(
-      pluralize(grid.assets.count, model_name)
-    ) %> found
+    <%= number_with_delimiter(grid.assets.count) %>
+    <%= model_name.pluralize(grid.assets.count) %>
+    found
   </h6>
 
   <% unless grid.assets.empty? %>
