@@ -5,7 +5,7 @@ class UpdateParentalConsents < ActiveRecord::Migration[5.1]
     total = StudentProfile.joins(:current_account).count
 
     ActiveRecord::Base.transaction do
-      ParentalConsent.update_all(status: :signed)
+      ParentalConsent.update_all(status: ParentalConsent.statuses[:signed])
 
       StudentProfile.find_each do |student|
         student.seasons.each do |season|
