@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Students leave their own team" do
+  include ActionView::RecordIdentifier
+
   before { SeasonToggles.team_building_enabled="yes" }
 
   scenario "leave the team" do
@@ -9,7 +11,10 @@ RSpec.feature "Students leave their own team" do
     sign_in(student)
     click_link "My team"
 
-    click_link "remove this member"
+    within("##{dom_id(student)}") do
+      click_link "remove this member"
+    end
+
     expect(current_path).to eq(student_dashboard_path)
     expect(page).to have_link("Register your team")
   end

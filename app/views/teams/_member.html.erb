@@ -1,6 +1,6 @@
 <% admin ||= false %>
 
-<li class="grid">
+<li id="<%= dom_id(member) %>" class="grid">
   <div class="grid__col-3 grid__col--bleed-x">
     <%= image_tag member.profile_image_url, class: "grid__cell-img" %>
   </div>
