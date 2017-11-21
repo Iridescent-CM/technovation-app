@@ -17,7 +17,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
         if (profile = record.student_profile).present?
           RegistrationMailer.welcome_student(record).deliver_later
 
-          if profile.parental_consent.nil?
+          if profile.reload.parental_consent.nil?
             profile.parental_consents.create!
           end
 
