@@ -17,8 +17,9 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
           (profile = record.student_profile).present?
         RegistrationMailer.welcome_student(record).deliver_later
 
+        profile.parental_consents.create!
+
         if profile.parent_guardian_email and profile.parental_consent.nil?
-          profile.parental_consents.create!
           ParentMailer.consent_notice(profile.id).deliver_later
         end
       end
