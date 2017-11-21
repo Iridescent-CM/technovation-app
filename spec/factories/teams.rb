@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :team do
-    sequence(:name) { |n| "Go Team Factory Girl #{n}!" }
+    sequence(:name) { |n| "FactoryBot #{n}!" }
     description { "Made with <3 by FactoryBot" }
     division { Division.senior }
     city "Chicago"

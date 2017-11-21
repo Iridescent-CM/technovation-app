@@ -9,6 +9,7 @@ FactoryBot.define do
     school_name { "FactoryBot High" }
 
     transient do
+      first_name "Student"
       city "Chicago"
       state_province "IL"
       country "US"
@@ -36,6 +37,7 @@ FactoryBot.define do
       attrs = FactoryBot.attributes_for(:account)
 
       s.build_account(attrs.merge(
+        first_name: e.first_name,
         city: e.city,
         state_province: e.state_province,
         country: e.country || attrs[:country],
@@ -46,7 +48,7 @@ FactoryBot.define do
     end
 
     after(:create) do |s, e|
-      RegisterToCurrentSeasonJob.perform_now(s.account)
+      ProfileCreating.execute(s, FakeController.new)
     end
 
     trait :on_team do
@@ -81,7 +83,7 @@ FactoryBot.define do
     bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
 
     transient do
-      first_name nil
+      first_name "Mentor"
       last_name nil
       city "Chicago"
       state_province "IL"
@@ -106,7 +108,7 @@ FactoryBot.define do
         city: e.city || attrs[:city] || "Chicago",
         state_province: e.state_province || attrs[:state_province] || "IL",
         country: e.country || attrs[:country],
-        first_name: e.first_name || attrs[:first_name],
+        first_name: e.first_name,
         last_name: e.last_name || attrs[:last_name],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
@@ -122,7 +124,7 @@ FactoryBot.define do
     end
 
     after(:create) do |m, e|
-      RegisterToCurrentSeasonJob.perform_now(m.account)
+      ProfileCreating.execute(m, FakeController.new)
     end
 
     trait :with_expertises do
@@ -166,7 +168,7 @@ FactoryBot.define do
       country "US"
       email nil
       password nil
-      first_name nil
+      first_name "RA"
     end
 
     trait :geocoded do
@@ -184,7 +186,7 @@ FactoryBot.define do
         country: e.country || attrs[:country],
         email: e.email || attrs[:email],
         password: e.password || attrs[:password],
-        first_name: e.first_name || attrs[:first_name],
+        first_name: e.first_name,
       ))
 
       unless r.background_check.present?
@@ -197,7 +199,7 @@ FactoryBot.define do
     end
 
     after(:create) do |r, e|
-      RegisterToCurrentSeasonJob.perform_now(r.account)
+      ProfileCreating.execute(r, FakeController.new)
     end
 
     trait :approved do
@@ -216,7 +218,7 @@ FactoryBot.define do
 
     transient do
       email nil
-      first_name nil
+      first_name "Judge"
       onboarded false
       virtual true
     end
@@ -243,7 +245,7 @@ FactoryBot.define do
 
       j.build_account(act_attrs.merge(
         email: e.email || act_attrs[:email],
-        first_name: e.first_name || act_attrs[:first_name],
+        first_name: e.first_name,
       ))
 
       if e.onboarded
@@ -254,7 +256,7 @@ FactoryBot.define do
     end
 
     after(:create) do |j, e|
-      RegisterToCurrentSeasonJob.perform_now(j.account)
+      ProfileCreating.execute(j, FakeController.new)
     end
   end
 end
