@@ -1,15 +1,33 @@
-<li class="feed--item">
+<tr>
   <% if activity.trackable %>
-    <%= image_tag activity.trackable.profile_image_url, class: "thumbnail-xs" %>
-    <%= link_to activity.trackable.full_name,
-      [current_scope, activity.trackable],
-      data: { turbolinks: false } %>
-    registered for the <%= Season.current.year %> season
+    <td>
+      <%= image_tag activity.trackable.profile_image_url,
+        class: "thumbnail-xs" %>
+    </td>
+
+    <td><%= activity.trackable.scope_name.humanize %></td>
+
+    <td>
+      <%= link_to activity.trackable.name,
+        [current_scope, activity.trackable],
+        data: { turbolinks: false } %>
+    </td>
   <% else %>
-    - sorry, this account has been deleted -
+    <td>–</td>
+    <td>–</td>
   <% end %>
 
-  <div class="feed-item--time">
-    <%= time_ago_in_words(activity.created_at) %> ago
-  </div>
-</li>
+  <td>registered for the <%= Season.current.year %> season</td>
+
+  <% if activity.recipient %>
+    <td>
+      <%= link_to activity.recipient.name,
+        [current_scope, activity.trackable],
+        data: { turbolinks: false } %>
+    </td>
+  <% else %>
+    <td>–</td>
+  <% end %>
+
+  <td><%= time_ago_in_words(activity.created_at) %> ago</td>
+</tr>
