@@ -54,8 +54,10 @@ RSpec.feature "Parental consent" do
     fill_in "Your name", with: "Parent M. McGee"
     click_button "I agree"
 
-    expect(current_path).to eq(parental_consent_path(ParentalConsent.last))
-    expect(page).to have_content("#{student.full_name} has been consented by #{student.parental_consent_electronic_signature} on #{student.parental_consent_signed_at.strftime("%-d %B, %Y")}")
+    expect(current_path).to eq(parental_consent_path(student.parental_consent))
+    expect(page).to have_content(
+      "#{student.full_name} has been consented by #{student.parental_consent_electronic_signature} on #{student.parental_consent_signed_at.strftime("%-d %B, %Y")}"
+    )
   end
 
   scenario "fill it out on dashboard steps" do
