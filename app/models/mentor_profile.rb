@@ -82,9 +82,22 @@ class MentorProfile < ActiveRecord::Base
     joins(:current_account)
   }
 
-  belongs_to :account, touch: true
+  belongs_to :account,
+    touch: true,
+    required: false
+
+  belongs_to :user_invitation,
+    required: false
+
   accepts_nested_attributes_for :account
-  validates_associated :account
+  validates_associated :account, if: -> { user_invitation.blank? }
+
+  before_validation -> {
+    if account.blank? and user_invitation.blank?
+      errors.add(:account, "is required unless there's a user invitation")
+      errors.add(:user_invitation, "is required unless there's an account")
+    end
+  }
 
   belongs_to :current_account, -> { current },
     foreign_key: :account_id,
@@ -136,7 +149,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { enable_searchability },
     on: :update,
-    if: -> { account.country_changed? or bio_changed? }
+    if: -> { account.present? and account.country_changed? or bio_changed? }
 
   after_save { current_teams.find_each(&:touch) }
   after_touch { current_teams.find_each(&:touch) }

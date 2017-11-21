@@ -736,7 +736,8 @@ CREATE TABLE mentor_profiles (
     searchable boolean DEFAULT false NOT NULL,
     accepting_team_invites boolean DEFAULT true NOT NULL,
     virtual boolean DEFAULT true NOT NULL,
-    connect_with_mentors boolean DEFAULT true NOT NULL
+    connect_with_mentors boolean DEFAULT true NOT NULL,
+    user_invitation_id bigint
 );
 
 
@@ -2300,6 +2301,13 @@ CREATE INDEX index_mentor_profiles_on_account_id ON mentor_profiles USING btree 
 
 
 --
+-- Name: index_mentor_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentor_profiles_on_user_invitation_id ON mentor_profiles USING btree (user_invitation_id);
+
+
+--
 -- Name: index_parental_consents_on_student_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2636,6 +2644,14 @@ ALTER TABLE ONLY regional_links
 
 
 --
+-- Name: mentor_profiles fk_rails_beb02031d5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY mentor_profiles
+    ADD CONSTRAINT fk_rails_beb02031d5 FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
+
+
+--
 -- Name: submission_scores fk_rails_c08133669a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2779,6 +2795,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171117142253'),
 ('20171117150649'),
 ('20171120200105'),
-('20171120200239');
+('20171120200239'),
+('20171121175628');
 
 
