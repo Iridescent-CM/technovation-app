@@ -19,11 +19,11 @@ class UserInvitation < ApplicationRecord
   after_commit -> {
     if mentor_account = Account.left_outer_joins(:regional_ambassador_profile)
                                .joins(:mentor_profile)
+                               .where("regional_ambassador_profiles.id IS NULL")
                                .find_by(
                                  "lower(trim(both ' ' from email)) = ?",
                                  email
                                )
-                               #.where("regional_ambassador_profiles.id IS NULL")
 
       profile = mentor_account.mentor_profile
       profile.update(account: nil, user_invitation: self)
@@ -41,13 +41,12 @@ class UserInvitation < ApplicationRecord
   validates :email, uniqueness: true, email: true
 
   validate ->(invitation) {
-    if Account.left_outer_joins(:mentor_profile)
-      .where("mentor_profiles.id IS NULL")
-      .where(
-         "lower(trim(both ' ' from email)) = ?",
-         email
-       ).exists?
-      invitation.errors.add(:email, :taken_by_account)
+    if inviting_existing_ra_to_be_an_ra?
+      errors.add(:email, :taken_by_account)
+    elsif inviting_existing_mentor_to_be_an_ra?
+      true
+    elsif inviting_existing_account?
+      errors.add(:email, :taken_by_account)
     end
   }, on: :create
 
@@ -62,5 +61,25 @@ class UserInvitation < ApplicationRecord
 
   def temporary_password?
     true
+  end
+
+  private
+  def inviting_existing_ra_to_be_an_ra?
+    profile_type.to_s == "regional_ambassador" and
+      Account.left_outer_joins(:regional_ambassador_profile)
+        .where("regional_ambassador_profiles.id IS NOT NULL")
+        .where("lower(trim(both ' ' from email)) = ?", email)
+        .exists?
+  end
+
+  def inviting_existing_mentor_to_be_an_ra?
+    profile_type.to_s == "regional_ambassador" and
+      Account.joins(:mentor_profile)
+        .where("lower(trim(both ' ' from email)) = ?", email)
+        .exists?
+  end
+
+  def inviting_existing_account?
+    Account.where("lower(trim(both ' ' from email)) = ?", email).exists?
   end
 end
