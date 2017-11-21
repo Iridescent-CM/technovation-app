@@ -33,7 +33,7 @@ class UserInvitation < ApplicationRecord
   }, on: :create
 
   after_commit -> {
-    if mentor = MentorProfile.find_by(user_invitation: self) 
+    if mentor = MentorProfile.find_by(user_invitation: self)
       account.mentor_profile = mentor
       account.save!
     end
