@@ -21,7 +21,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
             profile.parental_consents.create!
           end
 
-          if profile.parental_consent.pending? and
+          if profile.reload.parental_consent.pending? and
               not profile.parent_guardian_email.blank?
             ParentMailer.consent_notice(profile.id).deliver_later
           end
