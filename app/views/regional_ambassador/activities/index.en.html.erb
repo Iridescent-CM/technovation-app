@@ -1,0 +1,22 @@
+<% provide :title, "Activities" %>
+
+<div class="panel">
+  <table class="datagrid">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Profile type</th>
+        <th>Name</th>
+        <th>Activity</th>
+        <th>Target</th>
+        <th>When</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= render_activities(@activities) %>
+    </tbody>
+  </table>
+
+  <%= will_paginate(@activities) %>
+</div>

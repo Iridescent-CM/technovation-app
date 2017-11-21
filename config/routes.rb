@@ -140,6 +140,8 @@ Rails.application.routes.draw do
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: [:create, :destroy]
 
+    resources :activities, only: :index
+
     resources :export_downloads, only: :update
 
     resource :profile_image_upload_confirmation, only: :show
