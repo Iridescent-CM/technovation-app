@@ -13,14 +13,17 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
       record.update_columns(update_data)
 
-      if record.respond_to?(:student_profile) and
-          (profile = record.student_profile).present?
-        RegistrationMailer.welcome_student(record).deliver_later
+      if record.respond_to?(:student_profile)
+        if (profile = record.student_profile).present?
+          RegistrationMailer.welcome_student(record).deliver_later
 
-        profile.parental_consents.create!
+          if profile.parental_consent.nil?
+            profile.parental_consents.create!
 
-        if profile.parent_guardian_email and profile.parental_consent.nil?
-          ParentMailer.consent_notice(profile.id).deliver_later
+            unless profile.parent_guardian_email.blank?
+              ParentMailer.consent_notice(profile.id).deliver_later
+            end
+          end
         end
       end
 
