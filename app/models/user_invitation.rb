@@ -33,8 +33,10 @@ class UserInvitation < ApplicationRecord
   }, on: :create
 
   after_commit -> {
-    account.mentor_profile = MentorProfile.find_by(user_invitation: self)
-    account.save!
+    if mentor = MentorProfile.find_by(user_invitation: self) 
+      account.mentor_profile = mentor
+      account.save!
+    end
   }, on: :update, if: -> { saved_change_to_status? and registered? }
 
   validates :profile_type, :email, presence: true
