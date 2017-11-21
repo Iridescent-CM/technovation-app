@@ -1,5 +1,10 @@
 <% if SeasonToggles.survey_link_available?(current_scope) %>
   <%= link_to SeasonToggles.survey_link(current_scope, "text"),
-    SeasonToggles.survey_link(current_scope, "url"),
+    SeasonToggles.survey_link(
+      current_scope,
+      "url",
+      format_url: true,
+      account: current_account
+    ),
     target: "_blank" %>
 <% end %>

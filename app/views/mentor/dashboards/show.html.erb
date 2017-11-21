@@ -22,9 +22,11 @@
     </div>
   </div>
 
-  <% unless SeasonToggles.dashboard_text(:mentor).blank? %>
-    <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-      <div class="grid__cell">
+  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
+        <%= render 'program_survey' %>
+      <% else %>
         <h1 class="page-heading">
           <%= SeasonToggles.dashboard_text(:mentor) %>
 
@@ -32,9 +34,9 @@
             <%= render 'program_survey' %>
           </small>
         </h1>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
 
 <div class="grid">

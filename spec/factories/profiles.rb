@@ -143,6 +143,8 @@ FactoryBot.define do
         )
       end
     end
+
+    factory :onboarded_mentor
   end
 
   factory :regional_ambassador_profile, aliases: [
