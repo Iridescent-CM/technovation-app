@@ -1,7 +1,7 @@
 class TeamCreating
   def self.execute(team, profile, context)
     if team.seasons.empty?
-      RegisterToSeasonJob.perform_now(team)
+      RegisterToCurrentSeasonJob.perform_now(team)
     end
 
     team.create_activity(
