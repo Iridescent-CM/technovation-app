@@ -27,7 +27,7 @@ class SeasonToggles
 
       def show_survey_link_modal?(scope, account)
         not account.took_survey? and
-          not account.address_details.blank?
+          not account.address_details.blank? and
             survey_link_available?(scope) and
               account.needs_survey_reminder?
       end
