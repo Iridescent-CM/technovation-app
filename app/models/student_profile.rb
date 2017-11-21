@@ -95,6 +95,16 @@ class StudentProfile < ActiveRecord::Base
   has_many :parental_consents, dependent: :destroy
   has_one :parental_consent, -> { current }, dependent: :destroy
 
+  has_one :signed_parental_consent,
+    -> { current.signed },
+    class_name: "ParentalConsent",
+    dependent: :destroy
+
+  has_one :pending_parental_consent,
+    -> { current.pending },
+    class_name: "ParentalConsent",
+    dependent: :destroy
+
   has_many :past_parental_consents,
     -> { past },
     class_name: "ParentalConsent",

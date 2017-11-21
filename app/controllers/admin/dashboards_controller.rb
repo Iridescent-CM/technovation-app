@@ -6,9 +6,8 @@ module Admin
       @mentors = Account.current.left_outer_joins(:mentor_profile)
         .where("mentor_profiles.id IS NOT NULL")
 
-      @permitted_students = @students.joins(:parental_consent)
-      @unpermitted_students = @students.left_outer_joins(:parental_consent)
-        .where("parental_consents.id IS NULL")
+      @permitted_students = @students.joins(:signed_parental_consent)
+      @unpermitted_students = @students.joins(:pending_parental_consent)
 
       @new_students = @students.where(
         "accounts.created_at > ?",
