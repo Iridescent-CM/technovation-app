@@ -4,36 +4,20 @@ module RegionalAmbassador
       if current_ambassador.needs_intro_prompt?
         current_ambassador.regional_links.build
       else
-        trackable_user_ids = Account.current
+        @top_inactive_mentors = Account.in_region(current_ambassador)
           .not_staff
-          .in_region(current_ambassador)
-          .pluck(:id) - [current_ambassador.account_id]
-
-        trackable_team_ids = Team.current
-          .in_region(current_ambassador)
-          .pluck(:id)
-
-        user_activities = PublicActivity::Activity.where(
-          trackable_id: trackable_user_ids,
-          trackable_type: "Account"
-        )
-         .order("created_at desc")
-         .first(7)
-
-        team_activities = PublicActivity::Activity.where(
-          trackable_id: trackable_team_ids,
-          trackable_type: "Team"
-        )
-         .order("created_at desc")
-         .first(7)
-
-        @activities = (user_activities + team_activities).sort do |a, b|
-          b.created_at <=> a.created_at
-        end
-
-        @top_inactive = Account.in_region(current_ambassador)
           .inactive_mentors
-          .limit(10)
+          .limit(3)
+
+        @top_inactive_students = Account.in_region(current_ambassador)
+          .not_staff
+          .inactive_students
+          .limit(3)
+
+        @top_inactive_teams = Team.in_region(current_ambassador)
+          .not_staff
+          .inactive
+          .limit(3)
 
         @students = StudentProfile.current.in_region(current_ambassador)
 
@@ -71,11 +55,6 @@ module RegionalAmbassador
         )
       end
 
-      @uploader = ImageUploader.new
-      @uploader.success_action_redirect =
-        regional_ambassador_profile_image_upload_confirmation_url(
-          back: regional_ambassador_dashboard_path
-        )
       render "regional_ambassador/dashboards/show_#{current_ambassador.status}"
     end
 

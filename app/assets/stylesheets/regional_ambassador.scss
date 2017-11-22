@@ -30,10 +30,7 @@ ul, ol {
     .feed--item {
       clear: both;
       margin: 0 0 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 0.2rem;
-      background: white;
-      box-shadow: $shadow-default;
+      padding: 0;
 
       .feed-item--time {
         padding: 0.3rem 0 0;

@@ -83,6 +83,17 @@ class Account < ActiveRecord::Base
       .where("activities.id IS NULL")
   }
 
+  scope :inactive_students, -> {
+    current.joins(:student_profile)
+      .joins(
+        "LEFT OUTER JOIN activities
+        ON activities.trackable_id = accounts.id
+        AND activities.trackable_type = 'Account'
+        AND activities.created_at > '#{3.weeks.ago}'"
+      )
+      .where("activities.id IS NULL")
+  }
+
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
 

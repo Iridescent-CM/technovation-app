@@ -13,6 +13,21 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
+  scope :not_staff, -> {
+    where.not("name ilike ?", "%staff test%")
+  }
+
+  scope :inactive, -> {
+    current.joins(
+      "LEFT OUTER JOIN activities
+        ON activities.trackable_id = teams.id
+        AND activities.trackable_type = 'Team'
+        AND activities.created_at > '#{3.weeks.ago}'"
+    )
+      .where("activities.id IS NULL")
+  }
+
+
   def scope_name
     "student" # Needed for RPE selection views that are shared by judges
   end
