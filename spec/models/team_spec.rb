@@ -77,13 +77,8 @@ RSpec.describe Team do
   it "scopes to past seasons" do
     FactoryBot.create(:team) # current season by default
 
-    past_date = if Season.switch_date.year === Time.current.year
-                  Season.switch_date - 367.days
-                else
-                  Season.switch_date - 1.day
-                end
-
-    past_team = FactoryBot.create(:team, created_at: past_date)
+    past_team = FactoryBot.create(:team)
+    past_team.update(seasons: [Season.current.year - 1])
 
     expect(Team.past).to eq([past_team])
   end
@@ -91,46 +86,21 @@ RSpec.describe Team do
   it "scopes to the current season" do
     current_team = FactoryBot.create(:team) # current season by default
 
-    past_date = if Season.switch_date.year === Time.current.year
-                  Season.switch_date - 367.days
-                else
-                  Season.switch_date - 1.day
-                end
+    past_team = FactoryBot.create(:team)
+    past_team.update(seasons: [Season.current.year - 1])
 
-    FactoryBot.create(:team, created_at: past_date)
     expect(Team.current).to eq([current_team])
   end
 
   it "excludes current season teams from the past scope" do
     current_team = FactoryBot.create(:team) # current season by default
 
-    past_date = if Season.switch_date.year === Time.current.year
-                  Season.switch_date - 367.days
-                else
-                  Season.switch_date - 1.day
-                end
-
-    past_team = FactoryBot.create(:team, created_at: past_date)
+    past_team = FactoryBot.create(:team)
+    past_team.update(seasons: [Season.current.year - 1])
 
     current_team.update(seasons: (current_team.seasons << past_team.seasons.last))
 
     expect(Team.past).not_to include(current_team)
-  end
-
-  it "registers to past seasons" do
-    team = FactoryBot.create(
-      :team,
-      created_at: Time.new(
-        2015,
-        Season.switch_month,
-        Season.switch_day,
-        0,
-        0,
-        0,
-        "-08:00"
-      )
-    )
-    expect(team.reload.seasons).to eq([2016])
   end
 
   describe ".region_division_name" do
