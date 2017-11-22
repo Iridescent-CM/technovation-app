@@ -60,7 +60,9 @@ $.rails.showConfirmationDialog = function(link) {
 var stickyCols;
 
 stickyCols = function() {
-  $(".col--sticky").stick_in_parent();
+  $(".col--sticky").stick_in_parent({
+    recalc_every: 1,
+  });
 }
 
 $(document).on("ready turbolinks:load", stickyCols);
