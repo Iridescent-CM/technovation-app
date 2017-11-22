@@ -6,7 +6,7 @@ module RegionalAmbassador
 
     def update
       if ProfileUpdating.execute(current_ambassador, nil, introduction_params)
-        redirect_to regional_ambassador_dashboard_path,
+        redirect_to regional_ambassador_dashboard_path(anchor: "!ra-info"),
           success: "You updated your introduction!"
       else
         render :edit
