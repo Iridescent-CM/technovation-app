@@ -54,14 +54,16 @@ class SeasonToggles
 
       private
       def format_parsed_url(parsed_url, account)
-        formatted_url = parsed_url.dup
-        formatted_url.sub!("[email_value]", account.email)
-        formatted_url.sub!("[country_value]", FriendlyCountry.(account))
-        formatted_url.sub!("[state_value]", FriendlySubregion.(account))
-        formatted_url.sub!("[name_value]", account.full_name)
-        formatted_url.sub!("[city_value]", account.city)
-        formatted_url.sub!("[age_value]", account.age.to_s)
-        formatted_url
+        unless parsed_url.blank?
+          formatted_url = parsed_url.dup
+          formatted_url.sub!("[email_value]", account.email)
+          formatted_url.sub!("[country_value]", FriendlyCountry.(account))
+          formatted_url.sub!("[state_value]", FriendlySubregion.(account))
+          formatted_url.sub!("[name_value]", account.full_name)
+          formatted_url.sub!("[city_value]", account.city)
+          formatted_url.sub!("[age_value]", account.age.to_s)
+          formatted_url
+        end
       end
     end
   end

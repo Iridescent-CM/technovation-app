@@ -1,7 +1,7 @@
 module FriendlyCountry
   def self.call(record, options = {})
-    return unless record.respond_to?(:country)
-    return if record.country.nil? or record.country.strip == ""
+    return "" unless record.respond_to?(:country)
+    return "" if record.country.nil? or record.country.strip == ""
     return record.country if Carmen::Country.coded(record.country).blank?
 
     default_options = {
