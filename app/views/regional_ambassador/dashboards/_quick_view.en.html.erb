@@ -1,187 +1,149 @@
-<h3>
-  <%= current_ambassador.region_name %> <%= Season.current.year %> Quickview
+<h3 class="reset">
+  <%= current_ambassador.region_name %>
+  <%= Season.current.year %>
+  recruitment performance
 </h3>
 
-<h3 class="reset">Recruitment performance</h3>
+<p>
+  <%= link_to "View all participants in your region",
+    regional_ambassador_participants_path %>
+</p>
 
-<%= link_to "View all participants in your region",
-  regional_ambassador_participants_path %>
+<hr />
 
-<div class="panel">
-  <h3>Students</h3>
+<h3 class="reset">Students</h3>
 
-  <dl>
-    <dt>Total:</dt>
-    <dd><%= @students.count %></dd>
-  </dl>
+<dl>
+  <dt>Total:</dt>
+  <dd><%= @students.count %></dd>
+</dl>
 
-  <h3>Parental permission</h3>
 
-  <%= content_tag :canvas, nil,
-    class: "quickview-charts quickview-charts--students-permitted",
-    data: {
-      chart_data: {
-        labels: [
-          "With parental permission – #{show_percentage(@permitted_students, @students)}",
-          "Without parental permission – #{show_percentage(@unpermitted_students, @students)}",
-        ],
-        datasets: [
-          {
-            data: [
-              @permitted_students.count,
-              @unpermitted_students.count,
-            ],
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.7)',
-              'rgba(255, 99, 132, 0.7)',
-            ],
-            hoverBackgroundColor: [
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 99, 132, 1)',
-            ],
-            urls: [
-              regional_ambassador_participants_path(
-                accounts_grid: {
-                  scope_names: ["student"],
-                  parental_consent: "parental_consented",
-                }
-              ),
-              regional_ambassador_participants_path(
-                accounts_grid: {
-                  scope_names: ["student"],
-                  parental_consent: "not_parental_consented",
-                }
-              ),
-            ],
-          },
-        ],
-      },
-    } %>
+<div class="grid">
+  <div class="grid__col-6 center">
+    <h3>Parental permission</h3>
+
+    <%= content_tag :canvas, nil,
+      class: "quickview-charts quickview-charts--students-permitted",
+      data: {
+        chart_data: {
+          labels: [
+            "With parental permission – #{show_percentage(@permitted_students, @students)}",
+            "Without parental permission – #{show_percentage(@unpermitted_students, @students)}",
+          ],
+          datasets: [
+            {
+              data: [
+                @permitted_students.count,
+                @unpermitted_students.count,
+              ],
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 99, 132, 0.7)',
+              ],
+              hoverBackgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+              ],
+              urls: [
+                regional_ambassador_participants_path(
+                  accounts_grid: {
+                    scope_names: ["student"],
+                    parental_consent: "parental_consented",
+                  }
+                ),
+                regional_ambassador_participants_path(
+                  accounts_grid: {
+                    scope_names: ["student"],
+                    parental_consent: "not_parental_consented",
+                  }
+                ),
+              ],
+            },
+          ],
+        },
+      } %>
+  </div>
+
+  <div class="grid__col-6 center">
+    <h3>New vs. Returning</h3>
+
+    <%= content_tag :canvas, nil,
+      class: "quickview-charts quickview-charts--students-returning",
+      data: {
+        chart_data: {
+          labels: [
+            "Returning students – #{show_percentage(@returning_students, @students)}",
+            "New students – #{show_percentage(@new_students, @students)}",
+          ],
+          datasets: [
+            {
+              data: [
+                @returning_students.count,
+                @new_students.count,
+              ],
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+              ],
+              hoverBackgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+              ],
+            },
+          ],
+        },
+      } %>
+  </div>
 </div>
 
-<div class="panel">
-  <h3>New vs. Returning</h3>
+<hr />
 
-  <%= content_tag :canvas, nil,
-    class: "quickview-charts quickview-charts--students-returning",
-    data: {
-      chart_data: {
-        labels: [
-          "Returning students – #{show_percentage(@returning_students, @students)}",
-          "New students – #{show_percentage(@new_students, @students)}",
-        ],
-        datasets: [
-          {
-            data: [
-              @returning_students.count,
-              @new_students.count,
-            ],
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-            ],
-            hoverBackgroundColor: [
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-            ],
-          },
-        ],
-      },
-    } %>
-</div>
+<h3 class="reset">Mentors</h3>
 
-<div class="panel">
-  <h3>Mentors</h3>
+<dl>
+  <dt>Total:</dt>
+  <dd><%= @mentors.count %></dd>
+</dl>
 
-  <dl>
-    <dt>Total:</dt>
-    <dd><%= @mentors.count %></dd>
-  </dl>
 
-  <% if current_ambassador.country == "US" %>
-    <%= render "regional_ambassador/dashboards/quick_view/us_mentors" %>
-  <% else %>
-    <%= render "regional_ambassador/dashboards/quick_view/international_mentors" %>
-  <% end %>
-</div>
-
-<div class="panel">
-  <h3>New vs. Returning</h3>
-
-  <%= content_tag :canvas, nil,
-    class: "quickview-charts quickview-charts--mentors-returning",
-    data: {
-      chart_data: {
-        labels: [
-          "Returning mentors – #{show_percentage(@returning_mentors, @mentors)}",
-          "New mentors – #{show_percentage(@new_mentors, @mentors)}",
-        ],
-        datasets: [
-          {
-            data: [
-              @returning_mentors.count,
-              @new_mentors.count,
-            ],
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-            ],
-            hoverBackgroundColor: [
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-            ],
-          },
-        ],
-      },
-    } %>
-</div>
-
-<h3 class="reset">Inactivity notices</h3>
-
-<%= link_to "View all activity in your region",
-  regional_ambassador_activities_path %>
-
-<div class="panel">
-  <h3>3 most inactive mentors</h3>
-
-  <ul class="feed">
-    <% @top_inactive_mentors.each do |mentor| %>
-      <li class="feed--item">
-        <%= image_tag mentor.profile_image_url, width: 40, class: "thumbnail-xs" %>
-        <%= link_to mentor.name, regional_ambassador_participant_path(mentor) %>
-        hasn't been active for
-        <%= time_ago_in_words(mentor.activities.last.created_at) %>
-      </li>
+<div class="grid">
+  <div class="grid__col-6 center">
+    <% if current_ambassador.country == "US" %>
+      <%= render "regional_ambassador/dashboards/quick_view/us_mentors" %>
+    <% else %>
+      <%= render "regional_ambassador/dashboards/quick_view/international_mentors" %>
     <% end %>
-  </ul>
-</div>
+  </div>
 
-<div class="panel">
-  <h3>3 most inactive students</h3>
+  <div class="grid__col-6 center">
+    <h3>New vs. Returning</h3>
 
-  <ul class="feed">
-    <% @top_inactive_students.each do |student| %>
-      <li class="feed--item">
-        <%= image_tag student.profile_image_url, width: 40, class: "thumbnail-xs" %>
-        <%= link_to student.name, regional_ambassador_participant_path(student) %>
-        hasn't been active for
-        <%= time_ago_in_words(student.activities.last.created_at) %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="panel">
-  <h3>3 most inactive teams</h3>
-
-  <ul class="feed">
-    <% @top_inactive_teams.each do |team| %>
-      <li class="feed--item">
-        <%= image_tag team.team_photo_url, width: 40, class: "thumbnail-xs" %>
-        <%= link_to team.name, regional_ambassador_team_path(team) %>
-        hasn't been active for
-        <%= time_ago_in_words(team.activities.last.created_at) %>
-      </li>
-    <% end %>
-  </ul>
+    <%= content_tag :canvas, nil,
+      class: "quickview-charts quickview-charts--mentors-returning",
+      data: {
+        chart_data: {
+          labels: [
+            "Returning mentors – #{show_percentage(@returning_mentors, @mentors)}",
+            "New mentors – #{show_percentage(@new_mentors, @mentors)}",
+          ],
+          datasets: [
+            {
+              data: [
+                @returning_mentors.count,
+                @new_mentors.count,
+              ],
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+              ],
+              hoverBackgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+              ],
+            },
+          ],
+        },
+      } %>
+  </div>
 </div>

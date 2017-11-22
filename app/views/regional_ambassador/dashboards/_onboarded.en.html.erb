@@ -1,29 +1,12 @@
 <div class="grid">
   <div class="grid__col-7 grid__col--bleed-y">
     <div class="col--sticky">
-      <% if current_ambassador.needs_intro_prompt? %>
-        <div class="panel">
-          <h4>
-            New this year: Introduce your region to your program!
-
-            <small>
-              <%= link_to 'what is this?', '#',
-                data: { opens_modal: "explain-intro" } %>
-            </small>
-          </h4>
-
-          <%= render "regional_ambassador/introductions/form",
-            ra_dashboard: true %>
-        </div>
-      <% else %>
-        <%= render "regional_ambassador/dashboards/quick_view" %>
       <% end %>
     </div>
   </div>
 
   <div class="grid__col-5 grid__col--bleed-y">
     <div class="col--sticky">
-      <%= render "regional_ambassador/dashboards/info_sidebar" %>
     </div>
   </div>
 </div>

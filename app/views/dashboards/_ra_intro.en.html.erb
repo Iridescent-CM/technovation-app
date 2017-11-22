@@ -1,12 +1,12 @@
 <% ra_dashboard ||= false %>
 
 <% if regional_ambassador.provided_intro? %>
-  <div class="panel ra-intro">
-    <% if ra_dashboard %>
-      <h5 class="reset">
-        Your program introduction
-      </h5>
-    <% else %>
+  <% if ra_dashboard %>
+    <h5 class="reset">
+      Your program introduction
+    </h5>
+  <% else %>
+    <div class="panel ra-intro">
       <h5 class="reset">
         Meet your Regional Ambassador!
       </h5>
@@ -15,20 +15,23 @@
         class: "grid__cell-img" %>
 
       <h6><%= regional_ambassador.full_name %></h6>
+  <% end %>
+
+  <%= simple_format regional_ambassador.intro_summary %>
+
+  <ul class="reset">
+    <% regional_ambassador.regional_links.each do |link| %>
+      <li>
+        <% if link.name == "email" %>
+          <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
+        <% else %>
+          <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
+        <% end %>
+      </li>
     <% end %>
+  </ul>
 
-    <%= simple_format regional_ambassador.intro_summary %>
-
-    <ul class="reset">
-      <% regional_ambassador.regional_links.each do |link| %>
-        <li>
-          <% if link.name == "email" %>
-            <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
-          <% else %>
-            <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <% unless ra_dashboard %>
+    </div>
+  <% end %>
 <% end %>
