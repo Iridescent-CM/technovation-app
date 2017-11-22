@@ -1,9 +1,9 @@
 module FriendlySubregion
   def self.call(record, options = {})
-    return unless record.respond_to?(:country) and
+    return "" unless record.respond_to?(:country) and
       record.respond_to?(:state_province)
 
-    return if (record.country.nil? or record.country.strip == "") or
+    return "" if (record.country.nil? or record.country.strip == "") or
       (record.state_province.nil? or record.state_province.strip == "")
 
     return record.state_province if Carmen::Country.coded(record.country).blank?
