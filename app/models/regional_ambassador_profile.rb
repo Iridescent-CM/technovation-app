@@ -104,6 +104,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
           background_check_complete?
   end
 
+  def onboarding?
+    not onboarded?
+  end
+
   def authenticated?
     true
   end
