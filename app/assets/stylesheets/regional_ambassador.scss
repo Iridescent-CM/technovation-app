@@ -32,6 +32,12 @@ ul, ol {
       margin: 0 0 1rem;
       padding: 0;
 
+      &:after {
+        clear:both;
+        content:" ";
+        display:block;
+      }
+
       .feed-item--time {
         padding: 0.3rem 0 0;
         text-align: right;
