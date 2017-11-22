@@ -37,7 +37,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   has_many :regional_links, dependent: :destroy
 
   accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
-    attrs.values.any?(&:blank?)
+    attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
   }, allow_destroy: true
 
   delegate :submitted?,
