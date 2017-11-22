@@ -21,7 +21,7 @@ RSpec.describe MergeRAMentors do
 
   it "merges a mentor profile into an RA's account" do
     expect(MentorProfile.exists?(mentor.id)).not_to be true
-    expect(ra.account.mentor_profile).to be_present
+    expect(ra.account.reload.mentor_profile).to be_present
   end
 
   it "updates the RAs email to the desired email" do
