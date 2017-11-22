@@ -19,17 +19,23 @@ class SeasonToggles
         end
       end
 
-      def survey_link_available?(scope)
-        %w{text url changed_at}.all? do |key|
+      def survey_link_available?(scope, account = nil)
+        link_exists = %w{text url changed_at}.all? do |key|
           !!survey_link(scope, key) and not survey_link(scope, key).empty?
+        end
+
+        if account.present?
+          not account.took_survey? and
+            not account.address_details.blank? and
+              link_exists
+        else
+          link_exists
         end
       end
 
       def show_survey_link_modal?(scope, account)
-        not account.took_survey? and
-          not account.address_details.blank? and
-            survey_link_available?(scope) and
-              account.needs_survey_reminder?
+        survey_link_available?(scope, account) and
+          account.needs_survey_reminder?
       end
 
       def set_survey_link(scope, text, url, long_desc = nil)
