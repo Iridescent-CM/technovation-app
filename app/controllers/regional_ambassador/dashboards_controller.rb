@@ -3,6 +3,15 @@ module RegionalAmbassador
     def show
       if current_ambassador.needs_intro_prompt?
         current_ambassador.regional_links.build
+
+        unless params[:anchoring_to_info]
+          redirect_to(
+            regional_ambassador_dashboard_path(
+              anchor: "!ra-info",
+              anchoring_to_info: true,
+            )
+          ) and return
+        end
       else
         @top_inactive_mentors = Account.in_region(current_ambassador)
           .not_staff
