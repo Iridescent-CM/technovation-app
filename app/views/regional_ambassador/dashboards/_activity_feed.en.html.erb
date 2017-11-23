@@ -1,22 +1,10 @@
-<ul class="feed">
-  <%= render_activities(@activities) %>
-</ul>
+<h3 class="reset">Recent activity</h3>
 
-<h5 class="reset">
-  Inactive mentors
-</h5>
+<%= link_to "View all activity in your region",
+  regional_ambassador_activities_path %>
 
-<% if @top_inactive.empty? %>
-  <p>All your mentors have been active recently. Yay!</p>
-<% end %>
+<hr />
 
-<ul class="feed">
-  <% @top_inactive.sort { |a, b| a.activities.last.created_at <=> b.activities.last.created_at }.each do |inactive| %>
-    <li class="feed--item">
-      <%= image_tag inactive.photo_url, class: "thumbnail-xs" %>
-      <%= link_to inactive.name, [:regional_ambassador, inactive] %>
-      hasn't been active for
-      <%= time_ago_in_words(inactive.activities.last.created_at) %>
-    </li>
-  <% end %>
-</ul>
+<table class="datagrid">
+  <%= render_activities(@recent_activities) %>
+</table>

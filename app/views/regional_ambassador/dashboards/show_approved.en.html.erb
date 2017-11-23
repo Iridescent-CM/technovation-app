@@ -63,7 +63,7 @@
           <% if current_ambassador.needs_intro_prompt? %>
             <p>Please fill in your regional program introduction to access this section</p>
           <% else %>
-            Under construction... activity
+            <%= render 'regional_ambassador/dashboards/activity_feed' %>
           <% end %>
         </div>
 
