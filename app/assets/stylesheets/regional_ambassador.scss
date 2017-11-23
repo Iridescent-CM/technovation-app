@@ -72,3 +72,13 @@ ul, ol {
 .center {
   text-align: center;
 }
+
+#ra-info {
+  ul, ol {
+    &.reset {
+      li {
+        margin: 0 0 1rem;
+      }
+    }
+  }
+}
