@@ -34,7 +34,7 @@
 
 <p>
   <%= link_to "Download the PDF",
-    "https://iridescentsupport.zendesk.com/hc/en-us/articles/115002731034-How-do-I-submit-the-consent-forms-#article-comments",
+    ENV.fetch("PARENT_CONSENT_PDF"),
     target: "_blank" %>
 </p>
 
