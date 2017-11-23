@@ -32,9 +32,11 @@
           <%= image_tag current_ambassador.profile_image_url,
             class: "grid__cell-img thumbnail-md" %>
 
-          <h3 class="reset"><%= current_ambassador.full_name %></h3>
+          <div>
+            <h6 class="small reset"><%= current_ambassador.full_name %></h6>
 
-          <%= link_to "Edit your profile", regional_ambassador_profile_path %>
+            <%= link_to "edit profile", regional_ambassador_profile_path, class: "small" %>
+          </div>
         </div>
 
         <%= render 'regional_ambassador/dashboards/menu' %>
