@@ -218,6 +218,7 @@ Rails.application.routes.draw do
   resources :passwords, only: [:new, :create]
 
   get "/parental_consents/edit", to: "parental_consents#edit"
+  get "/parental_consents/new", to: "parental_consents#new"
   resource :parental_consent, only: [:new, :edit]
   resources :parental_consents, only: [:show, :update]
 
