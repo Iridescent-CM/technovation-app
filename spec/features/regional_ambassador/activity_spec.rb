@@ -36,7 +36,7 @@ RSpec.feature "RAs viewing regional activity" do
       # 2. register season
       # 3. joined team
 
-      expect(page).to have_content("joined the team", count: 2)
+      expect(page).to have_content("joined a team", count: 2)
       # 1. mentor
       # 2. student
 
@@ -46,7 +46,7 @@ RSpec.feature "RAs viewing regional activity" do
       # 3. joined team
       # 4. left team
 
-      expect(page).to have_content("left the team", count: 1)
+      expect(page).to have_content("left a team", count: 1)
     end
   end
 end
