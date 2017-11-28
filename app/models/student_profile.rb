@@ -183,7 +183,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def parental_consent_signed?
-    parental_consent.signed?
+    !!parental_consent && parental_consent.signed?
   end
 
   def can_search_teams?
