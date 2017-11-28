@@ -42,7 +42,8 @@ class StudentProfile < ActiveRecord::Base
         "parental_consents.id IS NULL OR
            parental_consents.status = ? OR
              accounts.location_confirmed = ? OR
-               accounts.email_confirmed_at IS NULL",
+               accounts.location_confirmed IS NULL OR
+                 accounts.email_confirmed_at IS NULL",
         ParentalConsent.statuses[:pending],
         false
       )
