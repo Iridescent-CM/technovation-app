@@ -1,22 +1,7 @@
-<% provide :title, "Activities" %>
+<% provide :title, "RA Data • Activity" %>
 
-<div class="panel">
-  <table class="datagrid">
-    <thead>
-      <tr>
-        <th>Avatar</th>
-        <th>Profile type</th>
-        <th>Name</th>
-        <th>Activity</th>
-        <th>Target</th>
-        <th>When</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <%= render_activities(@activities) %>
-    </tbody>
-  </table>
-
-  <%= will_paginate(@activities) %>
-</div>
+<%= render 'datagrid/datagrid',
+  grid: @activities_grid,
+  form_url: regional_ambassador_activities_path,
+  model_name: "activity",
+  scope: :regional_ambassador %>

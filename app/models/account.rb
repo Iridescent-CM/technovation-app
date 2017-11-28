@@ -276,6 +276,10 @@ class Account < ActiveRecord::Base
       ) or NullAuth.new
   end
 
+  def avatar_url
+    profile_image_url
+  end
+
   def took_survey!
     update_column(:survey_completed_at, Time.current)
   end

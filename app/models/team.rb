@@ -28,8 +28,12 @@ class Team < ActiveRecord::Base
   }
 
 
+  def avatar_url
+    team_photo_url
+  end
+
   def scope_name
-    "student" # Needed for RPE selection views that are shared by judges
+    "team"
   end
 
   def photo

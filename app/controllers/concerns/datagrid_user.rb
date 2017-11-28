@@ -4,7 +4,8 @@ module DatagridUser
   included do
     helper_method :default_or_saved_search_params?,
       :default_export_filename,
-      :param_root
+      :param_root,
+      :csv_export_supported?
 
     before_action -> {
       @saved_searches = current_profile.saved_searches
@@ -165,5 +166,9 @@ module DatagridUser
     when "teams_grid"
       "technovation-teams-#{Time.current}#{'.' + format.to_s if format}"
     end
+  end
+
+  def csv_export_supported?(grid)
+    grid.assets.any?
   end
 end

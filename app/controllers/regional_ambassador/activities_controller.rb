@@ -1,17 +1,19 @@
 module RegionalAmbassador
   class ActivitiesController < RegionalAmbassadorController
-    def index
-      trackable_user_ids = Account.current
-        .not_staff
-        .in_region(current_ambassador)
-        .pluck(:id) - [current_ambassador.account_id]
+    include DatagridUser
 
-      trackable_team_ids = Team.current
-        .in_region(current_ambassador)
-        .pluck(:id)
+    use_datagrid with: ActivitiesGrid,
+      html_scope: ->(scope, user, params) {
+        trackable_user_ids = Account.current
+          .not_staff
+          .in_region(user)
+          .pluck(:id) - [user.account_id]
 
-      @activities = PublicActivity::Activity.distinct
-        .where("
+        trackable_team_ids = Team.current
+          .in_region(user)
+          .pluck(:id)
+
+        scope.where("
             (activities.trackable_id IN (?) AND activities.trackable_type = ?) OR
             (activities.trackable_id IN (?) AND activities.trackable_type = ?)
           ",
@@ -20,8 +22,15 @@ module RegionalAmbassador
           trackable_team_ids,
           "Team"
         )
-        .order("created_at desc")
         .page(params[:page])
+      }
+    private
+    def grid_params
+      params[:activities_grid]
+    end
+
+    def csv_export_supported?(grid)
+      false
     end
   end
 end
