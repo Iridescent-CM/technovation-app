@@ -60,8 +60,6 @@ RSpec.feature "Admin UI for season toggles:" do
   end
 
   scenario "configure team submissions editable" do
-    skip "Rebuilding submissions, submission editing not back yet"
-
     SeasonToggles.team_submissions_editable = false
     visit edit_admin_season_schedule_settings_path
 
@@ -69,6 +67,16 @@ RSpec.feature "Admin UI for season toggles:" do
     click_button "Save"
 
     expect(SeasonToggles.team_submissions_editable?).to be true
+  end
+
+  scenario "configure team submissions not editable" do
+    SeasonToggles.team_submissions_editable = true
+    visit edit_admin_season_schedule_settings_path
+
+    page.uncheck "season_toggles[team_submissions_editable]"
+    click_button "Save"
+
+    expect(SeasonToggles.team_submissions_editable?).to be false
   end
 
   scenario "configure regional pitch event selection" do
