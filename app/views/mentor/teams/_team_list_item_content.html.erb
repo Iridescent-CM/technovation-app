@@ -19,6 +19,16 @@
       Submission app name: <strong><%= team.submission.app_name %></strong>
     </p>
 
+    <% if SeasonToggles.team_submissions_editable? %>
+      <p>
+        <%= link_to "Edit this team's submission",
+          mentor_team_submission_path(team.submission),
+          class: "button small" %>
+      </p>
+    <% else %>
+      <p class="hint">Submissions are not editable at this time.</p>
+    <% end %>
+
     <p>
       <%= link_to "See how it looks to the judges",
         app_path(team.submission),
