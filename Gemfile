@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "~> 2.4"
 
 gem 'rails', '~> 5.1'
-gem 'puma', '~> 3.10'
+gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
@@ -11,7 +11,7 @@ gem 'textacular', '~> 5.0'
 gem 'pdf-forms', '~> 1.1'
 
 gem 'public_activity', "~> 1.5"
-gem "paranoia", '~> 2.3'
+gem "paranoia", '~> 2.4'
 gem 'counter_culture', '~> 1.8'
 
 gem "autoprefixer-rails", "~> 6.7"
@@ -73,7 +73,7 @@ gem 'carrierwave_direct', "~> 0.0"
 gem 'checkr-official', "~> 1.2", require: "checkr"
 
 gem 'countries', '~> 1.2', require: "countries/global"
-gem 'carmen', '~> 1.0'
+gem 'carmen', '~> 1.1'
 
 gem 'indefinite_article', "~> 0.2"
 
@@ -116,7 +116,7 @@ group :test do
 end
 
 group :production, :development do
-  gem 'premailer-rails', "~> 1.9"
+  gem 'premailer-rails', "~> 1.10"
 end
 
 group :production do
