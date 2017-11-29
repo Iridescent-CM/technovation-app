@@ -6,7 +6,8 @@ RSpec.feature "Toggling editable team submissions" do
   let(:team) { FactoryBot.create(:team) }
 
   def set_editable_team_submissions(bool)
-    SeasonToggles.team_submissions_editable = bool
+    SeasonToggles.team_submissions_editable = !!bool
+    expect(SeasonToggles.team_submissions_editable?).to be !!bool
   end
 
   def create_authenticated_user_on_team(scope, options)
@@ -21,7 +22,7 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(true) }
 
       scenario "start and edit new submission" do
-        skip "Rebuilding mentor dashboard, submission editing not back yet"
+        skip "Submissions first page not ready just yet"
 
         create_authenticated_user_on_team(:mentor, submission: false)
 
@@ -49,7 +50,7 @@ RSpec.feature "Toggling editable team submissions" do
       end
 
       scenario "edit technical checklist" do
-        skip "Rebuilding mentor dashboard, submission editing not back yet"
+        skip "I don't understand the error happening in this spec"
 
         create_authenticated_user_on_team(:mentor, submission: true)
 
@@ -76,19 +77,17 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(false) }
 
       scenario "try to edit existing submission" do
-        skip "Rebuilding mentor dashboard, submission editing not back yet"
-
         create_authenticated_user_on_team(:mentor, submission: true)
 
         within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           expect(page).to have_content(
-            "Submissions may not be started at this time"
+            "Submissions are not editable at this time"
           )
           expect(page).not_to have_link("Edit this team's submission")
         end
 
-        visit mentor_team_submission_path(team.submission, team_id: team.id)
+        visit mentor_team_submission_path(team.reload.submission, team_id: team.id)
         expect(page).not_to have_css(".appy-button", text: "Edit")
 
         visit mentor_team_path(team)
@@ -102,7 +101,7 @@ RSpec.feature "Toggling editable team submissions" do
         within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           expect(page).not_to have_link("Start a submission now")
-          expect(page).to have_content("Submissions may not be started at this time")
+          expect(page).to have_content("Submissions are not editable at this time")
         end
 
         visit mentor_team_path(team)
@@ -129,7 +128,7 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(true) }
 
       scenario "begin and edit a submission" do
-        skip "Rebuilding submissions, submission editing not back yet"
+        skip "Submission intro page is not ready yet"
 
         create_authenticated_user_on_team(:student, submission: false)
 
@@ -150,7 +149,7 @@ RSpec.feature "Toggling editable team submissions" do
       end
 
       scenario "edit technical checklist" do
-        skip "Rebuilding submissions, submission editing not back yet"
+        skip "I don't understand the error happening in this spec"
 
         create_authenticated_user_on_team(:student, submission: true)
 
@@ -173,8 +172,6 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(false) }
 
       scenario "try to edit an existing submission" do
-        skip "Rebuilding submissions, submission editing not back yet"
-
         create_authenticated_user_on_team(:student, submission: true)
 
         expect(page).to have_content("submissions are not editable")
@@ -188,8 +185,6 @@ RSpec.feature "Toggling editable team submissions" do
       end
 
       scenario "try to begin a new submission" do
-        skip "Rebuilding submissions, submission editing not back yet"
-
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:student, submission: false)
 
@@ -201,8 +196,6 @@ RSpec.feature "Toggling editable team submissions" do
       end
 
       scenario "try to edit technical checklist" do
-        skip "Rebuilding submissions, submission editing not back yet"
-
         create_authenticated_user_on_team(:student, submission: true)
 
         visit student_team_submission_path(team.submission, team_id: team.id)
