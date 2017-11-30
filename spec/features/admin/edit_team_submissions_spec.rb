@@ -101,7 +101,7 @@ RSpec.feature "Toggling editable team submissions" do
         within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           expect(page).not_to have_link("Start a submission now")
-          expect(page).to have_content("Submissions are not editable at this time")
+          expect(page).to have_content("Submissions may not be started at this time.")
         end
 
         visit mentor_team_path(team)
