@@ -1,9 +1,26 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
-      <h1 class="page-heading">Submissions are not ready yet</h1>
-      <p>We are hard at work on a new design for the <%= Season.current.year %> season.</p>
-      <p>Technovation will email all teams when the submissions section is open!</p>
+      <div class="notice">ALLI & RUBY: THIS PAGE IS STILL A WORK IN PROGRESS!!!!!!</div>
+
+      <%= form_with model: [:student, @team_submission] do |f| %>
+        <div class="field">
+          <p>Before starting your submission, your team must agree to the honor code</p>
+
+          <p>---link or text to honor code will be here---</p>
+
+          <%= f.check_box :integrity_affirmed,
+            id: :team_submission_integrity_affirmed %>
+
+          <%= f.label :integrity_affirmed, "We agree to the honor code" %>
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= f.submit "Start now!", class: "button" %>
+          </p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

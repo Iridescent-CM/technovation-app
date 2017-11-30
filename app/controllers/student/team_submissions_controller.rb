@@ -9,11 +9,11 @@ module Student
           alert: "Sorry, the submission deadline has passed."
       end
 
-      @team_submission = if current_team.submission.present?
-                           current_team.submission
-                         else
-                           current_team.team_submissions.build
-                         end
+      if current_team.submission.present?
+        redirect_to student_team_submission_path(current_team.submission)
+      else
+        @team_submission = current_team.team_submissions.build
+      end
     end
 
     def edit
