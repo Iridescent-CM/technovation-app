@@ -30,15 +30,13 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Confirm submission deliverables are created solely by team students" do
-    skip "Submissions UI is on the way very soon"
-
     student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
     click_link "My team's submission"
 
     check "team_submission[integrity_affirmed]"
-    click_button "Get Started"
+    click_button "Start now!"
 
     expect(current_path).to eq(
       student_team_submission_path(TeamSubmission.last)
