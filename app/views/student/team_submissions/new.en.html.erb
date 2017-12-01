@@ -3,7 +3,7 @@
     <div class="panel">
       <div class="notice">ALLI & RUBY: THIS PAGE IS STILL A WORK IN PROGRESS!!!!!!</div>
 
-      <%= form_with model: [:student, @team_submission] do |f| %>
+      <%= form_with model: [:student, @team_submission], local: true do |f| %>
         <div class="field">
           <p>Before starting your submission, your team must agree to the honor code</p>
 
