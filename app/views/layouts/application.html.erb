@@ -9,7 +9,7 @@
 
     <title>
       <%= content_for?(:title) ?
-        "#{yield(:title)} • #{t("views.application.site_title")}".html_safe :
+        sanitize("#{yield(:title)} • #{t("views.application.site_title")}") :
         t("views.application.site_title_default") %>
     </title>
 
