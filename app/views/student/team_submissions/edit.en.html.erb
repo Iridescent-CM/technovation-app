@@ -48,4 +48,42 @@
     <%= link_to "Upload screenshots of your app",
       edit_student_team_submission_path(@team_submission, piece: :screenshots) %>
   </dd>
+
+  <dt>Business plan</dt>
+  <dd>
+    <% if current_team.senior? %>
+      <%= link_to "Upload your team's business plan",
+        edit_student_team_submission_path(@team_submission, piece: :business_plan) %>
+    <% else %>
+      <p>
+        <%= current_team.name %> is a <%= current_team.division_name.humanize %> Division team.
+      </p>
+
+      <p>
+        Uploading a business plan is not required in the Junior Division.
+        If your team has put one together, that is awesome!
+        You can hold on to it for your own records and be extremely proud!
+      </p>
+    <% end %>
+  </dd>
+
+  <dt>Pitch presentation slides</dt>
+  <dd>
+    <% if current_team.selected_regional_pitch_event.live? %>
+      <%= link_to "Upload the pitch presentation slides for your live event",
+        edit_student_team_submission_path(@team_submission, piece: :pitch_presentation) %>
+    <% else %>
+      <p>
+        <%= current_team.name %> is not currently set to attend a live regional pitch event.
+      </p>
+
+      <p>
+        If your team is invited to a live regional pitch event and you plan to attend, you will be required to upload your pitch presentation slides.
+      </p>
+
+      <p class="hint">
+        (by the way, Regional Pitch Event invitations will take place in March and April)
+      </p>
+    <% end %>
+  </dd>
 </dl>
