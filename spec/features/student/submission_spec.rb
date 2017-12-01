@@ -52,7 +52,6 @@ RSpec.feature "Student team submissions" do
     submission = student.team.team_submissions.create!({ integrity_affirmed: true })
     sign_in(student)
 
-
     click_link "My team's submission"
 
     expect(page).to have_link(
@@ -91,6 +90,64 @@ RSpec.feature "Student team submissions" do
     )
   end
 
-  scenario "See senior team submission pieces on TOC"
-  scenario "See live pitch event submission pieces on TOC"
+  scenario "See senior team submission pieces on TOC" do
+    student = FactoryBot.create(:student, :on_team)
+    submission = student.team.team_submissions.create!({ integrity_affirmed: true })
+
+    sign_in(student)
+
+    click_link "My team's submission"
+
+    expect(page).not_to have_link(
+      "Upload your team's business plan",
+    )
+
+    expect(page).to have_content("#{student.team.name} is a Junior Division team.")
+    expect(page).to have_content(
+      "Uploading a business plan is not required in the Junior Division. If your team has put one together, that is awesome! You can hold on to it for your own records and be extremely proud!"
+    )
+
+    ProfileUpdating.execute(student, :student, account_attributes: {
+      id: student.account_id,
+      date_of_birth: 15.years.ago,
+    })
+
+    click_link "My team's submission"
+
+    expect(page).to have_link(
+      "Upload your team's business plan",
+      href: edit_student_team_submission_path(submission, piece: :business_plan)
+    )
+  end
+
+  scenario "See live pitch event submission pieces on TOC" do
+    student = FactoryBot.create(:student, :on_team)
+    submission = student.team.team_submissions.create!({ integrity_affirmed: true })
+
+    sign_in(student)
+
+    click_link "My team's submission"
+
+    expect(page).not_to have_link(
+      "Upload the pitch presentation slides for your live event",
+    )
+
+    expect(page).to have_content(
+      "#{student.team.name} is not currently set to attend a live regional pitch event."
+    )
+
+    expect(page).to have_content(
+      "If your team is invited to a live regional pitch event and you plan to attend, you will be required to upload your pitch presentation slides"
+    )
+
+    rpe = FactoryBot.create(:regional_pitch_event)
+    rpe.teams << student.team
+
+    click_link "My team's submission"
+
+    expect(page).to have_link(
+      "Upload the pitch presentation slides for your live event",
+      href: edit_student_team_submission_path(submission, piece: :pitch_presentation)
+    )
+  end
 end
