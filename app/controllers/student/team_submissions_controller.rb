@@ -17,7 +17,17 @@ module Student
     end
 
     def edit
-      redirect_to student_dashboard_path, alert: "Sorry, can't go there"
+      @team_submission = current_team.submission
+
+      if @team_submission.present?
+        begin
+          render "team_submissions/pieces/#{params.fetch(:piece)}"
+        rescue ActionView::MissingTemplate, ActionController::ParameterMissing
+          redirect_to student_team_submission_path(@team_submission)
+        end
+      else
+        redirect_to new_student_team_submission_path
+      end
     end
 
     def create
