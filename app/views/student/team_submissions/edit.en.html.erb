@@ -1,96 +1,51 @@
-<h1 class="appy-title">
-  <%= t("views.team_submissions.show.title",
-        team_name: @team_submission.team.name) %>
+<% provide :title, "My team's submission" %>
+
+<h1 class="page-heading">
+  <%= t("views.team_submissions.show.title", team_name: @team_submission.team.name) %>
 </h1>
 
 <div class="notice">ALLI & RUBY: THIS PAGE IS STILL A WORK IN PROGRESS!!!!!!</div>
 
-<p>
-  <center>
-    <strong>
-      Track your progress from
-      <%= link_to "your dashboard!", [current_scope, :dashboard] %>
-    </strong>
-  </center>
-</p>
+<dl>
+  <dt>Your app's name</dt>
+  <dd>
+    <%= link_to "Set your app's name",
+      edit_student_team_submission_path(@team_submission, piece: :app_name) %>
+  </dd>
 
-<div data-team-submissions class="team-submissions">
-  <div class="team-submissions__row-left submissions-col">
-    <div class="team-submissions__fixed-col">
-      <%= render 'student/team_submissions/steps/team_photo',
-        submission: @team_submission,
-        uploader: @team_photo_uploader %>
+  <dt>A description of your app</dt>
+  <dd>
+    <%= link_to "Add your app's description",
+      edit_student_team_submission_path(@team_submission, piece: :app_description) %>
+  </dd>
 
-      <%= render 'student/team_submissions/steps/affirm_integrity',
-        submission: @team_submission %>
-    </div>
-  </div>
+  <dt>Demo video</dt>
+  <dd>
+    <%= link_to "Add the demo video link",
+      edit_student_team_submission_path(@team_submission, piece: :demo_video_link) %>
+  </dd>
 
-  <div class="team-submissions__row-center submissions-col">
-    <%= render 'student/team_submissions/steps/app_description',
-      submission: @team_submission %>
+  <dt>Pitch video</dt>
+  <dd>
+    <%= link_to "Add the pitch video link",
+      edit_student_team_submission_path(@team_submission, piece: :pitch_video_link) %>
+  </dd>
 
-    <%= render 'student/team_submissions/steps/sustainable_development_goals',
-      submission: @team_submission %>
+  <dt>Development platform</dt>
+  <dd>
+    <%= link_to "Select the development platform that your team used",
+      edit_student_team_submission_path(@team_submission, piece: :development_platform) %>
+  </dd>
 
-    <div id="team-submission-videos" class="tabs">
-      <ul class="tab-menu">
-        <li class="tab-link">
-          <button
-            role="button"
-            class="tab-button"
-            data-tab-id="tab--team_submission_pitch_video">
-            Pitch
-          </button>
-        </li>
+  <dt>Source code</dt>
+  <dd>
+    <%= link_to "Upload your app's source code",
+      edit_student_team_submission_path(@team_submission, piece: :source_code) %>
+  </dd>
 
-        <li class="tab-link">
-          <button
-            role="button"
-            class="tab-button"
-            data-tab-id="tab--team_submission_demo_video">
-            Demo
-          </button>
-        </li>
-      </ul>
-
-      <div class="content">
-        <div class="tab-content" id="tab--team_submission_pitch_video">
-          <%= render 'student/team_submissions/steps/pitch_video',
-            submission: @team_submission %>
-        </div>
-
-        <div class="tab-content tab-content__hiding" id="tab--team_submission_demo_video">
-          <%= render 'student/team_submissions/steps/demo_video',
-            submission: @team_submission %>
-        </div>
-      </div>
-    </div>
-
-    <%= render 'student/team_submissions/steps/screenshots',
-      submission: @team_submission %>
-  </div>
-
-  <div class="team-submissions__row-right submissions-col">
-    <div class="team-submissions__fixed-col">
-      <%= render 'student/team_submissions/steps/technical_checklist',
-        submission: @team_submission %>
-
-      <%= render 'student/team_submissions/steps/development_platform',
-        submission: @team_submission %>
-
-      <%= render 'student/team_submissions/steps/source_code',
-        submission: @team_submission %>
-
-      <% if Division.for(@team_submission.team).senior? %>
-        <%= render 'student/team_submissions/steps/business_plan',
-          submission: @team_submission %>
-      <% end %>
-
-      <% if @team_submission.team.selected_regional_pitch_event.live? %>
-        <%= render 'student/team_submissions/steps/pitch_presentation',
-          submission: @team_submission %>
-      <% end %>
-    </div>
-  </div>
-</div>
+  <dt>Screenshots</dt>
+  <dd>
+    <%= link_to "Upload screenshots of your app",
+      edit_student_team_submission_path(@team_submission, piece: :screenshots) %>
+  </dd>
+</dl>
