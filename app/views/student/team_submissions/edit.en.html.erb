@@ -6,48 +6,62 @@
 
 <div class="notice">ALLI & RUBY: THIS PAGE IS STILL A WORK IN PROGRESS!!!!!!</div>
 
-<dl>
-  <dt>Your app's name</dt>
-  <dd>
-    <%= link_to "Set your app's name",
-      edit_student_team_submission_path(@team_submission, piece: :app_name) %>
-  </dd>
+<dl class="submission-pieces">
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Your app's name",
+    scope: :student,
+    attribute: :app_name,
+    cta_when_empty: "Set your app's name",
+    cta_when_filled: "Change your app's name" %>
 
-  <dt>A description of your app</dt>
-  <dd>
-    <%= link_to "Add your app's description",
-      edit_student_team_submission_path(@team_submission, piece: :app_description) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "A description of your app",
+    scope: :student,
+    attribute: :app_description,
+    cta_when_empty: "Add your app's description",
+    cta_when_filled: "Change your app's description" %>
 
-  <dt>Demo video</dt>
-  <dd>
-    <%= link_to "Add the demo video link",
-      edit_student_team_submission_path(@team_submission, piece: :demo_video_link) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Demo video",
+    scope: :student,
+    attribute: :demo_video_link,
+    cta_when_empty: "Add the demo video link",
+    cta_when_filled: "Change the demo video link" %>
 
-  <dt>Pitch video</dt>
-  <dd>
-    <%= link_to "Add the pitch video link",
-      edit_student_team_submission_path(@team_submission, piece: :pitch_video_link) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Pitch video",
+    scope: :student,
+    attribute: :pitch_video_link,
+    cta_when_empty: "Add the pitch video link",
+    cta_when_filled: "Change the pitch video link" %>
 
-  <dt>Development platform</dt>
-  <dd>
-    <%= link_to "Select the development platform that your team used",
-      edit_student_team_submission_path(@team_submission, piece: :development_platform) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Development platform",
+    scope: :student,
+    attribute: :development_platform,
+    cta_when_empty: "Select the development platform that your team used",
+    cta_when_filled: "Select a different development platform option" %>
 
-  <dt>Source code</dt>
-  <dd>
-    <%= link_to "Upload your app's source code",
-      edit_student_team_submission_path(@team_submission, piece: :source_code) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Source code",
+    scope: :student,
+    attribute: :source_code,
+    cta_when_empty: "Upload your app's source code",
+    cta_when_filled: "Change your uploaded source code" %>
 
-  <dt>Screenshots</dt>
-  <dd>
-    <%= link_to "Upload screenshots of your app",
-      edit_student_team_submission_path(@team_submission, piece: :screenshots) %>
-  </dd>
+  <%= render 'team_submissions/pieces/piece',
+    submission: @team_submission,
+    title: "Screenshots",
+    scope: :student,
+    attribute: :screenshots,
+    cta_when_empty: "Upload screenshots of your app",
+    cta_when_filled: "Make changes to your screenshots" %>
 
   <dt>Business plan</dt>
   <dd>
@@ -78,7 +92,8 @@
       </p>
 
       <p>
-        If your team is invited to a live regional pitch event and you plan to attend, you will be required to upload your pitch presentation slides.
+        If your team is invited to a live regional pitch event and you plan to attend,
+        you will be required to upload your pitch presentation slides.
       </p>
 
       <p class="hint">
