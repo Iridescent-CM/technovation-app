@@ -19,8 +19,6 @@
     <% end %>
 
     <%= f.input :source_code %>
-    <%= f.input :source_code_file_uploaded, label: "Link to the uploaded file, and NOT the URL" %>
-    <%= f.input :source_code_external_url, label: "Or, Source code URL" %>
   </div>
 
   <%= f.input :development_platform, collection: TeamSubmission.development_platforms.keys %>
@@ -39,8 +37,6 @@
       <%= b.hidden_field :id %>
 
       <%= b.input :uploaded_file, label: "Business plan file" %>
-      <%= b.input :file_uploaded, label: "Link to the uploaded file, and NOT the URL" %>
-      <%= b.input :remote_file_url, label: "Or, business plan URL" %>
     </div>
   <% end %>
 

@@ -119,50 +119,36 @@ module Mentor
     end
 
     def team_submission_params
-      sub_params = if SeasonToggles.team_submissions_editable?
-                    params.require(:team_submission).permit(
-                      :integrity_affirmed,
-                      :source_code,
-                      :source_code_external_url,
-                      :app_description,
-                      :stated_goal,
-                      :stated_goal_explanation,
-                      :app_name,
-                      :demo_video_link,
-                      :pitch_video_link,
-                      :development_platform_other,
-                      :development_platform,
-                      :source_code_file_uploaded,
-                      business_plan_attributes: [
-                        :id,
-                        :remote_file_url,
-                      ],
-                      pitch_presentation_attributes: [
-                        :id,
-                        :remote_file_url,
-                      ],
-                      screenshots: [],
-                    )
-                   else
-                    params.require(:team_submission).permit(
-                      pitch_presentation_attributes: [
-                        :id,
-                        :remote_file_url,
-                      ],
-                    )
-                   end
-      sub_params.tap do |tapped|
-        if tapped[:pitch_presentation_attributes]
-          tapped[:pitch_presentation_attributes][:file_uploaded] = false
-        end
-
-        unless tapped[:source_code_external_url].blank?
-          tapped[:source_code_file_uploaded] = false
-        end
-
-        if tapped[:business_plan_attributes]
-          tapped[:business_plan_attributes][:file_uploaded] = false
-        end
+      if SeasonToggles.team_submissions_editable?
+        params.require(:team_submission).permit(
+          :integrity_affirmed,
+          :source_code,
+          :source_code_external_url,
+          :app_description,
+          :stated_goal,
+          :stated_goal_explanation,
+          :app_name,
+          :demo_video_link,
+          :pitch_video_link,
+          :development_platform_other,
+          :development_platform,
+          business_plan_attributes: [
+            :id,
+            :remote_file_url,
+          ],
+          pitch_presentation_attributes: [
+            :id,
+            :remote_file_url,
+          ],
+          screenshots: [],
+        )
+      else
+        params.require(:team_submission).permit(
+          pitch_presentation_attributes: [
+            :id,
+            :remote_file_url,
+          ],
+        )
       end
     end
   end
