@@ -273,11 +273,9 @@ ALTER SEQUENCE background_checks_id_seq OWNED BY background_checks.id;
 CREATE TABLE business_plans (
     id integer NOT NULL,
     uploaded_file character varying,
-    remote_file_url character varying,
     team_submission_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    file_uploaded boolean
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -881,9 +879,7 @@ ALTER SEQUENCE parental_consents_id_seq OWNED BY parental_consents.id;
 CREATE TABLE pitch_presentations (
     id integer NOT NULL,
     uploaded_file character varying,
-    remote_file_url character varying,
     team_submission_id integer NOT NULL,
-    file_uploaded boolean,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -1216,7 +1212,6 @@ CREATE TABLE submission_scores (
     id integer NOT NULL,
     team_submission_id integer,
     judge_profile_id integer,
-    sdg_alignment integer DEFAULT 0,
     evidence_of_problem integer DEFAULT 0,
     problem_addressed integer DEFAULT 0,
     app_functional integer DEFAULT 0,
@@ -1317,16 +1312,12 @@ CREATE TABLE team_submissions (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     source_code character varying,
-    source_code_external_url character varying,
     app_description text,
-    stated_goal integer,
-    stated_goal_explanation text,
     app_name character varying,
     demo_video_link character varying,
     pitch_video_link character varying,
     development_platform_other character varying,
     development_platform integer,
-    source_code_file_uploaded boolean,
     slug character varying,
     submission_scores_count integer,
     judge_opened_id integer,
@@ -2796,6 +2787,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171117150649'),
 ('20171120200105'),
 ('20171120200239'),
-('20171121175628');
+('20171121175628'),
+('20171204220222'),
+('20171204220418'),
+('20171204221323');
 
 
