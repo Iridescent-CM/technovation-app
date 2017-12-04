@@ -246,9 +246,9 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def pitch_presentation_url
-    if pitch_presentation.file_uploaded?
+    if !!pitch_presentation and pitch_presentation.file_uploaded?
       pitch_presentation.file_url
-    else
+    elsif !!pitch_presentation
       pitch_presentation.remote_file_url
     end
   end
