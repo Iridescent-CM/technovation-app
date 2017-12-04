@@ -145,9 +145,11 @@
             confirm: "Are you sure you want to DROP #{@account.first_name} OUT from Season #{Season.current.year}?",
           }
         ) %>
-      <% end %>
+      </div>
+    <% end %>
 
-      <% if @account.student_profile and @account.parental_consent.nil? %>
+    <% if @account.student_profile and @account.parental_consent.pending? %>
+      <div class="panel">
         <%= link_to "Indicate that a paper parental consent is on file",
           admin_paper_parental_consent_path(id: @account.student_profile.id),
           class: "button secondary",
