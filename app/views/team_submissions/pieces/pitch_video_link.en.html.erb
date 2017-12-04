@@ -16,5 +16,12 @@
         </div>
       <% end %>
     </div>
+
+    <% unless @team_submission.pitch_video_link.blank? %>
+      <div class="panel">
+        <p>Your team has previously linked this video:</p>
+        <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
+      </div>
+    <% end %>
   </div>
 </div>
