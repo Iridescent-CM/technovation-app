@@ -6,13 +6,15 @@
 %>
 
 <div id="<%= dom_id(submission) %>_<%= attribute %>" class="panel">
-  <h3 class="submission-piece--name"><%= title %></h3>
+  <h3 class="panel--heading submission-piece--name"><%= title %></h3>
 
   <div class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
     <% if value_is_blank %>
-      <%= link_to cta_when_empty,
-        send(base_path_name, submission, piece: attribute),
-        class: "button" %>
+      <div class="panel--footer">
+        <%= link_to cta_when_empty,
+          send(base_path_name, submission, piece: attribute),
+          class: "button small" %>
+      </div>
     <% else %>
       <% if yield_block %>
         <%= yield %>
@@ -20,9 +22,11 @@
         <p class="value"><%= submission.public_send(attribute) %></p>
       <% end %>
 
-      <%= link_to cta_when_filled,
-        send(base_path_name, submission, piece: attribute),
-        class: "button" %>
+      <div class="panel--footer">
+        <%= link_to cta_when_filled,
+          send(base_path_name, submission, piece: attribute),
+          class: "button small secondary" %>
+      </div>
     <% end %>
   </div>
 </div>
