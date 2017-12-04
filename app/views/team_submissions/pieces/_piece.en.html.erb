@@ -2,18 +2,27 @@
   value_is_blank = submission.public_send(attribute).blank?
   base_path_name = "edit_#{scope}_team_submission_path"
   completion_css_class = value_is_blank ? :incomplete : :complete
+  yield_block ||= false
 %>
 
-<dt class="submission-piece--name"><%= title %></dt>
+<div class="panel">
+  <h3 class="submission-piece--name"><%= title %></h3>
 
-<dd class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
-  <% if value_is_blank %>
-    <%= link_to cta_when_empty,
-      send(base_path_name, submission, piece: attribute) %>
-  <% else %>
-    <span class="value"><%= submission.public_send(attribute) %></span>
+  <div class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
+    <% if value_is_blank %>
+      <%= link_to cta_when_empty,
+        send(base_path_name, submission, piece: attribute),
+        class: "button" %>
+    <% else %>
+      <% if yield_block %>
+        <%= yield %>
+      <% else %>
+        <p class="value"><%= submission.public_send(attribute) %></p>
+      <% end %>
 
-    <%= link_to cta_when_filled,
-      send(base_path_name, submission, piece: attribute) %>
-  <% end %>
-</dd>
+      <%= link_to cta_when_filled,
+        send(base_path_name, submission, piece: attribute),
+        class: "button" %>
+    <% end %>
+  </div>
+</div>

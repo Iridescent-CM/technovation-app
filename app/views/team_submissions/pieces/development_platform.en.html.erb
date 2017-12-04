@@ -1,1 +1,25 @@
-Select the development platform!!!!!!!!!
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+        <div class="field">
+          <%= f.label :development_platform,
+            "Which development platform did your team use?" %>
+
+          <%= f.select :development_platform,
+            TeamSubmission.development_platforms.keys,
+            {},
+            id: :team_submission_development_platform %>
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= f.submit "Save this development platform selection", class: "button" %>
+            or
+            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
