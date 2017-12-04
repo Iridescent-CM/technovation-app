@@ -254,6 +254,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def source_code_filename
+    File.basename(source_code_url)
+  end
+
   def business_plan_url_text
     if business_plan and business_plan.file_uploaded?
       (business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
