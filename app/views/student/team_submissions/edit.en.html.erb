@@ -4,101 +4,115 @@
   <%= t("views.team_submissions.show.title", team_name: @team_submission.team.name) %>
 </h1>
 
-<div class="notice">ALLI & RUBY: THIS PAGE IS STILL A WORK IN PROGRESS!!!!!!</div>
+<div class="grid grid--justify-space-around submission-pieces">
+  <div class="grid__col-8">
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Your app's name",
+      scope: :student,
+      attribute: :app_name,
+      cta_when_empty: "Set your app's name",
+      cta_when_filled: "Change your app's name" %>
 
-<dl class="submission-pieces">
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Your app's name",
-    scope: :student,
-    attribute: :app_name,
-    cta_when_empty: "Set your app's name",
-    cta_when_filled: "Change your app's name" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "A description of your app",
-    scope: :student,
-    attribute: :app_description,
-    cta_when_empty: "Add your app's description",
-    cta_when_filled: "Change your app's description" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Demo video",
-    scope: :student,
-    attribute: :demo_video_link,
-    cta_when_empty: "Add the demo video link",
-    cta_when_filled: "Change the demo video link" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Pitch video",
-    scope: :student,
-    attribute: :pitch_video_link,
-    cta_when_empty: "Add the pitch video link",
-    cta_when_filled: "Change the pitch video link" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Development platform",
-    scope: :student,
-    attribute: :development_platform,
-    cta_when_empty: "Select the development platform that your team used",
-    cta_when_filled: "Select a different development platform option" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Source code",
-    scope: :student,
-    attribute: :source_code,
-    cta_when_empty: "Upload your app's source code",
-    cta_when_filled: "Change your uploaded source code" %>
-
-  <%= render 'team_submissions/pieces/piece',
-    submission: @team_submission,
-    title: "Screenshots",
-    scope: :student,
-    attribute: :screenshots,
-    cta_when_empty: "Upload screenshots of your app",
-    cta_when_filled: "Make changes to your screenshots" %>
-
-  <dt>Business plan</dt>
-  <dd>
-    <% if current_team.senior? %>
-      <%= link_to "Upload your team's business plan",
-        edit_student_team_submission_path(@team_submission, piece: :business_plan) %>
-    <% else %>
-      <p>
-        <%= current_team.name %> is a <%= current_team.division_name.humanize %> Division team.
-      </p>
-
-      <p>
-        Uploading a business plan is not required in the Junior Division.
-        If your team has put one together, that is awesome!
-        You can hold on to it for your own records and be extremely proud!
-      </p>
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "A description of your app",
+      scope: :student,
+      yield_block: true,
+      attribute: :app_description,
+      cta_when_empty: "Add your app's description",
+      cta_when_filled: "Change your app's description" do %>
+      <%= simple_format(@team_submission.app_description) %>
     <% end %>
-  </dd>
 
-  <dt>Pitch presentation slides</dt>
-  <dd>
-    <% if current_team.selected_regional_pitch_event.live? %>
-      <%= link_to "Upload the pitch presentation slides for your live event",
-        edit_student_team_submission_path(@team_submission, piece: :pitch_presentation) %>
-    <% else %>
-      <p>
-        <%= current_team.name %> is not currently set to attend a live regional pitch event.
-      </p>
-
-      <p>
-        If your team is invited to a live regional pitch event and you plan to attend,
-        you will be required to upload your pitch presentation slides.
-      </p>
-
-      <p class="hint">
-        (by the way, Regional Pitch Event invitations will take place in March and April)
-      </p>
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Demo video",
+      scope: :student,
+      attribute: :demo_video_link,
+      yield_block: true,
+      cta_when_empty: "Add the demo video link",
+      cta_when_filled: "Change the demo video link" do %>
+      <%= @team_submission.embed_code(:demo_video_link).html_safe %>
     <% end %>
-  </dd>
-</dl>
+
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Pitch video",
+      scope: :student,
+      yield_block: true,
+      attribute: :pitch_video_link,
+      cta_when_empty: "Add the pitch video link",
+      cta_when_filled: "Change the pitch video link" do %>
+      <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
+    <% end %>
+
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Development platform",
+      scope: :student,
+      attribute: :development_platform,
+      cta_when_empty: "Select the development platform that your team used",
+      cta_when_filled: "Change your selection" %>
+
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Source code",
+      scope: :student,
+      attribute: :source_code,
+      cta_when_empty: "Upload your app's source code",
+      cta_when_filled: "Change your uploaded source code" %>
+
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Screenshots",
+      scope: :student,
+      attribute: :screenshots,
+      cta_when_empty: "Upload screenshots of your app",
+      cta_when_filled: "Make changes to your screenshots" %>
+
+    <div class="panel">
+      Business plan
+
+      <% if current_team.senior? %>
+        <%= link_to "Upload your team's business plan",
+          edit_student_team_submission_path(@team_submission, piece: :business_plan) %>
+      <% else %>
+        <p>
+          <%= current_team.name %>
+          is a
+          <%= current_team.division_name.humanize %>
+          Division team.
+        </p>
+
+        <p>
+          Uploading a business plan is not required in the Junior Division.
+          If your team has put one together, that is awesome!
+          You can hold on to it for your own records and be extremely proud!
+        </p>
+      <% end %>
+    </div>
+
+    <div class="panel">
+      Pitch presentation slides
+
+      <% if current_team.selected_regional_pitch_event.live? %>
+        <%= link_to "Upload the pitch presentation slides for your live event",
+          edit_student_team_submission_path(@team_submission, piece: :pitch_presentation) %>
+      <% else %>
+        <p>
+          <%= current_team.name %> is not currently set to attend a live regional pitch event.
+        </p>
+
+        <p>
+          If your team is invited to a live regional pitch event and you plan to attend,
+          you will be required to upload your pitch presentation slides.
+        </p>
+
+        <p class="hint">
+          (by the way, Regional Pitch Event invitations will take place in March and April)
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

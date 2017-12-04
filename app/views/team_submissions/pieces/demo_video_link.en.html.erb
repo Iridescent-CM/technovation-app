@@ -1,1 +1,20 @@
-Edit the demo video link!!!
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+        <div class="field">
+          <%= f.label :demo_video_link, "Youtube or Vimeo URL" %>
+          <%= f.text_field :demo_video_link, id: :team_submission_demo_video_link %>
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= f.submit "Save this demo video link", class: "button" %>
+            or
+            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

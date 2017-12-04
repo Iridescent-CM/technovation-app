@@ -53,4 +53,74 @@ RSpec.feature "Students edit submission pieces" do
       )
     end
   end
+
+  scenario "Set the demo video" do
+    within(".demo_video_link.incomplete") do
+      click_link "Add the demo video link"
+    end
+
+    video_id = "qQTVuRrZO8w"
+    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+
+    click_button "Save this demo video link"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".demo_video_link.complete") do
+      expect(page).not_to have_link("Add your app's description")
+
+      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_link(
+        "Change the demo video link",
+        href: edit_student_team_submission_path(submission, piece: :demo_video_link)
+      )
+    end
+  end
+
+  scenario "Set the pitch video" do
+    within(".pitch_video_link.incomplete") do
+      click_link "Add the pitch video link"
+    end
+
+    video_id = "qQTVuRrZO8w"
+    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+
+    click_button "Save this pitch video link"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".pitch_video_link.complete") do
+      expect(page).not_to have_link("Add your app's description")
+
+      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_link(
+        "Change the pitch video link",
+        href: edit_student_team_submission_path(submission, piece: :pitch_video_link)
+      )
+    end
+  end
+
+  scenario "Set the devleopment platform" do
+    within(".development_platform.incomplete") do
+      click_link "Select the development platform that your team used"
+    end
+
+    select "Swift or XCode", from: "Which development platform did your team use?"
+
+    click_button "Save this development platform selection"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".development_platform.complete") do
+      expect(page).not_to have_link("Select the development platform that your team used")
+
+      expect(page).to have_content "Swift or XCode"
+      expect(page).to have_link(
+        "Change your selection",
+        href: edit_student_team_submission_path(submission, piece: :development_platform)
+      )
+    end
+  end
 end
