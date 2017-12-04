@@ -102,9 +102,9 @@ RSpec.feature "Student team submissions" do
       "Upload your team's business plan",
     )
 
-    expect(page).to have_content("#{student.team.name} is a Junior Division team.")
+    expect(page).to have_content("Your team is in the Junior Division")
     expect(page).to have_content(
-      "Uploading a business plan is not required in the Junior Division. If your team has put one together, that is awesome! You can hold on to it for your own records and be extremely proud!"
+      "Uploading a business plan is not required in the Junior Division. If your team has put one together, that is awesome! Hold on to it for your own records and be extremely proud!"
     )
 
     ProfileUpdating.execute(student, :student, account_attributes: {
@@ -133,11 +133,11 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "#{student.team.name} is not currently set to attend a live regional pitch event."
+      "Your team is not set to attend a live regional pitch event."
     )
 
     expect(page).to have_content(
-      "If your team is invited to a live regional pitch event and you plan to attend, you will be required to upload your pitch presentation slides"
+      "If your team is invited, then you will be required to upload your pitch presentation slides here."
     )
 
     rpe = FactoryBot.create(:regional_pitch_event)
