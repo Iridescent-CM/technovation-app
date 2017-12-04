@@ -125,8 +125,6 @@ module Mentor
           :source_code,
           :source_code_external_url,
           :app_description,
-          :stated_goal,
-          :stated_goal_explanation,
           :app_name,
           :demo_video_link,
           :pitch_video_link,

@@ -17,16 +17,17 @@ FactoryBot.define do
       app_description "Submission description"
       pitch_video_link "http://example.com/pitch"
       demo_video_link "http://example.com/demo"
-      source_code_external_url "http://example.com/demo"
 
       after(:create) do |sub|
+        sub.update_column(:source_code,  "source_code.zip")
+
         BusinessPlan.create!({
-          remote_file_url: "http://example.org/businessplan",
+          uploaded_file: "business_plan.pdf",
           team_submission: sub
         })
 
         PitchPresentation.create!({
-          remote_file_url: "http://example.org/pitch",
+          uploaded_file: "pitch_slides.pdf",
           team_submission: sub
         })
       end
