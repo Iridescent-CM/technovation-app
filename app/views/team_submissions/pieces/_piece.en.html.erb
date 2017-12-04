@@ -5,7 +5,7 @@
   yield_block ||= false
 %>
 
-<div class="panel">
+<div id="<%= dom_id(submission) %>_<%= attribute %>" class="panel">
   <h3 class="submission-piece--name"><%= title %></h3>
 
   <div class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
