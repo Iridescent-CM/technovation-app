@@ -45,3 +45,9 @@ $(document).on(
 $(document).on("ajax:beforeSend", "form[data-wait-for-jobs]", function() {
   swal.close();
 });
+
+$(document).on("click", "[data-browse-for]", function(e) {
+  e.preventDefault();
+  var fileFieldSelector = $(this).data("browseFor");
+  $(fileFieldSelector).click().show();
+});

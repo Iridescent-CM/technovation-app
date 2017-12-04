@@ -1,10 +1,28 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-8">
     <div class="panel">
+      <h3 class="panel--heading">
+        Source code
+      </h3>
+
       <%= form_with model: [:student, @team_submission], local: true do |f| %>
+        <% if @team_submission.source_code_url_complete? %>
+          <div class="field__existing-value">
+            Your team has previously uploaded
+            <%= link_to @team_submission.source_code_filename,
+              @team_submission.source_code_url %>
+          </div>
+        <% end %>
+
         <div class="field">
           <%= f.label :source_code, "Upload your app's source code" %>
           <%= f.file_field :source_code, id: :team_submission_source_code %>
+          <p>
+            <%= link_to "Select a file", "#",
+              data: { browse_for: "#team_submission_source_code" },
+              class: "button small secondary" %>
+          </p>
+
           <p class="hint">File types allowed: *.zip or *.aia</p>
         </div>
 
