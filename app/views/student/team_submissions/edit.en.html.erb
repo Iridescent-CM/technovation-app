@@ -121,46 +121,70 @@
         cta_when_empty: "Upload screenshots of your app",
         cta_when_filled: "Make changes to your screenshots" %>
 
-      <div class="panel">
-        Business plan
+      <div class="panel" id="<%= dom_id(@team_submission) %>_business_plan">
+        <h3 class="panel--heading">
+          Business plan
+        </h3>
 
         <% if current_team.senior? %>
-          <%= link_to "Upload your team's business plan",
-            edit_student_team_submission_path(@team_submission, piece: :business_plan) %>
+          <div class="panel--footer">
+            <%= link_to "Upload your team's business plan",
+              edit_student_team_submission_path(@team_submission, piece: :business_plan),
+              class: "button small" %>
+          </div>
         <% else %>
-          <p>
-            <%= current_team.name %>
-            is a
-            <%= current_team.division_name.humanize %>
-            Division team.
+          <p class="scent--strong">
+            Your team is in the
+            <strong>
+              <%= current_team.division_name.humanize %>
+              Division
+            </strong>
           </p>
 
-          <p>
-            Uploading a business plan is not required in the Junior Division.
+          <p class="scent">
+            Uploading a business plan is
+            <strong>not required</strong>
+            in the Junior Division.
+          </p>
+
+          <p class="scent">
             If your team has put one together, that is awesome!
-            You can hold on to it for your own records and be extremely proud!
+            Hold on to it for your own records and be extremely proud!
           </p>
         <% end %>
       </div>
 
-      <div class="panel">
-        Pitch presentation slides
+      <div class="panel" id="<%= dom_id(@team_submission) %>_pitch_presentation">
+        <h3 class="panel--heading">
+          Pitch presentation slides
+        </h3>
 
         <% if current_team.selected_regional_pitch_event.live? %>
-          <%= link_to "Upload the pitch presentation slides for your live event",
-            edit_student_team_submission_path(@team_submission, piece: :pitch_presentation) %>
+          <div class="panel--footer">
+            <%= link_to "Upload the pitch presentation slides for your live event",
+              edit_student_team_submission_path(
+                @team_submission,
+                piece: :pitch_presentation
+              ),
+              class: "button small" %>
+          </div>
         <% else %>
-          <p>
-            <%= current_team.name %> is not currently set to attend a live regional pitch event.
+          <p class="scent--strong">
+            Your team is not set to attend a live regional pitch event.
           </p>
 
           <p>
-            If your team is invited to a live regional pitch event and you plan to attend,
-            you will be required to upload your pitch presentation slides.
+            In March and April,
+            Regional Ambassadors will invite teams to pitch at a live event.
           </p>
 
-          <p class="hint">
-            (by the way, Regional Pitch Event invitations will take place in March and April)
+          <p>
+            If your team is invited,
+            then you will be required to upload your pitch presentation slides here.
+          </p>
+
+          <p class="scent">
+            (pitching at a live regional event is not required)
           </p>
         <% end %>
       </div>
