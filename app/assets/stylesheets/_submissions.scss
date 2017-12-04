@@ -50,8 +50,17 @@
   }
 
   .incomplete {
-    .icon-check-circle {
-      display: none;
+    .icon-check-circle:before {
+      color: #666;
+      content: "\f10c";
     }
   }
+
+  .hint {
+    margin: 0.5rem 0 0 1rem;
+  }
+}
+
+#team_submission_source_code {
+  display: none;
 }
