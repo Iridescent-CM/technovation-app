@@ -121,17 +121,43 @@
         cta_when_empty: "Upload screenshots of your app",
         cta_when_filled: "Make changes to your screenshots" %>
 
-      <div class="panel" id="<%= dom_id(@team_submission) %>_business_plan">
+      <div
+        id="<%= dom_id(@team_submission) %>_business_plan"
+        class="
+          panel
+          submission-piece
+          <%= completion_css(@team_submission, :business_plan_url) %>
+        "
+      >
         <h3 class="panel--heading">
           Business plan
         </h3>
 
         <% if current_team.senior? %>
-          <div class="panel--footer">
-            <%= link_to "Upload your team's business plan",
-              edit_student_team_submission_path(@team_submission, piece: :business_plan),
-              class: "button small" %>
-          </div>
+          <% if @team_submission.business_plan_url_complete? %>
+            <p>
+              Your team has uploaded:
+              <%= link_to @team_submission.business_plan_filename,
+                @team_submission.business_plan_url %>
+            </p>
+
+            <div class="panel--footer">
+              <%= link_to "Change your upload",
+                edit_student_team_submission_path(@team_submission, piece: :business_plan),
+                class: "button secondary small" %>
+            </div>
+          <% else %>
+            <p class="scent">
+              There's nothing here yet,
+              but your team can update this part whenever it's ready!
+            </p>
+
+            <div class="panel--footer">
+              <%= link_to "Upload your team's business plan",
+                edit_student_team_submission_path(@team_submission, piece: :business_plan),
+                class: "button small" %>
+            </div>
+          <% end %>
         <% else %>
           <p class="scent--strong">
             Your team is in the
@@ -154,20 +180,49 @@
         <% end %>
       </div>
 
-      <div class="panel" id="<%= dom_id(@team_submission) %>_pitch_presentation">
+      <div
+        id="<%= dom_id(@team_submission) %>_pitch_presentation"
+        class="
+          panel
+          submission-piece
+          <%= completion_css(@team_submission, :pitch_presentation_url) %>
+        "
+      >
         <h3 class="panel--heading">
           Pitch presentation slides
         </h3>
 
         <% if current_team.selected_regional_pitch_event.live? %>
-          <div class="panel--footer">
-            <%= link_to "Upload the pitch presentation slides for your live event",
-              edit_student_team_submission_path(
-                @team_submission,
-                piece: :pitch_presentation
-              ),
-              class: "button small" %>
-          </div>
+          <% if @team_submission.pitch_presentation_url_complete? %>
+            <p>
+              Your team has uploaded:
+              <%= link_to @team_submission.pitch_presentation_filename,
+                @team_submission.pitch_presentation_url %>
+            </p>
+
+            <div class="panel--footer">
+              <%= link_to "Change your upload",
+                edit_student_team_submission_path(
+                  @team_submission,
+                  piece: :pitch_presentation
+                ),
+                class: "button secondary small" %>
+            </div>
+          <% else %>
+            <p class="scent">
+              There's nothing here yet,
+              but your team can update this part whenever it's ready!
+            </p>
+
+            <div class="panel--footer">
+              <%= link_to "Upload the pitch presentation slides for your live event",
+                edit_student_team_submission_path(
+                  @team_submission,
+                  piece: :pitch_presentation
+                ),
+                class: "button small" %>
+            </div>
+          <% end %>
         <% else %>
           <p class="scent--strong">
             Your team is not set to attend a live regional pitch event.
