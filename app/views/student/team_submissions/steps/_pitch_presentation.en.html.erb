@@ -10,9 +10,9 @@
   </div>
   <div class="card__body">
     <% if submission.pitch_presentation.persisted? and
-         not submission.pitch_presentation_url_text.blank? %>
+         not submission.pitch_presentation_filename.blank? %>
       <p>
-        <%= link_to submission.pitch_presentation_url_text,
+        <%= link_to submission.pitch_presentation_filename,
           submission.pitch_presentation_url,
           target: :_blank %>
       </p>
@@ -28,15 +28,9 @@
   data: { heading: "Pitch presentation (.ppt, .pdf or URL)" } do %>
 
   <%
-    if submission.pitch_presentation.file_uploaded?
-      file_css = "active"
-      url_css = ""
-      switch_text = "Use a URL"
-    else
-      file_css = ""
-      url_css = "active"
-      switch_text = "Upload a PPT or PDF"
-    end
+    file_css = "active"
+    url_css = ""
+    switch_text = "Use a URL"
   %>
 
   <%= direct_upload_form_for @pitch_presentation_uploader,

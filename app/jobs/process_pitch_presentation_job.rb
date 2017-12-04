@@ -7,7 +7,6 @@ class ProcessPitchPresentationJob < ActiveJob::Base
     pitch_presentation = submission.pitch_presentation ||
                            submission.create_pitch_presentation!
     pitch_presentation.update_attributes({
-      file_uploaded: true,
       remote_uploaded_file_url: url,
     })
   end
