@@ -25,11 +25,6 @@ module StudentHelper
         return 'complete'
       end
 
-    when "sdg"
-      unless submission.stated_goal.blank? or submission.stated_goal_explanation.blank?
-        return 'complete'
-      end
-
     when "pitch"
       return 'complete' unless submission.pitch_video_link.blank?
 

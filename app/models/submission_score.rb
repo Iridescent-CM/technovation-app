@@ -218,10 +218,6 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.clear_judge_opened_details!
   end
 
-  def team_submission_stated_goal
-    team_submission.stated_goal || "No goal selected!"
-  end
-
   def senior_team_division?
     team_submission.team.division.senior?
   end
@@ -235,9 +231,8 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def ideation_total
-    sdg_alignment +
-      evidence_of_problem +
-        problem_addressed
+    evidence_of_problem +
+      problem_addressed
   end
 
   def technical_total

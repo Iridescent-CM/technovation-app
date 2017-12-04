@@ -179,16 +179,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def source_code_external_url=(url)
-    sanitized_url = if url.match(%r{\Ahttps?://})
-            url
-          elsif not url.blank?
-            url.sub(%r{\A(?:\w+://)?}, "http://")
-          end
-
-    super(sanitized_url)
-  end
-
   def incomplete?
     not complete?
   end
@@ -196,16 +186,11 @@ class TeamSubmission < ActiveRecord::Base
   def complete?
     Rails.cache.fetch("#{cache_key}/complete?") do
       (not app_name.blank? and
-
-       not app_description.blank? and
-
-       not pitch_video_link.blank? and
-
-       not demo_video_link.blank? and
-
-       not source_code_url.blank? and
-
-       business_plan_complete_or_not_required?)
+        not app_description.blank? and
+          not pitch_video_link.blank? and
+            not demo_video_link.blank? and
+              not source_code_url.blank? and
+                business_plan_complete_or_not_required?)
     end
   end
 

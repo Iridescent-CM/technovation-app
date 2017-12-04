@@ -70,7 +70,6 @@ RSpec.describe SubmissionScore do
       team_submission: team_submission,
       judge_profile: judge_profile,
 
-      sdg_alignment: 3,
       evidence_of_problem: 5,
       problem_addressed: 4,
       app_functional: 2,
@@ -94,7 +93,7 @@ RSpec.describe SubmissionScore do
       solution_stands_out: 5,
     })
 
-    expect(subscore.total).to eq(64)
+    expect(subscore.total).to eq(61)
   end
 
   it "calculates total possible score based on division" do
@@ -215,7 +214,7 @@ RSpec.describe SubmissionScore do
         sub = SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
-          sdg_alignment: 5,
+          evidence_of_problem: 5,
           round: round,
         )
 
@@ -224,7 +223,7 @@ RSpec.describe SubmissionScore do
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(5)
 
-        sub.update_attributes(sdg_alignment: 4)
+        sub.update_attributes(evidence_of_problem: 4)
         expect(
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(4)
@@ -234,7 +233,7 @@ RSpec.describe SubmissionScore do
         sub2 = SubmissionScore.create!(
           judge_profile_id: judge_profile2.id,
           team_submission_id: team_submission.id,
-          sdg_alignment: 2,
+          evidence_of_problem: 2,
           round: round,
         )
 
@@ -252,7 +251,7 @@ RSpec.describe SubmissionScore do
         SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
-          sdg_alignment: 5,
+          evidence_of_problem: 5,
           round: round,
         )
         expect(

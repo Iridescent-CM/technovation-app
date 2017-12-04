@@ -63,7 +63,6 @@ module Judge
     def submission_score_params
       params.require(:submission_score).permit(
         :completed_at,
-        :sdg_alignment,
         :evidence_of_problem,
         :problem_addressed,
         :ideation_comment,

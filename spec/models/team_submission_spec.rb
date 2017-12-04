@@ -125,13 +125,13 @@ RSpec.describe TeamSubmission do
 
     live_judge.submission_scores.create!({
       team_submission: sub,
-      sdg_alignment: 5,
+      evidence_of_problem: 5,
       completed_at: Time.current
     })
 
     virtual_judge.submission_scores.create!({
       team_submission: sub,
-      sdg_alignment: 2,
+      evidence_of_problem: 2,
       completed_at: Time.current
     })
 
