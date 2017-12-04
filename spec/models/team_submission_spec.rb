@@ -7,23 +7,6 @@ RSpec.describe TeamSubmission do
   it { should respond_to(:demo_video_link) }
   it { should respond_to(:pitch_video_link) }
 
-  it "prepends urls with http:// if it's not there" do
-    subject.source_code_external_url = "joesak.com"
-    expect(subject.source_code_external_url).to eq("http://joesak.com")
-
-    subject.source_code_external_url = "http://joesak.com"
-    expect(subject.source_code_external_url).to eq("http://joesak.com")
-
-    subject.source_code_external_url = "https://joesak.com"
-    expect(subject.source_code_external_url).to eq("https://joesak.com")
-
-    subject.source_code_external_url = "ht://joesak.com"
-    expect(subject.source_code_external_url).to eq("http://joesak.com")
-
-    subject.source_code_external_url = ""
-    expect(subject.source_code_external_url).to be_blank
-  end
-
   describe "cache_key" do
 
     subject(:submission) {
@@ -44,7 +27,6 @@ RSpec.describe TeamSubmission do
 
     it "changes when business plan added" do
       BusinessPlan.create!({
-        remote_file_url: "http://example.org/businessplan",
         team_submission: submission
       })
       expect(submission.cache_key).not_to eq(@before_key)
@@ -52,7 +34,6 @@ RSpec.describe TeamSubmission do
 
     it "changes when pitch presentation added" do
       PitchPresentation.create!({
-        remote_file_url: "http://example.org/pitch",
         team_submission: submission
       })
       expect(submission.cache_key).not_to eq(@before_key)
