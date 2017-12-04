@@ -10,6 +10,10 @@
 
   <div class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
     <% if value_is_blank %>
+      <p class="scent">
+        There's nothing here yet, but your team can add content whenever it's ready!
+      </p>
+
       <div class="panel--footer">
         <%= link_to cta_when_empty,
           send(base_path_name, submission, piece: attribute),
