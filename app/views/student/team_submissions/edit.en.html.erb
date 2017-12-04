@@ -32,9 +32,13 @@
           "##{dom_id(@team_submission)}_screenshots",
           class: completion_css(@team_submission, :screenshots) %>
 
+        <p class="hint">senior teams only:</p>
+
         <%= link_to web_icon("check-circle", text: "Business plan"),
           "##{dom_id(@team_submission)}_business_plan",
           class: completion_css(@team_submission, :business_plan_url) %>
+
+        <p class="hint">teams attending live pitch events:</p>
 
         <%= link_to web_icon("check-circle", text: "Presentation slides"),
           "##{dom_id(@team_submission)}_pitch_presentation",
