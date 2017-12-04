@@ -33,7 +33,7 @@
       <dt>Business plan (Senior division only)</dt>
       <dd>
         <% if submission.business_plan %>
-          <%= link_to submission.business_plan_url_text,
+          <%= link_to submission.business_plan_filename,
             submission.business_plan_url,
             target: :_blank %>
         <% end %>
@@ -48,9 +48,9 @@
 
     <dt>Source code</dt>
     <dd>
-      <% if submission.source_code_url_text %>
-        <%= link_to submission.source_code_url_text,
-          submission.detect_source_code_url,
+      <% if submission.source_code_url %>
+        <%= link_to submission.source_code_filename,
+          submission.source_code_url,
           target: :_blank %>
       <% end %>
     </dd>
@@ -62,7 +62,7 @@
       <dt>Pitch presentation (live event teams only)</dt>
       <dd>
         <% if submission.pitch_presentation %>
-          <%= link_to submission.pitch_presentation_url_text,
+          <%= link_to submission.pitch_presentation_filename,
             submission.pitch_presentation_url,
             target: :_blank %>
         <% end %>

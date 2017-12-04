@@ -11,7 +11,7 @@
   <div class="card__body">
     <% if submission.business_plan.persisted? %>
       <p>
-        <%= link_to submission.business_plan_url_text,
+        <%= link_to submission.business_plan_filename,
           submission.business_plan_url,
           target: :_blank %>
       </p>
@@ -34,15 +34,9 @@
   data: { heading: "Business plan (.pdf or URL)" } do %>
 
   <%
-    if submission.business_plan.file_uploaded?
-      file_css = "active"
-      url_css = ""
-      switch_text = "Use a URL"
-    else
-      file_css = ""
-      url_css = "active"
-      switch_text = "Upload a PDF"
-    end
+    file_css = "active"
+    url_css = ""
+    switch_text = "Use a URL"
   %>
 
   <%= direct_upload_form_for @business_plan_uploader,

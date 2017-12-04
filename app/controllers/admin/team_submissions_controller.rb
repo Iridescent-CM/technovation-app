@@ -42,20 +42,14 @@ module Admin
         :contest_rank,
         :app_name,
         :app_description,
-        :stated_goal,
-        :stated_goal_explanation,
         :demo_video_link,
         :pitch_video_link,
         :source_code,
-        :source_code_external_url,
-        :source_code_file_uploaded,
         :development_platform,
         :development_platform_other,
         business_plan_attributes: [
           :id,
           :uploaded_file,
-          :remote_file_url,
-          :file_uploaded,
         ],
       )
     end
