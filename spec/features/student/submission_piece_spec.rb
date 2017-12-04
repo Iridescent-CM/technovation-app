@@ -123,4 +123,60 @@ RSpec.feature "Students edit submission pieces" do
       )
     end
   end
+
+  scenario "Upload the .zip source code" do
+    within(".source_code.incomplete") do
+      click_link "Upload your app's source code"
+    end
+
+    attach_file(
+      "Upload your app's source code",
+      Rails.root + "spec/support/fixtures/source_code.zip"
+    )
+
+    click_button "Upload"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".source_code.complete") do
+      expect(page).not_to have_link("Upload your app's source code")
+
+      expect(page).to have_link(
+        "source_code.zip",
+        href: submission.reload.source_code_url
+      )
+      expect(page).to have_link(
+        "Change your upload",
+        href: edit_student_team_submission_path(submission, piece: :source_code)
+      )
+    end
+  end
+
+  scenario "Upload the .aia source code" do
+    within(".source_code.incomplete") do
+      click_link "Upload your app's source code"
+    end
+
+    attach_file(
+      "Upload your app's source code",
+      Rails.root + "spec/support/fixtures/source_code.aia"
+    )
+
+    click_button "Upload"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".source_code.complete") do
+      expect(page).not_to have_link("Upload your app's source code")
+
+      expect(page).to have_link(
+        "source_code.aia",
+        href: submission.reload.source_code_url
+      )
+      expect(page).to have_link(
+        "Change your upload",
+        href: edit_student_team_submission_path(submission, piece: :source_code)
+      )
+    end
+  end
 end

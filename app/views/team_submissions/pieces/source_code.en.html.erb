@@ -1,1 +1,21 @@
-Upload your dang source code!!!1
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+        <div class="field">
+          <%= f.label :source_code, "Upload your app's source code" %>
+          <%= f.file_field :source_code, id: :team_submission_source_code %>
+          <p class="hint">File types allowed: *.zip or *.aia</p>
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= f.submit "Upload", class: "button" %>
+            or
+            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
