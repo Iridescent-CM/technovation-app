@@ -219,3 +219,10 @@ form[data-remote] {
     opacity: 0;
   }
 }
+
+.field__existing-value {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: $radius-default;
+}
