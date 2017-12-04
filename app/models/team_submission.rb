@@ -10,15 +10,6 @@ class TeamSubmission < ActiveRecord::Base
 
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) }, on: :create
 
-  enum stated_goal: %w{
-    Poverty
-    Environment
-    Peace
-    Equality
-    Education
-    Health
-  }
-
   enum development_platform: %w{
     App\ Inventor\ 2
     Swift\ or\ XCode
