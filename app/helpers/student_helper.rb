@@ -43,13 +43,13 @@ module StudentHelper
       return 'complete' if submission.technical_checklist_completed?
 
     when "source-code"
-      return 'complete' unless submission.detect_source_code_url.blank?
+      return 'complete' unless submission.source_code_url.blank?
 
     when "development-platform"
       return 'complete' unless submission.development_platform_text.blank?
 
     when "business-plan"
-      return 'complete' unless submission.business_plan_url_text.blank?
+      return 'complete' unless submission.business_plan_url.blank?
 
     when "pitch-presentation"
       return 'complete' if submission.pitch_presentation_url_complete?
