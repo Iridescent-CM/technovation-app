@@ -2,24 +2,17 @@ require "rails_helper"
 
 RSpec.feature "Approved regional ambassadors" do
   scenario "updating their dashboard blurb" do
-    skip "disabled right now - ra introduction"
     ambassador = FactoryBot.create(:regional_ambassador, :approved)
 
     sign_in(ambassador)
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)
 
-    expect(page).to have_content("Your introduction")
-
-    expect(page).to have_content(
-      "Participants in your region can see this on their dashboards"
-    )
-
-    click_link "Edit your introduction"
+    expect(page).to have_content("Introduce your region to your program!")
 
     fill_in "Short summary", with: "Something that is 280 characters or less"
 
-    select "twitter",
+    select "Twitter",
       from: "regional_ambassador_profile_regional_links_attributes_0_name"
 
     fill_in "regional_ambassador_profile_regional_links_attributes_0_value",
@@ -29,7 +22,7 @@ RSpec.feature "Approved regional ambassadors" do
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)
 
-    within(".ra-info--dashboard-intro") do
+    within("#ra-info") do
       expect(page).to have_link(
         "@technomx",
         href: "https://www.twitter.com/technomx"
