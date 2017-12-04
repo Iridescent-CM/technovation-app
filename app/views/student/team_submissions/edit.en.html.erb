@@ -59,9 +59,15 @@
       submission: @team_submission,
       title: "Source code",
       scope: :student,
+      yield_block: true,
       attribute: :source_code,
       cta_when_empty: "Upload your app's source code",
-      cta_when_filled: "Change your uploaded source code" %>
+      cta_when_filled: "Change your upload" do %>
+      <p>
+        <%= link_to @team_submission.source_code_filename,
+          @team_submission.source_code_url %>
+      </p>
+    <% end %>
 
     <%= render 'team_submissions/pieces/piece',
       submission: @team_submission,
