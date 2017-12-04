@@ -203,7 +203,7 @@ class TeamSubmission < ActiveRecord::Base
 
        not demo_video_link.blank? and
 
-       not detect_source_code_url.blank? and
+       not source_code_url.blank? and
 
        business_plan_complete_or_not_required?)
     end
@@ -238,54 +238,25 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def business_plan_url
-    if !!business_plan and business_plan.file_uploaded?
-      business_plan.file_url
-    elsif !!business_plan
-      business_plan.remote_file_url
+    if !!business_plan
+      business_plan.uploaded_file_url
     end
   end
 
   def pitch_presentation_url
-    if !!pitch_presentation and pitch_presentation.file_uploaded?
-      pitch_presentation.file_url
-    elsif !!pitch_presentation
-      pitch_presentation.remote_file_url
+    if !!pitch_presentation
+      pitch_presentation.uploaded_file_url
     end
   end
 
-  def detect_source_code_url
-    if source_code_file_uploaded?
-      source_code_url
-    else
-      source_code_external_url
-    end
-  end
-
-  def source_code_url_text
-    if source_code_file_uploaded?
-      ((source_code_url || "").match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
-    else
-      source_code_external_url
-    end
-  end
-
-  def source_code_filename
-    File.basename(source_code_url)
-  end
-
-  def business_plan_url_text
-    if business_plan and business_plan.file_uploaded?
-      (business_plan.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
-    elsif business_plan
-      business_plan.remote_file_url
-    end
-  end
-
-  def pitch_presentation_url_text
-    if pitch_presentation and pitch_presentation.file_uploaded?
-      (pitch_presentation.file_url.match(/\/([\s\w\-\.%\(\)\]\[]+)$/) || [])[1]
-    elsif pitch_presentation
-      pitch_presentation.remote_file_url
+  %i{
+    source_code
+    business_plan
+    pitch_presentation
+  }.each do |piece|
+    define_method("#{piece}_filename") do
+      url = send("#{piece}_url")
+      File.basename(url)
     end
   end
 
@@ -381,7 +352,7 @@ class TeamSubmission < ActiveRecord::Base
   private
   def business_plan_complete_or_not_required?
     (junior_division? or team_division_name == Division.none_assigned_yet.name) or
-      (senior_division? and not business_plan_url_text.blank?)
+      (senior_division? and not business_plan_url.blank?)
   end
 
   def team_name_and_app_name

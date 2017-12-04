@@ -1,0 +1,42 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <h3 class="panel--heading">
+        Business plan
+      </h3>
+
+      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+        <% if @team_submission.business_plan_url_complete? %>
+          <div class="field__existing-value">
+            Your team has previously uploaded
+            <%= link_to @team_submission.business_plan_filename,
+              @team_submission.business_plan_url %>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.fields_for :business_plan do |b| %>
+            <%= b.label :uploaded_file, "Upload your app's business plan" %>
+            <%= b.file_field :uploaded_file, id: :team_submission_business_plan %>
+          <% end %>
+
+          <p>
+            <%= link_to "Select a file", "#",
+              data: { browse_for: "#team_submission_business_plan" },
+              class: "button small secondary" %>
+          </p>
+
+          <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= f.submit "Upload", class: "button" %>
+            or
+            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
