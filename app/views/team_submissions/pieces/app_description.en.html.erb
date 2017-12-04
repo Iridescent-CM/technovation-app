@@ -6,7 +6,15 @@
           <%= f.label :app_description,
             "Describe your app in only a few sentences or less" %>
 
-          <%= f.text_area :app_description, id: :team_submission_app_description %>
+          <%= f.text_area :app_description,
+            id: :team_submission_app_description,
+            rows: 6 %>
+
+          <p class="scent scent--strong">
+            <strong>Remember:</strong>
+            only write a few sentences!
+            The judges will have a lot of these to read, so keep it short!
+          </p>
         </div>
 
         <div class="actions">
