@@ -75,9 +75,9 @@ module Admin
 
       if submissions.empty? and page.to_i != 1
         get_sorted_paginated_submissions_in_requested_division(1)
-      elsif submissions.empty?
-        opposite_division = params[:division] == "senior" ? "junior":"senior"
-        get_sorted_paginated_submissions_in_requested_division(page, opposite_division)
+      elsif submissions.empty? and @opposite_division.nil?
+        @opposite_division = params[:division] == "senior" ? "junior":"senior"
+        get_sorted_paginated_submissions_in_requested_division(page, @opposite_division)
       else
         submissions
       end
