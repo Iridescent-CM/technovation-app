@@ -11,6 +11,10 @@ module StudentHelper
     end
   end
 
+  def completion_css(submission, piece)
+    submission.public_send("#{piece}_complete?") ? "complete" : "incomplete"
+  end
+
   def subprog(submission, step)
     case step
     when "team-photo"
