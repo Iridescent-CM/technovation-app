@@ -63,6 +63,16 @@ stickyCols = function() {
   $(".col--sticky").stick_in_parent({
     recalc_every: 1,
   });
+
+  var offset = 92;
+
+  $('#team_submissions--menu a').click(function(e) {
+    e.preventDefault();
+    var anchor = $(this).attr('href');
+    $(anchor)[0].scrollIntoView();
+    location.href = anchor;
+    scrollBy(0, -offset);
+  });
 }
 
 $(document).on("ready turbolinks:load", stickyCols);

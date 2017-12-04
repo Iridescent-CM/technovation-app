@@ -98,3 +98,12 @@
     margin: 92px 0 0;
   }
 }
+
+:target {
+  &::before {
+    content: "";
+    display: block;
+    height: 92px; /* fixed header height*/
+    margin: -92px 0 0;
+  }
+}
