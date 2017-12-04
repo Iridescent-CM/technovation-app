@@ -24,3 +24,34 @@
     }
   }
 }
+
+#team_submissions--menu {
+  a {
+    color: #666;
+
+    &:hover {
+      color: #000;
+    }
+
+    .icon-check-circle {
+      color: $shamrock;
+    }
+
+    > span {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 600px;
+
+      .web-icon-text {
+        display: inline;
+      }
+    }
+  }
+
+  .incomplete {
+    .icon-check-circle {
+      display: none;
+    }
+  }
+}

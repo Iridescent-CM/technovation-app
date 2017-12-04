@@ -82,6 +82,25 @@ class TeamSubmission < ActiveRecord::Base
     friendly.find(*args)
   end
 
+  %i{
+    app_name
+    app_description
+    demo_video_link
+    pitch_video_link
+    development_platform
+    source_code_url
+    business_plan_url
+    pitch_presentation_url
+  }.each do |piece|
+    define_method("#{piece}_complete?") do
+      not public_send(piece).blank?
+    end
+  end
+
+  def screenshots_complete?
+    screenshots.count >= 2
+  end
+
   def update_average_scores
     update_quarterfinals_average_score
     update_semifinals_average_score
@@ -170,10 +189,6 @@ class TeamSubmission < ActiveRecord::Base
     super(sanitized_url)
   end
 
-  def pitch_presentation_complete?
-    pitch_presentation.present? and pitch_presentation.persisted?
-  end
-
   def incomplete?
     not complete?
   end
@@ -223,9 +238,9 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def business_plan_url
-    if business_plan.file_uploaded?
+    if !!business_plan and business_plan.file_uploaded?
       business_plan.file_url
-    else
+    elsif !!business_plan
       business_plan.remote_file_url
     end
   end
