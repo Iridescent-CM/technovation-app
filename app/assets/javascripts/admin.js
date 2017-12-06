@@ -20,6 +20,7 @@
 //= require saved-searches
 //= require charts
 //= require jobs
+//= require sticky-cols
 
 document.addEventListener("turbolinks:load", function() {
   $(".accordion-toggle").on("click", function(e) {
@@ -72,11 +73,3 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
-
-var stickyCols;
-
-stickyCols = function() {
-  $(".col--sticky").stick_in_parent();
-}
-
-$(document).on("ready turbolinks:load", stickyCols);
