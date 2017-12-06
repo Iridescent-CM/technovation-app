@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Students edit submission pieces" do
-  let!(:student) { FactoryBot.create(:onboarded_student, :on_team) }
+  let!(:student) { FactoryBot.create(:onboarded_student, :senior, :on_team) }
   let!(:submission) { student.team.team_submissions.create!({ integrity_affirmed: true }) }
 
   before do
@@ -176,6 +176,34 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_link(
         "Change your upload",
         href: edit_student_team_submission_path(submission, piece: :source_code)
+      )
+    end
+  end
+
+  scenario "Upload a .pdf business plan" do
+    within(".business_plan.incomplete") do
+      click_link "Upload your team's business plan"
+    end
+
+    attach_file(
+      "Upload your team's business plan",
+      Rails.root + "spec/support/fixtures/business_plan.pdf"
+    )
+
+    click_button "Upload"
+
+    expect(current_path).to eq(student_team_submission_path(submission))
+
+    within(".business_plan.complete") do
+      expect(page).not_to have_link("Upload your team's business plan")
+
+      expect(page).to have_link(
+        "business_plan.pdf",
+        href: submission.reload.business_plan_url
+      )
+      expect(page).to have_link(
+        "Change your upload",
+        href: edit_student_team_submission_path(submission, piece: :business_plan)
       )
     end
   end
