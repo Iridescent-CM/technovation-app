@@ -51,14 +51,14 @@ FactoryBot.define do
       ProfileCreating.execute(s, FakeController.new)
     end
 
+    trait :senior do |s|
+      date_of_birth Date.today - 15.years
+    end
+
     trait :on_team do
       after(:create) do |s|
-        team = FactoryBot.create(:team)
-        FactoryBot.create(
-          :team_membership,
-          member: s,
-          team: team
-        )
+        team = FactoryBot.create(:team, members_count: 0)
+        TeamCreating.execute(team, s, FakeController.new)
       end
     end
 
