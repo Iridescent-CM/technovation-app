@@ -10,7 +10,7 @@ class TeamCreating
 
     TeamRosterManaging.add(team, profile)
 
-    if profile.longitude.present? and profile.latitude.present?
+    if !!profile and profile.longitude.present? and profile.latitude.present?
       team.latitude = profile.latitude
       team.longitude = profile.longitude
       Geocoding.perform(team).with_save
