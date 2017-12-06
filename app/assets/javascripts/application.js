@@ -16,6 +16,7 @@
 //= require image-uploaders
 //= require location-details
 //= require modals
+//= require sticky-cols
 
 $(document).ajaxSend(function(_, xhr) {
   xhr.setRequestHeader(
@@ -56,23 +57,3 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
-
-var stickyCols;
-
-stickyCols = function() {
-  $(".col--sticky").stick_in_parent({
-    recalc_every: 1,
-  });
-
-  var offset = 92;
-
-  $('#team_submissions--menu a').click(function(e) {
-    e.preventDefault();
-    var anchor = $(this).attr('href');
-    $(anchor)[0].scrollIntoView();
-    location.href = anchor;
-    scrollBy(0, -offset);
-  });
-}
-
-$(document).on("ready turbolinks:load", stickyCols);
