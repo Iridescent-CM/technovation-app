@@ -40,29 +40,35 @@
 </div>
 
 <div class="grid">
-  <div class="grid__col-sm-3 grid__col--bleed-y">
-    <div class="col--sticky">
-      <div class="panel">
-        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
+  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="panel">
+          <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
 
-        <h3 class="reset"><%= current_mentor.full_name %></h3>
+          <h3 class="reset"><%= current_mentor.full_name %></h3>
 
-        <%= link_to "View your profile", mentor_profile_path %>
+          <%= link_to "View your profile", mentor_profile_path %>
+        </div>
+
+        <%= render "dashboards/ra_intro" %>
       </div>
-
-      <%= render "dashboards/ra_intro" %>
     </div>
   </div>
 
-  <div class="grid__col-md-6 grid__col-sm-9">
-    <div class="col--sticky">
-      <%= render 'mentor/dashboards/current_actions' %>
+  <div class="grid__col-md-6 grid__col-sm-9 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <%= render 'mentor/dashboards/current_actions' %>
+      </div>
     </div>
   </div>
 
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    <div class="col--sticky">
-      <%= render "mentor/dashboards/info_sidebar" %>
+  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <%= render "mentor/dashboards/info_sidebar" %>
+      </div>
     </div>
   </div>
 </div>
