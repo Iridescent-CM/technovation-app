@@ -23,9 +23,11 @@
 
   <body>
     <div class="grid">
-      <div class="grid__col-3">
-        <div class="col--sticky">
-          <%= render 'admin/navigation' %>
+      <div class="grid__col-3 col--sticky-parent">
+        <div class="col--sticky-spacer">
+          <div class="col--sticky">
+            <%= render 'admin/navigation' %>
+          </div>
         </div>
       </div>
 

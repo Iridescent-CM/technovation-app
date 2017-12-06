@@ -1,54 +1,58 @@
 <% provide :title, "My profile" %>
 
 <div class="grid tabs tabs-vertical">
-  <div class="grid__col-sm-3">
-    <div class="col--sticky">
-      <div class="hidden-xs hidden-xxs">
-        <h3><%= current_mentor.full_name %></h3>
+  <div class="grid__col-sm-3 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="hidden-xs hidden-xxs">
+          <h3><%= current_mentor.full_name %></h3>
 
-        <%= image_tag current_mentor.profile_image_url,
-          id: "profile-image",
-          class: "grid__cell-img" %>
+          <%= image_tag current_mentor.profile_image_url,
+            id: "profile-image",
+            class: "grid__cell-img" %>
 
-        <%= render 'image_upload',
-          choose_from_defaults: (
-            not current_account.regional_ambassador_profile.present?
-          ),
-          current_image_path: current_mentor.profile_image_url,
-          modal_id: "image_upload_desktop",
-          heading: "Upload a profile photo",
-          size: "300x300" %>
+          <%= render 'image_upload',
+            choose_from_defaults: (
+              not current_account.regional_ambassador_profile.present?
+            ),
+            current_image_path: current_mentor.profile_image_url,
+            modal_id: "image_upload_desktop",
+            heading: "Upload a profile photo",
+            size: "300x300" %>
+        </div>
+
+        <%= render 'mentor/profiles/menu' %>
       </div>
-
-      <%= render 'mentor/profiles/menu' %>
     </div>
   </div>
 
-  <div class="content grid__col-sm-9">
-    <div class="col--sticky">
-      <div class="tab-content" id="basic">
-        <%= render 'mentor/profiles/basic' %>
-      </div>
+  <div class="content grid__col-sm-9 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="tab-content" id="basic">
+          <%= render 'mentor/profiles/basic' %>
+        </div>
 
-      <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
-        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
+        <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
+          <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
 
-        <%= render 'image_upload',
-          modal_id: "image_upload_mobile",
-          heading: "Upload a profile photo",
-          size: "300x300" %>
-      </div>
+          <%= render 'image_upload',
+            modal_id: "image_upload_mobile",
+            heading: "Upload a profile photo",
+            size: "300x300" %>
+        </div>
 
-      <div class="tab-content" id="location">
-        <%= render 'mentor/profiles/location' %>
-      </div>
+        <div class="tab-content" id="location">
+          <%= render 'mentor/profiles/location' %>
+        </div>
 
-      <div class="tab-content" id="change-email">
-        <%= render 'profiles/email' %>
-      </div>
+        <div class="tab-content" id="change-email">
+          <%= render 'profiles/email' %>
+        </div>
 
-      <div class="tab-content" id="change-password">
-        <%= render 'profiles/password' %>
+        <div class="tab-content" id="change-password">
+          <%= render 'profiles/password' %>
+        </div>
       </div>
     </div>
   </div>

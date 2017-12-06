@@ -27,41 +27,47 @@
 </div>
 
 <div class="grid">
-  <div class="grid__col-md-3 grid__col--bleed-y">
-    <div class="col--sticky">
-      <div class="panel">
-        <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
-
-        <h3 class="reset"><%= current_student.full_name %></h3>
-
-        <%= link_to "View your profile", student_profile_path %>
-      </div>
-
-      <% if current_student.is_on_team? %>
+  <div class="grid__col-md-3 grid__col--bleed-y col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
         <div class="panel">
-          <%= image_tag current_student.team.team_photo_url,
-            class: "grid__cell-img" %>
+          <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
 
-          <h3 class="reset"><%= current_student.team.name %></h3>
+          <h3 class="reset"><%= current_student.full_name %></h3>
 
-          <%= link_to "Manage your team", student_team_path(current_student.team) %>
+          <%= link_to "View your profile", student_profile_path %>
         </div>
-      <% end %>
 
-      <%= render "dashboards/ra_intro" %>
+        <% if current_student.is_on_team? %>
+          <div class="panel">
+            <%= image_tag current_student.team.team_photo_url,
+              class: "grid__cell-img" %>
+
+            <h3 class="reset"><%= current_student.team.name %></h3>
+
+            <%= link_to "Manage your team", student_team_path(current_student.team) %>
+          </div>
+        <% end %>
+
+        <%= render "dashboards/ra_intro" %>
+      </div>
     </div>
   </div>
 
-  <div class="grid__col-md-6">
-    <div class="col--sticky">
-      <%= render "student/dashboards/current_actions" %>
+  <div class="grid__col-md-6 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <%= render "student/dashboards/current_actions" %>
+      </div>
     </div>
   </div>
 
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar">
-    <div class="col--sticky">
-      <%= render "student/dashboards/season_checklist" %>
-      <%= render "student/dashboards/info_sidebar" %>
+  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <%= render "student/dashboards/season_checklist" %>
+        <%= render "student/dashboards/info_sidebar" %>
+      </div>
     </div>
   </div>
 </div>
