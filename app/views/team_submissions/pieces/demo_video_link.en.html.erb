@@ -1,6 +1,10 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-8">
     <div class="panel">
+      <h3 class="panel--heading">
+        Demo video
+      </h3>
+
       <%= form_with model: [:student, @team_submission], local: true do |f| %>
         <div class="field">
           <%= f.label :demo_video_link, "Youtube or Vimeo URL" %>
