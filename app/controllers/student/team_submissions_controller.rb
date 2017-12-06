@@ -85,10 +85,7 @@ module Student
         head 200
       elsif @team_submission.update_attributes(team_submission_params)
         if request.xhr?
-          render json: {
-            pitch_embed: @team_submission.embed_code(:pitch_video_link),
-            demo_embed: @team_submission.embed_code(:demo_video_link),
-          }
+          render json: {}
         else
           redirect_to [:student, @team_submission],
             success: t("controllers.team_submissions.update.success")
