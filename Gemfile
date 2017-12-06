@@ -12,7 +12,7 @@ gem 'pdf-forms', '~> 1.1'
 
 gem 'public_activity', "~> 1.5"
 gem "paranoia", '~> 2.4'
-gem 'counter_culture', '~> 1.8'
+gem 'counter_culture', '~> 1.9'
 
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
@@ -23,6 +23,7 @@ gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.5"
 gem 'chart-js-rails', "~> 0.1"
+gem 'dropzonejs-rails', "~> 0.8"
 
 gem "cocoon", "~> 1.2"
 
