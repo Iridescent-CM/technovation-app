@@ -109,6 +109,8 @@ module Student
           :pitch_video_link,
           :development_platform_other,
           :development_platform,
+          :app_inventor_app_name,
+          :app_inventor_gmail,
           screenshots: [],
           screenshots_attributes: [
             :id,
