@@ -1,0 +1,37 @@
+<% provide :title, "Help your teammates qualify for competition" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <h1>Competition Qualification</h1>
+
+      <% if current_team.qualified? %>
+        <p>
+          <%= web_icon("check-circle", class: "icon-green") %>
+          Your team is all set! Every student on your team has finished their registration!
+        </p>
+
+        <p>
+          <%= link_to "Continue working on your submission",
+            student_team_submission_path(current_team.submission),
+            class: "button" %>
+        </p>
+      <% else %>
+        <p>
+          The following students <strong>must finish their registration</strong>.
+        </p>
+
+        <p>
+          Until these steps are completed,
+          <%= current_team.name %> <strong>is not qualified</strong>
+          to submit for the competition.
+        </p>
+
+        <ul class="reset">
+          <%= render partial: "teams/onboarding_member",
+            collection: current_team.students.onboarding %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
