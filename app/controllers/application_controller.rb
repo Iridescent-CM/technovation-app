@@ -69,7 +69,9 @@ class ApplicationController < ActionController::Base
     # requirement of team_id in mentor scope
     case current_scope
     when "student"; current_account.team
-    when "mentor"; current_account.teams.find(params.fetch(:team_id))
+    when "mentor"; current_account.teams.find(
+                     params.fetch(:team_id) { params.fetch(:id) }
+                   )
     end
   end
 
