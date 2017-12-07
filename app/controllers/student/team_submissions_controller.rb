@@ -19,6 +19,14 @@ module Student
     def edit
       @team_submission = current_team.submission
 
+      if params[:attributes]
+        JSON.parse(params[:attributes]).each do |k, v|
+          @team_submission.public_send("#{k}=", v)
+        end
+
+        @team_submission.valid?
+      end
+
       @team_submission.screenshots.build
 
       unless @team_submission.business_plan.present?
@@ -93,7 +101,11 @@ module Student
             success: t("controllers.team_submissions.update.success")
         end
       else
-        render :new
+        redirect_to edit_student_team_submission_path(
+          @team_submission,
+          piece: params[:piece],
+          attributes: @team_submission.attributes.to_json,
+        )
       end
     end
 
