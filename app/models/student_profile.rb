@@ -95,6 +95,7 @@ class StudentProfile < ActiveRecord::Base
 
   has_many :parental_consents, dependent: :destroy
   has_one :parental_consent, -> { current }, dependent: :destroy
+  accepts_nested_attributes_for :parental_consents
 
   has_one :signed_parental_consent,
     -> { current.signed },
