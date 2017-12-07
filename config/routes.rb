@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
     resources :team_locations, only: :edit
+    resources :pending_teammates, only: :index
 
     resources :team_submissions
     resource :technical_checklist, only: [:edit, :update]

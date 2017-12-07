@@ -4,6 +4,22 @@ RSpec.describe Team do
   before { Timecop.travel(Division.cutoff_date - 1.day) }
   after { Timecop.return }
 
+  it "is not qualified to compete while pending students exist" do
+    team = FactoryBot.create(:team)
+    expect(team).to be_qualified
+
+    student = team.students.sample
+    student.update({
+      parental_consents_attributes: { 0 => {
+          id: student.parental_consent.id,
+          status: :pending,
+        },
+      },
+    })
+
+    expect(team.reload).not_to be_qualified
+  end
+
   it "knows when it's a past or current team" do
     team = FactoryBot.create(:team)
     expect(team).to be_current
