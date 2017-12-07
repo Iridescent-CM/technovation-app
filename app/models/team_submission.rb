@@ -32,7 +32,11 @@ class TeamSubmission < ActiveRecord::Base
 
   scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
-      joins(:team).where("teams.state_province = ? AND teams.country = 'US'", ambassador.state_province)
+      joins(:team)
+        .where(
+          "teams.state_province = ? AND teams.country = 'US'",
+          ambassador.state_province
+        )
     else
       joins(:team).where("teams.country = ?", ambassador.country)
     end
