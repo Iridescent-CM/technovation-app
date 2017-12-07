@@ -112,6 +112,8 @@ table {
   }
 }
 
-.clear {
+.clear:after {
+  content: "";
+  display: table;
   clear: both;
 }
