@@ -1,18 +1,27 @@
 <li class="grid">
   <div class="grid__col-3 grid__col--bleed-x">
     <div class="grid__cell">
-      <%= image_tag public_member.profile_image_url,
-        class: "thumbnail-md grid__cell-img" %>
+      <% if public_member.account.present? %>
+        <%= image_tag public_member.profile_image_url,
+          class: "thumbnail-md grid__cell-img" %>
+      <% else %>
+        <%= image_tag "placeholders/avatars/#{rand(21..24)}.svg",
+          class: "thumbnail-md grid__cell-img" %>
+      <% end %>
     </div>
   </div>
 
   <div class="grid__col-9">
-    <h3>
-      <%= public_member.first_name %>
-    </h3>
+    <% if public_member.account.present? %>
+      <h3>
+        <%= public_member.first_name %>
+      </h3>
 
-    <% if public_member.student_profile %>
-      <h4>Age <%= public_member.age %></h4>
+      <% if public_member.student_profile %>
+        <h4>Age <%= public_member.age %></h4>
+      <% end %>
+    <% else %>
+      - account deleted -
     <% end %>
   </div>
 </li>
