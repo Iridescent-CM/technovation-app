@@ -3,6 +3,7 @@
 
 //= require forms
 //= require search
+//= require toggling-select
 
 var offset = 92;
 

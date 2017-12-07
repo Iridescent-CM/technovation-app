@@ -51,9 +51,9 @@
             label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
             input_html: {
               data: {
-                toggle: true,
-                toggle_value: "Other",
-                toggle_reveal: ".referred_by_other",
+                toggles: {
+                  "Other": ".referred_by_other",
+                },
               },
               class: 'sign-up-referred-by'
             } %>

@@ -1,17 +1,21 @@
-document.addEventListener("turbolinks:load", function() {
-  $('[data-toggle]')
-    .each(toggleAttachedField)
-    .on('change', toggleAttachedField);
+var toggleAttachedField;
 
-  function toggleAttachedField() {
-    const toggleOnValue = $(this).data('toggle-value'),
-          toggleFieldSelector = $(this).data('toggle-reveal'),
-          $field = $(toggleFieldSelector);
+toggleAttachedField = function () {
+  var $selectField = $(this);
 
-    if ($(this).val() === toggleOnValue) {
+  $.each($(this).data("toggles"), function(selectValue, revealSelector) {
+    var $field = $(revealSelector);
+
+    if ($selectField.val() === selectValue) {
       $field.fadeIn();
     } else {
       $field.fadeOut();
     }
-  }
+  });
+}
+
+$(document).on("change", "[data-toggles]", toggleAttachedField);
+
+$(document).on("ready turbolinks:load", function() {
+  $('[data-toggles]').each(toggleAttachedField);
 });
