@@ -120,9 +120,15 @@
           submission: @team_submission,
           title: "Screenshots",
           scope: :student,
+          yield_block: true,
           attribute: :screenshots,
           cta_when_empty: "Upload screenshots of your app",
-          cta_when_filled: "Make changes to your screenshots" %>
+          cta_when_filled: "Make changes to your screenshots" do %>
+          <p>
+            Your team has uploaded
+            <%= pluralize(@team_submission.screenshots.count, "screenshot") %>
+          </p>
+        <% end %>
 
         <div
           id="<%= dom_id(@team_submission) %>_business_plan"

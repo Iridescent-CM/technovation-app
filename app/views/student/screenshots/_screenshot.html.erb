@@ -1,17 +1,23 @@
-<% edit ||= false %>
+<%
+  edit ||= false
+  img_css ||= ""
+  col_css ||= "grid__col-auto"
+%>
 
-<li>
+<div class="<%= col_css %>">
   <%= image_tag screenshot.image_url,
     alt: screenshot.image_identifier,
     data: {
       image_id: screenshot.id,
     },
+    class: img_css,
     width: "100%" %>
+
   <% if edit %>
     <%= link_to "".html_safe,
       send("#{current_scope}_screenshot_path",
-           screenshot,
-           team_id: current_team.id),
+            screenshot,
+            team_id: current_team.id),
       class: 'fa fa-trash-o',
       data: {
         remote: true,
@@ -19,4 +25,4 @@
         confirm: "Are you sure you want to delete the screenshot?",
       } %>
   <% end %>
-</li>
+</div>
