@@ -2835,9 +2835,16 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171204220222'),
 ('20171204220418'),
 ('20171204221323'),
+<<<<<<< HEAD
 ('20171207180553'),
 >>>>>>> Fix db seeds
 ('20180102162930');
+<<<<<<< HEAD
 >>>>>>> Allow existing judges to be invited as RAs
+=======
+=======
+('20171207180553');
+>>>>>>> Add app inventor grant funding fields to Team Submission
+>>>>>>> Add app inventor grant funding fields to Team Submission
 
 
