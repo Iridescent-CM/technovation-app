@@ -16,6 +16,7 @@
       <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
 
       <%= form_with model: [:student, @team_submission],
+        multipart: true,
         id: "team-submission-business-plan-dropzone",
         class: "dropzone" do |f| %>
         <%= f.hidden_field "business_plan_attributes[id]",

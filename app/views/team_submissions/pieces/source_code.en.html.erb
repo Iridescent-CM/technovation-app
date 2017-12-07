@@ -16,6 +16,7 @@
       <p class="hint">File types allowed: *.zip or *.aia</p>
 
       <%= form_with model: [:student, @team_submission],
+        multipart: true,
         id: "team-submission-sourcecode-dropzone",
         class: "dropzone" do |f| %>
         <div class="fallback">

@@ -226,3 +226,13 @@ form[data-remote] {
   background: rgba(0, 0, 0, 0.1);
   border-radius: $radius-default;
 }
+
+.dz-error-mark {
+  background: $alert-txt;
+  border-radius: 100px;
+}
+
+.dz-success-mark {
+  background: $shamrock;
+  border-radius: 100px;
+}

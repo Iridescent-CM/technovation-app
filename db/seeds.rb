@@ -23,7 +23,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       seasons: [Season.current.year],
                                     })).valid?
   Geocoding.perform(student).with_save
-  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent))
+  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent, :signed))
   puts ""
   puts "============================================================="
   puts ""
@@ -90,7 +90,7 @@ if (student = StudentProfile.create(school_name: "John Hughes High",
                                       email_confirmed_at: Time.current,
                                       seasons: [Season.current.year - 2],
                                     })).valid?
-  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent))
+  student.create_parental_consent!(FactoryBot.attributes_for(:parental_consent, :signed))
   puts ""
   puts "============================================================="
   puts ""

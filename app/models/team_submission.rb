@@ -49,6 +49,7 @@ class TeamSubmission < ActiveRecord::Base
     dependent: :destroy,
     after_add: Proc.new { |ts, _| ts.touch },
     after_remove: Proc.new { |ts, _| ts.touch }
+  accepts_nested_attributes_for :screenshots
 
   has_one :business_plan, dependent: :destroy
   accepts_nested_attributes_for :business_plan
@@ -98,7 +99,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def screenshots_complete?
-    screenshots.count >= 2
+    screenshots.reject(&:new_record?).count >= 2
   end
 
   def update_average_scores
@@ -327,7 +328,7 @@ class TeamSubmission < ActiveRecord::Base
   def total_technical_process
     if technical_checklist.pics_of_process.all? { |a|
         technical_checklist.send(a).present?
-      } and screenshots.count >= 2
+      } and screenshots_complete?
       3
     else
       0
