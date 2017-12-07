@@ -1351,7 +1351,9 @@ CREATE TABLE team_submissions (
     pending_semifinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     pending_quarterfinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     deleted_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    app_inventor_app_name character varying,
+    app_inventor_gmail character varying
 );
 
 
