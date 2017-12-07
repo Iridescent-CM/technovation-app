@@ -19,6 +19,8 @@ module Student
     def edit
       @team_submission = current_team.submission
 
+      @team_submission.screenshots.build
+
       unless @team_submission.business_plan.present?
         @team_submission.build_business_plan
       end
@@ -83,7 +85,7 @@ module Student
         end
 
         head 200
-      elsif @team_submission.update_attributes(team_submission_params)
+      elsif @team_submission.update(team_submission_params)
         if request.xhr?
           render json: {}
         else
@@ -107,7 +109,10 @@ module Student
           :pitch_video_link,
           :development_platform_other,
           :development_platform,
-          screenshots: [],
+          screenshots_attributes: [
+            :id,
+            :image,
+          ],
           business_plan_attributes: [
             :id,
             :uploaded_file,
