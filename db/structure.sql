@@ -1350,7 +1350,9 @@ CREATE TABLE team_submissions (
     pending_semifinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     pending_quarterfinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     deleted_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    app_inventor_app_name character varying,
+    app_inventor_gmail character varying
 );
 
 
@@ -2808,6 +2810,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171121175628'),
 ('20171204220222'),
 ('20171204220418'),
-('20171204221323');
+('20171204221323'),
+('20171207180553');
 
 
