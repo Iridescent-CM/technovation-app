@@ -34,7 +34,7 @@ jobs:
           MENTOR_SLACK_SIGNUP_URL: n-a
           STUDENT_SLACK_SIGNUP_URL: n-a
           PARENT_CONSENT_PDF: n-a
-      - image: circleci/postgres:10-alpine
+      - image: circleci/postgres:10.1
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
