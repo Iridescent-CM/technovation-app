@@ -80,3 +80,13 @@
     }
   }
 }
+
+.onboarding-reminder {
+  @extend .clear;
+
+  margin: 0 0 1rem;
+
+  img {
+    margin-right: 0.5rem;
+  }
+}

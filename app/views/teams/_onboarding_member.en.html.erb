@@ -9,16 +9,6 @@
 
     <p class="reset"><%= mail_to onboarding_member.email %></p>
 
-    <% if CanRemoveTeamMember.(current_account, onboarding_member) %>
-      <%= link_to "remove this member",
-        [current_scope, @team, :membership, { member_id: onboarding_member.id }],
-        data: {
-          method: :delete,
-          confirm: "Are you sure you want to REMOVE #{onboarding_member.full_name} from your team?"
-        },
-        class: "danger small" %>
-    <% end %>
-
     <div class="help">
       <h6 class="reset"><%= onboarding_member.first_name %> still needs to:</h6>
 
@@ -28,5 +18,17 @@
         <% end %>
       </ul>
     </div>
+
+    <% if CanRemoveTeamMember.(current_account, onboarding_member) %>
+      <%= link_to "remove this member",
+        [current_scope, current_team, :membership, { member_id: onboarding_member.id }],
+        data: {
+          method: :delete,
+          confirm: "Are you sure you want to REMOVE " +
+                  onboarding_member.full_name +
+                  " from your team?"
+        },
+        class: "danger small" %>
+    <% end %>
   </div>
 </li>
