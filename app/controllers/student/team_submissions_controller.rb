@@ -109,6 +109,7 @@ module Student
           :pitch_video_link,
           :development_platform_other,
           :development_platform,
+          screenshots: [],
           screenshots_attributes: [
             :id,
             :image,
