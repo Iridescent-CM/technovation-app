@@ -36,20 +36,6 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
-
-
---
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -137,6 +123,7 @@ CREATE TABLE accounts (
 --
 
 CREATE SEQUENCE accounts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -175,6 +162,7 @@ CREATE TABLE activities (
 --
 
 CREATE SEQUENCE activities_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -206,6 +194,7 @@ CREATE TABLE admin_profiles (
 --
 
 CREATE SEQUENCE admin_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -252,6 +241,7 @@ CREATE TABLE background_checks (
 --
 
 CREATE SEQUENCE background_checks_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -284,6 +274,7 @@ CREATE TABLE business_plans (
 --
 
 CREATE SEQUENCE business_plans_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -351,6 +342,7 @@ CREATE TABLE consent_waivers (
 --
 
 CREATE SEQUENCE consent_waivers_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -382,6 +374,7 @@ CREATE TABLE divisions (
 --
 
 CREATE SEQUENCE divisions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -423,6 +416,7 @@ CREATE TABLE expertises (
 --
 
 CREATE SEQUENCE expertises_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -459,6 +453,7 @@ CREATE TABLE exports (
 --
 
 CREATE SEQUENCE exports_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -493,6 +488,7 @@ CREATE TABLE honor_code_agreements (
 --
 
 CREATE SEQUENCE honor_code_agreements_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -527,6 +523,7 @@ CREATE TABLE jobs (
 --
 
 CREATE SEQUENCE jobs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -547,8 +544,8 @@ ALTER SEQUENCE jobs_id_seq OWNED BY jobs.id;
 
 CREATE TABLE join_requests (
     id integer NOT NULL,
-    requestor_id integer NOT NULL,
     requestor_type character varying NOT NULL,
+    requestor_id integer NOT NULL,
     team_id integer NOT NULL,
     accepted_at timestamp without time zone,
     declined_at timestamp without time zone,
@@ -564,6 +561,7 @@ CREATE TABLE join_requests (
 --
 
 CREATE SEQUENCE join_requests_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -596,6 +594,7 @@ CREATE TABLE judge_assignments (
 --
 
 CREATE SEQUENCE judge_assignments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -631,6 +630,7 @@ CREATE TABLE judge_profiles (
 --
 
 CREATE SEQUENCE judge_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -661,8 +661,8 @@ CREATE TABLE judge_profiles_regional_pitch_events (
 
 CREATE TABLE memberships (
     id integer NOT NULL,
-    member_id integer NOT NULL,
     member_type character varying NOT NULL,
+    member_id integer NOT NULL,
     team_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -674,6 +674,7 @@ CREATE TABLE memberships (
 --
 
 CREATE SEQUENCE memberships_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -706,6 +707,7 @@ CREATE TABLE mentor_profile_expertises (
 --
 
 CREATE SEQUENCE mentor_profile_expertises_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -745,6 +747,7 @@ CREATE TABLE mentor_profiles (
 --
 
 CREATE SEQUENCE mentor_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -773,8 +776,8 @@ CREATE TABLE messages (
     body text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    regarding_id integer,
     regarding_type character varying,
+    regarding_id integer,
     sent_at timestamp without time zone,
     delivered_at timestamp without time zone
 );
@@ -785,6 +788,7 @@ CREATE TABLE messages (
 --
 
 CREATE SEQUENCE messages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -805,10 +809,10 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 CREATE TABLE multi_messages (
     id integer NOT NULL,
-    sender_id integer NOT NULL,
     sender_type character varying NOT NULL,
-    regarding_id integer NOT NULL,
+    sender_id integer NOT NULL,
     regarding_type character varying NOT NULL,
+    regarding_id integer NOT NULL,
     recipients hstore NOT NULL,
     subject character varying,
     body text NOT NULL,
@@ -824,6 +828,7 @@ CREATE TABLE multi_messages (
 --
 
 CREATE SEQUENCE multi_messages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -859,6 +864,7 @@ CREATE TABLE parental_consents (
 --
 
 CREATE SEQUENCE parental_consents_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -891,6 +897,7 @@ CREATE TABLE pitch_presentations (
 --
 
 CREATE SEQUENCE pitch_presentations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -928,6 +935,7 @@ CREATE TABLE regional_ambassador_profiles (
 --
 
 CREATE SEQUENCE regional_ambassador_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1001,6 +1009,7 @@ CREATE TABLE regional_pitch_events (
 --
 
 CREATE SEQUENCE regional_pitch_events_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1042,6 +1051,7 @@ CREATE TABLE regions (
 --
 
 CREATE SEQUENCE regions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1119,6 +1129,7 @@ CREATE TABLE screenshots (
 --
 
 CREATE SEQUENCE screenshots_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1157,6 +1168,7 @@ CREATE TABLE signup_attempts (
 --
 
 CREATE SEQUENCE signup_attempts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1191,6 +1203,7 @@ CREATE TABLE student_profiles (
 --
 
 CREATE SEQUENCE student_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1250,6 +1263,7 @@ CREATE TABLE submission_scores (
 --
 
 CREATE SEQUENCE submission_scores_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1288,6 +1302,7 @@ CREATE TABLE team_member_invites (
 --
 
 CREATE SEQUENCE team_member_invites_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1345,6 +1360,7 @@ CREATE TABLE team_submissions (
 --
 
 CREATE SEQUENCE team_submissions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1376,11 +1392,11 @@ CREATE TABLE teams (
     accepting_mentor_requests boolean DEFAULT true NOT NULL,
     latitude double precision,
     longitude double precision,
+    seasons text[] DEFAULT '{}'::text[],
     city character varying,
     state_province character varying,
     country character varying,
     deleted_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[],
     has_students boolean DEFAULT false NOT NULL,
     has_mentor boolean DEFAULT false NOT NULL
 );
@@ -1391,6 +1407,7 @@ CREATE TABLE teams (
 --
 
 CREATE SEQUENCE teams_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1458,6 +1475,7 @@ CREATE TABLE technical_checklists (
 --
 
 CREATE SEQUENCE technical_checklists_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -2024,6 +2042,14 @@ ALTER TABLE ONLY saved_searches
 
 
 --
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: screenshots screenshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2468,13 +2494,6 @@ CREATE INDEX trgm_team_name_indx ON teams USING gist (name gist_trgm_ops);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2539,11 +2558,11 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: exports fk_rails_6a055fa9bf; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: exports fk_rails_65c6ec4a5e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY exports
-    ADD CONSTRAINT fk_rails_6a055fa9bf FOREIGN KEY (owner_id) REFERENCES accounts(id);
+    ADD CONSTRAINT fk_rails_65c6ec4a5e FOREIGN KEY (owner_id) REFERENCES accounts(id);
 
 
 --
@@ -2771,7 +2790,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171018170002'),
 ('20171018184701'),
 ('20171019162859'),
-('20171019230759'),
 ('20171019230800'),
 ('20171020085320'),
 ('20171020135709'),
@@ -2786,7 +2804,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171107225231'),
 ('20171107233018'),
 ('20171108140911'),
-('20171110224550'),
 ('20171113170115'),
 ('20171113170150'),
 ('20171113215850'),
@@ -2802,6 +2819,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171117142253'),
 ('20171117150649'),
 ('20171120200105'),
+('20171120200106'),
 ('20171120200239'),
 ('20171121175628'),
 ('20180102162930');
