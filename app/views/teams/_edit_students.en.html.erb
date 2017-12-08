@@ -16,7 +16,10 @@
 
   <ul class="reset">
     <%= render partial: "teams/onboarding_member",
-      collection: team.students.onboarding %>
+      collection: team.students.onboarding,
+      locals: {
+        team: team,
+      } %>
   </ul>
 <% end %>
 
