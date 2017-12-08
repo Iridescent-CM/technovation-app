@@ -1,10 +1,12 @@
 //= require application
 //= require jquery.maskedinput
+//= require dropzone
 
 //= require forms
 //= require search
 //= require char-counter
-
+//= require toggling-select
+//= require submissions
 
 document.addEventListener("turbolinks:load", function() {
   $("#background_check_candidate_ssn").mask("999-99-9999?");

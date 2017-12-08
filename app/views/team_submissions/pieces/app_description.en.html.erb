@@ -3,7 +3,7 @@
     <div class="panel">
       <h3 class="panel--heading">Description</h3>
 
-     <%= form_with model: [:student, @team_submission], local: true do |f| %>
+     <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
         <div class="field">
           <%= f.label :app_description,
             "Describe your app in only a few sentences or less" %>
@@ -23,7 +23,7 @@
           <p>
             <%= f.submit "Save this description", class: "button" %>
             or
-            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+            <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
         </div>
       <% end %>
