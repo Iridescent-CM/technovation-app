@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   add_flash_types :error
 
   helper_method :current_account,
-    :current_team,
     :current_scope,
     :current_profile,
     :current_profile_type,
@@ -60,17 +59,6 @@ class ApplicationController < ActionController::Base
     @current_session ||= Account.find_by(
       session_token: get_cookie(:session_token)
     ) || NullAuth.new
-  end
-
-  def current_team
-    # TODO: Figure out how to clean up the
-    # requirement of team_id in mentor scope
-    case current_scope
-    when "student"; current_account.team
-    when "mentor"; current_account.teams.find(
-                     params.fetch(:team_id) { params.fetch(:id) }
-                   )
-    end
   end
 
   private
