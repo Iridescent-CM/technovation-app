@@ -29,9 +29,43 @@ module Mentor
       if SeasonToggles.team_submissions_editable?
         render 'edit'
       else
-        render 'show'
+        render 'student/team_submissions/show' # TODO: legacy, but still sharing mentor/student team submission views
       end
     end
+
+    def edit
+      @team_submission = TeamSubmission.friendly.find(params[:id])
+      @team = @team_submission.team
+
+      if params[:attributes]
+        JSON.parse(params[:attributes]).each do |k, v|
+          @team_submission.public_send("#{k}=", v)
+        end
+
+        @team_submission.valid?
+      end
+
+      @team_submission.screenshots.build
+
+      unless @team_submission.business_plan.present?
+        @team_submission.build_business_plan
+      end
+
+      unless @team_submission.pitch_presentation.present?
+        @team_submission.build_pitch_presentation
+      end
+
+      if @team_submission.present?
+        begin
+          render "team_submissions/pieces/#{params.fetch(:piece)}"
+        rescue ActionView::MissingTemplate, ActionController::ParameterMissing
+          redirect_to mentor_team_submission_path(@team_submission)
+        end
+      else
+        redirect_to new_mentor_team_submission_path
+      end
+    end
+
 
     def update
       @team_submission = TeamSubmission.friendly.find(params[:id])
@@ -43,21 +77,19 @@ module Mentor
         end
 
         head 200
-      elsif @team_submission.update_attributes(team_submission_params)
+      elsif @team_submission.update(team_submission_params)
         if request.xhr?
-          render json: {
-            pitch_embed: @team_submission.embed_code(:pitch_video_link),
-            demo_embed: @team_submission.embed_code(:demo_video_link),
-          }
+          render json: {}
         else
-          redirect_to mentor_team_submission_path(
-            @team_submission,
-            team_id: @team_submission.team_id
-          ),
+          redirect_to [:mentor, @team_submission],
             success: t("controllers.team_submissions.update.success")
         end
       else
-        render 'student/team_submissions/new'
+        redirect_to edit_mentor_team_submission_path(
+          @team_submission,
+          piece: params[:piece],
+          attributes: @team_submission.attributes.to_json,
+        )
       end
     end
 

@@ -15,7 +15,7 @@
 
       <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
 
-      <%= form_with model: [:student, @team_submission],
+      <%= form_with model: [current_scope, @team_submission],
         multipart: true,
         id: "team-submission-business-plan-dropzone",
         class: "dropzone" do |f| %>
@@ -35,12 +35,12 @@
 
       <p class="dropzone-save" style="display: none;">
         <%= link_to "Save this upload",
-          student_team_submission_path(@team_submission),
+          [current_scope, @team_submission],
           class: "button" %>
       </p>
 
       <p class="after-dropzone-save">
-        <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+        <%= link_to "cancel", [current_scope, @team_submission] %>
       </p>
     </div>
   </div>

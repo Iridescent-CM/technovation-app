@@ -6,7 +6,7 @@
   <div class="card__body">
     <% if submission.screenshots.any? %>
       <ul class="gallerify">
-        <%= render partial: 'student/screenshots/screenshot',
+        <%= render partial: 'screenshots/screenshot',
           collection: submission.screenshots %>
       </ul>
     <% end %>
