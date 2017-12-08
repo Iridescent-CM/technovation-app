@@ -29,7 +29,7 @@ module Mentor
       if SeasonToggles.team_submissions_editable?
         render 'edit'
       else
-        render 'student/team_submissions/show' # TODO: legacy, but still sharing mentor/student team submission views
+        render 'show'
       end
     end
 
