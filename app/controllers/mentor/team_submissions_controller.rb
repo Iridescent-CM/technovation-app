@@ -3,80 +3,33 @@ module Mentor
     before_action :require_onboarded
 
     def new
-      @team_submission = if current_team.submission.present?
-                           current_team.submission
-                         else
-                           current_team.team_submissions.build
-                         end
-
-      render 'student/team_submissions/new'
+      team = Team.find(params[:team_id])
+      @team_submission = team.team_submissions.build
     end
 
     def create
-      @team_submission = if current_team.submission.present?
-                           current_team.submission
-                         else
-                            current_team.team_submissions.build(
-                              team_submission_params
-                            )
-                         end
+      @team_submission = TeamSubmission.new(team_submission_params)
 
       if @team_submission.save
-        redirect_to mentor_team_submission_path(
-          @team_submission,
-          team_id: current_team.id
-        ),
-        success: t("controllers.team_submissions.create.success")
+        redirect_to mentor_team_submission_path(@team_submission),
+          success: t("controllers.team_submissions.create.success")
       else
-        render 'student/team_submissions/new'
+        render :new
       end
     end
 
     def show
       @team_submission = TeamSubmission.friendly.find(params[:id])
-      params[:team_id] = @team_submission.team_id
+      @team = @team_submission.team
 
       unless @team_submission.pitch_presentation.present?
         @team_submission.build_pitch_presentation
       end
 
-      @pitch_presentation_uploader = FileUploader.new
-      @pitch_presentation_uploader.success_action_redirect =
-        student_team_submission_file_upload_confirmation_url(
-          file_attribute: :pitch_presentation,
-          back: student_team_submission_path(@team_submission)
-        )
-
       if SeasonToggles.team_submissions_editable?
-        unless @team_submission.business_plan
-          @team_submission.build_business_plan
-        end
-
-        @business_plan_uploader = FileUploader.new
-        @business_plan_uploader.success_action_redirect =
-          student_team_submission_file_upload_confirmation_url(
-            file_attribute: :business_plan,
-            back: student_team_submission_path(@team_submission)
-          )
-
-
-        @source_code_uploader = FileUploader.new
-        @source_code_uploader.success_action_redirect =
-          student_team_submission_file_upload_confirmation_url(
-            file_attribute: :source_code,
-            back: student_team_submission_path(@team_submission)
-          )
-
-        @team_photo_uploader = ImageUploader.new
-        @team_photo_uploader.success_action_redirect =
-          student_team_photo_upload_confirmation_url(back: request.fullpath)
-
-        @screenshots_uploader = ImageUploader.new
-        @screenshots_uploader.success_action_redirect = ''
-
-        render 'student/team_submissions/edit'
+        render 'edit'
       else
-        render 'student/team_submissions/show'
+        render 'show'
       end
     end
 
@@ -121,24 +74,30 @@ module Mentor
     def team_submission_params
       if SeasonToggles.team_submissions_editable?
         params.require(:team_submission).permit(
+          :team_id,
           :integrity_affirmed,
           :source_code,
-          :source_code_external_url,
           :app_description,
           :app_name,
           :demo_video_link,
           :pitch_video_link,
           :development_platform_other,
           :development_platform,
+          :app_inventor_app_name,
+          :app_inventor_gmail,
+          screenshots: [],
+          screenshots_attributes: [
+            :id,
+            :image,
+          ],
           business_plan_attributes: [
             :id,
-            :remote_file_url,
+            :uploaded_file,
           ],
           pitch_presentation_attributes: [
             :id,
-            :remote_file_url,
+            :uploaded_file,
           ],
-          screenshots: [],
         )
       else
         params.require(:team_submission).permit(
