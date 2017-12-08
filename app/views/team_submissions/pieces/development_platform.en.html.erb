@@ -5,7 +5,7 @@
         Development platform
       </h3>
 
-      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+      <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
         <%= hidden_field_tag :piece, params[:piece] %>
 
         <div class="field">
@@ -51,7 +51,7 @@
           <p>
             <%= f.submit "Save this development platform selection", class: "button" %>
             or
-            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+            <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
         </div>
       <% end %>
