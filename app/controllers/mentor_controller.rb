@@ -35,7 +35,7 @@ class MentorController < ApplicationController
   end
 
   def require_current_team
-    if current_team.present?
+    if current_mentor.teams.current.any?
       true
     else
       redirect_to mentor_dashboard_path,

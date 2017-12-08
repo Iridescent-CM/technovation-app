@@ -29,7 +29,10 @@
 
         <ul class="reset">
           <%= render partial: "teams/onboarding_member",
-            collection: current_team.students.onboarding %>
+            collection: current_team.students.onboarding,
+            locals: {
+              team: current_team,
+            } %>
         </ul>
       <% end %>
     </div>
