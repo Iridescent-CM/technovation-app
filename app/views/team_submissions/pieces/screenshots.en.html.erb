@@ -5,7 +5,7 @@
 
       <p class="hint">File types allowed: *.jpg, *.jpeg, *.gif, *.png</p>
 
-      <%= form_with model: [:student, @team_submission],
+      <%= form_with model: [current_scope, @team_submission],
         class: "dropzone",
         id: "team-submission-screenshots-dropzone",
         multipart: true do |f| %>
@@ -27,12 +27,12 @@
 
       <p class="dropzone-save" style="display: none;">
         <%= link_to "Save this upload",
-          student_team_submission_path(@team_submission),
+          [current_scope, @team_submission],
           class: "button" %>
       </p>
 
       <p class="after-dropzone-save">
-        <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+        <%= link_to "cancel", [current_scope, @team_submission] %>
       </p>
     </div>
 
@@ -41,9 +41,12 @@
         Your team has previously uploaded these screenshots:
 
         <div class="grid">
-          <%= render @team_submission.screenshots.reject(&:new_record?),
-            col_css: "grid__col-4",
-            img_css: "thumbnail-md" %>
+          <%= render partial: 'screenshots/screenshot',
+            collection: @team_submission.screenshots.reject(&:new_record?),
+            locals: {
+              col_css: "grid__col-4",
+              img_css: "thumbnail-md",
+            } %>
         </div>
       </div>
     <% end %>

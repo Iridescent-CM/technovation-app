@@ -5,7 +5,7 @@
         App name
       </h3>
 
-      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+      <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
         <div class="field">
           <%= f.label :app_name, "Your app's name" %>
           <%= f.text_field :app_name, id: :team_submission_app_name %>
@@ -15,7 +15,7 @@
           <p>
             <%= f.submit "Save this name", class: "button" %>
             or
-            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+            <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
         </div>
       <% end %>

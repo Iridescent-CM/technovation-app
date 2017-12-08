@@ -3,7 +3,7 @@
     <div class="panel">
       <h3 class="panel--heading">Pitch Video</h3>
 
-      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+      <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
         <div class="field">
           <%= f.label :pitch_video_link, "Youtube or Vimeo URL" %>
           <%= f.text_field :pitch_video_link, id: :team_submission_pitch_video_link %>
@@ -13,7 +13,7 @@
           <p>
             <%= f.submit "Save this pitch video link", class: "button" %>
             or
-            <%= link_to "cancel", student_team_submission_path(@team_submission) %>
+            <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
         </div>
       <% end %>
