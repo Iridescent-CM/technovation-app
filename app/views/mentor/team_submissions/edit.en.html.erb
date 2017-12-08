@@ -1,0 +1,268 @@
+<% provide :title, "#{@team.name}'s submission" %>
+
+<div class="grid">
+  <div class="grid__col-3 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <nav id="team_submissions--menu" class="menu">
+          <%= link_to web_icon("check-circle", text: "App name"),
+            "##{dom_id(@team_submission)}_app_name",
+            class: completion_css(@team_submission, :app_name) %>
+
+          <%= link_to web_icon("check-circle", text: "Description"),
+            "##{dom_id(@team_submission)}_app_description",
+            class: completion_css(@team_submission, :app_description) %>
+
+          <%= link_to web_icon("check-circle", text: "Demo video"),
+            "##{dom_id(@team_submission)}_demo_video_link",
+            class: completion_css(@team_submission, :demo_video_link) %>
+
+          <%= link_to web_icon("check-circle", text: "Pitch video"),
+            "##{dom_id(@team_submission)}_pitch_video_link",
+            class: completion_css(@team_submission, :pitch_video_link) %>
+
+          <%= link_to web_icon("check-circle", text: "Development platform"),
+            "##{dom_id(@team_submission)}_development_platform",
+            class: completion_css(@team_submission, :development_platform) %>
+
+          <%= link_to web_icon("check-circle", text: "Source code"),
+            "##{dom_id(@team_submission)}_source_code",
+            class: completion_css(@team_submission, :source_code_url) %>
+
+          <%= link_to web_icon("check-circle", text: "Screenshots"),
+            "##{dom_id(@team_submission)}_screenshots",
+            class: completion_css(@team_submission, :screenshots) %>
+
+          <p class="hint">senior teams only:</p>
+
+          <%= link_to web_icon("check-circle", text: "Business plan"),
+            "##{dom_id(@team_submission)}_business_plan",
+            class: completion_css(@team_submission, :business_plan_url) %>
+
+          <p class="hint">teams attending live pitch events:</p>
+
+          <%= link_to web_icon("check-circle", text: "Presentation slides"),
+            "##{dom_id(@team_submission)}_pitch_presentation",
+            class: completion_css(@team_submission, :pitch_presentation_url) %>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-6 submission-pieces col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Your app's name",
+          scope: :mentor,
+          attribute: :app_name,
+          cta_when_empty: "Set your app's name",
+          cta_when_filled: "Change your app's name" %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "A description of your app",
+          scope: :mentor,
+          yield_block: true,
+          attribute: :app_description,
+          cta_when_empty: "Add your app's description",
+          cta_when_filled: "Change your app's description" do %>
+          <%= simple_format(@team_submission.app_description) %>
+        <% end %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Demo video",
+          scope: :mentor,
+          attribute: :demo_video_link,
+          yield_block: true,
+          cta_when_empty: "Add the demo video link",
+          cta_when_filled: "Change the demo video link" do %>
+          <%= @team_submission.embed_code(:demo_video_link).html_safe %>
+        <% end %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Pitch video",
+          scope: :mentor,
+          yield_block: true,
+          attribute: :pitch_video_link,
+          cta_when_empty: "Add the pitch video link",
+          cta_when_filled: "Change the pitch video link" do %>
+          <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
+        <% end %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Development platform",
+          scope: :mentor,
+          attribute: :development_platform,
+          cta_when_empty: "Select the development platform that your team used",
+          cta_when_filled: "Change your selection" %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Source code",
+          scope: :mentor,
+          yield_block: true,
+          attribute: :source_code,
+          cta_when_empty: "Upload your app's source code",
+          cta_when_filled: "Change your upload" do %>
+          <p>
+            Your team has uploaded:
+            <%= link_to @team_submission.source_code_filename,
+              @team_submission.source_code_url %>
+          </p>
+        <% end %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Screenshots",
+          scope: :mentor,
+          yield_block: true,
+          attribute: :screenshots,
+          cta_when_empty: "Upload screenshots of your app",
+          cta_when_filled: "Make changes to your screenshots" do %>
+          <p>
+            Your team has uploaded
+            <%= pluralize(@team_submission.screenshots.count, "screenshot") %>
+          </p>
+        <% end %>
+
+        <div
+          id="<%= dom_id(@team_submission) %>_business_plan"
+          class="
+            panel
+            submission-piece
+            business_plan
+            <%= completion_css(@team_submission, :business_plan_url) %>
+          "
+        >
+          <h3 class="panel--heading">
+            Business plan
+          </h3>
+
+          <% if @team.senior? %>
+            <% if @team_submission.business_plan_url_complete? %>
+              <p>
+                Your team has uploaded:
+                <%= link_to @team_submission.business_plan_filename,
+                  @team_submission.business_plan_url %>
+              </p>
+
+              <div class="panel--footer">
+                <%= link_to "Change your upload",
+                  edit_mentor_team_submission_path(@team_submission, piece: :business_plan),
+                  class: "button secondary small" %>
+              </div>
+            <% else %>
+              <p class="scent">
+                There's nothing here yet,
+                but your team can update this part whenever it's ready!
+              </p>
+
+              <div class="panel--footer">
+                <%= link_to "Upload your team's business plan",
+                  edit_mentor_team_submission_path(@team_submission, piece: :business_plan),
+                  class: "button small" %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="scent--strong">
+              Your team is in the
+              <strong>
+                <%= @team.division_name.humanize %>
+                Division
+              </strong>
+            </p>
+
+            <p class="scent">
+              Uploading a business plan is
+              <strong>not required</strong>
+              in the Junior Division.
+            </p>
+
+            <p class="scent">
+              If your team has put one together, that is awesome!
+              Hold on to it for your own records and be extremely proud!
+            </p>
+          <% end %>
+        </div>
+
+        <div
+          id="<%= dom_id(@team_submission) %>_pitch_presentation"
+          class="
+            panel
+            submission-piece
+            <%= completion_css(@team_submission, :pitch_presentation_url) %>
+          "
+        >
+          <h3 class="panel--heading">
+            Pitch presentation slides
+          </h3>
+
+          <% if @team.selected_regional_pitch_event.live? %>
+            <% if @team_submission.pitch_presentation_url_complete? %>
+              <p>
+                Your team has uploaded:
+                <%= link_to @team_submission.pitch_presentation_filename,
+                  @team_submission.pitch_presentation_url %>
+              </p>
+
+              <div class="panel--footer">
+                <%= link_to "Change your upload",
+                  edit_mentor_team_submission_path(
+                    @team_submission,
+                    piece: :pitch_presentation
+                  ),
+                  class: "button secondary small" %>
+              </div>
+            <% else %>
+              <p class="scent">
+                There's nothing here yet,
+                but your team can update this part whenever it's ready!
+              </p>
+
+              <div class="panel--footer">
+                <%= link_to "Upload the pitch presentation slides for your live event",
+                  edit_mentor_team_submission_path(
+                    @team_submission,
+                    piece: :pitch_presentation
+                  ),
+                  class: "button small" %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="scent--strong">
+              Your team is not set to attend a live regional pitch event.
+            </p>
+
+            <p>
+              In March and April,
+              Regional Ambassadors will invite teams to pitch at a live event.
+            </p>
+
+            <p>
+              If your team is invited,
+              then you will be required to upload your pitch presentation slides here.
+            </p>
+
+            <p class="scent">
+              (pitching at a live regional event is not required)
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-3 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        Honor code reminder ...<br />
+        <%= render "team_submissions/eligibility_reminder", team: @team_submission.team %>
+      </div>
+    </div>
+  </div>
+</div>

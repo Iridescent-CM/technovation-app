@@ -1,7 +1,9 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
-      <%= form_with model: [:student, @team_submission], local: true do |f| %>
+      <%= form_with model: [:mentor, @team_submission], local: true do |f| %>
+        <%= f.hidden_field :team_id %>
+
         <div class="field">
           <p>Before starting your submission, your team must agree to the honor code</p>
 
