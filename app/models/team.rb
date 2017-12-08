@@ -143,7 +143,7 @@ class Team < ActiveRecord::Base
   delegate :name, to: :division, prefix: true
 
   def qualified?
-    students.onboarding.none?
+    students.any? and students.onboarding.none?
   end
 
   def photo_url
