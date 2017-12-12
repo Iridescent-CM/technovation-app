@@ -4,7 +4,6 @@ module Mentor
 
     def index
       @current_teams = current_mentor.teams.current
-      @past_teams = current_mentor.teams.past
     end
 
     private
