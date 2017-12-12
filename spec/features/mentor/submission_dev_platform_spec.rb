@@ -9,7 +9,6 @@ RSpec.feature "Students edit submission development platform" do
 
     sign_in(mentor)
 
-    click_link "My teams"
     click_link "Edit this team's submission"
     click_link "Select the development platform that your team used"
 
