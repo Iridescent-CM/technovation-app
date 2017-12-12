@@ -6,7 +6,7 @@ class SubmissionsGrid
   self.batch_size = 10
 
   scope do
-    TeamSubmission.includes(:team)
+    TeamSubmission.includes(:team).references(:teams)
   end
 
   column :team_name
