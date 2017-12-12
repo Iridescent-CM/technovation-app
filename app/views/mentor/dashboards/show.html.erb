@@ -51,6 +51,12 @@
           <%= link_to "View your profile", mentor_profile_path %>
         </div>
 
+        <svg height="10" width=10"">
+          <line x1="100" style="stroke:rgb(0,0,255);stroke-width:12"/>
+        </svg>
+
+        <%= render "mentor/dashboards/info_sidebar" %>
+
         <%= render "dashboards/ra_intro" %>
       </div>
     </div>
@@ -60,14 +66,6 @@
     <div class="col--sticky-spacer">
       <div class="col--sticky">
         <%= render 'mentor/dashboards/current_actions' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <%= render "mentor/dashboards/info_sidebar" %>
       </div>
     </div>
   </div>
