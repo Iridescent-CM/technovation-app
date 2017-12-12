@@ -174,21 +174,21 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
   context "Mentor my teams page" do
     let(:user) { FactoryBot.create(:mentor) }
-    let(:path) { mentor_teams_path }
+    let(:path) { mentor_dashboard_path }
 
     before { sign_in(user) }
 
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_link("Register a new team")
+      expect(page).to have_link("Register your team")
       expect(page).to have_link("Find more teams")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_link("Register a new team")
+      expect(page).not_to have_link("Register your team")
       expect(page).not_to have_link("Find more teams")
     end
   end

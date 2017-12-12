@@ -19,6 +19,12 @@
         [:new, current_scope, :team],
         class: "button"
       ) %>
+      or
+      <%= link_to(
+        "Find more teams",
+        [:new, current_scope, :team_search],
+        class: "button"
+      ) %>
     </div>
   </li>
 <% end %>
