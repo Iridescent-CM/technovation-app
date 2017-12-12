@@ -34,7 +34,6 @@ RSpec.feature "Admin / RA logging in as a user" do
       click_link "Login as #{mentor.full_name}"
       expect(current_path).to eq(mentor_dashboard_path)
 
-      click_link "My teams"
       click_link mentor.teams.first.name
       expect(current_path).to eq(mentor_team_path(mentor.teams.first))
 
@@ -92,7 +91,6 @@ RSpec.feature "Admin / RA logging in as a user" do
       click_link "Login as #{mentor.full_name}"
       expect(current_path).to eq(mentor_dashboard_path)
 
-      click_link "My teams"
       click_link mentor.teams.first.name
       expect(current_path).to eq(mentor_team_path(mentor.teams.first))
 
