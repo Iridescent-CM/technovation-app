@@ -16,13 +16,11 @@ RSpec.feature "Student team submissions" do
     team_mentor = FactoryBot.create(:mentor, :on_team)
 
     sign_in(mentor)
-    click_link "My teams"
 
     expect(page).not_to have_link("Start a submission now")
 
     sign_out
     sign_in(team_mentor)
-    click_link "My teams"
 
     expect(page).to have_link(
       "Start a submission now",
@@ -34,7 +32,6 @@ RSpec.feature "Student team submissions" do
     mentor = FactoryBot.create(:mentor, :on_team)
     sign_in(mentor)
 
-    click_link "My teams"
     click_link "Start a submission now"
 
     check "team_submission[integrity_affirmed]"
@@ -50,7 +47,6 @@ RSpec.feature "Student team submissions" do
     submission = mentor.teams.first.team_submissions.create!({ integrity_affirmed: true })
     sign_in(mentor)
 
-    click_link "My teams"
     click_link "Edit this team's submission"
 
     expect(page).to have_link(
@@ -95,7 +91,6 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    click_link "My teams"
     click_link "Edit this team's submission"
 
     expect(page).not_to have_link(
@@ -115,7 +110,7 @@ RSpec.feature "Student team submissions" do
       date_of_birth: 15.years.ago,
     })
 
-    click_link "My teams"
+    visit mentor_dashboard_path
     click_link "Edit this team's submission"
 
     expect(page).to have_link(
@@ -130,7 +125,6 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    click_link "My teams"
     click_link "Edit this team's submission"
 
     expect(page).not_to have_link(
@@ -149,7 +143,7 @@ RSpec.feature "Student team submissions" do
     rpe = FactoryBot.create(:regional_pitch_event)
     rpe.teams << mentor.teams.first
 
-    click_link "My teams"
+    visit mentor_dashboard_path
     click_link "Edit this team's submission"
 
     expect(page).to have_link(
