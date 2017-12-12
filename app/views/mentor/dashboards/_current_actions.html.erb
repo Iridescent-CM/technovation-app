@@ -5,7 +5,9 @@
   <%= render 'completion_steps/complete_profile', profile: current_mentor %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
 
-  <%= render "mentor/dashboards/current_teams" %>
+  <%= render 'mentor/teams/team_list',
+    type: :current,
+    teams: @current_teams %>
 
   <%= render "completion_steps/create_team",
     hidden: current_mentor.onboarding? %>

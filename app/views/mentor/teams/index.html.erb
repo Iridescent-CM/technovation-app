@@ -2,10 +2,6 @@
   <div class="grid__col-sm-8">
     <h3><%= t("views.teams.index.current_teams") %></h3>
 
-    <%= render 'mentor/teams/team_list',
-      type: :current,
-      teams: @current_teams %>
-
     <% if SeasonToggles.team_building_enabled? %>
       <p class="buttons">
         <%= link_to "Find more teams",
