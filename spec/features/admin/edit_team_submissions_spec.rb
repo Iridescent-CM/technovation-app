@@ -26,7 +26,6 @@ RSpec.feature "Toggling editable team submissions" do
 
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           click_link "Start a submission now"
         end
@@ -36,7 +35,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         expect(page).to have_css('.appy-button', text: "Edit")
 
-        visit mentor_teams_path
+        visit mentor_dashboard_path
 
         within("##{dom_id(team)}") do
           expect(page).not_to have_content(
@@ -54,7 +53,6 @@ RSpec.feature "Toggling editable team submissions" do
 
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           click_link("Edit this team's submission")
         end
@@ -79,7 +77,6 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit existing submission" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           expect(page).to have_content(
             "Submissions are not editable at this time"
@@ -98,7 +95,6 @@ RSpec.feature "Toggling editable team submissions" do
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:mentor, submission: false)
 
-        within(".navigation") { click_link("My teams") }
         within("##{dom_id(team)}") do
           expect(page).not_to have_link("Start a submission now")
           expect(page).to have_content("Submissions may not be started at this time.")
@@ -107,7 +103,7 @@ RSpec.feature "Toggling editable team submissions" do
         visit mentor_team_path(team)
         expect(page).not_to have_link("Start this team's submission now")
 
-        visit mentor_teams_path
+        visit mentor_dashboard_path
         expect(page).not_to have_link("Start a submission now")
       end
 
