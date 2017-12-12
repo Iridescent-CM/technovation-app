@@ -1,0 +1,18 @@
+.grid__cell--padding-sm-x {
+  padding: 0 0.5em;
+}
+.grid__cell--padding-sm-y {
+  padding: 0.5em 0;
+}
+.grid__cell--padding-md-x {
+  padding: 0 1em;
+}
+.grid__cell--padding-md-y {
+  padding: 1em 0 ;
+}
+.grid__cell--padding-lg-x {
+  padding: 0 2em;
+}
+.grid__cell--padding-lg-y {
+  padding: 2em 0;
+}
