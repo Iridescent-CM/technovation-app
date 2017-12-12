@@ -35,7 +35,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         expect(page).to have_css('.appy-button', text: "Edit")
 
-        visit mentor_teams_path
+        visit mentor_dashboard_path
 
         within("##{dom_id(team)}") do
           expect(page).not_to have_content(
@@ -103,7 +103,7 @@ RSpec.feature "Toggling editable team submissions" do
         visit mentor_team_path(team)
         expect(page).not_to have_link("Start this team's submission now")
 
-        visit mentor_teams_path
+        visit mentor_dashboard_path
         expect(page).not_to have_link("Start a submission now")
       end
 
