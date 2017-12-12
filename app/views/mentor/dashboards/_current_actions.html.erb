@@ -5,6 +5,11 @@
   <%= render 'completion_steps/complete_profile', profile: current_mentor %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
 
+  <% if current_mentor.mentor_invites.pending.any? %>
+    <%= render "completion_steps/invitations",
+      invites: current_mentor.mentor_invites.pending %>
+  <% end %>
+
   <%= render 'mentor/teams/team_list',
     type: :current,
     teams: @current_teams %>
@@ -16,7 +21,4 @@
     hidden: current_mentor.onboarding?,
     allow_many: true,
     requests: current_mentor.join_requests.pending %>
-
-  <%= render "completion_steps/invitations",
-    invites: current_mentor.mentor_invites.pending %>
 </ul>
