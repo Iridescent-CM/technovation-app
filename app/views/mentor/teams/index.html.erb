@@ -20,18 +20,6 @@
   </div>
 </div>
 
-<% if @past_teams.any? %>
-  <div class="grid grid--justify-space-around">
-    <div class="grid__col-sm-8">
-      <h3><%= t("views.teams.index.past_teams") %></h3>
-
-      <%= render 'mentor/teams/team_list',
-        type: :past,
-        teams: @past_teams %>
-    </div>
-  </div>
-<% end %>
-
 <% if SeasonToggles.select_regional_pitch_event? %>
   <div class="grid grid--justify-space-around">
     <div class="panel grid__col-sm-8">
