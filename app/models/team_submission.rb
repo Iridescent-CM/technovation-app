@@ -207,11 +207,11 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def country
-    team.country
+    team_country
   end
 
   def state_province
-    team.state_province
+    team_state_province
   end
 
   def division_id

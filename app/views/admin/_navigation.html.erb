@@ -17,14 +17,16 @@
     data: { turbolinks: false },
     class: al(admin_teams_path) %>
 
+  <%= link_to "Submissions",
+    admin_team_submissions_path,
+    data: { turbolinks: false },
+    class: al(admin_team_submissions_path) %>
+
+
 <% if false %>
   <%= link_to "Background Checks", admin_background_checks_path %>
 
   <%= link_to "Signup attempts", admin_signup_attempts_path %>
-
-
-  <%= link_to "Team Submissions", admin_team_submissions_path %>
-
 
   <%= link_to "Regional Pitch Events", admin_regional_pitch_events_path %>
 
