@@ -9,13 +9,22 @@ class SubmissionsGrid
     TeamSubmission.includes(:team).references(:teams)
   end
 
-  column :team_name
-  column :app_name
+  column :team_name, mandatory: true
+  column :app_name, mandatory: true
   column :state_province, header: "State"
-  column :country do
+
+  column :country, mandatory: true do
     if found_country = Carmen::Country.coded(country)
       found_country.name
     end
+  end
+
+  column :actions, mandatory: true, html: true do |submission|
+    link_to(
+      "edit",
+      send("admin_team_submissions_path", submission),
+      data: { turbolinks: false }
+    )
   end
 
   filter :season,
