@@ -1,4 +1,9 @@
 <h1>Team Submission Details</h1>
 
-
 <%= @team_submission.team_name %>
+<%= @team_submission.pitch_video_link %>
+
+<%= link_to "edit",
+  edit_admin_team_submission_path,
+  target: :_blank %>
+

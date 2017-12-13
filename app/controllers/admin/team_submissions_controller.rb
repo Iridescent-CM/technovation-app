@@ -10,6 +10,7 @@ module Admin
     end
 
     def edit
+      @team_submission = TeamSubmission.friendly.find(params[:id])
     end
 
     def update
