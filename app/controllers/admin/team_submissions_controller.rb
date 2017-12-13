@@ -6,6 +6,7 @@ module Admin
     use_datagrid with: SubmissionsGrid
 
     def show
+      @team_submission = TeamSubmission.friendly.find(params[:id])
     end
 
     def edit
