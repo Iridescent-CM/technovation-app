@@ -17,3 +17,26 @@
     right: 0.5rem;
   }
 }
+
+.mentor-resources {
+  border-top: 4px solid $shamrock;
+
+  a {
+    color: $light-grey;
+    font-size: 1.4rem;
+    display: block;
+    padding: 1rem 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+
+    &:hover {
+        color: $shamrock-dark;
+    }
+  }
+}
+
+.profile-image {
+  border-radius: 50%;
+  max-width: 250px;
+  border: 4px solid white;
+  margin: auto;
+}
