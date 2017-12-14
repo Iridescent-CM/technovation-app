@@ -1,59 +1,56 @@
-<div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= t("views.application.mentor_dashboard") %>
-
-        <% if SeasonToggles.signup_enabled?(:judge) %>
-          <small>
-            <%= link_to web_icon('refresh', text: "Switch to Judging"),
-              judge_dashboard_path %>
-          </small>
-        <% end %>
-
-        <% if current_mentor.is_an_ambassador? %>
-          <small>
-            <%= link_to "Switch to RA mode",
-              regional_ambassador_dashboard_path,
-              data: { turbolinks: false } %>
-          </small>
-        <% end %>
-      </h1>
-    </div>
-  </div>
-
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
-        <%= render 'program_survey' %>
-      <% else %>
-        <h1 class="page-heading">
-          <%= SeasonToggles.dashboard_text(:mentor) %>
-
-          <small>
-            <%= render 'program_survey' %>
-          </small>
-        </h1>
-      <% end %>
-    </div>
-  </div>
-</div>
-
 <div class="grid">
-  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent">
+  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent dashboard-sidebar">
     <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="panel">
-          <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
+      <div class="grid dashboard-notices">
+        <div class="grid__col-sm-6 grid__col--bleed-y">
+          <div class="grid__cell">
+            <h1 class="page-heading">
 
-          <h3 class="reset"><%= current_mentor.full_name %></h3>
+              <%= t("views.application.mentor_dashboard") %>
 
-          <%= link_to "View your profile", mentor_profile_path %>
+              <% if SeasonToggles.signup_enabled?(:judge) %>
+                <small>
+                  <%= link_to web_icon('refresh', text: "Switch to Judging"),
+                    judge_dashboard_path %>
+                </small>
+              <% end %>
+
+              <% if current_mentor.is_an_ambassador? %>
+                <small>
+                  <%= link_to "Switch to RA mode",
+                    regional_ambassador_dashboard_path,
+                    data: { turbolinks: false } %>
+                </small>
+              <% end %>
+
+            </h1>
+          </div>
         </div>
 
-        <svg height="10" width=10"">
-          <line x1="100" style="stroke:rgb(0,0,255);stroke-width:12"/>
-        </svg>
+        <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
+          <div class="grid__cell">
+            <% if SeasonToggles.dashboard_text(:mentor).blank? %>
+              <%= render 'program_survey' %>
+            <% else %>
+              <h1 class="page-heading">
+                <%= SeasonToggles.dashboard_text(:mentor) %>
+
+                <small>
+                  <%= render 'program_survey' %>
+                </small>
+              </h1>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col--sticky">
+        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img profile-image" %>
+
+          <h3 class="grid__cell--padding-md reset"><%= current_mentor.full_name %></h3>
+
+          <%= link_to "View your profile", mentor_profile_path %>
+
 
         <%= render "mentor/dashboards/info_sidebar" %>
 

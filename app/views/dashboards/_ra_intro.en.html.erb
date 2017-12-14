@@ -6,15 +6,16 @@
       Your program introduction
     </h5>
   <% else %>
-    <div class="panel ra-intro">
-      <h5 class="reset">
-        Meet your Regional Ambassador!
-      </h5>
+    <div class="grid ra-intro">
+      <div class="grid__col-12">
+        <h4 class="reset">
+          Meet your Regional Ambassador!
+        </h4>
 
       <%= image_tag regional_ambassador.profile_image_url,
         class: "grid__cell-img" %>
 
-      <h6><%= regional_ambassador.full_name %></h6>
+      <h3><%= regional_ambassador.full_name %></h3>
   <% end %>
 
   <%= simple_format regional_ambassador.intro_summary %>
@@ -32,6 +33,7 @@
   </ul>
 
   <% unless ra_dashboard %>
-    </div>
+      </div>
+      </div>
   <% end %>
 <% end %>
