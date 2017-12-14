@@ -1,10 +1,13 @@
 .dashboard-sidebar {
   h3 {
-    font-size: 1.2rem;
-    margin: 0;
+    color: $light-grey;
+    margin: 2;
+    text-align: center;
+    padding-top: 15px;
   }
 
   p {
+    color: $light-grey;
     font-size: 1.1rem;
     margin: 0 0 1rem;
   }
