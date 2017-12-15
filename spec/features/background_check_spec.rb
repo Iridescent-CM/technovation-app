@@ -1,29 +1,41 @@
 require "rails_helper"
 
 RSpec.feature "background checks" do
-  %i{mentor regional_ambassador}.each do |account|
-    scenario "Complete a #{account} background check", :vcr do
-      if account == :regional_ambassador
-        skip "Awaiting updates on RA features"
-      end
+  scenario "Complete a mentor background check", :vcr do
+    mentor = FactoryBot.create(:mentor, :geocoded)
+    mentor.background_check.destroy
+    sign_in(mentor)
+    click_link "Submit Background Check"
 
-      a = FactoryBot.create(account, :geocoded)
-      a.background_check.destroy
-      sign_in(a)
-      click_link "Submit Background Check"
+    fill_in "Zipcode", with: 60622
+    fill_in "Ssn", with: "111-11-2001"
+    fill_in "Driver license state", with: "CA"
+    click_button "Submit"
 
-      fill_in "Zipcode", with: 60622
-      fill_in "Ssn", with: "111-11-2001"
-      fill_in "Driver license state", with: "CA"
-      click_button "Submit"
+    expect(mentor.reload.background_check).to be_present
+  end
 
-      expect(a.reload.background_check).to be_present
-    end
+  scenario "Complete an RA background check", :vcr do
+    ra = FactoryBot.create(:regional_ambassador, :approved, :geocoded)
+    ra.background_check.destroy
+    sign_in(ra)
+    click_link "Submit Background Check"
+
+    fill_in "Zipcode", with: 60622
+    fill_in "Ssn", with: "111-11-2001"
+    fill_in "Driver license state", with: "CA"
+    click_button "Submit"
+
+    expect(ra.reload.background_check).to be_present
   end
 
   [16, 17].each do |age|
     scenario "mentors age #{age} do not need to complete one" do
-      mentor = FactoryBot.create(:mentor, :geocoded, date_of_birth: age.years.ago)
+      mentor = FactoryBot.create(
+        :mentor,
+        :geocoded,
+        date_of_birth: age.years.ago
+      )
 
       sign_in(mentor)
 
