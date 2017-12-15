@@ -25,3 +25,5 @@ churn*
 node_modules
 public/packs
 public/assets
+.ruby-version
+.tool-versions
