@@ -230,6 +230,7 @@ Rails.application.routes.draw do
   resources :teams, only: :show
   resources :apps, controller: :team_submissions, only: :show
   resources :technical_checklists, only: :show
+  resources :team_submission_pieces, only: :show
 
   resources :signup_attempts, only: [:create, :show, :update]
   resources :signup_attempt_confirmations, only: :new
