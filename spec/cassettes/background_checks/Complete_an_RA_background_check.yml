@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/candidates
+    body:
+      encoding: UTF-8
+      string: first_name=RA&middle_name=&no_middle_name=true&last_name=Account&email=account5%40example.com&phone&zipcode=60622&dob=1986-12-15&ssn=111-11-2001&driver_license_number&driver_license_state=CA&previous_driver_license_number&previous_driver_license_state&copy_requested=false&custom_id&reports&geos&documents=%7B%0A++%22object%22%3A+%22list%22%2C%0A++%22data%22%3A+%5B%0A%0A++%5D%0A%7D&id&object&uri&created_at
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.2.1'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.2.1","lang":"ruby","lang_version":"2.4.2 p198 (2017-09-14)","platform":"x86_64-darwin17","publisher":"checkr","uname":"Darwin
+        Josephs-MacBook-Pro.local 17.3.0 Darwin Kernel Version 17.3.0: Thu Nov  9
+        18:09:22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic NThiY2VjODFiMzkwNGFjYTQzZGJkNWRjOTk5Y2U4ZmEwYWI5Y2I4Mzo=
+      Content-Length:
+      - '407'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 15 Dec 2017 17:01:45 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '570'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d85b5721f93786cd59bdb0dd5908a050b1513357305; expires=Sat, 15-Dec-18
+        17:01:45 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Request-Id:
+      - 6dcdd6c8ec89cca58f042d4f6acf5240
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3cdaf7769c0c9b02-DFW
+    body:
+      encoding: UTF-8
+      string: '{"id":"ec7d693059f919b8ebf4fe81","object":"test_candidate","uri":"/v1/candidates/ec7d693059f919b8ebf4fe81","created_at":"2017-12-15T17:01:45Z","first_name":"Ra","last_name":"Account","middle_name":"","mother_maiden_name":null,"dob":"1986-12-15","ssn":"XXX-XX-2001","email":"account5@example.com","zipcode":"60622","phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":true,"report_ids":[],"geo_ids":[]}'
+    http_version: 
+  recorded_at: Fri, 15 Dec 2017 17:01:45 GMT
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/reports
+    body:
+      encoding: UTF-8
+      string: package=tasker_standard&candidate_id=ec7d693059f919b8ebf4fe81
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - 'Checkr/::API_VERSION:: RubyBindings/1.2.1'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Checkr-Client-User-Agent:
+      - '{"bindings_version":"1.2.1","lang":"ruby","lang_version":"2.4.2 p198 (2017-09-14)","platform":"x86_64-darwin17","publisher":"checkr","uname":"Darwin
+        Josephs-MacBook-Pro.local 17.3.0 Darwin Kernel Version 17.3.0: Thu Nov  9
+        18:09:22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64 x86_64"}'
+      Authorization:
+      - Basic NThiY2VjODFiMzkwNGFjYTQzZGJkNWRjOTk5Y2U4ZmEwYWI5Y2I4Mzo=
+      Content-Length:
+      - '61'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 15 Dec 2017 17:01:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '909'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=df14ff5523de8893a832fb41a2f2c03781513357305; expires=Sat, 15-Dec-18
+        17:01:45 GMT; path=/; domain=.checkr.com; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Request-Id:
+      - 91d8c5b12c0f4ab1f6e0dd3b06da04b4
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3cdaf7790fa35867-DFW
+    body:
+      encoding: UTF-8
+      string: '{"id":"a82d0568e2ee743b7fec78ea","object":"test_report","uri":"/v1/reports/a82d0568e2ee743b7fec78ea","status":"pending","created_at":"2017-12-15T17:01:45Z","completed_at":null,"revised_at":null,"upgraded_at":null,"turnaround_time":null,"due_time":"2017-12-23T17:01:45Z","package":"tasker_standard","tags":[],"adjudication":null,"assessment":null,"candidate_id":"ec7d693059f919b8ebf4fe81","county_criminal_search_ids":[],"document_ids":[],"federal_criminal_search_id":null,"global_watchlist_search_id":"5a33fffa5f0f8d001d010885","motor_vehicle_report_id":null,"national_criminal_search_id":"5a33fffa5f0f8d001d010883","personal_reference_verification_ids":[],"professional_reference_verification_ids":[],"sex_offender_search_id":"5a33fffa5f0f8d001d010884","ssn_trace_id":"5a33fffa5f0f8d001d01087e","state_criminal_search_ids":[],"terrorist_watchlist_search_id":"5a33fffa5f0f8d001d010885","facis_search_id":null}'
+    http_version: 
+  recorded_at: Fri, 15 Dec 2017 17:01:46 GMT
+recorded_with: VCR 3.0.3
