@@ -47,7 +47,11 @@ RSpec.feature "background checks" do
 
       click_link "Tell the students more about yourself"
       fill_in "mentor_profile_bio",
-        with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dapibus lacus vitae interdum. Praesent lacinia accumsan ligula, sit amet ultrices velit venenatis id. Duis ac nibh euismod, porta risus ut, molestie tortor."
+        with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+              "Praesent luctus dapibus lacus vitae interdum. " +
+              "Praesent lacinia accumsan ligula, sit amet ultrices " +
+              "velit venenatis id. Duis ac nibh euismod, " +
+              "porta risus ut, molestie tortor."
       click_button "Save"
 
       expect(mentor.reload).to be_searchable
