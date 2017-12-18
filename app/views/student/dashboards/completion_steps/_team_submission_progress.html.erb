@@ -115,22 +115,6 @@
   </div>
 </div>
 
-<p>
-  Check
-
-  <%= link_to 'how the judges will see',
-    app_path(submission),
-    target: :_blank %>
-
-  your submission, or
-
-  <%= link_to 'share your submission',
-    app_path(submission),
-    target: :_blank %>
-
-  with friends and family!
-</p>
-
 <% if SeasonToggles.team_submissions_editable? %>
   <p>
     <%= link_to "Edit your submission",
