@@ -5,7 +5,10 @@
         Development platform
       </h3>
 
-      <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
+      <%= form_with(
+        model: [current_scope, @team_submission],
+        local: true
+      ) do |f| %>
         <%= hidden_field_tag :piece, params[:piece] %>
 
         <div class="field">
@@ -30,10 +33,12 @@
 
         <div id="app_inventor_fields">
           <p class="scent">
-            We have to ask you two questions about your use of App Inventor 2.
+            We want to ask you two questions about your use of
+            App Inventor 2.
           </p>
 
-          <%= f.label :app_inventor_app_name, "What is your App Inventor 2 Project Name?" %>
+          <%= f.label :app_inventor_app_name,
+            "What is your App Inventor 2 Project Name?" %>
 
           <%= f.text_field :app_inventor_app_name,
             id: :team_submission_app_inventor_app_name %>
@@ -42,14 +47,18 @@
             "What is the gmail address of the App Inventor 2 " +
             "account that your team is using?" %>
 
-          <%= f.text_field :app_inventor_gmail, id: :team_submission_app_inventor_gmail %>
+          <%= f.text_field :app_inventor_gmail,
+            id: :team_submission_app_inventor_gmail %>
 
-          <p class="hint">We are keeping your personal information private.</p>
+          <p class="hint">
+            We are keeping your personal information private.
+          </p>
         </div>
 
         <div class="actions">
           <p>
-            <%= f.submit "Save this development platform selection", class: "button" %>
+            <%= f.submit "Save this development platform selection",
+              class: "button" %>
             or
             <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
