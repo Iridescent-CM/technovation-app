@@ -64,6 +64,11 @@ class TeamSubmission < ActiveRecord::Base
   has_one :technical_checklist, dependent: :destroy
   accepts_nested_attributes_for :technical_checklist
 
+  has_one :code_checklist,
+    class_name: "TechnicalChecklist",
+    dependent: :destroy
+  accepts_nested_attributes_for :code_checklist
+
   has_many :submission_scores, dependent: :destroy
 
   validate -> {
@@ -107,6 +112,10 @@ class TeamSubmission < ActiveRecord::Base
     define_method("#{piece}_complete?") do
       not public_send(piece).blank?
     end
+  end
+
+  def code_checklist_complete?
+    technical_checklist_completed?
   end
 
   def screenshots_complete?
@@ -181,6 +190,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def technical_checklist
     super || NullTechnicalChecklist.new
+  end
+
+  def code_checklist
+    technical_checklist
   end
 
   def app_name

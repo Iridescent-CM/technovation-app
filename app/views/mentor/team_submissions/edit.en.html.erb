@@ -21,13 +21,23 @@
             "##{dom_id(@team_submission)}_pitch_video_link",
             class: completion_css(@team_submission, :pitch_video_link) %>
 
-          <%= link_to web_icon("check-circle", text: "Development platform"),
+          <%= link_to web_icon(
+            "check-circle",
+            text: "Development platform"
+            ),
             "##{dom_id(@team_submission)}_development_platform",
-            class: completion_css(@team_submission, :development_platform) %>
+            class: completion_css(
+              @team_submission,
+              :development_platform
+            ) %>
 
           <%= link_to web_icon("check-circle", text: "Source code"),
             "##{dom_id(@team_submission)}_source_code",
             class: completion_css(@team_submission, :source_code_url) %>
+
+          <%= link_to web_icon("check-circle", text: "Code checklist"),
+            "##{dom_id(@team_submission)}_code_checklist",
+            class: completion_css(@team_submission, :code_checklist) %>
 
           <%= link_to web_icon("check-circle", text: "Screenshots"),
             "##{dom_id(@team_submission)}_screenshots",
@@ -113,6 +123,20 @@
             Your team has uploaded:
             <%= link_to @team_submission.source_code_filename,
               @team_submission.source_code_url %>
+          </p>
+        <% end %>
+
+        <%= render 'team_submissions/pieces/piece',
+          submission: @team_submission,
+          title: "Code checklist",
+          scope: :mentor,
+          yield_block: true,
+          attribute: :code_checklist,
+          cta_when_empty: "Confirm your code checklist",
+          cta_when_filled: "Make changes to your code checklist" do %>
+          <p>
+            Your team will earn :FIXME: bonus points
+            for your code checklist
           </p>
         <% end %>
 
