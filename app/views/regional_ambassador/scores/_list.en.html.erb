@@ -17,12 +17,6 @@
           <td><%= submission.team.name %></td>
 
           <td>
-            <%= link_to submission.app_name,
-              app_path(submission),
-              target: :_blank %>
-          </td>
-
-          <td>
             <%= submission.send(
               "complete_#{params[:round]}_official" +
               "_submission_scores_count"
