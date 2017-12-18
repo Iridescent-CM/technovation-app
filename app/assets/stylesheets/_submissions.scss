@@ -90,3 +90,30 @@
     margin-right: 0.5rem;
   }
 }
+
+[data-word-count] {
+  transition: background-color 2s;
+
+  &.notify {
+    background-color: $info;
+    transition: background-color 0.2s;
+  }
+}
+
+.word-count__total {
+  transition: font-weight 0.2s, color 0.2s;
+}
+
+.word-count--plenty-remaining {
+  color: $success-txt;
+}
+
+.word-count--some-remaining {
+  color: #f80;
+  font-weight: bold;
+}
+
+.word-count--none-remaining {
+  color: $alert-txt;
+  font-weight: bold;
+}
