@@ -28,6 +28,20 @@
             or
             <%= link_to "cancel", [current_scope, @team_submission] %>
           </p>
+
+          <p
+            class="scent"
+            data-word-count="#team_submission_app_description"
+            data-word-count-limit="100"
+          >
+            Number of words typed:
+            <br />
+            <span class="word-count__total word-count--plenty-remaining">
+              0
+            </span>
+            /
+            <span class="word-count__limit"></span>
+          </p>
         </div>
       <% end %>
 
