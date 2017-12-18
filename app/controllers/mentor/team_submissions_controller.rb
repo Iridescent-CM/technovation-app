@@ -29,7 +29,7 @@ module Mentor
       if SeasonToggles.team_submissions_editable?
         render 'edit'
       else
-        render 'show'
+        redirect_to mentor_dashboard_path
       end
     end
 
