@@ -11,16 +11,15 @@ $(document).on("click", "#team_submissions--menu a", function(e) {
 });
 
 $(document).on("ready turbolinks:load", function() {
-  var $wordCounters = $("[data-word-count]");
-  $.each($wordCounters, function() {
-    var limit = $(this).data("word-count-limit");
-    $(this).find(".word-count__limit").text(limit);
+  $.each($("[data-word-count]"), function() {
+    $(".word-count__limit").text($(this).data("word-count-limit"));
+    executeWordCounting($(this));
   });
 });
 
 $(document).on("click", ".actions", function(e) {
   if ($(this).find("[disabled]").length > 0) {
-    var $wordCountEl = $(this).find("[data-word-count]");
+    var $wordCountEl = $(this).find(".word-counter");
 
     $wordCountEl.addClass("notify");
 
@@ -28,7 +27,7 @@ $(document).on("click", ".actions", function(e) {
       $wordCountEl.removeClass("notify");
     }, 200);
 
-    var $inputEl = $($wordCountEl.data("word-count")),
+    var $inputEl = $("[data-word-count]"),
         val = $inputEl.val();
 
     $inputEl
@@ -40,32 +39,52 @@ $(document).on("click", ".actions", function(e) {
 });
 
 $(document).on("input", "#team_submission_app_description", function(e) {
-  var $wordCounter = $('[data-word-count="#' + e.target.id + '"]'),
-      limit = $wordCounter.data("word-count-limit"),
-      wordCount = $(this).val().split(" ").filter(function(word) {
-        return word.length > 2;
-      }).length,
-      ratio = wordCount / parseFloat(limit),
-      $total = $wordCounter.find(".word-count__total");
-
-  $total.text(wordCount).removeClass("word-count--plenty-remaining");
-
-  if (ratio >= 0.65 && ratio < 0.9) {
-    $total.addClass("word-count--some-remaining");
-  } else if (ratio >= 0.9) {
-    $total.addClass("word-count--none-remaining");
-  } else {
-    $total.addClass("word-count--plenty-remaining");
-  }
-
-  var $submitBtn = $(this).closest("form").find("[type=submit]");
-
-  if (ratio > 1) {
-    $submitBtn.prop("disabled", true);
-  } else {
-    $submitBtn.prop("disabled", false);
-  }
+  executeWordCounting($(this));
 });
+
+function executeWordCounting($el) {
+  var wordCount = countWords($el);
+
+  updateWordCounter($el, wordCount);
+
+  function countWords($el) {
+    return $el.val().split(" ").filter(function(word) {
+      return word.length > 2;
+    }).length;
+  }
+
+  function updateWordCounter($el, wordCount) {
+    var $total = $(".word-count__total");
+
+    $total
+      .text(wordCount)
+      .removeClass("word-count--plenty-remaining");
+
+    var limit = $el.data("word-count-limit"),
+        ratio = wordCount / parseFloat(limit);
+
+    if (ratio >= 0.65 && ratio < 0.9) {
+      $total.addClass("word-count--some-remaining");
+    } else if (ratio >= 0.9) {
+      $total.addClass("word-count--none-remaining");
+    } else {
+      $total.addClass("word-count--plenty-remaining");
+    }
+
+    updateSubmitButton(
+      $el.closest("form").find("[type=submit]"),
+      ratio
+    );
+
+    function updateSubmitButton(btn, ratio) {
+      if (ratio > 1) {
+        btn.prop("disabled", true);
+      } else {
+        btn.prop("disabled", false);
+      }
+    }
+  }
+}
 
 var defaultSubmissionDropzoneOptions = {
   maxFiles: 1,
