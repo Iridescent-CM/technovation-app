@@ -90,6 +90,9 @@ group :development, :test do
   gem 'rspec-rails', "~> 3.7"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
+  gem 'rack-test',
+    git: 'https://github.com/joemsak/rack-test',
+    branch: 'nil-uploaded-file-fix'
 end
 
 group :development do
