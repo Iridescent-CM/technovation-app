@@ -33,12 +33,6 @@
       <% if current_team.selected_regional_pitch_event == @regional_pitch_event %>
         <p><strong><%= current_team.name %> is attending this event!</strong></p>
 
-        <p>
-          <%= link_to 'Check how your submission looks to judges',
-            app_path(current_team.submission),
-            target: :_blank %>
-        </p>
-
         <% if SeasonToggles.select_regional_pitch_event? %>
           <p>
             <%= link_to "Remove #{current_team.name} from this event",

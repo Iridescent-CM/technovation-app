@@ -19,12 +19,6 @@
   <%= @team_submission.public_send("#{params[:round]}_average_score") %>
 </p>
 
-<p style="padding: 0; margin: 0 0 1rem;">
-  <%= link_to "Open the submission",
-    app_path(@team_submission),
-    target: :_blank %>
-</p>
-
 <% if current_account.admin_profile %>
   <p style="padding: 0; margin: 0 0 1rem;">
     <%= link_to "Edit the submission",
