@@ -90,7 +90,7 @@ module Student
       if SeasonToggles.team_submissions_editable?
         render 'edit'
       else
-        render 'show'
+        redirect_to student_dashboard_path
       end
     end
 
