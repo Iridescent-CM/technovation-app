@@ -17,6 +17,10 @@ module Student
     end
 
     def edit
+      unless SeasonToggles.team_submissions_editable?
+        redirect_to student_dashboard_path and return
+      end
+
       @team_submission = current_team.submission
 
       if params[:attributes]
