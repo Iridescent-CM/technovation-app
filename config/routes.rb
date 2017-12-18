@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :pending_teammates, only: :index
 
     resources :team_submissions
-    resource :technical_checklist, only: [:edit, :update]
+    resource :code_checklist, only: :update
     resources :screenshots, only: [:index, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
@@ -84,7 +84,7 @@ Rails.application.routes.draw do
 
     resources :certificates, only: :create
 
-    resource :technical_checklist, only: [:edit, :update]
+    resource :code_checklist, only: :update
     resources :screenshots, only: [:index, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
@@ -229,7 +229,6 @@ Rails.application.routes.draw do
 
   resources :teams, only: :show
   resources :apps, controller: :team_submissions, only: :show
-  resources :technical_checklists, only: :show
   resources :team_submission_pieces, only: :show
 
   resources :signup_attempts, only: [:create, :show, :update]
