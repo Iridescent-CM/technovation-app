@@ -214,8 +214,6 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Make changes to your screenshots"
     end
 
-    skip "Strange error with rack-test/uploaded_file"
-
     within(find_all(".field--file-upload")[1]) do
       attach_file(
         "Select up to 6 screenshots",

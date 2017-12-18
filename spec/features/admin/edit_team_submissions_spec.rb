@@ -22,8 +22,6 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(true) }
 
       scenario "start and edit new submission" do
-        skip "Submissions first page not ready just yet"
-
         create_authenticated_user_on_team(:mentor, submission: false)
 
         within("##{dom_id(team)}") do
@@ -31,9 +29,9 @@ RSpec.feature "Toggling editable team submissions" do
         end
 
         check "team_submission[integrity_affirmed]"
-        click_button "Get Started"
+        click_button "Start now!"
 
-        expect(page).to have_css('.appy-button', text: "Edit")
+        expect(page).to have_css('.button', text: "Set your app's name")
 
         visit mentor_dashboard_path
 
@@ -43,21 +41,19 @@ RSpec.feature "Toggling editable team submissions" do
           )
           expect(page).to have_link(
             "Edit this team's submission",
-            href: mentor_team_submission_path(team.submission, team_id: team.id)
+            href: mentor_team_submission_path(team.reload.submission)
           )
         end
       end
 
       scenario "edit technical checklist" do
-        skip "I don't understand the error happening in this spec"
-
         create_authenticated_user_on_team(:mentor, submission: true)
 
         within("##{dom_id(team)}") do
           click_link("Edit this team's submission")
         end
 
-        click_link "Edit Your Technical Checklist"
+        click_link "Confirm your code checklist"
 
         check "technical_checklist[used_strings]"
         fill_in "technical_checklist[used_strings_explanation]",
@@ -84,8 +80,11 @@ RSpec.feature "Toggling editable team submissions" do
           expect(page).not_to have_link("Edit this team's submission")
         end
 
-        visit mentor_team_submission_path(team.reload.submission, team_id: team.id)
-        expect(page).not_to have_css(".appy-button", text: "Edit")
+        visit mentor_team_submission_path(team.reload.submission)
+        expect(page).not_to have_css(
+          ".button",
+          text: "Set your app's name"
+        )
 
         visit mentor_team_path(team)
         expect(page).not_to have_link("Edit this team's submission")
@@ -97,7 +96,9 @@ RSpec.feature "Toggling editable team submissions" do
 
         within("##{dom_id(team)}") do
           expect(page).not_to have_link("Start a submission now")
-          expect(page).to have_content("Submissions may not be started at this time.")
+          expect(page).to have_content(
+            "Submissions may not be started at this time."
+          )
         end
 
         visit mentor_team_path(team)
@@ -110,10 +111,10 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit technical checklist" do
         create_authenticated_user_on_team(:mentor, submission: true)
 
-        visit mentor_team_submission_path(team.reload.submission, team_id: team.id)
-        expect(page).not_to have_link("Edit Your Technical Checklist")
+        visit mentor_team_submission_path(team.reload.submission)
+        expect(page).not_to have_link("Confirm your code checklist")
 
-        visit edit_mentor_technical_checklist_path(team_id: team.id)
+        visit edit_mentor_team_submission_path(team.submission, piece: :code_checklist)
         expect(current_path).to eq(mentor_dashboard_path)
       end
     end
@@ -124,33 +125,29 @@ RSpec.feature "Toggling editable team submissions" do
       before { set_editable_team_submissions(true) }
 
       scenario "begin and edit a submission" do
-        skip "Submission intro page is not ready yet"
-
         create_authenticated_user_on_team(:student, submission: false)
 
         within("#your-submission") { click_link "Begin your submission" }
         check "team_submission[integrity_affirmed]"
-        click_button "Get Started"
+        click_button "Start now!"
 
-        expect(page).to have_css('.appy-button', text: "Edit")
+        expect(page).to have_css('.button', text: "Set your app's name")
 
         visit student_dashboard_path
         within("#your-submission") do
           expect(page).not_to have_content("submissions are not editable")
           expect(page).to have_link(
             "Edit your submission",
-            href: student_team_submission_path(team.submission)
+            href: student_team_submission_path(team.reload.submission)
           )
         end
       end
 
       scenario "edit technical checklist" do
-        skip "I don't understand the error happening in this spec"
-
         create_authenticated_user_on_team(:student, submission: true)
 
         within("#your-submission") { click_link("Edit your submission") }
-        click_link "Edit Your Technical Checklist"
+        click_link "Confirm your code checklist"
 
         check "technical_checklist[used_strings]"
         fill_in "technical_checklist[used_strings_explanation]",
@@ -174,7 +171,10 @@ RSpec.feature "Toggling editable team submissions" do
         expect(page).not_to have_link("Edit your submission")
 
         visit student_team_submission_path(team.submission)
-        expect(page).not_to have_css(".appy-button", text: "Edit")
+        expect(page).not_to have_css(
+          ".button",
+          text: "Set your app's name"
+        )
 
         visit student_team_path(team)
         expect(page).not_to have_link("Edit this team's submission")
@@ -184,20 +184,24 @@ RSpec.feature "Toggling editable team submissions" do
         set_editable_team_submissions(false)
         create_authenticated_user_on_team(:student, submission: false)
 
-        expect(page).to have_content("Starting a submission is not available")
+        expect(page).to have_content(
+          "Starting a submission is not available"
+        )
         expect(page).not_to have_link("Begin your submission")
 
         visit student_team_path(team)
-        expect(page).not_to have_link("Start the submission for this team")
+        expect(page).not_to have_link(
+          "Start the submission for this team"
+        )
       end
 
       scenario "try to edit technical checklist" do
         create_authenticated_user_on_team(:student, submission: true)
 
-        visit student_team_submission_path(team.submission, team_id: team.id)
-        expect(page).not_to have_link("Edit Your Technical Checklist")
+        visit student_team_submission_path(team.submission)
+        expect(page).not_to have_link("Confirm your code checklist")
 
-        visit edit_student_technical_checklist_path(team_id: team.id)
+        visit edit_student_team_submission_path(team.submission, piece: :code_checklist)
         expect(current_path).to eq(student_dashboard_path)
       end
     end

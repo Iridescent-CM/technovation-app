@@ -59,10 +59,17 @@ module Mentor
         @team_submission.build_pitch_presentation
       end
 
+      if @team_submission.code_checklist.present?
+        @code_checklist = @team_submission.code_checklist
+      else
+        @code_checklist = @team_submission.build_code_checklist
+      end
+
       if @team_submission.present?
         begin
           render "team_submissions/pieces/#{params.fetch(:piece)}"
-        rescue ActionView::MissingTemplate, ActionController::ParameterMissing
+        rescue ActionView::MissingTemplate,
+               ActionController::ParameterMissing
           redirect_to mentor_team_submission_path(@team_submission)
         end
       else
