@@ -31,11 +31,6 @@
     <% end %>
 
     <p>
-      <%= link_to "See how it looks to the judges",
-        app_path(team.submission),
-        target: :_blank %>
-    </p>
-    <p>
       <%= t("views.teams.index.submission_not_started", name: team.name) %>
     </p>
   <% elsif SeasonToggles.team_submissions_editable? %>

@@ -40,11 +40,7 @@
             <small>
               <%= team.primary_location %><br />
 
-              <% if team.submission.present? %>
-                <%= link_to 'See how it looks to the judges',
-                  app_url(team.submission),
-                  target: :_blank %>
-              <% else %>
+              <% unless team.submission.present? %>
                 <strong class="has-danger">
                   <%= team.name %> has not begun their app submission!
                 </strong>
