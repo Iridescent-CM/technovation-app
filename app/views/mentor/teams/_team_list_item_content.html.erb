@@ -16,7 +16,8 @@
 
   <% if team.submission.present? %>
     <p>
-      Submission app name: <strong><%= team.submission.app_name %></strong>
+      Submission app name:
+      <strong><%= team.submission.app_name %></strong>
     </p>
 
     <% if SeasonToggles.team_submissions_editable? %>

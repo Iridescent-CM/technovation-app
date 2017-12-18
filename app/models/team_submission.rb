@@ -8,7 +8,8 @@ class TeamSubmission < ActiveRecord::Base
   extend FriendlyId
   friendly_id :team_name_and_app_name, use: :slugged
 
-  after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) }, on: :create
+  after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
+    on: :create
 
   enum development_platform: %w{
     App\ Inventor\ 2
