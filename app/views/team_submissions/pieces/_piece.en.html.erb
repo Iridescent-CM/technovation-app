@@ -11,10 +11,17 @@
 >
   <h3 class="panel--heading submission-piece--name"><%= title %></h3>
 
-  <div class="submission-piece--value <%= attribute %> <%= completion_css_class %>">
+  <div
+    class="
+      submission-piece--value
+      <%= attribute %>
+      <%= completion_css_class %>
+    "
+  >
     <% if value_is_blank %>
       <p class="scent">
-        There's nothing here yet, but your team can update this part whenever it's ready!
+        There's nothing here yet, but your team can
+        update this part whenever it's ready!
       </p>
 
       <div class="panel--footer">

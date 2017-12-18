@@ -245,8 +245,15 @@ Rails.application.routes.draw do
 
   get 'signup', to: 'signups#new', as: :signup
 
-  match 'logout',  to: 'signins#destroy', as: :logout, via: [:get, :delete]
-  match 'signout', to: 'signins#destroy', as: :signout, via: [:get, :delete]
+  match 'logout',
+    to: 'signins#destroy',
+    as: :logout,
+    via: [:get, :delete]
+
+  match 'signout',
+    to: 'signins#destroy',
+    as: :signout,
+    via: [:get, :delete]
 
   resources :signins, only: :create
 

@@ -49,9 +49,15 @@
 
           <p class="hint">teams attending live pitch events:</p>
 
-          <%= link_to web_icon("check-circle", text: "Presentation slides"),
+          <%= link_to web_icon(
+              "check-circle",
+              text: "Presentation slides"
+            ),
             "##{dom_id(@team_submission)}_pitch_presentation",
-            class: completion_css(@team_submission, :pitch_presentation_url) %>
+            class: completion_css(
+              @team_submission,
+              :pitch_presentation_url
+            ) %>
         </nav>
       </div>
     </div>
@@ -106,7 +112,8 @@
           title: "Development platform",
           scope: :student,
           attribute: :development_platform,
-          cta_when_empty: "Select the development platform that your team used",
+          cta_when_empty: "Select the development platform " +
+                          "that your team used",
           cta_when_filled: "Change your selection" %>
 
         <%= render 'team_submissions/pieces/piece',
@@ -148,7 +155,10 @@
           cta_when_filled: "Make changes to your screenshots" do %>
           <p>
             Your team has uploaded
-            <%= pluralize(@team_submission.screenshots.count, "screenshot") %>
+            <%= pluralize(
+              @team_submission.screenshots.count,
+              "screenshot"
+            ) %>
           </p>
         <% end %>
 
@@ -175,7 +185,10 @@
 
               <div class="panel--footer">
                 <%= link_to "Change your upload",
-                  edit_student_team_submission_path(@team_submission, piece: :business_plan),
+                  edit_student_team_submission_path(
+                    @team_submission,
+                    piece: :business_plan
+                  ),
                   class: "button secondary small" %>
               </div>
             <% else %>
@@ -186,7 +199,10 @@
 
               <div class="panel--footer">
                 <%= link_to "Upload your team's business plan",
-                  edit_student_team_submission_path(@team_submission, piece: :business_plan),
+                  edit_student_team_submission_path(
+                    @team_submission,
+                    piece: :business_plan
+                  ),
                   class: "button small" %>
               </div>
             <% end %>
@@ -217,7 +233,10 @@
           class="
             panel
             submission-piece
-            <%= completion_css(@team_submission, :pitch_presentation_url) %>
+            <%= completion_css(
+              @team_submission,
+              :pitch_presentation_url
+            ) %>
           "
         >
           <h3 class="panel--heading">
@@ -247,12 +266,15 @@
               </p>
 
               <div class="panel--footer">
-                <%= link_to "Upload the pitch presentation slides for your live event",
+                <%= link_to(
+                  "Upload the pitch presentation slides " +
+                  "for your live event",
                   edit_student_team_submission_path(
                     @team_submission,
                     piece: :pitch_presentation
                   ),
-                  class: "button small" %>
+                  class: "button small"
+                ) %>
               </div>
             <% end %>
           <% else %>
@@ -262,12 +284,14 @@
 
             <p>
               In March and April,
-              Regional Ambassadors will invite teams to pitch at a live event.
+              Regional Ambassadors will invite teams
+              to pitch at a live event.
             </p>
 
             <p>
               If your team is invited,
-              then you will be required to upload your pitch presentation slides here.
+              then you will be required to upload
+              your pitch presentation slides here.
             </p>
 
             <p class="scent">
@@ -283,7 +307,9 @@
     <div class="col--sticky-spacer">
       <div class="col--sticky">
         Honor code reminder ...<br />
-        <%= render "team_submissions/qualified_students_reminder", team: @team_submission.team %>
+
+        <%= render "team_submissions/qualified_students_reminder",
+          team: @team_submission.team %>
       </div>
     </div>
   </div>
