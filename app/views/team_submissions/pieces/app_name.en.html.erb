@@ -5,7 +5,10 @@
         App name
       </h3>
 
-      <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
+      <%= form_with(
+        model: [current_scope, @team_submission],
+        local: true
+      ) do |f| %>
         <div class="field">
           <%= f.label :app_name, "Your app's name" %>
           <%= f.text_field :app_name, id: :team_submission_app_name %>
