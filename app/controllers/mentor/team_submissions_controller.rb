@@ -34,6 +34,10 @@ module Mentor
     end
 
     def edit
+      unless SeasonToggles.team_submissions_editable?
+        redirect_to mentor_dashboard_path and return
+      end
+
       @team_submission = TeamSubmission.friendly.find(params[:id])
       @team = @team_submission.team
 
