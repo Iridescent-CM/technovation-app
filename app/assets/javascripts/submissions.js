@@ -1,16 +1,19 @@
-var offset = 92;
-
 $(document).on("click", "#team_submissions--menu a", function(e) {
   e.preventDefault();
-  var anchor = $(this).attr('href');
+
+  var anchor = $(this).attr('href'),
+      offset = 92;
+
   $(anchor)[0].scrollIntoView();
   location.href = anchor;
+
   scrollBy(0, -offset);
 });
 
 var defaultSubmissionDropzoneOptions = {
   maxFiles: 1,
-  dictDefaultMessage: "Drop file here to upload, or click to select a file",
+  dictDefaultMessage: "Drop file here to upload, " +
+                      "or click to select a file",
   method: "PUT",
   headers: {
     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
@@ -45,7 +48,8 @@ Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
   defaultSubmissionDropzoneOptions,
   {
     paramName: "team_submission[screenshots_attributes][][image]",
-    dictDefaultMessage: "Drop up to 6 screenshot files here, or click to select up to 6 files",
+    dictDefaultMessage: "Drop up to 6 screenshot files here, " +
+                        "or click to select up to 6 files",
     maxFiles: 6,
   }
 );

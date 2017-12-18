@@ -3,7 +3,10 @@
     <div class="panel">
       <h3 class="panel--heading">Description</h3>
 
-     <%= form_with model: [current_scope, @team_submission], local: true do |f| %>
+      <%= form_with(
+        model: [current_scope, @team_submission],
+        local: true
+      ) do |f| %>
         <div class="field">
           <%= f.label :app_description,
             "Describe your app in only a few sentences or less" %>
@@ -30,11 +33,12 @@
 
       <p class="grid__cell--padding-sm-y">
         Get some help writing your app description in the
-        <%= link_to("ideation curriculum unit.",
-                    "http://technovationchallenge.org/curriculum/ideation/",
-                      target: "_blank") %>
+        <%= link_to(
+          "ideation curriculum unit.",
+          "http://technovationchallenge.org/curriculum/ideation/",
+          target: "_blank"
+        ) %>
       </p>
-
     </div>
   </div>
 </div>
