@@ -91,7 +91,7 @@
   }
 }
 
-[data-word-count] {
+.word-counter {
   transition: background-color 2s;
 
   &.notify {
