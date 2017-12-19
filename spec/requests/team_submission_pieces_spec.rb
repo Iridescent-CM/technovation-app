@@ -28,9 +28,7 @@ RSpec.describe "GET /team_submission_pieces/:piece" do
 
   it "redirects to editing existing submission pieces" do
     student = FactoryBot.create(:student, :on_team)
-    submission = student.team.team_submissions.create!({
-      integrity_affirmed: true,
-    })
+    submission = FactoryBot.create(:team_submission, team: student.team)
 
     allow_any_instance_of(ApplicationController).to receive(
       :current_account
@@ -43,9 +41,10 @@ RSpec.describe "GET /team_submission_pieces/:piece" do
     )
 
     mentor = FactoryBot.create(:mentor, :on_team)
-    submission = mentor.teams.last.team_submissions.create!({
-      integrity_affirmed: true,
-    })
+    submission = FactoryBot.create(
+      :team_submission,
+      team: mentor.teams.first,
+    )
 
     allow_any_instance_of(ApplicationController).to receive(
       :current_account

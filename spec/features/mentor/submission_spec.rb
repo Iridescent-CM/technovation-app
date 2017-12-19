@@ -44,7 +44,11 @@ RSpec.feature "Student team submissions" do
 
   scenario "Start the submission from the table of contents" do
     mentor = FactoryBot.create(:mentor, :on_team)
-    submission = mentor.teams.first.team_submissions.create!({ integrity_affirmed: true })
+    submission = FactoryBot.create(
+      :team_submission,
+      team: mentor.teams.first,
+    )
+
     sign_in(mentor)
 
     click_link "Edit this team's submission"
@@ -87,7 +91,10 @@ RSpec.feature "Student team submissions" do
 
   scenario "See senior team submission pieces on TOC" do
     mentor = FactoryBot.create(:mentor, :on_team)
-    submission = mentor.teams.first.team_submissions.create!({ integrity_affirmed: true })
+    submission = FactoryBot.create(
+      :team_submission,
+      team: mentor.teams.first,
+    )
 
     sign_in(mentor)
 
@@ -121,7 +128,10 @@ RSpec.feature "Student team submissions" do
 
   scenario "See live pitch event submission pieces on TOC" do
     mentor = FactoryBot.create(:mentor, :on_team)
-    submission = mentor.teams.first.team_submissions.create!({ integrity_affirmed: true })
+    submission = FactoryBot.create(
+      :team_submission,
+      team: mentor.teams.first,
+    )
 
     sign_in(mentor)
 

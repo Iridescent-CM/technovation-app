@@ -32,7 +32,7 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns true if the student's team's submission is present" do
-        team.team_submissions.create!(integrity_affirmed: true)
+        FactoryBot.create(:team_submission, team: team)
         expect(
           CheckIfCertificateIsAllowed.(student_on_team, :completion)
         ).to be true
@@ -51,9 +51,10 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns false if the student's team submission is not a semifinalist" do
-        team.team_submissions.create!(
-          integrity_affirmed: true,
-          contest_rank: :quarterfinalist
+        FactoryBot.create(
+          :team_submission,
+          team: team,
+          contest_rank: :quarterfinalist,
         )
         expect(
           CheckIfCertificateIsAllowed.(student_on_team, :rpe_winner)
@@ -61,9 +62,10 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns false if the student's team was not at an official RPE" do
-        team.team_submissions.create!(
-          integrity_affirmed: true,
-          contest_rank: :quarterfinalist
+        FactoryBot.create(
+          :team_submission,
+          team: team,
+          contest_rank: :quarterfinalist,
         )
         rpe = FactoryBot.create(:rpe, unofficial: true)
         rpe.teams << team
@@ -73,9 +75,10 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it "returns false if team attended an official RPE, isn't a semifinalist" do
-        team.team_submissions.create!(
-          integrity_affirmed: true,
-          contest_rank: :quarterfinalist
+        FactoryBot.create(
+          :team_submission,
+          team: team,
+          contest_rank: :quarterfinalist,
         )
         rpe = FactoryBot.create(:rpe, unofficial: false)
         rpe.teams << team
@@ -85,9 +88,10 @@ RSpec.describe CheckIfCertificateIsAllowed do
       end
 
       it 'returns true if the team attended official RPE, is a semifinalist' do
-        team.team_submissions.create!(
-          integrity_affirmed: true,
-          contest_rank: :semifinalist
+        FactoryBot.create(
+          :team_submission,
+          team: team,
+          contest_rank: :semifinalist,
         )
         rpe = FactoryBot.create(:rpe, unofficial: false)
         rpe.teams << team
