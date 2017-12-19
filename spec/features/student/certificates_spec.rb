@@ -37,9 +37,10 @@ RSpec.feature "Student certificates" do
     rpe = FactoryBot.create(:rpe)
     rpe.teams << student.team
 
-    student.team.team_submissions.create!(
-      integrity_affirmed: true,
-      contest_rank: :semifinalist
+    FactoryBot.create(
+      :team_submission,
+      team: student.team,
+      contest_rank: :semifinalist,
     )
 
     sign_in(student)
