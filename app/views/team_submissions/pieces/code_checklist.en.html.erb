@@ -52,8 +52,16 @@
         <h4 class="reset">Use at least 4 (1 point each, 4 points max)</h4>
 
         <small>
-          <%= link_to "Learn in Code 2",
+          <%= link_to "Learn basic components in Code 2",
             "http://www.technovationchallenge.org/curriculum/code-2",
+            target: :_blank %>
+        </small>
+
+        <br />
+
+        <small>
+          <%= link_to "Learn advanced components in Code 3",
+            "http://www.technovationchallenge.org/curriculum/code-3",
             target: :_blank %>
         </small>
 
@@ -81,12 +89,6 @@
             name: :used_lists,
             label: "Lists or Arrays",
             placeholder: "lists" %>
-
-          <p>
-            <%= link_to "Learn in Code 3",
-              "http://www.technovationchallenge.org/curriculum/code-3",
-              target: :_blank %>
-          </p>
 
           <%= render "code_checklists/checklist_item",
             f: f,
@@ -118,8 +120,16 @@
         <h4 class="reset">Use at least 1 (1 point each, 1 point max)</h4>
 
         <small>
-          <%= link_to "Learn in Code 2",
+          <%= link_to "Learn local databases in Code 2",
             "http://www.technovationchallenge.org/curriculum/code-2",
+            target: :_blank %>
+        </small>
+
+        <br />
+
+        <small>
+          <%= link_to "Learn external databases and APIs in Code 4",
+            "http://www.technovationchallenge.org/curriculum/code-4",
             target: :_blank %>
         </small>
 
@@ -129,12 +139,6 @@
             name: :used_local_db,
             label: "Local Database",
             placeholder: "a local database" %>
-
-          <p>
-            <%= link_to "Learn in Code 4",
-              "http://www.technovationchallenge.org/curriculum/code-4",
-              target: :_blank %>
-          </p>
 
           <%= render "code_checklists/checklist_item",
             f: f,
@@ -224,50 +228,74 @@
         <h4 class="reset">Do all 3 for full points</h4>
 
         <small>
-          <%= link_to "Learn in Code 5",
+          <%= link_to "Learn prototyping in Code 5",
             "http://www.technovationchallenge.org/curriculum/code-5",
             target: :_blank %>
         </small>
 
+        <br />
+
+        <small>
+          <%= link_to "Learn flowcharts in Code 6",
+            "http://www.technovationchallenge.org/curriculum/code-6",
+            target: :_blank %>
+        </small>
+
         <div class="panel">
-          <div class="tc-form-group__photo-item">
-            <%= f.label :paper_prototype %>
+          <%= f.label :paper_prototype %>
 
-            <p>
-              You <strong>only have to attach one</strong>,
-              so choose your best example!
-            </p>
+          <p class="hint">
+            You <strong>only have to attach one</strong>,
+            so choose your best example!
+          </p>
 
-            <% if f.object.paper_prototype.present? %>
-              <%= image_tag(f.object.paper_prototype_url, width: 200) %>
-            <% end %>
+          <% verb = "Choose" %>
 
-            <%= f.file_field :paper_prototype %>
-            <%= f.input :paper_prototype_cache, as: :hidden %>
-          </div>
+          <% if f.object.paper_prototype.present? %>
+            <%= image_tag(f.object.paper_prototype_url, width: 200) %>
+            <% verb = "Replace with" %>
+          <% end %>
 
-          <div class="tc-form-group__photo-item">
-            <%= f.label :event_flow_chart, "Flowchart or Pseudocode" %>
+          <label class="file-field" for="paper_prototype_file_field">
+            <div class="button secondary small">
+              <%= verb %> a file from your computer
+            </div>
 
-            <p>
-              You <strong>only have to attach one</strong>,
-              so choose your best example!
-            </p>
+            <%= f.file_field :paper_prototype,
+              id: "paper_prototype_file_field" %>
+          </label>
 
-            <p>
-              <%= link_to "Learn in Code 6",
-                "http://www.technovationchallenge.org/curriculum/code-6",
-                target: :_blank %>
-            </p>
+          <%= f.input :paper_prototype_cache, as: :hidden %>
+        </div>
 
-            <% if f.object.event_flow_chart.present? %>
-              <%= image_tag(f.object.event_flow_chart_url, width: 200) %>
-            <% end %>
+        <div class="panel">
+          <%= f.label :event_flow_chart, "Flowchart or Pseudocode" %>
 
-            <%= f.file_field :event_flow_chart %>
-            <%= f.input :event_flow_chart_cache, as: :hidden %>
-          </div>
+          <p class="hint">
+            You <strong>only have to attach one</strong>,
+            so choose your best example!
+          </p>
 
+          <% verb = "Choose" %>
+
+          <% if f.object.event_flow_chart.present? %>
+            <%= image_tag(f.object.event_flow_chart_url, width: 200) %>
+            <% verb = "Replace with" %>
+          <% end %>
+
+          <label class="file-field" for="event_flow_chart_file_field">
+            <div class="button secondary small">
+              <%= verb %> a file from your computer
+            </div>
+
+            <%= f.file_field :event_flow_chart,
+              id: "event_flow_chart_file_field" %>
+          </label>
+
+          <%= f.input :event_flow_chart_cache, as: :hidden %>
+        </div>
+
+        <div class="panel">
           <p
             data-count-needed="2"
             data-count-has="
@@ -300,28 +328,28 @@
     <div class="col--sticky-spacer">
       <div class="col--sticky">
         <div class="indicator" data-name="technical-components">
-          <h4>Technical Components</h4>
+          <h4 class="reset">Technical Components</h4>
           <span class="total"></span>/<span class="possible"></span>
           points
           <%= web_icon "check-circle", class: "icon-green" %>
         </div>
 
         <div class="indicator" data-name="database">
-          <h4>Databases & Connectivity</h4>
+          <h4 class="reset">Databases & Connectivity</h4>
           <span class="total"></span>/<span class="possible"></span>
           points
           <%= web_icon "check-circle", class: "icon-green" %>
         </div>
 
         <div class="indicator" data-name="mobile">
-          <h4>Mobile Features</h4>
+          <h4 class="reset">Mobile Features</h4>
           <span class="total"></span>/<span class="possible"></span>
           points
           <%= web_icon "check-circle", class: "icon-green" %>
         </div>
 
         <div class="indicator" data-name="process-pics">
-          <h4>Pictures of your process</h4>
+          <h4 class="reset">Pictures of your process</h4>
           <span class="total"></span>/<span class="possible"></span>
           points
           <%= web_icon "check-circle", class: "icon-green" %>

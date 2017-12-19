@@ -1,11 +1,12 @@
 <div class="tc-form-group__item">
-  <%= f.input name,
-    label: label,
-    as: :boolean %>
+  <%= f.input name, label: label, as: :boolean %>
 
   <%= f.input "#{name}_explanation",
     placeholder: "Use 1 or 2 sentences ONLY " +
                  "to explain how you used #{placeholder}",
     label: "Explanation (#{label})",
-    as: :text %>
+    as: :text,
+    wrapper_html: {
+      class: "explanation",
+    } %>
 </div>
