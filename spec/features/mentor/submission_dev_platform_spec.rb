@@ -5,7 +5,7 @@ RSpec.feature "Students edit submission development platform" do
     SeasonToggles.team_submissions_editable!
 
     mentor = FactoryBot.create(:mentor, :on_team)
-    mentor.teams.first.team_submissions.create!({ integrity_affirmed: true })
+    FactoryBot.create(:team_submission, team: mentor.teams.first)
 
     sign_in(mentor)
 

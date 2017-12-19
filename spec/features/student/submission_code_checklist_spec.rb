@@ -6,7 +6,7 @@ RSpec.feature "Students edit submission code checklist" do
   }
 
   let!(:submission) {
-    student.team.team_submissions.create!({ integrity_affirmed: true })
+    FactoryBot.create(:team_submission, team: student.team)
   }
 
   before do
