@@ -1,18 +1,18 @@
 require "rails_helper"
 
-RSpec.feature "Students edit submission code checklist" do
-  let!(:student) {
-    FactoryBot.create(:onboarded_student, :senior, :on_team)
+RSpec.feature "Mentors edit submission code checklist" do
+  let!(:mentor) {
+    FactoryBot.create(:onboarded_mentor, :on_team)
   }
 
   let!(:submission) {
-    FactoryBot.create(:team_submission, team: student.team)
+    FactoryBot.create(:team_submission, team: mentor.teams.first)
   }
 
   before do
     SeasonToggles.team_submissions_editable!
-    sign_in(student)
-    click_link "My team's submission"
+    sign_in(mentor)
+    click_link "Edit this team's submission"
   end
 
   scenario "visit the checklist" do
