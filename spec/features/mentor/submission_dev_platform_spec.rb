@@ -12,7 +12,8 @@ RSpec.feature "Students edit submission development platform" do
     click_link "Edit this team's submission"
     click_link "Select the development platform that your team used"
 
-    select "App Inventor", from: "Which development platform did your team use?"
+    select "App Inventor",
+      from: "Which development platform did your team use?"
 
     click_button "Save"
 
@@ -24,9 +25,11 @@ RSpec.feature "Students edit submission development platform" do
       ".field_with_errors #team_submission_app_inventor_gmail",
     )
 
-    fill_in "What is your App Inventor 2 Project Name?", with: "my exact app name"
+    fill_in "What is your App Inventor 2 Project Name?",
+      with: "my exact app name"
 
-    fill_in "What is the gmail address of the App Inventor 2 account that your team is using?",
+    fill_in "What is the gmail address of the App Inventor 2 " +
+            "account that your team is using?",
       with: "my@gmail.com"
 
     click_button "Save"
