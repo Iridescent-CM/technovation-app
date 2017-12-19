@@ -29,7 +29,7 @@ RSpec.feature "Student team submissions" do
     )
   end
 
-  scenario "Confirm submission deliverables are created solely by team students" do
+  scenario "Confirm submissions are created solely by team students" do
     student = FactoryBot.create(:student, :on_team)
     sign_in(student)
 
@@ -56,37 +56,58 @@ RSpec.feature "Student team submissions" do
 
     expect(page).to have_link(
       "Set your app's name",
-      href: edit_student_team_submission_path(submission, piece: :app_name)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :app_name
+      )
     )
 
     expect(page).to have_link(
       "Add your app's description",
-      href: edit_student_team_submission_path(submission, piece: :app_description)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :app_description
+      )
     )
 
     expect(page).to have_link(
       "Add the demo video link",
-      href: edit_student_team_submission_path(submission, piece: :demo_video_link)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :demo_video_link
+      )
     )
 
     expect(page).to have_link(
       "Add the pitch video link",
-      href: edit_student_team_submission_path(submission, piece: :pitch_video_link)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :pitch_video_link
+      )
     )
 
     expect(page).to have_link(
       "Select the development platform that your team used",
-      href: edit_student_team_submission_path(submission, piece: :development_platform)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :development_platform
+      )
     )
 
     expect(page).to have_link(
       "Upload your app's source code",
-      href: edit_student_team_submission_path(submission, piece: :source_code)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :source_code
+      )
     )
 
     expect(page).to have_link(
       "Upload screenshots of your app",
-      href: edit_student_team_submission_path(submission, piece: :screenshots)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :screenshots
+      )
     )
   end
 
@@ -104,7 +125,10 @@ RSpec.feature "Student team submissions" do
 
     expect(page).to have_content("Your team is in the Junior Division")
     expect(page).to have_content(
-      "Uploading a business plan is not required in the Junior Division. If your team has put one together, that is awesome! Hold on to it for your own records and be extremely proud!"
+      "Uploading a business plan is not required " +
+      "in the Junior Division. If your team has " +
+      "put one together, that is awesome! Hold on " +
+      "to it for your own records and be extremely proud!"
     )
 
     ProfileUpdating.execute(student, :student, account_attributes: {
@@ -116,7 +140,10 @@ RSpec.feature "Student team submissions" do
 
     expect(page).to have_link(
       "Upload your team's business plan",
-      href: edit_student_team_submission_path(submission, piece: :business_plan)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :business_plan
+      )
     )
   end
 
@@ -137,7 +164,8 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "If your team is invited, then you will be required to upload your pitch presentation slides here."
+      "If your team is invited, then you will " +
+      "be required to upload your pitch presentation slides here."
     )
 
     rpe = FactoryBot.create(:regional_pitch_event)
@@ -147,7 +175,10 @@ RSpec.feature "Student team submissions" do
 
     expect(page).to have_link(
       "Upload the pitch presentation slides for your live event",
-      href: edit_student_team_submission_path(submission, piece: :pitch_presentation)
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :pitch_presentation
+      )
     )
   end
 end
