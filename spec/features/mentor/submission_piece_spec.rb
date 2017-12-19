@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Students edit submission pieces" do
-  let!(:student) { FactoryBot.create(:onboarded_student, :senior, :on_team) }
+  let!(:student) {
+    FactoryBot.create(:onboarded_student, :senior, :on_team)
+  }
   let!(:mentor) { FactoryBot.create(:mentor) }
   let!(:submission) {
     FactoryBot.create(:team_submission, team: student.team)
@@ -28,7 +30,10 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_content "WonderApp2018"
       expect(page).to have_link(
         "Change your app's name",
-        href: edit_mentor_team_submission_path(submission.reload, piece: :app_name)
+        href: edit_mentor_team_submission_path(
+          submission.reload,
+          piece: :app_name
+        )
       )
     end
   end
@@ -49,7 +54,10 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_content "Only a few sentences"
       expect(page).to have_link(
         "Change your app's description",
-        href: edit_mentor_team_submission_path(submission, piece: :app_description)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :app_description
+        )
       )
     end
   end
@@ -60,18 +68,24 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+    fill_in "Youtube or Vimeo URL",
+      with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this demo video link"
 
     within(".demo_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      embed_url = "https://www.youtube.com/embed/" +
+                  "#{video_id}?rel=0&cc_load_policy=1"
+
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(
         "Change the demo video link",
-        href: edit_mentor_team_submission_path(submission, piece: :demo_video_link)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :demo_video_link
+        )
       )
     end
   end
@@ -82,18 +96,24 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+    fill_in "Youtube or Vimeo URL",
+      with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this pitch video link"
 
     within(".pitch_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      embed_url = "https://www.youtube.com/embed/" +
+                  "#{video_id}?rel=0&cc_load_policy=1"
+
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(
         "Change the pitch video link",
-        href: edit_mentor_team_submission_path(submission, piece: :pitch_video_link)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :pitch_video_link
+        )
       )
     end
   end
@@ -103,17 +123,23 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Select the development platform that your team used"
     end
 
-    select "Swift or XCode", from: "Which development platform did your team use?"
+    select "Swift or XCode",
+      from: "Which development platform did your team use?"
 
     click_button "Save this development platform selection"
 
     within(".development_platform.complete") do
-      expect(page).not_to have_link("Select the development platform that your team used")
+      expect(page).not_to have_link(
+        "Select the development platform that your team used"
+      )
 
       expect(page).to have_content "Swift or XCode"
       expect(page).to have_link(
         "Change your selection",
-        href: edit_mentor_team_submission_path(submission, piece: :development_platform)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :development_platform
+        )
       )
     end
   end
@@ -139,7 +165,10 @@ RSpec.feature "Students edit submission pieces" do
       )
       expect(page).to have_link(
         "Change your upload",
-        href: edit_mentor_team_submission_path(submission, piece: :source_code)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :source_code
+        )
       )
     end
   end
@@ -165,7 +194,10 @@ RSpec.feature "Students edit submission pieces" do
       )
       expect(page).to have_link(
         "Change your upload",
-        href: edit_mentor_team_submission_path(submission, piece: :source_code)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :source_code
+        )
       )
     end
   end
@@ -191,7 +223,10 @@ RSpec.feature "Students edit submission pieces" do
       )
       expect(page).to have_link(
         "Change your upload",
-        href: edit_mentor_team_submission_path(submission, piece: :business_plan)
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :business_plan
+        )
       )
     end
   end
