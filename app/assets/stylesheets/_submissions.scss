@@ -79,7 +79,8 @@
   }
 }
 
-.word-counter {
+.word-counter,
+.indicator {
   transition: background-color 2s;
 
   &.notify {
@@ -104,4 +105,18 @@
 .word-count--none-remaining {
   color: $alert-txt;
   font-weight: bold;
+}
+
+.tc-form-group__item,
+.indicator {
+  margin: 0 0 1.5rem;
+
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.indicator {
+  padding: 0.5rem;
+  border-radius: $radius-default;
 }
