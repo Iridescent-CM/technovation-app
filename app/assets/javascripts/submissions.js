@@ -88,8 +88,8 @@ function executeWordCounting($el) {
 
 var defaultSubmissionDropzoneOptions = {
   maxFiles: 1,
-  dictDefaultMessage: "Drop file here to upload, " +
-                      "or click to select a file",
+  dictDefaultMessage: "Drag and drop up a file here, " +
+                      "<br />or <a class='button'>select a file</a>",
   method: "PUT",
   headers: {
     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
@@ -126,8 +126,9 @@ Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
   defaultSubmissionDropzoneOptions,
   {
     paramName: "team_submission[screenshots_attributes][][image]",
-    dictDefaultMessage: "Drop up to 6 screenshot files here, " +
-                        "or click to select up to 6 files",
+    dictDefaultMessage: "Drag and drop up to 6 screenshot files here, " +
+                        "<br />or " +
+                        "<a class='button'>select up to 6 files</a>",
     maxFiles: 6,
     acceptedFiles: ".jpg,.jpeg,.gif,.png",
   }
