@@ -1,6 +1,10 @@
 <div class="grid">
   <div class="grid__col-sm-3 grid__col--bleed">
-    <%= link_to image_tag(team.team_photo, class: "grid__cell-img"), [:mentor, team] %>
+    <%= link_to image_tag(
+        team.team_photo,
+        class: "grid__cell-img"
+      ),
+      [:mentor, team] %>
   </div>
 
   <div class="grid__col-sm-9  grid__col--bleed-y">
@@ -17,7 +21,8 @@
 
     <% if team.submission.present? %>
       <p>
-        Submission app name: <strong><%= team.submission.app_name %></strong>
+        Submission app name:
+        <strong><%= team.submission.app_name %></strong>
       </p>
 
       <% if SeasonToggles.team_submissions_editable? %>
@@ -31,12 +36,8 @@
       <% end %>
 
       <p>
-        <%= link_to "See how it looks to the judges",
-          app_path(team.submission),
-          target: :_blank %>
-      </p>
-      <p>
-        <%= t("views.teams.index.submission_not_started", name: team.name) %>
+        <%= t("views.teams.index.submission_not_started",
+              name: team.name) %>
       </p>
     <% elsif SeasonToggles.team_submissions_editable? %>
       <p>
@@ -48,6 +49,4 @@
       <p class="hint">Submissions may not be started at this time.</p>
     <% end %>
   </div>
-
-
 </div>
