@@ -1,6 +1,5 @@
 @import "application";
 @import "dropzone/dropzone";
-
 @import "dashboards";
 @import "submissions";
 @import "search_results";
@@ -18,8 +17,15 @@
   }
 }
 
+.profile-image {
+  border-radius: 50%;
+  max-width: 250px;
+  border: 4px solid white;
+  margin: auto;
+}
+
 .mentor-resources {
-  border-top: 4px solid $shamrock;
+  border-top: 4px solid $shamrock-light;
 
   a {
     color: $light-grey;
@@ -33,10 +39,58 @@
     }
   }
 }
+.ra-intro {
+border-top: 4px solid $mulberry;
 
-.profile-image {
-  border-radius: 50%;
-  max-width: 250px;
-  border: 4px solid white;
-  margin: auto;
+  .reset li {
+    margin: 0 0 1rem;
+    max-width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ra-intro-heading{
+    color: $mulberry-mid;
+    padding-bottom: 17px;
+  }
+
+  .ra-intro-image{
+    border-radius: 10%;
+    max-width: 250px;
+    border: 4px solid white;
+    margin: auto;
+  }
+
 }
+
+.profile-button{
+  outline: 0;
+  border: 0;
+  user-select: none;
+  background-color: $shamrock-mid;
+  border-radius: 0.15rem;
+  box-shadow: 0 2px 0 darken($shamrock-mid, 5);
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: inherit;
+  min-width: 0;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+  transform: translateY(0);
+  transition: background-color 0.1s, box-shadow 0.1s, transform 0.1s;
+}
+.profile-button:hover{
+  background: $shamrock-mid;
+  background-color: $shamrock-mid;
+  background-image: $shamrock-mid;
+}
+
+
+
