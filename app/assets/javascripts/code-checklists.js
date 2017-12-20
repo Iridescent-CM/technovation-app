@@ -4,7 +4,7 @@ $(document).on("ready turbolinks:load", function() {
   });
 });
 
-$(document).on("change", ".tc-form-group__item [type=checkbox]",
+$(document).on("change", ".tc-form-group__item input",
   function(){
     var $group = $(this).closest(".tc-form-group");
     updateUIBasedOnPointsEarned({ group: $group });
@@ -36,8 +36,33 @@ function updateUIBasedOnPointsEarned(opts) {
       $total = $indicator.find(".total"),
 
       pointsPossible = parseInt($group.data("possible")),
-      pointsEach = parseInt($group.data("pointsEach")),
-      totalPoints = $group.find(":checked").length * pointsEach;
+      pointsEach = parseInt($group.data("pointsEach"));
+
+  $group.find("input").each(function() {
+    var $explanation = $(this)
+      .closest(".tc-form-group__item")
+      .find(".explanation");
+
+    if ($(this).prop("checked")) {
+      $(this).data("completed", true);
+      $explanation.show();
+    } else if (isCompletedFileField(this)) {
+      $(this).data("completed", true);
+    } else if (isCompletedScreenshots(this)) {
+      $(this).data("completed", true);
+    } else {
+      $(this).data("completed", false);
+      $explanation.hide();
+    }
+  });
+
+  var totalPoints = $group.find("input").filter(function(idx, item) {
+    return $(item).data("completed");
+  }).length * pointsEach;
+
+  if ($group.data("allRequired") && totalPoints != pointsPossible) {
+    totalPoints = 0;
+  }
 
   $possible.text(pointsPossible);
   $total.text(totalPoints);
@@ -57,15 +82,30 @@ function updateUIBasedOnPointsEarned(opts) {
       .prop("disabled", false);
   }
 
-  $group.find("[type=checkbox]").each(function() {
-    var $explanation = $(this)
-      .closest(".tc-form-group__item")
-      .find(".explanation");
+  function isCompletedFileField(field) {
+    var isFileField = field.files != undefined;
 
-    if ($(this).prop("checked")) {
-      $explanation.show();
+    if (isFileField) {
+      var uploadedFile = $(field).closest("div").find("img"),
+          hasUploadedFile = uploadedFile.length > 0,
+          hasAttachedFile = field.files.length > 0;
+
+      return hasUploadedFile || hasAttachedFile;
     } else {
-      $explanation.hide();
+      return false;
     }
-  });
+  }
+
+  function isCompletedScreenshots(field) {
+    var isScreenshots = field.type === "hidden" &&
+      $(field).data("countNeeded");
+
+    if (isScreenshots) {
+      var countNeeded = parseInt($(field).data("countNeeded")),
+          countHas = parseInt($(field).data("countHas"));
+      return countNeeded === countHas;
+    } else {
+      return false;
+    }
+  }
 }

@@ -296,12 +296,12 @@
         </div>
 
         <div class="panel">
-          <p
-            data-count-needed="2"
-            data-count-has="
-              <%= f.object.team_submission.screenshots.count %>
-            "
-          >
+          <%= hidden_field_tag nil, nil, data: {
+            count_needed: 2,
+            count_has: f.object.team_submission.screenshots.count,
+          } %>
+
+          <p>
             At least <strong>two</strong> app screenshots.<br>
             Your team has uploaded
             <strong>
