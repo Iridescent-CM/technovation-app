@@ -1,26 +1,26 @@
 <ul class="steps">
-  <%= render 'completion_steps/location_details', profile: current_mentor %>
-  <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
-  <%= render 'completion_steps/background_check', profile: current_mentor %>
-  <%= render 'completion_steps/complete_profile', profile: current_mentor %>
-  <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
+    <%= render 'completion_steps/location_details', profile: current_mentor %>
+    <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
+    <%= render 'completion_steps/background_check', profile: current_mentor %>
+    <%= render 'completion_steps/complete_profile', profile: current_mentor %>
+    <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
 
-  <% if current_mentor.mentor_invites.pending.any? %>
-    <%= render "completion_steps/invitations",
-      invites: current_mentor.mentor_invites.pending %>
-  <% end %>
+    <% if current_mentor.mentor_invites.pending.any? %>
+      <%= render "completion_steps/invitations",
+        invites: current_mentor.mentor_invites.pending %>
+    <% end %>
 
-  <% @current_teams.each do |team| %>
-    <div class="panel team-preview" id="<%= dom_id(team) %>">
-      <%= render "mentor/teams/team_list_item_content", team: team %>
-    </div>
-  <% end %>
+    <% @current_teams.each do |team| %>
+      <div class="panel team-preview" id="<%= dom_id(team) %>">
+        <%= render "mentor/teams/team_list_item_content", team: team %>
+      </div>
+    <% end %>
 
-  <%= render "completion_steps/create_team",
-    hidden: current_mentor.onboarding? || !SeasonToggles.team_building_enabled? %>
+    <%= render "completion_steps/create_team",
+      hidden: current_mentor.onboarding? || !SeasonToggles.team_building_enabled? %>
 
-  <%= render "completion_steps/join_requests",
-    hidden: current_mentor.onboarding?,
-    allow_many: true,
-    requests: current_mentor.join_requests.pending %>
+    <%= render "completion_steps/join_requests",
+      hidden: current_mentor.onboarding?,
+      allow_many: true,
+      requests: current_mentor.join_requests.pending %>
 </ul>
