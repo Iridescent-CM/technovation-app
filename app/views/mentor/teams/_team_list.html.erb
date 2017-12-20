@@ -1,0 +1,13 @@
+<% if teams.any? %>
+  <ul class="reset">
+    <% teams.each do |team| %>
+      <li class="panel team-preview grid__cell" id="<%= dom_id(team) %>">
+        <%= render "mentor/teams/team_list_item_content",
+          team: team,
+          type: type %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t("views.teams.index.none", type: type) %></p>
+<% end %>
