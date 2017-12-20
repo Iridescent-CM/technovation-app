@@ -108,6 +108,7 @@ Dropzone.options.teamSubmissionBusinessPlanDropzone = $.extend(
   defaultSubmissionDropzoneOptions,
   {
     paramName: "team_submission[business_plan_attributes][uploaded_file]",
+    acceptedFiles: ".doc,.docx,.pdf",
   }
 );
 
@@ -116,6 +117,7 @@ Dropzone.options.teamSubmissionSourcecodeDropzone = $.extend(
   defaultSubmissionDropzoneOptions,
   {
     paramName: "team_submission[source_code]",
+    acceptedFiles: ".aia,.zip",
   }
 );
 
@@ -127,6 +129,7 @@ Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
     dictDefaultMessage: "Drop up to 6 screenshot files here, " +
                         "or click to select up to 6 files",
     maxFiles: 6,
+    acceptedFiles: ".jpg,.jpeg,.gif,.png",
   }
 );
 
