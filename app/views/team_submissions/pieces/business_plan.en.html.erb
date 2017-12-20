@@ -24,9 +24,12 @@
 
         <div class="fallback">
           <%= f.fields_for :business_plan do |b| %>
-            <%= b.label :uploaded_file, "Upload your team's business plan" %>
+            <%= b.label :uploaded_file,
+              "Upload your team's business plan" %>
+
             <%= b.file_field :uploaded_file,
-              id: :team_submission_business_plan_attributes_uploaded_file %>
+              id: "team_submission_business_plan_attributes_" +
+                  "uploaded_file" %>
           <% end %>
 
           <%= f.submit "Upload", class: "button" %>
