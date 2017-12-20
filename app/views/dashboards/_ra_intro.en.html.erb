@@ -6,20 +6,20 @@
       Your program introduction
     </h5>
   <% else %>
-    <div class="grid ra-intro">
-      <div class="grid__col-12">
-        <h3 class="reset ra-intro-heading">
-          Meet your Regional Ambassador!
-        </h3>
+    <div class="panel ra-intro">
+      <h5 class="reset">
+        Meet your Regional Ambassador!
+      </h5>
 
-      <%= image_tag regional_ambassador.profile_image_url, class: "grid__cell-img ra-intro-image" %>
+      <%= image_tag regional_ambassador.profile_image_url,
+        class: "grid__cell-img" %>
 
-      <h3><%= regional_ambassador.full_name %></h3>
+      <h6><%= regional_ambassador.full_name %></h6>
   <% end %>
 
   <%= simple_format regional_ambassador.intro_summary %>
 
-  <ul class="reset social-links">
+  <ul class="reset">
     <% regional_ambassador.regional_links.each do |link| %>
       <li>
         <% if link.name == "email" %>
@@ -32,7 +32,6 @@
   </ul>
 
   <% unless ra_dashboard %>
-      </div>
-      </div>
+    </div>
   <% end %>
 <% end %>
