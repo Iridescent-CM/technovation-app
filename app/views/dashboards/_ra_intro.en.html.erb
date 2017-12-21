@@ -12,27 +12,27 @@
           Meet your Regional Ambassador!
         </h3>
 
-      <%= image_tag regional_ambassador.profile_image_url, class: "grid__cell-img ra-intro-image" %>
+        <%= image_tag regional_ambassador.profile_image_url, class: "grid__cell-img ra-intro-image" %>
 
-      <h3><%= regional_ambassador.full_name %></h3>
+        <h3><%= regional_ambassador.full_name %></h3>
   <% end %>
 
   <%= simple_format regional_ambassador.intro_summary %>
 
-  <ul class="reset social-links">
-    <% regional_ambassador.regional_links.each do |link| %>
-      <li>
-        <% if link.name == "email" %>
-          <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
-        <% else %>
-          <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+          <ul class="reset social-links">
+            <% regional_ambassador.regional_links.each do |link| %>
+              <li>
+                <% if link.name == "email" %>
+                  <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
+                <% else %>
+                  <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
+                <% end %>
+              </li>
+                <% end %>
+          </ul>
 
-  <% unless ra_dashboard %>
+        <% unless ra_dashboard %>
       </div>
-      </div>
+    </div>
   <% end %>
 <% end %>
