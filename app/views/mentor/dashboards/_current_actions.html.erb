@@ -19,12 +19,6 @@
       invites: current_mentor.mentor_invites.pending %>
   <% end %>
 
-  <% @current_teams.each do |team| %>
-    <div class="panel team-preview" id="<%= dom_id(team) %>">
-      <%= render "mentor/teams/team_list_item_content", team: team %>
-    </div>
-  <% end %>
-
   <%= render "completion_steps/create_team",
     hidden: (current_mentor.onboarding? ||
              !SeasonToggles.team_building_enabled?) %>

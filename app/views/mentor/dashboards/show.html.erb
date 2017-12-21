@@ -1,52 +1,59 @@
 <div class="grid">
   <div class="grid__col-sm-3 dashboard-sidebar">
     <div class="grid__cell--padding-sm dashboard-notices">
-          <h1 class="page-heading">
-            <%= t("views.application.mentor_dashboard") %>
-            <% if SeasonToggles.signup_enabled?(:judge) %>
-            <small>
-              <%= link_to web_icon('refresh', text: "Switch to Judging"),
-                  judge_dashboard_path %>
-            </small>
-            <% end %>
-            <% if current_mentor.is_an_ambassador? %>
-              <small>
-                <%= link_to "Switch to RA mode",
-                  regional_ambassador_dashboard_path,
-                  data: { turbolinks: false } %>
-              </small>
-            <% end %>
-          </h1>
-      <div class="">
-          <% if SeasonToggles.dashboard_text(:mentor).blank? %>
+      <h1 class="page-heading">
+        <%= t("views.application.mentor_dashboard") %>
+
+        <% if SeasonToggles.signup_enabled?(:judge) %>
+          <small>
+            <%= link_to web_icon('refresh', text: "Switch to Judging"),
+                judge_dashboard_path %>
+          </small>
+        <% end %>
+
+        <% if current_mentor.is_an_ambassador? %>
+          <small>
+            <%= link_to "Switch to RA mode",
+              regional_ambassador_dashboard_path,
+              data: { turbolinks: false } %>
+          </small>
+        <% end %>
+      </h1>
+
+      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
+        <%= render 'program_survey' %>
+      <% else %>
+        <h1 class="page-heading">
+          <%= SeasonToggles.dashboard_text(:mentor) %>
+          <small>
             <%= render 'program_survey' %>
-          <% else %>
-            <h1 class="page-heading">
-              <%= SeasonToggles.dashboard_text(:mentor) %>
-              <small>
-                <%= render 'program_survey' %>
-              </small>
-            </h1>
-          <% end %>
-      </div>
+          </small>
+        </h1>
+      <% end %>
     </div>
 
-      <div align= "center">
-        <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img profile-image" %>
+    <div align= "center">
+      <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img profile-image" %>
 
-          <h3 class="reset"><%= current_mentor.full_name %></h3>
+      <h3 class="reset"><%= current_mentor.full_name %></h3>
 
-          <%= link_to "View your profile", mentor_profile_path, class: "profile-button" %>
+      <%= link_to "View your profile", mentor_profile_path, class: "profile-button" %>
 
-        <%= render "mentor/dashboards/info_sidebar" %>
+      <%= render "mentor/dashboards/info_sidebar" %>
 
-        <%= render "dashboards/ra_intro" %>
-      </div>
+      <%= render "dashboards/ra_intro" %>
+    </div>
   </div>
-<!-- Mentor's teams show-->
+
   <div class="grid__col-sm-9">
     <div class="grid__cell--padding-sm">
-        <%= render 'mentor/dashboards/current_actions' %>
+      <%= render 'mentor/dashboards/current_actions' %>
+
+      <% @current_teams.each do |team| %>
+        <div class="panel team-preview" id="<%= dom_id(team) %>">
+          <%= render "mentor/teams/team_list_item_content", team: team %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
