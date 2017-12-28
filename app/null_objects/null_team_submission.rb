@@ -1,10 +1,6 @@
-class NullTeamSubmission
-  def present?
-    false
-  end
-
+class NullTeamSubmission < NullObject
   def screenshots
-    Screenshot.none
+    ::Screenshot.none
   end
 
   def app_name
@@ -28,11 +24,11 @@ class NullTeamSubmission
   end
 
   def submission_scores
-    SubmissionScore.none
+    ::SubmissionScore.none
   end
 
   def technical_checklist
-    NullTechnicalChecklist.new
+    ::NullTechnicalChecklist.new
   end
 
   def touch
