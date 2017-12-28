@@ -1,5 +1,4 @@
-class NullConsentWaiver
+class NullConsentWaiver < NullObject
   def status; "none"; end
-  def present?; false; end
-  def destroy; end
+  def destroy; false; end
 end

@@ -1,9 +1,5 @@
-class NullRegionalAmbassador
+class NullRegionalAmbassador < NullObject
   def provided_intro?
-    false
-  end
-
-  def present?
     false
   end
 end
