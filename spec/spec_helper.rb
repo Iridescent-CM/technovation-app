@@ -1,7 +1,6 @@
 require "dotenv"
 Dotenv.load
 
-require "pry"
 require "vcr_helper"
 
 Dir[Dir.pwd + '/spec/no_rails_support/**/*.rb'].each { |f| require f }
