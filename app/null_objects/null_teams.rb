@@ -1,5 +1,5 @@
-class NullTeams
+class NullTeams < NullObject
   def current
-    Team.none
+    ::Team.none
   end
 end
