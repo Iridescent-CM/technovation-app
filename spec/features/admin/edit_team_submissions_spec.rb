@@ -170,7 +170,7 @@ RSpec.feature "Toggling editable team submissions" do
         expect(page).to have_content("submissions are not editable")
         expect(page).not_to have_link("Edit your submission")
 
-        visit student_team_submission_path(team.submission)
+        visit student_team_submission_path(team.reload.submission)
         expect(page).not_to have_css(
           ".button",
           text: "Set your app's name"
@@ -198,10 +198,13 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit technical checklist" do
         create_authenticated_user_on_team(:student, submission: true)
 
-        visit student_team_submission_path(team.submission)
+        visit student_team_submission_path(team.reload.submission)
         expect(page).not_to have_link("Confirm your code checklist")
 
-        visit edit_student_team_submission_path(team.submission, piece: :code_checklist)
+        visit edit_student_team_submission_path(
+          team.submission,
+          piece: :code_checklist
+        )
         expect(current_path).to eq(student_dashboard_path)
       end
     end
