@@ -1,11 +1,11 @@
 require 'data-anonymization'
-require "pry"
 require "bcrypt"
 
 database 'technovation-app_development' do
   strategy DataAnon::Strategy::Blacklist
 
-  source_db adapter: 'postgresql', database: 'technovation-app_development'
+  source_db adapter: 'postgresql',
+    database: 'technovation-app_development'
 
   table 'accounts' do
     primary_key 'id' # composite key is also supported
@@ -20,13 +20,17 @@ database 'technovation-app_development' do
     anonymize('last_name').using FieldStrategy::RandomLastName.new
     anonymize('profile_image') { |_| nil }
     anonymize('email') { |f| "user-#{f.ar_record.id}@oracle.com" }
-    anonymize('password_digest') { |_| BCrypt::Password.create("secret1234") }
+    anonymize('password_digest') { |_|
+      BCrypt::Password.create("secret1234")
+    }
   end
 
   table 'student_profiles' do
     primary_key 'id' # composite key is also supported
     anonymize 'parent_guardian_name'
-    anonymize('parent_guardian_email') { |f| "parent-#{f.ar_record.id}@oracle.com" }
+    anonymize('parent_guardian_email') {
+      |f| "parent-#{f.ar_record.id}@oracle.com"
+    }
   end
 
   table 'mentor_profiles' do
@@ -61,7 +65,9 @@ database 'technovation-app_development' do
 
   table 'team_member_invites' do
     primary_key 'id' # composite key is also supported
-    anonymize('invitee_email') { |f| "invitee-#{f.ar_record.id}@oracle.com" }
+    anonymize('invitee_email') { |f|
+      "invitee-#{f.ar_record.id}@oracle.com"
+    }
   end
 
   table 'signup_attempts' do
