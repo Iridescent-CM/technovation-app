@@ -134,7 +134,9 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
+    } do |value|
+      send(value)
+    end
 
   filter :parental_consent,
     :enum,
@@ -160,7 +162,9 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
+    } do |value|
+      send(value)
+    end
 
   filter :background_check,
     :enum,
@@ -189,7 +193,9 @@ class AccountsGrid
       g.country.empty? or
         g.country[0] == "US" and
           (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } { |value| send(value) }
+    } do |value|
+      send(value)
+    end
 
   filter :name_email, header: "Name or Email", filter_group: "more-specific" do |value|
     names = value.strip.downcase.split(' ').map { |n| I18n.transliterate(n) }
