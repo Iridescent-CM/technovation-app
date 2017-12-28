@@ -3,7 +3,7 @@ module Mentor
     def show
       @invite = MentorInvite.find_by(
         invite_token: params.fetch(:id)
-      ) || NullInvite.new
+      ) || ::NullInvite.new
 
       if @invite.invitee and @invite.invitee != current_profile
         signin = @invite.invitee.account

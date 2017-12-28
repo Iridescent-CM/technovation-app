@@ -7,7 +7,7 @@ module Student
     def show
       @join_request = JoinRequest.find_by(
         review_token: params.fetch(:id)
-      ) || NullJoinRequest.new
+      ) || ::NullJoinRequest.new
 
       if reviewer_is_requestor?(@join_request)
         render template: "join_requests/show_requestor_#{@join_request.status}"
@@ -37,7 +37,7 @@ module Student
       status = join_request_params.fetch(:status)
 
       join_request = JoinRequest.find_by(review_token: params.fetch(:id)) ||
-        NullJoinRequest.new
+        ::NullJoinRequest.new
       "join_request_#{status}".camelize.constantize.(join_request)
 
       redirect_to params[:back] || student_team_path(

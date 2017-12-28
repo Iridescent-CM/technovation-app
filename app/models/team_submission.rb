@@ -190,7 +190,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def technical_checklist
-    super || NullTechnicalChecklist.new
+    super || ::NullTechnicalChecklist.new
   end
 
   def code_checklist

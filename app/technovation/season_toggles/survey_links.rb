@@ -45,7 +45,7 @@ class SeasonToggles
       def survey_link(scope, key, opts = {})
         options = {
           format_url: false,
-          account: NullAccount.new,
+          account: ::NullAccount.new,
         }.merge(opts)
 
         value = store.get("#{scope}_survey_link") || "{}"
