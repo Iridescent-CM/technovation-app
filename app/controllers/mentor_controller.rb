@@ -22,7 +22,7 @@ class MentorController < ApplicationController
   def current_mentor
     @current_mentor ||= current_account.mentor_profile ||
       current_session.mentor_profile ||
-        NullProfile.new
+        ::NullProfile.new
   end
 
   def current_profile
