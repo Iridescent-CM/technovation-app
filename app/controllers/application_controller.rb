@@ -54,13 +54,13 @@ class ApplicationController < ActionController::Base
 
     @current_account ||= Account.find_by(
       auth_token: get_cookie(:auth_token)
-    ) || NullAuth.new
+    ) || ::NullAuth.new
   end
 
   def current_session
     @current_session ||= Account.find_by(
       session_token: get_cookie(:session_token)
-    ) || NullAuth.new
+    ) || ::NullAuth.new
   end
 
   private
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
       .approved
       .joins(:current_account)
       .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-      .find_by(find_by) || NullRegionalAmbassador.new
+      .find_by(find_by) || ::NullRegionalAmbassador.new
 
     if @regional_ambassador.present?
       @regional_ambassador
@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 
         @regional_ambassador = account.regional_ambassador_profile
       else
-        @regional_ambassador = NullRegionalAmbassador.new
+        @regional_ambassador = ::NullRegionalAmbassador.new
       end
 
     elsif region_account.country != "US"
@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
         .approved
         .joins(:current_account)
         .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-        .find_by(intnl_find_by) || NullRegionalAmbassador.new
+        .find_by(intnl_find_by) || ::NullRegionalAmbassador.new
     else
       @regional_ambassador
     end
@@ -203,7 +203,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_profile
-    NullProfile.new
+    ::NullProfile.new
   end
 
   def current_scope

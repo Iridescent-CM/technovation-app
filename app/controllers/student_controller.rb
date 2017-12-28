@@ -39,7 +39,7 @@ class StudentController < ApplicationController
   def current_student
     @current_student ||= current_account.student_profile ||
       current_session.student_profile ||
-        NullProfile.new
+        ::NullProfile.new
   end
 
   def current_profile

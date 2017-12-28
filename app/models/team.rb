@@ -151,7 +151,7 @@ class Team < ActiveRecord::Base
   end
 
   def submission
-    super || NullTeamSubmission.new
+    super || ::NullTeamSubmission.new
   end
 
   def remove_from_live_event
