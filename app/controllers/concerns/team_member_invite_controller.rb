@@ -4,7 +4,7 @@ module TeamMemberInviteController
   def show
     @invite = TeamMemberInvite.find_by(
       invite_token: params.fetch(:id)
-    ) || NullInvite.new
+    ) || ::NullInvite.new
 
     if @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account

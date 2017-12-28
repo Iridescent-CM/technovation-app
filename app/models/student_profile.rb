@@ -221,7 +221,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def team
-    current_teams.first or NullTeam.new
+    current_teams.first or ::NullTeam.new
   end
 
   def team_ids

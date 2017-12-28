@@ -262,7 +262,7 @@ class Account < ActiveRecord::Base
   validates :date_of_birth, :first_name, :last_name, presence: true
 
   def self.find_with_token(token)
-    find_by(auth_token: token) || NullAuth.new
+    find_by(auth_token: token) || ::NullAuth.new
   end
 
   def self.find_judge_profile_id_by_email(email)
@@ -273,7 +273,7 @@ class Account < ActiveRecord::Base
     "#{String(profile).camelize}Account".constantize
       .find_by(
         auth_token: token
-      ) or NullAuth.new
+      ) or ::NullAuth.new
   end
 
   def avatar_url
@@ -458,7 +458,7 @@ class Account < ActiveRecord::Base
   end
 
   def consent_waiver
-    super || NullConsentWaiver.new
+    super || ::NullConsentWaiver.new
   end
 
   def authenticated?
@@ -475,7 +475,7 @@ class Account < ActiveRecord::Base
     elsif mentor_profile
       mentor_profile.teams
     else
-      NullTeams.new
+      ::NullTeams.new
     end
   end
 
@@ -485,7 +485,7 @@ class Account < ActiveRecord::Base
     elsif mentor_profile
       mentor_profile.current_teams
     else
-      NullTeams.new
+      ::NullTeams.new
     end
   end
 
@@ -495,7 +495,7 @@ class Account < ActiveRecord::Base
     elsif mentor_profile
       mentor_profile.past_teams
     else
-      NullTeams.new
+      ::NullTeams.new
     end
   end
 

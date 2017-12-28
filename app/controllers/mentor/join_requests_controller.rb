@@ -17,7 +17,7 @@ module Mentor
     def show
       @join_request = JoinRequest.find_by(
         review_token: params.fetch(:id)
-      ) || NullJoinRequest.new
+      ) || ::NullJoinRequest.new
 
       if reviewer_is_requestor?(@join_request)
         render template: "join_requests/show_requestor_#{@join_request.status}"
@@ -33,7 +33,7 @@ module Mentor
       status = join_request_params.fetch(:status)
 
       join_request = JoinRequest.find_by(review_token: params.fetch(:id)) ||
-        NullJoinRequest.new
+        ::NullJoinRequest.new
 
       "join_request_#{status}".camelize.constantize.(join_request)
 
