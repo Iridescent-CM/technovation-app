@@ -1,7 +1,6 @@
-class NullAuth
+class NullAuth < NullObject
   def authenticated?; false; end
   def admin?; false; end
-  def present?; false; end
   def can_be_a_mentor?; false; end
 
   def scope_name; 'application'; end
@@ -10,9 +9,9 @@ class NullAuth
 
   def locale; I18n.default_locale; end
 
-  def admin_profile; NullProfile.new; end
-  def judge_profile; NullProfile.new; end
-  def mentor_profile; NullProfile.new; end
-  def regional_ambassador_profile; NullProfile.new; end
-  def student_profile; NullProfile.new; end
+  def admin_profile; ::NullProfile.new; end
+  def judge_profile; ::NullProfile.new; end
+  def mentor_profile; ::NullProfile.new; end
+  def regional_ambassador_profile; ::NullProfile.new; end
+  def student_profile; ::NullProfile.new; end
 end

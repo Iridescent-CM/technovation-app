@@ -1,6 +1,4 @@
-class NullTechnicalChecklist
-  def present?; false; end
-  def blank?; true; end
+class NullTechnicalChecklist < NullObject
   def new_record?; false; end
   def started?; false; end
   def total_points; 0; end

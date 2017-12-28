@@ -1,3 +1,2 @@
-class NullAccount
-  def present?; false; end
+class NullAccount < NullObject
 end

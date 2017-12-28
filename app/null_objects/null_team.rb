@@ -1,13 +1,9 @@
-class NullTeam
+class NullTeam < NullObject
   def touch
     # noop
   end
 
   def has_mentor?
-    false
-  end
-
-  def present?
     false
   end
 
@@ -20,30 +16,30 @@ class NullTeam
   end
 
   def mentors
-    MentorProfile.none
+    ::MentorProfile.none
   end
 
   def selected_regional_pitch_event
-    nil
+    ::NullRegionalPitchEvent.new
   end
 
   def current_team_submission
-    NullTeamSubmission.new
+    ::NullTeamSubmission.new
   end
 
   def submission
-    NullTeamSubmission.new
+    ::NullTeamSubmission.new
   end
 
   def pending_requests
-    JoinRequest.none
+    ::JoinRequest.none
   end
 
   def pending_student_join_requests
-    JoinRequest.none
+    ::JoinRequest.none
   end
 
   def pending_mentor_join_requests
-    JoinRequest.none
+    ::JoinRequest.none
   end
 end

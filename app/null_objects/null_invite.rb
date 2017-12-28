@@ -1,4 +1,4 @@
-class NullInvite
+class NullInvite < NullObject
   def status
     "missing"
   end
