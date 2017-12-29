@@ -3,41 +3,54 @@
     <div class="panel">
       <h3 class="panel--heading">Screenshots</h3>
 
-      <p class="hint">File types allowed: *.jpg, *.jpeg, *.gif, *.png</p>
+      <% Screenshot.while_files_remaining(@team_submission) do %>
+        <p class="hint">File types allowed: *.jpg, *.jpeg, *.gif, *.png</p>
 
-      <%= form_with model: [current_scope, @team_submission],
-        class: "dropzone",
-        id: "team-submission-screenshots-dropzone",
-        multipart: true do |f| %>
-        <div class="fallback">
-          <%= f.fields_for :screenshots do |s| %>
-            <div class="field--file-upload">
-              <%= s.label :image, "Select up to 6 screenshots" %>
-              <%= s.file_field :image,
-                id: "team_submission_screenshots_attributes_" +
-                    s.options[:child_index].to_s +
-                    "_image"
-              %>
-            </div>
-          <% end %>
+        <%= form_with model: [current_scope, @team_submission],
+          class: "dropzone",
+          id: "team-submission-screenshots-dropzone",
+          multipart: true do |f| %>
+          <div class="fallback">
+            <%= f.fields_for :screenshots do |s| %>
+              <div class="field--file-upload">
+                <%= s.label :image, "Select up to 6 screenshots" %>
+                <%= s.file_field :image,
+                  id: "team_submission_screenshots_attributes_" +
+                      s.options[:child_index].to_s +
+                      "_image"
+                %>
+              </div>
+            <% end %>
 
-          <%= f.submit "Upload", class: "button" %>
-        </div>
+            <%= f.submit "Upload", class: "button" %>
+          </div>
+        <% end %>
+
+        <p class="dropzone-save" style="display: none;">
+          <%= link_to "Save this upload",
+            [current_scope, @team_submission],
+            class: "button" %>
+        </p>
+
+        <p class="after-dropzone-save">
+          <%= link_to "cancel", [current_scope, @team_submission] %>
+        </p>
       <% end %>
 
-      <p class="dropzone-save" style="display: none;">
-        <%= link_to "Save this upload",
-          [current_scope, @team_submission],
-          class: "button" %>
-      </p>
-
-      <p class="after-dropzone-save">
-        <%= link_to "cancel", [current_scope, @team_submission] %>
-      </p>
+      <% Screenshot.while_none_remaining(@team_submission) do %>
+        <p>Your team has uploaded the maximum screenshots allowed.</p>
+        <p>Sort or remove them below.</p>
+      <% end %>
     </div>
 
     <% if @team_submission.screenshots.reject(&:new_record?).any? %>
-      <div class="panel">
+      <div
+        id="screenshots"
+        class="panel"
+        data-max-files-remaining="<%=
+          Screenshot.max_files_remaining(@team_submission)
+        %>"
+      >
         Your team has previously uploaded these screenshots:
 
         <div class="grid">
