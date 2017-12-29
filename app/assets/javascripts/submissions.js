@@ -1,3 +1,9 @@
+$(document).on("ajax:success", "[data-remove-on-delete]", function(e) {
+  $(this).closest(".remove-on-delete").fadeOut(function() {
+    $(this).remove();
+  });
+});
+
 $(document).on("click", "#team_submissions--menu a", function(e) {
   e.preventDefault();
 
