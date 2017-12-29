@@ -9,9 +9,13 @@ var defaultSubmissionDropzoneOptions = {
   },
 
   init: function() {
-    attachSuccess(this);
-    attachRemovedFile(this);
+    defaultInit(this);
   },
+}
+
+function defaultInit(el) {
+  attachSuccess(el);
+  attachRemovedFile(el);
 }
 
 function attachSuccess(el) {
