@@ -4,7 +4,7 @@
   col_css ||= "grid__col-auto"
 %>
 
-<div class="<%= col_css %>">
+<div class="remove-on-delete <%= col_css %>">
   <%= image_tag screenshot.image_url,
     alt: screenshot.image_identifier,
     data: {
@@ -14,12 +14,10 @@
     width: "100%" %>
 
   <% if edit %>
-    <%= link_to "".html_safe,
-      send("#{current_scope}_screenshot_path",
-            screenshot,
-            team_id: current_team.id),
-      class: 'fa fa-trash-o',
+    <%= link_to web_icon("trash-o"),
+      send("#{current_scope}_screenshot_path", screenshot),
       data: {
+        remove_on_delete: true,
         remote: true,
         method: :delete,
         confirm: "Are you sure you want to delete the screenshot?",
