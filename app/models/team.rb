@@ -81,9 +81,13 @@ class Team < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
-  scope :accepting_mentor_requests, -> { where(accepting_mentor_requests: true) }
+  scope :accepting_mentor_requests, -> {
+    where(accepting_mentor_requests: true)
+  }
 
-  scope :accepting_student_requests, -> { where(accepting_student_requests: true) }
+  scope :accepting_student_requests, -> {
+    where(accepting_student_requests: true)
+  }
 
   belongs_to :division
 
@@ -166,7 +170,8 @@ class Team < ActiveRecord::Base
 
   def eligible_events
     if submission.present?
-      [VirtualRegionalPitchEvent.new] + RegionalPitchEvent.available_to(submission)
+      [VirtualRegionalPitchEvent.new] +
+        RegionalPitchEvent.available_to(submission)
     else
       []
     end
@@ -213,10 +218,6 @@ class Team < ActiveRecord::Base
     division.senior?
   end
 
-  def current_team_submission
-    team_submissions.current.first
-  end
-
   def student_emails
     students.flat_map(&:email)
   end
@@ -230,7 +231,9 @@ class Team < ActiveRecord::Base
   end
 
   def spot_available?
-    (students + pending_student_invites + pending_student_join_requests).size < 5
+    (students +
+      pending_student_invites +
+        pending_student_join_requests).size < 5
   end
 
   def primary_location
