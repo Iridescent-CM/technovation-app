@@ -104,6 +104,9 @@
 .icon-envelope-o:before {
   content: "\f003";
 }
+.icon-trash-o:before {
+  content: "\f014";
+}
 .icon-green {
   color: $shamrock-mid;
 }
