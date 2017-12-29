@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
     resources :team_submissions
     resource :code_checklist, only: :update
-    resources :screenshots, only: [:index, :destroy]
+    resources :screenshots, only: [:index, :create, :update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show
@@ -85,7 +85,7 @@ Rails.application.routes.draw do
     resources :certificates, only: :create
 
     resource :code_checklist, only: :update
-    resources :screenshots, only: [:index, :destroy]
+    resources :screenshots, only: [:index, :create, :update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
     resource :profile_image_upload_confirmation, only: :show

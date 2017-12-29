@@ -15,7 +15,13 @@
 
   <% if edit %>
     <%= link_to web_icon("trash-o"),
-      send("#{current_scope}_screenshot_path", screenshot),
+      send(
+        "#{current_scope}_screenshot_path",
+        screenshot,
+        team_submission: {
+          id: @team_submission.id,
+        }
+      ),
       data: {
         remove_on_delete: true,
         remote: true,
