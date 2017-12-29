@@ -6,10 +6,15 @@
       <% Screenshot.while_files_remaining(@team_submission) do %>
         <p class="hint">File types allowed: *.jpg, *.jpeg, *.gif, *.png</p>
 
-        <%= form_with model: [current_scope, @team_submission],
+        <%= form_with model: @team_submission,
+          method: :post,
+          url: [current_scope, :screenshots],
           class: "dropzone",
           id: "team-submission-screenshots-dropzone",
           multipart: true do |f| %>
+
+          <%= f.hidden_field :id %>
+
           <div class="fallback">
             <%= f.fields_for :screenshots do |s| %>
               <div class="field--file-upload">
@@ -43,26 +48,26 @@
       <% end %>
     </div>
 
-    <% if @team_submission.screenshots.reject(&:new_record?).any? %>
-      <div
-        id="screenshots"
-        class="panel"
-        data-max-files-remaining="<%=
-          Screenshot.max_files_remaining(@team_submission)
-        %>"
-      >
+    <div
+      id="screenshots"
+      class="panel"
+      data-max-files-remaining="<%=
+        Screenshot.max_files_remaining(@team_submission)
+      %>"
+    >
+      <% Screenshot.while_any(@team_submission) do %>
         Your team has previously uploaded these screenshots:
 
         <div class="grid">
           <%= render partial: 'screenshots/screenshot',
-            collection: @team_submission.screenshots.reject(&:new_record?),
+            collection: @team_submission.screenshots.persisted,
             locals: {
               col_css: "grid__col-4",
               img_css: "thumbnail-md",
               edit: true,
             } %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

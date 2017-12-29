@@ -23,10 +23,6 @@ class NullTeam < NullObject
     ::NullRegionalPitchEvent.new
   end
 
-  def current_team_submission
-    ::NullTeamSubmission.new
-  end
-
   def submission
     ::NullTeamSubmission.new
   end

@@ -1,5 +1,6 @@
 var defaultSubmissionDropzoneOptions = {
   maxFiles: 1,
+  addRemoveLinks: true,
   dictDefaultMessage: "Drag and drop up a file here, " +
                       "<br />or <a class='button'>select a file</a>",
   method: "PUT",
@@ -8,11 +9,26 @@ var defaultSubmissionDropzoneOptions = {
   },
 
   init: function() {
-    this.on("success", function(file) {
-      $(".dropzone-save").fadeIn();
-      $(".after-dropzone-save").hide();
-    });
+    attachSuccess(this);
+    attachRemovedFile(this);
   },
+}
+
+function attachSuccess(el) {
+  el.on("success", function(file, res) {
+    $(".dropzone-save").fadeIn();
+    $(".after-dropzone-save").hide();
+    $(file).data("removeUrl", res.removeUrl);
+  });
+}
+
+function attachRemovedFile(el) {
+  el.on("removedfile", function(file) {
+    $.ajax({
+      url: $(file).data("removeUrl"),
+      method: "DELETE",
+    });
+  });
 }
 
 Dropzone.options.teamSubmissionBusinessPlanDropzone = $.extend(
@@ -35,17 +51,25 @@ Dropzone.options.teamSubmissionSourcecodeDropzone = $.extend(
 
 Dropzone.autoDiscover = false;
 
-$(document).on("ready turbolinks:load", function() {
+$(document).on("ready turbolinks:load", activateDropzones);
+
+function activateDropzones() {
+  updateScreenshots();
+  Dropzone.discover();
+}
+
+function updateScreenshots() {
   var maxScreenshotsRemaining = $("#screenshots")
-    .data("maxFilesRemaining"),
-    notOne = parseInt(maxScreenshotsRemaining) != 1,
-    prefix = notOne ? "up to " : "",
-    postfix = notOne ? "s" : "";
+                                  .data("maxFilesRemaining"),
+      notOne = parseInt(maxScreenshotsRemaining) != 1,
+      prefix = notOne ? "up to " : "",
+      postfix = notOne ? "s" : "";
 
   Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
     {},
     defaultSubmissionDropzoneOptions,
     {
+      method: "POST",
       paramName: "team_submission[screenshots_attributes][][image]",
       dictDefaultMessage: "Drag and drop " +
                           prefix +
@@ -62,6 +86,4 @@ $(document).on("ready turbolinks:load", function() {
       acceptedFiles: ".jpg,.jpeg,.gif,.png",
     }
   );
-
-  Dropzone.discover();
-});
+}
