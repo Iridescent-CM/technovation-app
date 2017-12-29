@@ -7,6 +7,8 @@
 //= require char-counter
 //= require toggling-select
 //= require submissions
+//= require dropzones
+//= require screenshots
 //= require code-checklists
 
 document.addEventListener("turbolinks:load", function() {
