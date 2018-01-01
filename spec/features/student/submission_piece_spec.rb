@@ -1,8 +1,13 @@
 require "rails_helper"
 
 RSpec.feature "Students edit submission pieces" do
-  let!(:student) { FactoryBot.create(:onboarded_student, :senior, :on_team) }
-  let!(:submission) { FactoryBot.create(:team_submission, team: student.team) }
+  let!(:student) {
+    FactoryBot.create(:onboarded_student, :senior, :on_team)
+  }
+
+  let!(:submission) {
+    FactoryBot.create(:team_submission, team: student.team)
+  }
 
   before do
     SeasonToggles.team_submissions_editable!
@@ -24,7 +29,10 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_content "WonderApp2018"
       expect(page).to have_link(
         "Change your app's name",
-        href: edit_student_team_submission_path(submission.reload, piece: :app_name)
+        href: edit_student_team_submission_path(
+          submission.reload,
+          piece: :app_name
+        )
       )
     end
   end
@@ -187,7 +195,10 @@ RSpec.feature "Students edit submission pieces" do
       )
       expect(page).to have_link(
         "Change your upload",
-        href: edit_student_team_submission_path(submission, piece: :business_plan)
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :business_plan
+        )
       )
     end
   end
