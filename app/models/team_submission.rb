@@ -1,4 +1,6 @@
 class TeamSubmission < ActiveRecord::Base
+  MAX_SCREENSHOTS_ALLOWED = 6
+
   include Seasoned
 
   include PublicActivity::Common
@@ -112,6 +114,28 @@ class TeamSubmission < ActiveRecord::Base
   }.each do |piece|
     define_method("#{piece}_complete?") do
       not public_send(piece).blank?
+    end
+  end
+
+  def max_screenshots_remaining
+    MAX_SCREENSHOTS_ALLOWED - screenshots.persisted.count
+  end
+
+  def while_screenshots_remaining(&block)
+    if max_screenshots_remaining > 0
+      yield
+    end
+  end
+
+  def while_has_screenshots(&block)
+    if screenshots.persisted.any?
+      yield
+    end
+  end
+
+  def while_no_screenshots_remaining(&block)
+    unless max_screenshots_remaining > 0
+      yield
     end
   end
 

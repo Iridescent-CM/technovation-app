@@ -3,8 +3,10 @@
     <div class="panel">
       <h3 class="panel--heading">Screenshots</h3>
 
-      <% Screenshot.while_files_remaining(@team_submission) do %>
-        <p class="hint">File types allowed: *.jpg, *.jpeg, *.gif, *.png</p>
+      <% @team_submission.while_screenshots_remaining do %>
+        <p class="hint">
+          File types allowed: *.jpg, *.jpeg, *.gif, *.png
+        </p>
 
         <%= form_with model: @team_submission,
           method: :post,
@@ -19,11 +21,7 @@
             <%= f.fields_for :screenshots do |s| %>
               <div class="field--file-upload">
                 <%= s.label :image, "Select up to 6 screenshots" %>
-                <%= s.file_field :image,
-                  id: "team_submission_screenshots_attributes_" +
-                      s.options[:child_index].to_s +
-                      "_image"
-                %>
+                <%= s.file_field :image %>
               </div>
             <% end %>
 
@@ -42,7 +40,7 @@
         </p>
       <% end %>
 
-      <% Screenshot.while_none_remaining(@team_submission) do %>
+      <% @team_submission.while_no_screenshots_remaining do %>
         <p>Your team has uploaded the maximum screenshots allowed.</p>
         <p>Sort or remove them below.</p>
       <% end %>
@@ -51,11 +49,11 @@
     <div
       id="screenshots"
       class="panel"
-      data-max-files-remaining="<%=
-        Screenshot.max_files_remaining(@team_submission)
-      %>"
+      data-max-files-remaining="
+        <%= @team_submission.max_screenshots_remaining %>
+      "
     >
-      <% Screenshot.while_any(@team_submission) do %>
+      <% @team_submission.while_has_screenshots do %>
         Your team has previously uploaded these screenshots:
 
         <div class="grid">
