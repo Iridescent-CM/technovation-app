@@ -156,7 +156,7 @@
           <p>
             Your team has uploaded
             <%= pluralize(
-              @team_submission.screenshots.count,
+              @team_submission.screenshots.persisted.count,
               "screenshot"
             ) %>
           </p>
