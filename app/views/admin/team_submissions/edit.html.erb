@@ -1,7 +1,8 @@
 <h1>Editing Team Submission</h1>
 
 <%= simple_form_for [:admin, @team_submission] do |f| %>
-  <%= f.input :contest_rank, collection: TeamSubmission.contest_ranks.keys %>
+  <%= f.input :contest_rank,
+    collection: TeamSubmission.contest_ranks.keys %>
   <%= f.input :app_name %>
   <%= f.input :app_description, input_html: { size: "40x7" } %>
   <%= f.input :demo_video_link %>
@@ -19,7 +20,8 @@
     <%= f.input :source_code %>
   </div>
 
-  <%= f.input :development_platform, collection: TeamSubmission.development_platforms.keys %>
+  <%= f.input :development_platform,
+    collection: TeamSubmission.development_platforms.keys %>
   <%= f.input :development_platform_other %>
 
   <%= f.fields_for :business_plan do |b| %>
