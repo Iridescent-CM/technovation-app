@@ -26,19 +26,27 @@ module ScreenshotController
     # THAT THINKS IT IS AN ARRAY
     # NO IDEA WHY - Joe Sak
 
-    @screenshot = Array(current_team.submission.screenshots.create!(
-      screenshot_params
-    )).first
+    submission = current_team.submission
+    submission.update(screenshot_params)
+    screenshot = submission.screenshots.last
 
-    render json: {
-      removeUrl: send(
-        "#{current_scope}_screenshot_path",
-        @screenshot,
-        team_submission: {
-          id: @screenshot.team_submission_id,
+    respond_to do |format|
+      format.html do
+        redirect_to [current_scope, submission]
+      end
+
+      format.js do
+        render json: {
+          removeUrl: send(
+            "#{current_scope}_screenshot_path",
+            screenshot,
+            team_submission: {
+              id: submission.id,
+            }
+          )
         }
-      )
-    }
+      end
+    end
   end
 
   def destroy
@@ -56,8 +64,9 @@ module ScreenshotController
   def screenshot_params
     params.require(:team_submission).permit(
       screenshots_attributes: [
+        :id,
         :image,
       ],
-    ).fetch(:screenshots_attributes)
+    )
   end
 end
