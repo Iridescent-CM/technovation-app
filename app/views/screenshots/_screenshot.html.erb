@@ -1,10 +1,13 @@
 <%
+  many ||= false
   edit ||= false
   img_css ||= ""
-  col_css ||= "grid__col-auto"
 %>
 
-<div class="remove-on-delete <%= col_css %>">
+<li
+  id="<%= dom_id(screenshot) %>"
+  class="sortable-list--item remove-on-delete"
+>
   <%= image_tag screenshot.image_url,
     alt: screenshot.image_identifier,
     data: {
@@ -14,19 +17,28 @@
     width: "100%" %>
 
   <% if edit %>
-    <%= link_to web_icon("trash-o"),
-      send(
-        "#{current_scope}_screenshot_path",
-        screenshot,
-        team_submission: {
-          id: @team_submission.id,
-        }
-      ),
-      data: {
-        remove_on_delete: true,
-        remote: true,
-        method: :delete,
-        confirm: "Are you sure you want to delete the screenshot?",
-      } %>
+    <div class="sortable-list-item--actions">
+      <%= link_to web_icon("trash-o"),
+        send(
+          "#{current_scope}_screenshot_path",
+          screenshot,
+          team_submission: {
+            id: @team_submission.id,
+          }
+        ),
+        data: {
+          remove_on_delete: true,
+          remote: true,
+          method: :delete,
+          confirm: "Are you sure you want to delete the screenshot?",
+        } %>
+
+      <% if many %>
+        <%= web_icon(
+          "navicon",
+          class: "sortable-list-item-actions--drag-handle"
+        ) %>
+      <% end %>
+    </div>
   <% end %>
-</div>
+</li>
