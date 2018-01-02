@@ -88,9 +88,6 @@ group :development, :test do
   gem 'rspec-rails', "~> 3.7"
   gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.2"
-  gem 'rack-test',
-    git: 'https://github.com/joemsak/rack-test',
-    branch: 'nil-uploaded-file-fix'
 end
 
 group :development do
@@ -108,7 +105,11 @@ group :test do
   gem 'vcr', "~> 3.0"
   gem 'webmock', "~> 3.1"
   gem 'sinatra', '~> 2.0'
-  gem 'capybara-webkit', "~> 1.14"
+
+  gem 'capybara-webkit',
+    git: "https://github.com/thoughtbot/capybara-webkit.git",
+    branch: :master
+
   gem 'database_cleaner', "~> 1.6"
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.6", require: "fakeredis/rspec"
