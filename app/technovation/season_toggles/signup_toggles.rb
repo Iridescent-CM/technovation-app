@@ -34,8 +34,16 @@ class SeasonToggles
         SCOPES.any? { |scope| signup_enabled?(scope) }
       end
 
+      def registration_open!
+        enable_signups!
+      end
+
       def registration_closed?
         SCOPES.all? { |scope| signup_disabled?(scope) }
+      end
+
+      def registration_closed!
+        disable_signups!
       end
 
       def disable_signups!

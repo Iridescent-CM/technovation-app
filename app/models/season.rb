@@ -10,21 +10,12 @@ class Season
   end
 
   def self.current
-    if Date.today < switch_date
-      new(Date.today.year)
-    else
-      new(Date.today.year + 1)
-    end
+    new(current_season_year)
   end
 
   def self.next
     nxt = current
-
-    unless SeasonToggles.registration_closed? and
-             Date.today >= switch_date
-      nxt.year += 1
-    end
-
+    nxt.year += 1
     nxt
   end
 
@@ -46,5 +37,16 @@ class Season
 
   def self.switch_day
     1
+  end
+
+  private
+  def self.current_season_year
+    current_year = Time.current.year
+
+    if Date.current >= switch_date
+      current_year += 1
+    end
+
+    current_year
   end
 end
