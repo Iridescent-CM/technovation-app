@@ -28,11 +28,24 @@ class JudgeProfile < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
-  belongs_to :account
+  belongs_to :account, required: false
   accepts_nested_attributes_for :account
-  validates_associated :account
+  validates_associated :account, if: -> { user_invitation.blank? }
+
+  before_validation -> {
+    if account.blank? and user_invitation.blank?
+      errors.add(:account, "is required unless there's a user invitation")
+      errors.add(
+        :user_invitation,
+        "is required unless there's an account"
+      )
+    end
+  }
 
   belongs_to :current_account, -> { current },
+    required: false
+
+  belongs_to :user_invitation,
     required: false
 
   has_many :submission_scores, dependent: :destroy
@@ -48,7 +61,8 @@ class JudgeProfile < ActiveRecord::Base
     begin
       account.public_send(method_name, *args)
     rescue
-      raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+      raise NoMethodError,
+        "undefined method `#{method_name}' not found for #{self}"
     end
   end
 

@@ -23,7 +23,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   enum status: %i{pending approved declined spam}
 
-  validates :organization_company_name, :ambassador_since_year, :job_title, :bio,
+  validates :organization_company_name,
+    :ambassador_since_year,
+    :job_title,
+    :bio,
     presence: true
 
   has_many :saved_searches, as: :searcher

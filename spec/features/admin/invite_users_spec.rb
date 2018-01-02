@@ -165,4 +165,46 @@ RSpec.feature "Admins invite users to signup" do
     invite = UserInvitation.last
     expect(invite.account.mentor_profile).to eq(mentor)
   end
+
+  scenario "invite an RA who has an existing judge account" do
+    email = "ra@example.com"
+    judge = FactoryBot.create(:judge, email: email)
+    expect(judge.account.reload.email).to eq(email)
+
+    UserInvitation.create!(
+      profile_type: "regional_ambassador",
+      email: email,
+    )
+
+    token = UserInvitation.last.admin_permission_token
+    url = regional_ambassador_signup_url(
+      admin_permission_token: token,
+      host: ENV.fetch("HOST_DOMAIN")
+    )
+
+    visit url
+
+    birthdate = Date.today - 25.years
+
+    fill_in "First name", with: "Pamela"
+    fill_in "Last name", with: "Beasley"
+
+    select_date birthdate, from: "Date of birth"
+
+    fill_in "Organization/company name", with: "John Hughes High."
+    fill_in "Job title", with: "Janitor / Man of the Year"
+    fill_in "Tell us about yourself",
+      with: "Lorem ipsum dolor sit amet, " +
+            "consectetur adipiscing elit. " +
+            "Phasellus ut diam vel felis fringilla amet."
+
+    fill_in "Create a password", with: "my-secret-password"
+
+    click_button "Create Your Account"
+
+    expect(current_path).to eq(regional_ambassador_dashboard_path)
+
+    invite = UserInvitation.last
+    expect(invite.account.reload.judge_profile).to eq(judge)
+  end
 end
