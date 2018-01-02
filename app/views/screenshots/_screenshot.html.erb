@@ -6,7 +6,7 @@
 
 <li
   id="<%= dom_id(screenshot) %>"
-  class="sortable-list--item remove-on-delete"
+  class="sortable-list__item remove-on-delete"
 >
   <%= image_tag screenshot.image_url,
     alt: screenshot.image_identifier,
@@ -17,7 +17,7 @@
     width: "100%" %>
 
   <% if edit %>
-    <div class="sortable-list-item--actions">
+    <div class="sortable-list__item-actions">
       <%= link_to web_icon("trash-o"),
         send(
           "#{current_scope}_screenshot_path",
@@ -36,7 +36,7 @@
       <% if many %>
         <%= web_icon(
           "navicon",
-          class: "sortable-list-item-actions--drag-handle"
+          class: "sortable-list__drag-handle"
         ) %>
       <% end %>
     </div>

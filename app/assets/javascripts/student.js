@@ -1,5 +1,6 @@
 //= require application
 //= require dropzone
+//= require dragula
 
 //= require forms
 //= require search
@@ -9,3 +10,4 @@
 //= require dropzones
 //= require screenshots
 //= require code-checklists
+//= require sortable-lists
