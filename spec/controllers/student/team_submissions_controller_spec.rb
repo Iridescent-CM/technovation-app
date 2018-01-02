@@ -2,14 +2,7 @@ require "rails_helper"
 
 RSpec.describe Student::TeamSubmissionsController do
   describe "PATCH #update" do
-    before do
-      @editable_submissions = !!SeasonToggles.team_submissions_editable?
-      SeasonToggles.team_submissions_editable = true
-    end
-
-    after do
-      SeasonToggles.team_submissions_editable = @editable_submissions
-    end
+    before { SeasonToggles.team_submissions_editable! }
 
     it "can handle sorting" do
       student = FactoryBot.create(:student, :on_team)
