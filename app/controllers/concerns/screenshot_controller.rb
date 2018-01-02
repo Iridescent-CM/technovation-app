@@ -35,7 +35,7 @@ module ScreenshotController
         redirect_to [current_scope, submission]
       end
 
-      format.js do
+      format.json do
         render json: {
           removeUrl: send(
             "#{current_scope}_screenshot_path",
