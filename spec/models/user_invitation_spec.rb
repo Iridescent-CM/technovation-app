@@ -31,7 +31,7 @@ RSpec.describe UserInvitation do
   end
 
   %i{student mentor judge}.each do |type|
-    it "validates the email against an existing mentor if the type is #{type}" do
+    it "validates email against existing mentor if the type is #{type}" do
       mentor = FactoryBot.create(:mentor)
 
       invite = UserInvitation.new(
@@ -52,6 +52,17 @@ RSpec.describe UserInvitation do
     invite = UserInvitation.new(
       profile_type: :regional_ambassador,
       email: mentor.email,
+    )
+
+    expect(invite).to be_valid
+  end
+
+  it "allows an existing judge to be moved for an RA" do
+    judge = FactoryBot.create(:judge)
+
+    invite = UserInvitation.new(
+      profile_type: :regional_ambassador,
+      email: judge.email,
     )
 
     expect(invite).to be_valid

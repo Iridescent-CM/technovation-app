@@ -17,24 +17,39 @@ class UserInvitation < ApplicationRecord
   }
 
   after_commit -> {
-    if mentor_account = Account.left_outer_joins(:regional_ambassador_profile)
-                               .joins(:mentor_profile)
-                               .where("regional_ambassador_profiles.id IS NULL")
-                               .find_by(
-                                 "lower(trim(both ' ' from email)) = ?",
-                                 email
-                               )
+    if account = Account.left_outer_joins(
+                   :regional_ambassador_profile
+                 )
+                 .left_outer_joins(:judge_profile, :mentor_profile)
+                 .where(
+                   "regional_ambassador_profiles.id " +
+                   "IS NULL"
+                 )
+                 .find_by(
+                   "lower(trim(both ' ' from email)) = ?",
+                   email
+                 )
 
-      profile = mentor_account.mentor_profile
-      profile.update(account: nil, user_invitation: self)
+      if mentor_profile = account.mentor_profile
+        mentor_profile.update(account: nil, user_invitation: self)
+      end
 
-      mentor_account.reload.destroy
+      if judge_profile = account.judge_profile
+        judge_profile.update(account: nil, user_invitation: self)
+      end
+
+      account.reload.destroy
     end
   }, on: :create
 
   after_commit -> {
     if mentor = MentorProfile.find_by(user_invitation: self)
       account.mentor_profile = mentor
+      account.save!
+    end
+
+    if judge = JudgeProfile.find_by(user_invitation: self)
+      account.judge_profile = judge
       account.save!
     end
   }, on: :update, if: -> { saved_change_to_status? and registered? }
@@ -46,6 +61,8 @@ class UserInvitation < ApplicationRecord
     if inviting_existing_ra_to_be_an_ra?
       errors.add(:email, :taken_by_account)
     elsif inviting_existing_mentor_to_be_an_ra?
+      true
+    elsif inviting_existing_judge_to_be_an_ra?
       true
     elsif inviting_existing_account?
       errors.add(:email, :taken_by_account)
@@ -77,6 +94,13 @@ class UserInvitation < ApplicationRecord
   def inviting_existing_mentor_to_be_an_ra?
     profile_type.to_s == "regional_ambassador" and
       Account.joins(:mentor_profile)
+        .where("lower(trim(both ' ' from email)) = ?", email)
+        .exists?
+  end
+
+  def inviting_existing_judge_to_be_an_ra?
+    profile_type.to_s == "regional_ambassador" and
+      Account.joins(:judge_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?
   end

@@ -618,12 +618,13 @@ ALTER SEQUENCE judge_assignments_id_seq OWNED BY judge_assignments.id;
 
 CREATE TABLE judge_profiles (
     id integer NOT NULL,
-    account_id integer NOT NULL,
+    account_id integer,
     company_name character varying NOT NULL,
     job_title character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    user_invitation_id bigint
 );
 
 
@@ -2273,6 +2274,13 @@ CREATE INDEX index_judge_profiles_on_account_id ON judge_profiles USING btree (a
 
 
 --
+-- Name: index_judge_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profiles_on_user_invitation_id ON judge_profiles USING btree (user_invitation_id);
+
+
+--
 -- Name: index_memberships_on_member_type_and_member_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2481,6 +2489,14 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 ALTER TABLE ONLY divisions_regional_pitch_events
     ADD CONSTRAINT fk_rails_1064d06b86 FOREIGN KEY (division_id) REFERENCES divisions(id);
+
+
+--
+-- Name: judge_profiles fk_rails_185397937b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY judge_profiles
+    ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
 
 
 --
@@ -2796,6 +2812,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171117150649'),
 ('20171120200105'),
 ('20171120200239'),
-('20171121175628');
+('20171121175628'),
+('20180102162930');
 
 
