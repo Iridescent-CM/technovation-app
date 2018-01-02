@@ -19,7 +19,7 @@ module Seasoned
     }
 
     def seasons
-      self[:seasons].map(&:to_i)
+      self[:seasons].flatten.map(&:to_i).uniq
     end
   end
 end
