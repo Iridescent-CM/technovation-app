@@ -35,9 +35,10 @@ else
   student = Account.find_by(email: "student@student.com").try(:student_profile)
 end
 
-if student
+if student and student.team.nil?
   if (student_team = Team.create(name: "All Star Team",
                         description: "We are allstars",
+                        seasons: [Season.current.year],
                         division: Division.none_assigned_yet)).valid?
     TeamRosterManaging.add(student_team, student)
     puts "Added student to Team: #{student_team.name}"
@@ -46,6 +47,12 @@ if student
     puts ""
   else
     student_team = Team.find_by(name: "All Star Team")
+    RegisterToCurrentSeasonJob.perform_now(student_team)
+    TeamRosterManaging.add(student_team, student)
+    puts "Added student to Team: #{student_team.name}"
+    puts ""
+    puts "============================================================="
+    puts ""
   end
 end
 
@@ -238,7 +245,7 @@ if (judge = JudgeProfile.create(
   puts ""
 end
 
-if student_team
+if student_team and student_team.submission.nil?
   submission = TeamSubmission.create(
     team_id: student_team.id,
     integrity_affirmed: true,
@@ -252,7 +259,7 @@ if student_team
   end
 end
 
-if admin = AdminProfile.create(
+if (admin = AdminProfile.create(
   account_attributes: {
     first_name: "QA",
     last_name: "Admin",
@@ -263,6 +270,6 @@ if admin = AdminProfile.create(
     country: "US",
     date_of_birth: 100.years.ago,
   }
-)
+)).valid?
   puts "Created Admin: #{admin.email}"
 end
