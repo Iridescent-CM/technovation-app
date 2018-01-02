@@ -31,7 +31,9 @@ class ParentalConsent < ActiveRecord::Base
   after_commit -> {
     after_signed_student_actions
     after_signed_parent_actions
-  }, on: :update, if: :signed?
+  }, on: :update, if: ->(pc) {
+    pc.saved_change_to_status and pc.signed?
+  }
 
   def student_profile_consent_token=(token)
     self.student_profile = StudentProfile.joins(:account)
@@ -72,5 +74,9 @@ class ParentalConsent < ActiveRecord::Base
       # TODO: entire test suite requires rewrite due to "wait: 3.days"
       ParentMailer.thank_you(id).deliver_later(wait: 3.days)
     end
+  end
+
+  def name
+    "parental consent for #{student_profile.name}"
   end
 end
