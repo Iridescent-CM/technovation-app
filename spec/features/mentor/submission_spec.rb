@@ -1,14 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Student team submissions" do
-  before do
-    @editable_submissions = SeasonToggles.team_submissions_editable?
-    SeasonToggles.team_submissions_editable!
-  end
-
-  after do
-    SeasonToggles.team_submissions_editable = @editable_submissions
-  end
+  before { SeasonToggles.team_submissions_editable! }
 
   scenario "Be on a team to see submission link" do
     mentor = FactoryBot.create(:mentor)
