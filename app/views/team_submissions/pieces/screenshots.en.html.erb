@@ -58,7 +58,7 @@
 
         <div class="grid grid--justify-space-around">
           <div class="grid__col-8">
-            <ol class="sortable-list">
+            <ol id="sortable-list">
               <%= render partial: 'screenshots/screenshot',
                 collection: @team_submission.screenshots.persisted,
                 locals: {
