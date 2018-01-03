@@ -98,12 +98,12 @@ module Student
       @team_submission = current_team.submission
 
       if team_submission_params[:screenshots]
-        team_submission_params[:screenshots].each_with_index do |id, index|
+        team_submission_params[:screenshots].each_with_index do |id, i|
           screenshot = @team_submission.screenshots.find(id)
-          screenshot.update(sort_position: index)
+          screenshot.update(sort_position: i)
         end
 
-        head 200
+        render json: {}
       elsif @team_submission.update(team_submission_params)
         if request.xhr?
           render json: {}
