@@ -2,13 +2,11 @@ require "rails_helper"
 
 RSpec.feature "Edit account spec" do
   before do
-    student = FactoryBot.create(
+    sign_in(FactoryBot.create(
       :student,
       email: "original@email.com",
       password: "secret1234"
-    )
-
-    sign_in(student)
+    ))
     visit student_profile_path
   end
 
@@ -55,7 +53,8 @@ RSpec.feature "Edit account spec" do
     expect(page).to have_css(
       ".error",
       text: I18n.translate(
-        "activerecord.errors.models.account.attributes.existing_password.blank"
+        "activerecord.errors.models.account." +
+        "attributes.existing_password.blank"
       )
     )
   end
@@ -80,7 +79,9 @@ RSpec.feature "Edit account spec" do
       click_link "Change your basic profile details"
 
       fill_in "#{scope}_profile[bio]",
-        with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
+        with: "Lorem ipsum dolor sit amet, " +
+              "consectetur adipiscing elit. " +
+              "Phasellus ut diam vel felis fringilla amet."
 
       click_button "Save"
 
