@@ -87,7 +87,7 @@ module Mentor
           screenshot.update_attributes(sort_position: index)
         end
 
-        head 200
+        render json: {}
       elsif @team_submission.update(team_submission_params)
         if request.xhr?
           render json: {}

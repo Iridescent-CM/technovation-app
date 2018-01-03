@@ -38,6 +38,18 @@ $(document).on("ready turbolinks:load", function() {
       method: "PATCH",
       url: url,
       data: data,
+      success: function() {
+        if (window.timeout) {
+          clearTimeout(window.timeout);
+          window.timeout = null;
+        }
+
+        $(el).addClass("sortable-list--updated");
+
+        window.timeout = setTimeout(function () {
+          $(el).removeClass("sortable-list--updated");
+        }, 100);
+      },
     });
   });
 });
