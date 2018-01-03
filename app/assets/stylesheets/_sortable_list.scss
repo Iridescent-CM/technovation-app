@@ -11,7 +11,12 @@
   border-radius: $radius-default;
   margin: 0 0 1rem;
   vertical-align: middle;
-  transition: margin-bottom 0.2s;
+  transition: margin-bottom 0.2s, background-color 1.5s;
+
+  &.sortable-list--updated {
+    background: $shamrock;
+    transition: none;
+  }
 
   &:after {
     content: "";
