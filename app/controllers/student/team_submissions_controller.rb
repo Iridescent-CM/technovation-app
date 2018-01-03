@@ -100,7 +100,7 @@ module Student
       if team_submission_params[:screenshots]
         team_submission_params[:screenshots].each_with_index do |id, index|
           screenshot = @team_submission.screenshots.find(id)
-          screenshot.update_attributes(sort_position: index)
+          screenshot.update(sort_position: index)
         end
 
         head 200
@@ -135,10 +135,6 @@ module Student
           :app_inventor_app_name,
           :app_inventor_gmail,
           screenshots: [],
-          screenshots_attributes: [
-            :id,
-            :image,
-          ],
           business_plan_attributes: [
             :id,
             :uploaded_file,
