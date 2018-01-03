@@ -58,7 +58,15 @@
 
         <div class="grid grid--justify-space-around">
           <div class="grid__col-8">
-            <ol id="sortable-list">
+            <ol
+              id="sortable-list"
+              data-sort-url="<%=
+                send(
+                  "#{current_scope}_team_submission_path",
+                  @team_submission
+                )
+              %>"
+            >
               <%= render partial: 'screenshots/screenshot',
                 collection: @team_submission.screenshots.persisted,
                 locals: {
