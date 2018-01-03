@@ -45,7 +45,7 @@ RSpec.describe RegionalAmbassador::ParticipantsController do
       expect(AccountsGrid).to have_received(:new).with(params)
     end
 
-    it "leaves the new params alone, deleting any legacy (should be strange edge case)" do
+    it "leaves new params alone, deleting legacy params" do
       ra = FactoryBot.create(:ambassador)
       sign_in(ra)
 
@@ -59,27 +59,16 @@ RSpec.describe RegionalAmbassador::ParticipantsController do
         },
       }
 
-      params = ActionController::Parameters.new({
-        name_email: "hello",
-        admin: false,
-        allow_state_search: false,
-        country: ["US"],
-        state_province: ["IL"],
-        season: 2018,
-        column_names: ["city"],
-      }).permit(
-        :name_email,
-        :name,
-        :email,
-        :admin,
-        :allow_state_search,
-        :season,
-        country: [],
-        state_province: [],
-        column_names: [],
+      expect(AccountsGrid).to have_received(:new).with(
+        hash_including(name_email: "hello")
       )
 
-      expect(AccountsGrid).to have_received(:new).with(params)
+      expect(AccountsGrid).to have_received(:new).with(
+        hash_excluding({
+          name: "blargh i am deleted",
+          email: "blargh i am also deleted",
+        })
+      )
     end
   end
 end

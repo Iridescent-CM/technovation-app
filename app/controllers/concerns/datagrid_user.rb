@@ -17,8 +17,11 @@ module DatagridUser
           params[:accounts_grid].present? and
             params[:accounts_grid][:name_email].nil?
 
-        params[:accounts_grid][:name_email] = params[:accounts_grid].delete(:name) || ""
-        params[:accounts_grid][:name_email] += " #{params[:accounts_grid].delete(:email)}"
+        params[:accounts_grid][:name_email] =
+          params[:accounts_grid].delete(:name) || ""
+
+        params[:accounts_grid][:name_email] +=
+          " #{params[:accounts_grid].delete(:email)}"
 
       elsif param_root == "accounts_grid" and
               params[:accounts_grid].present?
@@ -133,7 +136,11 @@ module DatagridUser
   end
 
   def default_or_saved_search_params?
-    SavedSearch.default_or_saved_search_params?(params, param_root, current_profile)
+    SavedSearch.default_or_saved_search_params?(
+      params,
+      param_root,
+      current_profile
+    )
   end
 
   def param_root
@@ -162,7 +169,9 @@ module DatagridUser
   def default_export_filename(format = nil)
     case param_root
     when "accounts_grid"
-      "technovation-participants-#{Time.current}#{'.' + format.to_s if format}"
+      "technovation-participants-" +
+      Time.current.to_s +
+      (format.present? ? ".#{format}" : "")
     when "teams_grid"
       "technovation-teams-#{Time.current}#{'.' + format.to_s if format}"
     end
