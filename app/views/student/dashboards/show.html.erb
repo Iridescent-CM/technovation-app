@@ -31,7 +31,8 @@
     <div class="col--sticky-spacer">
       <div class="col--sticky">
         <div class="panel">
-          <%= image_tag current_student.profile_image_url, class: "grid__cell-img" %>
+          <%= image_tag current_student.profile_image_url,
+            class: "grid__cell-img" %>
 
           <h3 class="reset"><%= current_student.full_name %></h3>
 
@@ -45,7 +46,8 @@
 
             <h3 class="reset"><%= current_student.team.name %></h3>
 
-            <%= link_to "Manage your team", student_team_path(current_student.team) %>
+            <%= link_to "Manage your team",
+              student_team_path(current_student.team) %>
           </div>
         <% end %>
 
@@ -62,7 +64,14 @@
     </div>
   </div>
 
-  <div class="grid__col-md-3 grid__col--bleed dashboard-sidebar col--sticky-parent">
+  <div
+    class="
+      grid__col-md-3
+      grid__col--bleed
+      dashboard-sidebar
+      col--sticky-parent
+    "
+  >
     <div class="col--sticky-spacer">
       <div class="col--sticky">
         <%= render "student/dashboards/season_checklist" %>

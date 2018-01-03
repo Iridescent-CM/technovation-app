@@ -1,24 +1,32 @@
 <div class="info-heading">
   <h3>Competition Qualification</h3>
-
-  <%= link_to "what is this?", "#",
-    class: "small",
-    data: {
-      opens_modal: "explain_qualified_students_reminder",
-    } %>
 </div>
 
 <% if team.qualified? %>
   <p class="scent">
     <%= web_icon "check-circle", class: "icon-green" %>
     Every member of <%= team.name %> is qualified to compete. Well done!
+
+    <%= link_to "what is this?", "#",
+      class: "small",
+      data: {
+        opens_modal: "explain_qualified_students_reminder",
+      } %>
   </p>
 <% else %>
   <p class="scent">
     <%= web_icon "exclamation-circle", class: "icon-red" %>
     <%= team.name %> is not qualified to compete!
-  </p>
 
+    <%= link_to "what is this?", "#",
+      class: "small",
+      data: {
+        opens_modal: "explain_qualified_students_reminder",
+      } %>
+  </p>
+<% end %>
+
+<% unless team.qualified? %>
   <% if team.students.any? %>
     <p class="scent">
       The following students need to finish their registration:
@@ -26,7 +34,8 @@
 
     <% team.students.onboarding.each do |pending_student| %>
       <div class="onboarding-reminder">
-        <%= image_tag pending_student.profile_image_url, class: "thumbnail-xs" %>
+        <%= image_tag pending_student.profile_image_url,
+          class: "thumbnail-xs" %>
         <%= pending_student.full_name %>
       </div>
     <% end %>
@@ -38,18 +47,26 @@
     </p>
   <% else %>
     <p class="scent">
-      This team has no students! Have you invited them to sign up and join the team?
+      This team has no students!
+      Have you invited them to sign up and join the team?
     </p>
   <% end %>
 <% end %>
 
 <%= content_tag :div,
   data: {
-    heading: "What makes a team qualified to compete?",
+    heading: "What is a qualified team?",
   },
   class: "modal",
   id: "explain_qualified_students_reminder" do %>
-  <div class="modal-content">
+  <div class="modal-content modal-content--left-aligned">
+    A team that is fully qualified to compete has students,
+    and every student has finished their required onboarding steps:
 
+    <ul>
+      <li>Get your parent or guardian's permission to participate</li>
+      <li>Enter your location details</li>
+      <li>Confirmed their email, if they changed it</li>
+    </ul>
   </div>
 <% end %>

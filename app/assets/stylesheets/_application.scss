@@ -44,6 +44,12 @@
   display: none;
 }
 
+.modal-content {
+  &.modal-content--left-aligned {
+    text-align: left;
+  }
+}
+
 .swal2-content form {
   text-align: left;
 }
