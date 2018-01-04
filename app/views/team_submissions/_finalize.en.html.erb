@@ -1,0 +1,22 @@
+<% submission.while_qualified do %>
+  <%= link_to "Submit for judging", "#", class: "button" %>
+
+  <p class="scent">
+    You will be <strong>able to make edits</strong> until April 26.
+  </p>
+<% end %>
+
+<% submission.while_unqualified do %>
+  <%= link_to "Submit for judging", "#",
+    class: "button button--disabled",
+    disabled: true %>
+
+  <p class="scent">
+    Once your team has finished all the deliverables,
+    you will be able to submit your app for the judging rounds.
+  </p>
+
+  <p class="scent">
+    You will be <strong>able to make edits</strong> until April 26.
+  </p>
+<% end %>
