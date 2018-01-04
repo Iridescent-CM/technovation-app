@@ -117,7 +117,8 @@
 
       <div class="panel--footer">
         <%= link_to "Change your upload",
-          edit_mentor_team_submission_path(
+          send(
+            "edit_#{current_scope}_team_submission_path",
             submission,
             piece: :business_plan
           ),
@@ -131,7 +132,8 @@
 
       <div class="panel--footer">
         <%= link_to "Upload your team's business plan",
-          edit_mentor_team_submission_path(
+          send(
+            "edit_#{current_scope}_team_submission_path",
             submission,
             piece: :business_plan
           ),
@@ -185,7 +187,8 @@
 
       <div class="panel--footer">
         <%= link_to "Change your upload",
-          edit_mentor_team_submission_path(
+          send(
+            "edit_#{current_scope}_team_submission_path",
             submission,
             piece: :pitch_presentation
           ),
@@ -201,7 +204,8 @@
         <%= link_to(
           "Upload the pitch presentation slides " +
           "for your live event",
-          edit_mentor_team_submission_path(
+          send(
+            "edit_#{current_scope}_team_submission_path",
             submission,
             piece: :pitch_presentation
           ),
