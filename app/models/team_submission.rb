@@ -139,6 +139,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def while_qualified(&block)
+    yield
+  end
+
+  def while_unqualified(&block)
+    yield
+  end
+
   def code_checklist_complete?
     technical_checklist_completed?
   end
