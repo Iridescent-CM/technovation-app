@@ -1,10 +1,11 @@
 <% submission.while_qualified do %>
-  <p>
-    <%= link_to "Submit for judging", "#", class: "button" %>
+  <p class="scent">
+    <%= web_icon "check-circle", class: "icon--green" %>
+    Great job! Your app is qualified to be submitted for judging!
   </p>
 
-  <p class="scent">
-    Great job! Your app is qualified to be submitted for judging!
+  <p>
+    <%= link_to "Submit for judging", "#", class: "button" %>
   </p>
 
   <p class="scent--strong">
@@ -15,6 +16,11 @@
 <% end %>
 
 <% submission.while_unqualified do %>
+  <p class="scent">
+    <%= web_icon "exclamation-circle", class: "icon--red" %>
+    Your submission still has deliverables that are not complete.
+  </p>
+
   <p>
     <%= link_to "Submit for judging", "#",
       class: "button button--disabled",
