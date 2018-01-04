@@ -140,11 +140,15 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def while_qualified(&block)
-    yield
+    if team.qualified? and complete?
+      yield
+    end
   end
 
   def while_unqualified(&block)
-    yield
+    unless team.qualified? and complete?
+      yield
+    end
   end
 
   def code_checklist_complete?
