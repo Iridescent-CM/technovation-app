@@ -107,10 +107,12 @@
 .icon-trash-o:before {
   content: "\f014";
 }
-.icon-green {
+.icon-green,
+.icon--green {
   color: $shamrock-mid;
 }
-.icon-red {
+.icon-red,
+.icon--red {
   font-weight: bold;
   color: $alert-txt;
 }
