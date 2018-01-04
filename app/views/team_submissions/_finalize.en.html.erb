@@ -1,22 +1,35 @@
 <% submission.while_qualified do %>
-  <%= link_to "Submit for judging", "#", class: "button" %>
+  <p>
+    <%= link_to "Submit for judging", "#", class: "button" %>
+  </p>
 
   <p class="scent">
-    You will be <strong>able to make edits</strong> until April 26.
+    Great job! Your app is qualified to be submitted for judging!
+  </p>
+
+  <p class="scent--strong">
+    Even after submitting,
+    <strong>you will be able to make changes</strong>
+    until April 26.
   </p>
 <% end %>
 
 <% submission.while_unqualified do %>
-  <%= link_to "Submit for judging", "#",
-    class: "button button--disabled",
-    disabled: true %>
-
-  <p class="scent">
-    Once your team has finished all the deliverables,
-    you will be able to submit your app for the judging rounds.
+  <p>
+    <%= link_to "Submit for judging", "#",
+      class: "button button--disabled",
+      disabled: true %>
   </p>
 
   <p class="scent">
-    You will be <strong>able to make edits</strong> until April 26.
+    Once your team is fully qualified, and you have finished all of the
+    deliverables, you will be able to submit your app for the judging
+    rounds.
+  </p>
+
+  <p class="scent">
+    Even after submitting,
+    <strong>you will be able to make changes</strong>
+    until April 26.
   </p>
 <% end %>
