@@ -169,7 +169,10 @@ RSpec.feature "Students edit submission pieces" do
       )
       expect(page).to have_link(
         "Change your upload",
-        href: edit_student_team_submission_path(submission, piece: :source_code)
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :source_code
+        )
       )
     end
   end
