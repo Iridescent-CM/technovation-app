@@ -4,8 +4,10 @@ RSpec.describe Season do
   describe ".next" do
     it "returns next year" do
       date = Season.switch_date(2011)
-      Timecop.travel(date)
-      expect(Season.next.year).to eq(2013)
+
+      Timecop.freeze(date) do
+        expect(Season.next.year).to eq(2013)
+      end
     end
   end
 
@@ -13,6 +15,7 @@ RSpec.describe Season do
     context "around NYE" do
       it "uses PST" do
         time = Time.new(2011, 1, 1, 0, 0, 0, 0)
+
         Timecop.freeze(time) do
           allow(Date).to receive(:today).and_return(
             Time.now.utc.to_date
