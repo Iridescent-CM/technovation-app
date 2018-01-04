@@ -49,7 +49,7 @@ module Student
 
       if @team_submission.present?
         begin
-          render "team_submissions/pieces/#{params.fetch(:piece)}"
+          render "team_submissions/pieces/#{piece_name}"
         rescue ActionView::MissingTemplate,
                ActionController::ParameterMissing
           redirect_to student_team_submission_path(@team_submission)
@@ -69,6 +69,11 @@ module Student
                          end
 
       if @team_submission.save
+        current_account.create_activity(
+          trackable: @team_submission,
+          key: "submission.create",
+          recipient: @team_submission,
+        )
         redirect_to [:student, @team_submission],
           success: t("controllers.team_submissions.create.success")
       else
@@ -105,6 +110,12 @@ module Student
 
         render json: {}
       elsif @team_submission.update(team_submission_params)
+        current_account.create_activity(
+          trackable: @team_submission,
+          key: "submission.update",
+          recipient: @team_submission,
+        )
+
         if request.xhr?
           render json: {}
         else
@@ -121,6 +132,10 @@ module Student
     end
 
     private
+    def piece_name
+      params.fetch(:piece)
+    end
+
     def team_submission_params
       if SeasonToggles.team_submissions_editable?
         params.require(:team_submission).permit(

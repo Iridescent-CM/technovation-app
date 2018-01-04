@@ -41,7 +41,11 @@ class ActivitiesGrid
 
   column :target, html: true, mandatory: true do |activity|
     if !!activity.recipient
-      resource_name = activity.recipient.is_a?(Account) ? "participant" : "team"
+      resource_name = activity.recipient_type.underscore.singularize
+
+      if resource_name == "account"
+        resource_name = "participant"
+      end
 
       link_to activity.recipient.name,
         send("#{current_scope}_#{resource_name}_path", activity.recipient)
@@ -74,5 +78,7 @@ class ActivitiesGrid
       ["Team was created", "team.create"],
       ["Team was updated", "team.update"],
       ["Team registered for season", "team.register_current_season"],
+      ["Submission was created", "submission.create"],
+      ["Submission was updated", "submission.update"],
     ]
 end

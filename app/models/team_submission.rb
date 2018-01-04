@@ -240,6 +240,7 @@ class TeamSubmission < ActiveRecord::Base
       self[:app_name].strip
     end
   end
+  alias :name :app_name
 
   def incomplete?
     not complete?

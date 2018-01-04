@@ -11,6 +11,11 @@ module Mentor
       @team_submission = TeamSubmission.new(team_submission_params)
 
       if @team_submission.save
+        current_account.create_activity(
+          trackable: @team_submission,
+          key: "submission.create",
+          recipient: @team_submission,
+        )
         redirect_to mentor_team_submission_path(@team_submission),
           success: t("controllers.team_submissions.create.success")
       else
@@ -89,6 +94,11 @@ module Mentor
 
         render json: {}
       elsif @team_submission.update(team_submission_params)
+        current_account.create_activity(
+          trackable: @team_submission,
+          key: "submission.update",
+          recipient: @team_submission,
+        )
         if request.xhr?
           render json: {}
         else
