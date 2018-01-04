@@ -21,14 +21,14 @@ module ScreenshotController
   end
 
   def create
-    # TODO: ARRAY() ADDED TO GET THE SCREENSHOT BECAUSE
-    # THE ORIGINAL CREATE LINE RETURNS AN OBJECT
-    # THAT THINKS IT IS AN ARRAY
-    # NO IDEA WHY - Joe Sak
-
     submission = current_team.submission
     submission.update(screenshot_params)
     screenshot = submission.screenshots.last
+    current_account.create_activity(
+      trackable: submission,
+      key: "submission.update",
+      recipient: submission,
+    )
 
     respond_to do |format|
       format.html do
@@ -54,6 +54,11 @@ module ScreenshotController
 
     if current_team.submission.screenshots.include?(screenshot)
       screenshot.destroy
+      current_account.create_activity(
+        trackable: screenshot.team_submission,
+        key: "submission.update",
+        recipient: screenshot.team_submission,
+      )
       render json: {}
     else
       render json: {}, status: 403

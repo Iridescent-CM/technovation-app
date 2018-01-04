@@ -1,8 +1,12 @@
 require "rails_helper"
 
 %w{student mentor judge regional_ambassador}.each do |scope|
-  RSpec.describe "#{scope.camelize}::ProfilesController".safe_constantize do
-    let(:profile) { FactoryBot.create(scope, :geocoded, email: "old@oldtime.com") }
+  klass = "#{scope.camelize}::ProfilesController".safe_constantize
+
+  RSpec.describe klass do
+    let(:profile) {
+      FactoryBot.create(scope, :geocoded, email: "old@oldtime.com")
+    }
 
     before do
       sign_in(profile)
@@ -21,7 +25,11 @@ require "rails_helper"
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(
+          profile.account_id,
+          profile.account.email,
+          "#{scope.upcase}_LIST_ID"
+        )
     end
 
     it "updates #{scope} newsletters with changes to first name" do

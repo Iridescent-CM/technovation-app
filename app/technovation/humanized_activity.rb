@@ -15,6 +15,10 @@ module HumanizedActivity
       "was updated"
     when /register_current_season/
       "registered for the #{Season.current.year} season"
+    when "submission.create"
+      "created a submission"
+    when "submission.update"
+      "updated their team's submission"
     else
       key
     end
