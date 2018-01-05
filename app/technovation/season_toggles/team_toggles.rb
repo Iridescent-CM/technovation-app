@@ -8,8 +8,10 @@ class SeasonToggles
       base.extend JudgingRoundDependency
       base.extend ClassMethods
 
-      base.judging_must_be_off :team_submissions_editable, topic: "Submissions"
-      base.judging_must_be_off :team_building_enabled, topic: "Team building"
+      base.judging_must_be_off :team_submissions_editable,
+        topic: "Submissions"
+      base.judging_must_be_off :team_building_enabled,
+        topic: "Team building"
     end
 
     module ClassMethods
@@ -23,6 +25,20 @@ class SeasonToggles
 
       def team_building_enabled!
         self.team_building_enabled = true
+      end
+
+      def team_submissions(open:, closed:)
+        if team_submissions_editable?
+          open.call
+        else
+          closed.call
+        end
+      end
+
+      def while_submission_editing_closed(&block)
+        unless team_submissions_editable?
+          yield
+        end
       end
 
       def team_submissions_editable=(value)
