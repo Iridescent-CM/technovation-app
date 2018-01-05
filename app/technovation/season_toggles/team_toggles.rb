@@ -35,12 +35,6 @@ class SeasonToggles
         end
       end
 
-      def while_submission_editing_closed(&block)
-        unless team_submissions_editable?
-          yield
-        end
-      end
-
       def team_submissions_editable=(value)
         store.set(:team_submissions_editable, with_bool_validation(value))
       end
