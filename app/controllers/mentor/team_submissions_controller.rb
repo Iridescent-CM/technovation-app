@@ -1,11 +1,8 @@
 module Mentor
   class TeamSubmissionsController < MentorController
-    before_action :require_onboarded
+    include TeamSubmissionController
 
-    def new
-      team = Team.find(params[:team_id])
-      @team_submission = team.team_submissions.build
-    end
+    before_action :require_onboarded
 
     def create
       @team_submission = TeamSubmission.new(team_submission_params)

@@ -1,18 +1,25 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
-      <%= form_with model: [:mentor, @team_submission], local: true do |f| %>
+      <%= form_with(
+            model: [current_scope, @team_submission],
+            local: true
+          ) do |f| %>
         <%= f.hidden_field :team_id %>
 
         <div class="field">
-          <p>Before starting your submission, your team must agree to the honor code</p>
+          <p>
+            Before starting your submission,
+            your team must agree to the honor code
+          </p>
 
           <p>---link or text to honor code will be here---</p>
 
           <%= f.check_box :integrity_affirmed,
             id: :team_submission_integrity_affirmed %>
 
-          <%= f.label :integrity_affirmed, "We agree to the honor code" %>
+          <%= f.label :integrity_affirmed,
+            "We agree to the honor code" %>
         </div>
 
         <div class="actions">
