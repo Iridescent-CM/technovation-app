@@ -70,24 +70,6 @@ module Student
       end
     end
 
-    def show
-      @team_submission = current_team.submission
-
-      if not @team_submission.present?
-        redirect_to student_dashboard_path and return
-      end
-
-      unless @team_submission.pitch_presentation.present?
-        @team_submission.build_pitch_presentation
-      end
-
-      if SeasonToggles.team_submissions_editable?
-        render 'edit'
-      else
-        redirect_to student_dashboard_path
-      end
-    end
-
     def update
       @team_submission = current_team.submission
 

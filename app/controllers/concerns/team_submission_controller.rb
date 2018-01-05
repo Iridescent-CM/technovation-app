@@ -14,4 +14,19 @@ module TeamSubmissionController
       render "team_submissions/new"
     end
   end
+
+  def show
+    @team_submission = TeamSubmission.friendly.find(params[:id])
+    @team = @team_submission.team
+
+    if SeasonToggles.team_submissions_editable?
+      if params.fetch(:piece) { false }
+        render "team_submissions/pieces/#{params.fetch(:piece)}"
+      else
+        render 'edit'
+      end
+    else
+      redirect_to [current_scope, :dashboard]
+    end
+  end
 end
