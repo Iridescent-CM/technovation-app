@@ -11,7 +11,10 @@ module TeamSubmissionController
   def show
     @team_submission = TeamSubmission.friendly.find(params[:id])
     @team = @team_submission.team
-    respond_according_to_submission_editable_setting
+    SeasonToggles.team_submissions(
+      open:   -> { render piece_or_full_edit },
+      closed: -> { redirect_to [current_scope, :dashboard] }
+    )
   end
 
   private
@@ -27,13 +30,6 @@ module TeamSubmissionController
       @team_submission = current_team.team_submissions.build
       render "team_submissions/new"
     end
-  end
-
-  def respond_according_to_submission_editable_setting
-    SeasonToggles.team_submissions(
-      open:   -> { render piece_or_full_edit },
-      closed: -> { redirect_to [current_scope, :dashboard] }
-    )
   end
 
   def piece_or_full_edit
