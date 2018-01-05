@@ -13,7 +13,7 @@ module TeamSubmissionController
     @team = @team_submission.team
     SeasonToggles.team_submissions(
       open:   -> { render piece_or_full_edit },
-      closed: -> { redirect_to [current_scope, :dashboard] }
+      closed: -> { notify_on_dashboard }
     )
   end
 
