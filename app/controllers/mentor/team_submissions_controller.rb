@@ -20,21 +20,6 @@ module Mentor
       end
     end
 
-    def show
-      @team_submission = TeamSubmission.friendly.find(params[:id])
-      @team = @team_submission.team
-
-      unless @team_submission.pitch_presentation.present?
-        @team_submission.build_pitch_presentation
-      end
-
-      if SeasonToggles.team_submissions_editable?
-        render 'edit'
-      else
-        redirect_to mentor_dashboard_path
-      end
-    end
-
     def edit
       unless SeasonToggles.team_submissions_editable?
         redirect_to mentor_dashboard_path and return

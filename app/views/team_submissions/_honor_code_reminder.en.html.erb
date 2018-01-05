@@ -1,0 +1,13 @@
+<h4 class="reset">Honor Code</h4>
+
+<p>
+  Your team has pledged to abide by the <%= Season.current.year %>
+  Technovation Honor Code.
+</p>
+
+<p>
+  <%= link_to "Read the honor code",
+    [current_scope, :team_submission, { piece: :honor_code }] %>
+</p>
+
+<hr />

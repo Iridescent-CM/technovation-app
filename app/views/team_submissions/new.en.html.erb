@@ -8,18 +8,13 @@
         <%= f.hidden_field :team_id %>
 
         <div class="field">
-          <p>
-            Before starting your submission,
-            your team must agree to the honor code
-          </p>
-
-          <p>---link or text to honor code will be here---</p>
+          <%= render "team_submissions/honor_code" %>
 
           <%= f.check_box :integrity_affirmed,
             id: :team_submission_integrity_affirmed %>
 
           <%= f.label :integrity_affirmed,
-            "We agree to the honor code" %>
+            "Our team agrees to abide by this honor code" %>
         </div>
 
         <div class="actions">
