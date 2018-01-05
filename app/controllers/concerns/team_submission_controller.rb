@@ -3,7 +3,7 @@ module TeamSubmissionController
 
   def new
     SeasonToggles.team_submissions(
-      open: ->   { respond_according_to_presence },
+      open:   -> { respond_according_to_presence },
       closed: -> { notify_on_dashboard },
     )
   end
