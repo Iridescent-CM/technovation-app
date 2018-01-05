@@ -1,20 +1,9 @@
 module Student
   class TeamSubmissionsController < StudentController
+    include TeamSubmissionController
+
     before_action :require_onboarded,
                   :require_current_team
-
-    def new
-      unless SeasonToggles.team_submissions_editable?
-        redirect_to student_dashboard_path,
-          alert: "Sorry, the submission deadline has passed."
-      end
-
-      if current_team.submission.present?
-        redirect_to student_team_submission_path(current_team.submission)
-      else
-        @team_submission = current_team.team_submissions.build
-      end
-    end
 
     def edit
       unless SeasonToggles.team_submissions_editable?
