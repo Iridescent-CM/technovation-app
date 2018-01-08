@@ -35,6 +35,27 @@
   padding: 0;
 }
 
+.icon-file-powerpoint-o:before {
+  content: "\f1c4";
+}
+.icon-file-text-o:before {
+  content: "\f0f6";
+}
+.icon-check-square-o:before {
+  content: "\f046";
+}
+.icon-code-fork:before {
+  content: "\f126";
+}
+.icon-file-code-o:before {
+  content: "\f1c9";
+}
+.icon-globe:before {
+  content: "\f0ac";
+}
+.icon-flag-o:before {
+  content: "\f11d";
+}
 .icon-twitter-square:before {
   content: "\f081";
 }
