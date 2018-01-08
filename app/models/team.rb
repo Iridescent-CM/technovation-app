@@ -27,7 +27,6 @@ class Team < ActiveRecord::Base
       .where("activities.id IS NULL")
   }
 
-
   def avatar_url
     team_photo_url
   end
@@ -50,7 +49,10 @@ class Team < ActiveRecord::Base
 
   Division.names.keys.each do |division_name|
     scope division_name, -> {
-      joins(:division).where("divisions.name = ?", Division.names[division_name])
+      joins(:division).where(
+        "divisions.name = ?",
+        Division.names[division_name]
+      )
     }
   end
 
@@ -64,7 +66,10 @@ class Team < ActiveRecord::Base
 
   scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
-      where("state_province = ? AND country = 'US'", ambassador.state_province)
+      where(
+        "state_province = ? AND country = 'US'",
+        ambassador.state_province
+      )
     else
       where("country = ?", ambassador.country)
     end
