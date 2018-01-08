@@ -76,11 +76,11 @@ brew install nodejs
 git clone git@github.com:Iridescent-CM/technovation-app.git
 ```
 
-Copy the `.env` file that your team should have given you Dropbox access to
+Move the `.env` file that your team should have given you Dropbox access to
 
 ```
 cd technovation-app
-cp <PATH-TO-.ENV-FILE> .
+mv <PATH-TO-.ENV-FILE> .
 ```
 
 Switch to ruby 2.5.0 (this creates the `.tool-versions` file and you won't have to do it again)
