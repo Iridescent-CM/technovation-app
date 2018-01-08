@@ -1,25 +1,35 @@
-// TODO: broken on mentor dashboard
-document.addEventListener("turbolinks:load", function() {
+$(document).on("ready turbolinks:load", function() {
   $('.tabs').each(function() {
-    var $links = $(this).find('.tab-menu').first().find('.tab-link'),
-        $contents = $(this).find('.content').first().find('> .tab-content');
+    var $links = $(this).find('.tab-menu, .tabs__menu')
+                        .first()
+                        .find('.tab-link, .tabs__menu-link'),
+
+        $contents = $(this).find('.content, .tabs__content')
+                           .first()
+                           .find('> .tab-content, > .tabs__tab-content');
 
     // possible col--sticky
     if ($contents.length === 0)
-      $contents = $(this).find('.content .col--sticky').first()
-        .find('> .tab-content');
+      $contents = $(this).find('.content .col--sticky')
+                         .first()
+                         .find('> .tab-content');
 
     // possible tabs-vertical layout
     if ($contents.length === 0)
       $contents = $('#' + $(this).prop('id') + ' + .content .tab-content');
 
-    $links.filter(":visible").first().addClass("active");
-    $contents.first().removeClass("hidden");
+    $links.filter(":visible")
+      .first()
+      .addClass("tabs__menu-link--active");
+
+    $contents.first()
+      .removeClass("hidden");
 
     var intendedTab = (window.location.hash).replace(/#!?/, '');
+
     if (intendedTab.length === 0)
       intendedTab = $links.filter(":visible").first()
-        .find(".tab-button")
+        .find(".tab-button, .tabs__menu-button")
         .data("tab-id");
 
     $links.each(function() {
@@ -46,10 +56,10 @@ document.addEventListener("turbolinks:load", function() {
     openTabMenu.bind(this)();
   });
 
-  $(".content").on("click", closeTabMenu);
+  $(".content, .tabs__content").on("click", closeTabMenu);
 
   function closeTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tab-menu");
+    var $menu = $(this).closest(".tabs").find(".tab-menu, .tabs__menu");
 
     if ($menu.data("open")) {
       $menu
@@ -63,7 +73,7 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   function openTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tab-menu");
+    var $menu = $(this).closest(".tabs").find(".tab-menu, .tabs__menu");
 
     if ($menu.data("closed")) {
       $menu
@@ -86,14 +96,15 @@ document.addEventListener("turbolinks:load", function() {
     $_btn.data('update-hash', true);
 
     $_contents.addClass('hidden');
-    $_links.removeClass('active');
+    $_links.removeClass('tabs__menu-link--active');
 
-    $_btn.closest('.tab-link').addClass('active');
+    $_btn.closest('.tab-link, .tabs__menu-link')
+      .addClass('tabs__menu-link--active');
 
     var $revealEl = $('#' + $_btn.data('tab-id'));
     $revealEl.removeClass('hidden');
 
-    var $parentTab = $_btn.closest('.tab-content');
+    var $parentTab = $_btn.closest('.tab-content, .tabs__tab-content');
 
     if ($parentTab.length !== 0) {
       var $parentBtn = $('[data-tab-id]').filter(function() {
@@ -105,14 +116,29 @@ document.addEventListener("turbolinks:load", function() {
       revealTab($parentBtn, $_contents, $_links);
     }
 
-    var $links = $revealEl.find('.tab-menu').first().find('.tab-link'),
-        $contents = $revealEl.find('.content').first().find('> .tab-content');
+    var $links = $revealEl.find('.tab-menu, .tabs__menu')
+                          .first()
+                          .find('.tab-link, .tabs__menu-link'),
+        $contents = $revealEl.find('.content, .tabs__content')
+                             .first()
+                             .find('> .tab-content, > .tabs__tab-content');
 
     // possible tabs-vertical layout
     if ($contents.length === 0)
-      $contents = $('#' + $revealEl.prop('id') + ' + .content .tab-content');
+      $contents = $(
+        '#' +
+        $revealEl.prop('id') +
+        ' + .content .tab-content'
+      );
 
-    $links.filter(":visible").first().addClass("active");
+    if ($contents.length === 0)
+      $contents = $(
+        '#' +
+        $revealEl.prop('id') +
+        ' + .tabs__content .tabs__tab-content'
+      );
+
+    $links.filter(":visible").first().addClass("tabs__menu-link--active");
     $contents.first().removeClass("hidden");
   }
 });

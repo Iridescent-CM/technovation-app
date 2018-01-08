@@ -1,12 +1,14 @@
 .tabs {
-  .tab-menu {
+  .tab-menu,
+  .tabs__menu {
     display: flex;
     flex-direction: row;
     margin: 0;
     padding: 0 0 0 1rem;
     list-style: none;
 
-    .tab-link {
+    .tab-link,
+    .tabs__menu-link {
       background: #ddd;
       border-top: 3px solid #999;
       box-sizing: border-box;
@@ -16,54 +18,64 @@
       position: relative;
       z-index: 0;
 
-      .tab-button {
+      .tab-button,
+      .tabs__menu-button {
         display: block;
         width: 100%;
       }
 
-      &.active {
+      &.tabs__menu-link--active {
         background: white;
         border-color: $mulberry;
 
-        .tab-button {
+        .tab-button,
+        .tabs__menu-button {
           color: black;
         }
       }
     }
   }
 
-  &.tabs-vertical {
+  &.tabs-vertical,
+  &.tabs--vertical {
     padding: 0;
     background: white;
 
-    .tab-menu {
+    .tab-menu,
+    .tabs__menu {
       display: block;
       background: white;
     }
 
-    .tab-link {
+    .tab-link,
+    .tabs__menu-link {
       background: inherit;
       border: 0;
       margin: 0;
       box-shadow: none;
 
-      .tab-button {
+      .tab-button,
+      .tabs__menu-button {
         font-size: 1rem;
         color: #999;
       }
     }
 
-    .tab-content {
+    .tab-content,
+    .tabs__tab-content {
       margin: 0;
       padding: 1rem;
     }
 
     .content,
-    + .content {
+    .tabs__content,
+    + .content,
+    + .tabs__content {
       border-left: 1px solid #ddd;
     }
 
-    .tab-button {
+    .tab-button,
+    .tabs__menu-button {
       color: #666;
       font-weight: normal;
       font-family: sans-serif;
@@ -78,10 +90,12 @@
     }
   }
 
-  .tab-content {
+  .tab-content,
+  .tabs__tab-content {
     position: relative;
     margin-top: -2px;
     background: white;
+    padding: 1rem;
 
     .card__heading {
       background: transparent;
@@ -99,7 +113,8 @@
   }
 }
 
-.tab-button {
+.tab-button,
+.tabs__menu-button {
   cursor: pointer;
   border-radius: 0;
   background-color: transparent !important;
@@ -118,7 +133,8 @@
   .tabs {
     -webkit-font-smoothing: antialiased;
 
-    &.tabs-vertical {
+    &.tabs-vertical,
+    &.tabs--vertical {
       position: relative;
 
       .close-tab-menu,
@@ -135,11 +151,13 @@
         padding: 0.5rem;
       }
 
-      .tab-content {
+      .tab-content,
+      .tabs__tab-content {
         padding: 0;
       }
 
-      .tab-menu {
+      .tab-menu,
+      .tabs__menu {
         position: absolute;
         left: -100%;
         top: 3rem;
@@ -150,8 +168,10 @@
         transition: left 0.5s;
         opacity: 0.9;
 
-        .tab-link {
-          .tab-button {
+        .tab-link,
+        .tabs__menu-link {
+          .tab-button,
+          .tabs__menu-button {
             padding: 0.75rem 2rem;
             font-size: 1.5rem;
             color: white;
@@ -162,7 +182,7 @@
             }
           }
 
-          &.active {
+          &.tabs__menu-link--active {
             background: $mulberry-mid;
           }
         }
