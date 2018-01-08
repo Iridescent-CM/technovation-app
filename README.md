@@ -18,11 +18,10 @@ Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install ruby 2.4.1
+Install ruby 2.5.0
 
 ```
-brew install rbenv
-rbenv install 2.4.1
+asdf install 2.5.0
 ```
 
 Make sure XCode is installed.
