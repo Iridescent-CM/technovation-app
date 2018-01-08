@@ -1,0 +1,25 @@
+<div class="team-info">
+  <div class="team-info__photo">
+    <%= image_tag team.team_photo_url,
+      class: "grid__cell-img" %>
+  </div>
+
+  <div class="team-info__name">
+    <%= team.name %>
+  </div>
+
+  <div class="team-info__division">
+    <%= web_icon("flag-o") %>
+    <%= team.division_name.humanize %> Division
+  </div>
+
+  <div class="team-info__location">
+    <%= web_icon("globe") %>
+    <%= team.location %>
+  </div>
+
+  <div class="team-info__dev-platform">
+    <%= web_icon("code-fork") %>
+    <%= submission.development_platform %>
+  </div>
+</div>

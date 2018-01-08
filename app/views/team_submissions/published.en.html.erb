@@ -1,0 +1,66 @@
+<% provide :title, "#{@team_submission.app_name} by #{@team.name}" %>
+<div class="grid">
+  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="panel submission-sidebar">
+          <%= render "team_submissions/team_info",
+            submission: @team_submission,
+            team: @team %>
+
+          <%= render "team_submissions/piece_links",
+            submission: @team_submission,
+            team: @team %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-9">
+    <h1><%= @team_submission.app_name %></h1>
+
+    <%= simple_format @team_submission.app_description %>
+
+    <h3>Screenshots</h3>
+
+    <div id="submission-pieces__video-tabs" class="tabs">
+      <ul class="reset tabs__menu">
+        <li class="tabs__menu-link">
+          <%= content_tag :button,
+            data: {
+              tab_id: "submission-piece__pitch-video",
+            },
+            class: "tabs__menu-button" do %>
+            Pitch video
+          <% end %>
+        </li>
+
+        <li class="tabs__menu-link">
+          <%= content_tag :button,
+            data: {
+              tab_id: "submission-piece__demo-video",
+            },
+            class: "tabs__menu-button" do %>
+            Demo video
+          <% end %>
+        </li>
+      </ul>
+
+      <div class="tabs__content">
+        <div
+          class="tabs__tab-content"
+          id="submission-piece__pitch-video"
+        >
+          <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
+        </div>
+
+        <div
+          class="tabs__tab-content"
+          id="submission-piece__demo-video"
+        >
+          <%= @team_submission.embed_code(:demo_video_link).html_safe %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -120,3 +120,31 @@
   padding: 0.5rem;
   border-radius: $radius-default;
 }
+
+.submission-sidebar {
+  font-size: 0.9rem;
+
+  > div > div {
+    margin: 0.5rem 0;
+    overflow: hidden;
+    max-width: 500px;
+    text-overflow: ellipsis;
+  }
+}
+
+.team-info {
+  .team-info__name {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .team-info__division {
+  }
+
+  .team-info__location {
+  }
+}
+
+.submission-piece-links {
+  margin: 1rem 0 0;
+}

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :pending_teammates, only: :index
 
     resources :team_submissions
+    resources :published_team_submissions, only: :show
     resource :code_checklist, only: :update
     resources :screenshots, only: [:index, :create, :update, :destroy]
 

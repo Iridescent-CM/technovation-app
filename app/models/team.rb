@@ -190,6 +190,12 @@ class Team < ActiveRecord::Base
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
 
+  def attending_live_event(&block)
+    if selected_regional_pitch_event.live?
+      yield
+    end
+  end
+
   def selected_regional_pitch_event_name
     selected_regional_pitch_event.name
   end
@@ -223,6 +229,12 @@ class Team < ActiveRecord::Base
     division.senior?
   end
 
+  def senior_division(&block)
+    if senior?
+      yield
+    end
+  end
+
   def student_emails
     students.flat_map(&:email)
   end
@@ -248,6 +260,7 @@ class Team < ActiveRecord::Base
       geolocation_str
     end
   end
+  alias :location :primary_location
 
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
