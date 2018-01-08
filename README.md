@@ -83,6 +83,11 @@ cd technovation-app
 cp <PATH-TO-.ENV-FILE> .
 ```
 
+Switch to ruby 2.5.0 (this creates the `.tool-versions` file and you won't have to do it again)
+```
+asdf local ruby 2.5.0
+```
+
 Run the rails setup file
 
 ```
