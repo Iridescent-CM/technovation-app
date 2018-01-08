@@ -21,7 +21,7 @@ Install homebrew
 Install ruby 2.5.0
 
 ```
-asdf install 2.5.0
+asdf install ruby 2.5.0
 ```
 
 Make sure XCode is installed.
