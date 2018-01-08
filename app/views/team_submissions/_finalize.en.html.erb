@@ -4,14 +4,17 @@
     Great job! Your app is qualified to be submitted for judging!
   </p>
 
-  <p>
-    <%= link_to "Submit for judging", "#", class: "button" %>
-  </p>
-
-  <p class="scent--strong">
+  <p class="scent">
+    <%= web_icon("exclamation-circle", class: "icon--green") %>
     Even after submitting,
     <strong>you will be able to make changes</strong>
     until April 26.
+  </p>
+
+  <p>
+    <%= link_to "Submit for judging",
+      [current_scope, :published, submission],
+      class: "button" %>
   </p>
 <% end %>
 
@@ -21,12 +24,6 @@
     Your submission still has deliverables that are not complete.
   </p>
 
-  <p>
-    <%= link_to "Submit for judging", "#",
-      class: "button button--disabled",
-      disabled: true %>
-  </p>
-
   <p class="scent">
     Once your team is fully qualified, and you have finished all of the
     deliverables, you will be able to submit your app for the judging
@@ -34,8 +31,15 @@
   </p>
 
   <p class="scent">
+    <%= web_icon("exclamation-circle", class: "icon--green") %>
     Even after submitting,
     <strong>you will be able to make changes</strong>
     until April 26.
+  </p>
+
+  <p>
+    <%= link_to "Submit for judging", "#",
+      class: "button button--disabled",
+      disabled: true %>
   </p>
 <% end %>
