@@ -29,13 +29,13 @@
     "##{dom_id(submission)}_source_code",
     class: completion_css(submission, :source_code_url) %>
 
-  <%= link_to web_icon("check-circle", text: "Code checklist"),
-    "##{dom_id(submission)}_code_checklist",
-    class: completion_css(submission, :code_checklist) %>
-
   <%= link_to web_icon("check-circle", text: "Screenshots"),
     "##{dom_id(submission)}_screenshots",
     class: completion_css(submission, :screenshots) %>
+
+  <%= link_to web_icon("check-circle", text: "Code checklist"),
+    "##{dom_id(submission)}_code_checklist",
+    class: completion_css(submission, :code_checklist) %>
 
   <p class="hint">senior teams only:</p>
 
