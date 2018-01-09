@@ -16,7 +16,7 @@ module Mentor
         redirect_to mentor_team_submission_path(@team_submission),
           success: t("controllers.team_submissions.create.success")
       else
-        render :new
+        render "team_submissions/new"
       end
     end
 
