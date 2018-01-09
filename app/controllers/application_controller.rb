@@ -51,6 +51,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
+    return current_session if current_session.authenticated?
+
     @current_account ||= Account.find_by(
       auth_token: get_cookie(:auth_token)
     ) || NullAuth.new
