@@ -10,10 +10,18 @@
 <ul class="feed">
   <% @top_inactive_mentors.each do |mentor| %>
     <li class="feed--item">
-      <%= image_tag mentor.profile_image_url, width: 40, class: "thumbnail-xs" %>
-      <%= link_to mentor.name, regional_ambassador_participant_path(mentor) %>
-      hasn't been active for
-      <%= time_ago_in_words(mentor.activities.last.created_at) %>
+      <%= image_tag mentor.profile_image_url,
+        width: 40,
+        class: "thumbnail-xs" %>
+
+      <%= link_to mentor.name,
+        regional_ambassador_participant_path(mentor) %>
+
+      hasn't been active
+
+      <% if mentor.activities.any? %>
+        for <%= time_ago_in_words(mentor.activities.last.created_at) %>
+      <% end %>
     </li>
   <% end %>
 </ul>
@@ -25,10 +33,17 @@
 <ul class="feed">
   <% @top_inactive_students.each do |student| %>
     <li class="feed--item">
-      <%= image_tag student.profile_image_url, width: 40, class: "thumbnail-xs" %>
-      <%= link_to student.name, regional_ambassador_participant_path(student) %>
-      hasn't been active for
-      <%= time_ago_in_words(student.activities.last.created_at) %>
+      <%= image_tag student.profile_image_url,
+        width: 40, class: "thumbnail-xs" %>
+
+      <%= link_to student.name,
+        regional_ambassador_participant_path(student) %>
+
+      hasn't been active
+
+      <% if student.activities.any? %>
+        for <%= time_ago_in_words(student.activities.last.created_at) %>
+      <% end %>
     </li>
   <% end %>
 </ul>
@@ -40,10 +55,16 @@
 <ul class="feed">
   <% @top_inactive_teams.each do |team| %>
     <li class="feed--item">
-      <%= image_tag team.team_photo_url, width: 40, class: "thumbnail-xs" %>
+      <%= image_tag team.team_photo_url,
+        width: 40, class: "thumbnail-xs" %>
+
       <%= link_to team.name, regional_ambassador_team_path(team) %>
-      hasn't been active for
-      <%= time_ago_in_words(team.activities.last.created_at) %>
+
+      hasn't been active
+
+      <% if team.activities.any? %>
+        for <%= time_ago_in_words(team.activities.last.created_at) %>
+      <% end %>
     </li>
   <% end %>
 </ul>

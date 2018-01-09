@@ -23,10 +23,10 @@ module RegionalAmbassador
           .pluck(:id)
 
         @recent_activities = PublicActivity::Activity.distinct
-          .where("
-              (activities.trackable_id IN (?) AND activities.trackable_type = ?) OR
-              (activities.trackable_id IN (?) AND activities.trackable_type = ?)
-            ",
+          .where("(activities.trackable_id IN (?) AND " +
+                 "activities.trackable_type = ?) OR " +
+                 "(activities.trackable_id IN (?) AND " +
+                 "activities.trackable_type = ?)",
             trackable_user_ids,
             "Account",
             trackable_team_ids,

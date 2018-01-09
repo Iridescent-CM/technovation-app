@@ -1,0 +1,35 @@
+<tr>
+  <% if activity.trackable %>
+    <td>
+      <%= image_tag activity.trackable.profile_image_url,
+        class: "thumbnail-xs" %>
+    </td>
+
+    <td>
+      Submission
+    </td>
+
+    <td>
+      <%= link_to activity.trackable.name,
+        [current_scope, activity.trackable],
+        data: { turbolinks: false } %>
+    </td>
+  <% else %>
+    <td>–</td>
+    <td>–</td>
+  <% end %>
+
+  <td>updated</td>
+
+  <% if activity.recipient %>
+    <td>
+      <%= link_to activity.recipient.name || "(no_name)",
+        [current_scope, activity.recipient],
+        data: { turbolinks: false } %>
+    </td>
+  <% else %>
+    <td>–</td>
+  <% end %>
+
+  <td><%= time_ago_in_words(activity.created_at) %> ago</td>
+</tr>
