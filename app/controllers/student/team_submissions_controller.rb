@@ -66,7 +66,7 @@ module Student
         redirect_to [:student, @team_submission],
           success: t("controllers.team_submissions.create.success")
       else
-        render :new
+        render "team_submissions/new"
       end
     end
 
