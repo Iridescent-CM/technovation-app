@@ -1,51 +1,48 @@
 <nav id="team_submissions__menu" class="menu">
   <%= link_to web_icon("check-circle", text: "App name"),
-    "##{dom_id(submission)}_app_name",
+    { anchor: "#{dom_id(submission)}_app_name" },
     class: completion_css(submission, :app_name) %>
 
   <%= link_to web_icon("check-circle", text: "Description"),
-    "##{dom_id(submission)}_app_description",
+    { anchor: "#{dom_id(submission)}_app_description" },
     class: completion_css(submission, :app_description) %>
 
   <%= link_to web_icon("check-circle", text: "Demo video"),
-    "##{dom_id(submission)}_demo_video_link",
+    { anchor: "#{dom_id(submission)}_demo_video_link" },
     class: completion_css(submission, :demo_video_link) %>
 
   <%= link_to web_icon("check-circle", text: "Pitch video"),
-    "##{dom_id(submission)}_pitch_video_link",
+    { anchor: "#{dom_id(submission)}_pitch_video_link" },
     class: completion_css(submission, :pitch_video_link) %>
 
-  <%= link_to web_icon(
-    "check-circle",
-    text: "Development platform"
-    ),
-    "##{dom_id(submission)}_development_platform",
+  <%= link_to web_icon("check-circle", text: "Development platform"),
+    { anchor: "#{dom_id(submission)}_development_platform" },
     class: completion_css(
       submission,
       :development_platform
     ) %>
 
   <%= link_to web_icon("check-circle", text: "Source code"),
-    "##{dom_id(submission)}_source_code",
+    { anchor: "#{dom_id(submission)}_source_code" },
     class: completion_css(submission, :source_code_url) %>
 
   <%= link_to web_icon("check-circle", text: "Screenshots"),
-    "##{dom_id(submission)}_screenshots",
+    { anchor: "#{dom_id(submission)}_screenshots" },
     class: completion_css(submission, :screenshots) %>
 
   <%= link_to web_icon("check-circle", text: "Code checklist"),
-    "##{dom_id(submission)}_code_checklist",
+    { anchor: "#{dom_id(submission)}_code_checklist" },
     class: completion_css(submission, :code_checklist) %>
 
   <p class="hint">senior teams only:</p>
 
   <%= link_to web_icon("check-circle", text: "Business plan"),
-    "##{dom_id(submission)}_business_plan",
+    { anchor: "#{dom_id(submission)}_business_plan" },
     class: completion_css(submission, :business_plan_url) %>
 
   <p class="hint">teams attending live pitch events:</p>
 
   <%= link_to web_icon("check-circle", text: "Presentation slides"),
-    "##{dom_id(submission)}_pitch_presentation",
+    { anchor: "#{dom_id(submission)}_pitch_presentation" },
     class: completion_css(submission, :pitch_presentation_url) %>
 </nav>

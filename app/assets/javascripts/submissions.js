@@ -1,7 +1,7 @@
-$(document).on("click", "#team_submissions--menu a", function(e) {
+$(document).on("click", "#team_submissions__menu a", function(e) {
   e.preventDefault();
 
-  var anchor = $(this).attr('href'),
+  var anchor = "#" + $(this).attr('href').split("#")[1],
       offset = 92;
 
   $(anchor)[0].scrollIntoView();
