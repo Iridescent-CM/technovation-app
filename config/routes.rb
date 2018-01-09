@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     resources :teams, except: [:index, :destroy]
     resources :team_memberships, only: :destroy
     resources :team_submissions
+    resources :published_team_submissions, only: :show
     resources :team_locations, only: :edit
 
     resources :certificates, only: :create
