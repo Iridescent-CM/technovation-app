@@ -21,8 +21,10 @@ class Account < ActiveRecord::Base
   has_one :judge_profile, dependent: :destroy
 
   has_one :regional_ambassador_profile, dependent: :destroy
+
   RegionalAmbassadorProfile.statuses.keys.each do |status|
-    has_one "#{status}_regional_ambassador_profile".to_sym, -> { send(status) },
+    has_one "#{status}_regional_ambassador_profile".to_sym,
+      -> { send(status) },
       class_name: "RegionalAmbassadorProfile",
       dependent: :destroy
   end

@@ -6,6 +6,7 @@ class NullTeamSubmission < NullObject
   def app_name
     "not started"
   end
+  alias :name :app_name
 
   def quarterfinals_average_score
     0

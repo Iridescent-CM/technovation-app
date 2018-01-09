@@ -59,7 +59,7 @@ module Student
 
       if @team_submission.save
         current_account.create_activity(
-          trackable: @team_submission,
+          trackable: current_account,
           key: "submission.create",
           recipient: @team_submission,
         )
@@ -82,7 +82,7 @@ module Student
         render json: {}
       elsif @team_submission.update(team_submission_params)
         current_account.create_activity(
-          trackable: @team_submission,
+          trackable: current_account,
           key: "submission.update",
           recipient: @team_submission,
         )
