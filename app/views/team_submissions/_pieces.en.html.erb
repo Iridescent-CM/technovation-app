@@ -65,20 +65,6 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: submission,
-  title: "Code checklist",
-  scope: scope,
-  yield_block: true,
-  attribute: :code_checklist,
-  cta_when_empty: "Confirm your code checklist",
-  cta_when_filled: "Make changes to your code checklist" do %>
-  <p>
-    Your team will earn :FIXME: bonus points
-    for your code checklist
-  </p>
-<% end %>
-
-<%= render 'team_submissions/pieces/piece',
-  submission: submission,
   title: "Screenshots",
   scope: scope,
   yield_block: true,
@@ -91,6 +77,20 @@
       submission.screenshots.persisted.count,
       "screenshot"
     ) %>
+  </p>
+<% end %>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: submission,
+  title: "Code checklist",
+  scope: scope,
+  yield_block: true,
+  attribute: :code_checklist,
+  cta_when_empty: "Confirm your code checklist",
+  cta_when_filled: "Make changes to your code checklist" do %>
+  <p>
+    Your team will earn :FIXME: bonus points
+    for your code checklist
   </p>
 <% end %>
 

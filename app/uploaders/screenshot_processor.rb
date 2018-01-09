@@ -12,6 +12,10 @@ class ScreenshotProcessor < CarrierWave::Uploader::Base
 
   process resize_to_fit: [350, 625]
 
+  version :large do
+    process resize_to_limit: [1024, 768]
+  end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   #

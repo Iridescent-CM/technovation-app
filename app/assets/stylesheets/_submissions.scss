@@ -148,3 +148,15 @@
 .submission-piece-links {
   margin: 1rem 0 0;
 }
+
+.submission-pieces__screenshots {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  margin: 0 0 1rem;
+
+  .submission-pieces__screenshot {
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+}
