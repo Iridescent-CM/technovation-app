@@ -15,12 +15,7 @@ module CodeChecklistController
       redirect_to [current_scope, @team_submission],
         success: "Your code checklist was saved!"
     else
-      redirect_to [
-        :edit,
-        current_scope,
-        @team_submission,
-        piece: :code_checklist
-      ]
+      render "team_submissions/pieces/code_checklist"
     end
   end
 
