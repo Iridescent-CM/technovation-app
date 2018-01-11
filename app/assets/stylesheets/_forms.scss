@@ -14,7 +14,8 @@ input[type="radio"] {
   display: inline;
   margin: 0 0.5rem 0 0;
 
-  + label {
+  + label,
+  + .field_with_errors label {
     margin: 0;
     display: inline;
   }
