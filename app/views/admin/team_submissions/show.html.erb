@@ -1,72 +1,62 @@
 <h1>Team Submission Details</h1>
+  <div class="grid">
 
-<%= render 'admin/team_submissions/detail/summary',
-  submission: @team_submission,
-  user_type: :admin %>
+    <div class="grid__col-6">
+      <div class="panel">
+        <h5> Team Name </h5>
+        <%= @team_submission.team_name %>
+        <h5> Division </h5>
+        <%=  @team_submission.team.division %>
+        <h5> Rank </h5>
+        <%= @team_submission.contest_rank %>
+      </div>
+    </div>
 
-<div class="flex-row">
-  <div class="flex-col-sm-6">
-    <%= link_to 'Edit this submission',
-      edit_admin_team_submission_path(@team_submission) %>
+    <div class="grid__col-6">
+      <div class="panel">
+        <h5> App Name</h5>
+        <p><%= @team_submission.app_name%></p>
+        <h5> Description</h5>
+        <p><%= @team_submission.app_description %></p>
+      </div>
+    </div>
 
-    <br /><br />
-
-    <%= link_to 'See the public/judge version',
-      app_path(@team_submission),
-      target: :_blank %>
-  </div>
-  <div class="flex-col-sm-6">
-    <dl>
-      <dt>Contest rank:</dt>
-      <dd><%= @team_submission.contest_rank %></dd>
-
-      <dt>Average <%= @team_submission.contest_rank %> score</dt>
-      <dd>
-        <%= @team_submission.public_send(
-          "#{@team_submission.contest_rank.sub("ist", "s")}_average_score"
-        ) %>
-
-        <% if @team_submission.submission_scores.deleted.any? %>
-           - <%= link_to 'Restore scores',
-            admin_submission_score_restoration_path(@team_submission),
-            data: { method: :patch } %>
+    <div class="grid__col-6">
+      <div class="panel">
+        <h5> Pitch Video</h5>
+        <%= link_to @team_submission.pitch_video_link,
+            @team_submission.pitch_video_link,
+            target: :_blank %>
+        <h5> Demo Video</h5>
+        <%= link_to @team_submission.demo_video_link,
+            @team_submission.demo_video_link,
+            target: :_blank %>
+        <h5>Business plan</h5>
+        <% if @team_submission.business_plan_url %>
+          <%= link_to @team_submission.business_plan_url,
+            @team_submission.business_plan_url,
+            target: :_blank %>
         <% end %>
-      </dd>
-    </dl>
+      </div>
+    </div>
+
+    <div class="grid__col-6">
+      <div class="panel">
+        <h5> Development Platform </h5>
+        <%= @team_submission.development_platform %>
+        <%= @team_submission.development_platform_other %>
+        <h5>Source code</h5>
+        <% if @team_submission.source_code %>
+          <%= link_to @team_submission.source_code_url,
+            @team_submission.source_code_url,
+            target: :_blank %>
+        <% end %>
+      </div>
+    </div>
+  <div class="grid__col-2">
+    <%= link_to "Edit",
+      edit_admin_team_submission_path,
+      target: :_blank,
+      class: "button" %>
   </div>
 </div>
-
-<hr />
-
-<div class="flex-row">
-  <div class="flex-col-sm-6">
-    Student completion certificates:
-    <ul>
-      <% @team_submission.team.students.each do |student| %>
-        <% next if student.certificates.empty? %>
-        <li><%= link_to "#{student.full_name}", student.certificates.last.file_url %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="flex-col-sm-6">
-    Mentor completion certificates:
-    <ul>
-      <% @team_submission.team.mentors.each do |mentor| %>
-        <% next if mentor.certificates.empty? %>
-        <li><%= link_to "#{mentor.full_name}", mentor.certificates.last.file_url %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="flex-col-sm-12">
-    <%= link_to 'Generate Completion Certificates',
-      admin_team_submission_certificate_path(@team_submission, type: :completion),
-      data: { method: :patch } %>
-  </div>
-</div>
-
-<hr />
-
-<%= render 'admin/team_submissions/detail/full',
-  submission: @team_submission %>
