@@ -9,3 +9,89 @@
 @import "flags";
 @import "checklist";
 @import "sortable_list";
+
+/* bar */
+
+.sub-list-style{
+  lh {
+    color: #granite;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  li {
+    color: $grey;
+    font-weight: normal;
+
+    &:hover {
+      color: $shamrock-mid;
+      cursor: pointer;
+    }
+  }
+}
+
+.circle {
+  display: inline-block;
+  font-size: 3rem;
+  line-height: 5.5rem;
+  cursor: pointer;
+  margin: 1.25rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.circle:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  content:'';
+}
+
+.circle.checkmark {
+  color: #fff;
+}
+
+.circle.green:after {
+  top: .07rem;
+  left: .07rem;
+  padding: .07rem;
+  z-index: -1;
+  background: #5ABF94;
+  -webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.2s, opacity 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.circle.orange:after {
+  top: .07rem;
+  left: .07rem;
+  padding: .07rem;
+  background-color:#fff;
+  border:.25rem solid $orange;
+  -webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.2s, opacity 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.circle.grey:after {
+  top: .07rem;
+  left: .07rem;
+  padding: .07rem;
+  background-color:#fff;
+  border:.25rem solid $grey;
+  -webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.2s, opacity 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.circle.scale:hover:after {
+  -webkit-transform: scale(0.85);
+  -moz-transform: scale(0.85);
+  -ms-transform: scale(0.85);
+  transform: scale(0.85);
+}
