@@ -22,7 +22,12 @@ function attachSuccess(el) {
   el.on("success", function(file, res) {
     $(".dropzone-save").fadeIn();
     $(".after-dropzone-save").hide();
-    $(file).data("remove-url", res.remove_url);
+    $(file).data({
+      "remove-url": res.remove_url,
+      "dom-id": res.dom_id,
+    });
+
+    $(file.previewElement).addClass("remove-with-" + res.dom_id);
   });
 }
 
@@ -32,6 +37,12 @@ function attachRemovedFile(el) {
       url: $(file).data("remove-url"),
       method: "DELETE",
     });
+
+    $("#" + $(file).data("dom-id")).fadeOut(function() {
+      $(this).remove();
+    });
+
+    displayDzMessage();
   });
 }
 
@@ -63,11 +74,7 @@ function activateDropzones() {
 }
 
 function updateScreenshots() {
-  var maxScreenshotsRemaining = $("#screenshots")
-                                  .data("maxFilesRemaining"),
-      notOne = parseInt(maxScreenshotsRemaining) != 1,
-      prefix = notOne ? "up to " : "",
-      postfix = notOne ? "s" : "";
+  $("#sortable-list").data("maxFiles", 6 - $("#sortable-list li").length);
 
   Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
     {},
@@ -75,18 +82,7 @@ function updateScreenshots() {
     {
       method: "POST",
       paramName: "team_submission[screenshots_attributes][][image]",
-      dictDefaultMessage: "Drag and drop " +
-                          prefix +
-                          maxScreenshotsRemaining +
-                          " screenshot" + postfix +
-                          " here, " +
-                          "<br />or " +
-                          "<a class='button small'>select " +
-                          prefix +
-                          maxScreenshotsRemaining +
-                          " screenshot" + postfix +
-                          "</a>",
-      maxFiles: parseInt(maxScreenshotsRemaining),
+      maxFiles: $("#sortable-list").data("maxFiles"),
       acceptedFiles: ".jpg,.jpeg,.gif,.png",
 
       success: function(file) {
@@ -127,7 +123,42 @@ function updateScreenshots() {
         $li.append($removeDiv);
 
         $("#sortable-list").append($li);
+        displayDzMessage();
+      },
+
+      init: function() {
+        defaultInit(this);
+        displayDzMessage();
+
+        $(document).on(
+          "removedfile",
+          "#sortable-list",
+          displayDzMessage
+        );
       },
     }
   );
+
+  function displayDzMessage() {
+    var maxScreenshotsRemaining = 6 - $("#sortable-list li").length,
+        notOne = maxScreenshotsRemaining != 1,
+        prefix = notOne ? "up to " : "",
+        postfix = notOne ? "s" : "";
+
+    var html = "Drag and drop " +
+               prefix +
+               maxScreenshotsRemaining +
+               " screenshot" + postfix +
+               " here, " +
+               "<br />or " +
+               "<a class='button small'>" +
+               "select " +
+               prefix +
+               maxScreenshotsRemaining +
+               " screenshot" + postfix +
+               "</a>";
+
+    $("#sortable-list").data("maxFiles", maxScreenshotsRemaining);
+    $(".dz-message span").html(html);
+  }
 }

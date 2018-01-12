@@ -3,87 +3,79 @@
     <div class="panel">
       <h3 class="panel--heading">Screenshots</h3>
 
-      <% @team_submission.while_screenshots_remaining do %>
-        <p class="hint">
-          File types allowed: *.jpg, *.jpeg, *.gif, *.png
-        </p>
+      <p class="hint">
+        File types allowed: *.jpg, *.jpeg, *.gif, *.png
+      </p>
 
-        <%= form_with model: @team_submission,
-          method: :post,
-          url: [current_scope, :screenshots],
-          class: "dropzone",
-          id: "team-submission-screenshots-dropzone",
-          multipart: true do |f| %>
+      <%= form_with model: @team_submission,
+        method: :post,
+        url: [current_scope, :screenshots],
+        class: "dropzone",
+        id: "team-submission-screenshots-dropzone",
+        multipart: true do |f| %>
 
-          <%= f.hidden_field :id %>
+        <%= f.hidden_field :id %>
 
-          <div class="fallback">
-            <%= f.fields_for :screenshots do |s| %>
-              <div class="field--file-upload">
-                <%= s.label :image, "Select up to 6 screenshots" %>
-                <%= s.file_field :image %>
-              </div>
-            <% end %>
+        <div class="dz-message" data-dz-message>
+          <span></span>
+        </div>
 
-            <%= f.submit "Upload", class: "button" %>
-          </div>
-        <% end %>
+        <div class="fallback">
+          <%= f.fields_for :screenshots do |s| %>
+            <div class="field--file-upload">
+              <%= s.label :image, "Select up to 6 screenshots" %>
+              <%= s.file_field :image %>
+            </div>
+          <% end %>
 
-        <p class="dropzone-save" style="display: none;">
-          <%= link_to "Save this upload",
-            [current_scope, @team_submission],
-            class: "button" %>
-        </p>
-
-        <p class="after-dropzone-save">
-          <%= link_to "cancel", [current_scope, @team_submission] %>
-        </p>
+          <%= f.submit "Upload", class: "button" %>
+        </div>
       <% end %>
 
-      <% @team_submission.while_no_screenshots_remaining do %>
-        <p>Your team has uploaded the maximum screenshots allowed.</p>
-        <p>Sort or remove them below.</p>
-      <% end %>
+      <p class="dropzone-save" style="display: none;">
+        <%= link_to "Save this upload",
+          [current_scope, @team_submission],
+          class: "button" %>
+      </p>
+
+      <p class="after-dropzone-save">
+        <%= link_to "cancel", [current_scope, @team_submission] %>
+      </p>
     </div>
 
-    <div
-      id="screenshots"
-      class="panel"
-      data-max-files-remaining="
-        <%= @team_submission.max_screenshots_remaining %>
-      "
-    >
+    <div id="screenshots" class="panel">
       <% @team_submission.while_has_screenshots do %>
         <p>
           Sort your screenshots in the order that you want
           the judges to see them:
         </p>
-
-        <ol
-          id="sortable-list"
-          data-sort-url="<%=
-            send(
-              "#{current_scope}_team_submission_path",
-              @team_submission
-            )
-          %>"
-        >
-          <%= render partial: 'screenshots/screenshot',
-            collection: @team_submission.screenshots.persisted,
-            locals: {
-              col_css: "grid__col-4",
-              img_css: "draggable",
-              edit: true,
-              many: @team_submission.screenshots.persisted.many?,
-            } %>
-        </ol>
       <% end %>
+
+      <ol
+        id="sortable-list"
+        data-sort-url="<%=
+          send(
+            "#{current_scope}_team_submission_path",
+            @team_submission
+          )
+        %>"
+      >
+        <%= render partial: 'screenshots/screenshot',
+          collection: @team_submission.screenshots.persisted,
+          locals: {
+            col_css: "grid__col-4",
+            img_css: "draggable",
+            edit: true,
+            many: @team_submission.screenshots.persisted.many?,
+          } %>
+      </ol>
 
       <p class="grid__cell--padding-sm-y">
         Get some help finishing and debugging your app in the
-        <%= link_to("debugging curriculum unit.",
-                    "http://technovationchallenge.org/curriculum/code-7/",
-                    target: "_blank") %>
+
+        <%= link_to "debugging curriculum unit.",
+          "http://technovationchallenge.org/curriculum/code-7/",
+          target: "_blank" %>
       </p>
     </div>
   </div>
