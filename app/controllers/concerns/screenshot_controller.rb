@@ -37,13 +37,20 @@ module ScreenshotController
 
       format.json do
         render json: {
-          removeUrl: send(
+          remove_url: send(
             "#{current_scope}_screenshot_path",
             screenshot,
             team_submission: {
               id: submission.id,
             }
-          )
+          ),
+          dom_id: dom_id(screenshot),
+          image: {
+            id: screenshot.id,
+            alt: screenshot.image_identifier,
+            url: screenshot.image_url,
+            modal_url: screenshot.image_url(:large),
+          },
         }
       end
     end
