@@ -40,6 +40,7 @@ function attachRemovedFile(el) {
 
     $("#" + $(file).data("dom-id")).fadeOut(function() {
       $(this).remove();
+      $(".dz-started").removeClass("dz-started");
     });
 
     displayDzMessage();
@@ -74,7 +75,9 @@ function activateDropzones() {
 }
 
 function updateScreenshots() {
-  $("#sortable-list").data("maxFiles", 6 - $("#sortable-list li").length);
+  var maxFiles = 6 - $("#sortable-list li").length;
+
+  $("#sortable-list").data("maxFiles", maxFiles);
 
   Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
     {},

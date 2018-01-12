@@ -12,6 +12,7 @@ $(document).on("ajax:success", "[data-remove-on-delete]", function(e) {
 
     $dzPreview.fadeOut(function() {
       $dzPreview.remove();
+      $(".dz-started").removeClass("dz-started");
     });
   });
 });
