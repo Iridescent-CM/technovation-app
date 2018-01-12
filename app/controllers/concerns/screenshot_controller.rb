@@ -21,11 +21,14 @@ module ScreenshotController
   end
 
   def create
-    # TODO: why is submission.screenshots.create returning an array ??
     submission = current_team.submission
-    screenshot = Array(submission.screenshots.create!(
+    screenshot = submission.screenshots.create!(
       screenshot_params[:screenshots_attributes]
-    ))[0]
+    )
+
+    # TODO: why is submission.screenshots.create returning an array ??
+    screenshot = Array(screenshot).first
+
     current_account.create_activity(
       trackable: submission,
       key: "submission.update",
@@ -78,9 +81,14 @@ module ScreenshotController
   def screenshot_params
     params.require(:team_submission).permit(
       screenshots_attributes: [
-        :id,
         :image,
       ],
-    )
+    ).tap do |tapped|
+        if tapped.dig(:screenshots_attributes, '0')
+          tapped[:screenshots_attributes] = tapped.dig(
+            :screenshots_attributes, '0'
+          )
+        end
+      end
   end
 end
