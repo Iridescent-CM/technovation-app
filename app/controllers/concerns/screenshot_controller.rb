@@ -21,9 +21,11 @@ module ScreenshotController
   end
 
   def create
+    # TODO: why is submission.screenshots.create returning an array ??
     submission = current_team.submission
-    submission.update(screenshot_params)
-    screenshot = submission.screenshots.last
+    screenshot = Array(submission.screenshots.create!(
+      screenshot_params[:screenshots_attributes]
+    ))[0]
     current_account.create_activity(
       trackable: submission,
       key: "submission.update",
