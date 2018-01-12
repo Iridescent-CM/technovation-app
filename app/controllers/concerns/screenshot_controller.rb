@@ -80,15 +80,13 @@ module ScreenshotController
   private
   def screenshot_params
     params.require(:team_submission).permit(
-      screenshots_attributes: [
-        :image,
-      ],
-    ).tap do |tapped|
-        if tapped.dig(:screenshots_attributes, '0')
-          tapped[:screenshots_attributes] = tapped.dig(
-            :screenshots_attributes, '0'
-          )
-        end
+      screenshots_attributes: :image,
+    ).tap do |t|
+      if Array(t[:screenshots_attributes])[0].dig("0")
+        t[:screenshots_attributes] = Array(
+          t[:screenshots_attributes]
+        )[0].dig("0")
       end
+    end
   end
 end
