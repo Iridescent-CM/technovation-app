@@ -14,7 +14,7 @@ $(document).on("ready turbolinks:load", function() {
     invalid: function (el, handle) {
       return false;
     },
-    direction: 'vertical',
+    direction: 'horizontal',
     copy: false,
     copySortSource: false,
     revertOnSpill: false,

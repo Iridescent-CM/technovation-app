@@ -1,7 +1,7 @@
 <%
   many ||= false
   edit ||= false
-  img_css ||= ""
+  img_css = (img_css ||= "") + " submission-pieces__screenshot"
 %>
 
 <li
@@ -13,13 +13,14 @@
     alt: screenshot.image_identifier,
     data: {
       image_id: screenshot.id,
+      modal_url: screenshot.image_url(:large),
     },
     class: img_css,
     width: "100%" %>
 
   <% if edit %>
     <div class="sortable-list__item-actions">
-      <%= link_to web_icon("trash-o"),
+      <%= link_to web_icon("trash-o", class: "icon--red"),
         send(
           "#{current_scope}_screenshot_path",
           screenshot,

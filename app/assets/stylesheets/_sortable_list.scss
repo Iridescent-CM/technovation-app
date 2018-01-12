@@ -1,17 +1,16 @@
 #sortable-list {
+  display: flex;
+  flex-flow: row nowrap;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .sortable-list__item {
+  position: relative;
   list-style: none;
   padding: 0.5rem;
-  border: 1px solid #999;
-  border-radius: $radius-default;
-  margin: 0 0 1rem;
-  vertical-align: middle;
-  transition: margin-bottom 0.2s, background-color 1.5s;
+  transition: margin 0.2s, background-color 1.5s;
 
   &.sortable-list--updated {
     background: $shamrock;
@@ -24,12 +23,19 @@
     clear: both;
   }
 
-  &:last-child {
-    margin: 0;
+  &:hover {
+    .sortable-list__item-actions {
+      opacity: 1;
+    }
   }
 
   .sortable-list__item-actions {
-    float: right;
+    opacity: 0;
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    transition: opacity 0.2s;
+    background: white;
   }
 
   .sortable-list__drag-handle {
