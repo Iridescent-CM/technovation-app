@@ -20,7 +20,7 @@
 
   <% if edit %>
     <div class="sortable-list__item-actions">
-      <%= link_to web_icon("trash-o", class: "icon--red"),
+      <%= link_to web_icon("remove", class: "icon--red"),
         send(
           "#{current_scope}_screenshot_path",
           screenshot,
