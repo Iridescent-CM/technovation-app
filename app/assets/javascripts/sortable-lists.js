@@ -6,7 +6,7 @@ $(document).on("ready turbolinks:load", function() {
       return el.classList.contains(".sortable-list");
     },
     moves: function (el, source, handle, sibling) {
-      return handle.classList.contains("sortable-list__drag-handle");
+      return true;
     },
     accepts: function (el, target, source, sibling) {
       return true;
