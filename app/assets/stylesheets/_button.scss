@@ -34,7 +34,8 @@
     transform: rotate(-135deg);
   }
 
-  &.secondary {
+  &.secondary,
+  &.button--secondary {
     background-color: $marine;
     box-shadow: 0 2px 0 darken($marine, 5);
 
