@@ -53,8 +53,10 @@ class AccountsGrid
       regional_ambassador_profile.organization_company_name
     elsif mentor_profile.present?
       mentor_profile.school_company_name
-    else
+    elsif judge_profile.present?
       judge_profile.company_name
+    else
+      "-"
     end
   end
 
