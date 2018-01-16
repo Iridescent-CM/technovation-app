@@ -233,6 +233,10 @@ class TeamSubmission < ActiveRecord::Base
     technical_checklist
   end
 
+  def code_checklist_points
+    code_checklist.total_points
+  end
+
   def app_name
     if (self[:app_name] || "").strip.blank?
       nil

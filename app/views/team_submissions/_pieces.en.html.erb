@@ -73,10 +73,12 @@
   cta_when_filled: "Make changes to your screenshots" do %>
   <p>
     Your team has uploaded
-    <%= pluralize(
-      submission.screenshots.persisted.count,
-      "screenshot"
-    ) %>
+    <strong>
+      <%= pluralize(
+        submission.screenshots.persisted.count,
+        "screenshot"
+      ) %>
+    </strong>
   </p>
 <% end %>
 
@@ -89,7 +91,8 @@
   cta_when_empty: "Confirm your code checklist",
   cta_when_filled: "Make changes to your code checklist" do %>
   <p>
-    Your team will earn :FIXME: bonus points
+    Your team will earn
+    <strong><%= submission.code_checklist_points %> out of 10 bonus points</strong>
     for your code checklist
   </p>
 <% end %>
