@@ -257,11 +257,13 @@
           <% end %>
 
           <label class="file-field" for="paper_prototype_file_field">
-            <div class="button secondary small">
+            <div class="img-preview"></div>
+            <div class="button button--secondary button--small">
               <%= verb %> a file from your computer
             </div>
 
             <%= f.file_field :paper_prototype,
+              class: "provide-preview",
               id: "paper_prototype_file_field" %>
           </label>
 
@@ -284,11 +286,13 @@
           <% end %>
 
           <label class="file-field" for="event_flow_chart_file_field">
-            <div class="button secondary small">
+            <div class="img-preview"></div>
+            <div class="button button--secondary button--small">
               <%= verb %> a file from your computer
             </div>
 
             <%= f.file_field :event_flow_chart,
+              class: "provide-preview",
               id: "event_flow_chart_file_field" %>
           </label>
 

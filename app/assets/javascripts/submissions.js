@@ -15,3 +15,20 @@ $(document).on("click", ".submission-pieces__screenshot", function(e) {
     imageUrl: $(e.target).data("modalUrl"),
   });
 });
+
+$(document).on("change", ".provide-preview", function(e) {
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var $img = $("<img>");
+
+    $img.prop('src', e.target.result)
+        .prop("width", 175);
+
+    $(this).closest(".file-field")
+      .find(".img-preview")
+      .html($img);
+  }.bind(this);
+
+  reader.readAsDataURL($(this).prop('files')[0]);
+});
