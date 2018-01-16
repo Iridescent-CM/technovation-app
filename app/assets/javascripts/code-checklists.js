@@ -87,8 +87,8 @@ function updateUIBasedOnPointsEarned(opts) {
 
     if (isFileField) {
       var uploadedFile = $(field).closest("div").find("img"),
-          hasUploadedFile = uploadedFile.length > 0,
-          hasAttachedFile = field.files.length > 0;
+          hasUploadedFile = !!uploadedFile.length,
+          hasAttachedFile = !!field.files.length;
 
       return hasUploadedFile || hasAttachedFile;
     } else {
@@ -103,7 +103,7 @@ function updateUIBasedOnPointsEarned(opts) {
     if (isScreenshots) {
       var countNeeded = parseInt($(field).data("countNeeded")),
           countHas = parseInt($(field).data("countHas"));
-      return countNeeded === countHas;
+      return countNeeded <= countHas;
     } else {
       return false;
     }
