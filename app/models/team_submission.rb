@@ -301,6 +301,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def app_inventor_2?
+    send("App Inventor 2?")
+  end
+
   %i{
     source_code
     business_plan
