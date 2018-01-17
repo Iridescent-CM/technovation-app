@@ -69,11 +69,19 @@ class ActivitiesGrid
 
   filter :trackable_type,
     :enum,
-    header: "Type",
+    header: "Filter by...",
     select: [
       "Account",
       "Team",
-    ]
+      "Submission",
+    ] do |option|
+      if option == "Submission"
+        where(trackable_type: "Account")
+          .where("key LIKE 'submission.%'")
+      else
+        where(trackable_type: option)
+      end
+    end
 
   filter :key,
     :enum,
