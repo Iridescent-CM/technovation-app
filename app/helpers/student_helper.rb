@@ -41,7 +41,7 @@ module StudentHelper
       status = :complete unless submission.demo_video_link.blank?
     when :screenshots
       status = :complete if submission.screenshots.many?
-    when :development_patform
+    when :development_platform
       status = :complete unless submission.development_platform_text.blank?
     when :source_code
       status = :complete unless submission.source_code_url.blank?
