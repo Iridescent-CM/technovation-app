@@ -17,108 +17,79 @@
 
 <%# see app/helpers/student_helper for SUBPROG function %>
 
-<div class="grid">
-  <div class="grid__col-sm-6 grid__col--bleed-x">
-    <ul class="progress">
-      <li class="<%= subprog(submission, "team-photo") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Team photo</span>
-      </li>
-
-      <li class="<%= subprog(submission, "app-info") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Name & description</span>
-      </li>
-
-      <li class="<%= subprog(submission, "pitch") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Pitch video</span>
-      </li>
-
-      <li class="<%= subprog(submission, "demo") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Demo video</span>
-      </li>
+<div class="sub-step grid">
+  <div class="grid__col-sm-3">
+    <ul>
+      <li><i class="circle green checkmark hover">✓</i></li>
     </ul>
-
-    <% if submission.team.division.senior? or
-            submission.team.selected_regional_pitch_event.live? %>
-      <div class="extra-progress-items">
-        <% if submission.team.division.senior? %>
-          <h5>Senior division teams</h5>
-
-          <ul class="progress">
-            <li class="<%= subprog(submission, "business-plan") %>">
-              <%= web_icon('circle-o') %>
-              <%= web_icon('check-circle') %>
-              <span>Business plan</span>
-            </li>
-          </ul>
-        <% end %>
-
-        <% if submission.team.selected_regional_pitch_event.live? %>
-          <h5>Teams attending live pitch events</h5>
-
-          <ul class="progress">
-            <li class="<%= subprog(submission, "pitch-presentation") %>">
-              <%= web_icon('circle-o') %>
-              <%= web_icon('check-circle') %>
-              <span>Pitch presentation</span><br />
-            </li>
-          </ul>
-
-          <p>
-            <%= link_to 'Edit your pitch presentation',
-              new_student_team_submission_pitch_presentation_path,
-              class: "button small" %><br />
-            <small>the presentation slides are due in time for your live event</small>
-          </p>
-        <% end %>
-      </div>
-    <% end %>
   </div>
-
-  <div class="grid__col-sm-6 grid__col--bleed-x">
-    <ul class="progress">
-      <li class="<%= subprog(submission, "screenshots") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>At least 2 screenshots</span>
-      </li>
-
-      <li class="<%= subprog(submission, "source-code") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Source code</span>
-      </li>
-
-      <li class="<%= subprog(submission, "development-platform") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Development platform</span>
-      </li>
-
-      <li class="<%= subprog(submission, "technical-checklist") %>">
-        <%= web_icon('check-circle') %>
-        <%= web_icon('circle-o') %>
-        <span>Technical checklist</span><br />
-        <small>
-          The checklist does not have to be complete,
-          but is not editable after the deadline.
-        </small>
-      </li>
+  <div class="sub-list-style grid__col-auto">
+    <ul>
+      <h1> Start</h1>
+      <li>Honor code</li>
+      <li>Team photo</li>
+    </ul>
+  </div>
+</div>
+<div class="sub-step grid">
+  <div class="grid__col-sm-3">
+    <ul>
+      <li><i class="circle green checkmark scale">✓</i></li>
+    </ul>
+  </div>
+  <div class="sub-list-style grid__col-auto">
+    <ul>
+      <h1>Ideation</h1>
+      <li>App name</li>
+      <li> App description</li>
+    </ul>
+  </div>
+</div>
+<div class="sub-step grid">
+  <div class="grid__col-sm-3">
+    <ul>
+      <li><i class="circle green checkmark scale">✓</i></li>
+    </ul>
+  </div>
+  <div class="sub-list-style grid__col-auto">
+    <ul>
+      <h1>Marketing</h1>
+      <li>Pitch video</li>
+      <li>Screenshots</li>
     </ul>
   </div>
 </div>
 
-<% if SeasonToggles.team_submissions_editable? %>
-  <p>
-    <%= link_to "Edit your submission",
-      student_team_submission_path(submission),
-      class: "button" %>
-  </p>
-<% end %>
+<div class="sub-step grid">
+  <div class="grid__col-sm-3">
+    <ul>
+      <li><i class="circle orange scale"></i></li>
+    </ul>
+  </div>
+  <div class="sub-list-style grid__col-auto">
+    <ul>
+      <h1>Code</h1>
+      <li>Development platform</li>
+      <li>Source code</li>
+      <li>Technovation checklist</li>
+      <small>
+        *The checklist does not have to be complete,
+        but is not editable after the deadline.
+      </small>
+    </ul>
+  </div>
+</div>
+
+<div class="sub-step grid">
+  <div class="grid__col-sm-3">
+    <ul>
+      <li><i class="circle grey scale"></i></li>
+    </ul>
+  </div>
+  <div class="sub-list-style grid__col-auto">
+    <ul>
+      <h1>Pitch</h1>
+      <li>Demo video</li>
+    </ul>
+  </div>
+</div>
