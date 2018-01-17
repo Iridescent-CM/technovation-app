@@ -1338,7 +1338,8 @@ CREATE TABLE team_submissions (
     deleted_at timestamp without time zone,
     seasons text[] DEFAULT '{}'::text[],
     app_inventor_app_name character varying,
-    app_inventor_gmail character varying
+    app_inventor_gmail character varying,
+    published_at timestamp without time zone
 );
 
 
@@ -2811,6 +2812,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171204220418'),
 ('20171204221323'),
 ('20171207180553'),
-('20180102162930');
+('20180102162930'),
+('20180117190150');
 
 

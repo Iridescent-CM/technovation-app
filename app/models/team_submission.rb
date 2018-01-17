@@ -258,6 +258,26 @@ class TeamSubmission < ActiveRecord::Base
     app_name || "(unnamed submission)"
   end
 
+  def publish!
+    update(published_at: Time.current)
+
+    team.members.each do |member|
+      TeamMailer.submission_published(team, member, self).deliver_later
+    end
+  end
+
+  def awaiting_publish(&block)
+    if !!!published_at || updated_at.to_date > published_at.to_date
+      yield
+    end
+  end
+
+  def already_published(&block)
+    if !!published_at && updated_at.to_date == published_at.to_date
+      yield
+    end
+  end
+
   def incomplete?
     not complete?
   end

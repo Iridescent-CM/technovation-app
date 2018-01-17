@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :pending_teammates, only: :index
 
     resources :team_submissions
+    resources :team_submission_publications, only: :create
     resources :published_team_submissions, only: :show
     resource :code_checklist, only: :update
     resources :screenshots, only: [:index, :create, :update, :destroy]
@@ -82,6 +83,7 @@ Rails.application.routes.draw do
     resources :teams, except: [:index, :destroy]
     resources :team_memberships, only: :destroy
     resources :team_submissions
+    resources :team_submission_publications, only: :create
     resources :published_team_submissions, only: :show
     resources :team_locations, only: :edit
     resource :honor_code, only: :show
