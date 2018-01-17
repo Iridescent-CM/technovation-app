@@ -1,24 +1,61 @@
 <% submission.while_qualified do %>
-  <p class="scent">
-    <%= web_icon "check-circle", class: "icon--green" %>
-    Great job! Your app is qualified to be submitted for judging!
-  </p>
+  <% submission.awaiting_publish do %>
+    <%= render "team_submissions/qualified_students_reminder",
+      team: submission.team %>
 
-  <p class="scent">
-    <%= web_icon("exclamation-circle", class: "icon--green") %>
-    Even after submitting,
-    <strong>you will be able to make changes</strong>
-    until April 26.
-  </p>
+    <p class="scent">
+      <%= web_icon "check-circle", class: "icon--green" %>
+      Great job! Your app is qualified to be submitted for judging!
+    </p>
 
-  <p>
-    <%= link_to "Submit for judging",
-      [current_scope, :published, submission],
-      class: "button" %>
-  </p>
+    <p class="scent">
+      <%= web_icon("exclamation-circle", class: "icon--green") %>
+      Even after submitting,
+      <strong>you will be able to make changes</strong>
+      until April 26.
+    </p>
+
+    <p>
+      <%= link_to "Submit for judging",
+        [
+          current_scope,
+          :team_submission_publications,
+          { id: submission.to_param },
+        ],
+        data: {
+          method: :post,
+        },
+        class: "button" %>
+    </p>
+  <% end %>
+
+  <% submission.already_published do %>
+    <p class="scent">
+      <%= web_icon "check-circle", class: "icon--green" %>
+      Your app has been entered for judging!
+    </p>
+
+    <p class="scent">
+      <%= web_icon("exclamation-circle", class: "icon--green") %>
+      <strong>You are allowed to make changes</strong> until April 26.
+    </p>
+
+    <p>
+      <%= link_to "View your complete submission",
+        [
+          current_scope,
+          :published_team_submission,
+          { id: submission.to_param },
+        ],
+        class: "button" %>
+    </p>
+  <% end %>
 <% end %>
 
 <% submission.while_unqualified do %>
+  <%= render "team_submissions/qualified_students_reminder",
+    team: submission.team %>
+
   <p class="scent">
     Once your team is fully qualified, and you have finished all of the
     deliverables, you will be able to submit your app for the judging
