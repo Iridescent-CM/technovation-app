@@ -30,6 +30,7 @@ ol {
     }
   }
 
+  &.list--reset,
   &.reset {
     @extend .unstyled;
     margin: 0;
