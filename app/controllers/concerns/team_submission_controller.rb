@@ -11,6 +11,13 @@ module TeamSubmissionController
   def show
     @team_submission = TeamSubmission.friendly.find(params[:id])
     @team = @team_submission.team
+
+    @code_checklist = @team_submission.code_checklist
+
+    unless @code_checklist.present?
+      @code_checklist = @team_submission.build_code_checklist
+    end
+
     SeasonToggles.team_submissions(
       open:   -> { render piece_or_full_edit },
       closed: -> { notify_on_dashboard }

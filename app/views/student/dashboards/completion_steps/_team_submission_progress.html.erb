@@ -8,188 +8,190 @@
   </div>
 </div>
 
-<div class="progress">
-  <div class="progress__section grid grid--bleed">
-    <div class="grid__col-sm-3">
-      <i class="circle green checkmark hover">✓</i>
+<% if SeasonToggles.team_submissions_editable? %>
+  <div class="progress">
+    <div class="progress__section grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <i class="circle green checkmark hover">✓</i>
+      </div>
+
+      <div class="progress__items grid__col-auto">
+        <h1>Start</h1>
+
+        <ol class="list--reset">
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :honor_code,
+              "Honor code"
+            ),
+            [
+              current_scope,
+              :honor_code,
+              team_submission_id: current_team.submission.id,
+            ] %>
+          </li>
+
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :team_photo,
+              "Team photo"
+            ),
+            student_team_path(current_team) %>
+          </li>
+        </ol>
+      </div>
     </div>
 
-    <div class="progress__items grid__col-auto">
-      <h1>Start</h1>
+    <div class="progress__section grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <i class="circle green checkmark scale">✓</i>
+      </div>
 
-      <ol class="list--reset">
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :honor_code,
-            "Honor code"
-          ),
-          [
-            current_scope,
-            :honor_code,
-            team_submission_id: current_team.submission.id,
-          ] %>
-        </li>
+      <div class="progress__items grid__col-auto">
+        <h1>Ideation</h1>
 
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :team_photo,
-            "Team photo"
-          ),
-          student_team_path(current_team) %>
-        </li>
-      </ol>
+        <ol class="list--reset">
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :app_name,
+              "Your app's name"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :app_name
+            ) %>
+          </li>
+
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :app_description,
+              "A description of your app"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :app_description
+            ) %>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="progress__section grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <i class="circle green checkmark scale">✓</i>
+      </div>
+
+      <div class="progress__items grid__col-auto">
+        <h1>Marketing</h1>
+
+        <ol class="list--reset">
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :demo_video,
+              "Demo video"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :demo_video_link
+            ) %>
+          </li>
+
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :screenshots,
+              "2 or more screenshots"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :screenshots
+            ) %>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="progress__section grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <i class="circle orange scale"></i>
+      </div>
+
+      <div class="progress__items grid__col-auto">
+        <h1>Code</h1>
+
+        <ol class="list--reset">
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :development_patform,
+              "Indicate your development platform"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :development_patform
+            ) %>
+          </li>
+
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :source_code,
+              "Upload your source code"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :source_code
+            ) %>
+          </li>
+
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :code_checklist,
+              "Code checklist*"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :code_checklist
+            ) %>
+
+            <small>
+              * The checklist does not have to be complete;<br />
+              &nbsp;&nbsp;
+              However, you may not change it after the deadline.
+            </small>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="progress__section grid grid--bleed">
+      <div class="grid__col-sm-3">
+        <i class="circle grey scale"></i>
+      </div>
+
+      <div class="progress__items grid__col-auto">
+        <h1>Pitch</h1>
+
+        <ol class="list--reset">
+          <li>
+            <%= link_to submission_progress_web_icon(
+              current_team.submission,
+              :pitch_video,
+              "Pitch video"
+            ),
+            student_team_submission_path(
+              current_team.submission,
+              piece: :pitch_video_link
+            ) %>
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
-
-  <div class="progress__section grid grid--bleed">
-    <div class="grid__col-sm-3">
-      <i class="circle green checkmark scale">✓</i>
-    </div>
-
-    <div class="progress__items grid__col-auto">
-      <h1>Ideation</h1>
-
-      <ol class="list--reset">
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :app_name,
-            "Your app's name"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :app_name
-          ) %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :app_description,
-            "A description of your app"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :app_description
-          ) %>
-        </li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="progress__section grid grid--bleed">
-    <div class="grid__col-sm-3">
-      <i class="circle green checkmark scale">✓</i>
-    </div>
-
-    <div class="progress__items grid__col-auto">
-      <h1>Marketing</h1>
-
-      <ol class="list--reset">
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :demo_video,
-            "Demo video"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :demo_video_link
-          ) %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :screenshots,
-            "2 or more screenshots"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :screenshots
-          ) %>
-        </li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="progress__section grid grid--bleed">
-    <div class="grid__col-sm-3">
-      <i class="circle orange scale"></i>
-    </div>
-
-    <div class="progress__items grid__col-auto">
-      <h1>Code</h1>
-
-      <ol class="list--reset">
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :development_patform,
-            "Indicate your development platform"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :development_patform
-          ) %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :source_code,
-            "Upload your source code"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :source_code
-          ) %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :code_checklist,
-            "Code checklist*"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :code_checklist
-          ) %>
-
-          <small>
-            * The checklist does not have to be complete;<br />
-            &nbsp;&nbsp;
-            However, you may not change it after the deadline.
-          </small>
-        </li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="progress__section grid grid--bleed">
-    <div class="grid__col-sm-3">
-      <i class="circle grey scale"></i>
-    </div>
-
-    <div class="progress__items grid__col-auto">
-      <h1>Pitch</h1>
-
-      <ol class="list--reset">
-        <li>
-          <%= link_to submission_progress_web_icon(
-            current_team.submission,
-            :pitch_video,
-            "Pitch video"
-          ),
-          student_team_submission_path(
-            current_team.submission,
-            piece: :pitch_video_link
-          ) %>
-        </li>
-      </ol>
-    </div>
-  </div>
-</div>
+<% end %>

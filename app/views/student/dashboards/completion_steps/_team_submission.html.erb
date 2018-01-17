@@ -7,10 +7,14 @@
     </div>
 
     <% if current_team.submission.present? %>
-      <%= render 'student/dashboards/completion_steps/team_submission_progress',
-        submission: current_team.submission %>
+      <%= render(
+        "student/dashboards/completion_steps/team_submission_progress",
+        submission: current_team.submission
+      ) %>
     <% else %>
-      <%= render 'student/dashboards/completion_steps/start_team_submission' %>
+      <%= render(
+        "student/dashboards/completion_steps/start_team_submission"
+      ) %>
     <% end %>
   </li>
 <% end %>

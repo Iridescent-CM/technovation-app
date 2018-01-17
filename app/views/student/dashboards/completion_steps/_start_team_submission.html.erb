@@ -1,5 +1,6 @@
 <% if SeasonToggles.team_submissions_editable? %>
   <h1 class="content-heading">Start Your Team Submission</h1>
+
   <p>
     You and your teammates can begin submitting your app now!
     As you work through the curriculum, you can upload it in parts.
@@ -13,10 +14,12 @@
   </div>
 <% else %>
   <h1 class="content-heading">Your Team Submission</h1>
+
   <p>
-  Submissions are currently locked. Starting a submission
-  is not available at this time.
+    Submissions are currently locked. Starting a submission
+    is not available at this time.
   </p>
+
   <p>
     Contact
     <%= mail_to ENV.fetch("HELP_EMAIL") %>
