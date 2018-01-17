@@ -18,7 +18,7 @@ module HumanizedActivity
     when "submission.create"
       "created a submission"
     when "submission.update"
-      "updated their team's submission"
+      "updated their submission"
     else
       key
     end

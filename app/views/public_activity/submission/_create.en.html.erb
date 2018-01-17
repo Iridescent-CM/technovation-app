@@ -1,15 +1,15 @@
 <tr>
-  <% if activity.trackable %>
+  <% if activity.recipient %>
     <td>
-      <%= image_tag activity.trackable.profile_image_url,
+      <%= image_tag activity.recipient.team_photo_url,
         class: "thumbnail-xs" %>
     </td>
 
     <td>Submission</td>
 
     <td>
-      <%= link_to activity.trackable.name,
-        [current_scope, activity.trackable],
+      <%= link_to activity.recipient.team_name,
+        [current_scope, activity.recipient.team],
         data: { turbolinks: false } %>
     </td>
   <% else %>

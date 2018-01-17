@@ -47,7 +47,8 @@ class TeamSubmission < ActiveRecord::Base
 
   Division.names.keys.each do |division_name|
     scope division_name, -> {
-      joins(team: :division).where("divisions.name = ?", Division.names[division_name])
+      joins(team: :division)
+        .where("divisions.name = ?", Division.names[division_name])
     }
   end
 
@@ -119,6 +120,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def team_photo_uploaded?
     team.team_photo_url !~ /placeholders/
+  end
+
+  def team_photo_url
+    team.team_photo_url
   end
 
   def max_screenshots_remaining
@@ -248,7 +253,10 @@ class TeamSubmission < ActiveRecord::Base
       self[:app_name].strip
     end
   end
-  alias :name :app_name
+
+  def name
+    app_name || "(unnamed submission)"
+  end
 
   def incomplete?
     not complete?
