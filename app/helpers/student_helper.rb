@@ -12,43 +12,47 @@ module StudentHelper
   end
 
   def completion_css(submission, piece)
-    submission.public_send("#{piece}_complete?") ? "complete" : "incomplete"
+    submission.public_send("#{piece}_complete?") ?
+      "complete" :
+      "incomplete"
   end
 
-  def subprog(submission, step)
-    case step
-    when "team-photo"
-      return 'complete' if submission.team.team_photo.present?
+  def submission_progress_web_icon(submission, piece, text)
+    complete_icon = "check-circle"
+    complete_opts = { class: "icon--green" }
 
-    when "app-info"
-      unless submission.app_name.blank? or submission.app_description.blank?
-        return 'complete'
-      end
+    incomplete_icon = "circle-o"
+    incomplete_opts = {}
 
-    when "pitch"
-      return 'complete' unless submission.pitch_video_link.blank?
+    status = :incomplete
 
-    when "demo"
-      return 'complete' unless submission.demo_video_link.blank?
+    case piece.to_sym
+    when :honor_code
+      status = :complete if submission.present?
+    when :team_photo
+      status = :complete if submission.team_photo_uploaded?
+    when :app_name
+      status = :complete unless submission.app_name.blank?
+    when :app_description
+      status = :complete unless submission.app_description.blank?
+    when :pitch_video
+      status = :complete unless submission.pitch_video_link.blank?
+    when :demo_video
+      status = :complete unless submission.demo_video_link.blank?
+    when :screenshots
+      status = :complete if submission.screenshots.many?
+    when :development_patform
+      status = :complete unless submission.development_platform_text.blank?
+    when :source_code
+      status = :complete unless submission.source_code_url.blank?
+    when :code_checklist
+      status = :complete if submission.code_checklist_complete?
+    end
 
-    when "screenshots"
-      return 'complete' if submission.screenshots.count >= 2
-
-    when "technical-checklist"
-      return 'complete' if submission.technical_checklist_completed?
-
-    when "source-code"
-      return 'complete' unless submission.source_code_url.blank?
-
-    when "development-platform"
-      return 'complete' unless submission.development_platform_text.blank?
-
-    when "business-plan"
-      return 'complete' unless submission.business_plan_url.blank?
-
-    when "pitch-presentation"
-      return 'complete' if submission.pitch_presentation_url_complete?
-
+    if status == :complete
+      web_icon(complete_icon, complete_opts.merge(text: text))
+    else
+      web_icon(incomplete_icon, incomplete_opts.merge(text: text))
     end
   end
 end

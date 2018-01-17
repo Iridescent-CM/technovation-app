@@ -117,6 +117,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def team_photo_uploaded?
+    team.team_photo_url !~ /placeholders/
+  end
+
   def max_screenshots_remaining
     MAX_SCREENSHOTS_ALLOWED - screenshots.persisted.count
   end
