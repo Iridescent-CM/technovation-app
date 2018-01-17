@@ -1,4 +1,19 @@
 class TeamMailer < ApplicationMailer
+  def submission_published(team, member, submission)
+    @team = team
+    @member = member
+    @submission = submission
+    @url = send(
+      "#{@member.scope_name}_published_team_submission_url",
+      submission
+    )
+
+    I18n.with_locale(@member.locale) do
+      mail to: @member.email,
+        subject: "Your submission is ready for judging!"
+    end
+  end
+
   def notify_removed_event(team, member, event)
     @team = team
     @event = event
@@ -8,7 +23,8 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-        subject: "Your RA has removed #{@team.name} from the regional pitch event: #{@event.name}"
+        subject: "Your RA has removed #{@team.name} " +
+                 "from the regional pitch event: #{@event.name}"
     end
   end
 
