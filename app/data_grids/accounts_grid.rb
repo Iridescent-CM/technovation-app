@@ -73,7 +73,7 @@ class AccountsGrid
 
   column :team_names, header: "Team name(s)" do
     if student_profile.present? or mentor_profile.present?
-      teams.map(&:name).to_sentence
+      teams.current.map(&:name).to_sentence
     else
       "-"
     end
