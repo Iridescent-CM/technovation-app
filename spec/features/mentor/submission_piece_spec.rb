@@ -68,7 +68,7 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL",
+    fill_in "Youtube, Vimeo, or Youku URL",
       with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this demo video link"
@@ -96,7 +96,7 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL",
+    fill_in "Youtube, Vimeo, or Youku URL",
       with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this pitch video link"
@@ -113,6 +113,65 @@ RSpec.feature "Students edit submission pieces" do
         href: edit_mentor_team_submission_path(
           submission,
           piece: :pitch_video_link
+        )
+      )
+    end
+  end
+
+  scenario "Set the pitch video with youku" do
+    within(".pitch_video_link.incomplete") do
+      click_link "Add the pitch video link"
+    end
+
+    video_id = "XMzMyNzg3OTY1Mg=="
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://v.youku.com/v_show/id_" +
+            video_id +
+            ".html?spm=a2hww.20027244.m_250036.5~5!2~5~5!2~5~5~A&f=51463715"
+
+    click_button "Save this pitch video link"
+
+    within(".pitch_video_link.complete") do
+      expect(page).not_to have_link("Add your app's description")
+
+      embed_url = "http://player.youku.com/embed/#{video_id}"
+
+      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_link(
+        "Change the pitch video link",
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :pitch_video_link
+        )
+      )
+    end
+  end
+
+  scenario "Set the demo video with youku" do
+    within(".demo_video_link.incomplete") do
+      click_link "Add the demo video link"
+    end
+
+    video_id = "XMzMyNzg3OTY1Mg=="
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://v.youku.com/v_show/id_" +
+            video_id +
+            ".html?spm=a2hww.20027244." +
+            "m_250036.5~5!2~5~5!2~5~5~A&f=51463715"
+
+    click_button "Save this demo video link"
+
+    within(".demo_video_link.complete") do
+      expect(page).not_to have_link("Add your app's description")
+
+      embed_url = "http://player.youku.com/embed/#{video_id}"
+
+      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_link(
+        "Change the demo video link",
+        href: edit_mentor_team_submission_path(
+          submission,
+          piece: :demo_video_link
         )
       )
     end

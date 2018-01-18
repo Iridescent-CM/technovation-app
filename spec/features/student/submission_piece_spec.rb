@@ -53,7 +53,10 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_content "Only a few sentences"
       expect(page).to have_link(
         "Change your app's description",
-        href: edit_student_team_submission_path(submission, piece: :app_description)
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :app_description
+        )
       )
     end
   end
@@ -64,18 +67,24 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this demo video link"
 
     within(".demo_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      embed_url = "https://www.youtube.com/embed/" +
+                  video_id +
+                  "?rel=0&cc_load_policy=1"
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(
         "Change the demo video link",
-        href: edit_student_team_submission_path(submission, piece: :demo_video_link)
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :demo_video_link
+        )
       )
     end
   end
@@ -86,18 +95,24 @@ RSpec.feature "Students edit submission pieces" do
     end
 
     video_id = "qQTVuRrZO8w"
-    fill_in "Youtube or Vimeo URL", with: "https://www.youtube.com/watch?v=#{video_id}"
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://www.youtube.com/watch?v=#{video_id}"
 
     click_button "Save this pitch video link"
 
     within(".pitch_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/#{video_id}?rel=0&cc_load_policy=1"
+      embed_url = "https://www.youtube.com/embed/" +
+                  video_id +
+                  "?rel=0&cc_load_policy=1"
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(
         "Change the pitch video link",
-        href: edit_student_team_submission_path(submission, piece: :pitch_video_link)
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :pitch_video_link
+        )
       )
     end
   end
