@@ -11,7 +11,8 @@
       <% if profile.consent_signed? %>
         <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
       <% else %>
-        <%= web_icon("exclamation-circle icon-red", text: "Not signed... boo...") %>
+        <%= web_icon("exclamation-circle icon-red",
+                     text: "Not signed... boo...") %>
       <% end %>
     </dd>
 
@@ -63,7 +64,7 @@
 
       <p>
         <%= select_tag "team_id",
-            options_from_collection_for_select(Team.current, "id", "name"),
+            options_from_collection_for_select(@teams, "id", "name"),
             prompt: "Select a team",
             required: true,
             class: "chosen" %>

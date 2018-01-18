@@ -10,6 +10,7 @@ module RegionalAmbassador
 
     def show
       @account = Account.in_region(current_ambassador).find(params[:id])
+      @teams = Team.current.in_region(current_ambassador)
     end
 
     private

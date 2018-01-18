@@ -6,6 +6,7 @@ module Admin
 
     def show
       @account = Account.find(params.fetch(:id))
+      @teams = Team.current
     end
 
     def edit
@@ -24,7 +25,11 @@ module Admin
         id: params.fetch(:id),
       }.merge(account_params)
 
-      if ProfileUpdating.execute(profile, @account.scope_name, profile_params)
+      if ProfileUpdating.execute(
+          profile,
+          @account.scope_name,
+          profile_params
+      )
         redirect_to admin_participant_path(@account),
           success: "You updated #{@account.full_name}'s account"
       else
