@@ -135,7 +135,7 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit student_dashboard_path
         within("#your-submission") do
-          expect(page).not_to have_content("submissions are not editable")
+          expect(page).not_to have_content("Submissions are not editable")
           expect(page).to have_link(
             "Your app's name",
             href: student_team_submission_path(
@@ -169,7 +169,7 @@ RSpec.feature "Toggling editable team submissions" do
       scenario "try to edit an existing submission" do
         create_authenticated_user_on_team(:student, submission: true)
 
-        expect(page).to have_content("submissions are not editable")
+        expect(page).to have_content("Submissions are not editable")
         expect(page).not_to have_link("Your app's name")
 
         visit student_team_submission_path(team.reload.submission)
