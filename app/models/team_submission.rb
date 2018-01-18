@@ -267,13 +267,13 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def awaiting_publish(&block)
-    if !!!published_at || updated_at.to_date > published_at.to_date
+    if !!!published_at || updated_at.to_i > published_at.to_i
       yield
     end
   end
 
   def already_published(&block)
-    if !!published_at && updated_at.to_date == published_at.to_date
+    if !!published_at && updated_at.to_i == published_at.to_i
       yield
     end
   end
