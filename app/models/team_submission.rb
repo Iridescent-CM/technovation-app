@@ -380,6 +380,16 @@ class TeamSubmission < ActiveRecord::Base
           mozallowfullscreen
           allowfullscreen>
         </iframe>}.strip_heredoc
+    elsif send(method) and send(method).match(/youku/)
+      id = send(method)[/id_(.+)\.html/, 1]
+
+      %{<iframe
+          height="498"
+          width="100%"
+          src="http://player.youku.com/embed/#{id}"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>}.strip_heredoc
     else
       ""
     end
