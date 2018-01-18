@@ -12,7 +12,7 @@
       <%= web_icon("exclamation-circle", class: "icon--green") %>
       Even after submitting,
       <strong>you will be able to make changes</strong>
-      until April 26.
+      until <%= Season.deadline %>.
     </p>
 
     <p>
@@ -37,7 +37,7 @@
 
     <p class="scent">
       <%= web_icon("exclamation-circle", class: "icon--green") %>
-      <strong>You are allowed to make changes</strong> until April 26.
+      <strong>You are allowed to make changes</strong> until <%= Season.deadline %>.
     </p>
 
     <p>
@@ -66,7 +66,7 @@
     <%= web_icon("exclamation-circle", class: "icon--green") %>
     Even after submitting,
     <strong>you will be able to make changes</strong>
-    until April 26.
+    until <%= Season.deadline %>.
   </p>
 
   <p>
