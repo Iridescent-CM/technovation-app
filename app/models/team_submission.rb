@@ -384,7 +384,7 @@ class TeamSubmission < ActiveRecord::Base
       id = send(method)[/id_(.+)\.html/, 1]
 
       %{<iframe
-          height="498"
+          height="348"
           width="100%"
           src="http://player.youku.com/embed/#{id}"
           frameborder="0"
