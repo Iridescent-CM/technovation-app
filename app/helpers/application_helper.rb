@@ -28,6 +28,12 @@ module ApplicationHelper
     end
   end
 
+  def before_submissions_are_open(&block)
+    if Date.current < Date.new(2018, 4, 25)
+      yield
+    end
+  end
+
   def locale_names
     I18n.available_locales.map do |locale|
       [I18n.t('language', locale: locale), locale.to_s]
