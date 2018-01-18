@@ -71,9 +71,29 @@ class AccountsGrid
     end
   end
 
-  column :background_check, if: ->(g) { g.admin or Array(g.country)[0] == "US" } do
+  column :team_names, header: "Team name(s)" do
+    if student_profile.present? or mentor_profile.present?
+      teams.map(&:name).to_sentence
+    else
+      "-"
+    end
+  end
+
+  column :filled_out_bio, header: "Filled out bio?" do
+    if mentor_profile.present?
+      mentor_profile.bio.blank? ? "No" : "Yes"
+    else
+      "-"
+    end
+  end
+
+  column :background_check, if: ->(g) {
+    g.admin or Array(g.country)[0] == "US"
+  } do
     if country == "US" and mentor_profile.present?
-      background_check.present? ? background_check.status : "not submitted"
+      background_check.present? ?
+        background_check.status :
+        "not submitted"
     elsif mentor_profile.present?
       "-"
     else
