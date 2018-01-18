@@ -18,6 +18,23 @@ class MentorController < ApplicationController
     "mentor"
   end
 
+  def current_team
+    if id = params&.dig(:team_submission, :id)
+      @current_team ||= current_mentor.teams
+        .joins(:submission)
+        .where("team_submissions.id = ?", id)
+        .first ||
+          raise(
+            ActiveRecord::RecordNotFound,
+            "team not found with id: #{id}"
+          )
+    elsif team_id = params.fetch(:team_id)
+      @current_team ||= current_mentor.teams.find(team_id)
+    else
+      raise(KeyError, "missing key for team_submission[id]")
+    end
+  end
+
   private
   def current_mentor
     @current_mentor ||= current_account.mentor_profile ||
@@ -45,22 +62,5 @@ class MentorController < ApplicationController
 
   def current_profile_type
     "MentorProfile"
-  end
-
-  def current_team
-    if id = params&.dig(:team_submission, :id)
-      @current_team ||= current_mentor.teams
-        .joins(:submission)
-        .where("team_submissions.id = ?", id)
-        .first ||
-          raise(
-            ActiveRecord::RecordNotFound,
-            "team not found with id: #{id}"
-          )
-    elsif team_id = params.fetch(:team_id)
-      @current_team ||= current_mentor.teams.find(team_id)
-    else
-      raise(KeyError, "missing key for team_submission[id]")
-    end
   end
 end
