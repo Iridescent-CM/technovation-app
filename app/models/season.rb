@@ -5,6 +5,10 @@ class Season
     @year = year
   end
 
+  def self.deadline
+    "April 25"
+  end
+
   def self.years
     (2015..Season.current.year).to_a
   end
