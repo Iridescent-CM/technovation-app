@@ -6,9 +6,10 @@
   </div>
 
   <div class="grid__col-9">
-    <% if admin %>
+    <% if admin_ra %>
       <h5 class="reset">
-        <%= link_to member.full_name, admin_participant_path(member.account) %>
+        <%= link_to member.full_name,
+          [current_scope, :participant, { id: member.account_id }] %>
       </h5>
     <% else %>
       <h5 class="reset"><%= member.full_name %></h5>

@@ -2,7 +2,10 @@
 
 <ul class="reset">
   <%= render partial: "teams/member",
-    collection: team.students.onboarded %>
+    collection: team.students.onboarded,
+    locals: {
+      admin_ra: admin_ra,
+    } %>
 </ul>
 
 <% if team.students.onboarding.any? %>
@@ -11,7 +14,8 @@
   <h3 class="reset">Pending students</h3>
 
   <p class="hint">
-    These students are listed on your team, but are not yet eligible to compete.
+    These students are listed on your team,
+    but are not yet eligible to compete.
   </p>
 
   <ul class="reset">

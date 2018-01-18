@@ -2,7 +2,11 @@
 
 <% if team.mentors.any? %>
   <ul class="reset">
-    <%= render partial: "teams/member", collection: team.mentors %>
+    <%= render partial: "teams/member",
+      collection: team.mentors,
+      locals: {
+        admin_ra: admin_ra,
+      } %>
   </ul>
 <% else %>
   <div class="grid grid--bleed">
