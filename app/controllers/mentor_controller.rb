@@ -3,7 +3,7 @@ class MentorController < ApplicationController
   include Authenticated
 
   layout "mentor"
-  helper_method :current_mentor, :current_profile
+  helper_method :current_mentor, :current_profile, :current_team
 
   before_action -> {
     set_last_profile_used("mentor")
@@ -26,7 +26,17 @@ class MentorController < ApplicationController
         .first ||
           raise(
             ActiveRecord::RecordNotFound,
-            "team not found with id: #{id}"
+            "team not found with submission id: #{id}"
+          )
+    elsif friendly_id = params[:id]
+      submission = TeamSubmission.friendly.find(friendly_id)
+      @current_team ||= current_mentor.teams
+        .joins(:submission)
+        .where("team_submissions.id = ?", submission.id)
+        .first ||
+          raise(
+            ActiveRecord::RecordNotFound,
+            "team not found with submission id: #{submission.id}"
           )
     elsif team_id = params.fetch(:team_id)
       @current_team ||= current_mentor.teams.find(team_id)
