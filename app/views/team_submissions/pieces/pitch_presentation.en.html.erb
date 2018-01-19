@@ -1,0 +1,83 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <h3 class="panel--heading">
+        Pitch presentation slides
+      </h3>
+
+      <% if @team.selected_regional_pitch_event.live? %>
+        <% if @team_submission.pitch_presentation_url_complete? %>
+          <div class="field__existing-value">
+            Your team has uploaded:
+            <%= link_to @team_submission.pitch_presentation_filename,
+              @team_submission.pitch_presentation_url %>
+          </div>
+        <% end %>
+
+        <p class="hint">File types allowed: *.ppt, *.pptx, *.pdf</p>
+
+        <%= form_with model: [current_scope, @team_submission],
+          multipart: true,
+          id: "team-submission-business-plan-dropzone",
+          class: "dropzone" do |f| %>
+          <%= f.hidden_field "pitch_presentation_attributes[id]",
+            value: @team_submission.pitch_presentation.id %>
+
+          <div class="fallback">
+            <%= f.fields_for :pitch_presentation do |b| %>
+              <%= b.label :uploaded_file,
+                "Upload your team's presentation slides" %>
+
+              <%= b.file_field :uploaded_file,
+                id: "team_submission_pitch_presentation_attributes_" +
+                    "uploaded_file" %>
+            <% end %>
+
+            <%= f.submit "Upload", class: "button" %>
+          </div>
+        <% end %>
+
+        <p class="dropzone-save" style="display: none;">
+          <%= link_to "Save this upload",
+            [current_scope, @team_submission],
+            class: "button" %>
+        </p>
+
+        <p class="after-dropzone-save">
+          <%= link_to "cancel", [current_scope, @team_submission] %>
+        </p>
+
+        <p class="grid__cell--padding-sm-y">
+          Get some help putting your slides together in the
+          <%= link_to(
+            ":FIXME LINK TO PRESENTATION SLIDES CURRICULUM UNIT:",
+            "#",
+            target: "_blank"
+          ) %>
+        </p>
+      <% else %>
+        <p class="scent--strong">
+          Your team is not set to attend a live regional pitch event.
+        </p>
+
+        <p>
+          In March and April,
+          Regional Ambassadors will invite teams
+          to pitch at a live event.
+        </p>
+
+        <p>
+          If your team is invited,
+          then you will be required to upload
+          your pitch presentation slides here.
+        </p>
+
+        <p class="scent">
+          (pitching at a live regional event is not required)
+        </p>
+
+        <%= link_to "go back", [current_scope, @team_submission] %>
+      <% end %>
+    </div>
+  </div>
+</div>
