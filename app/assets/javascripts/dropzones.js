@@ -29,6 +29,12 @@ function attachSuccess(el) {
 
     $(file.previewElement).addClass("remove-with-" + res.dom_id);
   });
+
+  el.on("addedfile", function(file) {
+    $(file.previewElement).addClass(
+      "remove-with-" + $(file).data("dom-id")
+    );
+  });
 }
 
 function attachRemovedFile(el) {
@@ -77,7 +83,7 @@ function activateDropzones() {
 function updateScreenshots() {
   var maxFiles = 6 - $("#sortable-list li").length;
 
-  $("#sortable-list").data("maxFiles", maxFiles);
+  var screenshotDZ;
 
   Dropzone.options.teamSubmissionScreenshotsDropzone = $.extend(
     {},
@@ -85,7 +91,7 @@ function updateScreenshots() {
     {
       method: "POST",
       paramName: "team_submission[screenshots_attributes][][image]",
-      maxFiles: $("#sortable-list").data("maxFiles"),
+      maxFiles: maxFiles,
       acceptedFiles: ".jpg,.jpeg,.gif,.png",
 
       success: function(file) {
@@ -130,7 +136,28 @@ function updateScreenshots() {
       },
 
       init: function() {
+        screenshotDZ = this;
         defaultInit(this);
+
+        $("#sortable-list li img").each(function() {
+          var filename = $(this).prop("src").replace(/^.*[\\\/]/, '');
+
+          var mockFile = {
+            name: filename,
+            size: $(this).data("file-size"),
+          };
+
+          $(mockFile).data("dom-id", $(this).data("dom-id"));
+
+          screenshotDZ.emit("addedfile", mockFile);
+          screenshotDZ.emit("complete", mockFile);
+          screenshotDZ.emit(
+            "thumbnail",
+            mockFile,
+            $(this).data("thumb-url")
+          );
+        });
+
         displayDzMessage();
 
         $(document).on(
@@ -144,24 +171,38 @@ function updateScreenshots() {
 
   function displayDzMessage() {
     var maxScreenshotsRemaining = 6 - $("#sortable-list li").length,
-        notOne = maxScreenshotsRemaining != 1,
-        prefix = notOne ? "up to " : "",
-        postfix = notOne ? "s" : "";
+        html = "";
 
-    var html = "Drag and drop " +
-               prefix +
-               maxScreenshotsRemaining +
-               " screenshot" + postfix +
-               " here, " +
-               "<br />or " +
-               "<a class='button small'>" +
-               "select " +
-               prefix +
-               maxScreenshotsRemaining +
-               " screenshot" + postfix +
-               "</a>";
+    screenshotDZ.options.maxFiles = maxScreenshotsRemaining;
 
-    $("#sortable-list").data("maxFiles", maxScreenshotsRemaining);
+    if (maxScreenshotsRemaining > 0) {
+      var notOne = maxScreenshotsRemaining != 1,
+          prefix = notOne ? "up to " : "",
+          postfix = notOne ? "s" : "";
+
+      screenshotDZ.enable();
+
+      html = "Drag and drop ";
+      html += prefix;
+      html += maxScreenshotsRemaining;
+      html += " screenshot" + postfix;
+      html += " here, ";
+      html += "<br />or ";
+      html += "<a class='button small'>";
+      html += "select ";
+      html += prefix;
+      html += maxScreenshotsRemaining;
+      html += " screenshot";
+      html += postfix;
+      html += "</a>";
+    } else {
+      screenshotDZ.disable();
+      html = "<p>";
+      html += "Your team has uploaded the most screenshots allowed. ";
+      html += "If you want to add more, you have to remove some first.";
+      html += "</p>";
+    }
+
     $(".dz-message span").html(html);
   }
 }
