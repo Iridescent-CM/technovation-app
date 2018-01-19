@@ -137,3 +137,6 @@
   font-weight: bold;
   color: $alert-txt;
 }
+.icon--orange {
+  color: $orange;
+}

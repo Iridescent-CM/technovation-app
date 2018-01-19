@@ -14,11 +14,12 @@
     li {
       width: auto;
 
-      .icon-circle-o {
-        color: $orange;
+      .not-required {
+        color: black;
       }
 
-      .icon-check-circle + .web-icon-text {
+      .icon-check-circle + .web-icon-text,
+      .not-required + .web-icon-text {
         color: black;
 
         &:hover {

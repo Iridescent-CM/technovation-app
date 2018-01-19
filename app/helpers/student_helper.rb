@@ -22,7 +22,9 @@ module StudentHelper
     complete_opts = { class: "icon--green" }
 
     incomplete_icon = "circle-o"
-    incomplete_opts = {}
+    incomplete_opts = { class: "icon--orange" }
+
+    not_required_opts = { class: "not-required" }
 
     status = :incomplete
 
@@ -47,10 +49,21 @@ module StudentHelper
       status = :complete unless submission.source_code_url.blank?
     when :code_checklist
       status = :complete if submission.code_checklist_complete?
+    when :business_plan
+      status = :complete unless submission.business_plan_url.blank?
+      status = :not_required if submission.junior_division?
+    when :pitch_presentation
+      status = :complete unless submission.pitch_presentation_url.blank?
+
+      unless submission.team.selected_regional_pitch_event.live?
+        status = :not_required
+      end
     end
 
     if status == :complete
       web_icon(complete_icon, complete_opts.merge(text: text))
+    elsif status == :not_required
+      web_icon(incomplete_icon, not_required_opts.merge(text: text))
     else
       web_icon(incomplete_icon, incomplete_opts.merge(text: text))
     end
