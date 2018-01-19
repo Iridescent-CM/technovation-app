@@ -135,7 +135,7 @@ RSpec.feature "Students edit submission pieces" do
     within(".pitch_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "http://player.youku.com/embed/#{video_id}"
+      embed_url = "https://player.youku.com/embed/#{video_id}"
 
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(
@@ -162,7 +162,7 @@ RSpec.feature "Students edit submission pieces" do
     within(".demo_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "http://player.youku.com/embed/#{video_id}"
+      embed_url = "https://player.youku.com/embed/#{video_id}"
 
       expect(page).to have_css "iframe[src='#{embed_url}']"
       expect(page).to have_link(

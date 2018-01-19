@@ -386,7 +386,7 @@ class TeamSubmission < ActiveRecord::Base
       %{<iframe
           height="348"
           width="100%"
-          src="http://player.youku.com/embed/#{id}"
+          src="https://player.youku.com/embed/#{id}"
           frameborder="0"
           allowfullscreen>
         </iframe>}.strip_heredoc
