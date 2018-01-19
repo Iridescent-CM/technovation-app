@@ -11,6 +11,7 @@ module Student
       end
 
       @team_submission = current_team.submission
+      @team = current_team
 
       if params[:attributes]
         JSON.parse(params[:attributes]).each do |k, v|
