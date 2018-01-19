@@ -137,7 +137,7 @@ RSpec.feature "Students edit submission pieces" do
 
       embed_url = "https://player.youku.com/embed/#{video_id}"
 
-      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_css "iframe[src*='#{embed_url}']"
       expect(page).to have_link(
         "Change the pitch video link",
         href: edit_mentor_team_submission_path(
@@ -164,7 +164,7 @@ RSpec.feature "Students edit submission pieces" do
 
       embed_url = "https://player.youku.com/embed/#{video_id}"
 
-      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_css "iframe[src*='#{embed_url}']"
       expect(page).to have_link(
         "Change the demo video link",
         href: edit_mentor_team_submission_path(
