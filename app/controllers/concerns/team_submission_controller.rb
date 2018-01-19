@@ -18,6 +18,10 @@ module TeamSubmissionController
       @code_checklist = @team_submission.build_code_checklist
     end
 
+    unless @team_submission.business_plan.present?
+      @team_submission.build_business_plan
+    end
+
     SeasonToggles.team_submissions(
       open:   -> { render piece_or_full_edit },
       closed: -> { notify_on_dashboard }
