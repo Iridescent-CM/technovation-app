@@ -123,11 +123,12 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Add the pitch video link"
     end
 
-    video_id = "XMzMyNzg3OTY1Mg=="
+    video_id = "XMzMyNzg3OTY1Mg"
     fill_in "Youtube, Vimeo, or Youku URL",
       with: "https://v.youku.com/v_show/id_" +
             video_id +
-            ".html?spm=a2hww.20027244.m_250036.5~5!2~5~5!2~5~5~A&f=51463715"
+            "==.html?spm=a2hww.20027244." +
+            "m_250036.5~5!2~5~5!2~5~5~A&f=51463715"
 
     click_button "Save this pitch video link"
 
@@ -152,12 +153,9 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Add the demo video link"
     end
 
-    video_id = "XMzMyNzg3OTY1Mg=="
+    video_id = "XMzMyNzg3OTY1Mg"
     fill_in "Youtube, Vimeo, or Youku URL",
-      with: "https://v.youku.com/v_show/id_" +
-            video_id +
-            ".html?spm=a2hww.20027244." +
-            "m_250036.5~5!2~5~5!2~5~5~A&f=51463715"
+      with: "https://v.youku.com/v_show/id_#{video_id}"
 
     click_button "Save this demo video link"
 

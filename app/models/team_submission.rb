@@ -381,7 +381,7 @@ class TeamSubmission < ActiveRecord::Base
           allowfullscreen>
         </iframe>}.strip_heredoc
     elsif send(method) and send(method).match(/youku/)
-      id = send(method)[/id_(.+)\.html/, 1]
+      id = send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1]
 
       %{<iframe
           height="348"
