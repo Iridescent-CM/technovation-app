@@ -26,6 +26,7 @@
 
   <%= f.input :development_platform,
     collection: TeamSubmission.development_platforms.keys %>
+
   <%= f.input :development_platform_other %>
 
   <%= f.fields_for :business_plan do |b| %>
