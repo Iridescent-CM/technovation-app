@@ -27,7 +27,7 @@ RSpec.feature "admin team submissions" do
   scenario "View a specific submission" do
     click_link "view"
 
-    expect(current_path).to eq(admin_team_submission_path(submission))
+    expect(current_path).to eq(admin_team_submission_path(submission.reload))
     expect(page).to have_content("Cool team")
   end
 
@@ -41,7 +41,7 @@ RSpec.feature "admin team submissions" do
     select "Swift or XCode", from: "Development platform"
 
     click_button "Save"
-    expect(current_path).to eq(admin_team_submission_path(submission))
+    expect(current_path).to eq(admin_team_submission_path(submission.reload))
     expect(page).to have_content("A great description for the ages")
     expect(page).to have_content("Swift or XCode")
   end

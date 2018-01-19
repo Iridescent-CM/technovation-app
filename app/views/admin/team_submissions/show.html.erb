@@ -83,7 +83,7 @@
       <h5>Source code</h5>
 
       <% if @team_submission.source_code_url %>
-        <%= link_to @team_submission.source_code_url,
+        <%= link_to @team_submission.source_code_identifier,
           @team_submission.source_code_url,
           target: :_blank %>
       <% else %>

@@ -13,6 +13,14 @@ module Admin
     end
 
     def update
+      @team_submission = TeamSubmission.friendly.find(params[:id])
+
+      if @team_submission.update(team_submission_params)
+        redirect_to [:admin, @team_submission],
+          success: "Submission has been updated"
+      else
+        render :edit
+      end
     end
 
     private
@@ -26,6 +34,15 @@ module Admin
 
       grid.merge(
         column_names: detect_extra_columns(grid),
+      )
+    end
+
+    def team_submission_params
+      params.require(:team_submission).permit(
+        :app_name,
+        :app_description,
+        :source_code,
+        :development_platform,
       )
     end
   end

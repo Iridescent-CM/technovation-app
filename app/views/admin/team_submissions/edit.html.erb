@@ -13,15 +13,15 @@
   <%= f.input :pitch_video_link %>
 
   <div class="form-group">
-    <h3>Source code</h3>
 
-    <% if @team_submission.source_code %>
-      <%= link_to @team_submission.source_code_url,
+    <% if @team_submission.source_code_url %>
+      <%= link_to @team_submission.source_code_identifier,
         @team_submission.source_code_url,
         target: :_blank %>
     <% end %>
 
     <%= f.input :source_code %>
+    <%= f.hidden_field :source_code_cache %>
   </div>
 
   <%= f.input :development_platform,
