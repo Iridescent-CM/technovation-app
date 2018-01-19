@@ -90,11 +90,13 @@ class TechnicalChecklist < ActiveRecord::Base
   end
 
   def total_mobile_components
-    mobile_components.reject { |m| send(m).blank? }.count
+    mobile_components.reject { |m| send(m).blank? }.count * 2
   end
 
   def completed_pics_of_process?
-    paper_prototype and event_flow_chart and team_submission.screenshots.count >= 2
+    paper_prototype and
+      event_flow_chart and
+      team_submission.screenshots.count >= 2
   end
 
   private
