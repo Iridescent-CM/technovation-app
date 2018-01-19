@@ -3,9 +3,10 @@
 <div class="grid">
   <div class="grid__col-3 col--sticky-parent">
     <div class="col--sticky-spacer">
-      <div class="col--sticky">
+      <div class="submission__sidebar col--sticky">
         <%= render "team_submissions/menu",
-          submission: @team_submission %>
+          submission: @team_submission,
+          embedded: true %>
       </div>
     </div>
   </div>

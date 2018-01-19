@@ -39,42 +39,13 @@
   }
 }
 
-#team_submissions__menu {
-  a {
-    color: #000;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    .icon-check-circle {
-      color: $shamrock;
-    }
-
-    > span {
-      display: block;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      max-width: 600px;
-
-      .web-icon-text {
-        display: inline;
+.submission__sidebar {
+  .progress {
+    .progress__section {
+      h1 {
+        font-size: 1.2rem;
       }
     }
-  }
-
-  .incomplete {
-    opacity: 0.7;
-
-    .icon-check-circle:before {
-      opacity: 0.7;
-      color: #000;
-      content: "\f10c";
-    }
-  }
-
-  .hint {
-    margin: 0.5rem 0 0 1rem;
   }
 }
 

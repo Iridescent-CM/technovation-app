@@ -1,48 +1,167 @@
-<nav id="team_submissions__menu" class="menu">
-  <%= link_to web_icon("check-circle", text: "App name"),
-    { anchor: "#{dom_id(submission)}_app_name" },
-    class: completion_css(submission, :app_name) %>
+<% embedded ||= false %>
 
-  <%= link_to web_icon("check-circle", text: "Description"),
-    { anchor: "#{dom_id(submission)}_app_description" },
-    class: completion_css(submission, :app_description) %>
+<div class="progress">
+  <div class="progress__section">
+    <h1>Start</h1>
 
-  <%= link_to web_icon("check-circle", text: "Demo video"),
-    { anchor: "#{dom_id(submission)}_demo_video_link" },
-    class: completion_css(submission, :demo_video_link) %>
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :honor_code,
+          "Honor code"
+        ),
+        [
+          current_scope,
+          :honor_code,
+          team_submission_id: submission.id,
+        ] %>
+      </li>
 
-  <%= link_to web_icon("check-circle", text: "Pitch video"),
-    { anchor: "#{dom_id(submission)}_pitch_video_link" },
-    class: completion_css(submission, :pitch_video_link) %>
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :team_photo,
+          "Team photo"
+        ),
+        [current_scope, current_team] %>
+      </li>
+    </ol>
+  </div>
 
-  <%= link_to web_icon("check-circle", text: "Development platform"),
-    { anchor: "#{dom_id(submission)}_development_platform" },
-    class: completion_css(
-      submission,
-      :development_platform
-    ) %>
+  <div class="progress__section">
+    <h1>Ideation</h1>
 
-  <%= link_to web_icon("check-circle", text: "Source code"),
-    { anchor: "#{dom_id(submission)}_source_code" },
-    class: completion_css(submission, :source_code_url) %>
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :app_name,
+          "Your app's name"
+        ),
+        [current_scope, submission, piece: :app_name] %>
+      </li>
 
-  <%= link_to web_icon("check-circle", text: "Screenshots"),
-    { anchor: "#{dom_id(submission)}_screenshots" },
-    class: completion_css(submission, :screenshots) %>
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :app_description,
+          "A description of your app"
+        ),
+        [current_scope, submission, piece: :app_description] %>
+      </li>
+    </ol>
+  </div>
 
-  <%= link_to web_icon("check-circle", text: "Code checklist"),
-    { anchor: "#{dom_id(submission)}_code_checklist" },
-    class: completion_css(submission, :code_checklist) %>
+  <div class="progress__section">
+    <h1>Marketing</h1>
 
-  <p class="hint">senior teams only:</p>
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :demo_video,
+          "Demo video"
+        ),
+        [current_scope, submission, piece: :demo_video_link] %>
+      </li>
 
-  <%= link_to web_icon("check-circle", text: "Business plan"),
-    { anchor: "#{dom_id(submission)}_business_plan" },
-    class: completion_css(submission, :business_plan_url) %>
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :screenshots,
+          "2 or more screenshots"
+        ),
+        [current_scope, submission, piece: :screenshots] %>
+      </li>
+    </ol>
+  </div>
 
-  <p class="hint">teams attending live pitch events:</p>
+  <div class="progress__section">
+    <h1>Code</h1>
 
-  <%= link_to web_icon("check-circle", text: "Presentation slides"),
-    { anchor: "#{dom_id(submission)}_pitch_presentation" },
-    class: completion_css(submission, :pitch_presentation_url) %>
-</nav>
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :development_platform,
+          "Development platform"
+        ),
+        [current_scope, submission, piece: :development_platform] %>
+      </li>
+
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :source_code,
+          "Upload your source code"
+        ),
+        [current_scope, submission, piece: :source_code] %>
+      </li>
+
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :code_checklist,
+          "Code checklist*"
+        ),
+        [current_scope, submission, piece: :code_checklist] %>
+
+        <% unless embedded %>
+          <small>
+            * The checklist does not have to be complete;<br />
+            &nbsp;&nbsp;
+            However, you may not change it after the deadline.
+          </small>
+        <% end %>
+      </li>
+    </ol>
+  </div>
+
+  <div class="progress__section">
+    <h1>Business</h1>
+
+    <ol class="list--reset">
+      <li>
+        <small>
+          senior division teams only:
+        </small>
+
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :business_plan,
+          "Upload your business plan"
+        ),
+        [current_scope, submission, piece: :business_plan] %>
+      </li>
+    </ol>
+  </div>
+
+  <div class="progress__section">
+    <h1>Pitch</h1>
+
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :pitch_video,
+          "Pitch video"
+        ),
+        [current_scope, submission, piece: :pitch_video_link] %>
+      </li>
+
+      <li>
+        <small>
+          only if attending a live, regional event:
+        </small>
+
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :pitch_presentation_url,
+          "Presentation slides"
+        ),
+        [current_scope, submission, piece: :pitch_presentation] %>
+      </li>
+    </ol>
+  </div>
+</div>
