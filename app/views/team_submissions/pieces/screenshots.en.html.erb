@@ -1,5 +1,5 @@
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
+  <div class="grid__col-3">
     <div class="panel">
       <h3 class="panel--heading">Screenshots</h3>
 
@@ -42,7 +42,9 @@
         <%= link_to "cancel", [current_scope, @team_submission] %>
       </p>
     </div>
+  </div>
 
+  <div class="grid__col-9">
     <div id="screenshots" class="panel">
       <% @team_submission.while_has_screenshots do %>
         <p>

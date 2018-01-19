@@ -13,7 +13,10 @@
     alt: screenshot.image_identifier,
     data: {
       image_id: screenshot.id,
+      dom_id: dom_id(screenshot),
       modal_url: screenshot.image_url(:large),
+      thumb_url: screenshot.image_url(:thumb),
+      file_size: screenshot.image.file.size,
     },
     class: img_css,
     width: "100%" %>

@@ -16,10 +16,15 @@ class ScreenshotProcessor < CarrierWave::Uploader::Base
     process resize_to_limit: [1024, 768]
   end
 
+  version :thumb do
+    process resize_to_fill: [120, 136]
+  end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   #
-  # Provide a default URL as a default if there hasn't been a file uploaded:
+  # Provide a default URL as a default if there
+  # hasn't been a file uploaded:
   # def default_url
   # end
 
