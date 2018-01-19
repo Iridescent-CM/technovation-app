@@ -22,7 +22,7 @@ class TechnicalChecklist < ActiveRecord::Base
   def completed?
     total_technical_components >= 4 and
       total_database_components >= 1 and
-        total_mobile_components >= 1 and
+        total_mobile_components >= 2 and
           completed_pics_of_process?
   end
 
