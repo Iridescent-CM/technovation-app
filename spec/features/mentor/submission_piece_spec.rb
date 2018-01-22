@@ -289,6 +289,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload 2 .jpg screenshots" do
+    skip "Vue is handling screenshot uploads..."
+
     within(".screenshots.incomplete") do
       click_link "Upload screenshots of your app"
     end
