@@ -1,0 +1,64 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h1 class="heading--page">
+      Submission section: Marketing
+    </h1>
+  </div>
+</div>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-4">
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Demo video",
+      scope: current_scope,
+      attribute: :demo_video_link,
+      yield_block: true,
+      cta_when_empty: "Add the demo video link",
+      cta_when_filled: "Change the demo video link" do %>
+      <%= @team_submission.embed_code(:demo_video_link).html_safe %>
+    <% end %>
+  </div>
+
+  <div class="grid__col-sm-4">
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Pitch video",
+      scope: current_scope,
+      yield_block: true,
+      attribute: :pitch_video_link,
+      cta_when_empty: "Add the pitch video link",
+      cta_when_filled: "Change the pitch video link" do %>
+      <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
+    <% end %>
+  </div>
+
+  <div class="grid__col-sm-4">
+    <%= render 'team_submissions/pieces/piece',
+      submission: @team_submission,
+      title: "Screenshots",
+      scope: current_scope,
+      yield_block: true,
+      attribute: :screenshots,
+      cta_when_empty: "Upload screenshots of your app",
+      cta_when_filled: "Make changes to your screenshots" do %>
+      <p>
+        Your team has uploaded
+        <strong>
+          <%= pluralize(
+            @team_submission.screenshots.persisted.count,
+            "screenshot"
+          ) %>
+        </strong>
+      </p>
+    <% end %>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <p class="paragraph--reset">
+      <%= link_to "Back", :back, class: "button button--small" %>
+    </p>
+  </div>
+</div>
