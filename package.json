@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "^3.2.1",
+    "vue": "^2.5.13",
+    "vue-loader": "^13.7.0",
+    "vue-template-compiler": "^2.5.13",
+    "vue-turbolinks": "^2.0.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.11.1"
+  }
+}
