@@ -2,7 +2,10 @@
 
 <div class="progress">
   <div class="progress__section">
-    <h1>Start</h1>
+    <h1>
+      <%= link_to "Start",
+        [current_scope, submission, :section, section: :start] %>
+    </h1>
 
     <ol class="list--reset">
       <li>
@@ -30,7 +33,10 @@
   </div>
 
   <div class="progress__section">
-    <h1>Ideation</h1>
+    <h1>
+      <%= link_to "Ideation",
+        [current_scope, submission, :section, section: :ideation] %>
+    </h1>
 
     <ol class="list--reset">
       <li>

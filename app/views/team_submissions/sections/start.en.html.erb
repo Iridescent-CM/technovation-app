@@ -1,0 +1,40 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h1 class="heading--page">
+      Start your submission
+    </h1>
+  </div>
+</div>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-6">
+    <div class="panel panel--left">
+      <h1 class="panel__heading">
+        <%= Season.current.year %> Technovation Honor Code
+      </h1>
+
+      <%= render "team_submissions/honor_code" %>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6">
+    <div class="panel panel--left">
+      <h1 class="panel__heading">
+        Your Team Photo
+      </h1>
+
+      <%= render 'teams/intro',
+        modal_id: "team_photo_desktop",
+        admin_ra: false,
+        team: @team %>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <p class="paragraph--reset">
+      <%= link_to "Back", :back, class: "button button--small" %>
+    </p>
+  </div>
+</div>
