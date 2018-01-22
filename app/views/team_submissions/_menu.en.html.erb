@@ -60,7 +60,10 @@
   </div>
 
   <div class="progress__section">
-    <h1>Marketing</h1>
+    <h1>
+      <%= link_to "Marketing",
+        [current_scope, submission, :section, section: :marketing] %>
+    </h1>
 
     <ol class="list--reset">
       <li>
@@ -93,7 +96,10 @@
   </div>
 
   <div class="progress__section">
-    <h1>Code</h1>
+    <h1>
+      <%= link_to "Code",
+        [current_scope, submission, :section, section: :code] %>
+    </h1>
 
     <ol class="list--reset">
       <li>
