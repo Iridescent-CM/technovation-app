@@ -31,6 +31,7 @@
         </p>
 
         <ol
+          v-dragula=""
           id="sortable-list"
           data-sort-url="<%=
             send(
@@ -41,8 +42,9 @@
           class="sortable-list submission-pieces__screenshots"
         >
           <li
-            class="sortable-list__item"
+            class="sortable-list__item draggable"
             v-for="screenshot in screenshots"
+            :key="screenshot.id"
             :data-db-id="screenshot.id"
           >
             <img
