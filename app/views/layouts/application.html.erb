@@ -9,8 +9,10 @@
 
     <title>
       <%= content_for?(:title) ?
-        sanitize("#{yield(:title)} • #{t("views.application.site_title")}") :
-        t("views.application.site_title_default") %>
+        sanitize(
+          "#{yield(:title)} • " +
+          t("views.application.site_title")
+        ) : t("views.application.site_title_default") %>
     </title>
 
     <%= render 'favicons' %>

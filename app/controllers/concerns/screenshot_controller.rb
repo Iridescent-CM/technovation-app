@@ -7,17 +7,14 @@ module ScreenshotController
   end
 
   def index
-    screenshots = current_team.submission.screenshots.map do |s|
+    render(json: current_team.submission.screenshots.map do |s|
       {
         id: s.id,
-        image_url: s.image_url,
-        image_alt: image_alt(s.image_url),
-        sort_position: s.sort_position,
-        delete_url: send("#{current_scope}_screenshot_url", s),
+        src: s.image_url,
+        name: s.image.identifier,
+        large_img_url: s.image_url(:large),
       }
-    end
-
-    render json: screenshots
+    end)
   end
 
   def create
@@ -35,29 +32,15 @@ module ScreenshotController
       recipient: submission,
     )
 
-    respond_to do |format|
-      format.html do
-        redirect_to [current_scope, submission]
-      end
-
-      format.json do
-        render json: {
-          remove_url: send(
-            "#{current_scope}_screenshot_path",
-            screenshot,
-            team_submission: {
-              id: submission.id,
-            }
-          ),
-          dom_id: dom_id(screenshot),
-          image: {
-            id: screenshot.id,
-            alt: screenshot.image_identifier,
-            url: screenshot.image_url,
-            modal_url: screenshot.image_url(:large),
-          },
-        }
-      end
+    if request.xhr?
+      render json: {
+        id: screenshot.id,
+        src: screenshot.image_url,
+        name: screenshot.image.identifier,
+        large_img_url: screenshot.image_url(:large),
+      }
+    else
+      redirect_to [current_scope, submission]
     end
   end
 
