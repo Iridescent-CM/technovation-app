@@ -11,6 +11,11 @@
   list-style: none;
   padding: 0.5rem;
   transition: margin 0.2s, background-color 1.5s;
+  max-width: 200px;
+
+  img {
+    max-width: 100%;
+  }
 
   &.sortable-list--updated {
     background: $shamrock;
@@ -32,12 +37,13 @@
   .sortable-list__item-actions {
     opacity: 0;
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0;
+    right: 0;
     transition: opacity 0.2s;
     background: white;
-    padding: 0.1rem 0 0 0.3rem;
+    padding: 0.1rem 0.3rem;
     font-size: 0.9rem;
+    cursor: pointer;
   }
 
   .sortable-list__drag-handle {

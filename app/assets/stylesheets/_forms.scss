@@ -7,6 +7,12 @@ label {
   letter-spacing: 1px;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
+
+  &.label--wraps-file-input {
+    input[type="file"] {
+      display: none;
+    }
+  }
 }
 
 input[type="checkbox"],
