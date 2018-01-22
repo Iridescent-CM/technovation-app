@@ -24,6 +24,7 @@ gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.5"
 gem 'chart-js-rails', "~> 0.1"
 gem 'dropzonejs-rails', "~> 0.8"
+gem 'webpacker', '~> 3.0'
 
 gem "cocoon", "~> 1.2"
 
