@@ -6,7 +6,7 @@ class Season
   end
 
   def self.deadline
-    "April 25"
+    "April 25th"
   end
 
   def self.years
