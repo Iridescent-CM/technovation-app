@@ -139,6 +139,5 @@ group :legacy do
   # Do not use these gems
   #
   gem 'flag_shih_tzu', "~> 0.3", require: false
-  gem 'paperclip', "~> 5.1", require: false
   gem 'aws-sdk', "~> 2.10", require: false
 end
