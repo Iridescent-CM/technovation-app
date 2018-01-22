@@ -86,7 +86,8 @@ module RegionalAmbassador
         )
       end
 
-      render "regional_ambassador/dashboards/show_#{current_ambassador.status}"
+      render "regional_ambassador/dashboards" +
+        "/show_#{current_ambassador.status}"
     end
 
     private

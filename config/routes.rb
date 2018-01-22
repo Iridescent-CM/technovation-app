@@ -119,6 +119,9 @@ Rails.application.routes.draw do
     resources :scores, only: [:show]
   end
 
+  get "pending_regional_ambassador/dashboard",
+    to: "regional_ambassador/dashboards#show"
+
   namespace :regional_ambassador do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
