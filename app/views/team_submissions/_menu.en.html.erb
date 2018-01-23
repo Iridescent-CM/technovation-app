@@ -90,7 +90,8 @@
           :screenshots,
           "2 or more screenshots"
         ),
-        [current_scope, submission, piece: :screenshots] %>
+        [current_scope, submission, piece: :screenshots],
+        data: { turbolinks: false } %>
       </li>
     </ol>
   </div>
