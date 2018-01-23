@@ -145,3 +145,23 @@
     transform: scale(1.05, 1.05);
   }
 }
+
+.submission-pieces__screenshot-placeholder {
+  margin-right: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  min-width: 100px;
+  justify-content: center;
+  border: 1px dashed #ccc;
+
+  i {
+    display: block;
+    align-self: center;
+  }
+
+  span {
+    display: block;
+    align-self: center;
+    font-size: 0.9rem;
+  }
+}
