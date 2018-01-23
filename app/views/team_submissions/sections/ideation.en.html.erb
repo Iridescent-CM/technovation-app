@@ -1,5 +1,19 @@
 <% provide :title, "Submission section: Ideation" %>
 
+<% provide :back_link_txt, "Start" %>
+<% provide :back_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :start
+) %>
+
+<% provide :next_link_txt, "Marketing" %>
+<% provide :next_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :marketing
+) %>
+
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Name Your App",

@@ -1,5 +1,12 @@
 <% provide :title, "Starting your submission" %>
 
+<% provide :next_link_txt, "Ideation" %>
+<% provide :next_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :ideation
+) %>
+
 <div class="panel panel--left">
   <h1 class="panel__heading">
     <%= Season.current.year %> Technovation Honor Code

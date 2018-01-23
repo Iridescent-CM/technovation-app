@@ -151,8 +151,12 @@
   display: flex;
   flex-flow: column nowrap;
   min-width: 100px;
+  max-width: 100px;
+  padding: 1rem;
   justify-content: center;
   border: 1px dashed #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   i {
     display: block;
@@ -164,4 +168,10 @@
     align-self: center;
     font-size: 0.9rem;
   }
+}
+
+.submission-nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
