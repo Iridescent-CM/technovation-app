@@ -9,11 +9,6 @@ class ProcessUploadJob < ActiveJob::Base
     case klass
     when "Account"
       record.icon_path = nil
-    when "Team"
-      account = Account.find(account_id)
-      # TODO requirement of team name uniqueness exceptions
-      # TODO really threw a wrench here
-      record.name_uniqueness_exceptions = account.past_teams.pluck(:name)
     end
 
     record.save!

@@ -90,6 +90,18 @@ RSpec.describe Team do
     expect(team.reload.division).to eq(Division.junior)
   end
 
+  it "reconsiders division when a student joins the team" do
+    team = FactoryBot.create(:team)
+    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    older_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
+
+    TeamRosterManaging.add(team, younger_student)
+    expect(team.reload.division).to eq(Division.junior)
+
+    TeamRosterManaging.add(team, older_student)
+    expect(team.reload.division).to eq(Division.senior)
+  end
+
   it "scopes to past seasons" do
     FactoryBot.create(:team) # current season by default
 
@@ -288,24 +300,27 @@ RSpec.describe Team do
       past_team = FactoryBot.create(:team, name: "Old Name")
       past_team.update(seasons: [Season.current.year - 1])
 
+      student = FactoryBot.create(:student)
+      TeamRosterManaging.add(past_team, student)
+
       new_team = FactoryBot.build(:team, name: "Old Name")
-      new_team.name_uniqueness_exceptions = ["Old Name", "Something Else"]
+      new_team.students << student
 
       expect(new_team).to be_valid
       expect(new_team.save).to be true
     end
 
     it "doesn't allow exceptions for current names" do
-      team1 = FactoryBot.create(:team, name: "Team Name")
+      FactoryBot.create(:team, name: "Team Name")
       team2 = FactoryBot.build(:team, name: "Team Name")
-      team2.name_uniqueness_exceptions = ["Team Name"]
 
       expect(team2).not_to be_valid
       expect(team2.save).to be false
     end
   end
 
-  it "deletes itself, pending requests/invites when membership decrements to zero" do
+  it "deletes itself, pending requests/invites when " +
+     "membership decrements to zero" do
     team = FactoryBot.create(:team)
 
     team.team_member_invites.create!(

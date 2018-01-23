@@ -39,12 +39,6 @@ class Team < ActiveRecord::Base
     team_photo
   end
 
-  attr_accessor :name_uniqueness_exceptions
-
-  def name_uniqueness_exceptions
-    @name_uniqueness_exceptions ||= []
-  end
-
   mount_uploader :team_photo, TeamPhotoProcessor
 
   Division.names.keys.each do |division_name|

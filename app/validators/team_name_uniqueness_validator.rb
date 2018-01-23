@@ -7,12 +7,11 @@ class TeamNameUniquenessValidator < ActiveModel::Validator
     past_conflicts = Team.past
       .where("lower(name) = ?", record.name.downcase)
       .where.not(id: record.id)
-
-    if record.name_uniqueness_exceptions.any?
-      past_conflicts = past_conflicts.where.not(
-        name: record.name_uniqueness_exceptions
+      .where.not(
+        name: record.members.flat_map { |m|
+          m.past_teams.pluck(:name)
+        }.uniq
       )
-    end
 
     if current_conflicts.exists? || past_conflicts.exists?
       record.errors.add(:name, :taken)

@@ -48,11 +48,13 @@ class TeamRosterManaging
           reconsider_division_with_save
         end
 
-        if invite = student.team_member_invites.pending.find_by(team: self)
+        if invite = student.team_member_invites
+                           .pending.find_by(team: self)
           invite.accepted!
         end
 
-        if join_request = student.join_requests.pending.find_by(team: self)
+        if join_request = student.join_requests
+                                 .pending.find_by(team: self)
           join_request.approved!
         end
 
@@ -70,7 +72,9 @@ class TeamRosterManaging
     end
 
     def add_mentor_profile(mentor)
-      mentors << mentor
+      unless mentors.include?(mentor)
+        mentors << mentor
+      end
 
       if invite = mentor.mentor_invites.pending.find_by(team: self)
         invite.accepted!

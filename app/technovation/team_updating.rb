@@ -13,7 +13,7 @@ class TeamUpdating
   end
 
   def update(attrs)
-    if team.update_attributes(attrs)
+    if team.update(attrs)
       perform_callbacks
       true
     else

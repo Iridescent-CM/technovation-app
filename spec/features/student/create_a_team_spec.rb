@@ -16,7 +16,8 @@ RSpec.feature "Student creates a team" do
     expect(Team.last.city).to eq(student.city)
   end
 
-  scenario "Location is a requirement when it hasn't been set on the student" do
+  scenario "Location is a requirement when it " +
+           "hasn't been set on the student" do
     SeasonToggles.team_building_enabled!
 
     student = FactoryBot.create(
