@@ -1,58 +1,54 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">Description</h3>
+<div class="panel">
+  <h3 class="panel--heading">Description</h3>
 
-      <%= form_with(
-        model: [current_scope, @team_submission],
-        local: true
-      ) do |f| %>
-        <div class="field">
-          <%= f.label :app_description,
-            "Describe your app in only a few sentences or less" %>
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <div class="field">
+      <%= f.label :app_description,
+        "Describe your app in only a few sentences or less" %>
 
-          <%= f.text_area :app_description,
-            id: :team_submission_app_description,
-            data: {
-              word_count: true,
-              word_count_limit: 100,
-            },
-            rows: 6 %>
+      <%= f.text_area :app_description,
+        id: :team_submission_app_description,
+        data: {
+          word_count: true,
+          word_count_limit: 100,
+        },
+        rows: 6 %>
 
-          <p class="scent scent--strong">
-            <strong>Remember:</strong>
-            only write a few sentences!
-            The judges will have a lot of these to read, so keep it short!
-          </p>
-        </div>
-
-        <div class="actions">
-          <p>
-            <%= f.submit "Save this description", class: "button" %>
-            or
-            <%= link_to "cancel", [current_scope, @team_submission] %>
-          </p>
-
-          <p class="scent word-counter">
-            Number of words typed:
-            <br />
-            <span class="word-count__total word-count--plenty-remaining">
-              0
-            </span>
-            /
-            <span class="word-count__limit"></span>
-          </p>
-        </div>
-      <% end %>
-
-      <p class="grid__cell--padding-sm-y">
-        Get some help writing your app description in the
-        <%= link_to(
-          "ideation curriculum unit.",
-          "http://technovationchallenge.org/curriculum/ideation/",
-          target: "_blank"
-        ) %>
+      <p class="scent scent--strong">
+        <strong>Remember:</strong>
+        only write a few sentences!
+        The judges will have a lot of these to read, so keep it short!
       </p>
     </div>
-  </div>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Save this description", class: "button" %>
+        or
+        <%= link_to "cancel", [current_scope, @team_submission] %>
+      </p>
+
+      <p class="scent word-counter">
+        Number of words typed:
+        <br />
+        <span class="word-count__total word-count--plenty-remaining">
+          0
+        </span>
+        /
+        <span class="word-count__limit"></span>
+      </p>
+    </div>
+  <% end %>
+
+  <p class="grid__cell--padding-sm-y">
+    Get some help writing your app description in the
+    <%= link_to(
+      "ideation curriculum unit.",
+      "http://technovationchallenge.org/curriculum/ideation/",
+      target: "_blank"
+    ) %>
+  </p>
 </div>

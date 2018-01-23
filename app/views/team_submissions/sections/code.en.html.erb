@@ -1,70 +1,48 @@
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
-    <h1 class="heading--page">
-      Submission section: Code
-    </h1>
-  </div>
-</div>
+<% provide :title, "Submission section: Code" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-4">
-    <%= render 'team_submissions/pieces/piece',
-      submission: @team_submission,
-      title: "Development platform",
-      scope: current_scope,
-      attribute: :development_platform,
-      cta_when_empty: "Select your development platform",
-      cta_when_filled: "Change your selection" %>
-  </div>
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Development platform",
+  scope: current_scope,
+  attribute: :development_platform,
+  cta_when_empty: "Select your development platform",
+  cta_when_filled: "Change your selection" %>
 
-  <div class="grid__col-sm-4">
-    <%= render 'team_submissions/pieces/piece',
-      submission: @team_submission,
-      title: "Source code",
-      scope: current_scope,
-      yield_block: true,
-      attribute: :source_code,
-      cta_when_empty: "Upload your app's source code",
-      cta_when_filled: "Change your upload" do %>
-      <p>
-        Your team has uploaded:
-        <%= link_to @team_submission.source_code_filename,
-          @team_submission.source_code_url %>
-      </p>
-    <% end %>
-  </div>
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Source code",
+  scope: current_scope,
+  yield_block: true,
+  attribute: :source_code,
+  cta_when_empty: "Upload your app's source code",
+  cta_when_filled: "Change your upload" do %>
+  <p>
+    Your team has uploaded:
+    <%= link_to @team_submission.source_code_filename,
+      @team_submission.source_code_url %>
+  </p>
+<% end %>
 
-  <div class="grid__col-sm-4">
-    <%= render 'team_submissions/pieces/piece',
-      submission: @team_submission,
-      title: "Code checklist",
-      scope: current_scope,
-      yield_block: true,
-      attribute: :code_checklist,
-      cta_when_empty: "Confirm your code checklist",
-      cta_when_filled: "Make changes to your code checklist" do %>
-      <p>
-        Your team will earn
-        <strong>
-          <%= @team_submission.code_checklist_points %>
-          out of 10 possible points
-        </strong>
-        for your code checklist
-      </p>
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Code checklist",
+  scope: current_scope,
+  yield_block: true,
+  attribute: :code_checklist,
+  cta_when_empty: "Confirm your code checklist",
+  cta_when_filled: "Make changes to your code checklist" do %>
+  <p>
+    Your team will earn
+    <strong>
+      <%= @team_submission.code_checklist_points %>
+      out of 10 possible points
+    </strong>
+    for your code checklist
+  </p>
 
-      <p class="scent">
-        * <strong>The code checklist does not have to be complete.</strong>
-        However, you will not be able change it after
-        <%= Season.deadline %>.
-      </p>
-    <% end %>
-  </div>
-</div>
-
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
-    <p class="paragraph--reset">
-      <%= link_to "Back", :back, class: "button button--small" %>
-    </p>
-  </div>
-</div>
+  <p class="scent">
+    * <strong>The code checklist does not have to be complete.</strong>
+    However, you will not be able change it after
+    <%= Season.deadline %>.
+  </p>
+<% end %>

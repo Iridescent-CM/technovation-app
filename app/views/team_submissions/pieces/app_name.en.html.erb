@@ -1,27 +1,23 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">
-        App name
-      </h3>
+<div class="panel">
+  <h3 class="panel--heading">
+    App name
+  </h3>
 
-      <%= form_with(
-        model: [current_scope, @team_submission],
-        local: true
-      ) do |f| %>
-        <div class="field">
-          <%= f.label :app_name, "Your app's name" %>
-          <%= f.text_field :app_name, id: :team_submission_app_name %>
-        </div>
-
-        <div class="actions">
-          <p>
-            <%= f.submit "Save this name", class: "button" %>
-            or
-            <%= link_to "cancel", [current_scope, @team_submission] %>
-          </p>
-        </div>
-      <% end %>
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <div class="field">
+      <%= f.label :app_name, "Your app's name" %>
+      <%= f.text_field :app_name, id: :team_submission_app_name %>
     </div>
-  </div>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Save this name", class: "button" %>
+        or
+        <%= link_to "cancel", [current_scope, @team_submission] %>
+      </p>
+    </div>
+  <% end %>
 </div>

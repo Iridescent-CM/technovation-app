@@ -1,6 +1,10 @@
 module TeamSubmissionController
   extend ActiveSupport::Concern
 
+  included do
+    layout "submissions"
+  end
+
   def new
     SeasonToggles.team_submissions(
       open:   -> { respond_according_to_presence },
@@ -21,6 +25,13 @@ module TeamSubmissionController
     unless @team_submission.business_plan.present?
       @team_submission.build_business_plan
     end
+
+    @uploader = ImageUploader.new
+    @uploader.success_action_redirect = send(
+      "#{current_scope}_team_photo_upload_confirmation_url",
+      team_id: @team.id,
+      back: request.fullpath
+    )
 
     SeasonToggles.team_submissions(
       open:   -> { render piece_or_full_edit },
@@ -47,7 +58,7 @@ module TeamSubmissionController
     if params.fetch(:piece) { false }
       "team_submissions/pieces/#{params.fetch(:piece)}"
     else
-      "edit"
+      "team_submissions/sections/start"
     end
   end
 end

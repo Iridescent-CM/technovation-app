@@ -1,0 +1,94 @@
+<% provide :root_path, send("#{current_scope}_dashboard_path") %>
+<% provide :menu, render("#{current_scope}/navigation/global_nav") %>
+
+<% if current_session.authenticated? %>
+  <% provide :session_bar, render("layouts/session_bar") %>
+<% end %>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'meta' %>
+
+    <title>
+      <%= content_for?(:title) ?
+        sanitize(
+          "#{yield(:title)} • " +
+          t("views.application.site_title")
+        ) : t("views.application.site_title_default") %>
+    </title>
+
+    <%= render 'favicons' %>
+
+    <%= stylesheet_link_tag determine_manifest %>
+
+    <%= stylesheet_link_tag(
+      '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css',
+      media: :all
+    ) %>
+
+    <%= javascript_include_tag determine_manifest,
+      'data-turbolinks-track' => true %>
+
+    <%= yield :js %>
+  </head>
+
+  <body class="col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="header-container col--sticky">
+        <%= yield :session_bar %>
+
+        <%= render 'application/navigation' %>
+
+        <%= yield :subnav %>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <%= render 'application/flash_messages' %>
+
+      <div class="grid">
+        <div class="grid__col-3 col--sticky-parent">
+          <div class="col--sticky-spacer">
+            <div class="submission__sidebar col--sticky">
+              <%= render "team_submissions/menu",
+                submission: @team_submission,
+                embedded: true %>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__col-6 submission-pieces col--sticky-parent">
+          <div class="col--sticky-spacer">
+            <div class="col--sticky">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__col-3 col--sticky-parent">
+          <div class="col--sticky-spacer">
+            <div class="col--sticky">
+              <%= render "team_submissions/sidebar_b",
+                submission: @team_submission %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'application/footer' %>
+    </div>
+
+    <%= render 'application/queued_jobs' %>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-4055471-6', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
