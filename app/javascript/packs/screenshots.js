@@ -14,6 +14,7 @@ document.addEventListener('turbolinks:load', () => {
     data: {
       maxAllowed: 6,
       screenshots: [],
+      uploads: [],
     },
 
     computed: {
@@ -59,6 +60,8 @@ document.addEventListener('turbolinks:load', () => {
             vm = this;
 
         [].forEach.call(keep, (file) => {
+          this.uploads.push(file);
+
           var vm = this,
               form = new FormData();
 
@@ -79,6 +82,9 @@ document.addEventListener('turbolinks:load', () => {
                 name: data.name,
                 large_img_url: data.large_img_url,
               });
+
+              var i = vm.uploads.indexOf(file);
+              vm.uploads.splice(i, 1);
 
               e.target.value = "";
             },

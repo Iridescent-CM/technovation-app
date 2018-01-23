@@ -61,6 +61,14 @@
               ></i>
             </div>
           </li>
+
+          <li
+            class="submission-pieces__screenshot-placeholder"
+            v-for="upload in uploads"
+          >
+            <i class="icon-spinner2 spin"></i>
+            <span>{{ upload.name }}</span>
+          </li>
         </ol>
       </div>
 
