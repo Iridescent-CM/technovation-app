@@ -20,7 +20,12 @@ RSpec.describe SubmissionScore do
   end
 
   it "cannot be duplicated for the same submission and judge" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team = Team.create!(
+      name: "A",
+      description: "B",
+      division: Division.senior
+    )
+
     team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true

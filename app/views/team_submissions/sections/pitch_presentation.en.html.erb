@@ -1,0 +1,82 @@
+<% provide :title, "Submission section: Ideation" %>
+
+<% provide :back_link_txt, "Business" %>
+<% provide :back_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :business
+) %>
+
+<div
+  id="<%= dom_id(@team_submission) %>_pitch_presentation"
+  class="
+    panel
+    submission-piece
+    <%= completion_css(
+      @team_submission,
+      :pitch_presentation_url
+    ) %>
+  "
+>
+  <h3 class="panel--heading">
+    Pitch presentation slides
+  </h3>
+
+  <% if @team.selected_regional_pitch_event.live? %>
+    <% if @team_submission.pitch_presentation_url_complete? %>
+      <p>
+        Your team has uploaded:
+        <%= link_to @team_submission.pitch_presentation_filename,
+          @team_submission.pitch_presentation_url %>
+      </p>
+
+      <div class="panel--footer">
+        <%= link_to "Change your upload",
+          send(
+            "edit_#{current_scope}_team_submission_path",
+            @team_submission,
+            piece: :pitch_presentation
+          ),
+          class: "button secondary small" %>
+      </div>
+    <% else %>
+      <p class="scent">
+        There's nothing here yet,
+        but your team can update this part whenever it's ready!
+      </p>
+
+      <div class="panel--footer">
+        <%= link_to(
+          "Upload the pitch presentation slides " +
+          "for your live event",
+          send(
+            "edit_#{current_scope}_team_submission_path",
+            @team_submission,
+            piece: :pitch_presentation
+          ),
+          class: "button small"
+        ) %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="scent--strong">
+      Your team is not set to attend a live regional pitch event.
+    </p>
+
+    <p>
+      In March and April,
+      Regional Ambassadors will invite teams
+      to pitch at a live event.
+    </p>
+
+    <p>
+      If your team is invited,
+      then you will be required to upload
+      your pitch presentation slides here.
+    </p>
+
+    <p class="scent">
+      (pitching at a live regional event is not required)
+    </p>
+  <% end %>
+</div>

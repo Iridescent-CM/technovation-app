@@ -1,0 +1,84 @@
+<% provide :title, "Submission section: Business" %>
+
+<% provide :back_link_txt, "Code" %>
+<% provide :back_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :code
+) %>
+
+<% provide :next_link_txt, "Regional pitch events" %>
+<% provide :next_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :pitch_presentation
+) %>
+
+<div
+  id="<%= dom_id(@team_submission) %>_business_plan"
+  class="
+    panel
+    submission-piece
+    business_plan
+    <%= completion_css(@team_submission, :business_plan_url) %>
+  "
+>
+  <h3 class="panel--heading">
+    Business plan
+  </h3>
+
+  <% if @team.senior? %>
+    <% if @team_submission.business_plan_url_complete? %>
+      <p>
+        Your team has uploaded:
+        <%= link_to @team_submission.business_plan_filename,
+          @team_submission.business_plan_url %>
+      </p>
+
+      <div class="panel--footer">
+        <%= link_to "Change your upload",
+          send(
+            "edit_#{current_scope}_team_submission_path",
+            @team_submission,
+            piece: :business_plan
+          ),
+          class: "button secondary small" %>
+      </div>
+    <% else %>
+      <p class="scent">
+        There's nothing here yet,
+        but your team can update this part whenever it's ready!
+      </p>
+
+      <div class="panel--footer">
+        <%= link_to "Upload your team's business plan",
+          send(
+            "edit_#{current_scope}_team_submission_path",
+            @team_submission,
+            piece: :business_plan
+          ),
+          class: "button small" %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="scent--strong">
+      Your team is in the
+      <strong>
+        <%= @team.division_name.humanize %>
+        Division
+      </strong>
+    </p>
+
+    <p class="scent">
+      Uploading a business plan is
+      <strong>not required</strong>
+      in the Junior Division.
+    </p>
+
+    <p class="scent">
+      If your team has put one together, that is awesome!
+      Hold on to it for your own records and be extremely proud!
+    </p>
+  <% end %>
+</div>
+

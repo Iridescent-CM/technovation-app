@@ -61,7 +61,35 @@
         <div class="grid__col-6 submission-pieces col--sticky-parent">
           <div class="col--sticky-spacer">
             <div class="col--sticky">
+              <h1><%= yield :title %></h1>
+
               <%= yield %>
+
+              <nav class="submission-nav">
+                <% if content_for?(:back_link) %>
+                  <%= link_to "Back: #{yield(:back_link_txt)}",
+                    yield(:back_link),
+                    data: { turbolinks: false },
+                    class: "
+                      submission-nav__back-btn
+                      button
+                      button--small
+                    " %>
+                <% else %>
+                  <span></span>
+                <% end %>
+
+                <% if content_for?(:next_link) %>
+                  <%= link_to "Next: #{yield(:next_link_txt)}",
+                    yield(:next_link),
+                    data: { turbolinks: false },
+                    class: "
+                      submission-nav__next-btn
+                      button
+                      button--small
+                    " %>
+                <% end %>
+              </nav>
             </div>
           </div>
         </div>

@@ -1,4 +1,19 @@
 <% provide :title, "Submission section: Marketing" %>
+
+<% provide :back_link_txt, "Ideation" %>
+<% provide :back_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :ideation
+) %>
+
+<% provide :next_link_txt, "Code" %>
+<% provide :next_link, send(
+  "#{current_scope}_team_submission_section_path",
+  @team_submission,
+  section: :code
+) %>
+
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Demo video",
