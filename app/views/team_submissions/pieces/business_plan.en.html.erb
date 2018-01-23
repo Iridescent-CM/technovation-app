@@ -1,82 +1,78 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">
-        Business plan
-      </h3>
+<div class="panel">
+  <h3 class="panel--heading">
+    Business plan
+  </h3>
 
-      <% if @team.senior? %>
-        <% if @team_submission.business_plan_url_complete? %>
-          <div class="field__existing-value">
-            Your team has previously uploaded
-            <%= link_to @team_submission.business_plan_filename,
-              @team_submission.business_plan_url %>
-          </div>
+  <% if @team.senior? %>
+    <% if @team_submission.business_plan_url_complete? %>
+      <div class="field__existing-value">
+        Your team has previously uploaded
+        <%= link_to @team_submission.business_plan_filename,
+          @team_submission.business_plan_url %>
+      </div>
+    <% end %>
+
+    <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
+
+    <%= form_with model: [current_scope, @team_submission],
+      multipart: true,
+      id: "team-submission-business-plan-dropzone",
+      class: "dropzone" do |f| %>
+      <%= f.hidden_field "business_plan_attributes[id]",
+        value: @team_submission.business_plan.id %>
+
+      <div class="fallback">
+        <%= f.fields_for :business_plan do |b| %>
+          <%= b.label :uploaded_file,
+            "Upload your team's business plan" %>
+
+          <%= b.file_field :uploaded_file,
+            id: "team_submission_business_plan_attributes_" +
+                "uploaded_file" %>
         <% end %>
 
-        <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
+        <%= f.submit "Upload", class: "button" %>
+      </div>
+    <% end %>
 
-        <%= form_with model: [current_scope, @team_submission],
-          multipart: true,
-          id: "team-submission-business-plan-dropzone",
-          class: "dropzone" do |f| %>
-          <%= f.hidden_field "business_plan_attributes[id]",
-            value: @team_submission.business_plan.id %>
+    <p class="dropzone-save" style="display: none;">
+      <%= link_to "Save this upload",
+        [current_scope, @team_submission],
+        class: "button" %>
+    </p>
 
-          <div class="fallback">
-            <%= f.fields_for :business_plan do |b| %>
-              <%= b.label :uploaded_file,
-                "Upload your team's business plan" %>
+    <p class="after-dropzone-save">
+      <%= link_to "cancel", [current_scope, @team_submission] %>
+    </p>
 
-              <%= b.file_field :uploaded_file,
-                id: "team_submission_business_plan_attributes_" +
-                    "uploaded_file" %>
-            <% end %>
+    <p class="grid__cell--padding-sm-y">
+      Get some help writing your business plan in the
+      <%= link_to(
+        "business plan curriculum unit.",
+        "http://technovationchallenge.org/curriculum/business-4/",
+        target: "_blank"
+      ) %>
+    </p>
+  <% else %>
+    <p class="scent--strong">
+      Your team is in the
+      <strong>
+        <%= @team.division_name.humanize %>
+        Division
+      </strong>
+    </p>
 
-            <%= f.submit "Upload", class: "button" %>
-          </div>
-        <% end %>
+    <p class="scent">
+      Uploading a business plan is
+      <strong>not required</strong>
+      in the Junior Division.
+    </p>
 
-        <p class="dropzone-save" style="display: none;">
-          <%= link_to "Save this upload",
-            [current_scope, @team_submission],
-            class: "button" %>
-        </p>
+    <p class="scent">
+      If your team has put one together, that is awesome!
+      Hold on to it for your own records and be extremely proud!
+    </p>
 
-        <p class="after-dropzone-save">
-          <%= link_to "cancel", [current_scope, @team_submission] %>
-        </p>
-
-        <p class="grid__cell--padding-sm-y">
-          Get some help writing your business plan in the
-          <%= link_to(
-            "business plan curriculum unit.",
-            "http://technovationchallenge.org/curriculum/business-4/",
-            target: "_blank"
-          ) %>
-        </p>
-      <% else %>
-        <p class="scent--strong">
-          Your team is in the
-          <strong>
-            <%= @team.division_name.humanize %>
-            Division
-          </strong>
-        </p>
-
-        <p class="scent">
-          Uploading a business plan is
-          <strong>not required</strong>
-          in the Junior Division.
-        </p>
-
-        <p class="scent">
-          If your team has put one together, that is awesome!
-          Hold on to it for your own records and be extremely proud!
-        </p>
-
-        <%= link_to "go back", [current_scope, @team_submission] %>
-      <% end %>
-    </div>
-  </div>
+    <%= link_to "go back", [current_scope, @team_submission] %>
+  <% end %>
 </div>

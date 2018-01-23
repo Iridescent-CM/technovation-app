@@ -1,45 +1,41 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">
-        Demo video
-      </h3>
+<div class="panel">
+  <h3 class="panel--heading">
+    Demo video
+  </h3>
 
-      <%= form_with(
-        model: [current_scope, @team_submission],
-        local: true
-      ) do |f| %>
-        <div class="field">
-          <%= f.label :demo_video_link, "Youtube, Vimeo, or Youku URL" %>
-          <%= f.text_field :demo_video_link,
-            id: :team_submission_demo_video_link %>
-        </div>
-
-        <div class="actions">
-          <p>
-            <%= f.submit "Save this demo video link", class: "button" %>
-            or
-            <%= link_to "cancel", [current_scope, @team_submission] %>
-          </p>
-        </div>
-      <% end %>
-
-      <p class="grid__cell--padding-sm-y">
-        Get some help making your demo video in the
-
-        <%= link_to(
-          "demo video curriculum unit.",
-          "http://technovationchallenge.org/curriculum/pitch-2/",
-          target: "_blank"
-        ) %>
-      </p>
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <div class="field">
+      <%= f.label :demo_video_link, "Youtube, Vimeo, or Youku URL" %>
+      <%= f.text_field :demo_video_link,
+        id: :team_submission_demo_video_link %>
     </div>
 
-    <% unless @team_submission.demo_video_link.blank? %>
-      <div class="panel">
-        <p>Your team has previously linked this video:</p>
-        <%= @team_submission.embed_code(:demo_video_link).html_safe %>
-      </div>
-    <% end %>
-  </div>
+    <div class="actions">
+      <p>
+        <%= f.submit "Save this demo video link", class: "button" %>
+        or
+        <%= link_to "cancel", [current_scope, @team_submission] %>
+      </p>
+    </div>
+  <% end %>
+
+  <p class="grid__cell--padding-sm-y">
+    Get some help making your demo video in the
+
+    <%= link_to(
+      "demo video curriculum unit.",
+      "http://technovationchallenge.org/curriculum/pitch-2/",
+      target: "_blank"
+    ) %>
+  </p>
 </div>
+
+<% unless @team_submission.demo_video_link.blank? %>
+  <div class="panel">
+    <p>Your team has previously linked this video:</p>
+    <%= @team_submission.embed_code(:demo_video_link).html_safe %>
+  </div>
+<% end %>

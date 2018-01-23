@@ -1,40 +1,20 @@
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
-    <h1 class="heading--page">
-      Submission section: Ideation
-    </h1>
-  </div>
-</div>
+<% provide :title, "Submission section: Ideation" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-6">
-    <%= render 'team_submissions/pieces/piece',
-      submission: @team_submission,
-      title: "Name Your App",
-      scope: current_scope,
-      attribute: :app_name,
-      cta_when_empty: "Set your app's name",
-      cta_when_filled: "Change your app's name" %>
-  </div>
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Name Your App",
+  scope: current_scope,
+  attribute: :app_name,
+  cta_when_empty: "Set your app's name",
+  cta_when_filled: "Change your app's name" %>
 
-  <div class="grid__col-sm-6">
-    <%= render 'team_submissions/pieces/piece',
-      submission: @team_submission,
-      title: "Describe Your App",
-      scope: current_scope,
-      yield_block: true,
-      attribute: :app_description,
-      cta_when_empty: "Add your app's description",
-      cta_when_filled: "Change your app's description" do %>
-      <%= simple_format(@team_submission.app_description) %>
-    <% end %>
-  </div>
-</div>
-
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
-    <p class="paragraph--reset">
-      <%= link_to "Back", :back, class: "button button--small" %>
-    </p>
-  </div>
-</div>
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Describe Your App",
+  scope: current_scope,
+  yield_block: true,
+  attribute: :app_description,
+  cta_when_empty: "Add your app's description",
+  cta_when_filled: "Change your app's description" do %>
+  <%= simple_format(@team_submission.app_description) %>
+<% end %>

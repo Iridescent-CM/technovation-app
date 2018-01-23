@@ -1,5 +1,7 @@
 module Student
   class TeamSubmissionSectionsController < StudentController
+    layout "submissions"
+
     def show
       @team_submission = current_team.submission
       @team = current_team

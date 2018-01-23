@@ -1,49 +1,44 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">
-        Source code
-      </h3>
+<div class="panel">
+  <h3 class="panel--heading">
+    Source code
+  </h3>
 
-      <% if @team_submission.source_code_url_complete? %>
-        <div class="field__existing-value">
-          Your team has previously uploaded
-          <%= link_to @team_submission.source_code_filename,
-            @team_submission.source_code_url %>
-        </div>
-      <% end %>
-
-      <p class="hint">File types allowed: *.zip or *.aia</p>
-
-      <%= form_with model: [current_scope, @team_submission],
-        local: true,
-        multipart: true,
-        id: "team-submission-sourcecode-dropzone",
-        class: "dropzone" do |f| %>
-        <div class="fallback">
-          <%= f.label :source_code, "Upload your app's source code" %>
-          <%= f.file_field :source_code, id: :team_submission_source_code %>
-          <%= f.submit "Upload", class: "button" %>
-        </div>
-      <% end %>
-
-      <p class="dropzone-save" style="display: none;">
-        <%= link_to "Save this upload",
-          [current_scope, @team_submission],
-          class: "button" %>
-      </p>
-
-      <p class="after-dropzone-save">
-      <%= link_to "cancel", [current_scope, @team_submission] %>
-      </p>
-
-      <p class="grid__cell--padding-sm-y">
-        Get some help making your source code in the
-        <%= link_to("code planning curriculum unit.",
-                    "http://technovationchallenge.org/curriculum/code-6/",
-                    target: "_blank") %>
-      </p>
-
+  <% if @team_submission.source_code_url_complete? %>
+    <div class="field__existing-value">
+      Your team has previously uploaded
+      <%= link_to @team_submission.source_code_filename,
+        @team_submission.source_code_url %>
     </div>
-  </div>
+  <% end %>
+
+  <p class="hint">File types allowed: *.zip or *.aia</p>
+
+  <%= form_with model: [current_scope, @team_submission],
+    local: true,
+    multipart: true,
+    id: "team-submission-sourcecode-dropzone",
+    class: "dropzone" do |f| %>
+    <div class="fallback">
+      <%= f.label :source_code, "Upload your app's source code" %>
+      <%= f.file_field :source_code, id: :team_submission_source_code %>
+      <%= f.submit "Upload", class: "button" %>
+    </div>
+  <% end %>
+
+  <p class="dropzone-save" style="display: none;">
+    <%= link_to "Save this upload",
+      [current_scope, @team_submission],
+      class: "button" %>
+  </p>
+
+  <p class="after-dropzone-save">
+    <%= link_to "cancel", [current_scope, @team_submission] %>
+  </p>
+
+  <p class="grid__cell--padding-sm-y">
+    Get some help making your source code in the
+    <%= link_to("code planning curriculum unit.",
+                "http://technovationchallenge.org/curriculum/code-6/",
+                target: "_blank") %>
+  </p>
 </div>

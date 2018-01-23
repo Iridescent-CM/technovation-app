@@ -1,71 +1,67 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <div class="panel">
-      <h3 class="panel--heading">
-        Development platform
-      </h3>
+<div class="panel">
+  <h3 class="panel--heading">
+    Development platform
+  </h3>
 
-      <%= form_with(
-        model: [current_scope, @team_submission],
-        local: true
-      ) do |f| %>
-        <%= hidden_field_tag :piece, params[:piece] %>
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <%= hidden_field_tag :piece, params[:piece] %>
 
-        <div class="field">
-          <%= f.label :development_platform,
-            "Which development platform did your team use?" %>
+    <div class="field">
+      <%= f.label :development_platform,
+        "Which development platform did your team use?" %>
 
-          <%= f.select :development_platform,
-            TeamSubmission.development_platforms.keys,
-            { include_blank: true },
-            data: {
-              toggles: {
-                "App Inventor 2": "#app_inventor_fields",
-                "Other": "#development_platform_other",
-              },
-            },
-            id: :team_submission_development_platform %>
-        </div>
-
-        <div id="development_platform_other">
-          <%= f.label :development_platform_other,
-            "Please enter it here:" %>
-          <%= f.text_field :development_platform_other %>
-        </div>
-
-        <div id="app_inventor_fields">
-          <p class="scent">
-            We want to ask you two questions about your use of
-            App Inventor 2.
-          </p>
-
-          <%= f.label :app_inventor_app_name,
-            "What is your App Inventor 2 Project Name?" %>
-
-          <%= f.text_field :app_inventor_app_name,
-            id: :team_submission_app_inventor_app_name %>
-
-          <%= f.label :app_inventor_gmail,
-            "What is the gmail address of the App Inventor 2 " +
-            "account that your team is using?" %>
-
-          <%= f.text_field :app_inventor_gmail,
-            id: :team_submission_app_inventor_gmail %>
-
-          <p class="hint">
-            We are keeping your personal information private.
-          </p>
-        </div>
-
-        <div class="actions">
-          <p>
-            <%= f.submit "Save this development platform selection",
-              class: "button" %>
-            or
-            <%= link_to "cancel", [current_scope, @team_submission] %>
-          </p>
-        </div>
-      <% end %>
+      <%= f.select :development_platform,
+        TeamSubmission.development_platforms.keys,
+        { include_blank: true },
+        data: {
+          toggles: {
+            "App Inventor 2": "#app_inventor_fields",
+            "Other": "#development_platform_other",
+          },
+        },
+        id: :team_submission_development_platform %>
     </div>
-  </div>
+
+    <div id="development_platform_other">
+      <%= f.label :development_platform_other,
+        "Please enter it here:" %>
+      <%= f.text_field :development_platform_other %>
+    </div>
+
+    <div id="app_inventor_fields">
+      <p class="scent">
+        We want to ask you two questions about your use of
+        App Inventor 2.
+      </p>
+
+      <%= f.label :app_inventor_app_name,
+        "What is your App Inventor 2 Project Name?" %>
+
+      <%= f.text_field :app_inventor_app_name,
+        id: :team_submission_app_inventor_app_name %>
+
+      <%= f.label :app_inventor_gmail,
+        "What is the gmail address of the App Inventor 2 " +
+        "account that your team is using?" %>
+
+      <%= f.text_field :app_inventor_gmail,
+        id: :team_submission_app_inventor_gmail %>
+
+      <p class="hint">
+        We are keeping your personal information private.
+      </p>
+    </div>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Save this development platform selection",
+          class: "button" %>
+        or
+        <%= link_to "cancel", [current_scope, @team_submission] %>
+      </p>
+    </div>
+  <% end %>
 </div>
