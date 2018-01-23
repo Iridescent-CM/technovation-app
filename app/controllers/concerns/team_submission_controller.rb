@@ -58,7 +58,10 @@ module TeamSubmissionController
     if params.fetch(:piece) { false }
       "team_submissions/pieces/#{params.fetch(:piece)}"
     else
-      "team_submissions/sections/ideation"
+      section = get_cookie(:last_visited_submission_section) ||
+        :ideation
+
+      "team_submissions/sections/#{section}"
     end
   end
 end

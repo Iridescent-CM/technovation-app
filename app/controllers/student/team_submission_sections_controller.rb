@@ -13,6 +13,11 @@ module Student
         back: request.fullpath
       )
 
+      set_cookie(
+        :last_visited_submission_section,
+        params.fetch(:section)
+      )
+
       render "team_submissions/sections/#{params.fetch(:section)}"
     end
   end
