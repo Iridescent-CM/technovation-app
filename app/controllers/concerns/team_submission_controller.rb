@@ -2,7 +2,7 @@ module TeamSubmissionController
   extend ActiveSupport::Concern
 
   included do
-    layout "submissions"
+    layout "submissions", except: :new
   end
 
   def new
@@ -58,7 +58,7 @@ module TeamSubmissionController
     if params.fetch(:piece) { false }
       "team_submissions/pieces/#{params.fetch(:piece)}"
     else
-      "team_submissions/sections/start"
+      "team_submissions/sections/ideation"
     end
   end
 end

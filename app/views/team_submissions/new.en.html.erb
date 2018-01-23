@@ -1,6 +1,8 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
-    <div class="panel">
+    <div class="panel panel--left">
+      <h1><%= Season.current.year %> Technovation Honor Code</h1>
+
       <%= form_with(
             model: [current_scope, @team_submission],
             local: true
