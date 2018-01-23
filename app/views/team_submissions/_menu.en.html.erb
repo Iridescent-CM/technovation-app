@@ -141,7 +141,10 @@
   </div>
 
   <div class="progress__section">
-    <h1>Business</h1>
+    <h1>
+      <%= link_to "Business",
+        [current_scope, submission, :section, section: :business] %>
+    </h1>
 
     <ol class="list--reset">
       <li>
@@ -160,7 +163,10 @@
   </div>
 
   <div class="progress__section">
-    <h1>Regional events</h1>
+    <h1>
+      <%= link_to "Regional events",
+        [current_scope, submission, :section, section: :pitch_presentation] %>
+    </h1>
 
     <ol class="list--reset">
       <li>
