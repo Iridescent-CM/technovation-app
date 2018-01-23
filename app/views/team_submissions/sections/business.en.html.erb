@@ -1,4 +1,4 @@
-<% provide :title, "Submission section: Business" %>
+<% provide :title, "Submission: Business" %>
 
 <% provide :back_link_txt, "Code" %>
 <% provide :back_link, send(
@@ -7,7 +7,7 @@
   section: :code
 ) %>
 
-<% provide :next_link_txt, "Regional pitch events" %>
+<% provide :next_link_txt, "Regional events" %>
 <% provide :next_link, send(
   "#{current_scope}_team_submission_section_path",
   @team_submission,
