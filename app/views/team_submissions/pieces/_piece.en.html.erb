@@ -3,6 +3,7 @@
   base_path_name = "edit_#{scope}_team_submission_path"
   completion_css_class = value_is_blank ? :incomplete : :complete
   yield_block ||= false
+  link_options ||= {}
 %>
 
 <div
@@ -27,7 +28,7 @@
       <div class="panel--footer">
         <%= link_to cta_when_empty,
           send(base_path_name, submission, piece: attribute),
-          class: "button small" %>
+          { class: "button small" }.merge(link_options) %>
       </div>
     <% else %>
       <% if yield_block %>
@@ -39,7 +40,7 @@
       <div class="panel--footer">
         <%= link_to cta_when_filled,
           send(base_path_name, submission, piece: attribute),
-          class: "button small secondary" %>
+          { class: "button small secondary" }.merge(link_options) %>
       </div>
     <% end %>
   </div>
