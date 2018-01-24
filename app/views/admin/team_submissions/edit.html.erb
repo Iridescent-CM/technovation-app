@@ -1,51 +1,51 @@
 <h1>Editing Team Submission</h1>
-
 <%= simple_form_for [:admin, @team_submission] do |f| %>
-  <%= f.input :contest_rank,
-    collection: TeamSubmission.contest_ranks.keys %>
-
-  <%= f.input :app_name %>
-
-  <%= f.input :app_description, input_html: { size: "40x7" } %>
-
-  <%= f.input :demo_video_link %>
-
-  <%= f.input :pitch_video_link %>
-
-  <div class="form-group">
-
-    <% if @team_submission.source_code_url %>
-      <%= link_to @team_submission.source_code_identifier,
-        @team_submission.source_code_url,
-        target: :_blank %>
-    <% end %>
-
-    <%= f.input :source_code %>
-    <%= f.hidden_field :source_code_cache %>
-  </div>
-
-  <%= f.input :development_platform,
-    collection: TeamSubmission.development_platforms.keys %>
-
-  <%= f.input :development_platform_other %>
-
-  <%= f.fields_for :business_plan do |b| %>
-    <div class="form-group">
-      <h3>Business plan</h3>
-
-      <% if @team_submission.business_plan_url %>
-        <%= link_to @team_submission.business_plan_url,
-          @team_submission.business_plan_url,
-          target: :_blank %>
-      <% end %>
-
-      <%= b.hidden_field :id %>
-
-      <%= b.input :uploaded_file, label: "Business plan file" %>
+  <div class="grid">
+    <div class="grid__col-12">
+      <div class="panel">
+        <%= f.input :contest_rank,
+          collection: TeamSubmission.contest_ranks.keys %>
+        <%= f.input :app_name %>
+        <%= f.input :app_description, input_html: { size: "20x5" } %>
+      </div>
     </div>
-  <% end %>
 
-  <p>
-    <%= f.submit "Save", class: "button" %>
-  </p>
+    <div class="grid__col-6">
+      <div class="panel">
+        <%= f.input :demo_video_link %>
+        <%= f.input :pitch_video_link %>
+
+        <% if @team_submission.business_plan_url %>
+          <%= link_to @team_submission.business_plan_url,
+            @team_submission.business_plan_url,
+            target: :_blank %>
+        <% end %>
+
+        <%= f.input :business_plan %>
+        <%= f.hidden_field :business_plan_cache %>
+      </div>
+    </div>
+
+    <div class="grid__col-6">
+      <div class="panel">
+        <%= f.input :development_platform,
+          collection: TeamSubmission.development_platforms.keys %>
+        <%= f.input :development_platform_other %>
+        <%= f.input :source_code %>
+        <%= f.hidden_field :source_code_cache %>
+
+        <% if @team_submission.source_code_url %>
+          <%= link_to @team_submission.source_code_identifier,
+            @team_submission.source_code_url,
+            target: :_blank %>
+        <% end %>
+
+      </div>
+    </div>
+    <div class="grid__col-2">
+      <p>
+        <%= f.submit "Save", class: "button" %>
+      </p>
+    </div>
+  </div>
 <% end %>

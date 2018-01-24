@@ -57,10 +57,13 @@
 
       <% if @team_submission.senior_division? %>
         <h5>Business plan</h5>
-        <% if @team_submission.business_plan_url %>
+
+        <% if @team_submission.business_plan %>
           <%= link_to @team_submission.business_plan_url,
             @team_submission.business_plan_url,
             target: :_blank %>
+        <%else %>
+        <span>blank</span>
         <% end %>
       <% end %>
     </div>

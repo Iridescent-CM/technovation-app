@@ -41,8 +41,11 @@ module Admin
       params.require(:team_submission).permit(
         :app_name,
         :app_description,
-        :source_code,
+        :pitch_video_link,
+        :demo_video_link,
+        :business_plan,
         :development_platform,
+        :source_code,
       )
     end
   end
