@@ -7,6 +7,8 @@
     model: [current_scope, @team_submission],
     local: true
   ) do |f| %>
+    <%= hidden_field_tag :piece, piece_name %>
+
     <div class="field">
       <%= f.label :app_name, "Your app's name" %>
       <%= f.text_field :app_name, id: :team_submission_app_name %>

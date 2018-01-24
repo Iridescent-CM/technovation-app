@@ -71,43 +71,7 @@ module Student
       end
     end
 
-    def update
-      @team_submission = current_team.submission
-
-      if team_submission_params[:screenshots]
-        team_submission_params[:screenshots].each_with_index do |id, i|
-          screenshot = @team_submission.screenshots.find(id)
-          screenshot.update(sort_position: i)
-        end
-
-        render json: {}
-      elsif @team_submission.update(team_submission_params)
-        current_account.create_activity(
-          trackable: current_account,
-          key: "submission.update",
-          recipient: @team_submission,
-        )
-
-        if request.xhr?
-          render json: {}
-        else
-          redirect_to [:student, @team_submission],
-            success: t("controllers.team_submissions.update.success")
-        end
-      else
-        redirect_to edit_student_team_submission_path(
-          @team_submission,
-          piece: params[:piece],
-          attributes: @team_submission.attributes.to_json,
-        )
-      end
-    end
-
     private
-    def piece_name
-      params.fetch(:piece)
-    end
-
     def team_submission_params
       if SeasonToggles.team_submissions_editable?
         params.require(:team_submission).permit(
