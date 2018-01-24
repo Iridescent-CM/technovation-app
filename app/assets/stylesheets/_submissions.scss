@@ -131,8 +131,8 @@
 
 .submission-pieces__screenshots {
   display: flex;
-  width: 100%;
-  overflow-x: auto;
+  flex-flow: row nowrap;
+  max-width: 100%;
   margin: 0 0 1rem;
 }
 
@@ -143,6 +143,10 @@
 
   &:hover {
     transform: scale(1.05, 1.05);
+  }
+
+  img {
+    max-width: 100%;
   }
 }
 
