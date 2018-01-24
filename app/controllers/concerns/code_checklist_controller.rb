@@ -12,6 +12,13 @@ module CodeChecklistController
                       end
 
     if @code_checklist.update(code_checklist_params)
+      current_team.create_activity(
+        trackable: current_account,
+        key: "submission.update",
+        parameters: { piece: "code_checklist" },
+        recipient: @team_submission,
+      )
+
       redirect_to [current_scope, @team_submission],
         success: "Your code checklist was saved!"
     else
