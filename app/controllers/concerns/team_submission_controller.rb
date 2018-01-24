@@ -2,8 +2,8 @@ module TeamSubmissionController
   extend ActiveSupport::Concern
 
   included do
-    layout "submissions", except: :new
     helper_method :piece_name
+    layout :determine_layout
 
     before_action -> {
       @submission_section = SubmissionSection.new(piece_name, self)
@@ -160,6 +160,14 @@ module TeamSubmissionController
   end
 
   private
+  def determine_layout
+    if action_name == "new" || piece_name == "code_checklist"
+      "application"
+    else
+      "submissions"
+    end
+  end
+
   def piece_name
     params.fetch(:piece) { "" }
   end
