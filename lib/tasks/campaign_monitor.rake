@@ -9,7 +9,12 @@ namespace :cm do
                   .where("parental_consents.id IS NULL")
                   .pluck("accounts.email").each do |email|
       begin
-        CreateSend::Subscriber.new(auth, ENV.fetch("STUDENT_LIST_ID"), email).delete
+        CreateSend::Subscriber.new(
+          auth,
+          ENV.fetch("STUDENT_LIST_ID"),
+          email
+        ).delete
+
         puts "Removed #{email}"
       rescue => e
         puts "PROBLEM REMOVING #{email}"
@@ -18,11 +23,11 @@ namespace :cm do
     end
   end
 
-  desc "Add students who are permitted by their parents"
-  task add_permitted_students: :environment do
+  desc "Add students who are not subscribed"
+  task add_students: :environment do
     auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
 
-    StudentProfile.joins(:account, :parental_consent).each do |profile|
+    StudentProfile.current.find_each do |profile|
       begin
         CreateSend::Subscriber.add(
           auth,
@@ -30,6 +35,35 @@ namespace :cm do
           profile.email,
           profile.full_name,
           [],
+          false # resubscribe?
+        )
+        puts "Added #{email}"
+      rescue => e
+        puts "PROBLEM ADDING #{email}"
+        puts e.message
+      end
+    end
+  end
+
+  desc "Add mentors who are not subscribed"
+  task add_mentors: :environment do
+    auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
+
+    MentorProfile.current.find_each do |profile|
+      begin
+        CreateSend::Subscriber.add(
+          auth,
+          ENV.fetch("MENTOR_LIST_ID"),
+          profile.email,
+          profile.full_name,
+          [
+            { Key: 'City',
+              Value: profile.city },
+            { Key: 'State/Province',
+              Value: profile.state_province },
+            { Key: 'Country',
+              Value: FriendlyCountry.(profile, prefix: false) },
+          ],
           false # resubscribe?
         )
         puts "Added #{email}"
@@ -69,7 +103,12 @@ namespace :cm do
            .where("consent_waivers.id IS NULL")
            .pluck(:email).each do |email|
       begin
-        CreateSend::Subscriber.new(auth, ENV.fetch("JUDGE_LIST_ID"), email).delete
+        CreateSend::Subscriber.new(
+          auth,
+          ENV.fetch("JUDGE_LIST_ID"),
+          email
+        ).delete
+
         puts "Removed #{email}"
       rescue => e
         puts "PROBLEM REMOVING #{email}"

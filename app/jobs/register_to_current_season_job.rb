@@ -8,13 +8,21 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       }
 
       if record.respond_to?(:season_registered_at)
-        update_data = update_data.merge({ season_registered_at: Time.current })
+        update_data = update_data.merge({
+          season_registered_at: Time.current
+        })
       end
 
       record.update_columns(update_data)
 
       if record.respond_to?(:student_profile)
         if (profile = record.student_profile).present?
+          SubscribeEmailListJob.perform_later(
+            record.email,
+            record.full_name,
+            "STUDENT_LIST_ID"
+          )
+
           RegistrationMailer.welcome_student(record).deliver_later
 
           if profile.reload.parental_consent.nil?
@@ -26,6 +34,23 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
             ParentMailer.consent_notice(profile.id).deliver_later
           end
         end
+      end
+
+      if record.respond_to?(:mentor_profile) and
+          record.student_profile.present?
+        SubscribeEmailListJob.perform_later(
+          record.email,
+          record.full_name,
+          "MENTOR_LIST_ID",
+          [
+            { Key: 'City',
+              Value: record.city },
+            { Key: 'State/Province',
+              Value: record.state_province },
+            { Key: 'Country',
+              Value: FriendlyCountry.(record, prefix: false) },
+          ]
+        )
       end
 
       record.create_activity(

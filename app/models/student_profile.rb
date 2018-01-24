@@ -290,24 +290,33 @@ class StudentProfile < ActiveRecord::Base
       errors.add(:parent_guardian_email, :found_in_student_accounts)
     end
 
-    if not parent_guardian_email.match(/^[^@\.][\w\.\-]+(?:\+?[\w\.\-]+)?@[\w\.\-]+\w+$/)
+    if not parent_guardian_email.match(
+      /^[^@\.][\w\.\-]+(?:\+?[\w\.\-]+)?@[\w\.\-]+\w+$/
+    )
       errors.add(:parent_guardian_email, :invalid)
     end
   end
 
   def reset_parent
-    if saved_change_to_parent_guardian_email? and parent_guardian_email.present?
+    if saved_change_to_parent_guardian_email? and
+        parent_guardian_email.present?
+
       parental_consent.pending!
       ParentMailer.consent_notice(id).deliver_later
+
     end
 
     if saved_change_to_parent_guardian_name? or
          saved_change_to_parent_guardian_email? and
            parent_guardian_email.present?
-      UpdateEmailListJob.perform_later(parent_guardian_email_before_last_save,
-                                       parent_guardian_email,
-                                       parent_guardian_name,
-                                       "PARENT_LIST_ID")
+
+      UpdateEmailListJob.perform_later(
+        parent_guardian_email_before_last_save,
+        parent_guardian_email,
+        parent_guardian_name,
+        "PARENT_LIST_ID"
+      )
+
     end
   end
 end

@@ -50,12 +50,6 @@ class ParentalConsent < ActiveRecord::Base
   alias void? voided?
 
   def after_signed_student_actions
-    SubscribeEmailListJob.perform_later(
-      student_profile_email,
-      student_profile_full_name,
-      "STUDENT_LIST_ID"
-    )
-
     AccountMailer.confirm_next_steps(self).deliver_later
   end
 

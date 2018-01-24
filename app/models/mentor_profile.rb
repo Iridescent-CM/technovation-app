@@ -188,17 +188,6 @@ class MentorProfile < ActiveRecord::Base
     self.searchable = can_enable_searchable?
 
     yield(self) if block_given?
-
-    if searchable?
-      SubscribeEmailListJob.perform_later(
-        email,
-        full_name,
-        "MENTOR_LIST_ID",
-        [{ Key: 'City', Value: city },
-         { Key: 'State/Province', Value: state_province },
-         { Key: 'Country', Value: FriendlyCountry.(self, prefix: false) }]
-      )
-    end
   end
 
   def enable_searchability_with_save
