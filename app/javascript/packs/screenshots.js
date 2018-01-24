@@ -48,7 +48,11 @@ document.addEventListener('turbolinks:load', () => {
             this.screenshots.splice(idx, 1);
             $.ajax({
               method: "DELETE",
-              url: screenshotsUrl + "/" + screenshot.id,
+              url: screenshotsUrl +
+                   "/" +
+                   screenshot.id +
+                   "?team_id=" +
+                   teamId,
             });
           },
 
@@ -105,7 +109,7 @@ document.addEventListener('turbolinks:load', () => {
 
       $.ajax({
         method: "GET",
-        url: screenshotsUrl,
+        url: screenshotsUrl + "?team_id=" + teamId,
         success: function(data) {
           vm.screenshots = data;
         },
