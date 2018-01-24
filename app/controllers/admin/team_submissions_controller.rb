@@ -16,8 +16,8 @@ module Admin
       @team_submission = TeamSubmission.friendly.find(params[:id])
 
       if @team_submission.update(team_submission_params)
-          redirect_to [:admin, @team_submission],
-          success: "Submission has been updated"
+        redirect_to [:admin, @team_submission],
+        success: "Submission has been updated"
       else
         render :edit
       end
