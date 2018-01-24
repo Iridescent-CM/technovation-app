@@ -9,7 +9,7 @@ var defaultSubmissionDropzoneOptions = {
   },
 
   init: function(el) {
-    el.on("success", function(file, res) {
+    this.on("success", function(file, res) {
       $(".dropzone-save").fadeIn();
       $(".after-dropzone-save").hide();
     });
