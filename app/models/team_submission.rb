@@ -451,8 +451,9 @@ class TeamSubmission < ActiveRecord::Base
 
   private
   def business_plan_complete_or_not_required?
-    (junior_division? or team_division_name == Division.none_assigned_yet.name) or
-      (senior_division? and not business_plan_url.blank?)
+    (junior_division? or
+      team_division_name == Division.none_assigned_yet.name) or
+        (senior_division? and not business_plan_url.blank?)
   end
 
   def team_name_and_app_name
