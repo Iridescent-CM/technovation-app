@@ -51,18 +51,6 @@ class TeamSubmission < ActiveRecord::Base
 
   mount_uploader :business_plan, FileProcessor
 
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(:team)
-        .where(
-          "teams.state_province = ? AND teams.country = 'US'",
-          ambassador.state_province
-        )
-    else
-      joins(:team).where("teams.country = ?", ambassador.country)
-    end
-  }
-
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(team: :division)
@@ -336,6 +324,12 @@ class TeamSubmission < ActiveRecord::Base
       ["Other", "-", development_platform_other].join(' ')
     else
       development_platform
+    end
+  end
+
+  def business_plan_url
+    if !!business_plan
+      business_plan.url
     end
   end
 

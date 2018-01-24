@@ -58,7 +58,7 @@
       <% if @team_submission.senior_division? %>
         <h5>Business plan</h5>
 
-        <% if @team_submission.business_plan %>
+        <% if @team_submission.business_plan_identifier %>
           <%= link_to @team_submission.business_plan_url,
             @team_submission.business_plan_url,
             target: :_blank %>
