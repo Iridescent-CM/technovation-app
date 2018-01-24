@@ -1,15 +1,16 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <div class="panel">
-      <h3><%= Season.current.year %> Technovation Honor Code</h3>
+<div class="panel">
+  <h3><%= Season.current.year %> Technovation Honor Code</h3>
 
-      <%= render "team_submissions/honor_code" %>
+  <%= render "team_submissions/honor_code" %>
 
-      <p>
-        <%= link_to "Back",
-          [current_scope, @team_submission],
-          class: "button button--small" %>
-      </p>
-    </div>
-  </div>
+  <p>
+    <%= link_to "Back",
+      [
+        current_scope,
+        @team_submission,
+        :section,
+        section: @submission_section,
+      ],
+      class: "button button--small" %>
+  </p>
 </div>
