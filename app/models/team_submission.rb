@@ -8,7 +8,9 @@ class TeamSubmission < ActiveRecord::Base
   acts_as_paranoid
 
   extend FriendlyId
-  friendly_id :team_name_and_app_name, use: :slugged
+  friendly_id :team_name_and_app_name,
+    use: :scoped,
+    scope: :deleted_at
 
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
     on: :create
