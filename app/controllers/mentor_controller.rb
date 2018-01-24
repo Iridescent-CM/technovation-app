@@ -29,7 +29,9 @@ class MentorController < ApplicationController
             "team not found with submission id: #{id}"
           )
     elsif friendly_id = params[:id]
-      submission = TeamSubmission.friendly.find(friendly_id)
+      submission = @team_submission ||
+        TeamSubmission.friendly.find(friendly_id)
+
       @current_team ||= current_mentor.teams
         .joins(:submission)
         .where("team_submissions.id = ?", submission.id)
