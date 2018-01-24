@@ -1,5 +1,5 @@
 module HumanizedActivity
-  def self.call(key)
+  def self.call(key, params = {})
     case key
     when "account.create"
       "signed up"
@@ -16,9 +16,9 @@ module HumanizedActivity
     when /register_current_season/
       "registered for the #{Season.current.year} season"
     when "submission.create"
-      "created a submission"
+      "started their submission"
     when "submission.update"
-      "updated their submission"
+      "updated their #{params[:piece].humanize}"
     else
       key
     end

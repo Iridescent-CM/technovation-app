@@ -26,9 +26,10 @@ module ScreenshotController
     # TODO: why is submission.screenshots.create returning an array ??
     screenshot = Array(screenshot).first
 
-    current_account.create_activity(
-      trackable: submission,
+    current_team.create_activity(
+      trackable: current_account,
       key: "submission.update",
+      parameters: { piece: "screenshots" },
       recipient: submission,
     )
 
@@ -49,9 +50,10 @@ module ScreenshotController
 
     if current_team.submission.screenshots.include?(screenshot)
       screenshot.destroy
-      current_account.create_activity(
-        trackable: screenshot.team_submission,
+      current_team.create_activity(
+        trackable: current_account,
         key: "submission.update",
+        parameters: { piece: "screenshots" },
         recipient: screenshot.team_submission,
       )
       render json: {}

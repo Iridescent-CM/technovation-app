@@ -119,6 +119,13 @@ module TeamSubmissionController
         screenshot.update(sort_position: i)
       end
 
+      current_team.create_activity(
+        trackable: current_account,
+        key: "submission.update",
+        parameters: { piece: "screenshots" },
+        recipient: @team_submission,
+      )
+
       render json: {}
     elsif @team_submission.update(team_submission_params)
       if @team_submission.saved_change_to_app_name?
@@ -128,6 +135,7 @@ module TeamSubmissionController
       current_team.create_activity(
         trackable: current_account,
         key: "submission.update",
+        parameters: { piece: piece_name },
         recipient: @team_submission,
       )
 

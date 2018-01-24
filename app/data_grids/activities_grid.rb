@@ -9,9 +9,7 @@ class ActivitiesGrid
   end
 
   column :avatar, html: true, mandatory: true do |activity|
-    if !!activity.recipient && activity.recipient.is_a?(TeamSubmission)
-      image_tag activity.recipient.team_photo_url, class: "thumbnail-xs"
-    elsif !!activity.trackable
+    if !!activity.trackable
       image_tag activity.trackable.avatar_url, class: "thumbnail-xs"
     else
       "–"
@@ -19,9 +17,7 @@ class ActivitiesGrid
   end
 
   column :profile_type, mandatory: true do
-    if !!recipient && recipient.is_a?(TeamSubmission)
-      "Submission"
-    elsif !!trackable
+    if !!trackable
       trackable.scope_name.humanize
     else
       "–"
@@ -29,23 +25,25 @@ class ActivitiesGrid
   end
 
   column :name, html: true,  mandatory: true do |activity|
-    if !!activity.recipient && activity.recipient.is_a?(TeamSubmission)
-      link_to activity.recipient.team_name,
-        send("#{current_scope}_team_path", activity.recipient.team)
-    elsif !!activity.trackable
+    if !!activity.trackable
       resource_name = activity.trackable.is_a?(Account) ?
         "participant" :
         "team"
 
-      link_to activity.trackable.name,
-        send("#{current_scope}_#{resource_name}_path", activity.trackable)
+      link_to(
+        activity.trackable.name,
+        send(
+          "#{current_scope}_#{resource_name}_path",
+          activity.trackable
+        )
+      )
     else
       "–"
     end
   end
 
   column :activity, mandatory: true do
-    HumanizedActivity.(key)
+    HumanizedActivity.(key, parameters)
   end
 
   column :target, html: true, mandatory: true do |activity|

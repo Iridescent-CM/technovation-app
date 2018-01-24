@@ -7,7 +7,8 @@ Vue.use(TurbolinksAdapter)
 Vue.use(VueDragula)
 
 document.addEventListener('turbolinks:load', () => {
-  const screenshotsUrl = $("#screenshots").data("url");
+  const screenshotsUrl = $("#screenshots").data("url"),
+        teamId = $("#screenshots").data("team-id");
 
   const app = new Vue({
     el: '#app',
@@ -69,6 +70,8 @@ document.addEventListener('turbolinks:load', () => {
             "team_submission[screenshots_attributes][]image", file
           );
 
+          form.append("team_id", teamId);
+
           $.ajax({
             method: "POST",
             url: screenshotsUrl,
@@ -114,19 +117,21 @@ document.addEventListener('turbolinks:load', () => {
 
         var url = $(list).data("sort-url"),
             items = $(list).find(".sortable-list__item"),
-            data = new FormData();
+            form = new FormData();
 
         [].forEach.call(items, (item) => {
-          data.append(
+          form.append(
             "team_submission[screenshots][]",
             $(item).data("db-id")
           );
         });
 
+        form.append("team_id", teamId);
+
         $.ajax({
           method: "PATCH",
           url: url,
-          data: data,
+          data: form,
           contentType: false,
           processData: false,
           success: function() {
