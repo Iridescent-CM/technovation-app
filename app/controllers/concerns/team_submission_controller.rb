@@ -125,7 +125,7 @@ module TeamSubmissionController
         @team_submission.reload
       end
 
-      current_account.create_activity(
+      current_team.create_activity(
         trackable: current_account,
         key: "submission.update",
         recipient: @team_submission,
