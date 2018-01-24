@@ -28,6 +28,8 @@ class MentorController < ApplicationController
             ActiveRecord::RecordNotFound,
             "team not found with submission id: #{id}"
           )
+    elsif team_id = params[:team_id]
+      @current_team ||= current_mentor.teams.find(team_id)
     elsif friendly_id = params[:id]
       submission = @team_submission ||
         TeamSubmission.friendly.find(friendly_id)
@@ -40,8 +42,6 @@ class MentorController < ApplicationController
             ActiveRecord::RecordNotFound,
             "team not found with submission id: #{submission.id}"
           )
-    elsif team_id = params.fetch(:team_id)
-      @current_team ||= current_mentor.teams.find(team_id)
     else
       raise(KeyError, "missing key for team_submission[id]")
     end
