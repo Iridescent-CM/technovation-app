@@ -64,38 +64,6 @@ module Mentor
       end
     end
 
-
-    def update
-      @team_submission = TeamSubmission.friendly.find(params[:id])
-
-      if team_submission_params[:screenshots]
-        team_submission_params[:screenshots].each_with_index do |id, index|
-          screenshot = @team_submission.screenshots.find(id)
-          screenshot.update_attributes(sort_position: index)
-        end
-
-        render json: {}
-      elsif @team_submission.update(team_submission_params)
-        current_account.create_activity(
-          trackable: current_account,
-          key: "submission.update",
-          recipient: @team_submission,
-        )
-        if request.xhr?
-          render json: {}
-        else
-          redirect_to [:mentor, @team_submission],
-            success: t("controllers.team_submissions.update.success")
-        end
-      else
-        redirect_to edit_mentor_team_submission_path(
-          @team_submission,
-          piece: params[:piece],
-          attributes: @team_submission.attributes.to_json,
-        )
-      end
-    end
-
     private
     def require_onboarded
       if current_mentor.onboarded?
