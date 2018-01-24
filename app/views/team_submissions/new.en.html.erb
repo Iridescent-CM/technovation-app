@@ -7,7 +7,7 @@
             model: [current_scope, @team_submission],
             local: true
           ) do |f| %>
-        <%= f.hidden_field :team_id %>
+        <%= hidden_field_tag :team_id, params[:team_id] %>
 
         <div class="field">
           <%= render "team_submissions/honor_code" %>
