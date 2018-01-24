@@ -121,6 +121,10 @@ module TeamSubmissionController
 
       render json: {}
     elsif @team_submission.update(team_submission_params)
+      if @team_submission.saved_change_to_app_name?
+        @team_submission.reload
+      end
+
       current_account.create_activity(
         trackable: current_account,
         key: "submission.update",
