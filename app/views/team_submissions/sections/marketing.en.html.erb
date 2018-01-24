@@ -45,13 +45,14 @@
   link_options: { data: { turbolinks: false } },
   cta_when_empty: "Upload screenshots of your app",
   cta_when_filled: "Make changes to your screenshots" do %>
-  <p>
-    Your team has uploaded
-    <strong>
-      <%= pluralize(
-        @team_submission.screenshots.persisted.count,
-        "screenshot"
-      ) %>
-    </strong>
-  </p>
+  <div class="submission-pieces__screenshots">
+    <% @team_submission.screenshots.each do |screenshot| %>
+      <div class="submission-pieces__screenshot">
+        <%= image_tag screenshot.image_url,
+          data: {
+            modal_url: screenshot.image_url(:large),
+          } %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
