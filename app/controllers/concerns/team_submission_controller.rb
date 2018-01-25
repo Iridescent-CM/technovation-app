@@ -32,7 +32,12 @@ module TeamSubmissionController
         key: "submission.create",
         recipient: @team_submission,
       )
-      redirect_to [current_scope, @team_submission],
+      redirect_to [
+        current_scope,
+        @team_submission,
+        :section,
+        section: SubmissionSection::SECTION_NAMES[1],
+      ],
         success: t("controllers.team_submissions.create.success")
     else
       render "team_submissions/new"
@@ -191,7 +196,7 @@ module TeamSubmissionController
       "team_submissions/pieces/#{params.fetch(:piece)}"
     else
       section = get_cookie(:last_visited_submission_section) ||
-        :ideation
+        SubmissionSection::SECTION_NAMES[1]
 
       "team_submissions/sections/#{section}"
     end
