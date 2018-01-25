@@ -17,6 +17,7 @@ FactoryBot.define do
       app_description "Submission description"
       pitch_video_link "http://example.com/pitch"
       demo_video_link "http://example.com/demo"
+      development_platform "Swift or XCode"
 
       after(:create) do |sub|
         sub.update_column(:source_code,  "source_code.zip")
@@ -30,6 +31,10 @@ FactoryBot.define do
           uploaded_file: "pitch_slides.pdf",
           team_submission: sub
         })
+
+        2.times do
+          sub.screenshots.create!
+        end
       end
     end
   end
