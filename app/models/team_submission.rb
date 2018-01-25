@@ -359,41 +359,51 @@ class TeamSubmission < ActiveRecord::Base
     technical_checklist.present? and technical_checklist.completed?
   end
 
-  def embed_code(method)
-    if send(method) and send(method).match(/youtu/)
-      id = send(method)[/v=([\w\-]+[^&])&?.*$/, 1]
+  def embed_code(video_type)
+    method = video_type.match(/_video_link$/) ?
+      video_type :
+      "#{video_type}_video_link"
 
-      %{<iframe
-          width="100%"
-          height="315"
-          src="https://www.youtube.com/embed/#{id}?rel=0&cc_load_policy=1"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>}.strip_heredoc
-    elsif send(method) and send(method).match(/vimeo/)
-      id = send(method)[/\/(\d+)$/, 1]
+    id = video_id(method)
+    root = video_url_root(method)
+    src = "#{root}#{id}?rel=0&cc_load_policy=1"
 
-      %{<iframe
-          src="https://player.vimeo.com/video/#{id}"
-          width="100%"
-          height="360"
-          frameborder="0"
-          webkitallowfullscreen
-          mozallowfullscreen
-          allowfullscreen>
-        </iframe>}.strip_heredoc
-    elsif send(method) and send(method).match(/youku/)
-      id = send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1]
+    %{<iframe
+        src="#{src}"
+        width="100%"
+        height="315"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>}.strip_heredoc
+  end
 
-      %{<iframe
-          height="348"
-          width="100%"
-          src="https://player.youku.com/embed/#{id}?autoplay=0&rel=0"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>}.strip_heredoc
-    else
-      ""
+  def video_id(video_type)
+    method = video_type.match(/_video_link$/) ?
+      video_type :
+      "#{video_type}_video_link"
+
+    case send(method)
+    when /youtu/
+      send(method)[/v=([\w\-]+[^&])&?.*$/, 1]
+    when /vimeo/
+      send(method)[/\/(\d+)$/, 1]
+    when /youku/
+      send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1]
+    end
+  end
+
+  def video_url_root(video_type)
+    method = video_type.match(/_video_link$/) ?
+      video_type :
+      "#{video_type}_video_link"
+
+    case send(method)
+    when /youtu/
+      "https://www.youtube.com/embed/"
+    when /vimeo/
+      "https://player.vimeo.com/video/"
+    when /youku/
+      "https://player.youku.com/embed/"
     end
   end
 

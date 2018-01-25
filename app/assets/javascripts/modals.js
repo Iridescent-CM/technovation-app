@@ -3,9 +3,13 @@ $(document).on("click", ".modal-content .close", function(e) {
   swal.close();
 });
 
-$(document).on("submit", ".modal-content form:not([data-remote])", function() {
-  swal.close();
-});
+$(document).on(
+  "submit",
+  ".modal-content form:not([data-remote])",
+  function() {
+    swal.close();
+  }
+);
 
 $(document).on("ready turbolinks:load", function() {
   $("[data-opens-modal]").on("click", function(e) {
