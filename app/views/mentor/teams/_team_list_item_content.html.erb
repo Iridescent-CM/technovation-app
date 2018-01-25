@@ -1,56 +1,59 @@
-<% if type === :current %>
-  <%= link_to image_tag(
-    team.team_photo,
-    class: "thumbnail-md grid__cell-img"
-  ), [:mentor, team] %>
+<h3 class="mentor-teams__heading">
+  <%= link_to team.name, [:mentor, team] %>
+</h3>
 
-  <h4 class="reset"><%= link_to team.name, [:mentor, team] %></h4>
+<div class="grid grid--bleed">
+  <div class="grid__col-6">
+    <%= link_to image_tag(
+      team.team_photo,
+      class: "thumbnail--mdlg grid__cell-img"
+    ), [:mentor, team] %>
 
-  <p>
-    Division: <%= team.division_name.humanize %>
-  </p>
+    <%= web_icon(
+      "flag-o",
+      text: "#{team.division_name.humanize} Division"
+    ) %>
+  </div>
 
-  <p>
-    <%= link_to "Manage this team", [:mentor, team] %>
-  </p>
+  <div class="grid__col-6">
+    <h6 class="heading--reset"><%= team.name %>'s Submission</h6>
 
-  <% if team.submission.present? %>
-    <p>
-      Submission app name:
-      <strong><%= team.submission.app_name %></strong>
+    <p class="scent">
+      App name:
+      <strong><%= team.submission.name %></strong>
     </p>
 
-    <% if SeasonToggles.team_submissions_editable? %>
+    <div class="bar-graph">
+      <div class="bar-wrap">
+        <span
+          class="bar-fill"
+          style="width: <%= team.submission.percent_complete %>%;">
+        </span>
+      </div>
+
+      <p class="scent scent--soft">
+        <%= team.submission.percent_complete %>% completed
+      </p>
+    </div>
+
+    <% if team.submission.present? %>
+      <% if SeasonToggles.team_submissions_editable? %>
+        <p>
+          <%= link_to "Edit this team's submission",
+            mentor_team_submission_path(team.submission),
+            class: "button small" %>
+        </p>
+      <% else %>
+        <p class="hint">Submissions are not editable at this time.</p>
+      <% end %>
+    <% elsif SeasonToggles.team_submissions_editable? %>
       <p>
-        <%= link_to "Edit this team's submission",
-          mentor_team_submission_path(team.submission),
+        <%= link_to "Start a submission now",
+          new_mentor_team_submission_path(team_id: team.id),
           class: "button small" %>
       </p>
     <% else %>
-      <p class="hint">Submissions are not editable at this time.</p>
+      <p class="hint">Submissions may not be started at this time.</p>
     <% end %>
-
-    <p>
-      <%= t("views.teams.index.submission_not_started", name: team.name) %>
-    </p>
-  <% elsif SeasonToggles.team_submissions_editable? %>
-    <p>
-      <%= link_to "Start a submission now",
-        new_mentor_team_submission_path(team_id: team.id),
-        class: "button small" %>
-    </p>
-  <% else %>
-    <p class="hint">Submissions may not be started at this time.</p>
-  <% end %>
-<% else %>
-  <%= link_to image_tag(
-    team.team_photo,
-    class: "thumbnail-md grid__cell-img"
-  ), team %>
-
-  <h4 class="reset"><%= link_to team.name, team %></h4>
-
-  <p>
-    Division: <%= team.division_name.humanize %>
-  </p>
-<% end %>
+  </div>
+</div>
