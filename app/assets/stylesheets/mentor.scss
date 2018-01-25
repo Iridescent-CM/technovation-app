@@ -37,4 +37,10 @@
   display: block;
   height: 1rem;
   width: 0;
+  animation-name: fill;
+  animation-duration: 1s;
+}
+
+@keyframes fill {
+  0%{width: 0;}
 }
