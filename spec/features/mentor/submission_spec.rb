@@ -32,7 +32,9 @@ RSpec.feature "Student team submissions" do
     click_button "Start now!"
 
     expect(current_path).to eq(
-      mentor_team_submission_path(TeamSubmission.last)
+      mentor_team_submission_section_path(
+        TeamSubmission.last,
+      )
     )
   end
 
@@ -63,6 +65,8 @@ RSpec.feature "Student team submissions" do
       )
     )
 
+    click_link "Marketing"
+
     expect(page).to have_link(
       "Add the demo video link",
       href: edit_mentor_team_submission_path(
@@ -79,8 +83,10 @@ RSpec.feature "Student team submissions" do
       )
     )
 
+    click_link "Code"
+
     expect(page).to have_link(
-      "Select the development platform that your team used",
+      "Select your development platform",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :development_platform
@@ -94,6 +100,8 @@ RSpec.feature "Student team submissions" do
         piece: :source_code
       )
     )
+
+    click_link "Marketing"
 
     expect(page).to have_link(
       "Upload screenshots of your app",
@@ -114,6 +122,8 @@ RSpec.feature "Student team submissions" do
     sign_in(mentor)
 
     click_link "Edit this team's submission"
+
+    click_link "Business"
 
     expect(page).not_to have_link(
       "Upload your team's business plan",
@@ -136,6 +146,8 @@ RSpec.feature "Student team submissions" do
     visit mentor_dashboard_path
     click_link "Edit this team's submission"
 
+    click_link "Business"
+
     expect(page).to have_link(
       "Upload your team's business plan",
       href: edit_mentor_team_submission_path(
@@ -155,6 +167,7 @@ RSpec.feature "Student team submissions" do
     sign_in(mentor)
 
     click_link "Edit this team's submission"
+    click_link "Regional events"
 
     expect(page).not_to have_link(
       "Upload the pitch presentation slides for your live event",
@@ -174,6 +187,7 @@ RSpec.feature "Student team submissions" do
 
     visit mentor_dashboard_path
     click_link "Edit this team's submission"
+    click_link "Regional events"
 
     expect(page).to have_link(
       "Upload the pitch presentation slides for your live event",

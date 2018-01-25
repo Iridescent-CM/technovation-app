@@ -16,6 +16,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the app name" do
+    click_link "Ideation"
+
     within(".app_name.incomplete") do
       click_link "Set your app's name"
     end
@@ -38,6 +40,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the app description" do
+    click_link "Ideation"
+
     within(".app_description.incomplete") do
       click_link "Add your app's description"
     end
@@ -62,6 +66,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the demo video" do
+    click_link "Marketing"
+
     within(".demo_video_link.incomplete") do
       click_link "Add the demo video link"
     end
@@ -90,6 +96,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the pitch video" do
+    click_link "Marketing"
+
     within(".pitch_video_link.incomplete") do
       click_link "Add the pitch video link"
     end
@@ -118,8 +126,10 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the devleopment platform" do
+    click_link "Code"
+
     within(".development_platform.incomplete") do
-      click_link "Select the development platform that your team used"
+      click_link "Select your development platform"
     end
 
     select "Swift or XCode",
@@ -144,6 +154,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .zip source code" do
+    click_link "Code"
+
     within(".source_code.incomplete") do
       click_link "Upload your app's source code"
     end
@@ -173,6 +185,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .aia source code" do
+    click_link "Code"
+
     within(".source_code.incomplete") do
       click_link "Upload your app's source code"
     end
@@ -202,6 +216,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload a .pdf business plan" do
+    click_link "Business"
+
     within(".business_plan.incomplete") do
       click_link "Upload your team's business plan"
     end
@@ -227,43 +243,6 @@ RSpec.feature "Students edit submission pieces" do
           piece: :business_plan
         )
       )
-    end
-  end
-
-  scenario "Upload 2 .jpg screenshots" do
-    skip "Vue is handling screenshot uploads..."
-
-    within(".screenshots.incomplete") do
-      click_link "Upload screenshots of your app"
-    end
-
-    attach_file(
-      "up to 6 screenshots",
-      Rails.root + "spec/support/fixtures/screenshot.jpg",
-      visible: false,
-    )
-
-    click_button "Upload"
-
-    within(".screenshots.complete") do
-      expect(page).not_to have_link("Upload screenshots of your app")
-
-      expect(page).to have_content("Your team has uploaded 1 screenshot")
-
-      click_link "Make changes to your screenshots"
-    end
-
-    within(find_all(".field--file-upload")[1]) do
-      attach_file(
-        "up to 6 screenshots",
-        Rails.root + "spec/support/fixtures/screenshot2.jpg",
-      )
-    end
-
-    click_button "Upload"
-
-    within(".screenshots.complete") do
-      expect(page).to have_content("Your team has uploaded 2 screenshots")
     end
   end
 end

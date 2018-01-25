@@ -32,7 +32,7 @@ RSpec.feature "Student team submissions" do
     click_button "Start now!"
 
     expect(current_path).to eq(
-      student_team_submission_path(TeamSubmission.last)
+      student_team_submission_section_path(TeamSubmission.last)
     )
     expect(page).to have_link(
       "My team's submission",
@@ -46,6 +46,7 @@ RSpec.feature "Student team submissions" do
     sign_in(student)
 
     click_link "My team's submission"
+    click_link "Ideation"
 
     expect(page).to have_link(
       "Set your app's name",
@@ -63,6 +64,8 @@ RSpec.feature "Student team submissions" do
       )
     )
 
+    click_link "Marketing"
+
     expect(page).to have_link(
       "Add the demo video link",
       href: edit_student_team_submission_path(
@@ -79,8 +82,10 @@ RSpec.feature "Student team submissions" do
       )
     )
 
+    click_link "Code"
+
     expect(page).to have_link(
-      "Select the development platform that your team used",
+      "Select your development platform",
       href: edit_student_team_submission_path(
         submission,
         piece: :development_platform
@@ -94,6 +99,8 @@ RSpec.feature "Student team submissions" do
         piece: :source_code
       )
     )
+
+    click_link "Marketing"
 
     expect(page).to have_link(
       "Upload screenshots of your app",
@@ -111,6 +118,7 @@ RSpec.feature "Student team submissions" do
     sign_in(student)
 
     click_link "My team's submission"
+    click_link "Business"
 
     expect(page).not_to have_link(
       "Upload your team's business plan",
@@ -130,6 +138,7 @@ RSpec.feature "Student team submissions" do
     })
 
     click_link "My team's submission"
+    click_link "Business"
 
     expect(page).to have_link(
       "Upload your team's business plan",
@@ -147,6 +156,7 @@ RSpec.feature "Student team submissions" do
     sign_in(student)
 
     click_link "My team's submission"
+    click_link "Regional events"
 
     expect(page).not_to have_link(
       "Upload the pitch presentation slides for your live event",
@@ -165,6 +175,7 @@ RSpec.feature "Student team submissions" do
     rpe.teams << student.team
 
     click_link "My team's submission"
+    click_link "Regional events"
 
     expect(page).to have_link(
       "Upload the pitch presentation slides for your live event",
