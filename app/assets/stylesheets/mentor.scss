@@ -34,13 +34,13 @@
 }
 
 .bar-wrap {
-  @include prefix(border-radius,0.5rem 0.5rem 0.5rem 0.5rem);
+  @include prefix(border-radius, 0.5rem 0.5rem 0.5rem 0.5rem);
   border: 0.0625rem solid $shamrock;
   margin-bottom: 1rem;
 }
 
 .bar-fill {
-  @include prefix(border-radius,0.5rem 0.5rem 0.5rem 0.5rem);
+  @include prefix(border-radius, 0.5rem 0.5rem 0.5rem 0.5rem);
   @include prefix(animation, bar-fill 1s);
   background-color: $shamrock;
   display: block;
