@@ -72,11 +72,7 @@ Layout/AlignHash:
   Enabled: true
 
 Layout/AlignParameters:
-  Description: >-
-                 Align the parameters of a method call if they span more
-                 than one line.
-  StyleGuide: '#no-double-indent'
-  Enabled: true
+  EnforcedStyle: with_fixed_indentation
 
 Layout/BlockAlignment:
   Description: 'Align block ends correctly.'
