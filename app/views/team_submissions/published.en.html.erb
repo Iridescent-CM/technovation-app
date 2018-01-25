@@ -12,6 +12,50 @@
           <%= render "team_submissions/piece_links",
             submission: @team_submission,
             team: @team %>
+
+          <p>
+            <%= link_to web_icon(
+                "play-circle-o",
+                text: "Watch the pitch video"
+              ),
+              "#",
+              class: "button button--small",
+              data: {
+                opens_modal: "video-modal-" +
+                            @team_submission.video_id(:pitch),
+              } %>
+          </p>
+
+          <div
+            class="modal"
+            id="video-modal-<%= @team_submission.video_id(:pitch) %>"
+          >
+            <div class="modal-content">
+              <%= @team_submission.embed_code(:pitch).html_safe %>
+            </div>
+          </div>
+
+          <p>
+            <%= link_to web_icon(
+                "play-circle-o",
+                text: "Watch the demo video"
+              ),
+              "#",
+              class: "button button--small",
+              data: {
+                opens_modal: "video-modal-" +
+                            @team_submission.video_id(:demo),
+              } %>
+          </p>
+
+          <div
+            class="modal"
+            id="video-modal-<%= @team_submission.video_id(:demo) %>"
+          >
+            <div class="modal-content">
+              <%= @team_submission.embed_code(:demo).html_safe %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -31,46 +75,6 @@
             } %>
         </div>
       <% end %>
-    </div>
-
-    <div id="submission-pieces__video-tabs" class="tabs">
-      <ul class="reset tabs__menu">
-        <li class="tabs__menu-link">
-          <%= content_tag :button,
-            data: {
-              tab_id: "submission-piece__pitch-video",
-            },
-            class: "tabs__menu-button" do %>
-            Pitch video
-          <% end %>
-        </li>
-
-        <li class="tabs__menu-link">
-          <%= content_tag :button,
-            data: {
-              tab_id: "submission-piece__demo-video",
-            },
-            class: "tabs__menu-button" do %>
-            Demo video
-          <% end %>
-        </li>
-      </ul>
-
-      <div class="tabs__content">
-        <div
-          class="tabs__tab-content"
-          id="submission-piece__pitch-video"
-        >
-          <%= @team_submission.embed_code(:pitch_video_link).html_safe %>
-        </div>
-
-        <div
-          class="tabs__tab-content"
-          id="submission-piece__demo-video"
-        >
-          <%= @team_submission.embed_code(:demo_video_link).html_safe %>
-        </div>
-      </div>
     </div>
   </div>
 </div>
