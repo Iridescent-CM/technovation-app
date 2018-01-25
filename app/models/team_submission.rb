@@ -248,6 +248,7 @@ class TeamSubmission < ActiveRecord::Base
     code_checklist.total_points
   end
 
+  # TODO: Understand who uses this custom getter
   def app_name
     if (self[:app_name] || "").strip.blank?
       nil
@@ -256,8 +257,11 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  # TODO: this method could just be an alias if the one
+  # above returned a default string
+  # try to see if that is possible
   def name
-    app_name || "(unnamed submission)"
+    app_name || "(no name yet)"
   end
 
   def publish!
