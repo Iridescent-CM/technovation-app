@@ -35,4 +35,8 @@ class NullTeamSubmission < NullObject
   def touch
     false
   end
+
+  def percent_complete
+    0
+  end
 end
