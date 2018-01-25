@@ -37,9 +37,9 @@ namespace :cm do
           [],
           false # resubscribe?
         )
-        puts "Added #{email}"
+        puts "Added #{profile.email}"
       rescue => e
-        puts "PROBLEM ADDING #{email}"
+        puts "PROBLEM ADDING #{profile.email}"
         puts e.message
       end
     end
@@ -66,9 +66,9 @@ namespace :cm do
           ],
           false # resubscribe?
         )
-        puts "Added #{email}"
+        puts "Added #{profile.email}"
       rescue => e
-        puts "PROBLEM ADDING #{email}"
+        puts "PROBLEM ADDING #{profile.email}"
         puts e.message
       end
     end
