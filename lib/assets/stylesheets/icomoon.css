@@ -128,15 +128,21 @@
 .icon-trash-o:before {
   content: "\f014";
 }
+.icon-play-circle-o:before {
+  content: "\f01d";
+}
+
 .icon-green,
 .icon--green {
   color: $shamrock-mid;
 }
+
 .icon-red,
 .icon--red {
   font-weight: bold;
   color: $alert-txt;
 }
+
 .icon--orange {
   color: $orange;
 }
