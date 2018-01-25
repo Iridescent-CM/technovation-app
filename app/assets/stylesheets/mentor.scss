@@ -20,28 +20,19 @@
   }
 }
 
-@mixin prefix ($property, $value, $spec: true) {
-  @if $spec {#{$property}: $value;}
-}
-
-@keyframes bar-fill {
-  0% {width: 0;}
-}
-
 .bar-graph {
   margin: 3rem 0 auto;
   width: 50%;
 }
 
 .bar-wrap {
-  @include prefix(border-radius, 0.5rem 0.5rem 0.5rem 0.5rem);
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   border: 0.0625rem solid $shamrock;
   margin-bottom: 1rem;
 }
 
 .bar-fill {
-  @include prefix(border-radius, 0.5rem 0.5rem 0.5rem 0.5rem);
-  @include prefix(animation, bar-fill 1s);
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   background-color: $shamrock;
   display: block;
   height: 1rem;
