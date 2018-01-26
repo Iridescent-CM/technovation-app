@@ -1,3 +1,5 @@
+require "./app/models/submissions/required_fields"
+
 class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
 
@@ -248,15 +250,6 @@ class TeamSubmission < ActiveRecord::Base
     code_checklist.total_points
   end
 
-  # TODO: Understand who uses this custom getter
-  def app_name
-    if (self[:app_name] || "").strip.blank?
-      nil
-    else
-      self[:app_name].strip
-    end
-  end
-
   # TODO: this method could just be an alias if the one
   # above returned a default string
   # try to see if that is possible
@@ -290,35 +283,15 @@ class TeamSubmission < ActiveRecord::Base
 
   def complete?
     Rails.cache.fetch("#{cache_key}/complete?") do
-      (not app_name.blank? and
-        not app_description.blank? and
-          not development_platform_text.blank?
-            not pitch_video_link.blank? and
-              not demo_video_link.blank? and
-                screenshots.count >= 2 and
-                  not source_code_url.blank? and
-                    business_plan_complete_or_not_required?)
+      RequiredFields.new(self).all?(&:complete?)
     end
   end
 
   def percent_complete
-    completed_items = %i{
-      app_name
-      app_description
-      development_platform_text
-      pitch_video_link
-      demo_video_link
-      source_code_url
-    }.reject { |method_name| send(method_name).blank? }
-      .count
-
-    completed_items += 1 if screenshots.count >= 2
-
-    if junior_division?
-      (completed_items / 7.0 * 100).round
-    else
-      completed_items += 1 if business_plan_complete_or_not_required?
-      (completed_items / 8.0 * 100).round
+    Rails.cache.fetch("#{cache_key}/percent_complete") do
+      required_fields = RequiredFields.new(self)
+      completed_count = required_fields.count(&:complete?)
+      (completed_count / required_fields.size.to_f * 100).round
     end
   end
 

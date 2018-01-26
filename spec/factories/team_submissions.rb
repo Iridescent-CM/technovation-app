@@ -12,6 +12,14 @@ FactoryBot.define do
       RegisterToCurrentSeasonJob.perform_now(sub)
     end
 
+    trait :junior do
+      team { FactoryBot.build(:team, :junior) }
+    end
+
+    trait :senior do
+      team { FactoryBot.build(:team, :senior) }
+    end
+
     trait :complete do
       app_name "Submission name"
       app_description "Submission description"
