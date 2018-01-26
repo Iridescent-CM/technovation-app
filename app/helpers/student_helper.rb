@@ -34,7 +34,9 @@ module StudentHelper
     when :team_photo
       status = :complete if submission.team_photo_uploaded?
     when :app_name
-      status = :complete unless submission.app_name.blank?
+      if RequiredAppNameField.new(submission, :app_name).complete?
+        status = :complete
+      end
     when :app_description
       status = :complete unless submission.app_description.blank?
     when :pitch_video

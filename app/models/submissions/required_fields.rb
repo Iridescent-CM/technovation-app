@@ -6,7 +6,7 @@ class RequiredFields
   def initialize(submission)
     @submission = submission
     @fields = [
-      RequiredField.new(submission, :app_name),
+      RequiredAppNameField.new(submission, :app_name),
       RequiredField.new(submission, :app_description),
       RequiredField.new(submission, :development_platform_text),
       RequiredField.new(submission, :demo_video_link),
@@ -32,6 +32,16 @@ end
 class RequiredField
   attr_reader :submission, :method_name
 
+  def self.for(submission, method_name)
+    if method_name.to_sym == :app_name
+      RequiredAppNameField.new(submission, method_name)
+    elsif method_name.to_sym == :screenshots
+      RequiredScreenshotsField.new(submission, method_name)
+    else
+      RequiredField.new(submission, method_name)
+    end
+  end
+
   def initialize(submission, method_name)
     @submission = submission
     @method_name = method_name
@@ -46,5 +56,11 @@ end
 class RequiredScreenshotsField < RequiredField
   def complete?
     submission.send(method_name).count >= 2
+  end
+end
+
+class RequiredAppNameField < RequiredField
+  def complete?
+    submission.send(method_name) != "(no name yet)"
   end
 end

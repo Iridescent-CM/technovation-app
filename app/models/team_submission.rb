@@ -250,12 +250,14 @@ class TeamSubmission < ActiveRecord::Base
     code_checklist.total_points
   end
 
-  # TODO: this method could just be an alias if the one
-  # above returned a default string
-  # try to see if that is possible
-  def name
-    app_name || "(no name yet)"
+  def app_name
+    if (self[:app_name] || "").strip.blank?
+      "(no name yet)"
+    else
+      self[:app_name].strip
+    end
   end
+  alias :name :app_name
 
   def publish!
     update(published_at: Time.current)
