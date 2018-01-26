@@ -18,21 +18,14 @@
       multipart: true,
       id: "team-submission-business-plan-dropzone",
       class: "dropzone" do |f| %>
-      <%= f.hidden_field "business_plan_attributes[id]",
-        value: @team_submission.business_plan.id %>
 
       <div class="fallback">
-        <%= f.fields_for :business_plan do |b| %>
-          <%= b.label :uploaded_file,
-            "Upload your team's business plan" %>
-
-          <%= b.file_field :uploaded_file,
-            id: "team_submission_business_plan_attributes_" +
-                "uploaded_file" %>
-        <% end %>
-
+        <%= f.label :business_plan, "Upload your team's business plan" %>
+        <%= f.file_field :business_plan, id: "team_submission_business_plan" %>
+        <%= f.hidden_field :business_plan_cache %>
         <%= f.submit "Upload", class: "button" %>
       </div>
+
     <% end %>
 
     <p class="dropzone-save" style="display: none;">

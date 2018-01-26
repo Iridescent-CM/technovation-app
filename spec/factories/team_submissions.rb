@@ -29,11 +29,7 @@ FactoryBot.define do
 
       after(:create) do |sub|
         sub.update_column(:source_code,  "source_code.zip")
-
-        BusinessPlan.create!({
-          uploaded_file: "business_plan.pdf",
-          team_submission: sub
-        })
+        sub.update_column(:business_plan,  "business_plan.pdf")
 
         PitchPresentation.create!({
           uploaded_file: "pitch_slides.pdf",

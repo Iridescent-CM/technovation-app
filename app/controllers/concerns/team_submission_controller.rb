@@ -62,10 +62,6 @@ module TeamSubmissionController
 
     @team_submission.screenshots.build
 
-    unless @team_submission.business_plan.present?
-      @team_submission.build_business_plan
-    end
-
     unless @team_submission.pitch_presentation.present?
       @team_submission.build_pitch_presentation
     end
@@ -96,10 +92,6 @@ module TeamSubmissionController
 
     unless @code_checklist.present?
       @code_checklist = @team_submission.build_code_checklist
-    end
-
-    unless @team_submission.business_plan.present?
-      @team_submission.build_business_plan
     end
 
     @uploader = ImageUploader.new
@@ -208,6 +200,7 @@ module TeamSubmissionController
         :team_id,
         :integrity_affirmed,
         :source_code,
+        :business_plan,
         :app_description,
         :app_name,
         :demo_video_link,
@@ -220,10 +213,6 @@ module TeamSubmissionController
         screenshots_attributes: [
           :id,
           :image,
-        ],
-        business_plan_attributes: [
-          :id,
-          :uploaded_file,
         ],
         pitch_presentation_attributes: [
           :id,

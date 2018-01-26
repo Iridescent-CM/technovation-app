@@ -17,6 +17,7 @@
   <div class="grid__col-6">
     <div class="panel">
       <h5>App Name</h5>
+
       <% if @team_submission.app_name %>
         <p><%= @team_submission.app_name%></p>
       <% else %>
@@ -24,6 +25,7 @@
       <% end %>
 
       <h5>Description</h5>
+
       <% if @team_submission.app_description %>
         <p><%= @team_submission.app_description %></p>
       <% else %>
@@ -58,8 +60,8 @@
       <% if @team_submission.senior_division? %>
         <h5>Business plan</h5>
 
-        <% if @team_submission.business_plan_identifier %>
-          <%= link_to @team_submission.business_plan_url,
+        <% if @team_submission.business_plan_url %>
+          <%= link_to @team_submission.business_plan_identifier,
             @team_submission.business_plan_url,
             target: :_blank %>
         <%else %>
