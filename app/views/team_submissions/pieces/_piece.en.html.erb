@@ -1,7 +1,7 @@
 <%
-  value_is_blank = submission.public_send(attribute).blank?
+  value_is_complete = RequiredField.for(submission, attribute).complete?
   base_path_name = "edit_#{scope}_team_submission_path"
-  completion_css_class = value_is_blank ? :incomplete : :complete
+  completion_css_class = value_is_complete ? :complete : :incomplete
   yield_block ||= false
   link_options ||= {}
 %>
@@ -19,18 +19,7 @@
       <%= completion_css_class %>
     "
   >
-    <% if value_is_blank %>
-      <p class="scent">
-        There's nothing here yet, but your team can
-        update this part whenever it's ready!
-      </p>
-
-      <div class="panel--footer">
-        <%= link_to cta_when_empty,
-          send(base_path_name, submission, piece: attribute),
-          { class: "button small" }.merge(link_options) %>
-      </div>
-    <% else %>
+    <% if value_is_complete %>
       <% if yield_block %>
         <%= yield %>
       <% else %>
@@ -41,6 +30,17 @@
         <%= link_to cta_when_filled,
           send(base_path_name, submission, piece: attribute),
           { class: "button small secondary" }.merge(link_options) %>
+      </div>
+    <% else %>
+      <p class="scent">
+        There's nothing here yet, but your team can
+        update this part whenever it's ready!
+      </p>
+
+      <div class="panel--footer">
+        <%= link_to cta_when_empty,
+          send(base_path_name, submission, piece: attribute),
+          { class: "button small" }.merge(link_options) %>
       </div>
     <% end %>
   </div>
