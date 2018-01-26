@@ -1,44 +1,36 @@
 require "rails_helper"
 
 RSpec.describe TeamSubmission do
-  subject(:submission) { TeamSubmission.new }
-
-  it { should respond_to(:app_name) }
-  it { should respond_to(:demo_video_link) }
-  it { should respond_to(:pitch_video_link) }
-
   describe "#percent_complete" do
     it "returns 0 for nothing completed" do
-      submission.team = FactoryBot.create(:team)
+      submission = FactoryBot.create(:submission)
       expect(submission.percent_complete).to eq(0)
     end
 
     it "returns 14 for one junior team item completed" do
-      submission.team = FactoryBot.create(:team)
-      submission.app_name = "Something"
+      submission = FactoryBot.create(:submission)
+      submission.update(app_name: "Something")
       expect(submission.percent_complete).to eq(14)
     end
 
     it "returns 13 for one senior team item completed" do
-      submission.team = FactoryBot.create(:team)
-      older_student = FactoryBot.create(:student, :senior)
-      TeamRosterManaging.add(submission.team, older_student)
-
-      submission.app_name = "Something"
+      submission = FactoryBot.create(:submission, :senior)
+      submission.update(app_name: "Something")
       expect(submission.percent_complete).to eq(13)
     end
 
     it "returns 100 percent for all of the items completed" do
-      team_submission = FactoryBot.create(:team_submission, :complete)
-      # TODO: Junior team by default
+      submission = FactoryBot.create(:submission, :junior, :complete)
+
       # TODO: faking the source code url
-      expect(team_submission).to receive(:source_code_url).and_return("hello")
-      expect(team_submission.percent_complete).to eq(100)
+      expect(submission).to receive(:source_code_url)
+        .and_return("something")
+
+      expect(submission.percent_complete).to eq(100)
     end
   end
 
   describe "cache_key" do
-
     subject(:submission) {
       TeamSubmission.create!({
         integrity_affirmed: true,
@@ -87,6 +79,7 @@ RSpec.describe TeamSubmission do
     it "changes when team regional pitch event changes" do
       team = submission.team
       team.reload
+
       team.regional_pitch_events << RegionalPitchEvent.create!({
         regional_ambassador_profile: FactoryBot.create(
           :regional_ambassador_profile
@@ -98,15 +91,50 @@ RSpec.describe TeamSubmission do
         city: "City",
         venue_address: "123 Street St."
       })
+
       expect(submission.reload.cache_key).not_to eq(@before_key)
     end
 
+    it "changes when regular fields updated" do
+      submission = FactoryBot.create(:submission, :complete)
+
+      RequiredFields.new(submission).each do |field|
+        if field.method_name == :screenshots
+          submission.screenshots.destroy_all
+        elsif field.method_name == :development_platform_text
+          submission.update(development_platform: nil)
+        elsif field.method_name == :source_code_url
+          submission.remove_source_code!
+        else
+          submission.update(field.method_name => nil)
+        end
+
+        expect(submission.reload.cache_key).not_to eq(@before_key),
+          "failed method: #{field.method_name}"
+      end
+    end
   end
 
   it "can be #complete?" do
     team = FactoryBot.create(:team)
     sub = FactoryBot.create(:submission, :complete, team: team)
-    expect(sub.reload.complete?).to be true
+
+    expect(sub.reload).to be_complete
+
+    RequiredFields.new(sub).each do |field|
+      if field.method_name == :screenshots
+        sub.screenshots.destroy_all
+      elsif field.method_name == :development_platform_text
+        sub.update(development_platform: nil)
+      elsif field.method_name == :source_code_url
+        sub.remove_source_code!
+      else
+        sub.update(field.method_name => nil)
+      end
+
+      expect(sub.reload).not_to be_complete,
+        "failed method: #{field.method_name}"
+    end
   end
 
   it "only averages scores that count" do
@@ -118,7 +146,9 @@ RSpec.describe TeamSubmission do
 
 
     rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
+      regional_ambassador_profile: FactoryBot.create(
+        :regional_ambassador_profile
+      ),
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,

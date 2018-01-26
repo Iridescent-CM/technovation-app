@@ -7,6 +7,34 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    trait :junior do
+      after(:create) do
+        members = evaluator.members_count.times.collect {
+          FactoryBot.create(:student, :junior)
+        }
+
+        TeamCreating.execute(team, members.first, FakeController.new)
+
+        members.drop(1).each do |m|
+          TeamRosterManaging.add(team, m)
+        end
+      end
+    end
+
+    trait :senior do
+      after(:create) do
+        members = evaluator.members_count.times.collect {
+          FactoryBot.create(:student, :senior)
+        }
+
+        TeamCreating.execute(team, members.first, FakeController.new)
+
+        members.drop(1).each do |m|
+          TeamRosterManaging.add(team, m)
+        end
+      end
+    end
+
     trait :with_mentor do
       after(:create) do |team, _|
         TeamRosterManaging.add(team, FactoryBot.create(:mentor))
