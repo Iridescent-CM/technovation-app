@@ -36,6 +36,7 @@ class TeamSubmission < ActiveRecord::Base
   attr_accessor :step
 
   mount_uploader :source_code, FileProcessor
+  mount_uploader :business_plan, FileProcessor
 
   scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
@@ -62,9 +63,6 @@ class TeamSubmission < ActiveRecord::Base
     after_add: Proc.new { |ts, _| ts.touch },
     after_remove: Proc.new { |ts, _| ts.touch }
   accepts_nested_attributes_for :screenshots
-
-  has_one :business_plan, dependent: :destroy
-  accepts_nested_attributes_for :business_plan
 
   has_one :pitch_presentation, dependent: :destroy
   accepts_nested_attributes_for :pitch_presentation
@@ -325,12 +323,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def business_plan_url
-    if !!business_plan
-      business_plan.uploaded_file_url
-    end
-  end
-
   def pitch_presentation_url
     if !!pitch_presentation
       pitch_presentation.uploaded_file_url
@@ -462,12 +454,6 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   private
-  def business_plan_complete_or_not_required?
-    (junior_division? or
-      team_division_name == Division.none_assigned_yet.name) or
-        (senior_division? and not business_plan_url.blank?)
-  end
-
   def team_name_and_app_name
     "#{app_name} by #{team_name}"
   end

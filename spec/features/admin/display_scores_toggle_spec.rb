@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Toggling display of scores" do
   context "Student dashboard" do
     let(:user) { FactoryBot.create(:student) }
-    let(:sub) { FactoryBot.create(:submission, :complete) }
+    let(:sub) { FactoryBot.create(:submission, :junior, :complete) }
     let(:path) { student_dashboard_path }
 
     before do
@@ -33,7 +33,7 @@ RSpec.feature "Toggling display of scores" do
 
   context "Mentor dashboard" do
     let(:user) { FactoryBot.create(:mentor) }
-    let(:sub) { FactoryBot.create(:submission, :complete) }
+    let(:sub) { FactoryBot.create(:submission, :junior, :complete) }
     let(:path) { mentor_dashboard_path }
 
     before do

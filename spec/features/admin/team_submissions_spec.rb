@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "admin team submissions" do
   let!(:submission) {
-    FactoryBot.create(:submission, app_name: "some app name")
+    FactoryBot.create(:submission, :senior, app_name: "some app name")
   }
 
   before do
@@ -27,22 +27,33 @@ RSpec.feature "admin team submissions" do
   scenario "View a specific submission" do
     click_link "view"
 
-    expect(current_path).to eq(admin_team_submission_path(submission))
+    expect(current_path).to eq(admin_team_submission_path(submission.reload))
     expect(page).to have_content("Cool team")
   end
 
   scenario "Edit a specific submission" do
-    skip "Alli is passing this spec in another branch"
-
     click_link "view"
     click_link "Edit"
 
     fill_in "App description", with: "A great description for the ages"
     select "Swift or XCode", from: "Development platform"
 
+    attach_file(
+      "Business plan",
+      Rails.root + "spec/support/fixtures/business_plan.pdf"
+    )
+
     click_button "Save"
-    expect(current_path).to eq(admin_team_submission_path(submission))
+
+    expect(current_path).to eq(admin_team_submission_path(submission.reload))
+
     expect(page).to have_content("A great description for the ages")
+
     expect(page).to have_content("Swift or XCode")
+
+    expect(page).to have_link(
+      "business_plan.pdf",
+      href: submission.business_plan_url
+    )
   end
 end

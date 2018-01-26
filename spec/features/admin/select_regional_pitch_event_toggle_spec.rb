@@ -6,7 +6,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   context "Student dashboard" do
     let(:user) { FactoryBot.create(:student, :on_team) }
     let(:rpe) { FactoryBot.create(:rpe) }
-    let(:sub) { FactoryBot.create(:submission) }
+    let(:sub) { FactoryBot.create(:submission, :junior) }
     let(:path) { student_dashboard_path(anchor: "live-events") }
 
     before do
@@ -161,7 +161,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   context "Mentor regional pitch event selection page" do
     let(:user) { FactoryBot.create(:mentor) }
     let(:team) { FactoryBot.create(:team) }
-    let(:sub) { FactoryBot.create(:submission) }
+    let(:sub) { FactoryBot.create(:submission, :junior) }
     let(:rpe) { FactoryBot.create(:rpe) }
     let(:path) { new_mentor_regional_pitch_event_selection_path }
 
@@ -196,7 +196,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   context "Mentor dashboard" do
     let(:user) { FactoryBot.create(:mentor) }
     let(:team) { FactoryBot.create(:team) }
-    let(:sub) { FactoryBot.create(:submission) }
+    let(:sub) { FactoryBot.create(:submission, :junior) }
     let!(:rpe) { FactoryBot.create(:rpe) }
     let(:path) { mentor_dashboard_path(anchor: "pitch-events") }
 

@@ -55,6 +55,10 @@ FactoryBot.define do
       date_of_birth Date.today - 15.years
     end
 
+    trait :junior do |s|
+      date_of_birth Date.today - 14.years
+    end
+
     trait :on_team do
       after(:create) do |s|
         team = FactoryBot.create(:team, members_count: 0)

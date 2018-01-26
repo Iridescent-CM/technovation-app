@@ -2,13 +2,13 @@ FactoryBot.define do
   factory :team do
     sequence(:name) { |n| "FactoryBot #{n}!" }
     description { "Made with <3 by FactoryBot" }
-    division { Division.senior }
+    division { Division.none_assigned_yet }
     city "Chicago"
     state_province "IL"
     country "US"
 
     trait :junior do
-      after(:create) do
+      after(:create) do |team, evaluator|
         members = evaluator.members_count.times.collect {
           FactoryBot.create(:student, :junior)
         }
@@ -22,7 +22,7 @@ FactoryBot.define do
     end
 
     trait :senior do
-      after(:create) do
+      after(:create) do |team, evaluator|
         members = evaluator.members_count.times.collect {
           FactoryBot.create(:student, :senior)
         }

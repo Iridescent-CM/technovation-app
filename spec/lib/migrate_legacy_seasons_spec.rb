@@ -21,7 +21,7 @@ RSpec.describe MigrateLegacySeasons do
     end
 
     it "converts TeamSubmission seasons" do
-      MigrateLegacySeasons::TestSetup.(:team_submission)
+      MigrateLegacySeasons::TestSetup.(:team_submission, :junior)
 
       submission = TeamSubmission.last
       submission.update(seasons: [])
