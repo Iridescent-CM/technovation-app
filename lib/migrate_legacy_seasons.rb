@@ -30,7 +30,7 @@ module MigrateLegacySeasons
   end
 
   module TestSetup
-    def self.call(model)
+    def self.call(model, *factory_args)
       unless ActiveRecord::Migration.table_exists?("seasons")
         ActiveRecord::Migration.create_table("seasons") do |t|
           t.integer :year
@@ -49,7 +49,7 @@ module MigrateLegacySeasons
       LegacySeason.create!(year: 2016)
       LegacySeason.create!(year: 2017)
 
-      registerable = FactoryBot.create(model)
+      registerable = FactoryBot.create(model, *factory_args)
 
       LegacySeason.all.each do |season|
         LegacySeasonRegistration.create!({

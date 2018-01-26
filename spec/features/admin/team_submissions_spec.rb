@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "admin team submissions" do
   let!(:submission) {
-    FactoryBot.create(:submission, app_name: "some app name")
+    FactoryBot.create(:submission, :senior, app_name: "some app name")
   }
 
   before do

@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   describe "#percent_complete" do
     it "returns 0 for nothing completed" do
-      submission = FactoryBot.create(:submission)
+      submission = FactoryBot.create(:submission, :junior)
       expect(submission.percent_complete).to eq(0)
     end
 
     it "returns 14 for one junior team item completed" do
-      submission = FactoryBot.create(:submission)
+      submission = FactoryBot.create(:submission, :junior)
       submission.update(app_name: "Something")
       expect(submission.percent_complete).to eq(14)
     end
@@ -16,7 +16,7 @@ RSpec.describe TeamSubmission do
     it "returns 13 for one senior team item completed" do
       submission = FactoryBot.create(:submission, :senior)
       submission.update(app_name: "Something")
-      expect(submission.percent_complete).to eq(13)
+      expect(submission.reload.percent_complete).to eq(13)
     end
 
     it "returns 100 percent for all of the items completed" do
@@ -31,7 +31,7 @@ RSpec.describe TeamSubmission do
   end
 
   it "can be #complete?" do
-    team = FactoryBot.create(:team)
+    team = FactoryBot.create(:team, :junior)
     sub = FactoryBot.create(:submission, :complete, team: team)
 
     expect(sub.reload).to be_complete
@@ -53,7 +53,7 @@ RSpec.describe TeamSubmission do
   end
 
   it "only averages scores that count" do
-    team = FactoryBot.create(:team)
+    team = FactoryBot.create(:team, :junior)
     sub = FactoryBot.create(:submission, :complete, team: team)
 
     live_judge = FactoryBot.create(:judge_profile)

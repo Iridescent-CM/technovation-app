@@ -4,6 +4,7 @@ RSpec.feature "Admins view scores" do
   scenario "view QF scores" do
     submission = FactoryBot.create(
       :submission,
+      :junior,
       :complete,
       technical_checklist_attributes: {
         used_camera: true,
@@ -27,6 +28,7 @@ RSpec.feature "Admins view scores" do
 
     submission = FactoryBot.create(
       :submission,
+      :junior,
       :complete,
       :semifinalist,
       technical_checklist_attributes: {

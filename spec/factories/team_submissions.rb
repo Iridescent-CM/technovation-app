@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :team_submission, aliases: [:submission] do
-    team
-
     integrity_affirmed true
 
     trait :semifinalist do
@@ -13,11 +11,11 @@ FactoryBot.define do
     end
 
     trait :junior do
-      team { FactoryBot.build(:team, :junior) }
+      association(:team, factory: [:team, :junior])
     end
 
     trait :senior do
-      team { FactoryBot.build(:team, :senior) }
+      association(:team, factory: [:team, :senior])
     end
 
     trait :complete do
