@@ -24,6 +24,8 @@
       media: :all
     ) %>
 
+    <%= yield :css %>
+
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
 

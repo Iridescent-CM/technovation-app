@@ -2,14 +2,8 @@
 <% provide :css, stylesheet_pack_tag("ra_events") %>
 
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-6">
+  <div class="grid__col-sm-8">
     <div class="panel">
-      <h1>Events</h1>
-
-      <div id="events">
-        {{ message }}
-      </div>
-
       <div id="add-judges">
         <input
           ref="judgeSearch"
@@ -23,6 +17,73 @@
             {{ result.name }} - {{ result.email }}
           </li>
         </ul>
+      </div>
+
+      <div v-if="false" id="events">
+        <label>
+          Event name
+          <input type="text" v-model="event.name" />
+        </label>
+
+        Division(s)
+        <label>
+          <input
+            type="checkbox"
+            v-model="event.divisions"
+            value="senior"
+          />
+          Senior
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            v-model="event.divisions"
+            value="junior"
+          />
+          Junior
+        </label>
+
+        <label>
+          City
+          <input type="text" v-model="event.city" />
+        </label>
+
+        <label>
+          Venue address
+          <input type="text" v-model="event.venue_address" />
+        </label>
+
+        <label>
+          Starting at
+          <datetime
+            type="datetime"
+            v-model="event.starts_at"
+            :minute-step="15"
+            :min-datetime="minDatetime"
+            :max-datetime="maxDatetime"
+            :week-start="7"
+            auto
+          ></datetime>
+        </label>
+
+        <label>
+          Ending at
+          <datetime
+            type="datetime"
+            v-model="event.ends_at"
+            :minute-step="15"
+            :min-datetime="minDatetime"
+            :max-datetime="maxDatetime"
+            :week-start="7"
+            auto
+          ></datetime>
+        </label>
+
+        <label>
+          Eventbrite URL
+          <input type="text" v-model="event.eventbrite_link" />
+        </label>
       </div>
     </div>
   </div>
