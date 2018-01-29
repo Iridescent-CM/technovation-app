@@ -992,7 +992,8 @@ CREATE TABLE regional_pitch_events (
     venue_address character varying,
     eventbrite_link character varying,
     name character varying,
-    unofficial boolean DEFAULT false
+    unofficial boolean DEFAULT false,
+    seasons text[] DEFAULT '{}'::text[]
 );
 
 
@@ -2815,6 +2816,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171207180553'),
 ('20180102162930'),
 ('20180117190150'),
-('20180126195041');
+('20180126195041'),
+('20180129165533'),
+('20180129165702');
 
 

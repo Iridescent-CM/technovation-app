@@ -1,4 +1,6 @@
 class RegionalPitchEvent < ActiveRecord::Base
+  include Seasoned
+
   after_validation -> {
     AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.(self)
   }
