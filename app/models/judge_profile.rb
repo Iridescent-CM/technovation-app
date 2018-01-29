@@ -45,6 +45,8 @@ class JudgeProfile < ActiveRecord::Base
   }
 
   belongs_to :current_account, -> { current },
+    foreign_key: :account_id,
+    class_name: "Account",
     required: false
 
   belongs_to :user_invitation,
