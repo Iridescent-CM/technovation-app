@@ -28,7 +28,7 @@ namespace :teams do
 
         event_name = t.selected_regional_pitch_event_name
 
-        t.remove_from_live_event
+        RemoveFromLiveEvent.(t)
 
         puts "Removed #{t.name} from #{event_name}"
       end

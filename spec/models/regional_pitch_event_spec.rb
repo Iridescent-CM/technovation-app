@@ -1,27 +1,27 @@
 require "rails_helper"
 
 RSpec.describe RegionalPitchEvent do
-  it "triggers an updates on team submission average scores if unofficial is toggled" do
-    # TODO Fix this broken test
-    skip "This is broken and it doesn't matter right now"
+  it "removes incompatible division teams when trying to add" do
+    team = FactoryBot.create(:team, :junior)
+    rpe = FactoryBot.create(:event, :senior)
 
-    team = FactoryBot.create(:team)
+    expect {
+      AddTeamToRegionalEvent.(rpe, team)
+    }.to raise_error(AddTeamToRegionalEvent::IncompatibleDivisionError)
+
+    expect(rpe.reload.teams).to be_empty
+  end
+
+  it "updates submission average scores if unofficial is toggled" do
+    team = FactoryBot.create(:team, :senior)
     sub = FactoryBot.create(:submission, :complete, team: team)
 
     live_judge = FactoryBot.create(:judge_profile)
     virtual_judge = FactoryBot.create(:judge_profile)
 
-    rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
-      name: "RPE",
-      starts_at: Date.today,
-      ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id,
-      city: "City",
-      venue_address: "123 Street St.",
-    })
+    rpe = FactoryBot.create(:event, :senior)
 
-    team.regional_pitch_events << rpe
+    AddTeamToRegionalEvent.(rpe, team)
     live_judge.regional_pitch_events << rpe
 
     live_judge.submission_scores.create!({

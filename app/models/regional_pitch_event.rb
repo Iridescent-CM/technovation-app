@@ -1,11 +1,6 @@
 class RegionalPitchEvent < ActiveRecord::Base
   after_validation -> {
-    teams.includes(:regional_pitch_events,
-                   team_submissions: :submission_scores).find_each do |team|
-      if not division_ids.include?(team.division.id)
-        team.remove_from_live_event
-      end
-    end
+    AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.(self)
   }
 
   after_update -> {
@@ -31,10 +26,17 @@ class RegionalPitchEvent < ActiveRecord::Base
   has_many :messages, as: :regarding
   has_many :multi_messages, as: :regarding
 
-  validates :name, :starts_at, :ends_at, :division_ids, :city, :venue_address,
+  validates :name,
+            :starts_at,
+            :ends_at,
+            :division_ids,
+            :city,
+            :venue_address,
     presence: true
 
-  delegate :state_province, :country, :timezone,
+  delegate :state_province,
+           :country,
+           :timezone,
     to: :regional_ambassador_profile,
     prefix: false
 

@@ -133,11 +133,13 @@ class Team < ActiveRecord::Base
     class_name: "JoinRequest"
 
   has_and_belongs_to_many :regional_pitch_events, -> { distinct },
-    after_add: :update_submission,
-    after_remove: :update_submission
+    after_add: ->(team, event) { team.submission.touch },
+    after_remove: ->(team, event) { team.submission.touch }
 
   has_many :judge_assignments
-  has_many :assigned_judges, through: :judge_assignments, source: :judge_profile
+  has_many :assigned_judges,
+    through: :judge_assignments,
+    source: :judge_profile
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
@@ -155,16 +157,6 @@ class Team < ActiveRecord::Base
 
   def submission
     super || ::NullTeamSubmission.new
-  end
-
-  def remove_from_live_event
-    team_submissions.flat_map(&:submission_scores).each(&:destroy)
-    judge_assignments.destroy_all
-    regional_pitch_events.destroy_all
-  end
-
-  def update_submission(team)
-    submission.touch
   end
 
   def eligible_events

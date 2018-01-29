@@ -402,9 +402,9 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def clear_judge_opened_details!
-    update_attributes({
+    update({
       judge_opened_at: nil,
-      judge_opened_id: nil
+      judge_opened_id: nil,
     })
   end
 

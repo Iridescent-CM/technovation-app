@@ -12,29 +12,15 @@ module Judge
       do_create(params)
     end
 
-    def destroy
-      do_destroy
-    end
-
     private
     def do_destroy
-      old_event = current_judge.selected_regional_pitch_event
-
-      current_judge.remove_from_live_event
-
-      SendPitchEventRSVPNotifications.perform_later(
-        current_judge.id,
-        judge_leaving_event_id: old_event.id
-      )
-
-      redirect_to [:judge, :dashboard],
-        success: t("controllers.judge.regional_pitch_event_selections.destroy.success")
+      false
     end
 
     def do_create(params)
       old_event = current_judge.selected_regional_pitch_event
 
-      current_judge.remove_from_live_event
+      RemoveFromLiveEvent.(current_judge)
 
       event = RegionalPitchEvent.find(params.fetch(:event_id))
       current_judge.regional_pitch_events << event
