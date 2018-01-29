@@ -160,6 +160,7 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: [:new, :create, :show]
 
+    resources :events, controller: :regional_pitch_events
     resources :regional_pitch_events
     resources :regional_pitch_event_participations, only: [:new, :create, :destroy]
     resources :judge_assignments, only: [:new, :create, :destroy]

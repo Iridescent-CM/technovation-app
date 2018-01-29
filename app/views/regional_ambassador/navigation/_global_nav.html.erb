@@ -1,6 +1,11 @@
 <%= link_to "Dashboard", regional_ambassador_dashboard_path %>
 
 <% if current_ambassador.onboarded? %>
+  <%= link_to "Events",
+    regional_ambassador_events_path,
+    data: { turbolinks: false },
+    class: al(regional_ambassador_events_path) %>
+
   <%= link_to "Participants",
     regional_ambassador_participants_path,
     data: { turbolinks: false },
