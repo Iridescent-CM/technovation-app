@@ -1,4 +1,5 @@
-<% provide :js, javascript_pack_tag("ra_events") %>
+<% provide :js, javascript_pack_tag("ra_events", "ra_add_judges") %>
+<% provide :css, stylesheet_pack_tag("ra_events") %>
 
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-6">
@@ -7,6 +8,21 @@
 
       <div id="events">
         {{ message }}
+      </div>
+
+      <div id="add-judges">
+        <input
+          ref="judgeSearch"
+          type="text"
+          data-fetch-url="<%= regional_ambassador_judge_search_path(format: :json) %>"
+          @input="searchJudges"
+          v-model="judgeQuery"
+        />
+        <ul>
+          <li v-for="result in searchResults">
+            {{ result.name }} - {{ result.email }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
