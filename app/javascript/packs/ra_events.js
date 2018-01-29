@@ -8,7 +8,9 @@ document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     el: '#events',
     data: {
-      message: "Hello events",
+      message: "Hello, RAs! The Technovation development team is " +
+               "hard at work on this section right now. " +
+               "Stay tuned for email announcements.",
     },
 
     computed: {
