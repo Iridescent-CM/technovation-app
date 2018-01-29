@@ -9,7 +9,10 @@ module Admin
       TeamRosterManaging.add(team, profile)
 
       msg = if team.members.include?(profile)
-              { success: "You have added #{account.full_name} to this team" }
+              {
+                success: "You have added #{account.full_name} " +
+                         "to this team",
+              }
             elsif account.student_profile
               { alert: team.errors[:add_student][0] }
             else
