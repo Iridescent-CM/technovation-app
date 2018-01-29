@@ -1,4 +1,9 @@
-<% admin ||= false %>
+<%
+  admin_ra ||= false
+  link_opts = admin_ra ?
+    { account_id: member.account_id } :
+    { member_id: member.id }
+%>
 
 <li id="<%= dom_id(member) %>" class="grid">
   <div class="grid__col-3 grid__col--bleed-x">
@@ -19,7 +24,7 @@
 
     <% if CanRemoveTeamMember.(current_account, member) %>
       <%= link_to "remove this member",
-        [current_scope, @team, :membership, { member_id: member.id }],
+        [current_scope, @team, :membership, link_opts],
         data: {
           method: :delete,
           confirm: t("views.teams.show.confirm_leave"),
