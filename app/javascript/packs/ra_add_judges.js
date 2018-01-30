@@ -1,64 +1,22 @@
 import TurbolinksAdapter from 'vue-turbolinks';
 import _ from 'lodash';
 
-import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
+import Vue from 'vue/dist/vue.esm';
+import App from '../app.vue';
+import Result from '../result';
 
 Vue.use(TurbolinksAdapter)
-
-function Result (res) {
-  this.name = res.name;
-  this.email = res.email;
-  this.highlighted = false;
-
-  this.display = res.name + " - " + res.email;
-
-  this.highlight = () => {
-    this.highlighted = true;
-  };
-
-  this.unhighlight = () => {
-    this.highlighted = false;
-  };
-
-  this.highlightedClass = () => {
-    if (this.highlighted)
-      return "autocomplete-list__result--highlighted"
-  };
-
-  this.match = (pattern) => {
-    var regexp = new RegExp(pattern, "i");
-
-    return !!this.name.match(regexp) ||
-      !!this.email.match(regexp);
-  };
-
-  this.highlightMatch = (query) => {
-    var regexp = new RegExp("(" + query + ")", "gi");
-    return this.display.replace(regexp, "<b>$1</b>");
-  };
-}
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     el: '#add-judges',
 
     data: {
-      judge: {
-        name: "",
-        email: "",
-      },
-
       query: "",
-
       results: [],
-
       resultsIdx: 0,
-
       highlightedResult: null,
-
       loading: false,
-
       error: false,
     },
 
@@ -94,7 +52,8 @@ document.addEventListener('turbolinks:load', () => {
         } else if (this.filterExistingResults().length) {
           this.setNewResults(this.filterExistingResults());
         } else if (this.query.length >= 3) {
-          this.performRemoteSearch();
+          this.loading = true;
+          _.debounce(this.performRemoteSearch, 300)();
         }
       },
 
@@ -109,16 +68,12 @@ document.addEventListener('turbolinks:load', () => {
                   "?keyword=" +
                   this.query;
 
-        this.loading = true;
-
-        _.debounce(() => {
-          $.ajax({
-            method: "GET",
-            url: url,
-            success: this.setNewResults,
-            error: this.indicateError,
-          });
-        }, 300)();
+        $.ajax({
+          method: "GET",
+          url: url,
+          success: this.setNewResults,
+          error: this.indicateError,
+        });
       },
 
       setNewResults (resp) {
