@@ -1,16 +1,17 @@
-<h1>Team Submission Details</h1>
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-6">
+    <div class="panel">
+      <h1>Submissions</h1>
 
-<%= render 'admin/team_submissions/detail/summary',
-  submission: @team_submission,
-  user_type: :regional_ambassador %>
+      <p>
+        Hello RAs! Technovation development team is hard at work to
+        improve this section for the <%= Season.current.year %> season.
+      </p>
 
-<div class="flex-row">
-  <div class="flex-col-sm-12">
-    <%= link_to 'See the public/judge version',
-      app_path(@team_submission),
-      target: :_blank %>
+      <p>
+        Check back later or wait for an announcement from staff that the
+        RA Submissions UI is ready
+      </p>
+    </div>
   </div>
 </div>
-
-<%= render 'admin/team_submissions/detail/full',
-  submission: @team_submission %>
