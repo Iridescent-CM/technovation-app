@@ -7,12 +7,13 @@ module RegionalAmbassador
         scope.in_region(user).page(params[:page])
       },
       csv_scope: "->(scope, user, params) { scope.in_region(user) }"
+
     def show
       @team_submission = TeamSubmission.friendly.find(params[:id])
     end
 
-
     private
+
       def grid_params
         grid = (params[:submissions_grid] ||= {}).merge(
           admin: true,
