@@ -3,9 +3,11 @@ module RegionalAmbassador
     include DatagridController
 
     use_datagrid with: AccountsGrid,
+
       html_scope: ->(scope, user, params) {
         scope.in_region(user).page(params[:page])
       },
+
       csv_scope: "->(scope, user, params) { scope.in_region(user) }"
 
     def show

@@ -3,6 +3,7 @@ module RegionalAmbassador
     include DatagridController
 
     use_datagrid with: ActivitiesGrid,
+
       html_scope: ->(scope, user, params) {
         trackable_user_ids = Account.current
           .not_staff
@@ -14,16 +15,20 @@ module RegionalAmbassador
           .pluck(:id)
 
         scope.where("
-            (activities.trackable_id IN (?) AND activities.trackable_type = ?) OR
-            (activities.trackable_id IN (?) AND activities.trackable_type = ?)
+            (activities.trackable_id IN (?) AND
+              activities.trackable_type = ?) OR
+
+            (activities.trackable_id IN (?) AND
+              activities.trackable_type = ?)
           ",
           trackable_user_ids,
           "Account",
           trackable_team_ids,
-          "Team"
+          "Team",
         )
         .page(params[:page])
       }
+
     private
     def grid_params
       params[:activities_grid] ||= {}
