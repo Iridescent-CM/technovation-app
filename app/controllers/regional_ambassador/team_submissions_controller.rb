@@ -2,14 +2,17 @@ module RegionalAmbassador
   class TeamSubmissionsController < RegionalAmbassadorController
     include DatagridUser
 
-    use_datagrid with: SubmissionsGrid
-
+    use_datagrid with: SubmissionsGrid,
+    html_scope: ->(scope, user, params) {
+        scope.in_region(user).page(params[:page])
+      },
+      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
     def show
-      @team_submission = TeamSubmission.friendly.find(params[:id])
+      @team_submission = TeamSubmission.in_region(current_ambassador).find(params[:id])
     end
 
     def edit
-      @team_submission = TeamSubmission.friendly.find(params[:id])
+      @team_submission = TeamSubmission.in_region(current_ambassador).find(params[:id])
     end
 
     def update
