@@ -88,51 +88,58 @@ document.addEventListener('turbolinks:load', () => {
         }
       },
 
-      search () {
-        if (!this.query.length)
+      generateResults () {
+        if (!this.query.length) {
           this.reset();
-
-        var vm = this,
-            url = vm.$refs.judgeSearch.dataset.fetchUrl +
-                  "?keyword=" +
-                  vm.query;
-
-        var filtered = vm.results.filter((r) => {
-          return r.match(vm.query);
-        });
-
-        if (filtered.length) {
-          vm.results = filtered;
-        } else if (vm.query.length >= 3) {
-          vm.loading = true;
-
-          _.debounce(() => {
-            $.ajax({
-              method: "GET",
-              url: url,
-
-              success: (resp) => {
-                vm.results = [];
-
-                [].forEach.call(resp, (result) => {
-                  vm.results.push(new Result(result));
-                });
-
-                vm.loading = false;
-              },
-
-              error: (resp) => {
-                vm.resultsIdx = 0;
-                vm.loading = false;
-                vm.error = true;
-              },
-            });
-          }, 300)();
+        } else if (this.filterExistingResults().length) {
+          this.setNewResults(this.filterExistingResults());
+        } else if (this.query.length >= 3) {
+          this.performRemoteSearch();
         }
       },
 
+      filterExistingResults () {
+        return this.results.filter((r) => {
+          return r.match(this.query);
+        });
+      },
+
+      performRemoteSearch () {
+        var url = this.$refs.judgeSearch.dataset.fetchUrl +
+                  "?keyword=" +
+                  this.query;
+
+        this.loading = true;
+
+        _.debounce(() => {
+          $.ajax({
+            method: "GET",
+            url: url,
+            success: this.setNewResults,
+            error: this.indicateError,
+          });
+        }, 300)();
+      },
+
+      setNewResults (resp) {
+        this.results = [];
+
+        [].forEach.call(resp, (result) => {
+          this.results.push(new Result(result));
+        });
+
+        this.loading = false;
+        this.highlightedResult = this.results[this.resultsIdx];
+      },
+
+      indicateError (resp) {
+        this.resultsIdx = 0;
+        this.loading = false;
+        this.error = true;
+      },
+
       selectHighlighted () {
-        alert(this.results[this.resultsIdx].display);
+        alert(this.highlightedResult.display);
       },
 
       unhighlightAll () {
@@ -145,19 +152,17 @@ document.addEventListener('turbolinks:load', () => {
 
     watch: {
       highlightedResult (current) {
+        this.unhighlightAll();
+
         if (!!current) {
-          this.unhighlightAll();
           this.highlightedResult.highlight();
+        } else {
+          this.highlightedResult = this.results[0];
         }
       },
 
       resultsIdx () {
         this.highlightedResult = this.results[this.resultsIdx];
-      },
-
-      results (current, old) {
-        if (current.length != old.length)
-          this.resultsIdx = 0;
       },
     },
 
