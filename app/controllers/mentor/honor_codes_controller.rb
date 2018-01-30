@@ -1,2 +1,5 @@
-class Mentor::HonorCodesControllerController < ApplicationController
+module Mentor
+  class HonorCodesController < MentorController
+    include HonorCodeController
+  end
 end
