@@ -1,15 +1,17 @@
 module RegionalAmbassador
   class JudgeSearchesController < RegionalAmbassadorController
     def show
+      keyword = params.fetch(:keyword) { "" }
+
       results = JudgeProfile.current
         .in_region(current_ambassador)
         .where(
           "accounts.first_name ILIKE ? OR
            accounts.last_name ILIKE ? OR
            accounts.email ILIKE ?",
-          "#{params[:keyword]}%",
-          "#{params[:keyword]}%",
-          "#{params[:keyword]}%"
+          "#{keyword.split(" ").first}%",
+          "#{keyword.split(" ").last}%",
+          "#{keyword}%"
         )
         .map do |r|
           {
