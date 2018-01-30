@@ -1,7 +1,21 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      @pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
+      pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
+        .map do |event|
+          {
+            name: event.name,
+            city: event.city,
+            venue_address: event.venue_address,
+            divisions: event.division_names,
+            date_time: event.date_time,
+          }
+        end
+
+      respond_to do |f|
+        f.html { }
+        f.json { render json: pitch_events }
+      end
     end
 
     def show

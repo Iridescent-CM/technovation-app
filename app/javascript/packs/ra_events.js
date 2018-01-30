@@ -8,13 +8,14 @@ import Errors from '../errors.vue';
 
 import "flatpickr/dist/themes/material_green.css";
 
-
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     el: '#new-event',
     data: {
+      active: false,
+
       event: {
         name: "",
         city: "",
@@ -46,6 +47,11 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     methods: {
+      reset () {
+        this.event = {};
+        this.active = false;
+      },
+
       updateEventDates () {
         this.event.starts_at = this.eventDate + " " + this.eventStartTime;
         this.event.ends_at = this.eventDate + " " + this.eventEndTime;
@@ -78,8 +84,8 @@ document.addEventListener('turbolinks:load', () => {
           processData: false,
           data: form,
 
-          success: () => {
-
+          success: (resp) => {
+            this.reset();
           },
 
           error: (resp) => {
@@ -98,23 +104,25 @@ document.addEventListener('turbolinks:load', () => {
       Errors,
     },
 
-    mounted () {
-      flatpickr('.flatpickr--date', {
-        altInput: true,
-        enableTime: false,
-        altFormat: "l, F J",
-        minDate: "2018-05-01",
-        maxDate: "2018-05-15",
-      });
+    updated () {
+      if (this.active) {
+        flatpickr('.flatpickr--date', {
+          altInput: true,
+          enableTime: false,
+          altFormat: "l, F J",
+          minDate: "2018-05-01",
+          maxDate: "2018-05-15",
+        });
 
-      flatpickr('.flatpickr--time', {
-        enableTime: true,
-        noCalendar: true,
-        minuteIncrement: 15,
-        mode: "range",
-        minTime: "07:00",
-        maxTime: "22:00",
-      });
+        flatpickr('.flatpickr--time', {
+          enableTime: true,
+          noCalendar: true,
+          minuteIncrement: 15,
+          mode: "range",
+          minTime: "07:00",
+          maxTime: "22:00",
+        });
+      }
     },
   });
 });

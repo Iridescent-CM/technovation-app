@@ -102,10 +102,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def date_time
-    [starts_at.in_time_zone(timezone).strftime("%a %b %e, %H:%M"),
+    [starts_at.in_time_zone(timezone).strftime("%a %b %e, %-I:%M%P"),
      "-",
-     ends_at.in_time_zone(timezone).strftime("%H:%M"),
-     "Timezone:",
+     ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+     "TZ:",
      regional_ambassador_profile.timezone].join(' ')
   end
 

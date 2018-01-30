@@ -1,0 +1,30 @@
+<% provide :js, javascript_pack_tag("ra_events_list") %>
+
+<table
+  data-fetch-url="
+    <%= regional_ambassador_regional_pitch_events_path(format: :json) %>
+  "
+  id="events-list"
+  ref="eventsList"
+  class="datagrid"
+>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Venue</th>
+      <th>Divisions</th>
+      <th>Date &amp; time</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr v-for="event in events">
+      <td>{{ event.name }}</td>
+      <td>{{ event.city }}</td>
+      <td>{{ event.venue_address }}</td>
+      <td>{{ event.divisions }}</td>
+      <td>{{ event.date_time }}</td>
+    </tr>
+  </tbody>
+</table>

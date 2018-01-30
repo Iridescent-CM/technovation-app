@@ -4,9 +4,16 @@
 <% url = regional_ambassador_regional_pitch_events_path(format: :json) %>
 
 <div id="new-event">
+  <button
+    class="button"
+    @click="active = true"
+    v-if="!active"
+  >+ Add an event</button>
+
   <form
     ref="newEvent"
     data-fetch-url="<%= url %>"
+    v-if="active"
     @submit.prevent="handleSubmit"
   >
     <label>
@@ -92,5 +99,7 @@
     </label>
 
     <input type="submit" value="Create this event" class="button" />
+
+    or <a @click="active = false" href="#">cancel</a>
   </form>
 </div>
