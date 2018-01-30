@@ -19,7 +19,8 @@ class MentorController < ApplicationController
   end
 
   def current_team
-    if id = params&.dig(:team_submission, :id)
+    if id = params&.dig(:team_submission, :id) ||
+        params[:team_submission_id]
       @current_team ||= current_mentor.teams
         .joins(:submission)
         .where("team_submissions.id = ?", id)
