@@ -89,8 +89,8 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       search () {
-        if (this.query.length < 3)
-          return;
+        if (!this.query.length)
+          this.reset();
 
         var vm = this,
             url = vm.$refs.judgeSearch.dataset.fetchUrl +
@@ -103,7 +103,7 @@ document.addEventListener('turbolinks:load', () => {
 
         if (filtered.length) {
           vm.results = filtered;
-        } else {
+        } else if (vm.query.length >= 3) {
           vm.loading = true;
 
           _.debounce(() => {
@@ -118,7 +118,6 @@ document.addEventListener('turbolinks:load', () => {
                   vm.results.push(new Result(result));
                 });
 
-                vm.resultsIdx = 0;
                 vm.loading = false;
               },
 
@@ -156,8 +155,9 @@ document.addEventListener('turbolinks:load', () => {
         this.highlightedResult = this.results[this.resultsIdx];
       },
 
-      results () {
-        this.highlightedResult = this.results[this.resultsIdx];
+      results (current, old) {
+        if (current.length != old.length)
+          this.resultsIdx = 0;
       },
     },
 
