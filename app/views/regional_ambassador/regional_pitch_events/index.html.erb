@@ -7,15 +7,45 @@
       <div id="add-judges">
         <input
           ref="judgeSearch"
+          class="autocomplete-input"
           type="text"
           data-fetch-url="<%= regional_ambassador_judge_search_path(format: :json) %>"
-          @input="searchJudges"
-          v-model="judgeQuery"
+          @input="search"
+          @keyup.up.prevent="traverseResultsUp"
+          @keyup.down.prevent="traverseResultsDown"
+          @keyup.enter.prevent="selectHighlighted"
+          @keyup.esc="reset"
+          v-model="query"
         />
-        <ul>
-          <li v-for="result in searchResults">
-            {{ result.name }} - {{ result.email }}
-          </li>
+
+        <div class="grid__cell--padding-sm" v-if="loading">
+          <i class="icon-spinner2 icon--spin"></i>
+        </div>
+
+        <div class="notice notice--error" v-else-if="error">
+          Sorry, there was an error on the server
+
+          <button
+            class="button button--small button--error"
+            @click="reset"
+          >
+            Reset and try again
+          </button>
+        </div>
+
+        <ul
+          class="autocomplete-list"
+          v-else
+        >
+          <li
+            :class="[
+              'autocomplete-list__result',
+              result.highlightedClass(),
+            ]"
+            @mouseover="resultsIdx = idx"
+            v-html="result.highlightMatch(query)"
+            v-for="(result, idx) in results"
+          ></li>
         </ul>
       </div>
 
