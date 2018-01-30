@@ -74,15 +74,20 @@
   <div class="grid__col-6">
     <div class="panel">
       <h5>Development Platform</h5>
-      <%= @team_submission.development_platform_text %>
 
-      <% if @team_submission.app_inventor_2? %>
-        <p>
-          App Name: <%= @team_submission.app_inventor_app_name %>
-        </p>
-        <p>
-          Email: <%= @team_submission.app_inventor_gmail %>
-        </p>
+      <% if @team_submission.business_plan_url %>
+        <%= @team_submission.development_platform_text %>
+
+        <% if @team_submission.app_inventor_2? %>
+          <p>
+            App Name: <%= @team_submission.app_inventor_app_name %>
+          </p>
+          <p>
+            Email: <%= @team_submission.app_inventor_gmail %>
+          </p>
+        <% end %>
+      <%else %>
+        <span>blank</span>
       <% end %>
 
       <h5>Source code</h5>
