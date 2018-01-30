@@ -8,7 +8,7 @@ module RegionalAmbassador
       },
       csv_scope: "->(scope, user, params) { scope.in_region(user) }"
     def show
-      @team_submission = TeamSubmission.in_region(current_ambassador).find(params[:id])
+      @team_submission = TeamSubmission.friendly.find(params[:id])
     end
 
     def edit

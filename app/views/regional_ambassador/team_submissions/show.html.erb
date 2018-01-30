@@ -1,0 +1,112 @@
+<h1>Team Submission Details</h1>
+
+<div class="grid">
+  <div class="grid__col-6">
+    <div class="panel">
+      <h5>Team Name</h5>
+      <%= @team_submission.team_name %>
+
+      <h5>Division</h5>
+      <%=  @team_submission.team.division.name %>
+
+      <h5>Rank</h5>
+      <%= @team_submission.contest_rank %>
+    </div>
+  </div>
+
+  <div class="grid__col-6">
+    <div class="panel">
+      <h5>App Name</h5>
+
+      <% if @team_submission.app_name %>
+        <p><%= @team_submission.app_name%></p>
+      <% else %>
+        <span>blank</span>
+      <% end %>
+
+      <h5>Description</h5>
+
+      <% if @team_submission.app_description %>
+        <p><%= @team_submission.app_description %></p>
+      <% else %>
+        <span>blank</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid__col-6">
+    <div class="panel">
+
+      <h5>Pitch Video</h5>
+
+      <% if @team_submission.pitch_video_link %>
+        <%= link_to @team_submission.pitch_video_link,
+            @team_submission.pitch_video_link,
+            target: :_blank %>
+      <% else %>
+        <span>blank</span>
+      <% end %>
+
+      <h5>Demo Video</h5>
+
+      <% if @team_submission.pitch_video_link %>
+        <%= link_to @team_submission.demo_video_link,
+            @team_submission.demo_video_link,
+            target: :_blank %>
+      <% else %>
+        <span>blank</span>
+      <% end %>
+
+      <% if @team_submission.senior_division? %>
+        <h5>Business plan</h5>
+
+        <% if @team_submission.business_plan_url %>
+          <%= link_to @team_submission.business_plan_identifier,
+            @team_submission.business_plan_url,
+            target: :_blank %>
+        <%else %>
+        <span>blank</span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid__col-6">
+    <div class="panel">
+      <h5>Development Platform</h5>
+
+      <% if @team_submission.business_plan_url %>
+        <%= @team_submission.development_platform_text %>
+
+        <% if @team_submission.app_inventor_2? %>
+          <p>
+            App Name: <%= @team_submission.app_inventor_app_name %>
+          </p>
+          <p>
+           Email: <%= @team_submission.app_inventor_gmail %>
+          </p>
+        <% end %>
+
+      <%else %>
+        <span>blank</span>
+      <% end %>
+
+      <h5>Source code</h5>
+
+      <% if @team_submission.source_code_url %>
+        <%= link_to @team_submission.source_code_identifier,
+          @team_submission.source_code_url,
+          target: :_blank %>
+      <% else %>
+        <span>blank</span>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="grid__col-2">
+    <%= link_to "Edit",
+      edit_admin_team_submission_path(@team_submission),
+      class: "button" %>
+  </div>
+</div>
