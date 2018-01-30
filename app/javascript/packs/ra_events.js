@@ -1,43 +1,120 @@
 import TurbolinksAdapter from 'vue-turbolinks';
-import { Datetime } from 'vue-datetime';
+import flatpickr from "flatpickr";
+import _ from "lodash";
 
-import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
+import Vue from 'vue/dist/vue.esm';
+import App from '../app.vue';
+import Errors from '../errors.vue';
 
-import 'vue-datetime/dist/vue-datetime.css';
+import "flatpickr/dist/themes/material_green.css";
+
 
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
-    el: '#events',
+    el: '#new-event',
     data: {
       event: {
         name: "",
         city: "",
         venue_address: "",
         divisions: [],
-        starts_at: "2018-05-05T18:00:00.000",
-        ends_at: "2018-05-05T22:00:00.000",
+        errors: {},
       },
 
-      minDatetime: "2018-05-01T00:00:00.000Z",
-      maxDatetime: "2018-05-15T23:59:59.000Z",
-
+      eventDate: "",
+      eventStartTime: "",
+      eventEndTime: "",
     },
 
     computed: {
     },
 
+    watch: {
+      eventDate () {
+        this.updateEventDates();
+      },
+
+      eventStartTime () {
+        this.updateEventDates();
+      },
+
+      eventEndTime () {
+        this.updateEventDates();
+      },
+    },
+
     methods: {
+      updateEventDates () {
+        this.event.starts_at = this.eventDate + " " + this.eventStartTime;
+        this.event.ends_at = this.eventDate + " " + this.eventEndTime;
+      },
+
+      handleSubmit () {
+        var url = this.$refs.newEvent.dataset.fetchUrl,
+            form = new FormData();
+
+        form.append("regional_pitch_event[name]", this.event.name);
+        form.append("regional_pitch_event[city]", this.event.city);
+        form.append("regional_pitch_event[ends_at]", this.event.ends_at);
+
+        form.append("regional_pitch_event[division_ids][]",
+          this.event.divisions);
+
+        form.append("regional_pitch_event[venue_address]",
+          this.event.venue_address);
+
+        form.append("regional_pitch_event[starts_at]",
+          this.event.starts_at);
+
+        form.append("regional_pitch_event[eventbrite_link]",
+          this.event.eventbrite_link);
+
+        $.ajax({
+          method: "POST",
+          url: url,
+          contentType: false,
+          processData: false,
+          data: form,
+
+          success: () => {
+
+          },
+
+          error: (resp) => {
+            var errors = resp.responseJSON.errors;
+
+            _.each(Object.keys(errors), (k) => {
+              this.event.errors[k] = errors[k];
+            });
+          },
+        });
+      },
     },
 
     components: {
       App,
-      Datetime,
+      Errors,
     },
 
     mounted () {
+      flatpickr('.flatpickr--date', {
+        altInput: true,
+        enableTime: false,
+        altFormat: "l, F J",
+        minDate: "2018-05-01",
+        maxDate: "2018-05-15",
+      });
+
+      flatpickr('.flatpickr--time', {
+        enableTime: true,
+        noCalendar: true,
+        minuteIncrement: 15,
+        mode: "range",
+        minTime: "07:00",
+        maxTime: "22:00",
+      });
     },
   });
 });

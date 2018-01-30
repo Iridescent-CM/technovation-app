@@ -12,6 +12,7 @@ document.addEventListener('turbolinks:load', () => {
     el: '#add-judges',
 
     data: {
+      selectedJudge: null,
       query: "",
       results: [],
       resultsIdx: 0,
@@ -94,7 +95,8 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       selectHighlighted () {
-        alert(this.highlightedResult.display);
+        this.selectedJudge = this.highlightedResult;
+        this.reset();
       },
 
       unhighlightAll () {

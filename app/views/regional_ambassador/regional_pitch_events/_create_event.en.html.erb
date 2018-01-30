@@ -1,0 +1,96 @@
+<% provide :js, javascript_pack_tag("ra_events") %>
+<% provide :css, stylesheet_pack_tag("ra_events") %>
+
+<% url = regional_ambassador_regional_pitch_events_path(format: :json) %>
+
+<div id="new-event">
+  <form
+    ref="newEvent"
+    data-fetch-url="<%= url %>"
+    @submit.prevent="handleSubmit"
+  >
+    <label>
+      Event name
+      <input type="text" v-model="event.name" />
+    </label>
+
+    <errors :errors="event.errors.name"></errors>
+
+    Division(s)
+    <label>
+      <input
+        type="checkbox"
+        v-model="event.divisions"
+        value="<%= Division.senior.id %>"
+      />
+      Senior
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        v-model="event.divisions"
+        value="<%= Division.junior.id %>"
+      />
+      Junior
+    </label>
+
+    <errors :errors="event.errors.division_ids"></errors>
+
+    <label>
+      City
+      <input type="text" v-model="event.city" />
+    </label>
+
+    <errors :errors="event.errors.city"></errors>
+
+    <label>
+      Venue address
+      <input type="text" v-model="event.venue_address" />
+    </label>
+
+    <errors :errors="event.errors.venue_address"></errors>
+
+    <label>
+      Date
+      <input
+        class="flatpickr--date"
+        type="hidden"
+        v-model="eventDate"
+      />
+    </label>
+
+    <div class="grid grid--bleed">
+      <div class="grid__col-6">
+        <label>
+          From
+          <input
+            class="flatpickr--time"
+            type="hidden"
+            v-model="eventStartTime"
+          />
+        </label>
+      </div>
+
+      <div class="grid__col-6">
+        <label>
+          To
+          <input
+            class="flatpickr--time"
+            type="hidden"
+            v-model="eventEndTime"
+          />
+        </label>
+      </div>
+    </div>
+
+    <errors :errors="event.errors.starts_at"></errors>
+
+    <label>
+      Eventbrite URL
+      <input type="text" v-model="event.eventbrite_link" />
+    </label>
+
+    <input type="submit" value="Create this event" class="button" />
+  </form>
+</div>

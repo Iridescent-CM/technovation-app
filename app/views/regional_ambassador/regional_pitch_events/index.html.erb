@@ -1,121 +1,13 @@
-<% provide :js, javascript_pack_tag("ra_events", "ra_add_judges") %>
-<% provide :css, stylesheet_pack_tag("ra_events") %>
-
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
-      <div id="add-judges">
-        <input
-          ref="judgeSearch"
-          class="autocomplete-input"
-          type="text"
-          data-fetch-url="<%= regional_ambassador_judge_search_path(format: :json) %>"
-          @input="generateResults"
-          @keyup.up.prevent="traverseResultsUp"
-          @keyup.down.prevent="traverseResultsDown"
-          @keyup.enter.prevent="selectHighlighted"
-          @keyup.esc="reset"
-          v-model="query"
-        />
+      <%= render(
+        "regional_ambassador/regional_pitch_events/create_event"
+      ) %>
 
-        <div class="grid__cell--padding-sm" v-if="loading">
-          <i class="icon-spinner2 icon--spin"></i>
-        </div>
-
-        <div class="notice notice--error" v-else-if="error">
-          Sorry, there was an error on the server
-
-          <button
-            class="button button--small button--error"
-            @click="reset"
-          >
-            Reset and try again
-          </button>
-        </div>
-
-        <ul
-          class="autocomplete-list"
-          v-else
-        >
-          <li
-            :class="[
-              'autocomplete-list__result',
-              result.highlightedClass(),
-            ]"
-            @mouseover="resultsIdx = idx"
-            @click="selectHighlighted"
-            v-html="result.highlightMatch(query)"
-            v-for="(result, idx) in results"
-          ></li>
-        </ul>
-      </div>
-
-      <div v-if="false" id="events">
-        <label>
-          Event name
-          <input type="text" v-model="event.name" />
-        </label>
-
-        Division(s)
-        <label>
-          <input
-            type="checkbox"
-            v-model="event.divisions"
-            value="senior"
-          />
-          Senior
-        </label>
-
-        <label>
-          <input
-            type="checkbox"
-            v-model="event.divisions"
-            value="junior"
-          />
-          Junior
-        </label>
-
-        <label>
-          City
-          <input type="text" v-model="event.city" />
-        </label>
-
-        <label>
-          Venue address
-          <input type="text" v-model="event.venue_address" />
-        </label>
-
-        <label>
-          Starting at
-          <datetime
-            type="datetime"
-            v-model="event.starts_at"
-            :minute-step="15"
-            :min-datetime="minDatetime"
-            :max-datetime="maxDatetime"
-            :week-start="7"
-            auto
-          ></datetime>
-        </label>
-
-        <label>
-          Ending at
-          <datetime
-            type="datetime"
-            v-model="event.ends_at"
-            :minute-step="15"
-            :min-datetime="minDatetime"
-            :max-datetime="maxDatetime"
-            :week-start="7"
-            auto
-          ></datetime>
-        </label>
-
-        <label>
-          Eventbrite URL
-          <input type="text" v-model="event.eventbrite_link" />
-        </label>
-      </div>
+      <%= render(
+        "regional_ambassador/regional_pitch_events/assign_judges"
+      ) %>
     </div>
   </div>
 </div>
