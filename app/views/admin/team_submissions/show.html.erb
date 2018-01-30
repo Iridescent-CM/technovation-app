@@ -64,9 +64,10 @@
           <%= link_to @team_submission.business_plan_identifier,
             @team_submission.business_plan_url,
             target: :_blank %>
-        <%else %>
-        <span>blank</span>
+        <% else %>
+          <span>blank</span>
         <% end %>
+
       <% end %>
     </div>
   </div>
@@ -86,7 +87,8 @@
             Email: <%= @team_submission.app_inventor_gmail %>
           </p>
         <% end %>
-      <%else %>
+
+      <% else %>
         <span>blank</span>
       <% end %>
 
