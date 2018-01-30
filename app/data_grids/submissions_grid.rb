@@ -22,7 +22,7 @@ class SubmissionsGrid
   column :actions, html: true do |submission|
     link_to(
       "view",
-      send("admin_team_submission_path", submission),
+      send("#{current_scope}_team_submission_path", submission),
       data: { turbolinks: false }
     )
   end
