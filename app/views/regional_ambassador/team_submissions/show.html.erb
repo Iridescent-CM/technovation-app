@@ -1,19 +1,25 @@
 <div class="grid">
   <div class="grid__col-6">
     <div class="panel">
-      <h5>Team Name</h5>
-      <%= @team_submission.team_name %>
+      <h3><%= @team_submission.team_name %></h3>
+      <%= image_tag(
+        @team_submission.team_photo,
+        class: "thumbnail--mdlg grid__cell-img"
+      ) %>
+      <p>
+        <%= web_icon(
+          "flag-o",
+          text: "Division: #{@team_submission.team.division.name.capitalize}"
+        ) %>
+      </p><p>
+        <%= web_icon(
+          "flag-o",
+          text: "Rank: #{@team_submission.contest_rank.capitalize}"
+        ) %>
+      </p>
 
-      <h5>Division</h5>
-      <%=  @team_submission.team.division.name %>
+      <%= submission_progress_bar(@team_submission) %>
 
-      <h5>Rank</h5>
-      <%= @team_submission.contest_rank %>
-    </div>
-  </div>
-
-  <div class="grid__col-6">
-    <div class="panel">
       <h5>App Name</h5>
 
       <% if @team_submission.app_name %>
@@ -67,25 +73,11 @@
         <% end %>
 
       <% end %>
-    </div>
-  </div>
 
-  <div class="grid__col-6">
-    <div class="panel">
       <h5>Development Platform</h5>
 
       <% if @team_submission.business_plan_url %>
         <%= @team_submission.development_platform_text %>
-
-        <% if @team_submission.app_inventor_2? %>
-          <p>
-            App Name: <%= @team_submission.app_inventor_app_name %>
-          </p>
-          <p>
-           Email: <%= @team_submission.app_inventor_gmail %>
-          </p>
-        <% end %>
-
       <%else %>
         <span>blank</span>
       <% end %>
