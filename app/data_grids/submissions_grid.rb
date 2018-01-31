@@ -80,7 +80,7 @@ filter :state_province,
       "lower(teams.state_province) like '#{v.downcase}%'"
     end
 
-    scope.where(country: grid.country)
+    scope.where("teams.country = ?", grid.country)
       .where(clauses.join(' OR '))
   end
 end
