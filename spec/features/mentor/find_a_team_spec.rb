@@ -22,9 +22,20 @@ RSpec.feature "Mentors find a team" do
 
     within('.steps') { click_link "Join a team" }
 
-    expect(page).to have_css(".search-result-head", text: available_team.name)
-    expect(page).to have_css(".search-result-head", text: mentored_team.name)
-    expect(page).not_to have_css(".search-result-head", text: faraway_team.name)
+    expect(page).to have_css(
+      ".search-result-head",
+      text: available_team.name
+    )
+
+    expect(page).to have_css(
+      ".search-result-head",
+      text: mentored_team.name
+    )
+
+    expect(page).not_to have_css(
+      ".search-result-head",
+      text: faraway_team.name
+    )
   end
 
   scenario "search for a team by name" do
@@ -46,8 +57,59 @@ RSpec.feature "Mentors find a team" do
 
     expect(page).to have_css(".search-result-head", text: "faraway")
 
-    expect(page).not_to have_css(".search-result-head", text: available_team.name)
-    expect(page).not_to have_css(".search-result-head", text: mentored_team.name)
+    expect(page).not_to have_css(
+      ".search-result-head",
+      text: available_team.name
+    )
+
+    expect(page).not_to have_css(
+      ".search-result-head",
+      text: mentored_team.name
+    )
+  end
+
+  scenario "search for a team by junior division" do
+    junior_team = FactoryBot.create(:team, :junior, :geocoded)
+    senior_team = FactoryBot.create(:team, :senior, :geocoded)
+
+    within('.steps') { click_link "Join a team" }
+
+    check "Junior"
+    uncheck "Senior"
+    uncheck "None assigned yet"
+    page.find("form").submit_form!
+
+    expect(page).not_to have_css(
+      ".search-result-head",
+      text: senior_team.name
+    )
+
+    expect(page).to have_css(
+      ".search-result-head",
+      text: junior_team.name
+    )
+  end
+
+  scenario "search for a team by senior division" do
+    junior_team = FactoryBot.create(:team, :junior, :geocoded)
+    senior_team = FactoryBot.create(:team, :senior, :geocoded)
+
+    within('.steps') { click_link "Join a team" }
+
+    check "Senior"
+    uncheck "Junior"
+    uncheck "None assigned yet"
+    page.find("form").submit_form!
+
+    expect(page).not_to have_css(
+      ".search-result-head",
+      text: junior_team.name
+    )
+
+    expect(page).to have_css(
+      ".search-result-head",
+      text: senior_team.name
+    )
   end
 
   scenario "request to join a team" do
