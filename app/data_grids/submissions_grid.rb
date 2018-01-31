@@ -9,8 +9,9 @@ class SubmissionsGrid
     TeamSubmission.includes(:team).references(:teams)
   end
 
-  column :team_name
-  column :app_name
+  column :team_name, mandatory: true
+  column :app_name, mandatory: true
+
   column :state_province, header: "State"
 
   column :country do
