@@ -18,9 +18,14 @@ module TeamSubmissionSectionController
 
     set_cookie(
       :last_visited_submission_section,
-      params.fetch(:section)
+      section_name,
     )
 
-    render "team_submissions/sections/#{params.fetch(:section)}"
+    render "team_submissions/sections/#{section_name}"
+  end
+
+  private
+  def section_name
+    params.fetch(:section) { "ideation" }
   end
 end

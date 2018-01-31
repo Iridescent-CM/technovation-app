@@ -43,6 +43,17 @@ class ProfileUpdating
   end
 
   def perform_regional_ambassador_updates
+    if profile.timezone.blank? and
+      profile.location_confirmed?
+
+      profile.account.update_column(
+        :timezone,
+        Timezone.lookup(
+          profile.latitude,
+          profile.longitude
+        ).name
+      )
+    end
   end
 
   def perform_student_updates

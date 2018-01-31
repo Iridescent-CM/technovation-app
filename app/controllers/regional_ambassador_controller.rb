@@ -5,25 +5,12 @@ class RegionalAmbassadorController < ApplicationController
     :current_profile
 
   before_action -> {
-    # TODO: move ambassador timezone setting to ProfileUpdating probably
-    if current_ambassador.timezone.blank? and
-      current_ambassador.location_confirmed?
-
-      current_ambassador.account.update_column(
-        :timezone,
-        Timezone.lookup(
-          current_ambassador.latitude,
-          current_ambassador.longitude
-        ).name
-      )
-    end
-
     set_last_profile_used("regional_ambassador")
-
     params.permit!
-  }
+  }, if: -> { current_ambassador.authenticated? }
 
-  around_action :set_time_zone, if: -> { current_ambassador.authenticated? }
+  around_action :set_time_zone,
+    if: -> { current_ambassador.authenticated? }
 
   # For Airbrake Notifier
   def current_user
