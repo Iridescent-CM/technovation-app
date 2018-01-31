@@ -36,6 +36,28 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     watch: {
+      active (val) {
+        if (!!val) {
+          flatpickr('.flatpickr__date', {
+            enableTime: false,
+            altInput: true,
+            altFormat: "l, F J",
+            dateFormat: "Y-m-d",
+            minDate: "2018-05-01",
+            maxDate: "2018-05-15",
+          });
+
+          flatpickr('.flatpickr__time', {
+            enableTime: true,
+            noCalendar: true,
+            minuteIncrement: 15,
+            mode: "range",
+            minTime: "07:00",
+            maxTime: "22:00",
+          });
+        }
+      },
+
       eventDate () {
         this.updateEventDates();
       },
@@ -105,27 +127,6 @@ document.addEventListener('turbolinks:load', () => {
     components: {
       App,
       Errors,
-    },
-
-    updated () {
-      if (this.active) {
-        flatpickr('.flatpickr--date', {
-          altInput: true,
-          enableTime: false,
-          altFormat: "l, F J",
-          minDate: "2018-05-01",
-          maxDate: "2018-05-15",
-        });
-
-        flatpickr('.flatpickr--time', {
-          enableTime: true,
-          noCalendar: true,
-          minuteIncrement: 15,
-          mode: "range",
-          minTime: "07:00",
-          maxTime: "22:00",
-        });
-      }
     },
 
     mounted () {
