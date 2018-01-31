@@ -23,18 +23,7 @@
       <strong><%= team.submission.name %></strong>
     </p>
 
-    <div class="bar-graph">
-      <div class="bar-wrap">
-        <span
-          class="bar-fill"
-          style="width: <%= team.submission.percent_complete %>%;">
-        </span>
-      </div>
-
-      <p class="scent scent--soft">
-        <%= team.submission.percent_complete %>% completed
-      </p>
-    </div>
+    <%= submission_progress_bar(team.submission) %>
 
     <% if team.submission.present? %>
       <% if SeasonToggles.team_submissions_editable? %>

@@ -8,6 +8,7 @@
 @import "flags";
 @import "teams";
 @import "sortable_list";
+@import "submission_progress";
 
 .show-hide--input {
   position: relative;
@@ -18,23 +19,4 @@
     top: 1.8rem;
     right: 0.5rem;
   }
-}
-
-.bar-wrap {
-  border-radius: 0.5rem;
-  border: 0.0625rem solid $shamrock;
-}
-
-.bar-fill {
-  border-radius: 0.5rem;
-  background-color: $shamrock;
-  display: block;
-  height: 1rem;
-  width: 0;
-  animation-name: fill;
-  animation-duration: 1s;
-}
-
-@keyframes fill {
-  0% { width: 0; }
 }

@@ -19,7 +19,11 @@ class SubmissionsGrid
     end
   end
 
-  column :actions, html: true do |submission|
+  column :progress, mandatory: true, html: true do |submission|
+    submission_progress_bar(submission)
+  end
+
+  column :actions, mandatory: true, html: true do |submission|
     link_to(
       "view",
       send("#{current_scope}_team_submission_path", submission),

@@ -1,0 +1,18 @@
+.bar-wrap {
+  border-radius: 0.5rem;
+  border: 0.0625rem solid $shamrock;
+}
+
+.bar-fill {
+  border-radius: 0.5rem;
+  background-color: $shamrock;
+  display: block;
+  height: 1rem;
+  width: 0;
+  animation-name: fill;
+  animation-duration: 1s;
+}
+
+@keyframes fill {
+  0% { width: 0; }
+}
