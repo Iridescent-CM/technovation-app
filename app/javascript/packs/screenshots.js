@@ -1,7 +1,6 @@
 import TurbolinksAdapter from 'vue-turbolinks';
 import VueDragula from 'vue-dragula';
 import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
 
 Vue.use(TurbolinksAdapter)
 Vue.use(VueDragula)
@@ -98,10 +97,6 @@ document.addEventListener('turbolinks:load', () => {
           });
         });
       },
-    },
-
-    components: {
-      App,
     },
 
     mounted () {

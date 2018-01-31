@@ -4,11 +4,20 @@ module RegionalAmbassador
       pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
         .map do |event|
           {
+            id: event.id,
             name: event.name,
             city: event.city,
             venue_address: event.venue_address,
-            divisions: event.division_names,
+            division_names: event.division_names,
+            division_ids: event.division_ids,
             date_time: event.date_time,
+            starts_at: event.starts_at,
+            ends_at: event.ends_at,
+            eventbrite_link: event.eventbrite_link,
+            url: regional_ambassador_regional_pitch_event_path(
+              event,
+              format: :json
+            ),
           }
         end
 
@@ -67,7 +76,24 @@ module RegionalAmbassador
           }
 
           format.json {
-            render json: @pitch_event
+            event = @pitch_event
+
+            render json: {
+              id: event.id,
+              name: event.name,
+              city: event.city,
+              venue_address: event.venue_address,
+              division_names: event.division_names,
+              division_ids: event.division_ids,
+              date_time: event.date_time,
+              starts_at: event.starts_at,
+              ends_at: event.ends_at,
+              eventbrite_link: event.eventbrite_link,
+              url: regional_ambassador_regional_pitch_event_path(
+                event,
+                format: :json
+              ),
+            }
           }
         end
       else
@@ -86,10 +112,24 @@ module RegionalAmbassador
         .find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
-        redirect_to [:regional_ambassador, @pitch_event],
-          notice: 'Regional pitch event was successfully updated.'
+        respond_to do |f|
+          f.html {
+            redirect_to [:regional_ambassador, @pitch_event],
+              notice: 'Regional pitch event was successfully updated.'
+          }
+
+          f.json {
+            render json: {}
+          }
+        end
       else
-        render :edit
+        respond_to do |f|
+          f.html { render :edit }
+
+          format.json {
+            render json: { errors: @pitch_event.errors }, status: 400
+          }
+        end
       end
     end
 

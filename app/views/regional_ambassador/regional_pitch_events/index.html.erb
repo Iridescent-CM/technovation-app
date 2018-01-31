@@ -1,20 +1,26 @@
 <% provide :title, "RA Data • Events" %>
+<% provide :js, javascript_pack_tag("ra_events_app") %>
 
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel panel--left">
       <h1>Regional Pitch Events</h1>
-      <%= render(
-        "regional_ambassador/regional_pitch_events/list"
-      ) %>
 
-      <%= render(
-        "regional_ambassador/regional_pitch_events/create_event"
-      ) %>
+      <div id="app">
+        <events-table
+          fetch-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
+        ></events-table>
 
-      <%= render(
-        "regional_ambassador/regional_pitch_events/assign_judges"
-      ) %>
+        <event-form
+          post-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
+          junior-division-id="<%= Division.junior.id %>"
+          senior-division-id="<%= Division.senior.id %>"
+        ></event-form>
+      </div>
     </div>
   </div>
 </div>
