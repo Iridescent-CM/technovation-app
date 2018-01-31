@@ -129,6 +129,8 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     mounted () {
+      console.log("mounted events form");
+
       EventBus.$on("editEvent", (event) => {
         console.log("got emit for", event, "from", EventBus);
         this.active = true;

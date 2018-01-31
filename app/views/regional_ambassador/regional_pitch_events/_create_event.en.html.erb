@@ -1,14 +1,16 @@
-<% provide :js, javascript_pack_tag("ra_events") %>
-<% provide :css, stylesheet_pack_tag("ra_events") %>
+<% provide :js, javascript_pack_tag("ra_events_new") %>
+<% provide :css, stylesheet_pack_tag("ra_events_new") %>
 
 <% url = regional_ambassador_regional_pitch_events_path(format: :json) %>
 
 <div id="new-event">
-  <button
-    class="button"
-    @click="active = true"
-    v-if="!active"
-  >+ Add an event</button>
+  <p class="grid__cell--padding-sm">
+    <button
+      class="button button--small"
+      @click="active = true"
+      v-if="!active"
+    >+ Add an event</button>
+  </p>
 
   <form
     ref="newEvent"

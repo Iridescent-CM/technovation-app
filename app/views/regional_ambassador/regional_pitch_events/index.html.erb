@@ -1,14 +1,15 @@
+<% provide :title, "RA Data • Events" %>
+
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel panel--left">
       <h1>Regional Pitch Events</h1>
-
       <%= render(
-        "regional_ambassador/regional_pitch_events/create_event"
+        "regional_ambassador/regional_pitch_events/list"
       ) %>
 
       <%= render(
-        "regional_ambassador/regional_pitch_events/list"
+        "regional_ambassador/regional_pitch_events/create_event"
       ) %>
 
       <%= render(

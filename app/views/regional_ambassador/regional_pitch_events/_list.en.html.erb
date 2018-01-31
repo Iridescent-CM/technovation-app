@@ -1,4 +1,4 @@
-<% provide :js, javascript_pack_tag("ra_events_list") %>
+<% provide :js, javascript_pack_tag("ra_events_index") %>
 
 <table
   data-fetch-url="
@@ -15,6 +15,7 @@
       <th>Venue</th>
       <th>Divisions</th>
       <th>Date &amp; time</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -25,6 +26,21 @@
       <td>{{ event.venue_address }}</td>
       <td>{{ event.divisions }}</td>
       <td>{{ event.date_time }}</td>
+      <td>
+        <img
+          alt="edit"
+          class="events-list__action-item"
+          src="https://icongr.am/fontawesome/edit.svg?size=16"
+          @click="editEvent(event)"
+        />
+
+        <img
+          alt="remove"
+          class="events-list__action-item"
+          src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+          @click="removeEvent(event)"
+        />
+      </td>
     </tr>
   </tbody>
 </table>

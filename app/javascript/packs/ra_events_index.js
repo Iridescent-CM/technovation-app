@@ -3,6 +3,8 @@ import TurbolinksAdapter from 'vue-turbolinks';
 import Vue from 'vue/dist/vue.esm';
 import App from '../app.vue';
 
+import EventBus from '../event_bus';
+
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
@@ -11,6 +13,13 @@ document.addEventListener('turbolinks:load', () => {
 
     data: {
       events: [],
+    },
+
+    methods: {
+      editEvent (event) {
+        EventBus.$emit("editEvent", event);
+        console.log("emitted to EventBus");
+      },
     },
 
     mounted () {
