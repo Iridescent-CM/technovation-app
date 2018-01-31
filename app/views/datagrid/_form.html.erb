@@ -1,10 +1,16 @@
 <%= form_for grid, options do |f| -%>
   <div class="grid">
     <% grid.filters
-           .group_by { |filter| filter.options[:filter_group] }
-           .each do |group, filters| %>
+        .group_by { |filter| filter.options[:filter_group] }
+        .each do |group, filters| %>
+
       <div
-        class="datagrid-filter-group <%= group %> grid__col-sm-6 grid__col--bleed-y"
+       class="
+         <%= group %>
+         datagrid-filter-group
+         grid__col-sm-6
+         grid__col--bleed-y
+       "
       >
         <% filters.each do |filter| %>
           <div class="datagrid-filter filter">
@@ -14,6 +20,7 @@
           </div>
         <% end %>
       </div>
+
     <% end %>
   </div>
 
