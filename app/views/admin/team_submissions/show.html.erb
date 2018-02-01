@@ -1,4 +1,9 @@
-<h1>Team Submission Details</h1>
+<div class="grid__cell--padding-md-x">
+  <h1>Submission Details</h1>
+</div>
+<div class="grid__cell--padding-md-x">
+  <%= link_to "Back", :back, class: "button button--small" %>
+</div>
 
 <div class="grid">
   <div class="grid__col-6">
@@ -49,12 +54,11 @@
           blank
         <% end %>
       </p>
-
-      <div class="grid__col-4">
-        <%= link_to "Edit",
-          edit_admin_team_submission_path(@team_submission),
-          class: "button" %>
-      </div>
+    </div>
+    <div class="grid__col-4">
+      <%= link_to "Edit",
+        edit_admin_team_submission_path(@team_submission),
+        class: "button button--small" %>
     </div>
   </div>
 
@@ -123,17 +127,17 @@
          blank
         <% end %>
 
-      <p>
+     <p>
         <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
-      </p>
-      <p>
+     </p>
+     <p>
         <% if @team_submission.screenshots.any? %>
           <div class="submission-pieces__screenshots">
             <% @team_submission.screenshots.each do |screenshot| %>
               <div class="submission-pieces__screenshot">
                 <%= image_tag screenshot.image_url,
                 data: {
-                  modal_url: screenshot.image_url(:large)
+                  modal_url: screenshot.image_url(:large),
                 } %>
               </div>
             <% end %>
