@@ -127,18 +127,20 @@
         <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
       </p>
       <p>
-        Screenshots:
-        <div class="submission-pieces__screenshots grid">
-          <% @team_submission.screenshots.each do |screenshot| %>
-            <div class="submission-pieces__screenshot grid__col-2">
-              <%= image_tag screenshot.image_url,
-              data: {
-                modal_url: screenshot.image_url(:large),
-                class: "grid__cell-img"
-              } %>
-            </div>
-          <% end %>
-        </div>
+        <% if @team_submission.screenshots.any? %>
+          <div class="submission-pieces__screenshots">
+            <% @team_submission.screenshots.each do |screenshot| %>
+              <div class="submission-pieces__screenshot">
+                <%= image_tag screenshot.image_url,
+                data: {
+                  modal_url: screenshot.image_url(:large)
+                } %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          No screenshots uploaded
+        <% end %>
       </p>
     </div>
   </div>
