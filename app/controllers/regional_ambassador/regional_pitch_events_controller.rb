@@ -80,15 +80,7 @@ module RegionalAmbassador
 
             render json: {
               id: event.id,
-              name: event.name,
-              city: event.city,
-              venue_address: event.venue_address,
-              division_names: event.division_names,
-              division_ids: event.division_ids,
               date_time: event.date_time,
-              starts_at: event.starts_at,
-              ends_at: event.ends_at,
-              eventbrite_link: event.eventbrite_link,
               url: regional_ambassador_regional_pitch_event_path(
                 event,
                 format: :json
@@ -119,7 +111,9 @@ module RegionalAmbassador
           }
 
           f.json {
-            render json: {}
+            render json: {
+              date_time: @pitch_event.date_time,
+            }
           }
         end
       else

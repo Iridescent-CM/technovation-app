@@ -145,6 +145,10 @@
       division_ids () {
         return this.event.division_ids;
       },
+
+      date_time () {
+        return this.event.date_time;
+      },
     },
 
     watch: {
@@ -186,6 +190,18 @@
           this.event.division_names.push(this.juniorDivisionName);
 
         this.event.division_names = this.event.division_names.join(", ")
+      },
+
+      date_time (val) {
+        if (!val || !val.length)
+          return;
+
+        var startDateTime = this.event.starts_at.split("T"),
+            endDateTime = this.event.ends_at.split("T");
+
+        this.eventDate = startDateTime[0];
+        this.eventStartTime = startDateTime[1].replace(/:00\.000.+/, "");
+        this.eventEndTime = endDateTime[1].replace(/:00\.000.+/, "");
       },
 
       eventDate () {
@@ -249,7 +265,11 @@
 
           success: (resp) => {
             vm.event.id = vm.event.id || resp.id;
+            vm.event.url = vm.event.url || resp.url;
+            vm.event.date_time = resp.date_time;
+
             EventBus.$emit("eventUpdated", vm.event);
+
             this.reset();
           },
 

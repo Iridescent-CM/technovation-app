@@ -4,7 +4,7 @@ export default function (event) {
   this.name = event.name;
   this.city = event.city;
   this.venue_address = event.venue_address;
-  this.eventbrite_link = event.eventbrite_link;
+  this.eventbrite_link = event.eventbrite_link || "";
 
   this.division_names = event.division_names;
   this.division_ids = event.division_ids;
