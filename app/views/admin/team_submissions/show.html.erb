@@ -36,17 +36,13 @@
         </div>
       </div>
 
-      <h5>Ideation</h5>
-      <p>
-        App Name:
+      <h5>
         <% if @team_submission.app_name %>
           <p><%= @team_submission.app_name%></p>
         <% else %>
           blank
         <% end %>
-      </p>
-
-      <p>Description:</p>
+      </h5>
       <p>
         <% if @team_submission.app_description %>
           <p><%= @team_submission.app_description %></p>
@@ -123,14 +119,22 @@
 
         <% if @team_submission.development_platform %>
           <%= @team_submission.development_platform_text %>
+
+          <% if @team_submission.app_inventor_2? %>
+            <ul>
+              <li>
+                App Name: <%= @team_submission.app_inventor_app_name %>
+              </li>
+              <li>
+                Email: <%= @team_submission.app_inventor_gmail %>
+              </li>
+            </ul>
+          <% end %>
+
         <% else %>
          blank
         <% end %>
-
-     <p>
-        <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
-     </p>
-     <p>
+      <p>
         <% if @team_submission.screenshots.any? %>
           <div class="submission-pieces__screenshots">
             <% @team_submission.screenshots.each do |screenshot| %>
@@ -146,6 +150,9 @@
           No screenshots uploaded
         <% end %>
       </p>
+      <p>
+        <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
+     </p>
     </div>
   </div>
 </div>

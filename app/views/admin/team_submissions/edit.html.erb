@@ -24,7 +24,7 @@
           <%= f.input :demo_video_link %>
           <%= f.input :pitch_video_link %>
         </div>
-        <div class="grid__cell--padding-lg-y">
+        <div class="grid__cell--padding-md-y">
           <h6>Entrepreneurship</h6>
           <%= f.label :business_plan %>
           <% if @team_submission.business_plan_url %>
@@ -40,7 +40,8 @@
           <h6>Technical</h6>
           <%= f.input :development_platform,
             collection: TeamSubmission.development_platforms.keys %>
-          <%= f.input :development_platform_other %>
+          <%= f.input :app_inventor_app_name %>
+          <%= f.input :app_inventor_gmail %>
 
           <%= f.label :source_code %>
 
@@ -54,11 +55,6 @@
           <%= f.hidden_field :source_code_cache %>
         </div>
       </div>
-    </div>
-    <div class="grid__col-2">
-      <p>
-        <%= f.submit "Save", class: "button" %>
-      </p>
     </div>
   </div>
 <% end %>
