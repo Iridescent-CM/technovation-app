@@ -98,7 +98,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def division_names
-    divisions.flat_map(&:name).to_sentence
+    divisions.flat_map(&:name).join(", ")
   end
 
   def date_time

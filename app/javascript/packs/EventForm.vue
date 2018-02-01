@@ -119,7 +119,13 @@
   export default {
     name: "event-form",
 
-    props: ["postUrl", "seniorDivisionId", "juniorDivisionId"],
+    props: [
+      "postUrl",
+      "seniorDivisionId",
+      "juniorDivisionId",
+      "juniorDivisionName",
+      "seniorDivisionName",
+    ],
 
     data () {
       return {
@@ -136,6 +142,9 @@
     },
 
     computed: {
+      division_ids () {
+        return this.event.division_ids;
+      },
     },
 
     watch: {
@@ -159,6 +168,25 @@
             maxTime: "22:00",
           });
         }
+      },
+
+      division_ids (ids) {
+        if (!ids || !ids.length) {
+          this.event.division_names = "";
+          return;
+        }
+
+        ids = _.map(ids, i => { return parseInt(i) });
+        this.event.division_names = []
+
+        if (ids.includes(parseInt(this.seniorDivisionId)))
+          this.event.division_names.push(this.seniorDivisionName);
+
+        if (ids.includes(parseInt(this.juniorDivisionId)))
+          this.event.division_names.push(this.juniorDivisionName);
+
+        console.log(ids, this.event.division_names);
+        this.event.division_names = this.event.division_names.join(", ")
       },
 
       eventDate () {
