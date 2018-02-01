@@ -2,7 +2,7 @@
   <div class="grid__col-6">
     <div class="panel">
       <h3><%= @team_submission.team_name %></h3>
-      <div class ="grid">
+      <div class="grid">
         <div class="grid__col-6">
           <%= image_tag(
             @team_submission.team_photo,
@@ -29,6 +29,7 @@
         </div>
       </div>
 
+      <h5>Ideation</h5>
       <p>
         App Name:
         <% if @team_submission.app_name %>
@@ -116,8 +117,24 @@
         <% end %>
 
       <p>
-        <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points} for their code checklist." %>
+        <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
       </p>
+      <p>
+        Screenshots:
+        <div class="submission-pieces__screenshots grid">
+          <% @team_submission.screenshots.each do |screenshot| %>
+            <div class="submission-pieces__screenshot grid__col-4">
+              <%= image_tag screenshot.image_url,
+              data: {
+                modal_url: screenshot.image_url(:large),
+                class: "grid__cell-img"
+              } %>
+            </div>
+          <% end %>
+        </div>
+      </p>
+
+
     </div>
   </div>
 </div>
