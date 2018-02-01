@@ -1,3 +1,6 @@
+<div class="grid__cell--padding-md">
+  <h1>Submission Details</h1>
+</div>
 <div class="grid">
   <div class="grid__col-6">
     <div class="panel">
@@ -29,17 +32,13 @@
         </div>
       </div>
 
-      <h5>Ideation</h5>
-      <p>
-        App Name:
+      <h5>
         <% if @team_submission.app_name %>
           <p><%= @team_submission.app_name%></p>
         <% else %>
           blank
         <% end %>
-      </p>
-
-      <p>Description:</p>
+      </h5>
       <p>
         <% if @team_submission.app_description %>
           <p><%= @team_submission.app_description %></p>
@@ -132,7 +131,9 @@
           <% end %>
         </div>
       </p>
-
     </div>
+  </div>
+  <div class="grid__cell--padding-lg-x grid__col-2">
+    <%= link_to "Back", :back, class: "button button--small" %>
   </div>
 </div>
