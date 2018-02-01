@@ -133,51 +133,6 @@
   margin: 1rem 0 0;
 }
 
-.submission-pieces__screenshots {
-  display: flex;
-  flex-flow: row nowrap;
-  max-width: 100%;
-  margin: 0 0 1rem;
-}
-
-.submission-pieces__screenshot {
-  margin-right: 1rem;
-  cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.05, 1.05);
-  }
-
-  img {
-    max-width: 100%;
-  }
-}
-
-.submission-pieces__screenshot-placeholder {
-  margin-right: 1rem;
-  display: flex;
-  flex-flow: column nowrap;
-  min-width: 100px;
-  max-width: 100px;
-  padding: 1rem;
-  justify-content: center;
-  border: 1px dashed #ccc;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  i {
-    display: block;
-    align-self: center;
-  }
-
-  span {
-    display: block;
-    align-self: center;
-    font-size: 0.9rem;
-  }
-}
-
 .submission-nav {
   display: flex;
   flex-flow: row nowrap;
