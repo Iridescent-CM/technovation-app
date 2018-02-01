@@ -77,7 +77,7 @@
       <p>
         Demo Video:
 
-        <% if @team_submission.pitch_video_link %>
+        <% if @team_submission.demo_video_link %>
           <%= link_to @team_submission.demo_video_link,
               @team_submission.demo_video_link,
               target: :_blank %>
@@ -91,6 +91,7 @@
         <h5>Entrepreneurship</h5>
         <p>
           Business Plan:
+
           <% if @team_submission.business_plan_url %>
             <%= link_to @team_submission.business_plan_identifier,
               @team_submission.business_plan_url,
@@ -98,6 +99,7 @@
           <% else %>
           <span>blank</span>
           <% end %>
+
         </p>
       <% end %>
 
@@ -135,6 +137,7 @@
          blank
         <% end %>
       <p>
+
         <% if @team_submission.screenshots.any? %>
           <div class="submission-pieces__screenshots">
             <% @team_submission.screenshots.each do |screenshot| %>
@@ -149,6 +152,7 @@
         <% else %>
           No screenshots uploaded
         <% end %>
+
       </p>
       <p>
         <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
