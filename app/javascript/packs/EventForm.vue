@@ -185,7 +185,6 @@
         if (ids.includes(parseInt(this.juniorDivisionId)))
           this.event.division_names.push(this.juniorDivisionName);
 
-        console.log(ids, this.event.division_names);
         this.event.division_names = this.event.division_names.join(", ")
       },
 
