@@ -231,8 +231,8 @@
       },
 
       updateEventDates () {
-        this.event.starts_at = this.eventDate + " " + this.eventStartTime;
-        this.event.ends_at = this.eventDate + " " + this.eventEndTime;
+        this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
+        this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
 
       handleSubmit () {
