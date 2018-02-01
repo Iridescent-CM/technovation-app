@@ -2,23 +2,32 @@
   <div class="grid__col-6">
     <div class="panel">
       <h3><%= @team_submission.team_name %></h3>
-      <%= image_tag(
-        @team_submission.team_photo,
-        class: "thumbnail--mdlg grid__cell-img"
-      ) %>
-      <p>
-        <%= web_icon(
-          "flag-o",
-          text: "Division: #{@team_submission.team.division.name.capitalize}"
-        ) %>
-      </p><p>
-        <%= web_icon(
-          "flag-o",
-          text: "Rank: #{@team_submission.contest_rank.capitalize}"
-        ) %>
-      </p>
+      <div class ="grid">
+        <div class="grid__col-6">
+          <%= image_tag(
+            @team_submission.team_photo,
+            class: "thumbnail--mdlg grid__cell-img"
+          ) %>
+        </div>
+        <div class="grid__col-6">
+          <%= web_icon(
+            "flag-o",
+            text: "Division: #{@team_submission.team.division.name.capitalize}",
+            class: "grid__cell--padding-sm-y"
+          ) %>
 
-      <%= submission_progress_bar(@team_submission) %>
+          <%= web_icon(
+            "flag-o",
+            text: "Rank: #{@team_submission.contest_rank.capitalize}",
+            class: "grid__cell--padding-sm-y"
+          ) %>
+
+          <div class="grid__cell--padding-sm-y">
+            <%= submission_progress_bar(@team_submission) %>
+          </div>
+
+        </div>
+      </div>
 
       <h5>App Name</h5>
 
