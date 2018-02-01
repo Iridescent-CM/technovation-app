@@ -5,15 +5,18 @@ class RequiredFields
 
   def initialize(submission)
     @submission = submission
-    @fields = [
-      RequiredAppNameField.new(submission, :app_name),
-      RequiredField.new(submission, :app_description),
-      RequiredField.new(submission, :development_platform_text),
-      RequiredField.new(submission, :demo_video_link),
-      RequiredField.new(submission, :pitch_video_link),
-      RequiredField.new(submission, :source_code_url),
-      RequiredScreenshotsField.new(submission, :screenshots),
-    ]
+
+    @fields = %i(
+      app_name
+      app_description
+      development_platform_text
+      demo_video_link
+      pitch_video_link
+      source_code_url
+      screenshots
+    ).map do |field|
+      RequiredField.for(submission, field)
+    end
 
     if submission.senior_division?
       @fields << RequiredField.new(submission, :business_plan)

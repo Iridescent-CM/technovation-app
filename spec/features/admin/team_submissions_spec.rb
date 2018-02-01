@@ -15,19 +15,21 @@ RSpec.feature "admin team submissions" do
   end
 
   scenario "list submissions on the admin page" do
-
     within(page.find_all("tr")[1]) do
       expect(page).to have_content("some app name")
       expect(page).to have_content("Cool team")
-      expect(page).to have_content("IL")
-      expect(page).to have_content("United States")
+      expect(page).to have_content("13% completed")
+      expect(page).to have_link("view")
     end
   end
 
   scenario "View a specific submission" do
     click_link "view"
 
-    expect(current_path).to eq(admin_team_submission_path(submission.reload))
+    expect(current_path).to eq(
+      admin_team_submission_path(submission.reload)
+    )
+
     expect(page).to have_content("Cool team")
   end
 
@@ -45,7 +47,9 @@ RSpec.feature "admin team submissions" do
 
     click_button "Save"
 
-    expect(current_path).to eq(admin_team_submission_path(submission.reload))
+    expect(current_path).to eq(
+      admin_team_submission_path(submission.reload)
+    )
 
     expect(page).to have_content("A great description for the ages")
 
