@@ -78,3 +78,7 @@ Airbrake.add_filter do |notice|
     notice.ignore!
   end
 end
+
+Airbrake.add_filter do |notice|
+  notice[:params][:meta] = nil
+end
