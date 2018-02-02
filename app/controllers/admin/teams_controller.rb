@@ -1,6 +1,6 @@
 module Admin
   class TeamsController < AdminController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: TeamsGrid
 

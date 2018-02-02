@@ -26,6 +26,8 @@ RSpec.describe TeamSubmission do
       expect(submission).to receive(:source_code_url)
         .and_return("something")
 
+      submission.touch
+
       expect(submission.percent_complete).to eq(100)
     end
   end

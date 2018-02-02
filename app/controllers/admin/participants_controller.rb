@@ -1,6 +1,6 @@
 module Admin
   class ParticipantsController < AdminController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: AccountsGrid
 

@@ -1,8 +1,17 @@
 module SigninHelper
   def sign_in(profile)
+    signin = case profile
+             when Symbol
+               FactoryBot.create(profile)
+             else
+               profile
+             end
+
     visit signin_path
-    fill_in 'Email', with: profile.email
-    fill_in 'Password', with: profile.account.password || "secret1234"
+
+    fill_in 'Email', with: signin.email
+    fill_in 'Password', with: signin.account.password || "secret1234"
+
     click_button 'Sign in'
   end
 

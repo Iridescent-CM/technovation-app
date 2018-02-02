@@ -1,5 +1,7 @@
 <div class="panel">
-  <%= datagrid_form_for grid, data: { turbolinks: false }, url: form_url %>
+  <%= datagrid_form_for grid,
+    data: { turbolinks: false },
+    url: form_url %>
 
   <h6>
     <%= number_with_delimiter(grid.assets.count) %>
@@ -68,8 +70,11 @@
         <% end %>
       <% end %>
 
-      <%= f.label :filename, "Customize the filename (optional)" %>
-      <%= f.text_field :filename, placeholder: default_export_filename(:csv) %>
+      <%= f.label :filename,
+        "Customize the filename (optional)" %>
+
+      <%= f.text_field :filename,
+        placeholder: default_export_filename(:csv) %>
 
       <p>
         <%= f.submit "Export now", class: "button" %>

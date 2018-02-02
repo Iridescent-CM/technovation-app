@@ -46,7 +46,8 @@ class ExportJob < ActiveJob::Base
     end
 
     grid = grid_klass.constantize.new(params) do |scope|
-      context_klass.class_eval(scope_modifier).call(scope, profile, params)
+      context_klass.class_eval(scope_modifier)
+        .call(scope, profile, params)
     end
 
     csv = grid.public_send("to_#{format}")

@@ -1,4 +1,4 @@
-module DatagridUser
+module DatagridController
   extend ActiveSupport::Concern
 
   included do
@@ -74,10 +74,21 @@ module DatagridUser
                     "#{passed_filename}"
                   end
 
+        # TODO tests fail into the else case if
+        # I don't do this check twice ... what
+        filters = if grid_params.is_a?(ActionController::Parameters)
+                    grid_params.to_unsafe_h
+                  elsif grid_params.is_a?(ActionController::Parameters)
+                    grid_params.to_unsafe_h
+                  else
+                    ActionController::Parameters.new(grid_params)
+                      .to_unsafe_h
+                  end
+
         ExportJob.perform_later(
           current_profile,
           grid_klass.name,
-          grid_params.to_unsafe_h,
+          filters,
           self.class.name,
           self.class.csv_scope_modifier.to_s,
           filename.sub(".csv", ""),
@@ -167,14 +178,18 @@ module DatagridUser
   end
 
   def default_export_filename(format = nil)
-    case param_root
-    when "accounts_grid"
-      "technovation-participants-" +
-      Time.current.to_s +
-      (format.present? ? ".#{format}" : "")
-    when "teams_grid"
-      "technovation-teams-#{Time.current}#{'.' + format.to_s if format}"
-    end
+    root = case param_root
+           when "accounts_grid"
+             "technovation-participants-"
+           when "teams_grid"
+             "technovation-teams"
+           when "submissions_grid"
+             "technovation-submissions"
+           else
+             "[DEV] Change me in DatagridController.rb"
+           end
+
+      "#{root}-#{Time.current}#{'.' + format.to_s if format}"
   end
 
   def csv_export_supported?(grid)

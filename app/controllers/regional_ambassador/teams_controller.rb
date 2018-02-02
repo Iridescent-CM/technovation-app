@@ -1,6 +1,6 @@
 module RegionalAmbassador
   class TeamsController < RegionalAmbassadorController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: TeamsGrid,
       html_scope: ->(scope, user, params) {

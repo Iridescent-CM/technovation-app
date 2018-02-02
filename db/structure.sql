@@ -1341,7 +1341,8 @@ CREATE TABLE team_submissions (
     app_inventor_app_name character varying,
     app_inventor_gmail character varying,
     published_at timestamp without time zone,
-    business_plan character varying
+    business_plan character varying,
+    percent_complete integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2544,14 +2545,6 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: exports fk_rails_6a055fa9bf; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY exports
-    ADD CONSTRAINT fk_rails_6a055fa9bf FOREIGN KEY (owner_id) REFERENCES accounts(id);
-
-
---
 -- Name: consent_waivers fk_rails_6dd1d3738c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2818,6 +2811,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180117190150'),
 ('20180126195041'),
 ('20180129165533'),
-('20180129165702');
+('20180129165702'),
+('20180202143954'),
+('20180202145104'),
+('20180202145820');
 
 

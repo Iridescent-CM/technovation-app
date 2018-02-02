@@ -20,8 +20,15 @@ class SubmissionsGrid
     end
   end
 
-  column :progress, mandatory: true, html: true do |submission|
+  column :progress,
+    order: "team_submissions.percent_complete",
+    mandatory: true,
+    html: true do |submission|
     submission_progress_bar(submission)
+  end
+
+  column :progress, html: false do |submission|
+    "#{submission.percent_complete}%"
   end
 
   column :actions, mandatory: true, html: true do |submission|

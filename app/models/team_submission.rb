@@ -17,6 +17,10 @@ class TeamSubmission < ActiveRecord::Base
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
     on: :create
 
+  after_commit -> {
+    update_column(:percent_complete, calculate_percent_complete)
+  }, on: :update
+
   enum development_platform: %w{
     App\ Inventor\ 2
     Swift\ or\ XCode
@@ -287,7 +291,7 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def percent_complete
+  def calculate_percent_complete
     Rails.cache.fetch("#{cache_key}/percent_complete") do
       required_fields = RequiredFields.new(self)
       completed_count = required_fields.count(&:complete?)

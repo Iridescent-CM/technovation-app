@@ -1,6 +1,6 @@
 module Admin
   class TeamSubmissionsController < AdminController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: SubmissionsGrid
 

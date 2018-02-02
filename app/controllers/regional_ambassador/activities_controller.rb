@@ -1,6 +1,6 @@
 module RegionalAmbassador
   class ActivitiesController < RegionalAmbassadorController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: ActivitiesGrid,
       html_scope: ->(scope, user, params) {

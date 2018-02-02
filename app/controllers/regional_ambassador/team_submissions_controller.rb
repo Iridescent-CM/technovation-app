@@ -1,6 +1,6 @@
 module RegionalAmbassador
   class TeamSubmissionsController < RegionalAmbassadorController
-    include DatagridUser
+    include DatagridController
 
     use_datagrid with: SubmissionsGrid,
     html_scope: ->(scope, user, params) {
