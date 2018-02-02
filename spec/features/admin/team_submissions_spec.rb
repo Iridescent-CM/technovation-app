@@ -2,13 +2,14 @@ require "rails_helper"
 
 RSpec.feature "admin team submissions" do
   let!(:submission) {
-    FactoryBot.create(:submission, :senior, app_name: "some app name")
+    FactoryBot.create(:submission, :senior)
   }
 
   before do
     admin = FactoryBot.create(:admin)
     sign_in(admin)
 
+    submission.update(app_name: "some app name")
     submission.team.update(name: "Cool team")
 
     click_link "Submissions"
