@@ -45,6 +45,8 @@ module Admin
         :demo_video_link,
         :business_plan,
         :development_platform,
+        :app_inventor_app_name,
+        :app_inventor_gmail,
         :source_code
       )
     end
