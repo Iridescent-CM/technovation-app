@@ -9,7 +9,12 @@ module RegionalAmbassador
       csv_scope: "->(scope, user, params) { scope.in_region(user) }"
 
     def show
-      @account = Account.in_region(current_ambassador).find(params[:id])
+      @account = if params[:allow_out_of_region]
+                   Account.find(params[:id])
+                 else
+                   Account.in_region(current_ambassador).find(params[:id])
+                 end
+
       @teams = Team.current.in_region(current_ambassador)
     end
 
