@@ -23,7 +23,8 @@
       <% elsif signup.new_record? %>
         <p>
           <strong>
-            <%= t("views.signups.form.signing_up_email", email: signup.email) %>
+            <%= t("views.signups.form.signing_up_email",
+                  email: signup.email) %>
           </strong>
         </p>
       <% end %>

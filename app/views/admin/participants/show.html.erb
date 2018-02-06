@@ -148,14 +148,21 @@
       </div>
     <% end %>
 
-    <% if @account.student_profile and @account.parental_consent.pending? %>
+    <% if parental_consent_pending? %>
       <div class="panel">
-        <%= link_to "Indicate that a paper parental consent is on file",
-          admin_paper_parental_consent_path(id: @account.student_profile.id),
-          class: "button secondary",
+        <h5>
+          Indicate that a paper parental consent is on file
+        </h5>
+
+        <%= link_to "Create paper consent",
+          admin_paper_parental_consent_path(
+            id: @account.student_profile.id
+          ),
+          class: "button button--secondary",
           data: {
             method: :post,
-            confirm: "You are marking #{@account.full_name} as having a paper parental consent on file.",
+            confirm: "You are marking #{@account.full_name} " +
+                     "as having a paper parental consent on file.",
           } %>
       </div>
     <% end %>

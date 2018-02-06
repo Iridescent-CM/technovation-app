@@ -2,6 +2,8 @@ module Admin
   class ParticipantsController < AdminController
     include DatagridController
 
+    helper_method :parental_consent_pending?
+
     use_datagrid with: AccountsGrid
 
     def show
@@ -78,6 +80,19 @@ module Admin
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
+      end
+    end
+
+    def parental_consent_pending?
+      if @account.present? and @account.student_profile.present?
+        if not @account.parental_consent.present?
+          @account.student_profile.create_parental_consent!
+          @account.reload
+        end
+
+        @account.parental_consent.pending?
+      else
+        false
       end
     end
   end
