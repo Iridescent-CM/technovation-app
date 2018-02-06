@@ -72,6 +72,10 @@ class JudgeProfile < ActiveRecord::Base
     update_column(:completed_training_at, Time.current)
   end
 
+  def training_completed?
+    !!completed_training_at
+  end
+
   def used_global_invitation?
     !!used_global_invitation
   end
@@ -95,7 +99,18 @@ class JudgeProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? and
       consent_signed? and
-        location_confirmed?
+        location_confirmed? and
+          training_completed? and
+            commitment_signed? and
+              survey_completed?
+  end
+
+  def commitment_signed?
+    false
+  end
+
+  def survey_completed?
+    false
   end
 
   def scope_name
