@@ -18,4 +18,22 @@ RSpec.feature "Judges sign up at special link" do
       expect(page).to have_css("input[type=password]")
     end
   end
+
+  scenario "encounter validation errors with the special token" do
+    invitation = GlobalInvitation.create!
+
+    visit judge_signup_path(invitation: invitation.token)
+
+    expect(current_path).to eq(judge_signup_path)
+
+    click_button "Create Your Account"
+
+    expect(page).to have_css(
+      "#new_judge_profile .field_with_errors input[type=email]"
+    )
+
+    expect(page).to have_css(
+      "#new_judge_profile .field_with_errors input[type=password]"
+    )
+  end
 end

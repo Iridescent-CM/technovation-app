@@ -10,12 +10,12 @@ module Judge
         admin_permission_token: invite_token
       )
 
-      if !!signup_token
-        setup_valid_profile_from_signup_attempt(:judge, signup_token)
-      elsif !!invite_token && !!invite && invite.registered?
+      if !!invite_token && !!invite && invite.registered?
         SignIn.(invite.account, self, permanent: true)
       elsif !!invite_token
         setup_valid_profile_from_invitation(:judge, invite, invite_token)
+      elsif !!signup_token
+        setup_valid_profile_from_signup_attempt(:judge, signup_token)
       else
         redirect_to root_path
       end
@@ -27,6 +27,10 @@ module Judge
       if @judge_profile.save
         ProfileCreating.execute(@judge_profile, self, :judge)
       else
+        GlobalInvitation.set_if_exists(
+          @judge_profile,
+          get_cookie(:global_invitation_token)
+        )
         render :new
       end
     end
@@ -54,16 +58,22 @@ module Judge
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt =
-          SignupAttempt.find_by(signup_token: get_cookie(:signup_token)) ||
-            UserInvitation.find_by!(
+        attempt = GlobalInvitation.find_by(
+          token: get_cookie(:global_invitation_token)
+        ) ||
+          SignupAttempt.find_by(
+            signup_token: get_cookie(:signup_token)
+          ) ||
+            UserInvitation.find_by(
               admin_permission_token: get_cookie(:admin_permission_token)
             )
 
         tapped[:account_attributes][:email] = attempt.email
 
-        unless attempt.temporary_password?
-          tapped[:account_attributes][:password_digest] = attempt.password_digest
+        unless attempt.is_a?(GlobalInvitation) or
+            attempt.temporary_password?
+          tapped[:account_attributes][:password_digest] =
+            attempt.password_digest
         end
       end
     end

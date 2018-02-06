@@ -13,4 +13,16 @@ class GlobalInvitation < ApplicationRecord
   def email
     ""
   end
+
+  def to_cookie_params
+    [:global_invitation_token, token]
+  end
+
+  def self.set_if_exists(profile, token)
+    if !!token
+      profile.used_global_invitation = active.exists?(token: token)
+    else
+      false
+    end
+  end
 end

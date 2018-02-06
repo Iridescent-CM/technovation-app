@@ -82,6 +82,10 @@ class UserInvitation < ApplicationRecord
     true
   end
 
+  def to_cookie_params
+    [:admin_permission_token, admin_permission_token]
+  end
+
   private
   def inviting_existing_ra_to_be_an_ra?
     profile_type.to_s == "regional_ambassador" and
