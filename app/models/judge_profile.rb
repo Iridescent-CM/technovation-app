@@ -68,6 +68,10 @@ class JudgeProfile < ActiveRecord::Base
     end
   end
 
+  def complete_training!
+    update_column(:completed_training_at, Time.current)
+  end
+
   def used_global_invitation?
     !!used_global_invitation
   end

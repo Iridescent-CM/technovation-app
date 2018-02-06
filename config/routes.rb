@@ -162,7 +162,8 @@ Rails.application.routes.draw do
 
     resources :events, controller: :regional_pitch_events
     resources :regional_pitch_events
-    resources :regional_pitch_event_participations, only: [:new, :create, :destroy]
+    resources :regional_pitch_event_participations,
+      only: [:new, :create, :destroy]
     resources :judge_assignments, only: [:new, :create, :destroy]
 
     resources :scores, only: [:index, :show]
@@ -175,6 +176,8 @@ Rails.application.routes.draw do
   namespace :judge do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
+
+    resource :training_completion, only: :show
 
     resource :location_details, only: :show
 
