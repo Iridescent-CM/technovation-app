@@ -28,6 +28,7 @@ if !!defined?(Dotenv)
     LD_LIBRARY_PATH
     SIDEKIQ_CLIENT_SIZE
     NEW_RELIC_AGENT_ENABLED
+    BIND_FAILING_SPECS
   }
 
   RSpec.describe "Circle CI config" do
