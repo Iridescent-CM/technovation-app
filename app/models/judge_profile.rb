@@ -1,4 +1,6 @@
 class JudgeProfile < ActiveRecord::Base
+  attr_accessor :used_global_invitation
+
   acts_as_paranoid
 
   scope :onboarded, -> {
@@ -64,6 +66,10 @@ class JudgeProfile < ActiveRecord::Base
       raise NoMethodError,
         "undefined method `#{method_name}' not found for #{self}"
     end
+  end
+
+  def used_global_invitation?
+    !!used_global_invitation
   end
 
   def assigned_team_names

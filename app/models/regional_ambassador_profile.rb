@@ -1,4 +1,6 @@
 class RegionalAmbassadorProfile < ActiveRecord::Base
+  attr_accessor :used_global_invitation
+
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.location_confirmed = ?", true)
@@ -63,6 +65,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     [
       20980,
     ]
+  end
+
+  def used_global_invitation?
+    !!used_global_invitation
   end
 
   def provided_intro?

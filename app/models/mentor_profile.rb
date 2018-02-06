@@ -1,4 +1,6 @@
 class MentorProfile < ActiveRecord::Base
+  attr_accessor :used_global_invitation
+
   scope :unmatched, -> {
     select("DISTINCT #{table_name}.*")
       .joins(:current_account)
@@ -174,6 +176,10 @@ class MentorProfile < ActiveRecord::Base
       raise NoMethodError,
         "undefined method `#{method_name}' not found for #{self}"
     end
+  end
+
+  def used_global_invitation?
+    !!used_global_invitation
   end
 
   def youngest_birth_year

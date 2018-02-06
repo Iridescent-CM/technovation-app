@@ -1,4 +1,6 @@
 class StudentProfile < ActiveRecord::Base
+  attr_accessor :used_global_invitation
+
   include Casting::Client
   delegate_missing_methods
 
@@ -154,6 +156,10 @@ class StudentProfile < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def used_global_invitation?
+    !!used_global_invitation
   end
 
   def validate_parent_email
