@@ -5,15 +5,24 @@
     <h1>Invite a user to the platform</h1>
 
     <div class="panel">
-      <%= render 'admin/user_invitations/form', invitation: @user_invitation %>
-      <%= render 'admin/user_invitations/existing_preview', invitation: @existing %>
+      <%= render 'admin/user_invitations/form',
+        invitation: @user_invitation %>
+
+      <%= render 'admin/user_invitations/existing_preview',
+        invitation: @existing %>
+    </div>
+
+    <h3>Judge Invitation URL</h3>
+
+    <div class="panel">
+      <%= judge_signup_url(invitation: invitation_token) %>
     </div>
   </div>
 </div>
 
 <div class="grid">
   <div class="grid__col-auto">
-    <h1>Invited Users</h1>
+    <h3>Invited Users</h3>
 
     <div class="panel">
       <table class="datagrid">
