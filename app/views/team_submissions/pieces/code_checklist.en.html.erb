@@ -323,7 +323,8 @@
       </div>
 
       <%= hidden_field_tag :piece, piece_name %>
-      <%= hidden_field_tag :team_id, @code_checklist.team_submission.team_id %>
+      <%= hidden_field_tag :team_id,
+        @code_checklist.team_submission.team_id %>
 
       <%= f.button :submit,
         "Save checklist",

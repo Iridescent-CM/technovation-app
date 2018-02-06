@@ -29,4 +29,13 @@ RSpec.feature "Students edit submission code checklist" do
       submission.code_checklist.used_strings_explanation
     ).to eq("Explained!")
   end
+
+  scenario "encounter validation errors" do
+    click_link "Confirm your code checklist"
+    check "Strings"
+
+    click_button "Save"
+
+    expect(page).to have_css(".field_with_errors", text: "Strings")
+  end
 end

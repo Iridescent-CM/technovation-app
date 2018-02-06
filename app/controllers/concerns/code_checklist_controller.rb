@@ -1,4 +1,10 @@
 module CodeChecklistController
+  extend ActiveSupport::Concern
+
+  included do
+    helper_method :piece_name
+  end
+
   def update
     unless SeasonToggles.team_submissions_editable?
       redirect_to dashboard_path and return
@@ -79,5 +85,9 @@ module CodeChecklistController
       "new_#{current_scope}_team_submission_path",
       team_id: @team_submission.team_id
     )
+  end
+
+  def piece_name
+    params.fetch(:piece) { "" }
   end
 end
