@@ -181,8 +181,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def setup_valid_profile_from_invitation(scope, token)
-    invite = UserInvitation.find_by!(admin_permission_token: token)
+  def setup_valid_profile_from_invitation(scope, *args)
+    if args.length > 1
+      invite = args[0]
+      token = args[1]
+    else
+      token = args[0]
+    end
+
+    invite ||= UserInvitation.find_by(admin_permission_token: token) ||
+      GlobalInvitation.active.find_by!(token: token)
+
     invite.opened!
 
     @profile = instance_variable_set(

@@ -15,7 +15,7 @@ module Judge
       elsif !!invite_token && !!invite && invite.registered?
         SignIn.(invite.account, self, permanent: true)
       elsif !!invite_token
-        setup_valid_profile_from_invitation(:judge, invite_token)
+        setup_valid_profile_from_invitation(:judge, invite, invite_token)
       else
         redirect_to root_path
       end
