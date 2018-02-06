@@ -167,7 +167,9 @@ class ApplicationController < ActionController::Base
       )
 
       if not @profile.valid? and
-          @profile.errors[:"account.email"].include?("has already been taken")
+          @profile.errors[:"account.email"].include?(
+            "has already been taken"
+          )
         render "signups/email_taken",
           locals: {
             email: @profile.email
@@ -186,7 +188,7 @@ class ApplicationController < ActionController::Base
     @profile = instance_variable_set(
       "@#{scope}_profile",
       "#{scope}_profile".camelize.constantize.new(
-        account_attributes: { email: invite.email }
+        account_attributes: { email: invite.email },
       )
     )
 

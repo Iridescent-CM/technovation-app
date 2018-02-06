@@ -155,7 +155,10 @@ class MentorProfile < ActiveRecord::Base
   after_touch { current_teams.find_each(&:touch) }
 
   validates :school_company_name, :job_title, presence: true
-  validates :bio, length: { minimum: 100 }, allow_blank: true, if: :bio_changed?
+  validates :bio,
+    length: { minimum: 100 },
+    allow_blank: true,
+    if: :bio_changed?
 
   delegate :submitted?,
            :candidate_id,
@@ -168,7 +171,8 @@ class MentorProfile < ActiveRecord::Base
     begin
       account.public_send(method_name, *args)
     rescue
-      raise NoMethodError, "undefined method `#{method_name}' not found for #{self}"
+      raise NoMethodError,
+        "undefined method `#{method_name}' not found for #{self}"
     end
   end
 

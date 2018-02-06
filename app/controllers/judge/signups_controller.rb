@@ -3,8 +3,12 @@ module Judge
     def new
       signup_token = get_cookie(:signup_token)
 
-      invite_token = params[:admin_permission_token]
-      invite = UserInvitation.find_by(admin_permission_token: invite_token)
+      invite_token = params[:admin_permission_token] ||
+        params[:invitation]
+
+      invite = UserInvitation.find_by(
+        admin_permission_token: invite_token
+      )
 
       if !!signup_token
         setup_valid_profile_from_signup_attempt(:judge, signup_token)

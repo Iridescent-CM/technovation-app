@@ -33,8 +33,11 @@
 
       <%= render "signups/#{signup.scope_name}_profile_fields", f: f %>
 
-      <% if signup.account.temporary_password? %>
-        <h6 class="signup-section"><%= t("models.account.password") %></h6>
+      <% if signup.account.temporary_password? ||
+          signup.used_global_invitation? %>
+        <h6 class="signup-section">
+          <%= t("models.account.password") %>
+        </h6>
 
         <%= f.fields_for :account do |a| %>
           <%= a.input :password, label: t("models.account.password") %>
@@ -49,7 +52,8 @@
         <%= f.fields_for :account do |a| %>
           <%= a.input :referred_by,
             collection: Account.referred_bies.keys,
-            label: "#{t('models.account.referred_by')} #{t('views.application.optional')}",
+            label: t('models.account.referred_by') +
+                     t('views.application.optional'),
             input_html: {
               data: {
                 toggles: {
