@@ -16,7 +16,7 @@
     <%= simple_form_for(signup, url: url) do |f| %>
       <%= render 'errors', record: signup %>
 
-      <% if admin %>
+      <% if admin || signup.used_global_invitation? %>
         <%= f.fields_for :account do |a| %>
           <%= a.input :email %>
         <% end %>

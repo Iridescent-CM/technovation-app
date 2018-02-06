@@ -201,6 +201,8 @@ class ApplicationController < ActionController::Base
       )
     )
 
+    @profile.used_global_invitation = invite.is_a?(GlobalInvitation)
+
     remove_cookie(:auth_token)
     set_cookie(:admin_permission_token, token)
   end
