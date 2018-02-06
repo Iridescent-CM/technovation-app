@@ -201,9 +201,8 @@ class ApplicationController < ActionController::Base
       )
     )
 
-    @profile.used_global_invitation = invite.is_a?(GlobalInvitation)
-
     remove_cookie(:auth_token)
+    GlobalInvitation.set_if_exists(@profile, token)
     set_cookie(*invite.to_cookie_params)
   end
 

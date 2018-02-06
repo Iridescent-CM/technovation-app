@@ -13,10 +13,8 @@ RSpec.feature "Judges sign up at special link" do
 
     expect(current_path).to eq(judge_signup_path)
 
-    within("form#new_judge_profile") do
-      expect(page).to have_css("input[type=email]")
-      expect(page).to have_css("input[type=password]")
-    end
+    expect(page).to have_css("#new_judge_profile input[type=email]")
+    expect(page).to have_css("#new_judge_profile input[type=password]")
   end
 
   scenario "encounter validation errors with the special token" do
