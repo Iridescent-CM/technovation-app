@@ -68,7 +68,7 @@ module Judge
               admin_permission_token: get_cookie(:admin_permission_token)
             )
 
-        tapped[:account_attributes][:email] = attempt.email
+        tapped[:account_attributes][:email] ||= attempt.email
 
         unless attempt.is_a?(GlobalInvitation) or
             attempt.temporary_password?
