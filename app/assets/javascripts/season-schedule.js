@@ -175,7 +175,10 @@ document.addEventListener("turbolinks:load", function() {
       $('h4').each(function() {
         var $panel = appendPanel($(this), $reviewDiv);
 
-        appendLabels($panel, $(this).closest('.tab-content').find('label'));
+        appendLabels(
+          $panel,
+          $(this).closest('.tab-content').find('label')
+        );
       });
 
       function appendPanel($heading, $reviewDiv) {

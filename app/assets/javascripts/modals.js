@@ -11,51 +11,54 @@ $(document).on(
   }
 );
 
-$(document).on("ready turbolinks:load", function() {
-  $("[data-opens-modal]").on("click", function(e) {
-    e.preventDefault();
+$(document).on("click", "[data-opens-modal]", function(e) {
+  e.preventDefault();
 
-    $(this).trigger("modals.beforeOpen");
+  const modal = $('#' + $(this).data("opensModal")),
+        that = this;
 
-    const modal = $('#' + $(this).data("opensModal"));
+  swal({
+    html: modal.find(".modal-content"),
+    width: modal.data("width") || "500px",
+    title: modal.data("heading") || "",
+    showCloseButton: true,
+    showConfirmButton: false,
 
-    swal({
-      html: modal.find(".modal-content"),
-      width: modal.data("width") || "500px",
-      title: modal.data("heading") || "",
-      showCloseButton: true,
-      showConfirmButton: false,
+    onBeforeOpen: function(el) {
+      $(that).trigger("modals.beforeOpen", el);
+    },
 
-      onOpen: makeClonedImageUploaderUnique,
+    onOpen: makeClonedImageUploaderUnique,
 
-      onClose: function(m) {
-        if (window.iconPicker !== undefined)
-          window.iconPicker.onModalClose();
-      },
-    }).then(
-      function(confirm) { },
-      function(dismiss) { }
-    );
+    onClose: function(m) {
+      if (window.iconPicker !== undefined)
+        window.iconPicker.onModalClose();
+    },
+  }).then(
+    function(confirm) { },
+    function(dismiss) { }
+  );
 
-    function makeClonedImageUploaderUnique(modal) {
-      $("a, button").blur();
+  function makeClonedImageUploaderUnique(modal) {
+    $("a, button").blur();
 
-      const $form = $(modal).find(".new_image_uploader");
+    const $form = $(modal).find(".new_image_uploader");
 
-      if ($form.length > 0) {
-        const $label = $form.find("label"),
-              $field = $form.find("input[type=file]"),
-              newId = Math.random()
-                .toString(36)
-                .replace(/[^a-z]+/g, '')
-                .substr(0, 7);
+    if ($form.length > 0) {
+      const $label = $form.find("label"),
+        $field = $form.find("input[type=file]"),
+        newId = Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, '')
+        .substr(0, 7);
 
-        $field.prop("id", newId);
-        $label.prop("for", newId);
-      }
+      $field.prop("id", newId);
+      $label.prop("for", newId);
     }
-  });
+  }
+});
 
+$(document).on("ready turbolinks:load", function() {
   $("[data-open-on-page-load]").each(function(_, modal) {
     swal({
       html: $(modal).find(".modal-content"),
@@ -79,3 +82,17 @@ $(document).on("click", ".submission-pieces__screenshot", function(e) {
     imageUrl: $(e.target).data("modalUrl"),
   });
 });
+
+$(document).on("modals.beforeOpen",
+  "[data-modal-fetch]",
+  function(evt, modal) {
+    $.ajax({
+      method: "GET",
+      headers: { "Content-Type": "text/html" },
+      url: $(this).data("modalFetch"),
+      success: function(html) {
+        $(modal).find(".modal-content").html(html);
+      },
+    });
+  }
+);

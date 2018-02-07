@@ -8,17 +8,19 @@
       <% if current_team.qualified? %>
         <p>
           <%= web_icon("check-circle", class: "icon-green") %>
-          Your team is all set! Every student on your team has finished their registration!
+          Your team is all set! Every student on your team has
+          finished their registration!
         </p>
 
         <p>
           <%= link_to "Continue working on your submission",
-            student_team_submission_path(current_team.submission),
+            [current_scope, current_team.submission],
             class: "button" %>
         </p>
       <% else %>
         <p>
-          The following students <strong>must finish their registration</strong>.
+          The following students
+          <strong>must finish their registration</strong>.
         </p>
 
         <p>

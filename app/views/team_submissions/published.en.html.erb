@@ -22,7 +22,12 @@
               class: "button button--small",
               data: {
                 opens_modal: "video-modal-" +
-                            @team_submission.video_id(:pitch),
+                             @team_submission.video_id(:pitch),
+                modal_fetch: send(
+                  "#{current_scope}_embed_code_path",
+                  @team_submission,
+                  piece: :pitch,
+                ),
               } %>
           </p>
 
@@ -30,9 +35,7 @@
             class="modal"
             id="video-modal-<%= @team_submission.video_id(:pitch) %>"
           >
-            <div class="modal-content">
-              <%= @team_submission.embed_code(:pitch).html_safe %>
-            </div>
+            <div class="modal-content"></div>
           </div>
 
           <p>
@@ -44,7 +47,12 @@
               class: "button button--small",
               data: {
                 opens_modal: "video-modal-" +
-                            @team_submission.video_id(:demo),
+                             @team_submission.video_id(:demo),
+                modal_fetch: send(
+                  "#{current_scope}_embed_code_path",
+                  @team_submission,
+                  piece: :demo,
+                ),
               } %>
           </p>
 
@@ -52,9 +60,7 @@
             class="modal"
             id="video-modal-<%= @team_submission.video_id(:demo) %>"
           >
-            <div class="modal-content">
-              <%= @team_submission.embed_code(:demo).html_safe %>
-            </div>
+            <div class="modal-content"></div>
           </div>
         </div>
       </div>
