@@ -6,7 +6,7 @@ class TeamsGrid
   self.batch_size = 10
 
   scope do
-    Team.order("teams.created_at desc")
+    Team
   end
 
   column :name, mandatory: true
