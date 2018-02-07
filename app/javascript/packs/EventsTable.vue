@@ -55,9 +55,26 @@
       editEvent (event) {
         EventBus.$emit("editEvent", event);
       },
+
+      removeEvent (event) {
+        EventBus.$emit("removeEvent", event);
+      },
     },
 
     mounted () {
+      EventBus.$on("removeEvent", (event) => {
+        $.ajax({
+          method: "DELETE",
+          url: event.url,
+          success: () => {
+            var idx = this.events.findIndex(e => { return e.id === event.id });
+
+            if (idx !== -1)
+              this.events.splice(idx, 1);
+          },
+        });
+      });
+
       EventBus.$on("eventUpdated", (event) => {
         var idx = this.events.findIndex(e => { return e.id === event.id });
 

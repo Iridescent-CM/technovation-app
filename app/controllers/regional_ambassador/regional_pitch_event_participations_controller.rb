@@ -69,11 +69,20 @@ module RegionalAmbassador
         )
       end
 
-      redirect_to regional_ambassador_regional_pitch_event_path(
-        event,
-        anchor: params[:referring_anchor],
-      ),
-        success: "You removed #{record.class.name} #{record.name rescue record.full_name} from your event"
+      respond_to do |f|
+        f.html {
+          redirect_to regional_ambassador_regional_pitch_event_path(
+            event,
+            anchor: params[:referring_anchor],
+          ),
+            success: "You removed #{record.class.name} " +
+                     "#{record.name rescue record.full_name} from your event"
+        }
+
+        f.json {
+          render json: {}
+        }
+      end
     end
   end
 end
