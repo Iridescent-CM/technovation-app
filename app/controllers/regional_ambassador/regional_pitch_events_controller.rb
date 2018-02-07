@@ -1,7 +1,9 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      pitch_events = RegionalPitchEvent.current.in_region_of(current_ambassador)
+      pitch_events = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
+        .order(:starts_at)
         .map do |event|
           {
             id: event.id,
@@ -113,6 +115,11 @@ module RegionalAmbassador
 
           f.json {
             render json: {
+              id: @pitch_event.id,
+              url: regional_ambassador_regional_pitch_event_path(
+                @pitch_event,
+                format: :json,
+              ),
               date_time: @pitch_event.date_time,
             }
           }
