@@ -81,10 +81,7 @@ RSpec.feature "Students edit submission pieces" do
     within(".demo_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/" +
-                  video_id +
-                  "?rel=0&cc_load_policy=1"
-      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_css "[data-modal-fetch*='piece=demo']"
       expect(page).to have_link(
         "Change the demo video link",
         href: edit_student_team_submission_path(
@@ -111,10 +108,7 @@ RSpec.feature "Students edit submission pieces" do
     within(".pitch_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
 
-      embed_url = "https://www.youtube.com/embed/" +
-                  video_id +
-                  "?rel=0&cc_load_policy=1"
-      expect(page).to have_css "iframe[src='#{embed_url}']"
+      expect(page).to have_css "[data-modal-fetch*='piece=pitch']"
       expect(page).to have_link(
         "Change the pitch video link",
         href: edit_student_team_submission_path(
