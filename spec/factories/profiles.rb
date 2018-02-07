@@ -157,7 +157,8 @@ FactoryBot.define do
     :ambassador,
     :regional_ambassador,
     :ambassador_account,
-    :regional_ambassador_account
+    :regional_ambassador_account,
+    :ra,
   ] do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
@@ -213,6 +214,12 @@ FactoryBot.define do
         a.location_confirmed = true
         a.save!
       end
+    end
+
+    trait :brazil do
+      country "BR"
+      state_province "Bahia"
+      city "Salvador"
     end
   end
 

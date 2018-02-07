@@ -1,8 +1,8 @@
 module ControllerSigninHelper
-  def sign_in(profile)
+  def sign_in(profile, *factory_opts)
     signin = case profile
              when Symbol
-               FactoryBot.create(profile)
+               FactoryBot.create(profile, *factory_opts)
              else
                profile
              end
