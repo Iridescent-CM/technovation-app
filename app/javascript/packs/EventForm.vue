@@ -10,7 +10,6 @@
 
     <form
       ref="newEvent"
-      data-fetch-url="<%= url %>"
       v-if="active"
       @submit.prevent="handleSubmit"
     >
@@ -19,7 +18,7 @@
         <input type="text" v-model="event.name" />
       </label>
 
-      <errors :errors="event.errors.name"></errors>
+      <errors :errors="eventErrors.name"></errors>
 
       <label>
         <input
@@ -39,21 +38,21 @@
         Junior division
       </label>
 
-      <errors :errors="event.errors.division_ids"></errors>
+      <errors :errors="eventErrors.division_ids"></errors>
 
       <label>
         City
         <input type="text" v-model="event.city" />
       </label>
 
-      <errors :errors="event.errors.city"></errors>
+      <errors :errors="eventErrors.city"></errors>
 
       <label>
         Venue address
         <input type="text" v-model="event.venue_address" />
       </label>
 
-      <errors :errors="event.errors.venue_address"></errors>
+      <errors :errors="eventErrors.venue_address"></errors>
 
       <label>
         Date
@@ -88,7 +87,7 @@
         </div>
       </div>
 
-      <errors :errors="event.errors.starts_at"></errors>
+      <errors :errors="eventErrors.starts_at"></errors>
 
       <label>
         Eventbrite URL
@@ -135,6 +134,7 @@
         event: new Event({
           url: this.postUrl,
         }),
+        eventErrors: {},
         eventDate: "",
         eventStartTime: "",
         eventEndTime: "",
@@ -142,6 +142,10 @@
     },
 
     computed: {
+      url () {
+        return this.event.url;
+      },
+
       division_ids () {
         return this.event.division_ids;
       },
@@ -218,6 +222,10 @@
     },
 
     methods: {
+      bindError (k, v) {
+        this.eventErrors[k] = v;
+      },
+
       reset () {
         this.httpMethod = "POST";
         this.saveBtnTxt = "Create this event";
@@ -228,6 +236,7 @@
         this.eventDate = "";
         this.eventStartTime = "";
         this.eventEndTime = "";
+        this.eventErrors = {};
       },
 
       updateEventDates () {
@@ -258,14 +267,14 @@
 
         $.ajax({
           method: this.httpMethod,
-          url: this.event.url,
+          url: vm.url,
           contentType: false,
           processData: false,
           data: form,
 
           success: (resp) => {
-            vm.event.id = vm.event.id || resp.id;
-            vm.event.url = vm.event.url || resp.url;
+            vm.event.id = resp.id;
+            vm.event.url = resp.url;
             vm.event.date_time = resp.date_time;
 
             EventBus.$emit("eventUpdated", vm.event);
@@ -276,8 +285,10 @@
           error: (resp) => {
             var errors = resp.responseJSON.errors;
 
+            vm.eventErrors = {};
+
             _.each(Object.keys(errors), (k) => {
-              this.event.errors[k] = errors[k];
+              vm.bindError(k, errors[k]);
             });
           },
         });
@@ -295,6 +306,7 @@
         this.active = true;
         this.saveBtnTxt = "Save changes";
         this.event = new Event(event);
+        this.event.url = event.url;
       });
     },
   };

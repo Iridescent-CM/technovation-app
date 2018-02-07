@@ -11,6 +11,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   }
 
+  after_create -> {
+    RegisterToCurrentSeasonJob.perform_later(self);
+  }
+
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 

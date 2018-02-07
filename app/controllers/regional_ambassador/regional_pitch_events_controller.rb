@@ -1,7 +1,7 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
+      pitch_events = RegionalPitchEvent.current.in_region_of(current_ambassador)
         .map do |event|
           {
             id: event.id,
@@ -18,6 +18,7 @@ module RegionalAmbassador
               event,
               format: :json
             ),
+            errors: {},
           }
         end
 
@@ -28,7 +29,7 @@ module RegionalAmbassador
     end
 
     def show
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
         .includes(
           teams: [:division, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
@@ -59,7 +60,7 @@ module RegionalAmbassador
     end
 
     def edit
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
         .find(params[:id])
     end
 
@@ -93,14 +94,14 @@ module RegionalAmbassador
           format.html { render :new }
 
           format.json {
-            render json: { errors: @pitch_event.errors }, status: 400
+            render json: { errors: @pitch_event.errors.messages }, status: 400
           }
         end
       end
     end
 
     def update
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
         .find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
@@ -128,7 +129,7 @@ module RegionalAmbassador
     end
 
     def destroy
-      RegionalPitchEvent.in_region_of(current_ambassador)
+      RegionalPitchEvent.current.in_region_of(current_ambassador)
         .find(params[:id]).destroy
 
       redirect_to regional_ambassador_regional_pitch_events_url,
