@@ -15,9 +15,16 @@ module RegionalAmbassador
     private
     def grid_params
       grid = (params[:submissions_grid] ||= {}).merge(
-        admin: true,
-        country: Array(params[:submissions_grid][:country]),
-        state_province: Array(params[:submissions_grid][:state_province]),
+        admin: false,
+        allow_state_search: current_ambassador.country != "US",
+        country: [current_ambassador.country],
+        state_province: (
+          if current_ambassador.country == "US"
+            [current_ambassador.state_province]
+          else
+            Array(params[:accounts_grid][:state_province])
+          end
+        ),
         season: params[:submissions_grid][:season] || Season.current.year,
       )
 
