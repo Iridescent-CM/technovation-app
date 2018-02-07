@@ -6,6 +6,8 @@ import EventForm from './EventForm';
 
 Vue.use(TurbolinksAdapter)
 
+import "flatpickr/dist/themes/material_green.css";
+
 document.addEventListener('turbolinks:load', () => {
   new Vue({
     el: "#app",

@@ -58,6 +58,7 @@
         Date
         <input
           class="flatpickr__date"
+          ref="flatpickr__date"
           type="text"
           v-model="eventDate"
         />
@@ -69,6 +70,7 @@
             From
             <input
               class="flatpickr__time"
+              ref="flatpickr__time-0"
               type="text"
               v-model="eventStartTime"
             />
@@ -80,6 +82,7 @@
             To
             <input
               class="flatpickr__time"
+              ref="flatpickr__time-0"
               type="text"
               v-model="eventEndTime"
             />
@@ -113,8 +116,6 @@
   import Event from '../event';
   import EventBus from '../event_bus';
 
-  import "flatpickr/dist/themes/material_green.css";
-
   export default {
     name: "event-form",
 
@@ -128,6 +129,8 @@
 
     data () {
       return {
+        dateFP: null,
+        timeFP: null,
         httpMethod: "POST",
         saveBtnTxt: "Create this event",
         active: false,
@@ -156,28 +159,6 @@
     },
 
     watch: {
-      active (val) {
-        if (!!val) {
-          flatpickr('.flatpickr__date', {
-            enableTime: false,
-            altInput: true,
-            altFormat: "l, F J",
-            dateFormat: "Y-m-d",
-            minDate: "2018-05-01",
-            maxDate: "2018-05-15",
-          });
-
-          flatpickr('.flatpickr__time', {
-            enableTime: true,
-            noCalendar: true,
-            minuteIncrement: 15,
-            mode: "range",
-            minTime: "07:00",
-            maxTime: "22:00",
-          });
-        }
-      },
-
       division_ids (ids) {
         if (!ids || !ids.length) {
           this.event.division_names = "";
@@ -298,6 +279,28 @@
     components: {
       App,
       Errors,
+    },
+
+    updated () {
+      if (!!this.active && !!!this.dateFP) {
+        this.dateFP = flatpickr(".flatpickr__date", {
+          enableTime: false,
+          altInput: true,
+          altFormat: "l, F J",
+          dateFormat: "Y-m-d",
+          minDate: "2018-05-01",
+          maxDate: "2018-05-15",
+        });
+
+        this.timeFP = flatpickr('.flatpickr__time', {
+          enableTime: true,
+          noCalendar: true,
+          minuteIncrement: 15,
+          mode: "range",
+          minTime: "07:00",
+          maxTime: "22:00",
+        });
+      }
     },
 
     mounted () {
