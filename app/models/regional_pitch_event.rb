@@ -11,6 +11,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   }
 
+  after_create -> {
+    RegisterToCurrentSeasonJob.perform_later(self);
+  }
+
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
@@ -93,20 +97,73 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
+  def to_list_json
+    {
+      id: id,
+      name: name,
+      city: city,
+      venue_address: venue_address,
+      division_names: division_names,
+      division_ids: division_ids,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+      starts_at: starts_at,
+      ends_at: ends_at,
+      eventbrite_link: eventbrite_link,
+      errors: {},
+    }
+  end
+
+  def to_create_json
+    {
+      id: id,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+    }
+  end
+
+  def to_update_json
+    {
+      id: id,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+    }
+  end
+
   def friendly_name
     "#{name} in #{city} on #{date_time}"
   end
 
   def division_names
-    divisions.flat_map(&:name).to_sentence
+    divisions.flat_map(&:name).join(", ")
   end
 
   def date_time
-    [starts_at.in_time_zone(timezone).strftime("%a %b %e, %H:%M"),
+    [starts_at.in_time_zone(timezone).strftime("%a %b %e, %-I:%M%P"),
      "-",
-     ends_at.in_time_zone(timezone).strftime("%H:%M"),
-     "Timezone:",
+     ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+     "TZ:",
      regional_ambassador_profile.timezone].join(' ')
+  end
+
+  def day
+    starts_at.in_time_zone(timezone).strftime("%A")
+  end
+
+  def date
+    starts_at.in_time_zone(timezone).strftime("%B %e")
+  end
+
+  def time
+    [starts_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+     "-",
+     ends_at.in_time_zone(timezone).strftime("%-I:%M%P")].join(" ")
   end
 
   def live?

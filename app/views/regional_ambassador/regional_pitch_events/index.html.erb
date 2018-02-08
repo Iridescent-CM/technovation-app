@@ -1,12 +1,28 @@
-<% provide :js, javascript_pack_tag("ra_events") %>
+<% provide :title, "RA Data • Events" %>
+<% provide :js, javascript_pack_tag("ra_events_app") %>
+<% provide :css, stylesheet_pack_tag("ra_events_app") %>
 
 <div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-6">
-    <div class="panel">
-      <h1>Events</h1>
+  <div class="grid__col-sm-10">
+    <div class="panel panel--left">
+      <h1>Regional Pitch Events</h1>
 
-      <div id="events">
-        {{ message }}
+      <div id="app">
+        <events-table
+          fetch-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
+        ></events-table>
+
+        <event-form
+          post-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
+          junior-division-id="<%= Division.junior.id %>"
+          senior-division-id="<%= Division.senior.id %>"
+          junior-division-name="<%= Division.junior.name %>"
+          senior-division-name="<%= Division.senior.name %>"
+        ></event-form>
       </div>
     </div>
   </div>

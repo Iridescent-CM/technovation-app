@@ -1,11 +1,29 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      @pitch_events = RegionalPitchEvent.in_region_of(current_ambassador)
+      respond_to do |f|
+        f.html { }
+        f.json {
+          pitch_events = RegionalPitchEvent.current
+            .in_region_of(current_ambassador)
+            .order(:starts_at)
+            .map do |e|
+              e.to_list_json.merge({
+                url: regional_ambassador_regional_pitch_event_path(
+                  e,
+                  format: :json
+                ),
+              })
+            end
+
+          render json: pitch_events
+        }
+      end
     end
 
     def show
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
         .includes(
           teams: [:division, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
@@ -30,41 +48,87 @@ module RegionalAmbassador
         .onboarded
         .in_region(current_ambassador)
         .not_attending_live_event
-        .sort { |j1, j2| j1.first_name.downcase <=> j2.first_name.downcase }
-    end
-
-    def new
-      @pitch_event = current_ambassador.regional_pitch_events.build
-      @pitch_event.starts_at = Date.new(Season.current.year, 5, 1).in_time_zone(current_ambassador.timezone)
-      @pitch_event.ends_at = (@pitch_event.starts_at + 1.hour).in_time_zone(current_ambassador.timezone)
+        .sort { |j1, j2|
+          j1.first_name.downcase <=> j2.first_name.downcase
+        }
     end
 
     def edit
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
+        .find(params[:id])
     end
 
     def create
-      @pitch_event = current_ambassador.regional_pitch_events.new(pitch_event_params)
+      @pitch_event = current_ambassador
+        .regional_pitch_events
+        .new(pitch_event_params)
 
       if @pitch_event.save
-        redirect_to [:regional_ambassador, @pitch_event], notice: 'Regional pitch event was successfully created.'
+        respond_to do |format|
+          format.html {
+            redirect_to [:regional_ambassador, @pitch_event],
+              notice: 'Regional pitch event was successfully created.'
+          }
+
+          format.json {
+            render json: @pitch_event.to_create_json.merge({
+              url: regional_ambassador_regional_pitch_event_path(
+                @pitch_event,
+                format: :json
+              ),
+            })
+          }
+        end
       else
-        render :new
+        respond_to do |format|
+          format.html { render :new }
+
+          format.json {
+            render json: {
+              errors: @pitch_event.errors.messages,
+            }, status: 400
+          }
+        end
       end
     end
 
     def update
-      @pitch_event = RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id])
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
+        .find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
-        redirect_to [:regional_ambassador, @pitch_event], notice: 'Regional pitch event was successfully updated.'
+        respond_to do |f|
+          f.html {
+            redirect_to [:regional_ambassador, @pitch_event],
+              notice: 'Regional pitch event was successfully updated.'
+          }
+
+          f.json {
+            render json: @pitch_event.to_update_json.merge({
+              url: regional_ambassador_regional_pitch_event_path(
+                @pitch_event,
+                format: :json,
+              ),
+            })
+          }
+        end
       else
-        render :edit
+        respond_to do |f|
+          f.html { render :edit }
+
+          format.json {
+            render json: { errors: @pitch_event.errors }, status: 400
+          }
+        end
       end
     end
 
     def destroy
-      RegionalPitchEvent.in_region_of(current_ambassador).find(params[:id]).destroy
+      RegionalPitchEvent.current.in_region_of(current_ambassador)
+        .find(params[:id]).destroy
+
       redirect_to regional_ambassador_regional_pitch_events_url,
         notice: 'Regional pitch event was successfully destroyed.'
     end

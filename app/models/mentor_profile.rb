@@ -97,7 +97,10 @@ class MentorProfile < ActiveRecord::Base
   before_validation -> {
     if account.blank? and user_invitation.blank?
       errors.add(:account, "is required unless there's a user invitation")
-      errors.add(:user_invitation, "is required unless there's an account")
+      errors.add(
+        :user_invitation,
+        "is required unless there's an account"
+      )
     end
   }
 

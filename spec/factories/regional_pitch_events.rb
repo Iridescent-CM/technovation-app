@@ -11,6 +11,7 @@ FactoryBot.define do
     city "City"
     venue_address "123 Street St."
     unofficial false
+    division_ids { Division.pluck(:id) }
 
     transient do
       divisions %i{senior junior}

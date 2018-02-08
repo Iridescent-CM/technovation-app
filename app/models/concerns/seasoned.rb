@@ -12,7 +12,8 @@ module Seasoned
 
     scope :by_season, ->(*args) {
       years = args.select { |a| not a.is_a?(Hash) }.flatten
-      opts = args.select { |a| a.is_a?(Hash) }[0] || {}
+      opts = args.select { |a| a.is_a?(Hash) }[0] ||
+               { match: :match_any }
 
       clauses = years.flatten.map do |year|
         "'#{year}' = ANY (#{table_name}.seasons)"
