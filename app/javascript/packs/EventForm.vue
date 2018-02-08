@@ -9,7 +9,6 @@
     </p>
 
     <form
-      ref="newEvent"
       v-if="active"
       @submit.prevent="handleSubmit"
     >
@@ -56,36 +55,27 @@
 
       <label>
         Date
-        <input
-          class="flatpickr__date"
-          ref="flatpickr__date"
-          type="text"
+        <flatpickr-input
           v-model="eventDate"
-        />
+          :options="dateOpts" />
       </label>
 
       <div class="grid grid--bleed">
         <div class="grid__col-6">
           <label>
             From
-            <input
-              class="flatpickr__time"
-              ref="flatpickr__time-0"
-              type="text"
+            <flatpickr-input
               v-model="eventStartTime"
-            />
+              :options="timeOpts" />
           </label>
         </div>
 
         <div class="grid__col-6">
           <label>
             To
-            <input
-              class="flatpickr__time"
-              ref="flatpickr__time-0"
-              type="text"
+            <flatpickr-input
               v-model="eventEndTime"
-            />
+              :options="timeOpts" />
           </label>
         </div>
       </div>
@@ -109,9 +99,9 @@
 </template>
 
 <script>
-  import flatpickr from "flatpickr";
   import _ from "lodash";
 
+  import FlatpickrInput from "./FlatpickrInput";
   import Errors from '../errors';
   import Event from '../event';
   import EventBus from '../event_bus';
@@ -129,14 +119,32 @@
 
     data () {
       return {
-        dateFP: null,
-        timeFP: null,
+        dateOpts: {
+          enableTime: false,
+          altInput: true,
+          altFormat: "l, F J",
+          dateFormat: "Y-m-d",
+          minDate: "2018-05-01",
+          maxDate: "2018-05-15",
+        },
+
+        timeOpts: {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "H:i",
+          minuteIncrement: 15,
+          minTime: "07:00",
+          maxTime: "22:00",
+        },
+
         httpMethod: "POST",
         saveBtnTxt: "Create this event",
         active: false,
+
         event: new Event({
           url: this.postUrl,
         }),
+
         eventErrors: {},
         eventDate: "",
         eventStartTime: "",
@@ -148,6 +156,7 @@
       url () {
         return this.event.url;
       },
+
 
       division_ids () {
         return this.event.division_ids;
@@ -190,15 +199,16 @@
       },
 
       eventDate () {
-        this.updateEventDates();
+        this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
+        this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
 
       eventStartTime () {
-        this.updateEventDates();
+        this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
       },
 
       eventEndTime () {
-        this.updateEventDates();
+        this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
     },
 
@@ -218,11 +228,6 @@
         this.eventStartTime = "";
         this.eventEndTime = "";
         this.eventErrors = {};
-      },
-
-      updateEventDates () {
-        this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
-        this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
 
       handleSubmit () {
@@ -279,28 +284,7 @@
     components: {
       App,
       Errors,
-    },
-
-    updated () {
-      if (!!this.active && !!!this.dateFP) {
-        this.dateFP = flatpickr(".flatpickr__date", {
-          enableTime: false,
-          altInput: true,
-          altFormat: "l, F J",
-          dateFormat: "Y-m-d",
-          minDate: "2018-05-01",
-          maxDate: "2018-05-15",
-        });
-
-        this.timeFP = flatpickr('.flatpickr__time', {
-          enableTime: true,
-          noCalendar: true,
-          minuteIncrement: 15,
-          mode: "range",
-          minTime: "07:00",
-          maxTime: "22:00",
-        });
-      }
+      FlatpickrInput,
     },
 
     mounted () {
