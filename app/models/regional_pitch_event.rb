@@ -97,6 +97,45 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
+  def to_list_json
+    {
+      id: id,
+      name: name,
+      city: city,
+      venue_address: venue_address,
+      division_names: division_names,
+      division_ids: division_ids,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+      starts_at: starts_at,
+      ends_at: ends_at,
+      eventbrite_link: eventbrite_link,
+      errors: {},
+    }
+  end
+
+  def to_create_json
+    {
+      id: id,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+    }
+  end
+
+  def to_update_json
+    {
+      id: id,
+      day: day,
+      date: date,
+      time: time,
+      tz: timezone,
+    }
+  end
+
   def friendly_name
     "#{name} in #{city} on #{date_time}"
   end

@@ -1,40 +1,29 @@
 module RegionalAmbassador
   class RegionalPitchEventsController < RegionalAmbassadorController
     def index
-      pitch_events = RegionalPitchEvent.current
-        .in_region_of(current_ambassador)
-        .order(:starts_at)
-        .map do |event|
-          {
-            id: event.id,
-            name: event.name,
-            city: event.city,
-            venue_address: event.venue_address,
-            division_names: event.division_names,
-            division_ids: event.division_ids,
-            day: event.day,
-            date: event.date,
-            time: event.time,
-            tz: event.timezone,
-            starts_at: event.starts_at,
-            ends_at: event.ends_at,
-            eventbrite_link: event.eventbrite_link,
-            url: regional_ambassador_regional_pitch_event_path(
-              event,
-              format: :json
-            ),
-            errors: {},
-          }
-        end
-
       respond_to do |f|
         f.html { }
-        f.json { render json: pitch_events }
+        f.json {
+          pitch_events = RegionalPitchEvent.current
+            .in_region_of(current_ambassador)
+            .order(:starts_at)
+            .map do |e|
+              e.to_list_json.merge({
+                url: regional_ambassador_regional_pitch_event_path(
+                  e,
+                  format: :json
+                ),
+              })
+            end
+
+          render json: pitch_events
+        }
       end
     end
 
     def show
-      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
         .includes(
           teams: [:division, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
@@ -65,7 +54,8 @@ module RegionalAmbassador
     end
 
     def edit
-      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
         .find(params[:id])
     end
 
@@ -82,19 +72,12 @@ module RegionalAmbassador
           }
 
           format.json {
-            event = @pitch_event
-
-            render json: {
-              id: event.id,
-              day: event.day,
-              date: event.date,
-              time: event.time,
-              tz: event.timezone,
+            render json: @pitch_event.to_create_json.merge({
               url: regional_ambassador_regional_pitch_event_path(
-                event,
+                @pitch_event,
                 format: :json
               ),
-            }
+            })
           }
         end
       else
@@ -123,17 +106,12 @@ module RegionalAmbassador
           }
 
           f.json {
-            render json: {
-              id: @pitch_event.id,
+            render json: @pitch_event.to_update_json.merge({
               url: regional_ambassador_regional_pitch_event_path(
                 @pitch_event,
                 format: :json,
               ),
-              day: @pitch_event.day,
-              date: @pitch_event.date,
-              time: @pitch_event.time,
-              tz: @pitch_event.timezone,
-            }
+            })
           }
         end
       else
