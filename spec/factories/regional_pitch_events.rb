@@ -11,24 +11,15 @@ FactoryBot.define do
     city "City"
     venue_address "123 Street St."
     unofficial false
+
     division_ids { Division.pluck(:id) }
 
-    transient do
-      divisions %i{senior junior}
-    end
-
     trait :senior do
-      divisions %i{senior}
+      division_ids { [Division.senior.id] }
     end
 
     trait :junior do
-      divisions %i{junior}
-    end
-
-    before(:create) do |r, e|
-      e.divisions.each do |d|
-        r.divisions << Division.public_send(d)
-      end
+      division_ids { [Division.junior.id] }
     end
   end
 end
