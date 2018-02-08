@@ -238,8 +238,19 @@ class AccountsGrid
     html: {
       class: "and-or-field",
     },
-    multiple: true do |value|
-    by_season(value)
+    multiple: true do |value, scope, grid|
+    scope.by_season(value, match: grid.season_and_or)
+  end
+
+  filter :season_and_or,
+    :enum,
+    header: "Season options:",
+    select: [
+      ["Match any season", :match_any],
+      ["Match all seasons", :match_all],
+    ],
+    filter_group: "more-specific" do |_, scope|
+    scope
   end
 
   filter :scope_names,
