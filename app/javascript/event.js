@@ -9,7 +9,11 @@ export default function (event) {
   this.division_names = event.division_names || [];
   this.division_ids = event.division_ids || [];
 
-  this.date_time = event.date_time || "";
+  this.day = event.day || "";
+  this.date = event.date || "";
+  this.time = event.time || "";
+  this.tz = event.tz || "";
+
   this.starts_at = event.starts_at || "";
   this.ends_at = event.ends_at || "";
 

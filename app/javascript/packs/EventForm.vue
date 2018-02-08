@@ -12,55 +12,67 @@
       v-if="active"
       @submit.prevent="handleSubmit"
     >
-      <label>
-        Event name
-        <input type="text" v-model="event.name" />
-      </label>
+      <div class="grid">
+        <div class="grid__col-sm-6">
+          <label>
+            Event name
+            <input type="text" v-model="event.name" />
+          </label>
 
-      <errors :errors="eventErrors.name"></errors>
+          <errors :errors="eventErrors.name"></errors>
+        </div>
 
-      <label>
-        <input
-          type="checkbox"
-          v-model="event.division_ids"
-          :value="seniorDivisionId"
-        />
-        Senior division
-      </label>
+        <div class="grid__col-sm-6">
+          <h6>Hosting divisions:</h6>
 
-      <label>
-        <input
-          type="checkbox"
-          v-model="event.division_ids"
-          :value="juniorDivisionId"
-        />
-        Junior division
-      </label>
+          <label>
+            <input
+              type="checkbox"
+              v-model="event.division_ids"
+              :value="seniorDivisionId"
+            />
+            Senior division
+          </label>
 
-      <errors :errors="eventErrors.division_ids"></errors>
+          <label>
+            <input
+              type="checkbox"
+              v-model="event.division_ids"
+              :value="juniorDivisionId"
+            />
+            Junior division
+          </label>
 
-      <label>
-        City
-        <input type="text" v-model="event.city" />
-      </label>
+          <errors :errors="eventErrors.division_ids"></errors>
+        </div>
 
-      <errors :errors="eventErrors.city"></errors>
+        <div class="grid__col-sm-6">
+          <label>
+            City
+            <input type="text" v-model="event.city" />
+          </label>
 
-      <label>
-        Venue address
-        <input type="text" v-model="event.venue_address" />
-      </label>
+          <errors :errors="eventErrors.city"></errors>
+        </div>
 
-      <errors :errors="eventErrors.venue_address"></errors>
+        <div class="grid__col-sm-6">
+          <label>
+            Venue address
+            <input type="text" v-model="event.venue_address" />
+          </label>
 
-      <label>
-        Date
-        <flatpickr-input
-          v-model="eventDate"
-          :options="dateOpts" />
-      </label>
+          <errors :errors="eventErrors.venue_address"></errors>
+        </div>
 
-      <div class="grid grid--bleed">
+        <div class="grid__col-sm-6">
+          <label>
+            Date
+            <flatpickr-input
+              v-model="eventDate"
+              :options="dateOpts" />
+          </label>
+        </div>
+
         <div class="grid__col-6">
           <label>
             From
@@ -68,32 +80,35 @@
               v-model="eventStartTime"
               :options="timeOpts" />
           </label>
-        </div>
 
-        <div class="grid__col-6">
+          <errors :errors="eventErrors.starts_at"></errors>
+
           <label>
             To
             <flatpickr-input
               v-model="eventEndTime"
               :options="timeOpts" />
           </label>
+
+          <errors :errors="eventErrors.ends_at"></errors>
+        </div>
+
+        <div class="grid__col-auto">
+          <label>
+            Eventbrite URL
+            <input type="text" v-model="event.eventbrite_link" />
+          </label>
+
+          <p>
+            <input
+              type="submit"
+              class="button"
+              :value="saveBtnTxt"
+            />
+            or <a @click="reset" href="#">cancel</a>
+          </p>
         </div>
       </div>
-
-      <errors :errors="eventErrors.starts_at"></errors>
-
-      <label>
-        Eventbrite URL
-        <input type="text" v-model="event.eventbrite_link" />
-      </label>
-
-      <input
-        type="submit"
-        class="button"
-        :value="saveBtnTxt"
-      />
-
-      or <a @click="reset" href="#">cancel</a>
     </form>
   </div>
 </template>
@@ -162,8 +177,12 @@
         return this.event.division_ids;
       },
 
-      date_time () {
-        return this.event.date_time;
+      date () {
+        return this.event.date;
+      },
+
+      time () {
+        return this.event.time;
       },
     },
 
@@ -186,7 +205,7 @@
         this.event.division_names = this.event.division_names.join(", ")
       },
 
-      date_time (val) {
+      date (val) {
         if (!val || !val.length)
           return;
 
@@ -261,7 +280,10 @@
           success: (resp) => {
             vm.event.id = resp.id;
             vm.event.url = resp.url;
-            vm.event.date_time = resp.date_time;
+            vm.event.day = resp.day;
+            vm.event.date = resp.date;
+            vm.event.time = resp.time;
+            vm.event.tz = resp.tz
 
             EventBus.$emit("eventUpdated", vm.event);
 

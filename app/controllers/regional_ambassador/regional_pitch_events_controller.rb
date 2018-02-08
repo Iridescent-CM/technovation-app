@@ -12,7 +12,10 @@ module RegionalAmbassador
             venue_address: event.venue_address,
             division_names: event.division_names,
             division_ids: event.division_ids,
-            date_time: event.date_time,
+            day: event.day,
+            date: event.date,
+            time: event.time,
+            tz: event.timezone,
             starts_at: event.starts_at,
             ends_at: event.ends_at,
             eventbrite_link: event.eventbrite_link,
@@ -83,7 +86,10 @@ module RegionalAmbassador
 
             render json: {
               id: event.id,
-              date_time: event.date_time,
+              day: event.day,
+              date: event.date,
+              time: event.time,
+              tz: event.timezone,
               url: regional_ambassador_regional_pitch_event_path(
                 event,
                 format: :json
@@ -96,14 +102,17 @@ module RegionalAmbassador
           format.html { render :new }
 
           format.json {
-            render json: { errors: @pitch_event.errors.messages }, status: 400
+            render json: {
+              errors: @pitch_event.errors.messages,
+            }, status: 400
           }
         end
       end
     end
 
     def update
-      @pitch_event = RegionalPitchEvent.current.in_region_of(current_ambassador)
+      @pitch_event = RegionalPitchEvent.current
+        .in_region_of(current_ambassador)
         .find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
@@ -120,7 +129,10 @@ module RegionalAmbassador
                 @pitch_event,
                 format: :json,
               ),
-              date_time: @pitch_event.date_time,
+              day: @pitch_event.day,
+              date: @pitch_event.date,
+              time: @pitch_event.time,
+              tz: @pitch_event.timezone,
             }
           }
         end

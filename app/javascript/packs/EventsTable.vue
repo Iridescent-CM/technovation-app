@@ -4,7 +4,8 @@
       <tr>
         <th>Name</th>
         <th>Divisions</th>
-        <th>Date &amp; time</th>
+        <th>Date</th>
+        <th>Time</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -13,7 +14,8 @@
       <tr :key="event.id" v-for="event in events">
         <td>{{ event.name }}</td>
         <td>{{ event.division_names }}</td>
-        <td>{{ event.date_time }}</td>
+        <td>{{ event.day }} <small>{{ event.date }}</small></td>
+        <td>{{ event.time }} <small>Timezone: {{ event.tz }}</small></td>
         <td>
           <img
             alt="edit"
@@ -67,7 +69,9 @@
           method: "DELETE",
           url: event.url,
           success: () => {
-            var idx = this.events.findIndex(e => { return e.id === event.id });
+            var idx = this.events.findIndex(
+              e => { return e.id === event.id }
+            );
 
             if (idx !== -1)
               this.events.splice(idx, 1);
@@ -99,4 +103,9 @@
 </script>
 
 <style scoped>
+  small {
+    display: block;
+    opacity: 0.7;
+    font-weight: 600;
+  }
 </style>

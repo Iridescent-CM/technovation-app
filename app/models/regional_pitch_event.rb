@@ -113,6 +113,20 @@ class RegionalPitchEvent < ActiveRecord::Base
      regional_ambassador_profile.timezone].join(' ')
   end
 
+  def day
+    starts_at.in_time_zone(timezone).strftime("%A")
+  end
+
+  def date
+    starts_at.in_time_zone(timezone).strftime("%B %e")
+  end
+
+  def time
+    [starts_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+     "-",
+     ends_at.in_time_zone(timezone).strftime("%-I:%M%P")].join(" ")
+  end
+
   def live?
     true
   end
