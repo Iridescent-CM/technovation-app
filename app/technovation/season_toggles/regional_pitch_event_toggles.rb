@@ -14,7 +14,10 @@ class SeasonToggles
 
     module ClassMethods
       def select_regional_pitch_event=(value)
-        store.set(:select_regional_pitch_event, with_bool_validation(value))
+        store.set(
+          :select_regional_pitch_event,
+          with_bool_validation(value),
+        )
       end
 
       def select_regional_pitch_event?

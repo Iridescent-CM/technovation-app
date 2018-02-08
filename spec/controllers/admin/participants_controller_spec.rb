@@ -6,7 +6,7 @@ RSpec.describe Admin::ParticipantsController do
     sign_in(admin)
   end
 
-  it "sends a message to student's team to reconsider division on dob change" do
+  it "reconsiders student's team division on dob change" do
     Timecop.freeze(Division.cutoff_date - 1.day) do
       student = FactoryBot.create(
         :student,
@@ -43,7 +43,11 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, "old@oldtime.com", "#{scope.upcase}_LIST_ID")
+        .with(
+          profile.account_id,
+          "old@oldtime.com",
+          "#{scope.upcase}_LIST_ID",
+        )
     end
 
     it "updates newsletters with a change to the address" do
@@ -60,7 +64,11 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(
+          profile.account_id,
+          profile.account.email,
+          "#{scope.upcase}_LIST_ID",
+        )
     end
 
     it "updates #{scope} newsletters with changes to first name" do
@@ -76,7 +84,11 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(
+          profile.account_id,
+          profile.account.email,
+          "#{scope.upcase}_LIST_ID",
+        )
     end
 
     it "updates #{scope} newsletters with changes to last name" do
@@ -92,7 +104,11 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(
+          profile.account_id,
+          profile.account.email,
+          "#{scope.upcase}_LIST_ID",
+        )
     end
   end
 end
