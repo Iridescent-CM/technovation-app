@@ -92,7 +92,7 @@ class TeamsGrid
     html: {
       class: "and-or-field",
     },
-    multiple: true do |value|
+    multiple: false do |value|
     by_season(value)
   end
 
