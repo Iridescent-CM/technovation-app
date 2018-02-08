@@ -3,7 +3,7 @@
     <p class="grid__cell--padding-sm">
       <button
         class="button button--small"
-        @click="active = true"
+        @click.prevent="active = true"
         v-if="!active"
       >+ Add an event</button>
     </p>
@@ -105,7 +105,7 @@
               class="button"
               :value="saveBtnTxt"
             />
-            or <a @click="reset" href="#">cancel</a>
+            or <a @click.prevent="reset" href="#">cancel</a>
           </p>
         </div>
       </div>

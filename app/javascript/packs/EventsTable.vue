@@ -21,14 +21,14 @@
             alt="edit"
             class="events-list__action-item"
             src="https://icongr.am/fontawesome/edit.svg?size=16"
-            @click="editEvent(event)"
+            @click.prevent="editEvent(event)"
           />
 
           <img
             alt="remove"
             class="events-list__action-item"
             src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-            @click="removeEvent(event)"
+            @click.prevent="removeEvent(event)"
           />
         </td>
       </tr>
