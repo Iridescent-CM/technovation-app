@@ -29,6 +29,7 @@ if !!defined?(Dotenv)
     SIDEKIQ_CLIENT_SIZE
     NEW_RELIC_AGENT_ENABLED
     BIND_FAILING_SPECS
+    SHOW_RA_EVENT_UI
   }
 
   RSpec.describe "Circle CI config" do

@@ -7,23 +7,31 @@
     <div class="panel panel--left">
       <h1>Regional Pitch Events</h1>
 
-      <div id="app">
-        <events-table
-          fetch-url="<%= regional_ambassador_regional_pitch_events_path(
-            format: :json
-          ) %>"
-        ></events-table>
+      <% if ENV.fetch("SHOW_RA_EVENT_UI") { false } %>
+        <div id="app">
+          <events-table
+            fetch-url="<%= regional_ambassador_regional_pitch_events_path(
+              format: :json
+            ) %>"
+          ></events-table>
 
-        <event-form
-          post-url="<%= regional_ambassador_regional_pitch_events_path(
-            format: :json
-          ) %>"
-          junior-division-id="<%= Division.junior.id %>"
-          senior-division-id="<%= Division.senior.id %>"
-          junior-division-name="<%= Division.junior.name %>"
-          senior-division-name="<%= Division.senior.name %>"
-        ></event-form>
-      </div>
+          <event-form
+            post-url="<%= regional_ambassador_regional_pitch_events_path(
+              format: :json
+            ) %>"
+            junior-division-id="<%= Division.junior.id %>"
+            senior-division-id="<%= Division.senior.id %>"
+            junior-division-name="<%= Division.junior.name %>"
+            senior-division-name="<%= Division.senior.name %>"
+          ></event-form>
+        </div>
+      <% else %>
+        <p>
+          Hello, RAs! The Technovation development team is
+          hard at work on this section right now.
+          Stay tuned for email announcements.
+        </p>
+      <% end %>
     </div>
   </div>
 </div>
