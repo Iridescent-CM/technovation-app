@@ -37,7 +37,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       end
 
       if record.respond_to?(:mentor_profile) and
-          record.student_profile.present?
+          record.mentor_profile.present?
         SubscribeEmailListJob.perform_later(
           record.email,
           record.full_name,

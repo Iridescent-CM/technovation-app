@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Register as a mentor" do
   before do
+    allow(SubscribeEmailListJob).to receive(:perform_later)
+
     set_signup_token("mentor@mentor.com")
 
     visit mentor_signup_path
@@ -22,6 +24,8 @@ RSpec.feature "Register as a mentor" do
   end
 
   scenario "saves location details" do
+    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+
     click_link "Update your location"
 
     fill_in "City", with: "Chicago"
@@ -33,6 +37,13 @@ RSpec.feature "Register as a mentor" do
       "Chicago, IL, United States"
     )
     expect(MentorProfile.last.account).to be_location_confirmed
+
+    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      .with(
+        MentorProfile.last.account_id,
+        "mentor@mentor.com",
+        "MENTOR_LIST_ID",
+    )
   end
 
   scenario "signup attempt attached" do
@@ -40,5 +51,19 @@ RSpec.feature "Register as a mentor" do
       account_id: MentorProfile.last.account_id
     )
     expect(attempt).to be_present
+  end
+
+  scenario "Email list subscribed" do
+    expect(SubscribeEmailListJob).to have_received(:perform_later)
+      .with(
+        "mentor@mentor.com",
+        "Mentor McGee",
+        "MENTOR_LIST_ID",
+        [
+          { Key: 'City', Value: nil },
+          { Key: 'State/Province', Value: nil },
+          { Key: 'Country', Value: "" },
+        ]
+      )
   end
 end
