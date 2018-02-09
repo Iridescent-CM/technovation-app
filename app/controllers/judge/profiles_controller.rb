@@ -6,6 +6,12 @@ module Judge
       [
         :company_name,
         :job_title,
+        :industry,
+        :industry_other,
+        :skills,
+        :degree,
+        :join_virtual,
+        :survey_completed,
       ]
     end
 

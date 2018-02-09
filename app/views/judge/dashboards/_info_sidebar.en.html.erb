@@ -43,6 +43,16 @@
     target: "_blank" %>
   </p>
 
+  <h3>Judges Chatroom</h3>
+
+  <p>
+    Get support, meet other judges, say hello
+    <br />
+    <%= link_to "Join our Slack chat",
+      ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
+      target: "_blank" %>
+  </p>
+
   <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(Season.current.year, 3, 8) %>
     <h3>Mentor Dashboard</h3>
 

@@ -1,6 +1,14 @@
 class JudgeProfile < ActiveRecord::Base
   attr_accessor :used_global_invitation
 
+  enum industry: %i(
+    Science
+    Technology
+    Engineering
+    Math
+    Other
+  )
+
   acts_as_paranoid
 
   scope :onboarded, -> {
@@ -113,10 +121,6 @@ class JudgeProfile < ActiveRecord::Base
   def commitment_signed?
     consent_waiver.present? and
       consent_waiver.signed?
-  end
-
-  def survey_completed?
-    false
   end
 
   def scope_name

@@ -193,6 +193,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :consent_waivers, only: [:new, :create, :show]
+    resource :survey_answers, except: [:index, :destroy]
   end
 
   namespace :admin do

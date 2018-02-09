@@ -655,7 +655,13 @@ CREATE TABLE judge_profiles (
     updated_at timestamp without time zone NOT NULL,
     deleted_at timestamp without time zone,
     user_invitation_id bigint,
-    completed_training_at timestamp without time zone
+    completed_training_at timestamp without time zone,
+    industry integer,
+    industry_other character varying,
+    skills character varying,
+    degree character varying,
+    join_virtual boolean,
+    survey_completed boolean
 );
 
 
@@ -2865,6 +2871,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180202145820'),
 ('20180206152207'),
 ('20180206184914'),
-('20180206193752');
+('20180206193752'),
+('20180209162551');
 
 
