@@ -158,7 +158,9 @@ module TeamSubmissionController
 
   private
   def determine_layout
-    if action_name == "new" || piece_name == "code_checklist"
+    if action_name == "new" ||
+        action_name == "create" ||
+          piece_name == "code_checklist"
       "application"
     else
       "submissions"
