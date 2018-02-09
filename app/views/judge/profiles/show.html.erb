@@ -5,9 +5,14 @@
     <div class="hidden-xs hidden-xxs">
       <h3><%= current_judge.full_name %></h3>
 
-      <%= image_tag current_judge.profile_image_url, class: "grid__cell-img" %>
+      <%= image_tag current_judge.profile_image_url,
+        id: "profile-image",
+        class: "grid__cell-img" %>
 
       <%= render 'image_upload',
+        choose_from_defaults: (
+          not current_account.regional_ambassador_profile.present?
+        ),
         modal_id: "image_upload_desktop",
         heading: "Upload a profile photo",
         size: "300x300" %>
@@ -22,7 +27,8 @@
     </div>
 
     <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
-      <%= image_tag current_judge.profile_image_url, class: "grid__cell-img" %>
+      <%= image_tag current_judge.profile_image_url,
+        class: "grid__cell-img" %>
 
       <%= render 'image_upload',
         modal_id: "image_upload_mobile",

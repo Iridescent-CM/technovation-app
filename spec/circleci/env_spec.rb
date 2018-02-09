@@ -30,6 +30,8 @@ if !!defined?(Dotenv)
     NEW_RELIC_AGENT_ENABLED
     BIND_FAILING_SPECS
     SHOW_RA_EVENT_UI
+    SKIP_TRAINING_URL
+    JUDGE_ONBOARDING_ENABLED
   }
 
   RSpec.describe "Circle CI config" do

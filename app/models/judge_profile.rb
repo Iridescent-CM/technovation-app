@@ -100,15 +100,19 @@ class JudgeProfile < ActiveRecord::Base
 
   def onboarded?
     account.email_confirmed? and
-      consent_signed? and
+      commitment_signed? and
         location_confirmed? and
           training_completed? and
-            commitment_signed? and
               survey_completed?
   end
 
+  def onboarding?
+    not onboarded?
+  end
+
   def commitment_signed?
-    false
+    consent_waiver.present? and
+      consent_waiver.signed?
   end
 
   def survey_completed?

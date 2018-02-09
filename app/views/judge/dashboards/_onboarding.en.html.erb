@@ -1,0 +1,49 @@
+<h1 class="heading--reset">Judge profile required steps</h1>
+
+<ul class="list--reset list-items--margin-sm">
+  <% if current_judge.training_completed? %>
+    <li>
+      <%= web_icon(
+        "check-circle",
+        class: "icon--green",
+        text: "Training complete!",
+      ) %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "Complete the training",
+        ENV.fetch("SKIP_TRAINING_URL") {
+          ENV.fetch("JUDGE_TRAINING_URL") { "#" }
+        } %>
+    </li>
+  <% end %>
+
+  <% if current_judge.commitment_signed? %>
+    <li>
+      <%= web_icon(
+        "check-circle",
+        class: "icon--green",
+        text: "Commitment form signed!",
+      ) %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "Sign the commitment form",
+        new_judge_consent_waiver_path %>
+    </li>
+  <% end %>
+
+  <% if current_judge.survey_completed? %>
+    <li>
+      <%= web_icon(
+        "check-circle",
+        class: "icon--green",
+        text: "Survey questions answered!",
+      ) %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "Answer a couple of short survey questions", "#" %>
+    </li>
+  <% end %>
+</ul>

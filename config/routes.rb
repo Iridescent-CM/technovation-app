@@ -191,6 +191,8 @@ Rails.application.routes.draw do
     resource :profile_image_upload_confirmation, only: :show
 
     resource :dashboard, only: :show
+
+    resources :consent_waivers, only: [:new, :create, :show]
   end
 
   namespace :admin do

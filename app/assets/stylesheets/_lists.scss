@@ -41,6 +41,12 @@ ol {
     }
   }
 
+  &.list-items--margin-sm {
+    li {
+      margin: 0.5rem 0;
+    }
+  }
+
   &.bleed-y {
     margin-top: 0;
     margin-bottom: 0;

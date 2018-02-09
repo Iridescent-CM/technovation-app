@@ -18,7 +18,9 @@ class ConsentWaiversController < ApplicationController
     @consent_waiver = ConsentWaiver.new(consent_waiver_params)
 
     if @consent_waiver.save
-      redirect_to send("#{@consent_waiver.account_scope_name}_dashboard_path"),
+      redirect_to send(
+        "#{@consent_waiver.account_scope_name}_dashboard_path"
+      ),
         success: t("controllers.consent_waivers.create.success")
     else
       render :new

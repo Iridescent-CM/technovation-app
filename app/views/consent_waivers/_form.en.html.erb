@@ -1,0 +1,9 @@
+<%= simple_form_for waiver do |f| %>
+  <%= f.input :account_consent_token, as: :hidden %>
+
+  <%= f.input :electronic_signature,
+    label: "Type your name as a form of electronic signature" %>
+
+  <%= f.button :submit, t("views.consent_waivers.new.submit"),
+    class: "button" %>
+<% end %>

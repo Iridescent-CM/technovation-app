@@ -53,6 +53,23 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
         )
       end
 
+      if record.respond_to?(:judge_profile) and
+          record.judge_profile.present?
+        SubscribeEmailListJob.perform_later(
+          record.email,
+          record.full_name,
+          "JUDGE_LIST_ID",
+          [
+            { Key: 'City',
+              Value: record.city },
+            { Key: 'State/Province',
+              Value: record.state_province },
+            { Key: 'Country',
+              Value: FriendlyCountry.(record, prefix: false) },
+          ]
+        )
+      end
+
       if record.respond_to?(:create_activity)
         record.create_activity(
           key: "#{record.class.name.underscore}.register_current_season"

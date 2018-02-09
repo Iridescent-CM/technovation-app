@@ -6,15 +6,15 @@ class ConsentWaiver < ActiveRecord::Base
 
   validates :electronic_signature, presence: true
 
-  delegate :full_name, :scope_name, :consent_token, to: :account, prefix: true
+  delegate :full_name,
+           :scope_name,
+           :consent_token,
+    to: :account,
+    prefix: true
 
   after_commit -> {
     if account.mentor_profile.present?
       account.mentor_profile.enable_searchability_with_save
-    end
-
-    if account.judge_profile
-      SubscribeProfileToEmailList.perform_later(account.id, "JUDGE_LIST_ID")
     end
   }, on: :create
 
@@ -27,7 +27,11 @@ class ConsentWaiver < ActiveRecord::Base
   end
 
   def status
-    "signed"
+    voided? ? "void" : "signed"
+  end
+
+  def signed?
+    not voided?
   end
 
   def void!
