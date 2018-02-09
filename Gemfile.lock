@@ -92,7 +92,7 @@ GEM
       activesupport (>= 3.0.0)
     airbrake (6.3.0)
       airbrake-ruby (~> 2.4)
-    airbrake-ruby (2.6.2)
+    airbrake-ruby (2.8.1)
     anbt-sql-formatter (0.0.5)
     arel (8.0.0)
     arrayfields (4.9.2)
