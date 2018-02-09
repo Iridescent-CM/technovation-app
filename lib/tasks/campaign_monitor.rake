@@ -1,23 +1,19 @@
 namespace :cm do
-  desc "Remove students who are not permitted by their parents"
-  task remove_unpermitted_students: :environment do
+  desc "Remove students from mentor list oops"
+  task remove_students_from_mentor_list: :environment do
     auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
 
-    StudentProfile.joins(:account)
-                  .includes(:parental_consent)
-                  .references(:parental_consents)
-                  .where("parental_consents.id IS NULL")
-                  .pluck("accounts.email").each do |email|
+    StudentProfile.current.find_each do |profile|
       begin
         CreateSend::Subscriber.new(
           auth,
-          ENV.fetch("STUDENT_LIST_ID"),
-          email
+          ENV.fetch("MENTOR_LIST_ID"),
+          profile.email
         ).delete
 
-        puts "Removed #{email}"
+        puts "Removed #{profile.email}"
       rescue => e
-        puts "PROBLEM REMOVING #{email}"
+        puts "PROBLEM REMOVING #{profile.email}"
         puts e.message
       end
     end
