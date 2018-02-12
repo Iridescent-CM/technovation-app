@@ -50,10 +50,13 @@ RSpec.describe TeamSubmission do
       end
 
       begin
-        expect(sub.reload).not_to be_complete,
-          "failed method: #{field.method_name}"
-      rescue => err
+        aggregate_failures do
+          expect(sub.reload).not_to be_complete,
+            "failed method: #{field.method_name}"
+        end
+      rescue RSpec::Expectations::MultipleExpectationsNotMetError => err
         if !!ENV["BIND_FAILING_SPECS"]
+          binding.irb
         else
           raise err
         end
