@@ -15,7 +15,10 @@ RSpec.describe Account do
   end
 
   it "requires a secure password when invited" do
-    FactoryBot.create(:team_member_invite, invitee_email: "test@account.com")
+    FactoryBot.create(
+      :team_member_invite,
+      invitee_email: "test@account.com"
+    )
     account = FactoryBot.build(
       :account,
       email: "test@account.com",
@@ -121,7 +124,10 @@ RSpec.describe Account do
       unmatched_student = FactoryBot.create(:student)
 
       past_student = FactoryBot.create(:student, :on_team)
-      past_student.team.update_column(:seasons, [Season.current.year - 1])
+      past_student.team.update_column(
+        :seasons,
+        [Season.current.year - 1]
+      )
 
       matched_student = FactoryBot.create(:student, :on_team)
 
@@ -155,7 +161,10 @@ RSpec.describe Account do
       unmatched_student = FactoryBot.create(:student)
 
       past_student = FactoryBot.create(:student, :on_team)
-      past_student.team.update_column(:seasons, [Season.current.year - 1])
+      past_student.team.update_column(
+        :seasons,
+        [Season.current.year - 1]
+      )
 
       matched_student = FactoryBot.create(:student, :on_team)
 

@@ -17,15 +17,22 @@ RSpec.feature "admin team submissions" do
 
   scenario "list submissions on the admin page" do
     within(page.find_all("tr")[1]) do
-      expect(page).to have_content("some app name")
-      expect(page).to have_content("Cool team")
+      expect(page).to have_link(
+        "some app name",
+        href: admin_team_submission_path(submission)
+      )
+
+      expect(page).to have_link(
+        "Cool team",
+        href: admin_team_path(submission.team)
+      )
+
       expect(page).to have_content("13% completed")
-      expect(page).to have_link("view")
     end
   end
 
   scenario "View a specific submission" do
-    click_link "view"
+    click_link "some app name"
 
     expect(current_path).to eq(
       admin_team_submission_path(submission.reload)
@@ -35,7 +42,7 @@ RSpec.feature "admin team submissions" do
   end
 
   scenario "Edit a specific submission" do
-    click_link "view"
+    click_link "some app name"
     click_link "Edit"
 
     fill_in "App description", with: "A great description for the ages"
