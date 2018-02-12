@@ -231,11 +231,11 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def team_ids
-    [team_id]
+    team.present? ? [team_id] : []
   end
 
   def team_id
-    team.id
+    team.present? ? team.id : nil
   end
 
   def team_name
