@@ -1,0 +1,19 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8">
+    <div class="panel">
+      <h3><%= Season.current.year %> Technovation Honor Code</h3>
+
+      <%= render "team_submissions/honor_code" %>
+
+      <p>
+        <%= link_to "Submit for judging",
+          [
+            current_scope,
+            :published_submission_confirmation,
+            team_id: @team_submission.team_id,
+          ],
+          class: "button" %>
+      </p>
+    </div>
+  </div>
+</div>
