@@ -8,7 +8,11 @@ module TeamMemberInviteController
 
     if @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account
-      SignIn.(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
+      SignIn.(
+        signin,
+        self,
+        redirect_to: "#{current_scope}_team_member_invite_path"
+      )
     else
       render template: "team_member_invites/show_#{@invite.status}"
     end
