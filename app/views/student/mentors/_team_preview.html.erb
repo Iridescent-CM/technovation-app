@@ -14,7 +14,8 @@
 
 <li>
   <div class="grid__cell">
-    <%= link_to team_preview.name, [current_scope, team_preview] %>
+    <%= link_to team_preview.name,
+      [current_scope, team_preview, allow_out_of_region: true] %>
   </div>
 
   <div class="grid__cell">
@@ -26,7 +27,8 @@
           <li>
             <%= link_to m.full_name, send(
               "#{current_scope}_#{profile_path_name}_path",
-              m.send(profile_id)
+              m.send(profile_id),
+              allow_out_of_region: true,
             ) %>
           </li>
         <% end %>

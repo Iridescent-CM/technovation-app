@@ -9,7 +9,8 @@
         <div class="grid__col-4">
           <% if params[:review_before] || params[:back] %>
             <div class="grid__cell">
-              <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+              <%= link_to params[:back] ||= :back,
+                class: "button secondary" do %>
                 <span class="back-btn"></span>
                 <%= params[:back_title] ||= "Search results" %>
               <% end %>
@@ -19,8 +20,13 @@
           <%= image_tag @account.profile_image_url,
             class: "thumbnail-lg grid__cell-img" %>
 
-          <h3 class="reset" style="margin-top: 1rem;"><%= @account.full_name %></h3>
-          <h5 class="reset"><%= @account.scope_name.titleize %> Profile</h5>
+          <h3 class="reset" style="margin-top: 1rem;">
+            <%= @account.full_name %>
+          </h3>
+
+          <h5 class="reset">
+            <%= @account.scope_name.titleize %> Profile
+          </h5>
         </div>
 
         <div class="grid__col-4">
@@ -108,7 +114,8 @@
               collection: @account.current_teams,
               locals: {
                 ra: true,
-                profile: @account.mentor_profile || @account.student_profile
+                profile: @account.mentor_profile ||
+                           @account.student_profile
               } %>
           </ul>
         <% else %>
