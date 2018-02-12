@@ -14,7 +14,7 @@ FactoryBot.define do
       state_province "IL"
       country "US"
       date_of_birth Date.today - 14.years
-      email nil
+      sequence(:email) { |n| "factory-student-#{n}@example.com" }
       password nil
       not_onboarded false
     end
@@ -30,7 +30,8 @@ FactoryBot.define do
         s.build_parental_consent
       else
         s.build_parental_consent(
-          FactoryBot.attributes_for(:parental_consent).merge(status: :signed)
+          FactoryBot.attributes_for(:parental_consent)
+            .merge(status: :signed)
         )
       end
 
@@ -92,7 +93,7 @@ FactoryBot.define do
       city "Chicago"
       state_province "IL"
       country "US"
-      email nil
+      sequence(:email) { |n| "factory-mentor-#{n}@example.com" }
       password nil
       date_of_birth nil
       not_onboarded false
@@ -141,7 +142,18 @@ FactoryBot.define do
 
     trait :on_team do
       after(:create) do |m|
-        team = FactoryBot.create(:team)
+        team = FactoryBot.create(:team, members_count: 0)
+        FactoryBot.create(
+          :team_membership,
+          member: m,
+          team: team
+        )
+      end
+    end
+
+    trait :on_junior_team do
+      after(:create) do |m|
+        team = FactoryBot.create(:team, :junior)
         FactoryBot.create(
           :team_membership,
           member: m,
@@ -171,7 +183,7 @@ FactoryBot.define do
       city "Chicago"
       state_province "IL"
       country "US"
-      email nil
+      sequence(:email) { |n| "factory-ra-#{n}@example.com" }
       password nil
       first_name "RA"
     end
@@ -228,7 +240,7 @@ FactoryBot.define do
     job_title { "Engineer" }
 
     transient do
-      email nil
+      sequence(:email) { |n| "factory-judge-#{n}@example.com" }
       first_name "Judge"
       onboarded false
       virtual true

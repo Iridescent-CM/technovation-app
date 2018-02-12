@@ -5,7 +5,7 @@ RSpec.feature "Student team submissions" do
 
   scenario "Be on a team to see submission link" do
     mentor = FactoryBot.create(:mentor)
-    team_mentor = FactoryBot.create(:mentor, :on_team)
+    team_mentor = FactoryBot.create(:mentor, :on_junior_team)
 
     sign_in(mentor)
 
@@ -23,7 +23,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Confirm submissions are created solely by team students" do
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :on_junior_team)
     sign_in(mentor)
 
     click_link "Start a submission now"
@@ -39,7 +39,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Start the submission from the table of contents" do
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :on_junior_team)
     submission = FactoryBot.create(
       :team_submission,
       team: mentor.teams.first,
@@ -113,7 +113,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "See senior team submission pieces on TOC" do
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :on_junior_team)
     submission = FactoryBot.create(
       :team_submission,
       team: mentor.teams.first,
@@ -158,7 +158,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "See live pitch event submission pieces on TOC" do
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :on_junior_team)
     submission = FactoryBot.create(
       :team_submission,
       team: mentor.teams.first,
