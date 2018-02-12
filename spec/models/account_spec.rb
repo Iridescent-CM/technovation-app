@@ -190,6 +190,16 @@ RSpec.describe Account do
 
       expect(Account.unmatched).not_to include(matched_mentor.account)
     end
+
+    it "excludes mentors with past teams and current teams" do
+      mentor = FactoryBot.create(:mentor, :on_team)
+
+      past_team = FactoryBot.create(:team, members_count: 0)
+      past_team.update_column(:seasons, [Season.current.year - 1])
+      TeamRosterManaging.add(past_team, mentor)
+
+      expect(Account.unmatched).to be_empty
+    end
   end
 
   describe ".parental_consented" do

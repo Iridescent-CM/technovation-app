@@ -121,17 +121,12 @@ class Account < ActiveRecord::Base
   }
 
   scope :unmatched, -> {
-    mentor_ids = unscoped.distinct
-      .left_outer_joins(mentor_profile: :current_teams)
-      .where("mentor_profiles.id IS NOT NULL")
-      .where("teams.id IS NULL").pluck(:id)
-
-    student_ids = unscoped.distinct
-      .left_outer_joins(student_profile: :current_teams)
-      .where("student_profiles.id IS NOT NULL")
-      .where("teams.id IS NULL").pluck(:id)
-
-    where(id: mentor_ids + student_ids)
+    left_outer_joins(:mentor_profile, :student_profile)
+      .where(
+        "mentor_profiles.id IS NOT NULL OR
+        student_profiles.id IS NOT NULL"
+      )
+      .where.not(id: matched.pluck(:id))
   }
 
   scope :parental_consented, ->(*seasons) {
@@ -145,7 +140,10 @@ class Account < ActiveRecord::Base
       .left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
       .where(season_clauses.join(' AND '))
-      .where("parental_consents.status = ?", ParentalConsent.statuses[:signed])
+      .where(
+        "parental_consents.status = ?",
+        ParentalConsent.statuses[:signed]
+      )
   }
 
   scope :not_parental_consented, ->(*seasons) {
