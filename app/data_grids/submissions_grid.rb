@@ -20,9 +20,13 @@ class SubmissionsGrid
     link_to sub.team_name, [current_scope, sub.team]
   end
 
+  column :team_name, html: false
+
   column :app_name, mandatory: true, html: true do |sub|
     link_to sub.app_name, [current_scope, sub]
   end
+
+  column :app_name, html: false
 
   column :city, order: "teams.city" do
     team.city
