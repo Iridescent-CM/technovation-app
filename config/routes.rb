@@ -174,8 +174,8 @@ Rails.application.routes.draw do
     resources :regional_pitch_event_participations,
       only: [:new, :create, :destroy]
 
-    resources :judge_assignments,
-      only: [:new, :create, :destroy]
+    resources :judge_assignments, only: [:new, :create]
+    resource :judge_assignments, only: :destroy
 
     resource :judge_search, only: :show
     resource :judge_list, only: :show

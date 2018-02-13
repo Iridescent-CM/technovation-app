@@ -12,7 +12,9 @@ module RegionalAmbassador
           "#{keyword.split(" ").first}%",
           "#{keyword.split(" ").last}%",
           "#{keyword}%"
-        ).map do |r|
+        )
+        .limit(7)
+        .map do |r|
           {
             id: r.id,
             name: r.full_name,

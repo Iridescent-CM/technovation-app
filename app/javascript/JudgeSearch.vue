@@ -67,19 +67,32 @@
     >
       Selected judges:
 
-      <ul>
-        <li :key="judge.email" v-for="judge in event.selectedJudges">
-          {{ judge.display }}
-        </li>
-      </ul>
+      <table class="judge-list">
+        <tr :key="judge.email" v-for="judge in event.selectedJudges">
+          <td>{{ judge.name }}</td>
 
-      <button
-        class="button button--small button--right"
-        v-if="event.dirty"
-        @click.prevent="saveHandler(event)"
-      >
-        Save judges list
-      </button>
+          <td>{{ judge.email }}</td>
+
+          <td class="judge-list__actions">
+            <img
+              alt="remove"
+              src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+              @click.prevent="removeJudge(judge)"
+            />
+          </td>
+        </tr>
+
+        <tr v-if="event.dirty">
+          <td colspan="3">
+            <button
+              class="button button--small button--right"
+              @click.prevent="saveHandler(event)"
+            >
+              Save judges list
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -102,7 +115,13 @@
       };
     },
 
-    props: ['fetchUrl', 'fetchListUrl', 'event', 'saveHandler'],
+    props: [
+      'fetchUrl',
+      'fetchListUrl',
+      'event',
+      'saveHandler',
+      'removeJudgeHandler',
+    ],
 
     methods: {
       reset () {
@@ -113,6 +132,19 @@
         this.results = [];
         this.resultsIdx = 0;
         this.highlightedResult = null;
+      },
+
+      removeJudge (judge) {
+        var vm = this;
+
+        vm.removeJudgeHandler(vm.event, judge, () => {
+          var idx = vm.event.selectedJudges.findIndex(
+            j => { return j.id === judge.id }
+          );
+
+          if (idx !== -1)
+            vm.event.selectedJudges.splice(idx, 1);
+        });
       },
 
       traverseResultsUp () {
@@ -266,5 +298,30 @@
 
   .button--right {
     float: right;
+  }
+
+  .judge-list {
+    width: 100%;
+
+    .judge-list__actions img {
+      cursor: pointer;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    tr {
+      &:hover,
+      &:hover td {
+        background: none;
+      }
+
+      &:hover {
+        .judge-list__actions img {
+          pointer-events: auto;
+          opacity: 1;
+        }
+      }
+    }
   }
 </style>
