@@ -20,4 +20,8 @@ export default function (event) {
   this.errors = event.errors || {};
 
   this.url = event.url;
+
+  this.managing = false;
+  this.selectedJudges = [];
+  this.dirty = false;
 };

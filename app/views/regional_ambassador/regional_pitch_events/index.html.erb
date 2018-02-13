@@ -13,6 +13,18 @@
             fetch-url="<%= regional_ambassador_regional_pitch_events_path(
               format: :json
             ) %>"
+
+            search-judges-url="<%= regional_ambassador_judge_search_path(
+              format: :json
+            ) %>"
+
+            save-judges-url="<%= regional_ambassador_judge_assignments_path(
+              format: :json
+            ) %>"
+
+            judges-list-url="<%= regional_ambassador_judge_list_path(
+              format: :json
+            ) %>"
           ></events-table>
 
           <event-form

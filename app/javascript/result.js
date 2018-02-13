@@ -1,4 +1,5 @@
 export default function Result (res) {
+  this.id = res.id;
   this.name = res.name;
   this.email = res.email;
   this.highlighted = false;
@@ -30,4 +31,3 @@ export default function Result (res) {
     return this.display.replace(regexp, "<b>$1</b>");
   };
 };
-

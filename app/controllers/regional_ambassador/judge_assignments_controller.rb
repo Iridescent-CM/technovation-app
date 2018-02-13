@@ -1,52 +1,31 @@
 module RegionalAmbassador
   class JudgeAssignmentsController < RegionalAmbassadorController
-    def new
-      @team = Team.in_region(current_ambassador)
-        .includes(:judge_assignments)
-        .find(params.fetch(:team_id))
-
-      @judges = @team.selected_regional_pitch_event.judges
-        .includes(:judge_assignments)
-        .where("judge_profiles.id NOT IN (
-                SELECT judge_assignments.judge_profile_id
-                FROM judge_assignments
-                WHERE judge_assignments.team_id = ?)", @team.id)
-        .order("accounts.first_name")
-
-      @judge_assignment = @team.judge_assignments.build
-    end
-
     def create
-      @team = Team.in_region(current_ambassador).find(assignment_params.fetch(:team_id))
-      event = @team.selected_regional_pitch_event
+      event = current_ambassador.regional_pitch_events
+        .find(assignment_params.fetch(:event_id))
 
-      assignment_params.fetch(:judge_profile_id).reject(&:blank?).each do |id|
-        @judge = event.judges.find(id)
-        @judge_assignment = JudgeAssignment.new(team: @team, judge_profile: @judge)
-        @judge_assignment.save!
+      assignment_params.fetch(:ids).each do |id|
+        judge = JudgeProfile.find(id)
+        event.judges << judge
       end
 
-      if request.xhr?
-        head 200
-      else
-        redirect_to regional_ambassador_regional_pitch_event_path(
-          event,
-          anchor: params[:referring_anchor]
-        ),
-        success: "You assigned #{@team.name} to judges: #{@team.assigned_judge_names.to_sentence}!"
-      end
+      render json: {
+        flash: {
+          success: "Your judge assignments were saved!",
+        },
+      }
     end
 
     def destroy
-      assignment = JudgeAssignment.find(params[:id])
-      assignment.destroy
-      redirect_to "#{params[:http_referer]}##{params[:referring_anchor]}",
-        success: "You removed #{assignment.team_name} from #{assignment.judge_profile_full_name}"
     end
 
     private
     def assignment_params
-      params.require(:judge_assignment).permit(:team_id, judge_profile_id: [])
+      params.require(:judge_assignment)
+        .permit(
+          :event_id,
+          ids: [],
+        )
     end
   end
 end

@@ -3,8 +3,8 @@ module RegionalAmbassador
     def show
       keyword = params.fetch(:keyword) { "" }
 
-      results = JudgeProfile.current
-        .in_region(current_ambassador)
+      results = JudgeProfile
+        .joins(:account)
         .where(
           "accounts.first_name ILIKE ? OR
            accounts.last_name ILIKE ? OR
@@ -12,9 +12,9 @@ module RegionalAmbassador
           "#{keyword.split(" ").first}%",
           "#{keyword.split(" ").last}%",
           "#{keyword}%"
-        )
-        .map do |r|
+        ).map do |r|
           {
+            id: r.id,
             name: r.full_name,
             email: r.email,
           }
