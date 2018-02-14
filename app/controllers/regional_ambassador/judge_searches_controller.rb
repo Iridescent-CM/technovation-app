@@ -27,6 +27,7 @@ module RegionalAmbassador
             "#{keyword.split(" ").last}%",
             "#{keyword}%"
           )
+          .where.not(id: results.pluck(:id))
           .limit(7 - results.count)
       end
 
