@@ -57,3 +57,16 @@ $.rails.showConfirmationDialog = function(link) {
     function() { return; }
   );
 }
+
+function confirmNegativeSwal (opts) {
+  return swal({
+    title: opts.title,
+    text: opts.text,
+    cancelButtonText: "No, go back",
+    confirmButtonText: opts.confirmButtonText,
+    confirmButtonColor: "#D8000C",
+    showCancelButton: true,
+    reverseButtons: true,
+    focusCancel: true,
+  });
+}
