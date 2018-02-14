@@ -31,7 +31,7 @@ RSpec.describe RegionalAmbassador::ParticipantsController do
         country: ["US"],
         state_province: ["IL"],
         season: 2018,
-        season_and_or: :match_any,
+        season_and_or: "match_any",
         column_names: ["city"],
       }).permit(
         :name_email,

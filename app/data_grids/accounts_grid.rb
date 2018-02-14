@@ -246,8 +246,8 @@ class AccountsGrid
     :enum,
     header: "Season options:",
     select: [
-      ["Match any season", :match_any],
-      ["Match all seasons", :match_all],
+      ["Match any season", "match_any"],
+      ["Match all seasons", "match_all"],
     ],
     filter_group: "more-specific" do |_, scope|
     scope
