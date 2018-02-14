@@ -2,7 +2,7 @@
   width: 100%;
   border-collapse: collapse;
 
-  td {
+  > tbody > tr > td {
     padding: 0.5rem;
     border-bottom: 1px solid #999;
     transition: background 0.2s;
