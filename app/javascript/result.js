@@ -2,9 +2,9 @@ export default function Result (res) {
   this.id = res.id;
   this.name = res.name;
   this.email = res.email;
-  this.highlighted = false;
+  this.location = res.location;
 
-  this.display = res.name + " - " + res.email;
+  this.highlighted = false;
 
   this.highlight = () => {
     this.highlighted = true;
@@ -26,8 +26,8 @@ export default function Result (res) {
       !!this.email.match(regexp);
   };
 
-  this.highlightMatch = (query) => {
+  this.highlightMatch = (prop, query) => {
     var regexp = new RegExp("(" + query + ")", "gi");
-    return this.display.replace(regexp, "<b>$1</b>");
+    return this[prop].replace(regexp, "<b>$1</b>");
   };
 };

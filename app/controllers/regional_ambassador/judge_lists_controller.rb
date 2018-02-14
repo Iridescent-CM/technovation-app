@@ -4,15 +4,7 @@ module RegionalAmbassador
       event = current_ambassador.regional_pitch_events
         .find(params.fetch(:event_id))
 
-      judges = event.judges.map do |judge|
-        {
-          id: judge.id,
-          name: judge.full_name,
-          email: judge.email,
-        }
-      end
-
-      render json: judges
+      render json: event.judges.map(&:to_search_json)
     end
   end
 end

@@ -78,6 +78,19 @@ class JudgeProfile < ActiveRecord::Base
     end
   end
 
+  def to_search_json
+    {
+      id: id,
+      name: full_name,
+      email: email,
+      location: [
+        city,
+        state_province,
+        country,
+      ].join(", ")
+    }
+  end
+
   def complete_training!
     update_column(:completed_training_at, Time.current)
   end

@@ -1,20 +1,33 @@
 <template>
   <div id="add-judges">
-    <label>
-      Find judges to assign
+    <div class="grid">
+      <div class="grid__col-4">
+        <input
+          ref="judgeSearch"
+          class="autocomplete-input"
+          type="text"
+          placeholder="Search for judges"
+          @input="generateResults"
+          @keyup.up.prevent="traverseResultsUp"
+          @keyup.down.prevent="traverseResultsDown"
+          @keyup.enter.prevent="selectHighlighted"
+          @keyup.esc="reset"
+          v-model="query"
+        />
+      </div>
 
-      <input
-        ref="judgeSearch"
-        class="autocomplete-input"
-        type="text"
-        @input="generateResults"
-        @keyup.up.prevent="traverseResultsUp"
-        @keyup.down.prevent="traverseResultsDown"
-        @keyup.enter.prevent="selectHighlighted"
-        @keyup.esc="reset"
-        v-model="query"
-      />
-    </label>
+      <div class="grid__col-auto">
+        <p>
+          <button
+            class="button button--small"
+            @click.prevent="saveHandler(event)"
+            v-if="event.dirty"
+          >
+            Save selected judges
+          </button>
+        </p>
+      </div>
+    </div>
 
     <div class="grid__cell--padding-sm" v-if="loading">
       <i class="icon-spinner2 icon--spin"></i>
@@ -45,34 +58,39 @@
       </button>
     </div>
 
-    <ul
+    <table
       class="autocomplete-list"
       v-else
     >
-      <li
+      <tr
         :class="[
           'autocomplete-list__result',
           result.highlightedClass(),
         ]"
         @mouseover="resultsIdx = idx"
         @click="selectHighlighted"
-        v-html="result.highlightMatch(query)"
         v-for="(result, idx) in results"
-      ></li>
-    </ul>
+      >
+        <td
+          v-html="result.highlightMatch('name', query)"
+        ></td>
+
+        <td
+          v-html="result.highlightMatch('email', query)"
+        ></td>
+
+        <td>{{ result.location }}</td>
+      </tr>
+    </table>
 
     <div
       class="grid__cell--padding-sm"
       v-if="event.selectedJudges.length"
     >
-      Selected judges:
+      <h6>Selected judges</h6>
 
       <table class="judge-list">
         <tr :key="judge.email" v-for="judge in event.selectedJudges">
-          <td>{{ judge.name }}</td>
-
-          <td>{{ judge.email }}</td>
-
           <td class="judge-list__actions">
             <img
               alt="remove"
@@ -80,17 +98,14 @@
               @click.prevent="removeJudge(judge)"
             />
           </td>
-        </tr>
 
-        <tr v-if="event.dirty">
-          <td colspan="3">
-            <button
-              class="button button--small button--right"
-              @click.prevent="saveHandler(event)"
-            >
-              Save judges list
-            </button>
+          <td>{{ judge.name }}</td>
+
+          <td>
+            <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
           </td>
+
+          <td>{{ judge.location }}</td>
         </tr>
       </table>
     </div>
@@ -137,13 +152,23 @@
       removeJudge (judge) {
         var vm = this;
 
-        vm.removeJudgeHandler(vm.event, judge, () => {
-          var idx = vm.event.selectedJudges.findIndex(
-            j => { return j.id === judge.id }
-          );
+        confirmNegativeSwal({
+          title: "Remove this judge from " + vm.event.name + "? ",
+          text: judge.name + " - " + judge.email,
+          confirmButtonText: "Yes, remove this judge",
+        }).then((result) => {
+          if (result.value) {
+            vm.removeJudgeHandler(vm.event, judge, () => {
+              var idx = vm.event.selectedJudges.findIndex(
+                j => { return j.id === judge.id }
+              );
 
-          if (idx !== -1)
-            vm.event.selectedJudges.splice(idx, 1);
+              if (idx !== -1)
+                vm.event.selectedJudges.splice(idx, 1);
+            });
+          } else {
+            return;
+          }
         });
       },
 
@@ -274,52 +299,81 @@
 <style lang="scss" scoped>
   .autocomplete-input {
     margin-bottom: 0;
+    margin-right: 1rem;
   }
 
   .autocomplete-list {
-    list-style: none;
-    margin: 0;
+    margin: -1.25rem 0 0 1.2rem;
     padding: 0;
-    border: solid rgba(0, 0, 0, 0.2);
+    border-collapse: collapse;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-    border-width: 0 1px;
 
     .autocomplete-list__result {
-      padding: 0.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      transition: background-color 0.1s;
+
+      td {
+        padding: 0.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        transition: background-color 0.1s;
+
+        &:first-child,
+        &:nth-child(2) {
+          max-width: 300px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
 
       &.autocomplete-list__result--highlighted {
-        background: #93bcff;
+        td {
+          background: #93bcff;
+        }
       }
     }
   }
 
-  .button--right {
-    float: right;
+  input[type=text] {
+    max-width: 300px;
   }
 
   .judge-list {
     width: 100%;
 
-    .judge-list__actions img {
-      cursor: pointer;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
+    .judge-list__actions {
+      text-align: right;
+
+      img {
+        cursor: pointer;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
     }
 
     tr {
+      td {
+        padding: 0.25rem;
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          max-width: 300px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
       &:hover,
       &:hover td {
         background: none;
       }
 
       &:hover {
-        .judge-list__actions img {
-          pointer-events: auto;
-          opacity: 1;
+        .judge-list__actions {
+          img {
+            pointer-events: auto;
+            opacity: 1;
+          }
         }
       }
     }

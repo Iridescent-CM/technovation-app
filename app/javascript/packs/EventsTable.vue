@@ -155,17 +155,26 @@
 
     mounted () {
       EventBus.$on("removeEvent", (event) => {
-        $.ajax({
-          method: "DELETE",
-          url: event.url,
-          success: () => {
-            var idx = this.events.findIndex(
-              e => { return e.id === event.id }
-            );
+        confirmNegativeSwal({
+          text: "Delete this event? " + event.name,
+          confirmButtonText: "Yes, delete this event",
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              method: "DELETE",
+              url: event.url,
+              success: () => {
+                var idx = this.events.findIndex(
+                  e => { return e.id === event.id }
+                );
 
-            if (idx !== -1)
-              this.events.splice(idx, 1);
-          },
+                if (idx !== -1)
+                  this.events.splice(idx, 1);
+              },
+            });
+          } else {
+            return;
+          }
         });
       });
 
