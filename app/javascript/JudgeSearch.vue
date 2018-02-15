@@ -16,12 +16,14 @@
         />
       </div>
 
-      <div class="grid__col-auto">
+      <div
+        class="grid__col-auto"
+        v-if="newJudgesToSave"
+      >
         <p>
           <button
             class="button button--small"
             @click.prevent="saveHandler(event)"
-            v-if="event.dirty"
           >
             Save selected judges
           </button>
@@ -40,7 +42,7 @@
         class="button button--small button--error"
         @click="reset"
       >
-        Reset and try again
+        Reset search and try again
       </button>
     </div>
 
@@ -54,7 +56,7 @@
         class="button button--small"
         @click="reset"
       >
-        Reset and try again
+        Reset search and try again
       </button>
     </div>
 
@@ -84,30 +86,43 @@
     </table>
 
     <div
-      class="grid__cell--padding-sm"
+      class="grid"
       v-if="event.selectedJudges.length"
     >
-      <h6>Selected judges</h6>
+      <div class="grid__col-12">
+        <h6 class="heading--reset">Selected judges</h6>
+      </div>
 
-      <table class="judge-list">
-        <tr :key="judge.email" v-for="judge in event.selectedJudges">
-          <td class="judge-list__actions">
-            <img
-              alt="remove"
-              src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-              @click.prevent="removeJudge(judge)"
-            />
-          </td>
+      <div class="grid__col-12 grid__col--bleed-y">
+        <table class="judge-list">
+          <tr :key="judge.email" v-for="judge in event.selectedJudges">
+            <td>
+              <div class="judge-list__actions">
+                <img
+                  alt="remove"
+                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+                  @click.prevent="removeJudge(judge)"
+                />
+              </div>
 
-          <td>{{ judge.name }}</td>
+              {{ judge.name }}
+            </td>
 
-          <td>
-            <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
-          </td>
+            <td>
+              <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+            </td>
 
-          <td>{{ judge.location }}</td>
-        </tr>
-      </table>
+            <td>{{ judge.location }}</td>
+
+            <td v-if="judge.recentlyAdded">
+              <label class="label--reset">
+                <input type="checkbox" v-model="judge.sendInvitation" />
+                Send invite
+              </label>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -115,7 +130,7 @@
 <script>
   import _ from 'lodash';
 
-  import Result from './result';
+  import Judge from './Judge';
 
   export default {
     data () {
@@ -222,7 +237,7 @@
         this.results = [];
 
         [].forEach.call(resp, (result) => {
-          this.results.push(new Result(result));
+          this.results.push(new Judge(result));
         });
 
         this.loading = false;
@@ -236,8 +251,7 @@
       },
 
       selectHighlighted () {
-        this.event.selectedJudges.push(this.highlightedResult);
-        this.event.dirty = true;
+        this.event.addJudge(this.highlightedResult);
         this.reset();
       },
 
@@ -247,6 +261,11 @@
     },
 
     computed: {
+      newJudgesToSave () {
+        return _.some(this.event.selectedJudges, (judge) => {
+          return judge.recentlyAdded;
+        });
+      },
     },
 
     watch: {
@@ -281,11 +300,9 @@
 
         success: (resp) => {
           _.each(resp, (result) => {
-            var judge = new Result(result);
+            var judge = new Judge(result);
             vm.event.selectedJudges.push(judge)
           });
-
-          vm.event.dirty = false;
         },
 
         error: (err) => {
@@ -340,8 +357,14 @@
   .judge-list {
     width: 100%;
 
+    td {
+      position: relative;
+    }
+
     .judge-list__actions {
-      text-align: right;
+      position: absolute;
+      top: 0.25rem;
+      left: -1rem;
 
       img {
         cursor: pointer;

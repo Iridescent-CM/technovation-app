@@ -13,6 +13,10 @@ label {
       display: none;
     }
   }
+
+  &.label--reset {
+    text-transform: none;
+  }
 }
 
 input[type="checkbox"],

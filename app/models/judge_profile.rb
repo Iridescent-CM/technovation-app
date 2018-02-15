@@ -87,7 +87,7 @@ class JudgeProfile < ActiveRecord::Base
         city,
         state_province,
         country,
-      ].join(", ")
+      ].join(", "),
     }
   end
 

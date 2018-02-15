@@ -1,10 +1,17 @@
-export default function Result (res) {
+export default function Judge (res) {
   this.id = res.id;
   this.name = res.name;
   this.email = res.email;
   this.location = res.location;
 
   this.highlighted = false;
+  this.sendInvitation = false;
+  this.recentlyAdded = false;
+
+  this.prepareToInvite = (event) => {
+    this.recentlyAdded = true;
+    this.sendInvitation = true;
+  };
 
   this.highlight = () => {
     this.highlighted = true;

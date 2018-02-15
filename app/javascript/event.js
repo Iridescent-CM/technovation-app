@@ -23,5 +23,9 @@ export default function (event) {
 
   this.managing = false;
   this.selectedJudges = [];
-  this.dirty = false;
+
+  this.addJudge = (judge) => {
+    judge.prepareToInvite();
+    this.selectedJudges.push(judge);
+  };
 };

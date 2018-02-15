@@ -107,7 +107,6 @@
           processData: false,
 
           success: (resp) => {
-            event.dirty = false;
             callback();
           },
 
@@ -134,7 +133,6 @@
           processData: false,
 
           success: (resp) => {
-            event.dirty = false;
           },
 
           error: (err) => {
