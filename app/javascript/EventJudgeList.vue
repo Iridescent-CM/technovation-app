@@ -9,7 +9,9 @@
       class="grid__col-12 grid__col-bleed-y"
       v-if="event.selectedJudges.length"
     >
-      <h6 class="heading--reset">Selected judges</h6>
+      <h6 class="heading--reset">
+        Selected judges <span>({{ this.event.selectedJudges.length }})</span>
+      </h6>
     </div>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -19,7 +21,7 @@
           :key="judge.email"
           v-for="judge in event.selectedJudges"
         >
-          <td>
+          <td class="medium-width">
             <div class="judge-list__actions">
               <img
                 alt="remove"
@@ -28,11 +30,15 @@
               />
             </div>
 
-            {{ judge.name }}
+            <div class="cutoff-with-ellipsis">
+              {{ judge.name }}
+            </div>
           </td>
 
-          <td>
-            <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+          <td class="medium-width">
+            <div class="cutoff-with-ellipsis">
+              <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+            </div>
           </td>
 
           <td>{{ judge.location }}</td>
@@ -199,17 +205,15 @@
 <style lang="scss" scoped>
   .judge-list {
     width: 100%;
-
-    td {
-      position: relative;
-    }
+    table-layout: fixed;
 
     .judge-list__actions {
-      position: absolute;
-      top: 0.25rem;
-      left: -1rem;
+      position: relative;
 
       img {
+        position: absolute;
+        top: 0.25rem;
+        left: -1rem;
         cursor: pointer;
         pointer-events: none;
         opacity: 0;
@@ -230,12 +234,6 @@
       td {
         padding: 0.25rem;
 
-        &:nth-child(2),
-        &:nth-child(3) {
-          max-width: 300px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
       }
 
       &:hover,
@@ -256,5 +254,18 @@
 
   .align-right {
     text-align: right;
+  }
+
+  .medium-width {
+    width: 225px;
+  }
+
+  .cutoff-with-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  h6 span {
+    font-weight: normal;
   }
 </style>
