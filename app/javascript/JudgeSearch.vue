@@ -73,7 +73,9 @@
           <tr
             :class="[
               'autocomplete-list__result',
-              result.highlightedClass(),
+              result.highlighted ?
+                'autocomplete-list__result--highlighted' :
+                '',
             ]"
             @mouseover="resultsIdx = idx"
             @click="selectHighlighted"
@@ -117,7 +119,25 @@
       'excludeIds',
     ],
 
+    watch: {
+      resultsIdx () {
+        this.highlightResult(this.results[this.resultsIdx]);
+      },
+    },
+
     methods: {
+      highlightResult (result) {
+        this.unhighlightAll();
+
+        if (!result)
+          result = this.results[0];
+
+        if (!!result) {
+          result.highlight();
+          this.highlightedResult = result;
+        }
+      },
+
       reset () {
         this.loading = false;
         this.error = false;
@@ -186,7 +206,7 @@
         });
 
         this.loading = false;
-        this.highlightedResult = this.results[this.resultsIdx];
+        this.highlightResult(this.results[this.resultsIdx]);
       },
 
       indicateError (resp) {

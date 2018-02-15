@@ -155,22 +155,6 @@
       },
     },
 
-    watch: {
-      highlightedResult (current) {
-        this.unhighlightAll();
-
-        if (!!current) {
-          this.highlightedResult.highlight();
-        } else {
-          this.highlightedResult = this.results[0];
-        }
-      },
-
-      resultsIdx () {
-        this.highlightedResult = this.results[this.resultsIdx];
-      },
-    },
-
     components: {
       App,
       JudgeSearch,

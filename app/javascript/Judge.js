@@ -21,11 +21,6 @@ export default function Judge (res) {
     this.highlighted = false;
   };
 
-  this.highlightedClass = () => {
-    if (this.highlighted)
-      return "autocomplete-list__result--highlighted"
-  };
-
   this.match = (pattern) => {
     var regexp = new RegExp(pattern, "i");
 
