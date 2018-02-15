@@ -34,4 +34,10 @@ export default function (event) {
   this.selectedJudgeIds = () => {
     return _.map(this.selectedJudges, (j) => { return j.id; });
   };
+
+  this.afterSave = () => {
+    _.each(this.selectedJudges, (judge) => {
+      judge.afterAssign();
+    });
+  };
 };

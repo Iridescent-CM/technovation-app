@@ -136,6 +136,7 @@
           processData: false,
 
           success: (resp) => {
+            this.event.afterSave();
           },
 
           error: (err) => {

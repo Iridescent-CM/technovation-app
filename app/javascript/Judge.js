@@ -37,4 +37,9 @@ export default function Judge (res) {
     var regexp = new RegExp("(" + query + ")", "gi");
     return this[prop].replace(regexp, "<b>$1</b>");
   };
+
+  this.afterAssign = () => {
+    this.recentlyAdded = false;
+    this.sendInvitation = false;
+  };
 };
