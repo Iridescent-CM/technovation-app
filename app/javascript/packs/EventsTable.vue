@@ -52,10 +52,9 @@
           <td colspan="5">
             <event-judge-list
               :event="event"
-              :saveHandler="saveJudgeAssignments"
-              :removeJudgeHandler="removeJudgeAssignment"
               :fetchListUrl="judgesListUrl"
               :fetchUrl="searchJudgesUrl"
+              :saveJudgesUrl="saveJudgesUrl"
             ></event-judge-list>
           </td>
         </tr>
@@ -93,54 +92,6 @@
     },
 
     methods: {
-      removeJudgeAssignment (event, judge, callback) {
-        var form = new FormData();
-
-        form.append("judge_assignment[judge_id]", judge.id);
-        form.append("judge_assignment[event_id]", event.id);
-
-        $.ajax({
-          method: "DELETE",
-          url: this.saveJudgesUrl,
-          data: form,
-          contentType: false,
-          processData: false,
-
-          success: (resp) => {
-            callback();
-          },
-
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      },
-
-      saveJudgeAssignments (event) {
-        var form = new FormData();
-
-        _.each(event.selectedJudges, (judge) => {
-          form.append("judge_assignment[judge_ids][]", judge.id);
-        });
-
-        form.append("judge_assignment[event_id]", event.id);
-
-        $.ajax({
-          method: "POST",
-          url: this.saveJudgesUrl,
-          data: form,
-          contentType: false,
-          processData: false,
-
-          success: (resp) => {
-          },
-
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      },
-
       editEvent (event) {
         EventBus.$emit("editEvent", event);
         event.managing = false;

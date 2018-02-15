@@ -54,7 +54,7 @@
       <p>
         <button
           class="button button--small"
-          @click.prevent="saveHandler(event)"
+          @click.prevent="saveJudgeAssignments"
         >
           Save selected judges
         </button>
@@ -74,9 +74,8 @@
     props: [
       'fetchUrl',
       'fetchListUrl',
+      'saveJudgesUrl',
       'event',
-      'saveHandler',
-      'removeJudgeHandler',
     ],
 
     methods: {
@@ -89,19 +88,62 @@
           confirmButtonText: "Yes, remove this judge",
         }).then((result) => {
           if (result.value) {
-            vm.removeJudgeHandler(vm.event, judge, () => {
-              var idx = vm.event.selectedJudges.findIndex(
-                j => { return j.id === judge.id }
-              );
+            var form = new FormData();
 
-              if (idx !== -1)
-                vm.event.selectedJudges.splice(idx, 1);
+            form.append("judge_assignment[judge_id]", judge.id);
+            form.append("judge_assignment[event_id]", vm.event.id);
+
+            $.ajax({
+              method: "DELETE",
+              url: this.saveJudgesUrl,
+              data: form,
+              contentType: false,
+              processData: false,
+
+              success: (resp) => {
+                var idx = vm.event.selectedJudges.findIndex(
+                  j => { return j.id === judge.id }
+                );
+
+                if (idx !== -1)
+                  vm.event.selectedJudges.splice(idx, 1);
+              },
+
+              error: (err) => {
+                console.log(err);
+              },
             });
           } else {
             return;
           }
         });
       },
+
+      saveJudgeAssignments () {
+        var form = new FormData();
+
+        _.each(this.event.selectedJudges, (judge) => {
+          form.append("judge_assignment[judge_ids][]", judge.id);
+        });
+
+        form.append("judge_assignment[event_id]", this.event.id);
+
+        $.ajax({
+          method: "POST",
+          url: this.saveJudgesUrl,
+          data: form,
+          contentType: false,
+          processData: false,
+
+          success: (resp) => {
+          },
+
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      },
+
     },
 
     computed: {
