@@ -1,128 +1,150 @@
 <template>
-  <div id="add-judges">
-    <div class="grid">
-      <div class="grid__col-4">
-        <input
-          ref="judgeSearch"
-          class="autocomplete-input"
-          type="text"
-          placeholder="Search for judges"
-          @input="generateResults"
-          @keyup.up.prevent="traverseResultsUp"
-          @keyup.down.prevent="traverseResultsDown"
-          @keyup.enter.prevent="selectHighlighted"
-          @keyup.esc="reset"
-          v-model="query"
-        />
-      </div>
-
-      <div
-        class="grid__col-auto"
-        v-if="newJudgesToSave"
-      >
-        <p>
-          <button
-            class="button button--small"
-            @click.prevent="saveHandler(event)"
-          >
-            Save selected judges
-          </button>
-        </p>
-      </div>
-    </div>
-
-    <div class="grid__cell--padding-sm" v-if="loading">
-      <i class="icon-spinner2 icon--spin"></i>
-    </div>
-
-    <div class="notice notice--error" v-else-if="error">
-      Sorry, there was an error on the server
-
-      <button
-        class="button button--small button--error"
-        @click="reset"
-      >
-        Reset search and try again
-      </button>
+  <div class="grid">
+    <div class="grid__col-4 grid__col--bleed-y">
+      <input
+        ref="judgeSearch"
+        class="autocomplete-input"
+        type="text"
+        placeholder="Search for judges"
+        @input="generateResults"
+        @keyup.up.prevent="traverseResultsUp"
+        @keyup.down.prevent="traverseResultsDown"
+        @keyup.enter.prevent="selectHighlighted"
+        @keyup.esc="reset"
+        v-model="query"
+      />
     </div>
 
     <div
-      class="notice notice--info"
+      class="
+        grid__col-8
+        notice
+        notice--error
+        notice--thin
+      "
+      v-if="error"
+    >
+      <p>
+        Sorry, there was an error on the server
+
+        <button
+          class="button button--small button--error"
+          @click="reset"
+        >
+          Reset search and try again
+        </button>
+      </p>
+    </div>
+
+    <div
+      class="
+        grid__col-8
+        notice
+        notice--info
+        notice--thin
+      "
       v-else-if="searched && !results.length"
     >
-      No results found...
+      <p>
+        No results found...
 
-      <button
-        class="button button--small"
-        @click="reset"
-      >
-        Reset search and try again
-      </button>
+        <button
+          class="button button--small"
+          @click="reset"
+        >
+          Reset search and try again
+        </button>
+      </p>
     </div>
 
-    <table
-      class="autocomplete-list"
-      v-else
-    >
-      <tr
-        :class="[
-          'autocomplete-list__result',
-          result.highlightedClass(),
-        ]"
-        @mouseover="resultsIdx = idx"
-        @click="selectHighlighted"
-        v-for="(result, idx) in results"
-      >
-        <td
-          v-html="result.highlightMatch('name', query)"
-        ></td>
+    <div class="grid__col-12" v-if="loading">
+      <p>
+        <i class="icon-spinner2 icon--spin"></i>
+      </p>
+    </div>
 
-        <td
-          v-html="result.highlightMatch('email', query)"
-        ></td>
-
-        <td>{{ result.location }}</td>
-      </tr>
-    </table>
 
     <div
-      class="grid"
+      class="grid__col-12 grid__col--bleed-y"
+      v-else
+    >
+      <table class="autocomplete-list">
+        <tr
+          :class="[
+            'autocomplete-list__result',
+            result.highlightedClass(),
+          ]"
+          @mouseover="resultsIdx = idx"
+          @click="selectHighlighted"
+          v-for="(result, idx) in results"
+        >
+          <td
+            v-html="result.highlightMatch('name', query)"
+          ></td>
+
+          <td
+            v-html="result.highlightMatch('email', query)"
+          ></td>
+
+          <td>{{ result.location }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div
+      class="grid__col-12 grid__col-bleed-y"
       v-if="event.selectedJudges.length"
     >
-      <div class="grid__col-12">
-        <h6 class="heading--reset">Selected judges</h6>
-      </div>
+      <h6 class="heading--reset">Selected judges</h6>
+    </div>
 
-      <div class="grid__col-12 grid__col--bleed-y">
-        <table class="judge-list">
-          <tr :key="judge.email" v-for="judge in event.selectedJudges">
-            <td>
-              <div class="judge-list__actions">
-                <img
-                  alt="remove"
-                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-                  @click.prevent="removeJudge(judge)"
-                />
-              </div>
+    <div class="grid__col-12 grid__col--bleed-y">
+      <table class="judge-list">
+        <tr
+          :class="judge.recentlyAdded ? 'table-row--new' : ''"
+          :key="judge.email"
+          v-for="judge in event.selectedJudges"
+        >
+          <td>
+            <div class="judge-list__actions">
+              <img
+                alt="remove"
+                src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+                @click.prevent="removeJudge(judge)"
+              />
+            </div>
 
-              {{ judge.name }}
-            </td>
+            {{ judge.name }}
+          </td>
 
-            <td>
-              <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
-            </td>
+          <td>
+            <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+          </td>
 
-            <td>{{ judge.location }}</td>
+          <td>{{ judge.location }}</td>
 
-            <td v-if="judge.recentlyAdded">
-              <label class="label--reset">
-                <input type="checkbox" v-model="judge.sendInvitation" />
-                Send invite
-              </label>
-            </td>
-          </tr>
-        </table>
-      </div>
+          <td v-if="judge.recentlyAdded">
+            <label class="label--reset">
+              <input type="checkbox" v-model="judge.sendInvitation" />
+              Send invite
+            </label>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div
+      class="grid__col-12 align-right"
+      v-if="newJudgesToSave"
+    >
+      <p>
+        <button
+          class="button button--small"
+          @click.prevent="saveHandler(event)"
+        >
+          Save selected judges
+        </button>
+      </p>
     </div>
   </div>
 </template>
@@ -223,7 +245,15 @@
       },
 
       performRemoteSearch () {
-        var url = this.fetchUrl + "?keyword=" + this.query;
+        var existingIds = _.map(
+          this.event.selectedJudges,
+          (j) => { return j.id; }
+        ),
+            url = this.fetchUrl + "?keyword=" + this.query;
+
+        _.each(existingIds, (id) => {
+          url += "&except_ids[]=" + id;
+        });
 
         $.ajax({
           method: "GET",
@@ -320,7 +350,7 @@
   }
 
   .autocomplete-list {
-    margin: -1.25rem 0 0 1.2rem;
+    margin: 0 0 1rem;
     padding: 0;
     border-collapse: collapse;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -375,6 +405,15 @@
     }
 
     tr {
+      &.table-row--new {
+        background: rgba(255, 255, 0, 0.2);
+
+        &:hover,
+        &:hover td {
+          background: rgba(255, 255, 0, 0.2);
+        }
+      }
+
       td {
         padding: 0.25rem;
 
@@ -400,5 +439,9 @@
         }
       }
     }
+  }
+
+  .align-right {
+    text-align: right;
   }
 </style>

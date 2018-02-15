@@ -14,6 +14,7 @@ module RegionalAmbassador
           "#{keyword.split(" ").last}%",
           "#{keyword}%"
         )
+        .where.not(id: params[:except_ids])
         .limit(7)
 
       if results.count < 7
@@ -27,7 +28,7 @@ module RegionalAmbassador
             "#{keyword.split(" ").last}%",
             "#{keyword}%"
           )
-          .where.not(id: results.pluck(:id))
+          .where.not(id: results.pluck(:id) + params[:except_ids].to_a)
           .limit(7 - results.count)
       end
 

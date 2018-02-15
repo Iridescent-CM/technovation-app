@@ -28,4 +28,8 @@
   &.notice--alert {
     @extend .flash--error;
   }
+
+  &.notice--thin {
+    padding: 0.25rem;
+  }
 }
