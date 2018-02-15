@@ -50,13 +50,13 @@
           v-if="event.managing"
         >
           <td colspan="5">
-            <judge-search
+            <event-judge-list
               :event="event"
               :saveHandler="saveJudgeAssignments"
               :removeJudgeHandler="removeJudgeAssignment"
               :fetchListUrl="judgesListUrl"
               :fetchUrl="searchJudgesUrl"
-            ></judge-search>
+            ></event-judge-list>
           </td>
         </tr>
       </template>
@@ -67,10 +67,10 @@
 <script>
   import _ from "lodash";
 
-  import EventBus from '../event_bus';
+  import EventBus from '../EventBus';
   import Event from '../event';
 
-  import JudgeSearch from '../JudgeSearch';
+  import EventJudgeList from '../EventJudgeList';
 
   export default {
     name: "events-table",
@@ -89,7 +89,7 @@
     },
 
     components: {
-      JudgeSearch,
+      EventJudgeList,
     },
 
     methods: {

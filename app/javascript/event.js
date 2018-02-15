@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export default function (event) {
   this.id = event.id || "";
 
@@ -27,5 +29,9 @@ export default function (event) {
   this.addJudge = (judge) => {
     judge.prepareToInvite();
     this.selectedJudges.push(judge);
+  };
+
+  this.selectedJudgeIds = () => {
+    return _.map(this.selectedJudges, (j) => { return j.id; });
   };
 };

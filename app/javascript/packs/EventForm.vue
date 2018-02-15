@@ -119,7 +119,7 @@
   import FlatpickrInput from "./FlatpickrInput";
   import Errors from '../errors';
   import Event from '../event';
-  import EventBus from '../event_bus';
+  import EventBus from '../EventBus';
 
   export default {
     name: "event-form",
