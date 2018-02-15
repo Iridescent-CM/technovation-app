@@ -35,6 +35,7 @@ module RegionalAmbassador
       judge = JudgeProfile.find(assignment_params.fetch(:judge_id))
 
       event.judges.destroy(judge)
+      JudgeMailer.notify_removed_from_event(judge.id, event.id).deliver_later
 
       render json: {
         flash: {

@@ -62,6 +62,7 @@ function confirmNegativeSwal (opts) {
   return swal({
     title: opts.title,
     text: opts.text,
+    html: opts.html,
     cancelButtonText: "No, go back",
     confirmButtonText: opts.confirmButtonText,
     confirmButtonColor: "#D8000C",

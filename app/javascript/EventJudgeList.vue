@@ -97,7 +97,8 @@
 
         confirmNegativeSwal({
           title: "Remove this judge from " + vm.event.name + "? ",
-          text: judge.name + " - " + judge.email,
+          html: judge.name + " - " + judge.email +
+                "<small>an email will be sent</small>",
           confirmButtonText: "Yes, remove this judge",
         }).then((result) => {
           if (result.value) {
