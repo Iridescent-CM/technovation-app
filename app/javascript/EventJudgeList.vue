@@ -135,8 +135,16 @@
       saveJudgeAssignments () {
         var form = new FormData();
 
-        _.each(this.event.selectedJudges, (judge) => {
-          form.append("judge_assignment[judge_ids][]", judge.id);
+        _.each(this.event.selectedJudges, (judge, idx) => {
+          form.append(
+            `judge_assignment[judge_ids][${idx}][]id`,
+            judge.id
+          )
+
+          form.append(
+            `judge_assignment[judge_ids][${idx}][]send_invite`,
+            judge.sendInvitation
+          );
         });
 
         form.append("judge_assignment[event_id]", this.event.id);
@@ -157,7 +165,6 @@
           },
         });
       },
-
     },
 
     computed: {

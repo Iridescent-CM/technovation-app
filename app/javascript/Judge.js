@@ -9,7 +9,7 @@ export default function Judge (res) {
   this.recentlyAdded = false;
   this.recentlyInvited = false;
 
-  this.prepareToInvite = (event) => {
+  this.prepareToBeInvited = (event) => {
     this.recentlyAdded = true;
     this.sendInvitation = true;
   };

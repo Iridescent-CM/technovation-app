@@ -27,7 +27,7 @@ export default function (event) {
   this.selectedJudges = [];
 
   this.addJudge = (judge) => {
-    judge.prepareToInvite();
+    judge.prepareToBeInvited();
     this.selectedJudges.push(judge);
   };
 

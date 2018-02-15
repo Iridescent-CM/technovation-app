@@ -203,6 +203,8 @@ Rails.application.routes.draw do
 
     resources :consent_waivers, only: [:new, :create, :show]
     resource :survey_answers, except: [:index, :destroy]
+
+    resources :regional_pitch_events, only: :show
   end
 
   namespace :admin do

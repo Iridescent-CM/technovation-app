@@ -4,8 +4,20 @@ module RegionalAmbassador
       event = current_ambassador.regional_pitch_events
         .find(assignment_params.fetch(:event_id))
 
-      assignment_params.fetch(:judge_ids).each do |id|
-        judge = JudgeProfile.find(id)
+      judge_params = assignment_params.fetch(:judge_ids)
+
+      judge_params.each do |_, par|
+        opts = par.first
+        # params come in strange
+        # FIXME in EventJudgeList.vue#saveJudgeAssignments form appending...
+
+        judge = JudgeProfile.find(opts[:id])
+
+        if "true" == opts[:send_invite]
+          # FIXME
+          JudgeMailer.invite_to_event(judge.id, event.id).deliver_later
+        end
+
         event.judges << judge
       end
 
@@ -37,7 +49,7 @@ module RegionalAmbassador
         .permit(
           :event_id,
           :judge_id,
-          judge_ids: [],
+          judge_ids: {},
         )
     end
   end
