@@ -1,65 +1,26 @@
 <template>
   <div class="grid__col-12 grid__col--bleed">
     <div class="search-components grid">
-      <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-if="loading || !!results.length"
-      >
-        <div class="autocomplete-list">
-          <div
-            class="grid__cell--padding-sm"
-            v-if="loading"
-          >
-            <p>
-              <i class="icon-spinner2 icon--spin"></i>
-            </p>
-          </div>
-
-          <table>
-            <tr
-             :class="[
-             'autocomplete-list__result',
-             result.highlighted ?
-             'autocomplete-list__result--highlighted' :
-             '',
-             ]"
-             @mouseover="resultsIdx = idx"
-             @click="selectHighlighted"
-             v-for="(result, idx) in results"
-             >
-             <td
-             v-html="result.highlightMatch('name', query)"
-             ></td>
-
-             <td
-             v-html="result.highlightMatch('email', query)"
-             ></td>
-
-             <td>{{ result.location }}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
       <div class="grid__col-4 grid__col--bleed-y">
-        <input
-          ref="judgeSearch"
-          class="autocomplete-input"
-          type="text"
-          placeholder="Search by name or email"
-          v-show="activelySearching || !excludeIds.length"
-          @input="generateResults"
-          @keyup.up.prevent="traverseResultsUp"
-          @keyup.down.prevent="traverseResultsDown"
-          @keyup.enter.prevent="selectHighlighted"
-          @keyup.esc="reset"
-          v-model="query"
-        />
+          <p v-show="activelySearching">
+          <input
+            ref="judgeSearch"
+            class="autocomplete-input"
+            type="text"
+            placeholder="Search by name or email"
+            @input="generateResults"
+            @keyup.up.prevent="traverseResultsUp"
+            @keyup.down.prevent="traverseResultsDown"
+            @keyup.enter.prevent="selectHighlighted"
+            @keyup.esc="reset"
+            v-model="query"
+          />
+        </p>
 
         <p v-show="!activelySearching">
           <button
             class="button button--small button--remove-bg"
-            @click.prevent="activelySearching = true"
+            @click.prevent="searching = true"
           >+ Add judges</button>
         </p>
       </div>
@@ -105,6 +66,47 @@
           </button>
         </p>
       </div>
+
+      <div
+
+        class="grid__col-12"
+        v-if="loading || !!results.length"
+      >
+        <div class="autocomplete-list">
+          <div
+            class="grid__cell--padding-sm"
+            v-if="loading"
+          >
+            <p>
+              <i class="icon-spinner2 icon--spin"></i>
+            </p>
+          </div>
+
+          <table>
+            <tr
+             :class="[
+               'autocomplete-list__result',
+               resultsIdx === idx ?
+                'autocomplete-list__result--highlighted' : '',
+             ]"
+             @mouseover="resultsIdx = idx"
+             @click="selectHighlighted(idx)"
+             v-for="(result, idx) in results"
+             >
+             <td
+             v-html="result.highlightMatch('name', query)"
+             ></td>
+
+             <td
+             v-html="result.highlightMatch('email', query)"
+             ></td>
+
+             <td>{{ result.location }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -116,14 +118,14 @@
   export default {
     data () {
       return {
-        activelySearching: false,
         query: "",
         results: [],
-        resultsIdx: 0,
+        resultsIdx: null,
         highlightedResult: null,
         loading: false,
         error: false,
         searched: false,
+        searching: false,
       }
     },
 
@@ -132,12 +134,18 @@
       'excludeIds',
     ],
 
+    computed: {
+      activelySearching () {
+        return this.searching || _.isEmpty(this.excludeIds);
+      },
+    },
+
     watch: {
-      resultsIdx () {
-        this.highlightResult(this.results[this.resultsIdx]);
+      resultsIdx (i) {
+        this.highlightResult(this.results[i]);
       },
 
-      activelySearching () {
+      searching () {
         var vm = this;
         this.$nextTick(() => {
           vm.$refs.judgeSearch.focus();
@@ -168,6 +176,8 @@
       },
 
       generateResults () {
+        this.searching = true;
+
         if (!this.query.length) {
           this.reset();
         } else if (this.filterExistingResults().length) {
@@ -223,12 +233,12 @@
       setNewResults (resp) {
         this.results = [];
 
-        [].forEach.call([].reverse.call(resp), (result) => {
+        [].forEach.call(resp, (result) => {
           this.results.push(new Judge(result));
         });
 
         this.loading = false;
-        this.resultsIdx = this.results.length - 1;
+        this.resultsIdx = 0;
         this.$refs.judgeSearch.focus();
       },
 
@@ -238,7 +248,11 @@
         this.error = true;
       },
 
-      selectHighlighted () {
+      selectHighlighted (idx) {
+        console.log('selecting', idx);
+        this.resultsIdx = idx;
+        console.log('idx set', this.resultsIdx);
+        console.log('selected', this.highlightedResult);
         EventBus.$emit("selected", this.highlightedResult);
         this.reset();
       },
@@ -246,6 +260,9 @@
       unhighlightAll () {
         this.results.forEach((r) => { r.unhighlight(); });
       },
+    },
+
+    mounted () {
     },
   };
 </script>
@@ -264,7 +281,7 @@
     width: 100%;
     width: 100%;
     position: absolute;
-    top: 2.5rem;
+    top: -0.6rem;
     left: 1.2rem;
     background: white;
     z-index: 1058; /* $z-under-shade */

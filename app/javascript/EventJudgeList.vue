@@ -90,12 +90,16 @@
 
     methods: {
       removeJudge (judge) {
-        var vm = this;
+        var vm = this,
+            modalHtml = judge.name + " - " + judge.email;
+
+        modalHtml += !judge.recentlyAdded ?
+          "<small>an email will be sent</small>" :
+          "<small>NO email will be sent</small>";
 
         confirmNegativeSwal({
           title: "Remove this judge from " + vm.event.name + "? ",
-          html: judge.name + " - " + judge.email +
-                "<small>an email will be sent</small>",
+          html: modalHtml,
           confirmButtonText: "Yes, remove this judge",
         }).then((result) => {
           if (result.value) {
@@ -167,9 +171,7 @@
 
     computed: {
       newJudgesToSave () {
-        return _.some(this.event.selectedJudges, (judge) => {
-          return judge.recentlyAdded;
-        });
+        return _.some(this.event.selectedJudges, 'recentlyAdded');
       },
     },
 
