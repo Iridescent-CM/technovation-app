@@ -117,8 +117,8 @@
   import _ from "lodash";
 
   import FlatpickrInput from "./FlatpickrInput";
-  import Errors from '../errors';
-  import Event from '../event';
+  import Errors from '../Errors';
+  import Event from '../Event';
   import EventBus from '../EventBus';
 
   export default {

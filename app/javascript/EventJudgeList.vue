@@ -37,11 +37,18 @@
 
           <td>{{ judge.location }}</td>
 
-          <td v-if="judge.recentlyAdded">
-            <label class="label--reset">
+          <td v-if="judge.recentlyAdded || judge.recentlyInvited">
+            <label
+              class="label--reset"
+              v-if="judge.recentlyAdded"
+            >
               <input type="checkbox" v-model="judge.sendInvitation" />
               Send invite
             </label>
+
+            <div v-else>
+              Invite sent!
+            </div>
           </td>
         </tr>
       </table>

@@ -67,7 +67,7 @@
   import _ from "lodash";
 
   import EventBus from '../EventBus';
-  import Event from '../event';
+  import Event from '../Event';
 
   import EventJudgeList from '../EventJudgeList';
 

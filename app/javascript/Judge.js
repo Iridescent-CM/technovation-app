@@ -7,6 +7,7 @@ export default function Judge (res) {
   this.highlighted = false;
   this.sendInvitation = false;
   this.recentlyAdded = false;
+  this.recentlyInvited = false;
 
   this.prepareToInvite = (event) => {
     this.recentlyAdded = true;
@@ -34,7 +35,12 @@ export default function Judge (res) {
   };
 
   this.afterAssign = () => {
-    this.recentlyAdded = false;
-    this.sendInvitation = false;
+    if (this.sendInvitation) {
+      this.recentlyInvited = true;
+      this.sendInvitation = false;
+    }
+
+    if (this.recentlyAdded)
+      this.recentlyAdded = false;
   };
 };
