@@ -27,8 +27,13 @@ export default function (event) {
   this.selectedJudges = [];
 
   this.addJudge = (judge) => {
-    judge.prepareToBeInvited();
-    this.selectedJudges.push(judge);
+    if (!this.selectedJudges.includes(judge)) {
+      judge.prepareToBeInvited();
+      this.selectedJudges.push(judge);
+    } else {
+      console.log("Judge already added");
+      return false;
+    }
   };
 
   this.selectedJudgeIds = () => {

@@ -74,6 +74,25 @@
     }
   }
 
+  &.button--remove-bg {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    color: $shamrock;
+    text-transform: uppercase;
+    padding-left: 0;
+    padding-right: 0;
+    transition: color 0.2s;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: none;
+      color: black;
+      box-shadow: none;
+    }
+  }
+
   &::selection {
     background-color: transparent;
   }

@@ -1,12 +1,53 @@
 <template>
   <div class="grid__col-12 grid__col--bleed">
-    <div class="grid">
+    <div class="search-components grid">
+      <div
+        class="grid__col-12 grid__col--bleed-y"
+        v-if="loading || !!results.length"
+      >
+        <div class="autocomplete-list">
+          <div
+            class="grid__cell--padding-sm"
+            v-if="loading"
+          >
+            <p>
+              <i class="icon-spinner2 icon--spin"></i>
+            </p>
+          </div>
+
+          <table>
+            <tr
+             :class="[
+             'autocomplete-list__result',
+             result.highlighted ?
+             'autocomplete-list__result--highlighted' :
+             '',
+             ]"
+             @mouseover="resultsIdx = idx"
+             @click="selectHighlighted"
+             v-for="(result, idx) in results"
+             >
+             <td
+             v-html="result.highlightMatch('name', query)"
+             ></td>
+
+             <td
+             v-html="result.highlightMatch('email', query)"
+             ></td>
+
+             <td>{{ result.location }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
       <div class="grid__col-4 grid__col--bleed-y">
         <input
           ref="judgeSearch"
           class="autocomplete-input"
           type="text"
-          placeholder="Search for judges"
+          placeholder="Search by name or email"
+          v-show="activelySearching || !excludeIds.length"
           @input="generateResults"
           @keyup.up.prevent="traverseResultsUp"
           @keyup.down.prevent="traverseResultsDown"
@@ -14,6 +55,13 @@
           @keyup.esc="reset"
           v-model="query"
         />
+
+        <p v-show="!activelySearching">
+          <button
+            class="button button--small button--remove-bg"
+            @click.prevent="activelySearching = true"
+          >+ Add judges</button>
+        </p>
       </div>
 
       <div
@@ -57,42 +105,6 @@
           </button>
         </p>
       </div>
-
-      <div class="grid__col-12" v-if="loading">
-        <p>
-          <i class="icon-spinner2 icon--spin"></i>
-        </p>
-      </div>
-
-
-      <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-else-if="!!results.length"
-      >
-        <table class="autocomplete-list">
-          <tr
-            :class="[
-              'autocomplete-list__result',
-              result.highlighted ?
-                'autocomplete-list__result--highlighted' :
-                '',
-            ]"
-            @mouseover="resultsIdx = idx"
-            @click="selectHighlighted"
-            v-for="(result, idx) in results"
-          >
-            <td
-              v-html="result.highlightMatch('name', query)"
-            ></td>
-
-            <td
-              v-html="result.highlightMatch('email', query)"
-            ></td>
-
-            <td>{{ result.location }}</td>
-          </tr>
-        </table>
-      </div>
     </div>
   </div>
 </template>
@@ -104,6 +116,7 @@
   export default {
     data () {
       return {
+        activelySearching: false,
         query: "",
         results: [],
         resultsIdx: 0,
@@ -123,6 +136,13 @@
       resultsIdx () {
         this.highlightResult(this.results[this.resultsIdx]);
       },
+
+      activelySearching () {
+        var vm = this;
+        this.$nextTick(() => {
+          vm.$refs.judgeSearch.focus();
+        });
+      },
     },
 
     methods: {
@@ -130,7 +150,7 @@
         this.unhighlightAll();
 
         if (!result)
-          result = this.results[0];
+          this.resultsIdx = 0;
 
         if (!!result) {
           result.highlight();
@@ -144,7 +164,6 @@
         this.searched = false;
         this.query = "";
         this.results = [];
-        this.resultsIdx = 0;
         this.highlightedResult = null;
       },
 
@@ -156,7 +175,6 @@
           this.setNewResults(this.filterExistingResults());
         } else if (this.query.length >= 3) {
           this.loading = true;
-          this.searched = true;
           _.debounce(this.performRemoteSearch, 300)();
         }
       },
@@ -170,7 +188,7 @@
       },
 
       traverseResultsDown () {
-        if (this.resultsIdx == this.results.length - 1) {
+        if (this.eesultsIdx == this.results.length - 1) {
           this.resultsIdx = 0;
         } else {
           this.resultsIdx++;
@@ -184,29 +202,34 @@
       },
 
       performRemoteSearch () {
-        var url = this.fetchUrl + "?keyword=" + this.query;
+        var vm = this,
+            url = vm.fetchUrl + "?keyword=" + vm.query;
 
-        _.each(this.excludeIds, (id) => {
+        _.each(vm.excludeIds, (id) => {
           url += "&exclude_ids[]=" + id;
         });
 
         $.ajax({
           method: "GET",
           url: url,
-          success: this.setNewResults,
-          error: this.indicateError,
+          success: vm.setNewResults,
+          error: vm.indicateError,
+          complete: () => {
+            vm.searched = true;
+          },
         });
       },
 
       setNewResults (resp) {
         this.results = [];
 
-        [].forEach.call(resp, (result) => {
+        [].forEach.call([].reverse.call(resp), (result) => {
           this.results.push(new Judge(result));
         });
 
         this.loading = false;
-        this.highlightResult(this.results[this.resultsIdx]);
+        this.resultsIdx = this.results.length - 1;
+        this.$refs.judgeSearch.focus();
       },
 
       indicateError (resp) {
@@ -233,15 +256,34 @@
     margin-right: 1rem;
   }
 
+  .search-components {
+    position: relative;
+  }
+
   .autocomplete-list {
-    margin: 0 0 1rem;
-    padding: 0;
-    border-collapse: collapse;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+    width: 100%;
+    position: absolute;
+    top: 2.5rem;
+    left: 1.2rem;
+    background: white;
+    z-index: 1058; /* $z-under-shade */
+
+    table {
+      padding: 0;
+      border-collapse: collapse;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+    }
 
     .autocomplete-list__result {
       cursor: pointer;
+      background: none;
+
+      &:hover,
+      &:hover td {
+        background: none;
+      }
 
       td {
         padding: 0.5rem;

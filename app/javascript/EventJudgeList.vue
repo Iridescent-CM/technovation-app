@@ -1,18 +1,15 @@
 <template>
   <div class="grid">
-    <judge-search
-       :exclude-ids="event.selectedJudgeIds()"
-       :fetch-url="fetchUrl"
-    ></judge-search>
-
-    <div
-      class="grid__col-12 grid__col-bleed-y"
-      v-if="event.selectedJudges.length"
-    >
+    <div class="grid__col-12 grid__col--bleed-y">
       <h6 class="heading--reset">
         Selected judges <span>({{ this.event.selectedJudges.length }})</span>
       </h6>
     </div>
+
+    <judge-search
+       :exclude-ids="event.selectedJudgeIds()"
+       :fetch-url="fetchUrl"
+    ></judge-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
       <table class="judge-list">
@@ -275,5 +272,9 @@
 
   h6 span {
     font-weight: normal;
+  }
+
+  p {
+    margin: 0;
   }
 </style>
