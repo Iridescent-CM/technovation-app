@@ -187,6 +187,11 @@
     },
 
     watch: {
+      active (current) {
+        if (current)
+          EventBus.$emit("EventForm.active");
+      },
+
       division_ids (ids) {
         if (!ids || !ids.length) {
           this.event.division_names = "";
@@ -247,6 +252,7 @@
         this.eventStartTime = "";
         this.eventEndTime = "";
         this.eventErrors = {};
+        EventBus.$emit("EventForm.reset");
       },
 
       handleSubmit () {
@@ -285,7 +291,7 @@
             vm.event.time = resp.time;
             vm.event.tz = resp.tz
 
-            EventBus.$emit("eventUpdated", vm.event);
+            EventBus.$emit("EventForm.handleSubmit", vm.event);
 
             this.reset();
           },
@@ -310,7 +316,7 @@
     },
 
     mounted () {
-      EventBus.$on("editEvent", (event) => {
+      EventBus.$on("EventsTable.editEvent", (event) => {
         this.httpMethod = "PATCH";
         this.active = true;
         this.saveBtnTxt = "Save changes";

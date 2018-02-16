@@ -13,17 +13,23 @@
     <tbody>
       <template v-for="event in events">
         <tr
+          v-if="managingOrNotEditing(event)"
           :class="['event-preview', event.managing ? 'open' : '']"
           :key="event.id"
-          @click="event.managing = !event.managing"
         >
-          <td>{{ event.name }}</td>
+          <td @click="event.managing = !event.managing; editingOne = false">
+            {{ event.name }}
+          </td>
 
-          <td>{{ event.division_names }}</td>
+          <td @click="event.managing = !event.managing; editingOne = false">
+            {{ event.division_names }}
+          </td>
 
-          <td>{{ event.day }} <small>{{ event.date }}</small></td>
+          <td @click="event.managing = !event.managing; editingOne = false">
+            {{ event.day }} <small>{{ event.date }}</small>
+          </td>
 
-          <td>
+          <td @click="event.managing = !event.managing; editingOne = false">
             {{ event.time }} <small>Timezone: {{ event.tz }}</small>
           </td>
 
@@ -47,7 +53,7 @@
         <tr
           class="event-manage"
           :key="event.id + '-manage'"
-          v-if="event.managing"
+          v-if="event.managing && !editingOne"
         >
           <td colspan="5">
             <event-judge-list
@@ -84,7 +90,15 @@
     data () {
       return {
         events: [],
+        editingOne: false,
       };
+    },
+
+    watch: {
+      editingOne (current) {
+        if (current)
+          _.each(this.events, (e) => { e.managing = false; });
+      },
     },
 
     components: {
@@ -92,18 +106,16 @@
     },
 
     methods: {
+      managingOrNotEditing (event) {
+        return !this.editingOne || event.managing;
+      },
+
       editEvent (event) {
-        EventBus.$emit("editEvent", event);
-        event.managing = false;
+        this.editingOne = true;
+        EventBus.$emit("EventsTable.editEvent", event);
       },
 
       removeEvent (event) {
-        EventBus.$emit("removeEvent", event);
-      },
-    },
-
-    mounted () {
-      EventBus.$on("removeEvent", (event) => {
         confirmNegativeSwal({
           text: "Delete this event? " + event.name,
           confirmButtonText: "Yes, delete this event",
@@ -125,9 +137,11 @@
             return;
           }
         });
-      });
+      },
+    },
 
-      EventBus.$on("eventUpdated", (event) => {
+    mounted () {
+      EventBus.$on("EventForm.handleSubmit", (event) => {
         var idx = this.events.findIndex(e => {
           return e.id === event.id;
         });
@@ -137,6 +151,14 @@
         } else {
           this.events.push(event);
         }
+      });
+
+      EventBus.$on("EventForm.reset", () => {
+        this.editingOne = false;
+      });
+
+      EventBus.$on("EventForm.active", () => {
+        this.editingOne = true;
       });
 
       $.ajax({
@@ -162,6 +184,11 @@
   .datagrid {
     .event-preview {
       cursor: pointer;
+
+      &:hover,
+      &:hover td {
+        background: rgba(220, 220, 220, 0.25);
+      }
 
       &.open td {
         border: 0;
