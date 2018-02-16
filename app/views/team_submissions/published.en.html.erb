@@ -4,83 +4,119 @@
   <div class="grid__col-sm-3 col--sticky-parent">
     <div class="col--sticky-spacer">
       <div class="col--sticky">
-        <div class="panel submission-sidebar">
+        <div class="submission-sidebar">
           <%= render "team_submissions/team_info",
             submission: @team_submission,
             team: @team %>
 
-          <%= render "team_submissions/piece_links",
-            submission: @team_submission,
-            team: @team %>
-
-          <p>
-            <%= link_to web_icon(
-                "play-circle-o",
-                text: "Watch the pitch video"
-              ),
-              "#",
-              class: "button button--small",
-              data: {
-                opens_modal: "video-modal-" +
-                             @team_submission.video_id(:pitch),
-                modal_fetch: send(
-                  "#{current_scope}_embed_code_path",
-                  @team_submission,
-                  piece: :pitch,
-                ),
-              } %>
-          </p>
-
-          <div
-            class="modal"
-            id="video-modal-<%= @team_submission.video_id(:pitch) %>"
-          >
-            <div class="modal-content"></div>
-          </div>
-
-          <p>
-            <%= link_to web_icon(
-                "play-circle-o",
-                text: "Watch the demo video"
-              ),
-              "#",
-              class: "button button--small",
-              data: {
-                opens_modal: "video-modal-" +
-                             @team_submission.video_id(:demo),
-                modal_fetch: send(
-                  "#{current_scope}_embed_code_path",
-                  @team_submission,
-                  piece: :demo,
-                ),
-              } %>
-          </p>
-
-          <div
-            class="modal"
-            id="video-modal-<%= @team_submission.video_id(:demo) %>"
-          >
-            <div class="modal-content"></div>
-          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="grid__col-sm-9">
-    <h1><%= @team_submission.app_name %></h1>
+    <div class="panel">
+      <h3><%= @team_submission.app_name %></h3>
 
-    <%= simple_format @team_submission.app_description %>
+      <%= simple_format @team_submission.app_description %>
 
-    <div class="submission-pieces__screenshots">
-      <% @team_submission.screenshots.each do |screenshot| %>
-        <div class="submission-pieces__screenshot">
-          <%= image_tag screenshot.image_url,
-            data: {
-              modal_url: screenshot.image_url(:large),
-            } %>
-        </div>
-      <% end %>
+      <div class="submission-pieces__screenshots">
+        <% @team_submission.screenshots.each do |screenshot| %>
+          <div class="submission-pieces__screenshot">
+            <%= image_tag screenshot.image_url,
+              data: {
+                modal_url: screenshot.image_url(:large),
+              } %>
+
+          </div>
+        <% end %>
+      </div>
     </div>
+
+    <div class="panel">
+      <h3>Technical</h3>
+        <%= render "team_submissions/piece_links",
+          submission: @team_submission,
+          team: @team %>
+
+
+
+    </div>
+
+    <div class="panel">
+      <h3>Pitch</h3>
+        <p>
+          <%= link_to web_icon(
+              "play-circle-o",
+              text: "Watch the pitch video"
+            ),
+            "#",
+            class: "button button--small",
+            data: {
+              opens_modal: "video-modal-" +
+                           @team_submission.video_id(:pitch),
+              modal_fetch: send(
+                "#{current_scope}_embed_code_path",
+                @team_submission,
+                piece: :pitch,
+              ),
+            } %>
+        </p>
+
+        <div
+          class="modal"
+          id="video-modal-<%= @team_submission.video_id(:pitch) %>"
+        >
+          <div class="modal-content"></div>
+        </div>
+
+        <p>
+          <%= link_to web_icon(
+              "play-circle-o",
+              text: "Watch the demo video"
+            ),
+            "#",
+            class: "button button--small",
+            data: {
+              opens_modal: "video-modal-" +
+                           @team_submission.video_id(:demo),
+              modal_fetch: send(
+                "#{current_scope}_embed_code_path",
+                @team_submission,
+                piece: :demo,
+              ),
+            } %>
+        </p>
+
+      <div
+        class="modal"
+        id="video-modal-<%= @team_submission.video_id(:demo) %>"
+      >
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+    <h3>Entrepreneurship</h3>
+    <p>Your team has uploaded:</p>
+    <%= link_to "Business plan", "#",
+      class: "button button--small"%>
+
   </div>
+
+  <div class="panel">
+    <h3> Regional Pitch Events</h3>
+    <p>Only if attending a live, regional event:</p>
+    <%= link_to "Open the presentation slides", "#",
+    class: "button button--small"%>
+  </div>
+
+  <center><p>
+      <%= link_to "Submit",
+        [current_scope, :honor_code_review, team_id: current_team.id],
+        class: "button" %>
+    </p></center>
+  </div>
+
+
 </div>
