@@ -2,7 +2,7 @@
   <div class="grid__col-12 grid__col--bleed">
     <div class="search-components grid">
       <div
-        class="grid__col-4 grid__col--bleed-y"
+        class="grid__col-12 grid__col--bleed-y"
         v-show="activelySearching"
       >
         <p>
@@ -31,23 +31,16 @@
             @keyup.esc="reset"
             v-model="emailQuery"
           />
-        </p>
-      </div>
-
-      <div
-        class="grid__col-8 grid__col--bleed-y"
-        v-if="searched && !results.length"
-      >
-        <p>
-          We couldn't find someone. You can invite them by email.
 
           <button
             class="
               button
+              button--inline
               button--small
               button--remove-bg
               button--black-text
             "
+            v-if="searched && !results.length"
             @click="addWithInvite"
           >
             <img
@@ -61,7 +54,21 @@
 
       <div
         class="
-          grid__col-8
+          grid__col-12
+          notice
+          notice--info
+          notice--thin
+        "
+        v-if="searched && !results.length"
+      >
+        <p>
+          We couldn't find someone. You can invite them by email.
+        </p>
+      </div>
+
+      <div
+        class="
+          grid__col-12
           notice
           notice--error
           notice--thin
@@ -303,6 +310,8 @@
   .autocomplete-input {
     margin-bottom: 0;
     margin-right: 1rem;
+    display: inline-block;
+    max-width: 250px;
   }
 
   .search-components {
