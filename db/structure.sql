@@ -1066,6 +1066,36 @@ CREATE TABLE regional_pitch_events_teams (
 
 
 --
+-- Name: regional_pitch_events_user_invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE regional_pitch_events_user_invitations (
+    id bigint NOT NULL,
+    regional_pitch_event_id bigint,
+    user_invitation_id bigint
+);
+
+
+--
+-- Name: regional_pitch_events_user_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE regional_pitch_events_user_invitations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: regional_pitch_events_user_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE regional_pitch_events_user_invitations_id_seq OWNED BY regional_pitch_events_user_invitations.id;
+
+
+--
 -- Name: regions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1562,7 +1592,8 @@ CREATE TABLE user_invitations (
     profile_type integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    name character varying
 );
 
 
@@ -1765,6 +1796,13 @@ ALTER TABLE ONLY regional_links ALTER COLUMN id SET DEFAULT nextval('regional_li
 --
 
 ALTER TABLE ONLY regional_pitch_events ALTER COLUMN id SET DEFAULT nextval('regional_pitch_events_id_seq'::regclass);
+
+
+--
+-- Name: regional_pitch_events_user_invitations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY regional_pitch_events_user_invitations ALTER COLUMN id SET DEFAULT nextval('regional_pitch_events_user_invitations_id_seq'::regclass);
 
 
 --
@@ -2068,6 +2106,14 @@ ALTER TABLE ONLY regional_pitch_events
 
 
 --
+-- Name: regional_pitch_events_user_invitations regional_pitch_events_user_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY regional_pitch_events_user_invitations
+    ADD CONSTRAINT regional_pitch_events_user_invitations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2161,6 +2207,20 @@ ALTER TABLE ONLY unconfirmed_email_addresses
 
 ALTER TABLE ONLY user_invitations
     ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_invites_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX events_invites_event_id ON regional_pitch_events_user_invitations USING btree (regional_pitch_event_id);
+
+
+--
+-- Name: events_invites_invite_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX events_invites_invite_id ON regional_pitch_events_user_invitations USING btree (user_invitation_id);
 
 
 --
@@ -2591,11 +2651,27 @@ ALTER TABLE ONLY team_submissions
 
 
 --
+-- Name: regional_pitch_events_user_invitations fk_rails_3bbe8623e3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY regional_pitch_events_user_invitations
+    ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
+
+
+--
 -- Name: accounts fk_rails_55bc732a9a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts
     ADD CONSTRAINT fk_rails_55bc732a9a FOREIGN KEY (division_id) REFERENCES divisions(id);
+
+
+--
+-- Name: regional_pitch_events_user_invitations fk_rails_6040809c97; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY regional_pitch_events_user_invitations
+    ADD CONSTRAINT fk_rails_6040809c97 FOREIGN KEY (regional_pitch_event_id) REFERENCES regional_pitch_events(id);
 
 
 --
@@ -2872,6 +2948,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180206152207'),
 ('20180206184914'),
 ('20180206193752'),
-('20180209162551');
+('20180209162551'),
+('20180216172108'),
+('20180216172742');
 
 

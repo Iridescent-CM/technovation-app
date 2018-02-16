@@ -64,7 +64,7 @@
       <p>
         <button
           class="button button--small"
-          @click.prevent="saveJudgeAssignments"
+          @click.prevent="saveAssignments"
         >
           Save selected judges
         </button>
@@ -105,8 +105,8 @@
           if (result.value) {
             var form = new FormData();
 
-            form.append("judge_assignment[judge_id]", judge.id);
-            form.append("judge_assignment[event_id]", vm.event.id);
+            form.append("event_assignment[attendee_id]", judge.id);
+            form.append("event_assignment[event_id]", vm.event.id);
 
             $.ajax({
               method: "DELETE",
@@ -134,22 +134,32 @@
         });
       },
 
-      saveJudgeAssignments () {
+      saveAssignments () {
         var form = new FormData();
 
         _.each(this.event.selectedJudges, (judge, idx) => {
           form.append(
-            `judge_assignment[judge_ids][${idx}][]id`,
+            `event_assignment[invites][${idx}][]id`,
             judge.id
           )
 
           form.append(
-            `judge_assignment[judge_ids][${idx}][]send_invite`,
+            `event_assignment[invites][${idx}][]email`,
+            judge.email
+          )
+
+          form.append(
+            `event_assignment[invites][${idx}][]name`,
+            judge.name
+          )
+
+          form.append(
+            `event_assignment[invites][${idx}][]send_email`,
             judge.sendInvitation
           );
         });
 
-        form.append("judge_assignment[event_id]", this.event.id);
+        form.append("event_assignment[event_id]", this.event.id);
 
         $.ajax({
           method: "POST",

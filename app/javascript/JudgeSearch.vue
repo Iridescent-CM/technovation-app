@@ -184,7 +184,15 @@
 
     methods: {
       addWithInvite () {
-        debugger;
+        // TODO - it's not always a highlighted result anymore
+        // this is a new judge that needs to sign up
+
+        this.highlightedResult = new Judge({
+          name: this.nameQuery,
+          email: this.emailQuery,
+        });
+
+        this.selectHighlighted();
       },
 
       highlightResult (result) {
@@ -288,10 +296,7 @@
       },
 
       selectHighlighted (idx) {
-        console.log('selecting', idx);
         this.resultsIdx = idx;
-        console.log('idx set', this.resultsIdx);
-        console.log('selected', this.highlightedResult);
         EventBus.$emit("selected", this.highlightedResult);
         this.reset();
       },
@@ -311,7 +316,7 @@
     margin-bottom: 0;
     margin-right: 1rem;
     display: inline-block;
-    max-width: 250px;
+    width: 250px;
   }
 
   .search-components {

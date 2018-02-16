@@ -71,12 +71,26 @@ class UserInvitation < ApplicationRecord
 
   has_secure_token :admin_permission_token
 
+  has_and_belongs_to_many :events, class_name: "RegionalPitchEvent"
   belongs_to :account, required: false
 
   delegate :name,
     to: :account,
     prefix: true,
     allow_nil: true
+
+  def to_search_json
+    {
+      id: id,
+      name: name,
+      email: email,
+      location: "Invitation: #{status}",
+    }
+  end
+
+  def locale
+    :en
+  end
 
   def temporary_password?
     true

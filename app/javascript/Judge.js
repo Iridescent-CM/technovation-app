@@ -1,7 +1,8 @@
 export default function Judge (res) {
-  this.id = res.id;
-  this.name = res.name;
+  this.id = res.id || "";
+  this.name = res.name || "";
   this.email = res.email;
+
   this.location = res.location;
 
   this.highlighted = false;

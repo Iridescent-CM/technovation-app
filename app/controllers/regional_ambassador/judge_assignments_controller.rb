@@ -4,21 +4,30 @@ module RegionalAmbassador
       event = current_ambassador.regional_pitch_events
         .find(assignment_params.fetch(:event_id))
 
-      judge_params = assignment_params.fetch(:judge_ids)
+      invite_params = assignment_params.fetch(:invites)
 
-      judge_params.each do |_, par|
-        opts = par.first
+      invite_params.each do |_, par|
         # params come in strange
-        # FIXME in EventJudgeList.vue#saveJudgeAssignments form appending...
+        # FIXME in EventJudgeList.vue#saveAssignments form appending...
+        opts = par.first
 
-        judge = JudgeProfile.find(opts[:id])
-
-        if "true" == opts[:send_invite]
-          # FIXME
-          JudgeMailer.invite_to_event(judge.id, event.id).deliver_later
+        if opts[:id].blank?
+          invite = UserInvitation.create!({
+            email: opts[:email],
+            name: opts[:name],
+            profile_type: :judge,
+          });
+          event.invites << invite
+        else
+          invite = JudgeProfile.find(opts[:id])
+          event.judges << invite
         end
 
-        event.judges << judge
+        # FIXME "true" == ...
+        # make it a real boolean
+        if "true" == opts[:send_email]
+          EventMailer.invite(invite.class.name, invite.id, event.id).deliver_later
+        end
       end
 
       render json: {
@@ -32,27 +41,32 @@ module RegionalAmbassador
       event = current_ambassador.regional_pitch_events
         .find(assignment_params.fetch(:event_id))
 
-      judge = JudgeProfile.find(assignment_params.fetch(:judge_id))
+      attendee = JudgeProfile.find(assignment_params.fetch(:attendee_id))
 
-      if event.judges.include?(judge)
-        event.judges.destroy(judge)
-        JudgeMailer.notify_removed_from_event(judge.id, event.id).deliver_later
+      if event.judges.include?(attendee)
+        event.judges.destroy(attendee)
+
+        EventMailer.notify_removed(
+          attendee.class.name,
+          attendee.id,
+          event.id,
+        ).deliver_later
       end
 
       render json: {
         flash: {
-          success: "You removed #{judge.full_name} from #{event.name}"
+          success: "You removed #{attendee.full_name} from #{event.name}"
         },
       }
     end
 
     private
     def assignment_params
-      params.require(:judge_assignment)
+      params.require(:event_assignment)
         .permit(
           :event_id,
-          :judge_id,
-          judge_ids: {},
+          :attendee_id,
+          invites: {},
         )
     end
   end
