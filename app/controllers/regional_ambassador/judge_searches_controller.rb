@@ -4,7 +4,9 @@ module RegionalAmbassador
       name_query = params.fetch(:name) { "" }
       email_query = params.fetch(:email) { "" }
 
-      scope = JudgeProfile.joins(:account)
+      scope = JudgeProfile
+        .includes(:account)
+        .references("accounts")
         .where(
           "accounts.first_name ILIKE ? AND
            accounts.last_name ILIKE ? AND
@@ -22,6 +24,17 @@ module RegionalAmbassador
                           id: results.pluck(:id) + params[:exclude_ids].to_a
                         )
                         .limit(7 - results.count)
+      end
+
+      if results.count < 8
+        results += UserInvitation.where(
+          "name ILIKE ? OR email ILIKE ?",
+          "#{name_query}%", "#{email_query}%",
+        )
+        .where.not(
+          id: results.pluck(:id) + params[:exclude_ids].to_a
+        )
+        .limit(7 - results.count)
       end
 
       render json: results.map(&:to_search_json)
