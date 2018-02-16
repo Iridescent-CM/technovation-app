@@ -1,27 +1,61 @@
 <template>
   <div class="grid__col-12 grid__col--bleed">
     <div class="search-components grid">
-      <div class="grid__col-4 grid__col--bleed-y">
-          <p v-show="activelySearching">
+      <div
+        class="grid__col-4 grid__col--bleed-y"
+        v-show="activelySearching"
+      >
+        <p>
           <input
-            ref="judgeSearch"
+            ref="nameSearch"
             class="autocomplete-input"
             type="text"
-            placeholder="Search by name or email"
+            placeholder="Name"
             @input="generateResults"
             @keyup.up.prevent="traverseResultsUp"
             @keyup.down.prevent="traverseResultsDown"
             @keyup.enter.prevent="selectHighlighted"
             @keyup.esc="reset"
-            v-model="query"
+            v-model="nameQuery"
+          />
+
+          <input
+            ref="emailSearch"
+            class="autocomplete-input"
+            type="email"
+            placeholder="Email"
+            @input="generateResults"
+            @keyup.up.prevent="traverseResultsUp"
+            @keyup.down.prevent="traverseResultsDown"
+            @keyup.enter.prevent="selectHighlighted"
+            @keyup.esc="reset"
+            v-model="emailQuery"
           />
         </p>
+      </div>
 
-        <p v-show="!activelySearching">
+      <div
+        class="grid__col-8 grid__col--bleed-y"
+        v-if="searched && !results.length"
+      >
+        <p>
+          We couldn't find someone. You can invite them by email.
+
           <button
-            class="button button--small button--remove-bg"
-            @click.prevent="searching = true"
-          >+ Add judges</button>
+            class="
+              button
+              button--small
+              button--remove-bg
+              button--black-text
+            "
+            @click="addWithInvite"
+          >
+            <img
+              alt="remove"
+              src="https://icongr.am/fontawesome/envelope-o.svg?size=16"
+            />
+            Add and invite
+          </button>
         </p>
       </div>
 
@@ -47,28 +81,18 @@
       </div>
 
       <div
-        class="
-          grid__col-8
-          notice
-          notice--info
-          notice--thin
-        "
-        v-else-if="searched && !results.length"
+        class="grid__col-12 grid__col--bleed-y"
+        v-show="!activelySearching"
       >
         <p>
-          No results found...
-
           <button
-            class="button button--small"
-            @click="reset"
-          >
-            Reset search and try again
-          </button>
+            class="button button--small button--remove-bg"
+            @click.prevent="searching = true"
+          >+ Add judges</button>
         </p>
       </div>
 
       <div
-
         class="grid__col-12"
         v-if="loading || !!results.length"
       >
@@ -94,11 +118,11 @@
              v-for="(result, idx) in results"
              >
              <td
-             v-html="result.highlightMatch('name', query)"
+             v-html="result.highlightMatch('name', nameQuery)"
              ></td>
 
              <td
-             v-html="result.highlightMatch('email', query)"
+             v-html="result.highlightMatch('email', emailQuery)"
              ></td>
 
              <td>{{ result.location }}</td>
@@ -106,7 +130,6 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -118,8 +141,10 @@
   export default {
     data () {
       return {
-        query: "",
+        nameQuery: "",
+        emailQuery: "",
         results: [],
+        invite: { email: "" },
         resultsIdx: null,
         highlightedResult: null,
         loading: false,
@@ -147,13 +172,14 @@
 
       searching () {
         var vm = this;
-        this.$nextTick(() => {
-          vm.$refs.judgeSearch.focus();
-        });
       },
     },
 
     methods: {
+      addWithInvite () {
+        debugger;
+      },
+
       highlightResult (result) {
         this.unhighlightAll();
 
@@ -170,20 +196,26 @@
         this.loading = false;
         this.error = false;
         this.searched = false;
-        this.query = "";
+        this.nameQuery = "";
+        this.emailQuery = "";
         this.results = [];
         this.highlightedResult = null;
       },
 
       generateResults () {
+        var queryEmpty = !this.nameQuery.length &&
+                           !this.emailQuery.length,
+            enoughQueryForRemote = this.nameQuery.length >= 3 ||
+                                     this.emailQuery.length >=3;
+
         this.searching = true;
 
-        if (!this.query.length) {
+        if (queryEmpty) {
           this.reset();
         } else if (this.filterExistingResults().length) {
           this.searched = true;
           this.setNewResults(this.filterExistingResults());
-        } else if (this.query.length >= 3) {
+        } else if (enoughQueryForRemote) {
           this.loading = true;
           _.debounce(this.performRemoteSearch, 300)();
         }
@@ -207,13 +239,14 @@
 
       filterExistingResults () {
         return this.results.filter((r) => {
-          return r.match(this.query);
+          return r.match(this.nameQuery, this.emailQuery);
         });
       },
 
       performRemoteSearch () {
         var vm = this,
-            url = vm.fetchUrl + "?keyword=" + vm.query;
+            url = vm.fetchUrl + "?name=" + vm.nameQuery +
+                                "&email=" + vm.emailQuery;
 
         _.each(vm.excludeIds, (id) => {
           url += "&exclude_ids[]=" + id;
@@ -239,7 +272,6 @@
 
         this.loading = false;
         this.resultsIdx = 0;
-        this.$refs.judgeSearch.focus();
       },
 
       indicateError (resp) {

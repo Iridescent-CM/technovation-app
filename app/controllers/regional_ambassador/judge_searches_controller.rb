@@ -1,35 +1,27 @@
 module RegionalAmbassador
   class JudgeSearchesController < RegionalAmbassadorController
     def show
-      keyword = params.fetch(:keyword) { "" }
+      name_query = params.fetch(:name) { "" }
+      email_query = params.fetch(:email) { "" }
 
-      results = JudgeProfile
-        .in_region(current_ambassador)
-        .joins(:account)
+      scope = JudgeProfile.joins(:account)
         .where(
-          "accounts.first_name ILIKE ? OR
-           accounts.last_name ILIKE ? OR
+          "accounts.first_name ILIKE ? AND
+           accounts.last_name ILIKE ? AND
            accounts.email ILIKE ?",
-          "#{keyword.split(" ").first}%",
-          "#{keyword.split(" ").last}%",
-          "#{keyword}%"
+           "#{name_query.split(" ")[0]}%",
+           "#{name_query.split(" ")[1]}%",
+           "#{email_query}%",
         )
         .where.not(id: params[:exclude_ids])
-        .limit(7)
 
-      if results.count < 7
-        results += JudgeProfile
-          .joins(:account)
-          .where(
-            "accounts.first_name ILIKE ? OR
-              accounts.last_name ILIKE ? OR
-              accounts.email ILIKE ?",
-            "#{keyword.split(" ").first}%",
-            "#{keyword.split(" ").last}%",
-            "#{keyword}%"
-          )
-          .where.not(id: results.pluck(:id) + params[:exclude_ids].to_a)
-          .limit(7 - results.count)
+      results = scope.in_region(current_ambassador).limit(7)
+
+      if results.count < 8
+        results += scope.where.not(
+                          id: results.pluck(:id) + params[:exclude_ids].to_a
+                        )
+                        .limit(7 - results.count)
       end
 
       render json: results.map(&:to_search_json)

@@ -22,11 +22,12 @@ export default function Judge (res) {
     this.highlighted = false;
   };
 
-  this.match = (pattern) => {
-    var regexp = new RegExp(pattern, "i");
+  this.match = (namePattern, emailPattern) => {
+    var name_spec = new RegExp(namePattern, "i"),
+        email_spec = new RegExp(emailPattern, "i");
 
-    return !!this.name.match(regexp) ||
-      !!this.email.match(regexp);
+    return !!this.name.match(name_spec) &&
+             !!this.email.match(email_spec);
   };
 
   this.highlightMatch = (prop, query) => {
