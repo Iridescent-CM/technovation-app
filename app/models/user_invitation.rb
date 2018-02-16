@@ -85,6 +85,7 @@ class UserInvitation < ApplicationRecord
       name: name,
       email: email,
       location: "Invitation: #{status}",
+      scope: self.class.model_name,
     }
   end
 

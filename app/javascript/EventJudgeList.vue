@@ -112,6 +112,7 @@
           if (result.value) {
             var form = new FormData();
 
+            form.append("event_assignment[attendee_scope]", judge.scope);
             form.append("event_assignment[attendee_id]", judge.id);
             form.append("event_assignment[event_id]", vm.event.id);
 
@@ -148,6 +149,11 @@
           form.append(
             `event_assignment[invites][${idx}][]id`,
             judge.id
+          )
+
+          form.append(
+            `event_assignment[invites][${idx}][]scope`,
+            judge.scope
           )
 
           form.append(

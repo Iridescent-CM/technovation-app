@@ -62,7 +62,10 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :submission_scores, dependent: :destroy
 
-  has_and_belongs_to_many :regional_pitch_events, -> { distinct }
+  has_and_belongs_to_many :events,
+    -> { distinct },
+    class_name: "RegionalPitchEvent"
+
   has_many :judge_assignments
   has_many :assigned_teams, through: :judge_assignments, source: :team
 
@@ -88,6 +91,7 @@ class JudgeProfile < ActiveRecord::Base
         state_province,
         country,
       ].join(", "),
+      scope: self.class.model_name,
     }
   end
 

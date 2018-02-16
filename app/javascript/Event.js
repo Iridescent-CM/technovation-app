@@ -27,7 +27,11 @@ export default function (event) {
   this.selectedJudges = [];
 
   this.addJudge = (judge) => {
-    if (!this.selectedJudges.includes(judge)) {
+    var existingIdx = this.selectedJudges.indexOf((j) => {
+      return j.id == judge.id
+    });
+
+    if (existingIdx === -1) {
       judge.prepareToBeInvited();
       this.selectedJudges.push(judge);
     } else {

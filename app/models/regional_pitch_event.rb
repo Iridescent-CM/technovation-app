@@ -26,7 +26,7 @@ class RegionalPitchEvent < ActiveRecord::Base
     -> { includes(:account).references(:accounts).distinct },
     class_name: "JudgeProfile"
 
-  has_and_belongs_to_many :invites,
+  has_and_belongs_to_many :user_invitations,
     -> { includes(:account).references(:accounts).distinct },
     class_name: "UserInvitation"
 
@@ -105,7 +105,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def judge_list
-    judges + invites
+    judges + user_invitations
   end
 
   def to_list_json

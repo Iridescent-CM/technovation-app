@@ -11,22 +11,20 @@ module RegionalAmbassador
         # FIXME in EventJudgeList.vue#saveAssignments form appending...
         opts = par.first
 
-        if opts[:id].blank?
-          invite = UserInvitation.create!({
+        unless invite = opts[:scope].constantize.find_by(id: opts[:id])
+          invite = opts[:scope].constantize.create!({
             email: opts[:email],
             name: opts[:name],
             profile_type: :judge,
           });
-          event.invites << invite
-        else
-          invite = JudgeProfile.find(opts[:id])
-          event.judges << invite
         end
+
+        invite.events << event
 
         # FIXME "true" == ...
         # make it a real boolean
         if "true" == opts[:send_email]
-          EventMailer.invite(invite.class.name, invite.id, event.id).deliver_later
+          EventMailer.invite(opts[:scope], invite.id, event.id).deliver_later
         end
       end
 
@@ -39,19 +37,17 @@ module RegionalAmbassador
 
     def destroy
       event = current_ambassador.regional_pitch_events
+        .includes(:judges, :user_invitations)
         .find(assignment_params.fetch(:event_id))
 
       attendee = event.judge_list.detect do |j|
-        j.id == assignment_params.fetch(:attendee_id).to_i
-      end
-
-      if attendee && attendee.is_a?(JudgeProfile)
-        event.judges.destroy(attendee)
-      elsif attendee && attendee.is_a?(UserInvitation)
-        event.invites.destroy(attendee)
+        j.id == assignment_params.fetch(:attendee_id).to_i &&
+          j.class.model_name == assignment_params.fetch(:attendee_scope)
       end
 
       if attendee
+        attendee.events.destroy(event)
+
         EventMailer.notify_removed(
           attendee.class.name,
           attendee.id,
@@ -78,6 +74,7 @@ module RegionalAmbassador
         .permit(
           :event_id,
           :attendee_id,
+          :attendee_scope,
           invites: {},
         )
     end
