@@ -86,7 +86,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :in_region_of, ->(ambassador) {
     if ambassador.country == "US"
       joins(regional_ambassador_profile: :account)
-      .where("accounts.country = 'US' AND accounts.state_province = ?", ambassador.state_province)
+      .where(
+        "accounts.country = 'US' AND accounts.state_province = ?",
+        ambassador.state_province
+      )
     else
       joins(regional_ambassador_profile: :account)
       .where("accounts.country = ?", ambassador.country)
@@ -101,8 +104,8 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
-  def judges
-    super + invites
+  def judge_list
+    judges + invites
   end
 
   def to_list_json

@@ -41,23 +41,35 @@ module RegionalAmbassador
       event = current_ambassador.regional_pitch_events
         .find(assignment_params.fetch(:event_id))
 
-      attendee = JudgeProfile.find(assignment_params.fetch(:attendee_id))
+      attendee = event.judge_list.detect do |j|
+        j.id == assignment_params.fetch(:attendee_id).to_i
+      end
 
-      if event.judges.include?(attendee)
+      if attendee && attendee.is_a?(JudgeProfile)
         event.judges.destroy(attendee)
+      elsif attendee && attendee.is_a?(UserInvitation)
+        event.invites.destroy(attendee)
+      end
 
+      if attendee
         EventMailer.notify_removed(
           attendee.class.name,
           attendee.id,
           event.id,
         ).deliver_later
-      end
 
-      render json: {
-        flash: {
-          success: "You removed #{attendee.full_name} from #{event.name}"
-        },
-      }
+        render json: {
+          flash: {
+            success: "You removed #{attendee.name} from #{event.name}"
+          },
+        }
+      else
+        render json: {
+          flash: {
+            success: "You removed a judge from #{event.name}"
+          },
+        }
+      end
     end
 
     private

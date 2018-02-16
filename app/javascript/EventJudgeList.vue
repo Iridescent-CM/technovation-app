@@ -202,8 +202,10 @@
         this.event.addJudge(selectedJudge);
       });
 
-      if (this.event.selectedJudges.length)
+      if (this.event.selectedJudges.length) {
+        this.fetchingList = false;
         return;
+      }
 
       var vm = this;
 
