@@ -7,6 +7,7 @@
     </div>
 
     <judge-search
+       v-if="!fetchingList"
        :exclude-ids="event.selectedJudgeIds()"
        :fetch-url="fetchUrl"
     ></judge-search>
@@ -81,6 +82,12 @@
   import EventBus from './EventBus';
 
   export default {
+    data () {
+      return {
+        fetchingList: true,
+      };
+    },
+
     props: [
       'fetchUrl',
       'fetchListUrl',
@@ -209,6 +216,8 @@
             var judge = new Judge(result);
             vm.event.selectedJudges.push(judge)
           });
+
+          this.fetchingList = false;
         },
 
         error: (err) => {
