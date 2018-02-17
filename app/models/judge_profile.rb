@@ -62,8 +62,8 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :submission_scores, dependent: :destroy
 
-  has_and_belongs_to_many :events,
-    -> { distinct },
+  has_and_belongs_to_many :regional_pitch_events, -> { distinct }
+  has_and_belongs_to_many :events, -> { distinct },
     class_name: "RegionalPitchEvent"
 
   has_many :judge_assignments
