@@ -67,4 +67,20 @@ RSpec.describe UserInvitation do
 
     expect(invite).to be_valid
   end
+
+  it "updates judges assigned to events after signing up" do
+    event = FactoryBot.create(:event)
+
+    invite = UserInvitation.create!(
+      profile_type: :judge,
+      email: "judge@judge.com",
+      event_ids: [event.id],
+    )
+
+    judge = FactoryBot.create(:judge, email: "judge@judge.com")
+
+    expect(invite.reload).to be_registered
+    expect(invite.account).to eq(judge.account)
+    expect(event.reload.judge_list).to eq([judge])
+  end
 end

@@ -3,9 +3,17 @@ class AttachUserInvitationJob < ActiveJob::Base
 
   def perform(account_id)
     account = Account.find(account_id)
+
     if invite = UserInvitation.find_by(email: account.email)
       invite.update_column(:account_id, account.id)
       invite.registered!
+
+      if account.judge_profile.present?
+        invite.events.each do |event|
+          event.user_invitations.destroy(invite)
+          event.judges << account.judge_profile
+        end
+      end
     end
   end
 end
