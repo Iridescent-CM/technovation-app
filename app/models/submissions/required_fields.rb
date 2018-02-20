@@ -64,6 +64,7 @@ end
 
 class RequiredAppNameField < RequiredField
   def complete?
-    submission.send(method_name) != "(no name yet)"
+    not submission.send(method_name).blank? and
+      submission.send(method_name) != "(no name yet)"
   end
 end

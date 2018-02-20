@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe TeamSubmission do
+  before { SeasonToggles.team_submissions_editable! }
+
   describe "#percent_complete" do
     it "returns 0 for nothing completed" do
       submission = FactoryBot.create(:submission, :junior)
@@ -49,18 +51,8 @@ RSpec.describe TeamSubmission do
         sub.update(field.method_name => nil)
       end
 
-      begin
-        aggregate_failures do
-          expect(sub.reload).not_to be_complete,
-            "failed method: #{field.method_name}"
-        end
-      rescue RSpec::Expectations::MultipleExpectationsNotMetError => err
-        if !!ENV["BIND_FAILING_SPECS"]
-          binding.irb
-        else
-          raise err
-        end
-      end
+      expect(sub.reload).not_to be_complete,
+        "failed method: #{field.method_name}"
     end
   end
 
