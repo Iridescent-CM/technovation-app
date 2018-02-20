@@ -178,7 +178,9 @@ Rails.application.routes.draw do
     resource :judge_assignments, only: :destroy
 
     resource :judge_search, only: :show
+    resource :team_search, only: :show
     resource :judge_list, only: :show
+    resource :team_list, only: :show
 
     resources :scores, only: [:index, :show]
 

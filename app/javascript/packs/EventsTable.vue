@@ -62,6 +62,13 @@
               :fetchUrl="searchJudgesUrl"
               :saveJudgesUrl="saveJudgesUrl"
             ></event-judge-list>
+
+            <event-team-list
+              :event="event"
+              :fetchListUrl="teamsListUrl"
+              :fetchUrl="searchTeamsUrl"
+              :saveTeamsUrl="saveTeamsUrl"
+            ></event-team-list>
           </td>
         </tr>
       </template>
@@ -76,6 +83,7 @@
   import Event from '../Event';
 
   import EventJudgeList from '../EventJudgeList';
+  import EventTeamList from '../EventTeamList';
 
   export default {
     name: "events-table",
@@ -85,6 +93,9 @@
       "saveJudgesUrl",
       "judgesListUrl",
       "searchJudgesUrl",
+      "saveTeamsUrl",
+      "teamsListUrl",
+      "searchTeamsUrl",
     ],
 
     data () {
@@ -103,6 +114,7 @@
 
     components: {
       EventJudgeList,
+      EventTeamList,
     },
 
     methods: {

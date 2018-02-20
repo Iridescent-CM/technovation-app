@@ -25,6 +25,7 @@ export default function (event) {
 
   this.managing = false;
   this.selectedJudges = [];
+  this.selectedTeams = [];
 
   this.addJudge = (judge) => {
     var existingIdx = this.selectedJudges.indexOf((j) => {
@@ -40,8 +41,26 @@ export default function (event) {
     }
   };
 
+  this.addTeam = (team) => {
+    var existingIdx = this.selectedTeams.indexOf((t) => {
+      return t.id == team.id
+    });
+
+    if (existingIdx === -1) {
+      team.prepareToBeInvited();
+      this.selectedTeams.push(team);
+    } else {
+      console.log("Team already added");
+      return false;
+    }
+  };
+
   this.selectedJudgeIds = () => {
-    return _.map(this.selectedJudges, (j) => { return j.id; });
+    return _.map(this.selectedJudges, 'id');
+  };
+
+  this.selectedTeamIds = () => {
+    return _.map(this.selectedTeams, 'id');
   };
 
   this.afterSave = () => {

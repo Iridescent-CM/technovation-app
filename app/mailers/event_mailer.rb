@@ -13,6 +13,8 @@ class EventMailer < ApplicationMailer
   end
 
   def invite(invite_klass_name, invite_id, event_id)
+    return if invite_klass_name == "Team"
+
     @invite = invite_klass_name.constantize.find(invite_id)
     @event = RegionalPitchEvent.find(event_id)
 

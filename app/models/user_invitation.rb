@@ -103,7 +103,7 @@ class UserInvitation < ApplicationRecord
   def friendly_status
     case status
     when "sent", "opened"; "Sign up now"
-    when "registered";     "Cpmplete your judge profile"
+    when "registered";     "Complete your judge profile"
     else; "status missing (bug)"
     end
   end

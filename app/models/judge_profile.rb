@@ -111,7 +111,7 @@ class JudgeProfile < ActiveRecord::Base
 
   def human_status
     case status
-    when "past_season"; "must sign up"
+    when "past_season"; "must log in"
     when "registered";  "must complete onboarding"
     when "ready";       "ready!"
     else; "status missing (bug)"
@@ -120,7 +120,7 @@ class JudgeProfile < ActiveRecord::Base
 
   def friendly_status
     case status
-    when "past_season"; "Sign up now"
+    when "past_season"; "Log in now"
     when "registered";  "Complete your judge profile"
     when "ready";       "Log in for more details"
     else; "status missing (bug)"

@@ -27,6 +27,51 @@ class Team < ActiveRecord::Base
       .where("activities.id IS NULL")
   }
 
+  def to_search_json
+    {
+      id: id,
+      name: name,
+      location: [
+        city,
+        state_province,
+        country,
+      ].join(", "),
+      scope: self.class.model_name,
+      status: status,
+      human_status: human_status,
+    }
+  end
+
+  def status
+    if submission.present? and qualified?
+      "ready"
+    elsif submission.present?
+      "unqualified"
+    elsif qualified?
+      "no_submission"
+    else
+      "cannot_compete"
+    end
+  end
+
+  def human_status
+    case status
+    when "ready";         "ready!"
+    when "unqualified";   "is not qualified"
+    when "no_submission"; "must start submission"
+    else; "status missing (bug)"
+    end
+  end
+
+  def friendly_status
+    case status
+    when "past_season"; "Log in now"
+    when "registered";  "Complete your judge profile"
+    when "ready";       "Log in for more details"
+    else; "status missing (bug)"
+    end
+  end
+
   def avatar_url
     team_photo_url
   end
@@ -133,6 +178,11 @@ class Team < ActiveRecord::Base
     class_name: "JoinRequest"
 
   has_and_belongs_to_many :regional_pitch_events, -> { distinct },
+    after_add: ->(team, event) { team.submission.touch },
+    after_remove: ->(team, event) { team.submission.touch }
+
+  has_and_belongs_to_many :events, -> { distinct },
+    class_name: "RegionalPitchEvent",
     after_add: ->(team, event) { team.submission.touch },
     after_remove: ->(team, event) { team.submission.touch }
 

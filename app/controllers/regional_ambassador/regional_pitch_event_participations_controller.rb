@@ -1,88 +1,80 @@
 module RegionalAmbassador
   class RegionalPitchEventParticipationsController < RegionalAmbassadorController
-    def new
-      @event = RegionalPitchEvent.in_region_of(current_ambassador)
-        .find(params.fetch(:event_id))
-
-      case params.fetch(:participant_type)
-      when "Team"
-        @participants = Team.current
-          .public_send(params.fetch(:division))
-          .in_region(current_ambassador)
-          .not_attending_live_event
-      end
-    end
-
     def create
-      event = RegionalPitchEvent.in_region_of(current_ambassador)
-        .find(params.fetch(:event_id))
+      event = current_ambassador.regional_pitch_events
+        .find(assignment_params.fetch(:event_id))
 
-      record = params.fetch(:participant_type).constantize
-        .find(params.fetch(:participant_id))
+      invite_params = assignment_params.fetch(:invites)
 
-      old_event = record.selected_regional_pitch_event
+      invite_params.each do |_, par|
+        # params come in strange
+        # FIXME in EventTeamList.vue#saveAssignments form appending...
+        opts = par.first
 
-      record.regional_pitch_events.destroy_all
+        invite = opts[:scope].constantize.find(opts[:id])
 
-      record.regional_pitch_events << event
-      record.save!
+        invite.events << event
 
-      if record.is_a?(Team)
-        SendPitchEventRSVPNotifications.perform_later(
-          record.id,
-          ra_removed_participant_from: old_event.id,
-          ra_added_participant_to: event.id,
-        )
-      else
-        SendPitchEventRSVPNotifications.perform_later(
-          record.id,
-          ra_removed_judge_from: old_event.id,
-          ra_added_judge_to: event.id,
-        )
+        # FIXME "true" == ...
+        # make it a real boolean
+        if "true" == opts[:send_email]
+          EventMailer.invite(
+            opts[:scope],
+            invite.id,
+            event.id
+          ).deliver_later
+        end
       end
 
-      redirect_to regional_ambassador_regional_pitch_event_path(
-        event,
-        anchor: params[:referring_anchor],
-      ),
-        success: "You added #{record.class.name} #{record.name rescue record.full_name} to your event!"
+      render json: {
+        flash: {
+          success: "You saved your selected teams for #{event.name}"
+        },
+      }
     end
 
     def destroy
-      event = RegionalPitchEvent.in_region_of(current_ambassador)
-        .find(params[:id])
+      event = current_ambassador.regional_pitch_events
+        .includes(:teams)
+        .find(assignment_params.fetch(:event_id))
 
-      record = params.fetch(:participant_type).constantize
-        .find(params.fetch(:participant_id))
+      attendee = event.teams.detect do |t|
+        t.id == assignment_params.fetch(:attendee_id).to_i &&
+          t.class.model_name == assignment_params.fetch(:attendee_scope)
+      end
 
-      RemoveFromLiveEvent.(record)
+      if attendee
+        attendee.events.destroy(event)
 
-      if record.is_a?(Team)
-        SendPitchEventRSVPNotifications.perform_later(
-          record.id,
-          ra_removed_participant_from: event.id,
-        )
+        EventMailer.notify_removed(
+          attendee.class.name,
+          attendee.id,
+          event.id,
+        ).deliver_later
+
+        render json: {
+          flash: {
+            success: "You removed #{attendee.name} from #{event.name}"
+          },
+        }
       else
-        SendPitchEventRSVPNotifications.perform_later(
-          record.id,
-          ra_removed_judge_from: event.id,
+        render json: {
+          flash: {
+            success: "You removed a team from #{event.name}"
+          },
+        }
+      end
+    end
+
+    private
+    def assignment_params
+      params.require(:event_assignment)
+        .permit(
+          :event_id,
+          :attendee_id,
+          :attendee_scope,
+          invites: {},
         )
-      end
-
-      respond_to do |f|
-        f.html {
-          redirect_to regional_ambassador_regional_pitch_event_path(
-            event,
-            anchor: params[:referring_anchor],
-          ),
-            success: "You removed #{record.class.name} " +
-                     "#{record.name rescue record.full_name} from your event"
-        }
-
-        f.json {
-          render json: {}
-        }
-      end
     end
   end
 end
