@@ -12,6 +12,32 @@ class UserInvitation < ApplicationRecord
     registered
   }
 
+  validates :profile_type, :email, presence: true
+  validates :email, uniqueness: true, email: true
+
+  validate ->(invitation) {
+    if inviting_existing_ra_to_be_an_ra?
+      errors.add(:email, :taken_by_account)
+    elsif inviting_existing_mentor_to_be_an_ra?
+      true
+    elsif inviting_existing_judge_to_be_an_ra?
+      true
+    elsif inviting_existing_account?
+      errors.add(:email, :taken_by_account)
+    end
+  }, on: :create
+
+  has_secure_token :admin_permission_token
+
+  has_and_belongs_to_many :events, class_name: "RegionalPitchEvent"
+  belongs_to :account, required: false
+  belongs_to :current_account, -> { current }, required: false
+
+  delegate :name,
+    to: :account,
+    prefix: true,
+    allow_nil: true
+
   before_validation -> {
     self.email = email.strip.downcase
   }
@@ -20,7 +46,7 @@ class UserInvitation < ApplicationRecord
     if account = Account.left_outer_joins(
                    :regional_ambassador_profile
                  )
-                 .left_outer_joins(:judge_profile, :mentor_profile)
+                 .includes(:judge_profile, :mentor_profile)
                  .where(
                    "regional_ambassador_profiles.id " +
                    "IS NULL"
@@ -54,39 +80,32 @@ class UserInvitation < ApplicationRecord
     end
   }, on: :update, if: -> { saved_change_to_status? and registered? }
 
-  validates :profile_type, :email, presence: true
-  validates :email, uniqueness: true, email: true
-
-  validate ->(invitation) {
-    if inviting_existing_ra_to_be_an_ra?
-      errors.add(:email, :taken_by_account)
-    elsif inviting_existing_mentor_to_be_an_ra?
-      true
-    elsif inviting_existing_judge_to_be_an_ra?
-      true
-    elsif inviting_existing_account?
-      errors.add(:email, :taken_by_account)
-    end
-  }, on: :create
-
-  has_secure_token :admin_permission_token
-
-  has_and_belongs_to_many :events, class_name: "RegionalPitchEvent"
-  belongs_to :account, required: false
-
-  delegate :name,
-    to: :account,
-    prefix: true,
-    allow_nil: true
-
   def to_search_json
     {
       id: id,
       name: name,
       email: email,
-      location: "Invitation: #{status}",
+      location: "",
       scope: self.class.model_name,
+      status: status,
+      human_status: human_status,
     }
+  end
+
+  def human_status
+    case status
+    when "sent", "opened"; "must sign up"
+    when "registered";     "must complete training"
+    else; "status missing (bug)"
+    end
+  end
+
+  def friendly_status
+    case status
+    when "sent", "opened"; "Sign up now"
+    when "registered";     "Cpmplete your judge profile"
+    else; "status missing (bug)"
+    end
   end
 
   def locale

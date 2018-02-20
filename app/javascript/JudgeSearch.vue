@@ -186,6 +186,7 @@
         this.highlightedResult = new Judge({
           name: this.nameQuery,
           email: this.emailQuery,
+          scope: "UserInvitation",
         });
 
         this.selectHighlighted();

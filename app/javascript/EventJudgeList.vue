@@ -41,7 +41,7 @@
 
           <td>{{ judge.location }}</td>
 
-          <td v-if="judge.recentlyAdded || judge.recentlyInvited">
+          <td>
             <label
               class="label--reset"
               v-if="judge.recentlyAdded"
@@ -51,7 +51,7 @@
             </label>
 
             <div v-else>
-              Invite sent!
+              {{ judge.human_status }}
             </div>
           </td>
         </tr>

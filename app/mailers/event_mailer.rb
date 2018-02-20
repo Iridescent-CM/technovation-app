@@ -19,6 +19,21 @@ class EventMailer < ApplicationMailer
     @ambassador_name = @event.regional_ambassador_profile.full_name
     @ambassador_email = @event.regional_ambassador_profile.email
 
+    @url = case @invite.status
+           when "sent", "opened"
+             judge_signup_url(
+               admin_permission_token: @invite.admin_permission_token
+             )
+           when "registered", "past_season", "training", "ready"
+             judge_dashboard_url(
+               mailer_token: @invite.mailer_token
+             )
+           else
+             raise ArgumentError,
+               "#{@invite.status} is an unsupported @invite status"
+           end
+
+
     I18n.with_locale(@invite.locale) do
       mail to: @invite.email,
         subject: "You are invited to participate in a Technovation event: " +

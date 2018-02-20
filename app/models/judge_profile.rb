@@ -67,7 +67,9 @@ class JudgeProfile < ActiveRecord::Base
     class_name: "RegionalPitchEvent"
 
   has_many :judge_assignments
-  has_many :assigned_teams, through: :judge_assignments, source: :team
+  has_many :assigned_teams,
+    through: :judge_assignments,
+    source: :team
 
   validates :company_name, :job_title,
     presence: true
@@ -92,7 +94,37 @@ class JudgeProfile < ActiveRecord::Base
         country,
       ].join(", "),
       scope: self.class.model_name,
+      status: status,
+      human_status: human_status,
     }
+  end
+
+  def status
+    if current_account && onboarded?
+      "ready"
+    elsif current_account
+      "registered"
+    else
+      "past_season"
+    end
+  end
+
+  def human_status
+    case status
+    when "past_season"; "must sign up"
+    when "registered";  "must complete onboarding"
+    when "ready";       "ready!"
+    else; "status missing (bug)"
+    end
+  end
+
+  def friendly_status
+    case status
+    when "past_season"; "Sign up now"
+    when "registered";  "Complete your judge profile"
+    when "ready";       "Log in for more details"
+    else; "status missing (bug)"
+    end
   end
 
   def complete_training!

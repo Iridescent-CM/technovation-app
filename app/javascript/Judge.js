@@ -3,6 +3,8 @@ export default function Judge (res) {
   this.name = res.name || "";
   this.email = res.email;
   this.scope = res.scope;
+  this.status = res.status || "status missing (bug)";
+  this.human_status = res.human_status || "must sign up";
 
   this.location = res.location;
 
