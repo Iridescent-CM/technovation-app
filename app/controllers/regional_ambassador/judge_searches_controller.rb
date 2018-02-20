@@ -21,14 +21,14 @@ module RegionalAmbassador
 
       if results.count < 8
         results += scope.where.not(
-                          id: results.pluck(:id) + params[:exclude_ids].to_a
-                        )
-                        .limit(7 - results.count)
+          id: results.pluck(:id) + params[:exclude_ids].to_a
+        )
+        .limit(7 - results.count)
       end
 
       if results.count < 8
-        results += UserInvitation.where(
-          "name ILIKE ? OR email ILIKE ?",
+        results += UserInvitation.judge.where(
+          "name ILIKE ? AND email ILIKE ?",
           "#{name_query}%", "#{email_query}%",
         )
         .where.not(
