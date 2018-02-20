@@ -136,14 +136,14 @@ class SubmissionsGrid
     } do |values, scope, grid|
       clauses = values.flatten.map do |v|
         v = v === "Mexico City" ? "Ciudad de México" : v
-        "accounts.city = '#{v}'"
+        "unaccent(teams.city) = unaccent('#{v}')"
       end
 
       state = grid.state_province[0]
       state = state === "DIF" ? "CDMX" : state
 
       scope.where(
-        "lower(accounts.state_province) like '#{state.downcase}%'"
+        "lower(teams.state_province) like '#{state.downcase}%'"
       )
         .where(clauses.join(' OR '))
     end

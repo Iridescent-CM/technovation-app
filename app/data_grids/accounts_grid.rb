@@ -343,7 +343,7 @@ class AccountsGrid
     } do |values, scope, grid|
       clauses = values.flatten.map do |v|
         v = v === "Mexico City" ? "Ciudad de México" : v
-        "accounts.city = '#{v}'"
+        "unaccent(accounts.city) = unaccent('#{v}')"
       end
 
       state = grid.state_province[0]
