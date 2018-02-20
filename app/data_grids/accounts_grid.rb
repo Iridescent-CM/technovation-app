@@ -159,8 +159,8 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
-    } do |value|
-      send(value)
+    } do |value, scope, grid|
+      scope.send(value)
     end
 
   filter :parental_consent,

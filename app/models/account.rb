@@ -121,12 +121,16 @@ class Account < ActiveRecord::Base
   }
 
   scope :unmatched, -> {
-    left_outer_joins(:mentor_profile, :student_profile)
-      .where(
-        "mentor_profiles.id IS NOT NULL OR
-        student_profiles.id IS NOT NULL"
-      )
-      .where.not(id: matched.pluck(:id))
+    mentor_ids = unscoped.distinct
+      .joins(mentor_profile: :current_teams).pluck(:id)
+
+    student_ids = unscoped.distinct
+      .joins(student_profile: :current_teams).pluck(:id)
+
+
+    left_outer_joins(:judge_profile, :regional_ambassador_profile)
+      .where("judge_profiles.id IS NULL AND regional_ambassador_profiles.id IS NULL")
+      .where.not(id: mentor_ids + student_ids)
   }
 
   scope :parental_consented, ->(*seasons) {

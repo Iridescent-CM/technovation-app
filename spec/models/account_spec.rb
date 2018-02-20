@@ -200,6 +200,27 @@ RSpec.describe Account do
 
       expect(Account.unmatched).to be_empty
     end
+
+    it "excludes students with past teams and current teams" do
+      student = FactoryBot.create(:student, :on_team)
+
+      past_team = FactoryBot.create(:team, members_count: 0)
+      past_team.update_column(:seasons, [Season.current.year - 1])
+      TeamRosterManaging.add(past_team, student)
+
+      expect(Account.unmatched).not_to include(student)
+    end
+
+    it "excludes students and mentors with current teams" do
+      mentor = FactoryBot.create(:mentor, :on_team)
+      student = FactoryBot.create(:student, :on_team)
+
+      team = FactoryBot.create(:team, members_count: 0)
+      TeamRosterManaging.add(team, [mentor, student])
+
+      expect(Account.unmatched).not_to include(student)
+      expect(Account.unmatched).not_to include(mentor)
+    end
   end
 
   describe ".parental_consented" do
