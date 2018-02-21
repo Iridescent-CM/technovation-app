@@ -108,6 +108,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     judges + user_invitations
   end
 
+  def attendees
+    judge_list + teams
+  end
+
   def to_list_json
     {
       id: id,

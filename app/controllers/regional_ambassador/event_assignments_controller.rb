@@ -31,14 +31,14 @@ module RegionalAmbassador
               EventMailer.invite(
                 membership.member_type,
                 membership.member_id,
-                event.id
+                event.id,
               ).deliver_later
             end
           else
             EventMailer.invite(
               opts[:scope],
               invite.id,
-              event.id
+              event.id,
             ).deliver_later
           end
         end
@@ -52,23 +52,33 @@ module RegionalAmbassador
     end
 
     def destroy
-      event = current_ambassador.regional_pitch_events
+      event = RegionalPitchEvent
         .includes(:judges, :user_invitations)
         .find(assignment_params.fetch(:event_id))
 
-      attendee = event.judge_list.detect do |j|
-        j.id == assignment_params.fetch(:attendee_id).to_i &&
-          j.class.model_name == assignment_params.fetch(:attendee_scope)
+      attendee = event.attendees.detect do |a|
+        a.id == assignment_params.fetch(:attendee_id).to_i &&
+          a.class.model_name == assignment_params.fetch(:attendee_scope)
       end
 
       if attendee
         attendee.events.destroy(event)
 
-        EventMailer.notify_removed(
-          attendee.class.name,
-          attendee.id,
-          event.id,
-        ).deliver_later
+        if assignment_params.fetch(:attendee_scope) == "Team"
+          attendee.memberships.each do |membership|
+            EventMailer.notify_removed(
+              membership.member_type,
+              membership.member_id,
+              event.id,
+            ).deliver_later
+          end
+        else
+          EventMailer.notify_removed(
+            attendee.class.name,
+            attendee.id,
+            event.id,
+          ).deliver_later
+        end
 
         render json: {
           flash: {
