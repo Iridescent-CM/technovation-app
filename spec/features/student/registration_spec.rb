@@ -25,7 +25,7 @@ RSpec.feature "Register as a student" do
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
-    select "United States", from: "Country"
+    select "United States", from: "Region"
     click_button "Save"
 
     expect(StudentProfile.last.address_details).to eq(

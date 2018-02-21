@@ -30,7 +30,7 @@ RSpec.feature "Register as a mentor" do
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
-    select "United States", from: "Country"
+    select "United States", from: "Region"
     click_button "Save"
 
     expect(MentorProfile.last.address_details).to eq(

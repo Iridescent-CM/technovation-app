@@ -31,6 +31,7 @@
         label: t("models.account.state_province") %>
 
       <%= f.input :country,
+        label: t("models.team.country"),
         collection: CountryStateSelect.countries_collection,
         input_html: {
           class: "chosen",

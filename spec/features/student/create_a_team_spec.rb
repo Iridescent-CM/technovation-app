@@ -41,7 +41,7 @@ RSpec.feature "Student creates a team" do
 
     fill_in "City", with: "Chicago"
     fill_in "State", with: "IL"
-    select "United States", from: "Country"
+    select "United States", from: "Region"
 
     click_button "Save"
 
