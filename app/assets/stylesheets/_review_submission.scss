@@ -1,4 +1,7 @@
 .submission-buttons {
   display: inline-block;
-  margin: .375rem;
+
+  .button {
+    margin: 0.375rem;
+  }
 }

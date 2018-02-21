@@ -8,7 +8,6 @@
           <%= render "team_submissions/team_info",
             submission: @team_submission,
             team: @team %>
-
         </div>
       </div>
     </div>
@@ -35,58 +34,57 @@
 
     <div class="panel">
       <h3>Technical</h3>
-        <%= render "team_submissions/piece_links",
-          submission: @team_submission,
-          team: @team %>
 
-
-
+      <%= render "team_submissions/piece_links",
+        submission: @team_submission,
+        team: @team %>
     </div>
 
     <div class="panel">
       <h3>Pitch</h3>
-        <p>
-          <%= link_to web_icon(
-              "play-circle-o",
-              text: "Watch the pitch video"
-            ),
-            "#",
-            class: "button button--small",
-            data: {
-              opens_modal: "video-modal-" +
-                           @team_submission.video_id(:pitch),
-              modal_fetch: send(
-                "#{current_scope}_embed_code_path",
-                @team_submission,
-                piece: :pitch,
-              ),
-            } %>
-        </p>
 
-        <div
-          class="modal"
-          id="video-modal-<%= @team_submission.video_id(:pitch) %>"
-        >
-          <div class="modal-content"></div>
-        </div>
-
-        <p>
-          <%= link_to web_icon(
-              "play-circle-o",
-              text: "Watch the demo video"
+      <p>
+        <%= link_to web_icon(
+            "play-circle-o",
+            text: "Watch the pitch video"
+          ),
+          "#",
+          class: "button button--small",
+          data: {
+            opens_modal: "video-modal-" +
+                          @team_submission.video_id(:pitch),
+            modal_fetch: send(
+              "#{current_scope}_embed_code_path",
+              @team_submission,
+              piece: :pitch,
             ),
-            "#",
-            class: "button button--small",
-            data: {
-              opens_modal: "video-modal-" +
-                           @team_submission.video_id(:demo),
-              modal_fetch: send(
-                "#{current_scope}_embed_code_path",
-                @team_submission,
-                piece: :demo,
-              ),
-            } %>
-        </p>
+          } %>
+      </p>
+
+      <div
+        class="modal"
+        id="video-modal-<%= @team_submission.video_id(:pitch) %>"
+      >
+        <div class="modal-content"></div>
+      </div>
+
+      <p>
+        <%= link_to web_icon(
+            "play-circle-o",
+            text: "Watch the demo video"
+          ),
+          "#",
+          class: "button button--small",
+          data: {
+            opens_modal: "video-modal-" +
+                          @team_submission.video_id(:demo),
+            modal_fetch: send(
+              "#{current_scope}_embed_code_path",
+              @team_submission,
+              piece: :demo,
+            ),
+          } %>
+      </p>
 
       <div
         class="modal"
@@ -97,26 +95,29 @@
     </div>
 
     <div class="panel">
-    <h3>Entrepreneurship</h3>
-    <p>Your team has uploaded:</p>
-    <%= link_to "Business plan", "#",
-      class: "button button--small"%>
+      <h3>Entrepreneurship</h3>
 
+      <p>Your team has uploaded:</p>
+
+      <%= link_to "Business plan", "#",
+        class: "button button--small"%>
+    </div>
+
+    <div class="panel">
+      <h3> Regional Pitch Events</h3>
+
+      <p>Only if attending a live, regional event:</p>
+
+      <%= link_to "Open the presentation slides", "#",
+        class: "button button--small"%>
+    </div>
+
+    <center>
+      <p>
+        <%= link_to "Submit",
+          [current_scope, :honor_code_review, team_id: current_team.id],
+          class: "button" %>
+      </p>
+    </center>
   </div>
-
-  <div class="panel">
-    <h3> Regional Pitch Events</h3>
-    <p>Only if attending a live, regional event:</p>
-    <%= link_to "Open the presentation slides", "#",
-    class: "button button--small"%>
-  </div>
-
-  <center><p>
-      <%= link_to "Submit",
-        [current_scope, :honor_code_review, team_id: current_team.id],
-        class: "button" %>
-    </p></center>
-  </div>
-
-
 </div>

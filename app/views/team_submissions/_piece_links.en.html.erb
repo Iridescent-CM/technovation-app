@@ -1,14 +1,12 @@
 <div class="submission-buttons submission-piece-links">
+  <div class="submission-piece-links__source-code">
+    <%= link_to "Source code",
+      submission.source_code_url,
+      class: "button button--small" %>
+  </div>
 
-    <div class="submission-piece-links__source-code">
-      <%= link_to "Source code",
-        submission.source_code_url,
-        class: "button button--small" %>
-    </div>
-
-    <div class="submission-piece-links__code-checklist">
-      <%= link_to "Read the code checklist", "#",
-      class: "button button--small"%>
-    </div>
-    
+  <div class="submission-piece-links__code-checklist">
+    <%= link_to "Read the code checklist", "#",
+    class: "button button--small"%>
+  </div>
 </div>
