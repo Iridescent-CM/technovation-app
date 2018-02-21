@@ -67,7 +67,7 @@
         <div class="grid__col-sm-6">
           <label>
             Date
-            <flatpickr-input
+            <datetime-input
               v-model="eventDate"
               :options="dateOpts" />
           </label>
@@ -76,18 +76,33 @@
         <div class="grid__col-6">
           <label>
             From
-            <flatpickr-input
+            <el-time-select
               v-model="eventStartTime"
-              :options="timeOpts" />
+              :picker-options="{
+                start: '07:00',
+                step: '00:15',
+                end: '23:30',
+                format: 'HH:mm A',
+              }"
+              placeholder="Select start time">
+            </el-time-select>
           </label>
 
           <errors :errors="eventErrors.starts_at"></errors>
 
           <label>
             To
-            <flatpickr-input
+            <el-time-select
               v-model="eventEndTime"
-              :options="timeOpts" />
+              :picker-options="{
+                start: '07:00',
+                step: '00:15',
+                end: '23:30',
+                format: 'HH:mm A',
+                minTime: eventStartTime,
+              }"
+              placeholder="Select start time">
+            </el-time-select>
           </label>
 
           <errors :errors="eventErrors.ends_at"></errors>
@@ -117,7 +132,7 @@
 <script>
   import _ from "lodash";
 
-  import FlatpickrInput from "./FlatpickrInput";
+  import DatetimeInput from "./DatetimeInput";
   import Errors from '../Errors';
   import Event from '../Event';
   import EventBus from '../EventBus';
@@ -321,7 +336,7 @@
     components: {
       App,
       Errors,
-      FlatpickrInput,
+      DatetimeInput,
     },
 
     mounted () {
