@@ -14,6 +14,8 @@
               format: :json
             ) %>"
 
+            manage-attendees="<%= ENV.fetch("MANAGE_EVENTS") { false } %>"
+
             search-judges-url="<%= regional_ambassador_judge_search_path(
               format: :json
             ) %>"

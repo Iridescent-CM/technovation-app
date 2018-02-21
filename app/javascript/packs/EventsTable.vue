@@ -34,23 +34,25 @@
           </td>
 
           <td>
-            <img
-              alt="edit teams"
-              title="Manage teams"
-              class="events-list__action-item"
-              src="https://icongr.am/fontawesome/group.svg?size=16"
-              v-tooltip.top-center="editEventTeamsMsg"
-              @click.prevent="manageEvent(event, 'managingTeams')"
-            />
+            <template v-if="managingAttendanceEnabled">
+              <img
+                alt="edit teams"
+                title="Manage teams"
+                class="events-list__action-item"
+                src="https://icongr.am/fontawesome/group.svg?size=16"
+                v-tooltip.top-center="editEventTeamsMsg"
+                @click.prevent="manageEvent(event, 'managingTeams')"
+              />
 
-            <img
-              alt="edit judges"
-              title="Manage judges"
-              class="events-list__action-item"
-              src="https://icongr.am/fontawesome/gavel.svg?size=16"
-              v-tooltip.top-center="editEventJudgesMsg"
-              @click.prevent="manageEvent(event, 'managingJudges')"
-            />
+              <img
+                alt="edit judges"
+                title="Manage judges"
+                class="events-list__action-item"
+                src="https://icongr.am/fontawesome/gavel.svg?size=16"
+                v-tooltip.top-center="editEventJudgesMsg"
+                @click.prevent="manageEvent(event, 'managingJudges')"
+              />
+            </template>
 
             <img
               alt="edit"
@@ -110,6 +112,7 @@
 
     props: [
       "fetchUrl",
+      "manageAttendees",
       "saveAssignmentsUrl",
       "judgesListUrl",
       "searchJudgesUrl",
@@ -127,6 +130,10 @@
     },
 
     computed: {
+      managingAttendanceEnabled () {
+        return this.manageAttendees != "false";
+      },
+
       editingOne () {
         return this.formActive || _.some(this.events, "editing");
       },
