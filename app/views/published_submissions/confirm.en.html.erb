@@ -1,15 +1,25 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
-      <h2>It's a girl's world.</h2>
+      <h2>It's a girl's world!</h2>
 
-      <p>Your project has been successfully submitted!
+      <p>
+        Your project has been successfully submitted!
         Thanks for taking on the challenge and creating positive change in
-        your local community using technology.</p>
+        your local community using technology.
+      </p>
 
-      <p>Let’s stay connected as part of the global Technovation community!</p>
-
-      <%= render 'social_icon_links' %>
+      <div class="grid--justify-center">
+        <p>
+          <%= link_to "View your complete submission",
+            [
+              current_scope,
+              :published_team_submission,
+              { id: @team_submission.to_param },
+            ],
+            class: "button button--small" %>
+        </p>
+      </div>
     </div>
   </div>
 </div>

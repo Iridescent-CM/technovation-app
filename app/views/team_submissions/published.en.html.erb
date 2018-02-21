@@ -104,7 +104,7 @@
     </div>
 
     <div class="panel">
-      <h3> Regional Pitch Events</h3>
+      <h3>Regional Pitch Events</h3>
 
       <p>Only if attending a live, regional event:</p>
 
@@ -112,12 +112,24 @@
         class: "button button--small"%>
     </div>
 
-    <div class="grid__col-auto grid--justify-center">
-      <p>
-        <%= link_to "Submit",
-          [current_scope, :honor_code_review, team_id: current_team.id],
-          class: "button" %>
-      </p>
-    </div>
+    <% @team_submission.awaiting_publish do %>
+      <div class="grid__col-auto grid--justify-center">
+        <p>
+          <%= link_to "Submit now",
+            [current_scope, :honor_code_review, team_id: current_team.id],
+            class: "button" %>
+
+          or
+
+          <%= link_to "continue editing",
+            [
+              current_scope,
+              @team_submission,
+              :section,
+              section: :ideation
+            ] %>
+        </p>
+      </div>
+    <% end %>
   </div>
 </div>
