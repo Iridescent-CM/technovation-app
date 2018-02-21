@@ -146,13 +146,13 @@ RSpec.describe SeasonToggles do
       end
 
       it "leaves changed_at when not changed" do
-        Timecop.freeze(Time.current)
-
-        SeasonToggles.set_survey_link(
-          scope,
-          "Hello World",
-          "https://google.com"
-        )
+        Timecop.freeze(Time.current) do
+          SeasonToggles.set_survey_link(
+            scope,
+            "Hello World",
+            "https://google.com"
+          )
+        end
 
         Timecop.freeze(Time.now + 1.second) do
           last_changed = SeasonToggles.survey_link(scope, "changed_at")
