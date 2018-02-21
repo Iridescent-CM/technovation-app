@@ -4,6 +4,7 @@ module RegionalAmbassador
       name_query = params.fetch(:name) { "" }
 
       scope = Team.current
+        .joins(:submission)
         .where("name ILIKE ?", "#{name_query.split(" ")[0]}%")
         .where.not(id: params[:exclude_ids])
 

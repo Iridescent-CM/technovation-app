@@ -10,6 +10,7 @@
        v-if="!fetchingList"
        :exclude-ids="event.selectedTeamIds()"
        :fetch-url="fetchUrl"
+       :event-bus-id="`event-${event.id}`"
     ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -171,7 +172,7 @@
           processData: false,
 
           success: (resp) => {
-            this.event.afterSave();
+            this.event.afterTeamSave();
           },
 
           error: (err) => {
@@ -193,9 +194,10 @@
     },
 
     mounted () {
-      EventBus.$on("selected", (selectedTeam) => {
-        this.event.addTeam(selectedTeam);
-      });
+      EventBus.$on(
+        "TeamSearch.selected-event-" + this.event.id,
+        (selectedTeam) => { this.event.addTeam(selectedTeam); }
+      );
 
       if (this.event.selectedTeams.length) {
         this.fetchingList = false;

@@ -2,7 +2,8 @@
   <div class="grid">
     <div class="grid__col-12 grid__col--bleed-y">
       <h6 class="heading--reset">
-        Selected judges <span>({{ this.event.selectedJudges.length }})</span>
+        Selected judges
+        <span>({{ this.event.selectedJudges.length }})</span>
       </h6>
     </div>
 
@@ -10,6 +11,7 @@
        v-if="!fetchingList"
        :exclude-ids="event.selectedJudgeIds()"
        :fetch-url="fetchUrl"
+       :event-bus-id="`event-${event.id}`"
     ></judge-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -204,9 +206,10 @@
     },
 
     mounted () {
-      EventBus.$on("selected", (selectedJudge) => {
-        this.event.addJudge(selectedJudge);
-      });
+      EventBus.$on(
+        "JudgeSearch.selected-event-" + this.event.id,
+        (selectedJudge) => { this.event.addJudge(selectedJudge); }
+      );
 
       if (this.event.selectedJudges.length) {
         this.fetchingList = false;

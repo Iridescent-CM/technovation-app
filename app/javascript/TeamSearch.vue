@@ -32,6 +32,7 @@
       >
         <p>
           We couldn't find a team with that name.
+          Make sure they have started their submission.
         </p>
       </div>
 
@@ -127,6 +128,7 @@
     props: [
       'fetchUrl',
       'excludeIds',
+      'eventBusId',
     ],
 
     computed: {
@@ -242,7 +244,10 @@
       },
 
       selectHighlighted (idx) {
-        EventBus.$emit("selected", this.highlightedResult);
+        EventBus.$emit(
+          "TeamSearch.selected-" + this.eventBusId,
+          this.highlightedResult
+        );
         this.reset();
       },
 

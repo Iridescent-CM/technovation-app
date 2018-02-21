@@ -68,4 +68,10 @@ export default function (event) {
       judge.afterAssign();
     });
   };
+
+  this.afterTeamSave = () => {
+    _.each(this.selectedTeams, (team) => {
+      team.afterAssign();
+    });
+  };
 };

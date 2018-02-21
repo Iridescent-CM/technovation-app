@@ -164,6 +164,7 @@
     props: [
       'fetchUrl',
       'excludeIds',
+      'eventBusId',
     ],
 
     computed: {
@@ -296,7 +297,11 @@
       },
 
       selectHighlighted (idx) {
-        EventBus.$emit("selected", this.highlightedResult);
+        EventBus.$emit(
+          "JudgeSearch.selected-" + this.eventBusId,
+          this.highlightedResult
+        );
+
         this.reset();
       },
 
