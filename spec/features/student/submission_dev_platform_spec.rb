@@ -13,7 +13,7 @@ RSpec.feature "Students edit submission development platform" do
     sign_in(student)
 
     click_link "My team's submission"
-    click_link "Code"
+    click_link "Technical"
     click_link "Select your development platform"
 
     select "App Inventor",

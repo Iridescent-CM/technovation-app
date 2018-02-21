@@ -16,7 +16,7 @@ RSpec.feature "Mentors edit submission code checklist" do
   end
 
   scenario "visit the checklist" do
-    click_link "Code"
+    click_link "Technical"
     click_link "Confirm your code checklist"
 
     check "Strings"

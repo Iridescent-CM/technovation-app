@@ -13,7 +13,7 @@ RSpec.feature "Students edit submission code checklist" do
     SeasonToggles.team_submissions_editable!
     sign_in(student)
     click_link "My team's submission"
-    click_link "Code"
+    click_link "Technical"
   end
 
   scenario "visit the checklist" do
