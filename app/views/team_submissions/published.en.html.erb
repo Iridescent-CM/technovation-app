@@ -35,9 +35,19 @@
     <div class="panel">
       <h3>Technical</h3>
 
-      <%= render "team_submissions/piece_links",
-        submission: @team_submission,
-        team: @team %>
+      <div class="submission-buttons submission-piece-links">
+        <div class="submission-piece-links__source-code">
+          <%= link_to "Source code",
+            @team_submission.source_code_url,
+            class: "button button--small" %>
+        </div>
+
+        <div class="submission-piece-links__code-checklist">
+          <%= link_to "Read the code checklist",
+            [current_scope, :code_checklist, team_id: @team.id],
+            class: "button button--small" %>
+        </div>
+      </div>
     </div>
 
     <div class="panel">

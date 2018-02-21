@@ -5,6 +5,12 @@ module CodeChecklistController
     helper_method :piece_name
   end
 
+  def show
+    @team_submission = current_team.submission
+    @code_checklist = @team_submission.code_checklist
+    render "team_submissions/code_checklist"
+  end
+
   def update
     unless SeasonToggles.team_submissions_editable?
       redirect_to dashboard_path and return

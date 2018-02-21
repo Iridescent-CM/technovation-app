@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :published_team_submissions, only: :show
     resource :honor_code_review, only: :show
     resource :published_submission_confirmation, only: :show
-    resource :code_checklist, only: :update
+    resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
     resource :honor_code, only: :show
     resources :embed_codes, only: :show
@@ -99,7 +99,7 @@ Rails.application.routes.draw do
 
     resources :certificates, only: :create
 
-    resource :code_checklist, only: :update
+    resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
