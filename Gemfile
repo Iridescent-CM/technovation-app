@@ -17,21 +17,21 @@ gem 'counter_culture', '~> 1.9'
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
 
-gem 'turbolinks', "~> 5.0"
+gem 'turbolinks', "~> 5.1"
 gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
-gem 'chosen-rails', "~> 1.5"
+gem 'chosen-rails', "~> 1.8"
 gem 'chart-js-rails', "~> 0.1"
 gem 'dropzonejs-rails', "~> 0.8"
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.2'
 
 gem "cocoon", "~> 1.2"
 
 gem 'sass-rails', "~> 5.0"
 gem 'normalize-rails', "~> 4.1"
 
-gem 'rails-i18n', "~> 5.0"
+gem 'rails-i18n', "~> 5.1"
 gem 'i18n-tasks', '~> 0.9'
 gem 'clipboard-rails', "~> 1.7"
 gem 'will_paginate', '~> 3.1'
@@ -72,7 +72,7 @@ gem "mini_magick", "~> 4.8"
 gem "fog-aws", "~> 1.4"
 gem 'carrierwave_direct', "~> 0.0"
 
-gem 'checkr-official', "~> 1.2", require: "checkr"
+gem 'checkr-official', "~> 1.5", require: "checkr"
 
 gem 'countries', '~> 1.2', require: "countries/global"
 gem 'carmen', '~> 1.1'
@@ -93,7 +93,7 @@ end
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
   gem 'active_record_query_trace', "~> 1.5"
-  gem "letter_opener", "~> 1.4"
+  gem "letter_opener", "~> 1.6"
   gem 'rack-mini-profiler', "~> 0.10"
   gem 'memory_profiler', "~> 0.9"
   gem 'listen', '~> 3.1'
@@ -103,7 +103,7 @@ end
 group :test do
   gem 'timecop', "~> 0.9"
   gem 'vcr', "~> 3.0"
-  gem 'webmock', "~> 3.1"
+  gem 'webmock', "~> 3.3"
   gem 'sinatra', '~> 2.0'
 
   gem 'capybara-webkit',
@@ -112,7 +112,7 @@ group :test do
 
   gem 'database_cleaner', "~> 1.6"
   gem 'rails-controller-testing', "~> 1.0"
-  gem "fakeredis", "~> 0.6", require: "fakeredis/rspec"
+  gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
@@ -124,7 +124,7 @@ end
 
 group :production do
   gem 'hiredis', "~> 0.6"
-  gem 'scout_apm', "~> 2.3"
+  gem 'scout_apm', "~> 2.4"
   gem "rack-timeout", "~> 0.4"
   gem 'heroku-deflater',
     git: 'https://github.com/romanbsd/heroku-deflater.git',
@@ -140,5 +140,5 @@ group :legacy do
   # Do not use these gems
   #
   gem 'flag_shih_tzu', "~> 0.3", require: false
-  gem 'aws-sdk', "~> 2.10", require: false
+  gem 'aws-sdk', "~> 2.11", require: false
 end
