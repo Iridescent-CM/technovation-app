@@ -6,13 +6,23 @@
       <%= render "team_submissions/honor_code" %>
 
       <p>
-        <%= link_to "Submit for judging",
+        <%= link_to "We agree",
           [
             current_scope,
             :published_submission_confirmation,
             team_id: @team_submission.team_id,
           ],
           class: "button" %>
+
+        or
+
+        <%= link_to "go back",
+          [
+            current_scope,
+            @team_submission,
+            :section,
+            section: :ideation
+          ] %>
       </p>
     </div>
   </div>

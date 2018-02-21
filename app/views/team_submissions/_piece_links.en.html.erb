@@ -1,28 +1,12 @@
-<div class="submission-piece-links">
+<div class="submission-buttons submission-piece-links">
   <div class="submission-piece-links__source-code">
-    <%= web_icon("file-code-o") %>
     <%= link_to "Source code",
-      submission.source_code_url %>
+      submission.source_code_url,
+      class: "button button--small" %>
   </div>
 
   <div class="submission-piece-links__code-checklist">
-    <%= web_icon("check-square-o") %>
-    <%= link_to "Read the code checklist", "#" %>
+    <%= link_to "Read the code checklist", "#",
+    class: "button button--small"%>
   </div>
-
-  <% team.senior_division do %>
-    <div class="submission-piece-links__business-plan">
-      <%= web_icon("file-text-o") %>
-      <%= link_to "Read the business plan",
-        submission.business_plan_url %>
-    </div>
-  <% end %>
-
-  <% team.attending_live_event do %>
-    <div class="submission-piece-links__presentation-slides">
-      <%= web_icon("file-powerpoint-o") %>
-      <%= link_to "Open the presentation slides",
-        submission.pitch_presentation_url %>
-    </div>
-  <% end %>
 </div>

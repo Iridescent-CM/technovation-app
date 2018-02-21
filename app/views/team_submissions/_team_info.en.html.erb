@@ -1,11 +1,11 @@
 <div class="team-info">
+  <div class="team-info__name">
+    <h1><%= team.name %></h1>
+  </div>
+
   <div class="team-info__photo">
     <%= image_tag team.team_photo_url,
       class: "grid__cell-img" %>
-  </div>
-
-  <div class="team-info__name">
-    <%= team.name %>
   </div>
 
   <div class="team-info__division">
