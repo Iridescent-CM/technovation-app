@@ -24,6 +24,10 @@ export default function (event) {
   this.url = event.url;
 
   this.managing = false;
+  this.editing = false;
+  this.managingJudges = false;
+  this.managingTeams = false;
+
   this.selectedJudges = [];
   this.selectedTeams = [];
 

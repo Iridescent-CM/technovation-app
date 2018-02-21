@@ -13,27 +13,43 @@
     <tbody>
       <template v-for="event in events">
         <tr
-          v-if="managingOrNotEditing(event)"
+          v-if="editingThisEventOrNone(event)"
           :class="['event-preview', event.managing ? 'open' : '']"
           :key="event.id"
         >
-          <td @click="event.managing = !event.managing; editingOne = false">
+          <td>
             {{ event.name }}
           </td>
 
-          <td @click="event.managing = !event.managing; editingOne = false">
+          <td>
             {{ event.division_names }}
           </td>
 
-          <td @click="event.managing = !event.managing; editingOne = false">
+          <td>
             {{ event.day }} <small>{{ event.date }}</small>
           </td>
 
-          <td @click="event.managing = !event.managing; editingOne = false">
+          <td>
             {{ event.time }} <small>Timezone: {{ event.tz }}</small>
           </td>
 
           <td>
+            <img
+              alt="edit teams"
+              title="Manage teams"
+              class="events-list__action-item"
+              src="https://icongr.am/fontawesome/group.svg?size=16"
+              @click.prevent="manageEvent(event, 'managingTeams')"
+            />
+
+            <img
+              alt="edit judges"
+              title="Manage judges"
+              class="events-list__action-item"
+              src="https://icongr.am/fontawesome/gavel.svg?size=16"
+              @click.prevent="manageEvent(event, 'managingJudges')"
+            />
+
             <img
               alt="edit"
               class="events-list__action-item"
@@ -53,10 +69,11 @@
         <tr
           class="event-manage"
           :key="event.id + '-manage'"
-          v-if="event.managing && !editingOne"
+          v-if="!editingOne && event.managing"
         >
           <td colspan="5">
             <event-judge-list
+              v-if="event.managingJudges"
               :event="event"
               :fetchListUrl="judgesListUrl"
               :fetchUrl="searchJudgesUrl"
@@ -64,6 +81,7 @@
             ></event-judge-list>
 
             <event-team-list
+              v-if="event.managingTeams"
               :event="event"
               :fetchListUrl="teamsListUrl"
               :fetchUrl="searchTeamsUrl"
@@ -101,14 +119,13 @@
     data () {
       return {
         events: [],
-        editingOne: false,
+        formActive: false,
       };
     },
 
-    watch: {
-      editingOne (current) {
-        if (current)
-          _.each(this.events, (e) => { e.managing = false; });
+    computed: {
+      editingOne () {
+        return this.formActive || _.some(this.events, "editing");
       },
     },
 
@@ -118,12 +135,19 @@
     },
 
     methods: {
-      managingOrNotEditing (event) {
-        return !this.editingOne || event.managing;
+      editingThisEventOrNone (event) {
+        return event.editing || !this.editingOne;
+      },
+
+      manageEvent (event, prop) {
+        event.editing = false;
+        event.managing = true;
+        event[prop] = !event[prop]
       },
 
       editEvent (event) {
-        this.editingOne = true;
+        event.editing = true;
+        _.each(this.events, (e) => { e.managing = false });
         EventBus.$emit("EventsTable.editEvent", event);
       },
 
@@ -166,11 +190,12 @@
       });
 
       EventBus.$on("EventForm.reset", () => {
-        this.editingOne = false;
+        this.formActive = false;
+        _.each(this.events, (e) => { e.editing = false; });
       });
 
       EventBus.$on("EventForm.active", () => {
-        this.editingOne = true;
+        this.formActive = true;
       });
 
       $.ajax({
@@ -194,26 +219,15 @@
   }
 
   .datagrid {
-    .event-preview {
-      cursor: pointer;
-
-      &:hover,
-      &:hover td {
-        background: rgba(220, 220, 220, 0.25);
-      }
-
-      &.open td {
-        border: 0;
-      }
+    .open td {
+      border: 0;
     }
 
     .event-manage {
       cursor: auto;
 
-      &:hover {
-        td {
-          background: none;
-        }
+      &:hover td {
+        background: none;
       }
     }
   }
