@@ -104,6 +104,7 @@
               type="submit"
               class="button"
               :value="saveBtnTxt"
+              :disabled="saving"
             />
             or <a @click.prevent="reset" href="#">cancel</a>
           </p>
@@ -134,6 +135,8 @@
 
     data () {
       return {
+        saving: false,
+
         dateOpts: {
           enableTime: false,
           altInput: true,
@@ -259,25 +262,27 @@
         var vm = this,
             form = new FormData();
 
-        form.append("regional_pitch_event[name]", this.event.name);
-        form.append("regional_pitch_event[city]", this.event.city);
-        form.append("regional_pitch_event[ends_at]", this.event.ends_at);
+        vm.saving = true;
 
-        _.each(this.event.division_ids, (id) => {
+        form.append("regional_pitch_event[name]", vm.event.name);
+        form.append("regional_pitch_event[city]", vm.event.city);
+        form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
+
+        _.each(vm.event.division_ids, (id) => {
           form.append("regional_pitch_event[division_ids][]", id);
         });
 
         form.append("regional_pitch_event[venue_address]",
-          this.event.venue_address);
+          vm.event.venue_address);
 
         form.append("regional_pitch_event[starts_at]",
-          this.event.starts_at);
+          vm.event.starts_at);
 
         form.append("regional_pitch_event[eventbrite_link]",
-          this.event.eventbrite_link);
+          vm.event.eventbrite_link);
 
         $.ajax({
-          method: this.httpMethod,
+          method: vm.httpMethod,
           url: vm.url,
           contentType: false,
           processData: false,
@@ -293,7 +298,7 @@
 
             EventBus.$emit("EventForm.handleSubmit", vm.event);
 
-            this.reset();
+            vm.reset();
           },
 
           error: (resp) => {
@@ -304,6 +309,10 @@
             _.each(Object.keys(errors), (k) => {
               vm.bindError(k, errors[k]);
             });
+          },
+
+          complete: () => {
+            vm.saving = false;
           },
         });
       },
