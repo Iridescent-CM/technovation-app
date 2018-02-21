@@ -39,6 +39,7 @@
               title="Manage teams"
               class="events-list__action-item"
               src="https://icongr.am/fontawesome/group.svg?size=16"
+              v-tooltip.top-center="editEventTeamsMsg"
               @click.prevent="manageEvent(event, 'managingTeams')"
             />
 
@@ -47,6 +48,7 @@
               title="Manage judges"
               class="events-list__action-item"
               src="https://icongr.am/fontawesome/gavel.svg?size=16"
+              v-tooltip.top-center="editEventJudgesMsg"
               @click.prevent="manageEvent(event, 'managingJudges')"
             />
 
@@ -119,6 +121,8 @@
       return {
         events: [],
         formActive: false,
+        editEventTeamsMsg: "Manage teams",
+        editEventJudgesMsg: "Manage judges",
       };
     },
 

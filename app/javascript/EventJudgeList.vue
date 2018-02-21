@@ -56,6 +56,17 @@
               {{ judge.human_status }}
             </div>
           </td>
+
+          <td>
+            <img
+              alt="edit teams"
+              title="Manage this judge's teams"
+              class="events-list__action-item"
+              src="https://icongr.am/fontawesome/group.svg?size=16"
+              v-tooltip.top-center="editEventTeamsMsg"
+              @click.prevent="manageJudgeTeams(judge)"
+            />
+          </td>
         </tr>
       </table>
     </div>
@@ -87,6 +98,7 @@
     data () {
       return {
         fetchingList: true,
+        editEventTeamsMsg: "Manage assigned teams",
       };
     },
 
@@ -98,6 +110,11 @@
     ],
 
     methods: {
+      manageJudgeTeams (judge) {
+        // FIXME: limit to events with 15+ teams
+        console.log("manage judge teams");
+      },
+
       removeJudge (judge) {
         var vm = this,
             modalHtml = judge.name + " - " + judge.email;
