@@ -181,6 +181,34 @@ class MentorProfile < ActiveRecord::Base
     end
   end
 
+  def status
+    if current_account && onboarded?
+      "ready"
+    elsif current_account
+      "registered"
+    else
+      "past_season"
+    end
+  end
+
+  def human_status
+    case status
+    when "past_season"; "must log in"
+    when "registered";  "must complete onboarding"
+    when "ready";       "ready!"
+    else; "status missing (bug)"
+    end
+  end
+
+  def friendly_status
+    case status
+    when "past_season"; "Log in now"
+    when "registered";  "Complete your mentor profile"
+    when "ready";       "Log in for more details"
+    else; "status missing (bug)"
+    end
+  end
+
   def used_global_invitation?
     !!used_global_invitation
   end

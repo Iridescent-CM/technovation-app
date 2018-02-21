@@ -1,6 +1,6 @@
 <tr>
   <td class="content-wrap">
-    <meta itemprop="name" content="Download your file"/>
+    <meta itemprop="name" content="Invited to event" />
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
@@ -9,7 +9,7 @@
       </tr>
       <tr>
         <td class="content-block">
-          Your Regional Ambassador has just added you to the event:
+          A Regional Ambassador has just added you to the event:
           <strong><%= @event.name %></strong>
         </td>
       </tr>
@@ -30,12 +30,14 @@
             itemprop="handler"
             itemscope
             itemtype="http://schema.org/HttpActionHandler">
-          <a href="<%= @url %>"><%= @invite.friendly_status %></a>
+          <%= link_to @invite.friendly_status,
+            @url,
+            class: "btn-primary", itemprop: "url" %>
         </td>
       </tr>
       <tr>
         <td class="content-block">
-          Send an email to your ambassador,
+          Send an email to the ambassador who invited you,
           <%= @ambassador_name %>,
           at <%= mail_to @ambassador_email %>
           if you have questions.

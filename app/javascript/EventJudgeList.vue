@@ -93,7 +93,7 @@
     props: [
       'fetchUrl',
       'fetchListUrl',
-      'saveJudgesUrl',
+      'saveAssignmentsUrl',
       'event',
     ],
 
@@ -120,7 +120,7 @@
 
             $.ajax({
               method: "DELETE",
-              url: this.saveJudgesUrl,
+              url: this.saveAssignmentsUrl,
               data: form,
               contentType: false,
               processData: false,
@@ -178,7 +178,7 @@
 
         $.ajax({
           method: "POST",
-          url: this.saveJudgesUrl,
+          url: this.saveAssignmentsUrl,
           data: form,
           contentType: false,
           processData: false,

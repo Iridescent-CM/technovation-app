@@ -77,7 +77,7 @@
               :event="event"
               :fetchListUrl="judgesListUrl"
               :fetchUrl="searchJudgesUrl"
-              :saveJudgesUrl="saveJudgesUrl"
+              :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-judge-list>
 
             <event-team-list
@@ -85,7 +85,7 @@
               :event="event"
               :fetchListUrl="teamsListUrl"
               :fetchUrl="searchTeamsUrl"
-              :saveTeamsUrl="saveTeamsUrl"
+              :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-team-list>
           </td>
         </tr>
@@ -108,10 +108,9 @@
 
     props: [
       "fetchUrl",
-      "saveJudgesUrl",
+      "saveAssignmentsUrl",
       "judgesListUrl",
       "searchJudgesUrl",
-      "saveTeamsUrl",
       "teamsListUrl",
       "searchTeamsUrl",
     ],

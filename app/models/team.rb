@@ -56,9 +56,10 @@ class Team < ActiveRecord::Base
 
   def human_status
     case status
-    when "ready";         "ready!"
-    when "unqualified";   "is not qualified"
-    when "no_submission"; "must start submission"
+    when "ready";          "ready!"
+    when "unqualified";    "is not qualified"
+    when "no_submission";  "must start submission"
+    when "cannot_compete"; "cannot compete"
     else; "status missing (bug)"
     end
   end

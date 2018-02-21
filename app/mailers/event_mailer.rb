@@ -13,8 +13,6 @@ class EventMailer < ApplicationMailer
   end
 
   def invite(invite_klass_name, invite_id, event_id)
-    return if invite_klass_name == "Team"
-
     @invite = invite_klass_name.constantize.find(invite_id)
     @event = RegionalPitchEvent.find(event_id)
 
@@ -23,11 +21,13 @@ class EventMailer < ApplicationMailer
 
     @url = case @invite.status
            when "sent", "opened"
-             judge_signup_url(
+             send(
+               "#{@invite.scope_name}_signup_url",
                admin_permission_token: @invite.admin_permission_token
              )
            when "registered", "past_season", "training", "ready"
-             judge_dashboard_url(
+             send(
+               "#{@invite.scope_name}_dashboard_url",
                mailer_token: @invite.mailer_token
              )
            else
