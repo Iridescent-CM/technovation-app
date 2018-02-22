@@ -4,7 +4,8 @@
       <p>
         With 15 or more teams attending your event, we recommend
         that you group them, so that the judges can focus on only
-        a handful of teams.
+        a handful of teams. No emails will be sent while you organize
+        this section.
       </p>
 
       <h6 class="heading--reset">
