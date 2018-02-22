@@ -144,7 +144,7 @@
         formActive: false,
         editEventTeamsMsg: "Manage teams",
         editEventJudgesMsg: "Manage judges",
-        editEventRoomsMsg: "Manage groups",
+        editEventRoomsMsg: "Manage rooms",
       };
     },
 

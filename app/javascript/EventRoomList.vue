@@ -8,17 +8,35 @@
     </div>
 
     <div class="grid__col-12 grid__col--bleed-y">
+      <p>
+        <button
+          class="button button--small"
+          @click="addRoom"
+        >
+          + Create a room
+        </button>
+      </p>
+
       <div class="grid">
         <div
           class="grid__col-sm-4"
-          v-for="room in event.rooms"
+          v-for="(room, idx) in event.rooms"
           :key="`room-${room.num}`"
         >
-          Room {{ room.num }}
+          <p>
+            <img
+              alt="remove"
+              src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+              @click.prevent="removeRoom(idx)"
+            />
+            Room {{ room.num }}
+          </p>
 
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
-              <strong>Teams</strong>
+              <strong>
+                Teams (<a @click="addTeam(room)">+</a>)
+              </strong>
 
               <ul class="list--reset">
                 <li
@@ -36,7 +54,9 @@
             </div>
 
             <div class="grid__col-auto">
-              <strong>Judges</strong>
+              <strong>
+                Judges (<a @click="addJudge(room)">+</a>)
+              </strong>
 
               <ul class="list--reset">
                 <li
@@ -63,6 +83,7 @@
   import _ from 'lodash';
 
   import EventBus from './EventBus';
+  import Room from "./Room";
 
   export default {
     data () {
@@ -78,6 +99,35 @@
     ],
 
     methods: {
+      addRoom () {
+        var num = this.event.rooms.length + 1;
+        var room = new Room({ num: num });
+        this.event.rooms.push(room);
+      },
+
+      addJudge (room) {
+        var judge = {
+          id: room.judges.length + 1,
+          name: "Judgey judge",
+        };
+        room.judges.push(judge);
+      },
+
+      addTeam (room) {
+        var team = {
+          id: room.teams.length + 1,
+          name: "Teamy team cats",
+        };
+        room.teams.push(team);
+      },
+
+      removeRoom (idx) {
+        this.event.rooms.splice(idx, 1);
+        _.each(this.event.rooms, (r, i) => {
+          r.num = i + 1;
+        });
+      },
+
       removeTeam (room, idx) {
         room.teams.splice(idx, 1);
       },
@@ -149,13 +199,19 @@
 </script>
 
 <style lang="scss" scoped>
+  a {
+    cursor: pointer;
+  }
+
   img {
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.2s;
   }
 
-  li:hover img {
-    opacity: 1;
+  li:hover, p:hover {
+    img {
+      opacity: 1;
+    }
   }
 </style>
