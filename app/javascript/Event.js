@@ -33,6 +33,12 @@ export default function (event) {
   this.selectedJudges = [];
   this.selectedTeams = [];
 
+  this.resetManaging = () => {
+    this.managingJudges = false;
+    this.managingTeams = false;
+    this.managingRooms = false;
+  };
+
   this.addJudge = (judge) => {
     var existingIdx = this.selectedJudges.indexOf((j) => {
       return j.id == judge.id

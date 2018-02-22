@@ -170,6 +170,7 @@
       },
 
       manageEvent (event, prop) {
+        event.resetManaging();
         event.editing = false;
         event.managing = true;
         event[prop] = !event[prop]
