@@ -126,6 +126,16 @@ class AccountsGrid
     end
   end
 
+  column :referred_by do
+    referred = referred_by
+
+    if referred == "Other"
+      referred += " - #{referred_by_other}"
+    end
+
+    referred
+  end
+
   column :created_at, header: "Signed up" do
     created_at.strftime("%Y-%m-%d")
   end
