@@ -1,6 +1,12 @@
 <template>
   <div class="grid">
     <div class="grid__col-12 grid__col--bleed-y">
+      <p>
+        With 15 or more teams attending your event, we recommend
+        that you group them, so that the judges can focus on only
+        a handful of teams.
+      </p>
+
       <h6 class="heading--reset">
         Rooms
         <span>({{ this.event.rooms.length }})</span>
