@@ -116,25 +116,43 @@
       },
 
       addJudge (room) {
-        this.promptSelection({
-          collection: this.event.selectedJudges,
-          title: "Add a judge to Room " + room.num,
-          sortBy: "name",
-          valueProp: "id",
-          textProp: "name",
-          prompt: "Select a judge",
-        });
+        var vm = this;
+
+        async function addRoomJudge () {
+          const judgeId = await vm.promptSelection({
+            collection: vm.event.selectedJudges,
+            title: "Add a judge to Room " + room.num,
+            sortBy: "name",
+            valueProp: "id",
+            textProp: "name",
+            prompt: "Select a judge",
+          });
+
+          if (judgeId)
+            room.judges.push(new Judge({ id: judgeId, name: "foo" }));
+        }
+
+        addRoomJudge();
       },
 
       addTeam (room) {
-        this.promptSelection({
-          collection: this.event.selectedTeams,
-          title: "Add a team to Room " + room.num,
-          sortBy: "name",
-          valueProp: "id",
-          textProp: "name",
-          prompt: "Select a team",
-        });
+        var vm = this;
+
+        async function addRoomTeam () {
+          const teamId = await vm.promptSelection({
+            collection: vm.event.selectedTeams,
+            title: "Add a team to Room " + room.num,
+            sortBy: "name",
+            valueProp: "id",
+            textProp: "name",
+            prompt: "Select a team",
+          });
+
+          if (teamId)
+            room.teams.push(new Team({ id: teamId, name: "bar" }));
+        }
+
+        addRoomTeam();
       },
 
       promptSelection (opts) {
@@ -154,11 +172,10 @@
             showCancelButton: true,
           });
 
-          if (selection)
-            console.log("Selected: ", selection);
+          return selection;
         }
 
-        promptForSelection();
+        return promptForSelection();
       },
 
       removeRoom (idx) {
