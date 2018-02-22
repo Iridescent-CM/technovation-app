@@ -120,6 +120,10 @@ class UserInvitation < ApplicationRecord
     [:admin_permission_token, admin_permission_token]
   end
 
+  def scope_name
+    profile_type
+  end
+
   private
   def inviting_existing_ra_to_be_an_ra?
     profile_type.to_s == "regional_ambassador" and
