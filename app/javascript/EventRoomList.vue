@@ -89,8 +89,9 @@
 <script>
   import _ from 'lodash';
 
-  import EventBus from './EventBus';
   import Room from "./Room";
+  import Team from './Team';
+  import Judge from './Judge';
 
   export default {
     data () {
@@ -100,7 +101,9 @@
     },
 
     props: [
-      'fetchListUrl',
+      'fetchRoomListUrl',
+      'fetchJudgeListUrl',
+      'fetchTeamListUrl',
       'saveAssignmentsUrl',
       'event',
     ],
@@ -113,19 +116,45 @@
       },
 
       addJudge (room) {
-        var judge = {
-          id: room.judges.length + 1,
-          name: "Judgey judge",
-        };
-        room.judges.push(judge);
+        this.promptSelection({
+          collection: this.event.selectedJudges,
+          sortBy: "name",
+          valueProp: "id",
+          textProp: "name",
+          prompt: "Select a judge",
+        });
       },
 
       addTeam (room) {
-        var team = {
-          id: room.teams.length + 1,
-          name: "Teamy team cats",
-        };
-        room.teams.push(team);
+        this.promptSelection({
+          collection: this.event.selectedTeams,
+          sortBy: "name",
+          valueProp: "id",
+          textProp: "name",
+          prompt: "Select a team",
+        });
+      },
+
+      promptSelection (opts) {
+        var sorted = _.sortBy(opts.collection, opts.sortBy),
+            inputOptions = {};
+
+            _.each(sorted, (s) => {
+              inputOptions[s[opts.valueProp]] = s[opts.textProp];
+            });
+
+        async function promptForSelection () {
+          const { value: selection } = await swal({
+            input: "select",
+            inputPlaceholder: opts.prompt,
+            inputOptions: inputOptions,
+          });
+
+          if (selection)
+            console.log("Selected: ", selection);
+        }
+
+        promptForSelection();
       },
 
       removeRoom (idx) {
@@ -201,6 +230,43 @@
     },
 
     mounted () {
+      var vm = this;
+
+      if (!vm.event.selectedTeams.length) {
+        $.ajax({
+          method: "GET",
+          url: this.fetchTeamListUrl + "?event_id=" + vm.event.id,
+
+          success: (resp) => {
+            _.each(resp, (result) => {
+              var team = new Team(result);
+              vm.event.selectedTeams.push(team)
+            });
+          },
+
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      }
+
+      if (!vm.event.selectedJudges.length) {
+        $.ajax({
+          method: "GET",
+          url: this.fetchJudgeListUrl + "?event_id=" + vm.event.id,
+
+          success: (resp) => {
+            _.each(resp, (result) => {
+              var judge = new Judge(result);
+              vm.event.selectedJudges.push(judge)
+            });
+          },
+
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      }
     },
   };
 </script>

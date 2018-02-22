@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@rails/webpacker": "^3.2.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "element-ui": "^2.2.0",
     "flatpickr": "^4.2.4",
     "lodash": "^4.17.4",

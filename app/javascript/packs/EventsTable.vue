@@ -88,7 +88,9 @@
             <event-room-list
               v-if="event.managingRooms"
               :event="event"
-              :fetchListUrl="roomsListUrl"
+              :fetchRoomListUrl="roomsListUrl"
+              :fetchJudgeListUrl="judgesListUrl"
+              :fetchTeamListUrl="teamsListUrl"
               :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-room-list>
 
