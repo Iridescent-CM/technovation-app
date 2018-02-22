@@ -118,6 +118,7 @@
       addJudge (room) {
         this.promptSelection({
           collection: this.event.selectedJudges,
+          title: "Add a judge to Room " + room.num,
           sortBy: "name",
           valueProp: "id",
           textProp: "name",
@@ -128,6 +129,7 @@
       addTeam (room) {
         this.promptSelection({
           collection: this.event.selectedTeams,
+          title: "Add a team to Room " + room.num,
           sortBy: "name",
           valueProp: "id",
           textProp: "name",
@@ -145,9 +147,11 @@
 
         async function promptForSelection () {
           const { value: selection } = await swal({
+            title: opts.title,
             input: "select",
             inputPlaceholder: opts.prompt,
             inputOptions: inputOptions,
+            showCancelButton: true,
           });
 
           if (selection)
