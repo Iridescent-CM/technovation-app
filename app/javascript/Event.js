@@ -29,7 +29,28 @@ export default function (event) {
   this.managingTeams = false;
   this.managingRooms = false;
 
-  this.rooms = [];
+  this.rooms = [
+    {
+      num: 1,
+      teams: [
+        { id: 1, name: "Team A" },
+        { id: 2, name: "Team B" },
+        { id: 3, name: "Team C" },
+        { id: 4, name: "Team D" },
+        { id: 5, name: "Team E" },
+        { id: 6, name: "Team F" },
+      ],
+      judges: [
+        { id: 1, name: "Judge A" },
+        { id: 2, name: "Judge B" },
+        { id: 3, name: "Judge C" },
+        { id: 4, name: "Judge D" },
+        { id: 5, name: "Judge E" },
+        { id: 6, name: "Judge F" },
+      ],
+    },
+  ];
+
   this.selectedJudges = [];
   this.selectedTeams = [];
 
