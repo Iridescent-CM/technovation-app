@@ -27,7 +27,9 @@ export default function (event) {
   this.editing = false;
   this.managingJudges = false;
   this.managingTeams = false;
+  this.managingRooms = false;
 
+  this.rooms = [];
   this.selectedJudges = [];
   this.selectedTeams = [];
 

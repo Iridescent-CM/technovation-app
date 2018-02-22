@@ -36,10 +36,19 @@
           <td>
             <template v-if="managingAttendanceEnabled">
               <img
+                alt="edit rooms"
+                title="Manage rooms"
+                class="events-list__action-item"
+                src="https://icongr.am/fontawesome/group.svg?size=16"
+                v-tooltip.top-center="editEventRoomsMsg"
+                @click.prevent="manageEvent(event, 'managingRooms')"
+              />
+
+              <img
                 alt="edit teams"
                 title="Manage teams"
                 class="events-list__action-item"
-                src="https://icongr.am/fontawesome/group.svg?size=16"
+                src="https://icongr.am/fontawesome/flag.svg?size=16"
                 v-tooltip.top-center="editEventTeamsMsg"
                 @click.prevent="manageEvent(event, 'managingTeams')"
               />
@@ -76,6 +85,13 @@
           v-if="!editingOne && event.managing"
         >
           <td colspan="5">
+            <event-room-list
+              v-if="event.managingRooms"
+              :event="event"
+              :fetchListUrl="roomsListUrl"
+              :saveAssignmentsUrl="saveAssignmentsUrl"
+            ></event-room-list>
+
             <event-judge-list
               v-if="event.managingJudges"
               :event="event"
@@ -104,6 +120,7 @@
   import EventBus from '../EventBus';
   import Event from '../Event';
 
+  import EventRoomList from '../EventRoomList';
   import EventJudgeList from '../EventJudgeList';
   import EventTeamList from '../EventTeamList';
 
@@ -114,6 +131,7 @@
       "fetchUrl",
       "manageAttendees",
       "saveAssignmentsUrl",
+      "roomsListUrl",
       "judgesListUrl",
       "searchJudgesUrl",
       "teamsListUrl",
@@ -126,6 +144,7 @@
         formActive: false,
         editEventTeamsMsg: "Manage teams",
         editEventJudgesMsg: "Manage judges",
+        editEventRoomsMsg: "Manage groups",
       };
     },
 
@@ -140,6 +159,7 @@
     },
 
     components: {
+      EventRoomList,
       EventJudgeList,
       EventTeamList,
     },
