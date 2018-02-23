@@ -90,8 +90,6 @@
   import _ from 'lodash';
 
   import Room from "./Room";
-  import Team from './Team';
-  import Judge from './Judge';
 
   export default {
     data () {
@@ -101,9 +99,6 @@
     },
 
     props: [
-      'fetchRoomListUrl',
-      'fetchJudgeListUrl',
-      'fetchTeamListUrl',
       'saveAssignmentsUrl',
       'event',
     ],
@@ -128,8 +123,10 @@
             prompt: "Select a judge",
           });
 
-          if (judgeId)
-            room.judges.push(new Judge({ id: judgeId, name: "foo" }));
+          if (judgeId) {
+            var judge = vm.event.findJudge(judgeId);
+            room.judges.push(judge);
+          }
         }
 
         addRoomJudge();
@@ -148,8 +145,10 @@
             prompt: "Select a team",
           });
 
-          if (teamId)
-            room.teams.push(new Team({ id: teamId, name: "bar" }));
+          if (teamId) {
+            var team = vm.event.findTeam(teamId);
+            room.teams.push(team);
+          }
         }
 
         addRoomTeam();
@@ -251,43 +250,8 @@
     },
 
     mounted () {
-      var vm = this;
-
-      if (!vm.event.selectedTeams.length) {
-        $.ajax({
-          method: "GET",
-          url: this.fetchTeamListUrl + "?event_id=" + vm.event.id,
-
-          success: (resp) => {
-            _.each(resp, (result) => {
-              var team = new Team(result);
-              vm.event.selectedTeams.push(team)
-            });
-          },
-
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      }
-
-      if (!vm.event.selectedJudges.length) {
-        $.ajax({
-          method: "GET",
-          url: this.fetchJudgeListUrl + "?event_id=" + vm.event.id,
-
-          success: (resp) => {
-            _.each(resp, (result) => {
-              var judge = new Judge(result);
-              vm.event.selectedJudges.push(judge)
-            });
-          },
-
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      }
+      this.event.fetchTeams();
+      this.event.fetchJudges();
     },
   };
 </script>

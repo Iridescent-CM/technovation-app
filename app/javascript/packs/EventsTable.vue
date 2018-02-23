@@ -88,16 +88,12 @@
             <event-room-list
               v-if="event.managingRooms"
               :event="event"
-              :fetchRoomListUrl="roomsListUrl"
-              :fetchJudgeListUrl="judgesListUrl"
-              :fetchTeamListUrl="teamsListUrl"
               :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-room-list>
 
             <event-judge-list
               v-if="event.managingJudges"
               :event="event"
-              :fetchListUrl="judgesListUrl"
               :fetchUrl="searchJudgesUrl"
               :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-judge-list>
@@ -105,7 +101,6 @@
             <event-team-list
               v-if="event.managingTeams"
               :event="event"
-              :fetchListUrl="teamsListUrl"
               :fetchUrl="searchTeamsUrl"
               :saveAssignmentsUrl="saveAssignmentsUrl"
             ></event-team-list>
@@ -236,6 +231,11 @@
         url: this.fetchUrl,
         success: (resp) => {
           _.each(resp, (event) => {
+
+            event.fetchTeamsUrlRoot = this.teamsListUrl;
+            event.fetchJudgesUrlRoot = this.judgesListUrl;
+            event.fetchRoomsUrlRoot = this.roomsListUrl;
+
             this.events.push(new Event(event));
           });
         },

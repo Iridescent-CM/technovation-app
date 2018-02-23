@@ -92,7 +92,6 @@
 
     props: [
       'fetchUrl',
-      'fetchListUrl',
       'saveAssignmentsUrl',
       'event',
     ],
@@ -211,28 +210,9 @@
         (selectedJudge) => { this.event.addJudge(selectedJudge); }
       );
 
-      if (this.event.selectedJudges.length) {
-        this.fetchingList = false;
-        return;
-      }
-
-      var vm = this;
-
-      $.ajax({
-        method: "GET",
-        url: this.fetchListUrl + "?event_id=" + vm.event.id,
-
-        success: (resp) => {
-          _.each(resp, (result) => {
-            var judge = new Judge(result);
-            vm.event.selectedJudges.push(judge)
-          });
-
+      this.event.fetchJudges({
+        onComplete: () => {
           this.fetchingList = false;
-        },
-
-        error: (err) => {
-          console.log(err);
         },
       });
     },

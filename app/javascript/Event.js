@@ -1,7 +1,12 @@
 import _ from "lodash";
+import Team from "./Team";
+import Judge from "./Judge";
 
 export default function (event) {
   this.id = event.id || "";
+  this.fetchTeamsUrlRoot = event.fetchTeamsUrlRoot;
+  this.fetchJudgesUrlRoot = event.fetchJudgesUrlRoot;
+  this.fetchRoomsUrlRoot = event.fetchRoomsUrlRoot;
 
   this.name = event.name || "";
   this.city = event.city || "";
@@ -86,5 +91,83 @@ export default function (event) {
     _.each(this.selectedTeams, (team) => {
       team.afterAssign();
     });
+  };
+
+  this.findTeam = (id) => {
+    return _.find(this.selectedTeams, (team) => {
+      return team.id === parseInt(id);
+    });
+  };
+
+  this.findJudge = (id) => {
+    return _.find(this.selectedJudges, (judge) => {
+      return judge.id === parseInt(id);
+    });
+  };
+
+  this.fetchTeams = (opts) => {
+    var event = this,
+        url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
+
+    opts = opts || {};
+    opts.onComplete = opts.onComplete || function () { return false; };
+
+    if (event.selectedTeams.length) {
+      opts.onComplete();
+      return false;
+    } else {
+      $.ajax({
+        method: "GET",
+        url: url,
+
+        success: (resp) => {
+          _.each(resp, (result) => {
+            var team = new Team(result);
+            event.selectedTeams.push(team)
+          });
+        },
+
+        error: (err) => {
+          console.log(err);
+        },
+
+        complete: () => {
+          opts.onComplete()
+        },
+      });
+    }
+  };
+
+  this.fetchJudges = (opts) => {
+    var event = this,
+        url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
+
+    opts = opts || {};
+    opts.onComplete = opts.onComplete || function () { return false; };
+
+    if (event.selectedJudges.length) {
+      opts.onComplete();
+      return false;
+    } else {
+      $.ajax({
+        method: "GET",
+        url: url,
+
+        success: (resp) => {
+          _.each(resp, (result) => {
+            var judge = new Judge(result);
+            event.selectedJudges.push(judge)
+          });
+        },
+
+        error: (err) => {
+          console.log(err);
+        },
+
+        complete: () => {
+          opts.onComplete();
+        },
+      });
+    }
   };
 };

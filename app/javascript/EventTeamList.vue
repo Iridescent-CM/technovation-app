@@ -72,7 +72,6 @@
 <script>
   import _ from 'lodash';
 
-  import Team from './Team';
   import TeamSearch from './TeamSearch';
   import EventBus from './EventBus';
 
@@ -85,7 +84,6 @@
 
     props: [
       'fetchUrl',
-      'fetchListUrl',
       'saveAssignmentsUrl',
       'event',
     ],
@@ -199,28 +197,9 @@
         (selectedTeam) => { this.event.addTeam(selectedTeam); }
       );
 
-      if (this.event.selectedTeams.length) {
-        this.fetchingList = false;
-        return;
-      }
-
-      var vm = this;
-
-      $.ajax({
-        method: "GET",
-        url: this.fetchListUrl + "?event_id=" + vm.event.id,
-
-        success: (resp) => {
-          _.each(resp, (result) => {
-            var team = new Team(result);
-            vm.event.selectedTeams.push(team)
-          });
-
+      this.event.fetchTeams({
+        onComplete: () => {
           this.fetchingList = false;
-        },
-
-        error: (err) => {
-          console.log(err);
         },
       });
     },
