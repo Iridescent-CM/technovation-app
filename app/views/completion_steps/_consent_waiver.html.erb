@@ -13,9 +13,11 @@
     <p><%= t("views.profile_requirements.consent_waiver.label") %></p>
 
     <div class="step-actions">
-      <%= link_to t("views.profile_requirements.consent_waiver.links.view.text"),
+      <%= link_to(
+        t("views.profile_requirements.consent_waiver.links.view.text"),
         new_consent_waiver_path(token: profile.account.consent_token),
-        class: "button" %>
+        class: "button",
+      ) %>
     </div>
   </li>
 <% end %>

@@ -24,7 +24,12 @@ RSpec.feature "Searchability" do
   end
 
   scenario "US mentor signs consent, passes bg check", :vcr do
-    mentor = FactoryBot.create(:mentor, country: "US", not_onboarded: true)
+    mentor = FactoryBot.create(
+      :mentor,
+      country: "US",
+      not_onboarded: true
+    )
+
     expect(mentor).not_to be_searchable
 
     sign_in(mentor)
