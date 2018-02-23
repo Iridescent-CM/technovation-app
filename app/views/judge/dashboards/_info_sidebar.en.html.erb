@@ -52,12 +52,4 @@
       ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
       target: "_blank" %>
   </p>
-
-  <% if current_judge.mentor_profile or current_judge.created_at <= Date.new(Season.current.year, 3, 8) %>
-    <h3>Mentor Dashboard</h3>
-
-    <p>
-      <%= link_to "Go to the Mentor Dashboard", mentor_dashboard_path %>
-    </p>
-  <% end %>
 </div>

@@ -458,7 +458,8 @@ class Account < ActiveRecord::Base
   end
 
   def consent_signed?
-    consent_waiver.present?
+    consent_waiver.present? and
+      consent_waiver.signed?
   end
 
   def consent_waiver

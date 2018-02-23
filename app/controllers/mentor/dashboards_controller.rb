@@ -6,7 +6,8 @@ module Mentor
 
     private
     def create_judge_mentor_on_dashboard
-      return if current_session.authenticated? # RA/Admin Logged in as someone else
+      return if current_session.authenticated?
+        # RA/Admin Logged in as someone else
 
       if CreateMentorProfile.(current_account)
         flash.now[:success] = t(

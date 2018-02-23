@@ -1,3 +1,9 @@
+<div class="flags">
+  <span class="flag flag-registration">
+    Registration
+  </span>
+</div>
+
 <h1 class="heading--reset">Judge profile required steps</h1>
 
 <ul class="list--reset list-items--margin-sm">
@@ -18,17 +24,38 @@
     </li>
   <% end %>
 
-  <% if current_judge.commitment_signed? %>
+  <% if current_judge.location_confirmed? %>
     <li>
       <%= web_icon(
         "check-circle",
         class: "icon--green",
-        text: "Commitment form signed!",
+        text: "Your Location is updated!",
       ) %>
     </li>
   <% else %>
     <li>
-      <%= link_to "Sign the commitment form",
+      <p>
+        <%= link_to "Set your location",
+          [
+            current_scope,
+            :location_details,
+            { return_to: request.fullpath },
+          ] %>
+      </p>
+    </li>
+  <% end %>
+
+  <% if current_judge.consent_signed? %>
+    <li>
+      <%= web_icon(
+        "check-circle",
+        class: "icon--green",
+        text: "Consent has been signed!",
+      ) %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "Sign the consent form",
         new_judge_consent_waiver_path %>
     </li>
   <% end %>
