@@ -35,19 +35,18 @@
     <div class="panel">
       <h3>Technical</h3>
 
-      <div class="submission-buttons submission-piece-links">
-        <div class="submission-piece-links__source-code">
-          <%= link_to "Source code",
-            @team_submission.source_code_url,
-            class: "button button--small" %>
-        </div>
+      <div class="submission-piece-links__source-code">
+        <%= link_to "Download the source code",
+          @team_submission.source_code_url %>
+      </div>
 
+      <% if false %>
         <div class="submission-piece-links__code-checklist">
           <%= link_to "Read the code checklist",
             [current_scope, :code_checklist, team_id: @team.id],
             class: "button button--small" %>
         </div>
-      </div>
+      <% end %>
     </div>
 
     <div class="panel">
@@ -104,29 +103,36 @@
       </div>
     </div>
 
-    <div class="panel">
-      <h3>Entrepreneurship</h3>
+    <% if @team.senior? %>
+      <div class="panel">
+        <h3>Entrepreneurship</h3>
 
-      <p>Your team has uploaded:</p>
+        <%= link_to "Read the business plan",
+          @team_submission.business_plan_url,
+          target: :_blank %>
+      </div>
+    <% end %>
 
-      <%= link_to "Business plan", "#",
-        class: "button button--small"%>
-    </div>
+    <% if @team.selected_regional_pitch_event.live? %>
+      <div class="panel">
+        <h3>Regional Pitch Events</h3>
 
-    <div class="panel">
-      <h3>Regional Pitch Events</h3>
-
-      <p>Only if attending a live, regional event:</p>
-
-      <%= link_to "Open the presentation slides", "#",
-        class: "button button--small"%>
-    </div>
+        <%= link_to "Open the presentation slides",
+          @team_submission.pitch_presentation_url,
+          target: :_blank %>
+      </div>
+    <% end %>
 
     <% @team_submission.awaiting_publish do %>
-      <div class="grid__col-auto grid--justify-center">
+      <div class="grid--justify-center">
         <p>
           <%= link_to "Submit now",
-            [current_scope, :honor_code_review, team_id: current_team.id],
+            [
+              current_scope,
+              :honor_code_review,
+              { team_id: current_team.id },
+            ],
+
             class: "button" %>
 
           or
@@ -139,6 +145,29 @@
               section: :ideation
             ] %>
         </p>
+      </div>
+    <% end %>
+
+    <% @team_submission.already_published do %>
+      <div class="grid--justify-center">
+        <% if SeasonToggles.team_submissions_editable? %>
+          <p>
+            You can make changes until <%= Season.deadline %>.
+          </p>
+
+          <p>
+            <%= link_to "Make changes",
+              [
+                current_scope,
+                @team_submission,
+                :section,
+                section: :ideation
+              ],
+              class: "button button--small" %>
+          </p>
+        <% else %>
+          <p>Submissions are not editable at this time.</p>
+        <% end %>
       </div>
     <% end %>
   </div>

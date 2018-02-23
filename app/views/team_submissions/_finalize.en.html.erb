@@ -16,15 +16,12 @@
     </p>
 
     <p>
-      <%= link_to "Submit for judging",
+      <%= link_to "Review and submit",
         [
           current_scope,
-          :team_submission_publications,
-          { id: submission.to_param },
+          :published,
+          submission
         ],
-        data: {
-          method: :post,
-        },
         class: "button" %>
     </p>
   <% end %>

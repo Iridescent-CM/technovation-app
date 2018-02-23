@@ -9,7 +9,11 @@ module Mentor
 
       submission.publish!
 
-      redirect_to mentor_published_team_submission_path(submission),
+      redirect_to [
+        current_scope,
+        :published_submission_confirmation,
+        team_id: submission.team_id,
+      ],
        success: "Your submission has been entered for judging!"
     end
   end

@@ -9,9 +9,15 @@
         <%= link_to "We agree",
           [
             current_scope,
-            :published_submission_confirmation,
-            team_id: @team_submission.team_id,
+            @team_submission,
+            :publications,
+            { id: @team_submission.to_param },
           ],
+
+          data: {
+            method: :post,
+          },
+
           class: "button" %>
 
         or
