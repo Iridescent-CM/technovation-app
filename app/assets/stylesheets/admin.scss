@@ -39,9 +39,9 @@ nav {
   a {
     display: block;
     color: black;
+    padding: 0.25rem;
+    font-size: 0.9rem;
     opacity: 0.5;
-    padding: 1rem 0.5rem;
-    border-bottom: 1px solid $grey-translucent;
     transition: 0.2s opacity;
 
     &.active, &:hover {
@@ -49,17 +49,8 @@ nav {
       color: black;
     }
 
-    &.small {
-      padding: 1rem 0 0 0;
-      font-size: 0.9rem;
-      border: 0;
-    }
-
     &[data-method] {
-      padding-left: 0;
       color: $alert-txt;
-      border: 0;
-      font-size: 0.9rem;
     }
   }
 }

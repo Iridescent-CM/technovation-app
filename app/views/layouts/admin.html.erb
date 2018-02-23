@@ -23,18 +23,18 @@
 
   <body>
     <div class="grid">
-      <div class="grid__col-3 col--sticky-parent">
+      <div class="grid__col-10">
+        <%= render 'flash_messages' %>
+
+        <%= yield %>
+      </div>
+
+      <div class="grid__col-2 col--sticky-parent">
         <div class="col--sticky-spacer">
           <div class="col--sticky">
             <%= render 'admin/navigation' %>
           </div>
         </div>
-      </div>
-
-      <div class="grid__col-9">
-        <%= render 'flash_messages' %>
-
-        <%= yield %>
       </div>
     </div>
 

@@ -1,18 +1,16 @@
 <% provide :title, "Admin dashboard" %>
 
-<div class="grid">
-  <div class="grid__col-10">
-    <h1>Technovation <%= Season.current.year %></h1>
+<h1>Technovation <%= Season.current.year %></h1>
 
-    <div class="panel">
-      <h3>Students</h3>
+<div class="panel">
+  <h3>
+    Students
+    <span>(<%= number_with_delimiter @students.count %>)</span>
+  </h3>
 
-      <dl>
-        <dt>Total:</dt>
-        <dd><%= number_with_delimiter @students.count %></dd>
-      </dl>
-
-      <h3>Parental permission</h3>
+  <div class="grid grid--bleed">
+    <div class="grid__col-sm-6">
+      <h6>Parental permission</h6>
 
       <%= content_tag :canvas, nil,
         class: "quickview-charts quickview-charts--students-permitted",
@@ -54,48 +52,50 @@
             ],
           },
         } %>
+      </div>
+
+      <div class="grid__col-sm-6">
+        <h6>New vs. Returning</h6>
+
+        <%= content_tag :canvas, nil,
+          class: "quickview-charts quickview-charts--students-returning",
+          data: {
+            chart_data: {
+              labels: [
+                "Returning students – #{show_percentage(@returning_students, @students)}",
+                "New students – #{show_percentage(@new_students, @students)}",
+              ],
+              datasets: [
+                {
+                  data: [
+                    @returning_students.count,
+                    @new_students.count,
+                  ],
+                  backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                  ],
+                  hoverBackgroundColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                  ],
+                },
+              ],
+            },
+          } %>
     </div>
+  </div>
+</div>
 
-    <div class="panel">
-      <h3>New vs. Returning</h3>
+<div class="panel">
+  <h3>
+    Mentors
+    <span>(<%= number_with_delimiter @mentors.count %>)</span>
+  </h3>
 
-      <%= content_tag :canvas, nil,
-        class: "quickview-charts quickview-charts--students-returning",
-        data: {
-          chart_data: {
-            labels: [
-              "Returning students – #{show_percentage(@returning_students, @students)}",
-              "New students – #{show_percentage(@new_students, @students)}",
-            ],
-            datasets: [
-              {
-                data: [
-                  @returning_students.count,
-                  @new_students.count,
-                ],
-                backgroundColor: [
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                ],
-                hoverBackgroundColor: [
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                ],
-              },
-            ],
-          },
-        } %>
-    </div>
-
-    <div class="panel">
-      <h3>Mentors</h3>
-
-      <dl>
-        <dt>Total:</dt>
-        <dd><%= number_with_delimiter @mentors.count %></dd>
-      </dl>
-
-      <h3>Background check / consent waivers</h3>
+  <div class="grid grid--bleed">
+    <div class="grid__col-sm-6">
+      <h6>Background check / consent waivers</h6>
 
       <%= content_tag :canvas, nil,
         class: "quickview-charts quickview-charts--mentors",
@@ -163,8 +163,8 @@
         } %>
     </div>
 
-    <div class="panel">
-      <h3>New vs. Returning</h3>
+    <div class="grid__col-sm-6">
+      <h6>New vs. Returning</h6>
 
       <%= content_tag :canvas, nil,
         class: "quickview-charts quickview-charts--mentors-returning",
@@ -191,7 +191,7 @@
               },
             ],
           },
-        } %>
+      } %>
     </div>
   </div>
 </div>
