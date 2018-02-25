@@ -1,39 +1,21 @@
 <div class="panel">
-  <div class="grid">
-    <div class="grid__col-12">
-    <h1 class="content-heading">Select a regional pitch event</h1>
-    </div>
-    <% @regional_events.each do |event| %>
-      <div class="grid__col-6">
-        <p>
-          <%= event.name %><br />
-          <%= event.city %><br />
-
-          <strong>
-            <%= event.starts_at
-              .in_time_zone(event.timezone)
-              .strftime("%A, %B %e") %>
-          </strong>
-
-          <br />
-
-          <%= event.starts_at
-            .in_time_zone(event.timezone)
-            .strftime("%-I:%M%P") %>
-
-          &ndash;
-
-          <%= event.ends_at
-            .in_time_zone(event.timezone)
-            .strftime("%-I:%M%P %Z") %>
-
-          <br />
-
+  <h1 class="content-heading">Select a regional pitch event</h1>
+  <% unless current_team.selected_regional_pitch_event %>
+    <p>
+      Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
+    </p>
+      <%= link_to 'Attend an Event',
+          "#",
+          class: "button small" %>
+  <% else %>
+    <p>
+      You are attending <%= current_team.selected_regional_pitch_event.name %>.
+    </p>
           <%= link_to 'view full details',
-            [current_scope, event],
+            [current_scope, current_team.selected_regional_pitch_event],
             class: "button small" %>
-        </p>
-      </div>
-    <% end %>
-  </div>
+    <p>
+      If this is a mistake or you want to attend a different event please contact your regional ambassador.
+    </p>
+  <% end %>
 </div>
