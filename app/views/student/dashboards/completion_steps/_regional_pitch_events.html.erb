@@ -1,11 +1,11 @@
 <div class="panel">
   <h1 class="content-heading">Select a regional pitch event</h1>
-  <% unless current_team.selected_regional_pitch_event %>
+  <% if current_team.selected_regional_pitch_event %>
     <p>
       Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
     </p>
       <%= link_to 'Attend an Event',
-          "#",
+          student_regional_pitch_events_path,
           class: "button small" %>
   <% else %>
     <p>
