@@ -281,18 +281,19 @@ RSpec.describe SubmissionScore do
 
   it "sets the event_type to live for RPE judges" do
     team = FactoryBot.create(:team)
-    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    team_submission = FactoryBot.create(
+      :team_submission,
+      :complete,
+      team: team
+    )
     judge_profile = FactoryBot.create(:judge_profile)
 
-    rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
+    rpe = FactoryBot.create(:event,
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
       division_ids: Division.senior.id,
-      city: "City",
-      venue_address: "123 Street St.",
-    })
+    )
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!
@@ -307,18 +308,19 @@ RSpec.describe SubmissionScore do
 
   it "does not re-set the event type if the judge changes" do
     team = FactoryBot.create(:team)
-    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    team_submission = FactoryBot.create(
+      :team_submission,
+      :complete,
+      team: team
+    )
     judge_profile = FactoryBot.create(:judge_profile)
 
-    rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
+    rpe = FactoryBot.create(:event,
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
       division_ids: Division.senior.id,
-      city: "City",
-      venue_address: "123 Street St.",
-    })
+    )
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!

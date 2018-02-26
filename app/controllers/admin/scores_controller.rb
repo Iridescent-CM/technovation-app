@@ -11,7 +11,7 @@ module Admin
       @division = params[:division] ||= "senior"
 
       events = RegionalPitchEvent.eager_load(
-        regional_ambassador_profile: :account
+        ambassador: :account
       ).all
 
       virtual_event = VirtualRegionalPitchEvent.new
@@ -26,8 +26,8 @@ module Admin
                  ).find(params[:event])
                end
 
-      @events = [virtual_event] + events.sort_by { |e|
-        FriendlyCountry.(e.regional_ambassador_profile.account)
+      @events = [virtual_event] + events.sort_by { |event|
+        FriendlyCountry.(event)
       }
 
       @submissions = get_sorted_paginated_submissions_in_requested_division
@@ -61,7 +61,10 @@ module Admin
       submissions = @event.team_submissions
         .includes(:submission_scores, team: :regional_pitch_events)
         .public_send(division)
-        .select { |s| s.team.selected_regional_pitch_event.live? or s.complete? }
+        .select { |s|
+          s.team.selected_regional_pitch_event.live? or
+            s.complete?
+        }
         .sort { |a, b|
           case params.fetch(:sort) { "avg_score_desc" }
           when "avg_score_desc"

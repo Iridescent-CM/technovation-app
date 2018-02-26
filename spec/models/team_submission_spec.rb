@@ -64,10 +64,7 @@ RSpec.describe TeamSubmission do
     virtual_judge = FactoryBot.create(:judge_profile)
 
 
-    rpe = RegionalPitchEvent.create!({
-      regional_ambassador_profile: FactoryBot.create(
-        :regional_ambassador_profile
-      ),
+    rpe = FactoryBot.create(:event,
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
@@ -75,7 +72,7 @@ RSpec.describe TeamSubmission do
       city: "City",
       venue_address: "123 Street St.",
       unofficial: true,
-    })
+    )
 
     team.regional_pitch_events << rpe
     team.save

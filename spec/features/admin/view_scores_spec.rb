@@ -12,7 +12,11 @@ RSpec.feature "Admins view scores" do
       }
     )
 
-    FactoryBot.create(:submission_score, :complete, team_submission: submission)
+    FactoryBot.create(
+      :submission_score,
+      :complete,
+      team_submission: submission
+    )
 
     admin = FactoryBot.create(:admin)
     sign_in(admin)

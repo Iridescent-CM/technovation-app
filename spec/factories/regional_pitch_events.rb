@@ -3,7 +3,7 @@ FactoryBot.define do
     aliases: [:event, :rpe],
     class: RegionalPitchEvent do
 
-    regional_ambassador_profile
+    ambassador
 
     name "RPE"
     starts_at { Date.current }

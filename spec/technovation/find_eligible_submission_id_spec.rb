@@ -74,16 +74,12 @@ RSpec.describe FindEligibleSubmissionId do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
 
-      team.regional_pitch_events << RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
-        name: "RPE",
+      team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
         division_ids: Division.senior.id,
-        city: "City",
-        venue_address: "123 Street St.",
-        unofficial: true
-      })
+        unofficial: true,
+      )
 
       sub = FactoryBot.create(:submission, :complete, team: team)
 
@@ -128,16 +124,11 @@ RSpec.describe FindEligibleSubmissionId do
     it "does not select submission for an official regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      team.regional_pitch_events << RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
-        name: "RPE",
+      team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
         division_ids: Division.senior.id,
-        city: "City",
-        venue_address: "123 Street St.",
-        unofficial: false
-      })
+      )
 
       TeamSubmission.create!({
         integrity_affirmed: true,
@@ -316,18 +307,18 @@ RSpec.describe FindEligibleSubmissionId do
     it "selects submission for an official regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      team.regional_pitch_events << RegionalPitchEvent.create!({
-        regional_ambassador_profile: FactoryBot.create(:regional_ambassador_profile),
-        name: "RPE",
+      team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
         division_ids: Division.senior.id,
-        city: "City",
-        venue_address: "123 Street St.",
-        unofficial: false
-      })
+      )
 
-      sub = FactoryBot.create(:submission, :complete, team: team, contest_rank: sf_rank)
+      sub = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team,
+        contest_rank: sf_rank
+      )
 
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
     end
