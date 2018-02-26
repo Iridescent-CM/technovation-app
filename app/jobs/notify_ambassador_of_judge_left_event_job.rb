@@ -10,13 +10,13 @@ class NotifyAmbassadorOfJudgeLeftEventJob < ActiveJob::Base
 
     if options[:ra_removed]
       AmbassadorMailer.confirm_judge_removed(
-        event.regional_ambassador_profile.account,
+        event.ambassador.account,
         event,
         judge
       ).deliver_now
     else
       AmbassadorMailer.judge_left_event(
-        event.regional_ambassador_profile.account,
+        event.ambassador.account,
         event,
         judge
       ).deliver_now

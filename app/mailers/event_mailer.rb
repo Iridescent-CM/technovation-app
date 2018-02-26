@@ -3,8 +3,8 @@ class EventMailer < ApplicationMailer
     @removed = removed_klass_name.constantize.find(removed_id)
     @event = RegionalPitchEvent.find(event_id)
 
-    @ambassador_name = @event.regional_ambassador_profile.full_name
-    @ambassador_email = @event.regional_ambassador_profile.email
+    @ambassador_name = @event.ambassador.name
+    @ambassador_email = @event.ambassador.email
 
     I18n.with_locale(@removed.locale) do
       mail to: @removed.email,
@@ -18,8 +18,8 @@ class EventMailer < ApplicationMailer
     @invite = invite_klass_name.constantize.find(invite_id)
     @event = RegionalPitchEvent.find(event_id)
 
-    @ambassador_name = @event.regional_ambassador_profile.full_name
-    @ambassador_email = @event.regional_ambassador_profile.email
+    @ambassador_name = @event.ambassador.name
+    @ambassador_email = @event.ambassador.email
 
     @url = case @invite.status
            when "sent", "opened"

@@ -18,8 +18,8 @@ class TeamMailer < ApplicationMailer
     @team = team
     @event = event
     @member = member
-    @ambassador_name = event.regional_ambassador_profile.full_name
-    @ambassador_email = event.regional_ambassador_profile.email
+    @ambassador_name = event.ambassador.name
+    @ambassador_email = event.ambassador.email
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
@@ -32,8 +32,8 @@ class TeamMailer < ApplicationMailer
     @team = team
     @event = event
     @member = member
-    @ambassador_name = event.regional_ambassador_profile.full_name
-    @ambassador_email = event.regional_ambassador_profile.email
+    @ambassador_name = event.ambassador.name
+    @ambassador_email = event.ambassador.email
 
     @event_url = send("#{@member.scope_name}_regional_pitch_event_url", event)
 

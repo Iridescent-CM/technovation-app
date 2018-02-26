@@ -10,13 +10,13 @@ class NotifyAmbassadorOfTeamJoinedEventJob < ActiveJob::Base
 
     if options[:ra_added]
       AmbassadorMailer.confirm_team_added(
-        event.regional_ambassador_profile.account,
+        event.ambassador.account,
         event,
         team
       ).deliver_now
     else
       AmbassadorMailer.team_joined_event(
-        event.regional_ambassador_profile.account,
+        event.ambassador.account,
         event,
         team
       ).deliver_now

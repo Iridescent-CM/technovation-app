@@ -29,8 +29,8 @@ class JudgeMailer < ApplicationMailer
     @judge = JudgeProfile.find(judge_id).account
     @event = RegionalPitchEvent.find(event_id)
 
-    @ambassador_name = @event.regional_ambassador_profile.full_name
-    @ambassador_email = @event.regional_ambassador_profile.email
+    @ambassador_name = @event.ambassador.name
+    @ambassador_email = @event.ambassador.email
 
     I18n.with_locale(@judge.locale) do
       mail to: @judge.email,
@@ -46,8 +46,8 @@ class JudgeMailer < ApplicationMailer
     @judge = JudgeProfile.find(judge_id).account
     @event = RegionalPitchEvent.find(event_id)
 
-    @ambassador_name = @event.regional_ambassador_profile.full_name
-    @ambassador_email = @event.regional_ambassador_profile.email
+    @ambassador_name = @event.ambassador.name
+    @ambassador_email = @event.ambassador.email
 
     @event_url = judge_regional_pitch_event_url(@event)
 
