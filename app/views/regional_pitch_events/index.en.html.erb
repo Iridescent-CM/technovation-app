@@ -1,1 +1,74 @@
-hello!
+<div class="grid">
+  <div class="grid__col-12">
+      <h1 class="content-heading">Sign up for a Regional Pitch Event</h1>
+  </div>
+  <ol style="margin-top:0px" class="grid__col-6 grid--direction-column">
+    <% @regional_events.each do |event| %>
+      <div class="grid__col-12">
+        <li>
+          <%= event.name %>
+          <p>
+            <strong>Time:</strong>
+
+            <br />
+
+            <%= event.starts_at
+              .in_time_zone(event.timezone)
+              .strftime("%A, %B %e") %>
+
+            <br />
+
+            <%= event.starts_at
+              .in_time_zone(event.timezone)
+              .strftime("%-I:%M%P") %>
+
+            &ndash;
+
+            <%= event.ends_at
+              .in_time_zone(event.timezone)
+              .strftime("%-I:%M%P %Z") %>
+            </p>
+            <p>
+              <strong>Address:</strong>
+              <br />
+              <%= event.venue_address %> <br />
+              <%= event.city %><br />
+            </p>
+
+            <% unless event.eventbrite_link.blank? %>
+              <p>
+                <strong>Eventbrite link:</strong>
+                <%= link_to "#{event.name} Eventbrite",
+                event.eventbrite_link,
+                target: :_blank %>
+              </p>
+            <% end %>
+
+            <% if current_account.student_profile.present? and current_student and SeasonToggles.select_regional_pitch_event?  %>
+              <p>
+                <%= link_to "Sign up for this event",
+                  student_regional_pitch_event_selection_path(
+                  event_id: event.id
+                  ),
+                  class: "button small",
+                  data: {
+                    method: :post,
+                    confirm: "Are you sure you want to attend #{event.name}?",
+                  } %>
+              </p>
+            <% end %>
+          </li>
+        </div>
+      <% end %>
+    </ol>
+    <div class="grid__col-6">
+      <img class="grid__cel-img" src="http://web-profile.net/wp-content/uploads/google-maps-multiple-markers.png">
+    </div>
+    <div class="grid__col-2">
+      <p>
+        <%= link_to 'Back',
+          student_dashboard_path(anchor: "live-events"),
+          class: "button small" %>
+      </p>
+    </div>
+</div>

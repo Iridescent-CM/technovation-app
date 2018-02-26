@@ -22,10 +22,9 @@
     hidden: SeasonToggles.team_building_disabled? ||
               current_student.is_on_team? %>
 
-  <%= render "student/dashboards/completion_steps/team_submission" %>
-
   <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
 
+  <%= render "student/dashboards/completion_steps/team_submission" %>
 
   <%= render "student/dashboards/completion_steps/find_a_mentor",
     hidden: current_student.team.mentors.any? %>
