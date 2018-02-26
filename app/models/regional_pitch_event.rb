@@ -18,7 +18,9 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
-  belongs_to :regional_ambassador_profile
+  belongs_to :ambassador,
+    class_name: "RegionalAmbassadorProfile",
+    foreign_key: :regional_ambassador_profile_id
 
   has_and_belongs_to_many :divisions
 
@@ -47,7 +49,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   delegate :state_province,
            :country,
            :timezone,
-    to: :regional_ambassador_profile,
+    to: :ambassador,
     prefix: false
 
   scope :available_to, ->(record) {
@@ -55,18 +57,18 @@ class RegionalPitchEvent < ActiveRecord::Base
       case record
       when JudgeProfile
         if record.country === "US"
-          joins(regional_ambassador_profile: :account)
+          joins(ambassador: :account)
           .where("accounts.country = 'US' AND accounts.state_province = ?",
                  record.state_province)
         else
-          joins(regional_ambassador_profile: :account)
+          joins(ambassador: :account)
           .where("accounts.country = ?", record.country)
         end
       when TeamSubmission
         if record.country === "US"
           joins(:divisions)
           .where("divisions.id = ?", record.division_id)
-          .joins(regional_ambassador_profile: :account)
+          .joins(ambassador: :account)
           .where(
             "accounts.country = 'US' AND accounts.state_province = ?",
             record.state_province
@@ -74,7 +76,7 @@ class RegionalPitchEvent < ActiveRecord::Base
         else
           joins(:divisions)
           .where("divisions.id = ?", record.division_id)
-          .joins(regional_ambassador_profile: :account)
+          .joins(ambassador: :account)
           .where("accounts.country = ?", record.country)
         end
       end
@@ -85,13 +87,13 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   scope :in_region_of, ->(ambassador) {
     if ambassador.country == "US"
-      joins(regional_ambassador_profile: :account)
+      joins(ambassador: :account)
       .where(
         "accounts.country = 'US' AND accounts.state_province = ?",
         ambassador.state_province
       )
     else
-      joins(regional_ambassador_profile: :account)
+      joins(ambassador: :account)
       .where("accounts.country = ?", ambassador.country)
     end
   }
@@ -164,7 +166,7 @@ class RegionalPitchEvent < ActiveRecord::Base
      "-",
      ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
      "TZ:",
-     regional_ambassador_profile.timezone].join(' ')
+     ambassador.timezone].join(' ')
   end
 
   def day
@@ -190,6 +192,6 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def name_with_friendly_country_prefix
-    "#{FriendlyCountry.(regional_ambassador_profile.account)} - #{name}"
+    "#{FriendlyCountry.(ambassador.account)} - #{name}"
   end
 end

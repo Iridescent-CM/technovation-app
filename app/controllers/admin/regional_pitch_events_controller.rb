@@ -1,20 +1,16 @@
 module Admin
   class RegionalPitchEventsController < AdminController
     def index
-      params[:page] = 1 if params[:page].blank?
-      params[:per_page] = 15 if params[:per_page].blank?
-      params[:status] = "all" if params[:status].blank?
-
-      @events = RegionalPitchEvent.public_send(params[:status])
-        .page(params[:page].to_i)
-        .per_page(params[:per_page].to_i)
-
-      if @events.empty?
-        @events = @events.page(1)
-      end
+      @events = RegionalPitchEvent.where(
+        "starts_at > ?", Date.new(Season.current.year, 1, 1)
+      )
     end
 
     def show
+      @event = RegionalPitchEvent.find(params[:id])
+    end
+
+    def edit
       @event = RegionalPitchEvent.find(params[:id])
     end
 

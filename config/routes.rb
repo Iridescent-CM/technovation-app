@@ -231,8 +231,13 @@ Rails.application.routes.draw do
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
 
-    resources :regional_pitch_events, only: [:index, :show, :update]
-    resources :regional_pitch_event_participations, only: :destroy
+    resources :events,
+      controller: :regional_pitch_events,
+      only: [:index, :show, :edit, :update]
+
+    resources :event_participations,
+      controller: :regional_pitch_event_participations,
+      only: :destroy
 
     resources :scores, only: [:index, :show]
     resources :semifinals_scores, only: [:index, :show]
