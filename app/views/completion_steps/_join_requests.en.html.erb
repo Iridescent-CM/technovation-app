@@ -27,7 +27,8 @@
               <div class="grid__cell">
                 <p>
                   <%= join_request.team_name %><br />
-                  Division: <%= join_request.team_division_name.humanize %><br />
+                  Division:
+                  <%= join_request.team_division_name.humanize %><br />
                   <%= join_request.team_primary_location %>
                 </p>
               </div>
@@ -36,15 +37,19 @@
         <% end %>
       <% end %>
     <% end %>
-    <% if allow_many ||= false or requests.empty? %>
+
+    <% if SeasonToggles.team_building_enabled? and
+         (allow_many ||= false or requests.empty?) %>
       <p>
         Use our team search to find a team and ask to join them!
       </p>
 
       <div class="step-actions">
-        <%= link_to t("views.profile_requirements.create_join_team.links.join.text"),
+        <%= link_to(
+          t("views.profile_requirements.create_join_team.links.join.text"),
           [:new, current_scope, :team_search],
-          class: "button" %>
+          class: "button"
+        ) %>
       </div>
     <% end %>
   </li>

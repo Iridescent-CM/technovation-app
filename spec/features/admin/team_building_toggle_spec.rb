@@ -55,14 +55,11 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Student dashboard" do
-    let(:user) { FactoryBot.create(:student) }
-    let(:path) { student_dashboard_path }
-
-    before { sign_in(user) }
+    before { sign_in(:student) }
 
     scenario "Toggle on" do
       toggle_on
-      visit path
+      visit student_dashboard_path
 
       within(".steps") do
         expect(page).to have_link("Join a team")
@@ -71,10 +68,8 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
 
     scenario "Toggle off" do
-      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
-
       toggle_off
-      visit path
+      visit student_dashboard_path
 
       expect(page).not_to have_link("Join a team")
       expect(page).not_to have_link("Register your team")
@@ -152,18 +147,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     before { sign_in(user) }
 
-    scenario "Toggle on" do
-      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
-      toggle_on
-      visit path
-      within("#pitch-events") do
-        expect(page).to have_link("Join a team")
-        expect(page).to have_link("Register your team")
-      end
-    end
-
     scenario "Toggle off" do
-      skip "The fate of this toggle is uncertain for now. Early team building is currently okay."
       toggle_on
       toggle_off
       visit path

@@ -24,7 +24,8 @@
     teams: @current_teams %>
 
   <%= render "completion_steps/create_team",
-    hidden: current_mentor.onboarding? || !SeasonToggles.team_building_enabled? %>
+    hidden: current_mentor.onboarding? ||
+      !SeasonToggles.team_building_enabled? %>
 
   <%= render "completion_steps/join_requests",
     hidden: current_mentor.onboarding?,
