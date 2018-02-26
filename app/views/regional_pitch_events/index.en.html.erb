@@ -38,7 +38,7 @@
             <% unless event.eventbrite_link.blank? %>
               <p>
                 <strong>Eventbrite link:</strong>
-                <%= link_to "#{event.name} Eventbrite",
+                <%= link_to "#{event.name}",
                 event.eventbrite_link,
                 target: :_blank %>
               </p>
