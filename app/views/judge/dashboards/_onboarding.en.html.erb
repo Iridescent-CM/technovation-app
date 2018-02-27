@@ -7,23 +7,6 @@
 <h1 class="heading--reset">Judge profile required steps</h1>
 
 <ul class="list--reset list-items--margin-sm">
-  <% if current_judge.training_completed? %>
-    <li>
-      <%= web_icon(
-        "check-circle",
-        class: "icon--green",
-        text: "Training complete!",
-      ) %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to "Complete the training",
-        ENV.fetch("SKIP_TRAINING_URL") {
-          ENV.fetch("JUDGE_TRAINING_URL") { "#" }
-        } %>
-    </li>
-  <% end %>
-
   <% if current_judge.location_confirmed? %>
     <li>
       <%= web_icon(
@@ -74,6 +57,33 @@
     <li>
       <%= link_to "Answer a couple of short survey questions",
         new_judge_survey_answers_path %>
+    </li>
+  <% end %>
+
+  <% if current_judge.training_completed? %>
+    <li>
+      <%= web_icon(
+        "check-circle",
+        class: "icon--green",
+        text: "Training complete!",
+      ) %>
+    </li>
+  <% elsif ENV.fetch("JUDGE_TRAINING_READY") { false } %>
+    <li>
+      <%= link_to "Complete the training",
+        ENV.fetch("JUDGE_TRAINING_URL") %>
+    </li>
+  <% else %>
+    <li>
+      <h6 class="heading--reset">
+        Judge training will be ready in mid-March.
+      </h6>
+
+      <p>
+        All judges are required to complete the training
+        <strong>before May 1st</strong>. Please come back in
+        mid-March when we announce the opening of the training site.
+      </p>
     </li>
   <% end %>
 </ul>

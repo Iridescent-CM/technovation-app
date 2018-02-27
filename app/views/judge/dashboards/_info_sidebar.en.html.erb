@@ -21,35 +21,19 @@
     <% end %>
   <% end %>
 
-  <h3>Judge Training</h3>
+  <h6 class="heading--reset">Judge resources</h6>
 
-  <p>
-    Confused? Not sure where to start?
-    <br>
-    <%= link_to "Complete the Judge Training",
-      'http://technovationchallenge.org/judge-training/',
-      target: "_blank" %>
-  </p>
+  <ul class="list--reset">
+    <li>
+      <%= link_to "Read the Judging Rubric",
+        "http://www.technovationchallenge.org/judging-rubric/",
+        target: "_blank" %>
+    </li>
 
-  <h3>Judging Rubric</h3>
-
-  <p>
-    Check out the
-    <%= Season.current.year %>
-    judging rubric.
-    <br>
-    <%= link_to "Read the Judging Rubric",
-    "http://www.technovationchallenge.org/judging-rubric/",
-    target: "_blank" %>
-  </p>
-
-  <h3>Judges Chatroom</h3>
-
-  <p>
-    Get support, meet other judges, say hello
-    <br />
-    <%= link_to "Join our Slack chat",
-      ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
-      target: "_blank" %>
-  </p>
+    <li>
+      <%= link_to "Join Technovation's chat community for judges",
+        ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
+        target: "_blank" %>
+    </li>
+  </ul>
 </div>

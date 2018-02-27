@@ -55,6 +55,7 @@
         <% if !!ENV.fetch("JUDGE_ONBOARDING_ENABLED") { false } %>
           <% if current_judge.onboarding? %>
             <%= render "judge/dashboards/onboarding" %>
+            <%= render "judge/dashboards/info_sidebar" %>
           <% else %>
             <%= render "judge/dashboards/onboarded" %>
           <% end %>
@@ -80,23 +81,6 @@
               mentor_dashboard_path %>
           </p>
         <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div
-    class="
-      grid__col-md-3
-      grid__col--bleed
-      dashboard-sidebar
-      col--sticky-parent
-    "
-  >
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="grid__cell--padding-md-y">
-          <%= render "judge/dashboards/info_sidebar" %>
-        </div>
       </div>
     </div>
   </div>
