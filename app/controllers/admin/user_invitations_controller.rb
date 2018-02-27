@@ -24,8 +24,12 @@ module Admin
                    @user_invitation.profile_type.titleize +
                    ": #{@user_invitation.email} to sign up"
       else
-        if @user_invitation.errors[:email].any? { |e| e.include?("taken") }
-          @existing = UserInvitation.find_by(email: @user_invitation.email)
+        if @user_invitation.errors[:email].any? { |e|
+             e.include?("taken")
+           }
+          @existing = UserInvitation.find_by(
+            email: @user_invitation.email
+          )
         end
 
         render :new

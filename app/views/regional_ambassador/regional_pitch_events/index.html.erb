@@ -7,53 +7,71 @@
     <div class="panel panel--left">
       <h1>Regional Pitch Events</h1>
 
-      <% if ENV.fetch("SHOW_RA_EVENT_UI") { false } %>
-        <div id="app">
-          <events-table
-            fetch-url="<%= regional_ambassador_regional_pitch_events_path(
-              format: :json
-            ) %>"
+      <div id="app">
+        <events-table
+          fetch-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
 
-            manage-attendees="<%= ENV.fetch("MANAGE_EVENTS") { false } %>"
+          manage-attendees="<%= ENV.fetch("MANAGE_EVENTS") { false } %>"
 
-            search-judges-url="<%= regional_ambassador_judge_search_path(
-              format: :json
-            ) %>"
+          search-judges-url="<%= regional_ambassador_judge_search_path(
+            format: :json
+          ) %>"
 
-            save-assignments-url="<%= regional_ambassador_event_assignments_path(
+          save-assignments-url="<%=
+            regional_ambassador_event_assignments_path(
               format: :json
-            ) %>"
+            )
+          %>"
 
-            judges-list-url="<%= regional_ambassador_judge_list_path(
-              format: :json
-            ) %>"
+          judges-list-url="<%= regional_ambassador_judge_list_path(
+            format: :json
+          ) %>"
 
-            teams-list-url="<%= regional_ambassador_team_list_path(
-              format: :json
-            ) %>"
+          teams-list-url="<%= regional_ambassador_team_list_path(
+            format: :json
+          ) %>"
 
-            search-teams-url="<%= regional_ambassador_team_search_path(
-              format: :json
-            ) %>"
-          ></events-table>
+          search-teams-url="<%= regional_ambassador_team_search_path(
+            format: :json
+          ) %>"
+        ></events-table>
 
-          <event-form
-            post-url="<%= regional_ambassador_regional_pitch_events_path(
-              format: :json
-            ) %>"
-            junior-division-id="<%= Division.junior.id %>"
-            senior-division-id="<%= Division.senior.id %>"
-            junior-division-name="<%= Division.junior.name %>"
-            senior-division-name="<%= Division.senior.name %>"
-          ></event-form>
-        </div>
-      <% else %>
-        <p>
-          Hello, RAs! The Technovation development team is
-          hard at work on this section right now.
-          Stay tuned for email announcements.
-        </p>
-      <% end %>
+        <event-form
+          post-url="<%= regional_ambassador_regional_pitch_events_path(
+            format: :json
+          ) %>"
+          junior-division-id="<%= Division.junior.id %>"
+          senior-division-id="<%= Division.senior.id %>"
+          junior-division-name="<%= Division.junior.name %>"
+          senior-division-name="<%= Division.senior.name %>"
+        ></event-form>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6 class="heading--reset">
+        You may give this URL to new judges which enables them to sign up:
+      </h6>
+
+      <p><%= judge_signup_url(invitation: invitation_token) %></p>
+
+
+      <h6 class="heading--reset">Please take note:</h6>
+
+      <p>
+        You will also be able invite new judges when you are assigning
+        them to your events, so it's your choice if you use this URL,
+        or wait to invite them while organizing your event, or both.
+      </p>
+
+      <p>
+        The Technovation development team is working hard on the
+        attendance features right now, and will release them
+        as soon as possible. You will have until May 1st
+        to finish organizing your event.
+      </p>
     </div>
   </div>
 </div>
