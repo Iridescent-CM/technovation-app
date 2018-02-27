@@ -142,6 +142,26 @@ class JudgeProfile < ActiveRecord::Base
     !!used_global_invitation
   end
 
+  def has_incomplete_scores?
+    submission_scores.current_round.incomplete.any?
+  end
+
+  def has_no_incomplete_scores?
+    submission_scores.current_round.incomplete.empty?
+  end
+
+  def last_incomplete_score
+    submission_scores.current_round.incomplete.last
+  end
+
+  def live_event?
+    selected_regional_pitch_event.live?
+  end
+
+  def event
+    selected_regional_pitch_event
+  end
+
   def assigned_team_names
     assigned_teams.pluck(:name)
   end

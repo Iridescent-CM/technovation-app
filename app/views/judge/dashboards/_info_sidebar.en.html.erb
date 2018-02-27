@@ -2,19 +2,22 @@
   <% if SeasonToggles.judging_enabled? %>
     <h3>Score Submissions</h3>
 
-    <% if current_judge.submission_scores.current_round.incomplete.any? %>
+    <% if current_judge.has_incomplete_scores? %>
       <p>
         <%= link_to "Resume scoring",
-          edit_judge_submission_score_path(current_judge.submission_scores.current_round.incomplete.last.id) %>
-        <%= current_judge.submission_scores.current_round.incomplete.last.name %>
+          edit_judge_submission_score_path(
+            current_judge.last_incomplete_score
+          ) %>
+
+        <%= current_judge.last_incomplete_score.name %>
       </p>
-    <% elsif quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
+    <% elsif quarterfinals? and current_judge.live_event? %>
       <p>
         Choose a submission from among the
-        <%= current_judge.selected_regional_pitch_event.division_names %>
+        <%= current_judge.event.division_names %>
         teams to get started.
       </p>
-    <% elsif current_judge.submission_scores.current_round.incomplete.empty? %>
+    <% elsif current_judge.has_no_incomplete_scores? %>
       <p>
         <%= link_to 'Start a new score', new_judge_submission_score_path %>
       </p>
