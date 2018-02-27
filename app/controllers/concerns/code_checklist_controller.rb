@@ -20,7 +20,7 @@ module CodeChecklistController
     @code_checklist = if @team_submission.code_checklist.present?
                         @team_submission.code_checklist
                       else
-                        @team_submission.build_code_checklist
+                        @team_submission.create_code_checklist!
                       end
 
     if @code_checklist.update(code_checklist_params)
