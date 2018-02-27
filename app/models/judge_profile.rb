@@ -6,6 +6,9 @@ class JudgeProfile < ActiveRecord::Base
     Technology
     Engineering
     Math
+    Business
+    Marketing
+    Entrepreneurship
     Other
   )
 
