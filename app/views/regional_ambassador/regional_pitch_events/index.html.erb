@@ -50,31 +50,29 @@
       </div>
     </div>
 
-    <% if ENV.fetch("JUDGE_ONBOARDING_ENABLED") { false } %>
-      <div class="panel">
-        <h6 class="heading--reset">
-          You may give this URL to new judges which
-          enables them to sign up:
-        </h6>
+    <div class="panel">
+      <h6 class="heading--reset">
+        You may give this URL to new judges which
+        enables them to sign up:
+      </h6>
 
-        <p><%= judge_signup_url(invitation: invitation_token) %></p>
+      <p><%= judge_signup_url(invitation: invitation_token) %></p>
 
 
-        <h6 class="heading--reset">Please take note:</h6>
+      <h6 class="heading--reset">Please take note:</h6>
 
-        <p>
-          You will also be able invite new judges when you are assigning
-          them to your events, so it's your choice if you use this URL,
-          or wait to invite them while organizing your event, or both.
-        </p>
+      <p>
+        You will also be able invite new judges when you are assigning
+        them to your events, so it's your choice if you use this URL,
+        or wait to invite them while organizing your event, or both.
+      </p>
 
-        <p>
-          The Technovation development team is working hard on the
-          attendance features right now, and will release them
-          as soon as possible. You will have until May 1st
-          to finish organizing your event.
-        </p>
-      </div>
+      <p>
+        The Technovation development team is working hard on the
+        attendance features right now, and will release them
+        as soon as possible. You will have until May 1st
+        to finish organizing your event.
+      </p>
     </div>
-  <% end %>
+  </div>
 </div>

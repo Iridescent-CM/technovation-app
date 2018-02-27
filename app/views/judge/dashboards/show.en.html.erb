@@ -43,43 +43,17 @@
 
   <div class="grid__col-md-6">
     <div class="grid__cell">
-
-      <% if !!ENV.fetch("JUDGE_ONBOARDING_ENABLED") { false } %>
-        <ul class="steps">
-          <%= render 'completion_steps/confirm_changed_email',
-            profile: current_judge %>
-        </ul>
-      <% end %>
+      <ul class="steps">
+        <%= render 'completion_steps/confirm_changed_email',
+          profile: current_judge %>
+      </ul>
 
       <div class="panel panel--left">
-        <% if !!ENV.fetch("JUDGE_ONBOARDING_ENABLED") { false } %>
-          <% if current_judge.onboarding? %>
-            <%= render "judge/dashboards/onboarding" %>
-            <%= render "judge/dashboards/info_sidebar" %>
-          <% else %>
-            <%= render "judge/dashboards/onboarded" %>
-          <% end %>
+        <% if current_judge.onboarding? %>
+          <%= render "judge/dashboards/onboarding" %>
+          <%= render "judge/dashboards/info_sidebar" %>
         <% else %>
-          <h1>The judging section is not currently available.</h1>
-
-          <p>
-            Technovation is changing how we are doing judging this year.
-          </p>
-
-          <p>
-            We will email you when updates are ready,
-            and you can apply to be a judge.
-          </p>
-
-          <p>
-            Stay tuned for more details.
-          </p>
-
-          <p>
-            In the meantime, if you're interested, you can
-            <%= link_to "become a mentor instead",
-              mentor_dashboard_path %>
-          </p>
+          <%= render "judge/dashboards/onboarded" %>
         <% end %>
       </div>
     </div>

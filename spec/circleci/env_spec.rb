@@ -32,7 +32,6 @@ if !!defined?(Dotenv)
     MANAGE_EVENTS
     JUDGE_TRAINING_URL
     JUDGE_TRAINING_READY
-    JUDGE_ONBOARDING_ENABLED
   }
 
   RSpec.describe "Circle CI config" do
