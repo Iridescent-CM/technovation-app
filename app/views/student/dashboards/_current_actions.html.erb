@@ -19,7 +19,7 @@
     profile: current_student %>
 
   <%= render "completion_steps/create_team",
-    hidden: !SeasonToggles.team_building_enabled? or
+    hidden: SeasonToggles.team_building_disabled? ||
               current_student.is_on_team? %>
 
   <%= render "student/dashboards/completion_steps/team_submission" %>

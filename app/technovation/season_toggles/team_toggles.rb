@@ -23,6 +23,10 @@ class SeasonToggles
         convert_to_bool(store.get(:team_building_enabled))
       end
 
+      def team_building_disabled?
+        not team_building_enabled?
+      end
+
       def team_building_enabled!
         self.team_building_enabled = true
       end
