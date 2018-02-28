@@ -1,10 +1,25 @@
 export default function Team (res) {
-  this.id = res.id || "";
-  this.name = res.name || "";
+  this.id = res.id;
+  this.name = res.name;
   this.scope = res.scope;
   this.viewUrl = res.view_url;
+  this.viewSubmissionUrl = res.view_submission_url;
+  this.submissionName = res.submission;
+
   this.status = res.status || "status missing (bug)";
-  this.human_status = res.human_status || "must sign up";
+  this.humanStatus = res.human_status || "status missing (bug)";
+  this.statusExplained = res.status_explained;
+
+  this.statusColor = (status => {
+    switch(status) {
+      case "ready":
+        return "green";
+      case "submission_incomplete":
+        return "orange";
+      default:
+        return "red";
+    };
+  })(this.status);
 
   this.location = res.location;
 

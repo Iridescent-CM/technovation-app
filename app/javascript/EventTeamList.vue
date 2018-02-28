@@ -40,7 +40,15 @@
             </div>
           </td>
 
-          <td>{{ team.location }}</td>
+          <td>
+            <a
+              data-turbolinks="false"
+              target="_blank"
+              :href="team.viewSubmissionUrl"
+            >
+              {{ team.submissionName }}
+            </a>
+          </td>
 
           <td>
             <label
@@ -52,7 +60,15 @@
             </label>
 
             <div v-else>
-              {{ team.human_status }}
+              <span
+                v-tooltip.top-center="team.statusExplained"
+                :class="[
+                  'team-status',
+                  `team-status--${team.statusColor}`
+                ]"
+              >
+                {{ team.humanStatus }}
+              </span>
             </div>
           </td>
         </tr>
@@ -281,5 +297,24 @@
 
   p {
     margin: 0;
+  }
+
+  .team-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+  }
+
+  .team-status--green {
+    background-color: green;
+  }
+
+  .team-status--orange {
+    background-color: orange;
+  }
+
+  .team-status--red {
+    background-color: red;
   }
 </style>

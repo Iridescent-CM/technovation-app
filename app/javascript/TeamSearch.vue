@@ -108,7 +108,7 @@
 </template>
 
 <script>
-  import Judge from './Judge';
+  import Team from './Team';
   import EventBus from './EventBus';
 
   export default {
@@ -230,7 +230,7 @@
         this.results = [];
 
         [].forEach.call(resp, (result) => {
-          this.results.push(new Judge(result));
+          this.results.push(new Team(result));
         });
 
         this.loading = false;

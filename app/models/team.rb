@@ -31,6 +31,7 @@ class Team < ActiveRecord::Base
     {
       id: id,
       name: name,
+      submission: submission.app_name,
       location: [
         city,
         state_province,
@@ -39,37 +40,40 @@ class Team < ActiveRecord::Base
       scope: self.class.model_name,
       status: status,
       human_status: human_status,
+      status_explained: status_explained,
     }
   end
 
   def status
-    if submission.present? and qualified?
+    if submission.complete? and qualified?
       "ready"
-    elsif submission.present?
-      "unqualified"
-    elsif qualified?
-      "no_submission"
+    elsif not submission.complete? and qualified?
+      "submission_incomplete"
     else
-      "cannot_compete"
+      "unqualified"
     end
   end
 
   def human_status
     case status
-    when "ready";          "ready!"
-    when "unqualified";    "is not qualified"
-    when "no_submission";  "must start submission"
-    when "cannot_compete"; "cannot compete"
+    when "ready";                 "ready!"
+    when "submission_incomplete"; "submission in progress"
+    when "unqualified";           "not qualified"
     else; "status missing (bug)"
     end
   end
 
-  def friendly_status
+  def status_explained
     case status
-    when "past_season"; "Log in now"
-    when "registered";  "Complete your judge profile"
-    when "ready";       "Log in for more details"
-    else; "status missing (bug)"
+    when "ready"
+      "#{name} finished their submission and " +
+      "all members are qualified"
+    when "submission_incomplete"
+      "#{name} is qualified to compete and needs " +
+      "to finish their submission"
+    when "unqualified"
+      "One or more students on #{name} has not finished " +
+      "completing their registration"
     end
   end
 
