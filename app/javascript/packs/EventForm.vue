@@ -277,6 +277,7 @@
         this.eventStartTime = "";
         this.eventEndTime = "";
         this.eventErrors = {};
+        this.saving = false;
         EventBus.$emit("EventForm.reset");
       },
 
