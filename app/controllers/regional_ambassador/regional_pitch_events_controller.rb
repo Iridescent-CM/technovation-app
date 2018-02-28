@@ -120,7 +120,7 @@ module RegionalAmbassador
         respond_to do |f|
           f.html { render :edit }
 
-          format.json {
+          f.json {
             render json: { errors: @pitch_event.errors }, status: 400
           }
         end
