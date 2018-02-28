@@ -152,6 +152,8 @@ Rails.application.routes.draw do
     resources :participants, only: [:index, :show, :edit, :update]
     resources :participant_sessions, only: [:show, :destroy]
 
+    resources :student_conversions, only: :create
+
     resource :missing_participant_search, only: [:new, :show, :create]
     resources :missing_participant_locations, only: [:edit, :update]
 
@@ -217,6 +219,8 @@ Rails.application.routes.draw do
     resources :participant_sessions, only: [:show, :destroy]
     resources :user_invitations, only: [:new, :create, :index]
     resources :user_invitation_emails, only: :create
+
+    resources :student_conversions, only: :create
 
     resources :regional_ambassador_status, only: :update
 

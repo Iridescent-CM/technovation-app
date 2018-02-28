@@ -86,7 +86,7 @@ class StudentProfile < ActiveRecord::Base
     as: :requestor,
     source: :team
 
-  belongs_to :account, touch: true
+  belongs_to :account, touch: true, required: false
   accepts_nested_attributes_for :account
   validates_associated :account
 

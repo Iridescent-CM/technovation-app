@@ -1247,7 +1247,7 @@ ALTER SEQUENCE signup_attempts_id_seq OWNED BY signup_attempts.id;
 
 CREATE TABLE student_profiles (
     id integer NOT NULL,
-    account_id integer NOT NULL,
+    account_id integer,
     parent_guardian_email character varying,
     parent_guardian_name character varying,
     school_name character varying NOT NULL,
@@ -2952,6 +2952,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180209162551'),
 ('20180216172108'),
 ('20180216172742'),
-('20180228150454');
+('20180228150454'),
+('20180228172449');
 
 

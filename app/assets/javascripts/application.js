@@ -52,10 +52,11 @@ $.rails.showConfirmationDialog = function(link) {
     showCancelButton: true,
     reverseButtons: true,
     focusCancel: true,
-  }).then(
-    function() { $.rails.confirmed(link); },
-    function() { return; }
-  );
+  }).then((result) => {
+    if (result.value) {
+      $.rails.confirmed(link);
+    }
+  });
 }
 
 function confirmNegativeSwal (opts) {
