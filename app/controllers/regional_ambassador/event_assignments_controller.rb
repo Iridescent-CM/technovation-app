@@ -19,6 +19,13 @@ module RegionalAmbassador
           });
         end
 
+        if opts[:scope] == "MentorProfile"
+          invite = invite.create_judge_profile!({
+            company_name: invite.school_company_name,
+            job_title: invite.job_title,
+          })
+        end
+
         unless invite.events.include?(event)
           invite.events << event
         end
@@ -36,7 +43,7 @@ module RegionalAmbassador
             end
           else
             EventMailer.invite(
-              opts[:scope],
+              invite.class.name,
               invite.id,
               event.id,
             ).deliver_later

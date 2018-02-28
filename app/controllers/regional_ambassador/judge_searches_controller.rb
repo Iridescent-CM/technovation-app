@@ -4,7 +4,7 @@ module RegionalAmbassador
       name_query = params.fetch(:name) { "" }
       email_query = params.fetch(:email) { "" }
 
-      scope = JudgeProfile
+      judge_scope = JudgeProfile
         .includes(:account)
         .references("accounts")
         .where(
@@ -17,11 +17,42 @@ module RegionalAmbassador
         )
         .where.not(id: params[:exclude_ids])
 
-      results = scope.in_region(current_ambassador).limit(7)
+      mentor_scope = MentorProfile
+        .includes(:account)
+        .references("accounts")
+        .where(
+          "accounts.first_name ILIKE ? AND
+           accounts.last_name ILIKE ? AND
+           accounts.email ILIKE ?",
+           "#{name_query.split(" ")[0]}%",
+           "#{name_query.split(" ")[1]}%",
+           "#{email_query}%",
+        )
+        .where.not(id: params[:exclude_ids])
+
+      results = judge_scope.in_region(current_ambassador).limit(7)
 
       if results.count < 8
-        results += scope.where.not(
-          id: results.pluck(:id) + params[:exclude_ids].to_a
+        results += judge_scope.where.not(
+          id: results.pluck(:id) + params[:exclude_ids].to_a,
+          account_id: results.pluck(:account_id)
+        )
+        .limit(7 - results.count)
+      end
+
+      if results.count < 8
+        results += mentor_scope.in_region(current_ambassador)
+          .where.not(
+            account_id: results.pluck(:account_id),
+            id: results.pluck(:id) + params[:exclude_ids].to_a,
+          )
+          .limit(7 - results.count)
+      end
+
+      if results.count < 8
+        results += mentor_scope.where.not(
+          id: results.pluck(:id) + params[:exclude_ids].to_a,
+          account_id: results.pluck(:account_id),
         )
         .limit(7 - results.count)
       end
@@ -32,13 +63,14 @@ module RegionalAmbassador
           "#{name_query}%", "#{email_query}%",
         )
         .where.not(
-          id: results.pluck(:id) + params[:exclude_ids].to_a
+          id: results.pluck(:id) + params[:exclude_ids].to_a,
+          account_id: results.pluck(:account_id)
         )
         .limit(7 - results.count)
       end
 
       json = results.map do |judge|
-        if judge.is_a?(JudgeProfile)
+        if judge.account.present?
           judge.to_search_json.merge({
             view_url: regional_ambassador_participant_path(
               judge.account,
