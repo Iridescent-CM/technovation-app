@@ -2,6 +2,7 @@ export default function Team (res) {
   this.id = res.id || "";
   this.name = res.name || "";
   this.scope = res.scope;
+  this.viewUrl = res.view_url;
   this.status = res.status || "status missing (bug)";
   this.human_status = res.human_status || "must sign up";
 

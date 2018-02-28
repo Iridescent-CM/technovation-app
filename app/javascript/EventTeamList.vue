@@ -30,7 +30,12 @@
             </div>
 
             <div class="cutoff-with-ellipsis">
-              {{ team.name }}
+              <a
+                target="_blank"
+                :href="team.viewUrl"
+              >
+                {{ team.name }}
+              </a>
             </div>
           </td>
 
