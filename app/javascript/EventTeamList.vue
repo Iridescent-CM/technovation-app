@@ -124,7 +124,7 @@
 
               success: (resp) => {
                 var idx = vm.event.selectedTeams.findIndex(
-                  t => { return t.id === team.id }
+                  (t) => { return t.id === team.id }
                 );
 
                 if (idx !== -1)

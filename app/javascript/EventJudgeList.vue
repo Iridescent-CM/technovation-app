@@ -142,7 +142,7 @@
 
               success: (resp) => {
                 var idx = vm.event.selectedJudges.findIndex(
-                  j => { return j.id === judge.id }
+                  (j) => { return j.id === judge.id }
                 );
 
                 if (idx !== -1)

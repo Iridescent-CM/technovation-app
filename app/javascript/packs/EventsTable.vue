@@ -190,7 +190,7 @@
               url: event.url,
               success: () => {
                 var idx = this.events.findIndex(
-                  e => { return e.id === event.id }
+                  (e) => { return e.id === event.id }
                 );
 
                 if (idx !== -1)
@@ -206,7 +206,7 @@
 
     mounted () {
       EventBus.$on("EventForm.handleSubmit", (event) => {
-        var idx = this.events.findIndex(e => {
+        var idx = this.events.findIndex((e) => {
           return e.id === event.id;
         });
 

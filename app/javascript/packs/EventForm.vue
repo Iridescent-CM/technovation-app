@@ -218,7 +218,7 @@
           return;
         }
 
-        ids = _.map(ids, i => { return parseInt(i) });
+        ids = _.map((ids, i) => { return parseInt(i) });
         this.event.division_names = []
 
         if (ids.includes(parseInt(this.seniorDivisionId)))
