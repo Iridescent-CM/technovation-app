@@ -71,6 +71,8 @@
               v-model="eventDate"
               :options="dateOpts" />
           </label>
+
+          <errors :errors="eventErrors.eventDate"></errors>
         </div>
 
         <div class="grid__col-6">
@@ -241,8 +243,13 @@
       },
 
       eventDate () {
-        this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
-        this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
+        if (this.eventDate.length) {
+          this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
+          this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
+          this.eventErrors.eventDate = [];
+        } else {
+          this.eventErrors.eventDate = ["can't be blank"];
+        }
       },
 
       eventStartTime () {
