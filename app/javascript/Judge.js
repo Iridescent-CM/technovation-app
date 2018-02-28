@@ -5,6 +5,7 @@ export default function Judge (res) {
   this.scope = res.scope;
   this.status = res.status || "status missing (bug)";
   this.human_status = res.human_status || "must sign up";
+  this.viewUrl = res.view_url || "";
 
   this.location = res.location;
 

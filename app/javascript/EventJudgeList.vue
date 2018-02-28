@@ -30,7 +30,22 @@
               />
             </div>
 
-            <div class="cutoff-with-ellipsis">
+            <div
+              v-if="judge.viewUrl.length"
+              class="cutoff-with-ellipsis"
+            >
+              <a
+                data-turbolinks="false"
+                :href="judge.viewUrl"
+              >
+                {{ judge.name }}
+              </a>
+            </div>
+
+            <div
+              v-else
+              class="cutoff-with-ellipsis"
+            >
               {{ judge.name }}
             </div>
           </td>
