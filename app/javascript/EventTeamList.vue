@@ -31,6 +31,7 @@
 
             <div class="cutoff-with-ellipsis">
               <a
+                data-turbolinks="false"
                 target="_blank"
                 :href="team.viewUrl"
               >
