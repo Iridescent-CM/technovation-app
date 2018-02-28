@@ -1411,7 +1411,8 @@ CREATE TABLE team_submissions (
     app_inventor_gmail character varying,
     published_at timestamp without time zone,
     business_plan character varying,
-    percent_complete integer DEFAULT 0 NOT NULL
+    percent_complete integer DEFAULT 0 NOT NULL,
+    pitch_presentation character varying
 );
 
 
@@ -2950,6 +2951,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180206193752'),
 ('20180209162551'),
 ('20180216172108'),
-('20180216172742');
+('20180216172742'),
+('20180228150454');
 
 

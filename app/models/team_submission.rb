@@ -41,6 +41,7 @@ class TeamSubmission < ActiveRecord::Base
 
   mount_uploader :source_code, FileProcessor
   mount_uploader :business_plan, FileProcessor
+  mount_uploader :pitch_presentation, FileProcessor
 
   scope :in_region, ->(ambassador) {
     if ambassador.country == "US"
@@ -67,9 +68,6 @@ class TeamSubmission < ActiveRecord::Base
     after_add: Proc.new { |ts, _| ts.touch },
     after_remove: Proc.new { |ts, _| ts.touch }
   accepts_nested_attributes_for :screenshots
-
-  has_one :pitch_presentation, dependent: :destroy
-  accepts_nested_attributes_for :pitch_presentation
 
   has_one :technical_checklist, dependent: :destroy
   accepts_nested_attributes_for :technical_checklist
@@ -324,12 +322,6 @@ class TeamSubmission < ActiveRecord::Base
       ["Other", "-", development_platform_other].join(' ')
     else
       development_platform
-    end
-  end
-
-  def pitch_presentation_url
-    if !!pitch_presentation
-      pitch_presentation.uploaded_file_url
     end
   end
 
