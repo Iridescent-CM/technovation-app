@@ -181,22 +181,6 @@ class MentorProfile < ActiveRecord::Base
     end
   end
 
-  def to_search_json
-    {
-      id: id,
-      name: full_name,
-      email: email,
-      location: [
-        city,
-        state_province,
-        country,
-      ].join(", "),
-      scope: self.class.model_name,
-      status: status,
-      human_status: human_status,
-    }
-  end
-
   def status
     if current_account && onboarded?
       "ready"
