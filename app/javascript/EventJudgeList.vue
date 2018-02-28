@@ -36,6 +36,7 @@
             >
               <a
                 data-turbolinks="false"
+                target="_blank"
                 :href="judge.viewUrl"
               >
                 {{ judge.name }}
