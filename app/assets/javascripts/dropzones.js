@@ -16,6 +16,15 @@ var defaultSubmissionDropzoneOptions = {
   },
 }
 
+Dropzone.options.teamSubmissionPitchPresentationDropzone = $.extend(
+  {},
+  defaultSubmissionDropzoneOptions,
+  {
+    paramName: "team_submission[pitch_presentation]",
+    acceptedFiles: ".ppt,.pptx,.pdf",
+  }
+);
+
 Dropzone.options.teamSubmissionBusinessPlanDropzone = $.extend(
   {},
   defaultSubmissionDropzoneOptions,

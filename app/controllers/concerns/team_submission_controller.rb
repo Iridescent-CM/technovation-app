@@ -62,10 +62,6 @@ module TeamSubmissionController
 
     @team_submission.screenshots.build
 
-    unless @team_submission.pitch_presentation.present?
-      @team_submission.build_pitch_presentation
-    end
-
     if @team_submission.code_checklist.present?
       @code_checklist = @team_submission.code_checklist
     else
@@ -203,6 +199,7 @@ module TeamSubmissionController
         :integrity_affirmed,
         :source_code,
         :business_plan,
+        :pitch_presentation,
         :app_description,
         :app_name,
         :demo_video_link,
@@ -216,17 +213,10 @@ module TeamSubmissionController
           :id,
           :image,
         ],
-        pitch_presentation_attributes: [
-          :id,
-          :uploaded_file,
-        ],
       )
     else
       params.require(:team_submission).permit(
-        pitch_presentation_attributes: [
-          :id,
-          :remote_file_url,
-        ],
+        :pitch_presentation,
       )
     end
   end

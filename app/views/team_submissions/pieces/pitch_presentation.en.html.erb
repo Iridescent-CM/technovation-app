@@ -16,20 +16,17 @@
 
     <%= form_with model: [current_scope, @team_submission],
       multipart: true,
-      id: "team-submission-business-plan-dropzone",
+      id: "team-submission-pitch-presentation-dropzone",
       class: "dropzone" do |f| %>
-      <%= f.hidden_field "pitch_presentation_attributes[id]",
-        value: @team_submission.pitch_presentation.id %>
 
       <div class="fallback">
-        <%= f.fields_for :pitch_presentation do |b| %>
-          <%= b.label :uploaded_file,
-            "Upload your team's presentation slides" %>
+        <%= f.label :pitch_presentation,
+          "Upload your team's pitch presentation slides" %>
 
-          <%= b.file_field :uploaded_file,
-            id: "team_submission_pitch_presentation_attributes_" +
-                "uploaded_file" %>
-        <% end %>
+        <%= f.file_field :pitch_presentation,
+          id: "team_submission_pitch_presentation" %>
+
+        <%= f.hidden_field :pitch_presentation_cache %>
 
         <%= f.submit "Upload", class: "button" %>
       </div>
@@ -58,11 +55,9 @@
 
     <p class="grid__cell--padding-sm-y">
       Get some help putting your slides together in the
-      <%= link_to(
-        ":FIXME LINK TO PRESENTATION SLIDES CURRICULUM UNIT:",
-        "#",
-        target: "_blank"
-      ) %>
+      <%= link_to "Pitch 3 Unit",
+        "http://technovationchallenge.org/curriculum/pitch-3/",
+        target: "_blank" %>
     </p>
   <% else %>
     <p class="scent--strong">
