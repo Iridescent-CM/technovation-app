@@ -10,7 +10,46 @@
       <% if profile.consent_signed? %>
         <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
       <% else %>
-        <%= web_icon("exclamation-circle icon-red", text: "Not signed... boo...") %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Not signed... boo..."
+        ) %>
+      <% end %>
+    </dd>
+
+    <dt>Location entered?</dt>
+    <dd>
+      <% if profile.location_confirmed? %>
+        <%= web_icon("check-circle icon-green", text: "Yes!") %>
+      <% else %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Nope... :("
+        ) %>
+      <% end %>
+    </dd>
+
+    <dt>Survey completed?</dt>
+    <dd>
+      <% if profile.survey_completed? %>
+        <%= web_icon("check-circle icon-green", text: "Yes!") %>
+      <% else %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Nope... :("
+        ) %>
+      <% end %>
+    </dd>
+
+    <dt>Training completed?</dt>
+    <dd>
+      <% if profile.training_completed? %>
+        <%= web_icon("check-circle icon-green", text: "Yes!") %>
+      <% else %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Nope... :("
+        ) %>
       <% end %>
     </dd>
   </dl>
