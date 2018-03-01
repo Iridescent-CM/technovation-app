@@ -1,12 +1,12 @@
 <div class="grid">
   <div class="grid__col-12">
-      <h1 class="content-heading">Sign up for a Regional Pitch Event</h1>
+      <h3 class="content-heading">Sign up for a Regional Pitch Event</h3>
   </div>
   <ol style="margin-top:0px" class="grid__col-6 grid--direction-column">
     <% @regional_events.each do |event| %>
       <div class="grid__col-12">
         <li>
-          <%= event.name %>
+          <h3><%= event.name %></h3>
           <p>
             <strong>Time:</strong>
 
@@ -62,7 +62,29 @@
       <% end %>
     </ol>
     <div class="grid__col-6">
-      <img class="grid__cel-img" src="http://web-profile.net/wp-content/uploads/google-maps-multiple-markers.png">
+    <div id="map"></div>
+    <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUM1EDCYb5G8FhXuUbkrhzZLqIO8bXzV0&callback=initMap">
+    </script>
     </div>
     <div class="grid__col-2">
       <p>
@@ -72,3 +94,5 @@
       </p>
     </div>
 </div>
+
+
