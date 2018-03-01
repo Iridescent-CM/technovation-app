@@ -958,7 +958,8 @@ CREATE TABLE regional_ambassador_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     bio text,
-    intro_summary text
+    intro_summary text,
+    secondary_regions character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -2953,6 +2954,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180216172108'),
 ('20180216172742'),
 ('20180228150454'),
-('20180228172449');
+('20180228172449'),
+('20180301140524');
 
 
