@@ -29,9 +29,8 @@
         [current_scope, team, :membership, link_opts],
         data: {
           method: :delete,
-          confirm: "Are you sure you want to REMOVE " +
-                  onboarding_member.full_name +
-                  " from your team?"
+          confirm: t("views.teams.show.confirm_leave",
+                     name: onboarding_member.name),
         },
         class: "danger small" %>
     <% end %>

@@ -33,7 +33,7 @@
         [current_scope, @team, :membership, link_opts],
         data: {
           method: :delete,
-          confirm: t("views.teams.show.confirm_leave"),
+          confirm: t("views.teams.show.confirm_leave", name: member.name),
         },
         class: "danger small" %>
     <% end %>

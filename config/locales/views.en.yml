@@ -328,7 +328,7 @@ en:
         title: "Register your team"
       show:
         add_members: "Add members"
-        confirm_leave: "Are you sure you want to REMOVE YOUR MEMBERSHIP the team?"
+        confirm_leave: "Are you sure you want to REMOVE %{name} from the team?"
         division_name: "%{name} Division"
         invite: "Invite more students"
         location: "Primary location: %{name}"
