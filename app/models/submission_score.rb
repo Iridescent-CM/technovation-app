@@ -17,8 +17,7 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   before_create -> {
-    self.event_type ||= judge_profile.selected_regional_pitch_event.live? ?
-      "live" : "virtual"
+    self.event_type ||= judge_profile.live_event? ? "live" : "virtual"
     self.official ||= official?
   }
 
