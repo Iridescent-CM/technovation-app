@@ -1,6 +1,29 @@
 require "rails_helper"
 
 RSpec.describe SubmissionScore do
+  describe "regioning" do
+    it "works with primary region searches" do
+      FactoryBot.create(:submission_score, :los_angeles)
+      chi = FactoryBot.create(:submission_score, :chicago)
+      ra = FactoryBot.create(:ambassador, :chicago)
+
+      expect(SubmissionScore.in_region(ra)).to contain_exactly(chi)
+    end
+
+    it "works with secondary region searches" do
+      FactoryBot.create(:submission_score, :brazil)
+      la = FactoryBot.create(:submission_score, :los_angeles)
+      chi = FactoryBot.create(:submission_score, :chicago)
+
+      ra = FactoryBot.create(
+        :ambassador,
+        :chicago,
+        secondary_regions: ["CA, US"])
+
+      expect(SubmissionScore.in_region(ra)).to contain_exactly(chi, la)
+    end
+  end
+
   it "acts as paranoid" do
     team = FactoryBot.create(:team)
     judge = FactoryBot.create(:judge_profile)
@@ -268,7 +291,11 @@ RSpec.describe SubmissionScore do
 
   it "sets the event_type to virtual for virtual judges" do
     team = FactoryBot.create(:team)
-    team_submission = FactoryBot.create(:team_submission, :complete, team: team)
+    team_submission = FactoryBot.create(
+      :team_submission,
+      :complete,
+      team: team
+    )
     judge_profile = FactoryBot.create(:judge_profile)
 
     score = SubmissionScore.create!(

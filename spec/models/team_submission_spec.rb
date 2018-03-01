@@ -3,6 +3,38 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   before { SeasonToggles.team_submissions_editable! }
 
+  describe "regioning" do
+    it "works with primary region searches" do
+      la_team = FactoryBot.create(:team, :los_angeles)
+      FactoryBot.create(:submission, team: la_team)
+
+      chi_team = FactoryBot.create(:team, :chicago)
+      chi = FactoryBot.create(:submission, team: chi_team)
+
+      ra = FactoryBot.create(:ambassador, :chicago)
+
+      expect(TeamSubmission.in_region(ra)).to contain_exactly(chi)
+    end
+
+    it "works with secondary region searches" do
+      br_team = FactoryBot.create(:team, :brazil)
+      FactoryBot.create(:submission, team: br_team)
+
+      la_team = FactoryBot.create(:team, :los_angeles)
+      la = FactoryBot.create(:submission, team: la_team)
+
+      chi_team = FactoryBot.create(:team, :chicago)
+      chi = FactoryBot.create(:submission, team: chi_team)
+
+      ra = FactoryBot.create(
+        :ambassador,
+        :chicago,
+        secondary_regions: ["CA, US"])
+
+      expect(TeamSubmission.in_region(ra)).to contain_exactly(chi, la)
+    end
+  end
+
   describe "#percent_complete" do
     it "returns 0 for nothing completed" do
       submission = FactoryBot.create(:submission, :junior)

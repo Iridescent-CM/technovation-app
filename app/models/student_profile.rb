@@ -1,6 +1,9 @@
 class StudentProfile < ActiveRecord::Base
   attr_accessor :used_global_invitation
 
+  include Regioned
+  regioned_source Account
+
   include Casting::Client
   delegate_missing_methods
 
@@ -15,20 +18,6 @@ class StudentProfile < ActiveRecord::Base
       .references(:accounts)
       .left_outer_joins(:current_teams)
       .where("teams.id IS NULL")
-  }
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(:account)
-        .where(
-          "accounts.country = ? AND accounts.state_province = ?",
-          "US",
-          ambassador.state_province
-        )
-    else
-      joins(:account)
-        .where("accounts.country = ?", ambassador.country)
-    end
   }
 
   scope :onboarded, -> {

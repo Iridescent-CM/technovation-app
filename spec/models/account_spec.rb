@@ -3,6 +3,30 @@ require "rails_helper"
 RSpec.describe Account do
   subject(:account) { FactoryBot.create(:account) }
 
+  describe "regioning" do
+    it "works with primary region searches" do
+      FactoryBot.create(:account, :los_angeles)
+      chi = FactoryBot.create(:account, :chicago)
+      ra = FactoryBot.create(:ambassador, :chicago)
+
+      expect(Account.in_region(ra)).to contain_exactly(chi, ra.account)
+    end
+
+    it "works with secondary region searches" do
+      FactoryBot.create(:account, :brazil)
+      la = FactoryBot.create(:account, :los_angeles)
+      chi = FactoryBot.create(:account, :chicago)
+
+      ra = FactoryBot.create(
+        :ambassador,
+        :chicago,
+        secondary_regions: ["CA, US"])
+
+      expect(Account.in_region(ra))
+        .to contain_exactly(chi, la, ra.account)
+    end
+  end
+
   it "sets an auth token" do
     expect(account.auth_token).not_to be_blank
   end

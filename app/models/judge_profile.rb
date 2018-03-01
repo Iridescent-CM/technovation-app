@@ -1,6 +1,9 @@
 class JudgeProfile < ActiveRecord::Base
   attr_accessor :used_global_invitation
 
+  include Regioned
+  regioned_source Account
+
   enum industry: %i(
     Science
     Technology
@@ -22,17 +25,6 @@ class JudgeProfile < ActiveRecord::Base
 
   scope :current, -> {
     joins(:current_account)
-  }
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(:account)
-      .where("accounts.country = 'US' AND accounts.state_province = ?",
-             ambassador.state_province)
-    else
-      joins(:account)
-      .where("accounts.country = ?", ambassador.country)
-    end
   }
 
   scope :not_attending_live_event, -> {

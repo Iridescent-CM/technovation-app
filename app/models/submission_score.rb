@@ -1,6 +1,9 @@
 class SubmissionScore < ActiveRecord::Base
   acts_as_paranoid
 
+  include Regioned
+  regioned_source Team, through: :team_submission
+
   before_destroy -> {
     if incomplete?
       team_submission.clear_judge_opened_details!
@@ -117,18 +120,6 @@ class SubmissionScore < ActiveRecord::Base
       current.semifinals
     else
       none
-    end
-  }
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(team_submission: :team)
-      .where(
-        "teams.state_province = ? AND teams.country = 'US'",
-        ambassador.state_province
-      )
-    else
-      where("teams.country = ?", ambassador.country)
     end
   }
 

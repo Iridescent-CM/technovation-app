@@ -9,7 +9,7 @@ module RegionalAmbassador
 
       @division = params[:division] ||= "senior"
 
-      events = RegionalPitchEvent.in_region_of(current_ambassador)
+      events = RegionalPitchEvent.in_region(current_ambassador)
       virtual_event = VirtualRegionalPitchEvent.new
 
       if virtual_event.teams.in_region(current_ambassador).any?

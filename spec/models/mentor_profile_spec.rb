@@ -66,37 +66,17 @@ RSpec.describe MentorProfile do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryBot.create(
-        :mentor,
-        city: "Los Angeles",
-        state_province: "CA",
-        country: "US"
-      )
+      FactoryBot.create(:mentor, :los_angeles)
+      il_mentor = FactoryBot.create(:mentor, :chicago)
+      il_ambassador = FactoryBot.create(:ambassador, :chicago)
 
-      il_mentor = FactoryBot.create(:mentor)
-      il_ambassador = FactoryBot.create(:ambassador)
-
-      expect(
-        MentorProfile.in_region(il_ambassador)
-      ).to eq([il_mentor])
+      expect(MentorProfile.in_region(il_ambassador)).to eq([il_mentor])
     end
 
     it "scopes to the given Int'l ambassador's country" do
-      FactoryBot.create(:mentor)
-
-      intl_mentor = FactoryBot.create(
-        :mentor,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
-
-      intl_ambassador = FactoryBot.create(
-        :ambassador,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
+      FactoryBot.create(:mentor, :chicago)
+      intl_mentor = FactoryBot.create(:mentor, :brazil)
+      intl_ambassador = FactoryBot.create(:ambassador, :brazil)
 
       expect(
         MentorProfile.in_region(intl_ambassador)

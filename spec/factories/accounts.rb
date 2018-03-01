@@ -11,6 +11,24 @@ FactoryBot.define do
     city "Chicago"
     location_confirmed true
 
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :brazil do
+      city "Salvador"
+      state_province "Bahia"
+      country "BR"
+    end
+
     after :create do |a|
       RegisterToCurrentSeasonJob.perform_now(a)
       a.update_column(:profile_image, "foo/bar/baz.png")

@@ -95,15 +95,9 @@ RSpec.describe StudentProfile do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryBot.create(
-        :student,
-        city: "Los Angeles",
-        state_province: "CA",
-        country: "US"
-      )
-
-      il_student = FactoryBot.create(:student)
-      il_ambassador = FactoryBot.create(:ambassador)
+      FactoryBot.create(:student, :los_angeles)
+      il_student = FactoryBot.create(:student, :chicago)
+      il_ambassador = FactoryBot.create(:ambassador, :chicago)
 
       expect(
         StudentProfile.in_region(il_ambassador)
@@ -113,23 +107,27 @@ RSpec.describe StudentProfile do
     it "scopes to the given Int'l ambassador's country" do
       FactoryBot.create(:student)
 
-      intl_student = FactoryBot.create(
-        :student,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
-
-      intl_ambassador = FactoryBot.create(
-        :ambassador,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
+      intl_student = FactoryBot.create(:student, :brazil)
+      intl_ambassador = FactoryBot.create(:ambassador, :brazil)
 
       expect(
         StudentProfile.in_region(intl_ambassador)
       ).to eq([intl_student])
+    end
+
+    it "works with secondary region searches" do
+      br = FactoryBot.create(:student, :brazil)
+      dhurma = FactoryBot.create(:student, :dhurma)
+      najran = FactoryBot.create(:student, :najran)
+
+      FactoryBot.create(:student, :los_angeles)
+
+      ra = FactoryBot.create(:ambassador, :brazil,
+        secondary_regions: ["Najran Province, Saudi Arabia"])
+
+      expect(StudentProfile.in_region(ra)).to contain_exactly(
+        br, dhurma, najran
+      )
     end
   end
 

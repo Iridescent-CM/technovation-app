@@ -7,6 +7,24 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
+    trait :brazil do
+      city "Salvador"
+      state_province "Bahia"
+      country "BR"
+    end
+
     trait :junior do
       after(:create) do |team, evaluator|
         members = evaluator.members_count.times.collect {

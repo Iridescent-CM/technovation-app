@@ -1,6 +1,8 @@
 class Account < ActiveRecord::Base
   include Seasoned
 
+  include Regioned
+
   include Casting::Client
   delegate_missing_methods
 
@@ -98,17 +100,6 @@ class Account < ActiveRecord::Base
 
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      where(
-        "accounts.country = 'US' AND accounts.state_province = ?",
-        ambassador.state_province
-      )
-    else
-      where("accounts.country = ?", ambassador.country)
-    end
-  }
 
   scope :matched, -> {
     mentor_ids = unscoped.distinct

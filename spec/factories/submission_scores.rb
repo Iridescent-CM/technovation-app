@@ -7,5 +7,20 @@ FactoryBot.define do
     trait :complete do
       completed_at Time.current
     end
+
+    trait :brazil do
+      association(:team_submission, factory: [:team_submission, :brazil])
+    end
+
+    trait :los_angeles do
+      association(
+        :team_submission,
+        factory: [:team_submission, :los_angeles]
+      )
+    end
+
+    trait :chicago do
+      association(:team_submission, factory: [:team_submission, :chicago])
+    end
   end
 end

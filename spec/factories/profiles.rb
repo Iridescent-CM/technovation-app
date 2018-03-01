@@ -19,6 +19,36 @@ FactoryBot.define do
       not_onboarded false
     end
 
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :brazil do
+      city "Salvador"
+      state_province "Bahia"
+      country "BR"
+    end
+
+    trait :najran do
+      city "Najran"
+      state_province "Najran Province"
+      country "Saudi Arabia"
+    end
+
+    trait :dhurma do
+      city "Dhurma"
+      state_province "Riyadh Province"
+      country "Saudi Arabia"
+    end
+
     trait :geocoded do
       after(:create) do |s, _|
         Geocoding.perform(s.account).with_save
@@ -97,6 +127,24 @@ FactoryBot.define do
       password nil
       date_of_birth nil
       not_onboarded false
+    end
+
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :brazil do
+      city "Salvador"
+      state_province "Bahia"
+      country "BR"
     end
 
     trait :geocoded do
@@ -186,6 +234,24 @@ FactoryBot.define do
       sequence(:email) { |n| "factory-ra-#{n}@example.com" }
       password nil
       first_name "RA"
+    end
+
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :brazil do
+      city "Salvador"
+      state_province "Bahia"
+      country "BR"
     end
 
     trait :geocoded do

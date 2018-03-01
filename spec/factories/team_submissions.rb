@@ -2,8 +2,22 @@ FactoryBot.define do
   factory :team_submission, aliases: [:submission] do
     integrity_affirmed true
 
+    team
+
     trait :semifinalist do
       contest_rank :semifinalist
+    end
+
+    trait :brazil do
+      association(:team, factory: [:team, :brazil])
+    end
+
+    trait :los_angeles do
+      association(:team, factory: [:team, :los_angeles])
+    end
+
+    trait :chicago do
+      association(:team, factory: [:team, :chicago])
     end
 
     after(:create) do |sub|

@@ -7,7 +7,7 @@ module RegionalAmbassador
         f.html { }
         f.json {
           pitch_events = RegionalPitchEvent.current
-            .in_region_of(current_ambassador)
+            .in_region(current_ambassador)
             .order(:starts_at)
             .map do |e|
               e.to_list_json.merge({
@@ -25,7 +25,7 @@ module RegionalAmbassador
 
     def show
       @pitch_event = RegionalPitchEvent.current
-        .in_region_of(current_ambassador)
+        .in_region(current_ambassador)
         .includes(
           teams: [:division, { judge_assignments: :judge_profile }],
           judges: { judge_assignments: :team }
@@ -57,7 +57,7 @@ module RegionalAmbassador
 
     def edit
       @pitch_event = RegionalPitchEvent.current
-        .in_region_of(current_ambassador)
+        .in_region(current_ambassador)
         .find(params[:id])
     end
 
@@ -97,7 +97,7 @@ module RegionalAmbassador
 
     def update
       @pitch_event = RegionalPitchEvent.current
-        .in_region_of(current_ambassador)
+        .in_region(current_ambassador)
         .find(params[:id])
 
       if @pitch_event.update_attributes(pitch_event_params)
@@ -128,7 +128,7 @@ module RegionalAmbassador
     end
 
     def destroy
-      RegionalPitchEvent.current.in_region_of(current_ambassador)
+      RegionalPitchEvent.current.in_region(current_ambassador)
         .find(params[:id]).destroy
 
       redirect_to regional_ambassador_regional_pitch_events_url,

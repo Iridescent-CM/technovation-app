@@ -5,6 +5,9 @@ class TeamSubmission < ActiveRecord::Base
 
   include Seasoned
 
+  include Regioned
+  regioned_source Team
+
   include PublicActivity::Common
 
   acts_as_paranoid
@@ -42,18 +45,6 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :source_code, FileProcessor
   mount_uploader :business_plan, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(:team)
-        .where(
-          "teams.state_province = ? AND teams.country = 'US'",
-          ambassador.state_province
-        )
-    else
-      joins(:team).where("teams.country = ?", ambassador.country)
-    end
-  }
 
   Division.names.keys.each do |division_name|
     scope division_name, -> {

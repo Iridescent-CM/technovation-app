@@ -1,6 +1,9 @@
 class RegionalPitchEvent < ActiveRecord::Base
   include Seasoned
 
+  include Regioned
+  regioned_source Account, through: :ambassador
+
   after_validation -> {
     AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.(self)
   }
@@ -82,19 +85,6 @@ class RegionalPitchEvent < ActiveRecord::Base
       end
     else
       none
-    end
-  }
-
-  scope :in_region_of, ->(ambassador) {
-    if ambassador.country == "US"
-      joins(ambassador: :account)
-      .where(
-        "accounts.country = 'US' AND accounts.state_province = ?",
-        ambassador.state_province
-      )
-    else
-      joins(ambassador: :account)
-      .where("accounts.country = ?", ambassador.country)
     end
   }
 

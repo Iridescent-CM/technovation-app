@@ -1,6 +1,28 @@
 require "rails_helper"
 
 RSpec.describe RegionalPitchEvent do
+  describe "regioning" do
+    it "works with primary region searches" do
+      ra = FactoryBot.create(:ambassador, :chicago)
+
+      chi = FactoryBot.create(:event, :chicago)
+      FactoryBot.create(:event, :los_angeles)
+
+      expect(RegionalPitchEvent.in_region(ra)).to contain_exactly(chi)
+    end
+
+    it "works with secondary region searches" do
+      FactoryBot.create(:event, :brazil)
+
+      la = FactoryBot.create(:event, :los_angeles)
+      chi = FactoryBot.create(:event, :chicago)
+      ra = FactoryBot.create(:ambassador, :chicago,
+        secondary_regions: ["CA, US"])
+
+      expect(RegionalPitchEvent.in_region(ra)).to contain_exactly(chi, la)
+    end
+  end
+
   it "removes incompatible division teams when trying to add" do
     team = FactoryBot.create(:team, :junior)
     rpe = FactoryBot.create(:event, :senior)

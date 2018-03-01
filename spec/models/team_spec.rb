@@ -417,41 +417,19 @@ RSpec.describe Team do
 
   describe ".in_region" do
     it "scopes to the given US ambassador's state" do
-      FactoryBot.create(
-        :team,
-        city: "Los Angeles",
-        state_province: "CA",
-        country: "US"
-      )
+      FactoryBot.create(:team, :los_angeles)
+      il_team = FactoryBot.create(:team, :chicago)
+      il_ambassador = FactoryBot.create(:ambassador, :chicago)
 
-      il_team = FactoryBot.create(:team)
-      il_ambassador = FactoryBot.create(:ambassador)
-
-      expect(
-        Team.in_region(il_ambassador)
-      ).to eq([il_team])
+      expect(Team.in_region(il_ambassador)).to eq([il_team])
     end
 
     it "scopes to the given Int'l ambassador's country" do
       FactoryBot.create(:team)
+      intl_team = FactoryBot.create(:team, :brazil)
+      intl_ambassador = FactoryBot.create(:ambassador, :brazil)
 
-      intl_team = FactoryBot.create(
-        :team,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
-
-      intl_ambassador = FactoryBot.create(
-        :ambassador,
-        city: "Salvador",
-        state_province: "Bahia",
-        country: "Brazil"
-      )
-
-      expect(
-        Team.in_region(intl_ambassador)
-      ).to eq([intl_team])
+      expect(Team.in_region(intl_ambassador)).to eq([intl_team])
     end
   end
 

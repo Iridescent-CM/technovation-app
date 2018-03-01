@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base
   include Seasoned
+  include Regioned
 
   acts_as_paranoid
 
@@ -106,17 +107,6 @@ class Team < ActiveRecord::Base
 
   scope :matched, ->(member_scope) {
     where("has_#{member_scope} = ?", true)
-  }
-
-  scope :in_region, ->(ambassador) {
-    if ambassador.country == "US"
-      where(
-        "state_province = ? AND country = 'US'",
-        ambassador.state_province
-      )
-    else
-      where("country = ?", ambassador.country)
-    end
   }
 
   scope :by_division, ->(division) {

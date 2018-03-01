@@ -14,6 +14,18 @@ FactoryBot.define do
 
     division_ids { Division.pluck(:id) }
 
+    trait :brazil do
+      association(:ambassador, factory: [:ambassador, :brazil])
+    end
+
+    trait :los_angeles do
+      association(:ambassador, factory: [:ambassador, :los_angeles])
+    end
+
+    trait :chicago do
+      association(:ambassador, factory: [:ambassador, :chicago])
+    end
+
     trait :senior do
       division_ids { [Division.senior.id] }
     end
