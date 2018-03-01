@@ -3,35 +3,45 @@ module Regioned
 
   included do
     scope :in_region, ->(ambassador) {
-      results = scope_records(ambassador)
+      regioned_scope = if regioned_through_assoc
+                         includes(region_source)
+                           .references(region_source_table)
+                       else
+                         self
+                       end
 
-      SecondaryRegions.new(ambassador).each do |region|
-        results += scope_records(region)
-      end
-
-      results
+      regioned_scope.where(
+        primary_query(ambassador) +
+        seconday_query(ambassador)
+      )
     }
   end
 
   module ClassMethods
-    def scope_records(source)
-      scope = if regioned_through_assoc
-                includes(region_source)
-                  .references(region_source_table)
-              else
-                self
-              end
+    def primary_query(ambassador)
+      construct_query(ambassador)
+    end
 
-      if source.country == "US"
-        scope.where("#{region_source_table}.country = ? AND " +
-                    "#{region_source_table}.state_province = ?",
-                    source.country,
-                    source.state_province)
+    def seconday_query(ambassador)
+      regions = SecondaryRegions.new(ambassador)
+
+      if regions.any?
+        " OR " +
+        regions.map { |region|
+          construct_query(region)
+        }.join(" OR ")
       else
-        scope.where(
-          "#{region_source_table}.country = ?",
-          source.country
-        )
+        ""
+      end
+    end
+
+    def construct_query(source)
+      if source.country == "US"
+        "(#{region_source_table}.country = 'US' AND " +
+        "#{region_source_table}.state_province " +
+        "= '#{source.state_province}')"
+      else
+        "(#{region_source_table}.country = '#{source.country}')"
       end
     end
 
