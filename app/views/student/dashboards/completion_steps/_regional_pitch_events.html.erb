@@ -1,21 +1,22 @@
-<div class="panel">
+<li class="completion-step">
   <h1 class="content-heading">Select a regional pitch event</h1>
   <% if !current_team.selected_regional_pitch_event.live? && @regional_events.any? %>
     <p>
       Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
     </p>
+    <div class="step-actions">
       <%= link_to 'Attend an Event',
           student_regional_pitch_events_path,
-          class: "button small" %>
+          class: "button" %>
+    </div>
   <% elsif current_team.selected_regional_pitch_event.live? %>
     <p>
       You are attending <%= current_team.selected_regional_pitch_event.name %>.
     </p>
     <div class="step-actions">
-
-          <%= link_to 'view full details',
-            [current_scope, current_team.selected_regional_pitch_event],
-            class: "button small" %>
+      <%= link_to 'view full details',
+        [current_scope, current_team.selected_regional_pitch_event],
+        class: "button" %>
     </div>
     <p>
       If this is a mistake or you want to attend a different event please contact your regional ambassador.
@@ -25,4 +26,4 @@
       There are no regional pitch events in your region. When you submit, your work will be judged online.
     </p>
   <% end %>
-</div>
+</li>

@@ -1,79 +1,82 @@
-<div class="grid">
+<div class="grid grid--direction-column grid--justify-center">
   <div class="grid__col-12">
-      <h2 class="content-heading">Sign up for a Regional Pitch Event</h2>
+      <h4 class="content-heading">Sign up for a Regional Pitch Event</h4>
   </div>
-    <% @regional_events.each do |event| %>
-      <div class="grid__col-6">
-        <div class="panel">
-          <h3><%= event.name %></h3>
-          <p>
-            <strong>Time:</strong>
-
-            <br />
-
-            <%= event.starts_at
-              .in_time_zone(event.timezone)
-              .strftime("%A, %B %e") %>
-
-            <br />
-
-            <%= event.starts_at
-              .in_time_zone(event.timezone)
-              .strftime("%-I:%M%P") %>
-
-            &ndash;
-
-            <%= event.ends_at
-              .in_time_zone(event.timezone)
-              .strftime("%-I:%M%P %Z") %>
-            </p>
+  <% @regional_events.each do |event| %>
+    <div class="grid__col-8 grid--align-content-space-between ">
+      <div class="panel">
+        <div class="grid">
+          <div class="grid__col-6">
+            <h3><%= event.name %></h3>
             <p>
-              <strong>Address:</strong>
+              <strong>Time:</strong>
+
               <br />
-              <%= event.venue_address %> <br />
-              <%= event.city %><br />
-            </p>
 
-            <% unless event.eventbrite_link.blank? %>
-              <p>
-                <strong>Eventbrite link:</strong>
-                <%= link_to "#{event.name}",
-                event.eventbrite_link,
-                target: :_blank %>
+              <%= event.starts_at
+                .in_time_zone(event.timezone)
+                .strftime("%A, %B %e") %>
+
+              <br />
+
+              <%= event.starts_at
+                .in_time_zone(event.timezone)
+                .strftime("%-I:%M%P") %>
+
+              &ndash;
+
+              <%= event.ends_at
+                .in_time_zone(event.timezone)
+                .strftime("%-I:%M%P %Z") %>
               </p>
-            <% end %>
-
-            <% if current_account.student_profile.present? and current_student and SeasonToggles.select_regional_pitch_event?  %>
               <p>
-                <%= link_to "Sign up for this event",
-                  student_regional_pitch_event_selection_path(
-                  event_id: event.id
-                  ),
-                  class: "button small",
-                  data: {
-                    method: :post,
-                    confirm: "Are you sure you want to attend #{event.name}?",
-                  } %>
+                <strong>Address:</strong>
+                <br />
+                <%= event.venue_address %> <br />
+                <%= event.city %><br />
               </p>
-            <% end %>
-          </div>
-        </div>
-        <div class="grid__col-6">
-          <div class="panel">
-            <p> Questions about this event? Please contact your regional ambassador. </p>
-            <p><strong> Name: </strong> <%= event.ambassador.name  %> </p>
-            <p><strong> Email: </strong> <%= mail_to event.ambassador.email %> </p>
-         </div>
-        </div>
-      <% end %>
 
-    <div class="grid__col-2">
-      <p>
-        <%= link_to 'Back',
-          public_send("#{current_account.scope_name}_dashboard_path"),
-          class: "button small" %>
-      </p>
+              <% unless event.eventbrite_link.blank? %>
+                <p>
+                  <strong>Eventbrite link:</strong>
+                  <%= link_to "#{event.name}",
+                  event.eventbrite_link,
+                  target: :_blank %>
+                </p>
+              <% end %>
+
+              <% if current_account.student_profile.present? and current_student and SeasonToggles.select_regional_pitch_event?  %>
+                <p>
+                  <%= link_to "Sign up for this event",
+                    student_regional_pitch_event_selection_path(
+                    event_id: event.id
+                    ),
+                    class: "button small",
+                    data: {
+                      method: :post,
+                      confirm: "Are you sure you want to attend #{event.name}?",
+                    } %>
+                </p>
+              <% end %>
+            </div>
+            <div class="grid__col-6">
+              <p> Questions about this event? Please contact your regional ambassador. </p>
+              <p><strong> Name: </strong> <%= event.ambassador.name  %> </p>
+              <p><strong> Email: </strong> <%= mail_to event.ambassador.email %> </p>
+            </div>
+          <div>
+        </div>
+      </div>
     </div>
+  </div>
+  <% end %>
+  <div class="grid__col-2">
+    <p>
+      <%= link_to 'Back',
+        public_send("#{current_account.scope_name}_dashboard_path"),
+        class: "button small" %>
+    </p>
+  </div>
 </div>
 
 

@@ -1,49 +1,47 @@
-<div class="grid">
-  <div class="grid__col-6">
+<div class="grid grid--justify-center">
+  <div class="grid__col-8">
     <div class="panel panel--left">
     <h1 class="content-heading "><%= @regional_pitch_event.name %></h1>
-      <p>
-        <strong>Time:</strong>
-        <br />
-        <%= @regional_pitch_event.starts_at
-          .in_time_zone( @regional_pitch_event.timezone)
-          .strftime("%A, %B %e") %>
+      <div class="grid">
+        <div class="grid__col-6 ">
+            <p>
+              <strong>Time:</strong>
+              <br />
+              <%= @regional_pitch_event.starts_at
+                .in_time_zone( @regional_pitch_event.timezone)
+                .strftime("%A, %B %e") %>
 
-        <br />
+              <br />
 
-        <%=  @regional_pitch_event.starts_at
-          .in_time_zone( @regional_pitch_event.timezone)
-          .strftime("%-I:%M%P") %>
+              <%=  @regional_pitch_event.starts_at
+                .in_time_zone( @regional_pitch_event.timezone)
+                .strftime("%-I:%M%P") %>
 
-        &ndash;
+              &ndash;
 
-        <%=  @regional_pitch_event.ends_at
-          .in_time_zone( @regional_pitch_event.timezone)
-          .strftime("%-I:%M%P %Z") %>
-          </p>
-      </p>
-
-
-      <p>
-        <strong>Address:</strong><br />
-        <%= @regional_pitch_event.venue_address %> <br />
-        <%= @regional_pitch_event.city %><br />
-      </p>
-
-      <% unless @regional_pitch_event.eventbrite_link.blank? %>
-        <p>
-          <strong>Eventbrite link:</strong>
-          <%= link_to "#{@regional_pitch_event.name}",
-            @regional_pitch_event.eventbrite_link,
-            target: :_blank %>
-        </p>
-      <% end %>
-
-      <% if current_account.student_profile.present? and current_student %>
-        <div class="standalone-buttons">
-          <div class="regional-pitch-event-selection-info">
+              <%=  @regional_pitch_event.ends_at
+                .in_time_zone( @regional_pitch_event.timezone)
+                .strftime("%-I:%M%P %Z") %>
+                </p>
+            </p>
 
 
+            <p>
+              <strong>Address:</strong><br />
+              <%= @regional_pitch_event.venue_address %> <br />
+              <%= @regional_pitch_event.city %><br />
+            </p>
+
+            <% unless @regional_pitch_event.eventbrite_link.blank? %>
+              <p>
+                <strong>Eventbrite link:</strong>
+                <%= link_to "#{@regional_pitch_event.name}",
+                  @regional_pitch_event.eventbrite_link,
+                  target: :_blank %>
+              </p>
+            <% end %>
+
+            <% if current_account.student_profile.present? and current_student %>
               <% if SeasonToggles.select_regional_pitch_event? %>
                 <p>
                   <%= link_to "Remove #{current_team.name} from this event",
@@ -55,68 +53,22 @@
                     } %>
                 </p>
               <% end %>
-
-          </div>
-        </div>
-      <% end %>
-
-      <% if (current_account.judge_profile.present? and current_judge rescue false) %>
-        <div class="standalone-buttons">
-          <div class="regional-pitch-event-selection-info">
-            <% if current_judge.selected_regional_pitch_event == @regional_pitch_event %>
-              <p><strong>You are attending this event!</strong></p>
-
-              <% if SeasonToggles.select_regional_pitch_event? %>
-                <p>
-                  <%= link_to "Remove yourself from this event",
-                    judge_regional_pitch_event_selection_path,
-                    class: "cta-link",
-                    data: {
-                      method: :delete,
-                      confirm: "Are you sure you want to remove yourself from the event: #{@regional_pitch_event.name}?",
-                    } %>
-                </p>
-              <% end %>
-            <% else %>
-              <p>
-                <strong>
-                  You are currently attending
-                  <%= link_to current_judge.selected_regional_pitch_event_name,
-                    judge_regional_pitch_event_path(current_judge.selected_regional_pitch_event) %>
-                </strong>
-              </p>
-
-              <% if SeasonToggles.select_regional_pitch_event? %>
-                <p>
-                  <%= link_to "Select this event instead",
-                    judge_regional_pitch_event_selection_path(
-                    event_id: @regional_pitch_event.id
-                    ),
-                    class: "cta-link",
-                    data: {
-                      method: :post,
-                      confirm: "Are you sure you want to leave your previous event and select this one?",
-                    } %>
-                </p>
-              <% end %>
             <% end %>
           </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="grid__col-6">
-    <div class="panel">
-      <p> Questions about this event? Please contact your regional ambassador. </p>
-      <p><strong> Name: </strong> <%= @regional_pitch_event.ambassador.name  %> </p>
-      <p><strong> Email: </strong> <%= mail_to @regional_pitch_event  .ambassador.email %> </p>
+          <div class="grid__col-6">
+            <p><strong>Questions? </strong></p>
+            <p>Please contact your regional ambassador. </p>
+            <p><strong> Name: </strong> <%= @regional_pitch_event.ambassador.name  %> </p>
+            <p><strong> Email: </strong> <%= mail_to @regional_pitch_event  .ambassador.email %> </p>
+          </div>
+        <div>
+      </div>
     </div>
   </div>
   <div class="grid__col-2">
-      <p>
-        <%= link_to 'Back',
-           public_send("#{current_account.scope_name}_dashboard_path"),
-          class: "button small" %>
-      </p>
-    </div>
-</div>
+  <p>
+    <%= link_to 'Back',
+      public_send("#{current_account.scope_name}_dashboard_path"),
+      class: "button small" %>
+  </p>
+  </div>
