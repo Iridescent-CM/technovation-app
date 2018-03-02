@@ -1,6 +1,6 @@
-<div class="grid grid--direction-column grid--justify-center">
+<div class="grid grid--direction-column">
   <div class="grid__col-12">
-      <h4 class="content-heading">Sign up for a Regional Pitch Event</h4>
+      <h4 class="content-heading">Sign up for an Event</h4>
   </div>
   <% @regional_events.each do |event| %>
     <div class="grid__col-8 grid--align-content-space-between ">
@@ -54,13 +54,14 @@
                     class: "button small",
                     data: {
                       method: :post,
-                      confirm: "Are you sure you want to attend #{event.name}?",
+                      confirm: "Are you sure you want to attend #{event.name}? You can't undo this.
+                      Please check with your regional ambassador if you have questions",
                     } %>
                 </p>
               <% end %>
             </div>
             <div class="grid__col-6">
-              <p> Questions about this event? Please contact your regional ambassador. </p>
+              <p> If you have questions about this event, please contact your regional ambassador. </p>
               <p><strong> Name: </strong> <%= event.ambassador.name  %> </p>
               <p><strong> Email: </strong> <%= mail_to event.ambassador.email %> </p>
             </div>
