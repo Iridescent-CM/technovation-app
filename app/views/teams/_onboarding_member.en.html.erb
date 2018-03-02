@@ -15,7 +15,9 @@
     <h5 class="reset"><%= onboarding_member.full_name %></h5>
 
     <div class="help">
-      <h6 class="reset"><%= onboarding_member.first_name %> still needs to:</h6>
+      <h6 class="reset">
+        <%= onboarding_member.first_name %> still needs to:
+      </h6>
 
       <ul class="reset">
         <% onboarding_member.actions_needed.each do |action| %>

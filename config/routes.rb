@@ -247,7 +247,6 @@ Rails.application.routes.draw do
     resources :semifinals_scores, only: [:index, :show]
     resources :submission_score_restorations, only: :update
 
-    resource :mentor_drop_out, only: :create
     resource :paper_parental_consent, only: :create
 
     resources :export_downloads, only: :update
