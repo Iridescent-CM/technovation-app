@@ -89,6 +89,7 @@ class UserInvitation < ApplicationRecord
       scope: self.class.model_name,
       status: status,
       human_status: human_status,
+      status_explained: status_explained,
     }
   end
 
@@ -105,6 +106,17 @@ class UserInvitation < ApplicationRecord
     when "sent", "opened"; "Sign up now"
     when "registered";     "Complete your judge profile"
     else; "status missing (bug)"
+    end
+  end
+
+  def status_explained
+    case status
+    when "sent", "opened"
+      "This person was sent an email to sign up"
+    when "registered"
+      "This person has signed up and needs to finish their profile"
+    else
+      "Status is missing, this is a bug"
     end
   end
 

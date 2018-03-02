@@ -1,6 +1,7 @@
 export default function Team (res) {
   this.id = res.id;
   this.name = res.name;
+  this.division = res.division;
   this.scope = res.scope;
   this.viewUrl = res.view_url;
   this.viewSubmissionUrl = res.view_submission_url;

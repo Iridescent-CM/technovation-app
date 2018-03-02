@@ -5,6 +5,7 @@ export default function Judge (res) {
   this.scope = res.scope;
   this.status = res.status || "status missing (bug)";
   this.human_status = res.human_status || "must sign up";
+  this.statusExplained = res.status_explained;
   this.viewUrl = res.view_url || "";
 
   this.location = res.location;
@@ -13,6 +14,17 @@ export default function Judge (res) {
   this.sendInvitation = false;
   this.recentlyAdded = false;
   this.recentlyInvited = false;
+
+  this.statusColor = (status => {
+    switch(status) {
+      case "ready":
+        return "green";
+      case "registered":
+        return "orange";
+      default:
+        return "red";
+    };
+  })(this.status);
 
   this.prepareToBeInvited = (event) => {
     this.recentlyAdded = true;

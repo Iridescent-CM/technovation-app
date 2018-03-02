@@ -91,6 +91,7 @@ class JudgeProfile < ActiveRecord::Base
       scope: self.class.model_name,
       status: status,
       human_status: human_status,
+      status_explained: status_explained,
     }
   end
 
@@ -110,6 +111,19 @@ class JudgeProfile < ActiveRecord::Base
     when "registered";  "must complete onboarding"
     when "ready";       "ready!"
     else; "status missing (bug)"
+    end
+  end
+
+  def status_explained
+    case status
+    when "ready"
+      "This judge is ready for your event!"
+    when "registered"
+      "This judge has some required steps before they can judge your event"
+    when "past_season"
+      "This judge is from a past season and hasn't logged in yet"
+    else
+      "Status is missing, this is a bug"
     end
   end
 

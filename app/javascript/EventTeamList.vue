@@ -15,63 +15,78 @@
 
     <div class="grid__col-12 grid__col--bleed-y">
       <table class="team-list">
-        <tr
-          :class="team.recentlyAdded ? 'table-row--new' : ''"
-          :key="team.id"
-          v-for="team in event.selectedTeams"
-        >
-          <td class="medium-width">
-            <div class="team-list__actions">
-              <img
-                alt="remove"
-                src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-                @click.prevent="removeTeam(team)"
-              />
-            </div>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Division</th>
+            <th>Submission</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-            <div class="cutoff-with-ellipsis">
+        <tbody>
+          <tr
+            :class="team.recentlyAdded ? 'table-row--new' : ''"
+            :key="team.id"
+            v-for="team in event.selectedTeams"
+          >
+            <td class="medium-width">
+              <div class="team-list__actions">
+                <img
+                  alt="remove"
+                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+                  @click.prevent="removeTeam(team)"
+                />
+              </div>
+
+              <div class="cutoff-with-ellipsis">
+                <a
+                  data-turbolinks="false"
+                  target="_blank"
+                  :href="team.viewUrl"
+                >
+                  {{ team.name }}
+                </a>
+              </div>
+            </td>
+
+            <td>
+              {{ team.division }}
+            </td>
+
+            <td>
               <a
                 data-turbolinks="false"
                 target="_blank"
-                :href="team.viewUrl"
+                :href="team.viewSubmissionUrl"
               >
-                {{ team.name }}
+                {{ team.submissionName }}
               </a>
-            </div>
-          </td>
+            </td>
 
-          <td>
-            <a
-              data-turbolinks="false"
-              target="_blank"
-              :href="team.viewSubmissionUrl"
-            >
-              {{ team.submissionName }}
-            </a>
-          </td>
-
-          <td>
-            <label
-              class="label--reset"
-              v-if="team.recentlyAdded"
-            >
-              <input type="checkbox" v-model="team.sendInvitation" />
-              Send invite
-            </label>
-
-            <div v-else>
-              <span
-                v-tooltip.top-center="team.statusExplained"
-                :class="[
-                  'team-status',
-                  `team-status--${team.statusColor}`
-                ]"
+            <td>
+              <label
+                class="label--reset"
+                v-if="team.recentlyAdded"
               >
-                {{ team.humanStatus }}
-              </span>
-            </div>
-          </td>
-        </tr>
+                <input type="checkbox" v-model="team.sendInvitation" />
+                Send invite
+              </label>
+
+              <div v-else>
+                <span
+                  v-tooltip.top-center="team.statusExplained"
+                  :class="[
+                    'team-status',
+                    `team-status--${team.statusColor}`
+                  ]"
+                >
+                  {{ team.humanStatus }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 

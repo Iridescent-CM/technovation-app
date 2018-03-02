@@ -32,6 +32,7 @@ class Team < ActiveRecord::Base
     {
       id: id,
       name: name,
+      division: division_name,
       submission: submission.app_name,
       location: [
         city,

@@ -16,63 +16,82 @@
 
     <div class="grid__col-12 grid__col--bleed-y">
       <table class="judge-list">
-        <tr
-          :class="judge.recentlyAdded ? 'table-row--new' : ''"
-          :key="judge.email"
-          v-for="judge in event.selectedJudges"
-        >
-          <td class="medium-width">
-            <div class="judge-list__actions">
-              <img
-                alt="remove"
-                src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-                @click.prevent="removeJudge(judge)"
-              />
-            </div>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-            <div
-              v-if="judge.viewUrl.length"
-              class="cutoff-with-ellipsis"
-            >
-              <a
-                data-turbolinks="false"
-                target="_blank"
-                :href="judge.viewUrl"
+        <tbody>
+          <tr
+            :class="judge.recentlyAdded ? 'table-row--new' : ''"
+            :key="judge.email"
+            v-for="judge in event.selectedJudges"
+          >
+            <td class="medium-width">
+              <div class="judge-list__actions">
+                <img
+                  alt="remove"
+                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
+                  @click.prevent="removeJudge(judge)"
+                />
+              </div>
+
+              <div
+                v-if="judge.viewUrl.length"
+                class="cutoff-with-ellipsis"
+              >
+                <a
+                  data-turbolinks="false"
+                  target="_blank"
+                  :href="judge.viewUrl"
+                >
+                  {{ judge.name }}
+                </a>
+              </div>
+
+              <div
+                v-else
+                class="cutoff-with-ellipsis"
               >
                 {{ judge.name }}
-              </a>
-            </div>
+              </div>
+            </td>
 
-            <div
-              v-else
-              class="cutoff-with-ellipsis"
-            >
-              {{ judge.name }}
-            </div>
-          </td>
+            <td class="medium-width">
+              <div class="cutoff-with-ellipsis">
+                <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+              </div>
+            </td>
 
-          <td class="medium-width">
-            <div class="cutoff-with-ellipsis">
-              <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
-            </div>
-          </td>
+            <td>{{ judge.location }}</td>
 
-          <td>{{ judge.location }}</td>
+            <td>
+              <label
+                class="label--reset"
+                v-if="judge.recentlyAdded"
+              >
+                <input type="checkbox" v-model="judge.sendInvitation" />
+                Send invite
+              </label>
 
-          <td>
-            <label
-              class="label--reset"
-              v-if="judge.recentlyAdded"
-            >
-              <input type="checkbox" v-model="judge.sendInvitation" />
-              Send invite
-            </label>
-
-            <div v-else>
-              {{ judge.human_status }}
-            </div>
-          </td>
-        </tr>
+              <div v-else>
+                <span
+                  v-tooltip.top-center="judge.statusExplained"
+                  :class="[
+                    'judge-status',
+                    `judge-status--${judge.statusColor}`
+                  ]"
+                >
+                  {{ judge.human_status }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -255,6 +274,8 @@
     }
 
     tr {
+      margin: 0 0 0.25rem;
+
       &.table-row--new {
         background: rgba(255, 255, 0, 0.2);
 
@@ -304,5 +325,24 @@
 
   p {
     margin: 0;
+  }
+
+  .judge-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+  }
+
+  .judge-status--green {
+    background-color: green;
+  }
+
+  .judge-status--orange {
+    background-color: orange;
+  }
+
+  .judge-status--red {
+    background-color: red;
   }
 </style>
