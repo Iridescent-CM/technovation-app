@@ -35,9 +35,16 @@ export default function (event) {
   this.selectedJudges = [];
   this.selectedTeams = [];
 
-  this.resetManaging = () => {
+  this.toggleManaging = (prop) => {
+    var wasManaging = this[prop];
+
     this.managingJudges = false;
     this.managingTeams = false;
+    this.managing = false;
+    this.editing = false;
+
+    this[prop] = !wasManaging;
+    this.managing = this[prop];
   };
 
   this.addJudge = (judge) => {

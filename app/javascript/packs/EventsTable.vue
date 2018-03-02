@@ -41,7 +41,7 @@
                 class="events-list__action-item"
                 src="https://icongr.am/fontawesome/flag.svg?size=16"
                 v-tooltip.top-center="editEventTeamsMsg"
-                @click.prevent="manageEvent(event, 'managingTeams')"
+                @click.prevent="event.toggleManaging('managingTeams')"
               />
 
               <img
@@ -50,7 +50,7 @@
                 class="events-list__action-item"
                 src="https://icongr.am/fontawesome/gavel.svg?size=16"
                 v-tooltip.top-center="editEventJudgesMsg"
-                @click.prevent="manageEvent(event, 'managingJudges')"
+                @click.prevent="event.toggleManaging('managingJudges')"
               />
             </template>
 
@@ -145,13 +145,6 @@
     methods: {
       editingThisEventOrNone (event) {
         return event.editing || !this.editingOne;
-      },
-
-      manageEvent (event, prop) {
-        event.resetManaging();
-        event.editing = false;
-        event.managing = true;
-        event[prop] = !event[prop]
       },
 
       editEvent (event) {
