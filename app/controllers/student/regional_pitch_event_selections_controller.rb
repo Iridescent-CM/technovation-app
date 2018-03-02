@@ -48,7 +48,7 @@ module Student
         joining_event_id: event.id
       )
 
-      if current_team.submission.pitch_presentation_complete?
+      if current_team.submission.pitch_presentation_url.blank?
         redirect_to [:student, current_team.selected_regional_pitch_event],
           success: t("controllers.student.regional_pitch_event_selections.create.success")
       else

@@ -1,13 +1,13 @@
 <div class="panel">
   <h1 class="content-heading">Select a regional pitch event</h1>
-  <% unless current_team.selected_regional_pitch_event && current_team.selected_regional_pitch_event.live? %>
+  <% if !current_team.selected_regional_pitch_event.live? && @regional_events.any? %>
     <p>
       Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
     </p>
       <%= link_to 'Attend an Event',
           student_regional_pitch_events_path,
           class: "button small" %>
-  <% else %>
+  <% elsif current_team.selected_regional_pitch_event.live? %>
     <p>
       You are attending <%= current_team.selected_regional_pitch_event.name %>.
     </p>
@@ -19,6 +19,10 @@
     </div>
     <p>
       If this is a mistake or you want to attend a different event please contact your regional ambassador.
+    </p>
+  <% else %>
+    <p>
+      There are no regional pitch events in your region. When you submit, your work will be judged online.
     </p>
   <% end %>
 </div>

@@ -1,11 +1,10 @@
 <div class="grid">
   <div class="grid__col-12">
-      <h3 class="content-heading">Sign up for a Regional Pitch Event</h3>
+      <h2 class="content-heading">Sign up for a Regional Pitch Event</h2>
   </div>
-  <ol style="margin-top:0px" class="grid__col-6 grid--direction-column">
     <% @regional_events.each do |event| %>
-      <div class="grid__col-12">
-        <li>
+      <div class="grid__col-6">
+        <div class="panel">
           <h3><%= event.name %></h3>
           <p>
             <strong>Time:</strong>
@@ -57,39 +56,21 @@
                   } %>
               </p>
             <% end %>
-          </li>
+          </div>
+        </div>
+        <div class="grid__col-6">
+          <div class="panel">
+            <p> Questions about this event? Please contact your regional ambassador. </p>
+            <p><strong> Name: </strong> <%= event.ambassador.name  %> </p>
+            <p><strong> Email: </strong> <%= mail_to event.ambassador.email %> </p>
+         </div>
         </div>
       <% end %>
-    </ol>
-    <div class="grid__col-6">
-    <div id="map"></div>
-    <style>
-       #map {
-        height: 400px;
-        width: 100%;
-       }
-    </style>
-    <script>
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUM1EDCYb5G8FhXuUbkrhzZLqIO8bXzV0&callback=initMap">
-    </script>
-    </div>
+
     <div class="grid__col-2">
       <p>
         <%= link_to 'Back',
-          student_dashboard_path(anchor: "live-events"),
+          public_send("#{current_account.scope_name}_dashboard_path"),
           class: "button small" %>
       </p>
     </div>
