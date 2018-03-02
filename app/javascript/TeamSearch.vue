@@ -1,106 +1,67 @@
 <template>
-  <div class="grid__col-12 grid__col--bleed">
-    <div class="search-components grid">
+  <div class="grid">
+    <div class="grid__col-auto grid__col--bleed-y">
+      <p>
+        <button
+          class="button button--remove-bg"
+          v-show="!searching"
+          @click="searching = true"
+        >
+          + Add teams
+        </button>
+      </p>
+
       <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-show="activelySearching"
+        class="modal-container"
+        v-show="searching"
       >
-        <p>
+        <div
+          class="modal"
+          v-show="searching"
+        >
           <input
-            ref="nameSearch"
-            class="autocomplete-input"
-            type="text"
-            placeholder="Name"
-            @input="generateResults"
-            @keyup.up.prevent="traverseResultsUp"
-            @keyup.down.prevent="traverseResultsDown"
-            @keyup.enter.prevent="selectHighlighted"
-            @keyup.esc="reset"
-            v-model="nameQuery"
+            type="search"
+            placeholder="Search by team or submission name"
+            v-model="query"
           />
-        </p>
-      </div>
 
-      <div
-        class="
-          grid__col-12
-          notice
-          notice--info
-          notice--thin
-        "
-        v-if="searched && !results.length"
-      >
-        <p>
-          We couldn't find a team with that name.
-          Make sure they have started their submission.
-        </p>
-      </div>
+          <div class="overflow-scroll">
+            <table class="width-full-container">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th colspan="2">Submission</th>
+                </tr>
+              </thead>
 
-      <div
-        class="
-          grid__col-12
-          notice
-          notice--error
-          notice--thin
-        "
-        v-if="error"
-      >
-        <p>
-          Sorry, there was an error on the server
+              <tbody>
+                <tr
+                  class="cursor-pointer"
+                  v-for="item in filteredItems"
+                  @click="item.toggleSelection"
+                >
+                  <td>
+                    {{ item.name }}
+                  </td>
 
-          <button
-            class="button button--small button--error"
-            @click="reset"
-          >
-            Reset search and try again
-          </button>
-        </p>
-      </div>
+                  <td>
+                    {{ item.submission.name }}
+                  </td>
 
-      <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-show="!activelySearching"
-      >
-        <p>
-          <button
-            class="button button--small button--remove-bg"
-            @click.prevent="searching = true"
-          >+ Add teams</button>
-        </p>
-      </div>
+                  <td
+                    class="light-opacity"
+                    v-show="!item.selected"
+                  >
+                    <icon name="check-circle-o" />
+                  </td>
 
-      <div
-        class="grid__col-12"
-        v-if="loading || !!results.length"
-      >
-        <div class="autocomplete-list">
-          <div
-            class="grid__cell--padding-sm"
-            v-if="loading"
-          >
-            <p>
-              <i class="icon-spinner2 icon--spin"></i>
-            </p>
+                  <td v-show="item.selected">
+                    <icon name="check-circle" color="228b22" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          <table>
-            <tr
-             :class="[
-               'autocomplete-list__result',
-               resultsIdx === idx ?
-                'autocomplete-list__result--highlighted' : '',
-             ]"
-             @mouseover="highlightResult(idx)"
-             @click="selectHighlighted(idx)"
-             v-for="(result, idx) in results"
-             >
-             <td
-             v-html="result.highlightMatch('name', nameQuery)"
-             ></td>
-
-             <td>{{ result.location }}</td>
-            </tr>
-          </table>
         </div>
       </div>
     </div>
@@ -108,218 +69,163 @@
 </template>
 
 <script>
-  import Team from './Team';
-  import EventBus from './EventBus';
+  import _ from "lodash";
+  import Icon from "./Icon";
+  import Attendee from "./Attendee";
 
   export default {
     data () {
       return {
-        nameQuery: "",
-        results: [],
-        resultsIdx: null,
-        highlightedResult: null,
-        loading: false,
-        error: false,
-        searched: false,
+        query: "",
         searching: false,
-      }
+        items: [],
+        filteredItems: [],
+      };
     },
 
-    props: [
-      'fetchUrl',
-      'excludeIds',
-      'eventBusId',
-    ],
-
-    computed: {
-      activelySearching () {
-        return this.searching || _.isEmpty(this.excludeIds);
-      },
+    components: {
+      Icon,
     },
 
     watch: {
-      searching () {
-        var vm = this;
+      query (val) {
+        this.filteredItems = _.filter(this.items, item => {
+          const pattern = new RegExp(val, "i");
+          return item.name.match(pattern) ||
+            item.submission.name.match(pattern);
+        });
+      },
+
+      searching (current) {
+        const vm = this,
+              url = "/regional_ambassador" +
+                    "/possible_event_attendees.json" +
+                    "?type=team";
+
+        if (current) {
+          if (!vm.items.length) {
+            $.get(url, json => {
+              _.each(json, obj => {
+                const item = new Attendee(obj);
+                vm.items.push(item);
+              });
+
+              vm.filteredItems = vm.items;
+            })
+          }
+        }
       },
     },
 
     methods: {
-      highlightResult (idx) {
-        this.resultsIdx = idx;
-        this.unhighlightAll();
-
-        var result = this.results[idx];
-
-        if (!result)
-          result = this.results[0];
-
-        if (!!result) {
-          result.highlight();
-          this.highlightedResult = result;
-        }
-      },
-
-      reset () {
-        this.loading = false;
-        this.error = false;
-        this.searched = false;
-        this.nameQuery = "";
-        this.results = [];
-        this.highlightedResult = null;
-      },
-
-      generateResults () {
-        var queryEmpty = !this.nameQuery.length,
-            enoughQueryForRemote = this.nameQuery.length >= 3;
-
-        this.searching = true;
-
-        if (queryEmpty) {
-          this.reset();
-        } else if (this.filterExistingResults().length) {
-          this.searched = true;
-          this.setNewResults(this.filterExistingResults());
-        } else if (enoughQueryForRemote) {
-          this.loading = true;
-          _.debounce(this.performRemoteSearch, 300)();
-        }
-      },
-
-      traverseResultsUp () {
-        if (this.resultsIdx == 0) {
-          this.highlightResult(this.results.length - 1);
-        } else {
-          this.highlightResult(this.resultsIdx - 1);
-        }
-      },
-
-      traverseResultsDown () {
-        if (this.ResultsIdx == this.results.length - 1) {
-          this.highlightResult(0);
-        } else {
-          this.highlightResult(this.resultsIdx + 1);
-        }
-      },
-
-      filterExistingResults () {
-        return this.results.filter((r) => {
-          return r.match(this.nameQuery)
-        });
-      },
-
-      performRemoteSearch () {
-        var vm = this,
-            url = vm.fetchUrl + "?name=" + vm.nameQuery;
-
-        _.each(vm.excludeIds, (id) => {
-          url += "&exclude_ids[]=" + id;
-        });
-
-        $.ajax({
-          method: "GET",
-          url: url,
-          success: vm.setNewResults,
-          error: vm.indicateError,
-          complete: () => {
-            vm.searched = true;
-          },
-        });
-      },
-
-      setNewResults (resp) {
-        this.results = [];
-
-        [].forEach.call(resp, (result) => {
-          this.results.push(new Team(result));
-        });
-
-        this.loading = false;
-        this.highlightResult(0);
-      },
-
-      indicateError (resp) {
-        this.highlightResult(0);
-        this.loading = false;
-        this.error = true;
-      },
-
-      selectHighlighted (idx) {
-        EventBus.$emit(
-          "TeamSearch.selected-" + this.eventBusId,
-          this.highlightedResult
-        );
-        this.reset();
-      },
-
-      unhighlightAll () {
-        this.results.forEach((r) => { r.unhighlight(); });
-      },
-    },
-
-    mounted () {
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .autocomplete-input {
-    margin-bottom: 0;
-    margin-right: 1rem;
-    display: inline-block;
-    width: 250px;
+  [type=search] {
+    font-size: 0.95rem;
+    padding: 0.25rem 1rem;
+    border-radius: 50vh;
+    background: url("https://icongr.am/fontawesome/search.svg?size=12")
+                no-repeat
+                right 0.5rem center;
   }
 
-  .search-components {
-    position: relative;
+  .position-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
-  .autocomplete-list {
+  .width-medium {
+    width: 40vw;
+  }
+
+  .width-full-screen {
+    width: 100vw;
+  }
+
+  .width-full-container {
     width: 100%;
-    width: 100%;
-    position: absolute;
-    top: -0.6rem;
-    left: 1.2rem;
+  }
+
+  .height-full-screen {
+    height: 100vh;
+  }
+
+  .background-white {
     background: white;
-    z-index: 1058; /* $z-under-shade */
+  }
 
-    table {
-      padding: 0;
-      border-collapse: collapse;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-    }
+  .background-semi-transparent-dark {
+    background: rgba(0, 0, 0, 0.7);
+  }
 
-    .autocomplete-list__result {
-      cursor: pointer;
-      background: none;
+  .display-flex {
+    display: flex;
+  }
 
-      &:hover,
-      &:hover td {
-        background: none;
-      }
+  .display-flex-center {
+    @extend .display-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-      td {
-        padding: 0.5rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        transition: background-color 0.1s;
+  .padding-small {
+    padding: 0.5rem;
+  }
 
-        &:first-child,
-        &:nth-child(2) {
-          max-width: 300px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
+  .shadow-subtle-white {
+    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);
+  }
 
-      &.autocomplete-list__result--highlighted {
-        td {
-          background: #93bcff;
-        }
-      }
+  .z-index-penultimate {
+    z-index: 999998;
+  }
+
+  .z-index-max {
+    z-index: 999999;
+  }
+
+  .border-radius-small {
+    border-radius: 0.2rem;
+  }
+
+  .overflow-scroll {
+    max-height: 40vh;
+    overflow-y: scroll;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+
+    &:hover,
+    &:hover td {
+      background: LavenderBlush;
     }
   }
 
-  input[type=text] {
-    max-width: 300px;
+  .light-opacity {
+    opacity: 0.2;
+  }
+
+  .modal {
+    @extend .width-medium;
+    @extend .padding-small;
+    @extend .background-white;
+    @extend .shadow-subtle-white;
+    @extend .border-radius-small;
+    @extend .z-index-max;
+    display: block;
+  }
+
+  .modal-container {
+    @extend .display-flex-center;
+    @extend .position-fixed;
+    @extend .z-index-penultimate;
+    @extend .width-full-screen;
+    @extend .height-full-screen;
+    @extend .background-semi-transparent-dark;
   }
 </style>

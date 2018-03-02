@@ -14,8 +14,14 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
+  scope :live_event_eligible, -> {
+    not_staff
+      .not_attending_live_event
+      .joins(:submission)
+  }
+
   scope :not_staff, -> {
-    where.not("name ilike ?", "%staff test%")
+    where.not("teams.name ilike ?", "%staff test%")
   }
 
   scope :inactive, -> {
