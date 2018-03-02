@@ -6,7 +6,6 @@ export default function (event) {
   this.id = event.id || "";
   this.fetchTeamsUrlRoot = event.fetchTeamsUrlRoot;
   this.fetchJudgesUrlRoot = event.fetchJudgesUrlRoot;
-  this.fetchRoomsUrlRoot = event.fetchRoomsUrlRoot;
 
   this.name = event.name || "";
   this.city = event.city || "";
@@ -32,9 +31,6 @@ export default function (event) {
   this.editing = false;
   this.managingJudges = false;
   this.managingTeams = false;
-  this.managingRooms = false;
-
-  this.rooms = [];
 
   this.selectedJudges = [];
   this.selectedTeams = [];
@@ -42,7 +38,6 @@ export default function (event) {
   this.resetManaging = () => {
     this.managingJudges = false;
     this.managingTeams = false;
-    this.managingRooms = false;
   };
 
   this.addJudge = (judge) => {
