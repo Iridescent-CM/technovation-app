@@ -5,6 +5,8 @@ export default function Attendee (json) {
   this.submission = json.submission;
   this.division = json.division;
 
+  this.viewUrl = json.links.view
+
   this.selected = false;
   this.recentlyAdded = false;
   this.sendInvitation = false;
