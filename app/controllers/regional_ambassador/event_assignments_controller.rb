@@ -56,12 +56,10 @@ module RegionalAmbassador
         .includes(:judges, :user_invitations)
         .find(assignment_params.fetch(:event_id))
 
-      attendee = event.attendees.detect do |a|
-        a.id == assignment_params.fetch(:attendee_id).to_i &&
-          a.class.model_name == assignment_params.fetch(:attendee_scope)
-      end
+      attendee = assignment_params.fetch(:attendee_scope).constantize
+        .find(assignment_params.fetch(:attendee_id))
 
-      if attendee
+      if event.attendees.include?(attendee)
         attendee.events.destroy(event)
 
         if assignment_params.fetch(:attendee_scope) == "Team"
@@ -79,19 +77,13 @@ module RegionalAmbassador
             event.id,
           ).deliver_later
         end
-
-        render json: {
-          flash: {
-            success: "You removed #{attendee.name} from #{event.name}"
-          },
-        }
-      else
-        render json: {
-          flash: {
-            success: "You removed a judge from #{event.name}"
-          },
-        }
       end
+
+      render json: {
+        flash: {
+          success: "You removed #{attendee.name} from #{event.name}"
+        },
+      }
     end
 
     private
