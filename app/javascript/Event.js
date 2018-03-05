@@ -67,7 +67,7 @@ export default function (event) {
     });
 
     if (existingIdx === -1) {
-      team.prepareToBeInvited();
+      team.addedToEvent();
       this.selectedTeams.push(team);
     } else {
       console.log("Team already added");
@@ -81,6 +81,7 @@ export default function (event) {
     });
 
     if (existingIdx !== -1) {
+      team.removedFromEvent();
       this.selectedTeams.splice(existingIdx, 1);
     } else {
       return false;

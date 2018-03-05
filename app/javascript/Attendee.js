@@ -6,16 +6,18 @@ export default function Attendee (json) {
   this.division = json.division;
 
   this.selected = false;
-
-  this.toggleSelection = () => {
-    this.selected = !this.selected;
-  }
-
   this.recentlyAdded = false;
   this.sendInvitation = false;
 
-  this.prepareToBeInvited = (event) => {
+  this.addedToEvent = () => {
     this.recentlyAdded = true;
     this.sendInvitation = true;
+    this.selected = true;
+  };
+
+  this.removedFromEvent = () => {
+    this.recentlyAdded = false;
+    this.sendInvitation = false;
+    this.selected = false;
   };
 }

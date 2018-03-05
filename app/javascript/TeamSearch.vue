@@ -135,7 +135,6 @@
 
     methods: {
       toggleSelection (item) {
-        item.toggleSelection();
         let eventName;
 
         if (item.selected) {
