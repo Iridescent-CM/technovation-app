@@ -8,7 +8,7 @@
 
     <team-search
        v-if="!fetchingList"
-       :event-id="event.id"
+       :event-bus-id="`event-${event.id}`"
     ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -226,12 +226,12 @@
 
     mounted () {
       EventBus.$on(
-        "TeamSearch.selected-for-event-" + this.event.id,
+        "TeamSearch.selected-event-" + this.event.id,
         (selectedTeam) => { this.event.addTeam(selectedTeam); }
       );
 
       EventBus.$on(
-        "TeamSearch.deselected-for-event-" + this.event.id,
+        "TeamSearch.deselected-event-" + this.event.id,
         (selectedTeam) => { this.event.removeTeam(selectedTeam); }
       );
 

@@ -97,7 +97,7 @@
       };
     },
 
-    props: ["eventId"],
+    props: ["eventBusId"],
 
     components: {
       Icon,
@@ -138,9 +138,9 @@
         let eventName;
 
         if (item.selected) {
-          eventName = "TeamSearch.selected-for-event-" + this.eventId;
+          eventName = "TeamSearch.deselected-" + this.eventBusId;
         } else {
-          eventName = "TeamSearch.deselected-for-event-" + this.eventId;
+          eventName = "TeamSearch.selected-" + this.eventBusId;
         }
 
         EventBus.$emit(eventName, item);
