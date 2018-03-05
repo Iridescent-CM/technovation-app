@@ -2,7 +2,8 @@
   <div class="grid">
     <div class="grid__col-12 grid__col--bleed-y">
       <h6 class="heading--reset">
-        Selected teams <span>({{ this.event.selectedTeams.length }})</span>
+        Selected teams
+        <span>({{ this.event.selectedTeams.length }})</span>
       </h6>
     </div>
 
@@ -42,7 +43,7 @@
                 <a
                   data-turbolinks="false"
                   target="_blank"
-                  :href="team.viewUrl"
+                  :href="team.links.self"
                 >
                   {{ team.name }}
                 </a>
@@ -57,9 +58,9 @@
               <a
                 data-turbolinks="false"
                 target="_blank"
-                :href="team.viewSubmissionUrl"
+                :href="team.links.submission"
               >
-                {{ team.submissionName }}
+                {{ team.submission.name }}
               </a>
             </td>
 
@@ -202,7 +203,7 @@
           processData: false,
 
           success: (resp) => {
-            this.event.afterTeamSave();
+            this.event.teamAssignmentsSaved();
           },
 
           error: (err) => {

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import Team from "./Team";
+import Attendee from "./Attendee";
 import Judge from "./Judge";
 
 export default function (event) {
@@ -102,10 +102,8 @@ export default function (event) {
     });
   };
 
-  this.afterTeamSave = () => {
-    _.each(this.selectedTeams, (team) => {
-      team.afterAssign();
-    });
+  this.teamAssignmentsSaved = () => {
+    _.each(this.selectedTeams, t => { t.assignmentSaved() });
   };
 
   this.findTeam = (id) => {
@@ -137,7 +135,7 @@ export default function (event) {
 
         success: (resp) => {
           _.each(resp, (result) => {
-            var team = new Team(result);
+            var team = new Attendee(result);
             event.selectedTeams.push(team)
           });
         },

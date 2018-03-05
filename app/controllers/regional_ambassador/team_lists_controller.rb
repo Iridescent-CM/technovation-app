@@ -2,19 +2,12 @@ module RegionalAmbassador
   class TeamListsController < RegionalAmbassadorController
     def show
       event = RegionalPitchEvent.find(params.fetch(:event_id))
-      json = event.teams.map do |team|
-        team.to_search_json.merge({
-          view_submission_url: regional_ambassador_team_submission_path(
-            team.submission,
-            allow_out_of_region: true,
-          ),
-          view_url: regional_ambassador_team_path(
-            team,
-            allow_out_of_region: true,
-          ),
-        })
-      end
-      render json: json
+
+      render json: Attendees.for(
+        event: event,
+        type: :team,
+        context: self,
+      )
     end
   end
 end
