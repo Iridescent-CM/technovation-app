@@ -10,9 +10,13 @@ module RegionalAmbassador
 
     def show
       clauses = []
+
       search_params.each do |k, v|
         unless v.blank?
-          clauses.push("lower(unaccent(#{k})) = '#{v.downcase.strip}'")
+          where_clause = "lower(unaccent(replace(#{k}, '.', ''))) = "
+          where_clause += "'#{v.downcase.strip.gsub('.', '')}'"
+
+          clauses.push(where_clause)
         end
       end
 
@@ -22,7 +26,9 @@ module RegionalAmbassador
     end
 
     def create
-      @missing_participant_search = MissingParticipantSearch.new(search_params)
+      @missing_participant_search = MissingParticipantSearch.new(
+        search_params
+      )
 
       redirect_to regional_ambassador_missing_participant_search_path(
         missing_participant_search: @missing_participant_search.attributes
