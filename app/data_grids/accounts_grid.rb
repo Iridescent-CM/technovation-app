@@ -232,13 +232,17 @@ class AccountsGrid
       send(value)
     end
 
-  filter :name_email, header: "Name or Email", filter_group: "more-specific" do |value|
-    names = value.strip.downcase.split(' ').map { |n| I18n.transliterate(n) }
+  filter :name_email,
+    header: "Name or Email",
+    filter_group: "more-specific" do |value|
+      names = value.strip.downcase.split(' ').map { |n|
+        I18n.transliterate(n)
+      }
     fuzzy_search({
       first_name: names.first,
       last_name: names.last || names.first,
       email: names.first,
-    }, false)
+    }, false) # false enables OR search
   end
 
   filter :season,
