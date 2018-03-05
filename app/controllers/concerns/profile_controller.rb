@@ -36,6 +36,10 @@ module ProfileController
       else
         render "passwords/edit"
       end
+    elsif profile.errors["account.city"].any? or
+            profile.errors["account.state_province"].any? or
+              profile.errors["account.country"].any?
+      render "location_details/show"
     else
       render :edit
     end

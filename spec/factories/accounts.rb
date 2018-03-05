@@ -9,6 +9,8 @@ FactoryBot.define do
     last_name { "Account" }
 
     city "Chicago"
+    state_province "IL"
+    country "US"
     location_confirmed true
 
     trait :chicago do
@@ -32,14 +34,6 @@ FactoryBot.define do
     after :create do |a|
       RegisterToCurrentSeasonJob.perform_now(a)
       a.update_column(:profile_image, "foo/bar/baz.png")
-
-      unless a.student_profile.present? or a.consent_signed?
-        a.create_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
-      end
-
-      unless a.background_check.present?
-        a.create_background_check!(FactoryBot.attributes_for(:background_check))
-      end
     end
   end
 end

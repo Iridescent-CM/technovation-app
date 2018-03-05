@@ -15,7 +15,8 @@ module MentorSearchesController
       "Male" => Account.genders['Male']
     }
 
-    @mentors = SearchMentors.(@search_filter).paginate(page: search_params[:page])
+    @mentors = SearchMentors.(@search_filter)
+      .paginate(page: search_params[:page])
   end
 
   private

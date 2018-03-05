@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Account do
-  subject(:account) { FactoryBot.create(:account) }
-
   describe "regioning" do
     it "works with primary region searches" do
       FactoryBot.create(:account, :los_angeles)
@@ -28,6 +26,7 @@ RSpec.describe Account do
   end
 
   it "sets an auth token" do
+    account = FactoryBot.create(:account)
     expect(account.auth_token).not_to be_blank
   end
 
@@ -65,6 +64,8 @@ RSpec.describe Account do
   end
 
   it "calculates age" do
+    account = FactoryBot.create(:account)
+
     account.date_of_birth = 15.years.ago + 1.day
     expect(account.age).to eq(14)
 
@@ -73,11 +74,15 @@ RSpec.describe Account do
   end
 
   it "calculates age compared to a particular date" do
+    account = FactoryBot.create(:account)
+
     account.date_of_birth = 15.years.ago + 3.months
     expect(account.age(3.months.from_now)).to eq(15)
   end
 
   it "does a somewhat normal email validation" do
+    account = FactoryBot.create(:account)
+
     account.skip_existing_password = true
 
     account.email = "hello@world.com"

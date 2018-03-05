@@ -256,6 +256,13 @@ class Account < ActiveRecord::Base
 
   validates :date_of_birth, :first_name, :last_name, presence: true
 
+  validates :city, presence: true,
+    if: -> { country.present? or state_province.present? }
+  validates :state_province, presence: true,
+    if: -> { country.present? or city.present? }
+  validates :country, presence: true,
+    if: -> { city.present? or state_province.present? }
+
   def self.find_with_token(token)
     find_by(auth_token: token) || ::NullAuth.new
   end

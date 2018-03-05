@@ -13,7 +13,7 @@ require "rails_helper"
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
     end
 
-    it "updates newsletters with a change to the address" do
+    it "updates newsletters with a change to the #{scope} address" do
       patch :update, params: {
         "#{scope}_profile" => {
           account_attributes: {
