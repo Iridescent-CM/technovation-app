@@ -1,7 +1,7 @@
 import _ from "lodash";
 
-import Event from '../../app/javascript/event';
-import Attendee from '../../app/javascript/attendee';
+import Event from '../../app/javascript/Event';
+import Attendee from '../../app/javascript/Attendee';
 
 test('addTeam adds new teams', () => {
   let event = new Event({ id: 1 });
