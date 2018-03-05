@@ -1,5 +1,5 @@
 export default function Judge (res) {
-  this.id = res.id || "";
+  this.id = parseInt(res.id);
   this.name = res.name || "";
   this.email = res.email;
   this.scope = res.scope;

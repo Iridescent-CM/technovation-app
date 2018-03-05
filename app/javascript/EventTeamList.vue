@@ -8,9 +8,7 @@
 
     <team-search
        v-if="!fetchingList"
-       :exclude-ids="event.selectedTeamIds()"
-       :fetch-url="fetchUrl"
-       :event-bus-id="`event-${event.id}`"
+       :event-id="event.id"
     ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -32,10 +30,11 @@
           >
             <td class="medium-width">
               <div class="team-list__actions">
-                <img
-                  alt="remove"
-                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-                  @click.prevent="removeTeam(team)"
+                <icon
+                   name="remove"
+                   size="16"
+                   color="ff0000"
+                   :handleClick="removeTeam.bind(this, team)"
                 />
               </div>
 
@@ -109,6 +108,7 @@
 <script>
   import _ from 'lodash';
 
+  import Icon from "./Icon";
   import TeamSearch from './TeamSearch';
   import EventBus from './EventBus';
 
@@ -153,13 +153,8 @@
               contentType: false,
               processData: false,
 
-              success: (resp) => {
-                var idx = vm.event.selectedTeams.findIndex(
-                  (t) => { return t.id === team.id }
-                );
-
-                if (idx !== -1)
-                  vm.event.selectedTeams.splice(idx, 1);
+              success: () => {
+                vm.event.removeTeam(team);
               },
 
               error: (err) => {
@@ -225,13 +220,19 @@
 
     components: {
       App,
+      Icon,
       TeamSearch,
     },
 
     mounted () {
       EventBus.$on(
-        "TeamSearch.selected-event-" + this.event.id,
+        "TeamSearch.selected-for-event-" + this.event.id,
         (selectedTeam) => { this.event.addTeam(selectedTeam); }
+      );
+
+      EventBus.$on(
+        "TeamSearch.deselected-for-event-" + this.event.id,
+        (selectedTeam) => { this.event.removeTeam(selectedTeam); }
       );
 
       this.event.fetchTeams({

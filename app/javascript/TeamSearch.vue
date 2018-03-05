@@ -15,10 +15,7 @@
         class="modal-container"
         v-show="searching"
       >
-        <div
-          class="modal"
-          v-show="searching"
-        >
+        <div class="modal">
           <input
             type="search"
             placeholder="Search by team or submission name"
@@ -26,10 +23,11 @@
           />
 
           <div class="overflow-scroll">
-            <table class="width-full-container">
+            <table class="width-full-container headers--left-align">
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Division</th>
                   <th colspan="2">Submission</th>
                 </tr>
               </thead>
@@ -38,10 +36,15 @@
                 <tr
                   class="cursor-pointer"
                   v-for="item in filteredItems"
-                  @click="item.toggleSelection"
+                  :key="item.id"
+                  @click="toggleSelection(item)"
                 >
                   <td>
                     {{ item.name }}
+                  </td>
+
+                  <td>
+                    {{ item.division }}
                   </td>
 
                   <td>
@@ -62,6 +65,15 @@
               </tbody>
             </table>
           </div>
+
+          <div class="modal-footer">
+            <button
+              class="button--unmask"
+              @click="searching = false"
+            >
+              Done
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +85,8 @@
   import Icon from "./Icon";
   import Attendee from "./Attendee";
 
+  import EventBus from "./EventBus";
+
   export default {
     data () {
       return {
@@ -82,6 +96,8 @@
         filteredItems: [],
       };
     },
+
+    props: ["eventId"],
 
     components: {
       Icon,
@@ -118,6 +134,18 @@
     },
 
     methods: {
+      toggleSelection (item) {
+        item.toggleSelection();
+        let eventName;
+
+        if (item.selected) {
+          eventName = "TeamSearch.selected-for-event-" + this.eventId;
+        } else {
+          eventName = "TeamSearch.deselected-for-event-" + this.eventId;
+        }
+
+        EventBus.$emit(eventName, item);
+      },
     },
   };
 </script>
@@ -136,6 +164,12 @@
     position: fixed;
     top: 0;
     left: 0;
+  }
+
+  .headers--left-align {
+    th {
+      padding-left: 0;
+    }
   }
 
   .width-medium {
@@ -210,6 +244,44 @@
     opacity: 0.2;
   }
 
+  .background-none {
+    background: none;
+  }
+
+  .border-none {
+    border: none;
+  }
+
+  .color-shamrock {
+    color: #5ABF94;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+
+  .font-bold {
+    font-weight: bold;
+  }
+
+  .button--unmask {
+    @extend .background-none;
+    @extend .border-none;
+    @extend .color-shamrock;
+    @extend .text-uppercase;
+    @extend .font-bold;
+    @extend .cursor-pointer;
+  }
+
+  .modal-container {
+    @extend .display-flex-center;
+    @extend .position-fixed;
+    @extend .z-index-penultimate;
+    @extend .width-full-screen;
+    @extend .height-full-screen;
+    @extend .background-semi-transparent-dark;
+  }
+
   .modal {
     @extend .width-medium;
     @extend .padding-small;
@@ -220,12 +292,10 @@
     display: block;
   }
 
-  .modal-container {
-    @extend .display-flex-center;
-    @extend .position-fixed;
-    @extend .z-index-penultimate;
-    @extend .width-full-screen;
-    @extend .height-full-screen;
-    @extend .background-semi-transparent-dark;
+  .modal-footer {
+    margin: 0 -0.5rem -0.5rem;
+    box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 0.5rem;
+    text-align: right;
   }
 </style>

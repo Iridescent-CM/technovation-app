@@ -1,5 +1,5 @@
 export default function Team (res) {
-  this.id = res.id;
+  this.id = parseInt(res.id);
   this.name = res.name;
   this.division = res.division;
   this.scope = res.scope;
@@ -28,11 +28,6 @@ export default function Team (res) {
   this.sendInvitation = false;
   this.recentlyAdded = false;
   this.recentlyInvited = false;
-
-  this.prepareToBeInvited = (event) => {
-    this.recentlyAdded = true;
-    this.sendInvitation = true;
-  };
 
   this.highlight = () => {
     this.highlighted = true;

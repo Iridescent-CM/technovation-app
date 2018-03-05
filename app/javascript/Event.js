@@ -48,7 +48,7 @@ export default function (event) {
   };
 
   this.addJudge = (judge) => {
-    var existingIdx = this.selectedJudges.indexOf((j) => {
+    var existingIdx = _.findIndex(this.selectedJudges, j => {
       return j.id == judge.id
     });
 
@@ -62,8 +62,8 @@ export default function (event) {
   };
 
   this.addTeam = (team) => {
-    var existingIdx = this.selectedTeams.indexOf((t) => {
-      return t.id == team.id
+    const existingIdx = _.findIndex(this.selectedTeams, t => {
+      return t.id === team.id
     });
 
     if (existingIdx === -1) {
@@ -71,6 +71,18 @@ export default function (event) {
       this.selectedTeams.push(team);
     } else {
       console.log("Team already added");
+      return false;
+    }
+  };
+
+  this.removeTeam = (team) => {
+    const existingIdx = _.findIndex(this.selectedTeams, t => {
+      return t.id === team.id;
+    });
+
+    if (existingIdx !== -1) {
+      this.selectedTeams.splice(existingIdx, 1);
+    } else {
       return false;
     }
   };

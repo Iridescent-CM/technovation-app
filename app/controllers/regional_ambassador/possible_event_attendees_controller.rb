@@ -43,10 +43,12 @@ module RegionalAmbassador
         base = {
           id: record.id,
           name: record.name,
+          scope: record.class.name,
         }
 
         if record.respond_to?(:submission)
           base.merge({
+            division: record.division_name,
             submission: {
               name: record.submission.app_name,
             },
