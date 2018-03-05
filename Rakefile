@@ -11,3 +11,8 @@ if ENV.fetch("CHURN_ENABLED") { "no" } == "yes"
 end
 
 Rails.application.load_tasks
+
+task default: :environment do
+  `bin/yarn test`
+  `bin/rspec`
+end

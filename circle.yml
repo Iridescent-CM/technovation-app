@@ -75,6 +75,10 @@ jobs:
           name: Parallel RSpec
           command: bundle exec rspec
 
+      - run:
+          name: Javascript tests
+          command: bundle exec yarn test
+
       # Save artifacts
       - store_test_results:
           path: /tmp/test-results
