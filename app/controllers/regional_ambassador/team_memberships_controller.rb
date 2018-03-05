@@ -31,7 +31,10 @@ module RegionalAmbassador
         account.mentor_profile || account.student_profile
       )
 
-      redirect_to regional_ambassador_team_path(team),
+      redirect_to regional_ambassador_team_path(
+        team,
+        allow_out_of_region: params.fetch(:allow_out_of_region) { false }
+      ),
         success: "You have removed #{account.full_name} from this team"
     end
   end
