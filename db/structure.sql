@@ -968,6 +968,7 @@ CREATE TABLE regional_ambassador_profiles (
 --
 
 CREATE SEQUENCE regional_ambassador_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1042,6 +1043,7 @@ CREATE TABLE regional_pitch_events (
 --
 
 CREATE SEQUENCE regional_pitch_events_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1113,6 +1115,7 @@ CREATE TABLE regions (
 --
 
 CREATE SEQUENCE regions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1190,6 +1193,7 @@ CREATE TABLE screenshots (
 --
 
 CREATE SEQUENCE screenshots_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1228,6 +1232,7 @@ CREATE TABLE signup_attempts (
 --
 
 CREATE SEQUENCE signup_attempts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1262,6 +1267,7 @@ CREATE TABLE student_profiles (
 --
 
 CREATE SEQUENCE student_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1321,6 +1327,7 @@ CREATE TABLE submission_scores (
 --
 
 CREATE SEQUENCE submission_scores_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1359,6 +1366,7 @@ CREATE TABLE team_member_invites (
 --
 
 CREATE SEQUENCE team_member_invites_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1422,6 +1430,7 @@ CREATE TABLE team_submissions (
 --
 
 CREATE SEQUENCE team_submissions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1453,11 +1462,11 @@ CREATE TABLE teams (
     accepting_mentor_requests boolean DEFAULT true NOT NULL,
     latitude double precision,
     longitude double precision,
+    seasons text[] DEFAULT '{}'::text[],
     city character varying,
     state_province character varying,
     country character varying,
     deleted_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[],
     has_students boolean DEFAULT false NOT NULL,
     has_mentor boolean DEFAULT false NOT NULL
 );
@@ -1468,6 +1477,7 @@ CREATE TABLE teams (
 --
 
 CREATE SEQUENCE teams_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1535,6 +1545,7 @@ CREATE TABLE technical_checklists (
 --
 
 CREATE SEQUENCE technical_checklists_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -2132,6 +2143,14 @@ ALTER TABLE ONLY saved_searches
 
 
 --
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: screenshots screenshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2590,13 +2609,6 @@ CREATE INDEX trgm_team_name_indx ON teams USING gist (name gist_trgm_ops);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2901,7 +2913,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171018170002'),
 ('20171018184701'),
 ('20171019162859'),
-('20171019230759'),
 ('20171019230800'),
 ('20171020085320'),
 ('20171020135709'),
@@ -2916,7 +2927,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171107225231'),
 ('20171107233018'),
 ('20171108140911'),
-('20171110224550'),
 ('20171113170115'),
 ('20171113170150'),
 ('20171113215850'),
