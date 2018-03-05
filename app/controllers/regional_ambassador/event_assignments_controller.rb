@@ -46,7 +46,7 @@ module RegionalAmbassador
 
       render json: {
         flash: {
-          success: "You saved your selected judges for #{event.name}"
+          success: "You saved your selected attendees for #{event.name}"
         },
       }
     end
