@@ -70,6 +70,10 @@ jobs:
           command: bundle exec yarn install
 
       - run:
+          name: Javascript tests
+          command: bundle exec yarn test
+
+      - run:
           name: Database Setup
           command: |
             bundle exec rails db:create
@@ -78,10 +82,6 @@ jobs:
       - run:
           name: Parallel RSpec
           command: bundle exec rspec
-
-      - run:
-          name: Javascript tests
-          command: bundle exec yarn test
 
       # Save artifacts
       - store_test_results:
