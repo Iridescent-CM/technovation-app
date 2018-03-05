@@ -66,6 +66,10 @@ jobs:
             - vendor/bundle
 
       - run:
+          name: Install JS dependencies
+          command: bundle exec yarn install
+
+      - run:
           name: Database Setup
           command: |
             bundle exec rails db:create
