@@ -264,6 +264,10 @@
       }
     }
 
+    th {
+      text-align: left;
+    }
+
     tr {
       &.table-row--new {
         background: rgba(255, 255, 0, 0.2);

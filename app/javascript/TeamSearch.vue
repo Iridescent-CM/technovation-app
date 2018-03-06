@@ -22,7 +22,24 @@
             v-model="query"
           />
 
-          <div class="overflow-scroll">
+          <div
+            class="padding-small"
+            v-show="!items.length"
+          >
+            <p>There are no teams available to add to your event.</p>
+
+            <p>
+              Teams must not be attending other events,
+              and must have started their submission.
+            </p>
+
+            <p>
+              You can try searching for teams that are not in your region,
+              but are close enough to travel to your event.
+            </p>
+          </div>
+
+          <div v-show="items.length" class="overflow-scroll">
             <table class="width-full-container headers--left-align">
               <thead>
                 <tr>
@@ -167,7 +184,7 @@
 
   .headers--left-align {
     th {
-      padding-left: 0;
+      text-align: left;
     }
   }
 
@@ -232,10 +249,20 @@
 
   .cursor-pointer {
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
 
+  tr.cursor-pointer {
     &:hover,
     &:hover td {
       background: LavenderBlush;
+    }
+  }
+
+  button.cursor-pointer {
+    &:hover,
+    &:hover td {
+      color: black;
     }
   }
 
