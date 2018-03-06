@@ -1,19 +1,31 @@
 class Attendees
   include Enumerable
 
-  def self.for(ambassador: nil, type:, context:, event: nil)
-    if ambassador
-      model = type.to_s.camelize.constantize
-      records = model
-        .live_event_eligible
-        .in_region(ambassador)
-        .order(:name)
+  def self.for(
+    type:,
+    context:,
+    query: "",
+    expand_search: false,
+    ambassador: NullRegionalAmbassador.new,
+    event: NullEvent.new
+  )
+    model = type.to_s.camelize.constantize
+    table_name = model.table_name
+
+    if ambassador.present?
+      scope = model.live_event_eligible
+
+      if expand_search
+        records = scope.where("#{table_name}.name ILIKE ?", "#{query}%")
+      else
+        records = scope.in_region(ambassador)
+      end
     else
       assoc = type.to_s.underscore.downcase.pluralize
       records = event.send(assoc)
     end
 
-    new(records, context)
+    new(records.order("#{table_name}.name"), context)
   end
 
   attr_reader :context

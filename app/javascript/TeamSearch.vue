@@ -23,8 +23,15 @@
           />
 
           <div
+            class="align-center padding-small"
+            v-show="fetching"
+          >
+            <icon class="spin" name="spinner" />
+          </div>
+
+          <div
             class="padding-small"
-            v-show="!items.length"
+            v-show="!fetching && !items.length"
           >
             <p>There are no teams available to add to your event.</p>
 
@@ -39,7 +46,7 @@
             </p>
           </div>
 
-          <div v-show="items.length" class="overflow-scroll">
+          <div v-show="!fetching && items.length" class="overflow-scroll">
             <table class="width-full-container headers--left-align">
               <thead>
                 <tr>
@@ -109,6 +116,7 @@
       return {
         query: "",
         searching: false,
+        fetching: true,
         items: [],
         filteredItems: [],
       };
@@ -127,26 +135,17 @@
           return item.name.match(pattern) ||
             item.submission.name.match(pattern);
         });
+
+        if (val.length >= 3 && !this.filteredItems.length)
+          _.debounce(
+            this.fetchRemoteItems.bind(this, { expandSearch: 1 }),
+            300
+          )();
       },
 
       searching (current) {
-        const vm = this,
-              url = "/regional_ambassador" +
-                    "/possible_event_attendees.json" +
-                    "?type=team";
-
-        if (current) {
-          if (!vm.items.length) {
-            $.get(url, json => {
-              _.each(json, obj => {
-                const item = new Attendee(obj);
-                vm.items.push(item);
-              });
-
-              vm.filteredItems = vm.items;
-            })
-          }
-        }
+        if (current && !this.items.length)
+          this.fetchRemoteItems();
       },
     },
 
@@ -161,6 +160,42 @@
         }
 
         EventBus.$emit(eventName, item);
+      },
+
+      fetchRemoteItems (opts) {
+        opts = opts || { expandSearch: 0 };
+
+        const vm = this,
+              url = "/regional_ambassador" +
+                    "/possible_event_attendees.json" +
+                    "?type=team" +
+                    "&query=" + this.query +
+                    "&expand_search=" + opts.expandSearch;
+
+        $.ajax({
+          url: url,
+
+          beforeSend: () => {
+            vm.fetching = true;
+          },
+
+          success: (json) => {
+            _.each(json, obj => {
+              const item = new Attendee(obj),
+                    idx = _.findIndex(vm.items, i => {
+                            return i.id === item.id;
+                          });
+
+              if (idx === -1) vm.items.push(item);
+            });
+
+            vm.filteredItems = vm.items;
+          },
+
+          complete: () => {
+            vm.fetching = false;
+          },
+        });
       },
     },
   };
@@ -224,6 +259,10 @@
 
   .padding-small {
     padding: 0.5rem;
+  }
+
+  .align-center {
+    text-align: center;
   }
 
   .shadow-subtle-white {

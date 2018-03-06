@@ -1,0 +1,2 @@
+class NullEvent < NullObject
+end
