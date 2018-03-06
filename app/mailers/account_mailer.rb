@@ -3,6 +3,11 @@ class AccountMailer < ApplicationMailer
     account = Account.find(account_id)
     token = account.unconfirmed_email_address.confirmation_token
 
+    if token.blank?
+      account.unconfirmed_email_address.regenerate_confirmation_token
+      token = account.unconfirmed_email_address.confirmation_token
+    end
+
     if not token.blank?
       @url = new_email_confirmation_url(token: token)
       I18n.with_locale(account.locale) do
@@ -18,6 +23,11 @@ class AccountMailer < ApplicationMailer
     @first_name = account.first_name
 
     token = account.password_reset_token
+
+    if token.blank?
+      account.regenerate_password_reset_token
+      token = account.password_reset_token
+    end
 
     if not token.blank?
       @url = new_password_url(token: token)
