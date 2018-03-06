@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/Iridescent-CM/city-state.git
+  revision: d911c4182aeb33b610450efc6da0405edd2f187f
+  branch: keep-list-updated
+  specs:
+    city-state (0.0.13)
+      rubyzip (~> 1.1)
+
+GIT
   remote: https://github.com/arvindvyas/Country-State-Select.git
   revision: df934e2b345cc962c77aeb50184c4874f975cb61
   branch: master
@@ -142,8 +150,6 @@ GEM
       rest-client (>= 1.6.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.1)
-    city-state (0.0.13)
-      rubyzip (~> 1.1)
     clipboard-rails (1.7.1)
     cliver (0.3.2)
     cocoon (1.2.11)
@@ -641,6 +647,7 @@ DEPENDENCIES
   checkr-official (~> 1.5)
   chosen-rails (~> 1.8)
   churn (~> 1.0)
+  city-state!
   clipboard-rails (~> 1.7)
   cocoon (~> 1.2)
   counter_culture (~> 1.9)

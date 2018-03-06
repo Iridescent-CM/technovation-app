@@ -75,6 +75,11 @@ gem 'carrierwave_direct', "~> 0.0"
 gem 'checkr-official', "~> 1.5", require: "checkr"
 
 gem 'countries', '~> 1.2', require: "countries/global"
+
+gem 'city-state',
+  git: 'https://github.com/Iridescent-CM/city-state.git',
+  branch: 'keep-list-updated'
+
 gem 'carmen', '~> 1.1'
 
 gem 'indefinite_article', "~> 0.2"
