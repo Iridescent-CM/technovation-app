@@ -109,7 +109,7 @@ class SubmissionsGrid
           CS.get(g.country[0]).any?
     } do |values, scope, grid|
       clauses = values.flatten.map do |v|
-        state = State.new(v)
+        state = State.new(v, grid.country)
         "lower(teams.state_province) like '#{state.search_name}%'"
       end
 
@@ -139,7 +139,7 @@ class SubmissionsGrid
         "unaccent(teams.city) = unaccent('#{v}')"
       end
 
-      state = State.new(grid.state_province[0])
+      state = State.new(grid.state_province[0], grid.country)
 
       scope.where(
         "lower(teams.state_province) like '#{state.search_name}%'"
