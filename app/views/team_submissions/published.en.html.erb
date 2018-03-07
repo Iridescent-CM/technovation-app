@@ -28,7 +28,7 @@
                 modal_url: screenshot.image_url(:large),
               } %>
           </div>
-          <% end %>
+        <% end %>
       </div>
 
       <p>
@@ -52,6 +52,7 @@
 
     <div class="submission-content-spacing">
       <h3 class="submission-titles">Code</h3>
+
       <div class="submission-content-color">
         <table>
           <tr>
@@ -94,10 +95,10 @@
         </table>
       </div>
 
-        <div class="submission-piece-links__source-code submission-content-spacing">
-          <%= link_to "Download the source code",
-            @team_submission.source_code_url %>
-        </div>
+      <div class="submission-piece-links__source-code submission-content-spacing">
+        <%= link_to "Download the source code",
+          @team_submission.source_code_url %>
+      </div>
     </div>
 
     <div class="submission-content-spacing">
@@ -142,75 +143,67 @@
     <div class="content-spacing">
       <h3 class="submission-titles">Business</h3>
 
-        <% if @team.senior? %>
-
-          <%= link_to "Read the business plan",
-            @team_submission.business_plan_url,
-            target: :_blank %>
-            
-        <% end %>
-
-      <% if @team.selected_regional_pitch_event.live? %>
+      <% if @team.senior? %>
+        <%= link_to "Read the business plan",
+          @team_submission.business_plan_url,
+          target: :_blank %>
+      <% end %>
     </div>
 
     <div class="submission-content-spacing">
       <h3 class="submission-titles">Regional Pitch Events</h3>
 
-      <%= link_to "Open the presentation slides",
-        @team_submission.pitch_presentation_url,
-        target: :_blank %>
-
+      <% if @team.selected_regional_pitch_event.live? %>
+        <%= link_to "Open the presentation slides",
+          @team_submission.pitch_presentation_url,
+          target: :_blank %>
       <% end %>
     </div>
   </div>
 
   <div class="grid__col-auto submission-footer submission-content-spacing">
     <% @team_submission.awaiting_publish do %>
-      <div>
+      <p>
+        <%= link_to "Submit now",
+          [
+            current_scope,
+            :honor_code_review,
+            { team_id: current_team.id },
+          ],
+
+          class: "button" %>
+
+        or
+
+        <%= link_to "continue editing",
+          [
+            current_scope,
+            @team_submission,
+            :section,
+            section: :ideation
+          ] %>
+      </p>
+    <% end %>
+
+    <% @team_submission.already_published do %>
+      <% if SeasonToggles.team_submissions_editable? %>
         <p>
-          <%= link_to "Submit now",
-            [
-              current_scope,
-              :honor_code_review,
-              { team_id: current_team.id },
-            ],
+          You can make changes until <%= Season.deadline %>.
+        </p>
 
-            class: "button" %>
-
-          or
-
-          <%= link_to "continue editing",
+        <p>
+          <%= link_to "Make changes",
             [
               current_scope,
               @team_submission,
               :section,
               section: :ideation
-            ] %>
+            ],
+            class: "button button--small" %>
         </p>
-      </div>
-    <% end %>
-
-    <% @team_submission.already_published do %>
-      <div>
-        <% if SeasonToggles.team_submissions_editable? %>
-          <p>
-            You can make changes until <%= Season.deadline %>.
-          </p>
-
-          <p>
-            <%= link_to "Make changes",
-              [
-                current_scope,
-                @team_submission,
-                :section,
-                section: :ideation
-              ],
-              class: "button button--small" %>
-          </p>
-        <% else %>
-          <p>Submissions are not editable at this time.</p>
-        <% end %>
-      </div>
+      <% else %>
+        <p>Submissions are not editable at this time.</p>
+      <% end %>
     <% end %>
   </div>
 </div>
