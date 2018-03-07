@@ -104,6 +104,14 @@ class Account < ActiveRecord::Base
     :participant
   end
 
+  def event_scope
+    "JudgeProfile"
+  end
+
+  def id_for_event
+    judge_profile.id
+  end
+
   scope :not_staff, -> {
     where.not("accounts.email ILIKE ?", "%joesak%")
   }

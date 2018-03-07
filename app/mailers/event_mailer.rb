@@ -8,7 +8,7 @@ class EventMailer < ApplicationMailer
 
     I18n.with_locale(@removed.locale) do
       mail to: @removed.email,
-        subject: removed_klass_name == "JudgeProfile" ?
+        subject: %w(Account UserInvitation).include?(removed_klass_name) ?
           "You have been removed from a Technovation event" :
           "Your team has been removed from a Technovation event"
     end

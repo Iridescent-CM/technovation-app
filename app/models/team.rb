@@ -33,6 +33,14 @@ class Team < ActiveRecord::Base
     model_name.singular_route_key
   end
 
+  def event_scope
+    self.class.name
+  end
+
+  def id_for_event
+    id
+  end
+
   scope :not_staff, -> {
     where.not("teams.name ilike ?", "%staff test%")
   }

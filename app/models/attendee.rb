@@ -8,9 +8,9 @@ class Attendee
 
   def as_json(*)
     base = {
-      id: record.id,
+      id: record.id_for_event,
       name: record.name,
-      scope: record.class.name,
+      scope: record.event_scope,
       links: {
         self: context.send(
           "regional_ambassador_#{record.ambassador_route_key}_path",
