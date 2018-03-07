@@ -6,12 +6,6 @@ class Attendee
     @context = context
   end
 
-  def view_path
-    "regional_ambassador_" +
-    record.model_name.singular_route_key +
-    "_path"
-  end
-
   def as_json(*)
     base = {
       id: record.id,
@@ -19,7 +13,7 @@ class Attendee
       scope: record.class.name,
       links: {
         self: context.send(
-          view_path,
+          "regional_ambassador_#{record.ambassador_route_key}_path",
           record,
           { allow_out_of_region: true },
         ),
@@ -43,6 +37,10 @@ class Attendee
         submission: {
           name: record.submission.app_name,
         },
+      })
+    elsif record.respond_to?(:email)
+      base.merge({
+        email: record.email,
       })
     else
       base

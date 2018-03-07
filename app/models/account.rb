@@ -72,6 +72,20 @@ class Account < ActiveRecord::Base
     Prefer\ not\ to\ say
   }
 
+  scope :live_event_eligible, ->(event) {
+    joins(:judge_profile)
+      .left_outer_joins(:mentor_profile)
+      .where("mentor_profiles.id IS NULL")
+  }
+
+  def self.sort_column
+    :first_name
+  end
+
+  def ambassador_route_key
+    :participant
+  end
+
   scope :not_staff, -> {
     where.not("accounts.email ILIKE ?", "%joesak%")
   }
@@ -269,6 +283,18 @@ class Account < ActiveRecord::Base
       .find_by(
         auth_token: token
       ) or ::NullAuth.new
+  end
+
+  def status
+    judge_profile && judge_profile.status
+  end
+
+  def human_status
+    judge_profile && judge_profile.human_status
+  end
+
+  def status_explained
+    judge_profile && judge_profile.status_explained
   end
 
   def avatar_url

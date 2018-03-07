@@ -1,140 +1,100 @@
 <template>
-  <div class="grid__col-12 grid__col--bleed">
-    <div class="search-components grid">
+  <div class="grid">
+    <div class="grid__col-auto grid__col--bleed-y">
+      <p>
+        <button
+          class="button button--remove-bg"
+          v-show="!searching"
+          @click="searching = true"
+        >
+          + Add judges
+        </button>
+      </p>
+
       <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-show="activelySearching"
+        class="modal-container"
+        v-show="searching"
       >
-        <p>
+        <div class="modal">
           <input
-            ref="nameSearch"
-            class="autocomplete-input"
-            type="text"
-            placeholder="Name"
-            @input="generateResults"
-            @keyup.up.prevent="traverseResultsUp"
-            @keyup.down.prevent="traverseResultsDown"
-            @keyup.enter.prevent="selectHighlighted"
-            @keyup.esc="reset"
-            v-model="nameQuery"
+            type="search"
+            placeholder="Search by name or email"
+            v-model="query"
           />
 
-          <input
-            ref="emailSearch"
-            class="autocomplete-input"
-            type="email"
-            placeholder="Email"
-            @input="generateResults"
-            @keyup.up.prevent="traverseResultsUp"
-            @keyup.down.prevent="traverseResultsDown"
-            @keyup.enter.prevent="selectHighlighted"
-            @keyup.esc="reset"
-            v-model="emailQuery"
-          />
-
-          <button
-            class="
-              button
-              button--inline
-              button--small
-              button--remove-bg
-              button--black-text
-            "
-            v-if="searched && !results.length"
-            @click="addWithInvite"
-          >
-            <img
-              alt="remove"
-              src="https://icongr.am/fontawesome/envelope-o.svg?size=16"
-            />
-            Add and invite
-          </button>
-        </p>
-      </div>
-
-      <div
-        class="
-          grid__col-12
-          notice
-          notice--info
-          notice--thin
-        "
-        v-if="searched && !results.length"
-      >
-        <p>
-          We couldn't find someone. You can invite them by email.
-        </p>
-      </div>
-
-      <div
-        class="
-          grid__col-12
-          notice
-          notice--error
-          notice--thin
-        "
-        v-if="error"
-      >
-        <p>
-          Sorry, there was an error on the server
-
-          <button
-            class="button button--small button--error"
-            @click="reset"
-          >
-            Reset search and try again
-          </button>
-        </p>
-      </div>
-
-      <div
-        class="grid__col-12 grid__col--bleed-y"
-        v-show="!activelySearching"
-      >
-        <p>
-          <button
-            class="button button--small button--remove-bg"
-            @click.prevent="searching = true"
-          >+ Add judges</button>
-        </p>
-      </div>
-
-      <div
-        class="grid__col-12"
-        v-if="loading || !!results.length"
-      >
-        <div class="autocomplete-list">
           <div
-            class="grid__cell--padding-sm"
-            v-if="loading"
+            class="align-center padding-small"
+            v-show="fetching"
           >
-            <p>
-              <i class="icon-spinner2 icon--spin"></i>
-            </p>
+            <icon class="spin" name="spinner" />
           </div>
 
-          <table>
-            <tr
-             :class="[
-               'autocomplete-list__result',
-               resultsIdx === idx ?
-                'autocomplete-list__result--highlighted' : '',
-             ]"
-             @mouseover="highlightResult(idx)"
-             @click="selectHighlighted(idx)"
-             v-for="(result, idx) in results"
-             >
-             <td
-             v-html="result.highlightMatch('name', nameQuery)"
-             ></td>
+          <div
+            class="padding-small"
+            v-show="!fetching && !items.length"
+          >
+            <p>There are no judges available to add to your event.</p>
 
-             <td
-             v-html="result.highlightMatch('email', emailQuery)"
-             ></td>
+            <p>Judges for live events cannot also be mentors.</p>
 
-             <td>{{ result.location }}</td>
-            </tr>
-          </table>
+            <p>
+              You can try searching for judges that are
+              not in your region, but are close enough
+              to travel to your event.
+            </p>
+
+            <p>You can enter a new email address to invite a new judge.</p>
+          </div>
+
+          <div v-show="!fetching && items.length" class="overflow-scroll">
+            <table class="width-full-container headers--left-align">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th colspan="2">Email</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  class="cursor-pointer"
+                  v-for="item in filteredItems"
+                  :key="item.id"
+                  @click="toggleSelection(item)"
+                >
+                  <td>
+                    {{ item.name }}
+                  </td>
+
+                  <td>
+                    <div class="width-medium overflow-ellipsis">
+                      {{ item.email }}
+                    </div>
+                  </td>
+
+                  <td
+                    class="light-opacity"
+                    v-show="!item.selected"
+                  >
+                    <icon name="check-circle-o" />
+                  </td>
+
+                  <td v-show="item.selected">
+                    <icon name="check-circle" color="228b22" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              class="button--unmask"
+              @click="searching = false"
+            >
+              Done
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -142,238 +102,269 @@
 </template>
 
 <script>
-  import Judge from './Judge';
-  import EventBus from './EventBus';
+  import _ from "lodash";
+  import Icon from "./Icon";
+  import Attendee from "./Attendee";
+
+  import EventBus from "./EventBus";
 
   export default {
     data () {
       return {
-        nameQuery: "",
-        emailQuery: "",
-        results: [],
-        invite: { email: "" },
-        resultsIdx: null,
-        highlightedResult: null,
-        loading: false,
-        error: false,
-        searched: false,
+        query: "",
         searching: false,
-      }
+        fetching: true,
+        items: [],
+        filteredItems: [],
+      };
     },
 
-    props: [
-      'fetchUrl',
-      'excludeIds',
-      'eventBusId',
-    ],
+    props: ["eventBusId", "eventId"],
 
-    computed: {
-      activelySearching () {
-        return this.searching || _.isEmpty(this.excludeIds);
-      },
+    components: {
+      Icon,
     },
 
     watch: {
-      searching () {
-        var vm = this;
+      query (val) {
+        this.filteredItems = _.filter(this.items, item => {
+          const pattern = new RegExp(val, "i");
+
+          return item.name.match(pattern) || item.email.match(pattern);
+        });
+
+        if (val.length >= 3 && !this.filteredItems.length)
+          _.debounce(
+            this.fetchRemoteItems.bind(this, { expandSearch: 1 }),
+            300
+          )();
+      },
+
+      searching (current) {
+        if (current && !this.items.length)
+          this.fetchRemoteItems();
       },
     },
 
     methods: {
-      addWithInvite () {
-        // TODO - it's not always a highlighted result anymore
-        // this is a new judge that needs to sign up
+      toggleSelection (item) {
+        let eventName;
 
-        this.highlightedResult = new Judge({
-          name: this.nameQuery,
-          email: this.emailQuery,
-          scope: "UserInvitation",
-        });
-
-        this.selectHighlighted();
-      },
-
-      highlightResult (idx) {
-        this.resultsIdx = idx;
-        this.unhighlightAll();
-
-        var result = this.results[idx];
-
-        if (!result)
-          result = this.results[0];
-
-        if (!!result) {
-          result.highlight();
-          this.highlightedResult = result;
-        }
-      },
-
-      reset () {
-        this.loading = false;
-        this.error = false;
-        this.searched = false;
-        this.nameQuery = "";
-        this.emailQuery = "";
-        this.results = [];
-        this.highlightedResult = null;
-      },
-
-      generateResults () {
-        var queryEmpty = !this.nameQuery.length &&
-                           !this.emailQuery.length,
-            enoughQueryForRemote = this.nameQuery.length >= 3 ||
-                                     this.emailQuery.length >=3;
-
-        this.searching = true;
-
-        if (queryEmpty) {
-          this.reset();
-        } else if (this.filterExistingResults().length) {
-          this.searched = true;
-          this.setNewResults(this.filterExistingResults());
-        } else if (enoughQueryForRemote) {
-          this.loading = true;
-          _.debounce(this.performRemoteSearch, 300)();
-        }
-      },
-
-      traverseResultsUp () {
-        if (this.resultsIdx == 0) {
-          this.highlightResult(this.results.length - 1);
+        if (item.selected) {
+          eventName = "JudgeSearch.deselected-" + this.eventBusId;
         } else {
-          this.highlightResult(this.resultsIdx - 1);
+          eventName = "JudgeSearch.selected-" + this.eventBusId;
         }
+
+        EventBus.$emit(eventName, item);
       },
 
-      traverseResultsDown () {
-        if (this.ResultsIdx == this.results.length - 1) {
-          this.highlightResult(0);
-        } else {
-          this.highlightResult(this.resultsIdx + 1);
-        }
-      },
+      fetchRemoteItems (opts) {
+        opts = opts || { expandSearch: 0 };
 
-      filterExistingResults () {
-        return this.results.filter((r) => {
-          return r.match(this.nameQuery, this.emailQuery);
-        });
-      },
-
-      performRemoteSearch () {
-        var vm = this,
-            url = vm.fetchUrl + "?name=" + vm.nameQuery +
-                                "&email=" + vm.emailQuery;
-
-        _.each(vm.excludeIds, (id) => {
-          url += "&exclude_ids[]=" + id;
-        });
+        const vm = this,
+              url = "/regional_ambassador" +
+                    "/possible_event_attendees.json" +
+                    "?type=account" +
+                    "&event_id=" + this.eventId +
+                    "&query=" + this.query +
+                    "&expand_search=" + opts.expandSearch;
 
         $.ajax({
-          method: "GET",
           url: url,
-          success: vm.setNewResults,
-          error: vm.indicateError,
+
+          beforeSend: () => {
+            vm.fetching = true;
+          },
+
+          success: (json) => {
+            _.each(json, obj => {
+              const item = new Attendee(obj),
+                    idx = _.findIndex(vm.items, i => {
+                            return i.id === item.id;
+                          });
+
+              if (idx === -1) vm.items.push(item);
+            });
+
+            vm.filteredItems = vm.items;
+          },
+
           complete: () => {
-            vm.searched = true;
+            vm.fetching = false;
           },
         });
       },
-
-      setNewResults (resp) {
-        this.results = [];
-
-        [].forEach.call(resp, (result) => {
-          this.results.push(new Judge(result));
-        });
-
-        this.loading = false;
-        this.highlightResult(0);
-      },
-
-      indicateError (resp) {
-        this.highlightResult(0);
-        this.loading = false;
-        this.error = true;
-      },
-
-      selectHighlighted (idx) {
-        EventBus.$emit(
-          "JudgeSearch.selected-" + this.eventBusId,
-          this.highlightedResult
-        );
-
-        this.reset();
-      },
-
-      unhighlightAll () {
-        this.results.forEach((r) => { r.unhighlight(); });
-      },
-    },
-
-    mounted () {
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .autocomplete-input {
-    margin-bottom: 0;
-    margin-right: 1rem;
-    display: inline-block;
-    width: 250px;
+  [type=search] {
+    font-size: 0.95rem;
+    padding: 0.25rem 1rem;
+    border-radius: 50vh;
+    background: url("https://icongr.am/fontawesome/search.svg?size=12")
+                no-repeat
+                right 0.5rem center;
   }
 
-  .search-components {
-    position: relative;
+  .position-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
-  .autocomplete-list {
+  .headers--left-align {
+    th {
+      text-align: left;
+    }
+  }
+
+  .width-medium {
+    width: 40vw;
+  }
+
+  .width-full-screen {
+    width: 100vw;
+  }
+
+  .width-full-container {
     width: 100%;
-    width: 100%;
-    position: absolute;
-    top: -0.6rem;
-    left: 1.2rem;
+  }
+
+  .height-full-screen {
+    height: 100vh;
+  }
+
+  .background-white {
     background: white;
-    z-index: 1058; /* $z-under-shade */
+  }
 
-    table {
-      padding: 0;
-      border-collapse: collapse;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-    }
+  .background-semi-transparent-dark {
+    background: rgba(0, 0, 0, 0.7);
+  }
 
-    .autocomplete-list__result {
-      cursor: pointer;
-      background: none;
+  .display-flex {
+    display: flex;
+  }
 
-      &:hover,
-      &:hover td {
-        background: none;
-      }
+  .display-flex-center {
+    @extend .display-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-      td {
-        padding: 0.5rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        transition: background-color 0.1s;
+  .padding-small {
+    padding: 0.5rem;
+  }
 
-        &:first-child,
-        &:nth-child(2) {
-          max-width: 300px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
+  .align-center {
+    text-align: center;
+  }
 
-      &.autocomplete-list__result--highlighted {
-        td {
-          background: #93bcff;
-        }
-      }
+  .shadow-subtle-white {
+    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);
+  }
+
+  .z-index-penultimate {
+    z-index: 999998;
+  }
+
+  .z-index-max {
+    z-index: 999999;
+  }
+
+  .border-radius-small {
+    border-radius: 0.2rem;
+  }
+
+  .overflow-scroll {
+    max-height: 40vh;
+    overflow-y: scroll;
+  }
+
+  .overflow-ellipsis {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  tr.cursor-pointer {
+    &:hover,
+    &:hover td {
+      background: LavenderBlush;
     }
   }
 
-  input[type=text] {
-    max-width: 300px;
+  button.cursor-pointer {
+    &:hover,
+    &:hover td {
+      color: black;
+    }
+  }
+
+  .light-opacity {
+    opacity: 0.2;
+  }
+
+  .background-none {
+    background: none;
+  }
+
+  .border-none {
+    border: none;
+  }
+
+  .color-shamrock {
+    color: #5ABF94;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+
+  .font-bold {
+    font-weight: bold;
+  }
+
+  .button--unmask {
+    @extend .background-none;
+    @extend .border-none;
+    @extend .color-shamrock;
+    @extend .text-uppercase;
+    @extend .font-bold;
+    @extend .cursor-pointer;
+  }
+
+  .modal-container {
+    @extend .display-flex-center;
+    @extend .position-fixed;
+    @extend .z-index-penultimate;
+    @extend .width-full-screen;
+    @extend .height-full-screen;
+    @extend .background-semi-transparent-dark;
+  }
+
+  .modal {
+    @extend .width-medium;
+    @extend .padding-small;
+    @extend .background-white;
+    @extend .shadow-subtle-white;
+    @extend .border-radius-small;
+    @extend .z-index-max;
+    display: block;
+  }
+
+  .modal-footer {
+    margin: 0 -0.5rem -0.5rem;
+    box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 0.5rem;
+    text-align: right;
   }
 </style>

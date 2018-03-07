@@ -21,6 +21,14 @@ class Team < ActiveRecord::Base
       .where("divisions.id IN (?)", event.division_ids)
   }
 
+  def self.sort_column
+    :name
+  end
+
+  def ambassador_route_key
+    model_name.singular_route_key
+  end
+
   scope :not_staff, -> {
     where.not("teams.name ilike ?", "%staff test%")
   }

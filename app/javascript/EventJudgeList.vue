@@ -9,9 +9,8 @@
 
     <judge-search
        v-if="!fetchingList"
-       :exclude-ids="event.selectedJudgeIds()"
-       :fetch-url="fetchUrl"
        :event-bus-id="`event-${event.id}`"
+       :event-id="event.id"
     ></judge-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
@@ -41,13 +40,13 @@
               </div>
 
               <div
-                v-if="judge.viewUrl.length"
+                v-if="judge.links.self"
                 class="cutoff-with-ellipsis"
               >
                 <a
                   data-turbolinks="false"
                   target="_blank"
-                  :href="judge.viewUrl"
+                  :href="judge.links.self"
                 >
                   {{ judge.name }}
                 </a>
@@ -114,7 +113,6 @@
 <script>
   import _ from 'lodash';
 
-  import Judge from './Judge';
   import JudgeSearch from './JudgeSearch';
   import EventBus from './EventBus';
 
@@ -242,7 +240,12 @@
     mounted () {
       EventBus.$on(
         "JudgeSearch.selected-event-" + this.event.id,
-        (selectedJudge) => { this.event.addJudge(selectedJudge); }
+        (judge) => { this.event.addJudge(judge); }
+      );
+
+      EventBus.$on(
+        "JudgeSearch.deselected-event-" + this.event.id,
+        (judge) => { this.event.removeJudge(judge); }
       );
 
       this.event.fetchJudges({

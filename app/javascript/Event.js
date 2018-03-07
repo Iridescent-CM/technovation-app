@@ -53,10 +53,23 @@ export default function (event) {
     });
 
     if (existingIdx === -1) {
-      judge.prepareToBeInvited();
+      judge.addedToEvent();
       this.selectedJudges.push(judge);
     } else {
       console.log("Judge already added");
+      return false;
+    }
+  };
+
+  this.removeJudge = (judge) => {
+    const existingIdx = _.findIndex(this.selectedJudges, j => {
+      return j.id === judge.id;
+    });
+
+    if (existingIdx !== -1) {
+      judge.removedFromEvent();
+      this.selectedJudges.splice(existingIdx, 1);
+    } else {
       return false;
     }
   };

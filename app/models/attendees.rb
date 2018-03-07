@@ -11,6 +11,7 @@ class Attendees
   )
     model = type.to_s.camelize.constantize
     table_name = model.table_name
+    sort_column = model.sort_column
 
     if ambassador.present?
       scope = model.live_event_eligible(event)
@@ -25,7 +26,7 @@ class Attendees
       records = event.send(assoc)
     end
 
-    new(records.order("#{table_name}.name"), context)
+    new(records.order("#{table_name}.#{sort_column}"), context)
   end
 
   attr_reader :context

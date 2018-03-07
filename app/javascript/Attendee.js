@@ -2,9 +2,14 @@ export default function Attendee (json) {
   this.id = parseInt(json.id);
   this.scope = json.scope;
   this.name = json.name;
+  this.links = json.links;
+
+  // Judges, UserInvitations
+  this.email = json.email;
+
+  // Teams
   this.submission = json.submission;
   this.division = json.division;
-  this.links = json.links;
 
   this.status = json.status || "status missing (bug)";
   this.humanStatus = json.human_status || "status missing (bug)";
