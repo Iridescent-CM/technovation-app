@@ -6,11 +6,14 @@ class EventMailer < ApplicationMailer
     @ambassador_name = @event.ambassador.name
     @ambassador_email = @event.ambassador.email
 
+    subject = %w(Account JudgeProfile UserInvitation).include?(
+      removed_klass_name
+    ) ?
+      "You have been removed from a Technovation event" :
+      "Your team has been removed from a Technovation event"
+
     I18n.with_locale(@removed.locale) do
-      mail to: @removed.email,
-        subject: %w(Account UserInvitation).include?(removed_klass_name) ?
-          "You have been removed from a Technovation event" :
-          "Your team has been removed from a Technovation event"
+      mail to: @removed.email, subject: subject
     end
   end
 
@@ -38,11 +41,15 @@ class EventMailer < ApplicationMailer
            end
 
 
+    subject = %w(Account JudgeProfile UserInvitation).include?(
+      invite_klass_name
+    ) ?
+      "You are invited to judge a Technovation event" :
+      "Your team is invited to compete in a Technovation event"
+
     I18n.with_locale(@invite.locale) do
       mail to: @invite.email,
-        subject: %w(Account UserInvitation).include?(invite_klass_name) ?
-          "You are invited to judge a Technovation event" :
-          "Your team is invited to compete in a Technovation event"
+        subject: subject
     end
   end
 end
