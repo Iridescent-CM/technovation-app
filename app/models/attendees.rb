@@ -17,7 +17,7 @@ class Attendees
       scope = model.live_event_eligible(event)
 
       if expand_search
-        records = scope.where("#{table_name}.name ILIKE ?", "#{query}%")
+        records = scope.by_query(query)
       else
         records = scope.in_region(ambassador)
       end
@@ -26,7 +26,11 @@ class Attendees
       records = event.send(assoc)
     end
 
-    new(records.order("#{table_name}.#{sort_column}"), context)
+    if records.is_a?(Array)
+      new(records.sort_by(&sort_column), context)
+    else
+      new(records.order("#{table_name}.#{sort_column}"), context)
+    end
   end
 
   attr_reader :context

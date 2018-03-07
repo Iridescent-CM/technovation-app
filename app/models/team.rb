@@ -14,6 +14,10 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
+  scope :by_query, ->(query) {
+    where("teams.name ILIKE ?", "#{query}%")
+  }
+
   scope :live_event_eligible, ->(event) {
     not_staff
       .not_attending_live_event

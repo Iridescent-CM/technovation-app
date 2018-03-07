@@ -72,6 +72,24 @@ class Account < ActiveRecord::Base
     Prefer\ not\ to\ say
   }
 
+  scope :by_query, ->(query) {
+    sanitized = sanitize_sql_like(query)
+    fname = sanitized.split(" ").first
+    lname = sanitized.split(" ").last
+
+    sql = "accounts.first_name ILIKE '#{fname}%'"
+
+    if fname != lname
+      sql += " AND "
+    else
+      sql += " OR "
+    end
+
+    sql += "accounts.last_name ILIKE '#{lname}%'"
+
+    where(sql += "OR accounts.email ILIKE '#{sanitized}%'")
+  }
+
   scope :live_event_eligible, ->(event) {
     joins(:judge_profile)
       .left_outer_joins(:mentor_profile)
@@ -285,6 +303,10 @@ class Account < ActiveRecord::Base
       ) or ::NullAuth.new
   end
 
+  def events
+    judge_profile && judge_profile.events
+  end
+
   def status
     judge_profile && judge_profile.status
   end
@@ -295,6 +317,10 @@ class Account < ActiveRecord::Base
 
   def status_explained
     judge_profile && judge_profile.status_explained
+  end
+
+  def friendly_status
+    judge_profile && judge_profile.friendly_status
   end
 
   def avatar_url

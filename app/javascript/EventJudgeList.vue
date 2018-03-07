@@ -19,7 +19,6 @@
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Location</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -32,10 +31,11 @@
           >
             <td class="medium-width">
               <div class="judge-list__actions">
-                <img
-                  alt="remove"
-                  src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-                  @click.prevent="removeJudge(judge)"
+                <icon
+                  name="remove"
+                  size="16"
+                  color="ff0000"
+                  :handleClick="removeJudge.bind(this, judge)"
                 />
               </div>
 
@@ -66,8 +66,6 @@
               </div>
             </td>
 
-            <td>{{ judge.location }}</td>
-
             <td>
               <label
                 class="label--reset"
@@ -85,7 +83,7 @@
                     `judge-status--${judge.statusColor}`
                   ]"
                 >
-                  {{ judge.human_status }}
+                  {{ judge.humanStatus }}
                 </span>
               </div>
             </td>
@@ -113,6 +111,7 @@
 <script>
   import _ from 'lodash';
 
+  import Icon from "./Icon";
   import JudgeSearch from './JudgeSearch';
   import EventBus from './EventBus';
 
@@ -216,7 +215,7 @@
           processData: false,
 
           success: (resp) => {
-            this.event.afterSave();
+            this.event.judgeAssignmentsSaved();
           },
 
           error: (err) => {
@@ -235,6 +234,7 @@
     components: {
       App,
       JudgeSearch,
+      Icon,
     },
 
     mounted () {
@@ -276,6 +276,10 @@
       }
     }
 
+    th {
+      text-align: left;
+    }
+
     tr {
       margin: 0 0 0.25rem;
 
@@ -314,7 +318,7 @@
   }
 
   .medium-width {
-    width: 225px;
+    width: 200px;
   }
 
   .cutoff-with-ellipsis {

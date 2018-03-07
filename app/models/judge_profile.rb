@@ -69,9 +69,13 @@ class JudgeProfile < ActiveRecord::Base
   validates :company_name, :job_title,
     presence: true
 
-  def method_missing(method_name, *args)
+  delegate :first_name,
+    to: :account,
+    prefix: false
+
+  def method_missing(method_name, *args, &block)
     begin
-      account.public_send(method_name, *args)
+      account.public_send(method_name, *args, &block)
     rescue
       raise NoMethodError,
         "undefined method `#{method_name}' not found for #{self}"

@@ -106,6 +106,8 @@
 
 <script>
   import _ from "lodash";
+  import escapeRegExp from "escape-string-regexp";
+
   import Icon from "./Icon";
   import Attendee from "./Attendee";
 
@@ -131,7 +133,9 @@
     watch: {
       query (val) {
         this.filteredItems = _.filter(this.items, item => {
-          const pattern = new RegExp(val, "i");
+          const escaped = escapeRegExp(val),
+                pattern = new RegExp(escaped, "i");
+
           return item.name.match(pattern) ||
             item.submission.name.match(pattern);
         });
@@ -170,7 +174,7 @@
                     "/possible_event_attendees.json" +
                     "?type=team" +
                     "&event_id=" + this.eventId +
-                    "&query=" + this.query +
+                    "&query=" + encodeURIComponent(this.query) +
                     "&expand_search=" + opts.expandSearch;
 
         $.ajax({

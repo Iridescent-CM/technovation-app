@@ -100,6 +100,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     judges + user_invitations
   end
 
+  def accounts
+    judges.map(&:account) + user_invitations
+  end
+
   def attendees
     judge_list + teams
   end

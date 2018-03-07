@@ -1,6 +1,5 @@
 import _ from "lodash";
 import Attendee from "./Attendee";
-import Judge from "./Judge";
 
 export default function (event) {
   this.id = event.id || "";
@@ -109,10 +108,8 @@ export default function (event) {
     return _.map(this.selectedTeams, 'id');
   };
 
-  this.afterSave = () => {
-    _.each(this.selectedJudges, (judge) => {
-      judge.afterAssign();
-    });
+  this.judgeAssignmentsSaved = () => {
+    _.each(this.selectedJudges, (judge) => { judge.assignmentSaved() });
   };
 
   this.teamAssignmentsSaved = () => {
@@ -181,7 +178,7 @@ export default function (event) {
 
         success: (resp) => {
           _.each(resp, (result) => {
-            var judge = new Judge(result);
+            var judge = new Attendee(result);
             event.selectedJudges.push(judge)
           });
         },
