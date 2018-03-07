@@ -229,7 +229,7 @@
   }
 
   .width-medium {
-    width: 40vw;
+    width: 60vw;
   }
 
   .width-full-screen {
@@ -287,7 +287,7 @@
   }
 
   .overflow-scroll {
-    max-height: 40vh;
+    max-height: 50vh;
     overflow-y: scroll;
   }
 
