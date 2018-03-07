@@ -144,13 +144,13 @@
 
         <% if @team.senior? %>
 
-        <%= link_to "Read the business plan",
-          @team_submission.business_plan_url,
-          target: :_blank %>
-
+          <%= link_to "Read the business plan",
+            @team_submission.business_plan_url,
+            target: :_blank %>
+            
         <% end %>
 
-        <% if @team.selected_regional_pitch_event.live? %>
+      <% if @team.selected_regional_pitch_event.live? %>
     </div>
 
     <div class="submission-content-spacing">
