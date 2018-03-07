@@ -15,6 +15,8 @@ module SavedSearchController
                   "#{current_scope}_teams_path"
                 when "activities_grid"
                   "#{current_scope}_activities_path"
+                when "submissions_grid"
+                  "#{current_scope}_team_submissions_path"
                 else
                   raise "Param root #{@saved_search.param_root} not supported"
                 end
