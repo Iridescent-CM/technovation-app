@@ -13,7 +13,7 @@
 }
 
 .submission-content-spacing {
-  padding: 1.5rem .5rem .5rem .5rem ;
+  padding: 1.5rem 0.5rem 0.5rem;
 }
 
 .submission-content-color {
@@ -21,16 +21,16 @@
 }
 
 .submission-footer {
-left: 0;
- bottom: 0;
- width: 100%;
- background-color: white;
- text-align: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
 }
 
 .code_checklist-margins {
   margin: 1rem 0 0;
-  border-bottom: 0.07rem solid $shamrock;
+  border-bottom: 1px solid $shamrock;
   padding-top: 3rem;
   text-align: left;
 }
@@ -38,5 +38,5 @@ left: 0;
 .code_checklist-item-selection {
   padding: 0.5rem;
   text-align: left;
-  -webkit-text-stroke: 0.05rem black;
+  stroke-width: 0.05rem black;
 }
