@@ -2,60 +2,112 @@
 
 <div class="grid">
   <div class="grid__col-sm-3 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="submission-sidebar">
-          <%= render "team_submissions/team_info",
-            submission: @team_submission,
-            team: @team %>
-        </div>
+    <div class="col--sticky-spacer col--sticky">
+      <h1 class="page-heading">Submission Review</h1>
+      <div class="submission-sidebar">
+        <%= render "team_submissions/team_info",
+          submission: @team_submission,
+          team: @team %>
       </div>
     </div>
   </div>
 
   <div class="grid__col-sm-9">
-    <div class="panel">
-      <h3><%= @team_submission.app_name %></h3>
+    <div class="submission-content-spacing">
+      <h3 class="submission-titles"><%= @team_submission.app_name %></h3>
 
-      <%= simple_format @team_submission.app_description %>
+      <div class="submission-content-color">
+        <%= simple_format @team_submission.app_description %>
+      </div>
 
-      <div class="submission-pieces__screenshots">
+      <div class="submission-pieces__screenshots submission-content-spacing">
         <% @team_submission.screenshots.each do |screenshot| %>
           <div class="submission-pieces__screenshot">
             <%= image_tag screenshot.image_url,
               data: {
                 modal_url: screenshot.image_url(:large),
               } %>
-
           </div>
-        <% end %>
+          <% end %>
       </div>
-    </div>
-
-    <div class="panel">
-      <h3>Technical</h3>
-
-      <div class="submission-piece-links__source-code">
-        <%= link_to "Download the source code",
-          @team_submission.source_code_url %>
-      </div>
-
-      <% if false %>
-        <div class="submission-piece-links__code-checklist">
-          <%= link_to "Read the code checklist",
-            [current_scope, :code_checklist, team_id: @team.id],
-            class: "button button--small" %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="panel">
-      <h3>Pitch</h3>
 
       <p>
         <%= link_to web_icon(
             "play-circle-o",
-            text: "Watch the pitch video"
+            text: "Watch demo video"
+          ),
+          "#",
+          class: "button button--small",
+          data: {
+            opens_modal: "video-modal-" +
+                          @team_submission.video_id(:demo),
+            modal_fetch: send(
+              "#{current_scope}_embed_code_path",
+              @team_submission,
+              piece: :demo,
+            ),
+          } %>
+      </p>
+    </div>
+
+    <div class="submission-content-spacing">
+      <h3 class="submission-titles">Code</h3>
+      <div class="submission-content-color">
+        <table>
+          <tr>
+            <th class="code_checklist-margins">Technical Components</th>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Strings</td>
+            <td>A data type that is text.</td>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Variables</td>
+            <td>Global Variable - A variable that can be used at any point in your code.</td>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Numbers</td>
+            <td>A number data type is just what you think it is! In App Inventor,  you can use numbers by clicking on going to Math in blocks.</td>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Loops</td>
+            <td>A loop is a block of code that will repeat over and over again.</td>
+          </tr>
+          <tr>
+            <th class="code_checklist-margins">Databases and Connectivity</th>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Local Database</td>
+            <td> Databases can store information for later use, even when the app is closed! You can think of databases as a place to store information you can recall later</td>
+          </tr>
+          <tr>
+            <th class="code_checklist-margins">Mobile Features</th>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Location Sensor</td>
+            <td>This sensor collects the latitude and longitude of the phone's location. This sensor can be useful anytime you need search for businesses or points of interests near the user. </td>
+          </tr>
+          <tr>
+            <td class="code_checklist-item-selection">Accelerometer Sensor</td>
+            <td>This component can determine if the phone is shaking and if it's being held upright or upside-down. This capability is very useful when you want the screen to re-orient in response to how the phone is being held, or if you want the app to react to shaking</td>
+          </tr>
+        </table>
+      </div>
+
+        <div class="submission-piece-links__source-code submission-content-spacing">
+          <%= link_to "Download the source code",
+            @team_submission.source_code_url %>
+        </div>
+    </div>
+
+    <div class="submission-content-spacing">
+      <h3 class="submission-titles">Marketing</h3>
+
+      <p class="submission-content-spacing">
+        <%= link_to web_icon(
+            "play-circle-o",
+            text: "Watch your pitch video"
+
           ),
           "#",
           class: "button button--small",
@@ -77,23 +129,6 @@
         <div class="modal-content"></div>
       </div>
 
-      <p>
-        <%= link_to web_icon(
-            "play-circle-o",
-            text: "Watch the demo video"
-          ),
-          "#",
-          class: "button button--small",
-          data: {
-            opens_modal: "video-modal-" +
-                          @team_submission.video_id(:demo),
-            modal_fetch: send(
-              "#{current_scope}_embed_code_path",
-              @team_submission,
-              piece: :demo,
-            ),
-          } %>
-      </p>
 
       <div
         class="modal"
@@ -103,28 +138,35 @@
       </div>
     </div>
 
-    <% if @team.senior? %>
-      <div class="panel">
-        <h3>Entrepreneurship</h3>
 
-        <%= link_to "Read the business plan",
-          @team_submission.business_plan_url,
-          target: :_blank %>
-      </div>
-    <% end %>
+    <div class="content-spacing">
+      <h3 class="submission-titles">Business</h3>
 
-    <% if @team.selected_regional_pitch_event.live? %>
-      <div class="panel">
-        <h3>Regional Pitch Events</h3>
+        <% if @team.senior? %>
 
-        <%= link_to "Open the presentation slides",
-          @team_submission.pitch_presentation_url,
-          target: :_blank %>
-      </div>
-    <% end %>
+          <%= link_to "Read the business plan",
+            @team_submission.business_plan_url,
+            target: :_blank %>
+            
+        <% end %>
 
+      <% if @team.selected_regional_pitch_event.live? %>
+    </div>
+
+    <div class="submission-content-spacing">
+      <h3 class="submission-titles">Regional Pitch Events</h3>
+
+      <%= link_to "Open the presentation slides",
+        @team_submission.pitch_presentation_url,
+        target: :_blank %>
+
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid__col-auto submission-footer submission-content-spacing">
     <% @team_submission.awaiting_publish do %>
-      <div class="grid--justify-center">
+      <div>
         <p>
           <%= link_to "Submit now",
             [
@@ -149,7 +191,7 @@
     <% end %>
 
     <% @team_submission.already_published do %>
-      <div class="grid--justify-center">
+      <div>
         <% if SeasonToggles.team_submissions_editable? %>
           <p>
             You can make changes until <%= Season.deadline %>.
