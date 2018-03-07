@@ -1,9 +1,13 @@
-class NullObject < BasicObject
+class NullObject
   def present?
     false
   end
 
   def blank?
+    true
+  end
+
+  def empty?
     true
   end
 

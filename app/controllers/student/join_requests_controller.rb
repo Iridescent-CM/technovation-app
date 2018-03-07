@@ -55,7 +55,8 @@ module Student
     end
 
     def reviewer_is_requestor?(join_request)
-      current_student.authenticated? and current_student == join_request.requestor
+      current_student.authenticated? and
+        current_student == join_request.requestor
     end
 
     def reviewer_is_unauthorized?(join_request)
