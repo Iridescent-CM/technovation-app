@@ -6,4 +6,8 @@ class NullObject < BasicObject
   def blank?
     true
   end
+
+  def nil?
+    true
+  end
 end
