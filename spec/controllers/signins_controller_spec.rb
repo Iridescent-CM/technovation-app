@@ -32,7 +32,20 @@ RSpec.describe SigninsController do
       expect(response).to redirect_to(student_dashboard_path)
     end
 
-    it "sends parent emails for past students registering for this season" do
+    it "ignores dots" do
+      FactoryBot.create(:student, email: "dots.ignored@gmail.com")
+
+      post :create, params: {
+        account: {
+          email: "dotsigno.red@gmail.com",
+          password: "secret1234",
+        },
+      }
+
+      expect(response).to redirect_to(student_dashboard_path)
+    end
+
+    it "sends parent emails for past students registering again" do
       student = FactoryBot.create(
         :onboarded_student,
         password: "secret1234",

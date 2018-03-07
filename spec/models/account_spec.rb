@@ -1,6 +1,21 @@
 require "rails_helper"
 
 RSpec.describe Account do
+  it "validates email uniqueness with dots" do
+    FactoryBot.create(:account, email: "remove.dots@gmail.com")
+    account = FactoryBot.build(:account, email: "removedots@gmail.com")
+
+    expect(account).not_to be_valid
+    expect(account.errors[:email]).to include("has already been taken")
+
+    account.email = "something@else.com"
+    expect(account).to be_valid
+    account.save
+
+    expect(account.reload.id).not_to be_nil
+    expect(account).to be_valid
+  end
+
   describe "regioning" do
     it "works with primary region searches" do
       FactoryBot.create(:account, :los_angeles)
@@ -337,7 +352,8 @@ RSpec.describe Account do
       )
 
       past_unconsented_student = FactoryBot.create(:onboarding_student)
-      past_unconsented_student.account.update(
+      account = past_unconsented_student.account
+      account.update(
         seasons: [Season.current.year - 1]
       )
 
@@ -352,7 +368,9 @@ RSpec.describe Account do
 
       expect(results).not_to include(consented_student.account)
       expect(results).not_to include(past_consented_student.account)
-      expect(results.current).not_to include(past_unconsented_student.account)
+      expect(results.current.pluck(:email)).not_to include(
+        past_unconsented_student.account.email
+      )
     end
 
     it "returns students by season without signed parental consents" do
@@ -379,7 +397,8 @@ RSpec.describe Account do
         status: :pending
       )
 
-      consented_student = FactoryBot.create(:onboarded_student)
+      FactoryBot.create(:onboarded_student)
+        # consented student
 
       results = Account.not_parental_consented(Season.current.year - 1)
 

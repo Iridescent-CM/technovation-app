@@ -20,10 +20,10 @@ RSpec.feature "Activate your email to sign up" do
   scenario "Use an email that exists" do
     ActionMailer::Base.deliveries.clear
 
-    FactoryBot.create(:judge, email: "joe@joesak.com")
+    FactoryBot.create(:judge, email: "joe.dots.ignored@joesak.com")
     visit root_path
 
-    fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Email address", with: "joedotsignored@joesak.com"
     fill_in "Create a password", with: "secret1234"
     click_button "Get Started"
 
@@ -33,24 +33,28 @@ RSpec.feature "Activate your email to sign up" do
 
   scenario "Use an email that is awaiting activation" do
     signup_attempt = SignupAttempt.create!(
-      email: "joe@joesak.com",
+      email: "joe.dots.ignored@joesak.com",
       password: "secret1234"
     )
 
     visit root_path
 
-    fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Email address", with: "j.oedotsignored@joesak.com"
     fill_in "Create a password", with: "secret1234"
     click_button "Get Started"
 
-    expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
+    expect(current_path).to eq(
+      signup_attempt_path(signup_attempt.pending_token)
+    )
     expect(page).to have_content("Check your spam folder")
-    expect(find_field("Email address").value).to eq("joe@joesak.com")
+    expect(find_field("Email address").value).to eq(
+      "joe.dots.ignored@joesak.com"
+    )
   end
 
   scenario "Use an email that has already activated" do
     signup_attempt = SignupAttempt.create!(
-      email: "joe@joesak.com",
+      email: "joe.dots.ignored@joesak.com",
       password: "secret1234"
     )
 
@@ -59,12 +63,14 @@ RSpec.feature "Activate your email to sign up" do
     ActionMailer::Base.deliveries.clear
 
     visit root_path
-    fill_in "Email address", with: "joe@joesak.com"
+    fill_in "Email address", with: "jo.edotsign.ored@joesak.com"
     fill_in "Create a password", with: "secret1234"
     click_button "Get Started"
 
     expect(ActionMailer::Base.deliveries).to be_empty
-    expect(current_path).to eq(signup_attempt_path(signup_attempt.pending_token))
+    expect(current_path).to eq(
+      signup_attempt_path(signup_attempt.pending_token)
+    )
     expect(page).to have_content("You have already confirmed your email!")
     expect(page).to have_link("Continue signing up")
   end

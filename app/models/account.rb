@@ -296,6 +296,13 @@ class Account < ActiveRecord::Base
 
   validates :date_of_birth, :first_name, :last_name, presence: true
 
+  validate -> {
+    errors.add(:email, :taken) if Account.where.not(id: id).exists?([
+      "replace(email, '.', '') = ?",
+      email.gsub(".", "")
+    ])
+  }
+
   def self.find_with_token(token)
     find_by(auth_token: token) || ::NullAuth.new
   end

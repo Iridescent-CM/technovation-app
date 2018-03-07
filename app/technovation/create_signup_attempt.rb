@@ -1,13 +1,13 @@
 module CreateSignupAttempt
   def self.call(params, callbacks)
     @existing_account = Account.where(
-      "lower(email) = ?",
-      params[:email].downcase
+      "lower(trim(both ' ' from replace(accounts.email, '.', ''))) = ?",
+      params[:email].strip.downcase.gsub('.', '')
     ).last
 
     @existing_attempt = SignupAttempt.where(
-      "lower(email) = ?",
-      params[:email].downcase
+      "lower(trim(both ' ' from replace(email, '.', ''))) = ?",
+      params[:email].strip.downcase.gsub('.', '')
     ).last
 
     @signup_attempt = SignupAttempt.new(params)
