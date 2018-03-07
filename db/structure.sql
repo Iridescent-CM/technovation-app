@@ -3,6 +3,7 @@ SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -36,20 +37,6 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
-
-
---
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -77,8 +64,6 @@ CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
 COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -87,7 +72,7 @@ SET default_with_oids = false;
 -- Name: accounts; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE accounts (
+CREATE TABLE public.accounts (
     id integer NOT NULL,
     email character varying NOT NULL,
     password_digest character varying NOT NULL,
@@ -136,7 +121,8 @@ CREATE TABLE accounts (
 -- Name: accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE accounts_id_seq
+CREATE SEQUENCE public.accounts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -148,14 +134,14 @@ CREATE SEQUENCE accounts_id_seq
 -- Name: accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE accounts_id_seq OWNED BY accounts.id;
+ALTER SEQUENCE public.accounts_id_seq OWNED BY public.accounts.id;
 
 
 --
 -- Name: activities; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE activities (
+CREATE TABLE public.activities (
     id integer NOT NULL,
     trackable_type character varying,
     trackable_id integer,
@@ -174,7 +160,8 @@ CREATE TABLE activities (
 -- Name: activities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE activities_id_seq
+CREATE SEQUENCE public.activities_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -186,14 +173,14 @@ CREATE SEQUENCE activities_id_seq
 -- Name: activities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE activities_id_seq OWNED BY activities.id;
+ALTER SEQUENCE public.activities_id_seq OWNED BY public.activities.id;
 
 
 --
 -- Name: admin_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE admin_profiles (
+CREATE TABLE public.admin_profiles (
     id integer NOT NULL,
     account_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -205,7 +192,8 @@ CREATE TABLE admin_profiles (
 -- Name: admin_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE admin_profiles_id_seq
+CREATE SEQUENCE public.admin_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -217,14 +205,14 @@ CREATE SEQUENCE admin_profiles_id_seq
 -- Name: admin_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE admin_profiles_id_seq OWNED BY admin_profiles.id;
+ALTER SEQUENCE public.admin_profiles_id_seq OWNED BY public.admin_profiles.id;
 
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE ar_internal_metadata (
+CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
     created_at timestamp without time zone NOT NULL,
@@ -236,7 +224,7 @@ CREATE TABLE ar_internal_metadata (
 -- Name: background_checks; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE background_checks (
+CREATE TABLE public.background_checks (
     id integer NOT NULL,
     candidate_id character varying NOT NULL,
     report_id character varying NOT NULL,
@@ -251,7 +239,8 @@ CREATE TABLE background_checks (
 -- Name: background_checks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE background_checks_id_seq
+CREATE SEQUENCE public.background_checks_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -263,14 +252,14 @@ CREATE SEQUENCE background_checks_id_seq
 -- Name: background_checks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE background_checks_id_seq OWNED BY background_checks.id;
+ALTER SEQUENCE public.background_checks_id_seq OWNED BY public.background_checks.id;
 
 
 --
 -- Name: business_plans; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE business_plans (
+CREATE TABLE public.business_plans (
     id integer NOT NULL,
     uploaded_file character varying,
     team_submission_id integer NOT NULL,
@@ -283,7 +272,8 @@ CREATE TABLE business_plans (
 -- Name: business_plans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE business_plans_id_seq
+CREATE SEQUENCE public.business_plans_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -295,14 +285,14 @@ CREATE SEQUENCE business_plans_id_seq
 -- Name: business_plans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE business_plans_id_seq OWNED BY business_plans.id;
+ALTER SEQUENCE public.business_plans_id_seq OWNED BY public.business_plans.id;
 
 
 --
 -- Name: certificates; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE certificates (
+CREATE TABLE public.certificates (
     id bigint NOT NULL,
     account_id bigint,
     file character varying,
@@ -317,7 +307,7 @@ CREATE TABLE certificates (
 -- Name: certificates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE certificates_id_seq
+CREATE SEQUENCE public.certificates_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -329,14 +319,14 @@ CREATE SEQUENCE certificates_id_seq
 -- Name: certificates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE certificates_id_seq OWNED BY certificates.id;
+ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 
 --
 -- Name: consent_waivers; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE consent_waivers (
+CREATE TABLE public.consent_waivers (
     id integer NOT NULL,
     electronic_signature character varying NOT NULL,
     account_id integer NOT NULL,
@@ -350,7 +340,8 @@ CREATE TABLE consent_waivers (
 -- Name: consent_waivers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE consent_waivers_id_seq
+CREATE SEQUENCE public.consent_waivers_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -362,14 +353,14 @@ CREATE SEQUENCE consent_waivers_id_seq
 -- Name: consent_waivers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE consent_waivers_id_seq OWNED BY consent_waivers.id;
+ALTER SEQUENCE public.consent_waivers_id_seq OWNED BY public.consent_waivers.id;
 
 
 --
 -- Name: divisions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE divisions (
+CREATE TABLE public.divisions (
     id integer NOT NULL,
     name integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -381,7 +372,8 @@ CREATE TABLE divisions (
 -- Name: divisions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE divisions_id_seq
+CREATE SEQUENCE public.divisions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -393,14 +385,14 @@ CREATE SEQUENCE divisions_id_seq
 -- Name: divisions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE divisions_id_seq OWNED BY divisions.id;
+ALTER SEQUENCE public.divisions_id_seq OWNED BY public.divisions.id;
 
 
 --
 -- Name: divisions_regional_pitch_events; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE divisions_regional_pitch_events (
+CREATE TABLE public.divisions_regional_pitch_events (
     division_id integer,
     regional_pitch_event_id integer
 );
@@ -410,7 +402,7 @@ CREATE TABLE divisions_regional_pitch_events (
 -- Name: expertises; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE expertises (
+CREATE TABLE public.expertises (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -422,7 +414,8 @@ CREATE TABLE expertises (
 -- Name: expertises_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE expertises_id_seq
+CREATE SEQUENCE public.expertises_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -434,14 +427,14 @@ CREATE SEQUENCE expertises_id_seq
 -- Name: expertises_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE expertises_id_seq OWNED BY expertises.id;
+ALTER SEQUENCE public.expertises_id_seq OWNED BY public.expertises.id;
 
 
 --
 -- Name: exports; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE exports (
+CREATE TABLE public.exports (
     id integer NOT NULL,
     owner_id integer NOT NULL,
     file character varying NOT NULL,
@@ -458,7 +451,8 @@ CREATE TABLE exports (
 -- Name: exports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE exports_id_seq
+CREATE SEQUENCE public.exports_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -470,14 +464,14 @@ CREATE SEQUENCE exports_id_seq
 -- Name: exports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE exports_id_seq OWNED BY exports.id;
+ALTER SEQUENCE public.exports_id_seq OWNED BY public.exports.id;
 
 
 --
 -- Name: global_invitations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE global_invitations (
+CREATE TABLE public.global_invitations (
     id bigint NOT NULL,
     token character varying NOT NULL,
     status integer DEFAULT 0 NOT NULL,
@@ -490,7 +484,7 @@ CREATE TABLE global_invitations (
 -- Name: global_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE global_invitations_id_seq
+CREATE SEQUENCE public.global_invitations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -502,14 +496,14 @@ CREATE SEQUENCE global_invitations_id_seq
 -- Name: global_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE global_invitations_id_seq OWNED BY global_invitations.id;
+ALTER SEQUENCE public.global_invitations_id_seq OWNED BY public.global_invitations.id;
 
 
 --
 -- Name: honor_code_agreements; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE honor_code_agreements (
+CREATE TABLE public.honor_code_agreements (
     id integer NOT NULL,
     account_id integer NOT NULL,
     electronic_signature character varying NOT NULL,
@@ -524,7 +518,8 @@ CREATE TABLE honor_code_agreements (
 -- Name: honor_code_agreements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE honor_code_agreements_id_seq
+CREATE SEQUENCE public.honor_code_agreements_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -536,14 +531,14 @@ CREATE SEQUENCE honor_code_agreements_id_seq
 -- Name: honor_code_agreements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE honor_code_agreements_id_seq OWNED BY honor_code_agreements.id;
+ALTER SEQUENCE public.honor_code_agreements_id_seq OWNED BY public.honor_code_agreements.id;
 
 
 --
 -- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE jobs (
+CREATE TABLE public.jobs (
     id integer NOT NULL,
     job_id character varying,
     status character varying,
@@ -558,7 +553,8 @@ CREATE TABLE jobs (
 -- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE jobs_id_seq
+CREATE SEQUENCE public.jobs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -570,17 +566,17 @@ CREATE SEQUENCE jobs_id_seq
 -- Name: jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE jobs_id_seq OWNED BY jobs.id;
+ALTER SEQUENCE public.jobs_id_seq OWNED BY public.jobs.id;
 
 
 --
 -- Name: join_requests; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE join_requests (
+CREATE TABLE public.join_requests (
     id integer NOT NULL,
-    requestor_id integer NOT NULL,
     requestor_type character varying NOT NULL,
+    requestor_id integer NOT NULL,
     team_id integer NOT NULL,
     accepted_at timestamp without time zone,
     declined_at timestamp without time zone,
@@ -595,7 +591,8 @@ CREATE TABLE join_requests (
 -- Name: join_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE join_requests_id_seq
+CREATE SEQUENCE public.join_requests_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -607,14 +604,14 @@ CREATE SEQUENCE join_requests_id_seq
 -- Name: join_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE join_requests_id_seq OWNED BY join_requests.id;
+ALTER SEQUENCE public.join_requests_id_seq OWNED BY public.join_requests.id;
 
 
 --
 -- Name: judge_assignments; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE judge_assignments (
+CREATE TABLE public.judge_assignments (
     id integer NOT NULL,
     team_id integer,
     judge_profile_id integer,
@@ -627,7 +624,8 @@ CREATE TABLE judge_assignments (
 -- Name: judge_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE judge_assignments_id_seq
+CREATE SEQUENCE public.judge_assignments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -639,14 +637,14 @@ CREATE SEQUENCE judge_assignments_id_seq
 -- Name: judge_assignments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE judge_assignments_id_seq OWNED BY judge_assignments.id;
+ALTER SEQUENCE public.judge_assignments_id_seq OWNED BY public.judge_assignments.id;
 
 
 --
 -- Name: judge_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE judge_profiles (
+CREATE TABLE public.judge_profiles (
     id integer NOT NULL,
     account_id integer,
     company_name character varying NOT NULL,
@@ -669,7 +667,8 @@ CREATE TABLE judge_profiles (
 -- Name: judge_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE judge_profiles_id_seq
+CREATE SEQUENCE public.judge_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -681,14 +680,14 @@ CREATE SEQUENCE judge_profiles_id_seq
 -- Name: judge_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE judge_profiles_id_seq OWNED BY judge_profiles.id;
+ALTER SEQUENCE public.judge_profiles_id_seq OWNED BY public.judge_profiles.id;
 
 
 --
 -- Name: judge_profiles_regional_pitch_events; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE judge_profiles_regional_pitch_events (
+CREATE TABLE public.judge_profiles_regional_pitch_events (
     judge_profile_id integer,
     regional_pitch_event_id integer
 );
@@ -698,10 +697,10 @@ CREATE TABLE judge_profiles_regional_pitch_events (
 -- Name: memberships; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE memberships (
+CREATE TABLE public.memberships (
     id integer NOT NULL,
-    member_id integer NOT NULL,
     member_type character varying NOT NULL,
+    member_id integer NOT NULL,
     team_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -712,7 +711,8 @@ CREATE TABLE memberships (
 -- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE memberships_id_seq
+CREATE SEQUENCE public.memberships_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -724,14 +724,14 @@ CREATE SEQUENCE memberships_id_seq
 -- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
+ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 
 --
 -- Name: mentor_profile_expertises; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE mentor_profile_expertises (
+CREATE TABLE public.mentor_profile_expertises (
     id integer NOT NULL,
     mentor_profile_id integer NOT NULL,
     expertise_id integer,
@@ -744,7 +744,8 @@ CREATE TABLE mentor_profile_expertises (
 -- Name: mentor_profile_expertises_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE mentor_profile_expertises_id_seq
+CREATE SEQUENCE public.mentor_profile_expertises_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -756,14 +757,14 @@ CREATE SEQUENCE mentor_profile_expertises_id_seq
 -- Name: mentor_profile_expertises_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE mentor_profile_expertises_id_seq OWNED BY mentor_profile_expertises.id;
+ALTER SEQUENCE public.mentor_profile_expertises_id_seq OWNED BY public.mentor_profile_expertises.id;
 
 
 --
 -- Name: mentor_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE mentor_profiles (
+CREATE TABLE public.mentor_profiles (
     id integer NOT NULL,
     account_id integer,
     school_company_name character varying NOT NULL,
@@ -783,7 +784,8 @@ CREATE TABLE mentor_profiles (
 -- Name: mentor_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE mentor_profiles_id_seq
+CREATE SEQUENCE public.mentor_profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -795,14 +797,14 @@ CREATE SEQUENCE mentor_profiles_id_seq
 -- Name: mentor_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE mentor_profiles_id_seq OWNED BY mentor_profiles.id;
+ALTER SEQUENCE public.mentor_profiles_id_seq OWNED BY public.mentor_profiles.id;
 
 
 --
 -- Name: messages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE messages (
+CREATE TABLE public.messages (
     id integer NOT NULL,
     recipient_id integer,
     recipient_type character varying,
@@ -812,8 +814,8 @@ CREATE TABLE messages (
     body text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    regarding_id integer,
     regarding_type character varying,
+    regarding_id integer,
     sent_at timestamp without time zone,
     delivered_at timestamp without time zone
 );
@@ -823,7 +825,8 @@ CREATE TABLE messages (
 -- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE messages_id_seq
+CREATE SEQUENCE public.messages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -835,20 +838,20 @@ CREATE SEQUENCE messages_id_seq
 -- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
+ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
 
 
 --
 -- Name: multi_messages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE multi_messages (
+CREATE TABLE public.multi_messages (
     id integer NOT NULL,
-    sender_id integer NOT NULL,
     sender_type character varying NOT NULL,
-    regarding_id integer NOT NULL,
+    sender_id integer NOT NULL,
     regarding_type character varying NOT NULL,
-    recipients hstore NOT NULL,
+    regarding_id integer NOT NULL,
+    recipients public.hstore NOT NULL,
     subject character varying,
     body text NOT NULL,
     sent_at timestamp without time zone,
@@ -862,7 +865,8 @@ CREATE TABLE multi_messages (
 -- Name: multi_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE multi_messages_id_seq
+CREATE SEQUENCE public.multi_messages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -874,14 +878,14 @@ CREATE SEQUENCE multi_messages_id_seq
 -- Name: multi_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE multi_messages_id_seq OWNED BY multi_messages.id;
+ALTER SEQUENCE public.multi_messages_id_seq OWNED BY public.multi_messages.id;
 
 
 --
 -- Name: parental_consents; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE parental_consents (
+CREATE TABLE public.parental_consents (
     id integer NOT NULL,
     electronic_signature character varying,
     student_profile_id integer NOT NULL,
@@ -897,7 +901,8 @@ CREATE TABLE parental_consents (
 -- Name: parental_consents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE parental_consents_id_seq
+CREATE SEQUENCE public.parental_consents_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -909,14 +914,14 @@ CREATE SEQUENCE parental_consents_id_seq
 -- Name: parental_consents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE parental_consents_id_seq OWNED BY parental_consents.id;
+ALTER SEQUENCE public.parental_consents_id_seq OWNED BY public.parental_consents.id;
 
 
 --
 -- Name: pitch_presentations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE pitch_presentations (
+CREATE TABLE public.pitch_presentations (
     id integer NOT NULL,
     uploaded_file character varying,
     team_submission_id integer NOT NULL,
@@ -929,7 +934,8 @@ CREATE TABLE pitch_presentations (
 -- Name: pitch_presentations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE pitch_presentations_id_seq
+CREATE SEQUENCE public.pitch_presentations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -941,14 +947,14 @@ CREATE SEQUENCE pitch_presentations_id_seq
 -- Name: pitch_presentations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE pitch_presentations_id_seq OWNED BY pitch_presentations.id;
+ALTER SEQUENCE public.pitch_presentations_id_seq OWNED BY public.pitch_presentations.id;
 
 
 --
 -- Name: regional_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regional_ambassador_profiles (
+CREATE TABLE public.regional_ambassador_profiles (
     id integer NOT NULL,
     organization_company_name character varying NOT NULL,
     ambassador_since_year character varying NOT NULL,
@@ -967,7 +973,7 @@ CREATE TABLE regional_ambassador_profiles (
 -- Name: regional_ambassador_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE regional_ambassador_profiles_id_seq
+CREATE SEQUENCE public.regional_ambassador_profiles_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -980,14 +986,14 @@ CREATE SEQUENCE regional_ambassador_profiles_id_seq
 -- Name: regional_ambassador_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE regional_ambassador_profiles_id_seq OWNED BY regional_ambassador_profiles.id;
+ALTER SEQUENCE public.regional_ambassador_profiles_id_seq OWNED BY public.regional_ambassador_profiles.id;
 
 
 --
 -- Name: regional_links; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regional_links (
+CREATE TABLE public.regional_links (
     id bigint NOT NULL,
     regional_ambassador_profile_id bigint,
     name integer,
@@ -1002,7 +1008,7 @@ CREATE TABLE regional_links (
 -- Name: regional_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE regional_links_id_seq
+CREATE SEQUENCE public.regional_links_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1014,14 +1020,14 @@ CREATE SEQUENCE regional_links_id_seq
 -- Name: regional_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE regional_links_id_seq OWNED BY regional_links.id;
+ALTER SEQUENCE public.regional_links_id_seq OWNED BY public.regional_links.id;
 
 
 --
 -- Name: regional_pitch_events; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regional_pitch_events (
+CREATE TABLE public.regional_pitch_events (
     id integer NOT NULL,
     starts_at timestamp without time zone NOT NULL,
     ends_at timestamp without time zone NOT NULL,
@@ -1042,7 +1048,7 @@ CREATE TABLE regional_pitch_events (
 -- Name: regional_pitch_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE regional_pitch_events_id_seq
+CREATE SEQUENCE public.regional_pitch_events_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1055,14 +1061,14 @@ CREATE SEQUENCE regional_pitch_events_id_seq
 -- Name: regional_pitch_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE regional_pitch_events_id_seq OWNED BY regional_pitch_events.id;
+ALTER SEQUENCE public.regional_pitch_events_id_seq OWNED BY public.regional_pitch_events.id;
 
 
 --
 -- Name: regional_pitch_events_teams; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regional_pitch_events_teams (
+CREATE TABLE public.regional_pitch_events_teams (
     regional_pitch_event_id integer,
     team_id integer
 );
@@ -1072,7 +1078,7 @@ CREATE TABLE regional_pitch_events_teams (
 -- Name: regional_pitch_events_user_invitations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regional_pitch_events_user_invitations (
+CREATE TABLE public.regional_pitch_events_user_invitations (
     id bigint NOT NULL,
     regional_pitch_event_id bigint,
     user_invitation_id bigint
@@ -1083,7 +1089,7 @@ CREATE TABLE regional_pitch_events_user_invitations (
 -- Name: regional_pitch_events_user_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE regional_pitch_events_user_invitations_id_seq
+CREATE SEQUENCE public.regional_pitch_events_user_invitations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1095,14 +1101,14 @@ CREATE SEQUENCE regional_pitch_events_user_invitations_id_seq
 -- Name: regional_pitch_events_user_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE regional_pitch_events_user_invitations_id_seq OWNED BY regional_pitch_events_user_invitations.id;
+ALTER SEQUENCE public.regional_pitch_events_user_invitations_id_seq OWNED BY public.regional_pitch_events_user_invitations.id;
 
 
 --
 -- Name: regions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE regions (
+CREATE TABLE public.regions (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -1114,7 +1120,7 @@ CREATE TABLE regions (
 -- Name: regions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE regions_id_seq
+CREATE SEQUENCE public.regions_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1127,14 +1133,14 @@ CREATE SEQUENCE regions_id_seq
 -- Name: regions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE regions_id_seq OWNED BY regions.id;
+ALTER SEQUENCE public.regions_id_seq OWNED BY public.regions.id;
 
 
 --
 -- Name: saved_searches; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE saved_searches (
+CREATE TABLE public.saved_searches (
     id bigint NOT NULL,
     searcher_type character varying NOT NULL,
     searcher_id bigint NOT NULL,
@@ -1150,7 +1156,7 @@ CREATE TABLE saved_searches (
 -- Name: saved_searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE saved_searches_id_seq
+CREATE SEQUENCE public.saved_searches_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1162,14 +1168,14 @@ CREATE SEQUENCE saved_searches_id_seq
 -- Name: saved_searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE saved_searches_id_seq OWNED BY saved_searches.id;
+ALTER SEQUENCE public.saved_searches_id_seq OWNED BY public.saved_searches.id;
 
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE schema_migrations (
+CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
 
@@ -1178,7 +1184,7 @@ CREATE TABLE schema_migrations (
 -- Name: screenshots; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE screenshots (
+CREATE TABLE public.screenshots (
     id integer NOT NULL,
     team_submission_id integer,
     image character varying,
@@ -1192,7 +1198,7 @@ CREATE TABLE screenshots (
 -- Name: screenshots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE screenshots_id_seq
+CREATE SEQUENCE public.screenshots_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1205,14 +1211,14 @@ CREATE SEQUENCE screenshots_id_seq
 -- Name: screenshots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE screenshots_id_seq OWNED BY screenshots.id;
+ALTER SEQUENCE public.screenshots_id_seq OWNED BY public.screenshots.id;
 
 
 --
 -- Name: signup_attempts; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE signup_attempts (
+CREATE TABLE public.signup_attempts (
     id integer NOT NULL,
     email character varying NOT NULL,
     activation_token character varying NOT NULL,
@@ -1231,7 +1237,7 @@ CREATE TABLE signup_attempts (
 -- Name: signup_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE signup_attempts_id_seq
+CREATE SEQUENCE public.signup_attempts_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1244,14 +1250,14 @@ CREATE SEQUENCE signup_attempts_id_seq
 -- Name: signup_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE signup_attempts_id_seq OWNED BY signup_attempts.id;
+ALTER SEQUENCE public.signup_attempts_id_seq OWNED BY public.signup_attempts.id;
 
 
 --
 -- Name: student_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE student_profiles (
+CREATE TABLE public.student_profiles (
     id integer NOT NULL,
     account_id integer,
     parent_guardian_email character varying,
@@ -1266,7 +1272,7 @@ CREATE TABLE student_profiles (
 -- Name: student_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE student_profiles_id_seq
+CREATE SEQUENCE public.student_profiles_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1279,14 +1285,14 @@ CREATE SEQUENCE student_profiles_id_seq
 -- Name: student_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE student_profiles_id_seq OWNED BY student_profiles.id;
+ALTER SEQUENCE public.student_profiles_id_seq OWNED BY public.student_profiles.id;
 
 
 --
 -- Name: submission_scores; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE submission_scores (
+CREATE TABLE public.submission_scores (
     id integer NOT NULL,
     team_submission_id integer,
     judge_profile_id integer,
@@ -1326,7 +1332,7 @@ CREATE TABLE submission_scores (
 -- Name: submission_scores_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE submission_scores_id_seq
+CREATE SEQUENCE public.submission_scores_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1339,14 +1345,14 @@ CREATE SEQUENCE submission_scores_id_seq
 -- Name: submission_scores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE submission_scores_id_seq OWNED BY submission_scores.id;
+ALTER SEQUENCE public.submission_scores_id_seq OWNED BY public.submission_scores.id;
 
 
 --
 -- Name: team_member_invites; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE team_member_invites (
+CREATE TABLE public.team_member_invites (
     id integer NOT NULL,
     inviter_id integer NOT NULL,
     team_id integer NOT NULL,
@@ -1365,7 +1371,7 @@ CREATE TABLE team_member_invites (
 -- Name: team_member_invites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE team_member_invites_id_seq
+CREATE SEQUENCE public.team_member_invites_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1378,14 +1384,14 @@ CREATE SEQUENCE team_member_invites_id_seq
 -- Name: team_member_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE team_member_invites_id_seq OWNED BY team_member_invites.id;
+ALTER SEQUENCE public.team_member_invites_id_seq OWNED BY public.team_member_invites.id;
 
 
 --
 -- Name: team_submissions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE team_submissions (
+CREATE TABLE public.team_submissions (
     id integer NOT NULL,
     integrity_affirmed boolean DEFAULT false NOT NULL,
     team_id integer NOT NULL,
@@ -1429,7 +1435,7 @@ CREATE TABLE team_submissions (
 -- Name: team_submissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE team_submissions_id_seq
+CREATE SEQUENCE public.team_submissions_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1442,14 +1448,14 @@ CREATE SEQUENCE team_submissions_id_seq
 -- Name: team_submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE team_submissions_id_seq OWNED BY team_submissions.id;
+ALTER SEQUENCE public.team_submissions_id_seq OWNED BY public.team_submissions.id;
 
 
 --
 -- Name: teams; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE teams (
+CREATE TABLE public.teams (
     id integer NOT NULL,
     name character varying NOT NULL,
     description text,
@@ -1476,7 +1482,7 @@ CREATE TABLE teams (
 -- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE teams_id_seq
+CREATE SEQUENCE public.teams_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1489,14 +1495,14 @@ CREATE SEQUENCE teams_id_seq
 -- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
+ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
 
 
 --
 -- Name: technical_checklists; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE technical_checklists (
+CREATE TABLE public.technical_checklists (
     id integer NOT NULL,
     used_strings boolean,
     used_strings_explanation character varying,
@@ -1544,7 +1550,7 @@ CREATE TABLE technical_checklists (
 -- Name: technical_checklists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE technical_checklists_id_seq
+CREATE SEQUENCE public.technical_checklists_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1557,14 +1563,14 @@ CREATE SEQUENCE technical_checklists_id_seq
 -- Name: technical_checklists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE technical_checklists_id_seq OWNED BY technical_checklists.id;
+ALTER SEQUENCE public.technical_checklists_id_seq OWNED BY public.technical_checklists.id;
 
 
 --
 -- Name: unconfirmed_email_addresses; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE unconfirmed_email_addresses (
+CREATE TABLE public.unconfirmed_email_addresses (
     id bigint NOT NULL,
     email character varying,
     account_id bigint,
@@ -1578,7 +1584,7 @@ CREATE TABLE unconfirmed_email_addresses (
 -- Name: unconfirmed_email_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE unconfirmed_email_addresses_id_seq
+CREATE SEQUENCE public.unconfirmed_email_addresses_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1590,14 +1596,14 @@ CREATE SEQUENCE unconfirmed_email_addresses_id_seq
 -- Name: unconfirmed_email_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE unconfirmed_email_addresses_id_seq OWNED BY unconfirmed_email_addresses.id;
+ALTER SEQUENCE public.unconfirmed_email_addresses_id_seq OWNED BY public.unconfirmed_email_addresses.id;
 
 
 --
 -- Name: user_invitations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_invitations (
+CREATE TABLE public.user_invitations (
     id bigint NOT NULL,
     admin_permission_token character varying NOT NULL,
     email character varying NOT NULL,
@@ -1614,7 +1620,7 @@ CREATE TABLE user_invitations (
 -- Name: user_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE user_invitations_id_seq
+CREATE SEQUENCE public.user_invitations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1626,287 +1632,287 @@ CREATE SEQUENCE user_invitations_id_seq
 -- Name: user_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE user_invitations_id_seq OWNED BY user_invitations.id;
+ALTER SEQUENCE public.user_invitations_id_seq OWNED BY public.user_invitations.id;
 
 
 --
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY accounts ALTER COLUMN id SET DEFAULT nextval('accounts_id_seq'::regclass);
+ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.accounts_id_seq'::regclass);
 
 
 --
 -- Name: activities id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY activities ALTER COLUMN id SET DEFAULT nextval('activities_id_seq'::regclass);
+ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.activities_id_seq'::regclass);
 
 
 --
 -- Name: admin_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_profiles ALTER COLUMN id SET DEFAULT nextval('admin_profiles_id_seq'::regclass);
+ALTER TABLE ONLY public.admin_profiles ALTER COLUMN id SET DEFAULT nextval('public.admin_profiles_id_seq'::regclass);
 
 
 --
 -- Name: background_checks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY background_checks ALTER COLUMN id SET DEFAULT nextval('background_checks_id_seq'::regclass);
+ALTER TABLE ONLY public.background_checks ALTER COLUMN id SET DEFAULT nextval('public.background_checks_id_seq'::regclass);
 
 
 --
 -- Name: business_plans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY business_plans ALTER COLUMN id SET DEFAULT nextval('business_plans_id_seq'::regclass);
+ALTER TABLE ONLY public.business_plans ALTER COLUMN id SET DEFAULT nextval('public.business_plans_id_seq'::regclass);
 
 
 --
 -- Name: certificates id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY certificates ALTER COLUMN id SET DEFAULT nextval('certificates_id_seq'::regclass);
+ALTER TABLE ONLY public.certificates ALTER COLUMN id SET DEFAULT nextval('public.certificates_id_seq'::regclass);
 
 
 --
 -- Name: consent_waivers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY consent_waivers ALTER COLUMN id SET DEFAULT nextval('consent_waivers_id_seq'::regclass);
+ALTER TABLE ONLY public.consent_waivers ALTER COLUMN id SET DEFAULT nextval('public.consent_waivers_id_seq'::regclass);
 
 
 --
 -- Name: divisions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY divisions ALTER COLUMN id SET DEFAULT nextval('divisions_id_seq'::regclass);
+ALTER TABLE ONLY public.divisions ALTER COLUMN id SET DEFAULT nextval('public.divisions_id_seq'::regclass);
 
 
 --
 -- Name: expertises id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY expertises ALTER COLUMN id SET DEFAULT nextval('expertises_id_seq'::regclass);
+ALTER TABLE ONLY public.expertises ALTER COLUMN id SET DEFAULT nextval('public.expertises_id_seq'::regclass);
 
 
 --
 -- Name: exports id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
+ALTER TABLE ONLY public.exports ALTER COLUMN id SET DEFAULT nextval('public.exports_id_seq'::regclass);
 
 
 --
 -- Name: global_invitations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY global_invitations ALTER COLUMN id SET DEFAULT nextval('global_invitations_id_seq'::regclass);
+ALTER TABLE ONLY public.global_invitations ALTER COLUMN id SET DEFAULT nextval('public.global_invitations_id_seq'::regclass);
 
 
 --
 -- Name: honor_code_agreements id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY honor_code_agreements ALTER COLUMN id SET DEFAULT nextval('honor_code_agreements_id_seq'::regclass);
+ALTER TABLE ONLY public.honor_code_agreements ALTER COLUMN id SET DEFAULT nextval('public.honor_code_agreements_id_seq'::regclass);
 
 
 --
 -- Name: jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs ALTER COLUMN id SET DEFAULT nextval('jobs_id_seq'::regclass);
+ALTER TABLE ONLY public.jobs ALTER COLUMN id SET DEFAULT nextval('public.jobs_id_seq'::regclass);
 
 
 --
 -- Name: join_requests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY join_requests ALTER COLUMN id SET DEFAULT nextval('join_requests_id_seq'::regclass);
+ALTER TABLE ONLY public.join_requests ALTER COLUMN id SET DEFAULT nextval('public.join_requests_id_seq'::regclass);
 
 
 --
 -- Name: judge_assignments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_assignments ALTER COLUMN id SET DEFAULT nextval('judge_assignments_id_seq'::regclass);
+ALTER TABLE ONLY public.judge_assignments ALTER COLUMN id SET DEFAULT nextval('public.judge_assignments_id_seq'::regclass);
 
 
 --
 -- Name: judge_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_profiles ALTER COLUMN id SET DEFAULT nextval('judge_profiles_id_seq'::regclass);
+ALTER TABLE ONLY public.judge_profiles ALTER COLUMN id SET DEFAULT nextval('public.judge_profiles_id_seq'::regclass);
 
 
 --
 -- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY memberships ALTER COLUMN id SET DEFAULT nextval('memberships_id_seq'::regclass);
+ALTER TABLE ONLY public.memberships ALTER COLUMN id SET DEFAULT nextval('public.memberships_id_seq'::regclass);
 
 
 --
 -- Name: mentor_profile_expertises id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profile_expertises ALTER COLUMN id SET DEFAULT nextval('mentor_profile_expertises_id_seq'::regclass);
+ALTER TABLE ONLY public.mentor_profile_expertises ALTER COLUMN id SET DEFAULT nextval('public.mentor_profile_expertises_id_seq'::regclass);
 
 
 --
 -- Name: mentor_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profiles ALTER COLUMN id SET DEFAULT nextval('mentor_profiles_id_seq'::regclass);
+ALTER TABLE ONLY public.mentor_profiles ALTER COLUMN id SET DEFAULT nextval('public.mentor_profiles_id_seq'::regclass);
 
 
 --
 -- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq'::regclass);
+ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
 
 
 --
 -- Name: multi_messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY multi_messages ALTER COLUMN id SET DEFAULT nextval('multi_messages_id_seq'::regclass);
+ALTER TABLE ONLY public.multi_messages ALTER COLUMN id SET DEFAULT nextval('public.multi_messages_id_seq'::regclass);
 
 
 --
 -- Name: parental_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY parental_consents ALTER COLUMN id SET DEFAULT nextval('parental_consents_id_seq'::regclass);
+ALTER TABLE ONLY public.parental_consents ALTER COLUMN id SET DEFAULT nextval('public.parental_consents_id_seq'::regclass);
 
 
 --
 -- Name: pitch_presentations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pitch_presentations ALTER COLUMN id SET DEFAULT nextval('pitch_presentations_id_seq'::regclass);
+ALTER TABLE ONLY public.pitch_presentations ALTER COLUMN id SET DEFAULT nextval('public.pitch_presentations_id_seq'::regclass);
 
 
 --
 -- Name: regional_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_ambassador_profiles ALTER COLUMN id SET DEFAULT nextval('regional_ambassador_profiles_id_seq'::regclass);
+ALTER TABLE ONLY public.regional_ambassador_profiles ALTER COLUMN id SET DEFAULT nextval('public.regional_ambassador_profiles_id_seq'::regclass);
 
 
 --
 -- Name: regional_links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_links ALTER COLUMN id SET DEFAULT nextval('regional_links_id_seq'::regclass);
+ALTER TABLE ONLY public.regional_links ALTER COLUMN id SET DEFAULT nextval('public.regional_links_id_seq'::regclass);
 
 
 --
 -- Name: regional_pitch_events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events ALTER COLUMN id SET DEFAULT nextval('regional_pitch_events_id_seq'::regclass);
+ALTER TABLE ONLY public.regional_pitch_events ALTER COLUMN id SET DEFAULT nextval('public.regional_pitch_events_id_seq'::regclass);
 
 
 --
 -- Name: regional_pitch_events_user_invitations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_user_invitations ALTER COLUMN id SET DEFAULT nextval('regional_pitch_events_user_invitations_id_seq'::regclass);
+ALTER TABLE ONLY public.regional_pitch_events_user_invitations ALTER COLUMN id SET DEFAULT nextval('public.regional_pitch_events_user_invitations_id_seq'::regclass);
 
 
 --
 -- Name: regions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regions ALTER COLUMN id SET DEFAULT nextval('regions_id_seq'::regclass);
+ALTER TABLE ONLY public.regions ALTER COLUMN id SET DEFAULT nextval('public.regions_id_seq'::regclass);
 
 
 --
 -- Name: saved_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY saved_searches ALTER COLUMN id SET DEFAULT nextval('saved_searches_id_seq'::regclass);
+ALTER TABLE ONLY public.saved_searches ALTER COLUMN id SET DEFAULT nextval('public.saved_searches_id_seq'::regclass);
 
 
 --
 -- Name: screenshots id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY screenshots ALTER COLUMN id SET DEFAULT nextval('screenshots_id_seq'::regclass);
+ALTER TABLE ONLY public.screenshots ALTER COLUMN id SET DEFAULT nextval('public.screenshots_id_seq'::regclass);
 
 
 --
 -- Name: signup_attempts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY signup_attempts ALTER COLUMN id SET DEFAULT nextval('signup_attempts_id_seq'::regclass);
+ALTER TABLE ONLY public.signup_attempts ALTER COLUMN id SET DEFAULT nextval('public.signup_attempts_id_seq'::regclass);
 
 
 --
 -- Name: student_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY student_profiles ALTER COLUMN id SET DEFAULT nextval('student_profiles_id_seq'::regclass);
+ALTER TABLE ONLY public.student_profiles ALTER COLUMN id SET DEFAULT nextval('public.student_profiles_id_seq'::regclass);
 
 
 --
 -- Name: submission_scores id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY submission_scores ALTER COLUMN id SET DEFAULT nextval('submission_scores_id_seq'::regclass);
+ALTER TABLE ONLY public.submission_scores ALTER COLUMN id SET DEFAULT nextval('public.submission_scores_id_seq'::regclass);
 
 
 --
 -- Name: team_member_invites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_member_invites ALTER COLUMN id SET DEFAULT nextval('team_member_invites_id_seq'::regclass);
+ALTER TABLE ONLY public.team_member_invites ALTER COLUMN id SET DEFAULT nextval('public.team_member_invites_id_seq'::regclass);
 
 
 --
 -- Name: team_submissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_submissions ALTER COLUMN id SET DEFAULT nextval('team_submissions_id_seq'::regclass);
+ALTER TABLE ONLY public.team_submissions ALTER COLUMN id SET DEFAULT nextval('public.team_submissions_id_seq'::regclass);
 
 
 --
 -- Name: teams id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regclass);
+ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
 
 
 --
 -- Name: technical_checklists id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY technical_checklists ALTER COLUMN id SET DEFAULT nextval('technical_checklists_id_seq'::regclass);
+ALTER TABLE ONLY public.technical_checklists ALTER COLUMN id SET DEFAULT nextval('public.technical_checklists_id_seq'::regclass);
 
 
 --
 -- Name: unconfirmed_email_addresses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY unconfirmed_email_addresses ALTER COLUMN id SET DEFAULT nextval('unconfirmed_email_addresses_id_seq'::regclass);
+ALTER TABLE ONLY public.unconfirmed_email_addresses ALTER COLUMN id SET DEFAULT nextval('public.unconfirmed_email_addresses_id_seq'::regclass);
 
 
 --
 -- Name: user_invitations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_invitations ALTER COLUMN id SET DEFAULT nextval('user_invitations_id_seq'::regclass);
+ALTER TABLE ONLY public.user_invitations ALTER COLUMN id SET DEFAULT nextval('public.user_invitations_id_seq'::regclass);
 
 
 --
 -- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY accounts
+ALTER TABLE ONLY public.accounts
     ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
 
 
@@ -1914,7 +1920,7 @@ ALTER TABLE ONLY accounts
 -- Name: activities activities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY activities
+ALTER TABLE ONLY public.activities
     ADD CONSTRAINT activities_pkey PRIMARY KEY (id);
 
 
@@ -1922,7 +1928,7 @@ ALTER TABLE ONLY activities
 -- Name: admin_profiles admin_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_profiles
+ALTER TABLE ONLY public.admin_profiles
     ADD CONSTRAINT admin_profiles_pkey PRIMARY KEY (id);
 
 
@@ -1930,7 +1936,7 @@ ALTER TABLE ONLY admin_profiles
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ar_internal_metadata
+ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
@@ -1938,7 +1944,7 @@ ALTER TABLE ONLY ar_internal_metadata
 -- Name: background_checks background_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY background_checks
+ALTER TABLE ONLY public.background_checks
     ADD CONSTRAINT background_checks_pkey PRIMARY KEY (id);
 
 
@@ -1946,7 +1952,7 @@ ALTER TABLE ONLY background_checks
 -- Name: business_plans business_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY business_plans
+ALTER TABLE ONLY public.business_plans
     ADD CONSTRAINT business_plans_pkey PRIMARY KEY (id);
 
 
@@ -1954,7 +1960,7 @@ ALTER TABLE ONLY business_plans
 -- Name: certificates certificates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY certificates
+ALTER TABLE ONLY public.certificates
     ADD CONSTRAINT certificates_pkey PRIMARY KEY (id);
 
 
@@ -1962,7 +1968,7 @@ ALTER TABLE ONLY certificates
 -- Name: consent_waivers consent_waivers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY consent_waivers
+ALTER TABLE ONLY public.consent_waivers
     ADD CONSTRAINT consent_waivers_pkey PRIMARY KEY (id);
 
 
@@ -1970,7 +1976,7 @@ ALTER TABLE ONLY consent_waivers
 -- Name: divisions divisions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY divisions
+ALTER TABLE ONLY public.divisions
     ADD CONSTRAINT divisions_pkey PRIMARY KEY (id);
 
 
@@ -1978,7 +1984,7 @@ ALTER TABLE ONLY divisions
 -- Name: expertises expertises_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY expertises
+ALTER TABLE ONLY public.expertises
     ADD CONSTRAINT expertises_pkey PRIMARY KEY (id);
 
 
@@ -1986,7 +1992,7 @@ ALTER TABLE ONLY expertises
 -- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports
+ALTER TABLE ONLY public.exports
     ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
 
 
@@ -1994,7 +2000,7 @@ ALTER TABLE ONLY exports
 -- Name: global_invitations global_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY global_invitations
+ALTER TABLE ONLY public.global_invitations
     ADD CONSTRAINT global_invitations_pkey PRIMARY KEY (id);
 
 
@@ -2002,7 +2008,7 @@ ALTER TABLE ONLY global_invitations
 -- Name: honor_code_agreements honor_code_agreements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY honor_code_agreements
+ALTER TABLE ONLY public.honor_code_agreements
     ADD CONSTRAINT honor_code_agreements_pkey PRIMARY KEY (id);
 
 
@@ -2010,7 +2016,7 @@ ALTER TABLE ONLY honor_code_agreements
 -- Name: jobs jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
+ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT jobs_pkey PRIMARY KEY (id);
 
 
@@ -2018,7 +2024,7 @@ ALTER TABLE ONLY jobs
 -- Name: join_requests join_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY join_requests
+ALTER TABLE ONLY public.join_requests
     ADD CONSTRAINT join_requests_pkey PRIMARY KEY (id);
 
 
@@ -2026,7 +2032,7 @@ ALTER TABLE ONLY join_requests
 -- Name: judge_assignments judge_assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_assignments
+ALTER TABLE ONLY public.judge_assignments
     ADD CONSTRAINT judge_assignments_pkey PRIMARY KEY (id);
 
 
@@ -2034,7 +2040,7 @@ ALTER TABLE ONLY judge_assignments
 -- Name: judge_profiles judge_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_profiles
+ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT judge_profiles_pkey PRIMARY KEY (id);
 
 
@@ -2042,7 +2048,7 @@ ALTER TABLE ONLY judge_profiles
 -- Name: memberships memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY memberships
+ALTER TABLE ONLY public.memberships
     ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
 
 
@@ -2050,7 +2056,7 @@ ALTER TABLE ONLY memberships
 -- Name: mentor_profile_expertises mentor_profile_expertises_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profile_expertises
+ALTER TABLE ONLY public.mentor_profile_expertises
     ADD CONSTRAINT mentor_profile_expertises_pkey PRIMARY KEY (id);
 
 
@@ -2058,7 +2064,7 @@ ALTER TABLE ONLY mentor_profile_expertises
 -- Name: mentor_profiles mentor_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profiles
+ALTER TABLE ONLY public.mentor_profiles
     ADD CONSTRAINT mentor_profiles_pkey PRIMARY KEY (id);
 
 
@@ -2066,7 +2072,7 @@ ALTER TABLE ONLY mentor_profiles
 -- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY messages
+ALTER TABLE ONLY public.messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
 
 
@@ -2074,7 +2080,7 @@ ALTER TABLE ONLY messages
 -- Name: multi_messages multi_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY multi_messages
+ALTER TABLE ONLY public.multi_messages
     ADD CONSTRAINT multi_messages_pkey PRIMARY KEY (id);
 
 
@@ -2082,7 +2088,7 @@ ALTER TABLE ONLY multi_messages
 -- Name: parental_consents parental_consents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY parental_consents
+ALTER TABLE ONLY public.parental_consents
     ADD CONSTRAINT parental_consents_pkey PRIMARY KEY (id);
 
 
@@ -2090,7 +2096,7 @@ ALTER TABLE ONLY parental_consents
 -- Name: pitch_presentations pitch_presentations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pitch_presentations
+ALTER TABLE ONLY public.pitch_presentations
     ADD CONSTRAINT pitch_presentations_pkey PRIMARY KEY (id);
 
 
@@ -2098,7 +2104,7 @@ ALTER TABLE ONLY pitch_presentations
 -- Name: regional_ambassador_profiles regional_ambassador_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_ambassador_profiles
+ALTER TABLE ONLY public.regional_ambassador_profiles
     ADD CONSTRAINT regional_ambassador_profiles_pkey PRIMARY KEY (id);
 
 
@@ -2106,7 +2112,7 @@ ALTER TABLE ONLY regional_ambassador_profiles
 -- Name: regional_links regional_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_links
+ALTER TABLE ONLY public.regional_links
     ADD CONSTRAINT regional_links_pkey PRIMARY KEY (id);
 
 
@@ -2114,7 +2120,7 @@ ALTER TABLE ONLY regional_links
 -- Name: regional_pitch_events regional_pitch_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events
+ALTER TABLE ONLY public.regional_pitch_events
     ADD CONSTRAINT regional_pitch_events_pkey PRIMARY KEY (id);
 
 
@@ -2122,7 +2128,7 @@ ALTER TABLE ONLY regional_pitch_events
 -- Name: regional_pitch_events_user_invitations regional_pitch_events_user_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_user_invitations
+ALTER TABLE ONLY public.regional_pitch_events_user_invitations
     ADD CONSTRAINT regional_pitch_events_user_invitations_pkey PRIMARY KEY (id);
 
 
@@ -2130,7 +2136,7 @@ ALTER TABLE ONLY regional_pitch_events_user_invitations
 -- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regions
+ALTER TABLE ONLY public.regions
     ADD CONSTRAINT regions_pkey PRIMARY KEY (id);
 
 
@@ -2138,7 +2144,7 @@ ALTER TABLE ONLY regions
 -- Name: saved_searches saved_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY saved_searches
+ALTER TABLE ONLY public.saved_searches
     ADD CONSTRAINT saved_searches_pkey PRIMARY KEY (id);
 
 
@@ -2146,7 +2152,7 @@ ALTER TABLE ONLY saved_searches
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY schema_migrations
+ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
@@ -2154,7 +2160,7 @@ ALTER TABLE ONLY schema_migrations
 -- Name: screenshots screenshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY screenshots
+ALTER TABLE ONLY public.screenshots
     ADD CONSTRAINT screenshots_pkey PRIMARY KEY (id);
 
 
@@ -2162,7 +2168,7 @@ ALTER TABLE ONLY screenshots
 -- Name: signup_attempts signup_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY signup_attempts
+ALTER TABLE ONLY public.signup_attempts
     ADD CONSTRAINT signup_attempts_pkey PRIMARY KEY (id);
 
 
@@ -2170,7 +2176,7 @@ ALTER TABLE ONLY signup_attempts
 -- Name: student_profiles student_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY student_profiles
+ALTER TABLE ONLY public.student_profiles
     ADD CONSTRAINT student_profiles_pkey PRIMARY KEY (id);
 
 
@@ -2178,7 +2184,7 @@ ALTER TABLE ONLY student_profiles
 -- Name: submission_scores submission_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY submission_scores
+ALTER TABLE ONLY public.submission_scores
     ADD CONSTRAINT submission_scores_pkey PRIMARY KEY (id);
 
 
@@ -2186,7 +2192,7 @@ ALTER TABLE ONLY submission_scores
 -- Name: team_member_invites team_member_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_member_invites
+ALTER TABLE ONLY public.team_member_invites
     ADD CONSTRAINT team_member_invites_pkey PRIMARY KEY (id);
 
 
@@ -2194,7 +2200,7 @@ ALTER TABLE ONLY team_member_invites
 -- Name: team_submissions team_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_submissions
+ALTER TABLE ONLY public.team_submissions
     ADD CONSTRAINT team_submissions_pkey PRIMARY KEY (id);
 
 
@@ -2202,7 +2208,7 @@ ALTER TABLE ONLY team_submissions
 -- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY teams
+ALTER TABLE ONLY public.teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
 
 
@@ -2210,7 +2216,7 @@ ALTER TABLE ONLY teams
 -- Name: technical_checklists technical_checklists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY technical_checklists
+ALTER TABLE ONLY public.technical_checklists
     ADD CONSTRAINT technical_checklists_pkey PRIMARY KEY (id);
 
 
@@ -2218,7 +2224,7 @@ ALTER TABLE ONLY technical_checklists
 -- Name: unconfirmed_email_addresses unconfirmed_email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY unconfirmed_email_addresses
+ALTER TABLE ONLY public.unconfirmed_email_addresses
     ADD CONSTRAINT unconfirmed_email_addresses_pkey PRIMARY KEY (id);
 
 
@@ -2226,7 +2232,7 @@ ALTER TABLE ONLY unconfirmed_email_addresses
 -- Name: user_invitations user_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_invitations
+ALTER TABLE ONLY public.user_invitations
     ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
 
 
@@ -2234,626 +2240,626 @@ ALTER TABLE ONLY user_invitations
 -- Name: events_invites_event_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX events_invites_event_id ON regional_pitch_events_user_invitations USING btree (regional_pitch_event_id);
+CREATE INDEX events_invites_event_id ON public.regional_pitch_events_user_invitations USING btree (regional_pitch_event_id);
 
 
 --
 -- Name: events_invites_invite_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX events_invites_invite_id ON regional_pitch_events_user_invitations USING btree (user_invitation_id);
+CREATE INDEX events_invites_invite_id ON public.regional_pitch_events_user_invitations USING btree (user_invitation_id);
 
 
 --
 -- Name: index_accounts_on_auth_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_auth_token ON accounts USING btree (auth_token);
+CREATE UNIQUE INDEX index_accounts_on_auth_token ON public.accounts USING btree (auth_token);
 
 
 --
 -- Name: index_accounts_on_consent_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_consent_token ON accounts USING btree (consent_token);
+CREATE UNIQUE INDEX index_accounts_on_consent_token ON public.accounts USING btree (consent_token);
 
 
 --
 -- Name: index_accounts_on_division_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_accounts_on_division_id ON accounts USING btree (division_id);
+CREATE INDEX index_accounts_on_division_id ON public.accounts USING btree (division_id);
 
 
 --
 -- Name: index_accounts_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_email ON accounts USING btree (email);
+CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (email);
 
 
 --
 -- Name: index_accounts_on_mailer_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_mailer_token ON accounts USING btree (mailer_token);
+CREATE UNIQUE INDEX index_accounts_on_mailer_token ON public.accounts USING btree (mailer_token);
 
 
 --
 -- Name: index_accounts_on_password_reset_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_password_reset_token ON accounts USING btree (password_reset_token);
+CREATE UNIQUE INDEX index_accounts_on_password_reset_token ON public.accounts USING btree (password_reset_token);
 
 
 --
 -- Name: index_accounts_on_session_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_session_token ON accounts USING btree (session_token);
+CREATE UNIQUE INDEX index_accounts_on_session_token ON public.accounts USING btree (session_token);
 
 
 --
 -- Name: index_activities_on_owner_id_and_owner_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_owner_id_and_owner_type ON activities USING btree (owner_id, owner_type);
+CREATE INDEX index_activities_on_owner_id_and_owner_type ON public.activities USING btree (owner_id, owner_type);
 
 
 --
 -- Name: index_activities_on_recipient_id_and_recipient_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_recipient_id_and_recipient_type ON activities USING btree (recipient_id, recipient_type);
+CREATE INDEX index_activities_on_recipient_id_and_recipient_type ON public.activities USING btree (recipient_id, recipient_type);
 
 
 --
 -- Name: index_activities_on_trackable_id_and_trackable_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_trackable_id_and_trackable_type ON activities USING btree (trackable_id, trackable_type);
+CREATE INDEX index_activities_on_trackable_id_and_trackable_type ON public.activities USING btree (trackable_id, trackable_type);
 
 
 --
 -- Name: index_admin_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_admin_profiles_on_account_id ON admin_profiles USING btree (account_id);
+CREATE INDEX index_admin_profiles_on_account_id ON public.admin_profiles USING btree (account_id);
 
 
 --
 -- Name: index_background_checks_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_background_checks_on_account_id ON background_checks USING btree (account_id);
+CREATE INDEX index_background_checks_on_account_id ON public.background_checks USING btree (account_id);
 
 
 --
 -- Name: index_business_plans_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_business_plans_on_team_submission_id ON business_plans USING btree (team_submission_id);
+CREATE INDEX index_business_plans_on_team_submission_id ON public.business_plans USING btree (team_submission_id);
 
 
 --
 -- Name: index_certificates_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_certificates_on_account_id ON certificates USING btree (account_id);
+CREATE INDEX index_certificates_on_account_id ON public.certificates USING btree (account_id);
 
 
 --
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_consent_waivers_on_account_id ON consent_waivers USING btree (account_id);
+CREATE INDEX index_consent_waivers_on_account_id ON public.consent_waivers USING btree (account_id);
 
 
 --
 -- Name: index_honor_code_agreements_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_honor_code_agreements_on_account_id ON honor_code_agreements USING btree (account_id);
+CREATE INDEX index_honor_code_agreements_on_account_id ON public.honor_code_agreements USING btree (account_id);
 
 
 --
 -- Name: index_jobs_on_owner_type_and_owner_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_owner_type_and_owner_id ON jobs USING btree (owner_type, owner_id);
+CREATE INDEX index_jobs_on_owner_type_and_owner_id ON public.jobs USING btree (owner_type, owner_id);
 
 
 --
 -- Name: index_join_requests_on_requestor_type_and_requestor_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_join_requests_on_requestor_type_and_requestor_id ON join_requests USING btree (requestor_type, requestor_id);
+CREATE INDEX index_join_requests_on_requestor_type_and_requestor_id ON public.join_requests USING btree (requestor_type, requestor_id);
 
 
 --
 -- Name: index_join_requests_on_review_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_join_requests_on_review_token ON join_requests USING btree (review_token);
+CREATE UNIQUE INDEX index_join_requests_on_review_token ON public.join_requests USING btree (review_token);
 
 
 --
 -- Name: index_join_requests_on_team_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_join_requests_on_team_id ON join_requests USING btree (team_id);
+CREATE INDEX index_join_requests_on_team_id ON public.join_requests USING btree (team_id);
 
 
 --
 -- Name: index_judge_assignments_on_judge_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_judge_assignments_on_judge_profile_id ON judge_assignments USING btree (judge_profile_id);
+CREATE INDEX index_judge_assignments_on_judge_profile_id ON public.judge_assignments USING btree (judge_profile_id);
 
 
 --
 -- Name: index_judge_assignments_on_team_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_judge_assignments_on_team_id ON judge_assignments USING btree (team_id);
+CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USING btree (team_id);
 
 
 --
 -- Name: index_judge_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_judge_profiles_on_account_id ON judge_profiles USING btree (account_id);
+CREATE INDEX index_judge_profiles_on_account_id ON public.judge_profiles USING btree (account_id);
 
 
 --
 -- Name: index_judge_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_judge_profiles_on_user_invitation_id ON judge_profiles USING btree (user_invitation_id);
+CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles USING btree (user_invitation_id);
 
 
 --
 -- Name: index_memberships_on_member_type_and_member_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_memberships_on_member_type_and_member_id ON memberships USING btree (member_type, member_id);
+CREATE INDEX index_memberships_on_member_type_and_member_id ON public.memberships USING btree (member_type, member_id);
 
 
 --
 -- Name: index_memberships_on_team_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_memberships_on_team_id ON memberships USING btree (team_id);
+CREATE INDEX index_memberships_on_team_id ON public.memberships USING btree (team_id);
 
 
 --
 -- Name: index_mentor_profile_expertises_on_mentor_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_mentor_profile_expertises_on_mentor_profile_id ON mentor_profile_expertises USING btree (mentor_profile_id);
+CREATE INDEX index_mentor_profile_expertises_on_mentor_profile_id ON public.mentor_profile_expertises USING btree (mentor_profile_id);
 
 
 --
 -- Name: index_mentor_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_mentor_profiles_on_account_id ON mentor_profiles USING btree (account_id);
+CREATE INDEX index_mentor_profiles_on_account_id ON public.mentor_profiles USING btree (account_id);
 
 
 --
 -- Name: index_mentor_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_mentor_profiles_on_user_invitation_id ON mentor_profiles USING btree (user_invitation_id);
+CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profiles USING btree (user_invitation_id);
 
 
 --
 -- Name: index_parental_consents_on_student_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_parental_consents_on_student_profile_id ON parental_consents USING btree (student_profile_id);
+CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_consents USING btree (student_profile_id);
 
 
 --
 -- Name: index_regional_ambassador_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_regional_ambassador_profiles_on_account_id ON regional_ambassador_profiles USING btree (account_id);
+CREATE INDEX index_regional_ambassador_profiles_on_account_id ON public.regional_ambassador_profiles USING btree (account_id);
 
 
 --
 -- Name: index_regional_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_regional_ambassador_profiles_on_status ON regional_ambassador_profiles USING btree (status);
+CREATE INDEX index_regional_ambassador_profiles_on_status ON public.regional_ambassador_profiles USING btree (status);
 
 
 --
 -- Name: index_regional_links_on_regional_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_regional_links_on_regional_ambassador_profile_id ON regional_links USING btree (regional_ambassador_profile_id);
+CREATE INDEX index_regional_links_on_regional_ambassador_profile_id ON public.regional_links USING btree (regional_ambassador_profile_id);
 
 
 --
 -- Name: index_regional_pitch_events_on_division_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_regional_pitch_events_on_division_id ON regional_pitch_events USING btree (division_id);
+CREATE INDEX index_regional_pitch_events_on_division_id ON public.regional_pitch_events USING btree (division_id);
 
 
 --
 -- Name: index_saved_searches_on_searcher_type_and_searcher_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON saved_searches USING btree (searcher_type, searcher_id);
+CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.saved_searches USING btree (searcher_type, searcher_id);
 
 
 --
 -- Name: index_screenshots_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_screenshots_on_team_submission_id ON screenshots USING btree (team_submission_id);
+CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
 
 
 --
 -- Name: index_signup_attempts_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_signup_attempts_on_status ON signup_attempts USING btree (status);
+CREATE INDEX index_signup_attempts_on_status ON public.signup_attempts USING btree (status);
 
 
 --
 -- Name: index_student_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_student_profiles_on_account_id ON student_profiles USING btree (account_id);
+CREATE INDEX index_student_profiles_on_account_id ON public.student_profiles USING btree (account_id);
 
 
 --
 -- Name: index_submission_scores_on_completed_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_submission_scores_on_completed_at ON submission_scores USING btree (completed_at);
+CREATE INDEX index_submission_scores_on_completed_at ON public.submission_scores USING btree (completed_at);
 
 
 --
 -- Name: index_submission_scores_on_judge_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_submission_scores_on_judge_profile_id ON submission_scores USING btree (judge_profile_id);
+CREATE INDEX index_submission_scores_on_judge_profile_id ON public.submission_scores USING btree (judge_profile_id);
 
 
 --
 -- Name: index_submission_scores_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_submission_scores_on_team_submission_id ON submission_scores USING btree (team_submission_id);
+CREATE INDEX index_submission_scores_on_team_submission_id ON public.submission_scores USING btree (team_submission_id);
 
 
 --
 -- Name: index_team_member_invites_on_invite_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_team_member_invites_on_invite_token ON team_member_invites USING btree (invite_token);
+CREATE UNIQUE INDEX index_team_member_invites_on_invite_token ON public.team_member_invites USING btree (invite_token);
 
 
 --
 -- Name: index_team_member_invites_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_team_member_invites_on_status ON team_member_invites USING btree (status);
+CREATE INDEX index_team_member_invites_on_status ON public.team_member_invites USING btree (status);
 
 
 --
 -- Name: index_teams_on_legacy_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_teams_on_legacy_id ON teams USING btree (legacy_id);
+CREATE INDEX index_teams_on_legacy_id ON public.teams USING btree (legacy_id);
 
 
 --
 -- Name: index_technical_checklists_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_technical_checklists_on_team_submission_id ON technical_checklists USING btree (team_submission_id);
+CREATE INDEX index_technical_checklists_on_team_submission_id ON public.technical_checklists USING btree (team_submission_id);
 
 
 --
 -- Name: index_unconfirmed_email_addresses_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_unconfirmed_email_addresses_on_account_id ON unconfirmed_email_addresses USING btree (account_id);
+CREATE INDEX index_unconfirmed_email_addresses_on_account_id ON public.unconfirmed_email_addresses USING btree (account_id);
 
 
 --
 -- Name: pitch_events_team_ids; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX pitch_events_team_ids ON regional_pitch_events_teams USING btree (team_id);
+CREATE INDEX pitch_events_team_ids ON public.regional_pitch_events_teams USING btree (team_id);
 
 
 --
 -- Name: pitch_events_teams; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX pitch_events_teams ON regional_pitch_events_teams USING btree (regional_pitch_event_id, team_id);
+CREATE UNIQUE INDEX pitch_events_teams ON public.regional_pitch_events_teams USING btree (regional_pitch_event_id, team_id);
 
 
 --
 -- Name: trgm_email_indx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX trgm_email_indx ON accounts USING gist (email gist_trgm_ops);
+CREATE INDEX trgm_email_indx ON public.accounts USING gist (email public.gist_trgm_ops);
 
 
 --
 -- Name: trgm_first_name_indx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX trgm_first_name_indx ON accounts USING gist (first_name gist_trgm_ops);
+CREATE INDEX trgm_first_name_indx ON public.accounts USING gist (first_name public.gist_trgm_ops);
 
 
 --
 -- Name: trgm_last_name_indx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX trgm_last_name_indx ON accounts USING gist (last_name gist_trgm_ops);
+CREATE INDEX trgm_last_name_indx ON public.accounts USING gist (last_name public.gist_trgm_ops);
 
 
 --
 -- Name: trgm_team_name_indx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX trgm_team_name_indx ON teams USING gist (name gist_trgm_ops);
+CREATE INDEX trgm_team_name_indx ON public.teams USING gist (name public.gist_trgm_ops);
 
 
 --
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_1064d06b86 FOREIGN KEY (division_id) REFERENCES divisions(id);
+ALTER TABLE ONLY public.divisions_regional_pitch_events
+    ADD CONSTRAINT fk_rails_1064d06b86 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
 
 
 --
 -- Name: judge_profiles fk_rails_185397937b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_profiles
-    ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
+ALTER TABLE ONLY public.judge_profiles
+    ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
 
 
 --
 -- Name: judge_assignments fk_rails_23ffe332fd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_assignments
-    ADD CONSTRAINT fk_rails_23ffe332fd FOREIGN KEY (team_id) REFERENCES teams(id);
+ALTER TABLE ONLY public.judge_assignments
+    ADD CONSTRAINT fk_rails_23ffe332fd FOREIGN KEY (team_id) REFERENCES public.teams(id);
 
 
 --
 -- Name: regional_pitch_events_teams fk_rails_24f0c96e18; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_teams
-    ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES teams(id);
+ALTER TABLE ONLY public.regional_pitch_events_teams
+    ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES public.teams(id);
 
 
 --
 -- Name: divisions_regional_pitch_events fk_rails_285ce9b10b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES regional_pitch_events(id);
+ALTER TABLE ONLY public.divisions_regional_pitch_events
+    ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
 
 
 --
 -- Name: technical_checklists fk_rails_306da78d6d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY technical_checklists
-    ADD CONSTRAINT fk_rails_306da78d6d FOREIGN KEY (team_submission_id) REFERENCES team_submissions(id);
+ALTER TABLE ONLY public.technical_checklists
+    ADD CONSTRAINT fk_rails_306da78d6d FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
 -- Name: team_submissions fk_rails_34e7653c32; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_submissions
-    ADD CONSTRAINT fk_rails_34e7653c32 FOREIGN KEY (team_id) REFERENCES teams(id);
+ALTER TABLE ONLY public.team_submissions
+    ADD CONSTRAINT fk_rails_34e7653c32 FOREIGN KEY (team_id) REFERENCES public.teams(id);
 
 
 --
 -- Name: regional_pitch_events_user_invitations fk_rails_3bbe8623e3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_user_invitations
-    ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
+ALTER TABLE ONLY public.regional_pitch_events_user_invitations
+    ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
 
 
 --
 -- Name: accounts fk_rails_55bc732a9a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY accounts
-    ADD CONSTRAINT fk_rails_55bc732a9a FOREIGN KEY (division_id) REFERENCES divisions(id);
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT fk_rails_55bc732a9a FOREIGN KEY (division_id) REFERENCES public.divisions(id);
 
 
 --
 -- Name: regional_pitch_events_user_invitations fk_rails_6040809c97; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_user_invitations
-    ADD CONSTRAINT fk_rails_6040809c97 FOREIGN KEY (regional_pitch_event_id) REFERENCES regional_pitch_events(id);
+ALTER TABLE ONLY public.regional_pitch_events_user_invitations
+    ADD CONSTRAINT fk_rails_6040809c97 FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
 
 
 --
 -- Name: consent_waivers fk_rails_6dd1d3738c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY consent_waivers
-    ADD CONSTRAINT fk_rails_6dd1d3738c FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.consent_waivers
+    ADD CONSTRAINT fk_rails_6dd1d3738c FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: certificates fk_rails_75edbeede4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY certificates
-    ADD CONSTRAINT fk_rails_75edbeede4 FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.certificates
+    ADD CONSTRAINT fk_rails_75edbeede4 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: join_requests fk_rails_7fd972d7ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY join_requests
-    ADD CONSTRAINT fk_rails_7fd972d7ce FOREIGN KEY (team_id) REFERENCES teams(id);
+ALTER TABLE ONLY public.join_requests
+    ADD CONSTRAINT fk_rails_7fd972d7ce FOREIGN KEY (team_id) REFERENCES public.teams(id);
 
 
 --
 -- Name: mentor_profile_expertises fk_rails_805b007c4f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profile_expertises
-    ADD CONSTRAINT fk_rails_805b007c4f FOREIGN KEY (mentor_profile_id) REFERENCES mentor_profiles(id);
+ALTER TABLE ONLY public.mentor_profile_expertises
+    ADD CONSTRAINT fk_rails_805b007c4f FOREIGN KEY (mentor_profile_id) REFERENCES public.mentor_profiles(id);
 
 
 --
 -- Name: parental_consents fk_rails_837621b019; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY parental_consents
-    ADD CONSTRAINT fk_rails_837621b019 FOREIGN KEY (student_profile_id) REFERENCES student_profiles(id);
+ALTER TABLE ONLY public.parental_consents
+    ADD CONSTRAINT fk_rails_837621b019 FOREIGN KEY (student_profile_id) REFERENCES public.student_profiles(id);
 
 
 --
 -- Name: signup_attempts fk_rails_86a8845c55; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY signup_attempts
-    ADD CONSTRAINT fk_rails_86a8845c55 FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.signup_attempts
+    ADD CONSTRAINT fk_rails_86a8845c55 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: mentor_profile_expertises fk_rails_9231fb852d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profile_expertises
-    ADD CONSTRAINT fk_rails_9231fb852d FOREIGN KEY (expertise_id) REFERENCES expertises(id);
+ALTER TABLE ONLY public.mentor_profile_expertises
+    ADD CONSTRAINT fk_rails_9231fb852d FOREIGN KEY (expertise_id) REFERENCES public.expertises(id);
 
 
 --
 -- Name: regional_pitch_events_teams fk_rails_96288d546f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events_teams
-    ADD CONSTRAINT fk_rails_96288d546f FOREIGN KEY (regional_pitch_event_id) REFERENCES regional_pitch_events(id);
+ALTER TABLE ONLY public.regional_pitch_events_teams
+    ADD CONSTRAINT fk_rails_96288d546f FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
 
 
 --
 -- Name: unconfirmed_email_addresses fk_rails_99a8a3bded; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY unconfirmed_email_addresses
-    ADD CONSTRAINT fk_rails_99a8a3bded FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.unconfirmed_email_addresses
+    ADD CONSTRAINT fk_rails_99a8a3bded FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: mentor_profiles fk_rails_9a3cf8d620; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profiles
-    ADD CONSTRAINT fk_rails_9a3cf8d620 FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.mentor_profiles
+    ADD CONSTRAINT fk_rails_9a3cf8d620 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: screenshots fk_rails_9f5eed79ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY screenshots
-    ADD CONSTRAINT fk_rails_9f5eed79ce FOREIGN KEY (team_submission_id) REFERENCES team_submissions(id);
+ALTER TABLE ONLY public.screenshots
+    ADD CONSTRAINT fk_rails_9f5eed79ce FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
 -- Name: submission_scores fk_rails_afdf541e79; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY submission_scores
-    ADD CONSTRAINT fk_rails_afdf541e79 FOREIGN KEY (judge_profile_id) REFERENCES judge_profiles(id);
+ALTER TABLE ONLY public.submission_scores
+    ADD CONSTRAINT fk_rails_afdf541e79 FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
 
 
 --
 -- Name: regional_links fk_rails_b88e121da0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_links
-    ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (regional_ambassador_profile_id) REFERENCES regional_ambassador_profiles(id);
+ALTER TABLE ONLY public.regional_links
+    ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (regional_ambassador_profile_id) REFERENCES public.regional_ambassador_profiles(id);
 
 
 --
 -- Name: mentor_profiles fk_rails_beb02031d5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY mentor_profiles
-    ADD CONSTRAINT fk_rails_beb02031d5 FOREIGN KEY (user_invitation_id) REFERENCES user_invitations(id);
+ALTER TABLE ONLY public.mentor_profiles
+    ADD CONSTRAINT fk_rails_beb02031d5 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
 
 
 --
 -- Name: submission_scores fk_rails_c08133669a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY submission_scores
-    ADD CONSTRAINT fk_rails_c08133669a FOREIGN KEY (team_submission_id) REFERENCES team_submissions(id);
+ALTER TABLE ONLY public.submission_scores
+    ADD CONSTRAINT fk_rails_c08133669a FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
 -- Name: regional_pitch_events fk_rails_c377215e38; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY regional_pitch_events
-    ADD CONSTRAINT fk_rails_c377215e38 FOREIGN KEY (division_id) REFERENCES divisions(id);
+ALTER TABLE ONLY public.regional_pitch_events
+    ADD CONSTRAINT fk_rails_c377215e38 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
 
 
 --
 -- Name: admin_profiles fk_rails_c70dd3b9e0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_profiles
-    ADD CONSTRAINT fk_rails_c70dd3b9e0 FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.admin_profiles
+    ADD CONSTRAINT fk_rails_c70dd3b9e0 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: judge_assignments fk_rails_d22de5943d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY judge_assignments
-    ADD CONSTRAINT fk_rails_d22de5943d FOREIGN KEY (judge_profile_id) REFERENCES judge_profiles(id);
+ALTER TABLE ONLY public.judge_assignments
+    ADD CONSTRAINT fk_rails_d22de5943d FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
 
 
 --
 -- Name: business_plans fk_rails_de87026bfd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY business_plans
-    ADD CONSTRAINT fk_rails_de87026bfd FOREIGN KEY (team_submission_id) REFERENCES team_submissions(id);
+ALTER TABLE ONLY public.business_plans
+    ADD CONSTRAINT fk_rails_de87026bfd FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
 -- Name: background_checks fk_rails_f5be68f7c1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY background_checks
-    ADD CONSTRAINT fk_rails_f5be68f7c1 FOREIGN KEY (account_id) REFERENCES accounts(id);
+ALTER TABLE ONLY public.background_checks
+    ADD CONSTRAINT fk_rails_f5be68f7c1 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
 -- Name: teams fk_rails_f5e3e59211; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY teams
-    ADD CONSTRAINT fk_rails_f5e3e59211 FOREIGN KEY (division_id) REFERENCES divisions(id);
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT fk_rails_f5e3e59211 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
 
 
 --
