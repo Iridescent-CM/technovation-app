@@ -3,6 +3,7 @@ module RegionalAmbassador
     def index
       possible_attendees = Attendees.for(
         ambassador: current_ambassador,
+        event: event,
         type: params.fetch(:type),
         query: params.fetch(:query),
         expand_search: expand_search?,
@@ -13,6 +14,10 @@ module RegionalAmbassador
     end
 
     private
+    def event
+      @event ||= RegionalPitchEvent.find(params.fetch(:event_id))
+    end
+
     def expand_search?
       %w(true 1 yes).include?(params.fetch(:expand_search))
     end

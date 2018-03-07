@@ -122,7 +122,7 @@
       };
     },
 
-    props: ["eventBusId"],
+    props: ["eventBusId", "eventId"],
 
     components: {
       Icon,
@@ -169,6 +169,7 @@
               url = "/regional_ambassador" +
                     "/possible_event_attendees.json" +
                     "?type=team" +
+                    "&event_id=" + this.eventId +
                     "&query=" + this.query +
                     "&expand_search=" + opts.expandSearch;
 

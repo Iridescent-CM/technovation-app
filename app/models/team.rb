@@ -14,10 +14,11 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
-  scope :live_event_eligible, -> {
+  scope :live_event_eligible, ->(event) {
     not_staff
       .not_attending_live_event
-      .joins(:submission)
+      .joins(:division, :submission)
+      .where("divisions.id IN (?)", event.division_ids)
   }
 
   scope :not_staff, -> {

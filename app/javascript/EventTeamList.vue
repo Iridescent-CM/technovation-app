@@ -10,6 +10,7 @@
     <team-search
        v-if="!fetchingList"
        :event-bus-id="`event-${event.id}`"
+       :event-id="event.id"
     ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">

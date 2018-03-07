@@ -13,7 +13,7 @@ class Attendees
     table_name = model.table_name
 
     if ambassador.present?
-      scope = model.live_event_eligible
+      scope = model.live_event_eligible(event)
 
       if expand_search
         records = scope.where("#{table_name}.name ILIKE ?", "#{query}%")
