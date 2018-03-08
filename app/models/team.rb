@@ -249,6 +249,10 @@ class Team < ActiveRecord::Base
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
 
+  def live_event?
+    selected_regional_pitch_event.live?
+  end
+
   def attending_live_event(&block)
     if selected_regional_pitch_event.live?
       yield

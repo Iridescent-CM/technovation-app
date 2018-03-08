@@ -77,29 +77,37 @@
             <h6>Business</h6>
 
             <p>
-              <%= link_to web_icon(
-                  "briefcase",
-                  text: "Read the business plan",
-                  remote: true,
-                  size: 12,
-                  color: "5ABF94",
-                ),
-                @team_submission.business_plan_url,
-                target: :_blank %>
+              <% if @team.senior? %>
+                <%= link_to web_icon(
+                    "briefcase",
+                    text: "Read the business plan",
+                    remote: true,
+                    size: 12,
+                    color: "5ABF94",
+                  ),
+                  @team_submission.business_plan_url,
+                  target: :_blank %>
+              <% else %>
+                Junior teams do not upload a business plan
+              <% end %>
             </p>
 
             <h6>Reigonal Pitch Events</h6>
 
             <p>
-              <%= link_to web_icon(
-                  "area-chart",
-                  text: "See the presentation slides",
-                  remote: true,
-                  size: 12,
-                  color: "5ABF94",
-                ),
-                @team_submission.pitch_presentation_url,
-                target: :_blank %>
+              <% if @team.live_event? %>
+                <%= link_to web_icon(
+                    "area-chart",
+                    text: "See the presentation slides",
+                    remote: true,
+                    size: 12,
+                    color: "5ABF94",
+                  ),
+                  @team_submission.pitch_presentation_url,
+                  target: :_blank %>
+              <% else %>
+                Virtual judging teams do not upload presentation slides
+              <% end %>
             </p>
           </div>
         </div>
