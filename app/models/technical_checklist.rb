@@ -38,11 +38,27 @@ class TechnicalChecklist < ActiveRecord::Base
     }
   end
 
+  def technical
+    comp = technical_components.select { |k|
+      not send(k).blank?
+    }
+
+    comp.map { |k| Item.new(self, k) }
+  end
+
   def database_components
     %i{
       used_local_db
       used_external_db
     }
+  end
+
+  def database
+    comp = database_components.select { |k|
+      not send(k).blank?
+    }
+
+    comp.map { |k| Item.new(self, k) }
   end
 
   def mobile_components
@@ -58,11 +74,27 @@ class TechnicalChecklist < ActiveRecord::Base
     }
   end
 
+  def mobile
+    comp = mobile_components.select { |k|
+      not send(k).blank?
+    }
+
+    comp.map { |k| Item.new(self, k) }
+  end
+
   def pics_of_process
     %i{
       paper_prototype
       event_flow_chart
     }
+  end
+
+  def process
+    comp = pics_of_process.select { |k|
+      not send(k).blank?
+    }
+
+    comp.map { |k| Item.new(self, k) }
   end
 
   def checked_items
@@ -103,7 +135,7 @@ class TechnicalChecklist < ActiveRecord::Base
   class Item
     def initialize(tc, attribute)
       @tc = tc
-      @attribute = attribute
+      @attribute = Array(attribute)
     end
 
     def label

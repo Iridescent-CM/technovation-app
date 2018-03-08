@@ -6,4 +6,9 @@ class NullTechnicalChecklist < NullObject
   def total_database_components; 0; end
   def total_mobile_components; 0; end
   def completed_pics_of_process?; false; end
+
+  def technical; []; end
+  def database; []; end
+  def mobile; []; end
+  def process; []; end
 end

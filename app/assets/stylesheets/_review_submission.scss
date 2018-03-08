@@ -11,9 +11,13 @@
 }
 
 .code_checklist-header {
-  margin: 1rem 0;
+  margin: 1rem 0 0;
   border-bottom: 2px solid $shamrock;
   text-align: left;
+
+  + dl {
+    margin-top: 1rem;
+  }
 }
 
 .submission-sidebar {
