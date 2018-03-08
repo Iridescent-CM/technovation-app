@@ -8,6 +8,8 @@ class State
       MexicoState.new(value)
     elsif countries.include?("IN")
       IndiaState.new(value)
+    elsif countries.include?("KE")
+      KenyaState.new(value)
     else
       new(value)
     end
@@ -23,6 +25,22 @@ class State
 
   def format_map
     {}
+  end
+end
+
+class KenyaState < State
+  def format_map
+    {
+      "10" => "kajiado",
+      "13" => "kiambu",
+      "16" => "kisii",
+      "17" => "kisumu",
+      "20" => "laikipia",
+      "28" => "mombasa",
+      "30" => "nairobi",
+      "31" => "nakuru",
+      "44" => "uasin",
+    }
   end
 end
 
