@@ -81,7 +81,7 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(s) { s.development_platform == "App Inventor 2" }
 
-  validates :app_inventor_gmail, gmail: true, allow_blank: true
+  validates :app_inventor_gmail, email: true, allow_blank: true
 
   delegate :name,
            :division_name,
