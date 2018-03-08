@@ -77,7 +77,7 @@ $(document).on("ready turbolinks:load", function() {
   });
 });
 
-$(document).on("click", ".submission-pieces__screenshot", function(e) {
+$(document).on("click", ".img-modal", function(e) {
   swal({
     imageUrl: $(e.target).data("modalUrl"),
   });

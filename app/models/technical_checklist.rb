@@ -140,7 +140,7 @@ class TechnicalChecklist < ActiveRecord::Base
 
     def label
       if name.match(/prototype/) or name.match(/flow_chart/)
-        @attribute[0].humanize
+        String(@attribute[0]).humanize
       else
         "We #{@attribute[0]}".humanize
       end
@@ -164,7 +164,7 @@ class TechnicalChecklist < ActiveRecord::Base
 
     def display
       # for paper prototype / event flow chart, which are image urls
-      @tc.public_send(name)
+      @tc.public_send("#{name}_url")
     end
 
     def present?

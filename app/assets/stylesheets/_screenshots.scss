@@ -7,12 +7,6 @@
 
 .submission-pieces__screenshot {
   margin-right: 1rem;
-  cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.05, 1.05);
-  }
 
   img {
     max-width: 100%;

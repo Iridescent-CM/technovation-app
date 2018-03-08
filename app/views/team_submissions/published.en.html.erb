@@ -124,7 +124,7 @@
 
     <div class="submission-pieces__screenshots">
       <% @team_submission.screenshots.each do |screenshot| %>
-        <div class="submission-pieces__screenshot">
+        <div class="submission-pieces__screenshot img-modal">
           <%= image_tag screenshot.image_url,
             data: {
               modal_url: screenshot.image_url(:large),
@@ -199,7 +199,14 @@
       <dl>
         <% @team_submission.code_checklist.process.each do |item| %>
           <dt><%= item.label %></dt>
-          <dd><%= item.display %></dd>
+
+          <dd class="img-modal">
+            <%= image_tag item.display,
+              class: "thumbnail-md thumbnail-process-pic",
+              data: {
+                modal_url: item.display,
+              } %>
+          </dd>
         <% end %>
       </dl>
     <% else %>
