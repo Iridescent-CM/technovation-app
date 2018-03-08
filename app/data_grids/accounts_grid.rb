@@ -324,18 +324,16 @@ class AccountsGrid
     data: {
       placeholder: "Select or start typing...",
     },
-    if: ->(g) {
-      (g.admin or g.allow_state_search) and
-        g.country.one? and
-          CS.get(g.country[0]).any?
-    } do |values, scope, grid|
-      clauses = values.flatten.map do |v|
-        state = State.new(v, grid.country)
-        "lower(accounts.state_province) like '#{state.search_name}%'"
-      end
-
+    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
       scope.where(country: grid.country)
-        .where(clauses.join(' OR '))
+        .where(
+          StateClauses.for(
+            values: values,
+            countries: grid.country,
+            table_name: 'accounts',
+            operator: 'OR'
+          )
+        )
     end
 
   filter :city,
@@ -350,22 +348,22 @@ class AccountsGrid
     data: {
       placeholder: "Select or start typing...",
     },
-    if: ->(g) {
-      country = g.country[0]
-      state = g.state_province[0]
-      g.state_province.one? && CS.get(country, state).any?
-    } do |values, scope, grid|
-      clauses = values.flatten.map do |v|
-        v = v === "Mexico City" ? "Ciudad de México" : v
-        "unaccent(accounts.city) = unaccent('#{v}')"
-      end
-
-      state = State.new(grid.state_province[0], grid.country)
-
+    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
       scope.where(
-        "lower(accounts.state_province) like '#{state.search_name}%'"
+        StateClauses.for(
+          values: grid.state_province[0],
+          countries: grid.country,
+          table_name: "accounts",
+          operator: "OR"
+        )
       )
-        .where(clauses.join(' OR '))
+        .where(
+          CityClauses.for(
+            values: values,
+            table_name: "accounts",
+            operator: "OR"
+          )
+        )
     end
 
   column_names_filter(

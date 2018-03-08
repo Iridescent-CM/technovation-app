@@ -1,30 +1,49 @@
 class State
-  attr_reader :value, :countries
+  attr_reader :value
 
-  def initialize(value, countries)
-    @value = value
-    @countries = Array(countries)
+  def self.for(value, countries)
+    countries = Array(countries)
+
+    if countries.include?("MX")
+      MexicoState.new(value)
+    elsif countries.include?("IN")
+      IndiaState.new(value)
+    else
+      new(value)
+    end
   end
 
-  def search_name
-    if countries.include?("MX")
-      case value
-      when "DIF"
-        "cdmx"
-      when "BCS"
-        "b.c.s."
-      else
-        value.downcase
-      end
-    elsif countries.include?("IN")
-      case value
-      when "TG"
-        "telangana"
-      else
-        value.downcase
-      end
-    else
-      value.downcase
-    end
+  def initialize(value)
+    @value = value
+  end
+
+  def search_spec
+    format_map.fetch(value) { value.downcase }
+  end
+
+  def format_map
+    {}
+  end
+end
+
+class MexicoState < State
+  def format_map
+    {
+      "BCS" => "b.c.s.",
+      "CMX" => "cdmx",
+      "DIF" => "cdmx",
+      "GUA" => "gto",
+      "HID" => "hgo",
+      "NLE" => "n.l.",
+      "SLP" => "s.l.p.",
+    }
+  end
+end
+
+class IndiaState < State
+  def format_map
+    {
+      "TG" => "telangana",
+    }
   end
 end
