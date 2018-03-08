@@ -2,166 +2,160 @@
 
 <div class="grid">
   <div class="grid__col-sm-3 col--sticky-parent">
-    <div class="col--sticky-spacer col--sticky">
-      <h1 class="page-heading">Submission Review</h1>
-      <div class="submission-sidebar">
-        <%= render "team_submissions/team_info",
-          submission: @team_submission,
-          team: @team %>
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="submission-sidebar">
+          <%= render "team_submissions/team_info",
+            submission: @team_submission,
+            team: @team %>
+
+          <div class="panel">
+            <h6>Marketing</h6>
+
+            <p>
+              <%= link_to web_icon(
+                  "play-circle-o",
+                  text: "Watch the demo video"
+                ),
+                "#",
+                data: {
+                  opens_modal: "video-modal-" +
+                                @team_submission.video_id(:demo),
+                  modal_fetch: send(
+                    "#{current_scope}_embed_code_path",
+                    @team_submission,
+                    piece: :demo,
+                  ),
+                } %>
+            </p>
+
+            <div
+              class="modal"
+              id="video-modal-<%= @team_submission.video_id(:demo) %>"
+            >
+              <div class="modal-content"></div>
+            </div>
+
+            <p>
+              <%= link_to web_icon(
+                  "play-circle-o",
+                  text: "Watch the pitch video"
+
+                ),
+                "#",
+                data: {
+                  opens_modal: "video-modal-" +
+                                @team_submission.video_id(:pitch),
+                  modal_fetch: send(
+                    "#{current_scope}_embed_code_path",
+                    @team_submission,
+                    piece: :pitch,
+                  ),
+                } %>
+            </p>
+
+            <div
+              class="modal"
+              id="video-modal-<%= @team_submission.video_id(:pitch) %>"
+            >
+              <div class="modal-content"></div>
+            </div>
+
+            <h6>Code</h6>
+
+            <p>
+              <%= link_to web_icon(
+                "code",
+                text: "Download the source code",
+                remote: true,
+                size: 12,
+                color: "5ABF94",
+              ),
+              @team_submission.source_code_url %>
+            </p>
+
+            <h6>Business</h6>
+
+            <p>
+              <%= link_to web_icon(
+                  "briefcase",
+                  text: "Read the business plan",
+                  remote: true,
+                  size: 12,
+                  color: "5ABF94",
+                ),
+                @team_submission.business_plan_url,
+                target: :_blank %>
+            </p>
+
+            <h6>Reigonal Pitch Events</h6>
+
+            <p>
+              <%= link_to web_icon(
+                  "area-chart",
+                  text: "See the presentation slides",
+                  remote: true,
+                  size: 12,
+                  color: "5ABF94",
+                ),
+                @team_submission.pitch_presentation_url,
+                target: :_blank %>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="grid__col-sm-9">
-    <div class="submission-content-spacing">
-      <h3 class="submission-titles"><%= @team_submission.app_name %></h3>
+    <h3 class="submission-title">
+      <%= @team_submission.app_name %>
+    </h3>
 
-      <div class="submission-content-color">
-        <%= simple_format @team_submission.app_description %>
-      </div>
+    <%= simple_format @team_submission.app_description %>
 
-      <div class="submission-pieces__screenshots submission-content-spacing">
-        <% @team_submission.screenshots.each do |screenshot| %>
-          <div class="submission-pieces__screenshot">
-            <%= image_tag screenshot.image_url,
-              data: {
-                modal_url: screenshot.image_url(:large),
-              } %>
-          </div>
-        <% end %>
-      </div>
-
-      <p>
-        <%= link_to web_icon(
-            "play-circle-o",
-            text: "Watch demo video"
-          ),
-          "#",
-          class: "button button--small",
-          data: {
-            opens_modal: "video-modal-" +
-                          @team_submission.video_id(:demo),
-            modal_fetch: send(
-              "#{current_scope}_embed_code_path",
-              @team_submission,
-              piece: :demo,
-            ),
-          } %>
-      </p>
-    </div>
-
-    <div class="submission-content-spacing">
-      <h3 class="submission-titles">Code</h3>
-
-      <div class="submission-content-color">
-        <table>
-          <tr>
-            <th class="code_checklist-margins">Technical Components</th>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Strings</td>
-            <td>A data type that is text.</td>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Variables</td>
-            <td>Global Variable - A variable that can be used at any point in your code.</td>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Numbers</td>
-            <td>A number data type is just what you think it is! In App Inventor,  you can use numbers by clicking on going to Math in blocks.</td>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Loops</td>
-            <td>A loop is a block of code that will repeat over and over again.</td>
-          </tr>
-          <tr>
-            <th class="code_checklist-margins">Databases and Connectivity</th>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Local Database</td>
-            <td> Databases can store information for later use, even when the app is closed! You can think of databases as a place to store information you can recall later</td>
-          </tr>
-          <tr>
-            <th class="code_checklist-margins">Mobile Features</th>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Location Sensor</td>
-            <td>This sensor collects the latitude and longitude of the phone's location. This sensor can be useful anytime you need search for businesses or points of interests near the user. </td>
-          </tr>
-          <tr>
-            <td class="code_checklist-item-selection">Accelerometer Sensor</td>
-            <td>This component can determine if the phone is shaking and if it's being held upright or upside-down. This capability is very useful when you want the screen to re-orient in response to how the phone is being held, or if you want the app to react to shaking</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="submission-piece-links__source-code submission-content-spacing">
-        <%= link_to "Download the source code",
-          @team_submission.source_code_url %>
-      </div>
-    </div>
-
-    <div class="submission-content-spacing">
-      <h3 class="submission-titles">Marketing</h3>
-
-      <p class="submission-content-spacing">
-        <%= link_to web_icon(
-            "play-circle-o",
-            text: "Watch your pitch video"
-
-          ),
-          "#",
-          class: "button button--small",
-          data: {
-            opens_modal: "video-modal-" +
-                          @team_submission.video_id(:pitch),
-            modal_fetch: send(
-              "#{current_scope}_embed_code_path",
-              @team_submission,
-              piece: :pitch,
-            ),
-          } %>
-      </p>
-
-      <div
-        class="modal"
-        id="video-modal-<%= @team_submission.video_id(:pitch) %>"
-      >
-        <div class="modal-content"></div>
-      </div>
-
-
-      <div
-        class="modal"
-        id="video-modal-<%= @team_submission.video_id(:demo) %>"
-      >
-        <div class="modal-content"></div>
-      </div>
-    </div>
-
-
-    <div class="content-spacing">
-      <h3 class="submission-titles">Business</h3>
-
-      <% if @team.senior? %>
-        <%= link_to "Read the business plan",
-          @team_submission.business_plan_url,
-          target: :_blank %>
+    <div class="submission-pieces__screenshots">
+      <% @team_submission.screenshots.each do |screenshot| %>
+        <div class="submission-pieces__screenshot">
+          <%= image_tag screenshot.image_url,
+            data: {
+              modal_url: screenshot.image_url(:large),
+            } %>
+        </div>
       <% end %>
     </div>
 
-    <div class="submission-content-spacing">
-      <h3 class="submission-titles">Regional Pitch Events</h3>
+    <h4 class="code_checklist-header">
+      Technical Components
+    </h4>
 
-      <% if @team.selected_regional_pitch_event.live? %>
-        <%= link_to "Open the presentation slides",
-          @team_submission.pitch_presentation_url,
-          target: :_blank %>
-      <% end %>
-    </div>
+    <dl>
+      <dt>Strings</dt>
+      <dd>A data type that is text.</dd>
+    </dl>
+
+    <h4 class="code_checklist-header">
+      Databases and Connectivity
+    </h4>
+
+    <dl>
+      <dt>Local Database</dt>
+
+      <dd>Databases can store information for later use, even when the app is closed! You can think of databases as a place to store information you can recall later</dd>
+    </dl>
+
+    <h4 class="code_checklist-header">
+      Mobile Features
+    </h4>
+
+    <dl>
+      <dt>Location Sensor</dt>
+
+      <dd>This sensor collects the latitude and longitude of the phone's location. This sensor can be useful anytime you need search for businesses or points of interests near the user.</dd>
+    </dl>
   </div>
 
-  <div class="grid__col-auto submission-footer submission-content-spacing">
+  <div class="grid__col-auto submission-footer">
     <% @team_submission.awaiting_publish do %>
       <p>
         <%= link_to "Submit now",

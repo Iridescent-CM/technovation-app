@@ -41,9 +41,39 @@ module ApplicationHelper
   end
 
   def web_icon(icon, options = {})
-    content_tag(:span) do
-      content_tag(:span, nil, class: "icon-#{icon} #{options[:class]}") +
-        content_tag(:span, options[:text], class: "web-icon-text")
+    if !!options[:remote]
+      url = "https://icongr.am/fontawesome/"
+      url += "#{icon}.svg"
+      url += "?size=#{options[:size]}"
+      url += "&color=#{options[:color]}"
+
+      content_tag(:span) do
+        img = content_tag(:img, nil, src: url)
+
+        text = content_tag(
+          :span,
+          options[:text],
+          class: "web-icon-text"
+        )
+
+        img + text
+      end
+    else
+      content_tag(:span) do
+        icon = content_tag(
+          :span,
+          nil,
+          class: "icon-#{icon} #{options[:class]}"
+        )
+
+        text = content_tag(
+          :span,
+          options[:text],
+          class: "web-icon-text"
+        )
+
+        icon + text
+      end
     end
   end
 

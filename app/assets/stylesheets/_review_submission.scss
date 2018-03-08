@@ -1,42 +1,31 @@
-.submission-buttons {
-  display: inline-block;
-
-  .button {
-    margin: 0.375rem;
-  }
-}
-
-.submission-titles {
-  margin: 1rem 0 0;
+.submission-title {
+  margin: 0;
+  padding: 0 0 0.5rem;
   border-bottom: 1px solid $grey-light;
-  padding: 0.5rem;
-}
-
-.submission-content-spacing {
-  padding: 1.5rem 0.5rem 0.5rem;
-}
-
-.submission-content-color {
-  color: $grey;
 }
 
 .submission-footer {
-  left: 0;
-  bottom: 0;
   width: 100%;
   background-color: white;
   text-align: center;
 }
 
-.code_checklist-margins {
-  margin: 1rem 0 0;
-  border-bottom: 1px solid $shamrock;
-  padding-top: 3rem;
+.code_checklist-header {
+  margin: 1rem 0;
+  border-bottom: 2px solid $shamrock;
   text-align: left;
 }
 
-.code_checklist-item-selection {
-  padding: 0.5rem;
-  text-align: left;
-  stroke-width: 0.05rem black;
+.submission-sidebar {
+  .panel {
+    font-size: 1rem;
+  }
+
+  h6 {
+    margin: 1rem 0 0;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
 }
