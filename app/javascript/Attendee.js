@@ -1,3 +1,5 @@
+import escapeRegExp from "escape-string-regexp";
+
 export default function Attendee (json) {
   this.id = parseInt(json.id);
   this.scope = json.scope;
@@ -51,4 +53,16 @@ export default function Attendee (json) {
     if (this.recentlyAdded)
       this.recentlyAdded = false;
   };
+
+  this.matchesQuery = (query) => {
+    const escaped = escapeRegExp(query),
+          pattern = new RegExp(escaped, "i");
+
+    if (this.scope === "Team") {
+      return this.name.match(pattern) ||
+        this.submission.name.match(pattern);
+    } else {
+      return this.name.match(pattern) || this.email.match(pattern);
+    }
+  }
 }

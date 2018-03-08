@@ -91,9 +91,14 @@ class Account < ActiveRecord::Base
   }
 
   scope :live_event_eligible, ->(event) {
-    joins(:judge_profile)
-      .left_outer_joins(:mentor_profile)
-      .where("mentor_profiles.id IS NULL")
+    includes(:judge_profile)
+      .references(:judge_profiles)
+      .left_outer_joins(:mentor_profile, :regional_ambassador_profile)
+      .where(
+        "judge_profiles.id IS NOT NULL AND " +
+        "mentor_profiles.id IS NULL AND " +
+        "regional_ambassador_profiles.id IS NULL"
+      )
   }
 
   def self.sort_column
