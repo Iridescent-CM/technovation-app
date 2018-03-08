@@ -177,8 +177,6 @@ Rails.application.routes.draw do
     resource :event_assignments, only: :destroy
     resources :possible_event_attendees, only: :index
 
-    resource :judge_search, only: :show
-    resource :team_search, only: :show
     resource :judge_list, only: :show
     resource :team_list, only: :show
 

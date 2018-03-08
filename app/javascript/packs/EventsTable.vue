@@ -214,6 +214,10 @@
         },
       });
     },
+
+    created () {
+      console.log("event table init")
+    },
   };
 </script>
 

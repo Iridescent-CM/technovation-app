@@ -1,13 +1,9 @@
-//= require application
+//= require admin
 //= require cocoon
-//= require Chart.min
 
 //= require accordion
 //= require char-counter
-//= require forms
 //= require saved-searches
-//= require charts
-//= require jobs
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({
@@ -35,3 +31,17 @@ $(document).on("change", ".regional-links-fields select", function() {
     $customLabel.fadeOut();
   }
 });
+
+function confirmNegativeSwal (opts) {
+  return swal({
+    title: opts.title,
+    text: opts.text,
+    html: opts.html,
+    cancelButtonText: "No, go back",
+    confirmButtonText: opts.confirmButtonText,
+    confirmButtonColor: "#D8000C",
+    showCancelButton: true,
+    reverseButtons: true,
+    focusCancel: true,
+  });
+}

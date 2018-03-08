@@ -3,6 +3,10 @@
   float: left;
 }
 
+.thumbnail-no-float {
+  float: none !important;
+}
+
 .thumbnail-xs {
   max-width: 40px;
   float: left;

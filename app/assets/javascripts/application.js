@@ -25,17 +25,3 @@ $(document).ajaxSend(function(_, xhr) {
     $('meta[name="csrf-token"]').attr('content')
   );
 });
-
-function confirmNegativeSwal (opts) {
-  return swal({
-    title: opts.title,
-    text: opts.text,
-    html: opts.html,
-    cancelButtonText: "No, go back",
-    confirmButtonText: opts.confirmButtonText,
-    confirmButtonColor: "#D8000C",
-    showCancelButton: true,
-    reverseButtons: true,
-    focusCancel: true,
-  });
-}

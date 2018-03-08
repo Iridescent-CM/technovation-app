@@ -1,34 +1,3 @@
-<div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col-auto grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= t("views.application.regional_ambassador_dashboard") %>
-
-        <small>
-          <%= link_to "Switch to Mentor Mode",
-            mentor_dashboard_path,
-            data: { turbolinks: false } %>
-        </small>
-      </h1>
-    </div>
-  </div>
-
-  <div
-    class="
-      grid__col-sm-6
-      grid__col-auto
-      grid__col--bleed-y
-      grid--align-end
-    "
-  >
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
-      </h1>
-    </div>
-  </div>
-</div>
-
 <% if current_ambassador.onboarding? %>
   <%= render "regional_ambassador/dashboards/onboarding" %>
 <% else %>
@@ -38,12 +7,16 @@
         <div class="col--sticky">
           <div class="grid__cell clearfix">
             <%= image_tag current_ambassador.profile_image_url,
-              class: "grid__cell-img thumbnail-md" %>
+              class: "grid__cell-img thumbnail-md thumbnail-no-float" %>
 
             <div>
-              <h6 class="small reset"><%= current_ambassador.full_name %></h6>
+              <h6 class="small reset">
+                <%= current_ambassador.full_name %>
+              </h6>
 
-              <%= link_to "edit profile", regional_ambassador_profile_path, class: "small" %>
+              <%= link_to "edit profile",
+                regional_ambassador_profile_path,
+                class: "small" %>
             </div>
           </div>
 
@@ -56,6 +29,8 @@
       <div class="col--sticky-spacer">
         <div class="col--sticky">
           <div class="tab-content" id="recruitment">
+            <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
+
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>

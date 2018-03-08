@@ -16,7 +16,7 @@ Vue.use(TurbolinksAdapter);
 Vue.use(VTooltip);
 Vue.use(ElementUI, { locale });
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('ready turbolinks:load', () => {
   new Vue({
     el: "#app",
 

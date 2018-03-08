@@ -1,19 +1,8 @@
-@import "application";
-
-@import "dashboards";
-@import "flags";
-@import "tables";
-@import "accordion";
-
-@import "datagrid";
-@import "debugging";
-@import "queued_jobs";
+@import "admin";
 
 @import "ra/navigation";
 @import "ra/regional_links";
 @import "ra/events";
-
-@import "submission_progress";
 
 .toggle-display-buttons {
   float: right;
@@ -96,4 +85,15 @@ ul, ol {
 
 .swal2-popup .swal2-title {
   font-size: 1.2rem;
+}
+
+#site-footer {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.social-links {
+  font-size: 1.5rem;
 }
