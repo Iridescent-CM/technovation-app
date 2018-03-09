@@ -5,6 +5,7 @@ export default function Attendee (json) {
   this.scope = json.scope;
   this.name = json.name;
   this.links = json.links;
+  this.selected = json.selected || false;
 
   // Judges, UserInvitations
   this.email = json.email;
@@ -28,7 +29,6 @@ export default function Attendee (json) {
     };
   })(this.status);
 
-  this.selected = false;
   this.recentlyAdded = false;
   this.sendInvitation = false;
 

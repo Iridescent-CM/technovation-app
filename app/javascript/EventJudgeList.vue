@@ -94,14 +94,14 @@
 
     <div
       class="grid__col-12 align-right"
-      v-if="newJudgesToSave"
+      v-if="changesToSave"
     >
       <p>
         <button
           class="button button--small"
           @click.prevent="saveAssignments"
         >
-          Save selected judges
+          Save changes
         </button>
       </p>
     </div>
@@ -119,6 +119,7 @@
     data () {
       return {
         fetchingList: true,
+        changesToSave: false,
       };
     },
 
@@ -134,8 +135,8 @@
             modalHtml = judge.name + " - " + judge.email;
 
         modalHtml += !judge.recentlyAdded ?
-          "<small>an email will be sent</small>" :
-          "<small>NO email will be sent</small>";
+          "<p><small>an email will be sent</small></p>" :
+          "<p><small>NO email will be sent</small></p>";
 
         confirmNegativeSwal({
           title: "Remove this judge from " + vm.event.name + "? ",
@@ -157,12 +158,7 @@
               processData: false,
 
               success: (resp) => {
-                var idx = vm.event.selectedJudges.findIndex(
-                  (j) => { return j.id === judge.id }
-                );
-
-                if (idx !== -1)
-                  vm.event.selectedJudges.splice(idx, 1);
+                vm.event.removeJudge(judge);
               },
 
               error: (err) => {
@@ -216,18 +212,13 @@
 
           success: (resp) => {
             this.event.judgeAssignmentsSaved();
+            this.changesToSave = false;
           },
 
           error: (err) => {
             console.log(err);
           },
         });
-      },
-    },
-
-    computed: {
-      newJudgesToSave () {
-        return _.some(this.event.selectedJudges, 'recentlyAdded');
       },
     },
 
@@ -239,13 +230,16 @@
 
     mounted () {
       EventBus.$on(
-        "JudgeSearch.selected-event-" + this.event.id,
-        (judge) => { this.event.addJudge(judge); }
+        "JudgeSearch.selected-event-" + this.event.id, (judge) => {
+          this.event.addJudge(judge);
+          this.changesToSave = true;
+        }
       );
 
       EventBus.$on(
-        "JudgeSearch.deselected-event-" + this.event.id,
-        (judge) => { this.event.removeJudge(judge); }
+        "JudgeSearch.deselected-event-" + this.event.id, (judge) => {
+          this.removeJudge(judge);
+        }
       );
 
       this.event.fetchJudges({
@@ -351,5 +345,12 @@
 
   .judge-status--red {
     background-color: red;
+  }
+
+</style>
+
+<style>
+  .swal2-container {
+    z-index: 9999999;
   }
 </style>

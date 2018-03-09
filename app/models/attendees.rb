@@ -27,22 +27,23 @@ class Attendees
     end
 
     if records.is_a?(Array)
-      new(records.sort_by(&sort_column), context)
+      new(records.sort_by(&sort_column), event, context)
     else
-      new(records.order("#{table_name}.#{sort_column}"), context)
+      new(records.order("#{table_name}.#{sort_column}"), event, context)
     end
   end
 
-  attr_reader :context
+  attr_reader :event, :context
 
-  def initialize(records, context)
+  def initialize(records, event, context)
     @records = records
     @context = context
+    @event = event
   end
 
   def each(&block)
     @records.each do |record|
-      block.call(Attendee.new(record, context))
+      block.call(Attendee.new(record, event, context))
     end
   end
 end

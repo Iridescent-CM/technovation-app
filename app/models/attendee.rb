@@ -1,8 +1,9 @@
 class Attendee
-  attr_reader :record, :context
+  attr_reader :record, :event, :context
 
-  def initialize(record, context)
+  def initialize(record, event, context)
     @record = record
+    @event = event
     @context = context
   end
 
@@ -21,6 +22,7 @@ class Attendee
       status: record.status,
       human_status: record.human_status,
       status_explained: record.status_explained,
+      selected: record.in_event?(event),
     }
 
     if record.respond_to?(:submission)

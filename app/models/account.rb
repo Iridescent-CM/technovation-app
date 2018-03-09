@@ -327,6 +327,10 @@ class Account < ActiveRecord::Base
     judge_profile && judge_profile.events
   end
 
+  def in_event?(event)
+    events.include?(event)
+  end
+
   def status
     judge_profile && judge_profile.status
   end

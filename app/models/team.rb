@@ -41,6 +41,10 @@ class Team < ActiveRecord::Base
     id
   end
 
+  def in_event?(event)
+    selected_regional_pitch_event == event
+  end
+
   scope :not_staff, -> {
     where.not("teams.name ilike ?", "%staff test%")
   }
