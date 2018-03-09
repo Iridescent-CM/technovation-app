@@ -13,6 +13,10 @@ FactoryBot.define do
     country "US"
     location_confirmed true
 
+    trait :mentor do
+      mentor_profile
+    end
+
     trait :chicago do
       city "Chicago"
       state_province "IL"

@@ -26,6 +26,23 @@ class Attendees
       records = event.send(assoc)
     end
 
+    if records.empty? and type.to_s === "account"
+      table_name = "user_invitations"
+      sort_column = :email
+      records = UserInvitation.judge.by_query(query)
+
+      if records.empty?
+        invite = UserInvitation.new(
+          profile_type: :judge,
+          email: query,
+        )
+
+        if invite.save
+          records = [invite]
+        end
+      end
+    end
+
     if records.is_a?(Array)
       new(records.sort_by(&sort_column), event, context)
     else

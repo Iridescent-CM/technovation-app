@@ -12,6 +12,13 @@ FactoryBot.define do
       virtual true
     end
 
+    trait :live_event_eligible do
+    end
+
+    trait :not_live_event_eligible do
+      association(:account, factory: [:account, :mentor])
+    end
+
     trait :geocoded do
       after(:create) do |j, _|
         Geocoding.perform(j.account).with_save

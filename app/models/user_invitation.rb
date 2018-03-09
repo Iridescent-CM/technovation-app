@@ -80,18 +80,10 @@ class UserInvitation < ApplicationRecord
     end
   }, on: :update, if: -> { saved_change_to_status? and registered? }
 
-  def to_search_json
-    {
-      id: id,
-      name: name,
-      email: email,
-      location: "",
-      scope: self.class.model_name,
-      status: status,
-      human_status: human_status,
-      status_explained: status_explained,
-    }
-  end
+  scope :by_query, ->(query) {
+    sanitized = sanitize_sql_like(query)
+    where("lower(unaccent(email)) ILIKE '#{sanitized.downcase}%'")
+  }
 
   def human_status
     case status
@@ -120,8 +112,32 @@ class UserInvitation < ApplicationRecord
     end
   end
 
+  def first_name
+    email
+  end
+
+  def name
+    "Invited judge"
+  end
+
+  def id_for_event
+    id
+  end
+
+  def in_event?(event)
+    events.include?(event)
+  end
+
+  def event_scope
+    "UserInvitation"
+  end
+
   def locale
     :en
+  end
+
+  def ambassador_route_key
+    false
   end
 
   def temporary_password?

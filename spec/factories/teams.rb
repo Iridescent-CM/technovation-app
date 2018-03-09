@@ -7,6 +7,15 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    trait :live_event_eligible do
+      team_submissions { build_list :submission, 1 }
+    end
+
+    trait :not_live_event_eligible do
+      team_submissions { build_list :submission, 1 }
+      events { build_list :event, 1 }
+    end
+
     trait :los_angeles do
       city "Los Angeles"
       state_province "CA"

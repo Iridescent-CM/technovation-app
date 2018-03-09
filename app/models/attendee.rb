@@ -12,18 +12,20 @@ class Attendee
       id: record.id_for_event,
       name: record.name,
       scope: record.event_scope,
-      links: {
-        self: context.send(
-          "regional_ambassador_#{record.ambassador_route_key}_path",
-          record,
-          { allow_out_of_region: true },
-        ),
-      },
+      links: { },
       status: record.status,
       human_status: record.human_status,
       status_explained: record.status_explained,
       selected: record.in_event?(event),
     }
+
+    if record.ambassador_route_key
+      base[:links][:self] = context.send(
+        "regional_ambassador_#{record.ambassador_route_key}_path",
+        record,
+        { allow_out_of_region: true },
+      )
+    end
 
     if record.respond_to?(:submission)
       base[:links] = base[:links].merge({

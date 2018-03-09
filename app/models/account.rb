@@ -591,7 +591,9 @@ class Account < ActiveRecord::Base
   end
 
   def email_changed?
-    email_was.strip.downcase != email.strip.downcase and super
+    !!email_was and
+      email_was.strip.downcase != email.strip.downcase and
+        super
   end
 
   private
