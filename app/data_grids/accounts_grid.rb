@@ -236,7 +236,7 @@ class AccountsGrid
     header: "Name or Email",
     filter_group: "more-specific" do |value|
       names = value.strip.downcase.split(' ').map { |n|
-        I18n.transliterate(n)
+        I18n.transliterate(n).gsub("'", "''")
       }
     fuzzy_search({
       first_name: names.first,

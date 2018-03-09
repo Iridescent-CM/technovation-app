@@ -16,7 +16,7 @@ class State
   end
 
   def initialize(value)
-    @value = value
+    @value = value.gsub("'", "''")
   end
 
   def search_spec
