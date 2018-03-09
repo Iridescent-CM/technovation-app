@@ -600,7 +600,7 @@ class Account < ActiveRecord::Base
   end
 
   def self.survey_reminder_period
-    2.weeks.ago
+    2.days.ago
   end
 
   def changes_require_password?
