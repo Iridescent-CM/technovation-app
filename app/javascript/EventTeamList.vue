@@ -133,8 +133,8 @@
             modalHtml = team.name;
 
         modalHtml += !team.recentlyAdded ?
-          "<small>an email will be sent</small>" :
-          "<small>NO email will be sent</small>";
+          "<p><small>an email will be sent</small></p>" :
+          "<p><small>NO email will be sent</small></p>";
 
         confirmNegativeSwal({
           title: "Remove this team from " + vm.event.name + "? ",
