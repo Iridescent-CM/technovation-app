@@ -29,7 +29,7 @@
             :key="judge.email"
             v-for="judge in event.selectedJudges"
           >
-            <td class="medium-width">
+            <td>
               <div class="judge-list__actions">
                 <icon
                   name="remove"
@@ -60,7 +60,7 @@
               </div>
             </td>
 
-            <td class="medium-width">
+            <td>
               <div class="cutoff-with-ellipsis">
                 <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
               </div>
@@ -254,7 +254,6 @@
 <style lang="scss" scoped>
   .judge-list {
     width: 100%;
-    table-layout: fixed;
 
     .judge-list__actions {
       position: relative;
@@ -309,10 +308,6 @@
 
   .align-right {
     text-align: right;
-  }
-
-  .medium-width {
-    width: 200px;
   }
 
   .cutoff-with-ellipsis {

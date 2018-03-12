@@ -30,7 +30,7 @@
             :key="team.id"
             v-for="team in event.selectedTeams"
           >
-            <td class="medium-width">
+            <td>
               <div class="team-list__actions">
                 <icon
                    name="remove"
@@ -56,13 +56,15 @@
             </td>
 
             <td>
-              <a
-                data-turbolinks="false"
-                target="_blank"
-                :href="team.links.submission"
-              >
-                {{ team.submission.name }}
-              </a>
+              <div class="cutoff-with-ellipsis">
+                <a
+                  data-turbolinks="false"
+                  target="_blank"
+                  :href="team.links.submission"
+                >
+                  {{ team.submission.name }}
+                </a>
+              </div>
             </td>
 
             <td>
@@ -253,7 +255,6 @@
 <style lang="scss" scoped>
   .team-list {
     width: 100%;
-    table-layout: fixed;
 
     .team-list__actions {
       position: relative;
@@ -285,7 +286,8 @@
 
       td {
         padding: 0.25rem;
-
+        width: 0.1%;
+        white-space: nowrap;
       }
 
       &:hover,
@@ -306,10 +308,6 @@
 
   .align-right {
     text-align: right;
-  }
-
-  .medium-width {
-    width: 225px;
   }
 
   .cutoff-with-ellipsis {
