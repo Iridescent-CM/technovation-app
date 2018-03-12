@@ -1,5 +1,5 @@
 module Mentor
-  class PublishedSubmissionConfirmationsController < StudentController
+  class PublishedSubmissionConfirmationsController < MentorController
     include PublishedSubmissionConfirmationController
   end
 end
