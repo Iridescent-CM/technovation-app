@@ -28,15 +28,22 @@
           <tr
             :class="team.recentlyAdded ? 'table-row--new' : ''"
             :key="team.id"
+            @mouseover="hoverTeam(team)"
             v-for="team in event.selectedTeams"
           >
             <td>
-              <div class="team-list__actions">
+              <div v-if="team.hovering" class="team-list__actions">
                 <icon
                    name="remove"
                    size="16"
                    color="ff0000"
                    :handleClick="removeTeam.bind(this, team)"
+                />
+
+                <icon
+                   name="gavel"
+                   size="16"
+                   :handleClick="addJudges.bind(this, team)"
                 />
               </div>
 
@@ -130,6 +137,15 @@
     ],
 
     methods: {
+      hoverTeam (team) {
+        _.each(this.event.selectedTeams, t => { t.hovering = false })
+        team.hovering = true
+      },
+
+      addJudges (team) {
+        console.log('add judges to', team.name)
+      },
+
       removeTeam (team) {
         var vm = this,
             modalHtml = team.name;
@@ -262,11 +278,15 @@
       img {
         position: absolute;
         top: 0.25rem;
-        left: -1rem;
         cursor: pointer;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.2s;
+
+        &:first-child {
+          left: -2.5rem;
+        }
+
+        &:last-child {
+          left: -1.25rem;
+        }
       }
     }
 
@@ -293,15 +313,6 @@
       &:hover,
       &:hover td {
         background: none;
-      }
-
-      &:hover {
-        .team-list__actions {
-          img {
-            pointer-events: auto;
-            opacity: 1;
-          }
-        }
       }
     }
   }

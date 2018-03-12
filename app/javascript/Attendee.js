@@ -13,6 +13,7 @@ export default function Attendee (json) {
   // Teams
   this.submission = json.submission;
   this.division = json.division;
+  this.hovering = false;
 
   this.status = json.status || "status missing (bug)";
   this.humanStatus = json.human_status || "status missing (bug)";
