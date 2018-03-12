@@ -10,13 +10,14 @@ FactoryBot.define do
       first_name "Judge"
       onboarded false
       virtual true
+      mentor false
     end
 
     trait :live_event_eligible do
     end
 
     trait :not_live_event_eligible do
-      association(:account, factory: [:account, :mentor])
+      mentor true
     end
 
     trait :geocoded do
@@ -51,6 +52,10 @@ FactoryBot.define do
         j.account.build_consent_waiver({
           electronic_signature: "test",
         })
+      end
+
+      if e.mentor
+        j.account.build_mentor_profile(FactoryBot.attributes_for(:mentor))
       end
     end
 
