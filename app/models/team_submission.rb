@@ -365,13 +365,13 @@ class TeamSubmission < ActiveRecord::Base
 
     case send(method)
     when /youtu/
-      send(method)[/v=([\w\-]+[^&])&?.*$/, 1]
+      send(method)[/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/, 1] || ""
     when /vimeo/
-      send(method)[/\/(\d+)$/, 1]
+      send(method)[/\/(\d+)$/, 1] || ""
     when /youku/
-      send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1]
+      send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1] || ""
     else
-      send(method)
+      send(method) || ""
     end
   end
 
