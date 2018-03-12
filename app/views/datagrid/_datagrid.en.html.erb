@@ -9,6 +9,8 @@
     found
   </h6>
 
+  <%= yield %>
+
   <% if csv_export_supported?(grid) %>
     <p>
       <%= link_to "Export current results to CSV", "#",
