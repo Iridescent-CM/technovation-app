@@ -370,6 +370,8 @@ class TeamSubmission < ActiveRecord::Base
       send(method)[/\/(\d+)$/, 1]
     when /youku/
       send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1]
+    else
+      send(method)
     end
   end
 
