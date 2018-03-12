@@ -20,7 +20,7 @@
     </template>
 
     <template slot="no-results">
-      <p>There are no teams available to add to your event.</p>
+      <p>There are no more teams available to add to your event.</p>
 
       <p>
         Teams must not be attending other events,
@@ -49,11 +49,15 @@
     methods: {
       handleSelection (item) {
         EventBus.$emit("TeamSearch.selected-" + this.eventBusId, item);
+
+        this.$store.commit('addTeam', item)
       },
 
       handleDeselection (item) {
         EventBus.$emit("TeamSearch.deselected-" + this.eventBusId, item);
+
+        this.$store.commit('removeTeam', item)
       },
-    }
+    },
   };
 </script>

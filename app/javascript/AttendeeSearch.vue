@@ -95,7 +95,7 @@
         searching: false,
         fetching: true,
         items: [],
-        filteredItems: [],
+        selectableItems: [],
       };
     },
 
@@ -108,17 +108,30 @@
       "eventId"
     ],
 
+    computed: {
+      filteredItems () {
+        if (this.type == 'team') {
+          return _.filter(this.selectableItems, i => {
+            return i.selected ||
+              !_.map(this.$store.state.teams, 'id').includes(i.id)
+          })
+        } else {
+          return this.selectableItems
+        }
+      }
+    },
+
     components: {
       Icon,
     },
 
     watch: {
       query (val) {
-        this.filteredItems = _.filter(this.items, item => {
+        this.selectableItems = _.filter(this.items, item => {
           return item.matchesQuery(val);
         });
 
-        if (val.length >= 3 && !this.filteredItems.length)
+        if (val.length >= 3 && !this.selectableItems.length)
           _.debounce(
             this.fetchRemoteItems.bind(this, { expandSearch: 1 }),
             300
@@ -160,14 +173,19 @@
 
           success: (json) => {
             _.each(json, obj => {
-              const item = new Attendee(obj),
-                    idx = _.findIndex(vm.items, i => {
-                            return i.id === item.id;
-                          });
+              const item = new Attendee(obj)
+              let source = vm.items
+
+              if (vm.type === 'team')
+                source = vm.$store.state.teams
+
+              const idx = _.findIndex(source, i => {
+                      return i.id === item.id;
+                    });
 
               if (idx === -1) {
                 vm.items.push(item);
-                vm.filteredItems.push(item);
+                vm.selectableItems.push(item);
               }
             });
           },
