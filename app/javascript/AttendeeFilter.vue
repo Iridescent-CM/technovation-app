@@ -9,7 +9,7 @@
       />
 
       <div
-        v-show="childItems.length"
+        v-show="items.length"
         class="overflow-scroll"
       >
         <table class="width-full-container headers--left-align">
@@ -23,7 +23,7 @@
           <tbody>
             <tr
               class="cursor-pointer"
-              v-for="item in childItems"
+              v-for="item in items"
               :key="item.id"
               @click="handleSelection(item)"
             >
@@ -68,6 +68,7 @@
     data () {
       return {
         filterTxt: "",
+        items: this.childItems,
       }
     },
 
@@ -83,6 +84,14 @@
 
     components: {
       Icon,
+    },
+
+    watch: {
+      filterTxt () {
+        this.items = _.filter(this.childItems, i => {
+          return i.matchesQuery(this.filterTxt)
+        })
+      },
     },
 
     mounted () {
