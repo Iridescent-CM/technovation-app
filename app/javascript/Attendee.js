@@ -7,9 +7,12 @@ export default function Attendee (json) {
   this.links = json.links;
   this.selected = json.selected || false;
 
+  this.hovering = false;
+
   // Judges, UserInvitations
   this.email = json.email;
   this.assignedTeams = []
+  this.addingTeams = false;
 
   this.isAssignedToTeam = (team) => {
     return this.assignedTeams.includes(team)
@@ -38,10 +41,13 @@ export default function Attendee (json) {
   // Teams
   this.submission = json.submission;
   this.division = json.division;
-  this.hovering = false;
   this.addingJudges = false;
 
   this.assignedJudges = []
+
+  this.isAssignedToJudge = (judge) => {
+    return this.assignedJudges.includes(judge)
+  }
 
   this.assignJudge = (judge) => {
     const idx = _.findIndex(this.assignedJudges, j => {

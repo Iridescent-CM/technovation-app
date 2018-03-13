@@ -38,6 +38,13 @@
                   color="ff0000"
                   :handleClick="removeJudge.bind(this, judge)"
                 />
+
+                <icon
+                   v-if="event.teamListIsTooLong()"
+                   name="flag"
+                   size="16"
+                   :handleClick="addTeams.bind(this, judge)"
+                />
               </div>
 
               <div
@@ -94,6 +101,65 @@
                 </span>
               </div>
             </td>
+
+            <div
+              class="modal-container"
+              v-show="judge.addingTeams"
+            >
+              <div class="modal">
+                <input
+                  type="search"
+                  placeholder="Filter by team or submission name"
+                  v-model="teamFilter"
+                />
+
+                <div
+                  v-show="filteredTeams.length"
+                  class="overflow-scroll"
+                >
+                  <table class="width-full-container headers--left-align">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th colspan="2">Email</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        class="cursor-pointer"
+                        v-for="team in filteredTeams"
+                        :key="team.id"
+                        @click="toggleSelection(judge, team)"
+                      >
+                        <td>{{ team.name }}</td>
+                        <td>{{ team.submission.name }}</td>
+
+                        <td
+                          class="light-opacity"
+                          v-show="!team.isAssignedToJudge(judge)"
+                        >
+                          <icon name="check-circle-o" />
+                        </td>
+
+                        <td v-show="team.isAssignedToJudge(judge)">
+                          <icon name="check-circle" color="228b22" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    class="button--unmask"
+                    @click="judge.addingTeams = false"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
           </tr>
         </tbody>
       </table>
@@ -127,6 +193,7 @@
       return {
         fetchingList: true,
         changesToSave: false,
+        teamFilter: "",
       };
     },
 
@@ -136,10 +203,33 @@
       'event',
     ],
 
+    computed: {
+      filteredTeams ()  {
+        return _.filter(this.event.selectedTeams, t => {
+          return t.matchesQuery(this.teamFilter)
+        })
+      },
+    },
+
     methods: {
+      toggleSelection(judge, team) {
+        if (team.isAssignedToJudge(judge)) {
+          team.unassignJudge(judge)
+          judge.unassignTeam(team)
+        } else {
+          team.assignJudge(judge)
+          judge.assignTeam(team)
+        }
+      },
+
       hoverJudge (judge) {
         _.each(this.event.selectedJudges, j => { j.hovering = false })
         judge.hovering = true
+      },
+
+      addTeams (judge) {
+        _.each(this.event.selectedJudges, j => { j.addingTeams = false })
+        judge.addingTeams = true
       },
 
       removeJudge (judge) {
@@ -256,7 +346,15 @@
 
       this.event.fetchJudges({
         onComplete: () => {
-          this.fetchingList = false;
+          if (!this.event.selectedTeams.length) {
+            this.event.fetchTeams({
+              onComplete: () => {
+                this.fetchingList = false
+              },
+            })
+          } else {
+            this.fetchingList = false;
+          }
         },
       });
     },
