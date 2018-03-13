@@ -175,7 +175,7 @@ export default function (event) {
       })
 
       if (idx !== -1)
-        attendee.assignedJudgeFoundInEvent(this.selectedTeams[idx])
+        attendee.assignedTeamFoundInEvent(this.selectedTeams[idx])
     })
 
     list.push(attendee)
