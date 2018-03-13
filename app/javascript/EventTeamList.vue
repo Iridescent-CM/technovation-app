@@ -379,7 +379,7 @@
       text-align: left;
     }
 
-    > tr {
+    > tbody > tr {
       &.table-row--new {
         background: rgba(255, 255, 0, 0.2);
 
@@ -396,7 +396,7 @@
       }
 
       &:hover,
-      &:hover td {
+      &:hover > td {
         background: none;
       }
     }

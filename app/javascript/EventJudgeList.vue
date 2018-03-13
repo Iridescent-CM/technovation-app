@@ -273,7 +273,7 @@
       text-align: left;
     }
 
-    tr {
+    > tbody > tr {
       margin: 0 0 0.25rem;
 
       &.table-row--new {
@@ -287,11 +287,12 @@
 
       td {
         padding: 0.25rem;
-
+        width: 0.1%;
+        white-space: nowrap;
       }
 
       &:hover,
-      &:hover td {
+      &:hover > td {
         background: none;
       }
 
