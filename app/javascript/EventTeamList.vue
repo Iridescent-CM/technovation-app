@@ -95,6 +95,65 @@
                 </span>
               </div>
             </td>
+
+            <div
+              class="modal-container"
+              v-show="team.addingJudges"
+            >
+              <div class="modal">
+                <input
+                  type="search"
+                  placeholder="Filter by name or email"
+                  v-model="judgeFilter"
+                />
+
+                <div
+                  v-show="filteredJudges(team).length"
+                  class="overflow-scroll"
+                >
+                  <table class="width-full-container headers--left-align">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th colspan="2">Email</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        class="cursor-pointer"
+                        v-for="judge in filteredJudges(team)"
+                        :key="judge.id"
+                        @click="toggleSelection(team, judge)"
+                      >
+                        <td>{{ judge.name }}</td>
+                        <td>{{ judge.email }}</td>
+
+                        <td
+                          class="light-opacity"
+                          v-show="!judge.isSelectedForTeam(team)"
+                        >
+                          <icon name="check-circle-o" />
+                        </td>
+
+                        <td v-show="judge.isSelectedForTeam(team)">
+                          <icon name="check-circle" color="228b22" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    class="button--unmask"
+                    @click="team.addingJudges = false"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
           </tr>
         </tbody>
       </table>
@@ -127,6 +186,7 @@
     data () {
       return {
         fetchingList: true,
+        judgeFilter: "",
       };
     },
 
@@ -137,13 +197,19 @@
     ],
 
     methods: {
+      toggleSelection(team, judge) {
+        judge.selectedForTeam = team
+        console.log('add judge', judge.name, 'to team', team.name)
+      },
+
       hoverTeam (team) {
         _.each(this.event.selectedTeams, t => { t.hovering = false })
         team.hovering = true
       },
 
       addJudges (team) {
-        console.log('add judges to', team.name)
+        _.each(this.event.selectedTeams, t => { t.addJudges = false })
+        team.addingJudges = true
       },
 
       removeTeam (team) {
@@ -231,6 +297,15 @@
           },
         });
       },
+
+      filteredJudges (team) {
+        return _.filter(this.event.selectedJudges, j => {
+          return !j.selectedForTeam ||
+                   j.isSelectedForTeam(team) &&
+                     j.matchesQuery(this.judgeFilter)
+
+        })
+      },
     },
 
     computed: {
@@ -261,9 +336,18 @@
 
       this.event.fetchTeams({
         onComplete: () => {
-          this.fetchingList = false;
+          if (!this.event.selectedJudges.length) {
+            this.event.fetchJudges({
+              onComplete: () => {
+                this.fetchingList = false
+              },
+            })
+          } else {
+            this.fetchingList = false;
+          }
         },
       });
+
     },
   };
 </script>
@@ -294,7 +378,7 @@
       text-align: left;
     }
 
-    tr {
+    > tr {
       &.table-row--new {
         background: rgba(255, 255, 0, 0.2);
 

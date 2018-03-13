@@ -9,11 +9,17 @@ export default function Attendee (json) {
 
   // Judges, UserInvitations
   this.email = json.email;
+  this.selectedForTeam = null;
+
+  this.isSelectedForTeam = (team) => {
+    return this.selectedForTeam === team
+  }
 
   // Teams
   this.submission = json.submission;
   this.division = json.division;
   this.hovering = false;
+  this.addingJudges = false;
 
   this.status = json.status || "status missing (bug)";
   this.humanStatus = json.human_status || "status missing (bug)";
