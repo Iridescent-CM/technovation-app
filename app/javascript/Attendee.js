@@ -9,17 +9,59 @@ export default function Attendee (json) {
 
   // Judges, UserInvitations
   this.email = json.email;
-  this.selectedForTeam = null;
+  this.assignedTeams = []
 
-  this.isSelectedForTeam = (team) => {
-    return this.selectedForTeam === team
+  this.isAssignedToTeam = (team) => {
+    return this.assignedTeams.includes(team)
   }
+
+  this.assignTeam = (team) => {
+    const idx = _.findIndex(this.assignedTeams, t => {
+      return t.id === team.id
+    })
+
+    if (idx === -1) {
+      this.assignedTeams.push(team)
+    }
+  }
+
+  this.unassignTeam = (team) => {
+    const idx = _.findIndex(this.assignedTeams, t => {
+      return t.id === team.id
+    })
+
+    if (idx !== -1) {
+      this.assignedTeams.splice(idx, 1)
+    }
+  },
 
   // Teams
   this.submission = json.submission;
   this.division = json.division;
   this.hovering = false;
   this.addingJudges = false;
+
+  this.assignedJudges = []
+
+  this.assignJudge = (judge) => {
+    const idx = _.findIndex(this.assignedJudges, j => {
+      return j.id === judge.id
+    })
+
+    if (idx === -1) {
+      this.assignedJudges.push(judge)
+    }
+  }
+
+  this.unassignJudge = (judge) => {
+    const idx = _.findIndex(this.assignedJudges, j => {
+      return j.id === judge.id
+    })
+
+    if (idx !== -1) {
+      this.assignedJudges.splice(idx, 1)
+    }
+  },
 
   this.status = json.status || "status missing (bug)";
   this.humanStatus = json.human_status || "status missing (bug)";

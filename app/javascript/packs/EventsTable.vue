@@ -375,6 +375,16 @@
     font-weight: bold;
   }
 
+  ul, ol {
+    &.list--indented {
+      padding-left: 0.5rem;
+    }
+  }
+
+  .font-small {
+    font-size: 0.9rem;
+  }
+
   .button--unmask {
     @extend .background-none;
     @extend .border-none;
@@ -408,5 +418,96 @@
     box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.2);
     padding: 0.25rem 0.5rem;
     text-align: right;
+  }
+
+  .attendee-list {
+    word-break: break-all;
+    width: 100%;
+
+    .attendee-list__actions {
+      position: relative;
+
+      img {
+        position: absolute;
+        top: 0.25rem;
+        cursor: pointer;
+
+        &:first-child {
+          left: -2.5rem;
+        }
+
+        &:last-child {
+          left: -1.25rem;
+        }
+      }
+    }
+
+    th {
+      word-break: keep-all;
+      text-align: left;
+    }
+
+    > tbody > tr {
+      &.table-row--new {
+        background: rgba(255, 255, 0, 0.2);
+
+        &:hover,
+        &:hover td {
+          background: rgba(255, 255, 0, 0.2);
+        }
+      }
+
+      td {
+        padding: 0.25rem;
+        width: 0.1%;
+        white-space: nowrap;
+        vertical-align: top;
+      }
+
+      &:hover,
+      &:hover > td {
+        background: none;
+      }
+    }
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .cutoff-with-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  h6 span {
+    font-weight: normal;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .attendee-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+  }
+
+  .attendee-status--green {
+    background-color: green;
+  }
+
+  .attendee-status--orange {
+    background-color: orange;
+  }
+
+  .attendee-status--red {
+    background-color: red;
+  }
+
+  .swal2-container {
+    z-index: 9999999;
   }
 </style>

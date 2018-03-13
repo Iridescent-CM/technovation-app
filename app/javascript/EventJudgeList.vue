@@ -14,7 +14,7 @@
     ></judge-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
-      <table class="judge-list">
+      <table class="attendee-list">
         <thead>
           <tr>
             <th>Name</th>
@@ -25,12 +25,13 @@
 
         <tbody>
           <tr
+            v-for="judge in event.selectedJudges"
+            @mouseover="hoverJudge(judge)"
             :class="judge.recentlyAdded ? 'table-row--new' : ''"
             :key="judge.email"
-            v-for="judge in event.selectedJudges"
           >
             <td>
-              <div class="judge-list__actions">
+              <div v-if="judge.hovering" class="attendee-list__actions">
                 <icon
                   name="remove"
                   size="16"
@@ -79,8 +80,8 @@
                 <span
                   v-tooltip.top-center="judge.statusExplained"
                   :class="[
-                    'judge-status',
-                    `judge-status--${judge.statusColor}`
+                    'attendee-status',
+                    `attendee-status--${judge.statusColor}`
                   ]"
                 >
                   {{ judge.humanStatus }}
@@ -130,6 +131,11 @@
     ],
 
     methods: {
+      hoverJudge (judge) {
+        _.each(this.event.selectedJudges, j => { j.hovering = false })
+        judge.hovering = true
+      },
+
       removeJudge (judge) {
         var vm = this,
             modalHtml = judge.name + " - " + judge.email;
@@ -250,105 +256,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .judge-list {
-    word-break: break-all;
-    width: 100%;
-
-    .judge-list__actions {
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 0.25rem;
-        left: -1rem;
-        cursor: pointer;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.2s;
-      }
-    }
-
-    th {
-      word-break: keep-all;
-      text-align: left;
-    }
-
-    > tbody > tr {
-      margin: 0 0 0.25rem;
-
-      &.table-row--new {
-        background: rgba(255, 255, 0, 0.2);
-
-        &:hover,
-        &:hover td {
-          background: rgba(255, 255, 0, 0.2);
-        }
-      }
-
-      td {
-        padding: 0.25rem;
-        width: 0.1%;
-        white-space: nowrap;
-      }
-
-      &:hover,
-      &:hover > td {
-        background: none;
-      }
-
-      &:hover {
-        .judge-list__actions {
-          img {
-            pointer-events: auto;
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-
-  .align-right {
-    text-align: right;
-  }
-
-  .cutoff-with-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  h6 span {
-    font-weight: normal;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .judge-status {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    color: white;
-    font-size: 0.8rem;
-  }
-
-  .judge-status--green {
-    background-color: green;
-  }
-
-  .judge-status--orange {
-    background-color: orange;
-  }
-
-  .judge-status--red {
-    background-color: red;
-  }
-
-</style>
-
-<style>
-  .swal2-container {
-    z-index: 9999999;
-  }
-</style>

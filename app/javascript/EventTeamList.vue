@@ -14,7 +14,7 @@
     ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
-      <table class="team-list">
+      <table class="attendee-list">
         <thead>
           <tr>
             <th>Name</th>
@@ -32,7 +32,7 @@
             v-for="team in event.selectedTeams"
           >
             <td>
-              <div v-if="team.hovering" class="team-list__actions">
+              <div v-if="team.hovering" class="attendee-list__actions">
                 <icon
                    name="remove"
                    size="16"
@@ -56,6 +56,12 @@
                 >
                   {{ team.name }}
                 </a>
+
+                <ul class="list--reset list--indented font-small">
+                  <li v-for="judge in team.assignedJudges">
+                    {{ judge.name }}
+                  </li>
+                </ul>
               </div>
             </td>
 
@@ -88,8 +94,8 @@
                 <span
                   v-tooltip.top-center="team.statusExplained"
                   :class="[
-                    'team-status',
-                    `team-status--${team.statusColor}`
+                    'attendee-status',
+                    `attendee-status--${team.statusColor}`
                   ]"
                 >
                   {{ team.humanStatus }}
@@ -109,7 +115,7 @@
                 />
 
                 <div
-                  v-show="filteredJudges(team).length"
+                  v-show="filteredJudges.length"
                   class="overflow-scroll"
                 >
                   <table class="width-full-container headers--left-align">
@@ -123,7 +129,7 @@
                     <tbody>
                       <tr
                         class="cursor-pointer"
-                        v-for="judge in filteredJudges(team)"
+                        v-for="judge in filteredJudges"
                         :key="judge.id"
                         @click="toggleSelection(team, judge)"
                       >
@@ -132,12 +138,12 @@
 
                         <td
                           class="light-opacity"
-                          v-show="!judge.isSelectedForTeam(team)"
+                          v-show="!judge.isAssignedToTeam(team)"
                         >
                           <icon name="check-circle-o" />
                         </td>
 
-                        <td v-show="judge.isSelectedForTeam(team)">
+                        <td v-show="judge.isAssignedToTeam(team)">
                           <icon name="check-circle" color="228b22" />
                         </td>
                       </tr>
@@ -199,8 +205,13 @@
 
     methods: {
       toggleSelection(team, judge) {
-        judge.selectedForTeam = team
-        console.log('add judge', judge.name, 'to team', team.name)
+        if (judge.isAssignedToTeam(team)) {
+          judge.unassignTeam(team)
+          team.unassignJudge(judge)
+        } else {
+          judge.assignTeam(team)
+          team.assignJudge(judge)
+        }
       },
 
       hoverTeam (team) {
@@ -298,18 +309,15 @@
           },
         });
       },
-
-      filteredJudges (team) {
-        return _.filter(this.event.selectedJudges, j => {
-          return !j.selectedForTeam ||
-                   j.isSelectedForTeam(team) &&
-                     j.matchesQuery(this.judgeFilter)
-
-        })
-      },
     },
 
     computed: {
+      filteredJudges ()  {
+        return _.filter(this.event.selectedJudges, j => {
+          return j.matchesQuery(this.judgeFilter)
+        })
+      },
+
       newTeamsToSave () {
         return _.some(this.event.selectedTeams, 'recentlyAdded');
       },
@@ -352,91 +360,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .team-list {
-    word-break: break-all;
-    width: 100%;
-
-    .team-list__actions {
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 0.25rem;
-        cursor: pointer;
-
-        &:first-child {
-          left: -2.5rem;
-        }
-
-        &:last-child {
-          left: -1.25rem;
-        }
-      }
-    }
-
-    th {
-      word-break: keep-all;
-      text-align: left;
-    }
-
-    > tbody > tr {
-      &.table-row--new {
-        background: rgba(255, 255, 0, 0.2);
-
-        &:hover,
-        &:hover td {
-          background: rgba(255, 255, 0, 0.2);
-        }
-      }
-
-      td {
-        padding: 0.25rem;
-        width: 0.1%;
-        white-space: nowrap;
-      }
-
-      &:hover,
-      &:hover > td {
-        background: none;
-      }
-    }
-  }
-
-  .align-right {
-    text-align: right;
-  }
-
-  .cutoff-with-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  h6 span {
-    font-weight: normal;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .team-status {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    color: white;
-    font-size: 0.8rem;
-  }
-
-  .team-status--green {
-    background-color: green;
-  }
-
-  .team-status--orange {
-    background-color: orange;
-  }
-
-  .team-status--red {
-    background-color: red;
-  }
-</style>
