@@ -41,6 +41,7 @@
                 />
 
                 <icon
+                   v-if="event.teamListIsTooLong()"
                    name="gavel"
                    size="16"
                    :handleClick="addJudges.bind(this, team)"

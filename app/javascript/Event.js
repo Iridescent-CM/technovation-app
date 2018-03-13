@@ -193,4 +193,9 @@ export default function (event) {
       });
     }
   };
+
+  this.teamListIsTooLong = () => {
+    return true
+    // return this.selectedTeams.length >= 15
+  }
 };
