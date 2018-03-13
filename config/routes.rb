@@ -173,6 +173,7 @@ Rails.application.routes.draw do
 
     resources :regional_pitch_events
 
+    resource :judge_assignments, only: [:create, :destroy]
     resources :event_assignments, only: :create
     resource :event_assignments, only: :destroy
     resources :possible_event_attendees, only: :index

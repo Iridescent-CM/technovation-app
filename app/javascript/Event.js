@@ -129,24 +129,73 @@ export default function (event) {
   };
 
   this.fetchTeams = (opts) => {
-    var event = this,
-        url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
+    const event = this
+    const url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
 
+    getRemoteData({
+      onComplete: opts.onComplete,
+      list: event.selectedTeams,
+      url: url,
+      event: event,
+    })
+  }
+
+  this.fetchJudges = (opts) => {
+    const event = this
+    const url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
+
+    getRemoteData({
+      onComplete: opts.onComplete,
+      list: event.selectedJudges,
+      url: url,
+      event: event,
+    })
+  }
+
+  this.teamListIsTooLong = () => {
+    return true
+    // return this.selectedTeams.length >= 15
+  }
+
+  this.resultReadyForList = (result, list) => {
+    let attendee = new Attendee(result)
+
+    _.each(result.assignments.judge_ids, id => {
+      const idx = _.findIndex(this.selectedJudges, j => {
+        return j.id === id
+      })
+
+      if (idx !== -1)
+        attendee.assignedJudgeFoundInEvent(this.selectedJudges[idx])
+    })
+
+    _.each(result.assignments.team_ids, id => {
+      const idx = _.findIndex(this.selectedTeams, t => {
+        return t.id === id
+      })
+
+      if (idx !== -1)
+        attendee.assignedJudgeFoundInEvent(this.selectedTeams[idx])
+    })
+
+    list.push(attendee)
+  }
+
+  function getRemoteData (opts) {
     opts = opts || {};
     opts.onComplete = opts.onComplete || function () { return false; };
 
-    if (event.selectedTeams.length) {
+    if (opts.list.length) {
       opts.onComplete();
       return false;
     } else {
       $.ajax({
         method: "GET",
-        url: url,
+        url: opts.url,
 
         success: (resp) => {
           _.each(resp, (result) => {
-            var team = new Attendee(result);
-            event.selectedTeams.push(team)
+            opts.event.resultReadyForList(result, opts.list)
           });
         },
 
@@ -159,43 +208,5 @@ export default function (event) {
         },
       });
     }
-  };
-
-  this.fetchJudges = (opts) => {
-    var event = this,
-        url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
-
-    opts = opts || {};
-    opts.onComplete = opts.onComplete || function () { return false; };
-
-    if (event.selectedJudges.length) {
-      opts.onComplete();
-      return false;
-    } else {
-      $.ajax({
-        method: "GET",
-        url: url,
-
-        success: (resp) => {
-          _.each(resp, (result) => {
-            var judge = new Attendee(result);
-            event.selectedJudges.push(judge)
-          });
-        },
-
-        error: (err) => {
-          console.log(err);
-        },
-
-        complete: () => {
-          opts.onComplete();
-        },
-      });
-    }
-  };
-
-  this.teamListIsTooLong = () => {
-    return true
-    // return this.selectedTeams.length >= 15
   }
 };

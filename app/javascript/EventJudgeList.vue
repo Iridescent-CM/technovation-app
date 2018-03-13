@@ -177,10 +177,8 @@
       toggleSelection(judge, team) {
         if (judge.isAssignedToTeam(team)) {
           judge.unassignTeam(team)
-          team.unassignJudge(judge)
         } else {
           judge.assignTeam(team)
-          team.assignJudge(judge)
         }
       },
 

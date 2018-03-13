@@ -12,11 +12,12 @@ class Attendee
       id: record.id_for_event,
       name: record.name,
       scope: record.event_scope,
-      links: { },
+      links: {},
       status: record.status,
       human_status: record.human_status,
       status_explained: record.status_explained,
       selected: record.in_event?(event),
+      assignments: { team_ids: [], judge_ids: [] },
     }
 
     if record.ambassador_route_key
@@ -36,6 +37,8 @@ class Attendee
         ),
       })
 
+      base[:assignments][:judge_ids] = record.assigned_judges.pluck(:id)
+
       base.merge({
         division: record.division_name,
         submission: {
@@ -43,6 +46,8 @@ class Attendee
         },
       })
     elsif record.respond_to?(:email)
+      base[:assignments][:team_ids] = record.assigned_teams.pluck(:id)
+
       base.merge({
         email: record.email,
       })

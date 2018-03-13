@@ -507,7 +507,7 @@
     background-color: red;
   }
 
-  .swal2-container {
+  .swal2-container, #flash.fixed {
     z-index: 9999999;
   }
 </style>

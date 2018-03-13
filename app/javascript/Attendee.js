@@ -11,31 +11,32 @@ export default function Attendee (json) {
 
   // Judges, UserInvitations
   this.email = json.email;
-  this.assignedTeams = []
   this.addingTeams = false;
+  this.assignedTeams = []
 
   this.isAssignedToTeam = (team) => {
     return this.assignedTeams.includes(team)
   }
 
-  this.assignTeam = (team) => {
-    const idx = _.findIndex(this.assignedTeams, t => {
-      return t.id === team.id
-    })
-
-    if (idx === -1) {
+  this.assignedTeamFoundInEvent = (team) => {
+    verifyNotInList(team, this.assignedTeams, () => {
       this.assignedTeams.push(team)
-    }
+    })
+  }
+
+
+  this.assignTeam = (team) => {
+    verifyNotInList(team, this.assignTeams, () => {
+      this.assignedTeams.push(team)
+      team.assignJudge(this)
+    })
   }
 
   this.unassignTeam = (team) => {
-    const idx = _.findIndex(this.assignedTeams, t => {
-      return t.id === team.id
-    })
-
-    if (idx !== -1) {
+    verifyInList(team, this.assignedTeams, (idx) => {
       this.assignedTeams.splice(idx, 1)
-    }
+      team.unassignJudge(this)
+    })
   },
 
   // Teams
@@ -49,24 +50,86 @@ export default function Attendee (json) {
     return this.assignedJudges.includes(judge)
   }
 
+  this.assignedJudgeFoundInEvent = (judge) => {
+    verifyNotInList(judge, this.assignedJudges, () => {
+      this.assignedJudges.push(judge)
+    })
+  }
+
   this.assignJudge = (judge) => {
-    const idx = _.findIndex(this.assignedJudges, j => {
-      return j.id === judge.id
+    verifyNotInList(judge, this.assignedJudges, () => {
+      notifyRemoteOfAssignmentChange({
+        method: 'POST',
+        other: judge,
+        otherParam: 'judge_id',
+        this: this,
+        thisParam: 'team_id',
+        callback: () => {
+          this.assignedJudges.push(judge)
+        },
+      })
+    })
+  }
+
+  function verifyNotInList(item, list, callback) {
+    const idx = _.findIndex(list, i => {
+      return i.id === item.id
     })
 
-    if (idx === -1) {
-      this.assignedJudges.push(judge)
+    if (idx === -1 && !!callback) {
+      callback(idx)
+    } else {
+      return idx === -1
     }
   }
 
-  this.unassignJudge = (judge) => {
-    const idx = _.findIndex(this.assignedJudges, j => {
-      return j.id === judge.id
+  function verifyInList(item, list, callback) {
+    const idx = _.findIndex(list, i => {
+      return i.id === item.id
     })
 
-    if (idx !== -1) {
-      this.assignedJudges.splice(idx, 1)
+    if (idx !== -1 && !!callback) {
+      callback(idx)
+    } else {
+      return idx !== -1
     }
+  }
+
+  function notifyRemoteOfAssignmentChange(opts) {
+    const url = '/regional_ambassador/judge_assignments'
+    const data = new FormData()
+
+    data.append(`judge_assignment[${opts.otherParam}]`, opts.other.id)
+    data.append(`judge_assignment[${opts.thisParam}]`, opts.this.id)
+
+    $.ajax({
+      method: opts.method,
+      url: url,
+      data: data,
+      contentType: false,
+      processData: false,
+
+      success: opts.callback,
+
+      error: (err) => {
+        console.log(err);
+      },
+    })
+  }
+
+  this.unassignJudge = (judge) => {
+    verifyInList(judge, this.assignedJudges, (idx) => {
+      notifyRemoteOfAssignmentChange({
+        method: 'DELETE',
+        other: judge,
+        otherParam: 'judge_id',
+        this: this,
+        thisParam: 'team_id',
+        callback: () => {
+          this.assignedJudges.splice(idx, 1)
+        },
+      })
+    })
   },
 
   this.status = json.status || "status missing (bug)";

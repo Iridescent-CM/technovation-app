@@ -117,6 +117,11 @@ class Account < ActiveRecord::Base
     judge_profile.id
   end
 
+  def assigned_teams
+    (judge_profile and judge_profile.assigned_teams) or
+      Team.none
+  end
+
   scope :not_staff, -> {
     where.not("accounts.email ILIKE ?", "%joesak%")
   }
