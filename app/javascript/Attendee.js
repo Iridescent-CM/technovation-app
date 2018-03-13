@@ -21,9 +21,9 @@ export default function Attendee (json) {
   this.assignedTeamFoundInEvent = (team) => {
     verifyNotInList(team, this.assignedTeams, () => {
       this.assignedTeams.push(team)
+      team.assignedJudgeFoundInEvent(this)
     })
   }
-
 
   this.assignTeam = (team) => {
     verifyNotInList(team, this.assignTeams, () => {
@@ -53,6 +53,7 @@ export default function Attendee (json) {
   this.assignedJudgeFoundInEvent = (judge) => {
     verifyNotInList(judge, this.assignedJudges, () => {
       this.assignedJudges.push(judge)
+      judge.assignedTeamFoundInEvent(this)
     })
   }
 
