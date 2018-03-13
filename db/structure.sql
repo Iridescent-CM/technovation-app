@@ -122,7 +122,6 @@ CREATE TABLE public.accounts (
 --
 
 CREATE SEQUENCE public.accounts_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -161,7 +160,6 @@ CREATE TABLE public.activities (
 --
 
 CREATE SEQUENCE public.activities_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -193,7 +191,6 @@ CREATE TABLE public.admin_profiles (
 --
 
 CREATE SEQUENCE public.admin_profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -240,7 +237,6 @@ CREATE TABLE public.background_checks (
 --
 
 CREATE SEQUENCE public.background_checks_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -273,7 +269,6 @@ CREATE TABLE public.business_plans (
 --
 
 CREATE SEQUENCE public.business_plans_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -341,7 +336,6 @@ CREATE TABLE public.consent_waivers (
 --
 
 CREATE SEQUENCE public.consent_waivers_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -373,7 +367,6 @@ CREATE TABLE public.divisions (
 --
 
 CREATE SEQUENCE public.divisions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -415,7 +408,6 @@ CREATE TABLE public.expertises (
 --
 
 CREATE SEQUENCE public.expertises_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -452,7 +444,6 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -519,7 +510,6 @@ CREATE TABLE public.honor_code_agreements (
 --
 
 CREATE SEQUENCE public.honor_code_agreements_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -554,7 +544,6 @@ CREATE TABLE public.jobs (
 --
 
 CREATE SEQUENCE public.jobs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -592,7 +581,6 @@ CREATE TABLE public.join_requests (
 --
 
 CREATE SEQUENCE public.join_requests_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -616,7 +604,8 @@ CREATE TABLE public.judge_assignments (
     team_id integer,
     judge_profile_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    user_invitation_id bigint
 );
 
 
@@ -625,7 +614,6 @@ CREATE TABLE public.judge_assignments (
 --
 
 CREATE SEQUENCE public.judge_assignments_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -668,7 +656,6 @@ CREATE TABLE public.judge_profiles (
 --
 
 CREATE SEQUENCE public.judge_profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -712,7 +699,6 @@ CREATE TABLE public.memberships (
 --
 
 CREATE SEQUENCE public.memberships_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -745,7 +731,6 @@ CREATE TABLE public.mentor_profile_expertises (
 --
 
 CREATE SEQUENCE public.mentor_profile_expertises_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -785,7 +770,6 @@ CREATE TABLE public.mentor_profiles (
 --
 
 CREATE SEQUENCE public.mentor_profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -826,7 +810,6 @@ CREATE TABLE public.messages (
 --
 
 CREATE SEQUENCE public.messages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -866,7 +849,6 @@ CREATE TABLE public.multi_messages (
 --
 
 CREATE SEQUENCE public.multi_messages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -902,7 +884,6 @@ CREATE TABLE public.parental_consents (
 --
 
 CREATE SEQUENCE public.parental_consents_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -935,7 +916,6 @@ CREATE TABLE public.pitch_presentations (
 --
 
 CREATE SEQUENCE public.pitch_presentations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -974,7 +954,6 @@ CREATE TABLE public.regional_ambassador_profiles (
 --
 
 CREATE SEQUENCE public.regional_ambassador_profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1049,7 +1028,6 @@ CREATE TABLE public.regional_pitch_events (
 --
 
 CREATE SEQUENCE public.regional_pitch_events_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1121,7 +1099,6 @@ CREATE TABLE public.regions (
 --
 
 CREATE SEQUENCE public.regions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1199,7 +1176,6 @@ CREATE TABLE public.screenshots (
 --
 
 CREATE SEQUENCE public.screenshots_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1238,7 +1214,6 @@ CREATE TABLE public.signup_attempts (
 --
 
 CREATE SEQUENCE public.signup_attempts_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1273,7 +1248,6 @@ CREATE TABLE public.student_profiles (
 --
 
 CREATE SEQUENCE public.student_profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1333,7 +1307,6 @@ CREATE TABLE public.submission_scores (
 --
 
 CREATE SEQUENCE public.submission_scores_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1372,7 +1345,6 @@ CREATE TABLE public.team_member_invites (
 --
 
 CREATE SEQUENCE public.team_member_invites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1436,7 +1408,6 @@ CREATE TABLE public.team_submissions (
 --
 
 CREATE SEQUENCE public.team_submissions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1468,11 +1439,11 @@ CREATE TABLE public.teams (
     accepting_mentor_requests boolean DEFAULT true NOT NULL,
     latitude double precision,
     longitude double precision,
-    seasons text[] DEFAULT '{}'::text[],
     city character varying,
     state_province character varying,
     country character varying,
     deleted_at timestamp without time zone,
+    seasons text[] DEFAULT '{}'::text[],
     has_students boolean DEFAULT false NOT NULL,
     has_mentor boolean DEFAULT false NOT NULL
 );
@@ -1483,7 +1454,6 @@ CREATE TABLE public.teams (
 --
 
 CREATE SEQUENCE public.teams_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1551,7 +1521,6 @@ CREATE TABLE public.technical_checklists (
 --
 
 CREATE SEQUENCE public.technical_checklists_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -2279,24 +2248,10 @@ CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (emai
 
 
 --
--- Name: index_accounts_on_mailer_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_accounts_on_mailer_token ON public.accounts USING btree (mailer_token);
-
-
---
 -- Name: index_accounts_on_password_reset_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_accounts_on_password_reset_token ON public.accounts USING btree (password_reset_token);
-
-
---
--- Name: index_accounts_on_session_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_accounts_on_session_token ON public.accounts USING btree (session_token);
 
 
 --
@@ -2377,13 +2332,6 @@ CREATE INDEX index_join_requests_on_requestor_type_and_requestor_id ON public.jo
 
 
 --
--- Name: index_join_requests_on_review_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_join_requests_on_review_token ON public.join_requests USING btree (review_token);
-
-
---
 -- Name: index_join_requests_on_team_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2402,6 +2350,13 @@ CREATE INDEX index_judge_assignments_on_judge_profile_id ON public.judge_assignm
 --
 
 CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USING btree (team_id);
+
+
+--
+-- Name: index_judge_assignments_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_assignments_on_user_invitation_id ON public.judge_assignments USING btree (user_invitation_id);
 
 
 --
@@ -2679,6 +2634,14 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 
 --
+-- Name: judge_assignments fk_rails_3be728c4b4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_assignments
+    ADD CONSTRAINT fk_rails_3be728c4b4 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
 -- Name: accounts fk_rails_55bc732a9a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2919,6 +2882,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171018170002'),
 ('20171018184701'),
 ('20171019162859'),
+('20171019230759'),
 ('20171019230800'),
 ('20171020085320'),
 ('20171020135709'),
@@ -2933,6 +2897,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171107225231'),
 ('20171107233018'),
 ('20171108140911'),
+('20171110224550'),
 ('20171113170115'),
 ('20171113170150'),
 ('20171113215850'),
@@ -2971,6 +2936,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180216172742'),
 ('20180228150454'),
 ('20180228172449'),
-('20180301140524');
+('20180301140524'),
+('20180313204753');
 
 

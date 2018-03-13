@@ -1,7 +1,9 @@
 module RegionalAmbassador
   class JudgeAssignmentsController < RegionalAmbassadorController
     def create
-      judge = JudgeProfile.find(assignment_params.fetch(:judge_id))
+      model = assignment_params.fetch(:model_scope).constantize
+      judge = model.find(assignment_params.fetch(:judge_id))
+
       team = Team.find(assignment_params.fetch(:team_id))
 
       judge.assigned_teams << team
@@ -14,7 +16,9 @@ module RegionalAmbassador
     end
 
     def destroy
-      judge = JudgeProfile.find(assignment_params.fetch(:judge_id))
+      model = assignment_params.fetch(:model_scope).constantize
+      judge = model.find(assignment_params.fetch(:judge_id))
+
       team = Team.find(assignment_params.fetch(:team_id))
 
       judge.assigned_teams.destroy(team)
@@ -31,6 +35,7 @@ module RegionalAmbassador
       params.require(:judge_assignment).permit(
         :judge_id,
         :team_id,
+        :model_scope,
       )
     end
   end

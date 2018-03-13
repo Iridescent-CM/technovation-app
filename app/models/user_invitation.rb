@@ -33,6 +33,11 @@ class UserInvitation < ApplicationRecord
   belongs_to :account, required: false
   belongs_to :current_account, -> { current }, required: false
 
+  has_many :judge_assignments
+  has_many :assigned_teams,
+    through: :judge_assignments,
+    source: :team
+
   delegate :name,
     to: :account,
     prefix: true,
@@ -117,7 +122,7 @@ class UserInvitation < ApplicationRecord
   end
 
   def name
-    "Invited judge"
+    "Invited judge - #{email}"
   end
 
   def id_for_event

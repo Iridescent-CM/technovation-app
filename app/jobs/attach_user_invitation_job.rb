@@ -13,6 +13,11 @@ class AttachUserInvitationJob < ActiveJob::Base
           event.user_invitations.destroy(invite)
           event.judges << account.judge_profile
         end
+
+        invite.judge_assignments.each do |assignment|
+          assignment.judge_profie = account.judge_profile
+          assignment.save!
+        end
       end
     end
   end

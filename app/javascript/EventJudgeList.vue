@@ -47,30 +47,26 @@
                 />
               </div>
 
-              <div
-                v-if="judge.links.self"
-                class="cutoff-with-ellipsis"
-              >
-                <a
-                  data-turbolinks="false"
-                  target="_blank"
-                  :href="judge.links.self"
-                >
+              <div class="cutoff-with-ellipsis">
+                <template v-if="judge.links.self">
+                  <a
+                    data-turbolinks="false"
+                    target="_blank"
+                    :href="judge.links.self"
+                  >
+                    {{ judge.name }}
+                  </a>
+                </template>
+
+                <template v-else>
                   {{ judge.name }}
-                </a>
+                </template>
 
                 <ul class="list--reset list--indented font-small">
                   <li v-for="team in judge.assignedTeams">
                     {{ team.name }}
                   </li>
                 </ul>
-              </div>
-
-              <div
-                v-else
-                class="cutoff-with-ellipsis"
-              >
-                {{ judge.name }}
               </div>
             </td>
 

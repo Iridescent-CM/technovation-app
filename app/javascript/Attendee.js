@@ -102,6 +102,7 @@ export default function Attendee (json) {
 
     data.append(`judge_assignment[${opts.otherParam}]`, opts.other.id)
     data.append(`judge_assignment[${opts.thisParam}]`, opts.this.id)
+    data.append(`judge_assignment[model_scope]`, opts.other.scope)
 
     $.ajax({
       method: opts.method,
