@@ -51,6 +51,12 @@
                 >
                   {{ judge.name }}
                 </a>
+
+                <ul class="list--reset list--indented font-small">
+                  <li v-for="team in judge.assignedTeams">
+                    {{ team.name }}
+                  </li>
+                </ul>
               </div>
 
               <div
