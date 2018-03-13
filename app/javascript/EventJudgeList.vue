@@ -108,8 +108,14 @@
               :childItems="filteredTeams"
               :handleSelection="toggleSelection.bind(this, judge)"
               :handleClose="handleClose.bind(this, judge)"
+              :isAssigned="judge.isAssignedToTeam"
+              col2Header="Submission"
               placeholder="Filter by team or submission name"
-            />
+            >
+              <template slot="col-2" slot-scope="item">
+                <td>{{ item.submission.name }}</td>
+              </template>
+            </attendee-filter>
           </tr>
         </tbody>
       </table>

@@ -16,7 +16,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th colspan="2">Email</th>
+              <th colspan="2">{{ col2Header }}</th>
             </tr>
           </thead>
 
@@ -28,16 +28,16 @@
               @click="handleSelection(item)"
             >
               <td>{{ item.name }}</td>
-              <td>{{ item.submission.name }}</td>
+              <slot name="col-2" v-bind="item" />
 
               <td
                 class="light-opacity"
-                v-show="!item.isAssignedToJudge(parentItem)"
+                v-show="!isAssigned(item, parentItem)"
               >
                 <icon name="check-circle-o" />
               </td>
 
-              <td v-show="item.isAssignedToJudge(parentItem)">
+              <td v-show="isAssigned(item, parentItem)">
                 <icon name="check-circle" color="228b22" />
               </td>
             </tr>
@@ -75,8 +75,10 @@
       'parentItem',
       'childItems',
       'placeholder',
+      'col2Header',
       'handleSelection',
-      'handleClose'
+      'handleClose',
+      'isAssigned'
     ],
 
     components: {

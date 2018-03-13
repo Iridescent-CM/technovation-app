@@ -103,64 +103,20 @@
               </div>
             </td>
 
-            <div
-              class="modal-container"
-              v-show="team.addingJudges"
+            <attendee-filter
+              v-if="team.addingJudges"
+              :parentItem="team"
+              :childItems="filteredJudges"
+              :handleSelection="toggleSelection.bind(this, team)"
+              :handleClose="handleClose.bind(this, team)"
+              :isAssigned="team.isAssignedToJudge"
+              col2Header="Email"
+              placeholder="Filter by name or email"
             >
-              <div class="modal">
-                <input
-                  type="search"
-                  placeholder="Filter by name or email"
-                  v-model="judgeFilter"
-                />
-
-                <div
-                  v-show="filteredJudges.length"
-                  class="overflow-scroll"
-                >
-                  <table class="width-full-container headers--left-align">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th colspan="2">Email</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      <tr
-                        class="cursor-pointer"
-                        v-for="judge in filteredJudges"
-                        :key="judge.id"
-                        @click="toggleSelection(team, judge)"
-                      >
-                        <td>{{ judge.name }}</td>
-                        <td>{{ judge.email }}</td>
-
-                        <td
-                          class="light-opacity"
-                          v-show="!judge.isAssignedToTeam(team)"
-                        >
-                          <icon name="check-circle-o" />
-                        </td>
-
-                        <td v-show="judge.isAssignedToTeam(team)">
-                          <icon name="check-circle" color="228b22" />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="modal-footer">
-                  <button
-                    class="button--unmask"
-                    @click="team.addingJudges = false"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </div>
+              <template slot="col-2" slot-scope="item">
+                <td>{{ item.email }}</td>
+              </template>
+            </attendee-filter>
           </tr>
         </tbody>
       </table>
@@ -189,6 +145,8 @@
   import TeamSearch from './TeamSearch';
   import EventBus from './EventBus';
 
+  import AttendeeFilter from './AttendeeFilter'
+
   export default {
     data () {
       return {
@@ -204,6 +162,10 @@
     ],
 
     methods: {
+      handleClose (team) {
+        team.addingJudges = false
+      },
+
       toggleSelection(team, judge) {
         if (judge.isAssignedToTeam(team)) {
           judge.unassignTeam(team)
@@ -327,6 +289,7 @@
       App,
       Icon,
       TeamSearch,
+      AttendeeFilter,
     },
 
     mounted () {
