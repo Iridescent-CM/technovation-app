@@ -355,6 +355,7 @@
 
 <style lang="scss" scoped>
   .team-list {
+    word-break: break-all;
     width: 100%;
 
     .team-list__actions {
@@ -376,6 +377,7 @@
     }
 
     th {
+      word-break: keep-all;
       text-align: left;
     }
 

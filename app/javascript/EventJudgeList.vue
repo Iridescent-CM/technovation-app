@@ -253,6 +253,7 @@
 
 <style lang="scss" scoped>
   .judge-list {
+    word-break: break-all;
     width: 100%;
 
     .judge-list__actions {
@@ -270,6 +271,7 @@
     }
 
     th {
+      word-break: keep-all;
       text-align: left;
     }
 
