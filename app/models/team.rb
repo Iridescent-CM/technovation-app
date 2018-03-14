@@ -263,6 +263,7 @@ class Team < ActiveRecord::Base
   def selected_regional_pitch_event_name
     selected_regional_pitch_event.name
   end
+  alias :event_name :selected_regional_pitch_event_name
 
   def region_name
     if %w{Brasil Brazil}.include?(state_province || "")
