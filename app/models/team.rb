@@ -44,6 +44,7 @@ class Team < ActiveRecord::Base
   def in_event?(event)
     selected_regional_pitch_event == event
   end
+  alias :attending_event? :in_event?
 
   scope :not_staff, -> {
     where.not("teams.name ilike ?", "%staff test%")
@@ -263,6 +264,7 @@ class Team < ActiveRecord::Base
   def selected_regional_pitch_event_name
     selected_regional_pitch_event.name
   end
+  alias :event_name :selected_regional_pitch_event_name
 
   def region_name
     if %w{Brasil Brazil}.include?(state_province || "")

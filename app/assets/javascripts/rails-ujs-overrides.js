@@ -18,7 +18,7 @@ $.rails.showConfirmationDialog = function(link) {
   var positive = link.data("positive");
 
   swal({
-    text: link.data("confirm"),
+    html: link.data("confirm"),
     cancelButtonText: "No, go back",
     confirmButtonText: "Yes, do it",
     confirmButtonColor: positive ? "#5ABF94" : "#D8000C",

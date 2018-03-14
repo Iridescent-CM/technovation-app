@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resource :regional_pitch_event_selection,
       only: [:show, :create, :update, :destroy]
 
-    resources :regional_pitch_events, only: :show
+    resources :regional_pitch_events, only: [:show, :index]
     resources :scores, only: [:show]
 
     resources :certificates, only: :create

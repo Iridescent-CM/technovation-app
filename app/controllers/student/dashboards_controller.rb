@@ -2,7 +2,10 @@ module Student
   class DashboardsController < StudentController
 
     def show
-      @regional_events = RegionalPitchEvent.available_to(current_team.submission)
+      @regional_events = RegionalPitchEvent.available_to(
+        current_team.submission
+      )
+
       @all_scores = SubmissionScore.none
       @quarterfinals_scores = SubmissionScore.none
       @semifinals_scores = SubmissionScore.none

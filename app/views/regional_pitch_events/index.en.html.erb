@@ -1,0 +1,14 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-8">
+    <h4 class="content-heading">Select an Regional Pitch Event</h4>
+
+    <%= render partial: 'regional_pitch_events/event',
+      collection: @regional_events %>
+
+    <p>
+      <%= link_to 'Go back',
+        public_send("#{current_scope}_dashboard_path"),
+        class: "button small" %>
+    </p>
+  </div>
+</div>

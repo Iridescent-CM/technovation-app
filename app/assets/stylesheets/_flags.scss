@@ -13,22 +13,11 @@
     font-size: 0.9rem;
     font-weight: 700;
     box-shadow: $shadow-small;
-
-    &.flag-success {
-      background: $mulberry;
-      color: white;
-    }
+    background: $mulberry;
+    color: white;
 
     &.flag-notice {
       background: $marine;
-    }
-
-    &.flag-registration,
-    &.flag-submission,
-    &.flag-team,
-    &.flag-mentor {
-      background: $mulberry;
-      color: white;
     }
   }
 }

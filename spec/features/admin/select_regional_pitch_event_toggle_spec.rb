@@ -4,77 +4,25 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   before { SeasonToggles.judging_round = :off }
 
   context "Student dashboard" do
-    let(:user) { FactoryBot.create(:student, :on_team) }
-    let(:rpe) { FactoryBot.create(:rpe) }
-    let(:sub) { FactoryBot.create(:submission, :junior) }
+    let!(:rpe) { FactoryBot.create(:event, :chicago, :junior) }
+
+    let(:sub) { FactoryBot.create(:submission, :chicago, :junior) }
     let(:path) { student_dashboard_path(anchor: "live-events") }
 
     before do
-      user.team.team_submissions << sub
-      rpe.teams << user.team
-
-      sign_in(user)
-    end
-
-    scenario "Toggled on" do
-      skip "Rebuilding student dashboard: RPE selection not back yet"
-
-      SeasonToggles.select_regional_pitch_event="on"
-      visit path
-      expect(page).to have_link("remove your team from this event")
-    end
-
-    scenario "Toggled off" do
-      skip "Rebuilding student dashboard: RPE selection not back yet"
-
-      SeasonToggles.select_regional_pitch_event="off"
-      visit path
-      expect(page).not_to have_link("remove your team from this event")
-    end
-  end
-
-  context "Student regional pitch event page for team's event" do
-    let(:user) { FactoryBot.create(:student, :on_team) }
-    let(:rpe) { FactoryBot.create(:rpe) }
-    let(:path) { student_regional_pitch_event_path(id: rpe.id) }
-
-    before do
-      rpe.teams << user.team
-      sign_in(user)
+      sign_in(sub.team.students.sample)
     end
 
     scenario "Toggled on" do
       SeasonToggles.select_regional_pitch_event="on"
       visit path
-      expect(page).to have_link("Remove #{user.team.name} from this event")
+      expect(page).to have_link("Attend an Event")
     end
 
     scenario "Toggled off" do
       SeasonToggles.select_regional_pitch_event="off"
       visit path
-      expect(page).not_to have_link("Remove #{user.team.name} from this event")
-    end
-  end
-
-  context "Student regional pitch event page for different event" do
-    let(:user) { FactoryBot.create(:student, :on_team) }
-    let(:rpe) { FactoryBot.create(:rpe) }
-    let(:path) { student_regional_pitch_event_path(id: rpe.id) }
-
-    before do
-      sign_in(user)
-    end
-
-    scenario "Toggled on" do
-      SeasonToggles.select_regional_pitch_event="on"
-      visit path
-      expect(page).to have_link("Select this event instead")
-    end
-
-    scenario "Toggled off" do
-      SeasonToggles.select_regional_pitch_event="off"
-      visit path
-      expect(page).not_to have_link("Select this event instead")
+      expect(page).not_to have_link("Attend an Event")
     end
   end
 

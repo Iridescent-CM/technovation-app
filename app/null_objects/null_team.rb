@@ -20,7 +20,11 @@ class NullTeam < NullObject
   end
 
   def selected_regional_pitch_event
-    ::NullRegionalPitchEvent.new
+    ::NullEvent.new
+  end
+
+  def live_event?
+    false
   end
 
   def submission
