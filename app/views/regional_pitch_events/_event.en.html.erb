@@ -67,10 +67,8 @@
               data: {
                 positive: true,
                 method: :post,
-                confirm: "Are you sure you want to attend " +
-                  "#{event.name}? You can't change this choice. " +
-                  "Please check with your regional ambassador " +
-                  "if you have questions",
+                confirm: "Are you sure you want to attend #{event.name}? " +
+                  "<p><strong>You cannot change this.</strong></p>"
               } %>
           </p>
         <% end %>
