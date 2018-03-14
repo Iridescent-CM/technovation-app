@@ -23,6 +23,10 @@ class NullTeam < NullObject
     ::NullEvent.new
   end
 
+  def live_event?
+    false
+  end
+
   def submission
     ::NullTeamSubmission.new
   end

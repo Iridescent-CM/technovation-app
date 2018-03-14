@@ -3,7 +3,9 @@ module Student
     before_action :require_current_team
 
     def index
-      @regional_events = RegionalPitchEvent.available_to(current_team.submission)
+      @regional_events = RegionalPitchEvent.available_to(
+        current_team.submission
+      )
       render template: 'regional_pitch_events/index'
     end
 
