@@ -1,6 +1,6 @@
 <li class="completion-step">
+<h1 class="content-heading">Select a regional pitch event</h1>
   <% if !current_team.selected_regional_pitch_event.live? && @regional_events.any? %>
-    <h1 class="content-heading">Select a regional pitch event</h1>
     <p>
       Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
     </p>
@@ -10,7 +10,6 @@
           class: "button" %>
     </div>
   <% elsif current_team.selected_regional_pitch_event.live? %>
-    <h1 class="content-heading">Regional pitch event</h1>
     <p>
       You are attending <strong><%= current_team.selected_regional_pitch_event.name %></strong>. If this is a mistake or you want to attend a different event please contact your regional ambassador.
     </p>
