@@ -1,6 +1,13 @@
 <li class="completion-step">
-<h1 class="content-heading">Select a regional pitch event</h1>
-  <% if !current_team.selected_regional_pitch_event.live? && @regional_events.any? %>
+  <div class="flags">
+    <span class="flag flag-events">
+      Regional Pitch Events
+    </span>
+  </div>
+
+  <h1 class="content-heading">Select a regional pitch event</h1>
+
+  <% if !current_team.live_event? && @regional_events.any? %>
     <p>
       Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
     </p>
