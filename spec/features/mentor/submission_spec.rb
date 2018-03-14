@@ -65,7 +65,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Marketing"
+    click_link "Pitch"
 
     expect(page).to have_link(
       "Add the demo video link",
@@ -83,7 +83,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Code"
+    click_link "Technical"
 
     expect(page).to have_link(
       "Select your development platform",
@@ -101,7 +101,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Marketing"
+    click_link "Pitch"
 
     expect(page).to have_link(
       "Upload screenshots of your app",
@@ -123,7 +123,7 @@ RSpec.feature "Student team submissions" do
 
     click_link "Edit this team's submission"
 
-    click_link "Business"
+    click_link "Entrepreneurship"
 
     expect(page).not_to have_link(
       "Upload your team's business plan",
@@ -146,7 +146,7 @@ RSpec.feature "Student team submissions" do
     visit mentor_dashboard_path
     click_link "Edit this team's submission"
 
-    click_link "Business"
+    click_link "Entrepreneurship"
 
     expect(page).to have_link(
       "Upload your team's business plan",

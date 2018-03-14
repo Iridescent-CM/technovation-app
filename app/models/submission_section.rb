@@ -2,17 +2,17 @@ class SubmissionSection
   SECTION_NAMES = {
     0 => "start",
     1 => "ideation",
-    2 => "marketing",
-    3 => "code",
-    4 => "business",
+    2 => "technical",
+    3 => "pitch",
+    4 => "entrepreneurship",
     5 => "pitch_presentation",
   }
 
   SECTION_GROUPS = {
     0 => %w{honor_code team_photo},
     1 => %w{app_name app_description},
-    2 => %w{demo_video_link pitch_video_link screenshots},
-    3 => %w{development_platform source_code code_checklist},
+    2 => %w{development_platform source_code code_checklist},
+    3 => %w{demo_video_link pitch_video_link screenshots},
     4 => %w{business_plan},
     5 => %w{pitch_presentation},
   }

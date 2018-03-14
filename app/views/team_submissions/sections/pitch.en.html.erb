@@ -1,17 +1,17 @@
-<% provide :title, "Submission: Marketing" %>
+<% provide :title, "Submission: Pitch" %>
 
-<% provide :back_link_txt, "Ideation" %>
+<% provide :back_link_txt, "Technical" %>
 <% provide :back_link, send(
   "#{current_scope}_team_submission_section_path",
   @team_submission,
-  section: :ideation
+  section: :technical
 ) %>
 
-<% provide :next_link_txt, "Code" %>
+<% provide :next_link_txt, "Entrepreneurship" %>
 <% provide :next_link, send(
   "#{current_scope}_team_submission_section_path",
   @team_submission,
-  section: :code
+  section: :entrepreneurship
 ) %>
 
 <%= render 'team_submissions/pieces/piece',

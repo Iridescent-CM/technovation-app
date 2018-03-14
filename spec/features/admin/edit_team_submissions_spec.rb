@@ -53,7 +53,7 @@ RSpec.feature "Toggling editable team submissions" do
           click_link("Edit this team's submission")
         end
 
-        click_link "Code"
+        click_link "Technical"
         click_link "Confirm your code checklist"
 
         check "technical_checklist[used_strings]"

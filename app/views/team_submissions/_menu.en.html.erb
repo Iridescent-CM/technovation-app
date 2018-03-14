@@ -61,45 +61,8 @@
 
   <div class="progress__section">
     <h1>
-      <%= link_to "Marketing",
-        [current_scope, submission, :section, section: :marketing] %>
-    </h1>
-
-    <ol class="list--reset">
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :demo_video,
-          "Demo video"
-        ),
-        [current_scope, submission, piece: :demo_video_link] %>
-      </li>
-
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :pitch_video,
-          "Pitch video"
-        ),
-        [current_scope, submission, piece: :pitch_video_link] %>
-      </li>
-
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :screenshots,
-          "2 or more screenshots"
-        ),
-        [current_scope, submission, piece: :screenshots],
-        data: { turbolinks: false } %>
-      </li>
-    </ol>
-  </div>
-
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Code",
-        [current_scope, submission, :section, section: :code] %>
+      <%= link_to "Technical",
+        [current_scope, submission, :section, section: :technical] %>
     </h1>
 
     <ol class="list--reset">
@@ -142,8 +105,45 @@
 
   <div class="progress__section">
     <h1>
-      <%= link_to "Business",
-        [current_scope, submission, :section, section: :business] %>
+      <%= link_to "Pitch",
+        [current_scope, submission, :section, section: :pitch] %>
+    </h1>
+
+    <ol class="list--reset">
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :demo_video,
+          "Demo video"
+        ),
+        [current_scope, submission, piece: :demo_video_link] %>
+      </li>
+
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :pitch_video,
+          "Pitch video"
+        ),
+        [current_scope, submission, piece: :pitch_video_link] %>
+      </li>
+
+      <li>
+        <%= link_to submission_progress_web_icon(
+          submission,
+          :screenshots,
+          "2 or more screenshots"
+        ),
+        [current_scope, submission, piece: :screenshots],
+        data: { turbolinks: false } %>
+      </li>
+    </ol>
+  </div>
+
+  <div class="progress__section">
+    <h1>
+      <%= link_to "Entrepreneurship",
+        [current_scope, submission, :section, section: :entrepreneurship] %>
     </h1>
 
     <ol class="list--reset">

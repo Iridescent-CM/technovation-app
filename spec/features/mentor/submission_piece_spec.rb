@@ -67,7 +67,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the demo video" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
       click_link "Add the demo video link"
@@ -94,7 +94,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the pitch video" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".pitch_video_link.incomplete") do
       click_link "Add the pitch video link"
@@ -121,7 +121,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the pitch video with youku" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".pitch_video_link.incomplete") do
       click_link "Add the pitch video link"
@@ -151,7 +151,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the demo video with youku" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
       click_link "Add the demo video link"
@@ -178,7 +178,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the devleopment platform" do
-    click_link "Code"
+    click_link "Technical"
 
     within(".development_platform.incomplete") do
       click_link "Select your development platform"
@@ -206,7 +206,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .zip source code" do
-    click_link "Code"
+    click_link "Technical"
 
     within(".source_code.incomplete") do
       click_link "Upload your app's source code"
@@ -237,7 +237,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .aia source code" do
-    click_link "Code"
+    click_link "Technical"
 
     within(".source_code.incomplete") do
       click_link "Upload your app's source code"
@@ -268,7 +268,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload a .pdf business plan" do
-    click_link "Business"
+    click_link "Entrepreneurship"
 
     within(".business_plan.incomplete") do
       click_link "Upload your team's business plan"
