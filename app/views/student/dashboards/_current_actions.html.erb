@@ -22,7 +22,9 @@
     hidden: SeasonToggles.team_building_disabled? ||
               current_student.is_on_team? %>
 
-  <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
+  <% if SeasonToggles.select_regional_pitch_event? %>
+    <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
+  <% end %>
 
   <%= render "student/dashboards/completion_steps/team_submission" %>
 
