@@ -65,7 +65,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Marketing"
+    click_link "Pitch"
 
     expect(page).to have_link(
       "Add the demo video link",
@@ -101,7 +101,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Marketing"
+    click_link "Pitch"
 
     expect(page).to have_link(
       "Upload screenshots of your app",

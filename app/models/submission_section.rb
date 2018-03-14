@@ -2,7 +2,7 @@ class SubmissionSection
   SECTION_NAMES = {
     0 => "start",
     1 => "ideation",
-    2 => "marketing",
+    2 => "pitch",
     3 => "code",
     4 => "business",
     5 => "pitch_presentation",

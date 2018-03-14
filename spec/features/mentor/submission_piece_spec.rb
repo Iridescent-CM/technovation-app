@@ -67,7 +67,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the demo video" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
       click_link "Add the demo video link"
@@ -94,7 +94,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the pitch video" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".pitch_video_link.incomplete") do
       click_link "Add the pitch video link"
@@ -121,7 +121,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the pitch video with youku" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".pitch_video_link.incomplete") do
       click_link "Add the pitch video link"
@@ -151,7 +151,7 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Set the demo video with youku" do
-    click_link "Marketing"
+    click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
       click_link "Add the demo video link"

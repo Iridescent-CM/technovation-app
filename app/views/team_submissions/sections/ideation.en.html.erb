@@ -7,11 +7,11 @@
   section: :start
 ) %>
 
-<% provide :next_link_txt, "Marketing" %>
+<% provide :next_link_txt, "Pitch" %>
 <% provide :next_link, send(
   "#{current_scope}_team_submission_section_path",
   @team_submission,
-  section: :marketing
+  section: :pitch
 ) %>
 
 <%= render 'team_submissions/pieces/piece',
