@@ -37,7 +37,8 @@ class Attendee
         ),
       })
 
-      base[:assignments][:judge_ids] = record.assigned_judges.pluck(:id)
+      base[:assignments][:judge_ids] = record.judge_assignments
+        .pluck(:assigned_judge_id)
 
       base.merge({
         division: record.division_name,

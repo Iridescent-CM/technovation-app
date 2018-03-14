@@ -214,9 +214,6 @@ class Team < ActiveRecord::Base
     after_remove: ->(team, event) { team.submission.touch }
 
   has_many :judge_assignments
-  has_many :assigned_judges,
-    through: :judge_assignments,
-    source: :judge_profile
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true

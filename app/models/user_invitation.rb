@@ -33,7 +33,7 @@ class UserInvitation < ApplicationRecord
   belongs_to :account, required: false
   belongs_to :current_account, -> { current }, required: false
 
-  has_many :judge_assignments, dependent: :destroy
+  has_many :judge_assignments, as: :assigned_judge, dependent: :destroy
   has_many :assigned_teams,
     through: :judge_assignments,
     source: :team

@@ -15,7 +15,7 @@ class AttachUserInvitationJob < ActiveJob::Base
         end
 
         invite.judge_assignments.each do |assignment|
-          assignment.judge_profile = account.judge_profile
+          assignment.assigned_judge = account.judge_profile
           assignment.save!
         end
       end

@@ -602,10 +602,10 @@ ALTER SEQUENCE public.join_requests_id_seq OWNED BY public.join_requests.id;
 CREATE TABLE public.judge_assignments (
     id integer NOT NULL,
     team_id integer,
-    judge_profile_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    user_invitation_id bigint
+    assigned_judge_type character varying,
+    assigned_judge_id integer
 );
 
 
@@ -2339,24 +2339,10 @@ CREATE INDEX index_join_requests_on_team_id ON public.join_requests USING btree 
 
 
 --
--- Name: index_judge_assignments_on_judge_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_judge_assignments_on_judge_profile_id ON public.judge_assignments USING btree (judge_profile_id);
-
-
---
 -- Name: index_judge_assignments_on_team_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USING btree (team_id);
-
-
---
--- Name: index_judge_assignments_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_judge_assignments_on_user_invitation_id ON public.judge_assignments USING btree (user_invitation_id);
 
 
 --
@@ -2634,14 +2620,6 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 
 --
--- Name: judge_assignments fk_rails_3be728c4b4; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.judge_assignments
-    ADD CONSTRAINT fk_rails_3be728c4b4 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
-
-
---
 -- Name: accounts fk_rails_55bc732a9a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2794,14 +2772,6 @@ ALTER TABLE ONLY public.admin_profiles
 
 
 --
--- Name: judge_assignments fk_rails_d22de5943d; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.judge_assignments
-    ADD CONSTRAINT fk_rails_d22de5943d FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
-
-
---
 -- Name: business_plans fk_rails_de87026bfd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2937,6 +2907,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180228150454'),
 ('20180228172449'),
 ('20180301140524'),
-('20180313204753');
+('20180313204753'),
+('20180314144804');
 
 
