@@ -61,8 +61,10 @@ class RegionalPitchEvent < ActiveRecord::Base
       when JudgeProfile
         if record.country === "US"
           joins(ambassador: :account)
-          .where("accounts.country = 'US' AND accounts.state_province = ?",
-                 record.state_province)
+          .where(
+            "accounts.country = 'US' AND accounts.state_province = ?",
+            record.state_province
+          )
         else
           joins(ambassador: :account)
           .where("accounts.country = ?", record.country)
@@ -70,17 +72,17 @@ class RegionalPitchEvent < ActiveRecord::Base
       when TeamSubmission
         if record.country === "US"
           joins(:divisions)
-          .where("divisions.id = ?", record.division_id)
-          .joins(ambassador: :account)
-          .where(
-            "accounts.country = 'US' AND accounts.state_province = ?",
-            record.state_province
-          )
+            .where("divisions.id = ?", record.division_id)
+            .joins(ambassador: :account)
+            .where(
+              "accounts.country = 'US' AND accounts.state_province = ?",
+              record.state_province
+            )
         else
           joins(:divisions)
-          .where("divisions.id = ?", record.division_id)
-          .joins(ambassador: :account)
-          .where("accounts.country = ?", record.country)
+            .where("divisions.id = ?", record.division_id)
+            .joins(ambassador: :account)
+            .where("accounts.country = ?", record.country)
         end
       end
     else

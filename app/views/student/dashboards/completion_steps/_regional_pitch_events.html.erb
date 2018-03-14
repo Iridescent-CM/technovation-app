@@ -9,25 +9,32 @@
 
   <% if !current_team.live_event? && @regional_events.any? %>
     <p>
-      Attend a regional pitch event in your area to pitch your submisison to a live panel of judges.
+      Attend a regional pitch event in your area to pitch
+      your submisison to a live panel of judges.
     </p>
+
     <div class="step-actions">
       <%= link_to 'Attend an Event',
           student_regional_pitch_events_path,
           class: "button" %>
     </div>
-  <% elsif current_team.selected_regional_pitch_event.live? %>
+  <% elsif current_team.live_event? %>
     <p>
-      You are attending <strong><%= current_team.selected_regional_pitch_event.name %></strong>. If this is a mistake or you want to attend a different event please contact your regional ambassador.
+      You are attending
+      <strong><%= current_team.selected_regional_pitch_event_name %></strong>.
+      If this is a mistake or you want to attend a
+      different event please contact your regional ambassador.
     </p>
-     <div class="step-actions">
+
+    <div class="step-actions">
       <%= link_to 'View full details',
         [current_scope, current_team.selected_regional_pitch_event],
         class: "button" %>
     </div>
   <% else %>
     <p>
-      There are no regional pitch events in your region. When you submit, your work will be judged online.
+      There are no regional pitch events in your region.
+      When you submit, your work will be judged online.
     </p>
   <% end %>
 </li>
