@@ -134,10 +134,11 @@
 <script>
   import _ from "lodash";
 
-  import DatetimeInput from "./DatetimeInput";
-  import Errors from '../Errors';
-  import Event from '../Event';
-  import EventBus from '../EventBus';
+  import DatetimeInput from "../components/DatetimeInput";
+  import Errors from '../components/Errors';
+  import EventBus from '../components/EventBus';
+
+  import Event from './Event';
 
   export default {
     name: "event-form",

@@ -1,5 +1,11 @@
 <template>
-  <img :src="srcUrl" @click="handleClick" />
+  <img
+    :class="className"
+    :alt="alt"
+    :title="title"
+    :src="srcUrl"
+    @click="handleClick"
+  />
 </template>
 
 <script>
@@ -13,6 +19,9 @@
     },
 
     props: {
+      alt: String,
+      title: String,
+      className: String,
       name: String,
       color: String,
       size: [String, Number],

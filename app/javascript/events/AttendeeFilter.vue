@@ -28,7 +28,8 @@
               @click="handleSelection(item)"
             >
               <td>{{ item.name }}</td>
-              <slot name="col-2" v-bind="item" />
+
+              <slot name="col-2" v-bind="item"></slot>
 
               <td
                 class="light-opacity"
@@ -60,7 +61,7 @@
 <script>
   import _ from 'lodash';
 
-  import Icon from "./Icon";
+  import Icon from "../components/Icon";
 
   export default {
     name: "AttendeeList",

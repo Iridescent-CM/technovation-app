@@ -85,7 +85,8 @@
 <script>
   import _ from "lodash";
 
-  import Icon from "./Icon";
+  import Icon from "../components/Icon";
+
   import Attendee from "./Attendee";
 
   export default {

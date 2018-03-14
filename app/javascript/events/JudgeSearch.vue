@@ -34,8 +34,9 @@
 </template>
 
 <script>
+  import EventBus from '../components/EventBus';
+
   import AttendeeSearch from './AttendeeSearch'
-  import EventBus from './EventBus';
 
   export default {
     components: {

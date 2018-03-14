@@ -6,11 +6,11 @@ Vue.use(Vuex)
 
 import VTooltip from 'v-tooltip';
 
-import EventsTable from './EventsTable';
-import EventForm from './EventForm';
+import EventsTable from '../events/EventsTable';
+import EventForm from '../events/EventForm';
 
 import "flatpickr/dist/themes/material_green.css";
-import "tooltip.scss";
+import "../components/tooltip.scss";
 
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'

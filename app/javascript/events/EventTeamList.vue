@@ -2,114 +2,119 @@
   <div class="grid">
     <div class="grid__col-12 grid__col--bleed-y">
       <h6 class="heading--reset">
-        Selected judges
-        <span>({{ this.event.selectedJudges.length }})</span>
+        Selected teams
+        <span>({{ this.event.selectedTeams.length }})</span>
       </h6>
     </div>
 
-    <judge-search
+    <team-search
        v-if="!fetchingList"
        :event-bus-id="`event-${event.id}`"
        :event-id="event.id"
-    ></judge-search>
+    ></team-search>
 
     <div class="grid__col-12 grid__col--bleed-y">
       <table class="attendee-list">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Email</th>
+            <th>Division</th>
+            <th>Submission</th>
             <th>Status</th>
           </tr>
         </thead>
 
         <tbody>
           <tr
-            v-for="judge in event.selectedJudges"
-            @mouseover="hoverJudge(judge)"
-            :class="judge.recentlyAdded ? 'table-row--new' : ''"
-            :key="judge.email"
+            :class="team.recentlyAdded ? 'table-row--new' : ''"
+            :key="team.id"
+            @mouseover="hoverTeam(team)"
+            v-for="team in event.selectedTeams"
           >
             <td>
-              <div v-if="judge.hovering" class="attendee-list__actions">
+              <div v-if="team.hovering" class="attendee-list__actions">
                 <icon
-                  name="remove"
-                  size="16"
-                  color="ff0000"
-                  :handleClick="removeJudge.bind(this, judge)"
+                   name="remove"
+                   size="16"
+                   color="ff0000"
+                   :handleClick="removeTeam.bind(this, team)"
                 />
 
                 <icon
                    v-if="event.teamListIsTooLong()"
-                   name="flag"
+                   name="gavel"
                    size="16"
-                   :handleClick="addTeams.bind(this, judge)"
+                   :handleClick="addJudges.bind(this, team)"
                 />
               </div>
 
               <div class="cutoff-with-ellipsis">
-                <template v-if="judge.links.self">
-                  <a
-                    data-turbolinks="false"
-                    target="_blank"
-                    :href="judge.links.self"
-                  >
-                    {{ judge.name }}
-                  </a>
-                </template>
-
-                <template v-else>
-                  {{ judge.name }}
-                </template>
+                <a
+                  data-turbolinks="false"
+                  target="_blank"
+                  :href="team.links.self"
+                >
+                  {{ team.name }}
+                </a>
 
                 <ul class="list--reset list--indented font-small">
-                  <li v-for="team in judge.assignedTeams">
-                    {{ team.name }}
+                  <li v-for="judge in team.assignedJudges">
+                    {{ judge.name }}
                   </li>
                 </ul>
               </div>
             </td>
 
             <td>
+              {{ team.division }}
+            </td>
+
+            <td>
               <div class="cutoff-with-ellipsis">
-                <a :href="`mailto:${judge.email}`">{{ judge.email }}</a>
+                <a
+                  data-turbolinks="false"
+                  target="_blank"
+                  :href="team.links.submission"
+                >
+                  {{ team.submission.name }}
+                </a>
               </div>
             </td>
 
             <td>
               <label
                 class="label--reset"
-                v-if="judge.recentlyAdded"
+                v-if="team.recentlyAdded"
               >
-                <input type="checkbox" v-model="judge.sendInvitation" />
+                <input type="checkbox" v-model="team.sendInvitation" />
                 Send invite
               </label>
 
               <div v-else>
                 <span
-                  v-tooltip.top-center="judge.statusExplained"
+                  v-tooltip.top-center="team.statusExplained"
                   :class="[
                     'attendee-status',
-                    `attendee-status--${judge.statusColor}`
+                    `attendee-status--${team.statusColor}`
                   ]"
                 >
-                  {{ judge.humanStatus }}
+                  {{ team.humanStatus }}
                 </span>
               </div>
             </td>
 
             <attendee-filter
-              v-if="judge.addingTeams"
-              :parentItem="judge"
-              :childItems="filteredTeams"
-              :handleSelection="toggleSelection.bind(this, judge)"
-              :handleClose="handleClose.bind(this, judge)"
-              :isAssigned="judge.isAssignedToTeam"
-              col2Header="Submission"
-              placeholder="Filter by team or submission name"
+              v-if="team.addingJudges"
+              :parentItem="team"
+              :childItems="filteredJudges"
+              :handleSelection="toggleSelection.bind(this, team)"
+              :handleClose="handleClose.bind(this, team)"
+              :isAssigned="team.isAssignedToJudge"
+              col2Header="Email"
+              placeholder="Filter by name or email"
             >
               <template slot="col-2" slot-scope="item">
-                <td>{{ item.submission.name }}</td>
+                <td>{{ item.email }}</td>
               </template>
             </attendee-filter>
           </tr>
@@ -119,14 +124,14 @@
 
     <div
       class="grid__col-12 align-right"
-      v-if="changesToSave"
+      v-if="newTeamsToSave"
     >
       <p>
         <button
           class="button button--small"
           @click.prevent="saveAssignments"
         >
-          Save changes
+          Save selected teams
         </button>
       </p>
     </div>
@@ -136,18 +141,17 @@
 <script>
   import _ from 'lodash';
 
-  import Icon from "./Icon";
-  import JudgeSearch from './JudgeSearch';
-  import EventBus from './EventBus';
+  import Icon from "../components/Icon";
+  import EventBus from '../components/EventBus';
 
+  import TeamSearch from './TeamSearch';
   import AttendeeFilter from './AttendeeFilter'
 
   export default {
     data () {
       return {
         fetchingList: true,
-        changesToSave: false,
-        teamFilter: "",
+        judgeFilter: "",
       };
     },
 
@@ -157,20 +161,12 @@
       'event',
     ],
 
-    computed: {
-      filteredTeams ()  {
-        return _.filter(this.event.selectedTeams, t => {
-          return t.matchesQuery(this.teamFilter)
-        })
-      },
-    },
-
     methods: {
-      handleClose (judge) {
-        judge.addingTeams = false
+      handleClose (team) {
+        team.addingJudges = false
       },
 
-      toggleSelection(judge, team) {
+      toggleSelection(team, judge) {
         if (judge.isAssignedToTeam(team)) {
           judge.unassignTeam(team)
         } else {
@@ -178,34 +174,34 @@
         }
       },
 
-      hoverJudge (judge) {
-        _.each(this.event.selectedJudges, j => { j.hovering = false })
-        judge.hovering = true
+      hoverTeam (team) {
+        _.each(this.event.selectedTeams, t => { t.hovering = false })
+        team.hovering = true
       },
 
-      addTeams (judge) {
-        _.each(this.event.selectedJudges, j => { j.addingTeams = false })
-        judge.addingTeams = true
+      addJudges (team) {
+        _.each(this.event.selectedTeams, t => { t.addJudges = false })
+        team.addingJudges = true
       },
 
-      removeJudge (judge) {
+      removeTeam (team) {
         var vm = this,
-            modalHtml = judge.name + " - " + judge.email;
+            modalHtml = team.name;
 
-        modalHtml += !judge.recentlyAdded ?
+        modalHtml += !team.recentlyAdded ?
           "<p><small>an email will be sent</small></p>" :
           "<p><small>NO email will be sent</small></p>";
 
         confirmNegativeSwal({
-          title: "Remove this judge from " + vm.event.name + "? ",
+          title: "Remove this team from " + vm.event.name + "? ",
           html: modalHtml,
-          confirmButtonText: "Yes, remove this judge",
+          confirmButtonText: "Yes, remove this team",
         }).then((result) => {
           if (result.value) {
             var form = new FormData();
 
-            form.append("event_assignment[attendee_scope]", judge.scope);
-            form.append("event_assignment[attendee_id]", judge.id);
+            form.append("event_assignment[attendee_scope]", team.scope);
+            form.append("event_assignment[attendee_id]", team.id);
             form.append("event_assignment[event_id]", vm.event.id);
 
             $.ajax({
@@ -215,8 +211,9 @@
               contentType: false,
               processData: false,
 
-              success: (resp) => {
-                vm.event.removeJudge(judge);
+              success: () => {
+                vm.event.removeTeam(team);
+                vm.$store.commit('removeTeam', team)
               },
 
               error: (err) => {
@@ -232,30 +229,25 @@
       saveAssignments () {
         var form = new FormData();
 
-        _.each(this.event.selectedJudges, (judge, idx) => {
+        _.each(this.event.selectedTeams, (team, idx) => {
           form.append(
             `event_assignment[invites][${idx}][]id`,
-            judge.id
+            team.id
           )
 
           form.append(
             `event_assignment[invites][${idx}][]scope`,
-            judge.scope
-          )
-
-          form.append(
-            `event_assignment[invites][${idx}][]email`,
-            judge.email
+            team.scope
           )
 
           form.append(
             `event_assignment[invites][${idx}][]name`,
-            judge.name
+            team.name
           )
 
           form.append(
             `event_assignment[invites][${idx}][]send_email`,
-            judge.sendInvitation
+            team.sendInvitation
           );
         });
 
@@ -269,8 +261,7 @@
           processData: false,
 
           success: (resp) => {
-            this.event.judgeAssignmentsSaved();
-            this.changesToSave = false;
+            this.event.teamAssignmentsSaved();
           },
 
           error: (err) => {
@@ -280,31 +271,43 @@
       },
     },
 
+    computed: {
+      filteredJudges ()  {
+        return _.filter(this.event.selectedJudges, j => {
+          return j.matchesQuery(this.judgeFilter)
+        })
+      },
+
+      newTeamsToSave () {
+        return _.some(this.event.selectedTeams, 'recentlyAdded');
+      },
+    },
+
     components: {
       App,
-      JudgeSearch,
       Icon,
+      TeamSearch,
       AttendeeFilter,
     },
 
     mounted () {
       EventBus.$on(
-        "JudgeSearch.selected-event-" + this.event.id, (judge) => {
-          this.event.addJudge(judge);
-          this.changesToSave = true;
-        }
+        "TeamSearch.selected-event-" + this.event.id,
+        (selectedTeam) => { this.event.addTeam(selectedTeam); }
       );
 
       EventBus.$on(
-        "JudgeSearch.deselected-event-" + this.event.id, (judge) => {
-          this.removeJudge(judge);
+        "TeamSearch.deselected-event-" + this.event.id,
+        (deselectedTeam) => {
+          this.event.removeTeam(deselectedTeam);
+          this.$store.commit('removeTeam', deselectedTeam)
         }
       );
 
-      this.event.fetchJudges({
+      this.event.fetchTeams({
         onComplete: () => {
-          if (!this.event.selectedTeams.length) {
-            this.event.fetchTeams({
+          if (!this.event.selectedJudges.length) {
+            this.event.fetchJudges({
               onComplete: () => {
                 this.fetchingList = false
               },

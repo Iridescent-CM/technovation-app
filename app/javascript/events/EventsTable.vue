@@ -1,116 +1,114 @@
 <template>
-  <table class="datagrid">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Divisions</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <template v-for="event in events">
-        <tr
-          v-if="editingThisEventOrNone(event)"
-          :class="['event-preview', event.managing ? 'open' : '']"
-          :key="event.id"
-        >
-          <td>
+  <div class="grid">
+    <template v-for="event in events">
+      <div
+        v-if="editingThisEventOrNone(event)"
+        :class="['grid__col-12', event.managing ? 'open' : '']"
+        :key="event.id"
+      >
+        <div class="grid grid--bleed">
+          <div class="grid__col-auto">
             {{ event.name }}
-          </td>
+          </div>
 
-          <td>
+          <div class="grid__col-auto">
+            <small>Divisions:</small>
             {{ event.division_names }}
-          </td>
+          </div>
 
-          <td>
+          <div class="grid__col-auto">
             {{ event.day }} <small>{{ event.date }}</small>
-          </td>
+          </div>
 
-          <td>
+          <div class="grid__col-auto">
             {{ event.time }} <small>Timezone: {{ event.tz }}</small>
-          </td>
+          </div>
 
-          <td>
-            <template v-if="managingAttendanceEnabled">
-              <img
+          <div class="grid__col-auto">
+            <div class="grid__cell">
+              <icon
                 alt="edit teams"
                 title="Manage teams"
-                class="events-list__action-item"
-                src="https://icongr.am/fontawesome/flag.svg?size=16"
+                className="events-list__action-item"
+                name="flag"
+                size="16"
                 v-tooltip.top-center="editEventTeamsMsg"
-                @click.prevent="event.toggleManaging('managingTeams')"
+                :handleClick="
+                  event.toggleManaging.bind(event, 'managingTeams')
+                "
               />
 
-              <img
+              <icon
                 alt="edit judges"
                 title="Manage judges"
-                class="events-list__action-item"
-                src="https://icongr.am/fontawesome/gavel.svg?size=16"
+                className="events-list__action-item"
+                name="gavel"
+                size="16"
                 v-tooltip.top-center="editEventJudgesMsg"
-                @click.prevent="event.toggleManaging('managingJudges')"
+                :handleClick="
+                  event.toggleManaging.bind(event, 'managingJudges')
+                "
               />
-            </template>
 
-            <img
-              alt="edit"
-              class="events-list__action-item"
-              src="https://icongr.am/fontawesome/edit.svg?size=16"
-              @click.prevent="editEvent(event)"
-            />
+              <icon
+                alt="edit"
+                className="events-list__action-item"
+                name="edit"
+                size="16"
+                :handleClick="editEvent.bind(this, event)"
+              />
 
-            <img
-              alt="remove"
-              class="events-list__action-item"
-              src="https://icongr.am/fontawesome/remove.svg?size=16&color=ff0000"
-              @click.prevent="removeEvent(event)"
-            />
-          </td>
-        </tr>
+              <icon
+                alt="remove"
+                className="events-list__action-item"
+                name="remove"
+                size="16"
+                color="ff0000"
+                :handleClick="removeEvent.bind(this, event)"
+              />
+            </div>
+          </div>
+        </div>
 
-        <tr
+        <div
           class="event-manage"
           :key="event.id + '-manage'"
           v-if="!editingOne && event.managing"
         >
-          <td colspan="5">
-            <event-judge-list
-              v-if="event.managingJudges"
-              :event="event"
-              :fetchUrl="searchJudgesUrl"
-              :saveAssignmentsUrl="saveAssignmentsUrl"
-            ></event-judge-list>
+          <event-judge-list
+            v-if="event.managingJudges"
+            :event="event"
+            :fetchUrl="searchJudgesUrl"
+            :saveAssignmentsUrl="saveAssignmentsUrl"
+          ></event-judge-list>
 
-            <event-team-list
-              v-if="event.managingTeams"
-              :event="event"
-              :fetchUrl="searchTeamsUrl"
-              :saveAssignmentsUrl="saveAssignmentsUrl"
-            ></event-team-list>
-          </td>
-        </tr>
-      </template>
-    </tbody>
-  </table>
+          <event-team-list
+            v-if="event.managingTeams"
+            :event="event"
+            :fetchUrl="searchTeamsUrl"
+            :saveAssignmentsUrl="saveAssignmentsUrl"
+          ></event-team-list>
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
   import _ from "lodash";
 
-  import EventBus from '../EventBus';
-  import Event from '../Event';
+  import Icon from '../components/Icon';
+  import EventBus from '../components/EventBus';
 
-  import EventJudgeList from '../EventJudgeList';
-  import EventTeamList from '../EventTeamList';
+  import Event from './Event';
+  import EventJudgeList from './EventJudgeList';
+  import EventTeamList from './EventTeamList';
 
   export default {
     name: "events-table",
 
     props: [
       "fetchUrl",
-      "manageAttendees",
       "saveAssignmentsUrl",
       "judgesListUrl",
       "searchJudgesUrl",
@@ -128,10 +126,6 @@
     },
 
     computed: {
-      managingAttendanceEnabled () {
-        return this.manageAttendees != "false";
-      },
-
       editingOne () {
         return this.formActive || _.some(this.events, "editing");
       },
@@ -140,6 +134,7 @@
     components: {
       EventJudgeList,
       EventTeamList,
+      Icon,
     },
 
     methods: {
@@ -224,21 +219,8 @@
     font-weight: 600;
   }
 
-  .datagrid {
-    .open td {
-      border: 0;
-    }
-
-    .event-manage {
-      cursor: auto;
-
-      &:hover td {
-        background: none;
-      }
-    }
-  }
-
   .events-list__action-item {
+    display: inline-block;
     padding: 0 0.5rem;
     cursor: pointer;
     transition: transform 0.2s;
@@ -337,16 +319,8 @@
     transition: background 0.2s, color 0.2s;
   }
 
-  tr.cursor-pointer {
-    &:hover,
-    &:hover td {
-      background: LavenderBlush;
-    }
-  }
-
   button.cursor-pointer {
-    &:hover,
-    &:hover td {
+    &:hover {
       color: black;
     }
   }
@@ -447,26 +421,11 @@
       text-align: left;
     }
 
-    > tbody > tr {
-      &.table-row--new {
+    &.row--new {
+      background: rgba(255, 255, 0, 0.2);
+
+      &:hover {
         background: rgba(255, 255, 0, 0.2);
-
-        &:hover,
-        &:hover td {
-          background: rgba(255, 255, 0, 0.2);
-        }
-      }
-
-      td {
-        padding: 0.25rem;
-        width: 0.1%;
-        white-space: nowrap;
-        vertical-align: top;
-      }
-
-      &:hover,
-      &:hover > td {
-        background: none;
       }
     }
   }
