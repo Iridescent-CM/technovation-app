@@ -1,6 +1,6 @@
 <div class="grid grid--justify-space-around">
   <div class= "grid__col-8">
-  <h3> Select Regional Pitch Events </h3>
+  <h3> Select Regional Pitch Events</h3>
     <% @current_teams.each do |team| %>
       <div class="panel">
 
@@ -48,7 +48,7 @@
 
               <p>
                 <%= link_to 'View full details',
-                  [current_scope, team.selected_regional_pitch_event],
+                  [current_scope, team.selected_regional_pitch_event, team_id: team.id],
                   class: "button" %>
               </p>
             <% else %>
