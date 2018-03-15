@@ -206,6 +206,8 @@ Rails.application.routes.draw do
     resource :survey_answers, except: [:index, :destroy]
 
     resources :regional_pitch_events, only: :show
+
+    resources :scores, only: :new
   end
 
   namespace :admin do
