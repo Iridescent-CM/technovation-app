@@ -32,8 +32,8 @@
     </div>
 
     <div class="grid">
-      <div class="grid__col-6">
-        <h6>Pitch</h6>
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Pitch</h3>
 
         <p>
           <%= link_to web_icon(
@@ -85,8 +85,8 @@
         </div>
       </div>
 
-      <div class="grid__col-6">
-        <h6>Code</h6>
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Code</h3>
 
         <%= link_to web_icon(
             "code",
@@ -99,8 +99,8 @@
           target: :_blank %>
       </div>
 
-      <div class="grid__col-6">
-        <h6>Business</h6>
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Business</h3>
 
         <% if @team.senior? %>
           <%= link_to web_icon(
@@ -117,8 +117,8 @@
         <% end %>
       </div>
 
-      <div class="grid__col-6">
-        <h6>Reigonal Pitch Events</h6>
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Reigonal Pitch Events</h3>
 
         <% if @team.live_event? %>
           <%= link_to web_icon(
@@ -135,10 +135,8 @@
         <% end %>
       </div>
 
-      <div class="grid__col-12 grid__col--bleed-y">
-        <h3 class="heading--reset">Code checklist</h3>
-
-        <p>
+      <div class="grid__col-12">
+        <p class="paragraph--reset">
           <%= @team.name %> earned
           <strong>
             <%= pluralize(
