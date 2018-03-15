@@ -63,10 +63,8 @@ RSpec.describe Attendees do
         event: event,
       )
 
-      invite = UserInvitation.last
-      expect(invite.email).to eq("invite@me.com")
       expect(results.count).to be 1
-      expect(results.first.record).to eq(invite)
+      expect(results.first.record.email).to eq("invite@me.com")
     end
   end
 end

@@ -37,7 +37,7 @@ class Attendees
           email: query,
         )
 
-        if invite.save
+        if invite.valid?
           records = [invite]
         end
       end
