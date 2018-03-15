@@ -14,15 +14,15 @@
       collection: @regional_events %>
 
     <p>
-    <% if current_scope == "mentor" %>
-      <%= link_to 'Go back',
-        mentor_regional_pitch_events_team_list_path,
-        class: "button small" %>
-    <% else %>
-      <%= link_to 'Go back',
-        public_send("#{current_scope}_dashboard_path"),
-        class: "button small" %>
+      <% if current_scope == "mentor" %>
+        <%= link_to 'Go back',
+          mentor_regional_pitch_events_team_list_path,
+          class: "button small" %>
+      <% else %>
+        <%= link_to 'Go back',
+          public_send("#{current_scope}_dashboard_path"),
+          class: "button small" %>
+      <% end %>
     </p>
-    <% end %>
   </div>
 </div>

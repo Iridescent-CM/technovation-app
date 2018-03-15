@@ -1,13 +1,12 @@
 <div class="grid grid--justify-center">
   <div class="grid__col-8">
-    <% if current_scope == "mentor" %>
 
+    <% if current_scope == "mentor" %>
       <div class="panel">
         <%= render "mentor/teams/team_list_item_content",
               team: current_team,
               type: :current %>
       </div>
-
     <% end %>
 
     <%= render 'regional_pitch_events/event',
