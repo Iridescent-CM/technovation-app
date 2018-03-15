@@ -1,0 +1,78 @@
+<div class="grid grid--justify-space-around">
+  <div class= "grid__col-8">
+  <h3> Select Regional Pitch Events </h3>
+    <% @current_teams.each do |team| %>
+      <div class="panel">
+
+        <h3 class="mentor-teams__heading">
+          <%= link_to team.name, [:mentor, team] %>
+        </h3>
+
+        <div class="grid">
+          <div class="grid__col-6">
+            <%= link_to image_tag(
+              team.team_photo,
+              class: "thumbnail--mdlg grid__cell-img"
+            ), [:mentor, team] %>
+
+            <%= web_icon(
+              "flag-o",
+              text: "#{team.division_name.humanize} Division"
+            ) %>
+          </div>
+
+          <div class="grid__col-6">
+            <% if !team.live_event? &&
+                RegionalPitchEvent.available_to(team.submission).any? %>
+
+              <p>
+                There <%= 'is'.pluralize(RegionalPitchEvent.available_to(team.submission).count) %>
+                <%= pluralize( RegionalPitchEvent.available_to(team.submission).count, 'nearby event') %>
+                <%= team.name %> can attend.
+              </p>
+
+              <p>
+                <%= link_to 'Sign up for an event',
+                  mentor_regional_pitch_events_path(team_id: team.id),
+                  class: "button"
+                %>
+              </p>
+
+            <% elsif team.live_event? %>
+              <p>
+                <%= team.name %> is attending
+                <strong><%= team.event_name %></strong>.
+                If this is a mistake or you want to change the event
+                please contact your regional ambassador.
+              </p>
+
+              <p>
+                <%= link_to 'View full details',
+                  [current_scope, team.selected_regional_pitch_event],
+                  class: "button" %>
+              </p>
+            <% else %>
+
+              There are no nearby events <%= team.name %> can attend.
+              <%= team.name %> will be judged online.
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <p>
+      <%= link_to 'Back',
+          public_send("#{current_account.scope_name}_dashboard_path"),
+          class: "button small" %>
+    <p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
