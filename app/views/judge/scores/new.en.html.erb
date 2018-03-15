@@ -1,5 +1,11 @@
 <% provide :js, javascript_pack_tag("judge_scores") %>
 <% provide :css, stylesheet_pack_tag("judge_scores") %>
 
-<div id="app">
+<div class="grid">
+  <div class="grid__col-auto">
+    <div id="app">
+      <ideation v-if="currentSection === 'ideation'"></ideation>
+      <technical v-if="currentSection === 'technical'"></technical>
+    </div>
+  </div>
 </div>
