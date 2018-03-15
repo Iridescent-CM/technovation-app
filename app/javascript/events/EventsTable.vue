@@ -26,29 +26,31 @@
 
           <div class="grid__col-auto">
             <div class="grid__cell">
-              <icon
-                alt="edit teams"
-                title="Manage teams"
-                className="events-list__action-item"
-                name="flag"
-                size="16"
-                v-tooltip.top-center="editEventTeamsMsg"
-                :handleClick="
-                  event.toggleManaging.bind(event, 'managingTeams')
-                "
-              />
+              <template v-if="managingAttendanceEnabled">
+                <icon
+                  alt="edit teams"
+                  title="Manage teams"
+                  className="events-list__action-item"
+                  name="flag"
+                  size="16"
+                  v-tooltip.top-center="editEventTeamsMsg"
+                  :handleClick="
+                    event.toggleManaging.bind(event, 'managingTeams')
+                  "
+                />
 
-              <icon
-                alt="edit judges"
-                title="Manage judges"
-                className="events-list__action-item"
-                name="gavel"
-                size="16"
-                v-tooltip.top-center="editEventJudgesMsg"
-                :handleClick="
-                  event.toggleManaging.bind(event, 'managingJudges')
-                "
-              />
+                <icon
+                  alt="edit judges"
+                  title="Manage judges"
+                  className="events-list__action-item"
+                  name="gavel"
+                  size="16"
+                  v-tooltip.top-center="editEventJudgesMsg"
+                  :handleClick="
+                    event.toggleManaging.bind(event, 'managingJudges')
+                  "
+                />
+              </template>
 
               <icon
                 alt="edit"
@@ -114,6 +116,7 @@
       "searchJudgesUrl",
       "teamsListUrl",
       "searchTeamsUrl",
+      "manageAttendees",
     ],
 
     data () {
@@ -126,6 +129,10 @@
     },
 
     computed: {
+      managingAttendanceEnabled () {
+        return this.manageAttendees != "false";
+      },
+
       editingOne () {
         return this.formActive || _.some(this.events, "editing");
       },
