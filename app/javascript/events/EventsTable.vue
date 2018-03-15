@@ -421,11 +421,21 @@
       text-align: left;
     }
 
-    &.row--new {
-      background: rgba(255, 255, 0, 0.2);
-
-      &:hover {
+    tr {
+      &.row--new {
         background: rgba(255, 255, 0, 0.2);
+
+        &:hover {
+          background: rgba(255, 255, 0, 0.2);
+        }
+      }
+
+      td {
+        vertical-align: top;
+
+        ul li:last-child {
+          margin-bottom: 1rem;
+        }
       }
     }
   }

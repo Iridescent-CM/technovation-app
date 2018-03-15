@@ -175,14 +175,17 @@
           success: (json) => {
             _.each(json, obj => {
               const item = new Attendee(obj)
-              let source = vm.items
+              let idx
 
-              if (vm.type === 'team')
-                source = vm.$store.state.teams
-
-              const idx = _.findIndex(source, i => {
-                      return i.id === item.id;
-                    });
+              if (vm.type === 'team') {
+                idx = _.findIndex(vm.$store.state.teams, i => {
+                  return i.id === item.id;
+                });
+              } else {
+                idx = _.findIndex(vm.items, i => {
+                  return i.email === item.email;
+                });
+              }
 
               if (idx === -1) {
                 vm.items.push(item);
