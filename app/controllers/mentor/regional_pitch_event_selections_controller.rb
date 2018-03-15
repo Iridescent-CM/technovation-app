@@ -5,30 +5,17 @@ module Mentor
     end
 
     def create
-      params.fetch(:regional_pitch_events_teams).each do |team_id, event_id|
-        team = current_mentor.teams.current.find(team_id)
-        event = team.eligible_events.detect { |e| e.id.to_s == event_id }
-        old_event = team.selected_regional_pitch_event
+      event = RegionalPitchEvent.find(params[:event_id])
 
-        if event
-          RemoveFromLiveEvent.(team)
-        else
-          head 404 and return
-        end
+      event.teams << current_team
 
-        if event.live?
-          team.regional_pitch_events << event
-          team.save!
-        end
+      SendPitchEventRSVPNotifications.perform_later(
+        current_team.id,
+        joining_event_id: event.id
+      )
 
-        SendPitchEventRSVPNotifications.perform_later(
-          team.id,
-          leaving_event_id: old_event.id,
-          joining_event_id: event.id
-        )
-
-        head 200
-      end
+      redirect_to mentor_regional_pitch_events_team_list_path,
+        success: "#{current_team.name} is now attending #{event.name}"
     end
   end
 end
