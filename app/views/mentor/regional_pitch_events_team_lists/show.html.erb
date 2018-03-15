@@ -9,25 +9,27 @@
         </h3>
 
         <div class="grid">
-          <div class="grid__col-6">
+          <div class="grid__col-4">
             <%= link_to image_tag(
               team.team_photo,
               class: "thumbnail--mdlg grid__cell-img"
             ), [:mentor, team] %>
 
-            <%= web_icon(
-              "flag-o",
-              text: "#{team.division_name.humanize} Division"
-            ) %>
+            <p>
+              <%= web_icon(
+                "flag-o",
+                text: "#{team.division_name.humanize} Division"
+              ) %>
+           </p>
           </div>
 
-          <div class="grid__col-6">
+          <div class="grid__col-8 ">
             <% if !team.live_event? &&
                 RegionalPitchEvent.available_to(team.submission).any? %>
 
               <p>
                 There <%= 'is'.pluralize(RegionalPitchEvent.available_to(team.submission).count) %>
-                <%= pluralize( RegionalPitchEvent.available_to(team.submission).count, 'nearby event') %>
+                <%= pluralize( RegionalPitchEvent.available_to(team.submission).count, 'regional pitch event') %>
                 <%= team.name %> can attend.
               </p>
 
@@ -39,17 +41,18 @@
               </p>
 
             <% elsif team.live_event? %>
+              <dl>
+                <dt>Selected Event:</dt>
+                <dd><%= team.event_name %></dd>
+              </dl>
               <p>
-                <%= team.name %> is attending
-                <strong><%= team.event_name %></strong>.
                 If this is a mistake or you want to change the event
                 please contact your regional ambassador.
               </p>
 
               <p>
-                <%= link_to 'View full details',
-                  [current_scope, team.selected_regional_pitch_event, team_id: team.id],
-                  class: "button" %>
+                <%= link_to 'View event details',
+                  [current_scope, team.selected_regional_pitch_event, team_id: team.id] %>
               </p>
             <% else %>
 
