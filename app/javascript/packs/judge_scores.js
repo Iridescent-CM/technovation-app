@@ -21,48 +21,7 @@ import '../scores/main.scss'
 const store = new Vuex.Store({
   state: {
     currentSection: 'ideation',
-    questions: [
-      {
-        section: 'ideation',
-        idx: 1,
-        text: "The team clearly shows how " +
-              "their app idea aligns " +
-              "with a problem in their community.",
-        worth: 5,
-        score: null,
-      },
-      {
-        section: 'ideation',
-        idx: 2,
-        text: "The team provides evidence of the problem they are " +
-              "solving through facts and statistics.",
-        worth: 5,
-        score: null,
-      },
-      {
-        section: 'ideation',
-        idx: 3,
-        text: "The team addresses the problem well.",
-        worth: 5,
-        score: null,
-      },
-      {
-        section: 'technical',
-        idx: 1,
-        text: "The app appears to be fully functional " +
-              "and has no noticeable",
-        worth: 5,
-        score: null,
-      },
-      {
-        section: 'technical',
-        idx: 2,
-        text: "The app is easy to use and the " +
-              "features are well thought out.",
-        worth: 5,
-        score: null,
-      },
-    ],
+    questions: [],
   },
 
   getters: {
@@ -91,6 +50,10 @@ const store = new Vuex.Store({
 
       _question.score = question.score
     },
+
+    populateQuestions (state, json) {
+      state.questions = json
+    },
   },
 })
 
@@ -98,8 +61,7 @@ $(document).on('ready turbolinks:load', () => {
   new Vue({
     el: "#app",
 
-    data: {
-    },
+    store,
 
     computed: {
       currentSection () {
@@ -107,11 +69,19 @@ $(document).on('ready turbolinks:load', () => {
       },
     },
 
-    store,
-
     components: {
       Ideation,
       Technical
+    },
+
+    mounted () {
+      $.ajax({
+        method: "GET",
+        url: "/judge/scores/new.json",
+        success: json => {
+          this.$store.commit('populateQuestions', json)
+        },
+      })
     },
   });
 });
