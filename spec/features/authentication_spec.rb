@@ -4,7 +4,7 @@ RSpec.feature "Authentication" do
   { judge: %i{regional_ambassador student admin},
     student: %i{mentor regional_ambassador judge admin},
     mentor: %i{regional_ambassador student admin},
-    regional_ambassador: %i{judge student admin} }.each do |scope, not_scopes|
+    regional_ambassador: %i{student admin} }.each do |scope, not_scopes|
 
     not_scopes.each do |not_scope|
       scenario "A #{scope} tries to visit a #{not_scope} path" do
@@ -13,8 +13,14 @@ RSpec.feature "Authentication" do
         sign_in(account)
         visit send("#{not_scope}_dashboard_path")
 
-        expect(current_path.sub(/\?.+$/, "")).to eq(send("#{scope}_dashboard_path"))
-        expect(page).to have_css(".flash", text: "You don't have permission to go there")
+        expect(current_path.sub(/\?.+$/, "")).to eq(
+          send("#{scope}_dashboard_path")
+        )
+
+        expect(page).to have_css(
+          ".flash",
+          text: "You don't have permission to go there"
+        )
       end
     end
   end

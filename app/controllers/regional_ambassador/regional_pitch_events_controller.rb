@@ -74,7 +74,7 @@ module RegionalAmbassador
           }
 
           format.json {
-            render json: @pitch_event.to_create_json.merge({
+            render json: @pitch_event.to_list_json.merge({
               url: regional_ambassador_regional_pitch_event_path(
                 @pitch_event,
                 format: :json
@@ -108,7 +108,7 @@ module RegionalAmbassador
           }
 
           f.json {
-            render json: @pitch_event.to_update_json.merge({
+            render json: @pitch_event.to_list_json.merge({
               url: regional_ambassador_regional_pitch_event_path(
                 @pitch_event,
                 format: :json,

@@ -313,15 +313,8 @@
           data: form,
 
           success: (resp) => {
-            vm.event.id = resp.id;
-            vm.event.url = resp.url;
-            vm.event.day = resp.day;
-            vm.event.date = resp.date;
-            vm.event.time = resp.time;
-            vm.event.tz = resp.tz
-
+            vm.event = new Event(resp)
             EventBus.$emit("EventForm.handleSubmit", vm.event);
-
             vm.reset();
           },
 

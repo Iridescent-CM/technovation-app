@@ -129,26 +129,6 @@ class RegionalPitchEvent < ActiveRecord::Base
     }
   end
 
-  def to_create_json
-    {
-      id: id,
-      day: day,
-      date: date,
-      time: time,
-      tz: timezone,
-    }
-  end
-
-  def to_update_json
-    {
-      id: id,
-      day: day,
-      date: date,
-      time: time,
-      tz: timezone,
-    }
-  end
-
   def friendly_name
     "#{name} in #{city} on #{date_time}"
   end
