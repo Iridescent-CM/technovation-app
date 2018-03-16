@@ -26,7 +26,9 @@ class Attendees
       records = event.send(assoc)
     end
 
-    if records.empty? and type.to_s === "account"
+    if records.empty? and
+        type.to_s === "account" and
+          not query.blank?
       table_name = "user_invitations"
       sort_column = :email
       records = UserInvitation.judge.by_query(query)
