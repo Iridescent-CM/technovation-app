@@ -6,8 +6,6 @@ gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
-gem 'yarn', "~> 0.1"
-
 gem 'textacular', '~> 5.0'
 
 gem 'pdf-forms', '~> 1.1'
