@@ -207,7 +207,7 @@ Rails.application.routes.draw do
 
     resources :regional_pitch_events, only: :show
 
-    resources :scores, only: :new
+    resources :scores, only: [:new, :update]
   end
 
   namespace :admin do

@@ -43,12 +43,31 @@ const store = new Vuex.Store({
       state.currentSection = section
     },
 
-    updateScores (state, question) {
-      let _question = _.find(state.questions, q => {
-        return q.section === question.section && q.idx === question.idx
+    updateScores (state, qData) {
+      let question = _.find(state.questions, q => {
+        return q.section === qData.section && q.idx === qData.idx
       })
 
-      _question.score = question.score
+      const data = new FormData()
+      data.append(`submission_score[${question.field}]`, qData.score)
+
+      $.ajax({
+        method: "PATCH",
+        url: question.update,
+
+        data: data,
+        contentType: false,
+        processData: false,
+
+        success: resp => {
+          console.log(resp)
+          question.score = qData.score
+        },
+
+        error: err => {
+          console.error(err)
+        },
+      })
     },
 
     populateQuestions (state, json) {

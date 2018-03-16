@@ -58,16 +58,25 @@ module FindEligibleSubmissionId
           teams: { id: official_rpe_team_ids }
         )
         .where(
-          "complete_#{current_round}_official_submission_scores_count IS NULL OR
-            complete_#{current_round}_official_submission_scores_count < #{SCORE_COUNT_LIMIT}"
+          "complete_#{current_round}_official_submission_scores_count " +
+          "IS NULL OR " +
+
+          "complete_#{current_round}_official_submission_scores_count " +
+           "< #{SCORE_COUNT_LIMIT}"
         )
         .select { |sub|
           (sub.complete? and
             not judge_conflicts.include?(sub.team.region_division_name))
         }
         .sort { |a, b|
-          a_complete = a.public_send("complete_#{current_round}_official_submission_scores_count") || 0
-          b_complete = b.public_send("complete_#{current_round}_official_submission_scores_count") || 0
+          a_complete = a.public_send(
+            "complete_#{current_round}_official_submission_scores_count"
+          ) || 0
+
+          b_complete = b.public_send(
+            "complete_#{current_round}_official_submission_scores_count"
+          ) || 0
+
           [weighted(a), a_complete] <=> [weighted(b), b_complete]
         }
 
@@ -94,6 +103,8 @@ module FindEligibleSubmissionId
         :quarterfinals
       when "sf"
         :semifinals
+      else
+        raise "Judging is not enabled"
       end
     end
 
