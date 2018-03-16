@@ -486,4 +486,8 @@
   .swal2-container, #flash.fixed {
     z-index: 9999999;
   }
+
+  .event-manage {
+    padding: 1rem 0;
+  }
 </style>

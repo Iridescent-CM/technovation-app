@@ -13,7 +13,10 @@
        :event-id="event.id"
     ></judge-search>
 
-    <div class="grid__col-12 grid__col--bleed-y">
+    <div
+      v-if="event.selectedJudges.length"
+      class="grid__col-12 grid__col--bleed-y"
+    >
       <table class="attendee-list">
         <thead>
           <tr>

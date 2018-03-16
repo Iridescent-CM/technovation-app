@@ -13,7 +13,10 @@
        :event-id="event.id"
     ></team-search>
 
-    <div class="grid__col-12 grid__col--bleed-y">
+    <div
+       v-if="event.selectedTeams.length"
+      class="grid__col-12 grid__col--bleed-y"
+    >
       <table class="attendee-list">
         <thead>
           <tr>
