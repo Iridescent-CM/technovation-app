@@ -6,6 +6,8 @@ gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
+gem 'yarn', "~> 0.1"
+
 gem 'textacular', '~> 5.0'
 
 gem 'pdf-forms', '~> 1.1'
@@ -24,7 +26,7 @@ gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.8"
 gem 'chart-js-rails', "~> 0.1"
 gem 'dropzonejs-rails', "~> 0.8"
-gem 'webpacker', '~> 3.2'
+gem 'webpacker', '~> 3.3'
 
 gem "cocoon", "~> 1.2"
 
