@@ -250,6 +250,7 @@ class Team < ActiveRecord::Base
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
+  alias :event :selected_regional_pitch_event
 
   def live_event?
     selected_regional_pitch_event.live?
