@@ -25,7 +25,8 @@
 
           <div class="grid__col-8 ">
             <% if !team.live_event? &&
-                RegionalPitchEvent.available_to(team.submission).any? %>
+                SeasonToggles.select_regional_pitch_event? &&
+                  RegionalPitchEvent.available_to(team.submission).any? %>
 
               <p>
                 There <%= 'is'.pluralize(RegionalPitchEvent.available_to(team.submission).count) %>
@@ -52,13 +53,15 @@
 
               <p>
                 <%= link_to 'View event details',
-                  [current_scope, team.selected_regional_pitch_event, team_id: team.id] %>
+                  [current_scope, team.event, team_id: team.id] %>
               </p>
+            <% elsif not SeasonToggles.select_regional_pitch_event? %>
+              <p>Regional Pitch Events cannot be selected at this time.</p>
             <% else %>
-
-              There are no nearby events <%= team.name %> can attend.
-              <%= team.name %> will be judged online.
-
+              <p>
+                There are no nearby events <%= team.name %> can attend.
+                <%= team.name %> will be judged online.
+              </p>
             <% end %>
           </div>
         </div>

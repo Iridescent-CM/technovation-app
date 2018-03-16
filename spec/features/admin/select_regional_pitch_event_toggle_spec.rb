@@ -107,37 +107,27 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   end
 
   context "Mentor regional pitch event selection page" do
-    let(:user) { FactoryBot.create(:mentor) }
-    let(:team) { FactoryBot.create(:team) }
-    let(:sub) { FactoryBot.create(:submission, :junior) }
-    let(:rpe) { FactoryBot.create(:rpe) }
-    let(:path) { new_mentor_regional_pitch_event_selection_path }
+    let!(:rpe) { FactoryBot.create(:rpe, :junior, :chicago) }
+
+    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:sub) { FactoryBot.create(:submission, :junior, :chicago) }
+    let(:path) { mentor_regional_pitch_events_team_list_path }
 
     before do
-      team.team_submissions << sub
-      TeamRosterManaging.add(team, user)
-
-      sign_in(user)
+      TeamRosterManaging.add(sub.team, mentor)
+      sign_in(mentor)
     end
 
     scenario "Toggled on" do
       SeasonToggles.select_regional_pitch_event="on"
       visit path
-      expect(page).to have_button("Save changes")
-
-      page.all(:css, "input[type='radio']").each do |radio|
-        expect(radio[:disabled]).to be_nil
-      end
+      expect(page).to have_css(".button", text: "Select an Event")
     end
 
     scenario "Toggled off" do
       SeasonToggles.select_regional_pitch_event="off"
       visit path
-      expect(page).not_to have_button("Save changes")
-
-      page.all(:css, "input[type='radio']").each do |radio|
-        expect(radio[:disabled]).to eq("disabled")
-      end
+      expect(page).not_to have_css(".button", text: "Select an Event")
     end
   end
 
@@ -146,7 +136,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     let(:team) { FactoryBot.create(:team) }
     let(:sub) { FactoryBot.create(:submission, :junior) }
     let!(:rpe) { FactoryBot.create(:rpe) }
-    let(:path) { mentor_dashboard_path(anchor: "pitch-events") }
+    let(:path) { mentor_dashboard_path }
 
     before do
       team.team_submissions << sub
@@ -156,37 +146,15 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
-      skip "Rebuilding mentor dashboard: RPE selection not back yet"
-
       SeasonToggles.select_regional_pitch_event="on"
       visit path
-      expect(page).to have_button("Save selection")
-
-      ["virtual", rpe.id].each do |id|
-        div = find("div#team_#{team.id}_event_info_#{id}")
-        expect(div).to have_button("Select")
-      end
-
-      page.all(:css, "input[type='radio']").each do |radio|
-        expect(radio[:disabled]).to be_nil
-      end
+      expect(page).to have_css(".button", text: "Select Events")
     end
 
     scenario "Toggled off" do
-      skip "Rebuilding mentor dashboard: RPE selection not back yet"
-
       SeasonToggles.select_regional_pitch_event="off"
       visit path
-      expect(page).not_to have_button("Save changes")
-
-      ["virtual", rpe.id].each do |id|
-        div = find("div#team_#{team.id}_event_info_#{id}")
-        expect(div).not_to have_button("Select")
-      end
-
-      page.all(:css, "input[type='radio']").each do |radio|
-        expect(radio[:disabled]).to eq("disabled")
-      end
+      expect(page).not_to have_css(".button", text: "Select Events")
     end
   end
 end
