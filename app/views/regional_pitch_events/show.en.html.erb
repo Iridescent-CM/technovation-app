@@ -4,8 +4,7 @@
     <% if current_scope == "mentor" %>
       <div class="panel">
         <%= render "mentor/teams/team_list_item_content",
-          team: current_team,
-          type: :current %>
+          team: current_team %>
       </div>
     <% end %>
 
@@ -13,15 +12,9 @@
       event: @regional_pitch_event %>
 
     <p>
-      <% if current_scope == "mentor" %>
-        <%= link_to 'Go back',
-          mentor_regional_pitch_events_team_list_path,
-          class: "button small" %>
-      <% else %>
-        <%= link_to 'Back',
-          public_send("#{current_scope}_dashboard_path"),
-          class: "button small" %>
-      <% end %>
+      <%= link_to 'Go back',
+        back_from_event_path,
+        class: "button small" %>
     </p>
   </div>
 </div>

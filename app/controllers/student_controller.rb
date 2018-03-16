@@ -2,7 +2,10 @@ class StudentController < ApplicationController
   include Authenticated
 
   layout "student"
-  helper_method :current_student, :current_team, :current_profile
+  helper_method :current_student,
+    :current_team,
+    :current_profile,
+    :back_from_event_path
 
   # For Airbrake Notifier
   def current_user
@@ -48,5 +51,9 @@ class StudentController < ApplicationController
 
   def current_profile_type
     "StudentProfile"
+  end
+
+  def back_from_event_path
+    student_dashboard_path
   end
 end

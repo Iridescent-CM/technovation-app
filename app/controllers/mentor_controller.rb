@@ -3,7 +3,10 @@ class MentorController < ApplicationController
   include Authenticated
 
   layout "mentor"
-  helper_method :current_mentor, :current_profile, :current_team
+  helper_method :current_mentor,
+    :current_profile,
+    :current_team,
+    :back_from_event_path
 
   before_action -> {
     set_last_profile_used("mentor")
@@ -75,5 +78,9 @@ class MentorController < ApplicationController
 
   def current_profile_type
     "MentorProfile"
+  end
+
+  def back_from_event_path
+    mentor_regional_pitch_events_team_list_path
   end
 end
