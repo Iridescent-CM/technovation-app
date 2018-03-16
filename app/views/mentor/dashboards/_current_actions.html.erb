@@ -19,7 +19,7 @@
       invites: current_mentor.mentor_invites.pending %>
   <% end %>
 
-  <% if  @current_teams.any? %>
+  <% if  @current_teams.any? && SeasonToggles.select_regional_pitch_event? %>
     <%= render 'mentor/dashboards/onboarded/regional_pitch_events',
       type: :current,
       teams: @current_teams %>
