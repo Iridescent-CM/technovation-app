@@ -11,7 +11,7 @@ RSpec.describe RegionalAmbassador::RegionalPitchEventsController do
       }
 
       event = RegionalPitchEvent.last
-      json = event.to_create_json.merge({
+      json = event.reload.to_list_json.merge({
         url: regional_ambassador_regional_pitch_event_path(
           event,
           format: :json
@@ -36,7 +36,7 @@ RSpec.describe RegionalAmbassador::RegionalPitchEventsController do
         },
       }
 
-      json = event.to_update_json.merge({
+      json = event.reload.to_list_json.merge({
         url: regional_ambassador_regional_pitch_event_path(
           event,
           format: :json
