@@ -393,6 +393,14 @@ class Account < ActiveRecord::Base
     not mentor_profile.present?
   end
 
+  def can_be_a_judge?
+    regional_ambassador_profile.present? or mentor_profile.present?
+  end
+
+  def is_not_a_judge?
+    not judge_profile.present?
+  end
+
   def is_an_ambassador?
     regional_ambassador_profile.present?
   end
