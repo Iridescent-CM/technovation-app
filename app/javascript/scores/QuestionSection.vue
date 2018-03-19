@@ -7,21 +7,29 @@
     <score-entry :questions="questions"></score-entry>
 
     <div class="grid grid--bleed grid--justify-space-between">
-      <button
-        v-if="!!prevSection"
-        class="button button--small btn-prev"
-        @click="$store.commit('changeSection', prevSection)"
-      >
-        Back: {{ prevBtnTxt }}
-      </button>
+      <div class="grid__col-auto">
+        <p>
+          <router-link
+            v-if="!!prevSection"
+            :to="{ name: prevSection }"
+            class="button button--small btn-prev"
+          >
+            Back: {{ prevBtnTxt }}
+          </router-link>
+        </p>
+      </div>
 
-      <button
-        v-if="!!nextSection"
-        class="button button--small btn-next"
-        @click="$store.commit('changeSection', nextSection)"
-      >
-        Next: {{ nextBtnTxt }}
-      </button>
+      <div class="grid__col-auto">
+        <p>
+          <router-link
+            v-if="!!nextSection"
+            :to="{ name: nextSection }"
+            class="button button--small btn-next"
+          >
+            Next: {{ nextBtnTxt }}
+          </router-link>
+        </p>
+      </div>
     </div>
   </div>
 </template>
