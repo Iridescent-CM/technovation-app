@@ -51,7 +51,9 @@ jobs:
       # Bundle install dependencies
       - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 
-      - run: sudo apt-get update; sudo apt-get install pdftk
+      - run: sudo apt-get install pdftk
+
+      - run: sudo apt-get install yarn
 
       - run:
           name: Install dependencies
@@ -130,17 +132,3 @@ deployment:
     branch: production
     heroku:
       appname: technovation
-
-machine:
-  environment:
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-
-dependencies:
-  override:
-    - yarn
-  cache_directories:
-    - ~/.cache/yarn
-
-test:
-  override:
-    - yarn test
