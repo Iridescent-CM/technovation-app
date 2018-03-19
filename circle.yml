@@ -69,11 +69,11 @@ jobs:
 
       - run:
           name: Install JS dependencies
-          command: bundle exec yarn install
+          command: yarn install
 
       - run:
           name: Javascript tests
-          command: bundle exec yarn test
+          command: yarn test
 
       - run:
           name: Database Setup
