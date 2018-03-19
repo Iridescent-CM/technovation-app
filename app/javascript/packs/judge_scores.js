@@ -2,24 +2,28 @@ import TurbolinksAdapter from 'vue-turbolinks';
 
 import Vue from 'vue/dist/vue.esm';
 import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 import VTooltip from 'v-tooltip';
 
 import _ from 'lodash'
 
 import ScoreStepper from "../scores/ScoreStepper"
-import Ideation from "../scores/Ideation"
-import Technical from "../scores/Technical"
+import routes from '../scores/routes'
 
 import "../components/tooltip.scss";
 import '../scores/main.scss'
 
 Vue.use(Vuex)
+Vue.use(VueRouter)
 Vue.use(TurbolinksAdapter);
 Vue.use(VTooltip);
 
+const router = new VueRouter({
+  routes,
+})
+
 const store = new Vuex.Store({
   state: {
-    currentSection: 'ideation',
     questions: [],
   },
 
@@ -35,13 +39,15 @@ const store = new Vuex.Store({
         return q.section === 'technical'
       })
     },
+
+    pitchQuestions (state) {
+      return _.filter(state.questions, q => {
+        return q.section === 'pitch'
+      })
+    },
   },
 
   mutations: {
-    changeSection (state, section) {
-      state.currentSection = section
-    },
-
     updateScores (state, qData) {
       let question = _.find(state.questions, q => {
         return q.section === qData.section && q.idx === qData.idx
@@ -78,18 +84,15 @@ $(document).on('ready turbolinks:load', () => {
   new Vue({
     el: "#app",
 
+    router,
+
     store,
 
     computed: {
-      currentSection () {
-        return this.$store.state.currentSection
-      },
     },
 
     components: {
       ScoreStepper,
-      Ideation,
-      Technical
     },
 
     mounted () {

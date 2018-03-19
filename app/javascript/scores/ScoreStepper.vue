@@ -11,48 +11,39 @@
       :class="[
         'grid__col-auto',
         'stepper__step',
-         currentSection === 'ideation' ? 'stepper__step--active' : ''
+         $route.name === 'ideation' ? 'stepper__step--active' : ''
       ]"
     >
-      <a
-        class="grid__cell"
-        @click="$store.commit('changeSection', 'ideation')"
-      >
+      <router-link to="/ideation" class="grid__cell">
         <span class="stepper__step-number">2</span>
         Ideation
-      </a>
+      </router-link>
     </div>
 
     <div
       :class="[
         'grid__col-auto',
         'stepper__step',
-         currentSection === 'technical' ? 'stepper__step--active' : ''
+         $route.name === 'technical' ? 'stepper__step--active' : ''
       ]"
     >
-      <a
-        class="grid__cell"
-        @click="$store.commit('changeSection', 'technical')"
-      >
+      <router-link to="/technical" class="grid__cell">
         <span class="stepper__step-number">3</span>
         Technical
-      </a>
+      </router-link>
     </div>
 
     <div
       :class="[
         'grid__col-auto',
         'stepper__step',
-         currentSection === 'pitch' ? 'stepper__step--active' : ''
+         $route.name === 'pitch' ? 'stepper__step--active' : ''
       ]"
     >
-      <a
-        class="grid__cell"
-        @click="$store.commit('changeSection', 'pitch')"
-      >
+      <router-link to="/pitch" class="grid__cell">
         <span class="stepper__step-number">4</span>
         Pitch
-      </a>
+      </router-link>
     </div>
   </nav>
 </template>
@@ -63,8 +54,6 @@ export default {
     return {
     }
   },
-
-  props: ['currentSection'],
 }
 </script>
 
