@@ -140,12 +140,12 @@ class Questions
       Question.new(
         submission_score: submission_score,
         section: 'entrepreneurship',
-        field: :business_plan_feasible,
+        field: :business_plan_long_term,
         idx: 3,
         text: "The team has research on how they will sustain their " +
               "business. The goals are explained and realistic.",
         worth: 5,
-        score: submission_score.business_plan_feasible,
+        score: submission_score.business_plan_long_term,
       ),
 
       Question.new(
@@ -162,11 +162,11 @@ class Questions
       Question.new(
         submission_score: submission_score,
         section: 'overall',
-        field: :business_plan_long_term,
+        field: :business_plan_feasible,
         idx: 1,
         text: "You are convinced the app can succeed.",
         worth: 5,
-        score: submission_score.business_plan_long_term,
+        score: submission_score.business_plan_feasible,
       ),
 
       Question.new(

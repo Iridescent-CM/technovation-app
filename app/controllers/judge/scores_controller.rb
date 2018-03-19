@@ -41,10 +41,10 @@ module Judge
 
         :viable_business_model,
         :market_research,
-        :business_plan_feasible,
+        :business_plan_long_term,
         :business_plan_short_term,
 
-        :business_plan_long_term,
+        :business_plan_feasible,
         :submission_thought_out,
         :cohesive_story,
         :solution_originality,
