@@ -35,11 +35,7 @@ jobs:
           STUDENT_SLACK_SIGNUP_URL: n-a
           JUDGE_SLACK_SIGNUP_URL: n-a
           PARENT_CONSENT_PDF: n-a
-      - image: circleci/postgres:10.3
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: circle-test_test
-    steps:
+      - image: circleci/postgres:9.6.7
       - checkout
 
       # Restore bundle cache
