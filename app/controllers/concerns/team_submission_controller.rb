@@ -188,6 +188,10 @@ module TeamSubmissionController
       section = get_cookie(:last_visited_submission_section) ||
         SubmissionSection::SECTION_NAMES[1]
 
+      if section.to_s.downcase == "marketing"
+        section = "pitch"
+      end
+
       "team_submissions/sections/#{section}"
     end
   end
