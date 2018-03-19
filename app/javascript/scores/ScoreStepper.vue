@@ -45,6 +45,32 @@
         Pitch
       </router-link>
     </div>
+
+    <div
+      :class="[
+        'grid__col-auto',
+        'stepper__step',
+         $route.name === 'entrepreneurship' ? 'stepper__step--active' : ''
+      ]"
+    >
+      <router-link to="/entrepreneurship" class="grid__cell">
+        <span class="stepper__step-number">5</span>
+        Entrepreneurship
+      </router-link>
+    </div>
+
+    <div
+      :class="[
+        'grid__col-auto',
+        'stepper__step',
+         $route.name === 'overall' ? 'stepper__step--active' : ''
+      ]"
+    >
+      <router-link to="/overall" class="grid__cell">
+        <span class="stepper__step-number">6</span>
+        Overall Impression
+      </router-link>
+    </div>
   </nav>
 </template>
 
