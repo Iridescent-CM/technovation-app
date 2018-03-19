@@ -150,6 +150,7 @@ class AccountsGrid
 
   filter :division,
     :enum,
+    multiple: true,
     header: "Division (students only)",
     select: [["Senior", "senior"], ["Junior", "junior"]],
     filter_group: "common",

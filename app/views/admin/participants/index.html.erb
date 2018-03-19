@@ -1,4 +1,17 @@
 <% provide :title, "Admin Data • Participants" %>
+<% provide :js, javascript_pack_tag("admin_participants") %>
+<% provide :css, stylesheet_pack_tag("admin_participants") %>
+
+<div class="panel">
+  <div id="app">
+    <v-app>
+      <v-container>
+        <division-filter></division-filter>
+        <season-filter></season-filter>
+      </v-container>
+    </v-app>
+  </div>
+</div>
 
 <%= render 'datagrid/datagrid',
   grid: @accounts_grid,

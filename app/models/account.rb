@@ -263,7 +263,10 @@ class Account < ActiveRecord::Base
     left_outer_joins(:division,:student_profile)
       .where("student_profiles.id IS NOT NULL")
       .where("divisions.id IS NOT NULL")
-      .where("divisions.name = ?", Division.names[division])
+      .where(
+        "divisions.name IN (?)",
+        Array(division).map { |n| Division.names[n] }
+      )
   }
 
   mount_uploader :profile_image, ImageProcessor
