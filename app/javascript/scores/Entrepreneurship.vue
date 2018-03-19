@@ -14,7 +14,7 @@ import QuestionSection from './QuestionSection'
 export default {
   computed: {
     questions () {
-      return this.$store.getters.pitchQuestions
+      return this.$store.getters.entrepreneurshipQuestions
     },
   },
 

@@ -45,6 +45,18 @@ const store = new Vuex.Store({
         return q.section === 'pitch'
       })
     },
+
+    entrepreneurshipQuestions (state) {
+      return _.filter(state.questions, q => {
+        return q.section === 'entrepreneurship'
+      })
+    },
+
+    overallQuestions (state) {
+      return _.filter(state.questions, q => {
+        return q.section === 'overall'
+      })
+    },
   },
 
   mutations: {

@@ -115,6 +115,102 @@ class Questions
         worth: 5,
         score: submission_score.pitch_specific,
       ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'entrepreneurship',
+        field: :viable_business_model,
+        idx: 1,
+        text: "The team has a strategy to bring the app to market.",
+        worth: 5,
+        score: submission_score.viable_business_model,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'entrepreneurship',
+        field: :market_research,
+        idx: 2,
+        text: "The team’s research shows they have looked for " +
+              "competitors and ways to stand out from them.",
+        worth: 5,
+        score: submission_score.market_research,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'entrepreneurship',
+        field: :business_plan_feasible,
+        idx: 3,
+        text: "The team has research on how they will sustain their " +
+              "business. The goals are explained and realistic.",
+        worth: 5,
+        score: submission_score.business_plan_feasible,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'entrepreneurship',
+        field: :business_plan_short_term,
+        idx: 4,
+        text: "The team’s business has an identity " +
+              "through branding and visuals.",
+        worth: 5,
+        score: submission_score.business_plan_short_term,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'overall',
+        field: :business_plan_long_term,
+        idx: 1,
+        text: "You are convinced the app can succeed.",
+        worth: 5,
+        score: submission_score.business_plan_long_term,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'overall',
+        field: :submission_thought_out,
+        idx: 2,
+        text: "Each component of the team submission " +
+              "is well thought out.",
+        worth: 5,
+        score: submission_score.submission_thought_out,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'overall',
+        field: :cohesive_story,
+        idx: 3,
+        text: "The team’s strong dedication and work ethic is clear, " +
+              "even if the submission is not complete.",
+        worth: 5,
+        score: submission_score.cohesive_story,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'overall',
+        field: :solution_originality,
+        idx: 4,
+        text: "The way the team approaches and solves " +
+              "the problem is unique.",
+        worth: 5,
+        score: submission_score.solution_originality,
+      ),
+
+      Question.new(
+        submission_score: submission_score,
+        section: 'overall',
+        field: :solution_stands_out,
+        idx: 5,
+        text: "The submission stands out from others.",
+        worth: 5,
+        score: submission_score.solution_stands_out,
+      ),
     ]
   end
 
