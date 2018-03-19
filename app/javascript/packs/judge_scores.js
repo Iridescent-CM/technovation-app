@@ -28,6 +28,18 @@ const store = new Vuex.Store({
   },
 
   getters: {
+    scorePossible: (state) => (section) => {
+      return _.reduce(_.filter(state.questions, q => {
+        return q.section === section
+      }), (acc, q) => { return acc += q.worth }, 0)
+    },
+
+    scoreTotal: (state) => (section) => {
+      return _.reduce(_.filter(state.questions, q => {
+        return q.section === section
+      }), (acc, q) => { return acc += q.score }, 0)
+    },
+
     ideationQuestions (state) {
       return _.filter(state.questions, q => {
         return q.section === 'ideation'

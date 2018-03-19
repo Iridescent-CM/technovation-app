@@ -17,6 +17,10 @@
       <router-link to="/ideation" class="grid__cell">
         <span class="stepper__step-number">2</span>
         Ideation
+
+        <span class="stepper__step-score">
+          {{ pointsTotal('ideation') }} / {{ pointsPossible('ideation') }}
+        </span>
       </router-link>
     </div>
 
@@ -30,6 +34,11 @@
       <router-link to="/technical" class="grid__cell">
         <span class="stepper__step-number">3</span>
         Technical
+
+        <span class="stepper__step-score">
+          {{ pointsTotal('technical') }} /
+          {{ pointsPossible('technical') }}
+        </span>
       </router-link>
     </div>
 
@@ -43,6 +52,10 @@
       <router-link to="/pitch" class="grid__cell">
         <span class="stepper__step-number">4</span>
         Pitch
+
+        <span class="stepper__step-score">
+          {{ pointsTotal('pitch') }} / {{ pointsPossible('pitch') }}
+        </span>
       </router-link>
     </div>
 
@@ -56,6 +69,11 @@
       <router-link to="/entrepreneurship" class="grid__cell">
         <span class="stepper__step-number">5</span>
         Entrepreneurship
+
+        <span class="stepper__step-score">
+          {{ pointsTotal('entrepreneurship') }} /
+          {{ pointsPossible('entrepreneurship') }}
+        </span>
       </router-link>
     </div>
 
@@ -69,6 +87,10 @@
       <router-link to="/overall" class="grid__cell">
         <span class="stepper__step-number">6</span>
         Overall Impression
+
+        <span class="stepper__step-score">
+          {{ pointsTotal('overall') }} / {{ pointsPossible('overall') }}
+        </span>
       </router-link>
     </div>
   </nav>
@@ -79,6 +101,16 @@ export default {
   data () {
     return {
     }
+  },
+
+  methods: {
+    pointsPossible (section) {
+      return this.$store.getters.scorePossible(section)
+    },
+
+    pointsTotal (section) {
+      return this.$store.getters.scoreTotal(section)
+    },
   },
 }
 </script>
@@ -92,6 +124,12 @@ export default {
   .stepper__step {
     opacity: 0.5;
     transition: opacity 0.2s;
+  }
+
+  .stepper__step-score {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.8;
   }
 
   .stepper__step--active,
