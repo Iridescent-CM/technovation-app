@@ -1,22 +1,21 @@
 import TurbolinksAdapter from 'vue-turbolinks';
+
 import Vue from 'vue/dist/vue.esm';
 import Vuex from 'vuex'
+import VTooltip from 'v-tooltip';
 
 import _ from 'lodash'
 
-Vue.use(Vuex)
-
-import VTooltip from 'v-tooltip';
-
-import "../components/tooltip.scss";
-
-Vue.use(TurbolinksAdapter);
-Vue.use(VTooltip);
-
+import ScoreStepper from "../scores/ScoreStepper"
 import Ideation from "../scores/Ideation"
 import Technical from "../scores/Technical"
 
+import "../components/tooltip.scss";
 import '../scores/main.scss'
+
+Vue.use(Vuex)
+Vue.use(TurbolinksAdapter);
+Vue.use(VTooltip);
 
 const store = new Vuex.Store({
   state: {
@@ -88,6 +87,7 @@ $(document).on('ready turbolinks:load', () => {
     },
 
     components: {
+      ScoreStepper,
       Ideation,
       Technical
     },

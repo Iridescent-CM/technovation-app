@@ -4,6 +4,7 @@
 <div class="grid">
   <div class="grid__col-auto">
     <div id="app">
+      <score-stepper :current-section="currentSection"></score-stepper>
       <ideation v-if="currentSection === 'ideation'"></ideation>
       <technical v-if="currentSection === 'technical'"></technical>
     </div>
