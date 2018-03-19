@@ -36,6 +36,8 @@ jobs:
           JUDGE_SLACK_SIGNUP_URL: n-a
           PARENT_CONSENT_PDF: n-a
       - image: circleci/postgres:9.6-alpine-ram
+
+    steps:
       - checkout
 
       # Restore bundle cache
