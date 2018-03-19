@@ -1,23 +1,15 @@
 <template>
-  <div>
-    <h1>Technical (20 points)</h1>
-
-    <p>
-      Refer to the source code, screenshots, and demo video.
-    </p>
-
-    <score-entry :questions="questions"></score-entry>
-
-    <button
-      class="button button--small"
-      @click="$store.commit('changeSection', 'ideation')">
-      Back: Ideation
-    </button>
-  </div>
+  <question-section
+    title="Technical (20 points)"
+    referTo="source code, screenshots, and demo video."
+    nextSection="pitch"
+    prevSection="ideation"
+    :questions="questions"
+  ></question-section>
 </template>
 
 <script>
-import ScoreEntry from './ScoreEntry'
+import QuestionSection from './QuestionSection'
 
 export default {
   computed: {
@@ -27,7 +19,7 @@ export default {
   },
 
   components: {
-    ScoreEntry,
+    QuestionSection,
   },
 }
 </script>

@@ -60,7 +60,6 @@ const store = new Vuex.Store({
         processData: false,
 
         success: resp => {
-          console.log(resp)
           question.score = qData.score
         },
 

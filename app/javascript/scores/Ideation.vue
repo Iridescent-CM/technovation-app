@@ -1,23 +1,14 @@
 <template>
-  <div>
-    <h1>Ideation (15 points)</h1>
-
-    <p>
-      Refer to the app name and description, pitch video, and demo video.
-    </p>
-
-    <score-entry :questions="questions"></score-entry>
-
-    <button
-      class="button button--small"
-      @click="$store.commit('changeSection', 'technical')">
-      Next: Technical
-    </button>
-  </div>
+  <question-section
+    title="Ideation (15 points)"
+    referTo="app name and description, pitch video, and demo video."
+    nextSection="technical"
+    :questions="questions"
+  ></question-section>
 </template>
 
 <script>
-import ScoreEntry from './ScoreEntry'
+import QuestionSection from './QuestionSection'
 
 export default {
   computed: {
@@ -27,7 +18,7 @@ export default {
   },
 
   components: {
-    ScoreEntry,
+    QuestionSection,
   },
 }
 </script>
