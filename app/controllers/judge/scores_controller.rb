@@ -38,6 +38,17 @@ module Judge
         :compelling_argument,
         :passion_energy,
         :pitch_specific,
+
+        :viable_business_model,
+        :market_research,
+        :business_plan_feasible,
+        :business_plan_short_term,
+
+        :business_plan_long_term,
+        :submission_thought_out,
+        :cohesive_story,
+        :solution_originality,
+        :solution_stands_out,
       )
     end
   end
