@@ -61,6 +61,10 @@ export default {
       })
     },
 
+    //
+    // FIXME hacky watcher to fill comment after
+    // remote score data is loaded
+    //
     submissionId () {
       this.comment = this.$store.getters.comment(this.section)
 
