@@ -41,7 +41,6 @@ class JudgeController < ApplicationController
     judge_dashboard_path
   end
 
-
   def assigned_teams(judge)
     if judge.assigned_teams.empty?
       judge.selected_regional_pitch_event.teams

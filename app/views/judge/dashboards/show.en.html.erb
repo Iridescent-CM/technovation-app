@@ -56,15 +56,14 @@
           profile: current_judge %>
       </ul>
 
-        <% if current_judge.onboarding? %>
-          <div class="panel panel--left">
-            <%= render "judge/dashboards/onboarding" %>
-            <%= render "judge/dashboards/info_sidebar" %>
-          </div>
-        <% else %>
-          <%= render "judge/dashboards/onboarded" %>
-        <% end %>
-
+      <% if current_judge.onboarding? %>
+        <div class="panel panel--left">
+          <%= render "judge/dashboards/onboarding" %>
+          <%= render "judge/dashboards/info_sidebar" %>
+        </div>
+      <% else %>
+        <%= render "judge/dashboards/onboarded" %>
+      <% end %>
     </div>
   </div>
 </div>
