@@ -31,7 +31,7 @@
 
     <p class="reset"><%= mail_to member.email %></p>
 
-    <% if CanRemoveTeamMember.(current_account, member) %>
+    <% if CanRemoveTeamMember.(current_account, member, admin_ra) %>
       <%= link_to "remove this member",
         [current_scope, @team, :membership, link_opts],
         data: {
