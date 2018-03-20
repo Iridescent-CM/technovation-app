@@ -26,6 +26,12 @@ module TeamSubmissionSectionController
 
   private
   def section_name
-    params.fetch(:section) { "ideation" }
+    name = params.fetch(:section) { "ideation" }
+
+    if name.to_s.downcase === 'marketing'
+      name = 'pitch'
+    end
+
+    name
   end
 end
