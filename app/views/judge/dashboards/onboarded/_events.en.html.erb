@@ -1,22 +1,29 @@
-
 <li class="completion-step">
-  <div class="flags">
-    <span class="flag flag-events">
-      Pitch Events
-    </span>
-  </div>
+    <div class="flags">
+      <span class="flag flag-events">
+        Judging
+      </span>
+    </div>
 
-  <h1 class="content-heading"> Regional Pitch Events</h1>
+  <% if SeasonToggles.select_regional_pitch_event? &&
+    current_judge.live_event? %>
 
-  <p>
-    Select pitch events in your area for your teams to
-    pitch to a live panel of judges!
-  </p>
+    <h1 class="content-heading"> Regional Pitch Events</h1>
 
-  <div class="step-actions">
-    <%= link_to 'View Details',
-        #,
-        class: "button" %>
-  </div>
-  </div>
+    <p>
+      You are attending x event.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to 'View Details',
+          #,
+          class: "button" %>
+    </div>
+  <% else %>
+    <h1 class="content-heading"> Virtual Judging</h1>
+
+    <p>
+      You will be judging submissions online. Quarterfinals judging begins in x days.
+      </p>
+  <% end %>
 </li>
