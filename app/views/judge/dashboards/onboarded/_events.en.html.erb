@@ -5,16 +5,51 @@
       </span>
     </div>
 
-  <% if current_judge.live_event? %>
+  <% if !current_judge.live_event? %>
 
     <h1 class="content-heading"> Regional Pitch Events</h1>
-
-    <p>
-      You will be judging teams at
-      <b><%= current_judge.event.name %></b>.
+    <dl>
+     <p>
+      You will be judging teams at <%= current_judge.event.name %>.
       If this is a mistake or you want to change the event
       please contact your regional ambassador.
     </p>
+      <div class="grid">
+        <div class="grid__col-auto">
+
+          <dt><%= current_judge.event.name %></dt>
+          <dd>
+            <%= current_judge.event.starts_at
+              .in_time_zone(current_judge.event.timezone)
+              .strftime("%A, %B %e") %>
+
+            <br />
+
+            <%= current_judge.event.starts_at
+              .in_time_zone(current_judge.event.timezone)
+              .strftime("%-I:%M%P") %>
+
+            &ndash;
+
+            <%= current_judge.event.ends_at
+              .in_time_zone(current_judge.event.timezone)
+              .strftime("%-I:%M%P %Z") %>
+          </dd>
+
+        </div>
+        <div class="grid__col-auto">
+
+          <dt> Regional Ambassador <dt>
+          <dd>
+            Name: <%= current_judge.event.ambassador.name  %>
+            <br />
+            Email: <%= mail_to current_judge.event.ambassador.email %>
+          </dd>
+
+        </div>
+      </div>
+    </dl>
+
 
     <div class="step-actions">
       <%= link_to 'View details',
@@ -25,7 +60,10 @@
     <h1 class="content-heading"> Online Judging</h1>
 
     <p>
-      You will be judging submissions online. Quarterfinals judging begins on May 1st 2018.
+      You will be judging submissions online.
+    </p>
+    <p>
+      Quarterfinals judging begins on May 1st 2018.
     </p>
   <% end %>
 </li>
