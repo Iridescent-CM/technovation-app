@@ -119,17 +119,29 @@ export default {
   .stepper {
     margin-bottom: 1.5rem;
     background: white;
+    font-size: 100%;
   }
 
   .stepper__step {
     opacity: 0.5;
     transition: opacity 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 0 1 auto;
+    font-size: 0.9rem;
+  }
+
+  .stepper__step a {
+    text-overflow: ellipsis;
+    font-weight: bold;
   }
 
   .stepper__step-score {
     display: block;
+    font-weight: normal;
     font-size: 0.9rem;
     opacity: 0.8;
+    text-align: right;
   }
 
   .stepper__step--active,
