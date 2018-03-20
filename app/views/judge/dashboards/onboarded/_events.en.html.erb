@@ -1,7 +1,22 @@
-<div class="flex-col-md-8">
-  <%= render 'dashboards/select_regional_pitch_event',
-    attendee: current_judge,
-    events: @regional_events %>
-</div>
 
-<%= render 'judge/dashboards/info_sidebar' %>
+<li class="completion-step">
+  <div class="flags">
+    <span class="flag flag-events">
+      Pitch Events
+    </span>
+  </div>
+
+  <h1 class="content-heading"> Regional Pitch Events</h1>
+
+  <p>
+    Select pitch events in your area for your teams to
+    pitch to a live panel of judges!
+  </p>
+
+  <div class="step-actions">
+    <%= link_to 'View Details',
+        #,
+        class: "button" %>
+  </div>
+  </div>
+</li>
