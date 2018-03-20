@@ -2,8 +2,8 @@
   <question-section
     title="Ideation (15 points)"
     referTo="app name and description, pitch video, and demo video."
+    section="ideation"
     nextSection="technical"
-    :questions="questions"
   ></question-section>
 </template>
 
@@ -11,12 +11,6 @@
 import QuestionSection from './QuestionSection'
 
 export default {
-  computed: {
-    questions () {
-      return this.$store.getters.ideationQuestions
-    },
-  },
-
   components: {
     QuestionSection,
   },

@@ -24,6 +24,11 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
   state: {
+    score: {
+      id: null,
+      comments: [],
+    },
+
     questions: [],
 
     team: {
@@ -31,11 +36,16 @@ const store = new Vuex.Store({
     },
 
     submission: {
+      id: null,
       total_checklist_points: 0,
     },
   },
 
   getters: {
+    comment: (state) => (sectionName) => {
+      return state.score.comments[sectionName]
+    },
+
     teamName (state) {
       return state.team.name
     },
@@ -44,10 +54,16 @@ const store = new Vuex.Store({
       return state.submission.total_checklist_points
     },
 
-    scorePossible: (state) => (section) => {
-      let possible = _.reduce(_.filter(state.questions, q => {
-        return q.section === section
-      }), (acc, q) => { return acc += q.worth }, 0)
+    submissionId (state) {
+      return state.submission.id
+    },
+
+    scorePossible: (state, getters) => (section) => {
+      let possible = _.reduce(
+        getters.sectionQuestions(section),
+        (acc, q) => { return acc += q.worth },
+        0
+      )
 
       if (section === 'technical') possible += 10
 
@@ -65,38 +81,47 @@ const store = new Vuex.Store({
       return total
     },
 
-    ideationQuestions (state) {
+    sectionQuestions: (state) => (section) => {
       return _.filter(state.questions, q => {
-        return q.section === 'ideation'
-      })
-    },
-
-    technicalQuestions (state) {
-      return _.filter(state.questions, q => {
-        return q.section === 'technical'
-      })
-    },
-
-    pitchQuestions (state) {
-      return _.filter(state.questions, q => {
-        return q.section === 'pitch'
-      })
-    },
-
-    entrepreneurshipQuestions (state) {
-      return _.filter(state.questions, q => {
-        return q.section === 'entrepreneurship'
-      })
-    },
-
-    overallQuestions (state) {
-      return _.filter(state.questions, q => {
-        return q.section === 'overall'
+        return q.section === section
       })
     },
   },
 
   mutations: {
+    setComment (state, commentData) {
+      state.score.comments[commentData.sectionName] = commentData.text
+    },
+
+    saveComment (state, sectionName) {
+      if (!state.score.comments[sectionName])
+        return false
+
+      const data = new FormData()
+
+      data.append(
+        `submission_score[${sectionName}_comment]`,
+        state.score.comments[sectionName]
+      )
+
+      $.ajax({
+        method: "PATCH",
+        url: `/judge/scores/${state.score.id}`,
+
+        data: data,
+        contentType: false,
+        processData: false,
+
+        success: resp => {
+          console.log(resp)
+        },
+
+        error: err => {
+          console.error(err)
+        },
+      })
+    },
+
     updateScores (state, qData) {
       let question = _.find(state.questions, q => {
         return q.section === qData.section && q.idx === qData.idx
@@ -107,7 +132,7 @@ const store = new Vuex.Store({
 
       $.ajax({
         method: "PATCH",
-        url: question.update,
+        url: `/judge/scores/${state.score.id}`,
 
         data: data,
         contentType: false,
@@ -123,17 +148,12 @@ const store = new Vuex.Store({
       })
     },
 
-    populateQuestions (state, questions) {
-      state.questions = questions
+    setStateFromJSON (state, json) {
+      state.questions = json.questions
+      state.team = json.team
+      state.submission = json.submission
+      state.score = json.score
     },
-
-    setTeam (state, team) {
-      state.team = team
-    },
-
-    setSubmission (state, submission) {
-      state.submission = submission
-    }
   },
 })
 
@@ -152,14 +172,18 @@ $(document).on('ready turbolinks:load', () => {
       ScoreStepper,
     },
 
+    watch: {
+      $route (to, from) {
+        this.$store.commit('saveComment', from.name)
+      },
+    },
+
     mounted () {
       $.ajax({
         method: "GET",
         url: "/judge/scores/new.json",
         success: json => {
-          this.$store.commit('populateQuestions', json.questions)
-          this.$store.commit('setTeam', json.team)
-          this.$store.commit('setSubmission', json.submission)
+          this.$store.commit('setStateFromJSON', json)
         },
       })
     },

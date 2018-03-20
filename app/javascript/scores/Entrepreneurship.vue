@@ -2,9 +2,9 @@
   <question-section
     title="Entrepreneurship (20 points)"
     referTo="business plan, demo video, and pitch video."
-    nextSection="overall"
     prevSection="pitch"
-    :questions="questions"
+    section="entrepreneurship"
+    nextSection="overall"
   ></question-section>
 </template>
 
@@ -12,12 +12,6 @@
 import QuestionSection from './QuestionSection'
 
 export default {
-  computed: {
-    questions () {
-      return this.$store.getters.entrepreneurshipQuestions
-    },
-  },
-
   components: {
     QuestionSection,
   },

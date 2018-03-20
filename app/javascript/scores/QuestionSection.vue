@@ -8,6 +8,8 @@
       <slot />
     </score-entry>
 
+    <textarea v-model="comment" />
+
     <div class="grid grid--bleed grid--justify-space-between">
       <div class="grid__col-auto">
         <p>
@@ -43,7 +45,48 @@ import ScoreEntry from './ScoreEntry'
 export default {
   name: 'QuestionSection',
 
+  data () {
+    return {
+      comment: '',
+    }
+  },
+
+  watch: {
+    comment (val) {
+      if (!!val) window.localStorage.setItem(this.commentStorageKey, val)
+
+      this.$store.commit('setComment', {
+        sectionName: this.section,
+        text: this.comment,
+      })
+    },
+
+    submissionId () {
+      this.comment = this.$store.getters.comment(this.section)
+
+      if (!this.comment) {
+        const comment = window.localStorage.getItem(
+          this.commentStorageKey
+        )
+
+        if (!!comment) this.comment = comment
+      }
+    },
+  },
+
   computed: {
+    questions () {
+      return this.$store.getters.sectionQuestions(this.section)
+    },
+
+    commentStorageKey () {
+      return `${this.section}-comment-${this.submissionId}`
+    },
+
+    submissionId () {
+      return this.$store.getters.submissionId
+    },
+
     nextBtnTxt () {
       return _.capitalize(this.nextSection)
     },
@@ -58,11 +101,16 @@ export default {
     'referTo',
     'nextSection',
     'prevSection',
-    'questions',
+    'section',
   ],
 
   components: {
     ScoreEntry,
+  },
+
+  mounted () {
+    const comment = window.localStorage.getItem(this.commentStorageKey)
+    if (!!comment) this.comment = comment
   },
 }
 </script>

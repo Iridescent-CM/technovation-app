@@ -1,7 +1,7 @@
 class Questions
   include Enumerable
 
-  attr_reader :judge, :submission, :questions
+  attr_reader :judge, :submission, :questions, :submission_score
 
   def initialize(judge, submission)
     @judge = judge
@@ -13,13 +13,39 @@ class Questions
     @questions.each { |q| block.call(q) }
   end
 
+  def as_json(*args, &block)
+    {
+      score: {
+        id: submission_score.id,
+        comments: {
+          ideation: submission_score.ideation_comment,
+          technical: submission_score.technical_comment,
+          pitch: submission_score.pitch_comment,
+          entrepreneurship: submission_score.entrepreneurship_comment,
+          overall: submission_score.overall_comment,
+        },
+      },
+
+      submission: {
+        id: submission.id,
+        total_checklist_points: submission.total_technical_checklist
+      },
+
+      team: {
+        id: submission.team_id,
+        name: submission.team_name,
+      },
+
+      questions: questions,
+    }
+  end
+
   private
   def init_questions
-    submission_score = init_db_score
+    @submission_score = init_db_score
 
     [
       Question.new(
-        submission_score: submission_score,
         section: 'ideation',
         field: :sdg_alignment,
         idx: 1,
@@ -31,7 +57,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'ideation',
         field: :evidence_of_problem,
         idx: 2,
@@ -42,7 +67,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'ideation',
         field: :problem_addressed,
         idx: 3,
@@ -52,7 +76,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'technical',
         field: :app_functional,
         idx: 1,
@@ -63,7 +86,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'technical',
         field: :demo_video,
         idx: 2,
@@ -74,7 +96,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'pitch',
         field: :problem_clearly_communicated,
         idx: 1,
@@ -85,7 +106,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'pitch',
         field: :compelling_argument,
         idx: 2,
@@ -96,7 +116,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'pitch',
         field: :passion_energy,
         idx: 3,
@@ -107,7 +126,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'pitch',
         field: :pitch_specific,
         idx: 4,
@@ -117,7 +135,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'entrepreneurship',
         field: :viable_business_model,
         idx: 1,
@@ -127,7 +144,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'entrepreneurship',
         field: :market_research,
         idx: 2,
@@ -138,7 +154,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'entrepreneurship',
         field: :business_plan_long_term,
         idx: 3,
@@ -149,7 +164,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'entrepreneurship',
         field: :business_plan_short_term,
         idx: 4,
@@ -160,7 +174,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'overall',
         field: :business_plan_feasible,
         idx: 1,
@@ -170,7 +183,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'overall',
         field: :submission_thought_out,
         idx: 2,
@@ -181,7 +193,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'overall',
         field: :cohesive_story,
         idx: 3,
@@ -192,7 +203,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'overall',
         field: :solution_originality,
         idx: 4,
@@ -203,7 +213,6 @@ class Questions
       ),
 
       Question.new(
-        submission_score: submission_score,
         section: 'overall',
         field: :solution_stands_out,
         idx: 5,

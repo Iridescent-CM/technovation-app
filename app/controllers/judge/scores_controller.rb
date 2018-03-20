@@ -6,20 +6,8 @@ module Judge
         f.json {
           submission_id = FindEligibleSubmissionId.(current_judge)
           submission = TeamSubmission.find(submission_id)
-
           questions = Questions.new(current_judge, submission)
-
-          render json: {
-            submission: {
-              total_checklist_points: submission.total_technical_checklist
-            },
-
-            team: {
-              name: submission.team_name,
-            },
-
-            questions: questions,
-          }
+          render json: questions
         }
       end
     end
@@ -40,25 +28,30 @@ module Judge
         :sdg_alignment,
         :evidence_of_problem,
         :problem_addressed,
+        :ideation_comment,
 
         :app_functional,
         :demo_video,
+        :technical_comment,
 
         :problem_clearly_communicated,
         :compelling_argument,
         :passion_energy,
         :pitch_specific,
+        :pitch_comment,
 
         :viable_business_model,
         :market_research,
         :business_plan_long_term,
         :business_plan_short_term,
+        :entrepreneurship_comment,
 
         :business_plan_feasible,
         :submission_thought_out,
         :cohesive_story,
         :solution_originality,
         :solution_stands_out,
+        :overall_comment,
       )
     end
   end

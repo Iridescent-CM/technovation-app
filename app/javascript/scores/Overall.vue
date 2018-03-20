@@ -2,9 +2,9 @@
   <question-section
     title="Overall Impression (25 points)"
     referTo="entire submission."
-    nextSection="reviewScore"
     prevSection="entrepreneurship"
-    :questions="questions"
+    section="overall"
+    nextSection="reviewScore"
   ></question-section>
 </template>
 
@@ -12,12 +12,6 @@
 import QuestionSection from './QuestionSection'
 
 export default {
-  computed: {
-    questions () {
-      return this.$store.getters.overallQuestions
-    },
-  },
-
   components: {
     QuestionSection,
   },

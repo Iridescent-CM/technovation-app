@@ -1,5 +1,5 @@
 class Question
-  attr_reader :section, :idx, :text, :worth, :score, :update, :field
+  attr_reader :section, :idx, :text, :worth, :score, :field
 
   def initialize(attrs)
     attrs.symbolize_keys!
@@ -9,6 +9,5 @@ class Question
     @worth = attrs[:worth]
     @score = attrs[:score]
     @field = attrs[:field]
-    @update = "/judge/scores/#{attrs[:submission_score].id}"
   end
 end

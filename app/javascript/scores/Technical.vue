@@ -2,9 +2,9 @@
   <question-section
     title="Technical (20 points)"
     referTo="source code, screenshots, and demo video."
-    nextSection="pitch"
     prevSection="ideation"
-    :questions="questions"
+    section="technical"
+    nextSection="pitch"
   >
     <li class="score-question">
       {{ teamName }} earned
@@ -25,10 +25,6 @@ export default {
 
     checklistPoints () {
       return this.$store.getters.checklistPoints
-    },
-
-    questions () {
-      return this.$store.getters.technicalQuestions
     },
   },
 

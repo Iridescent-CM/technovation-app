@@ -11,85 +11,16 @@
       :class="[
         'grid__col-auto',
         'stepper__step',
-         $route.name === 'ideation' ? 'stepper__step--active' : ''
+         $route.name === section.name ? 'stepper__step--active' : ''
       ]"
+      v-for="section in sections"
     >
-      <router-link to="/ideation" class="grid__cell">
-        <span class="stepper__step-number">2</span>
-        Ideation
+      <router-link :to="{ name: section.name }" class="grid__cell">
+        <span class="stepper__step-number">{{ section.stepNum }}</span>
+        {{ section.title }}
 
         <span class="stepper__step-score">
-          {{ pointsTotal('ideation') }} / {{ pointsPossible('ideation') }}
-        </span>
-      </router-link>
-    </div>
-
-    <div
-      :class="[
-        'grid__col-auto',
-        'stepper__step',
-         $route.name === 'technical' ? 'stepper__step--active' : ''
-      ]"
-    >
-      <router-link to="/technical" class="grid__cell">
-        <span class="stepper__step-number">3</span>
-        Technical
-
-        <span class="stepper__step-score">
-          {{ pointsTotal('technical') }} /
-          {{ pointsPossible('technical') }}
-        </span>
-      </router-link>
-    </div>
-
-    <div
-      :class="[
-        'grid__col-auto',
-        'stepper__step',
-         $route.name === 'pitch' ? 'stepper__step--active' : ''
-      ]"
-    >
-      <router-link to="/pitch" class="grid__cell">
-        <span class="stepper__step-number">4</span>
-        Pitch
-
-        <span class="stepper__step-score">
-          {{ pointsTotal('pitch') }} / {{ pointsPossible('pitch') }}
-        </span>
-      </router-link>
-    </div>
-
-    <div
-      :class="[
-        'grid__col-auto',
-        'stepper__step',
-         $route.name === 'entrepreneurship' ? 'stepper__step--active' : ''
-      ]"
-    >
-      <router-link to="/entrepreneurship" class="grid__cell">
-        <span class="stepper__step-number">5</span>
-        Entrepreneurship
-
-        <span class="stepper__step-score">
-          {{ pointsTotal('entrepreneurship') }} /
-          {{ pointsPossible('entrepreneurship') }}
-        </span>
-      </router-link>
-    </div>
-
-    <div
-      :class="[
-        'grid__col-auto',
-        'stepper__step',
-         $route.name === 'overall' ? 'stepper__step--active' : ''
-      ]"
-    >
-      <router-link to="/overall" class="grid__cell">
-        <span class="stepper__step-number">6</span>
-        Overall Impression
-
-        <span class="stepper__step-score">
-          {{ pointsTotal('overall') }} / {{ pointsPossible('overall') }}
+          {{ section.pointsTotal }} / {{ section.pointsPossible }}
         </span>
       </router-link>
     </div>
@@ -98,9 +29,50 @@
 
 <script>
 export default {
-  data () {
-    return {
-    }
+  computed: {
+    sections () {
+      return [
+        {
+          name: 'ideation',
+          title: 'Ideation',
+          stepNum: 2,
+          pointsTotal: this.pointsTotal('ideation'),
+          pointsPossible: this.pointsPossible('ideation'),
+        },
+
+        {
+          name: 'technical',
+          title: 'Technical',
+          stepNum: 3,
+          pointsTotal: this.pointsTotal('technical'),
+          pointsPossible: this.pointsPossible('technical'),
+        },
+
+        {
+          name: 'pitch',
+          title: 'Pitch',
+          stepNum: 4,
+          pointsTotal: this.pointsTotal('pitch'),
+          pointsPossible: this.pointsPossible('pitch'),
+        },
+
+        {
+          name: 'entrepreneurship',
+          title: 'Entrepreneurship',
+          stepNum: 5,
+          pointsTotal: this.pointsTotal('entrepreneurship'),
+          pointsPossible: this.pointsPossible('entrepreneurship'),
+        },
+
+        {
+          name: 'overall',
+          title: 'Overall Impression',
+          stepNum: 6,
+          pointsTotal: this.pointsTotal('overall'),
+          pointsPossible: this.pointsPossible('overall'),
+        },
+      ]
+    },
   },
 
   methods: {
