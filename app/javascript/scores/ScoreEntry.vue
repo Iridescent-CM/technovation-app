@@ -68,6 +68,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 2rem;
+
+    ol {
+      margin: 1rem 0 0;
+      padding: 0;
+    }
+  }
+
+  .score-question {
+    margin: 3rem 0 0;
+    padding: 0;
+  }
+
+  .score-value {
+    display: inline-block;
+    margin-right: 3rem;
+    opacity: 0.5;
+    background: none;
+    border: 1px solid darkgreen;
+    padding: 0.45rem 0.85rem;
+    border-radius: 50%;
+    font-weight: bold;
+    color: darkgreen;
+    transition: opacity 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+      background: darkgreen;
+      color: white;
+    }
+
+    &.selected,
+    &.selected:hover {
+      opacity: 1;
+      background: darkgreen;
+      color: white;
+    }
+  }
+
   .loading {
     padding: 2rem;
     text-align: center;

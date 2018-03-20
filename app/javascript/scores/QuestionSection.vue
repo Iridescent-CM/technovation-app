@@ -66,3 +66,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+  p {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0;
+  }
+</style>
