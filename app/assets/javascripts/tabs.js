@@ -90,8 +90,9 @@ $(document).on("ready turbolinks:load", function() {
     if (!$_btn.data('tab-id'))
       $_btn = $_btn.find('button').first();
 
-    if ($_btn.data('update-hash'))
-      window.location.hash = "#!" + $_btn.data('tab-id');
+    if ($_btn.data('update-hash')) {
+      history.replaceState(history.state, "", "#!" + $_btn.data('tab-id'))
+    }
 
     $_btn.data('update-hash', true);
 
