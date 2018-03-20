@@ -25,19 +25,44 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   state: {
     questions: [],
+
+    team: {
+      name: '',
+    },
+
+    submission: {
+      total_checklist_points: 0,
+    },
   },
 
   getters: {
+    teamName (state) {
+      return state.team.name
+    },
+
+    checklistPoints (state) {
+      return state.submission.total_checklist_points
+    },
+
     scorePossible: (state) => (section) => {
-      return _.reduce(_.filter(state.questions, q => {
+      let possible = _.reduce(_.filter(state.questions, q => {
         return q.section === section
       }), (acc, q) => { return acc += q.worth }, 0)
+
+      if (section === 'technical') possible += 10
+
+      return possible
     },
 
     scoreTotal: (state) => (section) => {
-      return _.reduce(_.filter(state.questions, q => {
+      let total = _.reduce(_.filter(state.questions, q => {
         return q.section === section
       }), (acc, q) => { return acc += q.score }, 0)
+
+      if (section === 'technical')
+        total += state.submission.total_checklist_points
+
+      return total
     },
 
     ideationQuestions (state) {
@@ -98,9 +123,17 @@ const store = new Vuex.Store({
       })
     },
 
-    populateQuestions (state, json) {
-      state.questions = json
+    populateQuestions (state, questions) {
+      state.questions = questions
     },
+
+    setTeam (state, team) {
+      state.team = team
+    },
+
+    setSubmission (state, submission) {
+      state.submission = submission
+    }
   },
 })
 
@@ -124,7 +157,9 @@ $(document).on('ready turbolinks:load', () => {
         method: "GET",
         url: "/judge/scores/new.json",
         success: json => {
-          this.$store.commit('populateQuestions', json)
+          this.$store.commit('populateQuestions', json.questions)
+          this.$store.commit('setTeam', json.team)
+          this.$store.commit('setSubmission', json.submission)
         },
       })
     },

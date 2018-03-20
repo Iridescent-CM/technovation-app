@@ -9,7 +9,17 @@ module Judge
 
           questions = Questions.new(current_judge, submission)
 
-          render json: questions
+          render json: {
+            submission: {
+              total_checklist_points: submission.total_technical_checklist
+            },
+
+            team: {
+              name: submission.team_name,
+            },
+
+            questions: questions,
+          }
         }
       end
     end
