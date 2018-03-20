@@ -58,19 +58,31 @@ const store = new Vuex.Store({
       return state.submission.id
     },
 
-    scorePossible: (state, getters) => (section) => {
+    totalScore (state) {
+      return _.reduce(state.questions, (acc, q) => {
+        return acc += q.score
+      }, 0) + state.submission.total_checklist_points
+    },
+
+    totalPossible (state) {
+      return _.reduce(state.questions, (acc, q) => {
+        return acc += q.worth
+      }, 0) + 10 // + code checklist
+    },
+
+    sectionPointsPossible: (state, getters) => (section) => {
       let possible = _.reduce(
         getters.sectionQuestions(section),
         (acc, q) => { return acc += q.worth },
         0
       )
 
-      if (section === 'technical') possible += 10
+      if (section === 'technical') possible += 10 // + code checklist
 
       return possible
     },
 
-    scoreTotal: (state) => (section) => {
+    sectionPointsTotal: (state) => (section) => {
       let total = _.reduce(_.filter(state.questions, q => {
         return q.section === section
       }), (acc, q) => { return acc += q.score }, 0)

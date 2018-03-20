@@ -4,7 +4,8 @@
     referTo="entire submission."
     prevSection="entrepreneurship"
     section="overall"
-    nextSection="reviewScore"
+    nextSection="review-score"
+    nextSectionTitle="Review score"
   ></question-section>
 </template>
 

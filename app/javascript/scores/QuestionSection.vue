@@ -92,7 +92,7 @@ export default {
     },
 
     nextBtnTxt () {
-      return _.capitalize(this.nextSection)
+      return this.nextSectionTitle || _.capitalize(this.nextSection)
     },
 
     prevBtnTxt () {
@@ -106,6 +106,7 @@ export default {
     'nextSection',
     'prevSection',
     'section',
+    'nextSectionTitle',
   ],
 
   components: {

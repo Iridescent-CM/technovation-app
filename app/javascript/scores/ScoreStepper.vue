@@ -1,10 +1,17 @@
 <template>
   <nav class="grid grid--bleed grid--justify-space-between stepper">
-    <div class="grid__col-auto stepper__step">
-      <a class="grid__cell">
+    <div
+      :class="[
+        'grid__col-auto',
+        'stepper__step',
+         $route.name === 'review-submission' ?
+                           'stepper__step--active' : ''
+      ]"
+    >
+      <router-link :to="{ name: 'review-submission' }" class="grid__cell">
         <span class="stepper__step-number">1</span>
         Review submission
-      </a>
+      </router-link>
     </div>
 
     <div
@@ -21,6 +28,23 @@
 
         <span class="stepper__step-score">
           {{ section.pointsTotal }} / {{ section.pointsPossible }}
+        </span>
+      </router-link>
+    </div>
+
+    <div
+      :class="[
+        'grid__col-auto',
+        'stepper__step',
+         $route.name === 'review-score' ? 'stepper__step--active' : ''
+      ]"
+    >
+      <router-link :to="{ name: 'review-score' }" class="grid__cell">
+        <span class="stepper__step-number">7</span>
+        Review score
+
+        <span class="stepper__step-score">
+          {{ totalScore }} / {{ totalPossible }}
         </span>
       </router-link>
     </div>
@@ -73,15 +97,23 @@ export default {
         },
       ]
     },
+
+    totalScore () {
+      return this.$store.getters.totalScore
+    },
+
+    totalPossible () {
+      return this.$store.getters.totalPossible
+    },
   },
 
   methods: {
     pointsPossible (section) {
-      return this.$store.getters.scorePossible(section)
+      return this.$store.getters.sectionPointsPossible(section)
     },
 
     pointsTotal (section) {
-      return this.$store.getters.scoreTotal(section)
+      return this.$store.getters.sectionPointsTotal(section)
     },
   },
 }
