@@ -1,5 +1,10 @@
 <template>
-  <ol>
+  <div v-if="!questions.length" class="loading">
+    <icon name="spinner" className="spin" />
+    <div>Loading questions...</div>
+  </div>
+
+  <ol v-else>
     <li v-for="question in questions">
       {{ question.text }}
 
@@ -21,7 +26,13 @@
 </template>
 
 <script>
+import Icon from '../components/Icon'
+
 export default {
+  components: {
+    Icon,
+  },
+
   props: ['questions'],
 
   methods: {
@@ -50,3 +61,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .loading {
+    padding: 2rem;
+    text-align: center;
+
+    div {
+      margin: 1rem auto;
+    }
+  }
+</style>
