@@ -53,23 +53,31 @@ module ApplicationHelper
         text = content_tag(
           :span,
           options[:text],
-          class: "web-icon-text"
+          class: "icomoon--icon-text"
         )
 
         img + text
       end
     else
+      css = (options[:class] || "").split(" ").map do |class_name|
+        if class_name.match(/^icon-/)
+          "icomoon--#{class_name}"
+        else
+          class_name
+        end
+      end
+
       content_tag(:span) do
         icon = content_tag(
           :span,
           nil,
-          class: "icon-#{icon} #{options[:class]}"
+          class: "icomoon--icon-#{icon} #{css.join(" ")}"
         )
 
         text = content_tag(
           :span,
           options[:text],
-          class: "web-icon-text"
+          class: "icomoon--icon-text"
         )
 
         icon + text
