@@ -7,7 +7,8 @@ class JudgeController < ApplicationController
     :current_profile,
     :assigned_teams,
     :current_round,
-    :quarterfinals?
+    :quarterfinals?,
+    :back_from_event_path
 
   before_action -> {
     set_last_profile_used("judge")
@@ -34,6 +35,10 @@ class JudgeController < ApplicationController
 
   def create_mentor_judge_on_dashboard
     # Implemented in Judge::DashboardsController
+  end
+
+  def back_from_event_path
+    judge_dashboard_path
   end
 
   def assigned_teams(judge)

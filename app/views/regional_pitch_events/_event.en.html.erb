@@ -38,40 +38,42 @@
               target: :_blank %>
           </dd>
         <% end %>
-      </div>
+      </dl>
+    </div>
 
-      <div class="grid__col-auto">
+    <div class="grid__col-auto">
+      <p>
+        If you have questions about this event,
+        please contact your regional ambassador.
+      </p>
+
+      <dl>
+        <dt>Name:</dt>
+        <dd><%= event.ambassador.name  %></dd>
+
+        <dt>Email:</dt>
+        <dd><%= mail_to event.ambassador.email %></dd>
+      </dl>
+
+      <% if current_scope != "judge" and
+              not current_team.attending_event?(event) and
+                SeasonToggles.select_regional_pitch_event? %>
         <p>
-          If you have questions about this event,
-          please contact your regional ambassador.
+          <%= link_to "Select this event",
+            [
+              current_scope,
+              :regional_pitch_event_selection,
+              { event_id: event.id, team_id: current_team.id },
+            ],
+            class: "button small",
+            data: {
+              positive: true,
+              method: :post,
+              confirm: "Are you sure you want to attend #{event.name}? " +
+              "<p><strong>You cannot change this.</strong></p>"
+            } %>
         </p>
-
-        <dl>
-          <dt>Name:</dt>
-          <dd><%= event.ambassador.name  %></dd>
-
-          <dt>Email:</dt>
-          <dd><%= mail_to event.ambassador.email %></dd>
-        </dl>
-
-        <% if !current_team.attending_event?(event) and
-            SeasonToggles.select_regional_pitch_event? %>
-          <p>
-            <%= link_to "Select this event",
-              [
-                current_scope,
-                :regional_pitch_event_selection,
-                { event_id: event.id, team_id: current_team.id },
-              ],
-              class: "button small",
-              data: {
-                positive: true,
-                method: :post,
-                confirm: "Are you sure you want to attend #{event.name}? " +
-                  "<p><strong>You cannot change this.</strong></p>"
-              } %>
-          </p>
-        <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
+</div>

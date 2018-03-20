@@ -28,7 +28,7 @@
 
   <ul class="list--reset">
     <li>
-      <%= link_to "Read the Judging Rubric",
+      <%= link_to "Read the judging rubric",
         "http://www.technovationchallenge.org/judging-rubric/",
         target: "_blank" %>
     </li>
@@ -38,5 +38,13 @@
         ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
         target: "_blank" %>
     </li>
+
+    <% if !current_judge.onboarding? %>
+      <li>
+        <%= link_to "Review your judge training",
+        ENV.fetch("JUDGE_TRAINING_URL"),
+        target: "_blank" %>
+      </li>
+    <% end %>
   </ul>
 </div>
