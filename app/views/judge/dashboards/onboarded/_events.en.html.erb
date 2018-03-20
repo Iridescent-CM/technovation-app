@@ -11,19 +11,22 @@
     <h1 class="content-heading"> Regional Pitch Events</h1>
 
     <p>
-      You are attending x event.
+      You will be judging teams at
+      <b><%= current_judge.event.name %></b>.
+      If this is a mistake or you want to change the event
+      please contact your regional ambassador.
     </p>
 
     <div class="step-actions">
-      <%= link_to 'View Details',
-          #,
-          class: "button" %>
+      <%= link_to 'View details',
+                  [current_scope, current_judge.event, current_team: true],
+                  class: "button" %>
     </div>
   <% else %>
-    <h1 class="content-heading"> Virtual Judging</h1>
+    <h1 class="content-heading"> Online Judging</h1>
 
     <p>
-      You will be judging submissions online. Quarterfinals judging begins in x days.
+      You will be judging submissions online. Quarterfinals judging begins on May 1st 2018.
       </p>
   <% end %>
 </li>
