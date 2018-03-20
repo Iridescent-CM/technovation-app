@@ -5,7 +5,10 @@
   </div>
 
   <ol v-else>
-    <li v-for="question in questions">
+    <li
+      class="score-question"
+      v-for="question in questions"
+    >
       {{ question.text }}
 
       <ol>
@@ -22,6 +25,8 @@
         </li>
       </ol>
     </li>
+
+    <slot />
   </ol>
 </template>
 

@@ -4,7 +4,9 @@
 
     <p>Refer to the {{ referTo }}</p>
 
-    <score-entry :questions="questions"></score-entry>
+    <score-entry :questions="questions">
+      <slot />
+    </score-entry>
 
     <div class="grid grid--bleed grid--justify-space-between">
       <div class="grid__col-auto">
