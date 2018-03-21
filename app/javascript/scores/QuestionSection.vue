@@ -26,6 +26,11 @@
         ></div>
 
         <div
+          v-tooltip.top-center="sentimentTooltip('neutral')"
+          :style="`width: ${sentimentPercentage('neutral')}`"
+        ></div>
+
+        <div
            v-tooltip.top-center="sentimentTooltip('negative')"
           :style="`width: ${sentimentPercentage('negative')}`"
         ></div>
@@ -231,12 +236,10 @@ export default {
           text: current_val,
         })
 
-        $.get(
-          'https://api.uclassify.com/v1/uclassify/Sentiment/classify/' +
-          '?readKey=0yZrs6zTgHt5&text=' + current_val,
-          null,
-          resp => { this.sentiment = resp }
-        )
+        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+          .algo("nlp/SocialSentimentAnalysis/0.1.4")
+          .pipe({ sentence: current_val })
+          .then(resp => { this.sentiment = resp.result[0] });
 
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/ProfanityDetection/1.0.0")
@@ -302,6 +305,10 @@ export default {
       padding: 0.5rem 0;
 
       &:first-child {
+        background: MediumSeaGreen;
+      }
+
+      &:nth-child(2) {
         background: SteelBlue;
       }
     }
