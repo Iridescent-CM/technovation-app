@@ -54,6 +54,8 @@
       <ul class="steps">
         <%= render 'completion_steps/confirm_changed_email',
           profile: current_judge %>
+
+        <%= render 'judge/dashboards/onboarded/events' %>
       </ul>
 
       <% if current_judge.onboarding? %>
@@ -62,7 +64,9 @@
           <%= render "judge/dashboards/info_sidebar" %>
         </div>
       <% else %>
-        <%= render "judge/dashboards/onboarded" %>
+        <div class="panel panel--left">
+          <%= render "judge/dashboards/info_sidebar" %>
+        </div>
       <% end %>
     </div>
   </div>

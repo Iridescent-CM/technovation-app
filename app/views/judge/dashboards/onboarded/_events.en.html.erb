@@ -6,12 +6,21 @@
   </div>
 
   <% if current_judge.live_event? %>
-    <h1 class="content-heading"> Regional Pitch Events</h1>
+    <h1 class="content-heading">Regional Pitch Events</h1>
 
     <p>
-      You will be judging teams at <%= current_judge.event.name %>.
-      If this is a mistake or you want to change the event
-      please contact your regional ambassador.
+      <% if current_judge.onboarding? %>
+        Please finish your onboarding steps below, so
+        that you will be able to judge at
+        <%= current_judge.event.name %>.
+      <% else %>
+        You will be judging teams at <%= current_judge.event.name %>.
+      <% end %>
+    </p>
+
+    <p>
+      If there is a mistake, if you want to change events, or
+      only judge online, please contact your regional ambassador.
     </p>
 
     <div class="grid">
@@ -47,19 +56,36 @@
             Email: <%= mail_to current_judge.event.ambassador.email %>
           </dd>
         </dl>
+
+        <p>
+          You can preview your event's submissions
+          beginning on May 1st, 2018.
+        </p>
       </div>
     </div>
 
     <div class="step-actions">
       <%= link_to 'View details',
-                  [current_scope, current_judge.event],
-                  class: "button" %>
+        [current_scope, current_judge.event],
+        class: "button" %>
     </div>
   <% else %>
-    <h1 class="content-heading"> Online Judging</h1>
+    <h1 class="content-heading">Online Judging</h1>
 
-    <p>You will be judging submissions online.</p>
+    <p>
+      <% if current_judge.onboarding? %>
+        Once you are finished onboarding,
+        you will be able to judge submissions online.
+      <% else %>
+        You are currently set to judge submissions online.
+      <% end %>
+    </p>
 
-    <p>Quarterfinals judging begins on May 1st 2018.</p>
+    <p class="scent--strong">
+      If your Regional Ambassador invites you to a live event,
+      you will receive an email, and details will appear here.
+    </p>
+
+    <p>Quarterfinals judging begins on May 1st, 2018.</p>
   <% end %>
 </li>
