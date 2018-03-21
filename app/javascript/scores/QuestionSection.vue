@@ -11,7 +11,7 @@
     </div>
 
     <div class="grid__col-6">
-      <h3 class="heading--reset">{{ sectionTitle}} comment</h3>
+      <h3>{{ sectionTitle}} comment</h3>
 
       <h5 class="heading--reset">Please keep in mind</h5>
 
@@ -21,13 +21,13 @@
 
       <div class="comment-sentiment">
         <div
-          v-tooltip.top-center="`Positive sentiment of your comment`"
-          :style="`width: ${sentiment.positive * 100}%`"
+          v-tooltip.top-center="sentimentTooltip('positive')"
+          :style="`width: ${sentimentPercentage('positive')}`"
         ></div>
 
         <div
-          v-tooltip.top-center="`Negative sentiment of your comment`"
-          :style="`width: ${sentiment.negative * 100}%`"
+           v-tooltip.top-center="sentimentTooltip('negative')"
+          :style="`width: ${sentimentPercentage('negative')}`"
         ></div>
       </div>
 
@@ -40,15 +40,15 @@
           <p class="word-count">
             <span :style="`color: ${colorForWordCount}`">
               {{ wordCount(comment) }}
+              {{ wordCount(comment) | pluralize('word') }}
             </span>
-            {{ wordCount(comment) | pluralize('word') }}
 
             <br />
 
             <span :style="`color: ${colorForBadWordCount}`">
               {{ badWordCount }}
+              {{ badWordCount | pluralize('prohibited word') }}
             </span>
-            {{ badWordCount | pluralize('prohibited word') }}
           </p>
         </div>
 
@@ -96,8 +96,8 @@ export default {
       comment: '',
 
       sentiment: {
-        negative: 0.5,
-        positive: 0.5,
+        negative: 0,
+        positive: 0,
       },
 
       detectedProfanity: {},
@@ -165,6 +165,16 @@ export default {
       }
     },
 
+    colorForBadWordCount () {
+      const count = this.badWordCount
+
+      if (count < 1) {
+        return 'darkgreen'
+      } else {
+        return 'darkred'
+      }
+    },
+
     sectionTitle () {
       return _.capitalize(this.section)
     },
@@ -204,6 +214,14 @@ export default {
   },
 
   methods: {
+    sentimentTooltip (slant) {
+      return `Your comment is ${this.sentimentPercentage(slant)} ${slant}`
+    },
+
+    sentimentPercentage (slant) {
+      return `${Math.round(this.sentiment[slant] * 100)}%`
+    },
+
     handleCommentChange: _.debounce(function(current_val, old_val) {
       if (current_val !== old_val) {
         window.localStorage.setItem(this.commentStorageKey, current_val)
@@ -281,7 +299,7 @@ export default {
       transition: width 1s ease-in-out;
       overflow: hidden;
       background: IndianRed;
-      padding: 0.5rem;
+      padding: 0.5rem 0;
 
       &:first-child {
         background: SteelBlue;
