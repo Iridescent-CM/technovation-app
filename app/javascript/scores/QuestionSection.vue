@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid--justify-space-between">
+  <div class="grid grid--align-start grid--justify-space-between">
     <div class="grid__col-auto">
       <h3>{{ title }}</h3>
 
