@@ -24,15 +24,32 @@ import '../admin/main.scss'
 
 const ROOT_URL = '/admin/participants.json?'
 
+function remoteFetch (state, url) {
+  $.ajax({
+    method: "GET",
+    url: url,
+    success: (resp) => {
+      state.items = resp.assets
+      state.totalItems = resp.total
+    },
+    error: (err) => { console.error(err) },
+  })
+}
+
 const store = new Vuex.Store({
   state: {
     items: [],
     searchFilters: [],
+    totalItems: 0,
   },
 
   getters: {
     items (state) {
       return state.items
+    },
+
+    totalItems (state) {
+      return state.totalItems
     },
   },
 
@@ -60,21 +77,11 @@ const store = new Vuex.Store({
         }
       })
 
-      $.ajax({
-        method: "GET",
-        url: url,
-        success: (resp) => { state.items = resp },
-        error: (err) => { console.error(err) },
-      })
+      remoteFetch(state, url)
     },
 
     initParticipants (state) {
-      $.ajax({
-        method: "GET",
-        url: ROOT_URL,
-        success: (resp) => { state.items = resp },
-        error: (err) => { console.error(err) },
-      })
+      remoteFetch(state, ROOT_URL)
     },
   },
 })
@@ -101,6 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     computed: {
       items () {
         return this.$store.getters.items
+      },
+
+      totalItems () {
+        return this.$store.getters.totalItems
       },
     },
 

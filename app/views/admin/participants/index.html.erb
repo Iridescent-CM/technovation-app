@@ -24,7 +24,10 @@
           </template>
         </v-data-table>	
 
-        <v-pagination :length="6" v-model="page"></v-pagination>
+        <v-pagination
+          :length="parseInt(totalItems / 15)"
+          v-model="page"
+        ></v-pagination>
       </v-container>
     </v-app>
   </div>

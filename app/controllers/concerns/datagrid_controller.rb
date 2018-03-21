@@ -97,11 +97,10 @@ module DatagridController
 
           render json: {}
         else
-          data = grid_klass.new(grid_params) { |scope|
-            modify_html_scope(scope)
-          }
+          data = grid_klass.new(grid_params)
+          paged = grid_klass.new(grid_params) { |scope| modify_html_scope(scope) }
 
-          render json: data.assets
+          render json: { assets: paged.assets, total: data.assets.count }
         end
       end
 
