@@ -25,20 +25,22 @@ export default {
     }
   },
 
-  watch: {
-    juniorDivision (bool) {
-      this.$store.commit('searchFilters', {
-        name: 'division-junior',
-        param: 'accounts_grid[division][]',
-        value: bool ? 'junior' : '',
-      })
+  computed: {
+    divisions () {
+      return [
+        this.juniorDivision ? 'junior' : '',
+        this.seniorDivision ? 'senior' : ''
+      ]
     },
+  },
 
-    seniorDivision (bool) {
+  watch: {
+    divisions (collection) {
       this.$store.commit('searchFilters', {
-        name: 'division-senior',
+        name: 'division',
         param: 'accounts_grid[division][]',
-        value: bool ? 'senior' : '',
+        value: collection,
+        multiple: true,
       })
     },
   },
