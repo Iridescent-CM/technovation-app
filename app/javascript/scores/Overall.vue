@@ -6,7 +6,13 @@
     section="overall"
     nextSection="review-score"
     nextSectionTitle="Review score"
-  ></question-section>
+  >
+    <p slot="comment-tips">
+      Considering the native language and ages of the team,
+      how does this submission stand out for you? How well
+      do all the parts work together?
+    </p>
+  </question-section>
 </template>
 
 <script>

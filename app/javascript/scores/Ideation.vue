@@ -4,7 +4,13 @@
     referTo="app name and description, pitch video, and demo video."
     section="ideation"
     nextSection="technical"
-  ></question-section>
+  >
+    <p slot="comment-tips">
+      Be sensitive to cultural differences and
+      focus on how well the team identified the problem
+      and presented a solution.
+    </p>
+  </question-section>
 </template>
 
 <script>

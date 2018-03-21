@@ -13,11 +13,9 @@
     <div class="grid__col-6">
       <h3 class="heading--reset">{{ sectionTitle}} comment</h3>
 
-      <p>
-        Please keep in mind cultural sensitivities and
-        focus on how well the team identified the problem
-        and presented a solution.
-      </p>
+      <h5 class="heading--reset">Please keep in mind</h5>
+
+      <slot name="comment-tips" />
 
       <textarea v-model="comment" />
 

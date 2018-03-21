@@ -11,6 +11,12 @@
       <strong>{{ checklistPoints }} points</strong>
       for their code checklist.
     </li>
+
+    <p slot="comment-tips">
+      This section is not about how complex the app is,
+      but how well the app solves the problem and meets
+      the needs outlined by the team.
+    </p>
   </question-section>
 </template>
 
