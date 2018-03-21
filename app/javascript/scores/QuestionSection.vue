@@ -36,6 +36,8 @@
       {{ words }}
     </p>
 
+    {{ badWordCount }} bad words
+
     <div class="grid grid--bleed grid--justify-space-between">
       <div class="grid__col-auto nav-btn">
         <p>
@@ -67,6 +69,7 @@
 
 <script>
 import _ from 'lodash'
+
 import ScoreEntry from './ScoreEntry'
 
 export default {
@@ -75,10 +78,13 @@ export default {
   data () {
     return {
       comment: '',
+
       sentiment: {
         negative: 0.5,
         positive: 0.5,
       },
+
+      badWords: {},
     }
   },
 
@@ -109,6 +115,12 @@ export default {
   },
 
   computed: {
+    badWordCount () {
+      return _.reduce(this.badWords, (acc, value, key) => {
+        return acc += value
+      }, 0)
+    },
+
     colorForWordCount () {
       const count = this.wordCount(this.comment)
 
@@ -181,6 +193,11 @@ export default {
           null,
           resp => { this.sentiment = resp }
         )
+
+        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+          .algo("nlp/ProfanityDetection/1.0.0")
+          .pipe([current_val, [], false])
+          .then(resp => { this.badWords = resp.result });
       }
     }, 1000),
 

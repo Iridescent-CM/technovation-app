@@ -1,4 +1,9 @@
-<% provide :js, javascript_pack_tag("judge_scores") %>
+<% content_for :js, javascript_include_tag(
+  "//algorithmia.com/v1/clients/js/algorithmia-0.2.0.js"
+) %>
+
+<% content_for :js, javascript_pack_tag("judge_scores") %>
+
 <% provide :css, stylesheet_pack_tag("judge_scores") %>
 
 <div class="grid">
