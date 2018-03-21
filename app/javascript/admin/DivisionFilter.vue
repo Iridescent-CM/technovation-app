@@ -20,32 +20,25 @@ export default {
 
   data () {
     return {
-      juniorDivision: this.$store.getters.searchFilters({
-        name: 'division',
-        value: 'junior'
-      }),
-
-      seniorDivision: this.$store.getters.searchFilters({
-        name: 'division',
-        value: 'senior'
-      }),
+      juniorDivision: true,
+      seniorDivision: true,
     }
   },
 
   watch: {
     juniorDivision (bool) {
       this.$store.commit('searchFilters', {
-        filterRoot: 'division',
-        filterName: 'junior',
-        value: bool
+        name: 'division-junior',
+        param: 'accounts_grid[division][]',
+        value: bool ? 'junior' : '',
       })
     },
 
     seniorDivision (bool) {
       this.$store.commit('searchFilters', {
-        filterRoot: 'division',
-        filterName: 'senior',
-        value: bool
+        name: 'division-senior',
+        param: 'accounts_grid[division][]',
+        value: bool ? 'senior' : '',
       })
     },
   },

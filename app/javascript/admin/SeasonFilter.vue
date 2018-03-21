@@ -16,26 +16,28 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'SeasonFilter',
 
   data () {
     return {
-      seasons: this.$store.getters.searchFilters({
-        name: 'seasons',
-      }),
-
-      selected: this.$store.getters.searchFilters({
-        name: 'selectedSeasons',
-      }),
+      seasons: [2018, 2017, 2016, 2015],
+      selected: [2018],
     }
+  },
+
+  computed: {
   },
 
   watch: {
     selected (collection) {
       this.$store.commit('searchFilters', {
-        filterRoot: 'seasons',
-        value: collection
+        name: 'season',
+        param: 'accounts_grid[season][]',
+        value: collection,
+        multiple: true,
       })
     },
   },
