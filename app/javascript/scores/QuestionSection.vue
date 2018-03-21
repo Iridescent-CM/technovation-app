@@ -223,7 +223,7 @@ export default {
     },
 
     handleCommentChange: _.debounce(function(current_val, old_val) {
-      if (current_val !== old_val) {
+      if (!!current_val && current_val !== old_val) {
         window.localStorage.setItem(this.commentStorageKey, current_val)
 
         this.$store.commit('setComment', {
