@@ -19,9 +19,18 @@
 //= require modals
 //= require sticky-cols
 
-$(document).ajaxSend(function(_, xhr) {
-  xhr.setRequestHeader(
-    'X-CSRF-Token',
-    $('meta[name="csrf-token"]').attr('content')
-  );
+$(document).ajaxSend(function(evt, xhr, opts) {
+  if (!opts.crossDomain)
+    xhr.setRequestHeader(
+      'X-CSRF-Token',
+      $('meta[name="csrf-token"]').attr('content')
+    );
+});
+
+$.ajaxPrefilter(function (options) {
+  if (options.crossDomain && jQuery.support.cors) {
+    var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+    options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  }
 });
