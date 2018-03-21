@@ -5,9 +5,8 @@
     <% if current_judge.has_incomplete_scores? %>
       <p>
         <%= link_to "Resume scoring",
-          edit_judge_submission_score_path(
-            current_judge.last_incomplete_score
-          ) %>
+          new_judge_score_path,
+          data: { turbolinks: false } %>
 
         <%= current_judge.last_incomplete_score.name %>
       </p>
@@ -19,7 +18,9 @@
       </p>
     <% elsif current_judge.has_no_incomplete_scores? %>
       <p>
-        <%= link_to 'Start a new score', new_judge_submission_score_path %>
+      <%= link_to 'Start a new score',
+        new_judge_score_path,
+        data: { turbolinks: false }%>
       </p>
     <% end %>
   <% end %>

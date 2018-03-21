@@ -121,9 +121,12 @@ export default {
 
 <style scoped>
   .stepper {
-    margin-bottom: 1.5rem;
     background: white;
     font-size: 100%;
+    position: fixed;
+    margin: -1rem -1rem 0;
+    z-index: 1058;
+    box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.3);
   }
 
   .stepper__step {
@@ -156,7 +159,7 @@ export default {
   a {
     display: block;
     cursor: pointer;
-    padding: 1rem;
+    padding: 1rem 0;
     color: black;
   }
 
