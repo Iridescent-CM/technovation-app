@@ -60,18 +60,21 @@ class RegionalPitchEvent < ActiveRecord::Base
       case record
       when JudgeProfile
         if record.country === "US"
-          joins(ambassador: :account)
-          .where(
-            "accounts.country = 'US' AND accounts.state_province = ?",
-            record.state_province
-          )
+          current
+            .joins(ambassador: :account)
+            .where(
+              "accounts.country = 'US' AND accounts.state_province = ?",
+              record.state_province
+            )
         else
-          joins(ambassador: :account)
-          .where("accounts.country = ?", record.country)
+          current
+            .joins(ambassador: :account)
+            .where("accounts.country = ?", record.country)
         end
       when TeamSubmission
         if record.country === "US"
-          joins(:divisions)
+          current
+            .joins(:divisions)
             .where("divisions.id = ?", record.division_id)
             .joins(ambassador: :account)
             .where(
@@ -79,7 +82,8 @@ class RegionalPitchEvent < ActiveRecord::Base
               record.state_province
             )
         else
-          joins(:divisions)
+          current
+            .joins(:divisions)
             .where("divisions.id = ?", record.division_id)
             .joins(ambassador: :account)
             .where("accounts.country = ?", record.country)
