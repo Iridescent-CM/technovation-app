@@ -24,6 +24,10 @@ import '../admin/main.scss'
 
 const store = new Vuex.Store({
   state: {
+    items: [],
+
+    url: '/admin/participants.json?',
+
     searchFilters: {
       seasons: {
         items: [
@@ -45,8 +49,8 @@ const store = new Vuex.Store({
           },
         ],
 
-        appendURLParams (urlRoot, paramRoot) {
-          return urlRoot + "?" + paramRoot
+        appendURLParams () {
+          store.commit('appendURL', { })
         },
       },
 
@@ -60,11 +64,13 @@ const store = new Vuex.Store({
             this.value = bool
           },
 
-          appendURLParams (urlRoot, paramRoot) {
-            let url = urlRoot + "?" + paramRoot
+          appendURLParams () {
+            let payload = {}
 
-            if (this.value) url += "[" + this.paramName + "][]=" +
-                                   this.paramValue
+            if (this.value) {
+              payload.append = "accounts_grid[" + this.paramName + "][]=" +
+                               this.paramValue
+            }
 
             const senior = store.getters.searchFilters({
               name: 'division',
@@ -72,11 +78,11 @@ const store = new Vuex.Store({
             })
 
             if (senior.value) {
-              url += "&" + paramRoot + "[" + senior.paramName + "][]=" +
+              payload.url += "&accounts_grid[" + senior.paramName + "][]=" +
                 senior.paramValue
             }
 
-            return url
+            store.commit('appendURL', payload)
           },
         },
 
@@ -89,11 +95,13 @@ const store = new Vuex.Store({
             this.value = bool
           },
 
-          appendURLParams (urlRoot, paramRoot) {
-            let url = urlRoot + "?" + paramRoot
+          appendURLParams () {
+            let payload = {}
 
-            if (this.value) url += "[" + this.paramName + "][]=" +
-                                   this.paramValue
+            if (this.value) {
+              payload.append = "accounts_grid[" + this.paramName + "][]=" +
+                               this.paramValue
+            }
 
             const junior = store.getters.searchFilters({
               name: 'division',
@@ -101,11 +109,11 @@ const store = new Vuex.Store({
             })
 
             if (junior.value) {
-              url += "&" + paramRoot + "[" + junior.paramName + "][]=" +
+              payload.url += "&accounts_grid[" + junior.paramName + "][]=" +
                 junior.paramValue
             }
 
-            return url
+            store.commit('appendURL', payload)
           },
         },
       },
@@ -113,6 +121,14 @@ const store = new Vuex.Store({
   },
 
   getters: {
+    url (state) {
+      return state.url
+    },
+
+    items (state) {
+      return state.items
+    },
+
     searchFilters: (state) => (opts) => {
       if (opts) {
         if (opts.value) {
@@ -131,31 +147,51 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    searchFilters (state, opts) {
+    appendURL (state, payload) {
+      state.url += payload.url
+    },
+
+    paginateSearch (state, payload) {
+      $.ajax({
+        method: "GET",
+        url: store.getters.url + "&page=" + payload.page,
+        success: (resp) => { state.items = resp },
+        error: (err) => { console.error(err) },
+      })
+    },
+
+    initParticipants (state) {
+      $.ajax({
+        method: "GET",
+        url: store.getters.url,
+        success: (resp) => { state.items = resp },
+        error: (err) => { console.error(err) },
+      })
+    },
+
+    searchFilters (state, payload) {
       let filter
 
-      if (opts.filterName) {
-        filter = state.searchFilters[opts.filterRoot][opts.filterName]
+      if (payload.filterName) {
+        filter = state.searchFilters[payload.filterRoot][payload.filterName]
       } else {
-        filter = state.searchFilters[opts.filterRoot]
+        filter = state.searchFilters[payload.filterRoot]
       }
 
-      if (typeof opts.value === Array) {
-        _.each(filter, f => { f.selected = opts.value.includes(f.value) })
+      if (typeof payload.value === Array) {
+        _.each(filter, f => { f.selected = payload.value.includes(f.value) })
       } else {
-        filter.value = opts.value
+        filter.value = payload.value
       }
 
-      const paramRoot = "accounts_grid"
-      const urlRoot = "/admin/participants.json"
-      const url = filter.appendURLParams(urlRoot, paramRoot)
+      filter.appendURLParams()
 
       $.ajax({
         method: "GET",
-        url: url,
+        url: store.getters.url,
 
         success: (resp) => {
-          console.log(resp)
+          state.items = resp
         },
 
         error: (err) => {
@@ -176,9 +212,31 @@ document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: "#app",
 
+    data: {
+      page: 1,
+
+      headers: [
+        { text: 'Last name', value: 'last_name' },
+        { text: 'First name', value: 'first_name' },
+        { text: 'Email', value: 'email' },
+        { text: 'City', value: 'city' },
+        { text: 'State', value: 'state_province' },
+        { text: 'Country', value: 'country' },
+      ],
+    },
+
     store,
 
     computed: {
+      items () {
+        return this.$store.getters.items
+      },
+    },
+
+    watch: {
+      page (val) {
+        this.$store.commit('paginateSearch', { page: val })
+      },
     },
 
     components: {
@@ -187,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     mounted () {
-      console.log('admin participants')
+      this.$store.commit('initParticipants')
     },
   });
 });
