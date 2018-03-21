@@ -1,67 +1,85 @@
 <template>
-  <div>
-    <h1>{{ title }}</h1>
+  <div class="grid grid--justify-space-between">
+    <div class="grid__col-auto">
+      <h3>{{ title }}</h3>
 
-    <p>Refer to the {{ referTo }}</p>
+      <p class="refer-to">Refer to the {{ referTo }}</p>
 
-    <score-entry :questions="questions">
-      <slot />
-    </score-entry>
-
-    <h2 class="heading--reset">{{ sectionTitle}} comment</h2>
-
-    <p>Reminder to be nice goes here.</p>
-
-    <p>Please write at least 40 words</p>
-
-    <textarea v-model="comment" />
-
-    <div class="comment-sentiment">
-      <div
-        v-tooltip.top-center="`Positive sentiment of your comment`"
-        :style="`width: ${sentiment.positive * 100}%`"
-      ></div>
-
-      <div
-        v-tooltip.top-center="`Negative sentiment of your comment`"
-         :style="`width: ${sentiment.negative * 100}%`"
-      ></div>
+      <score-entry :questions="questions">
+        <slot />
+      </score-entry>
     </div>
 
+    <div class="grid__col-6">
+      <h3 class="heading--reset">{{ sectionTitle}} comment</h3>
 
-    <p class="word-count">
-      <span :style="`color: ${colorForWordCount}`">
-        {{ wordCount(comment) }}
-      </span>
-      {{ words }}
-    </p>
+      <p>
+        Please keep in mind cultural sensitivities and
+        focus on how well the team identified the problem
+        and presented a solution.
+      </p>
 
-    {{ badWordCount }} bad words
+      <textarea v-model="comment" />
 
-    <div class="grid grid--bleed grid--justify-space-between">
-      <div class="grid__col-auto nav-btn">
-        <p>
-          <router-link
-            v-if="!!prevSection"
-            :to="{ name: prevSection }"
-            class="button button--small btn-prev"
-          >
-            Back: {{ prevBtnTxt }}
-          </router-link>
-        </p>
+      <div class="comment-sentiment">
+        <div
+          v-tooltip.top-center="`Positive sentiment of your comment`"
+          :style="`width: ${sentiment.positive * 100}%`"
+        ></div>
+
+        <div
+          v-tooltip.top-center="`Negative sentiment of your comment`"
+          :style="`width: ${sentiment.negative * 100}%`"
+        ></div>
       </div>
 
-      <div class="grid__col-auto nav-btn">
-        <p>
-          <router-link
-            v-if="!!nextSection"
-            :to="{ name: nextSection }"
-            :disabled="wordCount(comment) < 40"
-            class="button button--small btn-next"
-          >
-            Next: {{ nextBtnTxt }}
-          </router-link>
-        </p>
+      <div class="grid grid--bleed grid--justify-space-between">
+        <div class="grid__col-6">
+          <p><small>(please write at least 40 words)</small></p>
+        </div>
+
+        <div class="grid__col-6">
+          <p class="word-count">
+            <span :style="`color: ${colorForWordCount}`">
+              {{ wordCount(comment) }}
+            </span>
+            {{ wordCount(comment) | pluralize('word') }}
+
+            <br />
+
+            <span :style="`color: ${colorForBadWordCount}`">
+              {{ badWordCount }}
+            </span>
+            {{ badWordCount | pluralize('prohibited word') }}
+          </p>
+        </div>
+
+        <div class="grid__col-6 nav-btns--left">
+          <p>
+            <router-link
+              v-if="!!prevSection"
+              :to="{ name: prevSection }"
+              class="button button--small btn-prev"
+            >
+              Back: {{ prevBtnTxt }}
+            </router-link>
+          </p>
+        </div>
+
+        <div class="grid__col-6 nav-btns--right">
+          <p>
+            <span v-tooltip="nextDisabledMsg">
+              <router-link
+                v-if="!!nextSection"
+                :to="{ name: nextSection }"
+                :disabled="goingNextIsDisabled"
+                class="button button--small btn-next"
+              >
+                Next: {{ nextBtnTxt }}
+              </router-link>
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -84,7 +102,7 @@ export default {
         positive: 0.5,
       },
 
-      badWords: {},
+      detectedProfanity: {},
     }
   },
 
@@ -115,8 +133,22 @@ export default {
   },
 
   computed: {
+    nextDisabledMsg () {
+      if (this.goingNextIsDisabled) {
+        return "Please write a substantial comment, keep it clean, and be friendly"
+      } else {
+        return false
+      }
+    },
+
+    goingNextIsDisabled () {
+      return this.wordCount(this.comment) < 40 ||
+               this.badWordCount > 0 ||
+                 this.sentiment.negative > 0.4
+    },
+
     badWordCount () {
-      return _.reduce(this.badWords, (acc, value, key) => {
+      return _.reduce(this.detectedProfanity, (acc, value, key) => {
         return acc += value
       }, 0)
     },
@@ -193,7 +225,7 @@ export default {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/ProfanityDetection/1.0.0")
           .pipe([current_val, [], false])
-          .then(resp => { this.badWords = resp.result });
+          .then(resp => { this.detectedProfanity = resp.result });
       }
     }, 1000),
 
@@ -212,7 +244,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  p {
+  .refer-to {
     font-size: 0.9rem;
     font-style: italic;
     margin: 0;
@@ -225,15 +257,19 @@ export default {
     padding: 1rem;
   }
 
-  .nav-btn:nth-child(2) {
+  .nav-btns--right {
     text-align: right;
   }
 
-  p.word-count {
+  .word-count {
     text-align: right;
     font-size: 1rem;
     font-weight: bold;
     margin: 0.5rem 0;
+  }
+
+  .word-count__note {
+    font-weight: normal;
   }
 
   .comment-sentiment {
