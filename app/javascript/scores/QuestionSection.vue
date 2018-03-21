@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid--align-start grid--justify-space-between">
+  <div class="grid grid--bleed grid--align-start grid--justify-space-between">
     <div class="grid__col-auto">
       <h3>{{ title }}</h3>
 
@@ -270,10 +270,12 @@ export default {
   }
 
   textarea {
+    border: 0;
     width: 100%;
-    height: 30vh;
+    height: 40vh;
     margin: 1rem 0 0;
     padding: 1rem;
+    box-shadow: inset 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
   }
 
   .nav-btns--right {
