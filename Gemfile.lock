@@ -676,7 +676,7 @@ DEPENDENCIES
   letter_opener (~> 1.6)
   listen (~> 3.1)
   lodash-rails (~> 4.17)
-  loofah (~> 2.2.1)
+  loofah (~> 2.2)
   memory_profiler (~> 0.9)
   mini_magick (~> 4.8)
   newrelic_rpm (~> 3.18)
