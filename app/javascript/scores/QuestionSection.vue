@@ -139,10 +139,6 @@ export default {
       return _.capitalize(this.section)
     },
 
-    words () {
-      return this.wordCount(this.comment) === 1 ? 'word' : 'words'
-    },
-
     questions () {
       return this.$store.getters.sectionQuestions(this.section)
     },

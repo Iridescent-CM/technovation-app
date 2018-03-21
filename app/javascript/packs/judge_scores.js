@@ -4,6 +4,7 @@ import Vue from 'vue/dist/vue.esm';
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import VTooltip from 'v-tooltip';
+import Vue2Filters from 'vue2-filters'
 
 import _ from 'lodash'
 
@@ -17,6 +18,7 @@ Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(TurbolinksAdapter);
 Vue.use(VTooltip);
+Vue.use(Vue2Filters);
 
 const router = new VueRouter({
   routes,
