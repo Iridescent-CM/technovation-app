@@ -24,7 +24,7 @@
     </p>
 
     <div class="grid">
-      <div class="grid__col-auto">
+      <div class="grid__col-auto grid__col--bleed-x">
         <dl>
           <dt><%= current_judge.event.name %></dt>
           <dd>
@@ -47,14 +47,15 @@
         </dl>
       </div>
 
-      <div class="grid__col-auto">
+      <div class="grid__col-auto grid__col--bleed-x">
+        <h6>Regional Ambassador</h6>
+
         <dl>
-          <dt> Regional Ambassador <dt>
-          <dd>
-            Name: <%= current_judge.event.ambassador.name  %>
-            <br />
-            Email: <%= mail_to current_judge.event.ambassador.email %>
-          </dd>
+          <dt>Name</dt>
+          <dd><%= current_judge.event.ambassador.name  %></dd>
+
+          <dt>Email</dt>
+          <dd><%= mail_to current_judge.event.ambassador.email %></dd>
         </dl>
       </div>
     </div>
