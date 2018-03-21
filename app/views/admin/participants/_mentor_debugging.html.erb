@@ -63,6 +63,31 @@
       <% end %>
     </dd>
   </dl>
+
+  <% if profile.current_teams.none? %>
+    <hr />
+
+    <p>
+      <%= profile.name %> is not on any teams. If you'd like to
+      invite them as a judge at your live event, you may delete
+      their mentor profile by converting their account.
+    </p>
+
+    <p>
+      <%= link_to "Convert to a judge-only account",
+        [
+          current_scope,
+          :mentor_to_judge_conversions,
+          { account_id: profile.account_id },
+        ],
+        class: 'button',
+        data: {
+          method: :post,
+          confirm: "Convert #{profile.name} to a judge?" +
+                   "<p>This will delete their mentor profile</p>",
+        } %>
+    </p>
+  <% end %>
 </div>
 
 <h4 class="reset">Environment information</h4>
