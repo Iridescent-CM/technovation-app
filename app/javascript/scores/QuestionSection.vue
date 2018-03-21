@@ -220,7 +220,7 @@ export default {
 
   methods: {
     sentimentTooltip (slant) {
-      return `Your comment is ${this.sentimentPercentage(slant)} ${slant}`
+      return `Your comment seems ${this.sentimentPercentage(slant)} ${slant}`
     },
 
     sentimentPercentage (slant) {
