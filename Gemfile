@@ -89,6 +89,8 @@ gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
 gem 'browser', "~> 2.5"
 gem "oink", "~> 0.10"
 
+gem 'loofah', '~> 2.2'
+
 group :development, :test do
   gem 'rspec-rails', "~> 3.7"
   gem 'launchy', "~> 2.4"
