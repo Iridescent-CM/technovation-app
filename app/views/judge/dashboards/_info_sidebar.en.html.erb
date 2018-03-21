@@ -1,8 +1,11 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
-  <% if SeasonToggles.judging_enabled? %>
+  <% if current_judge.onboarded? and
+          SeasonToggles.judging_enabled? %>
+
     <h3>Score Submissions</h3>
 
     <% if current_judge.has_incomplete_scores? %>
+
       <p>
         <%= link_to "Resume scoring",
           new_judge_score_path,
@@ -10,19 +13,25 @@
 
         <%= current_judge.last_incomplete_score.name %>
       </p>
+
     <% elsif quarterfinals? and current_judge.live_event? %>
+
       <p>
         Choose a submission from among the
         <%= current_judge.event.division_names %>
         teams to get started.
       </p>
+
     <% elsif current_judge.has_no_incomplete_scores? %>
+
       <p>
-      <%= link_to 'Start a new score',
-        new_judge_score_path,
-        data: { turbolinks: false }%>
+        <%= link_to 'Start a new score',
+          new_judge_score_path,
+          data: { turbolinks: false }%>
       </p>
+
     <% end %>
+
   <% end %>
 
   <h6 class="heading--reset">Judge resources</h6>
