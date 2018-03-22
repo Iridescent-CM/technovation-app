@@ -16,7 +16,11 @@ RSpec.describe FindEligibleSubmissionId do
     it "chooses submissions with fewest scores" do
       judge1 = FactoryBot.create(:judge)
       team1 = FactoryBot.create(:team)
-      sub_with_score = FactoryBot.create(:submission, :complete, team: team1)
+      sub_with_score = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team1
+      )
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
         team_submission_id: sub_with_score.id,
@@ -25,7 +29,11 @@ RSpec.describe FindEligibleSubmissionId do
 
       judge2 = FactoryBot.create(:judge)
       team2 = FactoryBot.create(:team)
-      sub_without_score = FactoryBot.create(:submission, :complete, team: team2)
+      sub_without_score = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team2
+      )
 
       expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
     end
@@ -58,13 +66,15 @@ RSpec.describe FindEligibleSubmissionId do
     end
 
     it "does not reselect previously judged submission" do
-      judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       sub = FactoryBot.create(:submission, :complete, team: team)
+
+      judge = FactoryBot.create(:judge)
       score = SubmissionScore.create!(
-        judge_profile_id: judge.id,
-        team_submission_id: sub.id,
+        judge_profile: judge,
+        team_submission: sub,
       )
+
       score.complete!
 
       expect(FindEligibleSubmissionId.(judge)).to be_nil
