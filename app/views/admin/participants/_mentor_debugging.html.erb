@@ -64,7 +64,7 @@
     </dd>
   </dl>
 
-  <% if profile.current_teams.none? %>
+  <% if ENV.fetch("CONVERT_MENTORS") { false } and profile.current_teams.none? %>
     <hr />
 
     <p>
