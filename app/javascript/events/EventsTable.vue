@@ -1,5 +1,5 @@
 <template>
-  <div class="grid">
+  <div class="vue-events-table grid">
     <template v-for="event in events">
       <div
         v-if="editingThisEventOrNone(event)"
@@ -220,274 +220,276 @@
 </script>
 
 <style lang="scss">
-  small {
-    display: block;
-    opacity: 0.7;
-    font-weight: 600;
-  }
-
-  .events-list__action-item {
-    display: inline-block;
-    padding: 0 0.5rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: scale(1.15);
+  .vue-events-table {
+    small {
+      display: block;
+      opacity: 0.7;
+      font-weight: 600;
     }
-  }
 
-  [type=search] {
-    font-size: 0.95rem;
-    padding: 0.25rem 1rem;
-    border-radius: 50vh;
-    background: url("https://icongr.am/fontawesome/search.svg?size=12")
-                no-repeat
-                right 0.5rem center;
-  }
+    .events-list__action-item {
+      display: inline-block;
+      padding: 0 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s;
 
-  .position-fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  .headers--left-align {
-    th {
-      text-align: left;
-    }
-  }
-
-  .width-medium {
-    width: 60vw;
-  }
-
-  .width-full-screen {
-    width: 100vw;
-  }
-
-  .width-full-container {
-    width: 100%;
-  }
-
-  .height-full-screen {
-    height: 100vh;
-  }
-
-  .background-white {
-    background: white;
-  }
-
-  .background-semi-transparent-dark {
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  .display-flex {
-    display: flex;
-  }
-
-  .display-flex-center {
-    @extend .display-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .padding-small {
-    padding: 0.5rem;
-  }
-
-  .align-center {
-    text-align: center;
-  }
-
-  .shadow-subtle-white {
-    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);
-  }
-
-  .z-index-penultimate {
-    z-index: 999998;
-  }
-
-  .z-index-max {
-    z-index: 999999;
-  }
-
-  .border-radius-small {
-    border-radius: 0.2rem;
-  }
-
-  .overflow-scroll {
-    max-height: 50vh;
-    overflow-y: scroll;
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  button.cursor-pointer {
-    &:hover {
-      color: black;
-    }
-  }
-
-  .light-opacity {
-    opacity: 0.2;
-  }
-
-  .background-none {
-    background: none;
-  }
-
-  .border-none {
-    border: none;
-  }
-
-  .color-shamrock {
-    color: #5ABF94;
-  }
-
-  .text-uppercase {
-    text-transform: uppercase;
-  }
-
-  .font-bold {
-    font-weight: bold;
-  }
-
-  ul, ol {
-    &.list--indented {
-      padding-left: 0.5rem;
-    }
-  }
-
-  .font-small {
-    font-size: 0.9rem;
-  }
-
-  .button--unmask {
-    @extend .background-none;
-    @extend .border-none;
-    @extend .color-shamrock;
-    @extend .text-uppercase;
-    @extend .font-bold;
-    @extend .cursor-pointer;
-  }
-
-  .modal-container {
-    @extend .display-flex-center;
-    @extend .position-fixed;
-    @extend .z-index-penultimate;
-    @extend .width-full-screen;
-    @extend .height-full-screen;
-    @extend .background-semi-transparent-dark;
-  }
-
-  .modal {
-    @extend .width-medium;
-    @extend .padding-small;
-    @extend .background-white;
-    @extend .shadow-subtle-white;
-    @extend .border-radius-small;
-    @extend .z-index-max;
-    display: block;
-  }
-
-  .modal-footer {
-    margin: 0 -0.5rem -0.5rem;
-    box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.2);
-    padding: 0.25rem 0.5rem;
-    text-align: right;
-  }
-
-  .attendee-list {
-    word-break: break-all;
-    width: 100%;
-
-    .attendee-list__actions {
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 0.25rem;
-        cursor: pointer;
-
-        &:first-child {
-          left: -2.5rem;
-        }
-
-        &:last-child {
-          left: -1.25rem;
-        }
+      &:hover {
+        transform: scale(1.15);
       }
     }
 
-    th {
-      word-break: keep-all;
-      text-align: left;
+    [type=search] {
+      font-size: 0.95rem;
+      padding: 0.25rem 1rem;
+      border-radius: 50vh;
+      background: url("https://icongr.am/fontawesome/search.svg?size=12")
+                  no-repeat
+                  right 0.5rem center;
     }
 
-    tr {
-      &.row--new {
-        background: rgba(255, 255, 0, 0.2);
+    .position-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
 
-        &:hover {
+    .headers--left-align {
+      th {
+        text-align: left;
+      }
+    }
+
+    .width-medium {
+      width: 60vw;
+    }
+
+    .width-full-screen {
+      width: 100vw;
+    }
+
+    .width-full-container {
+      width: 100%;
+    }
+
+    .height-full-screen {
+      height: 100vh;
+    }
+
+    .background-white {
+      background: white;
+    }
+
+    .background-semi-transparent-dark {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .display-flex {
+      display: flex;
+    }
+
+    .display-flex-center {
+      @extend .display-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .padding-small {
+      padding: 0.5rem;
+    }
+
+    .align-center {
+      text-align: center;
+    }
+
+    .shadow-subtle-white {
+      box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);
+    }
+
+    .z-index-penultimate {
+      z-index: 999998;
+    }
+
+    .z-index-max {
+      z-index: 999999;
+    }
+
+    .border-radius-small {
+      border-radius: 0.2rem;
+    }
+
+    .overflow-scroll {
+      max-height: 50vh;
+      overflow-y: scroll;
+    }
+
+    .cursor-pointer {
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    button.cursor-pointer {
+      &:hover {
+        color: black;
+      }
+    }
+
+    .light-opacity {
+      opacity: 0.2;
+    }
+
+    .background-none {
+      background: none;
+    }
+
+    .border-none {
+      border: none;
+    }
+
+    .color-shamrock {
+      color: #5ABF94;
+    }
+
+    .text-uppercase {
+      text-transform: uppercase;
+    }
+
+    .font-bold {
+      font-weight: bold;
+    }
+
+    ul, ol {
+      &.list--indented {
+        padding-left: 0.5rem;
+      }
+    }
+
+    .font-small {
+      font-size: 0.9rem;
+    }
+
+    .button--unmask {
+      @extend .background-none;
+      @extend .border-none;
+      @extend .color-shamrock;
+      @extend .text-uppercase;
+      @extend .font-bold;
+      @extend .cursor-pointer;
+    }
+
+    .modal-container {
+      @extend .display-flex-center;
+      @extend .position-fixed;
+      @extend .z-index-penultimate;
+      @extend .width-full-screen;
+      @extend .height-full-screen;
+      @extend .background-semi-transparent-dark;
+    }
+
+    .modal {
+      @extend .width-medium;
+      @extend .padding-small;
+      @extend .background-white;
+      @extend .shadow-subtle-white;
+      @extend .border-radius-small;
+      @extend .z-index-max;
+      display: block;
+    }
+
+    .modal-footer {
+      margin: 0 -0.5rem -0.5rem;
+      box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.2);
+      padding: 0.25rem 0.5rem;
+      text-align: right;
+    }
+
+    .attendee-list {
+      word-break: break-all;
+      width: 100%;
+
+      .attendee-list__actions {
+        position: relative;
+
+        img {
+          position: absolute;
+          top: 0.25rem;
+          cursor: pointer;
+
+          &:first-child {
+            left: -2.5rem;
+          }
+
+          &:last-child {
+            left: -1.25rem;
+          }
+        }
+      }
+
+      th {
+        word-break: keep-all;
+        text-align: left;
+      }
+
+      tr {
+        &.row--new {
           background: rgba(255, 255, 0, 0.2);
+
+          &:hover {
+            background: rgba(255, 255, 0, 0.2);
+          }
         }
-      }
 
-      td {
-        vertical-align: top;
+        td {
+          vertical-align: top;
 
-        ul li:last-child {
-          margin-bottom: 1rem;
+          ul li:last-child {
+            margin-bottom: 1rem;
+          }
         }
       }
     }
-  }
 
-  .align-right {
-    text-align: right;
-  }
+    .align-right {
+      text-align: right;
+    }
 
-  .cutoff-with-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .cutoff-with-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  h6 span {
-    font-weight: normal;
-  }
+    h6 span {
+      font-weight: normal;
+    }
 
-  p {
-    margin: 0;
-  }
+    p {
+      margin: 0;
+    }
 
-  .attendee-status {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    color: white;
-    font-size: 0.8rem;
-  }
+    .attendee-status {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      color: white;
+      font-size: 0.8rem;
+    }
 
-  .attendee-status--green {
-    background-color: green;
-  }
+    .attendee-status--green {
+      background-color: green;
+    }
 
-  .attendee-status--orange {
-    background-color: orange;
-  }
+    .attendee-status--orange {
+      background-color: orange;
+    }
 
-  .attendee-status--red {
-    background-color: red;
+    .attendee-status--red {
+      background-color: red;
+    }
+
+    .event-manage {
+      padding: 1rem 0;
+    }
   }
 
   .swal2-container, #flash.fixed {
     z-index: 9999999;
-  }
-
-  .event-manage {
-    padding: 1rem 0;
   }
 </style>
