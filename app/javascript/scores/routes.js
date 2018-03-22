@@ -1,3 +1,8 @@
+import Vue from 'vue/dist/vue.esm';
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
 import ReviewSubmission from './ReviewSubmission'
 import Ideation from "./Ideation"
 import Technical from "./Technical"
@@ -6,7 +11,7 @@ import Entrepreneurship from "./Entrepreneurship"
 import Overall from "./Overall"
 import ReviewScore from './ReviewScore'
 
-export default [
+export const routes = [
   { path: '/', redirect: { name: 'review-submission' } },
   {
     path: '/review-submission',
@@ -24,3 +29,7 @@ export default [
   { path: '/overall', name: 'overall', component: Overall },
   { path: '/review-score', name: 'review-score', component: ReviewScore },
 ]
+
+export const router = new VueRouter({
+  routes,
+})
