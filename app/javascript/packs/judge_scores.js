@@ -4,12 +4,12 @@ import Vue from 'vue/dist/vue.esm';
 import VTooltip from 'v-tooltip';
 import Vue2Filters from 'vue2-filters'
 
-import ScoreStepper from "../scores/ScoreStepper"
-import { router } from '../scores/routes'
-import store from '../scores/store'
+import ScoreStepper from "../judge/scores/ScoreStepper"
+import { router } from '../judge/scores/routes'
+import store from '../judge/scores/store'
 
 import "../components/tooltip.scss";
-import '../scores/main.scss'
+import '../judge/scores/main.scss'
 
 import _ from 'lodash'
 

@@ -5,12 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    hello: 'world',
+    scores: {}
   },
 
   getters: {
+    finishedScores (state) {
+      return state.scores.finished
+    },
   },
 
   mutations: {
+    populateScores (state, payload) {
+      state.scores = payload
+    },
   },
 })

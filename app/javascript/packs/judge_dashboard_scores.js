@@ -5,7 +5,8 @@ import VTooltip from 'v-tooltip';
 import Vue2Filters from 'vue2-filters'
 import { mapState } from 'vuex'
 
-import store from '../dashboards/judge/scores/store'
+import store from '../judge/dashboards/scores/store'
+import { router } from '../judge/dashboards/scores/routes'
 
 import "../components/tooltip.scss";
 
@@ -16,9 +17,13 @@ Vue.use(Vue2Filters)
 $(document).on('ready turbolinks:load', () => {
   new Vue({
     el: '#app',
-
     store,
+    router,
 
-    computed: mapState(['hello']),
+    mounted () {
+      $.get("/judge/scores.json", null, resp => {
+        this.$store.commit('populateScores', resp)
+      })
+    },
   })
 })
