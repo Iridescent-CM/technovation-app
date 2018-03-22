@@ -19,6 +19,7 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   before_create -> {
+    self.seasons ||= [Season.current.year]
     self.event_type ||= judge_profile.live_event? ? "live" : "virtual"
     self.official ||= official?
   }
