@@ -122,11 +122,7 @@ export default {
       this.handleCommentChange(current, old)
     },
 
-    //
-    // FIXME hacky watcher to fill comment after
-    // remote score data is loaded
-    //
-    submissionId () {
+    commentStorageKey () {
       const comment = window.localStorage.getItem(
         this.commentStorageKey
       )
