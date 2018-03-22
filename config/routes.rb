@@ -44,8 +44,7 @@ Rails.application.routes.draw do
 
     resources :team_submission_pitch_presentations, only: [:new, :edit]
 
-    resource :regional_pitch_event_selection,
-      only: [:show, :create, :update, :destroy]
+    resource :regional_pitch_event_selection, only: :create
 
     resources :regional_pitch_events, only: [:show, :index]
     resources :scores, only: [:show]
@@ -123,7 +122,7 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create, :show]
 
     resource :regional_pitch_events_team_list, only: :show
-    resource :regional_pitch_event_selection, only: [:create]
+    resource :regional_pitch_event_selection, only: :create
     resources :regional_pitch_events, only: [:index, :show]
     resources :scores, only: [:show]
   end

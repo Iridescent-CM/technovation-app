@@ -1,7 +1,8 @@
 module Mentor
   class RegionalPitchEventSelectionsController < MentorController
     def new
-      @teams = current_mentor.teams.current.includes(:regional_pitch_events)
+      @teams = current_mentor.teams.current
+        .includes(:regional_pitch_events)
     end
 
     def create
