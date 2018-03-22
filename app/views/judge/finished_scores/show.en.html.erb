@@ -1,0 +1,7 @@
+<p>
+  Well done! You can
+  <%= link_to "revisit your score",
+    new_judge_score_path(score_id: @score.id),
+    data: { turbolinks: false } %>
+  and make changes through May 20th.
+</p>
