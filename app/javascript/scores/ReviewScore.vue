@@ -36,7 +36,7 @@
         <div class="grid__col-auto">
           <p class="align-center">
             <a
-             :href="`/judge/score_completions?id=${scoreId}`"
+             :href="`/judge/score_completions?id=${score.id}`"
               class="button"
               data-method="post"
               v-tooltip.top-center="'You can revisit your finished scores and make changes through May 20th.'"
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -65,9 +67,7 @@ export default {
   },
 
   computed: {
-    scoreId () {
-      return this.$store.getters.scoreId
-    },
+    ...mapState(['score']),
 
     totalScore () {
       return this.$store.getters.totalScore

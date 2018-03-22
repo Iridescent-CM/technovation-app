@@ -97,6 +97,7 @@
 
 <script>
 import _ from 'lodash'
+import { mapState } from 'vuex'
 
 import ScoreEntry from './ScoreEntry'
 
@@ -143,6 +144,8 @@ export default {
   },
 
   computed: {
+    ...mapState(['submission']),
+
     nextDisabledMsg () {
       if (this.goingNextIsDisabled) {
         return "Please write a substantial comment, keep it clean, and be friendly"
@@ -196,11 +199,7 @@ export default {
     },
 
     commentStorageKey () {
-      return `${this.section}-comment-${this.submissionId}`
-    },
-
-    submissionId () {
-      return this.$store.getters.submissionId
+      return `${this.section}-comment-${this.submission.id}`
     },
 
     nextBtnTxt () {
