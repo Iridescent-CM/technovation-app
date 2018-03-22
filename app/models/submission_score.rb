@@ -219,8 +219,9 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def ideation_total
-    evidence_of_problem +
-      problem_addressed
+    sdg_alignment +
+      evidence_of_problem +
+        problem_addressed
   end
 
   def technical_total
