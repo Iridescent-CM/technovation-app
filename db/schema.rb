@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110224550) do
+ActiveRecord::Schema.define(version: 20180316182251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "pg_trgm"
   enable_extension "unaccent"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
@@ -55,6 +56,13 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.string "mailer_token"
     t.string "icon_path"
     t.bigint "division_id"
+    t.datetime "survey_completed_at"
+    t.datetime "reminded_about_survey_at"
+    t.integer "reminded_about_survey_count", default: 0, null: false
+    t.datetime "season_registered_at"
+    t.index "email gist_trgm_ops", name: "trgm_email_indx", using: :gist
+    t.index "first_name gist_trgm_ops", name: "trgm_first_name_indx", using: :gist
+    t.index "last_name gist_trgm_ops", name: "trgm_last_name_indx", using: :gist
     t.index ["auth_token"], name: "index_accounts_on_auth_token", unique: true
     t.index ["consent_token"], name: "index_accounts_on_consent_token", unique: true
     t.index ["division_id"], name: "index_accounts_on_division_id"
@@ -99,11 +107,9 @@ ActiveRecord::Schema.define(version: 20171110224550) do
 
   create_table "business_plans", id: :serial, force: :cascade do |t|
     t.string "uploaded_file"
-    t.string "remote_file_url"
     t.integer "team_submission_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "file_uploaded"
     t.index ["team_submission_id"], name: "index_business_plans_on_team_submission_id"
   end
 
@@ -154,6 +160,13 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.string "owner_type"
   end
 
+  create_table "global_invitations", force: :cascade do |t|
+    t.string "token", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "honor_code_agreements", id: :serial, force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "electronic_signature", null: false
@@ -191,21 +204,30 @@ ActiveRecord::Schema.define(version: 20171110224550) do
 
   create_table "judge_assignments", id: :serial, force: :cascade do |t|
     t.integer "team_id"
-    t.integer "judge_profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["judge_profile_id"], name: "index_judge_assignments_on_judge_profile_id"
+    t.string "assigned_judge_type"
+    t.integer "assigned_judge_id"
     t.index ["team_id"], name: "index_judge_assignments_on_team_id"
   end
 
   create_table "judge_profiles", id: :serial, force: :cascade do |t|
-    t.integer "account_id", null: false
+    t.integer "account_id"
     t.string "company_name", null: false
     t.string "job_title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.bigint "user_invitation_id"
+    t.datetime "completed_training_at"
+    t.integer "industry"
+    t.string "industry_other"
+    t.string "skills"
+    t.string "degree"
+    t.boolean "join_virtual"
+    t.boolean "survey_completed"
     t.index ["account_id"], name: "index_judge_profiles_on_account_id"
+    t.index ["user_invitation_id"], name: "index_judge_profiles_on_user_invitation_id"
   end
 
   create_table "judge_profiles_regional_pitch_events", id: false, force: :cascade do |t|
@@ -242,7 +264,9 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.boolean "accepting_team_invites", default: true, null: false
     t.boolean "virtual", default: true, null: false
     t.boolean "connect_with_mentors", default: true, null: false
+    t.bigint "user_invitation_id"
     t.index ["account_id"], name: "index_mentor_profiles_on_account_id"
+    t.index ["user_invitation_id"], name: "index_mentor_profiles_on_user_invitation_id"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -275,20 +299,19 @@ ActiveRecord::Schema.define(version: 20171110224550) do
   end
 
   create_table "parental_consents", id: :serial, force: :cascade do |t|
-    t.string "electronic_signature", null: false
+    t.string "electronic_signature"
     t.integer "student_profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "voided_at"
     t.boolean "newsletter_opt_in"
+    t.text "seasons", default: [], array: true
+    t.integer "status", default: 0, null: false
     t.index ["student_profile_id"], name: "index_parental_consents_on_student_profile_id"
   end
 
   create_table "pitch_presentations", id: :serial, force: :cascade do |t|
     t.string "uploaded_file"
-    t.string "remote_file_url"
     t.integer "team_submission_id", null: false
-    t.boolean "file_uploaded"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -303,6 +326,7 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.datetime "updated_at", null: false
     t.text "bio"
     t.text "intro_summary"
+    t.string "secondary_regions", default: [], array: true
     t.index ["account_id"], name: "index_regional_ambassador_profiles_on_account_id"
     t.index ["status"], name: "index_regional_ambassador_profiles_on_status"
   end
@@ -329,6 +353,7 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.string "eventbrite_link"
     t.string "name"
     t.boolean "unofficial", default: false
+    t.text "seasons", default: [], array: true
     t.index ["division_id"], name: "index_regional_pitch_events_on_division_id"
   end
 
@@ -337,6 +362,13 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.integer "team_id"
     t.index ["regional_pitch_event_id", "team_id"], name: "pitch_events_teams", unique: true
     t.index ["team_id"], name: "pitch_events_team_ids"
+  end
+
+  create_table "regional_pitch_events_user_invitations", force: :cascade do |t|
+    t.bigint "regional_pitch_event_id"
+    t.bigint "user_invitation_id"
+    t.index ["regional_pitch_event_id"], name: "events_invites_event_id"
+    t.index ["user_invitation_id"], name: "events_invites_invite_id"
   end
 
   create_table "regions", id: :serial, force: :cascade do |t|
@@ -380,7 +412,7 @@ ActiveRecord::Schema.define(version: 20171110224550) do
   end
 
   create_table "student_profiles", id: :serial, force: :cascade do |t|
-    t.integer "account_id", null: false
+    t.integer "account_id"
     t.string "parent_guardian_email"
     t.string "parent_guardian_name"
     t.string "school_name", null: false
@@ -392,7 +424,6 @@ ActiveRecord::Schema.define(version: 20171110224550) do
   create_table "submission_scores", id: :serial, force: :cascade do |t|
     t.integer "team_submission_id"
     t.integer "judge_profile_id"
-    t.integer "sdg_alignment", default: 0
     t.integer "evidence_of_problem", default: 0
     t.integer "problem_addressed", default: 0
     t.integer "app_functional", default: 0
@@ -422,6 +453,8 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.datetime "deleted_at"
     t.integer "round", default: 0, null: false
     t.boolean "official", default: true
+    t.integer "sdg_alignment", default: 0
+    t.text "seasons", default: [], array: true
     t.index ["completed_at"], name: "index_submission_scores_on_completed_at"
     t.index ["judge_profile_id"], name: "index_submission_scores_on_judge_profile_id"
     t.index ["team_submission_id"], name: "index_submission_scores_on_team_submission_id"
@@ -448,16 +481,12 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "source_code"
-    t.string "source_code_external_url"
     t.text "app_description"
-    t.integer "stated_goal"
-    t.text "stated_goal_explanation"
     t.string "app_name"
     t.string "demo_video_link"
     t.string "pitch_video_link"
     t.string "development_platform_other"
     t.integer "development_platform"
-    t.boolean "source_code_file_uploaded"
     t.string "slug"
     t.integer "submission_scores_count"
     t.integer "judge_opened_id"
@@ -476,6 +505,12 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.integer "pending_quarterfinals_official_submission_scores_count", default: 0, null: false
     t.datetime "deleted_at"
     t.text "seasons", default: [], array: true
+    t.string "app_inventor_app_name"
+    t.string "app_inventor_gmail"
+    t.datetime "published_at"
+    t.string "business_plan"
+    t.integer "percent_complete", default: 0, null: false
+    t.string "pitch_presentation"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -495,6 +530,9 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.string "country"
     t.datetime "deleted_at"
     t.text "seasons", default: [], array: true
+    t.boolean "has_students", default: false, null: false
+    t.boolean "has_mentor", default: false, null: false
+    t.index "name gist_trgm_ops", name: "trgm_team_name_indx", using: :gist
     t.index ["legacy_id"], name: "index_teams_on_legacy_id"
   end
 
@@ -550,6 +588,17 @@ ActiveRecord::Schema.define(version: 20171110224550) do
     t.index ["account_id"], name: "index_unconfirmed_email_addresses_on_account_id"
   end
 
+  create_table "user_invitations", force: :cascade do |t|
+    t.string "admin_permission_token", null: false
+    t.string "email", null: false
+    t.integer "account_id"
+    t.integer "profile_type", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+  end
+
   add_foreign_key "accounts", "divisions"
   add_foreign_key "admin_profiles", "accounts"
   add_foreign_key "background_checks", "accounts"
@@ -558,18 +607,20 @@ ActiveRecord::Schema.define(version: 20171110224550) do
   add_foreign_key "consent_waivers", "accounts"
   add_foreign_key "divisions_regional_pitch_events", "divisions"
   add_foreign_key "divisions_regional_pitch_events", "regional_pitch_events"
-  add_foreign_key "exports", "accounts", column: "owner_id"
   add_foreign_key "join_requests", "teams"
-  add_foreign_key "judge_assignments", "judge_profiles"
   add_foreign_key "judge_assignments", "teams"
+  add_foreign_key "judge_profiles", "user_invitations"
   add_foreign_key "mentor_profile_expertises", "expertises"
   add_foreign_key "mentor_profile_expertises", "mentor_profiles"
   add_foreign_key "mentor_profiles", "accounts"
+  add_foreign_key "mentor_profiles", "user_invitations"
   add_foreign_key "parental_consents", "student_profiles"
   add_foreign_key "regional_links", "regional_ambassador_profiles"
   add_foreign_key "regional_pitch_events", "divisions"
   add_foreign_key "regional_pitch_events_teams", "regional_pitch_events"
   add_foreign_key "regional_pitch_events_teams", "teams"
+  add_foreign_key "regional_pitch_events_user_invitations", "regional_pitch_events"
+  add_foreign_key "regional_pitch_events_user_invitations", "user_invitations"
   add_foreign_key "screenshots", "team_submissions"
   add_foreign_key "signup_attempts", "accounts"
   add_foreign_key "submission_scores", "judge_profiles"

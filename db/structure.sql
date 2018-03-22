@@ -1313,8 +1313,8 @@ CREATE TABLE public.submission_scores (
     deleted_at timestamp without time zone,
     round integer DEFAULT 0 NOT NULL,
     official boolean DEFAULT true,
-    seasons text[] DEFAULT '{}'::text[],
-    sdg_alignment integer
+    sdg_alignment integer DEFAULT 0,
+    seasons text[] DEFAULT '{}'::text[]
 );
 
 
@@ -2944,6 +2944,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180301140524'),
 ('20180313204753'),
 ('20180314144804'),
-('20180316182251');
+('20180316182251'),
+('20180322201531');
 
 
