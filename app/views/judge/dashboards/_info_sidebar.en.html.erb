@@ -1,59 +1,28 @@
 <div class="flex-col-md-4 dashboard-sidebar border-left">
-  <% if current_judge.onboarded? and
-          SeasonToggles.judging_enabled? %>
-
-    <h3>Score Submissions</h3>
-
-    <% if current_judge.has_incomplete_scores? %>
-
-      <p>
-        <%= link_to "Resume scoring",
-          new_judge_score_path,
-          data: { turbolinks: false } %>
-
-        <%= current_judge.last_incomplete_score.name %>
-      </p>
-
-    <% elsif quarterfinals? and current_judge.live_event? %>
-
-      <p>
-        Choose a submission from among the
-        <%= current_judge.event.division_names %>
-        teams to get started.
-      </p>
-
-    <% elsif current_judge.has_no_incomplete_scores? %>
-
-      <p>
-        <%= link_to 'Start a new score',
-          new_judge_score_path,
-          data: { turbolinks: false }%>
-      </p>
-
-    <% end %>
-
-  <% end %>
-
-  <h6 class="heading--reset">Judge resources</h6>
-
-  <ul class="list--reset">
+  <ul class="list--unstyled list--bleed-x">
     <li>
+      <h6 class="heading--reset">Judge resources</h6>
+
       <%= link_to "Read the judging rubric",
         "http://www.technovationchallenge.org/judging-rubric/",
         target: "_blank" %>
     </li>
 
     <li>
-      <%= link_to "Join Technovation's chat community for judges",
+      <h6 class="heading--reset">Get support</h6>
+
+      <%= link_to "Join our chat community for judges",
         ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
         target: "_blank" %>
     </li>
 
     <% if !current_judge.onboarding? %>
       <li>
+        <h6 class="heading--reset">Judge training</h6>
+
         <%= link_to "Review your judge training",
-        ENV.fetch("JUDGE_TRAINING_URL"),
-        target: "_blank" %>
+          ENV.fetch("JUDGE_TRAINING_URL"),
+          target: "_blank" %>
       </li>
     <% end %>
   </ul>

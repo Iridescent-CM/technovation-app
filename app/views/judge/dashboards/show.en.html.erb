@@ -46,25 +46,31 @@
 
         <%= link_to "View your profile", judge_profile_path %>
       </div>
+
+      <% if current_judge.onboarded? %>
+        <div class="panel panel--left">
+          <%= render "judge/dashboards/info_sidebar" %>
+        </div>
+      <% end %>
     </div>
   </div>
 
-  <div class="grid__col-md-6">
+  <div class="grid__col-md-9">
     <div class="grid__cell">
       <ul class="steps">
         <%= render 'completion_steps/confirm_changed_email',
           profile: current_judge %>
+      </ul>
 
+      <%= render 'judge/dashboards/onboarded/scores' %>
+
+      <ul class="steps">
         <%= render 'judge/dashboards/onboarded/events' %>
       </ul>
 
       <% if current_judge.onboarding? %>
         <div class="panel panel--left">
           <%= render "judge/dashboards/onboarding" %>
-          <%= render "judge/dashboards/info_sidebar" %>
-        </div>
-      <% else %>
-        <div class="panel panel--left">
           <%= render "judge/dashboards/info_sidebar" %>
         </div>
       <% end %>
