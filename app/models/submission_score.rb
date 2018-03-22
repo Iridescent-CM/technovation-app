@@ -278,8 +278,9 @@ class SubmissionScore < ActiveRecord::Base
 
   def official?
     not (quarterfinals? and
-         (team.selected_regional_pitch_event == judge_profile.selected_regional_pitch_event and
-          team.selected_regional_pitch_event.live? and
-          team.selected_regional_pitch_event.unofficial?))
+          team.selected_regional_pitch_event ==
+              judge_profile.selected_regional_pitch_event and
+                team.selected_regional_pitch_event.live? and
+                  team.selected_regional_pitch_event.unofficial?)
   end
 end
