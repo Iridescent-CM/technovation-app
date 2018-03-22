@@ -28,6 +28,7 @@ class Questions
 
       submission: {
         id: submission.id,
+        name: submission.app_name,
         total_checklist_points: submission.total_technical_checklist
       },
 
