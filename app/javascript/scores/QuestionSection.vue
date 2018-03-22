@@ -254,7 +254,7 @@ export default {
           .pipe([current_val, [], false])
           .then(resp => { this.detectedProfanity = resp.result });
       }
-    }, 1000),
+    }, 500),
 
     wordCount (comment) {
       return _.filter(comment.split(' '), w => {
