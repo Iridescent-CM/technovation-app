@@ -44,6 +44,10 @@ const store = new Vuex.Store({
   },
 
   getters: {
+    scoreId (state) {
+      return state.score.id
+    },
+
     comment: (state) => (sectionName) => {
       return state.score.comments[sectionName]
     },
@@ -179,6 +183,8 @@ $(document).on('ready turbolinks:load', () => {
 
     store,
 
+    props: ['scoreId'],
+
     computed: {
     },
 
@@ -193,9 +199,12 @@ $(document).on('ready turbolinks:load', () => {
     },
 
     mounted () {
+      const score_id = new URLSearchParams(window.location.search)
+        .get('score_id')
+
       $.ajax({
         method: "GET",
-        url: "/judge/scores/new.json",
+        url: `/judge/scores/new.json?score_id=${score_id}`,
         success: json => {
           this.$store.commit('setStateFromJSON', json)
         },

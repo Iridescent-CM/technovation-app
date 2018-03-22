@@ -3,10 +3,17 @@ module Judge
     def new
       respond_to do |f|
         f.html { }
+
         f.json {
-          submission_id = FindEligibleSubmissionId.(current_judge)
+          submission_id = FindEligibleSubmissionId.(
+            current_judge,
+            { score_id: params[:score_id] }
+          )
+
           submission = TeamSubmission.find(submission_id)
+
           questions = Questions.new(current_judge, submission)
+
           render json: questions
         }
       end

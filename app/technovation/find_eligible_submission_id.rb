@@ -15,7 +15,8 @@ module FindEligibleSubmissionId
       else
 
         id_for_score_in_progress(judge_profile) or
-          random_eligible_id(judge_profile)
+          id_for_finished_score(judge_profile, options) or
+            random_eligible_id(judge_profile)
 
       end
     end
@@ -35,6 +36,12 @@ module FindEligibleSubmissionId
       judge.submission_scores.current_round.incomplete.last.try(
         :team_submission_id
       )
+    end
+
+    def id_for_finished_score(judge, opts)
+      judge.submission_scores.current_round.complete.find_by(
+        id: opts[:score_id]
+      ).try(:team_submission_id)
     end
 
     def random_eligible_id(judge)
