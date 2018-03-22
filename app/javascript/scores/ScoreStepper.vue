@@ -8,7 +8,11 @@
                            'stepper__step--active' : ''
       ]"
     >
-      <router-link :to="{ name: 'review-submission' }" class="grid__cell">
+      <router-link
+        :to="{ name: 'review-submission' }"
+        @click.native="handleClick"
+        class="grid__cell"
+      >
         <span class="stepper__step-number">1</span>
         Review submission
       </router-link>
@@ -22,7 +26,11 @@
       ]"
       v-for="section in sections"
     >
-      <router-link :to="{ name: section.name }" class="grid__cell">
+      <router-link
+        :to="{ name: section.name }"
+        @click.native="handleClick"
+        class="grid__cell"
+      >
         <span class="stepper__step-number">{{ section.stepNum }}</span>
         {{ section.title }}
 
@@ -39,7 +47,11 @@
          $route.name === 'review-score' ? 'stepper__step--active' : ''
       ]"
     >
-      <router-link :to="{ name: 'review-score' }" class="grid__cell">
+      <router-link
+        :to="{ name: 'review-score' }"
+        @click.native="handleClick"
+        class="grid__cell"
+      >
         <span class="stepper__step-number">7</span>
         Review score
 
@@ -108,6 +120,14 @@ export default {
   },
 
   methods: {
+    handleClick () {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
+    },
+
     pointsPossible (section) {
       return this.$store.getters.sectionPointsPossible(section)
     },
