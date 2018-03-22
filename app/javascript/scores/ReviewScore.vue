@@ -13,7 +13,6 @@
           <div class="grid__col-11">
             <p>
               {{ name | capitalize }}
-
             </p>
           </div>
 

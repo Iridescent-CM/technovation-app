@@ -1,5 +1,12 @@
 <template>
-  <div class="grid grid--bleed grid--align-start grid--justify-space-between">
+  <div
+    class="
+      grid
+      grid--bleed
+      grid--align-start
+      grid--justify-space-between
+    "
+  >
     <div class="grid__col-auto">
       <h3>{{ title }}</h3>
 
@@ -220,7 +227,9 @@ export default {
 
   methods: {
     sentimentTooltip (slant) {
-      return `Your comment seems ${this.sentimentPercentage(slant)} ${slant}`
+      return 'Your comment seems ' +
+             this.sentimentPercentage(slant) + ' ' +
+             slant
     },
 
     sentimentPercentage (slant) {
