@@ -65,4 +65,11 @@ class JudgeController < ApplicationController
   def current_profile_type
     "JudgeProfile"
   end
+
+  def require_onboarded
+    unless current_judge.onboarded?
+      redirect_to judge_dashboard_path,
+        error: "You need to finish your onboarding to judge scores"
+    end
+  end
 end

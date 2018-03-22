@@ -1,5 +1,7 @@
 module Judge
   class ScoresController < JudgeController
+    before_action :require_onboarded
+
     def new
       respond_to do |f|
         f.html { }
