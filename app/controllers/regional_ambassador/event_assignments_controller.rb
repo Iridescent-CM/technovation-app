@@ -60,7 +60,7 @@ module RegionalAmbassador
         .find(assignment_params.fetch(:attendee_id))
 
       if event.attendees.include?(attendee)
-        attendee.events.destroy(event)
+        RemoveFromLiveEvent.(attendee)
 
         if assignment_params.fetch(:attendee_scope) == "Team"
           attendee.memberships.each do |membership|
