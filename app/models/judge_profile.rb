@@ -55,7 +55,7 @@ class JudgeProfile < ActiveRecord::Base
   belongs_to :user_invitation,
     required: false
 
-  has_many :submission_scores, dependent: :destroy
+  has_many :submission_scores, -> { current }, dependent: :destroy
 
   has_and_belongs_to_many :regional_pitch_events, -> { current.distinct }
   has_and_belongs_to_many :events, -> { current.distinct },
