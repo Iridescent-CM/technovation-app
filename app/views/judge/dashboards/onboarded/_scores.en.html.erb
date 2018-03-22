@@ -3,6 +3,8 @@
   <% provide :css, stylesheet_pack_tag("judge_dashboard_scores") %>
 
   <div class="panel">
-    <div id="app">{{ hello }}</div>
+    <div id="app">
+      <router-view></router-view>
+    </div>
   </div>
 <% end %>

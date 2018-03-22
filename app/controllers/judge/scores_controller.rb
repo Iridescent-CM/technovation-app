@@ -2,6 +2,24 @@ module Judge
   class ScoresController < JudgeController
     before_action :require_onboarded
 
+    def index
+      render json: {
+        finished: current_judge.submission_scores
+                    .current_round.complete.map { |score|
+                      {
+                        id: score.id,
+                        submission_name: score.team_submission.app_name,
+                        team_name: score.team_submission.team_name,
+                        team_division: score.team_submission
+                                            .team_division_name,
+                        total: score.total,
+                        possible: score.total_possible,
+                        url: new_judge_score_path(score_id: score.id),
+                      }
+                    },
+      }
+    end
+
     def new
       respond_to do |f|
         f.html { }
