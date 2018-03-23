@@ -1,10 +1,8 @@
 module Admin
   class RegionalPitchEventsController < AdminController
-    def index
-      @events = RegionalPitchEvent.where(
-        "starts_at > ?", Date.new(Season.current.year, 1, 1)
-      )
-    end
+      include DatagridController
+
+      use_datagrid with: EventsGrid
 
     def show
       @event = RegionalPitchEvent.find(params[:id])
@@ -23,6 +21,18 @@ module Admin
     private
     def regional_pitch_event_params
       params.require(:regional_pitch_event).permit(:unofficial)
+    end
+
+    def grid_params
+      grid = (params[:events_grid] ||= {}).merge(
+        admin: true,
+        country: Array(params[:events_grid][:country]),
+        state_province: Array(params[:events_grid][:state_province])
+      )
+
+      grid.merge(
+        column_names: detect_extra_columns(grid),
+      )
     end
   end
 end

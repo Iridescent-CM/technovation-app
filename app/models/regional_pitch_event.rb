@@ -21,6 +21,11 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
+  scope :by_division, ->(division) {
+    joins(:division)
+      .where("divisions.name = ?", Division.names[division])
+  }
+
   belongs_to :ambassador,
     class_name: "RegionalAmbassadorProfile",
     foreign_key: :regional_ambassador_profile_id
@@ -54,6 +59,11 @@ class RegionalPitchEvent < ActiveRecord::Base
            :timezone,
     to: :ambassador,
     prefix: false
+
+  delegate :name,
+    to: :ambassador,
+    prefix: true
+
 
   scope :available_to, ->(record) {
     if record.present?

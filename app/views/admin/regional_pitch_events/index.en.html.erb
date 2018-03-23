@@ -1,40 +1,7 @@
 <% provide :title, "Admin • Events" %>
 
-<div class="grid">
-  <div class="grid__col-auto">
-    <div class="panel">
-      <table class="datagrid">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Divisions</th>
-            <th>Ambassador</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Country</th>
-            <th>Date / time</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @events.each do |event| %>
-            <tr>
-              <td><%= event.name %></td>
-              <td><%= event.division_names %></td>
-              <td><%= event.ambassador.name %></td>
-              <td><%= event.city %></td>
-              <td><%= event.state_province %></td>
-              <td><%= FriendlyCountry.(event) %></td>
-              <td>
-                <%= event.day %><br />
-                <%= event.date %><br />
-                <%= event.time %><br />
-                <small>Timezone: <%= event.timezone %></small>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<%= render 'datagrid/datagrid',
+  grid: @events_grid,
+  form_url: admin_events_path,
+  model_name: "event",
+  scope: :admin %>
