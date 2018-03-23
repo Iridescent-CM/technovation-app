@@ -45,7 +45,7 @@ module FindEligibleSubmissionId
     end
 
     def random_eligible_id(judge)
-      scored_submissions = judge.submission_scores.pluck(
+      scored_submissions = judge.submission_scores.current_round.pluck(
         :team_submission_id
       )
 
