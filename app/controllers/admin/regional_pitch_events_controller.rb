@@ -5,7 +5,8 @@ module Admin
       use_datagrid with: EventsGrid
 
     def show
-      @event = RegionalPitchEvent.find(params[:id])
+      @regional_pitch_event = RegionalPitchEvent.find(params[:id])
+      render template: 'regional_pitch_events/show'
     end
 
     def edit

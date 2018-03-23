@@ -38,6 +38,14 @@ class EventsGrid
     teams.count
   end
 
+  column :actions, mandatory: true, html: true do |event|
+    link_to(
+      "view",
+      #,
+      data: { turbolinks: false }
+    )
+  end
+
 
   filter :ambassador_name do |value|
     names = value.split(" ")
