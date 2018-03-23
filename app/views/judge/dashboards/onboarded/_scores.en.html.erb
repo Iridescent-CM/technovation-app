@@ -1,7 +1,4 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
-  <% content_for :js, javascript_pack_tag("judge_dashboard_scores") %>
-  <% provide :css, stylesheet_pack_tag("judge_dashboard_scores") %>
-
   <div class="panel">
     <div id="app">
       <router-view></router-view>

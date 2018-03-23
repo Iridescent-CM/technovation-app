@@ -1,11 +1,9 @@
 import Vue from 'vue/dist/vue.esm'
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
-
 import FinishedScoresList from './FinishedScoresList'
 
-export const routes = [
+export const dashboardAppRoutes = [
   { path: '/', redirect: { name: 'finished-scores' } },
   {
     path: '/finished-scores',
@@ -14,6 +12,6 @@ export const routes = [
   },
 ]
 
-export const router = new VueRouter({
-  routes,
+export const dashboardAppRouter = new VueRouter({
+  routes: dashboardAppRoutes,
 })

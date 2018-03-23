@@ -1,17 +1,20 @@
-<% content_for :js, javascript_include_tag(
-  "//algorithmia.com/v1/clients/js/algorithmia-0.2.0.js"
-) %>
-<% content_for :js, javascript_pack_tag("judge_scores") %>
-<% provide :css, stylesheet_pack_tag("judge_scores") %>
-
 <div class="grid">
   <div class="grid__col-auto">
-    <div id="app">
-      <score-stepper></score-stepper>
-
-      <div id="scores-container">
-        <router-view></router-view>
+    <div id="judge-scores-app">
+      <div
+         v-if="msg.length"
+         class="notice notice--info"
+      >
+        {{ msg }}
       </div>
+
+      <template v-else>
+        <score-stepper></score-stepper>
+
+        <div id="scores-container">
+          <router-view></router-view>
+        </div>
+      </template>
     </div>
   </div>
 </div>
