@@ -8,6 +8,7 @@
           :to="{ name: name }"
           v-tooltip.top-center="`Make changes to your ${name} score`"
           v-for="name in sectionNames"
+          :key="name"
           class="grid row"
         >
           <div class="grid__col-11">
