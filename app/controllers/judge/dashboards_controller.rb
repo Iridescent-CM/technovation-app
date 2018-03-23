@@ -2,6 +2,7 @@ module Judge
   class DashboardsController < JudgeController
     def show
       @regional_events = RegionalPitchEvent.available_to(current_judge)
+      @score_in_progress = ScoreInProgress.new(current_judge)
     end
 
     private

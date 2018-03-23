@@ -5,6 +5,9 @@ module Judge
     def index
       render json: {
         finished: current_judge.submission_scores
+                    .includes(team_submission: :team)
+                    .references(:team_submissions)
+                    .order("team_submissions.app_name")
                     .current_round.complete.map { |score|
                       {
                         id: score.id,

@@ -1,27 +1,32 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div class="panel">
     <div id="judge-dashboard-scores-app">
-      <router-view></router-view>
-
       <% if CanStartNewScore.(current_judge) %>
-
         <%= link_to "Start a new score",
           new_judge_score_path,
           class: "button",
           data: { turbolinks: false } %>
+      <% elsif @score_in_progress %>
+        <h6>You have a score in progress:</h6>
 
-      <% elsif ShouldFinishScoreInProgress.(current_judge) %>
+        <strong>
+          <%= @score_in_progress.submission_name %>
+        </strong>
 
-        <h6>You have a score in progress.</h6>
+        by <em><%= @score_in_progress.team_name %></em>
 
-        <%= link_to "Resume scoring",
-          new_judge_score_path(
-            score_id: ScoreInProgress.new(current_judge).id
-          ),
-          class: "button",
-          data: { turbolinks: false } %>
+        – score given so far: <%= @score_in_progress.total %> /
+        <%= @score_in_progress.possible %>
 
+        <p>
+          <%= link_to "Resume scoring",
+            new_judge_score_path(score_id: @score_in_progress.id),
+            class: "button button--small",
+            data: { turbolinks: false } %>
+        </p>
       <% end %>
+
+      <router-view></router-view>
     </div>
   </div>
 <% end %>

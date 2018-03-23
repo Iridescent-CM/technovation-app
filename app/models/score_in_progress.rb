@@ -9,4 +9,20 @@ class ScoreInProgress
   def id
     score.id
   end
+
+  def submission_name
+    score.team_submission.app_name
+  end
+
+  def team_name
+    score.team_submission.team_name
+  end
+
+  def total
+    score.total
+  end
+
+  def possible
+    score.total_possible
+  end
 end

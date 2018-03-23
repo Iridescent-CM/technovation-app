@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h6 class="heading--reset">Review your finished scores</h6>
+  <div class="margin-top-normal">
+    <h6 class="heading--reset">You can review your finished scores</h6>
 
     <div
       class="grid grid--justify-space-between"
@@ -27,8 +27,6 @@
         </a>
       </div>
     </div>
-
-    <hr />
   </div>
 </template>
 
@@ -46,5 +44,9 @@ small {
   font-weight: bold;
   text-transform: uppercase;
   color: #666;
+}
+
+.margin-top-normal {
+  margin-top: 1rem;
 }
 </style>
