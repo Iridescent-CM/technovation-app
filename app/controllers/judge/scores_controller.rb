@@ -25,16 +25,23 @@ module Judge
         f.html { }
 
         f.json {
-          submission_id = FindEligibleSubmissionId.(
-            current_judge,
-            { score_id: params[:score_id] }
-          )
+          if submission_id = FindEligibleSubmissionId.(
+               current_judge,
+               { score_id: params[:score_id] }
+             )
 
-          submission = TeamSubmission.find(submission_id)
+            submission = TeamSubmission.find(submission_id)
 
-          questions = Questions.new(current_judge, submission)
+            questions = Questions.new(current_judge, submission)
 
-          render json: questions
+            render json: questions
+          else
+            render json: {
+              msg: "There are no more eligible submissions " +
+                   "for you to judge now. This is not an error. " +
+                   "Thank you for your contribution!",
+            }, status: 404
+          end
         }
       end
     end
