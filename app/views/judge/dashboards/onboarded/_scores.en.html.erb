@@ -2,49 +2,71 @@
     <div id="judge-dashboard-scores-app">
       <% if CanStartNewScore.(current_judge) %>
         <div class="panel">
-          <%= link_to "Start a new score",
-            new_judge_score_path,
-            class: "button",
-            data: { turbolinks: false } %>
-        </div>
-      <% elsif @score_in_progress.present? %>
-        <div class="panel">
-          <h6>You have a score in progress:</h6>
-
-          <strong>
-            <%= @score_in_progress.submission_name %>
-          </strong>
-
-          by <em><%= @score_in_progress.team_name %></em>
-
-          – score given so far: <%= @score_in_progress.total %> /
-          <%= @score_in_progress.possible %>
+          <h5 class="heading--reset">You are ready to start a new score!</h5>
 
           <p>
-            <%= link_to "Resume scoring",
-              new_judge_score_path(score_id: @score_in_progress.id),
-              class: "button button--small",
+            <%= link_to "Start a new score",
+              new_judge_score_path,
+              class: "button",
               data: { turbolinks: false } %>
           </p>
+        </div>
+      <% elsif @score_in_progress.present? %>
+        <div class="panel score-in-progress">
+          <h5 class="heading--reset">Complete your score in progress</h5>
+
+          <div class="grid grid--justify-space-between">
+            <div class="grid__col-4 grid__col--bleed-x">
+              <small>Submission name</small>
+              <%= @score_in_progress.submission_name %>
+            </div>
+
+            <div class="grid__col-4 grid__col--bleed-x">
+              <small>
+                <%= @score_in_progress.team_division %> division team
+              </small>
+              <%= @score_in_progress.team_name %>
+            </div>
+
+            <div class="grid__col-2 grid__col--bleed-x">
+              <small>Score so far</small>
+              <%= @score_in_progress.total %> /
+              <%= @score_in_progress.possible %>
+            </div>
+
+            <div class="grid__col-2 grid__col--bleed-x">
+              <%= link_to "Resume",
+                new_judge_score_path(score_id: @score_in_progress.id),
+                class: "button button--remove-bg" %>
+            </div>
+          </div>
         </div>
       <% end %>
 
       <div class="panel">
-        <nav id="judge-dashboard-scores-nav">
-          <router-link
-            :to="{ name: 'assigned-submissions' }"
-            :class="$route.name === 'assigned-submissions' ? 'active' : ''"
-          >
-            Assigned submissions
-          </router-link>
+        <h5 class="heading--reset">Manage your scores</h5>
 
-          <router-link
-            :to="{ name: 'finished-scores' }"
-            :class="$route.name === 'finished-scores' ? 'active' : ''"
-          >
-            Finished scores
-          </router-link>
-        </nav>
+        <% if current_judge.live_event? %>
+          <nav id="judge-dashboard-scores-nav">
+            <router-link
+              :to="{ name: 'assigned-submissions' }"
+              :class="
+                $route.name === 'assigned-submissions' ? 'active' : ''
+              "
+            >
+              Assigned submissions
+            </router-link>
+
+            <router-link
+              :to="{ name: 'finished-scores' }"
+              :class="$route.name === 'finished-scores' ? 'active' : ''"
+            >
+              Finished scores
+            </router-link>
+          </nav>
+        <% else %>
+          <div ref="disableAssigned" />
+        <% end %>
 
         <router-view></router-view>
       </div>

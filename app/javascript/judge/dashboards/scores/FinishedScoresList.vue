@@ -1,6 +1,12 @@
 <template>
   <div class="margin-top-normal">
-    <h6 class="heading--reset">You can review your finished scores</h6>
+    <h6 class="heading--reset">
+      Review & revise finished scores until May 20th
+    </h6>
+
+    <template v-if="!finishedScores.length">
+      <p>Finish a score and it will appear here for you to review</p>
+    </template>
 
     <div
       class="grid grid--justify-space-between"
@@ -23,7 +29,7 @@
 
       <div class="grid__col-2 grid__col--bleed-x">
         <a :href="score.url" class="button button--remove-bg">
-          Review score
+          Review
         </a>
       </div>
     </div>

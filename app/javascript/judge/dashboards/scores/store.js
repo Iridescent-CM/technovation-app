@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    scores: {},
+    scores: {
+      finished: [],
+    },
+
     submissions: {}
   },
 

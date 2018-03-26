@@ -1,6 +1,8 @@
 <template>
   <div class="margin-top-normal">
-    <h6 class="heading--reset">Review your event's submissions</h6>
+    <h6 class="heading--reset">
+      Start scoring your assigned submissions
+    </h6>
 
     <div
       class="grid grid--justify-space-between"

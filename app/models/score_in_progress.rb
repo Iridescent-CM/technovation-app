@@ -22,6 +22,10 @@ class ScoreInProgress
     score.team_submission.team_name
   end
 
+  def team_division
+    score.team_division_name
+  end
+
   def total
     score.total
   end

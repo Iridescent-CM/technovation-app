@@ -37,9 +37,13 @@ document.addEventListener('turbolinks:load', () => {
           this.$store.commit('populateScores', resp)
         })
 
-        $.get("/judge/assigned_submissions.json", null, resp => {
-          this.$store.commit('populateSubmissions', resp)
-        })
+        if (this.$refs.disableAssigned) {
+          this.$router.push({ name: 'finished-scores' })
+        } else {
+          $.get("/judge/assigned_submissions.json", null, resp => {
+            this.$store.commit('populateSubmissions', resp)
+          })
+        }
       },
     })
   }

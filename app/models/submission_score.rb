@@ -142,6 +142,7 @@ class SubmissionScore < ActiveRecord::Base
     allow_nil: false
 
   delegate :team,
+           :team_division_name,
     to: :team_submission,
     prefix: false,
     allow_nil: false
