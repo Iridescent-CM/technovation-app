@@ -452,7 +452,7 @@ GEM
       hodel_3000_compliant_logger
     paranoia (2.4.0)
       activerecord (>= 4.0, < 5.2)
-    parser (2.5.0.4)
+    parser (2.5.0.5)
       ast (~> 2.4.0)
     pdf-forms (1.1.1)
       cliver (~> 0.3.2)
