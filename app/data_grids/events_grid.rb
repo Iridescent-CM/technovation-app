@@ -57,7 +57,7 @@ class EventsGrid
           "#{first_name}%", "#{last_name}%")
   end
 
-    filter :division,
+  filter :division,
     :enum,
     header: "Division",
     select: Division.names.keys.map { |n|
