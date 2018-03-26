@@ -2,3 +2,24 @@
 
 @import "dashboards";
 @import "flags";
+
+#judge-dashboard-scores-nav {
+  display: flex;
+
+  a {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+
+
+    &:hover {
+      color: #333;
+    }
+
+    &.active {
+      color: black;
+    }
+  }
+}

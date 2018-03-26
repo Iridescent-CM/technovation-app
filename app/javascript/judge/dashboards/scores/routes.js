@@ -5,7 +5,7 @@ import FinishedScoresList from './FinishedScoresList'
 import AssignedScoresList from './AssignedScoresList'
 
 export const dashboardAppRoutes = [
-  { path: '/', redirect: { name: 'finished-scores' } },
+  { path: '/', redirect: { name: 'assigned-submissions' } },
 
   {
     path: '/finished-scores',

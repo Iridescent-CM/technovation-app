@@ -1,46 +1,53 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
-  <div class="panel">
     <div id="judge-dashboard-scores-app">
       <% if CanStartNewScore.(current_judge) %>
-        <%= link_to "Start a new score",
-          new_judge_score_path,
-          class: "button",
-          data: { turbolinks: false } %>
-      <% elsif @score_in_progress.present? %>
-        <h6>You have a score in progress:</h6>
-
-        <strong>
-          <%= @score_in_progress.submission_name %>
-        </strong>
-
-        by <em><%= @score_in_progress.team_name %></em>
-
-        – score given so far: <%= @score_in_progress.total %> /
-        <%= @score_in_progress.possible %>
-
-        <p>
-          <%= link_to "Resume scoring",
-            new_judge_score_path(score_id: @score_in_progress.id),
-            class: "button button--small",
+        <div class="panel">
+          <%= link_to "Start a new score",
+            new_judge_score_path,
+            class: "button",
             data: { turbolinks: false } %>
-        </p>
+        </div>
+      <% elsif @score_in_progress.present? %>
+        <div class="panel">
+          <h6>You have a score in progress:</h6>
+
+          <strong>
+            <%= @score_in_progress.submission_name %>
+          </strong>
+
+          by <em><%= @score_in_progress.team_name %></em>
+
+          – score given so far: <%= @score_in_progress.total %> /
+          <%= @score_in_progress.possible %>
+
+          <p>
+            <%= link_to "Resume scoring",
+              new_judge_score_path(score_id: @score_in_progress.id),
+              class: "button button--small",
+              data: { turbolinks: false } %>
+          </p>
+        </div>
       <% end %>
 
-      <router-link
-        :to="{ name: 'assigned-submissions' }"
-        :class="$route.name === 'assigned-submissions' ? 'active' : ''"
-      >
-        Assigned submissions
-      </router-link>
+      <div class="panel">
+        <nav id="judge-dashboard-scores-nav">
+          <router-link
+            :to="{ name: 'assigned-submissions' }"
+            :class="$route.name === 'assigned-submissions' ? 'active' : ''"
+          >
+            Assigned submissions
+          </router-link>
 
-      <router-link
-        :to="{ name: 'finished-scores' }"
-        :class="$route.name === 'finished-scores' ? 'active' : ''"
-      >
-        Finished scores
-      </router-link>
+          <router-link
+            :to="{ name: 'finished-scores' }"
+            :class="$route.name === 'finished-scores' ? 'active' : ''"
+          >
+            Finished scores
+          </router-link>
+        </nav>
 
-      <router-view></router-view>
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 <% end %>

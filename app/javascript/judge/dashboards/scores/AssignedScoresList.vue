@@ -21,7 +21,7 @@
           :href="submission.new_score_url"
           class="button button--remove-bg"
         >
-          Begin score
+          {{ callToAction(submission) }}
         </a>
       </div>
     </div>
@@ -32,7 +32,21 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: mapGetters(['assignedSubmissions']),
+  computed: {
+    ...mapGetters(['assignedSubmissions']),
+  },
+
+  methods: {
+    callToAction (submission) {
+      if (submission.score_started) {
+        return 'Continue'
+      } else if (submission.score_finished) {
+        return 'Review'
+      } else {
+        return 'Start'
+      }
+    },
+  },
 }
 </script>
 

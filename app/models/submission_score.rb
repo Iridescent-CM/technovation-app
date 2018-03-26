@@ -202,7 +202,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def complete!
-    update_attributes(completed_at: Time.current)
+    update(completed_at: Time.current)
     team_submission.clear_judge_opened_details!
   end
 
