@@ -4,8 +4,9 @@ module Student
 
     def create
       event = RegionalPitchEvent.find(params.fetch(:event_id))
-      current_team.regional_pitch_events << event
-      current_team.save!
+
+      AddTeamToRegionalEvent.(event, current_team)
+      InvalidateExistingJudgeData.(current_team)
 
       SendPitchEventRSVPNotifications.perform_later(
         current_team.id,

@@ -10,6 +10,9 @@ module Mentor
 
       event.teams << current_team
 
+      AddTeamToRegionalEvent.(event, current_team)
+      InvalidateExistingJudgeData.(current_team)
+
       SendPitchEventRSVPNotifications.perform_later(
         current_team.id,
         joining_event_id: event.id
