@@ -69,7 +69,6 @@
             <router-link
               v-if="!!prevSection"
               :to="{ name: prevSection }"
-              @click.native="handleNextPrevClick"
               class="button button--small btn-prev"
             >
               Back: {{ prevBtnTxt }}
@@ -84,7 +83,6 @@
                 v-if="!!nextSection"
                 :to="{ name: nextSection }"
                 :disabled="goingNextIsDisabled"
-                @click.native="handleNextPrevClick"
                 class="button button--small btn-next"
               >
                 Next: {{ nextBtnTxt }}
@@ -223,14 +221,6 @@ export default {
   },
 
   methods: {
-    handleNextPrevClick () {
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
-    },
-
     sentimentTooltip (slant) {
       return 'Your comment seems ' +
              this.sentimentPercentage(slant) + ' ' +

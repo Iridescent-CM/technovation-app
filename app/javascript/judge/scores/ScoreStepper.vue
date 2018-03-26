@@ -4,13 +4,12 @@
       :class="[
         'grid__col-auto',
         'stepper__step',
-         $route.name === 'review-submission' ?
-                           'stepper__step--active' : ''
+        $route.name === 'review-submission' ?
+                          'stepper__step--active' : ''
       ]"
     >
       <router-link
         :to="{ name: 'review-submission' }"
-        @click.native="handleClick"
         class="grid__cell"
       >
         <span class="stepper__step-number">1</span>
@@ -22,16 +21,18 @@
       :class="[
         'grid__col-auto',
         'stepper__step',
-         $route.name === section.name ? 'stepper__step--active' : ''
+        $route.name === section.name ? 'stepper__step--active' : ''
       ]"
       v-for="section in sections"
     >
       <router-link
         :to="{ name: section.name }"
-        @click.native="handleClick"
         class="grid__cell"
       >
-        <span class="stepper__step-number">{{ section.stepNum }}</span>
+        <span class="stepper__step-number">
+          {{ section.stepNum }}
+        </span>
+
         {{ section.title }}
 
         <span class="stepper__step-score">
@@ -44,12 +45,11 @@
       :class="[
         'grid__col-auto',
         'stepper__step',
-         $route.name === 'review-score' ? 'stepper__step--active' : ''
+        $route.name === 'review-score' ? 'stepper__step--active' : ''
       ]"
     >
       <router-link
         :to="{ name: 'review-score' }"
-        @click.native="handleClick"
         class="grid__cell"
       >
         <span class="stepper__step-number">7</span>
@@ -120,14 +120,6 @@ export default {
   },
 
   methods: {
-    handleClick () {
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
-    },
-
     pointsPossible (section) {
       return this.$store.getters.sectionPointsPossible(section)
     },
@@ -143,9 +135,6 @@ export default {
   .stepper {
     background: white;
     font-size: 100%;
-    position: fixed;
-    margin: -1rem -1rem 0;
-    z-index: 1058;
     box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.3);
   }
 

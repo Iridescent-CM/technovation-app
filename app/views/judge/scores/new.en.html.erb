@@ -1,20 +1,16 @@
-<div class="grid">
-  <div class="grid__col-auto">
-    <div id="judge-scores-app">
-      <div
-         v-if="msg.length"
-         class="notice notice--info"
-      >
-        {{ msg }}
-      </div>
-
-      <template v-else>
-        <score-stepper></score-stepper>
-
-        <div id="scores-container">
-          <router-view></router-view>
-        </div>
-      </template>
-    </div>
+<div id="judge-scores-app">
+  <div
+    v-if="msg.length"
+    class="notice notice--info"
+  >
+    {{ msg }}
   </div>
+
+  <template v-else>
+    <% provide :subnav do %>
+      <div id="judge-scores-stepper"></div>
+    <% end %>
+
+    <router-view></router-view>
+  </template>
 </div>

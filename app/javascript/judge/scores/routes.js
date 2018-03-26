@@ -9,7 +9,7 @@ import Entrepreneurship from "./Entrepreneurship"
 import Overall from "./Overall"
 import ReviewScore from './ReviewScore'
 
-export const scoresAppRoutes = [
+export const routes = [
   { path: '/', redirect: { name: 'review-submission' } },
   {
     path: '/review-submission',
@@ -28,6 +28,6 @@ export const scoresAppRoutes = [
   { path: '/review-score', name: 'review-score', component: ReviewScore },
 ]
 
-export const scoresAppRouter = new VueRouter({
-  routes: scoresAppRoutes,
+export const router = new VueRouter({
+  routes,
 })

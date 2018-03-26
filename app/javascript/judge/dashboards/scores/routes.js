@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import FinishedScoresList from './FinishedScoresList'
 import AssignedScoresList from './AssignedScoresList'
 
-export const dashboardAppRoutes = [
+export const routes = [
   { path: '/', redirect: { name: 'assigned-submissions' } },
 
   {
@@ -20,6 +20,6 @@ export const dashboardAppRoutes = [
   },
 ]
 
-export const dashboardAppRouter = new VueRouter({
-  routes: dashboardAppRoutes,
+export const router = new VueRouter({
+  routes,
 })
