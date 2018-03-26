@@ -16,7 +16,7 @@ class AddTeamToRegionalEvent
         team_submissions: :submission_scores,
       ).where.not("divisions.id" => event.division_ids)
 
-      incompatible_teams.each { |t| RemoveFromLiveEvent.(t) }
+      incompatible_teams.each { |t| InvalidateExistingJudgeData.(t) }
 
       incompatible_teams
     end

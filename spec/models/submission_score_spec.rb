@@ -359,7 +359,7 @@ RSpec.describe SubmissionScore do
 
     expect(score.event_type).to eq("live")
 
-    RemoveFromLiveEvent.(judge_profile)
+    InvalidateExistingJudgeData.(judge_profile)
 
     expect(score.event_type).to eq("live")
   end

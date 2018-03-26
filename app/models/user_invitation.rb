@@ -90,6 +90,10 @@ class UserInvitation < ApplicationRecord
     where("lower(unaccent(email)) ILIKE '#{sanitized.downcase}%'")
   }
 
+  def submission_scores
+    SubmissionScore.none
+  end
+
   def human_status
     case status
     when "sent", "opened"; "must sign up"

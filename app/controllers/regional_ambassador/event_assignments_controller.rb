@@ -20,6 +20,7 @@ module RegionalAmbassador
         end
 
         unless invite.events.include?(event)
+          InvalidateExistingJudgeData.(invite)
           invite.events << event
         end
 
@@ -60,7 +61,7 @@ module RegionalAmbassador
         .find(assignment_params.fetch(:attendee_id))
 
       if event.attendees.include?(attendee)
-        RemoveFromLiveEvent.(attendee)
+        InvalidateExistingJudgeData.(attendee)
 
         if assignment_params.fetch(:attendee_scope) == "Team"
           attendee.memberships.each do |membership|
