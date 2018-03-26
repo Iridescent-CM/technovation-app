@@ -76,9 +76,16 @@ document.addEventListener('turbolinks:load', () => {
         const score_id = new URLSearchParams(window.location.search)
           .get('score_id')
 
+        const submission_id = new URLSearchParams(window.location.search)
+          .get('team_submission_id')
+
+        let url = '/judge/scores/new.json'
+        url += `?score_id=${score_id}`
+        url += `&team_submission_id=${submission_id}`
+
         $.ajax({
           method: "GET",
-          url: `/judge/scores/new.json?score_id=${score_id}`,
+          url: url,
           success: json => {
             this.$store.commit('setStateFromJSON', json)
           },

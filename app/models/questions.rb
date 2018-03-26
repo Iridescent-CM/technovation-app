@@ -29,12 +29,17 @@ class Questions
       submission: {
         id: submission.id,
         name: submission.app_name,
-        total_checklist_points: submission.total_technical_checklist
+        description: simple_format(submission.app_description),
+        development_platform: submission.development_platform_text,
+        total_checklist_points: submission.total_technical_checklist,
       },
 
       team: {
         id: submission.team_id,
         name: submission.team_name,
+        division: "#{submission.team_division_name.humanize} Division",
+        location: submission.team_primary_location,
+        photo: submission.team_photo_url,
       },
 
       questions: questions,
@@ -230,5 +235,11 @@ class Questions
       judge_profile: judge,
       seasons: [Season.current.year],
     })
+  end
+
+  def simple_format(text)
+    paragraphs = text.split("\r\n")
+    formatted = "<p>" + paragraphs.join("</p><p>") + "</p>"
+    formatted.gsub("<p></p>", "")
   end
 end

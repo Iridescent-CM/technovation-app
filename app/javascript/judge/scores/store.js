@@ -15,11 +15,16 @@ export default new Vuex.Store({
     team: {
       id: null,
       name: '',
+      location: '',
+      division: '',
+      photo: '',
     },
 
     submission: {
       id: null,
       name: '',
+      description: '',
+      development_platform: '',
       total_checklist_points: 0,
     },
   },

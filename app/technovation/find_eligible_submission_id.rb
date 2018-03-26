@@ -5,10 +5,9 @@ module FindEligibleSubmissionId
     def call(judge_profile, options = {})
       if SeasonToggles.quarterfinals? and judge_profile.live_event?
 
-        submission_id_from_live_event(
-          judge_profile.selected_regional_pitch_event,
-          options[:team_submission_id]
-        )
+        submission_id_from_live_event(judge_profile.event, options) or
+          id_for_finished_score(judge_profile, options) or
+            id_for_score_in_progress(judge_profile, options)
 
       else
 
@@ -20,9 +19,11 @@ module FindEligibleSubmissionId
     end
 
     private
-    def submission_id_from_live_event(event, id)
-      if id.nil?
-        event.team_submission_ids.sample
+    def submission_id_from_live_event(event, options)
+      id = options[:team_submission_id]
+
+      if [nil, "null", "undefined"].include?(id)
+        false
       elsif event.team_submission_ids.include?(Integer(id))
         id
       else
@@ -30,10 +31,16 @@ module FindEligibleSubmissionId
       end
     end
 
-    def id_for_score_in_progress(judge)
-      judge.submission_scores.current_round.incomplete.last.try(
-        :team_submission_id
-      )
+    def id_for_score_in_progress(judge, options = {})
+      if id = options[:score_id]
+        judge.submission_scores.current_round.incomplete.find_by(
+          id: id
+        ).try(:team_submission_id)
+      else
+        judge.submission_scores.current_round.incomplete.last.try(
+          :team_submission_id
+        )
+      end
     end
 
     def id_for_finished_score(judge, opts)

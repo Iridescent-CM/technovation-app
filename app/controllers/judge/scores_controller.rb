@@ -32,7 +32,10 @@ module Judge
         f.json {
           if submission_id = FindEligibleSubmissionId.(
                current_judge,
-               { score_id: params[:score_id] }
+               {
+                 score_id: params[:score_id],
+                 team_submission_id: params[:team_submission_id],
+               }
              )
 
             submission = TeamSubmission.find(submission_id)
