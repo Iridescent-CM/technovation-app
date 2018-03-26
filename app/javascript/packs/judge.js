@@ -36,6 +36,10 @@ document.addEventListener('turbolinks:load', () => {
         $.get("/judge/scores.json", null, resp => {
           this.$store.commit('populateScores', resp)
         })
+
+        $.get("/judge/assigned_submissions.json", null, resp => {
+          this.$store.commit('populateSubmissions', resp)
+        })
       },
     })
   }

@@ -5,18 +5,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    scores: {}
+    scores: {},
+    submissions: {}
   },
 
   getters: {
     finishedScores (state) {
       return state.scores.finished
     },
+
+    assignedSubmissions (state) {
+      return state.submissions
+    },
   },
 
   mutations: {
     populateScores (state, payload) {
       state.scores = payload
+    },
+
+    populateSubmissions (state, payload) {
+      state.submissions = payload
     },
   },
 })

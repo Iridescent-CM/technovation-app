@@ -208,6 +208,7 @@ Rails.application.routes.draw do
     resources :regional_pitch_events, only: :show
 
     resources :scores, only: [:index, :new, :update, :show]
+    resources :assigned_submissions, only: :index
     resources :score_completions, only: :create
     resources :finished_scores, only: :show
   end

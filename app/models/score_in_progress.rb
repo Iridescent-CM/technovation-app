@@ -6,6 +6,10 @@ class ScoreInProgress
     @score = judge.submission_scores.current_round.incomplete.last
   end
 
+  def present?
+    score.present?
+  end
+
   def id
     score.id
   end

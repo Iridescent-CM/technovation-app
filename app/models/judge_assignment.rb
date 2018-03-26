@@ -6,7 +6,6 @@ class JudgeAssignment < ActiveRecord::Base
   belongs_to :judge_profile, required: false
     # deprecated
 
-
   delegate :name,
     to: :team,
     prefix: true,

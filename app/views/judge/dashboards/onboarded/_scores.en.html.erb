@@ -6,7 +6,7 @@
           new_judge_score_path,
           class: "button",
           data: { turbolinks: false } %>
-      <% elsif @score_in_progress %>
+      <% elsif @score_in_progress.present? %>
         <h6>You have a score in progress:</h6>
 
         <strong>
@@ -25,6 +25,20 @@
             data: { turbolinks: false } %>
         </p>
       <% end %>
+
+      <router-link
+        :to="{ name: 'assigned-submissions' }"
+        :class="$route.name === 'assigned-submissions' ? 'active' : ''"
+      >
+        Assigned submissions
+      </router-link>
+
+      <router-link
+        :to="{ name: 'finished-scores' }"
+        :class="$route.name === 'finished-scores' ? 'active' : ''"
+      >
+        Finished scores
+      </router-link>
 
       <router-view></router-view>
     </div>
