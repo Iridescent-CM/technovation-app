@@ -82,7 +82,10 @@ export default {
 
     mailToHelp () {
       return 'mailto:help@technovationchallenge.org?subject=' +
-             'Errors while judging'
+             'Errors while judging submission ' +
+              '"' + this.submission.name + '"' +
+              ' by ' +
+              this.team.name
     },
   },
 
