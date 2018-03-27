@@ -1,4 +1,5 @@
 class Questions
+  include Rails.application.routes.url_helpers
   include Enumerable
 
   attr_reader :judge, :submission, :questions, :submission_score
@@ -37,6 +38,13 @@ class Questions
             full: s.image_url(:large),
           }
         },
+        demo_video_id: submission.video_id(:demo),
+        demo_video_url: judge_embed_code_path(submission, piece: :demo),
+        pitch_video_id: submission.video_id(:pitch),
+        pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
+        source_code_url: submission.source_code_url,
+        business_plan_url: submission.business_plan_url,
+        pitch_presentation_url: submission.pitch_presentation_url,
         total_checklist_points: submission.total_technical_checklist,
       },
 
@@ -46,6 +54,7 @@ class Questions
         division: submission.team_division_name,
         location: submission.team_primary_location,
         photo: submission.team_photo_url,
+        live_event: submission.team.live_event?,
       },
 
       questions: questions,

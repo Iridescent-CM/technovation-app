@@ -211,6 +211,7 @@ Rails.application.routes.draw do
     resources :assigned_submissions, only: :index
     resources :score_completions, only: :create
     resources :finished_scores, only: :show
+    resources :embed_codes, only: :show
   end
 
   namespace :admin do
