@@ -35,3 +35,12 @@
     font-size: 0.9rem;
   }
 }
+
+.img-modal {
+  cursor: pointer;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.05, 1.05);
+  }
+}

@@ -31,6 +31,12 @@ class Questions
         name: submission.app_name,
         description: simple_format(submission.app_description),
         development_platform: submission.development_platform_text,
+        screenshots: submission.screenshots.map { |s|
+          {
+            thumb: s.image_url(:thumb),
+            full: s.image_url(:large),
+          }
+        },
         total_checklist_points: submission.total_technical_checklist,
       },
 

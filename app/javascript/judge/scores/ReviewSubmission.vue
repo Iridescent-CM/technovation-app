@@ -38,7 +38,22 @@
 
     <div class="grid__col-9 grid__col--bleed-y submission-review">
       <h1>{{ submission.name }}</h1>
+
       <div class="app-description" v-html="submission.description"></div>
+
+
+      <div class="submission-pieces__screenshots">
+        <div
+          v-for="screenshot in submission.screenshots"
+          class="submission-pieces__screenshot"
+        >
+          <img
+            class="img-modal"
+            :src="screenshot.thumb"
+            :data-modal-url="screenshot.full"
+          />
+        </div>
+      </div>
     </div>
 
     <div class="grid__col-12 grid--align-center grid__col--bleed">
@@ -74,6 +89,10 @@ export default {
 </script>
 
 <style>
+  #judge-scores-app h2 {
+    margin: 1rem 0;
+  }
+
   .app-description p {
     margin: 1rem 0;
   }
