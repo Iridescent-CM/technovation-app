@@ -21,7 +21,7 @@
 
             <ul class="list--reset font-small">
               <li><icon size="16" name="flag-o" />
-                {{ team.division }}
+                {{ team.division | capitalize }} Division
               </li>
 
               <li><icon size="16" name="globe" />{{ team.location }}</li>

@@ -43,7 +43,7 @@ class Questions
       team: {
         id: submission.team_id,
         name: submission.team_name,
-        division: "#{submission.team_division_name.humanize} Division",
+        division: submission.team_division_name,
         location: submission.team_primary_location,
         photo: submission.team_photo_url,
       },
