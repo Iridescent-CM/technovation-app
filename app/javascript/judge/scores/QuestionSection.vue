@@ -2,12 +2,11 @@
   <div
     class="
       grid
-      grid--bleed
       grid--align-start
       grid--justify-space-between
     "
   >
-    <div class="grid__col-auto">
+    <div class="grid__col-12">
       <h3>{{ title }}</h3>
 
       <p class="refer-to">Refer to the {{ referTo }}</p>
@@ -17,7 +16,7 @@
       </score-entry>
     </div>
 
-    <div class="grid__col-6">
+    <div class="grid__col-12">
       <h3>{{ sectionTitle}} comment</h3>
 
       <h5 class="heading--reset">Please keep in mind</h5>
@@ -267,6 +266,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .grid {
+    background: white;
+  }
+
   .refer-to {
     font-size: 0.9rem;
     font-style: italic;
@@ -274,7 +277,6 @@ export default {
   }
 
   textarea {
-    border: 0;
     width: 100%;
     height: 40vh;
     margin: 1rem 0 0;

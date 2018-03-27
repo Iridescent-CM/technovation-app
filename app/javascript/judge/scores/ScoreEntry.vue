@@ -76,6 +76,8 @@ export default {
     ol {
       margin: 1rem 0 0;
       padding: 0;
+      display: flex;
+      justify-content: space-between;
     }
   }
 
@@ -85,8 +87,6 @@ export default {
   }
 
   .score-value {
-    display: inline-block;
-    margin-right: 3rem;
     opacity: 0.5;
     background: none;
     border: 1px solid darkgreen;
