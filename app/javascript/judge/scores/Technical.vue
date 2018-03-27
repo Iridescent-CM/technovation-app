@@ -13,7 +13,10 @@
 
       <div class="grid grid--bleed submission-pieces">
         <submission-pitch />
+        <submission-code />
       </div>
+
+      <submission-code-checklist />
 
       <question-section
         title="Technical (20 points)"
@@ -42,6 +45,8 @@
 import TeamInfo from './TeamInfo'
 import Screenshots from './Screenshots'
 import SubmissionPitch from './SubmissionPitch'
+import SubmissionCode from './SubmissionCode'
+import SubmissionCodeChecklist from './SubmissionCodeChecklist'
 
 import QuestionSection from './QuestionSection'
 
@@ -55,6 +60,8 @@ export default {
     TeamInfo,
     Screenshots,
     SubmissionPitch,
+    SubmissionCode,
+    SubmissionCodeChecklist,
   },
 }
 </script>
