@@ -25,6 +25,12 @@ export default new Vuex.Store({
       name: '',
       description: '',
       development_platform: '',
+      code_checklist: {
+        technical: [],
+        database: [],
+        mobile: [],
+        process: [],
+      },
       total_checklist_points: 0,
     },
   },

@@ -29,23 +29,46 @@ class Questions
 
       submission: {
         id: submission.id,
+
         name: submission.app_name,
         description: simple_format(submission.app_description),
+
         development_platform: submission.development_platform_text,
+
         screenshots: submission.screenshots.map { |s|
           {
             thumb: s.image_url(:thumb),
             full: s.image_url(:large),
           }
         },
+
         demo_video_id: submission.video_id(:demo),
         demo_video_url: judge_embed_code_path(submission, piece: :demo),
+
         pitch_video_id: submission.video_id(:pitch),
         pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
+
         source_code_url: submission.source_code_url,
+
         business_plan_url: submission.business_plan_url,
         pitch_presentation_url: submission.pitch_presentation_url,
+
         total_checklist_points: submission.total_technical_checklist,
+
+        code_checklist: {
+          technical: submission.code_checklist.technical.map { |item|
+            { label: item.label, explanation: item.explanation }
+          },
+          database: submission.code_checklist.database.map { |item|
+            { label: item.label, explanation: item.explanation }
+          },
+          mobile: submission.code_checklist.mobile.map { |item|
+            { label: item.label, explanation: item.explanation }
+          },
+          process: submission.code_checklist.process.map { |item|
+            { label: item.label, display: item.display }
+          }
+        },
       },
 
       team: {

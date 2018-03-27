@@ -115,7 +115,7 @@
           </p>
         </div>
 
-        <div class="grid__col-6">
+        <div :class="team.live_event ? 'grid__col-6' : 'grid__col-12'">
           <h4>Business</h4>
 
           <template v-if="team.division === 'senior'">
@@ -137,6 +137,77 @@
               Open the pitch presentation slides
             </a>
           </p>
+        </div>
+
+        <div class="grid__col-6 grid__col--bleed-y">
+          <h4 class="code_checklist-header">
+            Technical Components
+          </h4>
+
+          <dl v-if="submission.code_checklist.technical.length">
+            <template v-for="item in submission.code_checklist.technical">
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.explanation }}</dd>
+            </template>
+          </dl>
+
+          <p v-else>No use of technical components was indicated.</p>
+        </div>
+
+        <div class="grid__col-6 grid__col--bleed-y">
+          <h4 class="code_checklist-header">
+            Databases and Connectivity
+          </h4>
+
+          <dl v-if="submission.code_checklist.database.length">
+            <template v-for="item in submission.code_checklist.database">
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.explanation }}</dd>
+            </template>
+          </dl>
+
+          <p v-else>No use of database and connectivity was indicated.</p>
+
+          <h4 class="code_checklist-header">
+            Mobile Features
+          </h4>
+
+          <dl v-if="submission.code_checklist.mobile.length">
+            <template v-for="item in submission.code_checklist.mobile">
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.explanation }}</dd>
+            </template>
+          </dl>
+
+          <p v-else>No use of mobile features was indicated.</p>
+        </div>
+
+        <div class="grid__col-12 grid__col--bleed-y">
+          <h4 class="code_checklist-header">
+            Pictures of the process
+          </h4>
+
+          <div
+            v-if="submission.code_checklist.process.length"
+            class="grid grid--bleed"
+          >
+            <dl
+              class="grid__col-6"
+              v-for="item in submission.code_checklist.process"
+            >
+              <dt>{{ item.label }}</dt>
+
+              <dd class="img-modal">
+                <img
+                  :src="item.display"
+                  :data-modal-url="item.display"
+                  class="thumbnail-md thumbnail-process-pic"
+                />
+              </dd>
+            </dl>
+          </div>
+
+          <p v-else>No pictures of the process were uploaded.</p>
         </div>
       </div>
 
