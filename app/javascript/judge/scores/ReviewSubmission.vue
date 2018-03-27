@@ -55,9 +55,9 @@
         </div>
       </div>
 
-      <div class="grid grid--bleed">
-        <div class="grid__col-6">
-          <h3>Pitch</h3>
+      <div class="grid grid--bleed submission-pieces">
+        <div class="grid__col-6 pitch">
+          <h4>Pitch</h4>
 
           <p>
             <a
@@ -66,7 +66,7 @@
               :data-modal-fetch="submission.demo_video_url"
             >
               <icon name="play-circle-o" />
-              Watch the demo video
+              <span>Watch the demo video</span>
             </a>
           </p>
 
@@ -84,7 +84,7 @@
               :data-modal-fetch="submission.pitch_video_url"
             >
               <icon name="play-circle-o" />
-              Watch the pitch video
+              <span>Watch the pitch video</span>
             </a>
           </p>
 
@@ -97,7 +97,7 @@
         </div>
 
         <div class="grid__col-6">
-          <h3>Code</h3>
+          <h4>Code</h4>
 
           <a :href="submission.source_code_url" target="_blank">
             Download the source code
@@ -116,7 +116,7 @@
         </div>
 
         <div class="grid__col-6">
-          <h3>Business</h3>
+          <h4>Business</h4>
 
           <template v-if="team.division === 'senior'">
             <a :href="submission.business_plan_url" target="_blank">
@@ -130,7 +130,7 @@
         </div>
 
         <div v-if="team.live_event" class="grid__col-6">
-          <h3>Regional Pitch Events</h3>
+          <h4>Regional Pitch Events</h4>
 
           <p>
             <a :href="submission.pitch_presentation_url" target="_blank">
@@ -231,5 +231,19 @@ export default {
 
   .scent--strong a:hover {
     text-decoration: underline;
+  }
+
+  .pitch a {
+    display: flex;
+  }
+
+  .pitch a img,
+  .pitch a span {
+    align-self: center;
+    margin-right: 1rem;
+  }
+
+  .submission-pieces h4 {
+    margin: 1rem 0 0.5rem;
   }
 </style>
