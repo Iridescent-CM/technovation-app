@@ -16,14 +16,14 @@
       </score-entry>
     </div>
 
-    <div class="grid__col-12">
-      <h3>{{ sectionTitle}} comment</h3>
+    <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
+      <h3>{{ section | capitalize }} comment</h3>
 
       <h5 class="heading--reset">Please keep in mind</h5>
 
       <slot name="comment-tips" />
 
-      <textarea v-model="comment" />
+      <textarea v-model="comment.text" />
 
       <div class="comment-sentiment">
         <div
@@ -50,8 +50,8 @@
         <div class="grid__col-6">
           <p class="word-count">
             <span :style="`color: ${colorForWordCount}`">
-              {{ wordCount(comment) }}
-              {{ wordCount(comment) | pluralize('word') }}
+              {{ wordCount(comment.text) }}
+              {{ wordCount(comment.text) | pluralize('word') }}
             </span>
 
             <br />
@@ -105,54 +105,56 @@ export default {
 
   data () {
     return {
-      comment: '',
+      counter: 0,
 
-      sentiment: {
-        negative: 0,
-        positive: 0,
+      comment: {
+        text: '',
+        sentiment: {
+          negative: 0,
+          positive: 0,
+          neutral: 0,
+        },
+        bad_word_count: 0,
+        word_count: 0,
       },
 
       detectedProfanity: {},
+
+      commentInitiated: false,
     }
   },
 
   watch: {
-    comment (current, old) {
-      this.handleCommentChange(current, old)
+    commentText () {
+      if (this.commentInitiated)
+        this.handleCommentChange()
     },
 
     commentStorageKey () {
-      const comment = window.localStorage.getItem(
-        this.commentStorageKey
-      )
-
-      if (!!comment) {
-        this.comment = comment
-      } else {
-        this.comment = this.$store.getters.comment(this.section)
-      }
-
-      if (!this.comment) {
-        this.comment = ''
-      }
+      this.initiateComment()
     },
   },
 
   computed: {
     ...mapState(['submission']),
 
+    commentText () {
+      return this.comment.text
+    },
+
     nextDisabledMsg () {
       if (this.goingNextIsDisabled) {
-        return "Please write a substantial comment, keep it clean, and be friendly"
+        return 'Please write a substantial comment, ' +
+               'keep it clean, and be friendly'
       } else {
         return false
       }
     },
 
     goingNextIsDisabled () {
-      return this.wordCount(this.comment) < 40 ||
+      return this.wordCount(this.comment.text) < 40 ||
                this.badWordCount > 0 ||
-                 this.sentiment.negative > 0.4
+                 this.comment.sentiment.negative > 0.4
     },
 
     badWordCount () {
@@ -162,7 +164,7 @@ export default {
     },
 
     colorForWordCount () {
-      const count = this.wordCount(this.comment)
+      const count = this.wordCount(this.comment.text)
 
       if (count >= 40) {
         return 'darkgreen'
@@ -183,10 +185,6 @@ export default {
       } else {
         return 'darkred'
       }
-    },
-
-    sectionTitle () {
-      return _.capitalize(this.section)
     },
 
     questions () {
@@ -220,6 +218,30 @@ export default {
   },
 
   methods: {
+    initiateComment () {
+      const storeComment = this.$store.getters.comment(this.section)
+
+      if (!!storeComment)
+        this.comment = storeComment
+
+      const text = window.localStorage.getItem(this.commentStorageKey)
+      if (!!text) this.comment.text = text
+
+      this.$nextTick().then(() => {
+        this.commentInitiated = true
+      })
+    },
+
+    wordCount (text) {
+      return _.filter(text.split(' '), word => {
+
+        return _.filter(word.split(''), char => {
+          return char.match(/\w/)
+        }).length > 2
+
+      }).length
+    },
+
     sentimentTooltip (slant) {
       return 'Your comment seems ' +
              this.sentimentPercentage(slant) + ' ' +
@@ -227,40 +249,47 @@ export default {
     },
 
     sentimentPercentage (slant) {
-      return `${Math.round(this.sentiment[slant] * 100)}%`
+      return `${Math.round(parseFloat(this.comment.sentiment[slant]) * 100)}%`
     },
 
-    handleCommentChange: _.debounce(function(current_val, old_val) {
-      if (!!current_val && current_val !== old_val) {
-        window.localStorage.setItem(this.commentStorageKey, current_val)
+    handleCommentChange: _.debounce(function() {
+      window.localStorage.setItem(this.commentStorageKey, this.commentText)
 
-        this.$store.commit('setComment', {
-          sectionName: this.section,
-          text: current_val,
+      Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+        .algo("nlp/SocialSentimentAnalysis/0.1.4")
+        .pipe({ sentence: this.commentText })
+        .then(resp => {
+          this.comment.sentiment = resp.result[0]
+
+          this.$store.commit('setComment', {
+            sectionName: this.section,
+            text: this.commentText,
+            word_count: this.wordCount(this.commentText),
+            bad_word_count: this.badWordCount,
+            sentiment: this.comment.sentiment,
+          })
         })
 
-        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-          .algo("nlp/SocialSentimentAnalysis/0.1.4")
-          .pipe({ sentence: current_val })
-          .then(resp => { this.sentiment = resp.result[0] });
+      Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+        .algo("nlp/ProfanityDetection/1.0.0")
+        .pipe([this.commentText, [], false])
+        .then(resp => {
+          this.detectedProfanity = resp.result
 
-        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-          .algo("nlp/ProfanityDetection/1.0.0")
-          .pipe([current_val, [], false])
-          .then(resp => { this.detectedProfanity = resp.result });
-      }
+          this.$store.commit('setComment', {
+            sectionName: this.section,
+            text: this.commentText,
+            word_count: this.wordCount(this.commentText),
+            bad_word_count: this.badWordCount,
+            sentiment: this.comment.sentiment,
+          })
+        });
     }, 500),
-
-    wordCount (comment) {
-      return _.filter(comment.split(' '), w => {
-        return _.filter(w.split(''), c => { return c.match(/\w/) }).length > 2
-      }).length
-    },
   },
 
   mounted () {
-    const comment = window.localStorage.getItem(this.commentStorageKey)
-    if (!!comment) this.comment = comment
+    if (!!this.submission.id)
+      this.initiateComment()
   },
 }
 </script>

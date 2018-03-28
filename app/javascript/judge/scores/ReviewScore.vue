@@ -35,12 +35,15 @@
 
       <div class="grid grid--bleed grid--justify-space-around">
         <div class="grid__col-auto">
-          <p class="align-center">
+          <p
+            class="align-center"
+            v-tooltip.top-center="finishScoreTooltip"
+          >
             <a
-             :href="`/judge/score_completions?id=${score.id}`"
+              :href="`/judge/score_completions?id=${score.id}`"
+              :disabled="isScoreIncomplete"
               class="button"
               data-method="post"
-              v-tooltip.top-center="'You can revisit your finished scores and make changes through May 20th.'"
             >
               Finish score
             </a>
@@ -68,10 +71,29 @@ export default {
   },
 
   computed: {
-    ...mapState(['score']),
+    ...mapState(['score', 'submission']),
 
     totalScore () {
       return this.$store.getters.totalScore
+    },
+
+    isScoreIncomplete () {
+      const totalMinusChecklist = this.totalScore -
+        this.submission.total_checklist_points
+
+      return this.$store.getters.anyCommentsInvalid &&
+        totalMinusChecklist < 14
+    },
+
+    finishScoreTooltip () {
+      if (this.isScoreIncomplete) {
+        return 'Your score is not ready to be finished. ' +
+               'Enter a score for each question, and a ' +
+               'friendly, sufficient comment for each section'
+      } else {
+        return 'You can revisit your finished scores ' +
+               'and make changes through May 20th.'
+      }
     },
   },
 

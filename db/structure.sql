@@ -1315,7 +1315,32 @@ CREATE TABLE public.submission_scores (
     deleted_at timestamp without time zone,
     round integer DEFAULT 0 NOT NULL,
     official boolean DEFAULT true,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    ideation_comment_positivity numeric(4,3) DEFAULT 0,
+    ideation_comment_negativity numeric(4,3) DEFAULT 0,
+    ideation_comment_neutrality numeric(4,3) DEFAULT 0,
+    ideation_comment_word_count integer DEFAULT 0,
+    ideation_comment_bad_word_count integer DEFAULT 0,
+    technical_comment_positivity numeric(4,3) DEFAULT 0,
+    technical_comment_negativity numeric(4,3) DEFAULT 0,
+    technical_comment_neutrality numeric(4,3) DEFAULT 0,
+    technical_comment_word_count integer DEFAULT 0,
+    technical_comment_bad_word_count integer DEFAULT 0,
+    pitch_comment_positivity numeric(4,3) DEFAULT 0,
+    pitch_comment_negativity numeric(4,3) DEFAULT 0,
+    pitch_comment_neutrality numeric(4,3) DEFAULT 0,
+    pitch_comment_word_count integer DEFAULT 0,
+    pitch_comment_bad_word_count integer DEFAULT 0,
+    entrepreneurship_comment_positivity numeric(4,3) DEFAULT 0,
+    entrepreneurship_comment_negativity numeric(4,3) DEFAULT 0,
+    entrepreneurship_comment_neutrality numeric(4,3) DEFAULT 0,
+    entrepreneurship_comment_word_count integer DEFAULT 0,
+    entrepreneurship_comment_bad_word_count integer DEFAULT 0,
+    overall_comment_positivity numeric(4,3) DEFAULT 0,
+    overall_comment_negativity numeric(4,3) DEFAULT 0,
+    overall_comment_neutrality numeric(4,3) DEFAULT 0,
+    overall_comment_word_count integer DEFAULT 0,
+    overall_comment_bad_word_count integer DEFAULT 0
 );
 
 
@@ -2944,6 +2969,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180301140524'),
 ('20180313204753'),
 ('20180314144804'),
-('20180322201531');
+('20180322201531'),
+('20180328171732');
 
 

@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     score: {
       id: null,
-      comments: [],
+      comments: {},
     },
 
     questions: [],
@@ -35,10 +35,18 @@ export default new Vuex.Store({
     },
   },
 
-  computed: {
-  },
-
   getters: {
+    anyCommentsInvalid (state) {
+      let expectedCommentsLength = 4
+
+      if (state.team.division === 'senior')
+        expectedCommentsLength = 5
+
+      return _.keys(state.score.comments).length < expectedCommentsLength ||
+        _.some(state.score.comments, (comment, section) => {
+          return comment.wordCount < 40
+        })
+    },
 
     comment: (state) => (sectionName) => {
       return state.score.comments[sectionName]
@@ -92,7 +100,7 @@ export default new Vuex.Store({
 
   mutations: {
     setComment (state, commentData) {
-      state.score.comments[commentData.sectionName] = commentData.text
+      state.score.comments[commentData.sectionName] = commentData
     },
 
     saveComment (state, sectionName) {
@@ -103,7 +111,32 @@ export default new Vuex.Store({
 
       data.append(
         `submission_score[${sectionName}_comment]`,
-        state.score.comments[sectionName]
+        state.score.comments[sectionName].text
+      )
+
+      data.append(
+        `submission_score[${sectionName}_comment_positivity]`,
+        state.score.comments[sectionName].sentiment.positive
+      )
+
+      data.append(
+        `submission_score[${sectionName}_comment_negativity]`,
+        state.score.comments[sectionName].sentiment.negative
+      )
+
+      data.append(
+        `submission_score[${sectionName}_comment_neutrality]`,
+        state.score.comments[sectionName].sentiment.neutral
+      )
+
+      data.append(
+        `submission_score[${sectionName}_comment_word_count]`,
+        state.score.comments[sectionName].word_count
+      )
+
+      data.append(
+        `submission_score[${sectionName}_comment_bad_word_count]`,
+        state.score.comments[sectionName].bad_word_count
       )
 
       $.ajax({

@@ -19,11 +19,14 @@ class Questions
       score: {
         id: submission_score.id,
         comments: {
-          ideation: submission_score.ideation_comment,
-          technical: submission_score.technical_comment,
-          pitch: submission_score.pitch_comment,
-          entrepreneurship: submission_score.entrepreneurship_comment,
-          overall: submission_score.overall_comment,
+          ideation: comment_data(submission_score, :ideation),
+          technical: comment_data(submission_score, :technical),
+          pitch: comment_data(submission_score, :pitch),
+          entrepreneurship: comment_data(
+            submission_score,
+            :entrepreneurship
+          ),
+          overall: comment_data(submission_score, :overall)
         },
       },
 
@@ -279,5 +282,18 @@ class Questions
     paragraphs = text.split("\r\n")
     formatted = "<p>" + paragraphs.join("</p><p>") + "</p>"
     formatted.gsub("<p></p>", "")
+  end
+
+  def comment_data(score, section_name)
+    {
+      text: score["#{section_name}_comment"],
+      sentiment: {
+        positive: score["#{section_name}_comment_positivity"],
+        negative: score["#{section_name}_comment_negativity"],
+        neutral: score["#{section_name}_comment_neutrality"],
+      },
+      word_count: score["#{section_name}_comment_word_count"],
+      bad_word_count: score["#{section_name}_comment_bad_word_count"],
+    }
   end
 end
