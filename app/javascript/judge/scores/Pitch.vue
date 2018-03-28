@@ -22,7 +22,7 @@
         referTo="demo video and pitch video."
         prevSection="technical"
         section="pitch"
-        nextSection="entrepreneurship"
+        :nextSection="nextSection"
       >
         <p slot="comment-tips">
           English may not be the native language for the students.
@@ -44,7 +44,15 @@ import QuestionSection from './QuestionSection'
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState(['team', 'submission']),
+  computed: {
+    ...mapState(['team', 'submission']),
+
+    nextSection () {
+      return this.team.division === 'senior' ?
+        'entrepreneurship' :
+        'overall'
+    },
+  },
 
   components: {
     QuestionSection,
