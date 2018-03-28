@@ -1,5 +1,10 @@
 <template>
-  <div class="grid">
+  <div v-if="!submission.id" class="loading">
+    <icon name="spinner" className="spin" />
+    <div>Finding a submission for you to judge...</div>
+  </div>
+
+  <div v-else class="grid">
     <div class="grid__col-12 grid__col--bleed-y">
       <h2>Review submission</h2>
     </div>
@@ -13,11 +18,12 @@
 
       <screenshots />
 
-      <div class="grid grid--bleed submission-pieces">
+      <div class="grid grid--bleed submission-pieces mulberry-row">
         <submission-pitch />
-
         <submission-code />
+      </div>
 
+      <div class="grid grid--bleed submission-pieces white-row">
         <submission-business />
 
         <submission-presentation />
@@ -64,6 +70,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Icon from '../../components/Icon'
 
 import TeamInfo from './TeamInfo'
 import Screenshots from './Screenshots'
@@ -90,6 +97,7 @@ export default {
   },
 
   components: {
+    Icon,
     TeamInfo,
     Screenshots,
     SubmissionPitch,
@@ -104,7 +112,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   #judge-scores-app h2 {
     margin: 1rem 0;
   }
@@ -117,16 +125,61 @@ export default {
     border-bottom: 1px solid #5ABF94;
   }
 
-  .scent--strong a {
-    color: black;
-    font-weight: bold;
-  }
+  .scent--strong {
+    a {
+      color: black;
+      font-weight: bold;
 
-  .scent--strong a:hover {
-    text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .submission-pieces h4 {
-    margin: 1rem 0 0.5rem;
+    margin: 0;
+  }
+
+  .mulberry-row {
+    background: #903D54;
+    color: white;
+    padding: 1rem;
+    min-height: 240px;
+    -webkit-font-smoothing: antialiased;
+
+    a {
+      color: black;
+      font-weight: bold;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    > div {
+      align-self: center;
+    }
+  }
+
+  .white-row,
+  .grid--bleed [class*="grid__col-"].white-row {
+    background: white;
+    padding: 1rem;
+    min-height: 240px;
+
+    > div,
+    > h4 + div {
+      align-self: center;
+    }
+  }
+
+  .loading {
+    padding: 2rem;
+    text-align: center;
+
+    div {
+      margin: 1rem auto;
+    }
   }
 </style>

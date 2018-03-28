@@ -20,3 +20,11 @@ export default {
   computed: mapState(['submission']),
 }
 </script>
+
+<style scoped>
+  .submission-pieces__screenshots {
+    background: white;
+    padding: 1rem;
+    margin: 0;
+  }
+</style>

@@ -23,14 +23,14 @@
         'stepper__step',
         $route.name === section.name ? 'stepper__step--active' : ''
       ]"
-      v-for="section in sections"
+      v-for="(section, i) in sections"
     >
       <router-link
         :to="{ name: section.name }"
         class="grid__cell"
       >
         <span class="stepper__step-number">
-          {{ section.stepNum }}
+          {{ i + 2 }}
         </span>
 
         {{ section.title }}
@@ -52,7 +52,7 @@
         :to="{ name: 'review-score' }"
         class="grid__cell"
       >
-        <span class="stepper__step-number">7</span>
+        <span class="stepper__step-number">{{ lastStepNum }}</span>
         Review score
 
         <span class="stepper__step-score">
@@ -64,14 +64,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   computed: {
+    ...mapState(['team']),
+
+    lastStepNum () {
+      // review-submission + sections + review-score
+      return 1 + this.sections.length + 1
+    },
+
     sections () {
-      return [
+      let sections = [
         {
           name: 'ideation',
           title: 'Ideation',
-          stepNum: 2,
           pointsTotal: this.pointsTotal('ideation'),
           pointsPossible: this.pointsPossible('ideation'),
         },
@@ -79,7 +87,6 @@ export default {
         {
           name: 'technical',
           title: 'Technical',
-          stepNum: 3,
           pointsTotal: this.pointsTotal('technical'),
           pointsPossible: this.pointsPossible('technical'),
         },
@@ -87,27 +94,28 @@ export default {
         {
           name: 'pitch',
           title: 'Pitch',
-          stepNum: 4,
           pointsTotal: this.pointsTotal('pitch'),
           pointsPossible: this.pointsPossible('pitch'),
         },
+      ]
 
-        {
+      if (this.team.division === 'senior') {
+        sections.push({
           name: 'entrepreneurship',
           title: 'Entrepreneurship',
-          stepNum: 5,
           pointsTotal: this.pointsTotal('entrepreneurship'),
           pointsPossible: this.pointsPossible('entrepreneurship'),
-        },
+        })
+      }
 
-        {
-          name: 'overall',
-          title: 'Overall Impression',
-          stepNum: 6,
-          pointsTotal: this.pointsTotal('overall'),
-          pointsPossible: this.pointsPossible('overall'),
-        },
-      ]
+      sections.push({
+        name: 'overall',
+        title: 'Overall Impression',
+        pointsTotal: this.pointsTotal('overall'),
+        pointsPossible: this.pointsPossible('overall'),
+      })
+
+      return sections
     },
 
     totalScore () {

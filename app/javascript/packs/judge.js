@@ -7,7 +7,7 @@ import Vue2Filters from 'vue2-filters'
 
 import _ from 'lodash'
 
-import "../components/tooltip.scss";
+import "../components/tooltip.scss"
 import '../judge/scores/main.scss'
 
 Vue.use(VueRouter)

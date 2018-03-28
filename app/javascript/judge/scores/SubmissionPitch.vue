@@ -8,7 +8,7 @@
         :data-opens-modal="`video-modal-${submission.demo_video_id}`"
         :data-modal-fetch="submission.demo_video_url"
       >
-        <icon name="play-circle-o" />
+        <icon name="film" />
         <span>Watch the demo video</span>
       </a>
     </p>
@@ -26,7 +26,7 @@
         :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
         :data-modal-fetch="submission.pitch_video_url"
       >
-        <icon name="play-circle-o" />
+        <icon name="lightbulb-o" />
         <span>Watch the pitch video</span>
       </a>
     </p>

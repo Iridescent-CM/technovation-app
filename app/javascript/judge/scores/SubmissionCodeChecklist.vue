@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid--bleed submission-pieces">
-    <div class="grid__col-6 grid__col--bleed-y">
+    <div class="grid__col-6 grid__col--bleed-y marine-row">
       <h4 class="code_checklist-header">
         Technical Components
       </h4>
@@ -15,7 +15,7 @@
       <p v-else>No use of technical components was indicated.</p>
     </div>
 
-    <div class="grid__col-6 grid__col--bleed-y">
+    <div class="grid__col-6 grid__col--bleed-y marine-row">
       <h4 class="code_checklist-header">
         Databases and Connectivity
       </h4>
@@ -43,7 +43,7 @@
       <p v-else>No use of mobile features was indicated.</p>
     </div>
 
-    <div class="grid__col-12 grid__col--bleed-y">
+    <div class="grid__col-12 grid__col--bleed-y white-row">
       <h4 class="code_checklist-header">
         Pictures of the process
       </h4>
@@ -80,3 +80,21 @@ export default {
   computed: mapState(['submission']),
 }
 </script>
+
+<style lang="scss" scoped>
+.marine-row {
+  background: #4BC2C6;
+  padding: 1rem;
+  min-height: 240px;
+
+  > div {
+    align-self: center;
+  }
+
+  h4 {
+    margin: 0 0 1rem;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+</style>
