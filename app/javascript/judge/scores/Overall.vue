@@ -6,6 +6,7 @@
     section="overall"
     nextSection="review-score"
     nextSectionTitle="Review score"
+    :solo="true"
   >
     <p slot="comment-tips">
       Considering the native language and ages of the team,

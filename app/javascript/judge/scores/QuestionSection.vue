@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="
-      grid
-      grid--align-start
-      grid--justify-space-between
-    "
-  >
-    <div class="grid__col-12">
+  <div class="grid grid--align-start grid--justify-space-between ">
+    <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
       <h3>{{ title }}</h3>
 
       <p class="refer-to">Refer to the {{ referTo }}</p>
@@ -211,6 +205,7 @@ export default {
     'prevSection',
     'section',
     'nextSectionTitle',
+    'solo',
   ],
 
   components: {
