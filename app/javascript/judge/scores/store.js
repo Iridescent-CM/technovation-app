@@ -42,10 +42,27 @@ export default new Vuex.Store({
       if (state.team.division === 'senior')
         expectedCommentsLength = 5
 
-      return _.keys(state.score.comments).length < expectedCommentsLength ||
-        _.some(state.score.comments, (comment, section) => {
-          return comment.wordCount < 40
-        })
+      const actualCommentsLength = _.keys(state.score.comments).length
+
+      const anyCommentsTooShort = _.some(
+        state.score.comments,
+        (comment, section) => { return comment.word_count < 40 }
+      )
+
+      const anyBadWords = _.some(
+        state.score.comments,
+        (comment, section) => { return comment.bad_word_count > 0 }
+      )
+
+      const anyExcessiveNegativity = _.some(
+        state.score.comments,
+        (comment, section) => { return comment.sentiment.negative > 0.4 }
+      )
+
+      return actualCommentsLength < expectedCommentsLength ||
+               anyCommentsTooShort ||
+                 anyBadWords ||
+                   anyExcessiveNegativity
     },
 
     comment: (state) => (sectionName) => {

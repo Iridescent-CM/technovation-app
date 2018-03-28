@@ -81,7 +81,7 @@ export default {
       const totalMinusChecklist = this.totalScore -
         this.submission.total_checklist_points
 
-      return this.$store.getters.anyCommentsInvalid &&
+      return this.$store.getters.anyCommentsInvalid ||
         totalMinusChecklist < 14
     },
 
