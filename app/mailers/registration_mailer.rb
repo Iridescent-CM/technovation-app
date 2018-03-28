@@ -28,7 +28,8 @@ class RegistrationMailer < ApplicationMailer
         f.html { render :confirm_email }
       end
     else
-      raise AdminPermissionTokenNotPresent, "UserInvitation ID: #{invitation.id}"
+      raise AdminPermissionTokenNotPresent,
+        "UserInvitation ID: #{invitation.id}"
     end
   end
 
