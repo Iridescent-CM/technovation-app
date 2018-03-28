@@ -11,7 +11,7 @@
 
       <screenshots />
 
-      <div class="grid grid--bleed submission-pieces">
+      <div class="grid grid--bleed submission-pieces mulberry-row">
         <submission-pitch />
         <submission-code />
       </div>
