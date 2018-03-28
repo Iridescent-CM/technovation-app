@@ -86,6 +86,7 @@ export default {
   background: #4BC2C6;
   padding: 1rem;
   min-height: 240px;
+  color: black;
 
   > div {
     align-self: center;
@@ -93,8 +94,15 @@ export default {
 
   h4 {
     margin: 0 0 1rem;
-    color: white;
+    color: black;
     -webkit-font-smoothing: antialiased;
+  }
+
+  dl {
+    dt {
+      color: #e6e6e5;
+      font-weight: normal;
+    }
   }
 }
 </style>

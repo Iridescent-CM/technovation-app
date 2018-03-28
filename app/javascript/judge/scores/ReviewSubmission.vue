@@ -148,7 +148,7 @@ export default {
     -webkit-font-smoothing: antialiased;
 
     a {
-      color: black;
+      color: #e6e6e5;
       font-weight: bold;
       transition: transform 0.2s;
 

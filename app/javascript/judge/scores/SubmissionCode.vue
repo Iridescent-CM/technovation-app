@@ -26,3 +26,9 @@ export default {
   computed: mapState(['team', 'submission']),
 }
 </script>
+
+<style scoped>
+h4 {
+  margin: 0 0 1rem;
+}
+</style>
