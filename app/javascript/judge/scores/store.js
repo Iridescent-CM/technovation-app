@@ -36,33 +36,61 @@ export default new Vuex.Store({
   },
 
   getters: {
-    anyCommentsInvalid (state) {
-      let expectedCommentsLength = 4
+    anyScoresEmpty (state) {
+      let expectedScoreLength = 14
 
       if (state.team.division === 'senior')
-        expectedCommentsLength = 5
+        expectedScoreLength = 18
 
-      const actualCommentsLength = _.keys(state.score.comments).length
+      const scores = _.flatMap(state.questions, 'score')
+
+      const actualScoreLength = _.filter(
+        scores,
+        s => { return s > 0 }
+      ).length
+
+      return actualScoreLength < expectedScoreLength
+    },
+
+    anyCommentsInvalid (state) {
+      let expectedCount = 4
+
+      if (state.team.division === 'senior')
+        expectedCount = 5
+
+      let commentsToCount = state.score.comments
+
+      if (state.team.division === 'junior')
+        commentsToCount = _.reject(
+          commentsToCount,
+          (comment, section) => {
+            return section === 'entrepreneurship'
+          }
+        )
+
+      const actualCount = _.keys(commentsToCount).length
+
+      const notEnoughComments = actualCount < expectedCount
 
       const anyCommentsTooShort = _.some(
-        state.score.comments,
+        commentsToCount,
         (comment, section) => { return comment.word_count < 40 }
       )
 
       const anyBadWords = _.some(
-        state.score.comments,
+        commentsToCount,
         (comment, section) => { return comment.bad_word_count > 0 }
       )
 
       const anyExcessiveNegativity = _.some(
-        state.score.comments,
-        (comment, section) => { return comment.sentiment.negative > 0.4 }
+        commentsToCount,
+        (comment, section) => {
+          return parseFloat(comment.sentiment.negative) > 0.4
+        }
       )
 
-      return actualCommentsLength < expectedCommentsLength ||
-               anyCommentsTooShort ||
-                 anyBadWords ||
-                   anyExcessiveNegativity
+      return notEnoughComments || anyCommentsTooShort ||
+               anyBadWords || anyExcessiveNegativity
     },
 
     comment: (state) => (sectionName) => {

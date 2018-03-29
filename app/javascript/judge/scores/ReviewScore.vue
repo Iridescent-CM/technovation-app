@@ -58,31 +58,31 @@
 import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      sectionNames: [
+  computed: {
+    ...mapState(['team', 'score', 'submission']),
+
+    sectionNames () {
+      let names = [
         'ideation',
         'technical',
         'pitch',
-        'entrepreneurship',
-        'overall',
-      ],
-    }
-  },
+      ]
 
-  computed: {
-    ...mapState(['score', 'submission']),
+      if (this.team.division === 'senior')
+        names.push('entrepreneurship')
+
+      names.push('overall')
+
+      return names
+    },
 
     totalScore () {
       return this.$store.getters.totalScore
     },
 
     isScoreIncomplete () {
-      const totalMinusChecklist = this.totalScore -
-        this.submission.total_checklist_points
-
       return this.$store.getters.anyCommentsInvalid ||
-        totalMinusChecklist < 14
+        this.$store.getters.anyScoresEmpty
     },
 
     finishScoreTooltip () {
