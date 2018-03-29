@@ -1,0 +1,31 @@
+<% if current_session.authenticated? %>
+  <% provide :session_bar, render("layouts/session_bar") %>
+<% end %>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'meta' %>
+
+    <title>
+      <%= content_for?(:title) ?
+        sanitize(
+          "#{yield(:title)} • " +
+          t("views.application.site_title")
+        ) : t("views.application.site_title_default") %>
+    </title>
+
+    <%= render 'favicons' %>
+
+    <%= stylesheet_link_tag 'printable_scores', media: :all %>
+
+    <%= stylesheet_link_tag(
+      '//cloud.webtype.com/css/fea72f17-6c81-4c13-9e34-58b54a440d85.css',
+      media: :all
+    ) %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
