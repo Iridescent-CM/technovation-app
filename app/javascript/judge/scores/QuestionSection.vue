@@ -222,6 +222,9 @@ export default {
       const text = window.localStorage.getItem(this.commentStorageKey)
       if (!!text) this.comment.text = text
 
+      if (!this.comment.text)
+        this.comment.text = ''
+
       this.$nextTick().then(() => {
         this.commentInitiated = true
       })
