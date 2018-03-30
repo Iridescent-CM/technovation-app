@@ -23,12 +23,6 @@ document.addEventListener('turbolinks:load', () => {
       watch: {
         $route (to, from) {
           this.$store.commit('saveComment', from.name)
-
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-          })
         },
       },
 
