@@ -19,17 +19,17 @@
       <screenshots />
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
-        <submission-pitch />
-        <submission-code />
+        <pitch />
+        <code />
       </div>
 
       <div class="grid grid--bleed submission-pieces white-row">
-        <submission-business />
+        <business />
 
-        <submission-presentation />
+        <presentation />
       </div>
 
-      <submission-code-checklist />
+      <code-checklist />
 
       <div class="grid grid--bleed grid--justify-space-around">
         <div class="grid__col-12 grid--align-center">
@@ -70,15 +70,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import Icon from '../../components/Icon'
+import Icon from '../../../components/Icon'
 
-import TeamInfo from './TeamInfo'
-import Screenshots from './Screenshots'
-import SubmissionPitch from './SubmissionPitch'
-import SubmissionCode from './SubmissionCode'
-import SubmissionBusiness from './SubmissionBusiness'
-import SubmissionPresentation from './SubmissionPresentation'
-import SubmissionCodeChecklist from './SubmissionCodeChecklist'
+import TeamInfo from '../TeamInfo'
+import Screenshots from '../pieces/Screenshots'
+import Pitch from '../pieces/Pitch'
+import Code from '../pieces/Code'
+import Business from '../pieces/Business'
+import Presentation from '../pieces/Presentation'
+import CodeChecklist from '../pieces/CodeChecklist'
 
 export default {
   computed: {
@@ -100,11 +100,11 @@ export default {
     Icon,
     TeamInfo,
     Screenshots,
-    SubmissionPitch,
-    SubmissionCode,
-    SubmissionBusiness,
-    SubmissionPresentation,
-    SubmissionCodeChecklist,
+    Pitch,
+    Code,
+    Business,
+    Presentation,
+    CodeChecklist,
   },
 
   methods: {

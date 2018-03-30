@@ -12,7 +12,7 @@
       <div class="app-description" v-html="submission.description"></div>
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
-        <submission-pitch />
+        <pitch />
       </div>
 
       <question-section
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import TeamInfo from './TeamInfo'
-import SubmissionPitch from './SubmissionPitch'
+import TeamInfo from '../TeamInfo'
+import Pitch from '../pieces/Pitch'
 
-import QuestionSection from './QuestionSection'
+import QuestionSection from '../QuestionSection'
 
 import { mapState } from 'vuex'
 
@@ -45,7 +45,7 @@ export default {
   components: {
     QuestionSection,
     TeamInfo,
-    SubmissionPitch,
+    Pitch,
   },
 }
 </script>

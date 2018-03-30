@@ -12,11 +12,11 @@
       <screenshots />
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
-        <submission-pitch />
-        <submission-code />
+        <pitch />
+        <code />
       </div>
 
-      <submission-code-checklist />
+      <code-checklist />
 
       <question-section
         title="Technical (20 points)"
@@ -42,13 +42,14 @@
 </template>
 
 <script>
-import TeamInfo from './TeamInfo'
-import Screenshots from './Screenshots'
-import SubmissionPitch from './SubmissionPitch'
-import SubmissionCode from './SubmissionCode'
-import SubmissionCodeChecklist from './SubmissionCodeChecklist'
+import TeamInfo from '../TeamInfo'
 
-import QuestionSection from './QuestionSection'
+import Screenshots from '../pieces/Screenshots'
+import Pitch from '../pieces/Pitch'
+import Code from '../pieces/Code'
+import CodeChecklist from '../pieces/CodeChecklist'
+
+import QuestionSection from '../QuestionSection'
 
 import { mapState } from 'vuex'
 
@@ -59,9 +60,9 @@ export default {
     QuestionSection,
     TeamInfo,
     Screenshots,
-    SubmissionPitch,
-    SubmissionCode,
-    SubmissionCodeChecklist,
+    Pitch,
+    Code,
+    CodeChecklist,
   },
 }
 </script>

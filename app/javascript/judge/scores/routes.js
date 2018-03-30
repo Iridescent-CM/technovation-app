@@ -1,13 +1,13 @@
 import Vue from 'vue/dist/vue.esm';
 import VueRouter from 'vue-router'
 
-import ReviewSubmission from './ReviewSubmission'
-import Ideation from "./Ideation"
-import Technical from "./Technical"
-import Pitch from "./Pitch"
-import Entrepreneurship from "./Entrepreneurship"
-import Overall from "./Overall"
-import ReviewScore from './ReviewScore'
+import ReviewSubmission from './sections/ReviewSubmission'
+import Ideation from "./sections/Ideation"
+import Technical from "./sections/Technical"
+import Pitch from "./sections/Pitch"
+import Entrepreneurship from "./sections/Entrepreneurship"
+import Overall from "./sections/Overall"
+import ReviewScore from './sections/ReviewScore'
 
 export const routes = [
   { path: '/', redirect: { name: 'review-submission' } },

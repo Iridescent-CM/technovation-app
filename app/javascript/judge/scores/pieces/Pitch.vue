@@ -49,7 +49,7 @@
 <script>
 import { mapState } from 'vuex'
 
-import Icon from '../../components/Icon'
+import Icon from '../../../components/Icon'
 
 export default {
   computed: mapState(['submission']),

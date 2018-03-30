@@ -14,7 +14,7 @@
       <screenshots />
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
-        <submission-pitch :solo="true" />
+        <pitch :solo="true" />
       </div>
 
       <question-section
@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import TeamInfo from './TeamInfo'
-import Screenshots from './Screenshots'
-import SubmissionPitch from './SubmissionPitch'
+import TeamInfo from '../TeamInfo'
+import Screenshots from '../pieces/Screenshots'
+import Pitch from '../pieces/Pitch'
 
-import QuestionSection from './QuestionSection'
+import QuestionSection from '../QuestionSection'
 
 import { mapState } from 'vuex'
 
@@ -58,7 +58,7 @@ export default {
     QuestionSection,
     TeamInfo,
     Screenshots,
-    SubmissionPitch,
+    Pitch,
   },
 }
 </script>
