@@ -93,16 +93,19 @@ export default {
   }
 
   h4 {
-    margin: 0 0 1rem;
+    margin: 0 0 0.5rem;
     color: black;
     -webkit-font-smoothing: antialiased;
   }
 
-  dl {
-    dt {
-      color: #e6e6e5;
-      font-weight: normal;
-    }
+  dt {
+    color: #e6e6e5;
+    font-weight: normal;
+  }
+
+  p,
+  dd {
+    margin: 0 0 1rem;
   }
 }
 </style>
