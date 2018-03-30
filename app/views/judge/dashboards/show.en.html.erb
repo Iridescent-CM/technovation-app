@@ -36,22 +36,24 @@
 </div>
 
 <div class="grid">
-  <div class="grid__col-md-3">
-    <div class="grid__cell">
-      <div class="panel">
-        <%= image_tag current_judge.profile_image_url,
-          class: "grid__cell-img" %>
+  <div class="grid__col-md-3 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="panel">
+          <%= image_tag current_judge.profile_image_url,
+            class: "grid__cell-img" %>
 
-        <h3 class="reset"><%= current_judge.full_name %></h3>
+          <h3 class="reset"><%= current_judge.full_name %></h3>
 
-        <%= link_to "View your profile", judge_profile_path %>
-      </div>
-
-      <% if current_judge.onboarded? %>
-        <div class="panel panel--left">
-          <%= render "judge/dashboards/info_sidebar" %>
+          <%= link_to "View your profile", judge_profile_path %>
         </div>
-      <% end %>
+
+        <% if current_judge.onboarded? %>
+          <div class="panel panel--left">
+            <%= render "judge/dashboards/info_sidebar" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 
