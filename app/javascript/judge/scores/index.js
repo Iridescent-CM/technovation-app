@@ -14,6 +14,10 @@ document.addEventListener('turbolinks:load', () => {
       router,
       store,
 
+      data: {
+        msg: '',
+      },
+
       props: ['scoreId'],
 
       watch: {
