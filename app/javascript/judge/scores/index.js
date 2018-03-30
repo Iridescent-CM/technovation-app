@@ -15,7 +15,7 @@ document.addEventListener('turbolinks:load', () => {
       store,
 
       data: {
-        msg: '',
+        notice: '',
       },
 
       props: ['scoreId'],
@@ -44,7 +44,7 @@ document.addEventListener('turbolinks:load', () => {
             this.$store.commit('setStateFromJSON', json)
           },
           error: (xhr, ajaxOptions, thrownError) => {
-            this.msg = xhr.responseJSON.msg
+            this.notice = xhr.responseJSON.msg
           },
         })
 
