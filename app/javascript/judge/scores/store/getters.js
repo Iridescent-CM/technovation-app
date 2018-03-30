@@ -6,10 +6,7 @@ export const anyScoresEmpty = state => {
 
   const scores = _.flatMap(state.questions, 'score')
 
-  const actualScoreLength = _.filter(
-    scores,
-    s => { return s > 0 }
-  ).length
+  const actualScoreLength = _.filter(scores, s => { return s > 0 }).length
 
   return actualScoreLength < expectedScoreLength
 }
@@ -23,12 +20,9 @@ export const anyCommentsInvalid = state => {
   let commentsToCount = state.score.comments
 
   if (state.team.division === 'junior')
-    commentsToCount = _.reject(
-      commentsToCount,
-      (comment, section) => {
-        return section === 'entrepreneurship'
-      }
-    )
+    commentsToCount = _.reject(commentsToCount, (comment, section) => {
+      return section === 'entrepreneurship'
+    })
 
   const actualCount = _.keys(commentsToCount).length
 
@@ -39,10 +33,9 @@ export const anyCommentsInvalid = state => {
     (comment, section) => { return comment.word_count < 40 }
   )
 
-  const anyBadWords = _.some(
-    commentsToCount,
-    (comment, section) => { return comment.bad_word_count > 0 }
-  )
+  const anyBadWords = _.some(commentsToCount, (comment, section) => {
+    return comment.bad_word_count > 0
+  })
 
   const anyExcessiveNegativity = _.some(
     commentsToCount,
@@ -76,11 +69,9 @@ export const totalPossible = state => {
 }
 
 export const sectionPointsPossible = (state, getters) => (section) => {
-  let possible = _.reduce(
-    getters.sectionQuestions(section),
-    (acc, q) => { return acc += q.worth },
-    0
-  )
+  let possible = _.reduce(getters.sectionQuestions(section), (acc, q) => {
+    return acc += q.worth
+  }, 0)
 
   if (section === 'technical') possible += 10 // + code checklist
 
