@@ -27,6 +27,10 @@ class NullTeam < NullObject
     false
   end
 
+  def attending_event?(*)
+    false
+  end
+
   def submission
     ::NullTeamSubmission.new
   end

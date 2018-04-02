@@ -46,7 +46,7 @@ class EventsGrid
   end
 
   column :actions, mandatory: true, html: true do |event|
-    link_to "view", "#"
+    link_to "view", admin_event_path(event)
   end
 
   filter :ambassador_name do |value|

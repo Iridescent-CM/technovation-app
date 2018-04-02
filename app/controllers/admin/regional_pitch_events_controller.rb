@@ -1,12 +1,13 @@
 module Admin
   class RegionalPitchEventsController < AdminController
-      include DatagridController
+    include DatagridController
 
-      use_datagrid with: EventsGrid
+    use_datagrid with: EventsGrid
+
+    helper_method :back_from_event_path
 
     def show
-      @regional_pitch_event = RegionalPitchEvent.find(params[:id])
-      render template: 'regional_pitch_events/show'
+      @event = RegionalPitchEvent.find(params[:id])
     end
 
     def edit
@@ -15,8 +16,8 @@ module Admin
 
     def update
       @event = RegionalPitchEvent.find(params[:id])
-      @event.update_attributes(regional_pitch_event_params)
-      redirect_to [:admin, @event], success: "Changes were saved!"
+      @event.update(regional_pitch_event_params)
+      redirect_to admin_event_path(@event), success: "Changes were saved!"
     end
 
     private
@@ -34,6 +35,10 @@ module Admin
       grid.merge(
         column_names: detect_extra_columns(grid),
       )
+    end
+
+    def back_from_event_path
+      admin_events_path
     end
   end
 end

@@ -1,0 +1,106 @@
+<div class="grid grid--justify-center">
+  <div class="grid__col-12">
+    <div class="panel">
+      <h3><%= @event.name %></h3>
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <dl>
+            <dt>Official event?</dt>
+
+            <dd>
+              <%= @event.unofficial? ? "no" : "yes" %>
+
+              <p>
+                <%= link_to "Toggle official",
+                  admin_event_path(
+                    @event,
+                    {
+                      regional_pitch_event: {
+                        unofficial: !@event.unofficial
+                      }
+                    }
+                  ),
+                  data: {
+                    method: :patch,
+                    confirm: "You are about to mark #{@event.name} as " +
+                             "<strong>" +
+                             (@event.unofficial? ? 'OFFICIAL' : 'UNOFFICIAL') +
+                             "</strong>"
+                  },
+                  class: "button small" %>
+              </p>
+            </dd>
+
+            <dt>Divisions</dt>
+
+            <dd><%= @event.division_names %></dd>
+
+            <dt># of Teams</dt>
+            <dd><%= @event.teams.count %></dd>
+
+            <dt># of Judges</dt>
+            <dd><%= @event.judge_list.size %></dd>
+          </dl>
+        </div>
+
+        <div class="grid__col-auto">
+          <dl>
+            <dt>Ambassador:</dt>
+            
+            <dd>
+              <%= link_to @event.ambassador.name,
+                admin_participant_path(@event.ambassador.account) %>
+            </dd>
+
+            <dt>Time:</dt>
+
+            <dd>
+              <%= @event.starts_at
+                .in_time_zone(@event.timezone)
+                .strftime("%A, %B %e") %>
+
+              <br />
+
+              <%= @event.starts_at
+                .in_time_zone(@event.timezone)
+                .strftime("%-I:%M%P") %>
+
+              &ndash;
+
+              <%= @event.ends_at
+                .in_time_zone(@event.timezone)
+                .strftime("%-I:%M%P %Z") %>
+            </dd>
+
+            <dt>Address:</dt>
+
+            <dd>
+              <%= @event.venue_address %>
+              <br />
+              <%= @event.city %>
+            </dd>
+
+            <dt>Eventbrite link:</dt>
+
+            <% if @event.eventbrite_link.blank? %>
+              <dd>
+                <%= link_to "#{@event.name}",
+                  @event.eventbrite_link,
+                  target: :_blank %>
+              </dd>
+            <% else %>
+              <dd>No link provided.</dd>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <%= link_to 'Go back',
+        back_from_event_path,
+        class: "button small" %>
+    </p>
+  </div>
+</div>
