@@ -21,6 +21,11 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
+  scope :by_division, ->(division) {
+    joins(:divisions)
+      .where("divisions.name = ?", Division.names[division])
+  }
+
   belongs_to :ambassador,
     class_name: "RegionalAmbassadorProfile",
     foreign_key: :regional_ambassador_profile_id
@@ -55,6 +60,11 @@ class RegionalPitchEvent < ActiveRecord::Base
     to: :ambassador,
     prefix: false
 
+  delegate :name,
+    to: :ambassador,
+    prefix: true
+
+
   scope :available_to, ->(record) {
     if record.present?
       case record
@@ -68,7 +78,7 @@ class RegionalPitchEvent < ActiveRecord::Base
             )
         else
           current
-            .joins(ambassador: :account)
+            .joins(ambassador:  :account)
             .where("accounts.country = ?", record.country)
         end
       when TeamSubmission
