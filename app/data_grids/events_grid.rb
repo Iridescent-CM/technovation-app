@@ -21,12 +21,16 @@ class EventsGrid
   end
 
   column :official, mandatory: true do
-    !unofficial?
+    unofficial? ? "unofficial" : "official"
   end
 
   column :date
   column :time
-  column :country
+
+  column :country do
+    FriendlyCountry.(self)
+  end
+
   column :city
   column :state_province, header: "State"
 
