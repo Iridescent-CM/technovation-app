@@ -307,11 +307,7 @@
       this.event.fetchJudges({
         onComplete: () => {
           if (!this.event.selectedTeams.length) {
-            this.event.fetchTeams({
-              onComplete: () => {
-                this.fetchingList = false
-              },
-            })
+            this.event.fetchTeams().then(() => { this.fetchingList = false })
           } else {
             this.fetchingList = false;
           }

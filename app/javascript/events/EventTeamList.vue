@@ -307,19 +307,13 @@
         }
       );
 
-      this.event.fetchTeams({
-        onComplete: () => {
-          if (!this.event.selectedJudges.length) {
-            this.event.fetchJudges({
-              onComplete: () => {
-                this.fetchingList = false
-              },
-            })
-          } else {
-            this.fetchingList = false;
-          }
-        },
-      });
+      this.event.fetchTeams().then(() => {
+        if (!this.event.selectedJudges.length) {
+          this.event.fetchJudges().then(() => { this.fetchingList = false })
+        } else {
+          this.fetchingList = false;
+        }
+      })
     },
   };
 </script>

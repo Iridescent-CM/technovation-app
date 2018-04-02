@@ -34,6 +34,9 @@ export default function (event) {
   this.selectedJudges = [];
   this.selectedTeams = [];
 
+  this.isFetchingJudges = false
+  this.isFetchingTeams = false
+
   this.toggleManaging = (prop) => {
     var wasManaging = this[prop];
 
@@ -129,26 +132,40 @@ export default function (event) {
   };
 
   this.fetchTeams = (opts) => {
-    const event = this
-    const url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
+    return new Promise((resolve, reject) => {
+      if (this.isFetchingTeams) resolve()
 
-    getRemoteData({
-      onComplete: opts.onComplete,
-      list: event.selectedTeams,
-      url: url,
-      event: event,
+      this.isFetchingTeams = true
+      const event = this
+      const url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
+
+      getRemoteData({
+        list: event.selectedTeams,
+        url: url,
+        event: event,
+      }).then(() => {
+        this.isFetchingTeams = false
+        resolve()
+      }).catch((err) => { reject(err) })
     })
   }
 
   this.fetchJudges = (opts) => {
-    const event = this
-    const url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
+    return new Promise((resolve, reject) => {
+      if (this.isFetchingJudges) resolve()
 
-    getRemoteData({
-      onComplete: opts.onComplete,
-      list: event.selectedJudges,
-      url: url,
-      event: event,
+      this.isFetchingJudges = true
+      const event = this
+      const url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
+
+      getRemoteData({
+        list: event.selectedJudges,
+        url: url,
+        event: event,
+      }).then(() => {
+        this.isFetchingJudges = false
+        resolve()
+      }).catch((err) => { reject(err) })
     })
   }
 
@@ -181,31 +198,29 @@ export default function (event) {
   }
 
   function getRemoteData (opts) {
-    opts = opts || {};
-    opts.onComplete = opts.onComplete || function () { return false; };
+    return new Promise((resolve, reject) => {
+      opts = opts || {}
 
-    if (opts.list.length) {
-      opts.onComplete();
-      return false;
-    } else {
-      $.ajax({
-        method: "GET",
-        url: opts.url,
+      if (opts.list.length) {
+        resolve()
+      } else {
+        $.ajax({
+          method: "GET",
+          url: opts.url,
 
-        success: (resp) => {
-          _.each(resp, (result) => {
-            opts.event.resultReadyForList(result, opts.list)
-          });
-        },
+          success (resp) {
+            _.each(resp, (result) => {
+              opts.event.resultReadyForList(result, opts.list)
+            });
+          },
 
-        error: (err) => {
-          console.log(err);
-        },
+          error (err) { reject(err) },
 
-        complete: () => {
-          opts.onComplete()
-        },
-      });
-    }
+          complete () {
+            resolve()
+          },
+        });
+      }
+    })
   }
 };
