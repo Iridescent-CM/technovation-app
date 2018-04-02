@@ -46,7 +46,6 @@ class EventsGrid
     )
   end
 
-
   filter :ambassador_name do |value|
     names = value.split(" ")
     first_name = names.first
@@ -67,10 +66,11 @@ class EventsGrid
     by_division(value)
   end
 
-
   filter :official,
-  :enum,
-  select:["official", "unofficial"]
+    :enum,
+    select:["official", "unofficial"] do |value|
+      send(value)
+  end
 
   filter :country,
     :enum,
@@ -87,6 +87,30 @@ class EventsGrid
       clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
       where(clauses.join(' OR '))
     end
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing...",
+    },
+    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+      scope
+        .where({ "accounts.country" => grid.country })
+        .where(
+          StateClauses.for(
+            values: values,
+            countries: grid.country,
+            table_name: "accounts",
+            operator: "OR"
+          )
+        )
+  end
 
   filter :city,
     :enum,
@@ -105,42 +129,18 @@ class EventsGrid
         StateClauses.for(
           values: grid.state_province,
           countries: grid.country,
-          table_name: "teams",
+          table_name: "accounts",
           operator: "OR"
         )
       )
         .where(
           CityClauses.for(
             values: values,
-            table_name: "teams",
-            operator: "OR"
-          )
-        )
-    end
-
-  filter :state_province,
-    :enum,
-    header: "State / Province",
-    select: ->(g) {
-      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
-    },
-    filter_group: "more-specific",
-    multiple: true,
-    data: {
-      placeholder: "Select or start typing...",
-    },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
-      scope
-        .where(country: grid.country)
-        .where(
-          StateClauses.for(
-            values: values,
-            countries: grid.country,
             table_name: "accounts",
             operator: "OR"
           )
         )
-  end
+    end
 
   column_names_filter(
     header: "More columns",
