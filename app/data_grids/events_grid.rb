@@ -12,10 +12,11 @@ class EventsGrid
   end
 
   column :ambassador_name,
-  header: "Ambassador",
-  mandatory: true
+    header: "Ambassador",
+    mandatory: true
 
   column :name, mandatory: true
+
   column :divisions, mandatory: true do
     division_names
   end
@@ -25,6 +26,7 @@ class EventsGrid
   end
 
   column :date
+
   column :time
 
   column :country do
@@ -32,6 +34,7 @@ class EventsGrid
   end
 
   column :city
+
   column :state_province, header: "State"
 
   column :judge_count do
@@ -43,11 +46,7 @@ class EventsGrid
   end
 
   column :actions, mandatory: true, html: true do |event|
-    link_to(
-      "view",
-      #,
-      data: { turbolinks: false }
-    )
+    link_to "view", "#"
   end
 
   filter :ambassador_name do |value|
