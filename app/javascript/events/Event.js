@@ -36,6 +36,8 @@ export default function (event) {
 
   this.isFetchingJudges = false
   this.isFetchingTeams = false
+  this.hasFetchedJudges = false
+  this.hasFetchedTeams = false
 
   this.toggleManaging = (prop) => {
     var wasManaging = this[prop];
@@ -133,7 +135,7 @@ export default function (event) {
 
   this.fetchTeams = (opts) => {
     return new Promise((resolve, reject) => {
-      if (this.isFetchingTeams) resolve()
+      if (this.isFetchingTeams || this.hasFetchedTeams) resolve()
 
       this.isFetchingTeams = true
       const event = this
@@ -145,6 +147,7 @@ export default function (event) {
         event: event,
       }).then(() => {
         this.isFetchingTeams = false
+        this.hasFetchedTeams = true
         resolve()
       }).catch((err) => { reject(err) })
     })
@@ -152,7 +155,7 @@ export default function (event) {
 
   this.fetchJudges = (opts) => {
     return new Promise((resolve, reject) => {
-      if (this.isFetchingJudges) resolve()
+      if (this.isFetchingJudges || this.hasFetchedJudges) resolve()
 
       this.isFetchingJudges = true
       const event = this
@@ -164,6 +167,7 @@ export default function (event) {
         event: event,
       }).then(() => {
         this.isFetchingJudges = false
+        this.hasFetchedJudges = true
         resolve()
       }).catch((err) => { reject(err) })
     })
