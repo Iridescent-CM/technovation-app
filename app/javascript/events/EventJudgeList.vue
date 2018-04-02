@@ -66,7 +66,7 @@
                 </template>
 
                 <ul class="list--reset list--indented font-small">
-                  <li v-for="team in judge.assignedTeams">
+                  <li v-for="team in judge.assignedTeams" :key="team.id">
                     {{ team.name }}
                   </li>
                 </ul>

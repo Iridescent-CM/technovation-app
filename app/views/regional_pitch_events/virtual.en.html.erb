@@ -18,9 +18,9 @@
 <% if current_account.student_profile and current_student %>
   <p class="standalone-buttons">
     <%= link_to 'See how your submission looks to judges',
-      app_path(current_team.submission),
+      student_published_team_submissions_path(current_team.submission),
       target: :_blank,
-      class: "appy-button" %>
+      class: "button" %>
   </p>
 
   <p>
