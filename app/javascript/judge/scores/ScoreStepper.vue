@@ -1,5 +1,5 @@
 <template>
-  <nav class="grid grid--bleed grid--justify-space-between stepper">
+  <nav class="grid grid--bleed grid--justify-space-around stepper">
     <div
       :class="[
         'grid__col-auto',
@@ -24,6 +24,7 @@
         $route.name === section.name ? 'stepper__step--active' : ''
       ]"
       v-for="(section, i) in sections"
+      :key="i"
     >
       <router-link
         :to="{ name: section.name }"

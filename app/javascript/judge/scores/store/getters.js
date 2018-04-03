@@ -20,11 +20,11 @@ export const anyCommentsInvalid = state => {
   let commentsToCount = state.score.comments
 
   if (state.team.division === 'junior')
-    commentsToCount = _.reject(commentsToCount, (comment, section) => {
-      return section === 'entrepreneurship'
-    })
+    commentsToCount = _.filter(commentsToCount,
+      (_, section) => section !== 'entrepreneurship'
+    )
 
-  const actualCount = _.keys(commentsToCount).length
+  const actualCount = Object.keys(commentsToCount).length
 
   const notEnoughComments = actualCount < expectedCount
 
@@ -57,13 +57,21 @@ export const checklistPoints = state => {
 }
 
 export const totalScore = state => {
-  return _.reduce(state.questions, (acc, q) => {
+  const questions = state.team.division === 'junior' ?
+    state.questions.filter(q => q.section !== 'entrepreneurship') :
+    state.questions
+
+  return _.reduce(questions, (acc, q) => {
     return acc += q.score
   }, 0) + state.submission.total_checklist_points
 }
 
 export const totalPossible = state => {
-  return _.reduce(state.questions, (acc, q) => {
+  const questions = state.team.division === 'junior' ?
+    state.questions.filter(q => q.section !== 'entrepreneurship') :
+    state.questions
+
+  return _.reduce(questions, (acc, q) => {
     return acc += q.worth
   }, 0) + 10 // + code checklist
 }

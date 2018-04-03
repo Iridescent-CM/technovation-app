@@ -30,7 +30,8 @@ export const saveComment = (state, sectionName) => {
 
   data.append(
     `submission_score[${sectionName}_comment_word_count]`,
-    state.score.comments[sectionName].word_count
+    wordCount(state.score.comments[sectionName].text)
+
   )
 
   data.append(
@@ -41,18 +42,11 @@ export const saveComment = (state, sectionName) => {
   $.ajax({
     method: "PATCH",
     url: `/judge/scores/${state.score.id}`,
-
     data: data,
     contentType: false,
     processData: false,
-
-    success: resp => {
-      console.log(resp)
-    },
-
-    error: err => {
-      console.error(err)
-    },
+    success: resp => {},
+    error: err => (console.error(err)),
   })
 }
 
@@ -87,4 +81,10 @@ export const setStateFromJSON = (state, json) => {
   state.team = json.team
   state.submission = json.submission
   state.score = json.score
+}
+
+function wordCount (text) {
+  return text.split(' ').filter(word => {
+    return word.split('').filter(char => char.match(/\w/)).length > 2
+  }).length
 }

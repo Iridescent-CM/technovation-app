@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid--bleed grid--justify-space-around">
-    <div class="grid__col-6">
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-6 grid__col--bleed-x">
       <div class="panel">
         <h1>Review your score</h1>
 
@@ -9,7 +9,7 @@
           v-tooltip.top-center="`Make changes to your ${name} score`"
           v-for="name in sectionNames"
           :key="name"
-          class="grid row"
+          class="grid grid--bleed row"
         >
           <div class="grid__col-11">
             <p>
@@ -22,7 +22,7 @@
           </div>
         </router-link>
 
-        <div class="grid row row--bottom">
+        <div class="grid grid--bleed row row--bottom">
           <div class="grid__col-11">
             Final total score
           </div>
@@ -55,11 +55,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapState(['team', 'score', 'submission']),
+
+    ...mapGetters([
+      'anyCommentsInvalid',
+      'anyScoresEmpty',
+      'sectionPointsTotal',
+      'totalScore',
+    ]),
 
     sectionNames () {
       let names = [
@@ -76,13 +83,8 @@ export default {
       return names
     },
 
-    totalScore () {
-      return this.$store.getters.totalScore
-    },
-
     isScoreIncomplete () {
-      return this.$store.getters.anyCommentsInvalid ||
-        this.$store.getters.anyScoresEmpty
+      return this.anyCommentsInvalid || this.anyScoresEmpty
     },
 
     finishScoreTooltip () {
@@ -99,7 +101,7 @@ export default {
 
   methods: {
     totalPoints (sectionName) {
-      return this.$store.getters.sectionPointsTotal(sectionName)
+      return this.sectionPointsTotal(sectionName)
     },
   },
 }
