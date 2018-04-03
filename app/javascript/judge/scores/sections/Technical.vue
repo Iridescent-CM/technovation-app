@@ -13,7 +13,7 @@
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
         <pitch />
-        <code />
+        <tc-code />
       </div>
 
       <code-checklist />
@@ -46,7 +46,7 @@ import TeamInfo from '../TeamInfo'
 
 import Screenshots from '../pieces/Screenshots'
 import Pitch from '../pieces/Pitch'
-import Code from '../pieces/Code'
+import TcCode from '../pieces/Code'
 import CodeChecklist from '../pieces/CodeChecklist'
 
 import QuestionSection from '../QuestionSection'
@@ -61,7 +61,7 @@ export default {
     TeamInfo,
     Screenshots,
     Pitch,
-    Code,
+    TcCode,
     CodeChecklist,
   },
 }

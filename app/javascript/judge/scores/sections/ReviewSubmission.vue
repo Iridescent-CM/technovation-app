@@ -20,7 +20,7 @@
 
       <div class="grid grid--bleed submission-pieces mulberry-row">
         <pitch />
-        <code />
+        <tc-code />
       </div>
 
       <div class="grid grid--bleed submission-pieces white-row">
@@ -75,7 +75,7 @@ import Icon from '../../../components/Icon'
 import TeamInfo from '../TeamInfo'
 import Screenshots from '../pieces/Screenshots'
 import Pitch from '../pieces/Pitch'
-import Code from '../pieces/Code'
+import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
 import CodeChecklist from '../pieces/CodeChecklist'
@@ -101,13 +101,10 @@ export default {
     TeamInfo,
     Screenshots,
     Pitch,
-    Code,
+    TcCode,
     Business,
     Presentation,
     CodeChecklist,
-  },
-
-  methods: {
   },
 }
 </script>
