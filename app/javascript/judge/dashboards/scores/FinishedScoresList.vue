@@ -11,6 +11,7 @@
     <div
       class="grid grid--justify-space-between"
       v-for="score in scores"
+      :key="score.id"
     >
       <div class="grid__col-4 grid__col--bleed-x">
         <small>Submission name</small>
