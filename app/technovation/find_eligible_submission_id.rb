@@ -57,7 +57,8 @@ module FindEligibleSubmissionId
       judge_conflicts = judge.team_region_division_names
 
       official_rpe_team_ids = if SeasonToggles.quarterfinals?
-                                RegionalPitchEvent.official.joins(:teams)
+                                RegionalPitchEvent.current.official
+                                  .joins(:teams)
                                   .pluck(:team_id)
                               else
                                 []

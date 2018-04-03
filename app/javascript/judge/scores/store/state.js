@@ -1,4 +1,6 @@
 export default {
+  problemSections: [],
+
   score: {
     id: null,
     comments: {},

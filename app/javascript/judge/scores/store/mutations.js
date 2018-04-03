@@ -83,6 +83,10 @@ export const setStateFromJSON = (state, json) => {
   state.score = json.score
 }
 
+export const setProblemSections = (state, arr) => {
+  state.problemSections = arr
+}
+
 function wordCount (text) {
   return text.split(' ').filter(word => {
     return word.split('').filter(char => char.match(/\w/)).length > 2

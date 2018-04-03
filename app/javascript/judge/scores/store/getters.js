@@ -102,3 +102,7 @@ export const sectionQuestions = (state) => (section) => {
     return q.section === section
   })
 }
+
+export const problemInSection = (state) => (name) => {
+  return state.problemSections.includes(name)
+}

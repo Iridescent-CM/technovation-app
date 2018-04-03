@@ -13,12 +13,20 @@
         >
           <div class="grid__col-11">
             <p>
+              <icon
+                v-if="problemInSection(name)"
+                :alt="`Problem indicated in ${name}`"
+                :title="`Problem indicated in ${name}`"
+                name="exclamation-triangle"
+                color="903D54"
+                size="18"
+              />
               {{ name | capitalize }}
             </p>
           </div>
 
           <div class="grid__col-1">
-            {{ totalPoints(name) }}
+            {{ sectionPointsTotal(name) }}
           </div>
         </router-link>
 
@@ -57,6 +65,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 
+import Icon from '../../../components/Icon'
+
 export default {
   computed: {
     ...mapState(['team', 'score', 'submission']),
@@ -66,6 +76,7 @@ export default {
       'anyScoresEmpty',
       'sectionPointsTotal',
       'totalScore',
+      'problemInSection'
     ]),
 
     sectionNames () {
@@ -99,10 +110,12 @@ export default {
     },
   },
 
-  methods: {
-    totalPoints (sectionName) {
-      return this.sectionPointsTotal(sectionName)
-    },
+  components: {
+    Icon,
+  },
+
+  mounted () {
+    this.$store.dispatch('validateScore')
   },
 }
 </script>
@@ -137,6 +150,13 @@ export default {
       display: flex;
       justify-content: center;
       flex-direction: column;
+      position: relative;
+
+      img {
+        position: absolute;
+        top: 0.65rem;
+        left: -50px;
+      }
 
       &.grid__col-1 {
         font-size: 2rem;
