@@ -1,7 +1,14 @@
 class AddTeamToRegionalEvent
   def self.call(event, team)
     if event.divisions.include?(team.division)
-      event.teams.push(team)
+      InvalidateExistingJudgeData.(team)
+
+      event.teams << team
+
+      SendPitchEventRSVPNotifications.perform_later(
+        team.id,
+        joining_event_id: event.id
+      )
     else
       raise IncompatibleDivisionError,
         "This team is not in the correct division for this event"
