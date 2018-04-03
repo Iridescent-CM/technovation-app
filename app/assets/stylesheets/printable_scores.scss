@@ -1,5 +1,90 @@
-/* print version styles here,
- * they should work in the HTML view too,
- * as a preview
- * you can erase this comment
- */
+#top-header {
+  width:100%;
+  margin-bottom: .125rem;
+  text-align: right;
+  line-height: .625rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+#section-header {
+  width: 100%;
+  display: inline-block;
+  margin: 1rem 0 0;
+  text-align:left;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: bold;
+}
+
+#misc-header {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+#score-header {
+  margin-top: 3px
+}
+
+#no-border {
+  border: 0;
+}
+
+#online-comment {
+  margin-top: 5px;
+}
+
+#layouttable {
+  border:0rem;
+  width:100%;
+  text-align:center;
+}
+
+#layouttable td.col1 {
+  width:60%;
+  vertical-align:top;
+}
+
+#layouttable td.col2 {
+  width:10%;
+  vertical-align:top;
+}
+
+#layouttable td.col3 {
+  width:50%;
+  vertical-align:top;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+tr:nth-child(7) {
+  background-color: #ddd;font-family: "Source Sans Pro", sans-serif;
+}
+
+.box {
+  background: #fff;
+  border: 1px solid #ddd;
+  display: inline-block;
+  height: 200px;
+  width: 100%;
+}
+
+@media print {
+  td, th {
+    font-size: 9.5pt;
+    padding: 2px;
+    border: 1px solid #ddd;
+  }
+  tr:nth-child(7) {
+      background-color: #ddd;
+  }
+}
