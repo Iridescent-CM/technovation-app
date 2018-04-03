@@ -18,8 +18,18 @@ class SeasonToggles
         store.set(:judging_round, with_judging_round_validation(value))
       end
 
-      def judging_round
-        store.get(:judging_round) || :off
+      def judging_round(opts = {})
+        round = store.get(:judging_round) || :off
+
+        if !!opts[:full_name]
+          case round
+          when 'qf'; 'quarterfinals'
+          when 'sf'; 'semifinals'
+          else;      round
+          end
+        else
+          round
+        end
       end
       alias :current_judging_round :judging_round
 

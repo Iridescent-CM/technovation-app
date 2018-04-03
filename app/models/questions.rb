@@ -275,6 +275,7 @@ class Questions
       team_submission: submission,
       judge_profile: judge,
       seasons: [Season.current.year],
+      round: SeasonToggles.judging_round(full_name: true),
     })
   end
 
