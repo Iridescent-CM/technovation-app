@@ -4,24 +4,33 @@ module Judge
 
     def index
       scope = current_judge.submission_scores
+        .current
         .includes(team_submission: :team)
         .references(:team_submissions)
-        .current_round
         .order("team_submissions.app_name")
 
       render json: {
-        finished: scope.complete.map { |score|
-                    {
-                      id: score.id,
-                      submission_name: score.team_submission.app_name,
-                      team_name: score.team_submission.team_name,
-                      team_division: score.team_submission
-                                          .team_division_name,
-                      total: score.total,
-                      possible: score.total_possible,
-                      url: new_judge_score_path(score_id: score.id),
-                    }
-                  },
+        current_round: SeasonToggles.judging_round,
+
+        finished: {
+          qf: scope.quarterfinals.complete.map { |score|
+            ScoreSerializer.new(score).serialized_json
+          },
+
+          sf: scope.semifinals.complete.map { |score|
+            ScoreSerializer.new(score).serialized_json
+          },
+        },
+
+        incomplete: {
+          qf: scope.quarterfinals.incomplete.map { |score|
+            ScoreSerializer.new(score).serialized_json
+          },
+
+          sf: scope.semifinals.incomplete.map { |score|
+            ScoreSerializer.new(score).serialized_json
+          },
+        },
       }
     end
 

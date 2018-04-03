@@ -5,8 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currentRound: 'qf',
+
     scores: {
-      finished: [],
+      finished: {
+        qf: [],
+        sf: [],
+      },
+
+      incomplete: {
+        qf: [],
+        sf: [],
+      },
     },
 
     submissions: {}
@@ -14,7 +24,15 @@ export default new Vuex.Store({
 
   getters: {
     finishedScores (state) {
-      return state.scores.finished
+      return state.scores.finished[state.currentRound]
+    },
+
+    quarterFinalsScores (state) {
+      return state.scores.incomplete.qf
+    },
+
+    semiFinalsScores (state) {
+      return state.scores.incomplete.sf
     },
 
     assignedSubmissions (state) {
@@ -25,6 +43,7 @@ export default new Vuex.Store({
   mutations: {
     populateScores (state, payload) {
       state.scores = payload
+      state.currentRound = payload.current_round
     },
 
     populateSubmissions (state, payload) {

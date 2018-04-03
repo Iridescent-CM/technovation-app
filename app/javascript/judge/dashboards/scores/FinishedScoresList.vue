@@ -10,7 +10,7 @@
 
     <div
       class="grid grid--justify-space-between"
-      v-for="score in finishedScores"
+      v-for="score in scores"
     >
       <div class="grid__col-4 grid__col--bleed-x">
         <small>Submission name</small>
@@ -24,7 +24,7 @@
 
       <div class="grid__col-2 grid__col--bleed-x">
         <small>Score given</small>
-        {{ score.total }} / {{ score.possible }}
+        {{ score.total }} / {{ score.total_possible }}
       </div>
 
       <div class="grid__col-2 grid__col--bleed-x">
@@ -40,7 +40,18 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: mapGetters(['finishedScores']),
+  computed: {
+    ...mapGetters(['finishedScores']),
+
+    scores () {
+      if (!this.finishedScores || !this.finishedScores.length)
+        return []
+
+      return this.finishedScores.map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
+    },
+  },
 }
 </script>
 
