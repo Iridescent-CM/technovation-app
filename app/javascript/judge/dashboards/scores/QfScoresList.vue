@@ -1,16 +1,12 @@
 <template>
   <div class="margin-top-normal">
     <h6 class="heading--reset">
-      Review & revise finished scores until May 20th
+      Recall your scores from the quarterfinals
     </h6>
-
-    <template v-if="!finishedScores.length">
-      <p>Finish a score and it will appear here for you to review</p>
-    </template>
 
     <div
       class="grid grid--justify-space-between"
-      v-for="score in finishedScores"
+      v-for="score in finishedQuarterfinalsScores"
       :key="score.id"
     >
       <div class="grid__col-4 grid__col--bleed-x">
@@ -27,12 +23,6 @@
         <small>Score given</small>
         {{ score.total }} / {{ score.total_possible }}
       </div>
-
-      <div class="grid__col-2 grid__col--bleed-x">
-        <a :href="score.url" class="button button--remove-bg">
-          Review
-        </a>
-      </div>
     </div>
   </div>
 </template>
@@ -41,7 +31,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: mapGetters(['finishedScores']),
+  computed: mapGetters(['finishedQuarterfinalsScores']),
 }
 </script>
 

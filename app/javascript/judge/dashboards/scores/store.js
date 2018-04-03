@@ -24,15 +24,27 @@ export default new Vuex.Store({
 
   getters: {
     finishedScores (state) {
-      return state.scores.finished[state.currentRound]
+      return state.scores.finished[state.currentRound].map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
     },
 
     quarterFinalsScores (state) {
-      return state.scores.incomplete.qf
+      return state.scores.incomplete.qf.map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
+    },
+
+    finishedQuarterfinalsScores (state) {
+      return state.scores.finished.qf.map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
     },
 
     semiFinalsScores (state) {
-      return state.scores.incomplete.sf
+      return state.scores.incomplete.sf.map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
     },
 
     assignedSubmissions (state) {

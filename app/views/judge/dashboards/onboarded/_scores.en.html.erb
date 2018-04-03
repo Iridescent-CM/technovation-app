@@ -49,24 +49,9 @@
         <h5 class="heading--reset">Manage your scores</h5>
 
         <% if current_judge.live_event? %>
-          <nav id="judge-dashboard-scores-nav">
-            <router-link
-              :to="{ name: 'assigned-submissions' }"
-              :class="
-                $route.name === 'assigned-submissions' ? 'active' : ''
-              "
-            >
-              Assigned submissions
-            </router-link>
-
-            <router-link
-              :to="{ name: 'finished-scores' }"
-              :class="$route.name === 'finished-scores' ? 'active' : ''"
-            >
-              Finished scores
-            </router-link>
-          </nav>
+          <live-event-nav></live-event-nav>
         <% else %>
+          <virtual-nav></virtual-nav>
           <div ref="disableAssigned" />
         <% end %>
 

@@ -3,6 +3,9 @@ import Vue from 'vue/dist/vue.esm'
 import store from './scores/store'
 import { router } from './scores/routes'
 
+import LiveEventNav from './scores/LiveEventNav'
+import VirtualNav from './scores/VirtualNav'
+
 document.addEventListener('turbolinks:load', () => {
   const dashEl = document.querySelector('#judge-dashboard-scores-app')
 
@@ -11,6 +14,11 @@ document.addEventListener('turbolinks:load', () => {
       el: dashEl,
       router,
       store,
+
+      components: {
+        LiveEventNav,
+        VirtualNav,
+      },
 
       mounted () {
         $.get("/judge/scores.json", null, resp => {
