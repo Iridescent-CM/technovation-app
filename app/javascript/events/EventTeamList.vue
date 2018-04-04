@@ -69,7 +69,10 @@
                 </a>
 
                 <ul class="list--reset list--indented font-small">
-                  <li v-for="judge in team.assignedJudges">
+                  <li
+                    v-for="judge in team.assignedJudges"
+                    :key="judge.id"
+                  >
                     {{ judge.name }}
                   </li>
                 </ul>
