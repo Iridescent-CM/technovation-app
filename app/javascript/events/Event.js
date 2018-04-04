@@ -215,7 +215,8 @@ export default function (event) {
           success (resp) {
             _.each(resp, (result) => {
               opts.event.resultReadyForList(result, opts.list)
-            });
+            })
+            resolve(resp)
           },
 
           error (err) { reject(err) },

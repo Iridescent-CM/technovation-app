@@ -304,15 +304,13 @@
         }
       );
 
-      this.event.fetchJudges({
-        onComplete: () => {
-          if (!this.event.selectedTeams.length) {
-            this.event.fetchTeams().then(() => { this.fetchingList = false })
-          } else {
-            this.fetchingList = false;
-          }
-        },
-      });
+      this.event.fetchJudges().then(() => {
+        if (!this.event.selectedTeams.length) {
+          this.event.fetchTeams().then(() => this.fetchingList = false)
+        } else {
+          this.fetchingList = false
+        }
+      })
     },
   };
 </script>
