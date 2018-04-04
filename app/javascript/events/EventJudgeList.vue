@@ -7,14 +7,22 @@
       </h6>
     </div>
 
+    <div
+      v-if="fetchingList"
+      class="grid__col-12 grid--justify-center grid__col--bleed-y"
+    >
+      <icon name="spinner" className="spin" />
+      Initating judge management...
+    </div>
+
     <judge-search
-       v-if="!fetchingList"
+       v-else
        :event-bus-id="`event-${event.id}`"
        :event-id="event.id"
     ></judge-search>
 
     <div
-      v-if="event.selectedJudges.length"
+      v-if="!fetchingList && event.selectedJudges.length"
       class="grid__col-12 grid__col--bleed-y"
     >
       <table class="attendee-list">
