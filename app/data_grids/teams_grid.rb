@@ -23,6 +23,14 @@ class TeamsGrid
     has_students? ? "yes" : "no"
   end
 
+  column :student_emails do
+    students.collect(&:email).join(",")
+  end
+
+  column :mentor_emails do
+    mentors.collect(&:email).join(",")
+  end
+
   column :city
 
   column :state_province, header: "State"
