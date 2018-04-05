@@ -13,7 +13,12 @@ module ProfileController
   end
 
   def update
-    if ProfileUpdating.execute(profile, permitted_params)
+    if !!params[:setting_location] &&
+         permitted_params[:account_attributes][:country].blank? &&
+           permitted_params[:account_attributes][:latitude].blank?
+      profile.account.errors.add(:country, :blank)
+      render "location_details/show"
+    elsif ProfileUpdating.execute(profile, permitted_params)
       respond_to do |format|
         format.json {
           render json: {

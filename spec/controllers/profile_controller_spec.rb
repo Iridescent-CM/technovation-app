@@ -60,6 +60,33 @@ require "rails_helper"
         .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
     end
 
+    it "errors out when #{scope} country is blank" do
+      profile.account.update(
+        city: nil,
+        state_province: nil,
+        country: nil,
+        location_confirmed: false,
+        latitude: nil,
+        longitude: nil,
+      )
+
+      patch :update, params: {
+        setting_location: "1",
+
+        "#{scope}_profile" => {
+          account_attributes: {
+            id: profile.account_id,
+            city: "Los Angeles",
+            state_province: "CA",
+          },
+        },
+      }
+
+      expect(profile.reload.latitude).to be_blank
+      expect(profile.reload.longitude).to be_blank
+      expect(response).to render_template("location_details/show")
+    end
+
     it "geocodes when #{scope} address info changes" do
       # Sanity check
       expect(profile.latitude).to eq(41.50196838)
@@ -86,6 +113,7 @@ require "rails_helper"
           id: profile.account_id,
           city: "Los Angeles",
           state_province: "CA",
+          country: "US",
         }
       )
 

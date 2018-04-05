@@ -1,9 +1,11 @@
 <%= simple_form_for current_profile,
   url: [current_scope, :profile],
+  local: true,
   html: {
     class: "geocoding"
   } do |f| %>
   <%= hidden_field_tag :return_to, params[:return_to] %>
+  <%= hidden_field_tag :setting_location, 1 %>
 
   <div class="while-geocoding">
     <%= web_icon "spinner2", class: "spin" %>
