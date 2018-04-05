@@ -1,13 +1,20 @@
 <template>
-  <div class="submission-pieces__screenshots">
+  <div
+    id="screenshots-nav"
+    class="submission-pieces__screenshots"
+    :data-modal-last="submission.screenshots.length - 1"
+  >
+
     <div
-      v-for="screenshot in submission.screenshots"
+      v-for="(screenshot, i) in submission.screenshots"
+      :key="screenshot.id"
       class="submission-pieces__screenshot"
     >
       <img
         class="img-modal"
         :src="screenshot.thumb"
         :data-modal-url="screenshot.full"
+        :data-modal-idx="i"
       />
     </div>
   </div>

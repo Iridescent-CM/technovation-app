@@ -78,8 +78,45 @@ $(document).on("ready turbolinks:load", function() {
 });
 
 $(document).on("click", ".img-modal", function(e) {
+  let html, animation
+
+  if (typeof $(e.target).data("modalIdx") !== 'undefined') {
+    const last = parseInt($("#screenshots-nav").data("modalLast"))
+    const idx = parseInt($(e.target).data("modalIdx"))
+    const nextIdx = idx + 1 > last ? 0 : idx + 1
+    const prevIdx = idx - 1 < 0 ? last : idx - 1
+
+    html = "<div class='grid grid--bleed grid--justify-space-between screenshot-nav'>"
+
+    html += "<div class='" +
+            "screenshot-nav__item grid__col-auto grid--justify-center" +
+            "' data-go-to='" + prevIdx + "'>"
+    html += "<img src='https://icongr.am/fontawesome/angle-left.svg' />"
+    html += "</div>"
+
+    html += "<div class='grid__col-auto grid--justify-center'>"
+    html += "<img class='screenshot__img' " +
+            "src='" + $(e.target).data("modalUrl") + "' />"
+    html += "</div>"
+
+    html += "<div class='" +
+            "screenshot-nav__item grid__col-auto grid--justify-center" +
+            "' data-go-to='" + nextIdx + "'>"
+    html += "<img src='https://icongr.am/fontawesome/angle-right.svg' />"
+    html += "</div>"
+
+    html += "</div>"
+    animation = false
+  } else {
+    html = "<img src='" + $(e.target).data("modalUrl") + "' />"
+    animation = true
+  }
+
   swal({
-    imageUrl: $(e.target).data("modalUrl"),
+    html: html,
+    confirmButtonText: "Done",
+    animation: animation,
+    customClass: 'user-select--none',
   });
 });
 

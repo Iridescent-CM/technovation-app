@@ -42,3 +42,13 @@
 .thumbnail-process-pic {
   float: none;
 }
+
+.screenshot-nav__item {
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
