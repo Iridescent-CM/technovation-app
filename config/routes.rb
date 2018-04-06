@@ -285,6 +285,7 @@ Rails.application.routes.draw do
 
   resource :locale_switch, only: :create
 
+  resources :countries, only: :index
   resources :geolocation_results, only: :index
 
   get 'login', to: 'signins#new', as: :login
