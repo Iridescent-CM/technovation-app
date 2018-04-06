@@ -90,6 +90,18 @@ class Account < ActiveRecord::Base
     where(sql += "OR accounts.email ILIKE '#{sanitized}%'")
   }
 
+  scope :completed_training, -> () {
+    includes(:judge_profile)
+      .references(:judge_profiles)
+      .where.not("judge_profiles.completed_training_at" => nil)
+  }
+
+  scope :incomplete_training, -> () {
+    includes(:judge_profile)
+      .references(:judge_profiles)
+      .where("judge_profiles.completed_training_at" => nil)
+  }
+
   scope :live_event_eligible, ->(event) {
     includes(:judge_profile)
       .references(:judge_profiles)

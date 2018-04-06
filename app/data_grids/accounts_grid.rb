@@ -117,6 +117,14 @@ class AccountsGrid
     end
   end
 
+  column :completed_training do
+    if judge_profile.present?
+      judge_profile.training_completed? ? "yes" : "no"
+    else
+      "-"
+    end
+  end
+
   column :age, order: "accounts.date_of_birth desc"
   column :city
   column :state_province, header: "State"
@@ -230,6 +238,20 @@ class AccountsGrid
           (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
     } do |value|
       send(value)
+    end
+
+  filter :completed_training,
+    :enum,
+    header: "Completed training (judges only)",
+    select: [
+      ['Completed', 'completed_training'],
+      ['Not completed', 'incomplete_training'],
+    ],
+    filter_group: "common",
+    if: ->(g) {
+      (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value, scope, grid|
+      scope.send(value)
     end
 
   filter :name_email,
