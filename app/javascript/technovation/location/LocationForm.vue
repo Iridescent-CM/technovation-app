@@ -1,15 +1,35 @@
 <template>
   <form @submit.prevent="handleSubmit" v-if="showForm">
-    <ol class="candidates-list" v-if="candidates.length > 1">
-      <li
-        v-for="(candidate, i) in candidates"
-        :key="i"
-      >
-        <div class="city">{{ candidate.city }}</div>
-        <div class="state">{{ candidate.state }}</div>
-        <div class="country">{{ candidate.country }}</div>
-      </li>
-    </ol>
+    <template v-if="candidates.length">
+
+      <p>We found more than one possible result, please choose the best option.</p>
+
+      <ol class="candidates-list">
+        <li
+          v-for="(candidate, i) in candidates"
+          :key="i"
+          @click="selectCandidate(candidate)"
+        >
+          <div
+            class="checked"
+            v-show="candidate.selected"
+          >
+            <icon name="check-circle" color="228b22" />
+          </div>
+
+          <div
+            class="unchecked"
+            v-show="!candidate.selected"
+          >
+            <icon name="check-circle-o" />
+          </div>
+
+          <div class="city">{{ candidate.city }}</div>
+          <div class="state">{{ candidate.state }}</div>
+          <div class="country">{{ candidate.country }}</div>
+        </li>
+      </ol>
+    </template>
 
     <div :class="['field', errors.city.length ? 'field_with_errors' : '']">
       <label for="city">City</label>
@@ -146,13 +166,41 @@ export default {
   },
 
   methods: {
+    selectCandidate (candidate) {
+      this.candidates.forEach(c => c.selected = false)
+      this.city = candidate.city
+      this.state = candidate.state
+      this.country = candidate.country
+      candidate.selected = true
+    },
+
     handleSubmit () {
       if (!this.city.length)    this.errors.city = 'cannot be blank'
       if (!this.state.length)   this.errors.state = 'cannot be blank'
       if (!this.country.length) this.errors.country = 'cannot be blank'
 
-      if (!Object.keys(this.errors).length) {
+      const errorVals = Object.values(this.errors)
 
+      if (!errorVals.some(v => v.length)) {
+        let data = new FormData()
+
+        data.append('account[city]', this.city)
+        data.append('account[state_province]', this.state)
+        data.append('account[country]', this.country)
+
+        $.ajax({
+          method: "PATCH",
+          url: "/account_locations",
+          data: data,
+          contentType: false,
+          processData: false,
+        }).then(resp => {
+          if (resp.candidates) {
+            debugger
+          } else {
+            this.$router.push(this.$route.query.return_to || '/')
+          }
+        })
       } else {
         console.error(this.errors)
       }
@@ -163,13 +211,13 @@ export default {
       const lng = pos.coords.longitude
 
       $.getJSON(`/geolocation_results?lat=${lat}&lng=${lng}`, resp => {
-        if (resp.length == 1) {
-          this.city = resp[0].city
-          this.state = resp[0].state
-          this.country = resp[0].country
-        } else if (resp.length) {
+        // if (resp.length == 1) {
+        //   this.city = resp[0].city
+        //   this.state = resp[0].state
+        //   this.country = resp[0].country
+        // } else if (resp.length) {
           this.candidates = resp
-        }
+        // }
 
         this.showForm = true
       })
@@ -232,14 +280,21 @@ export default {
 
   mounted () {
     this.$store.dispatch('initApp').then(() => {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          this.handleCoordinates,
-          this.handleError
-        )
-      } else {
-        this.showForm = true
-      }
+      this.candidates = [
+        { selected: false, city: "Zapopan", state: "Jal.", country: "MX" },
+        { selected: false, city: "Monterrey", state: "N.L.", country: "MX" },
+        { selected: false, city: "Los Angeles", state: "CA", country: "US" },
+      ]
+      this.showForm = true
+
+      // if ("geolocation" in navigator) {
+      //   navigator.geolocation.getCurrentPosition(
+      //     this.handleCoordinates,
+      //     this.handleError
+      //   )
+      // } else {
+      //   this.showForm = true
+      // }
     })
   }
 }
@@ -285,7 +340,18 @@ export default {
 
   li {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: #ACCEF7;
+    }
   }
+}
+
+.unchecked {
+  opacity: 0.4;
 }
 </style>
