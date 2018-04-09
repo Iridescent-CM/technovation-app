@@ -39,8 +39,6 @@ RSpec.feature "Register as a mentor" do
     expect(MentorProfile.last.address_details).to eq(
       "Chicago, IL, United States"
     )
-    expect(MentorProfile.last.account).to be_location_confirmed
-
     expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
       .with(
         MentorProfile.last.account_id,

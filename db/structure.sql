@@ -112,7 +112,6 @@ CREATE TABLE public.accounts (
     last_login_ip character varying,
     locale character varying DEFAULT 'en'::character varying NOT NULL,
     timezone character varying,
-    location_confirmed boolean,
     browser_name character varying,
     browser_version character varying,
     os_name character varying,
@@ -174,7 +173,6 @@ CREATE TABLE public.activities (
 --
 
 CREATE SEQUENCE public.activities_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1285,7 +1283,6 @@ CREATE TABLE public.submission_scores (
     id integer NOT NULL,
     team_submission_id integer,
     judge_profile_id integer,
-    sdg_alignment integer DEFAULT 0,
     evidence_of_problem integer DEFAULT 0,
     problem_addressed integer DEFAULT 0,
     app_functional integer DEFAULT 0,
@@ -1315,6 +1312,7 @@ CREATE TABLE public.submission_scores (
     deleted_at timestamp without time zone,
     round integer DEFAULT 0 NOT NULL,
     official boolean DEFAULT true,
+    sdg_alignment integer DEFAULT 0,
     seasons text[] DEFAULT '{}'::text[],
     ideation_comment_positivity numeric(4,3) DEFAULT 0,
     ideation_comment_negativity numeric(4,3) DEFAULT 0,
@@ -1435,12 +1433,12 @@ CREATE TABLE public.team_submissions (
     pending_semifinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     pending_quarterfinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     deleted_at timestamp without time zone,
-    percent_complete integer DEFAULT 0 NOT NULL,
     seasons text[] DEFAULT '{}'::text[],
     app_inventor_app_name character varying,
     app_inventor_gmail character varying,
     published_at timestamp without time zone,
     business_plan character varying,
+    percent_complete integer DEFAULT 0 NOT NULL,
     pitch_presentation character varying
 );
 
@@ -2916,6 +2914,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171018170002'),
 ('20171018184701'),
 ('20171019162859'),
+('20171019230759'),
 ('20171019230800'),
 ('20171020085320'),
 ('20171020135709'),
@@ -2930,6 +2929,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171107225231'),
 ('20171107233018'),
 ('20171108140911'),
+('20171110224550'),
 ('20171113170115'),
 ('20171113170150'),
 ('20171113215850'),
@@ -2957,6 +2957,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180129165533'),
 ('20180129165702'),
 ('20180202143954'),
+('20180202145104'),
 ('20180202145820'),
 ('20180206152207'),
 ('20180206184914'),
@@ -2969,7 +2970,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180301140524'),
 ('20180313204753'),
 ('20180314144804'),
+('20180316182251'),
 ('20180322201531'),
-('20180328171732');
+('20180328171732'),
+('20180409220653');
 
 

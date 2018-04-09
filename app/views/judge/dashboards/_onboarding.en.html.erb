@@ -7,7 +7,7 @@
 <h1 class="heading--reset">Judge profile required steps</h1>
 
 <ul class="list--reset list-items--margin-sm">
-  <% if current_judge.location_confirmed? %>
+  <% if not current_judge.latitude.blank? %>
     <li>
       <%= web_icon(
         "check-circle",

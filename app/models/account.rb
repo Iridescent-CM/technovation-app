@@ -122,7 +122,6 @@ class Account < ActiveRecord::Base
       city: nil,
       state_province: nil,
       country: nil,
-      location_confirmed: false,
       latitude: nil,
       longitude: nil,
     )

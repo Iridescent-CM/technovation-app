@@ -1,4 +1,4 @@
-<% if not profile.location_confirmed? %>
+<% if profile.latitude.blank? %>
   <li>
     <div class="flags">
       <span class="flag flag-registration">
@@ -30,7 +30,7 @@
         class: "button" %>
     </div>
   </li>
-<% elsif not profile.location_confirmed? %>
+<% elsif not profile.latitude.blank? %>
   <%= content_tag :div,
     class: "modal",
     data: {

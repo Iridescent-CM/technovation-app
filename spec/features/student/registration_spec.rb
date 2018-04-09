@@ -34,7 +34,6 @@ RSpec.feature "Register as a student" do
     expect(StudentProfile.last.address_details).to eq(
       "Chicago, IL, United States"
     )
-    expect(StudentProfile.last.account).to be_location_confirmed
   end
 
   scenario "signup attempt attached" do
