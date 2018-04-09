@@ -25,7 +25,6 @@ RSpec.feature "Student creates a team" do
       city: nil,
       state_province: nil,
       country: nil,
-      location_confirmed: false,
       not_onboarded: true,
     )
 
@@ -49,7 +48,6 @@ RSpec.feature "Student creates a team" do
     expect(student.reload.city).to eq("Chicago")
 
     expect(student.latitude).to eq(team.latitude)
-    expect(student.account).to be_location_confirmed
   end
 
   scenario "Re-using a past team name" do

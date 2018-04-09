@@ -19,7 +19,6 @@ class JudgeProfile < ActiveRecord::Base
 
   scope :onboarded, -> {
     joins(account: :consent_waiver)
-      .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
@@ -174,9 +173,8 @@ class JudgeProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? and
       consent_signed? and
-        location_confirmed? and
-          training_completed? and
-              survey_completed?
+        training_completed? and
+            survey_completed?
   end
 
   def onboarding?

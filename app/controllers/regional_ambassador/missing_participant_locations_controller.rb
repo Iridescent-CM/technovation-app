@@ -35,8 +35,6 @@ module RegionalAmbassador
         end
 
         tapped[:country] = current_ambassador.country
-
-        tapped[:location_confirmed] = true
       end
     end
   end

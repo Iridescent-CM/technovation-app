@@ -42,10 +42,6 @@ class Geocoding
               longitude_changed?
         reverse_geocode
       end
-
-      if respond_to?(:location_confirmed)
-        self.location_confirmed = (not city.blank? and not country.blank?)
-      end
     end
   end
 end
