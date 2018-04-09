@@ -3,7 +3,6 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
 
   scope :onboarded, -> {
     approved.joins(:account)
-      .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
@@ -110,8 +109,7 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? and
       approved? and
-        location_confirmed? and
-          background_check_complete?
+        background_check_complete?
   end
 
   def onboarding?

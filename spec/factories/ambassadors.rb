@@ -78,7 +78,6 @@ FactoryBot.define do
       after(:create) do |m|
         m.approved!
         a = m.account
-        a.location_confirmed = true
         a.save!
       end
     end

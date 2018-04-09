@@ -18,8 +18,8 @@ class MentorProfile < ActiveRecord::Base
     .references(:accounts, :background_checks)
     .where(
       "(accounts.country = ?
-        AND background_checks.status = ?
-          AND accounts.location_confirmed = ?) OR accounts.country != ?",
+        AND background_checks.status = ?)
+          OR accounts.country != ?",
       "US", BackgroundCheck.statuses[:clear], true, "US"
     )
     .where("accounts.email_confirmed_at IS NOT NULL")
@@ -300,6 +300,6 @@ class MentorProfile < ActiveRecord::Base
 
   private
   def can_enable_searchable?
-    onboarded? and location_confirmed?
+    onboarded?
   end
 end

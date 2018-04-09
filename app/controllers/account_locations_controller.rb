@@ -24,7 +24,6 @@ class AccountLocationsController < ApplicationController
         country: results[0].country,
         latitude: results[0].lat,
         longitude: results[0].lng,
-        location_confirmed: true,
       )
         render json: {}, status: 200
       else

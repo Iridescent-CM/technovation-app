@@ -83,7 +83,6 @@ module Admin
         :profile_image,
         :profile_image_cache,
         :password,
-        :location_confirmed,
         "#{@account.scope_name.sub(/^\w+_r/, "r")}_profile_attributes" =>
           "#{@account.scope_name.sub(/^\w+_r/, "r")}/profiles_controller"
             .camelize

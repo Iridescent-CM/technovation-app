@@ -23,7 +23,6 @@ class StudentProfile < ActiveRecord::Base
   scope :onboarded, -> {
     joins(:account, :parental_consent)
       .where("parental_consents.status = ?", ParentalConsent.statuses[:signed])
-      .where("accounts.location_confirmed = ?", true)
       .where("accounts.email_confirmed_at IS NOT NULL")
   }
 
@@ -31,12 +30,9 @@ class StudentProfile < ActiveRecord::Base
     left_outer_joins(:account, :parental_consent)
       .where(
         "parental_consents.id IS NULL OR
-           parental_consents.status = ? OR
-             accounts.location_confirmed = ? OR
-               accounts.location_confirmed IS NULL OR
-                 accounts.email_confirmed_at IS NULL",
-        ParentalConsent.statuses[:pending],
-        false
+           accounts.email_confirmed_at IS NULL OR
+             parental_consents.status = ?",
+        ParentalConsent.statuses[:pending]
       )
   }
 
@@ -288,16 +284,14 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def onboarded?
-    account.email_confirmed? and
-      parental_consent_signed? and
-        location_confirmed?
+    account.email_confirmed? and parental_consent_signed?
   end
 
   def actions_needed
     actions = []
     actions << "Confirm their new email address" unless account.email_confirmed?
     actions << "Get their parent or guardian's permission to compete" unless parental_consent_signed?
-    actions << "Enter their location details" unless location_confirmed?
+    actions << "Enter their location details" if latitude.blank?
     actions
   end
 
