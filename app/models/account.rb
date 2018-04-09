@@ -117,6 +117,17 @@ class Account < ActiveRecord::Base
     :first_name
   end
 
+  def reset_location!
+    update(
+      city: nil,
+      state_province: nil,
+      country: nil,
+      location_confirmed: false,
+      latitude: nil,
+      longitude: nil,
+    )
+  end
+
   def ambassador_route_key
     :participant
   end
