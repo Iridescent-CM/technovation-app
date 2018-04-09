@@ -2,13 +2,15 @@
   <form @submit.prevent="handleSubmit" v-if="showForm">
     <template v-if="candidates.length">
 
-      <p>We found more than one possible result, please choose the best option.</p>
+      <p class="scent--strong">
+        We found more than one possible result, please choose the best option.
+      </p>
 
       <ol class="candidates-list">
         <li
           v-for="(candidate, i) in candidates"
           :key="i"
-          @click="selectCandidate(candidate)"
+          @click="electCandidate(candidate)"
         >
           <div
             class="checked"
@@ -57,14 +59,14 @@
       id="autocomplete-field"
       :class="['field', errors.country.length ? 'field_with_errors' : '']"
     >
-      <label for="country">Country</label>
+      <label for="country">Region</label>
       <input
         id="country"
         type="text"
         v-model="country"
         :autocomplete="disableBrowserSpecificAutofill"
         autocorrect="off"
-        placeholder="Start typing to find your country"
+        placeholder="Start typing to find your region"
         @focus="initCountryList"
         @input="initCountryList"
         @blur="showCountryList = false"
@@ -132,6 +134,20 @@ export default {
     }
   },
 
+  watch: {
+    city () {
+      if (this.city.length) this.errors.city = ''
+    },
+
+    state () {
+      if (this.state.length) this.errors.state = ''
+    },
+
+    country () {
+      if (this.country.length) this.errors.country = ''
+    },
+  },
+
   computed: {
     ...mapState(['appIsReady', 'countries']),
 
@@ -196,9 +212,14 @@ export default {
           processData: false,
         }).then(resp => {
           if (resp.candidates) {
-            debugger
+            this.candidates = resp.candidates
           } else {
-            this.$router.push(this.$route.query.return_to || '/')
+            const returnTo = new URLSearchParams(window.location.search).get('return_to')
+            if (returnTo.length) {
+              window.location.href = returnTo
+            } else {
+              window.location.href = "/"
+            }
           }
         })
       } else {
@@ -211,13 +232,13 @@ export default {
       const lng = pos.coords.longitude
 
       $.getJSON(`/geolocation_results?lat=${lat}&lng=${lng}`, resp => {
-        // if (resp.length == 1) {
-        //   this.city = resp[0].city
-        //   this.state = resp[0].state
-        //   this.country = resp[0].country
-        // } else if (resp.length) {
+        if (resp.length == 1) {
+          this.city = resp[0].city
+          this.state = resp[0].state
+          this.country = resp[0].country
+        } else if (resp.length) {
           this.candidates = resp
-        // }
+        }
 
         this.showForm = true
       })
@@ -280,21 +301,14 @@ export default {
 
   mounted () {
     this.$store.dispatch('initApp').then(() => {
-      this.candidates = [
-        { selected: false, city: "Zapopan", state: "Jal.", country: "MX" },
-        { selected: false, city: "Monterrey", state: "N.L.", country: "MX" },
-        { selected: false, city: "Los Angeles", state: "CA", country: "US" },
-      ]
-      this.showForm = true
-
-      // if ("geolocation" in navigator) {
-      //   navigator.geolocation.getCurrentPosition(
-      //     this.handleCoordinates,
-      //     this.handleError
-      //   )
-      // } else {
-      //   this.showForm = true
-      // }
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          this.handleCoordinates,
+          this.handleError
+        )
+      } else {
+        this.showForm = true
+      }
     })
   }
 }

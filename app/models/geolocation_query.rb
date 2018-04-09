@@ -9,11 +9,11 @@ class GeolocationQuery
     @country = country
   end
 
-  def to_geocodable
+  def to_reverse_geocodable
     [lat, lng].join(",")
   end
 
-  def to_reverse_geocodable
+  def to_geocodable
     [city, state, country].join(",")
   end
 end
