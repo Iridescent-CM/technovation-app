@@ -24,13 +24,16 @@ RSpec.feature "Register as a mentor" do
   end
 
   scenario "saves location details" do
+    skip "Vue / clickable button not scrolling to / selenium"
     allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 
     click_link "Update your location"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
-    select "United States", from: "Region"
+    fill_in "Region", with: "United States"
+
+    scroll_to(page.find("button", visible: false, text: "Save"))
     click_button "Save"
 
     expect(MentorProfile.last.address_details).to eq(
