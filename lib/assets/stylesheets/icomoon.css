@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icomoon--icon-"], [class*=" icomoon--icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -25,124 +25,124 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.web-icon-text {
+.icomoon--web-icon-text {
   display: inline-block;
   padding: 0 0 0 0.3rem;
   margin: 0;
 }
 
-.navigation .web-icon-text {
+.navigation .icomoon--web-icon-text {
   padding: 0;
 }
 
-.icon-file-powerpoint-o:before {
+.icomoon--icon-file-powerpoint-o:before {
   content: "\f1c4";
 }
-.icon-file-text-o:before {
+.icomoon--icon-file-text-o:before {
   content: "\f0f6";
 }
-.icon-check-square-o:before {
+.icomoon--icon-check-square-o:before {
   content: "\f046";
 }
-.icon-code-fork:before {
+.icomoon--icon-code-fork:before {
   content: "\f126";
 }
-.icon-file-code-o:before {
+.icomoon--icon-file-code-o:before {
   content: "\f1c9";
 }
-.icon-globe:before {
+.icomoon--icon-globe:before {
   content: "\f0ac";
 }
-.icon-flag-o:before {
+.icomoon--icon-flag-o:before {
   content: "\f11d";
 }
-.icon-twitter-square:before {
+.icomoon--icon-twitter-square:before {
   content: "\f081";
 }
-.icon-linkedin-square:before {
+.icomoon--icon-linkedin-square:before {
   content: "\f08c";
 }
-.icon-instagram:before {
+.icomoon--icon-instagram:before {
   content: "\f16d";
 }
-.icon-facebook-square:before {
+.icomoon--icon-facebook-square:before {
   content: "\f082";
 }
-.icon-close:before {
+.icomoon--icon-close:before {
   content: "\f00d";
 }
-.icon-remove:before {
+.icomoon--icon-remove:before {
   content: "\f00d";
 }
-.icon-times:before {
+.icomoon--icon-times:before {
   content: "\f00d";
 }
-.icon-lock:before {
+.icomoon--icon-lock:before {
   content: "\f023";
 }
-.icon-youtube:before {
+.icomoon--icon-youtube:before {
   content: "\f167";
 }
-.icon-spinner2:before {
+.icomoon--icon-spinner2:before {
   content: "\e97b";
 }
-.icon-check-circle:before {
+.icomoon--icon-check-circle:before {
   content: "\f058";
 }
-.icon-circle-o:before {
+.icomoon--icon-circle-o:before {
   content: "\f10c";
 }
-.icon-navicon:before {
+.icomoon--icon-navicon:before {
   content: "\f0c9";
 }
-.icon-sort-desc:before {
+.icomoon--icon-sort-desc:before {
   content: "\f0dd";
 }
-.icon-sort-down:before {
+.icomoon--icon-sort-down:before {
   content: "\f0dd";
 }
-.icon-sort-asc:before {
+.icomoon--icon-sort-asc:before {
   content: "\f0de";
 }
-.icon-sort-up:before {
+.icomoon--icon-sort-up:before {
   content: "\f0de";
 }
-.icon-reorder:before {
+.icomoon--icon-reorder:before {
   content: "\f0c9";
 }
-.icon-display:before {
+.icomoon--icon-display:before {
   content: "\e956";
 }
-.icon-exclamation-circle:before {
+.icomoon--icon-exclamation-circle:before {
   content: "\f06a";
 }
-.icon-whatsapp:before {
+.icomoon--icon-whatsapp:before {
   content: "\f232";
 }
-.icon-earth:before {
+.icomoon--icon-earth:before {
   content: "\e9ca";
 }
-.icon-envelope-o:before {
+.icomoon--icon-envelope-o:before {
   content: "\f003";
 }
-.icon-trash-o:before {
+.icomoon--icon-trash-o:before {
   content: "\f014";
 }
-.icon-play-circle-o:before {
+.icomoon--icon-play-circle-o:before {
   content: "\f01d";
 }
 
-.icon-green,
-.icon--green {
+.icomoon--icon-green,
+.icomoon--icon--green {
   color: $shamrock-mid;
 }
 
-.icon-red,
-.icon--red {
+.icomoon--icon-red,
+.icomoon--icon--red {
   font-weight: bold;
   color: $alert-txt;
 }
 
-.icon--orange {
+.icomoon--icon--orange {
   color: $orange;
 }

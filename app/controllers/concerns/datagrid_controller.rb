@@ -66,36 +66,42 @@ module DatagridController
       end
 
       f.json do
-        passed_filename = params[:filename]
+        if passed_filename = params[:filename]
 
-        filename = if passed_filename.blank?
-                    default_export_filename
-                  else
-                    "#{passed_filename}"
-                  end
+          filename = if passed_filename.blank?
+                      default_export_filename
+                    else
+                      "#{passed_filename}"
+                    end
 
-        # TODO tests fail into the else case if
-        # I don't do this check twice ... what
-        filters = if grid_params.is_a?(ActionController::Parameters)
-                    grid_params.to_unsafe_h
-                  elsif grid_params.is_a?(ActionController::Parameters)
-                    grid_params.to_unsafe_h
-                  else
-                    ActionController::Parameters.new(grid_params)
-                      .to_unsafe_h
-                  end
+          # TODO tests fail into the else case if
+          # I don't do this check twice ... what
+          filters = if grid_params.is_a?(ActionController::Parameters)
+                      grid_params.to_unsafe_h
+                    elsif grid_params.is_a?(ActionController::Parameters)
+                      grid_params.to_unsafe_h
+                    else
+                      ActionController::Parameters.new(grid_params)
+                        .to_unsafe_h
+                    end
 
-        ExportJob.perform_later(
-          current_profile,
-          grid_klass.name,
-          filters,
-          self.class.name,
-          self.class.csv_scope_modifier.to_s,
-          filename.sub(".csv", ""),
-          "csv"
-        )
+          ExportJob.perform_later(
+            current_profile,
+            grid_klass.name,
+            filters,
+            self.class.name,
+            self.class.csv_scope_modifier.to_s,
+            filename.sub(".csv", ""),
+            "csv"
+          )
 
-        render json: {}
+          render json: {}
+        else
+          data = grid_klass.new(grid_params)
+          paged = grid_klass.new(grid_params) { |scope| modify_html_scope(scope) }
+
+          render json: { assets: paged.assets, total: data.assets.count }
+        end
       end
 
       f.csv do

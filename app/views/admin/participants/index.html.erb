@@ -1,7 +1,34 @@
 <% provide :title, "Admin Data • Participants" %>
+<% provide :js, javascript_pack_tag("admin_participants") %>
+<% provide :css, stylesheet_pack_tag("admin_participants") %>
 
-<%= render 'datagrid/datagrid',
-  grid: @accounts_grid,
-  form_url: admin_participants_path,
-  model_name: "account",
-  scope: :admin %>
+<div class="panel">
+  <div id="app">
+    <v-app>
+      <v-container>
+        <division-filter></division-filter>
+        <season-filter></season-filter>
+
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          class="elevation-1"
+        >
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.last_name }}</td>
+            <td>{{ props.item.first_name }}</td>
+            <td>{{ props.item.email }}</td>
+            <td>{{ props.item.city }}</td>
+            <td>{{ props.item.state_province }}</td>
+            <td>{{ props.item.country }}</td>
+          </template>
+        </v-data-table>	
+
+        <v-pagination
+          :length="parseInt(totalItems / 15)"
+          v-model="page"
+        ></v-pagination>
+      </v-container>
+    </v-app>
+  </div>
+</div>
