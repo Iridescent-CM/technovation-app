@@ -64,7 +64,7 @@ module FindEligibleSubmissionId
                                 []
                               end
 
-      candidates = TeamSubmission.current.public_send(
+      candidates = TeamSubmission.current.complete.public_send(
           rank_for_current_round
         )
         .where.not(
@@ -81,10 +81,7 @@ module FindEligibleSubmissionId
           "complete_#{current_round}_official_submission_scores_count " +
            "< #{SCORE_COUNT_LIMIT}"
         )
-        .select { |sub|
-          (sub.complete? and
-            not judge_conflicts.include?(sub.team.region_division_name))
-        }
+        .select { |s| !judge_conflicts.include?(s.team.region_division_name) }
         .sort { |a, b|
           a_complete = a.public_send(
             "complete_#{current_round}_official_submission_scores_count"
@@ -98,8 +95,7 @@ module FindEligibleSubmissionId
         }
 
       sub = candidates.first
-
-      sub and sub.id
+      sub && sub.id
     end
 
     def weighted(sub)

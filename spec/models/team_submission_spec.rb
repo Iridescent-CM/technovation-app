@@ -56,13 +56,9 @@ RSpec.describe TeamSubmission do
     it "returns 100 percent for all of the items completed" do
       submission = FactoryBot.create(:submission, :junior, :complete)
 
-      # TODO: faking the source code url
-      expect(submission).to receive(:source_code_url)
-        .and_return("something")
-
+      submission.update_column(:source_code, "something.zip")
       submission.touch
-
-      expect(submission.percent_complete).to eq(100)
+      expect(submission.reload.percent_complete).to eq(100)
     end
   end
 

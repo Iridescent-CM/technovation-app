@@ -42,15 +42,9 @@ FactoryBot.define do
       after(:create) do |sub|
         sub.update_column(:source_code,  "source_code.zip")
         sub.update_column(:business_plan,  "business_plan.pdf")
-
-        PitchPresentation.create!({
-          uploaded_file: "pitch_slides.pdf",
-          team_submission: sub
-        })
-
-        2.times do
-          sub.screenshots.create!
-        end
+        sub.update_column(:pitch_presentation,  "slides.pdf")
+        2.times { sub.screenshots.create! }
+        sub.reload.published!
       end
     end
   end
