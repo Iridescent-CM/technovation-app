@@ -1252,7 +1252,8 @@ CREATE TABLE public.student_profiles (
     parent_guardian_name character varying,
     school_name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -1485,7 +1486,8 @@ CREATE TABLE public.teams (
     deleted_at timestamp without time zone,
     seasons text[] DEFAULT '{}'::text[],
     has_students boolean DEFAULT false NOT NULL,
-    has_mentor boolean DEFAULT false NOT NULL
+    has_mentor boolean DEFAULT false NOT NULL,
+    all_students_onboarded boolean DEFAULT false
 );
 
 
@@ -2973,6 +2975,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180316182251'),
 ('20180322201531'),
 ('20180328171732'),
-('20180409220653');
+('20180409220653'),
+('20180410160317'),
+('20180410171021');
 
 
