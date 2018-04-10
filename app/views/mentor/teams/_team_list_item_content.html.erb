@@ -27,11 +27,24 @@
 
     <% if team.submission.present? %>
       <% if SeasonToggles.team_submissions_editable? %>
-        <p>
-          <%= link_to "Edit this team's submission",
-            mentor_team_submission_path(team.submission),
-            class: "button small" %>
-        </p>
+        <% if team.submission.only_needs_to_submit? %>
+          <p>
+            Your last step is to:<br />
+            <%= link_to "Review and submit now!",
+              [
+                current_scope,
+                :published,
+                team.submission
+              ],
+              class: "button button--secondary" %>
+          </p>
+        <% else %>
+          <p>
+            <%= link_to "Edit this team's submission",
+              mentor_team_submission_path(team.submission),
+              class: "button small" %>
+          </p>
+        <% end %>
       <% else %>
         <p class="hint">Submissions are not editable at this time.</p>
       <% end %>

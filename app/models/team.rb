@@ -238,7 +238,7 @@ class Team < ActiveRecord::Base
   }
 
   def qualified?
-    all_students_onboarded?
+    has_students? && all_students_onboarded?
   end
 
   def photo_url
