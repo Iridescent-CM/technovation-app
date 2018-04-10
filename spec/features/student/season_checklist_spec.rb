@@ -14,7 +14,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "Registration complete" do
-    student = FactoryBot.create(:student)
+    student = FactoryBot.create(:student, :geocoded)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -38,7 +38,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "On a team" do
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -52,7 +52,7 @@ RSpec.feature "Dashboard season checklist" do
   scenario "Submission locked from toggle" do
     SeasonToggles.team_submissions_editable = false
 
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)
@@ -65,7 +65,7 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "Submission locked from prerequisites" do
-    SeasonToggles.team_submissions_editable = true
+    SeasonToggles.team_submissions_editable!
 
     student = FactoryBot.create(:student, not_onboarded: true)
     sign_in(student)
@@ -80,9 +80,9 @@ RSpec.feature "Dashboard season checklist" do
   end
 
   scenario "Submission started" do
-    SeasonToggles.team_submissions_editable = true
+    SeasonToggles.team_submissions_editable!
 
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     sign_in(student)
 
     expect(current_path).to eq(student_dashboard_path)

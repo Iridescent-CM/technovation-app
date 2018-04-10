@@ -6,7 +6,7 @@ RSpec.feature "Student team submissions" do
 
   scenario "Be on a team to see submission link" do
     student = FactoryBot.create(:student)
-    team_student = FactoryBot.create(:student, :on_team)
+    team_student = FactoryBot.create(:student, :on_team, :geocoded)
 
     sign_in(student)
     expect(page).not_to have_link(
@@ -23,7 +23,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Confirm submissions are created solely by team students" do
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     sign_in(student)
 
     click_link "My team's submission"
@@ -41,7 +41,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "Start the submission from the table of contents" do
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     submission = FactoryBot.create(:team_submission, team: student.team)
     sign_in(student)
 
@@ -112,7 +112,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "See senior team submission pieces on TOC" do
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     submission = FactoryBot.create(:team_submission, team: student.team)
 
     sign_in(student)
@@ -150,7 +150,7 @@ RSpec.feature "Student team submissions" do
   end
 
   scenario "See live pitch event submission pieces on TOC" do
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     submission = FactoryBot.create(:team_submission, team: student.team)
 
     sign_in(student)

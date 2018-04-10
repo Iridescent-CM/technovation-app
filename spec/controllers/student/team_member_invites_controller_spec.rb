@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Student::TeamMemberInvitesController do
-  before { SeasonToggles.team_building_enabled="yes" }
+  before { SeasonToggles.team_building_enabled! }
 
   describe "POST #create" do
-    let(:student) { FactoryBot.create(:student, :on_team) }
+    let(:student) { FactoryBot.create(:student, :on_team, :geocoded) }
 
     let(:invite) { TeamMemberInvite.last }
 
@@ -37,7 +37,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "sets the invitee to an existing account" do
-      existing = FactoryBot.create(:student)
+      existing = FactoryBot.create(:student, :geocoded)
 
       post :create, params: { team_member_invite: {
         invitee_email: existing.email,
@@ -49,7 +49,7 @@ RSpec.describe Student::TeamMemberInvitesController do
   end
 
   describe "PUT #update" do
-    let(:student) { FactoryBot.create(:student) }
+    let(:student) { FactoryBot.create(:student, :geocoded) }
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: student) }
 
     before do

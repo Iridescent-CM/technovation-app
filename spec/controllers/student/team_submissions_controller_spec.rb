@@ -5,7 +5,7 @@ RSpec.describe Student::TeamSubmissionsController do
     before { SeasonToggles.team_submissions_editable! }
 
     it "can handle sorting" do
-      student = FactoryBot.create(:student, :on_team)
+      student = FactoryBot.create(:student, :on_team, :geocoded)
       team_submission = FactoryBot.create(:submission, team: student.team)
 
       screenshot1 = team_submission.screenshots.create!

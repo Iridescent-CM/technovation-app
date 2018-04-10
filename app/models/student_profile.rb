@@ -88,10 +88,14 @@ class StudentProfile < ActiveRecord::Base
 
   after_commit :reset_parent, on: :update
 
-  after_save { team.touch }
   after_touch { team.touch }
 
+  attr_accessor :destroyed
+  after_destroy -> { self.destroyed = true }
+
   after_commit -> {
+    return if destroyed
+
     if signed_parental_consent.blank? or
          account.email_confirmed_at.blank? or
            account.latitude.blank?
@@ -100,7 +104,7 @@ class StudentProfile < ActiveRecord::Base
       update_column(:onboarded, true)
     end
 
-    team.update(updated_at: Time.current) # trigger after_commit on team
+    team.touch
   }
 
   validates :school_name, presence: true

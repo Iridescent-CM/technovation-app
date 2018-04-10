@@ -198,12 +198,7 @@ RSpec.describe Team do
   end
 
   it "reverse geocodes when coords change" do
-    team = FactoryBot.create(
-      :team,
-      :geocoded,
-      city: "Los Angeles",
-      state_province: "CA"
-    )
+    team = FactoryBot.create(:team, :geocoded, :los_angeles)
 
     # Sanity
     expect(team.city).to eq("Los Angeles")

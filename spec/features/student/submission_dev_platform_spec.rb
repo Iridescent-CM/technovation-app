@@ -4,7 +4,7 @@ RSpec.feature "Students edit submission development platform" do
   scenario "Choose App Inventor" do
     SeasonToggles.team_submissions_editable!
 
-    student = FactoryBot.create(:student, :on_team)
+    student = FactoryBot.create(:student, :on_team, :geocoded)
     FactoryBot.create(
       :team_submission,
       team: student.team,

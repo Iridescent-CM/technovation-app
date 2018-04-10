@@ -11,7 +11,7 @@ RSpec.feature "Toggling editable team submissions" do
   end
 
   def create_authenticated_user_on_team(scope, options)
-    user = FactoryBot.create(scope)
+    user = FactoryBot.create(scope, :geocoded)
     TeamRosterManaging.add(team, user)
     FactoryBot.create(:submission, team: team) if options[:submission]
     sign_in(user)
