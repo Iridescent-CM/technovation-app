@@ -92,7 +92,9 @@ class StudentProfile < ActiveRecord::Base
   after_touch { team.touch }
 
   after_commit -> {
-    if signed_parental_consent.blank? or account.email_confirmed_at.blank?
+    if signed_parental_consent.blank? or
+         account.email_confirmed_at.blank? or
+           account.latitude.blank?
       update_column(:onboarded, false)
     else
       update_column(:onboarded, true)
