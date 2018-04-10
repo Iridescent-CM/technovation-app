@@ -165,7 +165,7 @@ class MentorProfile < ActiveRecord::Base
       account.public_send(method_name, *args)
     rescue
       raise NoMethodError,
-        "undefined method `#{method_name}' not found for #{self}##{id}-account-##{account_id}"
+        "undefined method `#{method_name}' not found for #{self}"
     end
   end
 

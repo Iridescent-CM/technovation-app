@@ -132,7 +132,7 @@ RSpec.feature "Student team submissions" do
     expect(page).to have_content("Your team is in the Junior Division")
     expect(page).to have_content(
       "Uploading a business plan is not required " +
-      "in the Junior Division.\nIf your team has put " +
+      "in the Junior Division. If your team has put " +
       "one together, that is awesome! Hold on to it " +
       "for your own records and be extremely proud!"
     )
