@@ -113,6 +113,12 @@ class Account < ActiveRecord::Base
       )
   }
 
+  after_commit -> {
+    if saved_change_to_email_confirmed_at
+      student_profile && student_profile.update(updated_at: Time.current)
+    end
+  }
+
   def self.sort_column
     :first_name
   end

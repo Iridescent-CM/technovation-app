@@ -14,6 +14,13 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
+  scope :has_students, -> { where(has_students: true) }
+
+  scope :all_students_onboarded, -> { where(all_students_onboarded: true) }
+  scope :some_students_onboarding, -> {
+    where("has_students = ? AND all_students_onboarded = ?", true, false)
+  }
+
   scope :by_query, ->(query) {
     where("teams.name ILIKE ?", "#{query}%")
   }
@@ -222,8 +229,16 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  after_commit -> {
+    if has_students and students.all?(&:onboarded)
+      update_column(:all_students_onboarded, true)
+    else
+      update_column(:all_students_onboarded, false)
+    end
+  }
+
   def qualified?
-    students.any? and students.onboarding.none?
+    all_students_onboarded?
   end
 
   def photo_url

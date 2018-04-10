@@ -20,21 +20,8 @@ class StudentProfile < ActiveRecord::Base
       .where("teams.id IS NULL")
   }
 
-  scope :onboarded, -> {
-    joins(:account, :parental_consent)
-      .where("parental_consents.status = ?", ParentalConsent.statuses[:signed])
-      .where("accounts.email_confirmed_at IS NOT NULL")
-  }
-
-  scope :onboarding, -> {
-    left_outer_joins(:account, :parental_consent)
-      .where(
-        "parental_consents.id IS NULL OR
-           accounts.email_confirmed_at IS NULL OR
-             parental_consents.status = ?",
-        ParentalConsent.statuses[:pending]
-      )
-  }
+  scope :onboarded, -> { where(onboarded: true ) }
+  scope :onboarding, -> { where(onboarded: false) }
 
   has_many :memberships,
     as: :member,
@@ -103,6 +90,16 @@ class StudentProfile < ActiveRecord::Base
 
   after_save { team.touch }
   after_touch { team.touch }
+
+  after_commit -> {
+    if signed_parental_consent.blank? or account.email_confirmed_at.blank?
+      update_column(:onboarded, false)
+    else
+      update_column(:onboarded, true)
+    end
+
+    team.update(updated_at: Time.current) # trigger after_commit on team
+  }
 
   validates :school_name, presence: true
 
@@ -281,10 +278,6 @@ class StudentProfile < ActiveRecord::Base
 
   def onboarding?
     not onboarded?
-  end
-
-  def onboarded?
-    account.email_confirmed? and parental_consent_signed?
   end
 
   def actions_needed

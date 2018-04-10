@@ -35,6 +35,12 @@ class ParentalConsent < ActiveRecord::Base
     pc.saved_change_to_status and pc.signed?
   }
 
+  after_commit -> {
+    if saved_change_to_status
+      student_profile.update(updated_at: Time.current)
+    end
+  }
+
   def student_profile_consent_token=(token)
     self.student_profile = StudentProfile.joins(:account)
       .find_by("accounts.consent_token = ?", token)
