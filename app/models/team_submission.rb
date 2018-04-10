@@ -22,6 +22,7 @@ class TeamSubmission < ActiveRecord::Base
 
   after_commit -> {
     update_column(:percent_complete, calculate_percent_complete)
+    update_column(:published_at, nil) if RequiredFields.new(self).any?(&:blank?)
   }, on: :update
 
   enum development_platform: %w{
@@ -52,6 +53,8 @@ class TeamSubmission < ActiveRecord::Base
         .where("divisions.name = ?", Division.names[division_name])
     }
   end
+
+  scope :complete, -> { where('published_at IS NOT NULL') }
 
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
@@ -275,9 +278,11 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def complete?
-    Rails.cache.fetch("#{cache_key}/complete?") do
-      RequiredFields.new(self).all?(&:complete?)
-    end
+    not published_at.blank?
+  end
+
+  def published!
+    update(published_at: Time.current)
   end
 
   def calculate_percent_complete

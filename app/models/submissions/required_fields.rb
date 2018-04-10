@@ -33,7 +33,7 @@ class RequiredFields
 end
 
 class RequiredField
-  attr_reader :submission, :method_name
+  attr_reader :submission, :method_name, :value
 
   def self.for(submission, method_name)
     if method_name.to_sym == :app_name
@@ -48,23 +48,27 @@ class RequiredField
   def initialize(submission, method_name)
     @submission = submission
     @method_name = method_name
+    @value = submission.send(method_name)
     freeze
   end
 
   def complete?
-    not submission.send(method_name).blank?
+    not blank?
+  end
+
+  def blank?
+    value.blank?
   end
 end
 
 class RequiredScreenshotsField < RequiredField
-  def complete?
-    submission.send(method_name).count >= 2
+  def blank?
+    value.count < 2
   end
 end
 
 class RequiredAppNameField < RequiredField
-  def complete?
-    not submission.send(method_name).blank? and
-      submission.send(method_name) != "(no name yet)"
+  def blank?
+    value.blank? || value == "(no name yet)"
   end
 end
