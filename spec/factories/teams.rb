@@ -80,7 +80,11 @@ FactoryBot.define do
 
     after(:create) do |team, evaluator|
       members = evaluator.members_count.times.collect {
-        FactoryBot.create(:student)
+        FactoryBot.create(:student, :geocoded,
+          city: team.city,
+          state_province: team.state_province,
+          country: team.country,
+        )
       }
 
       TeamCreating.execute(team, members.first, FakeController.new)

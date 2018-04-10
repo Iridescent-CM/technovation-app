@@ -46,8 +46,8 @@ FactoryBot.define do
     end
 
     trait :geocoded do
-      after(:create) do |s, _|
-        Geocoding.perform(s.account).with_save
+      before(:create) do |s, _|
+        Geocoding.perform(s.account)
       end
     end
 
