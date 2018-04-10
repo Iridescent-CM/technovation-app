@@ -134,18 +134,6 @@
       </div>
     <% end %>
 
-    <div class="panel">
-      <%= link_to(
-        "Delete #{@account.name} from Technovation",
-        admin_participant_path(@account),
-        class: "button danger",
-        data: {
-          method: :delete,
-          confirm: "Are you sure you want to DELETE #{@account.name}?",
-        }
-      ) %>
-    </div>
-
     <% if parental_consent_pending? %>
       <div class="panel">
         <h5>
@@ -164,5 +152,17 @@
           } %>
       </div>
     <% end %>
+
+    <div class="panel">
+      <%= link_to(
+        "Delete #{@account.name} from Technovation",
+        admin_participant_path(@account),
+        class: "button danger",
+        data: {
+          method: :delete,
+          confirm: "ALERT! You are about to DELETE #{@account.name}!",
+        }
+      ) %>
+    </div>
   </div>
 </div>
