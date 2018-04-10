@@ -26,14 +26,8 @@
 
     <%= yield :css %>
 
-    <%= stylesheet_pack_tag("application",
-      data: { turbolinks_track: :reload }) %>
-
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
-
-    <%= javascript_pack_tag("application",
-      data: { turbolinks_track: :reload }) %>
 
     <%= yield :js %>
   </head>

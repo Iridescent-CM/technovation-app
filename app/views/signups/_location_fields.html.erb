@@ -1,3 +1,67 @@
-<div id="location-app">
-  <router-view />
-</div>
+<%= simple_form_for current_profile,
+  url: [current_scope, :profile],
+  local: true,
+  html: {
+    class: "geocoding"
+  } do |f| %>
+  <%= hidden_field_tag :return_to, params[:return_to] %>
+  <%= hidden_field_tag :setting_location, 1 %>
+
+  <div class="while-geocoding">
+    <%= web_icon "spinner2", class: "spin" %>
+    Detecting your location...
+  </div>
+
+  <%= f.fields_for :account do |a| %>
+    <%= a.input :city,
+      input_html: {
+        id: "city",
+        data: {
+          geolocation_url: geolocation_results_path,
+        },
+      } %>
+
+    <%= a.input :state_province,
+      label: t("models.account.state_province"),
+      input_html: {
+        id: "state_province",
+      } %>
+
+    <%= a.input :country,
+      label: t("models.account.country"),
+      collection: CountryStateSelect.countries_collection,
+      input_html: {
+        id: "country",
+        class: "chosen"
+      } %>
+
+    <%= a.input :latitude, as: :hidden,
+      input_html: {
+        id: "latitude",
+      } %>
+
+    <%= a.input :longitude, as: :hidden,
+      input_html: {
+        id: "longitude",
+      } %>
+
+    <ul>
+      <li>
+        <strong>Double-check</strong>
+        and confirm the information above.
+      </li>
+
+      <li>
+        <strong>Only</strong>
+        change something that is incorrect.
+      </li>
+
+      <li>
+        <strong>Please do not</strong>
+        change anything due to formatting.
+      </li>
+    </ul>
+  <% end %>
+
+  <%= f.button :submit, "Save", class: "button" %>
+<% end %>
