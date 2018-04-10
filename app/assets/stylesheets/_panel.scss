@@ -34,3 +34,14 @@
 .legend {
   background: rgba(0, 0, 0, 0.1);
 }
+
+.lighter-panel {
+  position: relative;
+  background: white;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: $radius-default;
+  box-shadow: $shadow-small;
+  margin: 0 0 1rem;
+  display: inline-block;
+}

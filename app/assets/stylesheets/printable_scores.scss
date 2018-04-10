@@ -1,90 +1,166 @@
-#top-header {
-  width:100%;
-  margin-bottom: .125rem;
-  text-align: right;
-  line-height: .625rem;
-  font-size: 1rem;
-  font-weight: bold;
-  font-family: "Source Sans Pro", sans-serif;
-}
-
-#section-header {
-  width: 100%;
-  display: inline-block;
-  margin: 1rem 0 0;
-  text-align:left;
-  font-family: "Source Sans Pro", sans-serif;
-  font-weight: bold;
-}
-
-#misc-header {
-  font-family: "Source Sans Pro", sans-serif;
-}
-
-#score-header {
-  margin-top: 3px
-}
+@import "reflex";
+@import "reflex.ext";
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
+@import "variables";
+@import "base";
+@import "lists";
+@import "forms";
+@import "panel";
+@import "button";
 
 #no-border {
   border: 0;
 }
 
-#online-comment {
-  margin-top: 5px;
-}
-
 #layouttable {
-  border:0rem;
-  width:100%;
+  border: 0;
+  width: 100%;
   text-align:center;
+  display: inline-block;
 }
 
 #layouttable td.col1 {
-  width:60%;
-  vertical-align:top;
+  border-collapse: collapse;
+  width: 60%;
+  vertical-align: top;
 }
 
 #layouttable td.col2 {
-  width:10%;
-  vertical-align:top;
+  width: 10%;
+  vertical-align: top;
 }
 
 #layouttable td.col3 {
-  width:50%;
-  vertical-align:top;
+  width: 50%;
+  vertical-align: top;
+}
+
+#div-distance {
+  margin-top: 1px;
+}
+
+#print-button {
+  margin: auto;
+  display: block;
+  width: 150px;
 }
 
 table {
   border-collapse: collapse;
-  width: 100%;
+  margin-bottom: 2px;
 }
 
 td, th {
   border: 1px solid #ddd;
   text-align: left;
-  padding: 8px;
-  font-family: "Source Sans Pro", sans-serif;
+  padding: 5px;
 }
 
-tr:nth-child(7) {
-  background-color: #ddd;font-family: "Source Sans Pro", sans-serif;
+section {
+  margin-bottom: 2px;
+}
+
+.page-header {
+  text-align: right;
+  line-height: 5px;
+  margin-top: 0;
+  padding: 0;
+}
+
+.page-title {
+  text-align: left;
+  line-height: 1px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
 }
 
 .box {
-  background: #fff;
   border: 1px solid #ddd;
   display: inline-block;
-  height: 200px;
+  height: 75px;
   width: 100%;
+  margin-top: .025px;
 }
 
 @media print {
-  td, th {
+
+  .page-header {
+    text-align: right;
+    margin: .05mm .05mm .05mm .05mm;
+    padding-top: 0;
+  }
+
+  .page-title {
+    display: none;
+  }
+
+  .panel, .lighter-panel {
+    margin: .05mm .05mm .05mm .05mm;
+    border: 1px solid #F5F5F5;
+    padding-top: 0;
+  }
+
+  .box {
+    border: 1px solid #F5F5F5;
+  }
+
+  td, th, {
+    font-size: 9pt;
+    padding: 1px;
+    border: 1px solid #F5F5F5;
+    margin: .05mm .05mm .05mm .05mm;
+  }
+
+  p {
+    font-size: 9pt;
+  }
+
+  h3 {
+    font-size: 12pt;
+    margin-bottom: 1.5mm;
+    padding-top: 0;
+  }
+
+  h4 {
     font-size: 9.5pt;
-    padding: 2px;
-    border: 1px solid #ddd;
+    margin: .05mm .05mm .05mm .05mm;
+    padding-top: 0;
   }
-  tr:nth-child(7) {
-      background-color: #ddd;
+
+  table, #layouttable {
+    margin: .05mm .05mm .05mm .05mm;
   }
+
+  #left-panel {
+    float: left;
+    width: 50%;
+    height: 15%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding-top: 0;
+  }
+
+  #right-panel {
+    float: right;
+    width: 50%;
+    height: 15%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding-top: 0;
+  }
+
+  #print-button {
+    display: none;
+  }
+
+  #div-distance {
+    margin: .05mm .05mm .05mm .05mm;
+    padding-top: 0;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 0 .05mm .05mm .05mm;
 }
