@@ -40,6 +40,10 @@ class SubmissionsGrid
     end
   end
 
+  column :complete? do
+    complete? ? "yes" : "NO"
+  end
+
   column :progress,
     order: "team_submissions.percent_complete",
     mandatory: true,
@@ -64,6 +68,15 @@ class SubmissionsGrid
         "teams.division_id = ?",
         Division.send(value).id
       )
+    end
+
+    filter :complete,
+    :enum,
+    select: [
+      ["Complete submissions", "complete"],
+      ["Incomplete submissions", "incomplete"],
+    ] do |value|
+      send(value)
     end
 
   filter :season,

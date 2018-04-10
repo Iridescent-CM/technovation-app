@@ -55,6 +55,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   scope :complete, -> { where('published_at IS NOT NULL') }
+  scope :incomplete, -> { where('published_at IS NULL') }
 
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
@@ -116,6 +117,12 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def only_needs_to_submit?
+    !complete? &&
+      team.qualified? &&
+        RequiredFields.new(self).all?(&:complete?)
+  end
+
   def team_photo_uploaded?
     team.team_photo_url !~ /placeholders/
   end
@@ -147,13 +154,13 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def while_qualified(&block)
-    if team.qualified? and complete?
+    if team.qualified? && RequiredFields.new(self).all?(&:complete?)
       yield
     end
   end
 
   def while_unqualified(&block)
-    unless team.qualified? and complete?
+    unless team.qualified? && RequiredFields.new(self).all?(&:complete?)
       yield
     end
   end
@@ -288,8 +295,15 @@ class TeamSubmission < ActiveRecord::Base
   def calculate_percent_complete
     Rails.cache.fetch("#{cache_key}/percent_complete") do
       required_fields = RequiredFields.new(self)
-      completed_count = required_fields.count(&:complete?)
-      (completed_count / required_fields.size.to_f * 100).round
+
+      total_needed = required_fields.size.to_f + 1
+        # + 1 === publishing / submitting is now required
+
+      published = complete? ? 1 : 0
+
+      completed_count = required_fields.count(&:complete?) + published
+
+      (completed_count / total_needed * 100).round
     end
   end
 
