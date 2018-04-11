@@ -1,7 +1,7 @@
 <template>
   <div class="margin-top-normal">
     <h6 class="heading--reset">
-      Review & revise finished scores until May 20th
+      Revise & review your finished scores until <strong v-html="deadline"></strong>
     </h6>
 
     <template v-if="!finishedScores.length">
@@ -38,10 +38,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
-  computed: mapGetters(['finishedScores']),
+  computed: {
+    ...mapGetters(['finishedScores']),
+    ...mapState(['deadline']),
+  }
 }
 </script>
 

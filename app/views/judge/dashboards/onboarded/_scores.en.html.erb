@@ -50,9 +50,17 @@
 
         <% if current_judge.live_event? %>
           <live-event-nav></live-event-nav>
+          <div
+            ref="deadline"
+            data-date="May 22<sup>nd</sup> (US/Pacific time)"
+          ></div>
         <% else %>
           <virtual-nav></virtual-nav>
-          <div ref="disableAssigned" />
+          <div ref="disableAssigned"></div>
+          <div
+            ref="deadline"
+            data-date="May 20<sup>th</sup> (US/Pacific time)"
+          ></div>
         <% end %>
 
         <router-view></router-view>

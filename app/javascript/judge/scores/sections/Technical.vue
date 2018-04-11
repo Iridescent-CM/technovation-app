@@ -16,8 +16,6 @@
         <tc-code />
       </div>
 
-      <code-checklist />
-
       <question-section
         title="Technical (20 points)"
         referTo="source code, screenshots, and demo video."
@@ -26,8 +24,9 @@
         nextSection="pitch"
       >
         <li class="score-question">
-          {{ team.name }} earned
-          <strong>{{ submission.total_checklist_points }} points</strong>
+          {{ team.name }} automatically earned
+          {{ submission.total_checklist_points }}
+          {{ submission.total_checklist_points | pluralize('point') }}
           for their code checklist.
         </li>
 
@@ -47,7 +46,6 @@ import TeamInfo from '../TeamInfo'
 import Screenshots from '../pieces/Screenshots'
 import Pitch from '../pieces/Pitch'
 import TcCode from '../pieces/Code'
-import CodeChecklist from '../pieces/CodeChecklist'
 
 import QuestionSection from '../QuestionSection'
 
@@ -62,7 +60,6 @@ export default {
     Screenshots,
     Pitch,
     TcCode,
-    CodeChecklist,
   },
 }
 </script>

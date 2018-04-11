@@ -70,8 +70,9 @@ export default {
 <style lang="scss" scoped>
   ol {
     list-style: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0 0 2rem;
+    width: 40vw;
 
     ol {
       margin: 1rem 0 0;
@@ -84,13 +85,15 @@ export default {
   .score-question {
     margin: 3rem 0 0;
     padding: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
   }
 
   .score-value {
     opacity: 0.5;
     background: none;
     border: 1px solid darkgreen;
-    padding: 0.45rem 0.85rem;
+    padding: 1.2rem 1.7rem;
     border-radius: 50%;
     font-weight: bold;
     color: darkgreen;
@@ -98,7 +101,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      opacity: 0.7;
+      opacity: 0.3;
       background: darkgreen;
       color: white;
     }

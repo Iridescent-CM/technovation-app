@@ -69,7 +69,7 @@ import Icon from '../../../components/Icon'
 
 export default {
   computed: {
-    ...mapState(['team', 'score', 'submission']),
+    ...mapState(['team', 'score', 'submission', 'deadline']),
 
     ...mapGetters([
       'anyCommentsInvalid',
@@ -105,7 +105,7 @@ export default {
                'friendly, sufficient comment for each section'
       } else {
         return 'You can revisit your finished scores ' +
-               'and make changes through May 20th.'
+               'and make changes through ' + this.deadline + '.'
       }
     },
   },

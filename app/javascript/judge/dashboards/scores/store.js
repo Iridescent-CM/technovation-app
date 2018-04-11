@@ -19,7 +19,9 @@ export default new Vuex.Store({
       },
     },
 
-    submissions: {}
+    submissions: {},
+
+    deadline: '',
   },
 
   getters: {
@@ -60,6 +62,10 @@ export default new Vuex.Store({
 
     populateSubmissions (state, payload) {
       state.submissions = payload
+    },
+
+    deadline (state, date) {
+      state.deadline = date
     },
   },
 })

@@ -7,6 +7,7 @@
     <div
       class="grid grid--justify-space-between"
       v-for="submission in assignedSubmissions"
+      :key="submission.id"
     >
       <div class="grid__col-5 grid__col--bleed-x">
         <small>Submission name</small>
@@ -41,7 +42,7 @@ export default {
   methods: {
     callToAction (submission) {
       if (submission.score_started) {
-        return 'Continue'
+        return 'Resume'
       } else if (submission.score_finished) {
         return 'Review'
       } else {

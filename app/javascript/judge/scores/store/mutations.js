@@ -87,6 +87,10 @@ export const setProblemSections = (state, arr) => {
   state.problemSections = arr
 }
 
+export const deadline = (state, date) => {
+  state.deadline = date
+}
+
 function wordCount (text) {
   return text.split(' ').filter(word => {
     return word.split('').filter(char => char.match(/\w/)).length > 2

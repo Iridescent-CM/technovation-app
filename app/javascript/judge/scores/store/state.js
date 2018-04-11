@@ -28,5 +28,6 @@ export default {
       process: [],
     },
     total_checklist_points: 0,
+    deadline: '',
   },
 }
