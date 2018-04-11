@@ -96,6 +96,14 @@ class JudgeProfile < ActiveRecord::Base
     end
   end
 
+  def industry_text
+    if industry == "Other"
+      industry_other
+    else
+      industry
+    end
+  end
+
   def status
     if current_account && onboarded?
       "ready"
