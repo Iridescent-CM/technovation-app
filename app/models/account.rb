@@ -211,8 +211,7 @@ class Account < ActiveRecord::Base
       "'#{season}' = ANY (parental_consents.seasons)"
     end
 
-    distinct
-      .left_outer_joins(student_profile: :parental_consents)
+    left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
       .where(season_clauses.join(' AND '))
       .where(
@@ -228,8 +227,7 @@ class Account < ActiveRecord::Base
       "('#{season}' = ANY (parental_consents.seasons) AND parental_consents.status = '#{ParentalConsent.statuses[:pending]}')"
     end
 
-    distinct
-      .left_outer_joins(student_profile: :parental_consents)
+    left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
       .where(season_clauses.join(' OR '))
   }
