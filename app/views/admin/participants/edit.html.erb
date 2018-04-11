@@ -23,8 +23,8 @@
       <%= f.date_select :date_of_birth,
         {
           prompt: true,
-          start_year: f.object.youngest_birth_year,
-          end_year: f.object.oldest_birth_year,
+          start_year: Season.current.year,
+          end_year: Season.current.year - 100,
         },
         class: "chosen dob_field" %>
     </p>
