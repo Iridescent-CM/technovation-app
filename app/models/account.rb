@@ -115,9 +115,15 @@ class Account < ActiveRecord::Base
   after_commit -> {
     if saved_change_to_email_confirmed_at
       if student_profile.present?
-        student_profile.touch
+        student_profile.update_column(
+          :onboarded,
+          student_profile.can_be_marked_onboarded?
+        )
       elsif judge_profile.present?
-        judge_profile.touch
+        judge_profile.update_column(
+          :onboarded,
+          judge_profile.can_be_marked_onboarded?
+        )
       end
     end
   }

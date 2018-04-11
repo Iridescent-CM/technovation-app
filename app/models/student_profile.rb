@@ -96,12 +96,10 @@ class StudentProfile < ActiveRecord::Base
   after_commit -> {
     return if destroyed
 
-    if signed_parental_consent.blank? or
-         account.email_confirmed_at.blank? or
-           account.latitude.blank?
-      update_column(:onboarded, false)
-    else
+    if can_be_marked_onboarded?
       update_column(:onboarded, true)
+    else
+      update_column(:onboarded, false)
     end
 
     team.touch
@@ -292,6 +290,12 @@ class StudentProfile < ActiveRecord::Base
     actions << "Get their parent or guardian's permission to compete" unless parental_consent_signed?
     actions << "Enter their location details" if latitude.blank?
     actions
+  end
+
+  def can_be_marked_onboarded?
+    signed_parental_consent.present? &&
+      !account.email_confirmed_at.blank? &&
+        !account.latitude.blank?
   end
 
   private
