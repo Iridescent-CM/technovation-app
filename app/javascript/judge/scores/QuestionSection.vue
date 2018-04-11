@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid--align-start grid--justify-space-between ">
-    <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
+    <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
       <h3>{{ title }}</h3>
 
       <p class="refer-to">Refer to the {{ referTo }}</p>
@@ -10,78 +10,82 @@
       </score-entry>
     </div>
 
-    <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
-      <h3>{{ section | capitalize }} comment</h3>
+    <div :class="solo ? 'grid__col-md-6' : 'grid__col-12 col--sticky-parent'">
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <h3>{{ section | capitalize }} comment</h3>
 
-      <h5 class="heading--reset">Please keep in mind</h5>
+          <h5 class="heading--reset">Please keep in mind</h5>
 
-      <slot name="comment-tips" />
+          <slot name="comment-tips" />
 
-      <textarea v-model="comment.text" />
+          <textarea v-model="comment.text" />
 
-      <div class="comment-sentiment">
-        <div
-          v-tooltip.top-center="sentimentTooltip('positive')"
-          :style="`width: ${sentimentPercentage('positive')}`"
-        ></div>
+          <div class="comment-sentiment">
+            <div
+              v-tooltip.top-center="sentimentTooltip('positive')"
+              :style="`width: ${sentimentPercentage('positive')}`"
+            ></div>
 
-        <div
-          v-tooltip.top-center="sentimentTooltip('neutral')"
-          :style="`width: ${sentimentPercentage('neutral')}`"
-        ></div>
+            <div
+              v-tooltip.top-center="sentimentTooltip('neutral')"
+              :style="`width: ${sentimentPercentage('neutral')}`"
+            ></div>
 
-        <div
-           v-tooltip.top-center="sentimentTooltip('negative')"
-          :style="`width: ${sentimentPercentage('negative')}`"
-        ></div>
-      </div>
+            <div
+              v-tooltip.top-center="sentimentTooltip('negative')"
+              :style="`width: ${sentimentPercentage('negative')}`"
+            ></div>
+          </div>
 
-      <div class="grid grid--bleed grid--justify-space-between">
-        <div class="grid__col-6">
-          <p><small>(please write at least 40 words)</small></p>
-        </div>
+          <div class="grid grid--bleed grid--justify-space-between">
+            <div class="grid__col-6">
+              <p><small>(please write at least 40 words)</small></p>
+            </div>
 
-        <div class="grid__col-6">
-          <p class="word-count">
-            <span :style="`color: ${colorForWordCount}`">
-              {{ wordCount(comment.text) }}
-              {{ wordCount(comment.text) | pluralize('word') }}
-            </span>
+            <div class="grid__col-6">
+              <p class="word-count">
+                <span :style="`color: ${colorForWordCount}`">
+                  {{ wordCount(comment.text) }}
+                  {{ wordCount(comment.text) | pluralize('word') }}
+                </span>
 
-            <br />
+                <br />
 
-            <span :style="`color: ${colorForBadWordCount}`">
-              {{ badWordCount }}
-              {{ badWordCount | pluralize('prohibited word') }}
-            </span>
-          </p>
-        </div>
+                <span :style="`color: ${colorForBadWordCount}`">
+                  {{ badWordCount }}
+                  {{ badWordCount | pluralize('prohibited word') }}
+                </span>
+              </p>
+            </div>
 
-        <div class="grid__col-6 nav-btns--left">
-          <p>
-            <router-link
-              v-if="!!prevSection"
-              :to="{ name: prevSection }"
-              class="button button--small btn-prev"
-            >
-              Back: {{ prevBtnTxt }}
-            </router-link>
-          </p>
-        </div>
+            <div class="grid__col-6 nav-btns--left">
+              <p>
+                <router-link
+                  v-if="!!prevSection"
+                  :to="{ name: prevSection }"
+                  class="button button--small btn-prev"
+                >
+                  Back: {{ prevBtnTxt }}
+                </router-link>
+              </p>
+            </div>
 
-        <div class="grid__col-6 nav-btns--right">
-          <p>
-            <span v-tooltip="nextDisabledMsg">
-              <router-link
-                v-if="!!nextSection"
-                :to="{ name: nextSection }"
-                :disabled="goingNextIsDisabled"
-                class="button button--small btn-next"
-              >
-                Next: {{ nextBtnTxt }}
-              </router-link>
-            </span>
-          </p>
+            <div class="grid__col-6 nav-btns--right">
+              <p>
+                <span v-tooltip="nextDisabledMsg">
+                  <router-link
+                    v-if="!!nextSection"
+                    :to="{ name: nextSection }"
+                    :disabled="goingNextIsDisabled"
+                    class="button button--small btn-next"
+                  >
+                    Next: {{ nextBtnTxt }}
+                  </router-link>
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -293,7 +297,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .grid {
+  .grid,
+  .col--sticky {
     background: white;
   }
 
@@ -305,7 +310,7 @@ export default {
 
   textarea {
     width: 100%;
-    height: 40vh;
+    height: 35vh;
     margin: 1rem 0 0;
     padding: 1rem;
     box-shadow: inset 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);

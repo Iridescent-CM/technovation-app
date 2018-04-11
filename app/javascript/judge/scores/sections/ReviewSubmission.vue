@@ -29,8 +29,6 @@
         <presentation />
       </div>
 
-      <code-checklist />
-
       <div class="grid grid--bleed grid--justify-space-around">
         <div class="grid__col-12 grid--align-center">
           <hr />
@@ -47,9 +45,9 @@
           </p>
 
           <p>
-            Even after &#8220;finishing&#8221; a score,
-            you have until May 20<sup>th</sup> to make changes.
-            You may find that scoring a few submissions
+            Even after &#8220;finishing&#8221; a score, you have
+            until <strong v-html="deadline"></strong> to make
+            changes. You may find that scoring a few submissions
             will help you calibrate your expectations.
           </p>
 
@@ -78,13 +76,13 @@ import Pitch from '../pieces/Pitch'
 import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
-import CodeChecklist from '../pieces/CodeChecklist'
 
 export default {
   computed: {
     ...mapState([
       'team',
       'submission',
+      'deadline',
     ]),
 
     mailToHelp () {
@@ -104,7 +102,6 @@ export default {
     TcCode,
     Business,
     Presentation,
-    CodeChecklist,
   },
 }
 </script>

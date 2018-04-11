@@ -27,6 +27,9 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       mounted () {
+        if (this.$refs.deadline)
+          this.$store.commit('deadline', this.$refs.deadline.dataset.date)
+
         const score_id = new URLSearchParams(window.location.search)
           .get('score_id')
 

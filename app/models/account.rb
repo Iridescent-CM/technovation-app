@@ -113,10 +113,12 @@ class Account < ActiveRecord::Base
   }
 
   after_commit -> {
-    if saved_change_to_email_confirmed_at &&
-         student_profile.present? &&
-           email_confirmed_at.nil?
-      student_profile.update(onboarded: false)
+    if saved_change_to_email_confirmed_at
+      if student_profile.present?
+        student_profile.touch
+      elsif judge_profile.present?
+        judge_profile.touch
+      end
     end
   }
 

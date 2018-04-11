@@ -32,6 +32,9 @@ document.addEventListener('turbolinks:load', () => {
             this.$store.commit('populateSubmissions', resp)
           })
         }
+
+        if (this.$refs.deadline)
+          this.$store.commit('deadline', this.$refs.deadline.dataset.date)
       },
     })
   }

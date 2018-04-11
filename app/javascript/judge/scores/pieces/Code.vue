@@ -7,7 +7,7 @@
     </a>
 
     <p>
-      {{ team.name }} earned
+      {{ team.name }} automatically earned
 
       <strong>
         {{ submission.total_checklist_points }}
