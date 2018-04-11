@@ -3,16 +3,27 @@
 @import "variables";
 @import "button";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
 body {
   padding: 1rem;
+  height: 100%;
 }
 
 header {
+  float: right;
+  max-width: 250px;
+  height: 100%;
   text-align: right;
 
   h3,
   h4 {
-    width: 100%;
     margin: 0;
   }
 
@@ -21,10 +32,28 @@ header {
   }
 }
 
+.sections {
+  margin-right: 250px;
+}
+
 table {
-  width: 60vw;
-  margin: 0 auto 1rem;
+  width: 100%;
+  margin: 0 0 2.2rem;
   border-collapse: collapse;
+}
+
+header table {
+  margin: 1rem 0 0;
+
+  tr {
+    td {
+      border: none;
+    }
+  }
+
+  th {
+    text-transform: uppercase;
+  }
 }
 
 th {
@@ -35,12 +64,6 @@ tr {
   td {
     padding: 0 0.5rem;
     border-bottom: 1px solid black;
-  }
-
-  &:last-child {
-    td {
-      border-top: 2px solid black;
-    }
   }
 }
 
@@ -56,10 +79,8 @@ td:last-child {
   height: 40px;
 }
 
-p,
 h3,
 h4 {
-  width: 60vw;
   margin: 1rem auto 0;
 }
 
