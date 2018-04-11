@@ -24,7 +24,7 @@
             {{ event.time }} <small>Timezone: {{ event.tz }}</small>
           </div>
 
-          <div class="grid__col-auto">
+          <div class="grid__col-3">
             <div class="grid__cell">
               <template v-if="managingAttendanceEnabled">
                 <icon
@@ -51,6 +51,15 @@
                   "
                 />
               </template>
+
+              <icon
+                alt="print"
+                className="events-list__action-item"
+                name="print"
+                size="16"
+                v-tooltip.top-center="`Print for live event`"
+                :handleClick="goToPrintUrl.bind(this, event)"
+              />
 
               <icon
                 alt="edit"
@@ -145,6 +154,10 @@
     },
 
     methods: {
+      goToPrintUrl (event) {
+        window.location.href = `/regional_ambassador/printable_scores/${event.id}`
+      },
+
       editingThisEventOrNone (event) {
         return event.editing || !this.editingOne;
       },
