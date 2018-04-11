@@ -50,11 +50,7 @@ class JudgeProfile < ActiveRecord::Base
   after_commit -> {
     return if destroyed
 
-    if account &&
-         account.email_confirmed? &&
-           consent_signed? &&
-             training_completed? &&
-               survey_completed?
+    if can_be_marked_onboarded?
       update_column(:onboarded, true)
     else
       update_column(:onboarded, false)
@@ -199,5 +195,13 @@ class JudgeProfile < ActiveRecord::Base
 
   def scope_name
     "judge"
+  end
+
+  def can_be_marked_onboarded?
+    account &&
+      account.email_confirmed? &&
+        consent_signed? &&
+          training_completed? &&
+            survey_completed?
   end
 end
