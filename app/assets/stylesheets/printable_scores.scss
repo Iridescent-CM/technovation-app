@@ -19,18 +19,18 @@
   display: inline-block;
 }
 
-#layouttable td.col1 {
+#layouttable th.col1 {
   border-collapse: collapse;
   width: 60%;
   vertical-align: top;
 }
 
-#layouttable td.col2 {
+#layouttable th.col2 {
   width: 10%;
   vertical-align: top;
 }
 
-#layouttable td.col3 {
+#layouttable th.col3 {
   width: 50%;
   vertical-align: top;
 }
@@ -85,59 +85,44 @@ section {
 
 @media print {
 
-  .page-header {
-    text-align: right;
-    margin: .05mm .05mm .05mm .05mm;
-    padding-top: 0;
-  }
-
-  .page-title {
-    display: none;
-  }
-
-  .panel, .lighter-panel {
-    margin: .05mm .05mm .05mm .05mm;
-    border: 1px solid #F5F5F5;
-    padding-top: 0;
-  }
-
-  .box {
-    border: 1px solid #F5F5F5;
-  }
-
   td, th, {
     font-size: 9pt;
-    padding: 1px;
-    border: 1px solid #F5F5F5;
-    margin: .05mm .05mm .05mm .05mm;
+    padding: .024in;
+    border: .025in solid #F5F5F5;
+    margin: .025in .025in .025in .025in;
+    page-break-after: avoid;
   }
 
   p {
     font-size: 9pt;
+    page-break-after: avoid;
   }
 
   h3 {
-    font-size: 12pt;
-    margin-bottom: 1.5mm;
+    font-size: 10pt;
+    margin-bottom: .05in;
     padding-top: 0;
+    page-break-after: avoid;
   }
 
   h4 {
     font-size: 9.5pt;
-    margin: .05mm .05mm .05mm .05mm;
+    margin: .005in .005in .005in .005in;
     padding-top: 0;
+    page-break-after: avoid;
   }
 
   table, #layouttable {
-    margin: .05mm .05mm .05mm .05mm;
+    margin: .005in .005in .005in .005in;
+    page-break-after: avoid;
   }
 
   #left-panel {
     float: left;
     width: 50%;
     height: 15%;
-    margin-top: 1px;
-    margin-bottom: 1px;
+    margin-top: .035in;
+    margin-bottom: .035in;
     padding-top: 0;
   }
 
@@ -145,8 +130,8 @@ section {
     float: right;
     width: 50%;
     height: 15%;
-    margin-top: 1px;
-    margin-bottom: 1px;
+    margin-top: .035in;
+    margin-bottom: .035in;
     padding-top: 0;
   }
 
@@ -156,11 +141,43 @@ section {
 
   #div-distance {
     margin: .05mm .05mm .05mm .05mm;
+    padding: 0;
+  }
+
+  .page-header {
+    text-align: right;
+    margin: .05mm .05mm .05mm .05mm;
     padding-top: 0;
+    page-break-after: avoid;
+  }
+
+  .page-title {
+    display: none;
+  }
+
+  .panel, .lighter-panel {
+    margin: .005in .005in .005in .005in;
+    border: .025in solid #F5F5F5;
+    padding-top: 0;
+    width: 3.8in;
+    height: 3.25in;
+    page-break-after: avoid;
+  }
+
+  .box {
+    border: .025in solid #F5F5F5;
   }
 }
 
 @page {
+  @top-center {
+    content: element (pageHeader);
+  }
   size: auto;
-  margin: 0 .05mm .05mm .05mm;
+  margin: 0mm;
+  position: absolute;
+}
+
+#pageHeader {
+  position: running(pageHeader);
 }
