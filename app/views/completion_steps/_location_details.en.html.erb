@@ -30,23 +30,4 @@
         class: "button" %>
     </div>
   </li>
-<% elsif not profile.latitude.blank? %>
-  <%= content_tag :div,
-    class: "modal",
-    data: {
-      heading: "Confirm your location",
-      open_on_page_load: true,
-    } do %>
-    <p>
-      We're very sorry to inconvenience you,
-      but we've had some trouble with user location data.
-      Please help us out by confirming your information!
-    </p>
-
-    <div class="modal-actions">
-      <%= link_to "Confirm your location details now",
-        [current_scope, :location_details],
-        class: "button" %>
-    </div>
-  <% end %>
 <% end %>
