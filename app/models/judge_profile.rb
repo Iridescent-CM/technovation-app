@@ -50,10 +50,11 @@ class JudgeProfile < ActiveRecord::Base
   after_commit -> {
     return if destroyed
 
-    if account.email_confirmed? &&
-         consent_signed? &&
-           training_completed? &&
-             survey_completed?
+    if account &&
+         account.email_confirmed? &&
+           consent_signed? &&
+             training_completed? &&
+               survey_completed?
       update_column(:onboarded, true)
     else
       update_column(:onboarded, false)
