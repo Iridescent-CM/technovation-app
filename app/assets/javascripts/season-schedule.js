@@ -165,21 +165,43 @@ document.addEventListener("turbolinks:load", function() {
   function handleSeasonSettingsReview($form) {
     const $reviewDiv = $('#season_review');
 
-    $form.find('[data-opens-modal]').on('modals.beforeOpen', function() {
-      $(document).on("click", '[data-submit-form]', function() {
-        $form.submit();
-      });
+    $(document).on('click', '#season_schedule [data-prepares-modal]', function (e) {
+      e.preventDefault()
 
-      $reviewDiv.html("");
+      if (!$(e.target).data("preparesModal"))
+        return false
 
-      $('h4').each(function() {
-        var $panel = appendPanel($(this), $reviewDiv);
+      $(document).on("click", '[data-submit-form]', function () {
+        $form.submit()
+      })
 
-        appendLabels(
-          $panel,
-          $(this).closest('.tab-content').find('label')
+      var $modal = $('#' + $(e.target).data("preparesModal"))
+
+      $reviewDiv.html("")
+
+      new Promise(function(resolve, reject) {
+        $('h4').each(function() {
+          var $panel = appendPanel($(this), $reviewDiv);
+
+          appendLabels(
+            $panel,
+            $(this).closest('.tab-content').find('label')
+          );
+        })
+
+        resolve()
+      }).then(function() {
+        swal({
+          html: $modal.find(".modal-content"),
+          width: $modal.data("width") || "500px",
+          title: $modal.data("heading") || "",
+          showCloseButton: true,
+          showConfirmButton: false,
+        }).then(
+          function(confirm) { },
+          function(dismiss) { }
         );
-      });
+      })
 
       function appendPanel($heading, $reviewDiv) {
         var $panel = $('<div class="review-panel">'),
