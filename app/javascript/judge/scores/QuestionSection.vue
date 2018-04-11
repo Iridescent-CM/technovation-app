@@ -19,7 +19,27 @@
 
           <slot name="comment-tips" />
 
-          <textarea v-model="comment.text" />
+          <div class="grid grid--bleed grid--justify-space-between">
+            <div class="grid__col-6 grid--align-self-end">
+              <small>(please write at least 40 words, and be less than 40% negative)</small>
+            </div>
+
+            <div class="grid__col-6">
+              <p class="word-count">
+                <span :style="`color: ${colorForWordCount}`">
+                  {{ wordCount(comment.text) }}
+                  {{ wordCount(comment.text) | pluralize('word') }}
+                </span>
+
+                <br />
+
+                <span :style="`font-size: ${fontSizeForBadWordCount}; color: ${colorForBadWordCount}`">
+                  {{ badWordCount }}
+                  {{ badWordCount | pluralize('prohibited word') }}
+                </span>
+              </p>
+            </div>
+          </div>
 
           <div class="comment-sentiment">
             <div
@@ -38,27 +58,9 @@
             ></div>
           </div>
 
+          <textarea v-model="comment.text" />
+
           <div class="grid grid--bleed grid--justify-space-between">
-            <div class="grid__col-6">
-              <p><small>(please write at least 40 words)</small></p>
-            </div>
-
-            <div class="grid__col-6">
-              <p class="word-count">
-                <span :style="`color: ${colorForWordCount}`">
-                  {{ wordCount(comment.text) }}
-                  {{ wordCount(comment.text) | pluralize('word') }}
-                </span>
-
-                <br />
-
-                <span :style="`color: ${colorForBadWordCount}`">
-                  {{ badWordCount }}
-                  {{ badWordCount | pluralize('prohibited word') }}
-                </span>
-              </p>
-            </div>
-
             <div class="grid__col-6 nav-btns--left">
               <p>
                 <router-link
@@ -185,6 +187,16 @@ export default {
       }
     },
 
+    fontSizeForBadWordCount () {
+      const count = this.badWordCount
+
+      if (count < 1) {
+        return 'inherit'
+      } else {
+        return '1.3rem'
+      }
+    },
+
     questions () {
       return this.$store.getters.sectionQuestions(this.section)
     },
@@ -274,7 +286,7 @@ export default {
 
       Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
         .algo("nlp/ProfanityDetection/1.0.0")
-        .pipe([this.commentText, [], false])
+        .pipe([this.commentText, ['suck', 'sucks'], false])
         .then(resp => {
           this.detectedProfanity = resp.result
 
@@ -311,7 +323,7 @@ export default {
   textarea {
     width: 100%;
     height: 35vh;
-    margin: 1rem 0 0;
+    margin: 0 0 1rem;
     padding: 1rem;
     box-shadow: inset 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
   }
