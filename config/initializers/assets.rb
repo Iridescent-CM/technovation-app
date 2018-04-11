@@ -21,6 +21,8 @@ Rails.application.config.assets.precompile += %w(
   mentor.css
   judge.css
 
+  printable_scores.css
+
   public.js
   admin.js
   regional_ambassador.js

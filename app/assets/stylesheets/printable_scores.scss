@@ -1,0 +1,183 @@
+@import "reflex";
+@import "reflex.ext";
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
+@import "variables";
+@import "base";
+@import "lists";
+@import "forms";
+@import "panel";
+@import "button";
+
+#no-border {
+  border: 0;
+}
+
+#layouttable {
+  border: 0;
+  width: 100%;
+  text-align:center;
+  display: inline-block;
+}
+
+#layouttable th.col1 {
+  border-collapse: collapse;
+  width: 60%;
+  vertical-align: top;
+}
+
+#layouttable th.col2 {
+  width: 10%;
+  vertical-align: top;
+}
+
+#layouttable th.col3 {
+  width: 50%;
+  vertical-align: top;
+}
+
+#div-distance {
+  margin-top: 1px;
+}
+
+#print-button {
+  margin: auto;
+  display: block;
+  width: 150px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 2px;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 5px;
+}
+
+section {
+  margin-bottom: 2px;
+}
+
+.page-header {
+  text-align: right;
+  line-height: 5px;
+  margin-top: 0;
+  padding: 0;
+}
+
+.page-title {
+  text-align: left;
+  line-height: 1px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.box {
+  border: 1px solid #ddd;
+  display: inline-block;
+  height: 75px;
+  width: 100%;
+  margin-top: .025px;
+}
+
+@media print {
+
+  td, th, {
+    font-size: 9pt;
+    padding: .024in;
+    border: .025in solid #F5F5F5;
+    margin: .025in .025in .025in .025in;
+    page-break-after: avoid;
+  }
+
+  p {
+    font-size: 9pt;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 10pt;
+    margin-bottom: .05in;
+    padding-top: 0;
+    page-break-after: avoid;
+  }
+
+  h4 {
+    font-size: 9.5pt;
+    margin: .005in .005in .005in .005in;
+    padding-top: 0;
+    page-break-after: avoid;
+  }
+
+  table, #layouttable {
+    margin: .005in .005in .005in .005in;
+    page-break-after: avoid;
+  }
+
+  #left-panel {
+    float: left;
+    width: 50%;
+    height: 15%;
+    margin-top: .035in;
+    margin-bottom: .035in;
+    padding-top: 0;
+  }
+
+  #right-panel {
+    float: right;
+    width: 50%;
+    height: 15%;
+    margin-top: .035in;
+    margin-bottom: .035in;
+    padding-top: 0;
+  }
+
+  #print-button {
+    display: none;
+  }
+
+  #div-distance {
+    margin: .05mm .05mm .05mm .05mm;
+    padding: 0;
+  }
+
+  .page-header {
+    text-align: right;
+    margin: .05mm .05mm .05mm .05mm;
+    padding-top: 0;
+    page-break-after: avoid;
+  }
+
+  .page-title {
+    display: none;
+  }
+
+  .panel, .lighter-panel {
+    margin: .005in .005in .005in .005in;
+    border: .025in solid #F5F5F5;
+    padding-top: 0;
+    width: 3.8in;
+    height: 3.25in;
+    page-break-after: avoid;
+  }
+
+  .box {
+    border: .025in solid #F5F5F5;
+  }
+}
+
+@page {
+  @top-center {
+    content: element (pageHeader);
+  }
+  size: auto;
+  margin: 0mm;
+  position: absolute;
+}
+
+#pageHeader {
+  position: running(pageHeader);
+}
