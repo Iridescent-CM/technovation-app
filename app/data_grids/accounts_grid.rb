@@ -22,6 +22,14 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :virtual_judge_committee do
+    if judge_profile
+      judge_profile.join_virtual? ? "yes" : "NO"
+    else
+      "-"
+    end
+  end
+
   column :parent_guardian_name do
     if student_profile.present?
       student_profile.parent_guardian_name
