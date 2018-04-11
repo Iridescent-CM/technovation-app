@@ -17,10 +17,8 @@ class JudgeProfile < ActiveRecord::Base
 
   acts_as_paranoid
 
-  scope :onboarded, -> {
-    joins(account: :consent_waiver)
-      .where("accounts.email_confirmed_at IS NOT NULL")
-  }
+  scope :onboarded, -> { where(onboarded: true) }
+  scope :onboarding, -> { where(onboarded: false) }
 
   scope :current, -> {
     joins(:current_account)
@@ -43,6 +41,22 @@ class JudgeProfile < ActiveRecord::Base
         :user_invitation,
         "is required unless there's an account"
       )
+    end
+  }
+
+  attr_accessor :destroyed
+  after_destroy -> { self.destroyed = true }
+
+  after_commit -> {
+    return if destroyed
+
+    if account.email_confirmed? &&
+         consent_signed? &&
+           training_completed? &&
+             survey_completed?
+      update_column(:onboarded, true)
+    else
+      update_column(:onboarded, false)
     end
   }
 
@@ -168,13 +182,6 @@ class JudgeProfile < ActiveRecord::Base
 
   def authenticated?
     true
-  end
-
-  def onboarded?
-    account.email_confirmed? and
-      consent_signed? and
-        training_completed? and
-            survey_completed?
   end
 
   def onboarding?

@@ -117,9 +117,9 @@ class AccountsGrid
     end
   end
 
-  column :completed_training do
+  column :onboarded_judges do
     if judge_profile.present?
-      judge_profile.training_completed? ? "yes" : "no"
+      judge_profile.onboarded? ? "yes" : "no"
     else
       "-"
     end
@@ -240,18 +240,21 @@ class AccountsGrid
       send(value)
     end
 
-  filter :completed_training,
+  filter :onboarded_judges,
     :enum,
-    header: "Completed training (judges only)",
     select: [
-      ['Completed', 'completed_training'],
-      ['Not completed', 'incomplete_training'],
+      ['Yes, fully onboarded', 'onboarded'],
+      ['No, still onboarding', 'onboarding'],
     ],
     filter_group: "common",
     if: ->(g) {
       (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.send(value)
+      scope.where(
+        "judge_profiles.id IS NOT NULL AND " +
+        "judge_profiles.onboarded = ?",
+         value == 'onboarded' ? true : false
+      )
     end
 
   filter :name_email,
