@@ -660,7 +660,8 @@ CREATE TABLE public.judge_profiles (
     skills character varying,
     degree character varying,
     join_virtual boolean,
-    survey_completed boolean
+    survey_completed boolean,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -2978,6 +2979,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180409220653'),
 ('20180410160317'),
 ('20180410171021'),
-('20180410201244');
+('20180410201244'),
+('20180411134940');
 
 

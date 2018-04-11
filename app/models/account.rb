@@ -21,7 +21,6 @@ class Account < ActiveRecord::Base
   has_one :student_profile, dependent: :destroy
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
-
   has_one :regional_ambassador_profile, dependent: :destroy
 
   RegionalAmbassadorProfile.statuses.keys.each do |status|
