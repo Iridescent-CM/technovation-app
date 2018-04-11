@@ -23,8 +23,32 @@ class AccountsGrid
   column :email, mandatory: true
 
   column :virtual_judge_committee do
-    if judge_profile
+    if judge_profile.present?
       judge_profile.join_virtual? ? "yes" : "NO"
+    else
+      "-"
+    end
+  end
+
+  column :judge_industry do
+    if judge_profile.present?
+      judge_profile.industry_text
+    else
+      "-"
+    end
+  end
+
+  column :judge_skills do
+    if judge_profile.present?
+      judge_profile.skills
+    else
+      "-"
+    end
+  end
+
+  column :judge_degree do
+    if judge_profile.present?
+      judge_profile.degree
     else
       "-"
     end
