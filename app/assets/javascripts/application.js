@@ -4,6 +4,7 @@
 //= require jquery3
 //= require jquery_ujs
 //= require chosen-jquery
+//= require promise-polyfill.min
 //= require sweetalert2
 //= require jquery.sticky-kit.min
 
