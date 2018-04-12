@@ -168,6 +168,14 @@ class SubmissionScore < ActiveRecord::Base
     judge_profile.selected_regional_pitch_event_name
   end
 
+  def judge_name
+    judge_profile.name
+  end
+
+  def team_name
+    team.name
+  end
+
   def event_official_status
     if judge_profile.selected_regional_pitch_event.live?
       judge_profile.selected_regional_pitch_event.unofficial? ? "unofficial" : "official"
