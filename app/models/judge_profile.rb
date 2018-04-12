@@ -142,7 +142,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def complete_training!
-    update_column(:completed_training_at, Time.current)
+    update(completed_training_at: Time.current)
   end
 
   def training_completed?
