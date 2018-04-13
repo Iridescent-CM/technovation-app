@@ -72,7 +72,14 @@ class TeamSubmission < ActiveRecord::Base
     dependent: :destroy
   accepts_nested_attributes_for :code_checklist
 
-  has_many :submission_scores, -> { current }, dependent: :destroy
+  has_many :submission_scores,
+    -> { current },
+    dependent: :destroy
+
+  has_many :complete_submission_scores,
+    -> { current.complete },
+    class_name: "SubmissionScore",
+    dependent: :destroy
 
   validate -> {
     unless integrity_affirmed?

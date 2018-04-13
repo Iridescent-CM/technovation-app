@@ -28,7 +28,11 @@ header {
   }
 
   h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h4 {
+    color: #666;
   }
 }
 
@@ -50,7 +54,6 @@ header table {
       border: none;
     }
   }
-
   th {
     text-transform: uppercase;
   }
@@ -93,13 +96,28 @@ h4 {
 @media print {
   body {
     font-size: 9pt !important;
+    padding: 0;
   }
 
   button {
     display: none !important;
   }
+
+  .page {
+    page-break-before: always;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  .page.junior {
+    padding: 1rem;
+
+    table {
+      margin-bottom: 5rem;
+    }
+  }
 }
 
 @page {
-  margin: 0;
+  margin: 5px 10px;
 }
