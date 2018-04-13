@@ -594,6 +594,8 @@ class Account < ActiveRecord::Base
       student_profile.teams
     elsif mentor_profile
       mentor_profile.teams
+    elsif judge_profile
+      judge_profile.assigned_teams
     else
       ::NullTeams.new
     end
