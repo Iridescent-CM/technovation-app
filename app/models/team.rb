@@ -15,10 +15,14 @@ class Team < ActiveRecord::Base
   end
 
   scope :has_students, -> { where(has_students: true) }
+  scope :no_students, -> { where(has_students: false) }
 
   scope :all_students_onboarded, -> { where(all_students_onboarded: true) }
   scope :some_students_onboarding, -> {
-    where("has_students = ? AND all_students_onboarded = ?", true, false)
+    where(
+      has_students: true,
+      all_students_onboarded: false
+    )
   }
 
   scope :by_query, ->(query) {

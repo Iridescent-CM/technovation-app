@@ -54,8 +54,7 @@ class TeamsGrid
   end
 
   column :qualified do
-    students.any? &&
-      students.all?(&:onboarded?) ? "yes" : "NO"
+    all_students_onboarded? ? "yes" : "NO"
   end
 
   filter :division,
@@ -98,7 +97,8 @@ class TeamsGrid
     :enum,
     header: "All students onboarded?",
     select: [["Yes, students are onboarded", "all_students_onboarded"],
-             ["No, some students are not onboarded", "some_students_onboarding"]],
+             ["No, some students are not onboarded", "some_students_onboarding"],
+             ["No, there are no students", "no_students"]],
     filter_group: "common" do |value|
       send(value)
   end
