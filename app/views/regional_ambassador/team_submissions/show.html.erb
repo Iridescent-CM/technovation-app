@@ -5,6 +5,7 @@
   <div class="grid__col-6">
     <div class="panel">
       <h3><%= @team_submission.team_name %></h3>
+
       <div class="grid">
         <div class="grid__col-6">
           <%= image_tag(
@@ -12,6 +13,7 @@
             class: "thumbnail--mdlg grid__cell-img"
           ) %>
         </div>
+
         <div class="grid__col-6">
           <%= web_icon(
             "flag-o",
@@ -28,25 +30,18 @@
           <div class="grid__cell--padding-sm-y">
             <%= submission_progress_bar(@team_submission) %>
           </div>
-
         </div>
       </div>
 
-      <h5>
-        <% if @team_submission.app_name %>
-          <p><%= @team_submission.app_name%></p>
-        <% else %>
-          blank
-        <% end %>
-      </h5>
-      <p>
-        <% if @team_submission.app_description %>
-          <p><%= @team_submission.app_description %></p>
-        <% else %>
-          blank
-        <% end %>
-      </p>
+      <dl>
+        <dt>App Name</dt>
+        <dd><%= @team_submission.app_name%></dd>
+
+        <dt>Description</dt>
+        <dd><%= simple_format @team_submission.app_description %></dd>
+      </dl>
     </div>
+
     <div class="grid__cell--padding-sm-x">
       <%= link_to "Back", :back, class: "button button--small" %>
     </div>
@@ -54,98 +49,117 @@
 
   <div class="grid__col-6">
     <div class="panel">
-      <h5>Pitch</h5>
+      <dl>
+        <dt>Pitch Video:</dt>
 
-      <p>
-        Pitch Video:
+        <dd>
+          <% if @team_submission.pitch_video_link %>
+            <%= link_to @team_submission.pitch_video_link,
+                @team_submission.pitch_video_link,
+                target: :_blank %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
 
-        <% if @team_submission.pitch_video_link %>
-          <%= link_to @team_submission.pitch_video_link,
-              @team_submission.pitch_video_link,
-              target: :_blank %>
-        <% else %>
-            blank
-        <% end %>
+      <dt>Demo Video:</dt>
 
-      </p>
-
-      <p>
-        Demo Video:
-
+      <dd>
         <% if @team_submission.pitch_video_link %>
           <%= link_to @team_submission.demo_video_link,
               @team_submission.demo_video_link,
               target: :_blank %>
         <% else %>
-          <span>blank</span>
+          -
         <% end %>
+      </dd>
 
-      </p>
+        <% if @team_submission.team.live_event? %>
+          <dt>Pitch Presentation</dt>
+          <dd>
+            <% if @team_submission.pitch_presentation_url %>
+              <%= link_to @team_submission.pitch_presentation_identifier,
+                @team_submission.pitch_presentation_url,
+                target: :_blank %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        <% end %>
+      </dl>
 
       <% if @team_submission.senior_division? %>
-        <h5>Entrepreneurship</h5>
-
-        <p>
-          Business Plan:
-          <% if @team_submission.seasons == [2017] %>
-            <% if bp = BusinessPlan.find_by(team_submission_id: @team_submission.id) %>
-              <%= link_to bp.uploaded_file_identifier,
-                bp.uploaded_file_url,
-                target: :_blank %>
+        <dl>
+          <dt>Business Plan:</dt>
+          <dd>
+            <% if @team_submission.seasons == [2017] %>
+              <% if bp = BusinessPlan.find_by(team_submission_id: @team_submission.id) %>
+                <%= link_to bp.uploaded_file_identifier,
+                  bp.uploaded_file_url,
+                  target: :_blank %>
+              <% else %>
+                -
+              <% end %>
             <% else %>
-              <span>blank</span>
+              <% if @team_submission.business_plan_url %>
+                <%= link_to @team_submission.business_plan_identifier,
+                  @team_submission.business_plan_url,
+                  target: :_blank %>
+              <% else %>
+                -
+              <% end %>
             <% end %>
-          <% else %>
-            <% if @team_submission.business_plan_url %>
-              <%= link_to @team_submission.business_plan_identifier,
-                @team_submission.business_plan_url,
-                target: :_blank %>
-            <% else %>
-              <span>blank</span>
-            <% end %>
-          <% end %>
-        </p>
+          </dd>
+        </dl>
       <% end %>
 
-      <h5>Technical</h5>
-      <p>
-        Source Code:
+      <dl>
+        <dt>Source Code:</dt>
 
-        <% if @team_submission.source_code_url %>
-          <%= link_to @team_submission.source_code_identifier,
-            @team_submission.source_code_url,
-            target: :_blank %>
-        <% else %>
-          blank
-        <% end %>
+        <dd>
+          <% if @team_submission.source_code_url %>
+            <%= link_to @team_submission.source_code_identifier,
+              @team_submission.source_code_url,
+              target: :_blank %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
 
-      </p>
-      <p>
-        Development Platform:
+        <dt>Development Platform:</dt>
 
-        <% if @team_submission.development_platform %>
-          <%= @team_submission.development_platform_text %>
-        <% else %>
-         blank
-        <% end %>
+        <dd>
+          <% if @team_submission.development_platform %>
+            <%= @team_submission.development_platform_text %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
+
+        <dt>Screenshots</dt>
+        <dd>
+          <% if @team_submission.screenshots.any? %>
+            <div class="submission-pieces__screenshots">
+              <% @team_submission.screenshots.each do |screenshot| %>
+                <div class="submission-pieces__screenshot">
+                  <%= image_tag screenshot.image_url,
+                  data: {
+                    modal_url: screenshot.image_url(:large),
+                  } %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            No screenshots uploaded
+          <% end %>
+        </dd>
+      </dt>
+
       <p>
-        <% if @team_submission.screenshots.any? %>
-          <div class="submission-pieces__screenshots">
-            <% @team_submission.screenshots.each do |screenshot| %>
-              <div class="submission-pieces__screenshot">
-                <%= image_tag screenshot.image_url,
-                data: {
-                  modal_url: screenshot.image_url(:large),
-                } %>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          No screenshots uploaded
-        <% end %>
-      </p>
-      <p>
-        <%= "#{@team_submission.team_name} has earned #{@team_submission.code_checklist_points}/10 for their code checklist." %>
+        <%= @team_submission.team_name %>
+        has earned
+        <%= @team_submission.code_checklist_points %>/10
+        for their code checklist.
       </p>
     </div>
   </div>
