@@ -234,10 +234,12 @@ class Team < ActiveRecord::Base
   delegate :name, to: :division, prefix: true
 
   after_commit -> {
-    if has_students and students.all?(&:onboarded)
+    if has_students? and students.all?(&:onboarded)
       update_column(:all_students_onboarded, true)
-    else
+    elsif has_students?
       update_column(:all_students_onboarded, false)
+    else
+      update_column(:has_students, false)
     end
   }
 
