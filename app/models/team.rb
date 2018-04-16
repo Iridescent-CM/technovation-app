@@ -235,7 +235,10 @@ class Team < ActiveRecord::Base
 
   after_commit -> {
     if students.any? and students.all?(&:onboarded)
-      update_column(:all_students_onboarded, true)
+      update_columns(
+        has_students: true,
+        all_students_onboarded: true
+      )
     elsif students.any?
       update_column(:all_students_onboarded, false)
     else

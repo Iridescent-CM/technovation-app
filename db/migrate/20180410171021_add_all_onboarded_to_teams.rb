@@ -4,10 +4,11 @@ class AddAllOnboardedToTeams < ActiveRecord::Migration[5.1]
 
     Team.current.includes(:students).find_each do |t|
       if t.students.any? && t.students.all?(&:onboarded)
-        t.update_column(:all_students_onboarded, true)
-      elsif t.students.any?
-        t.update_column(:all_students_onboarded, false)
-      else
+        t.update_columns(
+          all_students_onboarded: true,
+          has_students: true
+        )
+      elsif t.students.none?
         t.update_column(:has_students, false)
       end
     end
