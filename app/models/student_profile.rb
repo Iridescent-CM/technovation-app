@@ -95,13 +95,7 @@ class StudentProfile < ActiveRecord::Base
 
   after_commit -> {
     return if destroyed
-
-    if can_be_marked_onboarded?
-      update_column(:onboarded, true)
-    else
-      update_column(:onboarded, false)
-    end
-
+    update_column(:onboarded, can_be_marked_onboarded?)
     team.touch
   }
 
