@@ -4,7 +4,29 @@
 </button>
 
 <% @groups.each do |group_idx, scores| %>
-  <div class="cover-page">Cover page</div>
+  <div class="cover-page">
+    <h1><%= @event.name %></h1>
+
+    <div class="cover-page-teams">
+      <h1>Teams</h1>
+
+      <ul>
+        <% scores.flat_map(&:team).uniq.each do |team| %>
+          <li><%= team.name %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="cover-page-judges">
+      <h1>Judges</h1>
+
+      <ul>
+        <% scores.flat_map(&:judge_profile).uniq.each do |judge| %>
+          <li><%= judge.name %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
   <% scores.each do |score| %>
     <div class="page <%= score.team.division_name %>">

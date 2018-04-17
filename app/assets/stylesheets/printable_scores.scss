@@ -118,6 +118,40 @@ h4 {
   }
 }
 
+.cover-page {
+  page-break-before: always;
+  page-break-after: always;
+  page-break-inside: avoid;
+  text-align: center;
+  padding: 40vh 0;
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 3rem;
+  }
+
+  .cover-page-teams,
+  .cover-page-judges {
+    width: 50%;
+    float: left;
+
+    h1 {
+      font-size: 1.2rem;
+      margin: 0 0 1rem;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0 0 1rem;
+      }
+    }
+  }
+}
+
 @page {
   margin: 5px 10px;
 }
