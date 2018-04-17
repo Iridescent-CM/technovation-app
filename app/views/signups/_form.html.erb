@@ -19,6 +19,13 @@
       <% if admin || signup.used_global_invitation? %>
         <%= f.fields_for :account do |a| %>
           <%= a.input :email %>
+
+          <% if signup.account.errors[:email].include?("has already been taken") %>
+            <p>
+              (<%= link_to "try logging in instead",
+               login_path(email: signup.email) %>)
+            </p>
+          <% end %>
         <% end %>
       <% elsif signup.new_record? %>
         <p>
