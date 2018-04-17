@@ -87,10 +87,10 @@ h4 {
   margin: 1rem auto 0;
 }
 
-.button {
-  display: block;
-  width: 20vw;
-  margin: 0 auto !important;
+.print-button {
+  text-align: center;
+  position: fixed;
+  width: 100%;
 }
 
 @media print {
@@ -99,7 +99,9 @@ h4 {
     padding: 0;
   }
 
-  button {
+  .print-button,
+  button,
+  .button {
     display: none !important;
   }
 
@@ -122,8 +124,15 @@ h4 {
   page-break-before: always;
   page-break-after: always;
   page-break-inside: avoid;
-  text-align: center;
-  padding: 40vh 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .cover-page-content {
+    max-width: 50%;
+    text-align: center;
+  }
 
   h1 {
     font-size: 1.4rem;
