@@ -204,7 +204,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
 
     resources :consent_waivers, only: [:new, :create, :show]
-    resource :survey_answers, except: [:index, :destroy]
+    resource :survey_answers, except: [:index, :destroy, :show]
 
     resources :regional_pitch_events, only: :show
 

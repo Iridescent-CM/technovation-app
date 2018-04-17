@@ -5,59 +5,7 @@
         Please help Technovation improve by telling us about yourself
       </h3>
 
-      <%= form_with(
-        model: current_judge,
-        local: true,
-      ) do |f| %>
-        <%= hidden_field_tag :return_to, judge_dashboard_path %>
-
-        <p>
-          <%= f.label :industry %>
-
-          <%= f.select :industry,
-            JudgeProfile.industries.keys,
-            {
-              prompt: true,
-            },
-            data: {
-              toggles: {
-                "Other": ".industry_other",
-                }
-            } %>
-
-          <span class="industry_other">
-            <%= f.text_field :industry_other,
-              placeholder: "Please specify" %>
-          </span>
-        </p>
-
-        <p>
-          <%= f.label :skills %>
-          <%= f.text_field :skills,
-            placeholder: "(example) programming, marketing, " +
-                         "project management, ..." %>
-        </p>
-
-        <p>
-          <%= f.label :degree %>
-          <%= f.text_field :degree,
-            placeholder: "(example) B.S. Telecommunications" %>
-        </p>
-
-        <p>
-          <%= f.check_box :join_virtual,
-            id: "judge_profile_join_virtual" %>
-
-          <%= f.label :join_virtual,
-            "I would like to join the virtual Judge committee" %>
-        </p>
-
-        <%= f.hidden_field :survey_completed, value: 1 %>
-
-        <p>
-          <%= f.submit "Save", class: "button" %>
-        </p>
-      <% end %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>

@@ -1,0 +1,19 @@
+<dl>
+  <dt>Industry</dt>
+  <dd><%= current_judge.industry_text %></dd>
+
+  <dt>Skills</dt>
+  <dd><%= current_judge.skills %></dd>
+
+  <dt>Degree</dt>
+  <dd><%= current_judge.degree %></dd>
+
+  <dt>Join the virtual judge committee?</dt>
+  <dd><%= current_judge.join_virtual? ? "yes" : "no" %></dd>
+</dl>
+
+<%= link_to "Change answers",
+  edit_judge_survey_answers_path(
+    return_to: judge_profile_path(anchor: "!survey-answers")
+  ),
+  class: "button" %>
