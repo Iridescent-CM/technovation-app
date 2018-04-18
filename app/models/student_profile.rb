@@ -94,9 +94,12 @@ class StudentProfile < ActiveRecord::Base
   after_destroy -> { self.destroyed = true }
 
   after_commit -> {
-    return if destroyed
-    update_column(:onboarded, can_be_marked_onboarded?)
-    team.touch
+    if destroyed
+      team.touch
+    else
+      update_column(:onboarded, can_be_marked_onboarded?)
+      team.touch
+    end
   }
 
   validates :school_name, presence: true
