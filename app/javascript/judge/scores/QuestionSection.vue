@@ -10,87 +10,84 @@
       </score-entry>
     </div>
 
-    <div :class="solo ? 'grid__col-md-6' : 'grid__col-12 col--sticky-parent'">
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <h3>{{ section | capitalize }} comment</h3>
+    <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
+      <h3>{{ section | capitalize }} comment</h3>
 
-          <h5 class="heading--reset">Please keep in mind</h5>
+      <h5 class="heading--reset">Please keep in mind</h5>
 
-          <slot name="comment-tips" />
+      <slot name="comment-tips" />
 
-          <div class="grid grid--bleed grid--justify-space-between">
-            <div class="grid__col-6 grid--align-self-end">
-              <small>(please write at least 40 words, and be less than 40% negative)</small>
-            </div>
+      <div class="grid grid--bleed grid--justify-space-between">
+        <div class="grid__col-6 grid--align-self-end">
+          <small>(please write at least 40 words, and be less than 40% negative)</small>
+        </div>
 
-            <div class="grid__col-6">
-              <p class="word-count">
-                <span :style="`color: ${colorForWordCount}`">
-                  {{ wordCount(comment.text) }}
-                  {{ wordCount(comment.text) | pluralize('word') }}
-                </span>
+        <div class="grid__col-6">
+          <p class="word-count">
+            <span :style="`color: ${colorForWordCount}`">
+              {{ wordCount(comment.text) }}
+              {{ wordCount(comment.text) | pluralize('word') }}
+            </span>
 
-                <br />
+            <br />
 
-                <span :style="`font-size: ${fontSizeForBadWordCount}; color: ${colorForBadWordCount}`">
-                  {{ badWordCount }}
-                  {{ badWordCount | pluralize('prohibited word') }}
-                </span>
-              </p>
-            </div>
-          </div>
-
-          <div class="comment-sentiment">
-            <div
-              v-tooltip.top-center="sentimentTooltip('positive')"
-              :style="`width: ${sentimentPercentage('positive')}`"
-            ></div>
-
-            <div
-              v-tooltip.top-center="sentimentTooltip('neutral')"
-              :style="`width: ${sentimentPercentage('neutral')}`"
-            ></div>
-
-            <div
-              v-tooltip.top-center="sentimentTooltip('negative')"
-              :style="`width: ${sentimentPercentage('negative')}`"
-            ></div>
-          </div>
-
-          <textarea v-model="comment.text" />
-
-          <div class="grid grid--bleed grid--justify-space-between">
-            <div class="grid__col-6 nav-btns--left">
-              <p>
-                <router-link
-                  v-if="!!prevSection"
-                  :to="{ name: prevSection }"
-                  class="button button--small btn-prev"
-                >
-                  Back: {{ prevBtnTxt }}
-                </router-link>
-              </p>
-            </div>
-
-            <div class="grid__col-6 nav-btns--right">
-              <p>
-                <span v-tooltip="nextDisabledMsg">
-                  <router-link
-                    v-if="!!nextSection"
-                    :to="{ name: nextSection }"
-                    :disabled="goingNextIsDisabled"
-                    class="button button--small btn-next"
-                  >
-                    Next: {{ nextBtnTxt }}
-                  </router-link>
-                </span>
-              </p>
-            </div>
-          </div>
+            <span :style="`font-size: ${fontSizeForBadWordCount}; color: ${colorForBadWordCount}`">
+              {{ badWordCount }}
+              {{ badWordCount | pluralize('prohibited word') }}
+            </span>
+          </p>
         </div>
       </div>
-    </div>
+
+      <div class="comment-sentiment">
+        <div
+          v-tooltip.top-center="sentimentTooltip('positive')"
+          :style="`width: ${sentimentPercentage('positive')}`"
+        ></div>
+
+        <div
+          v-tooltip.top-center="sentimentTooltip('neutral')"
+          :style="`width: ${sentimentPercentage('neutral')}`"
+        ></div>
+
+        <div
+          v-tooltip.top-center="sentimentTooltip('negative')"
+          :style="`width: ${sentimentPercentage('negative')}`"
+        ></div>
+      </div>
+
+      <textarea v-model="comment.text" />
+
+      <div class="grid grid--bleed grid--justify-space-between">
+        <div class="grid__col-6 nav-btns--left">
+          <p>
+            <router-link
+              v-if="!!prevSection"
+              :to="{ name: prevSection }"
+              class="button button--small btn-prev"
+            >
+              Back: {{ prevBtnTxt }}
+            </router-link>
+          </p>
+        </div>
+
+        <div class="grid__col-6 nav-btns--right">
+          <p>
+            <span v-tooltip="nextDisabledMsg">
+              <router-link
+                v-if="!!nextSection"
+                :to="{ name: nextSection }"
+                :disabled="goingNextIsDisabled"
+                class="button button--small btn-next"
+              >
+                Next: {{ nextBtnTxt }}
+              </router-link>
+            </span>
+          </p>
+        </div>
+      </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -309,8 +306,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .grid,
-  .col--sticky {
+  .grid {
     background: white;
   }
 
