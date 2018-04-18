@@ -11,12 +11,10 @@ RSpec.describe SuspiciousSubmissionScores do
 
   describe "when same judge completes 2 scores too fast" do
     it "includes those scores" do
-      expect(SeasonToggles).to be_quarterfinals_judging
-
       judge  = FactoryBot.create(:judge)
-      score = FactoryBot.create(:score, judge_profile: judge)
-      score2 = FactoryBot.create(:score, judge_profile: judge)
-      score3 = FactoryBot.create(:score, judge_profile: judge)
+      score = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
+      score2 = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
+      score3 = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
 
       score.complete!
       expect(score).to be_completed_too_fast
@@ -35,6 +33,54 @@ RSpec.describe SuspiciousSubmissionScores do
 
       suspicious = SuspiciousSubmissionScores.new
       expect(suspicious.map(&:id)).to eq([score3.id])
+    end
+  end
+
+  describe "when score is too low" do
+    it "includes those scores" do
+      senior_min_score = FactoryBot.create(:score, :senior)
+      junior_min_score = FactoryBot.create(:score, :junior)
+
+      senior_low_score = FactoryBot.create(:score, :senior)
+      junior_low_score = FactoryBot.create(:score, :junior)
+
+      senior_min_score.update({
+        sdg_alignment: 5,
+        evidence_of_problem: 5,
+        problem_addressed: 5,
+        app_functional: 5,
+        business_plan_short_term: 5,
+      })
+
+      junior_min_score.update({
+        sdg_alignment: 5,
+        evidence_of_problem: 5,
+        problem_addressed: 5,
+        app_functional: 5,
+      })
+
+      senior_low_score.update({
+        sdg_alignment: 5,
+        evidence_of_problem: 5,
+        problem_addressed: 5,
+        app_functional: 5,
+        business_plan_short_term: 2,
+      })
+
+      junior_low_score.update({
+        sdg_alignment: 5,
+        evidence_of_problem: 5,
+        problem_addressed: 5,
+        app_functional: 3,
+      })
+
+      SubmissionScore.find_each(&:complete!)
+
+      suspicious = SuspiciousSubmissionScores.new
+      expect(suspicious.map(&:id)).to contain_exactly(
+        senior_low_score.id,
+        junior_low_score.id,
+      )
     end
   end
 end

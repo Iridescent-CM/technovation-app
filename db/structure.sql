@@ -1328,7 +1328,8 @@ CREATE TABLE public.submission_scores (
     overall_comment_word_count integer DEFAULT 0,
     overall_comment_bad_word_count integer DEFAULT 0,
     completed_too_fast boolean DEFAULT false,
-    completed_too_fast_repeat_offense boolean DEFAULT false
+    completed_too_fast_repeat_offense boolean DEFAULT false,
+    seems_too_low boolean DEFAULT false
 );
 
 
@@ -2949,6 +2950,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180410171021'),
 ('20180410201244'),
 ('20180411134940'),
-('20180418162816');
+('20180418162816'),
+('20180418193758');
 
 

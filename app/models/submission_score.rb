@@ -6,6 +6,9 @@ class SubmissionScore < ActiveRecord::Base
   include Regioned
   regioned_source Team, through: :team_submission
 
+  SENIOR_LOW_SCORE_THRESHOLD = 23
+  JUNIOR_LOW_SCORE_THRESHOLD = 19
+
   before_destroy -> {
     if incomplete?
       team_submission.clear_judge_opened_details!
@@ -24,6 +27,14 @@ class SubmissionScore < ActiveRecord::Base
         )
           update_column(:completed_too_fast_repeat_offense, true)
         end
+      end
+
+      if senior_team_division? && total < SENIOR_LOW_SCORE_THRESHOLD
+        update_column(:seems_too_low, true)
+      elsif junior_team_division? && total < JUNIOR_LOW_SCORE_THRESHOLD
+        update_column(:seems_too_low, true)
+      elsif seems_too_low?
+        update_column(:seems_too_low, false)
       end
     end
   }
@@ -117,6 +128,8 @@ class SubmissionScore < ActiveRecord::Base
   scope :completed_too_fast_repeat_offense, -> {
     where(completed_too_fast_repeat_offense: true)
   }
+
+  scope :seems_too_low, -> { where(seems_too_low: true) }
 
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }
@@ -232,6 +245,10 @@ class SubmissionScore < ActiveRecord::Base
 
   def senior_team_division?
     team_submission.team.division.senior?
+  end
+
+  def junior_team_division?
+    team_submission.team.division.junior?
   end
 
   def total

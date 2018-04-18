@@ -9,6 +9,14 @@ FactoryBot.define do
       completed_at Time.current
     end
 
+    trait :senior do
+      association(:team_submission, factory: [:team_submission, :senior])
+    end
+
+    trait :junior do
+      association(:team_submission, factory: [:team_submission, :junior])
+    end
+
     trait :brazil do
       association(:team_submission, factory: [:team_submission, :brazil])
     end
@@ -22,6 +30,14 @@ FactoryBot.define do
 
     trait :chicago do
       association(:team_submission, factory: [:team_submission, :chicago])
+    end
+
+    trait :minimum_total do
+      sdg_alignment 5
+      evidence_of_problem 5
+      problem_addressed 5
+      app_functional 5
+      business_plan_short_term 5
     end
   end
 end
