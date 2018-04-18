@@ -13,7 +13,6 @@ class RequiredFields
       demo_video_link
       pitch_video_link
       source_code_url
-      screenshots
     ).map do |field|
       RequiredField.for(submission, field)
     end

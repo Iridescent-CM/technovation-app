@@ -43,7 +43,6 @@ FactoryBot.define do
         sub.update_column(:source_code,  "source_code.zip")
         sub.update_column(:business_plan,  "business_plan.pdf")
         sub.update_column(:pitch_presentation,  "slides.pdf")
-        2.times { sub.screenshots.create! }
         sub.reload.published!
       end
     end
