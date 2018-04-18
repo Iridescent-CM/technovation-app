@@ -3,12 +3,12 @@ module Admin
     def create
       student = StudentProfile.find(params[:id])
 
-      student.student_profile.update_columns(parent_guardian_name: "ON FILE",
-                                             parent_guardian_email: "ON FILE")
+      student.student_profile.update(parent_guardian_name: "ON FILE",
+                                     parent_guardian_email: "ON FILE")
 
       consent = ParentalConsent.where(student_profile_id: params[:id]).last
 
-      consent.update_columns(
+      consent.update(
         status: ParentalConsent.statuses[:signed],
         electronic_signature: "ON FILE"
       )
