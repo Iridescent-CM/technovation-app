@@ -12,9 +12,19 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
-  after_commit ->(sub) {
-    if !!sub.completed_at
-      sub.team_submission.update_average_scores
+  after_commit -> {
+    if !!completed_at
+      team_submission.update_average_scores
+
+      if completed_at - created_at < 10.minutes
+        update_column(:completed_too_fast, true)
+
+        if self.class.current_round.completed_too_fast.where.not(id: id).exists?(
+          judge_profile: judge_profile
+        )
+          update_column(:completed_too_fast_repeat_offense, true)
+        end
+      end
     end
   }
 
@@ -102,6 +112,11 @@ class SubmissionScore < ActiveRecord::Base
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
   scope :incomplete, -> { where("completed_at IS NULL") }
+
+  scope :completed_too_fast, -> { where(completed_too_fast: true) }
+  scope :completed_too_fast_repeat_offense, -> {
+    where(completed_too_fast_repeat_offense: true)
+  }
 
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }
