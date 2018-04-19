@@ -185,6 +185,8 @@ module DatagridController
              "technovation-teams"
            when "submissions_grid"
              "technovation-submissions"
+           when "events_grid"
+             "technovation-events"
            else
              "[DEV] Change me in DatagridController.rb"
            end

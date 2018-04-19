@@ -40,7 +40,11 @@ class RegionalPitchEvent < ActiveRecord::Base
     -> { includes(:account).references(:accounts).distinct },
     class_name: "UserInvitation"
 
-  has_and_belongs_to_many :teams, -> { distinct.joins(:team_submissions) }
+  has_and_belongs_to_many :teams,
+    -> { distinct.joins(:team_submissions) },
+    before_add: :inc_teams_count,
+    before_remove: :dec_teams_count
+
   has_many :team_submissions, through: :teams
 
   has_many :messages, as: :regarding
@@ -183,5 +187,14 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def name_with_friendly_country_prefix
     "#{FriendlyCountry.(ambassador.account)} - #{name}"
+  end
+
+  private
+  def inc_teams_count(team)
+    RegionalPitchEvent.increment_counter('teams_count', id)
+  end
+
+  def dec_teams_count(team)
+    RegionalPitchEvent.decrement_counter('teams_count', id)
   end
 end

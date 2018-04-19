@@ -43,7 +43,10 @@ RSpec.describe RegionalPitchEvent do
 
     rpe = FactoryBot.create(:event, :senior)
 
-    AddTeamToRegionalEvent.(rpe, team)
+    expect {
+      AddTeamToRegionalEvent.(rpe, team)
+    }.to change { rpe.reload.teams_count }.from(0).to(1)
+
     live_judge.regional_pitch_events << rpe
 
     live_judge.submission_scores.create!({

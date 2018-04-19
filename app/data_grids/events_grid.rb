@@ -41,9 +41,7 @@ class EventsGrid
     judge_list.size
   end
 
-  column :team_count do
-    teams.count
-  end
+  column :teams_count, header: "Team count", mandatory: true
 
   column :actions, mandatory: true, html: true do |event|
     link_to "view", admin_event_path(event)
