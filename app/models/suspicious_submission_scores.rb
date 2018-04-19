@@ -4,7 +4,7 @@ class SuspiciousSubmissionScores
   attr_reader :scores
 
   def initialize
-    @scores = SubmissionScore.complete.unapproved
+    @scores = SubmissionScore.current.complete.unapproved
   end
 
   def each(&block)
