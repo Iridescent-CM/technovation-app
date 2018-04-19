@@ -16,28 +16,15 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   after_commit -> {
-    if !!completed_at
-      team_submission.update_average_scores
+    team_submission.update_average_scores
 
-      if completed_at - created_at < 10.minutes
-        update_column(:completed_too_fast, true)
-
-        if self.class.current_round.completed_too_fast.where.not(id: id).exists?(
-          judge_profile: judge_profile
-        )
-          update_column(:completed_too_fast_repeat_offense, true)
-        end
-      end
-
-      if senior_team_division? && raw_total < SENIOR_LOW_SCORE_THRESHOLD
-        update_column(:seems_too_low, true)
-      elsif junior_team_division? && raw_total < JUNIOR_LOW_SCORE_THRESHOLD
-        update_column(:seems_too_low, true)
-      elsif seems_too_low?
-        update_column(:seems_too_low, false)
-      end
-    end
-  }
+    update_columns(
+      completed_too_fast: detect_if_completed_too_fast,
+      completed_too_fast_repeat_offense: detect_if_too_fast_repeat_offense,
+      seems_too_low: detect_if_raw_total_seems_too_low,
+      approved_at: can_automatically_approve? ? Time.current : nil,
+    )
+  }, if: :complete?
 
   before_create -> {
     self.seasons = [Season.current.year]
@@ -130,6 +117,9 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   scope :seems_too_low, -> { where(seems_too_low: true) }
+
+  scope :approved, -> { where("approved_at IS NOT NULL") }
+  scope :unapproved, -> { where(approved_at: nil) }
 
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }
@@ -231,7 +221,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def complete?
-    completed_at != nil
+    !!completed_at
   end
 
   def incomplete?
@@ -241,6 +231,10 @@ class SubmissionScore < ActiveRecord::Base
   def complete!
     update(completed_at: Time.current)
     team_submission.clear_judge_opened_details!
+  end
+
+  def approved?
+    !!approved_at
   end
 
   def senior_team_division?
@@ -257,6 +251,10 @@ class SubmissionScore < ActiveRecord::Base
         entrepreneurship_total +
           pitch_total +
             overall_impression_total
+  end
+
+  def raw_technical_total
+    technical_total - total_technical_checklist
   end
 
   def raw_total
@@ -327,5 +325,31 @@ class SubmissionScore < ActiveRecord::Base
               judge_profile.selected_regional_pitch_event and
                 team.selected_regional_pitch_event.live? and
                   team.selected_regional_pitch_event.unofficial?)
+  end
+
+  def approve!
+    update_column(:approved_at, Time.current)
+  end
+
+  def detect_if_completed_too_fast
+    completed_at - created_at < 10.minutes
+  end
+
+  def detect_if_too_fast_repeat_offense
+    detect_if_completed_too_fast &&
+      self.class
+        .current_round
+        .completed_too_fast
+        .where.not(id: id)
+        .exists?(judge_profile: judge_profile)
+  end
+
+  def detect_if_raw_total_seems_too_low
+    (senior_team_division? && raw_total < SENIOR_LOW_SCORE_THRESHOLD) ||
+      (junior_team_division? && raw_total < JUNIOR_LOW_SCORE_THRESHOLD)
+  end
+
+  def can_automatically_approve?
+    !detect_if_too_fast_repeat_offense && !detect_if_raw_total_seems_too_low
   end
 end

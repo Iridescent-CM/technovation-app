@@ -14,6 +14,13 @@ class SuspiciousScoreSerializer
     score.team_submission.team_division_name
   end
 
+  attribute :flags do |score|
+    flags = []
+    flags << "Seems too low" if score.seems_too_low?
+    flags << "Completed too fast" if score.completed_too_fast_repeat_offense?
+    flags.to_sentence
+  end
+
   attribute :url do |score|
     Rails.application.routes.url_helpers.admin_score_path(score)
   end

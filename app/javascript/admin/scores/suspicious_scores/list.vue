@@ -7,7 +7,7 @@
       <div>Submission</div>
       <div>Team</div>
       <div>Score</div>
-      <div>Actions</div>
+      <div>Flags</div>
     </div>
 
     <div v-if="scores.length === 0">
@@ -35,8 +35,9 @@
         {{ score.total }} / {{ score.total_possible }}
       </div>
 
-      <div class="score__actions">
-        <a :href="score.url">View entire score</a>
+      <div class="score__flags">
+        <small>{{ score.flags }}</small>
+        <a :href="score.url">Open score</a>
       </div>
     </div>
   </div>

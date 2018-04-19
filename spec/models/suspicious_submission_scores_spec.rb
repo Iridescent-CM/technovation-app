@@ -19,17 +19,21 @@ RSpec.describe SuspiciousSubmissionScores do
       score.complete!
       expect(score).to be_completed_too_fast
       expect(score).not_to be_completed_too_fast_repeat_offense
+      expect(score).to be_approved
       expect(SuspiciousSubmissionScores.new.scores).to be_empty
 
       Timecop.travel(10.minutes.from_now) do
         score2.complete!
         expect(score2.reload).not_to be_completed_too_fast
+        expect(score2).not_to be_completed_too_fast_repeat_offense
+        expect(score2).to be_approved
         expect(SuspiciousSubmissionScores.new.scores).to be_empty
       end
 
       score3.complete!
       expect(score3.reload).to be_completed_too_fast
       expect(score3).to be_completed_too_fast_repeat_offense
+      expect(score3).not_to be_approved
 
       suspicious = SuspiciousSubmissionScores.new
       expect(suspicious.map(&:id)).to eq([score3.id])
@@ -38,11 +42,15 @@ RSpec.describe SuspiciousSubmissionScores do
 
   describe "when score is too low" do
     it "includes those scores" do
-      senior_min_score = FactoryBot.create(:score, :senior)
-      junior_min_score = FactoryBot.create(:score, :junior)
+      senior_min_score, senior_low_score, junior_low_score, junior_min_score = nil
 
-      senior_low_score = FactoryBot.create(:score, :senior)
-      junior_low_score = FactoryBot.create(:score, :junior)
+      Timecop.freeze(10.minutes.ago) do
+        senior_min_score = FactoryBot.create(:score, :senior)
+        junior_min_score = FactoryBot.create(:score, :junior)
+
+        senior_low_score = FactoryBot.create(:score, :senior)
+        junior_low_score = FactoryBot.create(:score, :junior)
+      end
 
       senior_min_score.update({
         sdg_alignment: 5,
