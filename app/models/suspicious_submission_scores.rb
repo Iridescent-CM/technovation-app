@@ -4,8 +4,8 @@ class SuspiciousSubmissionScores
   attr_reader :scores
 
   def initialize
-    @scores = SubmissionScore.completed_too_fast_repeat_offense +
-      SubmissionScore.seems_too_low
+    @scores = SubmissionScore.current_round.completed_too_fast_repeat_offense +
+      SubmissionScore.current_round.seems_too_low
   end
 
   def each(&block)
