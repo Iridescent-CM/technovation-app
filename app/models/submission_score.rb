@@ -29,9 +29,9 @@ class SubmissionScore < ActiveRecord::Base
         end
       end
 
-      if senior_team_division? && total < SENIOR_LOW_SCORE_THRESHOLD
+      if senior_team_division? && raw_total < SENIOR_LOW_SCORE_THRESHOLD
         update_column(:seems_too_low, true)
-      elsif junior_team_division? && total < JUNIOR_LOW_SCORE_THRESHOLD
+      elsif junior_team_division? && raw_total < JUNIOR_LOW_SCORE_THRESHOLD
         update_column(:seems_too_low, true)
       elsif seems_too_low?
         update_column(:seems_too_low, false)
@@ -257,6 +257,10 @@ class SubmissionScore < ActiveRecord::Base
         entrepreneurship_total +
           pitch_total +
             overall_impression_total
+  end
+
+  def raw_total
+    total - total_technical_checklist
   end
 
   def ideation_total

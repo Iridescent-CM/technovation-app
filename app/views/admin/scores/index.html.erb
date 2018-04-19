@@ -1,28 +1,13 @@
-<div class="flex-row">
-  <div class="flex-col-md-4">
-    <h1 class="appy-title">
-      All Scores
-    </h1>
-  </div>
+<div id="admin-scores-app" class="panel">
+  {{ notice }}
 
-  <div class="flex-col-md-4">
-    <h1 class="appy-title">
-      <%= pluralize SubmissionScore.quarterfinals.complete.count,
-        "complete score" %>
-    </h1>
-  </div>
+  <template v-if="!ready">
+    <%= web_icon(
+      "spinner2",
+      class: "spin",
+      text: "Checking for suspicious scores..."
+    ) %>
+  </template>
 
-  <div class="flex-col-md-4">
-    <h1 class="appy-title">
-      <%= pluralize SubmissionScore.quarterfinals.incomplete.count,
-        "pending score" %>
-    </h1>
-  </div>
-
-  <%= render 'regional_ambassador/scores/index',
-    submissions: @submissions,
-    event: @event,
-    events: @events,
-    division: @division,
-    scope: :admin %>
+  <router-view v-else></router-view>
 </div>

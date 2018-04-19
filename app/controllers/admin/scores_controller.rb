@@ -3,87 +3,18 @@ require "will_paginate/array"
 module Admin
   class ScoresController < AdminController
     def index
-      params[:round] = :quarterfinals
-      params[:event] ||= "virtual"
-      params[:page] ||= 1
-      params[:per_page] ||= 15
+      suspicious_scores = SuspiciousSubmissionScores.new
 
-      @division = params[:division] ||= "senior"
+      respond_to do |format|
+        format.html { }
 
-      events = RegionalPitchEvent.eager_load(
-        ambassador: :account
-      ).all
-
-      virtual_event = VirtualRegionalPitchEvent.new
-
-      @event = if params[:event] == "virtual"
-                 virtual_event
-               else
-                 events.eager_load(
-                   :divisions,
-                   :judges,
-                   teams: :team_submissions
-                 ).find(params[:event])
-               end
-
-      @events = [virtual_event] + events.sort_by { |event|
-        FriendlyCountry.(event)
-      }
-
-      @submissions = get_sorted_paginated_submissions_in_requested_division
+        format.json {
+          render json: SuspiciousScoreSerializer.new(suspicious_scores).serialized_json
+        }
+      end
     end
 
     def show
-      @team_submission = TeamSubmission.includes(
-        team: :division,
-        submission_scores: { judge_profile: :account }
-      ).friendly.find(params[:id])
-
-      @team = @team_submission.team
-
-      @event = @team.selected_regional_pitch_event
-
-      @scores = @team_submission.submission_scores
-        .complete
-        .quarterfinals
-        .includes(judge_profile: :account)
-        .references(:accounts)
-        .order("accounts.first_name")
-
-      render "regional_ambassador/scores/show"
-    end
-
-    private
-    def get_sorted_paginated_submissions_in_requested_division(
-      page = params[:page],
-      division = params[:division]
-    )
-      submissions = @event.team_submissions
-        .includes(:submission_scores, team: :regional_pitch_events)
-        .public_send(division)
-        .select { |s|
-          s.team.selected_regional_pitch_event.live? or
-            s.complete?
-        }
-        .sort { |a, b|
-          case params.fetch(:sort) { "avg_score_desc" }
-          when "avg_score_desc"
-            b.quarterfinals_average_score <=> a.quarterfinals_average_score
-          when "avg_score_asc"
-            a.quarterfinals_average_score <=> b.quarterfinals_average_score
-          when "team_name"
-            a.team.name <=> b.team.name
-          end
-        }.paginate(page: page.to_i, per_page: params[:per_page].to_i)
-
-      if submissions.empty? and page.to_i != 1
-        get_sorted_paginated_submissions_in_requested_division(1)
-      elsif submissions.empty? and @opposite_division.nil?
-        @opposite_division = params[:division] == "senior" ? "junior":"senior"
-        get_sorted_paginated_submissions_in_requested_division(page, @opposite_division)
-      else
-        submissions
-      end
     end
   end
 end

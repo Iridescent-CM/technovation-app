@@ -3,6 +3,8 @@ import Vue from 'vue/dist/vue.esm'
 import store from './store'
 import { router } from './routes'
 
+import { mapState } from 'vuex'
+
 document.addEventListener('turbolinks:load', () => {
   const scoresEl = document.querySelector("#admin-scores-app")
 
@@ -17,6 +19,8 @@ document.addEventListener('turbolinks:load', () => {
           notice: '',
         }
       },
+
+      computed: mapState(['ready']),
 
       mounted () {
         let url = '/admin/scores.json'

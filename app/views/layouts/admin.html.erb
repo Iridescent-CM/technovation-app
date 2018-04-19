@@ -16,9 +16,12 @@
       media: :all
     ) %>
 
+    <%= stylesheet_pack_tag("admin", data: { turbolinks_track: :reload }) %>
+
     <%= csrf_meta_tags %>
 
     <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+    <%= javascript_pack_tag("admin", data: { turbolinks_track: :reload }) %>
   </head>
 
   <body>

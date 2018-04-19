@@ -1,0 +1,69 @@
+<template>
+  <div class="suspicious-scores">
+    <div class="score score--header">
+      <div>Judge</div>
+      <div>Submission</div>
+      <div>Team</div>
+      <div>Score</div>
+      <div>Actions</div>
+    </div>
+
+    <div
+      class="score"
+      v-for="score in scores"
+    >
+      <div class="score__judge-name">
+        <a :href="score.judge_url">{{ score.judge_name }}</a>
+      </div>
+
+      <div class="score__submission-name">
+        <a :href="score.submission_url">{{ score.submission_name }}</a>
+      </div>
+
+      <div class="score__team-name">
+        {{ score.team_name }}
+        <small>{{ score.team_division }} division</small>
+      </div>
+
+      <div class="score__total">
+        {{ score.total }} / {{ score.total_possible }}
+      </div>
+
+      <div class="score__actions">
+        <a :href="score.url">View entire score</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: mapState(['scores']),
+}
+</script>
+
+<style lang="scss" scoped>
+.score {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 1rem;
+
+  div {
+    width: 20%;
+
+    small {
+      display: block;
+      color: #777;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.score--header {
+  font-weight: bold;
+}
+</style>
