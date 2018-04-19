@@ -1,6 +1,6 @@
 class SuspiciousScoreSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :total, :total_possible, :judge_name
+  attributes :id, :raw_total, :total, :total_possible, :judge_name
 
   attribute :submission_name do |score|
     score.team_submission.app_name

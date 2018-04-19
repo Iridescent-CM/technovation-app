@@ -32,7 +32,7 @@
       </div>
 
       <div class="score__total">
-        {{ score.total }} / {{ score.total_possible }}
+        {{ score.raw_total }} / {{ score.total_possible }}
       </div>
 
       <div class="score__flags">
