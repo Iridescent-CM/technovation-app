@@ -1,11 +1,17 @@
 <template>
   <div class="suspicious-scores">
+    <h1>Suspicious Scores</h1>
+
     <div class="score score--header">
       <div>Judge</div>
       <div>Submission</div>
       <div>Team</div>
       <div>Score</div>
       <div>Actions</div>
+    </div>
+
+    <div v-if="scores.length === 0">
+      There are no suspicious scores at this time.
     </div>
 
     <div
@@ -65,5 +71,11 @@ export default {
 
 .score--header {
   font-weight: bold;
+}
+
+h1 {
+  font-size: 1.4rem;
+  text-align: left;
+  margin: 0 0 1rem;
 }
 </style>
