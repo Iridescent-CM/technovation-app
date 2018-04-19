@@ -113,7 +113,10 @@ class Account < ActiveRecord::Base
   }
 
   after_commit -> {
-    if saved_change_to_email_confirmed_at
+    if saved_change_to_email_confirmed_at ||
+         saved_change_to_latitude ||
+           saved_change_to_city
+
       if student_profile.present?
         student_profile.update_column(
           :onboarded,
@@ -125,6 +128,7 @@ class Account < ActiveRecord::Base
           judge_profile.can_be_marked_onboarded?
         )
       end
+
     end
   }
 
