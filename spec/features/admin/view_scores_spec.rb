@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Admins view scores" do
   scenario "view QF scores" do
+    skip "Rebuilding the UI now"
+
     submission = FactoryBot.create(
       :submission,
       :junior,
