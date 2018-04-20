@@ -31,26 +31,6 @@
 
       <div class="grid grid--bleed grid--justify-space-around">
         <div class="grid__col-12 grid--align-center">
-          <hr />
-
-          <h6>Notes for judges:</h6>
-
-          <p class="scent--strong">
-            If any part of the submission is broken, please
-            <a :href="mailToHelp">email us</a> and complete
-            as much of the score as you can. We will give the
-            team a chance to correct any simple, technical mistakes.
-            If the team is able to fix the issue, we will email you
-            back and you will be able to update the score.
-          </p>
-
-          <p>
-            Even after &#8220;finishing&#8221; a score, you have
-            until <strong v-html="deadline"></strong> to make
-            changes. You may find that scoring a few submissions
-            will help you calibrate your expectations.
-          </p>
-
           <p>
             <router-link
               :to="{ name: 'ideation' }"
@@ -82,16 +62,7 @@ export default {
     ...mapState([
       'team',
       'submission',
-      'deadline',
     ]),
-
-    mailToHelp () {
-      return 'mailto:help@technovationchallenge.org?subject=' +
-             'Errors while judging submission ' +
-              '"' + this.submission.name + '"' +
-              ' by ' +
-              this.team.name
-    },
   },
 
   components: {

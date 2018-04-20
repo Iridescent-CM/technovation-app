@@ -18,9 +18,7 @@
       <slot name="comment-tips" />
 
       <div class="grid grid--bleed grid--justify-space-between">
-        <div class="grid__col-6 grid--align-self-end">
-          <small>(please write at least 40 words, and be less than 40% negative)</small>
-        </div>
+        <div class="grid__col-6"></div>
 
         <div class="grid__col-6">
           <p class="word-count">
@@ -59,6 +57,10 @@
       <textarea v-model="comment.text" />
 
       <div class="grid grid--bleed grid--justify-space-between">
+        <div class="grid__col-12">
+          <small>(please write at least 40 words, with less than 20% negativity)</small>
+        </div>
+
         <div class="grid__col-6 nav-btns--left">
           <p>
             <router-link
@@ -150,7 +152,7 @@ export default {
     goingNextIsDisabled () {
       return this.wordCount(this.comment.text) < 40 ||
                this.badWordCount > 0 ||
-                 this.comment.sentiment.negative > 0.4
+                 this.comment.sentiment.negative > 0.2
     },
 
     badWordCount () {
@@ -318,7 +320,7 @@ export default {
   textarea {
     width: 100%;
     height: 35vh;
-    margin: 0 0 1rem;
+    margin: 0;
     padding: 1rem;
     box-shadow: inset 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
   }

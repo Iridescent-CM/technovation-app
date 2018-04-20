@@ -20,6 +20,26 @@
             </li>
           </ul>
         </div>
+
+        <div class="panel">
+          <h6>If something is broken:</h6>
+
+          <p>
+            Complete as much of the score as you can and
+            <a :href="mailToHelp">email us</a>.
+            If the team is able to fix the issue,
+            we will email you back and you will be able
+            to update the score.
+          </p>
+
+          <h6>Finishing a score:</h6>
+
+          <p>
+            Even after finishing a score, you have
+            until <strong v-html="deadline"></strong> to make
+            changes.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -31,10 +51,21 @@ import { mapState } from 'vuex'
 import Icon from '../../components/Icon'
 
 export default {
-  computed: mapState([
-    'team',
-    'submission',
-  ]),
+  computed: {
+    ...mapState([
+      'team',
+      'submission',
+      'deadline',
+    ]),
+
+    mailToHelp () {
+      return 'mailto:help@technovationchallenge.org?subject=' +
+             'Errors while judging submission ' +
+             '"' + this.submission.name + '"' +
+             ' by ' +
+             this.team.name
+    },
+  },
 
   components: {
     Icon,
@@ -50,5 +81,8 @@ export default {
   ul {
     font-size: 0.9rem;
   }
-</style>
 
+  h6 {
+    margin: 1rem 0 0;
+  }
+</style>
