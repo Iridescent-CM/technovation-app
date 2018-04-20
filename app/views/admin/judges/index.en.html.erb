@@ -1,0 +1,7 @@
+<% provide :title, "Admin Data • Judges" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @judges_grid,
+  form_url: admin_judges_path,
+  model_name: "judge",
+  scope: :admin %>
