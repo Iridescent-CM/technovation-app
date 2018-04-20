@@ -178,20 +178,8 @@ module DatagridController
   end
 
   def default_export_filename(format = nil)
-    root = case param_root
-           when "accounts_grid"
-             "technovation-participants-"
-           when "teams_grid"
-             "technovation-teams"
-           when "submissions_grid"
-             "technovation-submissions"
-           when "events_grid"
-             "technovation-events"
-           else
-             "[DEV] Change me in DatagridController.rb"
-           end
-
-      "#{root}-#{Time.current}#{'.' + format.to_s if format}"
+    root = "technovation-#{param_root.sub("_grid", "")}"
+    "#{root}-#{Time.current}#{'.' + format.to_s if format}"
   end
 
   def csv_export_supported?(grid)
