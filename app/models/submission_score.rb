@@ -36,6 +36,7 @@ class SubmissionScore < ActiveRecord::Base
     quarterfinals
     semifinals
     finals
+    off
   }
 
   belongs_to :team_submission, counter_cache: true
@@ -106,11 +107,13 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'pending_semifinals_official_submission_scores_count'
     }
 
-  belongs_to :judge_profile, counter_cache: true
+  belongs_to :judge_profile
 
-  counter_culture :judge_profile, column_name: proc { |score|
-    score.complete? && score.send("#{SeasonToggles.current_judging_round}?") ?
-      'current_round_scores_count' : nil
+  counter_culture :judge_profile, column_name: ->(score) {
+    if score.complete? &&
+         score.send("#{SeasonToggles.current_judging_round(full_name: true)}?")
+      "current_round_scores_count"
+    end
   }
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
