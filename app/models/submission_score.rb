@@ -106,7 +106,12 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'pending_semifinals_official_submission_scores_count'
     }
 
-  belongs_to :judge_profile
+  belongs_to :judge_profile, counter_cache: true
+
+  counter_culture :judge_profile, column_name: proc { |score|
+    score.complete? && score.send("#{SeasonToggles.current_judging_round}?") ?
+      'current_round_scores_count' : nil
+  }
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
   scope :incomplete, -> { where("completed_at IS NULL") }
