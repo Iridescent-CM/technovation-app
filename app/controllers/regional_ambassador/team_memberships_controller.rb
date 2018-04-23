@@ -24,18 +24,18 @@ module RegionalAmbassador
 
     def destroy
       team = Team.find(params.fetch(:id))
-      account = Account.find(params.fetch(:account_id))
+      member = team.memberships.find_by(
+        member_id: params.fetch(:member_id),
+        member_type: params.fetch(:member_type),
+      ).member
 
-      TeamRosterManaging.remove(
-        team,
-        account.mentor_profile || account.student_profile
-      )
+      TeamRosterManaging.remove(team, member)
 
       redirect_to regional_ambassador_team_path(
         team,
         allow_out_of_region: params.fetch(:allow_out_of_region) { false }
       ),
-        success: "You have removed #{account.full_name} from this team"
+        success: "You have removed #{member.name} from this team"
     end
   end
 end
