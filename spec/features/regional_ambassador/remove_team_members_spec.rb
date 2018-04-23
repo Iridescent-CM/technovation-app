@@ -9,7 +9,6 @@ RSpec.feature "Remove an onboarding student" do
     TeamRosterManaging.add(team, student)
 
     sign_in(ra)
-    save_and_open_page
     click_link "Teams"
     click_link "view"
 
