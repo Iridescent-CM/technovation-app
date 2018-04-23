@@ -24,7 +24,11 @@ module Admin
 
     def destroy
       team = Team.find(params.fetch(:id))
-      account = Account.find(params.fetch(:account_id))
+      account = team.memberships.find_by(
+        member_id: params.fetch(:member_id),
+        member_type: params.fetch(:member_type),
+      ).member.account
+
 
       if account.mentor_profile
         TeamRosterManaging.remove(team, account.mentor_profile)

@@ -55,7 +55,8 @@ RSpec.describe "Team Memberships Controllers" do
 
           delete :destroy, params: {
             id: team.id,
-            account_id: older_student.account_id,
+            member_id: older_student.id,
+            member_type: "StudentProfile",
           }
 
           expect(team.reload).to be_junior
