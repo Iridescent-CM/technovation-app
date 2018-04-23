@@ -1,10 +1,3 @@
-<%
-  admin_ra ||= false
-  link_opts = admin_ra ?
-    { account_id: onboarding_member.account_id } :
-    { member_id: onboarding_member.id }
-%>
-
 <li class="grid">
   <div class="grid__col-2 grid__col--bleed-x">
     <%= image_tag onboarding_member.profile_image_url,
@@ -28,7 +21,13 @@
 
     <% if CanRemoveTeamMember.(current_account, onboarding_member) %>
       <%= link_to "remove this member",
-        [current_scope, team, :membership, link_opts],
+        [
+          current_scope,
+          team,
+          :membership,
+          member_id: onboarding_member.id,
+          member_type: onboarding_member.class.name,
+        ],
         data: {
           method: :delete,
           confirm: t("views.teams.show.confirm_leave",

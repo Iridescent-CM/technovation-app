@@ -18,12 +18,11 @@
     but are not yet eligible to compete.
   </p>
 
-  <ul class="reset">
+  <ul class="reset onboarding_students">
     <%= render partial: "teams/onboarding_member",
       collection: team.students.onboarding,
       locals: {
         team: team,
-        admin_ra: admin_ra,
       } %>
   </ul>
 <% end %>

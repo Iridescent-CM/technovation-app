@@ -96,6 +96,11 @@ FactoryBot.define do
       end
     end
 
+    trait :onboarded do
+      geocoded
+      not_onboarded false
+    end
+
     trait :full_profile do
       geocoded
       parent_guardian_email "example@example.com"
