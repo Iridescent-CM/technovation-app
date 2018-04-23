@@ -2,7 +2,8 @@
   admin_ra ||= false
   link_opts = admin_ra ?
     {
-      account_id: member.account_id,
+      member_id: member.id,
+      member_type: member.class.name,
       allow_out_of_region: params.fetch(:allow_out_of_region) { false },
     } :
     { member_id: member.id }
