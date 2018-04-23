@@ -108,7 +108,9 @@ $(document).on("click", ".img-modal", function(e) {
     html += "</div>"
     animation = false
   } else {
-    html = "<img src='" + $(e.target).data("modalUrl") + "' />"
+    html = "<img " +
+      "src='" + $(e.target).data("modalUrl") + "' " +
+      "width='100%' />"
     animation = true
   }
 
@@ -117,6 +119,7 @@ $(document).on("click", ".img-modal", function(e) {
     confirmButtonText: "Done",
     animation: animation,
     customClass: 'user-select--none',
+    width: $(e.target).data("width") || "32rem",
   });
 });
 

@@ -163,8 +163,17 @@ class TechnicalChecklist < ActiveRecord::Base
     end
 
     def display
-      # for paper prototype / event flow chart, which are image urls
+      # for paper prototype / event flow chart
       @tc.public_send("#{name}_url")
+    end
+
+    def partial_path
+      # for paper prototype / event flow chart
+      if @tc.public_send("#{name}").file.extension.downcase === "pdf"
+        "code_checklists/process/pdf"
+      else
+        "code_checklists/process/img"
+      end
     end
 
     def present?

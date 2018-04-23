@@ -204,14 +204,7 @@
           <dl>
             <% @team_submission.code_checklist.process.each do |item| %>
               <dt><%= item.label %></dt>
-
-              <dd class="img-modal">
-                <%= image_tag item.display,
-                  class: "thumbnail-md thumbnail-process-pic",
-                  data: {
-                    modal_url: item.display,
-                  } %>
-              </dd>
+              <dd><%= render item.partial_path, item: item %></dd>
             <% end %>
           </dl>
         <% else %>
