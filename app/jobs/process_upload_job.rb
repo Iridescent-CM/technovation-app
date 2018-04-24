@@ -11,7 +11,7 @@ class ProcessUploadJob < ActiveJob::Base
     )
   end
 
-  after_enqueue do |job|
+  after_perform do |job|
     if db_job = Job.find_by(job_id: job.job_id)
       db_job.update(status: "complete")
     end
