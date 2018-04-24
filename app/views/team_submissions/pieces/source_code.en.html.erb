@@ -13,41 +13,11 @@
 
   <p class="hint">File types allowed: *.zip or *.aia</p>
 
-  <%= form_with model: [current_scope, @team_submission],
-    local: true,
-    multipart: true,
-    id: "team-submission-sourcecode-dropzone",
-    class: "dropzone" do |f| %>
-
-    <div class="fallback">
-      <%= f.label :source_code, "Upload your app's source code" %>
-      <%= f.file_field :source_code, id: :team_submission_source_code %>
-      <%= f.hidden_field :source_code_cache %>
-      <%= f.submit "Upload", class: "button" %>
-    </div>
-
+  <%= direct_upload_form_for @source_code_uploader, html: { multipart: true } do |f| %>
+    <%= f.label :file, "Upload your app's source code" %>
+    <%= f.file_field :file %>
+    <%= f.submit "Upload", class: "button" %>
   <% end %>
-
-  <p class="dropzone-save" style="display: none;">
-    <%= link_to "Save this upload",
-      [
-        current_scope,
-        @team_submission,
-        :section,
-        section: @submission_section,
-      ],
-      class: "button" %>
-  </p>
-
-  <p class="after-dropzone-save">
-    <%= link_to "cancel",
-      [
-        current_scope,
-        @team_submission,
-        :section,
-        section: @submission_section,
-      ] %>
-  </p>
 
   <p class="grid__cell--padding-sm-y">
     Get some help making your source code in the

@@ -62,6 +62,13 @@ module TeamSubmissionController
 
     @team_submission.screenshots.build
 
+    @source_code_uploader = FileUploader.new
+    @source_code_uploader.success_action_redirect = send(
+      "#{current_scope}_team_submission_file_upload_confirmation_url",
+      team_id: @team.id,
+      back: request.fullpath
+    )
+
     if @team_submission.code_checklist.present?
       @code_checklist = @team_submission.code_checklist
     else
@@ -93,6 +100,13 @@ module TeamSubmissionController
     @uploader = ImageUploader.new
     @uploader.success_action_redirect = send(
       "#{current_scope}_team_photo_upload_confirmation_url",
+      team_id: @team.id,
+      back: request.fullpath
+    )
+
+    @source_code_uploader = FileUploader.new
+    @source_code_uploader.success_action_redirect = send(
+      "#{current_scope}_team_submission_file_upload_confirmation_url",
       team_id: @team.id,
       back: request.fullpath
     )

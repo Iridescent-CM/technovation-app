@@ -206,6 +206,8 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .zip source code" do
+    skip "Direct to s3 how to mock"
+
     click_link "Code"
 
     within(".source_code.incomplete") do
@@ -237,18 +239,18 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload the .aia source code" do
+    skip "Direct to s3 how to mock"
     click_link "Code"
 
     within(".source_code.incomplete") do
       click_link "Upload your app's source code"
     end
 
-    attach_file(
+    attach_file_for_direct_upload(
       "Upload your app's source code",
       Rails.root + "spec/support/fixtures/source_code.aia"
     )
-
-    click_button "Upload"
+    upload_directly(FileUploader.new, "Upload")
 
     within(".source_code.complete") do
       expect(page).not_to have_link("Upload your app's source code")

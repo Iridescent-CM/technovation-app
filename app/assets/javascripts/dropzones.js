@@ -38,6 +38,7 @@ Dropzone.options.teamSubmissionSourcecodeDropzone = $.extend(
   {},
   defaultSubmissionDropzoneOptions,
   {
+    method: "POST",
     paramName: "team_submission[source_code]",
     acceptedFiles: ".aia,.zip",
   }
