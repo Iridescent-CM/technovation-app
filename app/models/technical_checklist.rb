@@ -169,7 +169,9 @@ class TechnicalChecklist < ActiveRecord::Base
 
     def partial_path
       # for paper prototype / event flow chart
-      if @tc.public_send("#{name}").file.extension.downcase === "pdf"
+      file = @tc.public_send("#{name}").file
+
+      if file && file.extension && file.extension.downcase === "pdf"
         "code_checklists/process/pdf"
       else
         "code_checklists/process/img"
