@@ -114,6 +114,12 @@ class SubmissionScore < ActiveRecord::Base
          score.send("#{SeasonToggles.current_judging_round(full_name: true)}?")
       "current_round_scores_count"
     end
+  },
+  column_names: {
+    [
+      "submission_scores.completed_at IS NOT NULL AND submission_scores.round = ?",
+      rounds[SeasonToggles.current_judging_round(full_name: true)],
+    ] => 'current_round_scores_count'
   }
 
   scope :complete, -> { where("completed_at IS NOT NULL") }
