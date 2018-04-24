@@ -138,6 +138,8 @@ class MentorProfile < ActiveRecord::Base
     as: :requestor,
     source: :team
 
+  has_many :jobs, as: :owner
+
   reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   after_validation -> { enable_searchability },

@@ -1,3 +1,6 @@
+<% provide :js, javascript_pack_tag('job_process') %>
+<% provide :css, stylesheet_pack_tag('job_process') %>
+
 <div class="grid grid--justify-space-around">
   <div class="grid__col-8">
     <div class="panel">
@@ -11,7 +14,13 @@
       </p>
 
       <center>
-        <p><%= link_to "Okay", params[:back], class: "button" %></p>
+        <div id="job-process-app">
+          <jp-template
+            status-url="
+              <%= send("#{current_scope}_job_status_path", @job.job_id) %>
+            "
+          ></jp-template>
+        </div>
       </center>
     </div>
   </div>
