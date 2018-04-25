@@ -7,6 +7,14 @@ GIT
       rubyzip (~> 1.1)
 
 GIT
+  remote: https://github.com/Iridescent-CM/textacular.git
+  revision: 99cf5ef6cff0129b75bed261c6dd8e765f04a0c8
+  branch: change-assemble-query
+  specs:
+    textacular (5.0.1)
+      activerecord (>= 5.0, < 6.0)
+
+GIT
   remote: https://github.com/arvindvyas/Country-State-Select.git
   revision: df934e2b345cc962c77aeb50184c4874f975cb61
   branch: master
@@ -594,8 +602,6 @@ GEM
       sprockets (>= 3.0.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    textacular (5.0.1)
-      activerecord (>= 3.0, < 5.2)
     thor (0.20.0)
     thread (0.2.2)
     thread_safe (0.3.6)
@@ -708,7 +714,7 @@ DEPENDENCIES
   sidekiq (~> 4.2)
   simple_form!
   sinatra (~> 2.0)
-  textacular (~> 5.0)
+  textacular!
   timecop (~> 0.9)
   timezone (~> 1.2)
   turbolinks (~> 5.1)
