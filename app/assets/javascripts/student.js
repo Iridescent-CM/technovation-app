@@ -1,4 +1,5 @@
 //= require application
+//= require jquery-ui/widgets/accordion
 //= require dropzone
 
 //= require forms
@@ -8,3 +9,7 @@
 //= require submissions
 //= require dropzones
 //= require code-checklists
+
+document.addEventListener('turbolinks:load', function () {
+  $(".accordion").accordion()
+})

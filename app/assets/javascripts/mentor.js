@@ -1,5 +1,6 @@
 //= require application
 //= require jquery.maskedinput
+//= require jquery-ui/widgets/accordion
 //= require dropzone
 
 //= require forms
@@ -29,4 +30,6 @@ document.addEventListener("turbolinks:load", function() {
       $fieldToObfuscate.prop("type", "text");
     }
   });
+
+  $(".accordion").accordion()
 });
