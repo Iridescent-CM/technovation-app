@@ -94,7 +94,7 @@
       return {
         query: "",
         searching: false,
-        fetching: true,
+        fetching: false,
         items: [],
         selectableItems: [],
       };
@@ -155,6 +155,8 @@
       },
 
       fetchRemoteItems (opts) {
+        if (this.fetching) return false
+
         opts = opts || { expandSearch: 0 };
 
         const vm = this,
@@ -175,15 +177,13 @@
           success: (json) => {
             _.each(json, obj => {
               const item = new Attendee(obj)
-              let idx = -1
+              let idx
 
               if (vm.type === 'team') {
-                idx = _.findIndex(vm.$store.state.teams, i => {
+                idx = _.findIndex(vm.items, i => {
                   return i.id === item.id;
                 });
-              }
-
-              if (idx === -1) {
+              } else {
                 idx = _.findIndex(vm.items, i => {
                   return i.email === item.email;
                 });
