@@ -59,7 +59,9 @@ class SubmissionsGrid
     scope.where("teams.name ilike ?", "#{value}%")
   end
 
-  filter :app_name
+  filter :app_name do |value, scope, grid|
+    scope.where("team_submissions.app_name ilike ?", "#{value}%")
+  end
 
   filter :division,
     :enum,
