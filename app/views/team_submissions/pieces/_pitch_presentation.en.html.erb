@@ -1,0 +1,91 @@
+<div class="panel">
+  <h3 class="panel--heading">
+    Pitch presentation slides
+  </h3>
+
+  <% if team.selected_regional_pitch_event.live? %>
+    <% if submission.pitch_presentation_url_complete? %>
+      <div class="field__existing-value">
+        Your team has uploaded:
+        <%= link_to submission.pitch_presentation_filename,
+          submission.pitch_presentation_url %>
+      </div>
+    <% end %>
+
+    <p class="hint">File types allowed: *.ppt, *.pptx, *.pdf</p>
+
+    <%= form_with model: [current_scope, submission],
+      multipart: true,
+      id: "team-submission-pitch-presentation-dropzone",
+      class: "dropzone" do |f| %>
+
+      <div class="fallback">
+        <%= f.label :pitch_presentation,
+          "Upload your team's pitch presentation slides" %>
+
+        <%= f.file_field :pitch_presentation,
+          id: "team_submission_pitch_presentation" %>
+
+        <%= f.hidden_field :pitch_presentation_cache %>
+
+        <%= f.submit "Upload", class: "button" %>
+      </div>
+    <% end %>
+
+    <p class="dropzone-save" style="display: none;">
+      <%= link_to "Save this upload",
+        [
+          current_scope,
+          submission,
+          :section,
+          section: @submission_section,
+        ],
+        class: "button" %>
+    </p>
+
+    <p class="after-dropzone-save">
+      <%= link_to "cancel",
+        [
+          current_scope,
+          submission,
+          :section,
+          section: @submission_section,
+        ] %>
+    </p>
+
+    <p class="grid__cell--padding-sm-y">
+      Get some help putting your slides together in the
+      <%= link_to "Pitch 3 Unit",
+        "http://technovationchallenge.org/curriculum/pitch-3/",
+        target: "_blank" %>
+    </p>
+  <% else %>
+    <p class="scent--strong">
+      Your team is not set to attend a live regional pitch event.
+    </p>
+
+    <p>
+      In March and April,
+      Regional Ambassadors will invite teams
+      to pitch at a live event.
+    </p>
+
+    <p>
+      If your team is invited,
+      then you will be required to upload
+      your pitch presentation slides here.
+    </p>
+
+    <p class="scent">
+      (pitching at a live regional event is not required)
+    </p>
+
+    <%= link_to "go back",
+      [
+        current_scope,
+        submission,
+        :section,
+        section: @submission_section,
+      ] %>
+  <% end %>
+</div>

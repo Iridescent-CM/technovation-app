@@ -1,20 +1,25 @@
-<div class="grid">
-  <div class="grid__col-sm-12 grid__col--bleed">
-    <h3>Submission Progress</h3>
-
-    <% unless SeasonToggles.team_submissions_editable? %>
-      Submissions are not editable at this time.
-    <% end %>
-  </div>
-</div>
+<h3>Submission Progress</h3>
 
 <% if SeasonToggles.team_submissions_editable? %>
   <%= render 'team_submissions/menu',
     submission: current_team.submission %>
-<% elsif current_team.submission.complete? %>
+<% end %>
+
+<% if !SeasonToggles.team_submissions_editable? && current_team.live_event? %>
+  <%= render 'team_submissions/pieces/pitch_presentation',
+    team: current_team,
+    submission: current_team.submission %>
+
+<% end %>
+
+<% if !SeasonToggles.team_submissions_editable? && current_team.submission.complete? %>
   <p>
     <%= link_to 'View your finished submission',
       student_published_team_submission_path(current_team.submission),
       class: "button" %>
   </p>
+<% end %>
+
+<% unless SeasonToggles.team_submissions_editable? %>
+  Submissions are not editable at this time.
 <% end %>
