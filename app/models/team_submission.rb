@@ -21,8 +21,12 @@ class TeamSubmission < ActiveRecord::Base
     on: :create
 
   after_commit -> {
-    update_column(:percent_complete, calculate_percent_complete)
-    update_colum(:published_at, nil) if RequiredFields.new(self).any?(&:blank?)
+    columns = {
+      percent_complete: calculate_percent_complete,
+    }
+    columns[:published_at] = nil if RequiredFields.new(self).any?(&:blank?)
+
+    update_columns(columns)
   }, on: :update
 
   enum development_platform: %w{
