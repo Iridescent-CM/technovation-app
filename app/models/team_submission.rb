@@ -22,7 +22,7 @@ class TeamSubmission < ActiveRecord::Base
 
   after_commit -> {
     update_column(:percent_complete, calculate_percent_complete)
-    update_column(:published_at, nil) if RequiredFields.new(self).any?(&:blank?)
+    update_colum(:published_at, nil) if RequiredFields.new(self).any?(&:blank?)
   }, on: :update
 
   enum development_platform: %w{
@@ -276,13 +276,13 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def awaiting_publish(&block)
-    if !!!published_at || updated_at.to_i > published_at.to_i
+    if !!!published_at
       yield
     end
   end
 
   def already_published(&block)
-    if !!published_at && updated_at.to_i == published_at.to_i
+    if !!published_at
       yield
     end
   end
