@@ -58,4 +58,12 @@
       <p class="hint">Submissions may not be started at this time.</p>
     <% end %>
   </div>
+
+  <div class="grid__col-12">
+    <% if !SeasonToggles.team_submissions_editable? && team.live_event? %>
+      <%= render 'team_submissions/pieces/pitch_presentation',
+        team: team,
+        submission: team.submission %>
+    <% end %>
+  </div>
 </div>
