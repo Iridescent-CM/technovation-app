@@ -20,7 +20,15 @@
     class: al(new_student_team_search_path) %>
 <% end %>
 
-<% if current_student.is_on_team? and current_team.submission.present? %>
+<% if !SeasonToggles.team_submissions_editable? &&
+        current_student.is_on_team? &&
+          current_team.submission.complete? %>
+
+  <%= link_to t("views.application.dashboards.menu.team_submission"),
+    student_published_team_submission_path(current_team.submission),
+    class: al(student_published_team_submission_path(current_team.submission)) %>
+
+<% elsif current_student.is_on_team? and current_team.submission.present? %>
 
   <%= link_to t("views.application.dashboards.menu.team_submission"),
     student_team_submission_path(current_team.submission),
