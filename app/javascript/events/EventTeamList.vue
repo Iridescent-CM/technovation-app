@@ -15,11 +15,24 @@
       Initating team management...
     </div>
 
-    <team-search
-       v-else
-       :event-bus-id="`event-${event.id}`"
-       :event-id="event.id"
-    ></team-search>
+    <template v-else>
+      <team-search
+        :event-bus-id="`event-${event.id}`"
+        :event-id="event.id"
+      ></team-search>
+
+      <div class="grid__col-12">
+        <p>
+          <button
+            class="button button--small button--remove-bg"
+            @click="exportList"
+          >
+            <icon name="download" size="16" />
+            Export to CSV
+          </button>
+        </p>
+      </div>
+    </template>
 
     <div
       v-if="!fetchingList && event.selectedTeams.length"
@@ -176,6 +189,13 @@
     ],
 
     methods: {
+      exportList () {
+        $.ajax({
+          url: `/regional_ambassador/event_team_list_exports?id=${this.event.id}`,
+          method: "POST",
+        })
+      },
+
       handleClose (team) {
         team.addingJudges = false
       },

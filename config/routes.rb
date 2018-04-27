@@ -173,6 +173,8 @@ Rails.application.routes.draw do
 
     resources :regional_pitch_events
     resources :printable_scores, only: :show
+    resources :event_team_list_exports, only: :create
+    resources :event_judge_list_exports, only: :create
 
     resource :judge_assignments, only: [:create, :destroy]
     resources :event_assignments, only: :create
