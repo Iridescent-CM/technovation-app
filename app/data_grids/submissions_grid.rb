@@ -13,6 +13,24 @@ class SubmissionsGrid
     team.division_name.humanize
   end
 
+  column :app_name
+  column :app_description
+  column :demo_video_link
+  column :pitch_video_link
+
+  column :screenshots do
+    screenshots.count
+  end
+
+  column :code_checklist do
+    total_technical_checklist
+  end
+
+  column :development_platform_text
+  column :source_code_url
+  column :business_plan_url
+  column :pitch_presentation_url
+
   column :team_name,
     mandatory: true,
     order: "teams.name",
@@ -53,6 +71,14 @@ class SubmissionsGrid
 
   column :progress, html: false do |submission|
     "#{submission.percent_complete}%"
+  end
+
+  column :number_of_students do
+    team.students.count
+  end
+
+  column :number_of_mentors do
+    team.mentors.count
   end
 
   filter :team_name do |value, scope, grid|
