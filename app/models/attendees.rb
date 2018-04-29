@@ -46,9 +46,20 @@ class Attendees
     end
 
     if records.is_a?(Array)
-      new(records.sort_by(&sort_column), event, context)
+      new(
+        records
+          .sort { |a, b|
+            a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
+          },
+        event,
+        context
+      )
     else
-      new(records.order("#{table_name}.#{sort_column}"), event, context)
+      new(
+        records.order("lower(unaccent(#{table_name}.#{sort_column}))"),
+        event,
+        context
+      )
     end
   end
 
