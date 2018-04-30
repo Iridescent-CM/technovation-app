@@ -67,7 +67,7 @@ export default function (event) {
 
   this.removeJudge = (judge) => {
     const existingIdx = _.findIndex(this.selectedJudges, j => {
-      return j.id === judge.id;
+      return j.id === judge.id && j.email === judge.email
     });
 
     if (existingIdx !== -1) {
