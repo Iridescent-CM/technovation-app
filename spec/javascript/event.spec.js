@@ -3,6 +3,16 @@ import _ from "lodash";
 import Event from '../../app/javascript/events/Event';
 import Attendee from '../../app/javascript/events/Attendee';
 
+test('resultReadyForList ignores double entry', () => {
+  let event = new Event({ id: 1 })
+
+  const teamResp = { id: "1", assignments: [] }
+  event.resultReadyForList(teamResp, event.selectedTeams)
+  event.resultReadyForList(teamResp, event.selectedTeams)
+
+  expect(_.map(event.selectedTeams, "id")).toEqual([1])
+})
+
 test('addTeam adds new teams', () => {
   let event = new Event({ id: 1 });
 

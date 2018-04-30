@@ -79,9 +79,7 @@ export default function (event) {
   };
 
   this.addTeam = (team) => {
-    const existingIdx = _.findIndex(this.selectedTeams, t => {
-      return t.id === team.id
-    });
+    const existingIdx = _.findIndex(this.selectedTeams, t => t.id === team.id)
 
     if (existingIdx === -1) {
       team.addedToEvent();
@@ -134,40 +132,42 @@ export default function (event) {
   };
 
   this.fetchTeams = (opts) => {
-    return new Promise((resolve, reject) => {
-      if (this.isFetchingTeams || this.hasFetchedTeams) resolve()
+    const event = this
 
-      this.isFetchingTeams = true
-      const event = this
+    return new Promise((resolve, reject) => {
+      if (event.isFetchingTeams || event.hasFetchedTeams) resolve()
+
+      event.isFetchingTeams = true
       const url = event.fetchTeamsUrlRoot + "?event_id=" + event.id;
 
-      getRemoteData({
+      event.getRemoteData({
         list: event.selectedTeams,
         url: url,
         event: event,
       }).then(() => {
-        this.isFetchingTeams = false
-        this.hasFetchedTeams = true
+        event.isFetchingTeams = false
+        event.hasFetchedTeams = true
         resolve()
       }).catch((err) => { reject(err) })
     })
   }
 
   this.fetchJudges = (opts) => {
-    return new Promise((resolve, reject) => {
-      if (this.isFetchingJudges || this.hasFetchedJudges) resolve()
+    const event = this
 
-      this.isFetchingJudges = true
-      const event = this
+    return new Promise((resolve, reject) => {
+      if (event.isFetchingJudges || event.hasFetchedJudges) resolve()
+
+      event.isFetchingJudges = true
       const url = event.fetchJudgesUrlRoot + "?event_id=" + event.id;
 
-      getRemoteData({
+      event.getRemoteData({
         list: event.selectedJudges,
         url: url,
         event: event,
       }).then(() => {
-        this.isFetchingJudges = false
-        this.hasFetchedJudges = true
+        event.isFetchingJudges = false
+        event.hasFetchedJudges = true
         resolve()
       }).catch((err) => { reject(err) })
     })
@@ -182,7 +182,7 @@ export default function (event) {
 
     _.each(result.assignments.judge_ids, id => {
       const idx = _.findIndex(this.selectedJudges, j => {
-        return j.id === id
+        return j.id === id && j.email === attendee.email
       })
 
       if (idx !== -1)
@@ -198,10 +198,13 @@ export default function (event) {
         attendee.assignedTeamFoundInEvent(this.selectedTeams[idx])
     })
 
-    list.push(attendee)
+    const idx = _.findIndex(list, i => i.id === attendee.id)
+
+    if (idx === -1)
+      list.push(attendee)
   }
 
-  function getRemoteData (opts) {
+  this.getRemoteData = (opts) => {
     return new Promise((resolve, reject) => {
       opts = opts || {}
 
