@@ -33,15 +33,15 @@ class RegionalPitchEvent < ActiveRecord::Base
   has_and_belongs_to_many :divisions
 
   has_and_belongs_to_many :judges,
-    -> { includes(:account).references(:accounts).distinct },
+    -> { includes(:account).references(:accounts) },
     class_name: "JudgeProfile"
 
   has_and_belongs_to_many :user_invitations,
-    -> { includes(:account).references(:accounts).distinct },
+    -> { includes(:account).references(:accounts) },
     class_name: "UserInvitation"
 
   has_and_belongs_to_many :teams,
-    -> { distinct.joins(:team_submissions) },
+    -> { joins(:team_submissions) },
     before_add: :inc_teams_count,
     before_remove: :dec_teams_count
 

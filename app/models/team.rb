@@ -216,11 +216,11 @@ class Team < ActiveRecord::Base
     -> { pending.for_students },
     class_name: "JoinRequest"
 
-  has_and_belongs_to_many :regional_pitch_events, -> { current.distinct },
+  has_and_belongs_to_many :regional_pitch_events, -> { current },
     after_add: ->(team, event) { team.submission.touch },
     after_remove: ->(team, event) { team.submission.touch }
 
-  has_and_belongs_to_many :events, -> { current.distinct },
+  has_and_belongs_to_many :events, -> { current },
     class_name: "RegionalPitchEvent",
     after_add: ->(team, event) { team.submission.touch },
     after_remove: ->(team, event) { team.submission.touch }
