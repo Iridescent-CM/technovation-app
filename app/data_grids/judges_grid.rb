@@ -58,7 +58,7 @@ class JudgesGrid
     end
   end
 
-  column :company_name, order: "judge_profiles.company_name"
+  column :get_school_company_name, order: "judge_profiles.company_name"
 
   column :onboarded do
     judge_profile.onboarded? ? "yes" : "no"
