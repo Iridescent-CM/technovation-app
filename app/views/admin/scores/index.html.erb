@@ -1,4 +1,4 @@
-<% provide :title, "Admin Scores" %>
+<% provide :title, "Admin Data • Scores" %>
 
 <div id="admin-scores-app" class="panel">
   {{ notice }}
@@ -12,3 +12,11 @@
   </template>
   <router-view v-else></router-view>
 </div>
+
+<h1>Season <%= Season.current.year %> Scores</h1>
+
+<%= render 'datagrid/datagrid',
+  grid: @scores_grid,
+  form_url: admin_scores_path,
+  model_name: "score",
+  scope: :admin %>
