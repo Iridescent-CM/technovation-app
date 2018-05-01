@@ -399,6 +399,14 @@ class Account < ActiveRecord::Base
     update(survey_completed_at: Time.current)
   end
 
+  def took_program_survey!
+    update(pre_survey_completed_at: Time.curreent)
+  end
+
+  def took_program_survey?
+    !!pre_survey_completed_at
+  end
+
   def took_survey?
     !!survey_completed_at
   end

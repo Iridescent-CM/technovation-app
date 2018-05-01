@@ -25,7 +25,7 @@ class SeasonToggles
         end
 
         if account.present?
-          not account.took_survey? and
+          not account.took_program_survey? and
             not account.address_details.blank? and
               link_exists
         else
