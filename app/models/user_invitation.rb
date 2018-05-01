@@ -165,6 +165,10 @@ class UserInvitation < ApplicationRecord
     profile_type
   end
 
+  def mailer_token
+    admin_permission_token
+  end
+
   private
   def inviting_existing_ra_to_be_an_ra?
     profile_type.to_s == "regional_ambassador" and
