@@ -1,5 +1,7 @@
 // Karma configuration
 // Generated on Mon Apr 30 2018 21:48:14 GMT-0500 (CDT)
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+var webpackConfig = require('./config/webpack/test.js');
 
 module.exports = function(config) {
   config.set({
@@ -15,7 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'spec/javascript/**/*.spec.js'
+      'spec/javascript/**/*.spec.js',
     ],
 
 
@@ -24,9 +26,13 @@ module.exports = function(config) {
     ],
 
 
+    webpack: webpackConfig,
+
+
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'spec/javascript/**/*.spec.js': ['webpack'],
     },
 
 
@@ -55,7 +61,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
 
 
     // Continuous Integration mode
