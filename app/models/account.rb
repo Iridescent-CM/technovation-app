@@ -396,7 +396,7 @@ class Account < ActiveRecord::Base
   end
 
   def took_survey!
-    update_column(:survey_completed_at, Time.current)
+    update(survey_completed_at: Time.current)
   end
 
   def took_survey?

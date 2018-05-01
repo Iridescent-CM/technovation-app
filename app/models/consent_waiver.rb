@@ -16,6 +16,10 @@ class ConsentWaiver < ActiveRecord::Base
     if account.mentor_profile.present?
       account.mentor_profile.enable_searchability_with_save
     end
+
+    if account.judge_profile.present?
+      account.judge_profile.touch
+    end
   }, on: :create
 
   def account_consent_token=(token)
