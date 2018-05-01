@@ -95,7 +95,7 @@ RSpec.feature "Survey links" do
 
     scenario "no reminders or links appear for those who took the survey" do
       user = FactoryBot.create(scope)
-      user.account.took_survey!
+      user.account.took_program_survey!
 
       sign_in(user)
 

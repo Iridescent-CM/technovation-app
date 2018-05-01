@@ -13,7 +13,7 @@ RSpec.feature "Survey completion" do
       click_button 'Sign in'
 
       expect(current_path).to eq(send("#{scope}_dashboard_path"))
-      expect(user.account.reload).to be_took_survey
+      expect(user.account.reload).to be_took_program_survey
     end
   end
 end

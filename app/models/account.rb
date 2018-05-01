@@ -400,7 +400,7 @@ class Account < ActiveRecord::Base
   end
 
   def took_program_survey!
-    update(pre_survey_completed_at: Time.curreent)
+    update(pre_survey_completed_at: Time.current)
   end
 
   def took_program_survey?
