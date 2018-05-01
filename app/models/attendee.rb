@@ -1,4 +1,6 @@
 class Attendee
+  extend Forwardable
+
   attr_reader :record, :event, :context
 
   def initialize(record, event, context)
@@ -7,21 +9,25 @@ class Attendee
     @context = context
   end
 
-  def as_json(*)
-    base = {
-      id: record.id_for_event,
-      name: record.name,
-      scope: record.event_scope,
-      links: {},
-      status: record.status,
-      human_status: record.human_status,
-      status_explained: record.status_explained,
-      selected: record.in_event?(event),
-      assignments: { team_ids: [], judge_ids: [] },
-    }
+  def id
+    record.id_for_event
+  end
+
+  def scope
+    record.event_scope
+  end
+
+  def_delegators :@record, :name, :status, :human_status, :status_explained
+
+  def selected
+    record.in_event?(event)
+  end
+
+  def links
+    base_links = {}
 
     if record.ambassador_route_key
-      base[:links][:self] = context.send(
+      base_links[:self] = context.send(
         "regional_ambassador_#{record.ambassador_route_key}_path",
         record,
         { allow_out_of_region: true },
@@ -29,31 +35,52 @@ class Attendee
     end
 
     if record.respond_to?(:submission)
-      base[:links] = base[:links].merge({
+      base_links = base_links.merge({
         submission: context.send(
           "regional_ambassador_team_submission_path",
           record.submission,
           { allow_out_of_region: true },
         ),
       })
+    end
 
-      base[:assignments][:judge_ids] = record.judge_assignments
-        .pluck(:assigned_judge_id)
+    base_links
+  end
 
-      base.merge({
-        division: record.division_name,
-        submission: {
-          name: record.submission.app_name,
-        },
-      })
-    elsif record.respond_to?(:email)
-      base[:assignments][:team_ids] = record.assigned_teams.pluck(:id)
 
-      base.merge({
-        email: record.email,
-      })
-    else
-      base
+  def division
+    if record.respond_to?(:division_name)
+      record.division_name
+    end
+  end
+
+  def submission
+    if record.respond_to?(:submission)
+      {
+        name: record.submission.app_name,
+      }
+    end
+  end
+
+  def assignments
+    team_ids = []
+    judge_ids = []
+
+    if record.respond_to?(:judge_assignments)
+      judge_ids = record.judge_assignments.pluck(:assigned_judge_id)
+    elsif record.respond_to?(:assigned_teams)
+      team_ids = record.assigned_teams.pluck(:id)
+    end
+
+    {
+      team_ids: team_ids,
+      judge_ids: judge_ids,
+    }
+  end
+
+  def email
+    if record.respond_to?(:email)
+      record.email
     end
   end
 end

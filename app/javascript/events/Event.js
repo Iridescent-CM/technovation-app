@@ -210,8 +210,8 @@ export default function (event) {
           url: opts.url,
 
           success (resp) {
-            _.each(resp, (result) => {
-              opts.event.resultReadyForList(result, opts.list)
+            _.each(resp.data, (result) => {
+              opts.event.resultReadyForList(result.attributes, opts.list)
             })
             resolve(resp)
           },
