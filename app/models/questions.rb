@@ -281,9 +281,13 @@ class Questions
   end
 
   def simple_format(text)
-    paragraphs = text.split("\r\n")
-    formatted = "<p>" + paragraphs.join("</p><p>") + "</p>"
-    formatted.gsub("<p></p>", "")
+    if !!text
+      paragraphs = text.split("\r\n")
+      formatted = "<p>" + paragraphs.join("</p><p>") + "</p>"
+      formatted.gsub("<p></p>", "")
+    else
+      ""
+    end
   end
 
   def comment_data(score, section_name)
