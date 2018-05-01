@@ -130,7 +130,11 @@ class UserInvitation < ApplicationRecord
   end
 
   def id_for_event
-    id
+    if persisted?
+      id
+    else
+      SecureRandom.hex(16)
+    end
   end
 
   def in_event?(event)
