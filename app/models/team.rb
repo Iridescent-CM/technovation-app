@@ -225,7 +225,7 @@ class Team < ActiveRecord::Base
     after_add: ->(team, event) { team.submission.touch },
     after_remove: ->(team, event) { team.submission.touch }
 
-  has_many :judge_assignments
+  has_many :judge_assignments, -> { current }
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true

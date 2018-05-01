@@ -37,6 +37,20 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
+--
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -563,8 +577,8 @@ ALTER SEQUENCE public.jobs_id_seq OWNED BY public.jobs.id;
 
 CREATE TABLE public.join_requests (
     id integer NOT NULL,
-    requestor_type character varying NOT NULL,
     requestor_id integer NOT NULL,
+    requestor_type character varying NOT NULL,
     team_id integer NOT NULL,
     accepted_at timestamp without time zone,
     declined_at timestamp without time zone,
@@ -604,7 +618,8 @@ CREATE TABLE public.judge_assignments (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     assigned_judge_type character varying,
-    assigned_judge_id integer
+    assigned_judge_id integer,
+    seasons text[] DEFAULT '{}'::text[]
 );
 
 
@@ -687,8 +702,8 @@ CREATE TABLE public.judge_profiles_regional_pitch_events (
 
 CREATE TABLE public.memberships (
     id integer NOT NULL,
-    member_type character varying NOT NULL,
     member_id integer NOT NULL,
+    member_type character varying NOT NULL,
     team_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -799,8 +814,8 @@ CREATE TABLE public.messages (
     body text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    regarding_type character varying,
     regarding_id integer,
+    regarding_type character varying,
     sent_at timestamp without time zone,
     delivered_at timestamp without time zone
 );
@@ -831,10 +846,10 @@ ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
 
 CREATE TABLE public.multi_messages (
     id integer NOT NULL,
-    sender_type character varying NOT NULL,
     sender_id integer NOT NULL,
-    regarding_type character varying NOT NULL,
+    sender_type character varying NOT NULL,
     regarding_id integer NOT NULL,
+    regarding_type character varying NOT NULL,
     recipients public.hstore NOT NULL,
     subject character varying,
     body text NOT NULL,
@@ -2153,14 +2168,6 @@ ALTER TABLE ONLY public.saved_searches
 
 
 --
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: screenshots screenshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2283,10 +2290,24 @@ CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (emai
 
 
 --
+-- Name: index_accounts_on_mailer_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_accounts_on_mailer_token ON public.accounts USING btree (mailer_token);
+
+
+--
 -- Name: index_accounts_on_password_reset_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_accounts_on_password_reset_token ON public.accounts USING btree (password_reset_token);
+
+
+--
+-- Name: index_accounts_on_session_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_accounts_on_session_token ON public.accounts USING btree (session_token);
 
 
 --
@@ -2364,6 +2385,13 @@ CREATE INDEX index_jobs_on_owner_type_and_owner_id ON public.jobs USING btree (o
 --
 
 CREATE INDEX index_join_requests_on_requestor_type_and_requestor_id ON public.join_requests USING btree (requestor_type, requestor_id);
+
+
+--
+-- Name: index_join_requests_on_review_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_join_requests_on_review_token ON public.join_requests USING btree (review_token);
 
 
 --
@@ -2588,6 +2616,13 @@ CREATE INDEX trgm_last_name_indx ON public.accounts USING gist (last_name public
 --
 
 CREATE INDEX trgm_team_name_indx ON public.teams USING gist (name public.gist_trgm_ops);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
@@ -2958,6 +2993,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180419155950'),
 ('20180419164217'),
 ('20180419181556'),
-('20180420141640');
+('20180420141640'),
+('20180501194208');
 
 

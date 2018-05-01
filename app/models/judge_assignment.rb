@@ -1,4 +1,12 @@
 class JudgeAssignment < ActiveRecord::Base
+  include Seasoned
+
+  after_commit -> {
+    if seasons.empty?
+      update_column(:seasons, [Season.current.year])
+    end
+  }, on: :create
+
   belongs_to :team
   belongs_to :assigned_judge, polymorphic: true
 
