@@ -15,14 +15,28 @@ class ScoresGrid
     team_submission.team_division_name
   end
 
-  column :judge, html: true do |score|
+  column :judge, mandatory: true, html: true do |score|
     link_to score.judge_profile.name,
      [current_scope, :participant, id: score.judge_profile.account_id]
   end
 
+  column :team_name, mandatory: true do
+    team.name
+  end
+
+  column :submission, mandatory: true do
+    team.submission.app_name
+  end
+
   column :round
-  column :total
-  column :total_possible
+
+  column :total, mandatory: true do
+    "#{total}/#{total_possible}"
+  end
+
+  column :view, mandatory: true, html: true do |score|
+    link_to 'view', [current_scope, :score, id: score.id]
+  end
 
   filter :by_event,
     :enum,

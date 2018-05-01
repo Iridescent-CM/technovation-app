@@ -366,4 +366,10 @@ class SubmissionScore < ActiveRecord::Base
   def can_automatically_approve?
     !detect_if_too_fast_repeat_offense && !detect_if_raw_total_seems_too_low
   end
+
+  def awaiting_review(&block)
+    if complete? and not approved?
+      block.call
+    end
+  end
 end
