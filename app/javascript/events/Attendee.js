@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import escapeRegExp from "escape-string-regexp";
 
 export default function Attendee (json) {

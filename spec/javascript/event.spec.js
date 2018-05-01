@@ -6,11 +6,27 @@ import Attendee from '../../app/javascript/events/Attendee';
 test('resultReadyForList ignores double entry', () => {
   let event = new Event({ id: 1 })
 
-  const teamResp = { id: "1", assignments: [] }
+  const teamResp = { id: "1", assignments: {} }
   event.resultReadyForList(teamResp, event.selectedTeams)
   event.resultReadyForList(teamResp, event.selectedTeams)
 
   expect(_.map(event.selectedTeams, "id")).toEqual([1])
+})
+
+test('resultReadyForList appends assignments', () => {
+  let event = new Event({ id: 1 })
+
+  const teamResp = { id: "1", assignments: { judge_ids: [1, 2] } }
+  const judgeResp = { id: "2", assignments: { team_ids: [1] } }
+
+  event.resultReadyForList(teamResp, event.selectedTeams)
+  event.resultReadyForList(judgeResp, event.selectedJudges)
+
+  const team = event.selectedTeams[0]
+  const judge = event.selectedJudges[0]
+
+  expect(_.map(team.assignedJudges, "id")).toEqual([2])
+  expect(_.map(judge.assignedTeams, "id")).toEqual([1])
 })
 
 test('addTeam adds new teams', () => {

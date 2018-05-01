@@ -181,19 +181,13 @@ export default function (event) {
     let attendee = new Attendee(result)
 
     _.each(result.assignments.judge_ids, id => {
-      const idx = _.findIndex(this.selectedJudges, j => {
-        return j.id === id && j.email === attendee.email
-      })
-
+      const idx = _.findIndex(this.selectedJudges, j => j.id === id)
       if (idx !== -1)
         attendee.assignedJudgeFoundInEvent(this.selectedJudges[idx])
     })
 
     _.each(result.assignments.team_ids, id => {
-      const idx = _.findIndex(this.selectedTeams, t => {
-        return t.id === id
-      })
-
+      const idx = _.findIndex(this.selectedTeams, t => t.id === id)
       if (idx !== -1)
         attendee.assignedTeamFoundInEvent(this.selectedTeams[idx])
     })
