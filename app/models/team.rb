@@ -246,6 +246,10 @@ class Team < ActiveRecord::Base
     end
   }
 
+  def is_team?
+    true
+  end
+
   def qualified?
     has_students? && all_students_onboarded?
   end

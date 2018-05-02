@@ -136,6 +136,10 @@ class Account < ActiveRecord::Base
     :first_name
   end
 
+  def virtual_event?
+    judge_profile.present? && judge_profile.event.virtual?
+  end
+
   def reset_location!
     update(
       city: nil,

@@ -96,6 +96,10 @@ class JudgeProfile < ActiveRecord::Base
     end
   end
 
+  def is_team?
+    false
+  end
+
   def industry_text
     if industry == "Other"
       industry_other
