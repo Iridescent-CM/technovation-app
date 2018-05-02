@@ -259,7 +259,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def code_checklist_points
-    code_checklist.total_points
+    total_technical_checklist
   end
 
   def app_name
