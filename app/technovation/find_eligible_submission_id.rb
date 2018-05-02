@@ -5,7 +5,7 @@ module FindEligibleSubmissionId
     def call(judge_profile, options = {})
       if SeasonToggles.quarterfinals? and judge_profile.live_event?
 
-        submission_id_from_live_event(judge_profile.event, options) or
+        submission_id_from_live_event(judge_profile.events, options) or
           id_for_finished_score(judge_profile, options) or
             id_for_score_in_progress(judge_profile, options)
 
@@ -19,12 +19,12 @@ module FindEligibleSubmissionId
     end
 
     private
-    def submission_id_from_live_event(event, options)
+    def submission_id_from_live_event(events, options)
       id = options[:team_submission_id]
 
       if [nil, "null", "undefined"].include?(id)
         false
-      elsif event.team_submission_ids.include?(Integer(id))
+      elsif events.flat_map(&:team_submission_ids).include?(Integer(id))
         id
       else
         raise ActiveRecord::RecordNotFound

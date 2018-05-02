@@ -61,7 +61,7 @@ module RegionalAmbassador
         .find(assignment_params.fetch(:attendee_id))
 
       if event.attendees.include?(attendee)
-        InvalidateExistingJudgeData.(attendee)
+        InvalidateExistingJudgeData.(attendee, removing: true, event: event)
 
         if assignment_params.fetch(:attendee_scope) == "Team"
           attendee.memberships.each do |membership|

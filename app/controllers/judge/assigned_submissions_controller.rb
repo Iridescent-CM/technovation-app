@@ -2,7 +2,7 @@ module Judge
   class AssignedSubmissionsController < JudgeController
     def index
       teams = current_judge.assigned_teams
-      teams = current_judge.event.teams if teams.empty?
+      teams = current_judge.events.flat_map(&:teams) if teams.empty?
 
       current_scores = current_judge.submission_scores.current_round
 
