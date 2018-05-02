@@ -184,7 +184,8 @@ Rails.application.routes.draw do
     resource :judge_list, only: :show
     resource :team_list, only: :show
 
-    resources :scores, only: [:index, :show]
+    resources :quarterfinals_scores, only: :index
+    resources :semifinals_scores, only: [:index, :show]
 
     resources :messages
     resources :multi_messages
@@ -257,6 +258,7 @@ Rails.application.routes.draw do
     resources :score_approvals, only: :create
     resources :judges, only: :index
 
+    resources :quarterfinals_scores, only: :index
     resources :semifinals_scores, only: [:index, :show]
     resources :submission_score_restorations, only: :update
 
