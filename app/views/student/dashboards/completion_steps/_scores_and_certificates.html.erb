@@ -1,0 +1,16 @@
+<li class="completion-step">
+  <div class="flags">
+    <span class="flag flag-events">
+      Scores
+    </span>
+  </div>
+
+  <h1 class="content-heading">View your Scores and Certificates</h1>
+
+  Hi these are some scores!
+
+ <% @all_scores.each do |score| %>
+  <%= score.total %>
+ <% end %>
+
+</li>
