@@ -82,8 +82,55 @@ class TeamSubmission < ActiveRecord::Base
 
   has_many :complete_submission_scores,
     -> { current.complete },
-    class_name: "SubmissionScore",
-    dependent: :destroy
+    class_name: "SubmissionScore"
+
+  has_many :quarterfinals_all_submission_scores,
+    -> { current.quarterfinals },
+    class_name: "SubmissionScore"
+
+  has_many :quarterfinals_complete_submission_scores,
+    -> { current.quarterfinals.complete },
+    class_name: "SubmissionScore"
+
+  has_many :quarterfinals_incomplete_submission_scores,
+    -> { current.quarterfinals.incomplete },
+    class_name: "SubmissionScore"
+
+  has_many :semifinals_all_submission_scores,
+    -> { current.semifinals },
+    class_name: "SubmissionScore"
+
+  has_many :semifinals_complete_submission_scores,
+    -> { current.semifinals.complete },
+    class_name: "SubmissionScore"
+
+  has_many :semifinals_incomplete_submission_scores,
+    -> { current.semifinals.incomplete },
+    class_name: "SubmissionScore"
+
+  has_many :virtual_all_submission_scores,
+    -> { current.virtual },
+    class_name: "SubmissionScore"
+
+  has_many :virtual_incomplete_submission_scores,
+    -> { current.virtual.incomplete },
+    class_name: "SubmissionScore"
+
+  has_many :virtual_complete_submission_scores,
+    -> { current.virtual.complete },
+    class_name: "SubmissionScore"
+
+  has_many :live_all_submission_scores,
+    -> { current.live },
+    class_name: "SubmissionScore"
+
+  has_many :live_incomplete_submission_scores,
+    -> { current.live.incomplete },
+    class_name: "SubmissionScore"
+
+  has_many :live_complete_submission_scores,
+    -> { current.live.complete },
+    class_name: "SubmissionScore"
 
   validate -> {
     unless integrity_affirmed?
@@ -126,6 +173,10 @@ class TeamSubmission < ActiveRecord::Base
     define_method("#{piece}_complete?") do
       not public_send(piece).blank?
     end
+  end
+
+  def total_possible_score
+    senior_division? ? 100 : 80
   end
 
   def only_needs_to_submit?

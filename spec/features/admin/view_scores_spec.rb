@@ -2,8 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Admins view scores" do
   scenario "view QF scores" do
-    skip "Rebuilding the UI now"
-
     submission = FactoryBot.create(
       :submission,
       :junior,
@@ -20,18 +18,17 @@ RSpec.feature "Admins view scores" do
       team_submission: submission
     )
 
+    SeasonToggles.judging_round = :qf
     admin = FactoryBot.create(:admin)
     sign_in(admin)
 
     visit admin_scores_path
-    click_link "View details"
+    click_link "view"
 
     expect(page).to have_content("earned 2 points")
   end
 
   scenario "view SF scores" do
-    skip "This is under construction"
-
     submission = FactoryBot.create(
       :submission,
       :junior,
@@ -50,11 +47,12 @@ RSpec.feature "Admins view scores" do
       team_submission: submission
     )
 
+    SeasonToggles.judging_round = :sf
     admin = FactoryBot.create(:admin)
     sign_in(admin)
 
-    visit admin_semifinals_scores_path
-    click_link "View details"
+    visit admin_scores_path
+    click_link "view"
 
     expect(page).to have_content("earned 2 points")
   end

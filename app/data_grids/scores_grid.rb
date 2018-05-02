@@ -1,53 +1,60 @@
 class ScoresGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search
+  attr_accessor :admin, :allow_state_search, :current_account
 
   self.batch_size = 10
 
   scope do
-    SubmissionScore.current
-      .includes({ team_submission: :team }, :judge_profile)
-      .references(:teams, :team_submissions, :judge_profiles)
+    TeamSubmission.complete.current
+      .includes(:team, { submission_scores: :judge_profile })
+      .references(:teams, :submission_scores, :judge_profiles)
   end
 
   column :division do
-    team_submission.team_division_name
+    team_division_name
   end
 
-  column :judge, mandatory: true, html: true do |score|
-    link_to score.judge_profile.name,
-     [current_scope, :participant, id: score.judge_profile.account_id]
-  end
-
-  column :team_name, mandatory: true do
-    team.name
-  end
+  column :team_name, mandatory: true
 
   column :submission, mandatory: true do
-    team.submission.app_name
+    app_name
   end
 
-  column :round
+  column :contest_rank
 
-  column :total, mandatory: true do
-    "#{total}/#{total_possible}"
+  column :total, order: :quarterfinals_average_score, mandatory: true do |submission, grid|
+    str = submission.public_send("#{grid.round}_average_score").to_s
+    str += "/#{submission.total_possible_score}"
   end
 
-  column :view, mandatory: true, html: true do |score|
-    link_to 'view', [current_scope, :score, id: score.id]
+  column :view, mandatory: true, html: true do |submission|
+    link_to 'view', [current_scope, :score_detail, id: submission.id]
+  end
+
+  filter :round,
+  :enum,
+  select: -> { [
+    ['Quarterfinals', 'quarterfinals'],
+    ['Semifinals', 'semifinals'],
+  ] } do |value, scope, grid|
+    mod = grid.complete.present? ? grid.complete : "all"
+    assoc = "#{value}_#{mod}_submission_scores".to_sym
+    scope.joins(assoc)
   end
 
   filter :by_event,
     :enum,
-    select: RegionalPitchEvent.current.order(:name).map { |e|
-      [e.name, e.id]
+    select: ->(grid) {
+      RegionalPitchEvent.visible_to(grid.current_account)
+        .current
+        .order(:name)
+        .map { |e| [e.name, e.id] }
     } do |value, scope, grid|
-      scope.includes(judge_profile: :events)
+      scope.includes(team: :events)
         .references(:regional_pitch_events)
         .where("regional_pitch_events.id = ?", value)
   end
-
 
   filter :live_or_virtual,
     :enum,
@@ -55,8 +62,10 @@ class ScoresGrid
       ['Virtual scores', 'virtual'],
       ['Live event scores', 'live'],
     ],
-    filter_group: "common" do |value|
-      send(value)
+    filter_group: "common" do |value, scope, grid|
+      mod = grid.complete.present? ? grid.complete : "all"
+      assoc = "#{value}_#{mod}_submission_scores".to_sym
+      scope.joins(assoc)
     end
 
   filter :complete,
@@ -64,8 +73,8 @@ class ScoresGrid
   select: [
     ["Complete scores", "complete"],
     ["Incomplete scores", "incomplete"],
-  ] do |value|
-    send(value)
+  ] do |value, scope, grid|
+    scope.joins("#{grid.round}_#{value}_submission_scores".to_sym)
   end
 
   filter :country,

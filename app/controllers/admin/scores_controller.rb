@@ -1,5 +1,3 @@
-require "will_paginate/array"
-
 module Admin
   class ScoresController < AdminController
     include DatagridController
@@ -35,10 +33,18 @@ module Admin
 
     private
     def grid_params
+      round = SeasonToggles.current_judging_round(full_name: true).to_s
+
+      if round === 'off'
+        round = 'quarterfinals'
+      end
+
       grid = (params[:scores_grid] ||= {}).merge(
         admin: true,
         country: Array(params[:scores_grid][:country]),
         state_province: Array(params[:scores_grid][:state_province]),
+        current_account: current_account,
+        round: params[:scores_grid].fetch(:round) { round },
       )
 
       grid.merge(

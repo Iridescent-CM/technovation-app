@@ -73,6 +73,23 @@ class RegionalPitchEvent < ActiveRecord::Base
     to: :ambassador,
     prefix: true
 
+  scope :visible_to, ->(admin_ra) {
+    if admin_ra.admin?
+      unscoped
+    elsif admin_ra.country == "US"
+      joins(ambassador: :account)
+        .where(
+          "accounts.country = 'US' AND accounts.state_province = ?",
+          admin_ra.state_province
+        )
+    else
+      joins(ambassador: :account)
+        .where(
+          "accounts.country = ?",
+          admin_ra.country
+        )
+    end
+  }
 
   scope :available_to, ->(record) {
     if record.present?

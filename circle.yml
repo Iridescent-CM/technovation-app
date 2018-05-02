@@ -28,7 +28,6 @@ jobs:
           BONSAI_URL: localhost:9200
           GOOGLE_TIMEZONE_API_KEY: n-a
           BING_MAPS_API_KEY: n-a
-          ENABLE_RA_SCORES: yes
           SEARCH_INDEX_TIMING: realtime
           RA_SLACK_URL: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a

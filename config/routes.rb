@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resource :regional_pitch_event_selection, only: :create
 
     resources :regional_pitch_events, only: [:show, :index]
-    resources :scores, only: [:show]
+    resources :scores, only: :show
 
     resources :certificates, only: :create
 
@@ -124,7 +124,7 @@ Rails.application.routes.draw do
     resource :regional_pitch_events_team_list, only: :show
     resource :regional_pitch_event_selection, only: :create
     resources :regional_pitch_events, only: [:index, :show]
-    resources :scores, only: [:show]
+    resources :scores, only: :show
   end
 
   get "pending_regional_ambassador/dashboard",
@@ -184,8 +184,8 @@ Rails.application.routes.draw do
     resource :judge_list, only: :show
     resource :team_list, only: :show
 
-    resources :quarterfinals_scores, only: :index
-    resources :semifinals_scores, only: [:index, :show]
+    resources :scores, only: [:index, :show]
+    resources :score_details, only: :show
 
     resources :messages
     resources :multi_messages
@@ -258,8 +258,7 @@ Rails.application.routes.draw do
     resources :score_approvals, only: :create
     resources :judges, only: :index
 
-    resources :quarterfinals_scores, only: :index
-    resources :semifinals_scores, only: [:index, :show]
+    resources :score_details, only: :show
     resources :submission_score_restorations, only: :update
 
     resource :paper_parental_consent, only: :create
