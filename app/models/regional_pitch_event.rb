@@ -34,7 +34,12 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :judges,
     -> { includes(:account).references(:accounts) },
+    join_table: :judge_profiles_regional_pitch_events,
     class_name: "JudgeProfile"
+
+  has_many :judge_assignments,
+    ->(evt) { where(team: evt.teams) },
+    through: :judges
 
   has_and_belongs_to_many :user_invitations,
     -> { includes(:account).references(:accounts) },
