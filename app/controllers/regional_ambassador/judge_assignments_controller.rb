@@ -3,17 +3,9 @@ module RegionalAmbassador
     def create
       model = assignment_params.fetch(:model_scope).constantize
       judge = model.find(assignment_params.fetch(:judge_id))
-
       team = Team.find(assignment_params.fetch(:team_id))
 
-      judge.assigned_teams << team
-
-      unassigned_scores_in_event = judge.submission_scores
-        .current_round
-        .joins(team_submission: { team: :events })
-        .where("regional_pitch_events.id = ?", team.event.id)
-        .where.not(team_submission: judge.assigned_teams.map(&:submission))
-      unassigned_scores_in_event.destroy_all
+      CreateJudgeAssignment.(team: team, judge: judge)
 
       render json: {
         flash: {
