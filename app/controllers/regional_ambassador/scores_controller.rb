@@ -2,7 +2,13 @@ module RegionalAmbassador
   class ScoresController < RegionalAmbassadorController
     include DatagridController
 
-    use_datagrid with: ScoresGrid
+    use_datagrid with: ScoresGrid,
+
+      html_scope: ->(scope, user, params) {
+        scope.in_region(user).page(params[:page])
+      },
+
+      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
 
     def show
       @score = SubmissionScore.find(params.fetch(:id))
@@ -18,9 +24,16 @@ module RegionalAmbassador
       end
 
       grid = (params[:scores_grid] ||= {}).merge(
-        admin: true,
-        country: Array(params[:scores_grid][:country]),
-        state_province: Array(params[:scores_grid][:state_province]),
+        admin: false,
+        allow_state_search: current_ambassador.country != "US",
+        country: [current_ambassador.country],
+        state_province: (
+          if current_ambassador.country == "US"
+            [current_ambassador.state_province]
+          else
+            Array(params[:scores_grid][:state_province])
+          end
+        ),
         current_account: current_account,
         round: params.fetch(:round) { round },
       )

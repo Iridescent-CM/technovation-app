@@ -54,7 +54,8 @@ class ScoresGrid
         .current
         .order(:name)
         .map { |e| [e.name, e.id] }
-    } do |value, scope, grid|
+    },
+    if: ->(g) { g.admin or g.current_account.events.any? } do |value, scope, grid|
       scope.includes(team: :events)
         .references(:regional_pitch_events)
         .where("regional_pitch_events.id = ?", value)

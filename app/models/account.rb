@@ -372,7 +372,10 @@ class Account < ActiveRecord::Base
   end
 
   def events
-    judge_profile && judge_profile.events
+    judge_profile && judge_profile.events ||
+
+      regional_ambassador_profile &&
+        regional_ambassador_profile.regional_pitch_events
   end
 
   def in_event?(event)
