@@ -84,6 +84,10 @@ class TeamSubmission < ActiveRecord::Base
     -> { current },
     dependent: :destroy
 
+  has_many :scores,
+    -> { current },
+    class_name: "SubmissionScore"
+
   has_many :complete_submission_scores,
     -> { current.complete },
     class_name: "SubmissionScore"
