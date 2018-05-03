@@ -27,6 +27,10 @@ class TeamSubmission < ActiveRecord::Base
     columns[:published_at] = nil if RequiredFields.new(self).any?(&:blank?)
 
     update_columns(columns)
+
+    if not published?
+      submission_scores.current_round.destroy_all
+    end
   }, on: :update
 
   enum development_platform: %w{
@@ -322,6 +326,10 @@ class TeamSubmission < ActiveRecord::Base
   end
   alias :name :app_name
 
+  def published?
+    !!published_at
+  end
+
   def publish!
     update(published_at: Time.current)
 
@@ -331,13 +339,13 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def awaiting_publish(&block)
-    if !!!published_at
+    if not published?
       yield
     end
   end
 
   def already_published(&block)
-    if !!published_at
+    if published?
       yield
     end
   end

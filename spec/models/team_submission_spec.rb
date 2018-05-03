@@ -3,6 +3,22 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   before { SeasonToggles.team_submissions_editable! }
 
+  it "removes existing current round scores if unpublished" do
+    SeasonToggles.set_judging_round(:qf)
+
+    submission = FactoryBot.create(:submission, :complete)
+    score = FactoryBot.create(:score, team_submission: submission)
+
+    expect {
+      submission.app_name = nil
+      submission.save
+    }
+      .to change { submission.scores.current_round.count }
+      .from(1).to(0)
+
+    SeasonToggles.set_judging_round(:off)
+  end
+
   describe "regioning" do
     it "works with primary region searches" do
       la_team = FactoryBot.create(:team, :los_angeles)

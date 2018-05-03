@@ -33,6 +33,10 @@ class SeasonToggles
       end
       alias :current_judging_round :judging_round
 
+      def set_judging_round(name)
+        self.judging_round = name
+      end
+
       def judging_enabled?
         quarterfinals_judging? or semifinals_judging?
       end
