@@ -11,3 +11,90 @@
 @import "checklist";
 @import "sortable_list";
 @import "review_submission";
+
+$num-of-tabs: 3;
+
+@mixin tabs {
+  @for $i from 1 through $num-of-tabs {
+    &:nth-of-type(#{$i}) {
+      &:checked {
+        ~ .slide {
+          left: calc((100% / #{$num-of-tabs}) * #{$i - 1});
+        }
+      }
+    }
+  }
+}
+
+
+h5 {
+  font-size: 26px;
+  background: $antiqua;
+  color: white;
+  padding: 40px 0 100px 20%;
+  margin-bottom: 50px;
+}
+
+.tab-wrap {
+  width: 50%;
+  margin-left: 20%;
+  position: relative;
+  display: flex;
+  top: -106px;
+}
+
+input[name="tabs"] {
+  position: absolute;
+  z-index: -1;
+  &:checked {
+    + .tab-label-content {
+      label {
+        color: white;
+      }
+      .tab-content {
+        display: block;
+      }
+    }
+  }
+  @include tabs;
+  &:first-of-type {
+    &:checked {
+      ~ .slide {
+        left: 0;
+      }
+    }
+  }
+}
+
+label {
+  cursor: pointer;
+  color: rgba(255,255,255,0.8);
+  background-color: $antiqua;
+  box-sizing: relative;
+  justify-content: left;
+  text-align: left;
+  height: 56px;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.slide {
+  background: $shamrock-mid;
+  width: calc(100% / #{$num-of-tabs});
+  height: 4px;
+  position: absolute;
+  left: 0;
+  top: calc(100% - 4px);
+  transition: left 0.3s ease-out;
+}
+
+.tab-label-content {
+  width: 100%;
+  .tab-content {
+    position: absolute;
+    top: 100px;
+    left: 6px;
+    line-height: 130%;
+    display: none;
+  }
+}

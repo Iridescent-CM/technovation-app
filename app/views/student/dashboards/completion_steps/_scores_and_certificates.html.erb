@@ -5,12 +5,41 @@
     </span>
   </div>
 
-  <h1 class="content-heading">View your Scores and Certificates</h1>
+  <h5 class="content-heading">View your Scores and Certificates</h5>
 
-  Hi these are some scores!
+ <div class="tab-wrap">
 
- <% @all_scores.each do |score| %>
-  <%= score.total %>
- <% end %>
+     <input type="radio" name="tabs" id="tab1" checked>
+     <div class="tab-label-content" id="tab1-content">
+       <label for="tab1">Quarterfinal Scores</label>
+       <div class="tab-content">
+         Hi these are some scores! hi
+
+         <% @all_scores.each do |score| %>
+         <%= score.total %>
+         <% end %>
+         Insert accordion with scores here.</div>
+     </div>
+
+     <input type="radio" name="tabs" id="tab2">
+     <div class="tab-label-content" id="tab2-content">
+       <label for="tab2">Semifinal Scores</label>
+       <div class="tab-content">Insert accordion with scores here.
+         <div class="accordion">
+           One
+         </div>
+
+       </div>
+     </div>
+
+     <input type="radio" name="tabs" id="tab3">
+     <div class="tab-label-content" id="tab3-content">
+       <label for="tab3">Certificates</label>
+       <div class="tab-content">Insert certificates here.</div>
+     </div>
+
+     <div class="slide"></div>
+
+ </div>
 
 </li>
