@@ -4,3 +4,13 @@
   <%= pluralize @submission.code_checklist_points, 'point' %>
   for their code checklist.
 </p>
+
+<ul>
+  <% @submission.scores.each do |score| %>
+    <li>
+      <%= link_to 'View score', [current_scope, :score, id: score.id] %>
+      <%= score.total %> / <%= score.total_possible %>
+      by <%= score.judge_name %>
+    </li>
+  <% end %>
+</ul>

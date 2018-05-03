@@ -4,6 +4,7 @@
   <header class="admin-score-header">
     <h3><%= @score.judge_name %></h3>
     <h4><%= @score.team_name %></h4>
+    <h5><%= @score.total %> / <%= @score.total_possible %></h5>
 
     <h3>Ideation – <%= @score.ideation_total %></h3>
     <h4>Comment:</h4>
@@ -181,7 +182,7 @@
     </table>
   </div>
 
-  <% @score.awaiting_review do %>
+  <% @score.awaiting_review(current_account) do %>
     <div class="admin-score-actions">
       <%= button_to "Approve this score",
         admin_score_approvals_path(id: @score.id),
