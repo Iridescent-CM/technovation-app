@@ -65,13 +65,14 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{team submission division percent\ complete}
+      csv << %w{team submission division percent\ complete, presentation}
       event.teams.each do |item|
         csv << [
           item.name,
           item.submission.app_name,
           item.division_name,
           item.submission.percent_complete,
+          item.pitch_presentation_url,
         ]
       end
     end

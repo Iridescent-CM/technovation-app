@@ -70,7 +70,9 @@ RSpec.feature "RA prints event scores" do
     expect(page).to have_content("#{judge_a.name}\n#{team_a.name}")
     expect(page).not_to have_content("#{judge_b.name}\n#{team_a.name}")
 
-    expect(page).to have_css(".page", count: 4)
-    expect(page).to have_css(".cover-page", count: 2)
+    expect(page).to have_css(".page", count: 8)
+    expect(page).to have_css(".page-comments", count: 4)
+    expect(page).to have_css(".cover-page", count: 4)
+    expect(page).to have_css(".cover-page--blank", count: 2)
   end
 end
