@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :submission_score, aliases: [:score] do
     judge_profile
-    association(:team_submission, factory: [:team_submission, :junior])
+    association(:team_submission, factory: [:team_submission, :complete, :junior])
     round SubmissionScore.rounds[:quarterfinals]
     seasons [Season.current.year]
 
@@ -10,26 +10,26 @@ FactoryBot.define do
     end
 
     trait :senior do
-      association(:team_submission, factory: [:team_submission, :senior])
+      association(:team_submission, factory: [:team_submission, :complete, :senior])
     end
 
     trait :junior do
-      association(:team_submission, factory: [:team_submission, :junior])
+      association(:team_submission, factory: [:team_submission, :complete, :junior])
     end
 
     trait :brazil do
-      association(:team_submission, factory: [:team_submission, :brazil])
+      association(:team_submission, factory: [:team_submission, :complete, :brazil])
     end
 
     trait :los_angeles do
       association(
         :team_submission,
-        factory: [:team_submission, :los_angeles]
+        factory: [:team_submission, :complete, :los_angeles]
       )
     end
 
     trait :chicago do
-      association(:team_submission, factory: [:team_submission, :chicago])
+      association(:team_submission, factory: [:team_submission, :complete, :chicago])
     end
 
     trait :minimum_total do

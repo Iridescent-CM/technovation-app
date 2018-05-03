@@ -7,6 +7,10 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    trait :submitted do
+      association(:submission, :complete)
+    end
+
     trait :live_event_eligible do
       team_submissions { build_list :submission, 1 }
     end
