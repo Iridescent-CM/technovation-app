@@ -13,6 +13,9 @@ FactoryBot.define do
       mentor false
     end
 
+    trait :virtual do
+    end
+
     trait :live_event_eligible do
     end
 

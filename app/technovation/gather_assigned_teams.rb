@@ -17,6 +17,8 @@ module GatherAssignedTeams
       judge.events.flat_map(&:teams)
     elsif judge_events_without_assignments.any?
       teams += judge_events_without_assignments.flat_map(&:teams)
+    else
+      teams
     end
   end
 end
