@@ -15,10 +15,14 @@ class ScoresGrid
     team_division_name
   end
 
-  column :team_name, mandatory: true
+  column :team_name, mandatory: true, html: true do |submission|
+    link_to submission.team_name,
+      [current_scope, submission.team]
+  end
 
-  column :submission, mandatory: true do
-    app_name
+  column :submission, mandatory: true, html: true do |submission|
+    link_to submission.app_name,
+      [current_scope, submission]
   end
 
   column :contest_rank
@@ -54,6 +58,15 @@ class ScoresGrid
       scope.includes(team: :events)
         .references(:regional_pitch_events)
         .where("regional_pitch_events.id = ?", value)
+  end
+
+  filter :team_or_submission_name do |value|
+    where(
+      "lower(trim(teams.name)) ILIKE ? OR " +
+      "lower(trim(team_submissions.app_name)) ILIKE ?",
+      "#{value.downcase.strip}%",
+      "#{value.downcase.strip}%"
+    )
   end
 
   filter :live_or_virtual,
