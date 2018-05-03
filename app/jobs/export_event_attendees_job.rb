@@ -28,7 +28,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def perform(ambassador_id, event_id, context_klass_name, list_type)
     ambassador = RegionalAmbassadorProfile.find(ambassador_id)
-    event = ambassador.regional_pitch_events.find(event_id)
+    event = RegionalPitchEvent.find(event_id)
 
     filepath = "./tmp/#{event.name.parameterize}-#{list_type}.csv"
 
@@ -72,7 +72,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
           item.submission.app_name,
           item.division_name,
           item.submission.percent_complete,
-          item.pitch_presentation_url,
+          item.submission.pitch_presentation_url,
         ]
       end
     end
