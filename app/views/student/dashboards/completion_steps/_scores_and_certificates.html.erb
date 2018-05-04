@@ -27,21 +27,33 @@
 
   <div class="tab-wrap">
     <input type="radio" name="tabs" id="tab1" checked>
-       <div class="tab-label-content" id="tab1-content">
-         <label for="tab1">Quarterfinal Scores</label>
-         <div class="tab-content">
-          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
-          scores: @quarterfinals_scores %>
-         </div>
-       </div>
+    <div class="tab-label-content" id="tab1-content">
+      <label for="tab1">Quarterfinal Scores</label>
+      <div class="tab-content">
 
-    <input type="radio" name="tabs" id="tab2">
-     <div class="tab-label-content" id="tab2-content">
-       <label for="tab2">Semifinal Scores</label>
-       <div class="tab-content">
-         Insert accordion with scores here.
-       </div>
-     </div>
+        <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+            scores: @quarterfinals_scores.official %>
+
+        <% if @quarterfinals_scores.unofficial.any? %>
+          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+              scores: @quarterfinals_scores.unofficial %>
+        <% end %>
+
+      </div>
+    </div>
+
+    <% if @semifinals_scores.any? %>
+      <input type="radio" name="tabs" id="tab2">
+      <div class="tab-label-content" id="tab2-content">
+        <label for="tab2">Semifinal Scores</label>
+        <div class="tab-content">
+
+          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+              scores: @semifinals_scores %>
+
+        </div>
+      </div>
+    <% end %>
 
     <input type="radio" name="tabs" id="tab3">
      <div class="tab-label-content" id="tab3-content">
