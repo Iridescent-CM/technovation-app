@@ -30,12 +30,8 @@
        <div class="tab-label-content" id="tab1-content">
          <label for="tab1">Quarterfinal Scores</label>
          <div class="tab-content">
-           Hi these are some scores! hi hola hola
-          Insert accordion with scores here.
-           <% @all_scores.each do |score| %>
-           <%= score.total %>
-           <% end %>
-
+          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+          scores: @quarterfinals_scores %>
          </div>
        </div>
 

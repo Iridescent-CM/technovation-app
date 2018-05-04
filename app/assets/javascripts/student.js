@@ -11,5 +11,8 @@
 //= require code-checklists
 
 document.addEventListener('turbolinks:load', function () {
-  $(".accordion").accordion()
-})
+  $( ".accordion" ).accordion({
+    collapsible: true,
+    active: false,
+  });
+});

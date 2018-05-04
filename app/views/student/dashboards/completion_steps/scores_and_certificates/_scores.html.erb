@@ -1,9 +1,45 @@
- Hi these are some scores!
- <h1> Quarterfinals Scores </h1>
-        <% @all_scores.each do |score| %>
-        <%= score.total %>
-        <% end %>
-        Insert accordion with scores here.
 
-
-<%= @qf_ideation_average %>
+<% scores.each do |score| %>
+ <div class="grid__col-12">
+    Total Score: <%= score.total %>
+    <div class="accordion">
+      <h3> Ideation: <%= score.ideation_total %> </h3>
+      <div>
+        <p>
+          <%= score.ideation_comment %>
+        </p>
+      </div>
+      <h3>Technical: <%= score.technical_total %></h3>
+      <div>
+        <p>
+          <%= score.technical_comment %>
+        </p>
+      </div>
+      <h3>Entrepreneurship: <%= score.entrepreneurship_total %></h3>
+      <div>
+        <p>
+          here's some stuff from your business total
+          <%= score.business_plan_short_term %>
+        </p>
+      </div>
+      <h3>Pitch: <%= score.pitch_total %></h3>
+      <div>
+        <p>
+          <p>
+            The team clearly communicates the problem they are addressing. <%= score.problem_clearly_communicated %>
+          </p>
+          <p>
+            The team’s passion and energy for solving the problem is evident in their pitch delivery. <%= score.passion_energy %>
+          </p>
+           <%= score.pitch_comment %>
+        </p>
+      </div>
+      <h3>Overall Impression: <%= score.overall_impression_total %></h3>
+      <div>
+        <p>
+          here's some stuff from your overall impression
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
