@@ -1,3 +1,4 @@
+import URLSearchParams from 'url-search-params'
 import Vue from 'vue/dist/vue.esm'
 
 import store from './store'
