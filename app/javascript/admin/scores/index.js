@@ -23,7 +23,7 @@ document.addEventListener('turbolinks:load', () => {
       computed: mapState(['ready']),
 
       mounted () {
-        let url = '/admin/scores.json'
+        let url = '/admin/suspicious_scores.json'
 
         $.ajax({
           method: "GET",

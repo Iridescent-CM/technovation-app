@@ -122,8 +122,8 @@ class SubmissionScore < ActiveRecord::Base
     ] => 'current_round_scores_count'
   }
 
-  scope :complete, -> { where("completed_at IS NOT NULL") }
-  scope :incomplete, -> { where("completed_at IS NULL") }
+  scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
+  scope :incomplete, -> { where("submission_scores.completed_at IS NULL") }
 
   scope :completed_too_fast, -> { where(completed_too_fast: true) }
   scope :completed_too_fast_repeat_offense, -> {
@@ -132,7 +132,7 @@ class SubmissionScore < ActiveRecord::Base
 
   scope :seems_too_low, -> { where(seems_too_low: true) }
 
-  scope :approved, -> { where("approved_at IS NOT NULL") }
+  scope :approved, -> { where("submission_scores.approved_at IS NOT NULL") }
   scope :unapproved, -> { where(approved_at: nil) }
 
   scope :live, -> { where(event_type: :live) }

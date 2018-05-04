@@ -15,11 +15,13 @@ class ScoresGrid
     team_division_name
   end
 
+  column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
     link_to submission.team_name,
       [current_scope, submission.team]
   end
 
+  column :app_name, mandatory: true, html: false
   column :submission, mandatory: true, html: true do |submission|
     link_to submission.app_name,
       [current_scope, submission]

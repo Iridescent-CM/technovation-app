@@ -255,6 +255,7 @@ Rails.application.routes.draw do
       only: :destroy
 
     resources :scores, only: [:index, :show, :destroy]
+    resources :suspicious_scores, only: :index
     resources :score_approvals, only: :create
     resources :judges, only: :index
 

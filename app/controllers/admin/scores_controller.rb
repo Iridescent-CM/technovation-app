@@ -4,22 +4,6 @@ module Admin
 
     use_datagrid with: ScoresGrid
 
-    def index
-      suspicious_scores = SuspiciousSubmissionScores.new
-
-      respond_to do |format|
-        format.html {
-          @scores_grid = ScoresGrid.new(grid_params) { |scope|
-            scope.page(params[:page])
-          }
-        }
-
-        format.json {
-          render json: SuspiciousScoreSerializer.new(suspicious_scores).serialized_json
-        }
-      end
-    end
-
     def show
       @score = SubmissionScore.find(params.fetch(:id))
     end
