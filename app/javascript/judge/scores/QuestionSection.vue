@@ -267,35 +267,41 @@ export default {
     handleCommentChange: _.debounce(function() {
       window.localStorage.setItem(this.commentStorageKey, this.commentText)
 
-      Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-        .algo("nlp/SocialSentimentAnalysis/0.1.4")
-        .pipe({ sentence: this.commentText })
-        .then(resp => {
-          this.comment.sentiment = resp.result[0]
+      const wordCount = this.wordCount(this.commentText)
 
-          this.$store.commit('setComment', {
-            sectionName: this.section,
-            text: this.commentText,
-            word_count: this.wordCount(this.commentText),
-            bad_word_count: this.badWordCount,
-            sentiment: this.comment.sentiment,
+      if (wordCount > 19 && wordCount % 5 === 0) {
+        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+          .algo("nlp/SocialSentimentAnalysis/0.1.4")
+          .pipe({ sentence: this.commentText })
+          .then(resp => {
+            this.comment.sentiment = resp.result[0]
+
+            this.$store.commit('setComment', {
+              sectionName: this.section,
+              text: this.commentText,
+              word_count: wordCount,
+              bad_word_count: this.badWordCount,
+              sentiment: this.comment.sentiment,
+            })
           })
-        })
+      }
 
-      Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-        .algo("nlp/ProfanityDetection/1.0.0")
-        .pipe([this.commentText, ['suck', 'sucks'], false])
-        .then(resp => {
-          this.detectedProfanity = resp.result
+      if (wordCount > 0 && wordCount % 2 === 0) {
+        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+          .algo("nlp/ProfanityDetection/1.0.0")
+          .pipe([this.commentText, ['suck', 'sucks'], false])
+          .then(resp => {
+            this.detectedProfanity = resp.result
 
-          this.$store.commit('setComment', {
-            sectionName: this.section,
-            text: this.commentText,
-            word_count: this.wordCount(this.commentText),
-            bad_word_count: this.badWordCount,
-            sentiment: this.comment.sentiment,
-          })
-        });
+            this.$store.commit('setComment', {
+              sectionName: this.section,
+              text: this.commentText,
+              word_count: wordCount,
+              bad_word_count: this.badWordCount,
+              sentiment: this.comment.sentiment,
+            })
+          });
+      }
     }, 500),
   },
 
