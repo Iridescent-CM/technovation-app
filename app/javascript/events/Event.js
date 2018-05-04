@@ -174,7 +174,7 @@ export default function (event) {
   }
 
   this.teamListIsTooLong = () => {
-    return this.selectedTeams.length >= 15
+    return this.selectedTeams.length >= 10
   }
 
   this.resultReadyForList = (result, list) => {
