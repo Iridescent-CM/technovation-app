@@ -1,0 +1,60 @@
+ <h3>View your Scores and Certificates</h3>
+
+  <div class="grid">
+    <div class="judging-banner">
+      <div class="grid__col-6 left">
+        <h4 class="content-heading grid__cell">How judging works</h4>
+      </div>
+
+      <div class="grid__col-6">
+        <ol class="grid__cell right">
+          <li><b>Incomplete.</b> The work is missing.</li>
+          <li><b>Needs Improvement.</b> The work needs major improvement.</li>
+          <li><b>Acceptable.</b> The work needs minor improvement.</li>
+          <li><b>Good.</b> The work is of good quality.</li>
+          <li><b>Excellent.</b> The work is of excellent quality.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-wrap">
+    <input type="radio" name="tabs" id="tab1">
+    <div class="tab-label-content" id="tab1-content">
+      <label for="tab1">Quarterfinal Scores</label>
+      <div class="tab-content">
+
+        <%= render "student/scores/scores",
+            scores: @quarterfinals_scores.official %>
+
+        <% if @quarterfinals_scores.unofficial.any? %>
+          <%= render "student/scores/scores",
+              scores: @quarterfinals_scores.unofficial %>
+        <% end %>
+
+      </div>
+    </div>
+
+    <% if @semifinals_scores.any? %>
+      <input type="radio" name="tabs" id="tab2">
+      <div class="tab-label-content" id="tab2-content">
+        <label for="tab2">Semifinal Scores</label>
+        <div class="tab-content">
+
+          <%= render "student/scores/scores",
+              scores: @semifinals_scores %>
+
+        </div>
+      </div>
+    <% end %>
+
+    <input type="radio" name="tabs" id="tab3">
+     <div class="tab-label-content" id="tab3-content">
+       <label for="tab3">Certificates</label>
+       <div class="tab-content">
+         Insert certificates here.
+       </div>
+     </div>
+
+    <div class="slide"></div>
+ </div>
