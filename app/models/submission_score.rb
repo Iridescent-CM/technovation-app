@@ -110,14 +110,18 @@ class SubmissionScore < ActiveRecord::Base
   belongs_to :judge_profile
 
   counter_culture :judge_profile, column_name: ->(score) {
-    if score.complete? &&
-         score.send("#{SeasonToggles.current_judging_round(full_name: true)}?")
+    if score.current_season? &&
+        score.complete? &&
+          score.send("#{SeasonToggles.current_judging_round(full_name: true)}?")
       "current_round_scores_count"
     end
   },
   column_names: {
     [
-      "submission_scores.completed_at IS NOT NULL AND submission_scores.round = ?",
+      "? = ANY (submission_scores.seasons) AND " +
+      "submission_scores.completed_at IS NOT NULL AND " +
+      "submission_scores.round = ?",
+      Season.current.year.to_s,
       rounds[SeasonToggles.current_judging_round(full_name: true)],
     ] => 'current_round_scores_count'
   }

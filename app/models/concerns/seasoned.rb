@@ -29,5 +29,9 @@ module Seasoned
     def seasons
       self[:seasons].flatten.map(&:to_i).uniq
     end
+
+    def current_season?
+      seasons.include?(Season.current.year)
+    end
   end
 end
