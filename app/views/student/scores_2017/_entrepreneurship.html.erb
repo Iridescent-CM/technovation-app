@@ -1,0 +1,34 @@
+<h3>Entrepreneurship - <%= @score.entrepreneurship_total %> points</h3>
+
+<dl>
+  <dt>
+    The business plan reflects short term and clear strategy to achieve the plan.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(@score.business_plan_short_term) %>
+  </dd>
+
+  <dt>
+    The business plan reflects long term and clear strategy to achieve the plan.  It includes an assessment of the market, research on competitors,  does not duplicate an existing product offering (may be similar but must have some differentiating feature).
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(@score.business_plan_long_term) %>
+  </dd>
+
+  <dt>
+    The market research portion of the business plan is thoroughly researched (did they incorporate facts and figures, survey results, as well as the market size and segmentation?).
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(@score.market_research) %>
+  </dd>
+
+  <dt>
+    There is a viable business model (For example: free, freemium, subscription, paid) and the reason for selecting it is explained.
+  </dt>
+  <dd>
+    <%= JudgingRubricScores::Explain.(@score.viable_business_model) %>
+  </dd>
+
+  <dt>Comment:</dt>
+  <dd><%= simple_format @score.entrepreneurship_comment %></dd>
+</dl>

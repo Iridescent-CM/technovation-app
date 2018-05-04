@@ -31,11 +31,11 @@
       <label for="tab1">Quarterfinal Scores</label>
       <div class="tab-content">
 
-        <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+        <%= render "student/scores/scores",
             scores: @quarterfinals_scores.official %>
 
         <% if @quarterfinals_scores.unofficial.any? %>
-          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+          <%= render "student/scores/scores",
               scores: @quarterfinals_scores.unofficial %>
         <% end %>
 
@@ -48,7 +48,7 @@
         <label for="tab2">Semifinal Scores</label>
         <div class="tab-content">
 
-          <%= render "student/dashboards/completion_steps/scores_and_certificates/scores",
+          <%= render "student/scores/scores",
               scores: @semifinals_scores %>
 
         </div>

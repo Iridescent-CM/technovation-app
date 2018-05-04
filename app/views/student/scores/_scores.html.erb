@@ -1,0 +1,47 @@
+<div class="grid">
+  <% scores.each do |score| %>
+    <div class="grid__col-6 ">
+      <p>
+        Judge Location: <%= score.judge_profile.address_details %>
+      </p>
+      <p>
+        Total Score: <%= score.total %>
+      </p>
+      <div class="accordion">
+
+        <h3> Ideation: <%= score.ideation_total %> </h3>
+        <div>
+          <%= render "student/scores/ideation",
+              score: score %>
+        </div>
+
+        <h3>Technical: <%= score.technical_total %></h3>
+        <div>
+          <%= render "student/scores/technical",
+              score: score  %>
+        </div>
+
+        <% if current_team.senior? %>
+          <h3>Entrepreneurship: <%= score.entrepreneurship_total %></h3>
+          <div>
+            <%= render "student/scores/entrepreneurship",
+                score: score  %>
+          </div>
+        <% end %>
+
+        <h3>Pitch: <%= score.pitch_total %></h3>
+        <div>
+          <%= render "student/scores/pitch",
+              score: score  %>
+        </div>
+
+        <h3>Overall Impression: <%= score.overall_impression_total %></h3>
+        <div>
+          <%= render "student/scores/overall_impression",
+              score: score  %>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+</div>
