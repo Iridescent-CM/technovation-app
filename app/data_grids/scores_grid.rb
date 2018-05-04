@@ -29,6 +29,10 @@ class ScoresGrid
 
   column :contest_rank
 
+  column :num_scores, header: "# of Scores", mandatory: true do
+    scores.current_round.count
+  end
+
   column :total, order: :quarterfinals_average_score, mandatory: true do |submission, grid|
     str = submission.public_send("#{grid.round}_average_score").to_s
     str += "/#{submission.total_possible_score}"
@@ -57,7 +61,7 @@ class ScoresGrid
         .order(:name)
         .map { |e| [e.name, e.id] }
     },
-    if: ->(g) { g.admin or g.current_account.events.any? } do |value, scope, grid|
+    if: ->(g) { g.admin or RegionalPitchEvent.visible_to(g.current_account).any? } do |value, scope, grid|
       scope.includes(team: :events)
         .references(:regional_pitch_events)
         .where("regional_pitch_events.id = ?", value)
