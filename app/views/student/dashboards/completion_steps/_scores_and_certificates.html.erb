@@ -5,41 +5,56 @@
     </span>
   </div>
 
-  <h5 class="content-heading">View your Scores and Certificates</h5>
+  <h3>View your Scores and Certificates</h3>
 
- <div class="tab-wrap">
+  <div class="grid">
+    <div class="judging-banner">
+      <div class="grid__col-6 left">
+        <h4 class="content-heading grid__cell">How judging works</h4>
+      </div>
 
-     <input type="radio" name="tabs" id="tab1" checked>
-     <div class="tab-label-content" id="tab1-content">
-       <label for="tab1">Quarterfinal Scores</label>
-       <div class="tab-content">
-         Hi these are some scores! hi
+      <div class="grid__col-6">
+        <ol class="grid__cell right">
+          <li><b>Incomplete.</b> The work is missing.</li>
+          <li><b>Needs Improvement.</b> The work needs major improvement.</li>
+          <li><b>Acceptable.</b> The work needs minor improvement.</li>
+          <li><b>Good.</b> The work is of good quality.</li>
+          <li><b>Excellent.</b> The work is of excellent quality.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
 
-         <% @all_scores.each do |score| %>
-         <%= score.total %>
-         <% end %>
-         Insert accordion with scores here.</div>
-     </div>
+  <div class="tab-wrap">
+    <input type="radio" name="tabs" id="tab1" checked>
+       <div class="tab-label-content" id="tab1-content">
+         <label for="tab1">Quarterfinal Scores</label>
+         <div class="tab-content">
+           Hi these are some scores! hi hola hola
+          Insert accordion with scores here.
+           <% @all_scores.each do |score| %>
+           <%= score.total %>
+           <% end %>
 
-     <input type="radio" name="tabs" id="tab2">
+         </div>
+       </div>
+
+    <input type="radio" name="tabs" id="tab2">
      <div class="tab-label-content" id="tab2-content">
        <label for="tab2">Semifinal Scores</label>
-       <div class="tab-content">Insert accordion with scores here.
-         <div class="accordion">
-           One
-         </div>
-
+       <div class="tab-content">
+         Insert accordion with scores here.
        </div>
      </div>
 
-     <input type="radio" name="tabs" id="tab3">
+    <input type="radio" name="tabs" id="tab3">
      <div class="tab-label-content" id="tab3-content">
        <label for="tab3">Certificates</label>
-       <div class="tab-content">Insert certificates here.</div>
+       <div class="tab-content">
+         Insert certificates here.
+       </div>
      </div>
 
-     <div class="slide"></div>
-
+    <div class="slide"></div>
  </div>
-
 </li>
