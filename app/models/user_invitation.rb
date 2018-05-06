@@ -94,6 +94,14 @@ class UserInvitation < ApplicationRecord
     SubmissionScore.none
   end
 
+  def is_team?
+    false
+  end
+
+  def virtual_event?
+    false
+  end
+
   def human_status
     case status
     when "sent", "opened"; "must sign up"
