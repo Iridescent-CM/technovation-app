@@ -8,7 +8,7 @@ RSpec.feature "Regional Ambassador views scores" do
 
   scenario "RA can't pick finals scores, as there is no such thing" do
     click_link "Scores"
-    options = page.find("[name='scores_grid[round]']").all('option')
+    options = page.find("[name='scored_submissions_grid[round]']").all('option')
     expect(options.map(&:value)).not_to include("finals")
   end
 
