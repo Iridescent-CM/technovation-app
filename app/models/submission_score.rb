@@ -296,6 +296,8 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def entrepreneurship_total
+    return 0 if junior_team_division?
+
     business_plan_short_term +
       business_plan_long_term +
         market_research +
