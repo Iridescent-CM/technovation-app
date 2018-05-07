@@ -33,7 +33,7 @@ class ScoredSubmissionsGrid
     scores.current_round.complete.count
   end
 
-  column :incomplete_scores mandatory: true do
+  column :incomplete_scores, mandatory: true do
     scores.current_round.incomplete.count
   end
 
