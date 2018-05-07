@@ -2,12 +2,12 @@ module RegionalAmbassador
   class ScoresController < RegionalAmbassadorController
     include DatagridController
 
-    use_datagrid with: ScoresGrid,
+    use_datagrid with: ScoredSubmissionsGrid,
 
       html_scope: ->(scope, user, params) {
-        scores_grid = params.fetch(:scores_grid) { {} }
+        scored_submissions_grid = params.fetch(:scored_submissions_grid) { {} }
 
-        if not scores_grid[:by_event].blank?
+        if not scored_submissions_grid[:by_event].blank?
           scope.page(params[:page])
         else
           scope.in_region(user).page(params[:page])
@@ -32,7 +32,7 @@ module RegionalAmbassador
         round = 'quarterfinals'
       end
 
-      grid = (params[:scores_grid] ||= {}).merge(
+      grid = (params[:scored_submissions_grid] ||= {}).merge(
         admin: false,
         allow_state_search: current_ambassador.country != "US",
         country: [current_ambassador.country],
@@ -40,7 +40,7 @@ module RegionalAmbassador
           if current_ambassador.country == "US"
             [current_ambassador.state_province]
           else
-            Array(params[:scores_grid][:state_province])
+            Array(params[:scored_submissions_grid][:state_province])
           end
         ),
         current_account: current_account,

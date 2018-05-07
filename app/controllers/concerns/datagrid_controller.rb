@@ -35,6 +35,7 @@ module DatagridController
 
   module ClassMethods
     attr_accessor :using_datagrid_with_klass,
+      :csv_datagrid_klass,
       :html_scope_modifier,
       :csv_scope_modifier
 
@@ -51,6 +52,8 @@ module DatagridController
 
       @csv_scope_modifier = opts[:csv_scope] ||
         "->(scope, user, params) { scope }"
+
+      @csv_datagrid_klass = opts.fetch(:to_csv) { using_datagrid_with_klass }
     end
   end
 
@@ -87,7 +90,7 @@ module DatagridController
 
         ExportJob.perform_later(
           current_profile,
-          grid_klass.name,
+          self.class.csv_datagrid_klass.name,
           filters,
           self.class.name,
           self.class.csv_scope_modifier.to_s,

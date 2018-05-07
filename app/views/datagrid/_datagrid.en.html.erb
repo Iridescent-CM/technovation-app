@@ -1,3 +1,8 @@
+<%
+  extra_count ||= false
+  verb ||= "found"
+%>
+
 <div class="panel">
   <%= datagrid_form_for grid,
     data: { turbolinks: false },
@@ -6,8 +11,12 @@
   <h6>
     <%= number_with_delimiter(grid.assets.count) %>
     <%= model_name.pluralize(grid.assets.count) %>
-    found
+    <%= verb %>
   </h6>
+
+  <% if extra_count %>
+    <h6><%= extra_count %></h6>
+  <% end %>
 
   <%= yield %>
 

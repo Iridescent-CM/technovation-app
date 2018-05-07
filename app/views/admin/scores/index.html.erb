@@ -16,7 +16,9 @@
 <h1>Season <%= Season.current.year %> Scores</h1>
 
 <%= render 'datagrid/datagrid',
-  grid: @scores_grid,
+  grid: @scored_submissions_grid,
   form_url: admin_scores_path,
   model_name: "submission",
-  scope: :admin %>
+  scope: :admin,
+  verb: "scored",
+  extra_count: "#{number_with_delimiter(SubmissionScore.current_round.count)} total scores" %>

@@ -2,7 +2,10 @@ module Admin
   class ScoresController < AdminController
     include DatagridController
 
-    use_datagrid with: ScoresGrid
+    use_datagrid(
+      with: ScoredSubmissionsGrid,
+      to_csv: ScoresGrid
+    )
 
     def show
       @score = SubmissionScore.find(params.fetch(:id))
@@ -23,12 +26,12 @@ module Admin
         round = 'quarterfinals'
       end
 
-      grid = (params[:scores_grid] ||= {}).merge(
+      grid = (params[:scored_submissions_grid] ||= {}).merge(
         admin: true,
-        country: Array(params[:scores_grid][:country]),
-        state_province: Array(params[:scores_grid][:state_province]),
+        country: Array(params[:scored_submissions_grid][:country]),
+        state_province: Array(params[:scored_submissions_grid][:state_province]),
         current_account: current_account,
-        round: params[:scores_grid].fetch(:round) { round },
+        round: params[:scored_submissions_grid].fetch(:round) { round },
       )
 
       grid.merge(
