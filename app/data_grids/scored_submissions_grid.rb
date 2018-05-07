@@ -53,6 +53,15 @@ class ScoredSubmissionsGrid
     scope.joins(assoc)
   end
 
+  filter :division,
+  :enum,
+  select: -> { [
+    ['Senior', 'senior'],
+    ['Junior', 'junior'],
+  ]} do |value, scope, grid|
+    scope.public_send(value)
+  end
+
   filter :by_event,
     :enum,
     select: ->(grid) {
