@@ -8,7 +8,7 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 
 [![We are using BrowserStack for cross-browser compatibility](https://s3.amazonaws.com/technovation-uploads-production/header-logo.png "BrowserStack")](https://www.browserstack.com/)
 
-We use BrowserStack to [test for cross-browser compatibility](https://www.browserstack.com/) for our worldwide community of volunteers!
+We use BrowserStack to [test for cross-browser compatibility](https://www.browserstack.com/) to help use support a worldwide community of volunteers!
 
 ## Installation and Setup
 
