@@ -28,7 +28,7 @@ module RegionalAmbassador
           if current_ambassador.country == "US"
             [current_ambassador.state_province]
           else
-            Array(params[:accounts_grid][:state_province])
+            Array(params[:judges_grid][:state_province])
           end
         ),
         current_account: current_account,
