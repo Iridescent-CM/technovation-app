@@ -5,10 +5,19 @@ module RegionalAmbassador
     use_datagrid with: ScoresGrid,
 
       html_scope: ->(scope, user, params) {
-        scope.in_region(user).page(params[:page])
+        scores_grid = params.fetch(:scores_grid) { {} }
+
+        if not scores_grid[:by_event].blank?
+          scope.page(params[:page])
+        else
+          scope.in_region(user).page(params[:page])
+        end
       },
 
-      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
+      csv_scope: "->(scope, user, params) { " +
+          "if not params[:by_event].blank?; scope; " +
+          "else; scope.in_region(user); end " +
+        "}"
 
     def show
       @score = SubmissionScore.find(params.fetch(:id))

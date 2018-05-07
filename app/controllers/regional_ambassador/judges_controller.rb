@@ -6,7 +6,7 @@ module RegionalAmbassador
       html_scope: ->(scope, user, params) {
         judges_grid = params.fetch(:judges_grid) { {} }
 
-        if judges_grid[:by_event]
+        if not judges_grid[:by_event].blank?
           scope.page(params[:page])
         else
           scope.in_region(user).page(params[:page])
@@ -14,7 +14,7 @@ module RegionalAmbassador
       },
 
       csv_scope: "->(scope, user, params) { " +
-          "if params[:by_event]; scope; " +
+          "if not params[:by_event].blank?; scope; " +
           "else; scope.in_region(user); end " +
         "}"
 

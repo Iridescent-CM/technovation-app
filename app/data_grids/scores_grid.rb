@@ -18,13 +18,13 @@ class ScoresGrid
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
     link_to submission.team_name,
-      [current_scope, submission.team]
+      [current_scope, submission.team, allow_out_of_region: true]
   end
 
   column :app_name, mandatory: true, html: false
   column :submission, mandatory: true, html: true do |submission|
     link_to submission.app_name,
-      [current_scope, submission]
+      [current_scope, submission, allow_out_of_region: true]
   end
 
   column :contest_rank
