@@ -186,6 +186,7 @@ Rails.application.routes.draw do
 
     resources :scores, only: [:index, :show]
     resources :score_details, only: :show
+    resources :judges, only: :index
 
     resources :messages
     resources :multi_messages

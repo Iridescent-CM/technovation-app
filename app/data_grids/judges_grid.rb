@@ -1,12 +1,12 @@
 class JudgesGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search
+  attr_accessor :admin, :allow_state_search, :current_account
 
   self.batch_size = 10
 
   scope do
-    Account.current.includes(judge_profile: :regional_pitch_events)
+    Account.includes(judge_profile: :events)
       .references(:judge_profiles, :regional_pitch_events)
       .where("judge_profiles.id IS NOT NULL")
   end
@@ -121,6 +121,18 @@ class JudgesGrid
         "mentor_profiles.id #{is_is_not} NULL"
       )
     end
+
+  filter :by_event,
+    :enum,
+    select: ->(grid) {
+      RegionalPitchEvent.visible_to(grid.current_account)
+        .current
+        .order(:name)
+        .map { |e| [e.name, e.id] }
+    },
+    if: ->(g) { g.admin or RegionalPitchEvent.visible_to(g.current_account).any? } do |value|
+      where("regional_pitch_events.id = ?", value)
+  end
 
   filter :virtual_or_live,
     :enum,

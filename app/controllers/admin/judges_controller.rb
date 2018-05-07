@@ -10,6 +10,7 @@ module Admin
         admin: true,
         country: Array(params[:judges_grid][:country]),
         state_province: Array(params[:judges_grid][:state_province]),
+        current_account: current_account,
       )
 
       grid.merge(
