@@ -6,7 +6,9 @@ Master: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree
 
 Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production.svg?style=svg&circle-token=2761348ab1cf794859c6cc40536654b342a8a9d1)](https://circleci.com/gh/Iridescent-CM/technovation-app/tree/production)
 
-![We are using BrowserStack for cross-browser compatibility](https://s3.amazonaws.com/technovation-uploads-production/header-logo.png "BrowserStack") We use BrowserStack to achieve cross-browser compatibility for our worldwide community of volunteers!
+![We are using BrowserStack for cross-browser compatibility](https://s3.amazonaws.com/technovation-uploads-production/header-logo.png "BrowserStack")
+
+We use BrowserStack to achieve cross-browser compatibility for our worldwide community of volunteers!
 
 ## Installation and Setup
 
