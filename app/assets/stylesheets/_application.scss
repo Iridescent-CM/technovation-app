@@ -129,3 +129,7 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
     margin: -92px 0 0;
   }
 }
+
+.antialias {
+  -webkit-font-smoothing: antialiased;
+}
