@@ -29,9 +29,14 @@ class ScoredSubmissionsGrid
 
   column :contest_rank
 
-  column :num_scores, header: "# of Scores", mandatory: true do
-    scores.current_round.count
+  column :complete_scores, mandatory: true do
+    scores.current_round.complete.count
   end
+
+  column :incomplete_scores, mandatory: true do
+    scores.current_round.incomplete.count
+  end
+
 
   column :total, order: :quarterfinals_average_score, mandatory: true do |submission, grid|
     str = submission.public_send("#{grid.round}_average_score").to_s
