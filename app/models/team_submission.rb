@@ -252,18 +252,18 @@ class TeamSubmission < ActiveRecord::Base
     if team.selected_regional_pitch_event.live? &&
          team.selected_regional_pitch_event.unofficial?
 
-      official_scores = submission_scores.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.live.complete.quarterfinals
+      official_scores = submission_scores.current.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.current.live.complete.quarterfinals
 
     elsif team.selected_regional_pitch_event.live?
 
-      official_scores = submission_scores.live.complete.quarterfinals
-      unofficial_scores = submission_scores.virtual.complete.quarterfinals
+      official_scores = submission_scores.current.live.complete.quarterfinals
+      unofficial_scores = submission_scores.current.virtual.complete.quarterfinals
 
     else
 
-      official_scores = submission_scores.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.live.complete.quarterfinals
+      official_scores = submission_scores.current.virtual.complete.quarterfinals
+      unofficial_scores = submission_scores.current.live.complete.quarterfinals
 
     end
 
@@ -289,7 +289,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def update_semifinals_average_score
-    scores = submission_scores.complete.semifinals
+    scores = submission_scores.current.complete.semifinals
     if scores.any?
       avg = (scores.inject(0.0) { |acc, s|
         acc + s.total
