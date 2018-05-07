@@ -14,11 +14,11 @@ module GatherAssignedTeams
       .select { |event| event.judge_assignments.empty? }
 
     if teams.empty?
-      judge.events.flat_map(&:teams)
+      judge.events.flat_map(&:teams).uniq
     elsif judge_events_without_assignments.any?
-      teams += judge_events_without_assignments.flat_map(&:teams)
+      (teams += judge_events_without_assignments.flat_map(&:teams)).uniq
     else
-      teams
+      teams.uniq
     end
   end
 end
