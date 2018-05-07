@@ -6,6 +6,7 @@
       <div>Judge</div>
       <div>Submission</div>
       <div>Team</div>
+      <div>Event</div>
       <div>Score</div>
       <div>Flags</div>
     </div>
@@ -29,6 +30,11 @@
       <div class="score__team-name">
         {{ score.team_name }}
         <small>{{ score.team_division }} division</small>
+      </div>
+
+      <div class="score__event-name">
+        {{ score.event_name }}
+        <small>{{ score.event_official }}</small>
       </div>
 
       <div class="score__total">

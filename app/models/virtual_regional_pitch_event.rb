@@ -17,6 +17,7 @@ class VirtualRegionalPitchEvent
   def live?; false; end
   def virtual?; true; end
   def unofficial?; false; end
+  def official?; true; end
   def id; "virtual"; end
   def city; "No city, judging happens online"; end
   def venue_address; "No address, judging happens online"; end

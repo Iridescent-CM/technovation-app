@@ -15,6 +15,10 @@ class TeamsGrid
     division.name.humanize
   end
 
+  column :event_name do
+    event.name
+  end
+
   column :mentor_matched, header: "Has mentor?" do
     has_mentor? ? "yes" : "no"
   end

@@ -138,6 +138,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
+  def official?
+    not unofficial?
+  end
+
   def judge_list
     judges + user_invitations
   end

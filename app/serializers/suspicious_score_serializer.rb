@@ -14,6 +14,14 @@ class SuspiciousScoreSerializer
     score.team_submission.team_division_name
   end
 
+  attribute :event_name do |score|
+    score.team.event.name
+  end
+
+  attribute :event_official do |score|
+    score.team.event.official? ? "official" : "celebration"
+  end
+
   attribute :flags do |score|
     flags = []
     flags << "Seems too low" if score.seems_too_low?
