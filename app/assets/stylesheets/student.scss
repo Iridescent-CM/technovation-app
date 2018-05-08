@@ -13,12 +13,12 @@
 @import "review_submission";
 
 .judging-banner {
-  background-color:$antiqua;
-  color:white;
+  background-color: $antiqua;
+  color: #ECECEC;
   width: auto;
-  padding:25px;
-  margin-top:25px;
-  margin-bottom:25px
+  padding: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px
 }
 
 .left {
@@ -27,6 +27,15 @@
 
 .right {
   float: right;
+}
+
+#header {
+  margin: 25px;
+}
+
+#banner-header {
+  margin: 50px;
+  font-size: 3rem;
 }
 
 $num-of-tabs: 3;
@@ -45,7 +54,7 @@ $num-of-tabs: 3;
 
 .tab-wrap {
   width: 100%;
-  position: relative;
+  position: absolute;
   display: flex;
 }
 
@@ -75,7 +84,7 @@ input[type="radio"][name="tabs"] {
 label {
   cursor: pointer;
   color: $grey-translucent;
-  background-color: white;
+  background-color: #ECECEC;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -83,7 +92,8 @@ label {
   text-align: left;
   height: 25px;
   transition: color 0.2s ease;
-  width: 100%;
+  width: auto;
+  margin: 25px;
 }
 
 .slide {
@@ -105,4 +115,56 @@ label {
     line-height: 130%;
     display: none;
   }
+}
+
+.score-title {
+  background: $shamrock;
+  border-bottom: 1px solid $shamrock-mid;
+  border-radius: 7px 7px 0 0;
+  color: white;
+  font-size: 2rem;
+  width: auto;
+  height: 100px;
+  padding: 25px;
+}
+
+.score-title-left {
+  float: left;
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
+.score-title-right {
+  float: right;
+  font-weight: bold;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.accordion,
+.accordion dt,
+.accordion dd, {
+  margin: 0;
+  padding: 0;
+}
+
+.accordion dt {
+  border-bottom: 1px solid $shamrock-mid;
+  border-radius: 7px 7px 0 0;
+  color: $shamrock-mid;
+  font-size: 2rem;
+}
+
+.accordion dd {
+  border: 1px solid $shamrock;
+  border-top: none;
+  border-radius: 0 0 7px 7px;
+  padding: 1em;
+}
+
+.accordion dt:hover {
+  background-color: $shamrock-mid;
+  border-radius: 0;
+  opacity: 0.5;
+  color: white;
 }
