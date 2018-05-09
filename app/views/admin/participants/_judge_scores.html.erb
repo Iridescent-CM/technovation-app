@@ -1,0 +1,29 @@
+<h3 class="reset">Scores given by this judge:</h3>
+<table>
+  <th>
+    <tr>
+      <td>Team Name </td>
+      <td> Submission Name </td>
+      <td> Score </td>
+      <td> Details </td>
+    </tr>
+  </th>
+  <tbody>
+    <% SubmissionScore.where(judge_profile_id: profile.id).each do |score|  %>
+      <tr>
+        <td> <%= score.team_name %> </td>
+        <td>
+          <%= link_to "#{TeamSubmission.find(score.team_submission_id).name}",
+                      admin_team_submission_path(score.team_submission_id),
+                      class: "cta-link" %>
+       </td>
+        <td> <%= score.total %> / <%= score.total_possible %> </td>
+        <td>
+          <%= link_to 'View',
+                      admin_score_path(score),
+                      class: "cta-link" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

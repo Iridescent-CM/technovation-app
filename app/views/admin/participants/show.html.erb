@@ -67,6 +67,8 @@
             class: "button secondary small" %>
         </div>
 
+
+
         <% if @account.regional_ambassador_profile || @account.mentor_profile %>
           <div class="grid__col-12 grid__col--bleed-y">
             <dl>
@@ -82,6 +84,16 @@
         <% end %>
       </div>
     </div>
+
+    <% if @account.judge_profile %>
+      <div class="panel">
+        <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
+            <%= render 'admin/participants/judge_scores',
+              profile: @account.judge_profile %>
+          </div>
+        </div>
+    <% end %>
+
   </div>
 </div>
 
