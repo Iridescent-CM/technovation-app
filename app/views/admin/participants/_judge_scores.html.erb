@@ -16,7 +16,7 @@
           <%= link_to "#{TeamSubmission.find(score.team_submission_id).name}",
                       admin_team_submission_path(score.team_submission_id),
                       class: "cta-link" %>
-       </td>
+        </td>
         <td> <%= score.total %> / <%= score.total_possible %> </td>
         <td>
           <%= link_to 'View',
