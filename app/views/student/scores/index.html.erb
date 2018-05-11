@@ -16,43 +16,39 @@
     </div>
   </div>
 
-  <div class="tab-wrap">
-    <input type="radio" name="tabs" id="tab1">
-    <div class="tab-label-content" id="tab1-content">
-      <label for="tab1">Quarterfinal Scores</label>
-      <div class="tab-content">
 
-        <%= render "student/scores/scores",
-            scores: @quarterfinals_scores.official %>
+  <div class="tabs">
+    <ul class="tab-menu">
+      <li class=""><a href="#tab1-Quarterfinal">Quarterfinal</a></li>
+      <li><a href="#tab2-Semifinal">Semifinal</a></li>
+      <li><a href="#tab3-Certificates">Certificates</a></li>
+    </ul>
 
-        <% if @quarterfinals_scores.unofficial.any? %>
+    <div id="tab1-Quarterfinal">
+        <div class="tab-content">
           <%= render "student/scores/scores",
-              scores: @quarterfinals_scores.unofficial %>
-        <% end %>
+              scores: @quarterfinals_scores.official %>
 
-      </div>
+          <% if @quarterfinals_scores.unofficial.any? %>
+            <%= render "student/scores/scores",
+                scores: @quarterfinals_scores.unofficial %>
+          <% end %>
+        </div>
     </div>
 
-    <% if @semifinals_scores.any? %>
-      <input type="radio" name="tabs" id="tab2">
-      <div class="tab-label-content" id="tab2-content">
-        <label for="tab2">Semifinal Scores</label>
-        <div class="tab-content">
-
-          <%= render "student/scores/scores",
-              scores: @semifinals_scores %>
+    <div id="tab2-Semifinal">
+      <% if @semifinals_scores.any? %>
+          <div class="tab-content">
+            <%= render "student/scores/scores",
+                scores: @semifinals_scores %>
 
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
 
-    <input type="radio" name="tabs" id="tab3">
-     <div class="tab-label-content" id="tab3-content">
-       <label for="tab3">Certificates</label>
-       <div class="tab-content">
+    <div id="tab3-Certificates">
+        <div class="tab-content">
          Insert certificates here.
-       </div>
-     </div>
-
-    <div class="slide"></div>
- </div>
+        </div>
+    </div>
+  </div>

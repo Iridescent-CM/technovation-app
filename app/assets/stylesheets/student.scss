@@ -11,6 +11,7 @@
 @import "checklist";
 @import "sortable_list";
 @import "review_submission";
+@import "tabs";
 
 .judging-banner {
   background-color: $antiqua;
@@ -21,14 +22,6 @@
   margin-bottom: 25px
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
 #header {
   margin: 25px;
 }
@@ -36,49 +29,6 @@
 #banner-header {
   margin: 50px;
   font-size: 3rem;
-}
-
-$num-of-tabs: 3;
-
-@mixin tabs {
-  @for $i from 1 through $num-of-tabs {
-    &:nth-of-type(#{$i}) {
-      &:checked {
-        ~ .slide {
-          left: calc((100% / #{$num-of-tabs}) * #{$i - 1});
-        }
-      }
-    }
-  }
-}
-
-.tab-wrap {
-  width: 100%;
-  position: absolute;
-  display: flex;
-}
-
-input[type="radio"][name="tabs"] {
-  position: absolute;
-  z-index: -1;
-  &:checked {
-    + .tab-label-content {
-      label {
-        color: black;
-      }
-      .tab-content {
-        display: block;
-      }
-    }
-  }
-  @include tabs;
-  &:first-of-type {
-    &:checked {
-      ~ .slide {
-        left: 0;
-      }
-    }
-  }
 }
 
 label {
@@ -96,27 +46,6 @@ label {
   margin: 25px;
 }
 
-.slide {
-  background: $shamrock-mid;
-  width: calc(80% / #{$num-of-tabs});
-  height: 5px;
-  position: absolute;
-  left: 0;
-  top: calc(100% - 4px);
-  transition: left 0.3s ease-out;
-}
-
-.tab-label-content {
-  width: 100%;
-  .tab-content {
-    position: absolute;
-    top: 100px;
-    left: 6px;
-    line-height: 130%;
-    display: none;
-  }
-}
-
 .score-title {
   background: $shamrock;
   border-bottom: 1px solid $shamrock-mid;
@@ -126,19 +55,19 @@ label {
   width: auto;
   height: 100px;
   padding: 25px;
-}
 
-.score-title-left {
-  float: left;
-  font-size: 2rem;
-  text-transform: capitalize;
-}
+  .score-title-left {
+    float: left;
+    font-size: 2rem;
+    text-transform: capitalize;
+  }
 
-.score-title-right {
-  float: right;
-  font-weight: bold;
-  font-size: 3rem;
-  text-align: center;
+  .score-title-right {
+    float: right;
+    font-weight: bold;
+    font-size: 3rem;
+    text-align: center;
+  }
 }
 
 .accordion,
