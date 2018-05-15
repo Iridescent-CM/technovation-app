@@ -117,3 +117,8 @@ nav {
   justify-content: space-between;
   margin: 1rem 0;
 }
+
+#admin-scores-app {
+  overflow-y: scroll;
+  max-height: 500px;
+}
