@@ -350,14 +350,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def awaiting_publish(&block)
-    if not published?
+  def awaiting_publish(scope = :student, &block)
+    if scope.to_s != 'public' and not published?
       yield
     end
   end
 
-  def already_published(&block)
-    if published?
+  def already_published(scope = :student, &block)
+    if scope.to_s != 'public' and published?
       yield
     end
   end

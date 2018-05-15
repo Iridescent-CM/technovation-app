@@ -108,8 +108,8 @@
 <script>
   import _ from "lodash";
 
-  import Icon from '../components/Icon';
-  import EventBus from '../components/EventBus';
+  import Icon from '../../components/Icon';
+  import EventBus from '../../components/EventBus';
 
   import Event from './Event';
   import EventJudgeList from './EventJudgeList';

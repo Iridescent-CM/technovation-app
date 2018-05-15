@@ -1,7 +1,7 @@
 import _ from "lodash";
 
-import Event from '../../app/javascript/events/Event';
-import Attendee from '../../app/javascript/events/Attendee';
+import Event from '../../app/javascript/ra/events/Event';
+import Attendee from '../../app/javascript/ra/events/Attendee';
 
 test('resultReadyForList ignores double entry', () => {
   let event = new Event({ id: 1 })

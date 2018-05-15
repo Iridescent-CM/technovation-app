@@ -134,9 +134,9 @@
 <script>
   import _ from "lodash";
 
-  import DatetimeInput from "../components/DatetimeInput";
-  import Errors from '../components/Errors';
-  import EventBus from '../components/EventBus';
+  import DatetimeInput from "../../components/DatetimeInput";
+  import Errors from '../../components/Errors';
+  import EventBus from '../../components/EventBus';
 
   import Event from './Event';
 

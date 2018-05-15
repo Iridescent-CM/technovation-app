@@ -44,7 +44,25 @@ class ScoredSubmissionsGrid
   end
 
   column :view, mandatory: true, html: true do |submission|
-    link_to 'view', [current_scope, :score_detail, id: submission.id]
+    html = link_to(
+      web_icon('list-ul', size: 16, remote: true),
+      [current_scope, :score_detail, id: submission.id],
+      {
+        class: "view-details",
+        "v-tooltip" => "'Read score details'",
+      }
+    )
+
+    html += " "
+
+    html += link_to(
+      web_icon('photo', size: 16, remote: true),
+      app_path(submission),
+      class: "open-public",
+      "v-tooltip" => "'Open public page'",
+      target: :_blank,
+      data: { turbolinks: false }
+    )
   end
 
   filter :round,

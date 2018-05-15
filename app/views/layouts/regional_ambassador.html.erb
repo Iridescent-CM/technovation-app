@@ -22,12 +22,16 @@
       media: :all
     ) %>
 
+    <%= stylesheet_pack_tag("ra", data: { turbolinks_track: :reload }) %>
+
     <%= yield :css %>
 
     <%= csrf_meta_tags %>
 
     <%= javascript_include_tag 'regional_ambassador',
       'data-turbolinks-track' => true %>
+
+    <%= javascript_pack_tag("ra", data: { turbolinks_track: :reload }) %>
 
     <%= yield :js %>
   </head>

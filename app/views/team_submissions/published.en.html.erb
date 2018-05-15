@@ -215,7 +215,7 @@
 
     <div class="grid">
       <div class="grid__col-auto submission-footer">
-        <% @team_submission.awaiting_publish do %>
+        <% @team_submission.awaiting_publish(current_scope) do %>
           <p>
             <%= link_to "Submit now",
               [
@@ -243,7 +243,7 @@
           </p>
         <% end %>
 
-        <% @team_submission.already_published do %>
+        <% @team_submission.already_published(current_scope) do %>
           <% if SeasonToggles.team_submissions_editable? %>
             <p>
               You can make changes until <%= Season.deadline %>.

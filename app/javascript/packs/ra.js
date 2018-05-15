@@ -12,5 +12,5 @@ Vue.use(TurbolinksAdapter);
 Vue.use(VTooltip)
 Vue.use(Vue2Filters)
 
-import '../admin/scores'
+import '../ra/events'
 import '../datagrids/scores'

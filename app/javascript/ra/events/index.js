@@ -1,24 +1,18 @@
-import TurbolinksAdapter from 'vue-turbolinks';
 import Vue from 'vue/dist/vue.esm';
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
-
-import VTooltip from 'v-tooltip';
-
-import EventsTable from '../events/EventsTable';
-import EventForm from '../events/EventForm';
+import EventsTable from './EventsTable';
+import EventForm from './EventForm';
 
 import "flatpickr/dist/themes/material_green.css";
-import "../components/tooltip.scss";
+import "../../components/tooltip.scss";
 
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(TurbolinksAdapter);
-Vue.use(VTooltip);
 Vue.use(ElementUI, { locale });
+Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
@@ -46,15 +40,17 @@ const store = new Vuex.Store({
   }
 })
 
-$(document).on('ready turbolinks:load', () => {
-  new Vue({
-    el: "#app",
+document.addEventListener('turbolinks:load', () => {
+  const appEl = document.querySelector("#app")
 
-    store,
-
-    components: {
-      EventsTable,
-      EventForm,
-    },
-  });
+  if (appEl != undefined) {
+    new Vue({
+      el: appEl,
+      store,
+      components: {
+        EventsTable,
+        EventForm,
+      },
+    });
+  }
 });

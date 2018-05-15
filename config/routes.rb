@@ -274,6 +274,10 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
   end
 
+  namespace :public do
+    resources :embed_codes, only: :show
+  end
+
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 
@@ -315,6 +319,8 @@ Rails.application.routes.draw do
 
   resource :token_error, only: :show
   resource :timeout_error, only: :show
+
+  resources :apps, only: :show
 
   root to: "application/dashboards#show"
 end

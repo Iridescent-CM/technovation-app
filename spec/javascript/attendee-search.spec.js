@@ -1,5 +1,5 @@
 import Vue from "vue";
-import AttendeeSearch from "events/AttendeeSearch";
+import AttendeeSearch from "ra/events/AttendeeSearch";
 
 test('performs remote search when filteredItems is empty', () => {
   const vm = new Vue(AttendeeSearch).$mount();

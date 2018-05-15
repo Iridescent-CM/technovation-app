@@ -61,7 +61,7 @@
 <script>
   import _ from 'lodash';
 
-  import Icon from "../components/Icon";
+  import Icon from "../../components/Icon";
 
   export default {
     name: "AttendeeList",
