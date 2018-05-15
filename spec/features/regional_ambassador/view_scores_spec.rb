@@ -25,7 +25,7 @@ RSpec.feature "Regional Ambassador views scores" do
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     click_link "Scores"
-    click_link "view"
+    find('a.view-details').click
 
     expect(page).to have_content("earned 2 points")
   end
@@ -49,7 +49,7 @@ RSpec.feature "Regional Ambassador views scores" do
     )
 
     visit regional_ambassador_scores_path(round: :semifinals)
-    click_link "view"
+    find('a.view-details').click
 
     expect(page).to have_content("earned 2 points")
   end

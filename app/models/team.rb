@@ -225,6 +225,11 @@ class Team < ActiveRecord::Base
     after_add: ->(team, event) { team.submission.touch },
     after_remove: ->(team, event) { team.submission.touch }
 
+  has_and_belongs_to_many :current_official_events, -> { current.official },
+    class_name: "RegionalPitchEvent",
+    after_add: ->(team, event) { team.submission.touch },
+    after_remove: ->(team, event) { team.submission.touch }
+
   has_many :judge_assignments, -> { current }
 
   validates :name, presence: true, team_name_uniqueness: true

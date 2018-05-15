@@ -65,6 +65,14 @@ class TeamSubmission < ActiveRecord::Base
   scope :complete, -> { where('published_at IS NOT NULL') }
   scope :incomplete, -> { where('published_at IS NULL') }
 
+  scope :live, -> { complete.joins(team: :current_official_events) }
+
+  scope :virtual, -> {
+    complete
+    .left_outer_joins(team: :current_official_events)
+    .where("regional_pitch_events.id IS NULL")
+  }
+
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
     dependent: :destroy,

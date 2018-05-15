@@ -96,10 +96,22 @@ class SubmissionsGrid
         "teams.division_id = ?",
         Division.send(value).id
       )
-    end
+  end
 
-    filter :complete,
+  filter :live_virtual,
     :enum,
+    header: "Live event or virtual judging",
+    filter_group: "more-specific",
+    select: [
+      ["Live, official event submissions", "live"],
+      ["Virtual submissions", "virtual"],
+    ] do |value|
+      public_send(value)
+  end
+
+  filter :complete,
+    :enum,
+    filter_group: "more-specific",
     select: [
       ["Complete submissions", "complete"],
       ["Incomplete submissions", "incomplete"],

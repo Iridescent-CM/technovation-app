@@ -23,7 +23,7 @@ RSpec.feature "Admins view scores" do
     sign_in(admin)
 
     visit admin_scores_path
-    click_link "view"
+    find("a.view-details").click
 
     expect(page).to have_content("earned 2 points")
   end
@@ -52,7 +52,7 @@ RSpec.feature "Admins view scores" do
     sign_in(admin)
 
     visit admin_scores_path
-    click_link "view"
+    find("a.view-details").click
 
     expect(page).to have_content("earned 2 points")
   end
