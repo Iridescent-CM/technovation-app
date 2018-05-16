@@ -1,9 +1,15 @@
 class JudgesGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search, :current_account
+  attr_accessor :admin, :allow_state_search, :current_account, :current_judging_round
 
   self.batch_size = 10
+
+  def self.current_judging_round
+    round = SeasonToggles.current_judging_round(full_name: true)
+    return :quarterfinals if round.to_sym == :off
+    round
+  end
 
   scope do
     Account.includes(judge_profile: :events)
@@ -21,9 +27,11 @@ class JudgesGrid
 
   column :current_round_scores_count,
   header: "Complete Scores",
-    order: "judge_profiles.#{SeasonToggles.current_judging_round(full_name: true)}_scores_count",
-    mandatory: true do
-    judge_profile.public_send("#{SeasonToggles.current_judging_round(full_name: true)}_scores_count")
+    order: "judge_profiles.#{current_judging_round}_scores_count",
+    mandatory: true do |asset, grid|
+
+    asset.judge_profile.public_send("#{grid.current_judging_round}_scores_count")
+
   end
 
   column :virtual_judge_committee do

@@ -29,13 +29,16 @@ class ScoredSubmissionsGrid
 
   column :contest_rank
 
-  column :complete_scores, mandatory: true do
-    public_send("complete_#{SeasonToggles.current_judging_round(full_name: true)}_official_submission_scores_count")
-    scores.current_round.complete.count
+  column :complete_scores, mandatory: true do |asset, grid|
+    asset.public_send(
+      "complete_#{grid.round}_official_submission_scores_count"
+    )
   end
 
-  column :incomplete_scores, mandatory: true do
-    public_send("pending_#{SeasonToggles.current_judging_round(full_name: true)}_official_submission_scores_count")
+  column :incomplete_scores, mandatory: true do |asset, grid|
+    asset.public_send(
+      "pending_#{grid.round}_official_submission_scores_count"
+    )
   end
 
   column :total, order: :quarterfinals_average_score, mandatory: true do |submission, grid|
