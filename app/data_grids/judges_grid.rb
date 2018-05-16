@@ -20,10 +20,10 @@ class JudgesGrid
   column :email, mandatory: true
 
   column :current_round_scores_count,
-  header: "# of Scores",
-    order: "judge_profiles.current_round_scores_count",
+  header: "Complete Scores",
+    order: "judge_profiles.#{SeasonToggles.current_judging_round(full_name: true)}_scores_count",
     mandatory: true do
-    judge_profile.current_round_scores_count
+    judge_profile.public_send("#{SeasonToggles.current_judging_round(full_name: true)}_scores_count")
   end
 
   column :virtual_judge_committee do

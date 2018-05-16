@@ -30,13 +30,13 @@ class ScoredSubmissionsGrid
   column :contest_rank
 
   column :complete_scores, mandatory: true do
+    public_send("complete_#{SeasonToggles.current_judging_round(full_name: true)}_official_submission_scores_count")
     scores.current_round.complete.count
   end
 
   column :incomplete_scores, mandatory: true do
-    scores.current_round.incomplete.count
+    public_send("pending_#{SeasonToggles.current_judging_round(full_name: true)}_official_submission_scores_count")
   end
-
 
   column :total, order: :quarterfinals_average_score, mandatory: true do |submission, grid|
     str = submission.public_send("#{grid.round}_average_score").to_s

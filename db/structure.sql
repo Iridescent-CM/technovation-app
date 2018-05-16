@@ -663,7 +663,8 @@ CREATE TABLE public.judge_profiles (
     join_virtual boolean,
     survey_completed boolean,
     onboarded boolean DEFAULT false,
-    current_round_scores_count integer DEFAULT 0 NOT NULL
+    quarterfinals_scores_count integer DEFAULT 0 NOT NULL,
+    semifinals_scores_count integer DEFAULT 0
 );
 
 
@@ -2994,6 +2995,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180419164217'),
 ('20180419181556'),
 ('20180420141640'),
-('20180501194208');
+('20180501194208'),
+('20180516145423');
 
 
