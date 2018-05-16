@@ -20,6 +20,9 @@ module RegionalAmbassador
 
     private
     def grid_params
+      round = SeasonToggles.current_judging_round(full_name: true)
+      round = :quarterfinals if round.to_sym == :off
+
       grid = (params[:judges_grid] ||= {}).merge(
         admin: false,
         allow_state_search: current_ambassador.country != "US",
@@ -32,6 +35,7 @@ module RegionalAmbassador
           end
         ),
         current_account: current_account,
+        current_judging_round: round,
       )
 
       grid.merge(
