@@ -77,81 +77,61 @@ label {
   padding: 0;
 }
 
-.accordion dt {
-  border-bottom: 1px solid $shamrock-mid;
-  border-radius: 7px 7px 0 0;
-  color: $shamrock-mid;
-  font-size: 2rem;
-}
+.accordion {
+  dt {
+    border-bottom: 1px solid $shamrock-mid;
+    border-radius: 7px 7px 0 0;
+    color: $shamrock-mid;
+    font-size: 2rem;
 
-.accordion dd {
-  border: 1px solid $shamrock;
-  border-top: none;
-  border-radius: 0 0 7px 7px;
-  padding: 1em;
-}
-
-.accordion dt:hover {
-  background-color: $shamrock-mid;
-  border-radius: 0;
-  opacity: 0.5;
-  color: white;
-}
-
-.score-tabs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    &:hover {
+      background-color: $shamrock-mid;
+      border-radius: 0;
+      opacity: 0.5;
+      color: white;
+    }
   }
 
-.score-tabs li {
-  display: inline-block;
-
-}
-
-.score-tabs a {
-  background: white;
-  color: $shamrock-dark;
-  border-radius: 3px 3px 0 0;
-  border: 1px solid $shamrock;
-  display: block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-}
-
-.score-tabs a.current {
-  background: $shamrock;
-  color: white;
-}
-
-.score-tabs a:hover {
-  background: $shamrock-dark;
-  color: white;
+  dd {
+    border: 1px solid $shamrock;
+    border-top: none;
+    border-radius: 0 0 7px 7px;
+    padding: 1em;
+  }
 }
 
 .score-tab {
   background: white;
   border: 3px solid $shamrock;
-  padding: 1px;
+  padding: 0.05rem;
 }
 
 .certificates-btn {
+  display: block;
   background-color: $antiqua;
-  border: none;
   color: white;
-  padding: 15px 32px;
-  margin: 2px 2px;
+  padding: 1rem 2rem;
+  margin: 0.15rem auto;
   text-align: center;
   text-decoration: none;
-  align-content: center;
-  justify-content: center;
-  display: flex;
   cursor: pointer;
-  border-radius: 10em;
-}
-.certificates-btn:hover {
-  background: white;
-  color: $antiqua;
   border: 1px solid $antiqua;
-  border-radius: 10em;
+  border-radius: 10rem;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background: white;
+    color: $antiqua;
+  }
+}
+
+#student-scores-tabs {
+  .ui-accordion-header {
+    outline: none;
+  }
+
+  #certificates {
+    text-align: center;
+    padding: 1rem 0;
+  }
 }
