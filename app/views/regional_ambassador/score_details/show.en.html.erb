@@ -21,12 +21,7 @@
 
     <% if @submission.submission_scores.unofficial.any? %>
       <dt>Quarterfinals unofficial:</dt>
-      <dd><%= @submission.unofficial_quarterfinals_average_score %></dd>
-
-      <% if @submission.semifinalist? %>
-        <dt>Semifinals unofficial:</dt>
-        <dd><%= @submission.unofficial_semifinals_average_score %></dd>
-      <% end %>
+      <dd><%= @submission.average_unofficial_score %></dd>
     <% end %>
   </dl>
 

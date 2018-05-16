@@ -30,7 +30,10 @@ class SubmissionScore < ActiveRecord::Base
     self.seasons = [Season.current.year]
     self.event_type ||= LiveEventJudgingEnabled.(judge_profile) ?
       "live" : "virtual"
-    self.official ||= official?
+  }
+
+  after_commit -> {
+    update_column(:official, official?)
   }
 
   enum round: %w{
@@ -354,11 +357,12 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def official?
+    event = team.selected_regional_pitch_event
+
     not (quarterfinals? and
-          team.selected_regional_pitch_event ==
-              judge_profile.selected_regional_pitch_event and
-                team.selected_regional_pitch_event.live? and
-                  team.selected_regional_pitch_event.unofficial?)
+          event == judge_profile.selected_regional_pitch_event and
+            event.live? and
+              event.unofficial?)
   end
 
   def approve!
