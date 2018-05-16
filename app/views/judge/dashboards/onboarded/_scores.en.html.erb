@@ -48,7 +48,7 @@
       <div class="panel">
         <h5 class="heading--reset">Manage your scores</h5>
 
-        <% if current_judge.live_event? %>
+        <% if LiveEventJudgingEnabled.(current_judge) %>
           <live-event-nav></live-event-nav>
           <div
             ref="deadline"
