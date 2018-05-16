@@ -49,6 +49,10 @@ class SeasonToggles
         self.judging_round = name
       end
 
+      def clear_judging_round
+        self.judging_round = :off
+      end
+
       def judging_enabled?
         quarterfinals_judging? or semifinals_judging?
       end

@@ -307,6 +307,8 @@ RSpec.describe SubmissionScore do
   end
 
   it "sets the event_type to live for RPE judges" do
+    SeasonToggles.set_judging_round(:qf)
+
     team = FactoryBot.create(:team)
     team_submission = FactoryBot.create(
       :team_submission,
@@ -331,9 +333,13 @@ RSpec.describe SubmissionScore do
     )
 
     expect(score.event_type).to eq("live")
+
+    SeasonToggles.clear_judging_round
   end
 
   it "does not re-set the event type if the judge changes" do
+    SeasonToggles.set_judging_round(:qf)
+
     team = FactoryBot.create(:team)
     team_submission = FactoryBot.create(
       :team_submission,
@@ -362,6 +368,8 @@ RSpec.describe SubmissionScore do
     InvalidateExistingJudgeData.(judge_profile)
 
     expect(score.event_type).to eq("live")
+
+    SeasonToggles.clear_judging_round
   end
 
   it "only counts itself on the submission when it's complete" do

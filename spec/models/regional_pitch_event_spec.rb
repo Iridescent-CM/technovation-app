@@ -34,7 +34,9 @@ RSpec.describe RegionalPitchEvent do
     expect(rpe.reload.teams).to be_empty
   end
 
-  it "updates submission average scores if unofficial is toggled" do
+  it "updates quarterfinals submission average scores if unofficial is toggled" do
+    SeasonToggles.set_judging_round(:qf)
+
     team = FactoryBot.create(:team, :senior)
     sub = FactoryBot.create(:submission, :complete, team: team)
 
@@ -73,5 +75,27 @@ RSpec.describe RegionalPitchEvent do
 
     expect(sub.reload.quarterfinals_average_score).to eq(5)
     expect(sub.reload.average_unofficial_score).to eq(2)
+
+    SeasonToggles.clear_judging_round
+  end
+
+  it "updates semifinals submission average scores" do
+    SeasonToggles.set_judging_round(:sf)
+
+    team = FactoryBot.create(:team, :senior)
+    sub = FactoryBot.create(:submission, :complete, team: team)
+
+    virtual_judge = FactoryBot.create(:judge_profile)
+
+    virtual_judge.submission_scores.create!({
+      team_submission: sub,
+      evidence_of_problem: 2,
+      completed_at: Time.current,
+      round: SeasonToggles.current_judging_round(full_name: true)
+    })
+
+    expect(sub.reload.semifinals_average_score).to eq(2)
+
+    SeasonToggles.clear_judging_round
   end
 end

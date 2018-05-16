@@ -120,6 +120,8 @@ RSpec.describe TeamSubmission do
   end
 
   it "only averages scores that count" do
+    SeasonToggles.set_judging_round(:qf)
+
     team = FactoryBot.create(:team, :junior)
     sub = FactoryBot.create(:submission, :complete, team: team)
 
@@ -158,5 +160,7 @@ RSpec.describe TeamSubmission do
     expect(sub.reload.quarterfinals_average_score).to eq(2)
 
     expect(sub.reload.average_unofficial_score).to eq(5)
+
+    SeasonToggles.clear_judging_round
   end
 end
