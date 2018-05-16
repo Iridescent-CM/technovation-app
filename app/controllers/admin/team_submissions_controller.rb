@@ -47,7 +47,11 @@ module Admin
         :development_platform,
         :app_inventor_app_name,
         :app_inventor_gmail,
-        :source_code
+        :source_code,
+        :contest_rank,
+        :business_plan_cache,
+        :development_platform_other,
+        :source_code_cache,
       )
     end
   end
