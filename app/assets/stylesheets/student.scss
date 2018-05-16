@@ -97,3 +97,61 @@ label {
   opacity: 0.5;
   color: white;
 }
+
+.score-tabs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+
+.score-tabs li {
+  display: inline-block;
+
+}
+
+.score-tabs a {
+  background: white;
+  color: $shamrock-dark;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid $shamrock;
+  display: block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+
+.score-tabs a.current {
+  background: $shamrock;
+  color: white;
+}
+
+.score-tabs a:hover {
+  background: $shamrock-dark;
+  color: white;
+}
+
+.score-tab {
+  background: white;
+  border: 3px solid $shamrock;
+  padding: 1px;
+}
+
+.certificates-btn {
+  background-color: $antiqua;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+  border-radius: 10em;
+}
+.certificates-btn:hover {
+  background: white;
+  color: $antiqua;
+  border: 1px solid $antiqua;
+  border-radius: 10em;
+}
