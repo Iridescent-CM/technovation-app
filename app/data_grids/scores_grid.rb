@@ -41,7 +41,5 @@ class ScoresGrid
     team.event.name
   end
 
-  column :live, mandatory: true do
-    team.live_event? ? "live" : "virtual"
-  end
+  column :event_type, mandatory: true
 end
