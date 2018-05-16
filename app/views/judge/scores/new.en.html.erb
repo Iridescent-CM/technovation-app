@@ -1,15 +1,8 @@
 <div id="judge-scores-app">
-  <% if current_judge.live_event? %>
-    <div
-      ref="deadline"
-      data-date="May 22<sup>nd</sup> (US/Pacific time)"
-    ></div>
-  <% else %>
-    <div
-      ref="deadline"
-      data-date="May 20<sup>th</sup> (US/Pacific time)"
-    ></div>
-  <% end %>
+  <div
+    ref="deadline"
+    data-date="<%= SeasonToggles.current_round_deadline(current_judge) %>"
+  ></div>
 
   <div
     v-if="notice.length"

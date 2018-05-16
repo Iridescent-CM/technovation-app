@@ -50,18 +50,15 @@
 
         <% if LiveEventJudgingEnabled.(current_judge) %>
           <live-event-nav></live-event-nav>
-          <div
-            ref="deadline"
-            data-date="May 22<sup>nd</sup> (US/Pacific time)"
-          ></div>
         <% else %>
           <virtual-nav></virtual-nav>
           <div ref="disableAssigned"></div>
-          <div
-            ref="deadline"
-            data-date="May 20<sup>th</sup> (US/Pacific time)"
-          ></div>
         <% end %>
+
+        <div
+          ref="deadline"
+          data-date="<%= SeasonToggles.current_round_deadline(current_judge) %>"
+        ></div>
 
         <router-view></router-view>
       </div>

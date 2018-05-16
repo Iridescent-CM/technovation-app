@@ -33,6 +33,18 @@ class SeasonToggles
       end
       alias :current_judging_round :judging_round
 
+      def current_round_deadline(judge)
+        if LiveEventJudgingEnabled.(judge)
+          "May 22<sup>nd</sup> (US/Pacific time)".html_safe
+        elsif quarterfinals?
+          "May 20<sup>th</sup> (US/Pacific time)".html_safe
+        elsif semifinals?
+          "June 17<sup>th</sup> (US/Pacific time)".html_safe
+        else
+          "- judging is closed -"
+        end
+      end
+
       def set_judging_round(name)
         self.judging_round = name
       end
