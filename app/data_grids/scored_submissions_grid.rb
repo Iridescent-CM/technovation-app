@@ -11,6 +11,22 @@ class ScoredSubmissionsGrid
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
+  column :contest_rank, mandatory: true, html: false
+
+  column :contest_rank, mandatory: true, html: true, if: ->(g) { g.admin } do |asset, grid|
+    select_tag(
+      :contest_rank,
+      options_from_collection_for_select(
+        TeamSubmission.contest_ranks,
+        :first,
+        :first,
+        asset.contest_rank,
+      ),
+      "v-on:change" => "updateContestRank",
+      data: { submission_id: asset.id },
+    )
+  end
+
   column :division do
     team_division_name
   end
@@ -26,8 +42,6 @@ class ScoredSubmissionsGrid
     link_to submission.app_name,
       [current_scope, submission, allow_out_of_region: true]
   end
-
-  column :contest_rank
 
   column :complete_scores, mandatory: true do |asset, grid|
     asset.public_send(

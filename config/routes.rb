@@ -259,6 +259,7 @@ Rails.application.routes.draw do
     resources :suspicious_scores, only: :index
     resources :score_approvals, only: :create
     resources :judges, only: :index
+    resources :contest_rank_changes, only: :create
 
     resources :score_details, only: :show
     resources :submission_score_restorations, only: :update
