@@ -12,11 +12,13 @@
         invitation: @existing %>
     </div>
 
-    <h3>Judge Invitation URL</h3>
+    <% if invitation_token.present? %>
+      <h3>Judge Invitation URL</h3>
 
-    <div class="panel">
-      <%= judge_signup_url(invitation: invitation_token) %>
-    </div>
+      <div class="panel">
+        <%= judge_signup_url(invitation: invitation_token) %>
+      </div>
+    <% end %>
   </div>
 </div>
 

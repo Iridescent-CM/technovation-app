@@ -152,6 +152,10 @@ module RegionalAmbassador
       (GlobalInvitation.active.last || NullInvitation.new("")).token
     end
 
-    class NullInvitation < Struct.new(:token); end
+    class NullInvitation < Struct.new(:token)
+      def present?
+        false
+      end
+    end
   end
 end
