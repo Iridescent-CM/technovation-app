@@ -180,12 +180,23 @@ class AccountsGrid
     created_at.strftime("%Y-%m-%d")
   end
 
-  column :actions, mandatory: true, html: true do |account|
-    link_to(
+  column :actions, mandatory: true, html: true do |account, grid|
+    html = link_to(
       "view",
       send("#{current_scope}_participant_path", account),
       data: { turbolinks: false }
     )
+
+    if grid.admin
+      html += " | "
+
+      html += link_to(
+        'login',
+        admin_participant_session_path(account),
+      )
+    end
+
+    html
   end
 
   filter :division,
