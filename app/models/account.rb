@@ -448,7 +448,8 @@ class Account < ActiveRecord::Base
   end
 
   def can_be_a_judge?
-    regional_ambassador_profile.present? or mentor_profile.present?
+    id != 43662 and
+      regional_ambassador_profile.present? or mentor_profile.present?
   end
 
   def is_not_a_judge?

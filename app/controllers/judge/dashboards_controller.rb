@@ -14,7 +14,15 @@ module Judge
         flash.now[:success] = t(
           "controllers.judge.dashboards.show.judge_profile_created"
         )
+      elsif current_account.authenticated? and is_not_and_cannot_be_judge?
+        redirect_to root_path,
+          alert: "You don't have permission to go there!"
       end
+    end
+
+    def is_not_and_cannot_be_judge?
+      not current_account.judge_profile.present? and
+        not current_account.can_be_a_judge?
     end
   end
 end
