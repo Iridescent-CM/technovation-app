@@ -4,6 +4,16 @@ FactoryBot.define do
 
     team
 
+    trait :past_season do
+      seasons { [Season.current.year - (1..10).to_a.sample] }
+    end
+
+    trait :incomplete do
+      after(:create) do |submission|
+        SubmissionValidation.invalidate(submission)
+      end
+    end
+
     trait :semifinalist do
       contest_rank :semifinalist
     end

@@ -39,6 +39,10 @@ class RequiredField
       RequiredAppNameField.new(submission, method_name)
     elsif method_name.to_sym == :screenshots
       RequiredScreenshotsField.new(submission, method_name)
+    elsif method_name.to_sym == :development_platform_text
+      RequiredDevPlatformField.new(submission, method_name)
+    elsif method_name.to_sym == :source_code_url
+      RequiredSourceCodeField.new(submission, method_name)
     else
       RequiredField.new(submission, method_name)
     end
@@ -49,6 +53,10 @@ class RequiredField
     @method_name = method_name
     @value = submission.send(method_name)
     freeze
+  end
+
+  def invalidate!
+    submission.public_send("#{method_name}=", nil)
   end
 
   def complete?
@@ -69,5 +77,20 @@ end
 class RequiredAppNameField < RequiredField
   def blank?
     value.blank? || value == "(no name yet)"
+  end
+end
+
+class RequiredDevPlatformField < RequiredField
+  def invalidate!
+    submission.development_platform = nil
+    submission.development_platform_other = nil
+    submission.app_inventor_app_name = nil
+    submission.app_inventor_gmail = nil
+  end
+end
+
+class RequiredSourceCodeField < RequiredField
+  def invalidate!
+    submission.source_code = nil
   end
 end

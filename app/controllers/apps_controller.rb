@@ -3,7 +3,7 @@ class AppsController < ApplicationController
     :determine_manifest
 
   def show
-    @team_submission = TeamSubmission.current.complete.friendly.find(params.fetch(:id))
+    @team_submission = TeamSubmission.friendly.find(params.fetch(:id))
     @team = @team_submission.team
     render "team_submissions/published"
   end
