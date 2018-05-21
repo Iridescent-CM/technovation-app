@@ -135,6 +135,11 @@ export default {
         } else {
           this.comment.isProfanityAnalyzed = false
           this.comment.isSentimentAnalyzed = false
+          this.comment.sentiment = {
+            negative: 0,
+            positive: 0,
+            neutral: 0,
+          }
         }
       }
     },
