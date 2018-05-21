@@ -11,35 +11,39 @@ class ScoresGrid
       .references(:teams, :team_submissions, :judge_profiles)
   end
 
-  column :division, mandatory: true do
+  column :division do
     team_division_name
   end
 
-  column :judge_name, mandatory: true do
+  column :judge_name do
     judge_profile.name
   end
 
-  column :team_name, mandatory: true do
+  column :team_name do
     team_submission.team_name
   end
 
-  column :total, mandatory: true
+  column :total
 
-  column :app_name, mandatory: true do
+  column :app_name do
     team_submission.app_name
   end
 
-  column :complete, mandatory: true do
+  column :complete do
     complete? ? "yes" : "no"
   end
 
-  column :official, mandatory: true do
+  column :official do
     official? ? "yes" : "no"
   end
 
-  column :event_name, mandatory: true do
+  column :event_name do
     team.event.name
   end
 
-  column :event_type, mandatory: true
+  column :event_type
+
+  column :country do
+    FriendlyCountry.(team)
+  end
 end
