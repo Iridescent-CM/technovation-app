@@ -6,7 +6,7 @@ module FillPdfs
 
     private
     def pathname
-     './lib/RegionalAppreciation-mentor-RA-ME-SA_nobleed-June.pdf'
+     './lib/certs/2018/regional-appreciation-mentor.pdf'
     end
 
     def tmp_output
