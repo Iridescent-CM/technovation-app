@@ -245,6 +245,8 @@ export default {
     },
 
     wordCount (text) {
+      if (!text) text = ''
+
       return _.filter(text.split(' '), word => {
 
         return _.filter(word.split(''), char => {
