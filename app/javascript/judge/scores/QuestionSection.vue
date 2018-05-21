@@ -107,13 +107,18 @@ export default {
 
       comment: {
         text: '',
+
         sentiment: {
           negative: 0,
           positive: 0,
           neutral: 0,
         },
+
         bad_word_count: 0,
         word_count: 0,
+
+        isSentimentAnalyzed: false,
+        isProfanityAnalyzed: false,
       },
 
       detectedProfanity: {},
@@ -135,6 +140,14 @@ export default {
 
   computed: {
     ...mapState(['submission']),
+
+    commentIsSentimentAnalyzed () {
+      return this.comment.isSentimentAnalyzed
+    },
+
+    commentIsProfanityAnalyzed () {
+      return this.comment.isProfanityAnalyzed
+    },
 
     commentText () {
       return this.comment.text
@@ -231,7 +244,7 @@ export default {
       const storeComment = this.$store.getters.comment(this.section)
 
       if (!!storeComment)
-        this.comment = storeComment
+        this.comment = Object.assign({}, this.comment, storeComment)
 
       const text = window.localStorage.getItem(this.commentStorageKey)
       if (!!text) this.comment.text = text
@@ -240,6 +253,12 @@ export default {
         this.comment.text = ''
 
       this.$nextTick().then(() => {
+        if (!!this.comment.sentiment.positive ||
+              !!this.comment.sentiment.neutral ||
+                !!this.comment.sentiment.negative) {
+          this.comment.isSentimentAnalyzed = true
+        }
+
         this.commentInitiated = true
       })
     },
@@ -271,12 +290,13 @@ export default {
 
       const wordCount = this.wordCount(this.commentText)
 
-      if (wordCount > 19 && wordCount % 5 === 0) {
+      if (wordCount > 19 && (wordCount % 5 === 0 || !this.commentIsSentimentAnalyzed)) {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/SocialSentimentAnalysis/0.1.4")
           .pipe({ sentence: this.commentText })
           .then(resp => {
             this.comment.sentiment = resp.result[0]
+            this.comment.isSentimentAnalyzed = true
 
             this.$store.commit('setComment', {
               sectionName: this.section,
@@ -288,12 +308,13 @@ export default {
           })
       }
 
-      if (wordCount > 0 && wordCount % 2 === 0) {
+      if (wordCount > 0 && (wordCount % 2 === 0 || !this.commentIsProfanityAnalyzed)) {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/ProfanityDetection/1.0.0")
           .pipe([this.commentText, ['suck', 'sucks'], false])
           .then(resp => {
             this.detectedProfanity = resp.result
+            this.comment.isProfanityAnalyzed = true
 
             this.$store.commit('setComment', {
               sectionName: this.section,
