@@ -4,6 +4,20 @@ import Vue from 'vue/dist/vue.esm'
 import store from './store'
 import { router } from './routes'
 
+import AirbrakeClient from 'airbrake-js';
+
+const airbrake = new AirbrakeClient({
+  projectId: 107438,
+  projectKey: '25c7abb3eb366a19a0743c5f04a9320e',
+})
+
+Vue.config.errorHandler = function (err, vm, info) {
+  airbrake.notify({
+    error: err,
+    params: { info: info },
+  })
+}
+
 import './stepper'
 
 document.addEventListener('turbolinks:load', () => {
