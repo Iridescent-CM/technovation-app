@@ -1,4 +1,4 @@
-$(document).on("ready turbolinks:load", function() {
+$(document).on("turbolinks:load", function() {
   $('.tabs').each(function() {
     var $links = $(this).find('.tab-menu, .tabs__menu')
                         .first()
