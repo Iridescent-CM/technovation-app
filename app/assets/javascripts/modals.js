@@ -130,6 +130,7 @@ $(document).on("modals.beforeOpen",
       method: "GET",
       headers: { "Content-Type": "text/html" },
       url: $(this).data("modalFetch"),
+      dataType: 'html',
       success: function(html) {
         $(modal).find(".modal-content").html(html);
       },
