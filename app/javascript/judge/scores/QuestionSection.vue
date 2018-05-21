@@ -129,8 +129,14 @@ export default {
 
   watch: {
     commentText () {
-      if (this.commentInitiated)
-        this.handleCommentChange()
+      if (this.commentInitiated) {
+        if (!!this.comment.text.length) {
+          this.handleCommentChange()
+        } else {
+          this.comment.isProfanityAnalyzed = false
+          this.comment.isSentimentAnalyzed = false
+        }
+      }
     },
 
     commentStorageKey () {
@@ -290,7 +296,18 @@ export default {
 
       const wordCount = this.wordCount(this.commentText)
 
-      if (wordCount > 19 && (wordCount % 5 === 0 || !this.commentIsSentimentAnalyzed)) {
+      const shouldRunSentimentAnalysis = (
+        wordCount > 19 &&
+          (wordCount % 5 === 0 ||
+            !this.commentIsSentimentAnalyzed)
+      )
+
+      console.log('sentiment?', shouldRunSentimentAnalysis)
+      console.log('wordCount', wordCount)
+      console.log('wordCount % 5', wordCount % 5)
+      console.log('this.commentIsSentinmentAnalyzed', this.commentIsSentimentAnalyzed)
+
+      if (shouldRunSentimentAnalysis) {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/SocialSentimentAnalysis/0.1.4")
           .pipe({ sentence: this.commentText })
@@ -304,8 +321,8 @@ export default {
               word_count: wordCount,
               bad_word_count: this.badWordCount,
               sentiment: this.comment.sentiment,
-            })
           })
+        })
       }
 
       if (wordCount > 0 && (wordCount % 2 === 0 || !this.commentIsProfanityAnalyzed)) {
