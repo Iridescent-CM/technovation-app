@@ -259,9 +259,13 @@ export default {
         this.comment.text = ''
 
       this.$nextTick().then(() => {
-        if (!!this.comment.sentiment.positive ||
-              !!this.comment.sentiment.neutral ||
-                !!this.comment.sentiment.negative) {
+        const commentSentiment = this.comment.sentiment
+
+        const positiveSentiment = parseFloat(commentSentiment.positive)
+        const neutralSentiment = parseFloat(commentSentiment.neutral)
+        const negativeSentiment = parseFloat(commentSentiment.negative)
+
+        if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
           this.comment.isSentimentAnalyzed = true
         }
 
