@@ -13,7 +13,7 @@
       <tr>
         <td> <%= score.team_name %> </td>
         <td>
-          <%= link_to "#{TeamSubmission.find(score.team_submission_id).name}",
+          <%= link_to score.app_name,
                       admin_team_submission_path(score.team_submission_id),
                       class: "cta-link" %>
         </td>
