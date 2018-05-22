@@ -85,25 +85,19 @@
 
     <% if @account.judge_profile %>
       <div class="panel">
+        <h3 class="reset">Quarterfinals Scores:</h3>
+        <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
+          <%= render 'admin/participants/judge_scores',
+            profile: @account.judge_profile,
+            scores: @scores.quarterfinals %>
+        </div>
 
-        <% if @scores.quarterfinals.present? %>
-          <h3 class="reset">Quarterfinals Scores:</h3>
-          <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
-            <%= render 'admin/participants/judge_scores',
-              profile: @account.judge_profile,
-              scores: @scores.quarterfinals %>
-          </div>
-        <% end %>
-
-        <% if @scores.semifinals.present? %>
-          <h3 class="reset">Semifinals Scores:</h3>
-          <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
-            <%= render 'admin/participants/judge_scores',
-              profile: @account.judge_profile,
-              scores: @scores.semifinals %>
-          </div>
-        <% end %>
-
+        <h3 class="reset">Semifinals Scores:</h3>
+        <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
+          <%= render 'admin/participants/judge_scores',
+            profile: @account.judge_profile,
+            scores: @scores.semifinals %>
+        </div>
       </div>
     <% end %>
 
