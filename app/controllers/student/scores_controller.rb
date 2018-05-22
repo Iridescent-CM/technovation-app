@@ -1,6 +1,5 @@
 module Student
   class ScoresController < StudentController
-
     def index
       @all_scores = SubmissionScore.none
       @quarterfinals_scores = SubmissionScore.none
@@ -17,6 +16,5 @@ module Student
 
       render template: 'student/scores/index'
     end
-
   end
 end
