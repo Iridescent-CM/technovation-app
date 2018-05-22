@@ -1,3 +1,5 @@
+require 'fill_pdfs'
+
 module Student
   class DashboardsController < StudentController
 

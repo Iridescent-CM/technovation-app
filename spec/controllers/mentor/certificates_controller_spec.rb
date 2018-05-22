@@ -2,16 +2,14 @@ require "rails_helper"
 
 RSpec.describe Mentor::CertificatesController, type: :controller do
   describe "POST #create" do
-    it "generates an appreciation cert for the current mentor" do
+    it "generates a completion cert for the current mentor" do
       mentor = FactoryBot.create(:mentor)
 
       sign_in(mentor)
 
-      expect(mentor.certificates.appreciation).to be_empty
-
-      post :create, params: { type: :appreciation }
-
-      expect(mentor.certificates.appreciation).not_to be_empty
+      expect {
+        post :create, params: { type: :completion }
+      }.to change { mentor.certificates.completion.count }.from(0).to(1)
     end
   end
 end

@@ -7,11 +7,9 @@ RSpec.describe Student::CertificatesController, type: :controller do
 
       sign_in(student)
 
-      expect(student.certificates.completion).to be_empty
-
-      post :create, params: { type: :completion }
-
-      expect(student.certificates.completion).not_to be_empty
+      expect {
+        post :create, params: { type: :completion }
+      }.to change { student.certificates.current.completion }.from(0).to(1)
     end
 
     it "generates an rpe winner cert for the current student" do
@@ -19,11 +17,9 @@ RSpec.describe Student::CertificatesController, type: :controller do
 
       sign_in(student)
 
-      expect(student.certificates.rpe_winner).to be_empty
-
-      post :create, params: { type: :rpe_winner }
-
-      expect(student.certificates.rpe_winner).not_to be_empty
+      expect {
+        post :create, params: { type: :rpe_winner }
+      }.to change { student.certificates.current.rpe_winner }.from(0).to(1)
     end
   end
 end

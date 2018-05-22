@@ -2,9 +2,8 @@
 
 require 'pdf_forms'
 
-require 'fill_pdfs/regional_grand_prize'
-require 'fill_pdfs/mentor_appreciation'
 require 'fill_pdfs/completion'
+require 'fill_pdfs/regional_winner'
 
 module FillPdfs
   # PROD settings:
@@ -27,12 +26,10 @@ module FillPdfs
 
   def self.call(participant, type)
     case type.to_sym
-    when :rpe_winner
-      RegionalGrandPrize.new(participant, type).generate_certificate
     when :completion
       Completion.new(participant, type).generate_certificate
-    when :appreciation
-      MentorAppreciation.new(participant, type).generate_certificate
+    when :rpe_winner
+      RegionalWinner.new(participant, type).generate_certificate
     else
       raise "Unsupported type #{type}"
     end
@@ -48,7 +45,7 @@ module FillPdfs
 
   def generate_certificate
     unless account.certificates.public_send(type).current.present?
-      PDFTK.fill_form(pathname, tmp_output, field_values, flatten: true)
+      fill_form
       attach_uploaded_certificate_from_tmp_file_to_account
     end
 
