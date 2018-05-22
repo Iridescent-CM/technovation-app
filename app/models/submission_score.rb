@@ -215,10 +215,6 @@ class SubmissionScore < ActiveRecord::Base
      team_submission_team_name].join(' by ')
   end
 
-  def app_name
-    team_submission_app_name
-  end
-
   def event_name
     judge_profile.selected_regional_pitch_event_name
   end
