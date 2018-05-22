@@ -79,6 +79,8 @@ class VersionReleasing
 
   def new_version
     @new_version ||= case @updating_version_part
+                     when "hotfix"
+                       "#{current_major}.#{current_minor}.#{current_patch}.HOTFIX"
                      when "patch"
                        "#{current_major}.#{current_minor}.#{current_patch + 1}"
                      when "minor"
