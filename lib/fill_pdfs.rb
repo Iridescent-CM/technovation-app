@@ -54,7 +54,7 @@ module FillPdfs
 
   private
   def field_values
-    Hash[ pdf.fields.map{|f| [f.name, participant[f.name]]} ]
+    Hash[ pdf.fields.map{|f| [f.name, set_value(participant, f.name)]} ]
   end
 
   def pdf
@@ -73,5 +73,15 @@ module FillPdfs
       season: Season.current.year,
       cert_type: type.to_sym,
     })
+  end
+
+  def set_value(participant, field_name)
+    if field_name === "Firstname Lastname.Page 1"
+      participant['Recipient Name']
+    elsif field_name === "Description.Page 1"
+      "For her outstanding work as a member of Technovation [Region] team [insert team name] to develop the mobile application [Mobile Application Name]."
+    else
+      participant[field_name]
+    end
   end
 end

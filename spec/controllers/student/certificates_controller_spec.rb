@@ -9,7 +9,7 @@ RSpec.describe Student::CertificatesController, type: :controller do
 
       expect {
         post :create, params: { type: :completion }
-      }.to change { student.certificates.current.completion }.from(0).to(1)
+      }.to change { student.certificates.current.completion.count }.from(0).to(1)
     end
 
     it "generates an rpe winner cert for the current student" do
@@ -19,7 +19,7 @@ RSpec.describe Student::CertificatesController, type: :controller do
 
       expect {
         post :create, params: { type: :rpe_winner }
-      }.to change { student.certificates.current.rpe_winner }.from(0).to(1)
+      }.to change { student.certificates.current.rpe_winner.count }.from(0).to(1)
     end
   end
 end
