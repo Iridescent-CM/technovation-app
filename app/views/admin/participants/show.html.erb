@@ -87,7 +87,8 @@
       <div class="panel">
         <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
             <%= render 'admin/participants/judge_scores',
-              profile: @account.judge_profile %>
+              profile: @account.judge_profile,
+              scores: @scores %>
           </div>
         </div>
     <% end %>

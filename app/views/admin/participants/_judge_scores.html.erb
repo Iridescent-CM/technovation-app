@@ -9,7 +9,7 @@
     </tr>
   </th>
   <tbody>
-    <% SubmissionScore.where(judge_profile_id: profile.id).each do |score|  %>
+    <% scores.each do |score| %>
       <tr>
         <td> <%= score.team_name %> </td>
         <td>
