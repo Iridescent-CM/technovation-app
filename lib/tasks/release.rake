@@ -77,10 +77,14 @@ class VersionReleasing
     @current_patch ||= @current_version.split('.')[2].to_i
   end
 
+  def current_hotfix
+    @current_hotfix ||= @current_version.split('HOTFIX.').last.to_i
+  end
+
   def new_version
     @new_version ||= case @updating_version_part
                      when "hotfix"
-                       "#{current_major}.#{current_minor}.#{current_patch}.HOTFIX"
+                       "#{current_major}.#{current_minor}.#{current_patch}.HOTFIX.#{current_hotfix + 1}"
                      when "patch"
                        "#{current_major}.#{current_minor}.#{current_patch + 1}"
                      when "minor"
