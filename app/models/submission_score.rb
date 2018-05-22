@@ -357,12 +357,10 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def official?
-    event = team.selected_regional_pitch_event
-
-    not (quarterfinals? and
-          event == judge_profile.selected_regional_pitch_event and
-            event.live? and
-              event.unofficial?)
+    !(quarterfinals? &&
+      judge_profile.events.include?(team.event) &&
+        team.event.live? &&
+          team.event.unofficial?)
   end
 
   def approve!
