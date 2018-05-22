@@ -660,8 +660,8 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def email_changed?
-    !!email_was and
+  def email_is_changing?
+    !!will_save_change_to_email? and
       email_was.strip.downcase != email.strip.downcase and
         super
   end
@@ -677,11 +677,11 @@ class Account < ActiveRecord::Base
 
   def changes_require_password?
     !!!skip_existing_password &&
-      (persisted? && (email_changed? || changing_password?))
+      (persisted? && (email_is_changing? || changing_password?))
   end
 
   def changing_password?
-    !!!skip_existing_password && (persisted? && password_digest_changed?)
+    !!!skip_existing_password && (persisted? && will_save_change_to_password_digest?)
   end
 
   def changing_password_or_temporary_password?
