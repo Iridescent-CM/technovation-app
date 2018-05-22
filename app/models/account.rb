@@ -1,4 +1,10 @@
 class Account < ActiveRecord::Base
+  JUDGE_BLACKLISTED_ACCOUNT_IDS = [
+    43662,
+    29481,
+    46986,
+  ]
+
   acts_as_paranoid
 
   include Seasoned
@@ -453,8 +459,10 @@ class Account < ActiveRecord::Base
   end
 
   def can_be_a_judge?
-    id != 43662 and
-      regional_ambassador_profile.present? or mentor_profile.present?
+    not student_profile.present? and
+      not JUDGE_BLACKLISTED_ACCOUNT_IDS.include?(id) and
+        regional_ambassador_profile.present? or
+          mentor_profile.present?
   end
 
   def is_not_a_judge?

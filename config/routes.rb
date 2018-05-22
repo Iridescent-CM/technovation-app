@@ -220,6 +220,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resource :special, only: :show
+
     resource :dashboard, only: :show
 
     resources :job_statuses, only: :show
