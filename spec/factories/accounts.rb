@@ -12,6 +12,12 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    seasons { [] }
+
+    trait :past do
+      seasons { [Season.current.year - (1..99).to_a.sample] }
+    end
+
     trait :mentor do
       mentor_profile
     end
@@ -35,7 +41,10 @@ FactoryBot.define do
     end
 
     after :create do |a|
-      RegisterToCurrentSeasonJob.perform_now(a)
+      if a.seasons.empty?
+        RegisterToCurrentSeasonJob.perform_now(a)
+      end
+
       a.update_column(:profile_image, "foo/bar/baz.png")
     end
   end
