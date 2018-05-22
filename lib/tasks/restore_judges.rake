@@ -15,13 +15,17 @@ task restore_judges: :environment do
     accounts = JSON.parse(File.read("./lib/restore_accounts.json"))
 
     accounts.each do |json|
+      pwd_digest = json.delete('password_digest')
       judge_profile_json = json.delete("judge_profile")
       original_profile_id = judge_profile_json.delete("original_id")
 
       account = AccountFromJudgeRestoreJson.(json)
       profile = JudgeProfileFromRestoreJson.(account, judge_profile_json)
 
+      account.skip_existing_password = true
+      account.password = 'somethingwaltminusbear'
       account.save!
+      account.update_column(:password_digest, pwd_digest)
 
       # SubmissionScore.with_deleted.where(judge_profile_id: original_profile_id).each do |score|
       #   score.judge_profile = account.judge_profile
@@ -67,7 +71,9 @@ module JudgeProfileFromRestoreJson
       profile.public_send("#{key}=", json[key])
     end
 
-    profile.events << RegionalPitchEvent.find(event_id)
+    if event = RegionalPitchEvent.find_by(id: event_id)
+      profile.events << event
+    end
 
     profile
   end
