@@ -71,9 +71,11 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       end
 
       if record.respond_to?(:create_activity)
-        record.create_activity(
-          key: "#{record.class.name.underscore}.register_current_season"
-        )
+        activity_hash = { key: "#{record.class.name.underscore}.register_current_season" }
+
+        unless record.activities.where(activity_hash).exists?
+          record.create_activity(activity_hash)
+        end
       end
     end
   end
