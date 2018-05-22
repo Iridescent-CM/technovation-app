@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  acts_as_paranoid
+
   include Seasoned
 
   include Regioned
@@ -324,8 +326,11 @@ class Account < ActiveRecord::Base
 
   validates :email,
     presence: true,
-    uniqueness: { case_sensitive: false },
     email: true
+
+  validates_uniqueness_of :email,
+    case_sensitive: false,
+    scope: :deleted_at
 
   validates :profile_image, verify_cached_file: true
 

@@ -126,7 +126,8 @@ CREATE TABLE public.accounts (
     survey_completed_at timestamp without time zone,
     reminded_about_survey_at timestamp without time zone,
     reminded_about_survey_count integer DEFAULT 0 NOT NULL,
-    season_registered_at timestamp without time zone
+    season_registered_at timestamp without time zone,
+    deleted_at timestamp without time zone
 );
 
 
@@ -2287,7 +2288,7 @@ CREATE INDEX index_accounts_on_division_id ON public.accounts USING btree (divis
 -- Name: index_accounts_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (email);
+CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (email) WHERE (deleted_at IS NOT NULL);
 
 
 --
@@ -2996,6 +2997,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180419181556'),
 ('20180420141640'),
 ('20180501194208'),
-('20180516145423');
+('20180516145423'),
+('20180522141357'),
+('20180522161954');
 
 
