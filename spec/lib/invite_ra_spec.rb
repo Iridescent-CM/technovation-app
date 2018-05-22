@@ -14,19 +14,18 @@ RSpec.describe InviteRA do
   it "replaces any student or judge account found" do
     %w{student judge}.each do |scope|
       existing = FactoryBot.create(scope).account
-
       account = FactoryBot.build(:account, email: existing.email)
-
-      invited = InviteRA.(
-        account.attributes.merge(FactoryBot.attributes_for(:ambassador))
-      )
-
-      expect(invited).not_to be_nil
+      invited = nil
 
       expect {
-        existing.reload
-      }.to raise_error(ActiveRecord::RecordNotFound)
+        invited = InviteRA.(
+          account.attributes.merge(FactoryBot.attributes_for(:ambassador))
+        )
+      }.to change {
+        existing.reload.deleted?
+      }.from(false).to(true)
 
+      expect(invited).not_to be_nil
       expect(invited.account_id).not_to be_nil
       expect(invited.account_id).not_to eq(existing.id)
     end
