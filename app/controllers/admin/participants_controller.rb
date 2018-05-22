@@ -111,9 +111,9 @@ module Admin
 
     def submission_score(account)
       if account.judge_profile.present?
-        SubmissionScore.where(judge_profile_id: account)
+        account.judge_profile.submission_scores.current.complete
       else
-        false
+        SubmissionScore.none
       end
     end
 
