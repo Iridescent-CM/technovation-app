@@ -6,7 +6,7 @@
   "repository": "https://github.com/heroku/ruby-rails-sample",
   "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Ruby_on_Rails_logo.svg",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate"
+    "postdeploy": "bundle exec rake db:migrate tmp:cache:clear assets:clean airbrake:deploy"
   },
   "env": {
     "RAILS_ENV": "production",
