@@ -9,6 +9,7 @@ module Admin
     def show
       @account = Account.find(params.fetch(:id))
       @teams = Team.current
+      @scores = submission_score(@account)
     end
 
     def edit
@@ -107,5 +108,14 @@ module Admin
         false
       end
     end
+
+    def submission_score(account)
+      if account.judge_profile.present?
+        account.judge_profile.submission_scores.current.complete
+      else
+        SubmissionScore.none
+      end
+    end
+
   end
 end
