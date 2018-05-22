@@ -2,14 +2,10 @@ module Seasoned
   extend ActiveSupport::Concern
 
   included do
-    if column_names.include?("seasons")
-      include SeasonedByArray
-    elsif column_names.include?("season")
+    if name === "Certificate"
       include SeasonedByInteger
     else
-      raise "Supported Database field not found - " +
-            "Please add seasons:array or season:integer to " +
-            table_name
+      include SeasonedByArray
     end
 
     scope :current, -> { where(seasoning_scope(Season.current.year)) }
