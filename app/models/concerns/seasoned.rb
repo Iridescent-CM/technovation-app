@@ -8,30 +8,32 @@ module Seasoned
       include SeasonedByArray
     end
 
-    scope :current, -> { where(seasoning_scope(Season.current.year)) }
-    scope :past,  -> { where.not(seasoning_scope(Season.current.year)) }
-    scope :by_season, ->(*args) { by_season_scope(*args) }
+    scope :current, -> {
+      where(seasoning_scope(Season.current.year))
+    }
+
+    scope :past, -> {
+      where.not(seasoning_scope(Season.current.year))
+    }
+
+    scope :by_season, ->(*args) {
+      years = args.select { |a| not a.is_a?(Hash) }.flatten
+      opts = args.select { |a| a.is_a?(Hash) }[0] ||
+              { match: "match_any" }
+
+      clauses = years.flatten.map do |year|
+        seasoning_scope_as_string(year)
+      end
+
+      if "match_all" == opts[:match].to_s
+        where(clauses.join(' AND '))
+      else
+        where(clauses.join(' OR '))
+      end
+    }
 
     def current_season?
       seasons.include?(Season.current.year)
-    end
-
-    module ClassMethods
-      def by_season_scope(*args)
-        years = args.select { |a| not a.is_a?(Hash) }.flatten
-        opts = args.select { |a| a.is_a?(Hash) }[0] ||
-                { match: "match_any" }
-
-        clauses = years.flatten.map do |year|
-          seasoning_scope_as_string(year)
-        end
-
-        if "match_all" == opts[:match].to_s
-          where(clauses.join(' AND '))
-        else
-          where(clauses.join(' OR '))
-        end
-      end
     end
   end
 
