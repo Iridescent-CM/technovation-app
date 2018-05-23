@@ -12,6 +12,14 @@ class SeasonToggles
     end
 
     module ClassMethods
+      def display_scores_on!
+        self.display_scores = "on"
+      end
+
+      def display_scores_off!
+        self.display_scores = "off"
+      end
+
       def display_scores=(value)
         store.set(:display_scores, with_bool_validation(value))
       end

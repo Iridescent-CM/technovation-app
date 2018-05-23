@@ -6,8 +6,6 @@ RSpec.feature "Students view scores" do
   end
 
   scenario "view QF scores" do
-    skip "Rebuilding student dashboard: scores not back yet"
-
     submission = FactoryBot.create(
       :submission,
       :complete,
@@ -20,13 +18,12 @@ RSpec.feature "Students view scores" do
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     sign_in(submission.team.students.sample)
+    click_link "View your scores and certificates"
 
     expect(page).to have_content("earned 2 points")
   end
 
   scenario "view SF scores" do
-    skip "Rebuilding student dashboard: scores not back yet"
-
     submission = FactoryBot.create(
       :submission,
       :complete,
@@ -45,6 +42,7 @@ RSpec.feature "Students view scores" do
     )
 
     sign_in(submission.team.students.sample)
+    click_link "View your scores and certificates"
 
     expect(page).to have_content("earned 2 points")
   end

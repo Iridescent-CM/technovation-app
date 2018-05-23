@@ -8,26 +8,25 @@ RSpec.feature "Toggling display of scores" do
 
     before do
       TeamRosterManaging.add(sub.team, user)
-
       sign_in(user)
     end
 
     scenario "display scores on" do
-      skip "Rebuilding student dashboard: scores not back yet"
-      SeasonToggles.display_scores="on"
+      SeasonToggles.display_scores_on!
+
       visit path
 
-      expect(page).to have_button("Scores")
-      expect(page).to have_css("div.content div#scores")
+      expect(page).to have_content("Scores and Certificates")
+      expect(page).to have_css(".button", text: "View your scores and certificates")
     end
 
     scenario "display scores off" do
-      skip "Rebuilding student dashboard: scores not back yet"
-      SeasonToggles.display_scores="off"
+      SeasonToggles.display_scores_off!
+
       visit path
 
-      expect(page).not_to have_button("Scores")
-      expect(page).not_to have_css("div.content div#scores")
+      expect(page).not_to have_content("Scores and Certificates")
+      expect(page).not_to have_css(".button", text: "View your scores and certificates")
     end
   end
 
@@ -43,8 +42,9 @@ RSpec.feature "Toggling display of scores" do
     end
 
     scenario "display scores on" do
-      skip "Rebuilding student dashboard: scores not back yet"
-      SeasonToggles.display_scores="on"
+      skip "Rebuilding mentor dashboard: scores not back yet"
+      SeasonToggles.display_scores_on!
+
       visit path
 
       expect(page).to have_button("Scores")
@@ -52,8 +52,9 @@ RSpec.feature "Toggling display of scores" do
     end
 
     scenario "display scores off" do
-      skip "Rebuilding student dashboard: scores not back yet"
-      SeasonToggles.display_scores="off"
+      skip "Rebuilding mentor dashboard: scores not back yet"
+      SeasonToggles.display_scores_off!
+
       visit path
 
       expect(page).not_to have_button("Scores")

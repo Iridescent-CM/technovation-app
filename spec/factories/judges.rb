@@ -13,6 +13,10 @@ FactoryBot.define do
       mentor false
     end
 
+    trait :onboarded do
+      onboarded true
+    end
+
     trait :virtual do
     end
 
@@ -38,6 +42,9 @@ FactoryBot.define do
           state_province: "IL",
           country: "US",
         }
+
+        j.training_completed_without_save!
+        j.survey_completed_without_save!
       end
 
       act_attrs = FactoryBot.attributes_for(:account).merge(attrs)
@@ -58,6 +65,10 @@ FactoryBot.define do
 
       if e.mentor
         j.account.build_mentor_profile(FactoryBot.attributes_for(:mentor))
+      end
+
+      if e.onboarded && !j.can_be_marked_onboarded?
+        raise "Judge should be onboarded but is not. Fix Factory"
       end
     end
 

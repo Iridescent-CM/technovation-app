@@ -66,6 +66,7 @@ class JudgeProfile < ActiveRecord::Base
     required: false
 
   has_many :submission_scores, -> { current }, dependent: :destroy
+  has_many :scores, -> { current }, class_name: "SubmissionScore"
 
   has_and_belongs_to_many :regional_pitch_events, -> { current }
   has_and_belongs_to_many :events, -> { current },
@@ -155,6 +156,14 @@ class JudgeProfile < ActiveRecord::Base
 
   def training_completed?
     !!completed_training_at
+  end
+
+  def training_completed_without_save!
+    self.completed_training_at = Time.current
+  end
+
+  def survey_completed_without_save!
+    self.survey_completed = true
   end
 
   def used_global_invitation?
