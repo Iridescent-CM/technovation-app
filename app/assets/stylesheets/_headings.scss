@@ -85,12 +85,20 @@ h2 {
 h3 {
   font-size: 1.6rem;
 
+  &.heading--page {
+    margin: 1rem 0;
+    padding: 0 1rem;
+    font-size: 1.6rem;
+  }
+
+  &.heading--info,
   &.info-heading {
     margin: 1rem 0;
     font-size: 1rem;
   }
 }
 
+.heading--info,
 .info-heading {
   h3 {
     margin: 1rem 0;
