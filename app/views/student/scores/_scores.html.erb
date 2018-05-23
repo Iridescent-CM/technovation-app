@@ -1,5 +1,5 @@
 <div class="grid">
-  <% scores.each do |score| %>
+  <% scores.sort_by(&:total).reverse.each do |score| %>
     <% globes = %w{🌍 🌎 🌏}.shuffle %>
 
     <div class="grid__col-6">
