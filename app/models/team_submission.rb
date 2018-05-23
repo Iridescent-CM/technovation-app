@@ -491,13 +491,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def clear_judge_opened_details!
-    update({
-      judge_opened_at: nil,
-      judge_opened_id: nil,
-    })
-  end
-
   def total_technical_checklist
     if technical_checklist.present?
       total_technical_coding +

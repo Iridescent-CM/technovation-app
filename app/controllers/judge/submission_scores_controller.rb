@@ -40,11 +40,6 @@ module Judge
       if @current_team_submission.technical_checklist.blank?
         @current_team_submission.build_technical_checklist
       end
-
-      @submission_score.team_submission.update_attributes({
-        judge_opened_id: current_judge.id,
-        judge_opened_at: Time.current,
-      })
     end
 
     def update

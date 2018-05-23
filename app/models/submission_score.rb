@@ -9,12 +9,6 @@ class SubmissionScore < ActiveRecord::Base
   SENIOR_LOW_SCORE_THRESHOLD = 23
   JUNIOR_LOW_SCORE_THRESHOLD = 19
 
-  before_destroy -> {
-    if incomplete?
-      team_submission.clear_judge_opened_details!
-    end
-  }
-
   after_commit -> {
     team_submission.update_average_scores
 
@@ -263,7 +257,6 @@ class SubmissionScore < ActiveRecord::Base
 
   def complete!
     update(completed_at: Time.current)
-    team_submission.clear_judge_opened_details!
   end
 
   def approved?
