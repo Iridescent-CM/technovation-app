@@ -4,14 +4,25 @@ class Questions
 
   attr_reader :judge, :submission, :questions, :submission_score
 
-  def initialize(judge, submission)
+  def initialize(judge, submission, options = {})
     @judge = judge
     @submission = submission
+    @submission_score = options[:score]
     @questions = init_questions
+  end
+
+  def self.for(score)
+    new(score.judge_profile, score.team_submission, score: score)
   end
 
   def each(&block)
     @questions.each { |q| block.call(q) }
+  end
+
+  def in_section(section_name)
+    @questions.select do |question|
+      String(question.section) === String(section_name)
+    end
   end
 
   def as_json(*args, &block)
@@ -128,7 +139,7 @@ class Questions
         field: :app_functional,
         idx: 1,
         text: "The app appears to be fully functional " +
-              "and has no noticeable bugs",
+              "and has no noticeable bugs.",
         worth: 5,
         score: submission_score.app_functional,
       ),
@@ -272,7 +283,7 @@ class Questions
   end
 
   def init_db_score
-    SubmissionScore.find_or_create_by!({
+    @submission_score ||= SubmissionScore.find_or_create_by!({
       team_submission: submission,
       judge_profile: judge,
       seasons: [Season.current.year],

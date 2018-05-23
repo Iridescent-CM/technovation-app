@@ -1,20 +1,31 @@
-<h3 id="header">View your Scores and Certificates</h3>
+<h3 class="heading--page">View your Scores and Certificates</h3>
 
 <div class="grid judging-banner">
-  <div class="grid__col-6 left">
-    <h3 class="content-heading grid__cell" id="banner-header">
-      How judging works
+  <div class="grid__col-6">
+    <h3 class="judging-banner__header">
+      Scores Explained
     </h3>
+
+    <dl>
+      <dt>1: Incomplete</dt>
+      <dd>The work is missing.</dd>
+
+      <dt>2: Needs Improvement.</dt>
+      <dd>The work needs major improvement.</dd>
+    </dl>
   </div>
 
   <div class="grid__col-6">
-    <ol class="grid__cell right">
-      <li><b>Incomplete.</b> The work is missing.</li>
-      <li><b>Needs Improvement.</b> The work needs major improvement.</li>
-      <li><b>Acceptable.</b> The work needs minor improvement.</li>
-      <li><b>Good.</b> The work is of good quality.</li>
-      <li><b>Excellent.</b> The work is of excellent quality.</li>
-    </ol>
+    <dl>
+      <dt>3: Acceptable.</dt>
+      <dd>The work needs minor improvement.</dd>
+
+      <dt>4: Good.</dt>
+      <dd>The work is of good quality.</dd>
+
+      <dt>5: Excellent.</dt>
+      <dd>The work is of excellent quality.</dd>
+    </dl>
   </div>
 </div>
 
@@ -27,12 +38,14 @@
       >Quarterfinal</button>
     </li>
 
-    <li class="tab-link">
-      <button
-        class="tab-button"
-        data-tab-id="semifinal"
-      >Semifinal</button>
-    </li>
+    <% if @semifinals_scores.any? %>
+      <li class="tab-link">
+        <button
+          class="tab-button"
+          data-tab-id="semifinal"
+        >Semifinal</button>
+      </li>
+    <% end %>
 
     <li class="tab-link">
       <button
@@ -57,7 +70,6 @@
       <% if @semifinals_scores.any? %>
         <%= render "student/scores/scores",
           scores: @semifinals_scores %>
-
       <% end %>
     </div>
 

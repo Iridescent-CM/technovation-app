@@ -286,6 +286,18 @@ class SubmissionScore < ActiveRecord::Base
             overall_impression_total
   end
 
+  def total_for_question(question)
+    public_send(question.field)
+  end
+
+  def total_for_section(section_name)
+    public_send("#{section_name}_total")
+  end
+
+  def comment_for_section(section_name)
+    public_send("#{section_name}_comment")
+  end
+
   def raw_technical_total
     technical_total - total_technical_checklist
   end
@@ -310,6 +322,10 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.total_technical_checklist
   end
 
+  def total_code_checklist
+    total_technical_checklist
+  end
+
   def entrepreneurship_total
     return 0 if junior_team_division?
 
@@ -332,6 +348,10 @@ class SubmissionScore < ActiveRecord::Base
         cohesive_story +
           solution_originality +
             solution_stands_out
+  end
+
+  def overall_total
+    overall_impression_total
   end
 
 
