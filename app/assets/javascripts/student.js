@@ -14,5 +14,6 @@ document.addEventListener('turbolinks:load', function () {
   $( ".accordion" ).accordion({
     collapsible: true,
     active: false,
+    heightStyle: "content",
   });
 });
