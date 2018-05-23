@@ -101,7 +101,7 @@ class Questions
 
   private
   def init_questions
-    @submission_score = init_db_score
+    @submission_score ||= init_db_score
 
     [
       Question.new(
