@@ -4,19 +4,20 @@
 
     <div class="grid__col-6">
       <div class="score-title">
-        <div class="score-title__judge">
-          <%= globes.pop %>
-          Score from <strong><%= score.judge_profile.address_details %></strong>
-          <%= globes.pop %>
+        <div class="score-title__total">
+          <%= score.total %><sub>/<%= score.total_possible %></sub>
         </div>
 
-        <div class="score-title__total">
-          <%= score.total %>
+        <div class="score-title__judge">
+          from<br />
+          <%= globes.pop %>
+          <strong><%= score.judge_profile.address_details %></strong>
+          <%= globes.pop %>
         </div>
       </div>
 
       <dl class="accordion">
-        <dt>Ideation: <%= score.ideation_total %></dt>
+        <dt>Ideation <span><%= score.ideation_total %></span></dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -24,7 +25,7 @@
             section: :ideation %>
         </dd>
 
-        <dt>Technical: <%= score.technical_total %></dt>
+        <dt>Technical <span><%= score.technical_total %></span></dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -33,7 +34,7 @@
         </dd>
 
         <% if current_team.senior? %>
-          <dt>Entrepreneurship: <%= score.entrepreneurship_total %></dt>
+          <dt>Entrepreneurship <span><%= score.entrepreneurship_total %></span></dt>
 
           <dd>
             <%= render "student/scores/section",
@@ -42,7 +43,7 @@
           </dd>
         <% end %>
 
-        <dt>Pitch: <%= score.pitch_total %></dt>
+        <dt>Pitch <span><%= score.pitch_total %></span></dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -50,7 +51,7 @@
             section: :pitch %>
         </dd>
 
-        <dt>Overall Impression: <%= score.overall_impression_total %></dt>
+        <dt>Overall Impression <span><%= score.overall_impression_total %></span></dt>
 
         <dd>
           <%= render "student/scores/section",

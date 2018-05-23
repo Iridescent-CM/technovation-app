@@ -21,15 +21,19 @@
     color: white;
     font-size: 2rem;
     padding: 1rem;
+    text-align: center;
 
     .score-title__total {
-      float: right;
       font-weight: bold;
       font-size: 3rem;
+
+      sub {
+        font-size: 1.3rem;
+      }
     }
 
     .score-title__judge {
-      text-align: center;
+      padding: 1rem 0 0;
       font-size: 1.2rem;
     }
   }
@@ -79,6 +83,15 @@
         font-size: 2rem;
         padding: 0.5rem;
         transition: background-color 0.2s, opacity 0.2s, color 0.2s;
+
+        display: flex;
+        justify-content: space-between;
+
+        text-transform: uppercase;
+
+        .ui-accordion-header-icon {
+          display: none;
+        }
 
         &:hover,
         &.ui-accordion-header-active {
