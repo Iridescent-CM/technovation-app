@@ -12,24 +12,7 @@
 @import "sortable_list";
 @import "review_submission";
 @import "tabs";
-
-.judging-banner {
-  background-color: $antiqua;
-  color: #ECECEC;
-  width: auto;
-  padding: 25px;
-  margin-top: 25px;
-  margin-bottom: 25px
-}
-
-#header {
-  margin: 25px;
-}
-
-#banner-header {
-  margin: 50px;
-  font-size: 3rem;
-}
+@import "scores";
 
 label {
   cursor: pointer;
@@ -44,94 +27,4 @@ label {
   transition: color 0.2s ease;
   width: auto;
   margin: 25px;
-}
-
-.score-title {
-  background: $shamrock;
-  border-bottom: 1px solid $shamrock-mid;
-  border-radius: 7px 7px 0 0;
-  color: white;
-  font-size: 2rem;
-  width: auto;
-  height: 100px;
-  padding: 25px;
-
-  .score-title-left {
-    float: left;
-    font-size: 2rem;
-    text-transform: capitalize;
-  }
-
-  .score-title-right {
-    float: right;
-    font-weight: bold;
-    font-size: 3rem;
-    text-align: center;
-  }
-}
-
-.accordion,
-.accordion dt,
-.accordion dd, {
-  margin: 0;
-  padding: 0;
-}
-
-.accordion {
-  dt {
-    border-bottom: 1px solid $shamrock-mid;
-    border-radius: 7px 7px 0 0;
-    color: $shamrock-mid;
-    font-size: 2rem;
-
-    &:hover {
-      background-color: $shamrock-mid;
-      border-radius: 0;
-      opacity: 0.5;
-      color: white;
-    }
-  }
-
-  dd {
-    border: 1px solid $shamrock;
-    border-top: none;
-    border-radius: 0 0 7px 7px;
-    padding: 1em;
-  }
-}
-
-.score-tab {
-  background: white;
-  border: 3px solid $shamrock;
-  padding: 0.05rem;
-}
-
-.certificates-btn {
-  display: block;
-  background-color: $antiqua;
-  color: white;
-  padding: 1rem 2rem;
-  margin: 0.15rem auto;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1px solid $antiqua;
-  border-radius: 10rem;
-  transition: background-color 0.2s, color 0.2s;
-
-  &:hover {
-    background: white;
-    color: $antiqua;
-  }
-}
-
-#student-scores-tabs {
-  .ui-accordion-header {
-    outline: none;
-  }
-
-  #certificates {
-    text-align: center;
-    padding: 1rem 0;
-  }
 }

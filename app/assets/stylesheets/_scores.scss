@@ -1,0 +1,128 @@
+.judging-banner {
+  background-color: $antiqua;
+  color: #ECECEC;
+  width: auto;
+  margin-bottom: 2rem;
+}
+
+#header {
+  margin: 2rem;
+}
+
+#banner-header {
+  font-size: 2rem;
+}
+
+#student-scores-tabs {
+  .score-title {
+    background: $shamrock;
+    border-bottom: 1px solid $shamrock-mid;
+    border-radius: 7px 7px 0 0;
+    color: white;
+    font-size: 2rem;
+    padding: 1rem;
+
+    .score-title__total {
+      float: right;
+      font-weight: bold;
+      font-size: 3rem;
+    }
+
+    .score-title__judge {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+
+  .score-section-table {
+    border-collapse: collapse;
+    padding: 0;
+    margin: 1rem;
+
+    td {
+      border: 1px solid black;
+      padding: 0.5rem;
+
+      &.empty {
+        border: none;
+      }
+
+      &:first-child {
+        font-weight: bold;
+      }
+
+      &:last-child {
+        font-weight: normal;
+        padding: 0.5rem 1rem;
+        text-align: right;
+      }
+    }
+  }
+
+  .score-tab {
+    background: white;
+    padding: 0.05rem;
+    min-height: 500px;
+
+    .accordion,
+    .accordion > dt,
+    .accordion > dd, {
+      margin: 0;
+      padding: 0;
+    }
+
+    .accordion {
+      > dt {
+        border-bottom: 1px solid $shamrock-mid;
+        border-radius: 7px 7px 0 0;
+        color: $shamrock-mid;
+        font-size: 2rem;
+        padding: 0.5rem;
+        transition: background-color 0.2s, opacity 0.2s, color 0.2s;
+
+        &:hover,
+        &.ui-accordion-header-active {
+          background-color: $shamrock-mid;
+          border-radius: 0;
+          opacity: 0.5;
+          color: white;
+        }
+      }
+
+      > dd {
+        border: 1px solid $shamrock;
+        border-top: none;
+        border-radius: 0 0 7px 7px;
+        padding: 1em;
+      }
+    }
+  }
+
+  .certificates-btn {
+    display: block;
+    background-color: $antiqua;
+    color: white;
+    padding: 1rem 2rem;
+    margin: 0.15rem auto;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid $antiqua;
+    border-radius: 10rem;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      background: white;
+      color: $antiqua;
+    }
+  }
+
+  .ui-accordion-header {
+    outline: none;
+  }
+
+  #certificates {
+    text-align: center;
+    padding: 1rem 0;
+  }
+}
