@@ -139,3 +139,64 @@
     padding: 1rem 0;
   }
 }
+
+.mentor-scores {
+  img {
+    float: right;
+    max-width: 250px;
+  }
+
+  h3 {
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+  }
+}
+
+.score_breakdown {
+  margin: 0 0 1rem;
+
+  h6 {
+    font-size: 1.4rem;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.admin-score-header,
+.admin-score-sections {
+  max-width: 640px;
+  margin: 1rem auto;
+
+  h3,
+  h4,
+  h5 {
+    width: 80%;
+    margin: 1rem auto 0.5rem;
+  }
+
+  table {
+    width: 80%;
+    margin: 1rem auto;
+    border-collapse: collapse;
+
+    td {
+      padding: 0.5rem;
+      border: 1px solid black;
+
+      &:last-child {
+        font-weight: bold;
+        text-align: right;
+        width: 50px;
+      }
+    }
+  }
+
+  p + h3 {
+    margin-top: 4rem;
+  }
+}
+
+.admin-score-actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}

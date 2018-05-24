@@ -36,6 +36,7 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 @import "submission_progress";
 @import "screenshots";
 @import "season_schedule";
+@import "scores";
 
 // font
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
@@ -82,40 +83,6 @@ nav {
     overflow: hidden;
     white-space: nowrap;
   }
-}
-
-.admin-score-header,
-.admin-score-sections {
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    td {
-      padding: 0.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
-      &:first-child {
-        width: 100%;
-      }
-    }
-  }
-
-  h3,
-  h4 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  h3 {
-    margin: 1rem 0 0;
-    font-size: 1.2rem;
-  }
-}
-
-.admin-score-actions {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
 }
 
 #admin-scores-app {

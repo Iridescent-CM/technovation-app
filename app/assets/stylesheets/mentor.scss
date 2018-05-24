@@ -1,4 +1,5 @@
 @import "application";
+@import "tables";
 @import "dropzone/dropzone";
 @import "dragula";
 @import "jquery-ui/accordion";
@@ -11,6 +12,7 @@
 @import "sortable_list";
 @import "submission_progress";
 @import "review_submission";
+@import "scores";
 
 .show-hide--input {
   position: relative;
