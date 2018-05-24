@@ -32,4 +32,26 @@ RSpec.describe "/admin/judges", type: :request do
       expect(csv).not_to include("no_findy-email@judge.com")
     end
   end
+
+  describe "GET judges/index.html" do
+    # Regression - first load of page without params, saved searches exist
+    it "is okay on HTML with empty params" do
+      admin = FactoryBot.create(:admin)
+      admin.saved_searches.create!(
+        param_root: "judges_grid",
+        name: "testing 123",
+        search_string: 'name_email="judgey"',
+      )
+
+      post '/signins', params: {
+        account: {
+          email: admin.email,
+          password: "secret1234",
+        },
+      }
+
+      get '/admin/judges'
+      expect(response).to be_ok
+    end
+  end
 end

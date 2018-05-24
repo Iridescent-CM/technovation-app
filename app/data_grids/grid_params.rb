@@ -4,7 +4,7 @@ module GridParams
     round = :quarterfinals if round.to_sym == :off
     is_admin = options.fetch(:admin)
 
-    (grid_params ||= {}).merge(
+    grid_params.merge(
       admin: is_admin,
       allow_state_search: is_admin || profile.country != "US",
 

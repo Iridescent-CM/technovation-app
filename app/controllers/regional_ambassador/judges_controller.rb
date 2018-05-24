@@ -20,6 +20,7 @@ module RegionalAmbassador
 
     private
     def grid_params
+      params[:judges_grid] ||= {}
       grid = GridParams.for(params[:judges_grid], current_ambassador, admin: false)
       grid.merge(column_names: detect_extra_columns(grid))
     end

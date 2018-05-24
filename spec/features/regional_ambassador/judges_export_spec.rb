@@ -35,4 +35,26 @@ RSpec.describe "/regional_ambassador/judges", type: :request do
       expect(csv).not_to include("no_findy-region@judge.com")
     end
   end
+
+  describe "GET judges/index.html" do
+    # Regression - first load of page without params, saved searches exist
+    it "is okay on HTML with empty params" do
+      ra = FactoryBot.create(:ra, :approved)
+      ra.saved_searches.create!(
+        param_root: "judges_grid",
+        name: "testing 123",
+        search_string: 'name_email="judgey"',
+      )
+
+      post '/signins', params: {
+        account: {
+          email: ra.email,
+          password: "secret1234",
+        },
+      }
+
+      get '/regional_ambassador/judges'
+      expect(response).to be_ok
+    end
+  end
 end
