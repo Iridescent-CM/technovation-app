@@ -78,7 +78,14 @@ class VersionReleasing
   end
 
   def current_hotfix
-    @current_hotfix ||= @current_version.split('HOTFIX.').last.to_i
+    return @current_hotfix if defined?(@current_hotfix)
+    split_by_hotfix = @current_version.split('HOTFIX.')
+
+    if split_by_hotfix.size > 1
+      @current_hotfix = split_by_hotfix.last.to_i
+    else
+      @current_hotfix = 0
+    end
   end
 
   def new_version
