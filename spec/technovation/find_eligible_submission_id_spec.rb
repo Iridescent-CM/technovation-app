@@ -44,21 +44,25 @@ RSpec.describe FindEligibleSubmissionId do
 
       (FindEligibleSubmissionId::SCORE_COUNT_LIMIT - 1).times do
         j = FactoryBot.create(:judge)
-        SubmissionScore.create!(
-          judge_profile_id: j.id,
-          team_submission_id: sub.id,
-          completed_at: Time.current,
+        FactoryBot.create(:score, :complete,
+          team_submission: sub,
+          judge_profile: j
         )
       end
 
       judge = FactoryBot.create(:judge)
+
+      FactoryBot.create(:score, :incomplete,
+        team_submission: sub,
+        judge_profile: judge
+      )
+
       expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
 
       judge2 = FactoryBot.create(:judge)
-      SubmissionScore.create!(
-        judge_profile_id: judge2.id,
-        team_submission_id: sub.id,
-        completed_at: Time.current,
+      FactoryBot.create(:score, :complete,
+        team_submission: sub,
+        judge_profile: judge2
       )
 
       judge3 = FactoryBot.create(:judge)

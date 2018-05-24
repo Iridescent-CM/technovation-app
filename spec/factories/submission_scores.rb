@@ -9,6 +9,10 @@ FactoryBot.define do
       completed_at Time.current
     end
 
+    trait :incomplete do
+      completed_at nil
+    end
+
     trait :senior do
       association(:team_submission, factory: [:team_submission, :complete, :senior])
     end

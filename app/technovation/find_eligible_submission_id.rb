@@ -1,5 +1,5 @@
 module FindEligibleSubmissionId
-  SCORE_COUNT_LIMIT = 3
+  SCORE_COUNT_LIMIT = 9
 
   class << self
     def call(judge_profile, options = {})
