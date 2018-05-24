@@ -53,35 +53,51 @@
     </div>
   </div>
 
-  <div
-    class="
-      grid__col-md-6
-      grid__col-sm-9
-      grid__col--bleed-y
-      col--sticky-parent
-    "
-  >
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <%= render 'mentor/dashboards/current_actions' %>
+  <% if SeasonToggles.display_scores? %>
+    <div
+      class="
+        grid__col-sm-9
+        grid__col--bleed-y
+        col--sticky-parent
+      "
+    >
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <%= render 'mentor/dashboards/onboarded/scores' %>
+        </div>
       </div>
     </div>
-  </div>
+  <% else %>
+    <div
+      class="
+        grid__col-md-6
+        grid__col-sm-9
+        grid__col--bleed-y
+        col--sticky-parent
+      "
+    >
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <%= render 'mentor/dashboards/current_actions' %>
+        </div>
+      </div>
+    </div>
 
-  <div
-    class="
-      grid__col-md-3
-      grid__col--bleed
-      dashboard-sidebar
-      col--sticky-parent
-    "
-  >
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <%= render "mentor/dashboards/info_sidebar" %>
+    <div
+      class="
+        grid__col-md-3
+        grid__col--bleed
+        dashboard-sidebar
+        col--sticky-parent
+      "
+    >
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <%= render "mentor/dashboards/info_sidebar" %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <%= render 'program_survey_modal' %>

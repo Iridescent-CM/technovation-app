@@ -37,28 +37,19 @@ RSpec.feature "Toggling display of scores" do
 
     before do
       TeamRosterManaging.add(sub.team, user)
-
       sign_in(user)
     end
 
     scenario "display scores on" do
-      skip "Rebuilding mentor dashboard: scores not back yet"
       SeasonToggles.display_scores_on!
-
       visit path
-
-      expect(page).to have_button("Scores")
-      expect(page).to have_css("div.content div#scores")
+      expect(page).to have_css("div.mentor-scores")
     end
 
     scenario "display scores off" do
-      skip "Rebuilding mentor dashboard: scores not back yet"
       SeasonToggles.display_scores_off!
-
       visit path
-
-      expect(page).not_to have_button("Scores")
-      expect(page).not_to have_css("div.content div#scores")
+      expect(page).not_to have_css("div.mentor-scores")
     end
   end
 end

@@ -1,13 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Mentors view scores" do
-  before do
-    SeasonToggles.display_scores="yes"
-  end
+  before { SeasonToggles.display_scores_on! }
 
   scenario "view QF scores" do
-    skip "Rebuilding mentor dashboard, scores not back yet"
-
     team = FactoryBot.create(:team)
     mentor = FactoryBot.create(:mentor)
 
@@ -32,8 +28,6 @@ RSpec.feature "Mentors view scores" do
   end
 
   scenario "view SF scores" do
-    skip "Rebuilding mentor dashboard, scores not back yet"
-
     team = FactoryBot.create(:team)
     mentor = FactoryBot.create(:mentor)
 

@@ -3,10 +3,10 @@ module Mentor
     def show
       submission_ids = TeamSubmission.where(team_id: current_mentor.teams.pluck(:id))
       @score = SubmissionScore.where(team_submission_id: submission_ids).find(params[:id])
+      @team = @score.team
+      @team_submission = @team.submission
 
-      @division = @score.team_submission.team.division
-
-      render 'student/scores/show'
+      render 'admin/scores/show'
     end
   end
 end
