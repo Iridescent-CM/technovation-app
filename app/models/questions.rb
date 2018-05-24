@@ -25,6 +25,22 @@ class Questions
     end
   end
 
+  def sections
+    collection = %w{
+      ideation
+      technical
+    }
+
+    if submission.senior_division?
+      collection << 'entrepreneurship'
+    end
+
+    collection += %w{
+      pitch
+      overall
+    }
+  end
+
   def as_json(*args, &block)
     {
       score: {
