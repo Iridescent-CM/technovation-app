@@ -11,6 +11,9 @@ FactoryBot.define do
       onboarded false
       virtual true
       mentor false
+      city "Chicago"
+      state_province "IL"
+      country "US"
     end
 
     trait :onboarded do
@@ -33,16 +36,26 @@ FactoryBot.define do
       end
     end
 
+    trait :los_angeles do
+      city "Los Angeles"
+      state_province "CA"
+      country "US"
+    end
+
+    trait :chicago do
+      city "Chicago"
+      state_province "IL"
+      country "US"
+    end
+
     before(:create) do |j, e|
-      attrs = {}
+      attrs = {
+        city: e.city,
+        state_province: e.state_province,
+        country: e.country,
+      }
 
       if e.onboarded
-        attrs = {
-          city: "Chicago",
-          state_province: "IL",
-          country: "US",
-        }
-
         j.training_completed_without_save!
         j.survey_completed_without_save!
       end
