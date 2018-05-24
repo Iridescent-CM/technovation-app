@@ -35,7 +35,7 @@ module RegionalAmbassador
           end
         ),
         current_account: current_account,
-        current_judging_round: round,
+        current_judging_round: String(round),
       )
 
       grid.merge(
