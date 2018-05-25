@@ -5,7 +5,15 @@
 <div class="panel">
   <header class="admin-score-header">
     <h3><span>Team</span> <%= @score.team_name %></h3>
-    <h3><span>Submission</span> <%= link_to @score.team_submission.app_name, app_path(@score.team_submission) %></h3>
+
+    <h3>
+      <span>Submission</span>
+      <%= link_to @score.team_submission.app_name,
+        app_path(@score.team_submission),
+        data: { turbolinks: false }
+      %>
+    </h3>
+
     <h4><span>Score</span> <%= @score.total %> / <%= @score.total_possible %></h4>
 
     <% if is_privileged %>
