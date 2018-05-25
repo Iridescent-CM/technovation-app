@@ -12,7 +12,7 @@
       :to="{ name: 'qf-scores' }"
       :class="$route.name === 'qf-scores' ? 'active' : ''"
     >
-      Quarterfinals
+      Review your Quarterfinals Scores
     </router-link>
   </nav>
 </template>

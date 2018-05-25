@@ -23,6 +23,10 @@
         <small>Score given</small>
         {{ score.total }} / {{ score.total_possible }}
       </div>
+
+      <div class="grid__col-2 grid__col--bleed-x">
+        <a :href="`/judge/scores/${score.id}`">View score</a>
+      </div>
     </div>
   </div>
 </template>

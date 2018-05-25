@@ -63,6 +63,11 @@ module Judge
       end
     end
 
+    def show
+      @score = current_judge.scores.find(params.fetch(:id))
+      render 'admin/scores/show'
+    end
+
     def update
       score = current_judge.submission_scores.find(params[:id])
 
