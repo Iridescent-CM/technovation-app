@@ -8,16 +8,16 @@
     <dt>Event:</dt>
     <dd><%= @submission.team.event.name %></dd>
 
+    <% if @submission.semifinalist? %>
+      <dt>Semifinals average:</dt>
+      <dd><%= @submission.semifinals_average_score %></dd>
+    <% end %>
+
     <dt>Quarterfinals average:</dt>
     <dd>
       <%= @submission.quarterfinals_average_score %> /
       <%= @submission.senior_division? ? 100 : 80 %>
     </dd>
-
-    <% if @submission.semifinalist? %>
-      <dt>Semifinals:</dt>
-      <dd><%= @submission.semifinals_average_score %></dd>
-    <% end %>
 
     <% if @submission.submission_scores.unofficial.any? %>
       <dt>Quarterfinals unofficial:</dt>
@@ -32,41 +32,34 @@
     for their code checklist.
   </p>
 
-  <h5>Complete scores</h5>
+  <%= render 'regional_ambassador/score_details/scores_table',
+    scores: @submission.scores,
+    round: :semifinals,
+    status: :complete
+  %>
 
-  <table>
-    <tbody>
-      <% @submission.scores.complete.each do |score| %>
-        <tr>
-          <td style="width: 100px;"><%= score.total %> / <%= score.total_possible %></td>
-          <td style="width: 200px;">
-            <%= link_to score.judge_name,
-              [current_scope, :participant, id: score.judge_profile.account_id] %>
-          </td>
-          <td style="width: 100px;"><%= score.official? ? "official" : "unofficial" %></td>
-          <td><%= link_to 'View score', [current_scope, :score, id: score.id] %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render 'regional_ambassador/score_details/scores_table',
+    scores: @submission.scores,
+    round: :semifinals,
+    status: :incomplete
+  %>
 
-  <h5>Scores still in progress</h5>
+  <%= render 'regional_ambassador/score_details/scores_table',
+    scores: @submission.scores,
+    round: :quarterfinals,
+    status: :complete
+  %>
 
-  <table>
-    <tbody>
-      <% @submission.scores.incomplete.each do |score| %>
-        <tr>
-          <td style="width: 100px;"><%= score.total %> / <%= score.total_possible %></td>
-          <td style="width: 200px;">
-            <%= link_to score.judge_name,
-              [current_scope, :participant, id: score.judge_profile.account_id] %>
-          </td>
-          <td style="width: 100px;"><%= score.official? ? "official" : "unofficial" %></td>
-          <td><%= link_to 'View score', [current_scope, :score, id: score.id] %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render 'regional_ambassador/score_details/scores_table',
+    scores: @submission.scores,
+    round: :quarterfinals,
+    status: :incomplete
+  %>
 
-  <p><%= link_to 'Back to scores', [current_scope, :scores], class: "button button--small" %></p>
+  <p>
+    <%= link_to 'Back to scores',
+      [current_scope, :scores],
+      data: { turbolinks: false },
+      class: "button button--small" %>
+  </p>
 </div>

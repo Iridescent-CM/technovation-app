@@ -1,0 +1,26 @@
+<%
+  status = String(status)
+  round = String(round)
+%>
+
+<h5><%= status.titlecase %> <%= round.titlecase %> scores</h5>
+
+<% if scores.public_send(round).public_send(status).any? %>
+  <table>
+    <tbody>
+      <% scores.public_send(round).public_send(status).each do |score| %>
+        <tr>
+          <td style="width: 100px;"><%= score.total %> / <%= score.total_possible %></td>
+          <td style="width: 200px;">
+            <%= link_to score.judge_name,
+              [current_scope, :participant, id: score.judge_profile.account_id] %>
+          </td>
+          <td style="width: 100px;"><%= score.official? ? "official" : "unofficial" %></td>
+          <td><%= link_to 'View score', [current_scope, :score, id: score.id] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  — No <%= status %> <%= round %> scores —
+<% end %>
