@@ -25,7 +25,10 @@
       </div>
 
       <div class="grid__col-2 grid__col--bleed-x">
-        <a :href="`/judge/scores/${score.id}`">View score</a>
+        <a
+          data-turbolinks="false"
+          :href="`/judge/scores/${score.id}`"
+        >View score</a>
       </div>
     </div>
   </div>
