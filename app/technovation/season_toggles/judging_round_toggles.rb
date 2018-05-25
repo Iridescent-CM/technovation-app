@@ -14,6 +14,18 @@ class SeasonToggles
                            %w{off}
 
     module ClassMethods
+      def sf_opening_date
+        Date.new(Season.current.year, 6, 1)
+      end
+
+      def live_judge_qf_deadline
+        DateTime.new(Season.current.year, 5, 22, 0, 0, 0)
+      end
+
+      def virtual_judge_qf_deadline
+        DateTime.new(Season.current.year, 5, 20, 0, 0, 0)
+      end
+
       def judging_round=(value)
         store.set(:judging_round, with_judging_round_validation(value))
       end
@@ -42,6 +54,28 @@ class SeasonToggles
           "June 17<sup>th</sup> (US/Pacific time)".html_safe
         else
           "- judging is closed -"
+        end
+      end
+
+      def between_rounds?(judge)
+        return false if judging_enabled?
+
+        if LiveEventJudgingEnabled.(judge)
+          Time.current > live_judge_qf_deadline &&
+            Time.current < sf_opening_date
+        else
+          Time.current > virtual_judge_qf_deadline &&
+            Time.current < sf_opening_date
+        end
+      end
+
+      def quarterfinals_or_earlier?(judge)
+        return true if quarterfinals?
+
+        if LiveEventJudgingEnabled.(judge)
+          Time.current <= live_judge_qf_deadline
+        else
+          Time.current <= virtual_judge_qf_deadline
         end
       end
 
