@@ -11,7 +11,10 @@
     >
       <div class="grid__col-4 grid__col--bleed-x">
         <small>Submission name</small>
-        {{ score.submission_name }}
+        <a
+          data-turbolinks="false"
+          :href="score.submission_url"
+        >{{ score.submission_name }}</a>
       </div>
 
       <div class="grid__col-4 grid__col--bleed-x">

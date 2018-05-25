@@ -5,14 +5,14 @@
 <div class="panel">
   <header class="admin-score-header">
     <h3><span>Team</span> <%= @score.team_name %></h3>
-    <h3><span>Submission</span> <%= @score.team_submission.app_name %></h3>
+    <h3><span>Submission</span> <%= link_to @score.team_submission.app_name, app_path(@score.team_submission) %></h3>
     <h4><span>Score</span> <%= @score.total %> / <%= @score.total_possible %></h4>
 
     <% if is_privileged %>
       <h4><span>Judge</span> <%= @score.judge_name %></h4>
     <% end %>
 
-    <h5><span>From</span> <%= @score.judge_profile.address_details %></h5>
+    <h5><span>Score comes from</span> <%= @score.judge_profile.address_details %></h5>
   </header>
 
   <% questions = Questions.for(@score) %>
