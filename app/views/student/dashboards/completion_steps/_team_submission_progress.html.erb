@@ -5,11 +5,10 @@
     submission: current_team.submission %>
 <% end %>
 
-<% if !SeasonToggles.team_submissions_editable? && current_team.live_event? %>
+<% if SeasonToggles.pitch_presentation_needed?(current_team) %>
   <%= render 'team_submissions/pieces/pitch_presentation',
     team: current_team,
     submission: current_team.submission %>
-
 <% end %>
 
 <% if !SeasonToggles.team_submissions_editable? && current_team.submission.complete? %>

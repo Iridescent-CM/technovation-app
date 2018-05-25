@@ -79,6 +79,12 @@ class SeasonToggles
         end
       end
 
+      def pitch_presentation_needed?(team)
+        Time.current <= live_judge_qf_deadline &&
+          !team_submissions_editable? &&
+            team.live_event?
+      end
+
       def set_judging_round(name)
         self.judging_round = name
       end
