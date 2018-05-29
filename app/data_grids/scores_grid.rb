@@ -33,6 +33,18 @@ class ScoresGrid
     team_submission.app_name
   end
 
+  column :submission_quarterfinals_score do
+    team_submission.average_quarterfinals_score
+  end
+
+  column :submission_unofficial_score do
+    team_submission.unofficial_average_score
+  end
+
+  column :submission_semifinals_score do
+    team_submission.average_semifinals_score
+  end
+
   column :complete do
     complete? ? "yes" : "no"
   end
