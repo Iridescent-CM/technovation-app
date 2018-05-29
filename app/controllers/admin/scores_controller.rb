@@ -2,10 +2,18 @@ module Admin
   class ScoresController < AdminController
     include DatagridController
 
+    helper_method :grid_params
+
     use_datagrid(
       with: ScoredSubmissionsGrid,
       to_csv: ScoresGrid
     )
+
+    before_action -> {
+      unless request.xhr?
+        @scores = SubmissionScore.current.public_send(grid_params[:round])
+      end
+    }, only: :index
 
     def show
       @score = SubmissionScore.find(params.fetch(:id))
@@ -20,15 +28,17 @@ module Admin
 
     private
     def grid_params
+      round = SeasonToggles.current_judging_round(full_name: true).to_s
+
+      if round === 'off'
+        round = 'quarterfinals'
+      end
+
       if request.xhr?
-        {}
+        {
+          round: params[:scored_submissions_grid].fetch(:round) { round },
+        }
       else
-        round = SeasonToggles.current_judging_round(full_name: true).to_s
-
-        if round === 'off'
-          round = 'quarterfinals'
-        end
-
         grid = (params[:scored_submissions_grid] ||= {}).merge(
           admin: true,
           country: Array(params[:scored_submissions_grid][:country]),

@@ -21,4 +21,4 @@
   model_name: "submission",
   scope: :admin,
   verb: "scored",
-  extra_count: "#{number_with_delimiter(SubmissionScore.current_round.count)} total scores" %>
+  extra_count: "Exports #{number_with_delimiter(@scores.count)} #{grid_params[:round]} scores" %>

@@ -5,11 +5,15 @@ class ScoresGrid
 
   self.batch_size = 10
 
+  filter :round
+
   scope do
     SubmissionScore.current
       .includes({ team_submission: :team }, :judge_profile)
       .references(:teams, :team_submissions, :judge_profiles)
   end
+
+  column :round
 
   column :division do
     team_division_name
