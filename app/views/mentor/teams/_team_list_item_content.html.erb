@@ -59,11 +59,11 @@
     <% end %>
   </div>
 
-  <div class="grid__col-12">
-    <% if !SeasonToggles.team_submissions_editable? && team.live_event? %>
+  <% if SeasonToggles.pitch_presentation_needed?(team) %>
+    <div class="grid__col-12">
       <%= render 'team_submissions/pieces/pitch_presentation',
         team: team,
         submission: team.submission %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
