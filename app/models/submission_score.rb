@@ -200,10 +200,15 @@ class SubmissionScore < ActiveRecord::Base
     rounds[name]
   end
 
-  def self.average_score
+  def self.average_score(round)
     return @@average_score if defined?(@@average_score)
     if first
-      method_for_average = "#{first.round}_average_score"
+      if round === :unofficial
+        method_for_average = "average_unofficial_score"
+      else
+        method_for_average = "#{round}_average_score"
+      end
+
       @@average_score = first.team_submission.public_send(method_for_average)
     else
       0.0

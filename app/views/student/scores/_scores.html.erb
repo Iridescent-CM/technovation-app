@@ -2,7 +2,7 @@
   <div class="grid__col-12">
     Average <%= String(round).titlecase %> Score
     <span>
-      <%= scores.average_score %>
+      <%= scores.average_score(round) %>
       <sub>/<%= scores.total_possible %></sub>
     </span>
   </div>
