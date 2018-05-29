@@ -34,15 +34,15 @@ class ScoresGrid
   end
 
   column :submission_quarterfinals_score do
-    team_submission.average_quarterfinals_score
+    team_submission.quarterfinals_average_score
   end
 
   column :submission_unofficial_score do
-    team_submission.unofficial_average_score
+    team_submission.average_unofficial_score
   end
 
   column :submission_semifinals_score do
-    team_submission.average_semifinals_score
+    team_submission.semifinals_average_score
   end
 
   column :complete do
