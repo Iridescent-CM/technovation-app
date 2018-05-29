@@ -13,6 +13,8 @@ class ScoresGrid
       .references(:teams, :team_submissions, :judge_profiles)
   end
 
+  column :id
+
   column :round
 
   column :division do
