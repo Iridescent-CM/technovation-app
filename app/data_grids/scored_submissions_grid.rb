@@ -138,7 +138,14 @@ class ScoredSubmissionsGrid
       mod = grid.complete.present? ? grid.complete : "all"
       assoc = "#{value}_#{mod}_submission_scores".to_sym
       scope.joins(assoc)
-    end
+  end
+
+  filter :submission_contest_rank,
+    :enum,
+    select: TeamSubmission.contest_ranks.keys,
+    filter_group: "common" do |value, scope, grid|
+      scope.public_send(value)
+  end
 
   filter :complete,
   :enum,
