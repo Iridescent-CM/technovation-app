@@ -201,7 +201,6 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def self.average_score(round)
-    return @@average_score if defined?(@@average_score)
     if first
       if round === :unofficial
         method_for_average = "average_unofficial_score"
@@ -209,19 +208,14 @@ class SubmissionScore < ActiveRecord::Base
         method_for_average = "#{round}_average_score"
       end
 
-      @@average_score = first.team_submission.public_send(method_for_average)
+      first.team_submission.public_send(method_for_average)
     else
       0.0
     end
   end
 
   def self.total_possible
-    return @@total_possible if defined?(@@total_possible)
-    if first
-      @@total_possible = first.total_possible
-    else
-      0.0
-    end
+    first && first.total_possible || 0.0
   end
 
   def overall_impression_comment
