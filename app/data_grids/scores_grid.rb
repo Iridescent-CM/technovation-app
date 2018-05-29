@@ -15,6 +15,10 @@ class ScoresGrid
 
   column :round
 
+  column :submission_contest_rank do
+    team_submission.contest_rank
+  end
+
   column :division do
     team_division_name
   end
