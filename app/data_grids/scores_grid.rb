@@ -13,8 +13,6 @@ class ScoresGrid
       .references(:teams, :team_submissions, :judge_profiles)
   end
 
-  column :id
-
   column :round
 
   column :division do
@@ -63,5 +61,17 @@ class ScoresGrid
 
   column :country do
     FriendlyCountry.(team)
+  end
+
+  column :id
+
+  column :team_id, header: :team_id do
+    team_submission.team_id
+  end
+
+  column :team_submission_id, header: :team_submission_id
+
+  column :judge_account_id, header: :judge_account_id do
+    judge_profile.account_id
   end
 end
