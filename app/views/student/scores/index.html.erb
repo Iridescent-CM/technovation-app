@@ -2,12 +2,23 @@
 
 <div id="student-scores-tabs" class="tabs">
   <ul class="score-tabs-menu tab-menu">
-    <li class="tab-link">
-      <button
-        class="tab-button"
-        data-tab-id="quarterfinal"
-      >Quarterfinals</button>
-    </li>
+    <% if @quarterfinals_scores.official.any? %>
+      <li class="tab-link">
+        <button
+          class="tab-button"
+          data-tab-id="quarterfinal"
+        >Quarterfinals</button>
+      </li>
+    <% end %>
+
+    <% if @quarterfinals_scores.unofficial.any? %>
+      <li class="tab-link">
+        <button
+          class="tab-button"
+          data-tab-id="unofficial"
+        >Unofficial Quarterfinals</button>
+      </li>
+    <% end %>
 
     <% if @semifinals_scores.any? %>
       <li class="tab-link">
@@ -27,25 +38,29 @@
   </ul>
 
   <div class="score-tab-content content">
-    <div class="score-tab tab-content" id="quarterfinal">
-      <%= render "student/scores/scores",
-        round: :quarterfinals,
-        scores: @quarterfinals_scores.official %>
+    <% if @quarterfinals_scores.official.any? %>
+      <div class="score-tab tab-content" id="quarterfinal">
+        <%= render "student/scores/scores",
+          round: :quarterfinals,
+          scores: @quarterfinals_scores.official %>
+      </div>
+    <% end %>
 
-      <% if @quarterfinals_scores.unofficial.any? %>
+    <% if @quarterfinals_scores.unofficial.any? %>
+      <div class="score-tab tab-content" id="unofficial">
         <%= render "student/scores/scores",
           round: :unofficial,
           scores: @quarterfinals_scores.unofficial %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
-    <div class="score-tab tab-content" id="semifinal">
-      <% if @semifinals_scores.any? %>
+    <% if @semifinals_scores.any? %>
+      <div class="score-tab tab-content" id="semifinal">
         <%= render "student/scores/scores",
           round: :semifinals,
           scores: @semifinals_scores %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
     <div class="score-tab tab-content" id="certificates">
       <h2>Congratulations on all your hard work!</h2>
