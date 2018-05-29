@@ -34,13 +34,15 @@ class ScoredSubmissionsGrid
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
     link_to submission.team_name,
-      [current_scope, submission.team, allow_out_of_region: true]
+      [current_scope, submission.team, allow_out_of_region: true],
+      data: { turbolinks: false }
   end
 
   column :app_name, mandatory: true, html: false
   column :submission, mandatory: true, html: true do |submission|
     link_to submission.app_name,
-      [current_scope, submission, allow_out_of_region: true]
+      [current_scope, submission, allow_out_of_region: true],
+      data: { turbolinks: false }
   end
 
   column :complete_scores, mandatory: true do |asset, grid|
@@ -67,6 +69,7 @@ class ScoredSubmissionsGrid
       {
         class: "view-details",
         "v-tooltip" => "'Read score details'",
+        data: { turbolinks: false },
       }
     )
 
