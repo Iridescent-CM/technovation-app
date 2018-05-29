@@ -5,6 +5,24 @@
   margin-bottom: 2rem;
 }
 
+.score-banner {
+  background-color: $mulberry-light;
+  box-shadow: $shadow-small;
+  color: black;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  text-align: center;
+  text-transform: uppercase;
+  position: sticky;
+  top: 72px;
+  z-index: $z-under-shade;
+
+  span {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+}
+
 #header {
   margin: 2rem;
 }

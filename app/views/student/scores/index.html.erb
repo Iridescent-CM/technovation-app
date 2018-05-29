@@ -1,41 +1,12 @@
 <h3 class="heading--page">View your Scores and Certificates</h3>
 
-<div class="grid judging-banner">
-  <div class="grid__col-6">
-    <h3 class="judging-banner__header">
-      Scores Explained
-    </h3>
-
-    <dl>
-      <dt>1: Incomplete</dt>
-      <dd>The work is missing.</dd>
-
-      <dt>2: Needs Improvement.</dt>
-      <dd>The work needs major improvement.</dd>
-    </dl>
-  </div>
-
-  <div class="grid__col-6">
-    <dl>
-      <dt>3: Acceptable.</dt>
-      <dd>The work needs minor improvement.</dd>
-
-      <dt>4: Good.</dt>
-      <dd>The work is of good quality.</dd>
-
-      <dt>5: Excellent.</dt>
-      <dd>The work is of excellent quality.</dd>
-    </dl>
-  </div>
-</div>
-
 <div id="student-scores-tabs" class="tabs">
   <ul class="score-tabs-menu tab-menu">
     <li class="tab-link">
       <button
         class="tab-button"
         data-tab-id="quarterfinal"
-      >Quarterfinal</button>
+      >Quarterfinals</button>
     </li>
 
     <% if @semifinals_scores.any? %>
@@ -43,7 +14,7 @@
         <button
           class="tab-button"
           data-tab-id="semifinal"
-        >Semifinal</button>
+        >Semifinals</button>
       </li>
     <% end %>
 
@@ -58,10 +29,12 @@
   <div class="score-tab-content content">
     <div class="score-tab tab-content" id="quarterfinal">
       <%= render "student/scores/scores",
+        round: :quarterfinals,
         scores: @quarterfinals_scores.official %>
 
       <% if @quarterfinals_scores.unofficial.any? %>
         <%= render "student/scores/scores",
+          round: :unofficial,
           scores: @quarterfinals_scores.unofficial %>
       <% end %>
     </div>
@@ -69,6 +42,7 @@
     <div class="score-tab tab-content" id="semifinal">
       <% if @semifinals_scores.any? %>
         <%= render "student/scores/scores",
+          round: :semifinals,
           scores: @semifinals_scores %>
       <% end %>
     </div>

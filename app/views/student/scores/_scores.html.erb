@@ -1,3 +1,42 @@
+<div class="grid score-banner">
+  <div class="grid__col-12">
+    Average <%= String(round).titlecase %> Score
+    <span>
+      <%= scores.average_score %>
+      <sub>/<%= scores.total_possible %></sub>
+    </span>
+  </div>
+</div>
+
+<div class="grid judging-banner">
+  <div class="grid__col-6">
+    <h3 class="judging-banner__header">
+      Scores Explained
+    </h3>
+
+    <dl>
+      <dt>1: Incomplete</dt>
+      <dd>The work is missing.</dd>
+
+      <dt>2: Needs Improvement.</dt>
+      <dd>The work needs major improvement.</dd>
+    </dl>
+  </div>
+
+  <div class="grid__col-6">
+    <dl>
+      <dt>3: Acceptable.</dt>
+      <dd>The work needs minor improvement.</dd>
+
+      <dt>4: Good.</dt>
+      <dd>The work is of good quality.</dd>
+
+      <dt>5: Excellent.</dt>
+      <dd>The work is of excellent quality.</dd>
+    </dl>
+  </div>
+</div>
+
 <div class="grid">
   <% scores.sort_by(&:total).reverse.each do |score| %>
     <% globes = %w{🌍 🌎 🌏}.shuffle %>
