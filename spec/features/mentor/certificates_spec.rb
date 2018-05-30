@@ -1,20 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Mentor certificates" do
-  before do
-    @original_certificates = ENV["CERTIFICATES"]
-    ENV["CERTIFICATES"] = "any value -- booleans don't work in ENV"
-    SeasonToggles.display_scores="yes"
-  end
-
-  after do
-    if @original_certificates.blank?
-      ENV.delete("CERTIFICATES")
-    end
-  end
+  before  { SeasonToggles.display_scores_on! }
 
   scenario "generate an appreciation cert" do
-    skip "Rebuilding mentor dashboard, certificates not back yet"
+    skip "Unskip mentor certficates specs ASAP"
 
     mentor = FactoryBot.create(:mentor, :on_team)
 
@@ -22,7 +12,9 @@ RSpec.feature "Mentor certificates" do
 
     within("#cert_appreciation") { click_button("Prepare my certificate") }
 
-    expect(page).to have_link("Download my certificate",
-                              href: mentor.certificates.appreciation.current.file_url)
+    expect(page).to have_link(
+      "Download my certificate",
+      href: mentor.certificates.appreciation.current.file_url
+    )
   end
 end
