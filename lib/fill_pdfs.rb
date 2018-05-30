@@ -24,15 +24,25 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(participant, type)
-    case type.to_sym
+  def self.call(pdf_field_value_pairs, certificate_type)
+    certificate_generator = nil
+
+    case certificate_type.to_sym
     when :completion
-      Completion.new(participant, type).generate_certificate
+      certificate_generator = Completion.new(
+        pdf_field_value_pairs,
+        certificate_type
+      )
     when :rpe_winner
-      RegionalWinner.new(participant, type).generate_certificate
+      certificate_generator = RegionalWinner.new(
+        pdf_field_value_pairs,
+        certificate_type
+      )
     else
-      raise "Unsupported type #{type}"
+      raise "Unsupported certificate type #{certificate_type}"
     end
+
+    certificate_generator.generate_certificate
   end
 
   attr_reader :participant, :account, :type

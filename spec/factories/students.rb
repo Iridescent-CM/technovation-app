@@ -15,6 +15,17 @@ FactoryBot.define do
       not_onboarded false
     end
 
+    trait :quarterfinalist do
+      onboarded
+      on_team
+
+      after(:create) do |student|
+        student.team.create_submission!(
+          FactoryBot.attributes_for(:submission, :complete)
+        )
+      end
+    end
+
     trait :chicago do
       city "Chicago"
       state_province "IL"

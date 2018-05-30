@@ -1,37 +1,29 @@
 require "rails_helper"
 
 RSpec.feature "Student certificates" do
-  before do
-    @original_certificates = ENV["CERTIFICATES"]
-    ENV["CERTIFICATES"] = "a truthy value -- booleans don't work"
-    SeasonToggles.display_scores="yes"
-  end
+  before { SeasonToggles.display_scores_on! }
 
-  after do
-    if @original_certificates.blank?
-      ENV.delete("CERTIFICATES")
+  context "quarterfinalist students" do
+    let(:student) { FactoryBot.create(:student, :quarterfinalist) }
+
+    scenario "receive a completion certificate" do
+      expect {
+        sign_in(student)
+      }.to change {
+        student.certificates.current.completion.count
+      }.from(0).to(1)
+
+      click_link("View your scores and certificates")
+
+      expect(page).to have_link(
+        "View your certificate",
+        href: student.certificates.completion.current.last.file_url
+      )
     end
   end
 
-  scenario "generate a completion cert" do
-    skip "Rebuilding student dashboard: certs not back yet"
-
-    student = FactoryBot.create(:student, :on_team)
-    FactoryBot.create(:team_submission, team: student.team)
-
-    sign_in(student)
-
-    within("#student_completion_cert") {
-      click_button("Prepare my certificate")
-    }
-
-    expect(page).to have_link("Download my certificate",
-                              href: student.certificates.current.file_url)
-  end
-
   scenario "generate a regional grand prize cert" do
-    skip "Rebuilding student dashboard: certs not back yet"
-
+    skip "for now"
     student = FactoryBot.create(:student, :on_team)
 
     rpe = FactoryBot.create(:rpe)
