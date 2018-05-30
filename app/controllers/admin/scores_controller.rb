@@ -28,15 +28,18 @@ module Admin
 
     private
     def grid_params
-      round = SeasonToggles.current_judging_round(full_name: true).to_s
+      grid = params[:scored_submissions_grid] ||= {}
+
+      round = 'quarterfinals'
+      current_round = SeasonToggles.current_judging_round(full_name: true).to_s
       passed_round = params[:scored_submissions_grid].fetch(:round) { round }
 
-      if passed_round.blank? && round === 'off'
+      if not passed_round.blank?
+        round = passed_round
+      elsif current_round === 'off'
         round = 'quarterfinals'
       elsif passed_round.blank?
-        round = round
-      else
-        round = passed_round
+        round = current_round
       end
 
       if request.xhr?
@@ -44,17 +47,14 @@ module Admin
           round: round
         }
       else
-        grid = (params[:scored_submissions_grid] ||= {}).merge(
+        grid.merge({
           admin: true,
           country: Array(params[:scored_submissions_grid][:country]),
           state_province: Array(params[:scored_submissions_grid][:state_province]),
           current_account: current_account,
           round: round,
-        )
-
-        grid.merge(
           column_names: detect_extra_columns(grid),
-        )
+        })
       end
     end
   end
