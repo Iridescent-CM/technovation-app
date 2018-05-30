@@ -1,7 +1,7 @@
 <template>
   <div class="margin-top-normal">
     <h6 class="heading--reset">
-      Recall your scores from the quarterfinals
+      Your scores from the quarterfinals
     </h6>
 
     <div
@@ -13,6 +13,7 @@
         <small>Submission name</small>
         <a
           data-turbolinks="false"
+          target="_blank"
           :href="score.submission_url"
         >{{ score.submission_name }}</a>
       </div>
