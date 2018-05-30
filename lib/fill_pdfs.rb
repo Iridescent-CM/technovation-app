@@ -54,7 +54,7 @@ module FillPdfs
 
   private
   def field_values
-    Hash[ pdf.fields.map{|f| [f.name, set_value(participant, f.name)]} ]
+    Hash[ pdf.fields.map{|f| [f.name, get_value(participant, f.name)]} ]
   end
 
   def pdf
@@ -62,7 +62,12 @@ module FillPdfs
   end
 
   def fill_form
-    PDFTK.fill_form(pathname, tmp_output, field_values, flatten: true)
+    PDFTK.fill_form(
+      pathname,
+      tmp_output,
+      field_values,
+      flatten: true
+    )
   end
 
   def attach_uploaded_certificate_from_tmp_file_to_account
@@ -75,11 +80,9 @@ module FillPdfs
     })
   end
 
-  def set_value(participant, field_name)
-    if field_name === "Firstname Lastname.Page 1"
-      participant['Recipient Name']
-    elsif field_name === "Description.Page 1"
-      "For her outstanding work as a member of Technovation [Region] team [insert team name] to develop the mobile application [Mobile Application Name]."
+  def get_value(participant, field_name)
+    if field_name === "fullText"
+      full_text(participant)
     else
       participant[field_name]
     end
