@@ -12,6 +12,8 @@ FactoryBot.define do
     venue_address "123 Street St."
     unofficial false
 
+    seasons { [Season.current.year] }
+
     division_ids { Division.pluck(:id) }
 
     trait :brazil do

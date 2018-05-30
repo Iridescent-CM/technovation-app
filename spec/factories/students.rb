@@ -15,6 +15,21 @@ FactoryBot.define do
       not_onboarded false
     end
 
+    trait :has_current_completion_certificate do
+      quarterfinalist
+
+      after(:create) do |student|
+        student.account.certificates.create!(
+          season: Season.current.year,
+          cert_type: :completion
+        )
+      end
+    end
+
+    trait :submitted do
+      quarterfinalist
+    end
+
     trait :quarterfinalist do
       onboarded
       on_team

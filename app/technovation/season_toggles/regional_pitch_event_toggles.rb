@@ -20,6 +20,14 @@ class SeasonToggles
         )
       end
 
+      def select_regional_pitch_event_on!
+        self.select_regional_pitch_event = 'on'
+      end
+
+      def select_regional_pitch_event_off!
+        self.select_regional_pitch_event = 'off'
+      end
+
       def select_regional_pitch_event?
         convert_to_bool(store.get(:select_regional_pitch_event))
       end

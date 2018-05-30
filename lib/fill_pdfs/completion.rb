@@ -4,12 +4,12 @@ module FillPdfs
   class Completion
     include FillPdfs
 
-    def full_text(participant)
+    def full_text
       "For her outstanding work as a member of Technovation " +
-      "#{participant['region']} team " +
-      "#{participant['teamName']} " +
+      "#{recipient.region} team " +
+      "#{recipient.teamName} " +
       "to develop the mobile application " +
-      "#{participant['mobileAppName']}."
+      "#{recipient.mobileAppName}."
     end
 
     private
@@ -18,7 +18,7 @@ module FillPdfs
     end
 
     def tmp_output
-      "./tmp/#{Season.current.year}-completion-#{participant['id']}.pdf"
+      "./tmp/#{Season.current.year}-completion-#{recipient.id}.pdf"
     end
   end
 end

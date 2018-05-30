@@ -24,18 +24,18 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(pdf_field_value_pairs, certificate_type)
+  def self.call(pdf_field_value_pairs_or_recipient, certificate_type)
     certificate_generator = nil
 
     case certificate_type.to_sym
     when :completion
       certificate_generator = Completion.new(
-        pdf_field_value_pairs,
+        pdf_field_value_pairs_or_recipient,
         certificate_type
       )
     when :rpe_winner
       certificate_generator = RegionalWinner.new(
-        pdf_field_value_pairs,
+        pdf_field_value_pairs_or_recipient,
         certificate_type
       )
     else
@@ -45,16 +45,21 @@ module FillPdfs
     certificate_generator.generate_certificate
   end
 
-  attr_reader :participant, :account, :type
+  attr_reader :recipient, :account, :type
 
-  def initialize(participant, type)
-    @participant = participant
+  def initialize(hash_or_recipient, type)
+    @recipient = hash_or_recipient
     @type = type
-    @account = Account.find(participant['id'])
+
+    @account = if recipient.is_a?(CertificateRecipient)
+                 recipient.account
+               else
+                 Account.find(recipient['id'])
+               end
   end
 
   def generate_certificate
-    unless account.certificates.public_send(type).current.present?
+    unless account.certificates.public_send(type).current.any?
       fill_form
       attach_uploaded_certificate_from_tmp_file_to_account
     end
@@ -64,7 +69,7 @@ module FillPdfs
 
   private
   def field_values
-    Hash[ pdf.fields.map { |f| [f.name, get_value(participant, f.name)] } ]
+    Hash[ pdf.fields.map { |f| [f.name, get_value(recipient, f.name)] } ]
   end
 
   def pdf
@@ -90,11 +95,11 @@ module FillPdfs
     })
   end
 
-  def get_value(participant, field_name)
+  def get_value(recipient, field_name)
     if field_name === "fullText"
-      full_text(participant)
+      full_text
     else
-      participant[field_name]
+      recipient[field_name]
     end
   end
 end

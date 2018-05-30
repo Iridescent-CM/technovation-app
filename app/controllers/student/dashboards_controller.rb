@@ -3,21 +3,20 @@ require 'fill_pdfs'
 module Student
   class DashboardsController < StudentController
     def show
-      @regional_events = RegionalPitchEvent.available_to(
-        current_team.submission
-      )
+      @regional_events = available_regional_events
 
-      field_value_pairs = {
-        'id' => current_account.id,
-        'mobileAppName' => current_team.submission.app_name,
-        'fullName' => current_account.name,
-        'teamName' => current_team.name,
-        'region' => FriendlyCountry.(current_account, prefix: false)
-      }
+      if SeasonToggles.display_scores?
+        FillPdfs.(CertificateRecipient.new(current_student), :completion)
+      end
+    end
 
-      certificate_type = :completion
-
-      FillPdfs.(field_value_pairs, certificate_type)
+    private
+    def available_regional_events
+      if SeasonToggles.select_regional_pitch_event?
+        RegionalPitchEvent.available_to(current_team.submission)
+      else
+        RegionalPitchEvent.none
+      end
     end
   end
 end
