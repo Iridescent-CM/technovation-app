@@ -2,8 +2,15 @@ FactoryBot.define do
   factory :submission_score, aliases: [:score] do
     judge_profile
     association(:team_submission, factory: [:team_submission, :complete, :junior])
-    round SubmissionScore.rounds[:quarterfinals]
+    round :quarterfinals
     seasons [Season.current.year]
+
+    trait :quarterfinals do
+    end
+
+    trait :semifinals do
+      round :semifinals
+    end
 
     trait :complete do
       completed_at Time.current
