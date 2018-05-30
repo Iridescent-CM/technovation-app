@@ -43,7 +43,7 @@ RSpec.feature "Admins view scores" do
     FactoryBot.create(
       :score,
       :complete,
-      round: :semifinals,
+      :semifinals,
       team_submission: submission
     )
 
