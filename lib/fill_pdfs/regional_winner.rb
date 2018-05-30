@@ -10,7 +10,7 @@ module FillPdfs
     end
 
     def tmp_output
-      "./tmp/#{Season.current.year}-Regional-Winner-#{participant['id']}.pdf"
+      "./tmp/#{Season.current.year}-Regional-Winner-#{recipient['id']}.pdf"
     end
   end
 end
