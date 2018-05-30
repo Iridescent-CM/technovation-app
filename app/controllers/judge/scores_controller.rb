@@ -36,7 +36,11 @@ module Judge
 
     def new
       respond_to do |f|
-        f.html { }
+        f.html {
+          unless SeasonToggles.judging_enabled?
+            redirect_to root_path, alert: "Judging is not open right now"
+          end
+        }
 
         f.json {
           if submission_id = FindEligibleSubmissionId.(
