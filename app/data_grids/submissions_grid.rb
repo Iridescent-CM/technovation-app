@@ -13,6 +13,8 @@ class SubmissionsGrid
     team.division_name.humanize
   end
 
+  column :contest_rank, mandatory: true
+
   column :app_name
   column :app_description
   column :demo_video_link
@@ -96,6 +98,12 @@ class SubmissionsGrid
         "teams.division_id = ?",
         Division.send(value).id
       )
+  end
+
+  filter :contest_rank,
+    :enum,
+    select: TeamSubmission.contest_ranks.keys do |value|
+      public_send(value)
   end
 
   filter :live_virtual,
