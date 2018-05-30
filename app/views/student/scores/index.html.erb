@@ -65,15 +65,23 @@
     <div class="score-tab tab-content" id="certificates">
       <h2>Congratulations on all your hard work!</h2>
 
-      <p>Thank you for taking the lead in changing your community for the better.</p>
+      <p>
+        Thank you for taking the lead in changing your community for the better.
+      </p>
 
-      <p>Your participation in our program is truly valued and we wish you the best in your future endeavor!</p>
+      <p>
+        Your participation in our program is truly valued and we wish you the
+        best in your future endeavor!
+      </p>
 
       <%= image_tag "certificates-congrats.svg", width: 500 %>
 
-      <button class="certificates-btn">
-        View your certificate
-      </button>
+      <div class="certificates-btn-wrapper">
+        <%= link_to "View your certificate",
+          current_student.certificates.completion.current.last.file_url,
+          target: "_blank",
+          class: "certificates-btn" %>
+      </div>
     </div>
   </div>
 </div>

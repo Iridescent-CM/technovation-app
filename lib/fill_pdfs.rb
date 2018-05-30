@@ -64,7 +64,7 @@ module FillPdfs
 
   private
   def field_values
-    Hash[ pdf.fields.map{|f| [f.name, get_value(participant, f.name)]} ]
+    Hash[ pdf.fields.map { |f| [f.name, get_value(participant, f.name)] } ]
   end
 
   def pdf

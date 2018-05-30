@@ -129,8 +129,11 @@
     }
   }
 
+  .certificates-btn-wrapper {
+    text-align: center;
+    padding: 0 0 1rem;
+  }
   .certificates-btn {
-    display: block;
     background-color: $antiqua;
     color: white;
     padding: 1rem 2rem;
