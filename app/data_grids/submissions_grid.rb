@@ -29,6 +29,8 @@ class SubmissionsGrid
   end
 
   column :development_platform_text
+  column :app_inventor_app_name
+  column :app_inventor_gmail
   column :source_code_url
   column :business_plan_url
   column :pitch_presentation_url
