@@ -24,18 +24,18 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(pdf_field_value_pairs_or_recipient, certificate_type)
+  def self.call(recipient, certificate_type)
     certificate_generator = nil
 
     case certificate_type.to_sym
     when :completion
       certificate_generator = Completion.new(
-        pdf_field_value_pairs_or_recipient,
+        recipient,
         certificate_type
       )
     when :rpe_winner
       certificate_generator = RegionalWinner.new(
-        pdf_field_value_pairs_or_recipient,
+        recipient,
         certificate_type
       )
     else
@@ -47,15 +47,10 @@ module FillPdfs
 
   attr_reader :recipient, :account, :type
 
-  def initialize(hash_or_recipient, type)
-    @recipient = hash_or_recipient
+  def initialize(recipient, type)
+    @recipient = recipient
     @type = type
-
-    @account = if recipient.is_a?(CertificateRecipient)
-                 recipient.account
-               else
-                 Account.find(recipient['id'])
-               end
+    @account = recipient.account
   end
 
   def generate_certificate
@@ -96,10 +91,12 @@ module FillPdfs
   end
 
   def get_value(recipient, field_name)
-    if field_name === "fullText"
+    if ["fullText", "Description.Page 1"].include?(field_name)
       full_text
+    elsif field_name === "Firstname Lastname.Page 1"
+      recipient.fullName
     else
-      recipient[field_name]
+      recipient.public_send(field_name)
     end
   end
 end

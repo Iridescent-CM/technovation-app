@@ -1,7 +1,7 @@
 require './lib/fill_pdfs'
 
 class FillPdfJob < ApplicationJob
-  def perform(participant, type)
-    FillPdfs.(participant, type.to_sym)
+  def perform(recipient, certificate_type)
+    FillPdfs.(recipient, certificate_type.to_sym)
   end
 end
