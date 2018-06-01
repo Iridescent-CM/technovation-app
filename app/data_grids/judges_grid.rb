@@ -25,8 +25,12 @@ class JudgesGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :quarterfinals_scores_count, header: "Quarterfinals Scores" do |asset, grid|
+    asset.judge_profile.quarterfinals_scores_count
+  end
+
   column :current_round_scores_count,
-  header: "Complete Scores",
+  header: "Complete #{current_judging_round} Scores",
     order: "judge_profiles.#{current_judging_round}_scores_count",
     mandatory: true do |asset, grid|
 
