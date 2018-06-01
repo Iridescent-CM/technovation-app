@@ -675,8 +675,7 @@ class Account < ActiveRecord::Base
 
   def email_is_changing?
     !!will_save_change_to_email? and
-      email_was.strip.downcase != email.strip.downcase and
-        super
+      email_was.strip.downcase != email.strip.downcase
   end
 
   private
