@@ -28,6 +28,10 @@ class NullTeamSubmission < NullObject
     ::SubmissionScore.none
   end
 
+  def scores
+    ::SubmissionScore.none
+  end
+
   def technical_checklist
     ::NullTechnicalChecklist.new
   end

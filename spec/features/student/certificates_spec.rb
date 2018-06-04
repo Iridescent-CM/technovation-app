@@ -39,6 +39,8 @@ RSpec.feature "Student certificates" do
       }.not_to change {
         student.certificates.count
       }
+
+      expect(page).not_to have_link("View your scores and certificates")
     end
   end
 
