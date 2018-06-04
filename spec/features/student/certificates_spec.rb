@@ -30,6 +30,18 @@ RSpec.feature "Student certificates" do
     end
   end
 
+  context "when the student has completed less than 50% of the submission" do
+    scenario "no certificates are generated" do
+      student = FactoryBot.create(:student, :incomplete_submission)
+
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.count
+      }
+    end
+  end
+
   scenario "generate a regional grand prize cert" do
     skip "for now"
     student = FactoryBot.create(:student, :on_team)

@@ -26,6 +26,17 @@ FactoryBot.define do
       end
     end
 
+    trait :incomplete_submission do
+      onboarded
+      on_team
+
+      after(:create) do |student|
+        student.team.create_submission!(
+          FactoryBot.attributes_for(:submission, :less_than_half_complete)
+        )
+      end
+    end
+
     trait :submitted do
       quarterfinalist
     end

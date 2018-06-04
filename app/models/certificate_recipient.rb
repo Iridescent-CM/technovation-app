@@ -18,7 +18,11 @@ class CertificateRecipient
     public_send(fieldName)
   end
 
-  def certificate_type
-    "fill_pdfs/completion"
+  def certificate_types
+    if team.submission.percent_complete >= 50
+      ["fill_pdfs/completion"]
+    else
+      []
+    end
   end
 end

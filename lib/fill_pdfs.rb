@@ -26,9 +26,10 @@ module FillPdfs
   end
 
   def self.call(recipient)
-    certificate_type = String(recipient.certificate_type)
-    generator = certificate_type.camelize.constantize.new(recipient)
-    generator.generate_certificate
+    recipient.certificate_types.each do |certificate_type|
+      generator = certificate_type.camelize.constantize.new(recipient)
+      generator.generate_certificate
+    end
   end
 
   attr_reader :recipient, :account
