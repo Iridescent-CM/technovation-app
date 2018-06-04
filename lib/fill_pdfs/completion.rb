@@ -12,6 +12,10 @@ module FillPdfs
       "#{recipient.mobileAppName}."
     end
 
+    def type
+      "completion"
+    end
+
     private
     def pathname
       './lib/certs/2018/completion.pdf'

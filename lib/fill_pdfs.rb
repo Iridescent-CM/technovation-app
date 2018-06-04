@@ -26,36 +26,13 @@ module FillPdfs
   end
 
   def self.call(recipient, certificate_type)
-    certificate_generator = nil
-
-    case certificate_type.to_sym
-    when :completion
-      certificate_generator = Completion.new(
-        recipient,
-        certificate_type
-      )
-    when :participation
-      certificate_generator = Participation.new(
-        recipient,
-        certificate_type
-      )
-    when :rpe_winner
-      certificate_generator = RegionalWinner.new(
-        recipient,
-        certificate_type
-      )
-    else
-      raise "Unsupported certificate type #{certificate_type}"
-    end
-
-    certificate_generator.generate_certificate
+    CertificateGenerator.for(recipient, certificate_type).generate_certificate
   end
 
-  attr_reader :recipient, :account, :type
+  attr_reader :recipient, :account
 
-  def initialize(recipient, type)
+  def initialize(recipient)
     @recipient = recipient
-    @type = type
     @account = recipient.account
   end
 
@@ -103,6 +80,21 @@ module FillPdfs
       recipient.fullName
     else
       recipient.public_send(field_name)
+    end
+  end
+
+  class CertificateGenerator
+    def self.for(recipient, certificate_type)
+      case certificate_type.to_sym
+      when :completion
+        certificate_generator = Completion.new(recipient)
+      when :participation
+        certificate_generator = Participation.new(recipient)
+      when :rpe_winner
+        certificate_generator = RegionalWinner.new(recipient)
+      else
+        raise "Unsupported certificate type #{certificate_type}"
+      end
     end
   end
 end
