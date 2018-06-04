@@ -93,14 +93,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
-import VTooltip from 'v-tooltip'
-import Vue2Filters from 'vue2-filters'
-
-Vue.use(VTooltip)
-Vue.use(Vue2Filters)
-
 import _ from 'lodash'
 import { mapState, mapGetters } from 'vuex'
 
