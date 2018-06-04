@@ -20,6 +20,14 @@ RSpec.feature "Student certificates" do
         href: student.certificates.completion.current.last.file_url
       )
     end
+
+    scenario "no participation certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.participation.count
+      }
+    end
   end
 
   scenario "generate a regional grand prize cert" do

@@ -3,6 +3,7 @@
 require 'pdf_forms'
 
 require 'fill_pdfs/completion'
+require 'fill_pdfs/participation'
 require 'fill_pdfs/regional_winner'
 
 module FillPdfs
@@ -30,6 +31,11 @@ module FillPdfs
     case certificate_type.to_sym
     when :completion
       certificate_generator = Completion.new(
+        recipient,
+        certificate_type
+      )
+    when :participation
+      certificate_generator = Participation.new(
         recipient,
         certificate_type
       )
