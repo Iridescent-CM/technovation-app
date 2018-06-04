@@ -17,4 +17,8 @@ class CertificateRecipient
   def [](fieldName)
     public_send(fieldName)
   end
+
+  def certificate_type
+    "completion"
+  end
 end

@@ -6,7 +6,7 @@ module Student
       @regional_events = available_regional_events
 
       if SeasonToggles.display_scores?
-        FillPdfs.(CertificateRecipient.new(current_student), :completion)
+        FillPdfs.(CertificateRecipient.new(current_student))
       end
     end
 

@@ -25,8 +25,8 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(recipient, certificate_type)
-    CertificateGenerator.for(recipient, certificate_type).generate_certificate
+  def self.call(recipient)
+    CertificateGenerator.for(recipient).generate_certificate
   end
 
   attr_reader :recipient, :account
@@ -84,8 +84,8 @@ module FillPdfs
   end
 
   class CertificateGenerator
-    def self.for(recipient, certificate_type)
-      case certificate_type.to_sym
+    def self.for(recipient)
+      case recipient.certificate_type.to_sym
       when :completion
         certificate_generator = Completion.new(recipient)
       when :participation
