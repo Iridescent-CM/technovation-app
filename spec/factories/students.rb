@@ -124,8 +124,10 @@ FactoryBot.define do
 
     trait :on_team do
       after(:create) do |s|
-        team = FactoryBot.create(:team, members_count: 0)
-        TeamCreating.execute(team, s, FakeController.new)
+        unless s.team.present?
+          team = FactoryBot.create(:team, members_count: 0)
+          TeamCreating.execute(team, s, FakeController.new)
+        end
       end
     end
 

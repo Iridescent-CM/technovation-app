@@ -19,10 +19,14 @@ class CertificateRecipient
   end
 
   def certificate_types
-    if team.submission.percent_complete >= 50
-      ["fill_pdfs/completion"]
-    else
-      []
-    end
+    types = []
+    types.push("completion") if needs_completion_certificate?
+    types
+  end
+
+  private
+  def needs_completion_certificate?
+    !account.certificates.completion.current.any? &&
+      team.submission.complete?
   end
 end

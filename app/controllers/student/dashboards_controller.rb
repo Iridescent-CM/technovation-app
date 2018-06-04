@@ -5,9 +5,7 @@ module Student
     def show
       @regional_events = available_regional_events
 
-      if SeasonToggles.display_scores?
-        FillPdfs.(CertificateRecipient.new(current_student))
-      end
+      FillPdfs.(current_student) if SeasonToggles.display_scores?
     end
 
     private

@@ -25,9 +25,13 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(recipient)
+  def self.call(profile)
+    recipient = CertificateRecipient.new(profile)
+
     recipient.certificate_types.each do |certificate_type|
-      generator = certificate_type.camelize.constantize.new(recipient)
+      generator_klass = "fill_pdfs/#{certificate_type}"
+      generator = generator_klass.camelize.constantize.new(recipient)
+
       generator.generate_certificate
     end
   end
@@ -40,11 +44,8 @@ module FillPdfs
   end
 
   def generate_certificate
-    unless account.certificates.public_send(type).current.any?
-      fill_form
-      attach_uploaded_certificate_from_tmp_file_to_account
-    end
-
+    fill_form
+    attach_uploaded_certificate_from_tmp_file_to_account
     account.certificates.public_send(type).current
   end
 
