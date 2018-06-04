@@ -18,8 +18,7 @@
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
-    },
-    "setupFiles":["./spec/javascript/support/browserMocks.js"]
+    }
   },
   "dependencies": {
     "@rails/webpacker": "^3.2.1",
