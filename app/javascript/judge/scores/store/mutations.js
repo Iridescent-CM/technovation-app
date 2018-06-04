@@ -1,5 +1,26 @@
 export const setComment = (state, commentData) => {
-  state.score.comments[commentData.sectionName] = commentData
+  const originalComment = state.score.comments[commentData.sectionName]
+  const comment = Object.assign({}, originalComment, commentData)
+
+  state.score.comments[commentData.sectionName] = comment
+}
+
+export const resetComment = (state, sectionName) => {
+  const originalComment = state.score.comments[sectionName]
+  const comment = Object.assign({}, originalComment, {
+    text: '',
+    isProfanityAnalyzed: false,
+    isSentimentAnalyzed: false,
+    sentiment: {
+      negative: 0,
+      positive: 0,
+      neutral: 0,
+    },
+    bad_word_count: 0,
+    word_count: 0,
+  })
+
+  state.score.comments[sectionName] = comment
 }
 
 export const saveComment = (state, sectionName) => {

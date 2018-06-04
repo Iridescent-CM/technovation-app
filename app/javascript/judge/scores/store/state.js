@@ -1,9 +1,31 @@
+const emptyComment = {
+  text: '',
+
+  sentiment: {
+    negative: 0,
+    positive: 0,
+    neutral: 0,
+  },
+
+  bad_word_count: 0,
+  word_count: 0,
+
+  isSentimentAnalyzed: false,
+  isProfanityAnalyzed: false,
+}
+
 export default {
   problemSections: [],
 
   score: {
     id: null,
-    comments: {},
+    comments: {
+      ideation: emptyComment,
+      technical: emptyComment,
+      entrepreneurship: emptyComment,
+      pitch: emptyComment,
+      overall: emptyComment,
+    },
   },
 
   questions: [],

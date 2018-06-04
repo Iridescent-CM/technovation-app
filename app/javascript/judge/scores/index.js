@@ -35,12 +35,6 @@ document.addEventListener('turbolinks:load', () => {
 
       props: ['scoreId'],
 
-      watch: {
-        $route (to, from) {
-          this.$store.commit('saveComment', from.name)
-        },
-      },
-
       mounted () {
         if (this.$refs.deadline)
           this.$store.commit('deadline', this.$refs.deadline.dataset.date)

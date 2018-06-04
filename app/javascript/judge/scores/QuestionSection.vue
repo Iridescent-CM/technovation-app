@@ -103,45 +103,19 @@ export default {
 
   data () {
     return {
-      counter: 0,
-
-      comment: {
-        text: '',
-
-        sentiment: {
-          negative: 0,
-          positive: 0,
-          neutral: 0,
-        },
-
-        bad_word_count: 0,
-        word_count: 0,
-
-        isSentimentAnalyzed: false,
-        isProfanityAnalyzed: false,
-      },
-
       detectedProfanity: {},
-
       commentInitiated: false,
     }
   },
 
   watch: {
     commentText () {
-      if (this.commentInitiated) {
-        if (!!this.comment.text.length) {
-          this.handleCommentChange()
-        } else {
-          this.comment.isProfanityAnalyzed = false
-          this.comment.isSentimentAnalyzed = false
-          this.comment.sentiment = {
-            negative: 0,
-            positive: 0,
-            neutral: 0,
-          }
-        }
-      }
+      this.$store.commit('setComment', {
+        sectionName: this.section,
+        word_count: this.wordCount,
+      })
+
+      this.debouncedCommentWatcher()
     },
 
     commentStorageKey () {
@@ -152,6 +126,10 @@ export default {
   computed: {
     ...mapState(['submission']),
     ...mapGetters(['sectionQuestions']),
+
+    comment () {
+      return this.$store.getters.comment(this.section)
+    },
 
     commentIsSentimentAnalyzed () {
       return this.comment.isSentimentAnalyzed
@@ -262,15 +240,13 @@ export default {
   methods: {
     initiateComment () {
       const storeComment = this.$store.getters.comment(this.section)
+      let myComment = Object.assign({}, storeComment, { sectionName: this.section })
 
-      if (!!storeComment)
-        this.comment = Object.assign({}, this.comment, storeComment)
+      if (!myComment.text) {
+        myComment.text = ''
+      }
 
-      const text = window.localStorage.getItem(this.commentStorageKey)
-      if (!!text) this.comment.text = text
-
-      if (!this.comment.text)
-        this.comment.text = ''
+      this.$store.commit('setComment', myComment)
 
       this.$nextTick().then(() => {
         const commentSentiment = this.comment.sentiment
@@ -280,7 +256,10 @@ export default {
         const negativeSentiment = parseFloat(commentSentiment.negative)
 
         if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
-          this.comment.isSentimentAnalyzed = true
+          this.$store.commit('setComment', {
+            sectionName: this.section,
+            isSentimentAnalyzed: true,
+          })
         }
 
         this.commentInitiated = true
@@ -297,11 +276,20 @@ export default {
       return `${Math.round(parseFloat(this.comment.sentiment[slant]) * 100)}%`
     },
 
-    handleCommentChange: _.debounce(function() {
-      window.localStorage.setItem(this.commentStorageKey, this.commentText)
+    handleCommentChange () {
+      if (this.commentInitiated) {
+        if (!!this.commentText.length) {
+          this.runSentimentAnalysis()
+          this.runProfanityAnalysis()
+       } else {
+          this.$store.commit('resetComment', this.section)
+        }
+      }
 
-      const wordCount = this.wordCount(this.commentText)
+      this.$store.commit('saveComment', this.section)
+    },
 
+    runSentimentAnalysis () {
       const shouldRunSentimentAnalysis = (
         this.wordCount > 19 &&
           (this.wordCount % 5 === 0 ||
@@ -313,43 +301,47 @@ export default {
           .algo("nlp/SocialSentimentAnalysis/0.1.4")
           .pipe({ sentence: this.commentText })
           .then(resp => {
-            this.comment.sentiment = resp.result[0]
-            this.comment.isSentimentAnalyzed = true
-
             this.$store.commit('setComment', {
               sectionName: this.section,
-              text: this.commentText,
-              word_count: wordCount,
-              bad_word_count: this.badWordCount,
-              sentiment: this.comment.sentiment,
+              sentiment: resp.result[0],
+              isSentimentAnalyzed: true,
           })
         })
       }
+    },
 
-      if (wordCount > 0 && (wordCount % 2 === 0 || !this.commentIsProfanityAnalyzed)) {
+    runProfanityAnalysis () {
+      const shouldRunProfanityAlysis = (
+        this.wordCount > 0 &&
+          (this.wordCount % 2 === 0 ||
+            !this.commentIsProfanityAnalyzed)
+      )
+
+      if (shouldRunProfanityAlysis) {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
           .algo("nlp/ProfanityDetection/1.0.0")
           .pipe([this.commentText, ['suck', 'sucks'], false])
           .then(resp => {
             this.detectedProfanity = resp.result
-            this.comment.isProfanityAnalyzed = true
 
             this.$store.commit('setComment', {
               sectionName: this.section,
-              text: this.commentText,
-              word_count: wordCount,
               bad_word_count: this.badWordCount,
-              sentiment: this.comment.sentiment,
+              isProfanityAnalyzed: true,
             })
-          });
+          })
       }
-    }, 500),
+    },
   },
 
   mounted () {
     if (!!this.submission.id)
       this.initiateComment()
   },
+
+  created () {
+    this.debouncedCommentWatcher = _.debounce(this.handleCommentChange, 500)
+  }
 }
 </script>
 
