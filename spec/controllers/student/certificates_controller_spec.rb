@@ -8,17 +8,18 @@ RSpec.describe Student::CertificatesController, type: :controller do
       sign_in(student)
 
       expect {
-        post :create, params: { type: :completion }
+        post :create
       }.to change { student.certificates.current.completion.count }.from(0).to(1)
     end
 
     it "generates an rpe winner cert for the current student" do
-      student = FactoryBot.create(:student, :quarterfinalist)
+      skip "rpe winner coming soon"
+      student = FactoryBot.create(:student)
 
       sign_in(student)
 
       expect {
-        post :create, params: { type: :rpe_winner }
+        post :create
       }.to change { student.certificates.current.rpe_winner.count }.from(0).to(1)
     end
   end
