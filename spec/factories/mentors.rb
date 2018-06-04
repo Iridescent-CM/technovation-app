@@ -100,6 +100,12 @@ FactoryBot.define do
       end
     end
 
+    trait :complete_submission do
+      after(:create) do |mentor|
+        FactoryBot.create(:submission, :complete, team: mentor.teams.last)
+      end
+    end
+
     trait :on_junior_team do
       after(:create) do |m|
         team = FactoryBot.create(:team, :junior)
