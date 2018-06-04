@@ -179,7 +179,6 @@
               const item = new Attendee(obj.attributes)
               let idx
 
-console.log(item)
               if (vm.type === 'team') {
                 idx = _.findIndex(vm.items, i => i.id === item.id)
               } else {
