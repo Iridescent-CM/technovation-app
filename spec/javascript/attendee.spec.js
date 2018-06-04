@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import Attendee from '../../app/javascript/ra/events/Attendee';
+import Attendee from 'ra/events/Attendee';
 
 test('assignedTeamFoundInEvent adds teams to assignedTeams list', () => {
   const team = new Attendee({ id: 1 })

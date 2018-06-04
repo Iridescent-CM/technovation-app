@@ -93,8 +93,16 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
+import VTooltip from 'v-tooltip'
+import Vue2Filters from 'vue2-filters'
+
+Vue.use(VTooltip)
+Vue.use(Vue2Filters)
+
 import _ from 'lodash'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import ScoreEntry from './ScoreEntry'
 
@@ -151,6 +159,7 @@ export default {
 
   computed: {
     ...mapState(['submission']),
+    ...mapGetters(['sectionQuestions']),
 
     commentIsSentimentAnalyzed () {
       return this.comment.isSentimentAnalyzed
@@ -220,7 +229,7 @@ export default {
     },
 
     questions () {
-      return this.$store.getters.sectionQuestions(this.section)
+      return this.sectionQuestions(this.section)
     },
 
     commentStorageKey () {
@@ -310,11 +319,6 @@ export default {
           (wordCount % 5 === 0 ||
             !this.commentIsSentimentAnalyzed)
       )
-
-      console.log('sentiment?', shouldRunSentimentAnalysis)
-      console.log('wordCount', wordCount)
-      console.log('wordCount % 5', wordCount % 5)
-      console.log('this.commentIsSentinmentAnalyzed', this.commentIsSentimentAnalyzed)
 
       if (shouldRunSentimentAnalysis) {
         Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")

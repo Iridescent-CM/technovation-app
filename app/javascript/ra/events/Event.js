@@ -60,7 +60,6 @@ export default function (event) {
       judge.addedToEvent();
       this.selectedJudges.push(judge);
     } else {
-      console.log("Judge already added");
       return false;
     }
   };
@@ -85,7 +84,6 @@ export default function (event) {
       team.addedToEvent();
       this.selectedTeams.push(team);
     } else {
-      console.log("Team already added");
       return false;
     }
   };
