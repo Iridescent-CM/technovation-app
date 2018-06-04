@@ -23,8 +23,8 @@
         <div class="grid__col-6">
           <p class="word-count">
             <span :style="`color: ${colorForWordCount}`">
-              {{ wordCount(comment.text) }}
-              {{ wordCount(comment.text) | pluralize('word') }}
+              {{ wordCount }}
+              {{ wordCount | pluralize('word') }}
             </span>
 
             <br />
@@ -183,9 +183,23 @@ export default {
     },
 
     goingNextIsDisabled () {
-      return this.wordCount(this.comment.text) < 40 ||
+      return this.wordCount < 40 ||
                this.badWordCount > 0 ||
                  this.comment.sentiment.negative > 0.2
+    },
+
+    wordCount () {
+      let text = this.commentText
+
+      if (!this.commentText) text = ''
+
+      return _.filter(text.split(' '), word => {
+
+        return _.filter(word.split(''), char => {
+          return char.match(/\w/)
+        }).length > 2
+
+      }).length
     },
 
     badWordCount () {
@@ -195,13 +209,11 @@ export default {
     },
 
     colorForWordCount () {
-      const count = this.wordCount(this.comment.text)
-
-      if (count >= 40) {
+      if (this.wordCount >= 40) {
         return 'darkgreen'
-      } else if (count >= 30) {
+      } else if (this.wordCount >= 30) {
         return 'orange'
-      } else if (count >= 20) {
+      } else if (this.wordCount >= 20) {
         return 'darkyellow'
       } else {
         return 'darkred'
@@ -209,9 +221,7 @@ export default {
     },
 
     colorForBadWordCount () {
-      const count = this.badWordCount
-
-      if (count < 1) {
+      if (this.badWordCount < 1) {
         return 'darkgreen'
       } else {
         return 'darkred'
@@ -219,9 +229,7 @@ export default {
     },
 
     fontSizeForBadWordCount () {
-      const count = this.badWordCount
-
-      if (count < 1) {
+      if (this.badWordCount < 1) {
         return 'inherit'
       } else {
         return '1.3rem'
@@ -287,18 +295,6 @@ export default {
       })
     },
 
-    wordCount (text) {
-      if (!text) text = ''
-
-      return _.filter(text.split(' '), word => {
-
-        return _.filter(word.split(''), char => {
-          return char.match(/\w/)
-        }).length > 2
-
-      }).length
-    },
-
     sentimentTooltip (slant) {
       return 'Your comment seems ' +
              this.sentimentPercentage(slant) + ' ' +
@@ -315,8 +311,8 @@ export default {
       const wordCount = this.wordCount(this.commentText)
 
       const shouldRunSentimentAnalysis = (
-        wordCount > 19 &&
-          (wordCount % 5 === 0 ||
+        this.wordCount > 19 &&
+          (this.wordCount % 5 === 0 ||
             !this.commentIsSentimentAnalyzed)
       )
 
