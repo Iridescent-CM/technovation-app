@@ -15,11 +15,19 @@ class SuspiciousScoreSerializer
   end
 
   attribute :event_name do |score|
-    score.team.event.name
+    if score.semifinals?
+      VirtualRegionalPitchEvent.new.name
+    else
+      score.team.event.name
+    end
   end
 
   attribute :event_official do |score|
-    score.team.event.official? ? "official" : "celebration"
+    if score.semifinals?
+      "virtual"
+    else
+      score.team.event.official? ? "official" : "celebration"
+    end
   end
 
   attribute :flags do |score|
