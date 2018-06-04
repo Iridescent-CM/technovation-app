@@ -19,6 +19,6 @@ class CertificateRecipient
   end
 
   def certificate_type
-    "completion"
+    "fill_pdfs/completion"
   end
 end

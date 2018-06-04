@@ -26,7 +26,9 @@ module FillPdfs
   end
 
   def self.call(recipient)
-    CertificateGenerator.for(recipient).generate_certificate
+    certificate_type = String(recipient.certificate_type)
+    generator = certificate_type.camelize.constantize.new(recipient)
+    generator.generate_certificate
   end
 
   attr_reader :recipient, :account
@@ -80,21 +82,6 @@ module FillPdfs
       recipient.fullName
     else
       recipient.public_send(field_name)
-    end
-  end
-
-  class CertificateGenerator
-    def self.for(recipient)
-      case recipient.certificate_type.to_sym
-      when :completion
-        certificate_generator = Completion.new(recipient)
-      when :participation
-        certificate_generator = Participation.new(recipient)
-      when :rpe_winner
-        certificate_generator = RegionalWinner.new(recipient)
-      else
-        raise "Unsupported certificate type #{certificate_type}"
-      end
     end
   end
 end
