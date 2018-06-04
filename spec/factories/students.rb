@@ -31,9 +31,7 @@ FactoryBot.define do
       on_team
 
       after(:create) do |student|
-        student.team.create_submission!(
-          FactoryBot.attributes_for(:submission, :less_than_half_complete)
-        )
+        FactoryBot.create(:submission, :less_than_half_complete, team: student.team)
       end
     end
 
@@ -46,9 +44,7 @@ FactoryBot.define do
       on_team
 
       after(:create) do |student|
-        student.team.create_submission!(
-          FactoryBot.attributes_for(:submission, :complete)
-        )
+        FactoryBot.create(:submission, :complete, team: student.team)
       end
     end
 
