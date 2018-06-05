@@ -6,11 +6,11 @@
 
     <%= image_tag team.team_photo_url %>
 
-    <h3><span>Team</span> <%= team.name %></h3>
+    <h3><span>Team</span> <%= link_to team.name, [:mentor, team] %></h3>
     <h3><span>Submission</span> <%= team.submission.app_name %></h3>
 
     <% if all_scores.empty? %>
-      <% if !team.submission.complete? or !team.submission.present? %>
+      <% if !team.submission.complete? || !team.submission.present? %>
         <h3>No Scores Available</h3>
 
         <p>
@@ -24,7 +24,7 @@
             <%= link_to "Open your submission page",
                 app_path(team.submission),
                 class: "button",
-                target: :_blank %>
+                target: "_blank" %>
           </p>
         <% end %>
       <% else %>
@@ -42,7 +42,7 @@
           <%= link_to "Open your submission page",
               app_path(team.submission),
               class: "button",
-              target: :_blank %>
+              target: "_blank" %>
         </p>
       <% end %>
     <% elsif all_scores.any? %>
