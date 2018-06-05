@@ -70,7 +70,7 @@ Install pdftk
 Install nodejs
 
 ```
-brew install nodejs
+asdf install nodejs <put-latest-version-here>
 ```
 
 
@@ -120,19 +120,19 @@ Seeded users:
 * Student
   * username: student@student.com
   * password: student@student.com
-  
+
 * Mentor
   * username: mentor@mentor.com
   * password: mentor@mentor.com
-  
+
 * Judge
   * username: judge@judge.com
   * password: judge@judge.com
-  
+
 * Regional Ambassador
   * username: ra@ra.com
   * password: ra@ra.com
-  
+
 * Admin
   * username: admin@admin.com
   * password: admin@admin.com
