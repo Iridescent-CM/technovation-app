@@ -22,10 +22,16 @@ Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install ruby 2.5.0
+Install asdf, ruby 2.5.1, nodejs <latest-version>
 
 ```
-asdf install ruby 2.5.0
+brew install asdf
+
+asdf plugin-add ruby
+asdf plugin-add nodejs
+
+asdf install ruby 2.5.1
+asdf install nodejs <latest-version>
 ```
 
 Make sure XCode is installed.
@@ -67,13 +73,6 @@ Install pdftk
 
 [https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
 
-Install nodejs
-
-```
-asdf install nodejs <put-latest-version-here>
-```
-
-
 ### Install the rails application
 
 ```
@@ -87,9 +86,11 @@ cd technovation-app
 mv <PATH-TO-.ENV-FILE> .
 ```
 
-Switch to ruby 2.5.0 (this creates the `.tool-versions` file and you won't have to do it again)
+Switch to ruby 2.5.1 (this creates the `.tool-versions` file and you won't have to do it again)
+Switch to nodejs <latest-version>
 ```
-asdf local ruby 2.5.0
+asdf local ruby 2.5.1
+asdf local nodejs <latest-version>
 ```
 
 Run the rails setup file
