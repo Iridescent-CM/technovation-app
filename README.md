@@ -57,7 +57,7 @@ which qmake
 /usr/local/bin/qmake
 ```
 
-Install redis
+Install redis  (follow the post-install instructions)
 
 ```
 brew install redis
