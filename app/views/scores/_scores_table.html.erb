@@ -1,8 +1,8 @@
-<% if scores.official.any? %>
+<% if scores.unofficial.any? %>
   <h5>Official Scores - These scores counted</h5>
-
-  <%= render 'scores/table', scores: scores.official %>
 <% end %>
+
+<%= render 'scores/table', scores: scores.official %>
 
 <% if scores.unofficial.any? %>
   <h5>Unofficial Scores - These scores are from a celebration event</h5>
