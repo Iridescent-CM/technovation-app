@@ -141,7 +141,7 @@ Seeded users:
 ## To turn on/off various user features:
 
   * Login as the admin
-  * Go to "Season Schedule Settings"
+  * Go to "Content & Settings"
   * Toggle what you need on or off
 
 
