@@ -6,7 +6,7 @@ gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
-gem 'fast_jsonapi', "~> 1.1"
+gem 'fast_jsonapi', "~> 1.2"
 
 gem 'textacular',
   git: 'https://github.com/Iridescent-CM/textacular.git',
@@ -16,7 +16,7 @@ gem 'pdf-forms', '~> 1.1'
 
 gem 'public_activity', "~> 1.5"
 gem "paranoia", '~> 2.4'
-gem 'counter_culture', '~> 1.9'
+gem 'counter_culture', '~> 1.11'
 
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
@@ -28,7 +28,7 @@ gem 'lodash-rails', "~> 4.17"
 gem 'chosen-rails', "~> 1.8"
 gem 'chart-js-rails', "~> 0.1"
 gem 'dropzonejs-rails', "~> 0.8"
-gem 'webpacker', '~> 3.4'
+gem 'webpacker', '~> 3.5'
 
 gem "cocoon", "~> 1.2"
 
@@ -98,7 +98,7 @@ gem 'loofah', '~> 2.2'
 group :development, :test do
   gem 'rspec-rails', "~> 3.7"
   gem 'launchy', "~> 2.4"
-  gem 'dotenv-rails', "~> 2.2"
+  gem 'dotenv-rails', "~> 2.4"
 end
 
 group :development do
@@ -114,14 +114,14 @@ end
 group :test do
   gem 'timecop', "~> 0.9"
   gem 'vcr', "~> 3.0"
-  gem 'webmock', "~> 3.3"
+  gem 'webmock', "~> 3.4"
   gem 'sinatra', '~> 2.0'
 
   gem 'capybara-webkit',
     git: "https://github.com/thoughtbot/capybara-webkit.git",
     branch: :master
 
-  gem 'database_cleaner', "~> 1.6"
+  gem 'database_cleaner', "~> 1.7"
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
@@ -136,14 +136,14 @@ end
 group :production do
   gem 'hiredis', "~> 0.6"
   gem 'scout_apm', "~> 2.4"
-  gem "rack-timeout", "~> 0.4"
+  gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater',
     git: 'https://github.com/romanbsd/heroku-deflater.git',
     branch: 'master'
 end
 
 group :test, :development do
-  gem 'factory_bot_rails', "~> 4.8"
+  gem 'factory_bot_rails', "~> 4.10"
 end
 
 group :legacy do
