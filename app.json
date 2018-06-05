@@ -13,5 +13,8 @@
     "RACK_ENV": "production",
     "RAILS_SERVE_STATIC_FILES": "true"
   },
-  "addons": ["heroku-postgresql"]
+  "addons": ["heroku-postgresql"],
+  "engines": {
+    "yarn": "1.5.1"
+  }
 }
