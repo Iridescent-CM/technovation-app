@@ -63,10 +63,11 @@ Install redis
 brew install redis
 ```
 
-Install postgresql
+Install postgresql (follow the post-install instructions)
 
 ```
 brew install postgresql
+createuser -s postgres
 ```
 
 Install pdftk
