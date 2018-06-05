@@ -98,8 +98,8 @@ export const sectionPointsTotal = (state) => (section) => {
 }
 
 export const sectionQuestions = (state) => (section) => {
-  return _.filter(state.questions, q => {
-    return q.section === section
+  return state.questions.filter(question => {
+    return question.section === section
   })
 }
 

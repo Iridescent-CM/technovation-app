@@ -1,74 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import state from '../state'
+import * as getters from '../getters'
+import * as mutations from '../mutations'
+
 Vue.use(Vuex)
 
-export const getters = {
-  comment: jest.fn(() => (sectionName) => state.score.comments[sectionName]),
-  sectionQuestions: jest.fn(() => () => {}),
-}
-
-export const mutations = {
-  setComment: (state, commentData) => {
-    const originalComment = state.score.comments[commentData.sectionName]
-    const comment = Object.assign({}, originalComment, commentData)
-
-    state.score.comments[commentData.sectionName] = comment
-  },
-
-  resetComment: (state, sectionName) => {
-    const originalComment = state.score.comments[sectionName]
-    const comment = Object.assign({}, originalComment, {
-      text: '',
-      isProfanityAnalyzed: false,
-      isSentimentAnalyzed: false,
-      sentiment: {
-        negative: 0,
-        positive: 0,
-        neutral: 0,
-      },
-      bad_word_count: 0,
-      word_count: 0,
-    })
-
-    state.score.comments[sectionName] = comment
-  }
-}
-
-export const actions = {}
-
-const emptyComment = {
-  text: '',
-
-  sentiment: {
-    negative: 0,
-    positive: 0,
-    neutral: 0,
-  },
-
-  bad_word_count: 0,
-  word_count: 0,
-
-  isSentimentAnalyzed: false,
-  isProfanityAnalyzed: false,
-}
-
-export const state = {
-  submission: {
-    id: 1,
-  },
-
-  score: {
-    id: null,
-    comments: {
-      ideation: emptyComment,
-      technical: emptyComment,
-      entrepreneurship: emptyComment,
-      pitch: emptyComment,
-      overall: emptyComment,
-    },
-  },
-}
+const actions = {}
 
 // eslint-disable-next-line no-underscore-dangle
 export function __createMocks(custom = { getters: {}, mutations: {}, actions: {}, state: {} }) {
