@@ -16,7 +16,12 @@
               [current_scope, :participant, id: score.judge_profile.account_id] %>
           </td>
           <td style="width: 100px;"><%= score.official? ? "official" : "unofficial" %></td>
-          <td><%= link_to 'View score', [current_scope, :score, id: score.id] %></td>
+
+          <td>
+            <%= link_to 'View score',
+              [current_scope, :score, id: score.id],
+              data: { turbolinks: false } %>
+          </td>
         </tr>
       <% end %>
     </tbody>
