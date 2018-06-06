@@ -77,10 +77,12 @@
       <%= image_tag "certificates-congrats.svg", width: 500 %>
 
       <div class="certificates-btn-wrapper">
-        <%= link_to "View your certificate",
-          current_student.certificates.completion.current.last.file_url,
-          target: "_blank",
-          class: "certificates-btn" %>
+        <% @certificates.each do |certificate| %>
+          <%= link_to "Open your #{certificate.cert_type} certificate",
+            certificate.file_url,
+            target: "_blank",
+            class: "certificates-btn" %>
+        <% end %>
       </div>
     </div>
   </div>

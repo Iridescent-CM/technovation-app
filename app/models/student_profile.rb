@@ -143,6 +143,11 @@ class StudentProfile < ActiveRecord::Base
     end
   end
 
+  def participated?
+    team.submission.present? &&
+      team.submission.qualifies_for_participation?
+  end
+
   def status
     if current_account && onboarded?
       "ready"

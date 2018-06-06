@@ -28,7 +28,7 @@ module FillPdfs
   def self.call(profile)
     recipient = CertificateRecipient.new(profile)
 
-    recipient.certificate_types.each do |certificate_type|
+    recipient.needed_certificate_types.each do |certificate_type|
       generator_klass = "fill_pdfs/#{certificate_type}"
       generator = generator_klass.camelize.constantize.new(recipient)
 
@@ -44,6 +44,7 @@ module FillPdfs
   end
 
   def generate_certificate
+    raise "PDF is not editable" if pdf.fields.empty?
     fill_form
     attach_uploaded_certificate_from_tmp_file_to_account
     account.certificates.public_send(type).current

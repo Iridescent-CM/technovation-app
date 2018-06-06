@@ -4,21 +4,17 @@ module FillPdfs
   class Participation
     include FillPdfs
 
-    def full_text
-      "TODO: This cert is not at all complete!"
-    end
-
     def type
       "participation"
     end
 
     private
     def pathname
-      './lib/certs/2018/completion.pdf'
+      './lib/certs/2018/participation.pdf'
     end
 
     def tmp_output
-      "./tmp/#{Season.current.year}-completion-#{recipient.id}.pdf"
+      "./tmp/#{Season.current.year}-participation-#{recipient.id}.pdf"
     end
   end
 end

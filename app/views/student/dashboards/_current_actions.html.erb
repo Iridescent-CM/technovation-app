@@ -29,7 +29,7 @@
   <% if SeasonToggles.display_scores? %>
     <% if current_team.submission.complete? %>
       <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
-    <% elsif current_team.submission.present? %>
+    <% elsif current_student.participated? %>
       <%= render "student/dashboards/completion_steps/participation_certificate" %>
     <% end %>
   <% end %>

@@ -18,21 +18,45 @@ class CertificateRecipient
     public_send(fieldName)
   end
 
-  def certificate_types
+  def needed_certificate_types
     types = []
     types.push("participation") if needs_participation_certificate?
     types.push("completion")    if needs_completion_certificate?
     types
   end
 
+  def certificate_types
+    types = []
+    types.push("participation") if gets_participation_certificate?
+    types.push("completion")    if gets_completion_certificate?
+    types
+  end
+
+  def certificates
+    certificate_types.map { |certificate_type|
+      profile.certificates
+             .current
+             .public_send(certificate_type)
+             .last
+    }.compact
+  end
+
   private
   def needs_completion_certificate?
-    !account.certificates.completion.current.any? &&
-      team.submission.complete?
+      gets_completion_certificate? &&
+        !account.certificates.completion.current.any?
+  end
+
+  def gets_completion_certificate?
+    team.submission.complete?
   end
 
   def needs_participation_certificate?
-    team.submission.percent_complete < 100 &&
-      team.submission.percent_complete >= 50
+    gets_participation_certificate? &&
+      !account.certificates.participation.current.any?
+  end
+
+  def gets_participation_certificate?
+    team.submission.qualifies_for_participation?
   end
 end

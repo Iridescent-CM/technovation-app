@@ -16,7 +16,7 @@ RSpec.feature "Student certificates" do
       click_link("View your scores and certificates")
 
       expect(page).to have_link(
-        "View your certificate",
+        "Open your completion certificate",
         href: student.certificates.completion.current.last.file_url
       )
     end
@@ -62,7 +62,12 @@ RSpec.feature "Student certificates" do
         student.certificates.current.participation.count
       }.from(0).to(1)
 
-      expect(page).to have_link("View your certificate")
+      click_link( "View your certificate")
+
+      expect(page).to have_link(
+        "Open your participation certificate",
+        href: student.certificates.participation.current.last.file_url
+      )
     end
 
     scenario "no completion certificate is generated" do

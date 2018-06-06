@@ -2,6 +2,7 @@ require "./app/models/submissions/required_fields"
 
 class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
+  PARTICIPATION_MINIMUM_PERCENT = 50
 
   include Seasoned
 
@@ -189,6 +190,11 @@ class TeamSubmission < ActiveRecord::Base
     define_method("#{piece}_complete?") do
       not public_send(piece).blank?
     end
+  end
+
+  def qualifies_for_participation?
+    percent_complete < 100 &&
+      percent_complete >= PARTICIPATION_MINIMUM_PERCENT
   end
 
   def total_possible_score
