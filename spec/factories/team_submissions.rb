@@ -25,6 +25,19 @@ FactoryBot.define do
       end
     end
 
+    trait :half_complete do
+      after(:create) do |submission|
+        SubmissionValidation.invalidate(submission)
+        submission.update(
+          app_name: "Filled in by the factory!",
+          app_description: "Filled in by the factory! " +
+                           "Hello world!\n I have line breaks too",
+          development_platform: "Swift or XCode",
+          pitch_video_link: "http://example.com/pitch",
+        )
+      end
+    end
+
     trait :semifinalist do
       contest_rank :semifinalist
     end

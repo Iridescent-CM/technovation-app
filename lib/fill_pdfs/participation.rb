@@ -8,6 +8,10 @@ module FillPdfs
       "TODO: This cert is not at all complete!"
     end
 
+    def type
+      "participation"
+    end
+
     private
     def pathname
       './lib/certs/2018/completion.pdf'

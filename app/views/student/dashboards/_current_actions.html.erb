@@ -26,8 +26,12 @@
     <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
   <% end %>
 
-  <% if current_team.submission.complete? && SeasonToggles.display_scores? %>
-    <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
+  <% if SeasonToggles.display_scores? %>
+    <% if current_team.submission.complete? %>
+      <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
+    <% elsif current_team.submission.present? %>
+      <%= render "student/dashboards/completion_steps/participation_certificate" %>
+    <% end %>
   <% end %>
 
   <%= render "student/dashboards/completion_steps/team_submission" %>

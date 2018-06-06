@@ -52,6 +52,40 @@ RSpec.feature "Student certificates" do
     end
   end
 
+  context "when the student has completed 50-99% of the submission" do
+    let(:student) { FactoryBot.create(:student, :half_complete_submission) }
+
+    scenario "a participation certificate is generated" do
+      expect {
+        sign_in(student)
+      }.to change {
+        student.certificates.current.participation.count
+      }.from(0).to(1)
+
+      expect(page).to have_link("View your certificate")
+    end
+
+    scenario "no completion certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.completion.count
+      }
+
+      expect(page).not_to have_link("View your scores and certificates")
+    end
+
+    scenario "no rpe winner certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.rpe_winner.count
+      }
+
+      expect(page).not_to have_link("View your scores and certificates")
+    end
+  end
+
   scenario "generate a regional grand prize cert" do
     skip "for now"
     student = FactoryBot.create(:student, :on_team)

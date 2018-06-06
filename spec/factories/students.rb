@@ -35,6 +35,15 @@ FactoryBot.define do
       end
     end
 
+    trait :half_complete_submission do
+      onboarded
+      on_team
+
+      after(:create) do |student|
+        FactoryBot.create(:submission, :half_complete, team: student.team)
+      end
+    end
+
     trait :submitted do
       quarterfinalist
     end
