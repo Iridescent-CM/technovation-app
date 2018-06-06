@@ -8,6 +8,10 @@ module FillPdfs
       "Placeholder regional winner fullText"
     end
 
+    def type
+      "rpe_winner"
+    end
+
     private
     def pathname
       './lib/certs/2018/student/regional_winner.pdf'

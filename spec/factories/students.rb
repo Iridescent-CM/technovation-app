@@ -39,6 +39,14 @@ FactoryBot.define do
       quarterfinalist
     end
 
+    trait :virtual do
+      after(:create) do |student|
+        if student.team.present?
+          student.team.events.destroy_all
+        end
+      end
+    end
+
     trait :quarterfinalist do
       onboarded
       on_team

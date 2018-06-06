@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.feature "Student certificates" do
   before { SeasonToggles.display_scores_on! }
 
-  context "quarterfinalist students" do
-    let(:student) { FactoryBot.create(:student, :quarterfinalist) }
+  context "virtual quarterfinalist students" do
+    let(:student) { FactoryBot.create(:student, :virtual, :quarterfinalist) }
 
     scenario "receive a completion certificate" do
       expect {
@@ -26,6 +26,14 @@ RSpec.feature "Student certificates" do
         sign_in(student)
       }.not_to change {
         student.certificates.current.participation.count
+      }
+    end
+
+    scenario "no rpe winner certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.rpe_winner.count
       }
     end
   end
