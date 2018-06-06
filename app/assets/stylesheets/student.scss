@@ -13,18 +13,3 @@
 @import "review_submission";
 @import "tabs";
 @import "scores";
-
-label {
-  cursor: pointer;
-  color: $grey-translucent;
-  background-color: #ECECEC;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: left;
-  text-align: left;
-  height: 25px;
-  transition: color 0.2s ease;
-  width: auto;
-  margin: 25px;
-}
