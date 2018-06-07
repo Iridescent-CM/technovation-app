@@ -281,12 +281,11 @@ export default {
         if (!!this.commentText.length) {
           this.runSentimentAnalysis()
           this.runProfanityAnalysis()
-       } else {
+        } else {
           this.$store.commit('resetComment', this.section)
+          this.$store.commit('saveComment', this.section)
         }
       }
-
-      this.$store.commit('saveComment', this.section)
     },
 
     runSentimentAnalysis () {
@@ -305,8 +304,10 @@ export default {
               sectionName: this.section,
               sentiment: resp.result[0],
               isSentimentAnalyzed: true,
+            })
+
+            this.$store.commit('saveComment', this.section)
           })
-        })
       }
     },
 
@@ -329,6 +330,8 @@ export default {
               bad_word_count: this.badWordCount,
               isProfanityAnalyzed: true,
             })
+
+            this.$store.commit('saveComment', this.section)
           })
       }
     },
