@@ -5,6 +5,7 @@ require 'pdf_forms'
 require 'fill_pdfs/completion'
 require 'fill_pdfs/participation'
 require 'fill_pdfs/regional_winner'
+require 'fill_pdfs/semifinalist'
 
 module FillPdfs
   # PROD settings:

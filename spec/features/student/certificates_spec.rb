@@ -3,6 +3,49 @@ require "rails_helper"
 RSpec.feature "Student certificates" do
   before { SeasonToggles.display_scores_on! }
 
+  context "virtual semifinalist students" do
+    let(:student) { FactoryBot.create(:student, :virtual, :semifinalist) }
+
+    scenario "receive a semifinalist certificate" do
+      expect {
+        sign_in(student)
+      }.to change {
+        student.certificates.current.semifinalist.count
+      }.from(0).to(1)
+
+      click_link("View your scores and certificates")
+
+      expect(page).to have_link(
+        "Open your semifinalist certificate",
+        href: student.certificates.semifinalist.current.last.file_url
+      )
+    end
+
+    scenario "no completion certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.completion.count
+      }
+    end
+
+    scenario "no participation certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.participation.count
+      }
+    end
+
+    scenario "no rpe winner certificate is generated" do
+      expect {
+        sign_in(student)
+      }.not_to change {
+        student.certificates.current.rpe_winner.count
+      }
+    end
+  end
+
   context "virtual quarterfinalist students" do
     let(:student) { FactoryBot.create(:student, :virtual, :quarterfinalist) }
 

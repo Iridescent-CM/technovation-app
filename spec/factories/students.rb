@@ -65,6 +65,15 @@ FactoryBot.define do
       end
     end
 
+    trait :semifinalist do
+      onboarded
+      on_team
+
+      after(:create) do |student|
+        FactoryBot.create(:submission, :complete, :semifinalist, team: student.team)
+      end
+    end
+
     trait :chicago do
       city "Chicago"
       state_province "IL"

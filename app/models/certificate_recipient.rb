@@ -22,6 +22,7 @@ class CertificateRecipient
     types = []
     types.push("participation") if needs_participation_certificate?
     types.push("completion")    if needs_completion_certificate?
+    types.push("semifinalist")  if needs_semifinalist_certificate?
     types
   end
 
@@ -29,6 +30,7 @@ class CertificateRecipient
     types = []
     types.push("participation") if gets_participation_certificate?
     types.push("completion")    if gets_completion_certificate?
+    types.push("semifinalist")  if gets_semifinalist_certificate?
     types
   end
 
@@ -48,7 +50,8 @@ class CertificateRecipient
   end
 
   def gets_completion_certificate?
-    team.submission.complete?
+    team.submission.complete? &&
+      team.submission.quarterfinalist?
   end
 
   def needs_participation_certificate?
@@ -58,5 +61,14 @@ class CertificateRecipient
 
   def gets_participation_certificate?
     team.submission.qualifies_for_participation?
+  end
+
+  def needs_semifinalist_certificate?
+    gets_semifinalist_certificate? &&
+      !account.certificates.semifinalist.current.any?
+  end
+
+  def gets_semifinalist_certificate?
+    team.submission.semifinalist?
   end
 end

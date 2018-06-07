@@ -6,6 +6,7 @@ class Certificate < ApplicationRecord
     appreciation
     rpe_winner
     participation
+    semifinalist
   }
 
   belongs_to :account
