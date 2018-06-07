@@ -54,7 +54,7 @@
         ></div>
       </div>
 
-      <textarea v-model="comment.text" />
+      <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
 
       <div class="grid grid--bleed grid--justify-space-between">
         <div class="grid__col-12">
@@ -239,31 +239,26 @@ export default {
 
   methods: {
     initiateComment () {
-      const storeComment = this.$store.getters.comment(this.section)
-      let myComment = Object.assign({}, storeComment, { sectionName: this.section })
+      let comment = Object.assign({}, this.comment, { sectionName: this.section })
 
-      if (!myComment.text) {
-        myComment.text = ''
+      if (!comment.text) {
+        comment.text = ''
       }
 
-      this.$store.commit('setComment', myComment)
+      this.$store.commit('setComment', comment)
 
-      this.$nextTick().then(() => {
-        const commentSentiment = this.comment.sentiment
+      const positiveSentiment = parseFloat(comment.sentiment.positive)
+      const neutralSentiment = parseFloat(comment.sentiment.neutral)
+      const negativeSentiment = parseFloat(comment.sentiment.negative)
 
-        const positiveSentiment = parseFloat(commentSentiment.positive)
-        const neutralSentiment = parseFloat(commentSentiment.neutral)
-        const negativeSentiment = parseFloat(commentSentiment.negative)
+      if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
+        this.$store.commit('setComment', {
+          sectionName: this.section,
+          isSentimentAnalyzed: true,
+        })
+      }
 
-        if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
-          this.$store.commit('setComment', {
-            sectionName: this.section,
-            isSentimentAnalyzed: true,
-          })
-        }
-
-        this.commentInitiated = true
-      })
+      this.commentInitiated = true
     },
 
     sentimentTooltip (slant) {
@@ -281,12 +276,11 @@ export default {
         if (!!this.commentText.length) {
           this.runSentimentAnalysis()
           this.runProfanityAnalysis()
-       } else {
+        } else {
           this.$store.commit('resetComment', this.section)
+          this.$store.commit('saveComment', this.section)
         }
       }
-
-      this.$store.commit('saveComment', this.section)
     },
 
     runSentimentAnalysis () {
@@ -305,8 +299,10 @@ export default {
               sectionName: this.section,
               sentiment: resp.result[0],
               isSentimentAnalyzed: true,
+            })
+
+            this.$store.commit('saveComment', this.section)
           })
-        })
       }
     },
 
@@ -329,8 +325,17 @@ export default {
               bad_word_count: this.badWordCount,
               isProfanityAnalyzed: true,
             })
+
+            this.$store.commit('saveComment', this.section)
           })
       }
+    },
+
+    updateCommentText (e) {
+      this.$store.commit('setComment', {
+        sectionName: this.section,
+        text: e.target.value,
+      })
     },
   },
 
