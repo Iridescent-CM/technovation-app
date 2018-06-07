@@ -239,31 +239,26 @@ export default {
 
   methods: {
     initiateComment () {
-      const storeComment = this.$store.getters.comment(this.section)
-      let myComment = Object.assign({}, storeComment, { sectionName: this.section })
+      let comment = Object.assign({}, this.comment, { sectionName: this.section })
 
-      if (!myComment.text) {
-        myComment.text = ''
+      if (!comment.text) {
+        comment.text = ''
       }
 
-      this.$store.commit('setComment', myComment)
+      this.$store.commit('setComment', comment)
 
-      this.$nextTick().then(() => {
-        const commentSentiment = this.comment.sentiment
+      const positiveSentiment = parseFloat(comment.sentiment.positive)
+      const neutralSentiment = parseFloat(comment.sentiment.neutral)
+      const negativeSentiment = parseFloat(comment.sentiment.negative)
 
-        const positiveSentiment = parseFloat(commentSentiment.positive)
-        const neutralSentiment = parseFloat(commentSentiment.neutral)
-        const negativeSentiment = parseFloat(commentSentiment.negative)
+      if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
+        this.$store.commit('setComment', {
+          sectionName: this.section,
+          isSentimentAnalyzed: true,
+        })
+      }
 
-        if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
-          this.$store.commit('setComment', {
-            sectionName: this.section,
-            isSentimentAnalyzed: true,
-          })
-        }
-
-        this.commentInitiated = true
-      })
+      this.commentInitiated = true
     },
 
     sentimentTooltip (slant) {
