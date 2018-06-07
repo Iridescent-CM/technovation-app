@@ -35,7 +35,7 @@ document.addEventListener('turbolinks:load', () => {
 
       props: ['scoreId'],
 
-      mounted () {
+      created () {
         if (this.$refs.deadline)
           this.$store.commit('deadline', this.$refs.deadline.dataset.date)
 
@@ -59,7 +59,9 @@ document.addEventListener('turbolinks:load', () => {
             this.notice = xhr.responseJSON.msg
           },
         })
+      },
 
+      mounted () {
         $(".col--sticky").stick_in_parent({
           parent: ".col--sticky-parent",
           spacer: ".col--sticky-spacer",
