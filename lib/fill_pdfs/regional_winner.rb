@@ -4,21 +4,12 @@ module FillPdfs
   class RegionalWinner
     include FillPdfs
 
-    def full_text
-      "Placeholder regional winner fullText"
-    end
-
     def type
       "rpe_winner"
     end
 
-    private
-    def pathname
-      './lib/certs/2018/student/regional_winner.pdf'
-    end
-
-    def tmp_output
-      "./tmp/#{Season.current.year}-Regional-Winner-#{recipient.id}.pdf"
+    def full_text
+      "Placeholder regional winner fullText"
     end
   end
 end

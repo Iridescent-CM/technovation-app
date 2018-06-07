@@ -88,4 +88,12 @@ module FillPdfs
       recipient.public_send(field_name)
     end
   end
+
+  def pathname
+    "./lib/certs/#{Season.current.year}/#{type}.pdf"
+  end
+
+  def tmp_output
+    "./tmp/#{Season.current.year}-#{type}-#{recipient.id}.pdf"
+  end
 end
