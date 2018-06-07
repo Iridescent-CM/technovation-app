@@ -62,7 +62,7 @@ class ScoredSubmissionsGrid
     str += "/#{submission.total_possible_score}"
   end
 
-  column :view, mandatory: true, html: true do |submission|
+  column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon('list-ul', size: 16, remote: true),
       [current_scope, :score_detail, id: submission.id],
@@ -73,16 +73,20 @@ class ScoredSubmissionsGrid
       }
     )
 
-    html += " "
+    if grid.admin
+      html += " "
 
-    html += link_to(
-      web_icon('photo', size: 16, remote: true),
-      app_path(submission),
-      class: "open-public",
-      "v-tooltip" => "'Open public page'",
-      target: :_blank,
-      data: { turbolinks: false }
-    )
+      html += link_to(
+        web_icon('photo', size: 16, remote: true),
+        app_path(submission),
+        class: "open-public",
+        "v-tooltip" => "'Open public page'",
+        target: :_blank,
+        data: { turbolinks: false }
+      )
+    else
+      html
+    end
   end
 
   filter :round,
