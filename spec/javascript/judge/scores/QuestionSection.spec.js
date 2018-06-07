@@ -27,7 +27,10 @@ describe('Question comments section', () => {
       state: initialState,
       getters: {
         sectionQuestions: jest.fn(() => () => {}),
-      }
+      },
+      mutations: {
+        saveComment: jest.fn(() => {}),
+      },
     })
 
     wrapper = shallow(
@@ -69,6 +72,33 @@ describe('Question comments section', () => {
           done()
         })
       })
+    })
+  })
+
+  test('textarea should update comment text in store on change', (done) => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: "ideation",
+        },
+        attachToDocument: true
+      }
+    )
+
+    const comment = 'This is a pretty great project. I like what I see here.'
+
+    wrapper.vm.$refs.commentText.value = comment
+
+    const inputEvent = document.createEvent('HTMLEvents');
+    inputEvent.initEvent('input', true, true);
+    wrapper.vm.$refs.commentText.dispatchEvent(inputEvent);
+
+    wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.vm.comment.text).toEqual(comment)
+      expect(wrapper.vm.commentText).toEqual(comment)
+      done()
     })
   })
 })

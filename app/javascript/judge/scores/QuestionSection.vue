@@ -54,7 +54,7 @@
         ></div>
       </div>
 
-      <textarea v-model="comment.text" />
+      <textarea ref="commentText" v-model="comment.text" />
 
       <div class="grid grid--bleed grid--justify-space-between">
         <div class="grid__col-12">
