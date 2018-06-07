@@ -54,7 +54,7 @@
         ></div>
       </div>
 
-      <textarea ref="commentText" v-model="comment.text" />
+      <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
 
       <div class="grid grid--bleed grid--justify-space-between">
         <div class="grid__col-12">
@@ -329,6 +329,13 @@ export default {
             this.$store.commit('saveComment', this.section)
           })
       }
+    },
+
+    updateCommentText (e) {
+      this.$store.commit('setComment', {
+        sectionName: this.section,
+        text: e.target.value,
+      })
     },
   },
 
