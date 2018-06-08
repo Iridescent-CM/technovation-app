@@ -70,7 +70,19 @@ FactoryBot.define do
       on_team
 
       after(:create) do |student|
-        FactoryBot.create(:submission, :complete, :semifinalist, team: student.team)
+        submission = FactoryBot.create(:submission, :complete, :semifinalist, team: student.team)
+        FactoryBot.create(:score, :semifinals, team_submission: submission)
+      end
+    end
+
+    trait :has_qf_scores do
+      quarterfinalist
+
+      after(:create) do |student|
+        submission = student.team.submission
+        raise "Submission is missing" unless submission.present?
+        raise "Submission is incomplete" unless submission.complete?
+        FactoryBot.create(:score, :quarterfinals, team_submission: submission)
       end
     end
 

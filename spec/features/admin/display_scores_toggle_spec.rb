@@ -2,19 +2,14 @@ require "rails_helper"
 
 RSpec.feature "Toggling display of scores" do
   context "Student dashboard" do
-    let(:user) { FactoryBot.create(:student) }
-    let(:sub) { FactoryBot.create(:submission, :junior, :complete) }
-    let(:path) { student_dashboard_path }
+    let(:user) { FactoryBot.create(:student, :has_qf_scores) }
 
-    before do
-      TeamRosterManaging.add(sub.team, user)
-      sign_in(user)
-    end
+    before { sign_in(user) }
 
     scenario "display scores on" do
       SeasonToggles.display_scores_on!
 
-      visit path
+      visit student_dashboard_path
 
       expect(page).to have_content("Scores and Certificates")
       expect(page).to have_css(".button", text: "View your scores and certificates")
@@ -23,7 +18,7 @@ RSpec.feature "Toggling display of scores" do
     scenario "display scores off" do
       SeasonToggles.display_scores_off!
 
-      visit path
+      visit student_dashboard_path
 
       expect(page).not_to have_content("Scores and Certificates")
       expect(page).not_to have_css(".button", text: "View your scores and certificates")
@@ -31,24 +26,19 @@ RSpec.feature "Toggling display of scores" do
   end
 
   context "Mentor dashboard" do
-    let(:user) { FactoryBot.create(:mentor) }
-    let(:sub) { FactoryBot.create(:submission, :junior, :complete) }
-    let(:path) { mentor_dashboard_path }
+    let(:user) { FactoryBot.create(:mentor, :has_qf_scores) }
 
-    before do
-      TeamRosterManaging.add(sub.team, user)
-      sign_in(user)
-    end
+    before { sign_in(user) }
 
     scenario "display scores on" do
       SeasonToggles.display_scores_on!
-      visit path
+      visit mentor_dashboard_path
       expect(page).to have_css("div.mentor-scores")
     end
 
     scenario "display scores off" do
       SeasonToggles.display_scores_off!
-      visit path
+      visit mentor_dashboard_path
       expect(page).not_to have_css("div.mentor-scores")
     end
   end

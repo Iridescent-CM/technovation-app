@@ -106,6 +106,18 @@ FactoryBot.define do
       end
     end
 
+    trait :has_qf_scores do
+      on_team
+      complete_submission
+
+      after(:create) do |mentor|
+        submission = mentor.current_teams.last.submission
+        raise "Submission is missing" unless submission.present?
+        raise "Submission is incomplete" unless submission.complete?
+        FactoryBot.create(:score, :quarterfinals, team_submission: submission)
+      end
+    end
+
     trait :on_junior_team do
       after(:create) do |m|
         team = FactoryBot.create(:team, :junior)
