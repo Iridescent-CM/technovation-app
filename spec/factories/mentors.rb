@@ -114,7 +114,7 @@ FactoryBot.define do
         submission = mentor.current_teams.last.submission
         raise "Submission is missing" unless submission.present?
         raise "Submission is incomplete" unless submission.complete?
-        FactoryBot.create(:score, :quarterfinals, team_submission: submission)
+        FactoryBot.create(:score, :quarterfinals, :complete, team_submission: submission)
       end
     end
 

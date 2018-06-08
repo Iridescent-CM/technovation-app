@@ -47,7 +47,9 @@ RSpec.feature "Student certificates" do
   end
 
   context "virtual quarterfinalist students" do
-    let(:student) { FactoryBot.create(:student, :virtual, :quarterfinalist, :has_qf_scores) }
+    let(:student) {
+      FactoryBot.create(:student, :virtual, :has_qf_scores)
+    }
 
     scenario "receive a completion certificate" do
       expect {

@@ -7,7 +7,7 @@
 
   <h1 class="content-heading">Scores and Certificates</h1>
 
-  <% if current_team.submission.complete? && current_team.submission.scores.any? %>
+  <% if current_team.submission.complete? && current_team.submission.scores.complete.any? %>
     <p>
       Congratulations! Your scores and certificates are ready.
     </p>

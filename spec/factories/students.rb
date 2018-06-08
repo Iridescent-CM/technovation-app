@@ -71,7 +71,7 @@ FactoryBot.define do
 
       after(:create) do |student|
         submission = FactoryBot.create(:submission, :complete, :semifinalist, team: student.team)
-        FactoryBot.create(:score, :semifinals, team_submission: submission)
+        FactoryBot.create(:score, :semifinals, :complete, team_submission: submission)
       end
     end
 
@@ -82,7 +82,7 @@ FactoryBot.define do
         submission = student.team.submission
         raise "Submission is missing" unless submission.present?
         raise "Submission is incomplete" unless submission.complete?
-        FactoryBot.create(:score, :quarterfinals, team_submission: submission)
+        FactoryBot.create(:score, :quarterfinals, :complete, team_submission: submission)
       end
     end
 
