@@ -95,6 +95,9 @@ export default {
     },
 
     isScoreIncomplete () {
+      // Check remote database instead of local state
+      // GET `/judge/scores/${this.score.id}`
+      // Modify JSON returned in app/serializers/score_serializer.rb
       return this.anyCommentsInvalid || this.anyScoresEmpty
     },
 

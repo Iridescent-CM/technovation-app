@@ -69,7 +69,11 @@ module Judge
 
     def show
       @score = current_judge.scores.find(params.fetch(:id))
-      render 'admin/scores/show'
+
+      respond_to do |format|
+        format.html { render 'admin/scores/show' }
+        format.json { render json: ScoreSerializer.new(@score).serialized_json }
+      end
     end
 
     def update
