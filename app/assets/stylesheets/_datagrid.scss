@@ -5,6 +5,14 @@
 .filter {
   .chosen-container {
     margin: 0 0 1rem;
+
+    .chosen-single {
+      position: static;
+    }
+
+    .chosen-search {
+      background: none;
+    }
   }
 }
 
