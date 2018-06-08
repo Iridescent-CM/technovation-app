@@ -2,21 +2,12 @@
 
 <div id="student-scores-tabs" class="tabs">
   <ul class="score-tabs-menu tab-menu">
-    <% if @quarterfinals_scores.official.any? %>
+    <% if @quarterfinals_scores.any? %>
       <li class="tab-link">
         <button
           class="tab-button"
           data-tab-id="quarterfinal"
         >Quarterfinals</button>
-      </li>
-    <% end %>
-
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <li class="tab-link">
-        <button
-          class="tab-button"
-          data-tab-id="unofficial"
-        >Unofficial Quarterfinals</button>
       </li>
     <% end %>
 
@@ -38,19 +29,11 @@
   </ul>
 
   <div class="score-tab-content content">
-    <% if @quarterfinals_scores.official.any? %>
+    <% if @quarterfinals_scores.any? %>
       <div class="score-tab tab-content" id="quarterfinal">
         <%= render "student/scores/scores",
           round: :quarterfinals,
-          scores: @quarterfinals_scores.official %>
-      </div>
-    <% end %>
-
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <div class="score-tab tab-content" id="unofficial">
-        <%= render "student/scores/scores",
-          round: :unofficial,
-          scores: @quarterfinals_scores.unofficial %>
+          scores: @quarterfinals_scores %>
       </div>
     <% end %>
 
