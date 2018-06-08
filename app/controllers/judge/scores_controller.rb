@@ -80,7 +80,7 @@ module Judge
       score = current_judge.submission_scores.find(params[:id])
 
       if score.update(score_params)
-        render json: ScoreSerializer.new(score).serialized_json
+        render json: ScoreSerializer.new(score.reload).serialized_json
       else
         render json: score.errors
       end

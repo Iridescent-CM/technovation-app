@@ -66,7 +66,9 @@ export const saveComment = (state, sectionName) => {
     data: data,
     contentType: false,
     processData: false,
-    success: resp => {},
+    success: resp => {
+      // Verify the resp here
+    },
     error: err => (console.error(err)),
   })
 }
