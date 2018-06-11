@@ -31,6 +31,12 @@
       <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
     <% elsif current_student.participated? %>
       <%= render "student/dashboards/completion_steps/participation_certificate" %>
+    <% else %>
+      <p>
+        Thank you for your participation. Unfortunately, no scores are available
+        for your team because your submission was incomplete. We hope you will
+        continue working on your app and join again next season!
+      </p>
     <% end %>
   <% end %>
 

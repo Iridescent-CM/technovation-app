@@ -1,8 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "Students view scores" do
-  before do
-    SeasonToggles.display_scores="yes"
+  before { SeasonToggles.display_scores_on! }
+
+  scenario "Unfinished / unstarted submission" do
+    submission = FactoryBot.create(:submission, :incomplete)
+    sign_in(submission.team.students.sample)
+    expect(page).to have_content("Thank you for your participation. Unfortunately")
   end
 
   scenario "view QF scores" do
