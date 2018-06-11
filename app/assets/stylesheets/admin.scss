@@ -8,7 +8,7 @@
 $chosen-sprite: image-url('chosen-sprite.png');
 $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 
-@import "chosen";
+@import "chosen-base";
 @import "sweetalert2";
 
 // base
