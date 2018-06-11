@@ -16,7 +16,7 @@
         <button
           class="tab-button"
           data-tab-id="unofficial"
-        >Unofficial Quarterfinals</button>
+        >Celebration Scores</button>
       </li>
     <% end %>
 
@@ -49,7 +49,7 @@
     <% if @quarterfinals_scores.unofficial.any? %>
       <div class="score-tab tab-content" id="unofficial">
         <%= render "student/scores/scores",
-          round: :unofficial,
+          round: UnofficialJudgingRound.new,
           scores: @quarterfinals_scores.unofficial %>
       </div>
     <% end %>

@@ -192,6 +192,8 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  alias_attribute :celebration_average_score, :average_unofficial_score
+
   def qualifies_for_participation?
     percent_complete < 100 &&
       percent_complete >= PARTICIPATION_MINIMUM_PERCENT
