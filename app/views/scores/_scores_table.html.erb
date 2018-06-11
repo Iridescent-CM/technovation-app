@@ -1,11 +1,11 @@
 <% if scores.unofficial.any? %>
-  <h5>Official Scores - These scores counted</h5>
+  <h5>Official Scores - These scores counted toward the average</h5>
 <% end %>
 
 <%= render 'scores/table', scores: scores.official %>
 
 <% if scores.unofficial.any? %>
-  <h5>Unofficial Scores - These scores are from a celebration event</h5>
+  <h5>Celebration Scores - These scores are from a celebration event</h5>
 
   <%= render 'scores/table', scores: scores.unofficial %>
 <% end %>
