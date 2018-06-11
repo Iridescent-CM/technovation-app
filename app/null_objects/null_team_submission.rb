@@ -1,4 +1,12 @@
 class NullTeamSubmission < NullObject
+  def qualifies_for_participation?
+    false
+  end
+
+  def semifinalist?
+    false
+  end
+
   def screenshots
     ::Screenshot.none
   end
