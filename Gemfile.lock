@@ -145,10 +145,6 @@ GEM
     checkr-official (1.5.2)
       json (>= 1.8.1)
       rest-client (>= 1.4)
-    chosen-rails (1.8.3)
-      coffee-rails (>= 3.2)
-      railties (>= 3.0)
-      sass-rails (>= 3.2)
     chronic (0.10.2)
     churn (1.0.2)
       chronic (>= 0.2.3)
@@ -655,11 +651,11 @@ DEPENDENCIES
   casting (~> 0.7)
   chart-js-rails (~> 0.1)
   checkr-official (~> 1.5)
-  chosen-rails (~> 1.8)
   churn (~> 1.0)
   city-state!
   clipboard-rails (~> 1.7)
   cocoon (~> 1.2)
+  coffee-rails
   counter_culture (~> 1.11)
   countries (~> 1.2)
   country_state_select!
