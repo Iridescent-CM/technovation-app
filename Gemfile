@@ -20,6 +20,7 @@ gem 'counter_culture', '~> 1.11'
 
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
+gem 'coffee-rails'
 
 gem 'turbolinks', "~> 5.1"
 gem 'jquery-rails', "~> 4.3"
