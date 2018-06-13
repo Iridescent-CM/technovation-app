@@ -47,7 +47,7 @@ class CertificateRecipient
   private
   def needs_completion_certificate?
       gets_completion_certificate? &&
-        !account.certificates.completion.current.any?
+        !account.current_completion_certificates.any?
   end
 
   def gets_completion_certificate?
@@ -57,7 +57,7 @@ class CertificateRecipient
 
   def needs_participation_certificate?
     gets_participation_certificate? &&
-      !account.certificates.participation.current.any?
+      !account.current_participation_certificates.any?
   end
 
   def gets_participation_certificate?
@@ -66,7 +66,7 @@ class CertificateRecipient
 
   def needs_semifinalist_certificate?
     gets_semifinalist_certificate? &&
-      !account.certificates.semifinalist.current.any?
+      !account.current_semifinalist_certificates.any?
   end
 
   def gets_semifinalist_certificate?
