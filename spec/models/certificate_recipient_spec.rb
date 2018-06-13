@@ -38,6 +38,31 @@ RSpec.describe CertificateRecipient do
 
         expect(recipient.needed_certificate_types).to eq(["participation"])
       end
+
+      context "and already has a participation certificate" do
+        it "needs no certificates" do
+          submission = double(
+            :TeamSubmission,
+            app_name: "Submission app name",
+            :qualifies_for_participation? => true,
+            :complete? => false,
+            :semifinalist? => false
+          )
+
+          account = double(
+            :Account,
+            id: 1,
+            name: "My full name",
+            current_participation_certificates: [double(:participation_certificate)]
+          )
+
+          team = double(:Team, name: "Team name", submission: submission)
+
+          recipient = CertificateRecipient.new(account, team)
+
+          expect(recipient.needed_certificate_types).to be_empty
+        end
+      end
     end
   end
 
