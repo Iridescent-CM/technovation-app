@@ -155,6 +155,89 @@ RSpec.describe CertificateRecipient do
         expect(recipient.certificate_types).to be_empty
       end
     end
+
+    context "a team with a participation qualifying submission" do
+      let(:submission) {
+        double(
+          :TeamSubmission,
+          app_name: "Submission app name",
+          :qualifies_for_participation? => true,
+          :complete? => false,
+          :semifinalist? => false
+        )
+      }
+
+      let(:team) { double(:Team, name: "Team name", submission: submission) }
+
+      it "gets a participation certificate" do
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          current_participation_certificates: []
+        )
+
+        recipient = CertificateRecipient.new(account, team)
+
+        expect(recipient.certificate_types).to eq(["participation"])
+      end
+    end
+
+    context "a team with a complete submission" do
+      let(:submission) {
+        double(
+          :TeamSubmission,
+          app_name: "Submission app name",
+          :qualifies_for_participation? => false,
+          :complete? => true,
+          :quarterfinalist? => true,
+          :semifinalist? => false
+        )
+      }
+
+      let(:team) { double(:Team, name: "Team name", submission: submission) }
+
+      it "gets a completion certificate" do
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          current_completion_certificates: []
+        )
+
+        recipient = CertificateRecipient.new(account, team)
+
+        expect(recipient.certificate_types).to eq(["completion"])
+      end
+    end
+
+    context "a team with a semifinalist submission" do
+      let(:submission) {
+        double(
+          :TeamSubmission,
+          app_name: "Submission app name",
+          :qualifies_for_participation? => false,
+          :complete? => true,
+          :quarterfinalist? => false,
+          :semifinalist? => true
+        )
+      }
+
+      let(:team) { double(:Team, name: "Team name", submission: submission) }
+
+      it "gets a semifinalist certificate" do
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          current_semifinalist_certificates: []
+        )
+
+        recipient = CertificateRecipient.new(account, team)
+
+        expect(recipient.certificate_types).to eq(["semifinalist"])
+      end
+    end
   end
 
   describe "#certificates" do
