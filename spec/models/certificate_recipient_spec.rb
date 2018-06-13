@@ -99,6 +99,49 @@ RSpec.describe CertificateRecipient do
         end
       end
     end
+
+    context "a team with a semifinalist submission" do
+      let(:submission) {
+        double(
+          :TeamSubmission,
+          app_name: "Submission app name",
+          :qualifies_for_participation? => false,
+          :complete? => true,
+          :quarterfinalist? => false,
+          :semifinalist? => true
+        )
+      }
+
+      let(:team) { double(:Team, name: "Team name", submission: submission) }
+
+      it "needs a completion certificate" do
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          current_semifinalist_certificates: []
+        )
+
+        recipient = CertificateRecipient.new(account, team)
+
+        expect(recipient.needed_certificate_types).to eq(["semifinalist"])
+      end
+
+      context "and already has a completion certificate" do
+        it "needs no certificates" do
+          account = double(
+            :Account,
+            id: 1,
+            name: "My full name",
+            current_semifinalist_certificates: [double(:semifinalist_certificate)]
+          )
+
+          recipient = CertificateRecipient.new(account, team)
+
+          expect(recipient.needed_certificate_types).to be_empty
+        end
+      end
+    end
   end
 
   describe "#certificate_types" do
