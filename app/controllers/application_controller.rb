@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
     :current_profile,
     :current_profile_type,
     :current_session,
-    :can_generate_certificate?,
     :get_cookie,
     :regional_ambassador
 
@@ -138,18 +137,6 @@ class ApplicationController < ActionController::Base
   def force_logout
     remove_cookie(:auth_token)
     remove_cookie(:session_token)
-  end
-
-  def can_generate_certificate?(scope, cert_type)
-    @can_generate_certificate ||= {}
-
-    @can_generate_certificate[cert_type] ||= (
-      ENV.fetch("CERTIFICATES") { false } and
-        CheckIfCertificateIsAllowed.(
-          send("current_#{scope}"),
-          cert_type
-        )
-    )
   end
 
   def setup_valid_profile_from_signup_attempt(scope, token)

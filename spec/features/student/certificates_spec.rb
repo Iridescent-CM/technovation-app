@@ -36,14 +36,6 @@ RSpec.feature "Student certificates" do
         student.certificates.current.participation.count
       }
     end
-
-    scenario "no rpe winner certificate is generated" do
-      expect {
-        sign_in(student)
-      }.not_to change {
-        student.certificates.current.rpe_winner.count
-      }
-    end
   end
 
   context "virtual quarterfinalist students" do
@@ -71,14 +63,6 @@ RSpec.feature "Student certificates" do
         sign_in(student)
       }.not_to change {
         student.certificates.current.participation.count
-      }
-    end
-
-    scenario "no rpe winner certificate is generated" do
-      expect {
-        sign_in(student)
-      }.not_to change {
-        student.certificates.current.rpe_winner.count
       }
     end
   end
@@ -124,40 +108,5 @@ RSpec.feature "Student certificates" do
 
       expect(page).not_to have_link("View your scores and certificates")
     end
-
-    scenario "no rpe winner certificate is generated" do
-      expect {
-        sign_in(student)
-      }.not_to change {
-        student.certificates.current.rpe_winner.count
-      }
-
-      expect(page).not_to have_link("View your scores and certificates")
-    end
-  end
-
-  scenario "generate a regional grand prize cert" do
-    skip "for now"
-    student = FactoryBot.create(:student, :on_team)
-
-    rpe = FactoryBot.create(:rpe)
-    rpe.teams << student.team
-
-    FactoryBot.create(
-      :team_submission,
-      team: student.team,
-      contest_rank: :semifinalist,
-    )
-
-    sign_in(student)
-
-    within("#student_winner_cert") {
-      click_button("Prepare my certificate")
-    }
-
-    expect(page).to have_link(
-      "Download my certificate",
-      href: student.certificates.rpe_winner.current.file_url
-    )
   end
 end
