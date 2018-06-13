@@ -6,7 +6,7 @@ RSpec.describe FillPdfs do
     student = FactoryBot.create(:student, :quarterfinalist, :has_current_completion_certificate)
 
     expect {
-      FillPdfs.(student)
+      FillPdfs.(student.account, student.team)
     }.not_to change {
       student.certificates.current.completion.count
     }

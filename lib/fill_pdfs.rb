@@ -26,8 +26,8 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(profile)
-    recipient = CertificateRecipient.new(profile)
+  def self.call(account, team)
+    recipient = CertificateRecipient.new(account, team)
 
     recipient.needed_certificate_types.each do |certificate_type|
       generator_klass = "fill_pdfs/#{certificate_type}"

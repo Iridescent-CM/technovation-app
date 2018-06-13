@@ -49,6 +49,15 @@ class Account < ActiveRecord::Base
 
   has_many :certificates, dependent: :destroy
 
+  has_many :current_participation_certificates, -> { current.participation },
+    class_name: "Certificate"
+
+  has_many :current_completion_certificates, -> { current.completion },
+    class_name: "Certificate"
+
+  has_many :current_semifinalist_certificates, -> { current.semifinalist },
+    class_name: "Certificate"
+
   has_many :void_consent_waivers,
     -> { void },
     class_name: "ConsentWaiver",

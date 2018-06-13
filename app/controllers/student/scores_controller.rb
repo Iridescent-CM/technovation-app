@@ -14,7 +14,7 @@ module Student
         end
       end
 
-      certificate_recipient = CertificateRecipient.new(current_student)
+      certificate_recipient = CertificateRecipient.new(current_account, current_team)
       @certificates = certificate_recipient.certificates
 
       render template: 'student/scores/index'
