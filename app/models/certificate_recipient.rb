@@ -1,11 +1,12 @@
+require "./app/technovation/friendly_country"
+
 class CertificateRecipient
-  attr_reader :profile, :account, :team,
+  attr_reader :account, :team,
    :id, :mobileAppName, :fullName, :teamName, :region
 
-  def initialize(profile)
-    @profile = profile
-    @account = profile.account
-    @team = profile.teams.last # TODO this is placeholder logic ONLY
+  def initialize(account, team)
+    @account = account
+    @team = team
 
     @id = account.id
     @mobileAppName = team.submission.app_name
@@ -36,7 +37,7 @@ class CertificateRecipient
 
   def certificates
     certificate_types.map { |certificate_type|
-      profile.certificates
+      account.certificates
              .current
              .public_send(certificate_type)
              .last

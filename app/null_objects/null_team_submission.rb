@@ -1,3 +1,5 @@
+require "./app/null_objects/null_object"
+
 class NullTeamSubmission < NullObject
   def qualifies_for_participation?
     false
