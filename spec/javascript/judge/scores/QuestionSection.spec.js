@@ -58,6 +58,24 @@ describe('Question comments section', () => {
     })
   })
 
+  test("saves comments after changes, even if analysis does not run", (done) => {
+    wrapper.vm.$nextTick().then(() => {
+      let storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
+
+      wrapper.vm.comment.isProfanityAnalyzed = true
+      wrapper.vm.comment.text = "hello wo"
+
+      wrapper.vm.handleCommentChange()
+
+      wrapper.vm.$nextTick().then(() => {
+        wrapper.vm.$nextTick().then(() => {
+          expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
+          done()
+        })
+      })
+    })
+  })
+
   test("it resets the word count when the text is deleted", (done) => {
     wrapper.vm.$nextTick().then(() => {
       wrapper.vm.comment.text = "hello beautiful world"

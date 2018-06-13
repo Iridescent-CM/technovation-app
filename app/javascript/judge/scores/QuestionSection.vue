@@ -273,62 +273,72 @@ export default {
 
     handleCommentChange () {
       if (this.commentInitiated) {
-        if (!!this.commentText.length) {
-          this.runSentimentAnalysis()
-          this.runProfanityAnalysis()
+        if (this.commentText.length) {
+          this.runSentimentAnalysis().then(() => {
+            this.runProfanityAnalysis().then(() => {
+              this.saveComment()
+            })
+          })
         } else {
           this.$store.commit('resetComment', this.section)
-          this.$store.commit('saveComment', this.section)
+          this.saveComment()
         }
       }
     },
 
     runSentimentAnalysis () {
-      const shouldRunSentimentAnalysis = (
-        this.wordCount > 19 &&
-          (this.wordCount % 5 === 0 ||
-            !this.commentIsSentimentAnalyzed)
-      )
+      return new Promise((resolve, reject) => {
+        const shouldRunSentimentAnalysis = (
+          this.wordCount > 19 &&
+            (this.wordCount % 5 === 0 ||
+              !this.commentIsSentimentAnalyzed)
+        )
 
-      if (shouldRunSentimentAnalysis) {
-        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-          .algo("nlp/SocialSentimentAnalysis/0.1.4")
-          .pipe({ sentence: this.commentText })
-          .then(resp => {
-            this.$store.commit('setComment', {
-              sectionName: this.section,
-              sentiment: resp.result[0],
-              isSentimentAnalyzed: true,
+        if (shouldRunSentimentAnalysis) {
+          Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+            .algo("nlp/SocialSentimentAnalysis/0.1.4")
+            .pipe({ sentence: this.commentText })
+            .then(resp => {
+              this.$store.commit('setComment', {
+                sectionName: this.section,
+                sentiment: resp.result[0],
+                isSentimentAnalyzed: true,
+              })
+              resolve()
             })
-
-            this.$store.commit('saveComment', this.section)
-          })
-      }
+        } else {
+          resolve()
+        }
+      })
     },
 
     runProfanityAnalysis () {
-      const shouldRunProfanityAlysis = (
-        this.wordCount > 0 &&
-          (this.wordCount % 2 === 0 ||
-            !this.commentIsProfanityAnalyzed)
-      )
+      return new Promise((resolve, reject) => {
+        const shouldRunProfanityAlysis = (
+          this.wordCount > 0 &&
+            (this.wordCount % 2 === 0 ||
+              !this.commentIsProfanityAnalyzed)
+        )
 
-      if (shouldRunProfanityAlysis) {
-        Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-          .algo("nlp/ProfanityDetection/1.0.0")
-          .pipe([this.commentText, ['suck', 'sucks'], false])
-          .then(resp => {
-            this.detectedProfanity = resp.result
+        if (shouldRunProfanityAlysis) {
+          Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
+            .algo("nlp/ProfanityDetection/1.0.0")
+            .pipe([this.commentText, ['suck', 'sucks'], false])
+            .then(resp => {
+              this.detectedProfanity = resp.result
 
-            this.$store.commit('setComment', {
-              sectionName: this.section,
-              bad_word_count: this.badWordCount,
-              isProfanityAnalyzed: true,
+              this.$store.commit('setComment', {
+                sectionName: this.section,
+                bad_word_count: this.badWordCount,
+                isProfanityAnalyzed: true,
+              })
+
+              resolve()
             })
-
-            this.$store.commit('saveComment', this.section)
-          })
-      }
+        } else {
+          resolve()
+        }
+      })
     },
 
     updateCommentText (e) {
@@ -336,6 +346,10 @@ export default {
         sectionName: this.section,
         text: e.target.value,
       })
+    },
+
+    saveComment () {
+      this.$store.commit('saveComment', this.section)
     },
   },
 
