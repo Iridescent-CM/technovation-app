@@ -46,8 +46,8 @@ class CertificateRecipient
 
   private
   def needs_completion_certificate?
-      gets_completion_certificate? &&
-        !account.current_completion_certificates.any?
+    gets_completion_certificate? &&
+      !account.current_completion_certificates.any?
   end
 
   def gets_completion_certificate?
