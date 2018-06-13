@@ -16,23 +16,25 @@ RSpec.describe CertificateRecipient do
     end
 
     context "a team with a participation qualifying submission" do
-      it "needs a participation certificate" do
-        submission = double(
+      let(:submission) {
+        double(
           :TeamSubmission,
           app_name: "Submission app name",
           :qualifies_for_participation? => true,
           :complete? => false,
           :semifinalist? => false
         )
+      }
 
+      let(:team) { double(:Team, name: "Team name", submission: submission) }
+
+      it "needs a participation certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
           current_participation_certificates: []
         )
-
-        team = double(:Team, name: "Team name", submission: submission)
 
         recipient = CertificateRecipient.new(account, team)
 
@@ -41,22 +43,12 @@ RSpec.describe CertificateRecipient do
 
       context "and already has a participation certificate" do
         it "needs no certificates" do
-          submission = double(
-            :TeamSubmission,
-            app_name: "Submission app name",
-            :qualifies_for_participation? => true,
-            :complete? => false,
-            :semifinalist? => false
-          )
-
           account = double(
             :Account,
             id: 1,
             name: "My full name",
             current_participation_certificates: [double(:participation_certificate)]
           )
-
-          team = double(:Team, name: "Team name", submission: submission)
 
           recipient = CertificateRecipient.new(account, team)
 
