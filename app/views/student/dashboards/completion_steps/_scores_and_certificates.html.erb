@@ -17,6 +17,16 @@
           student_scores_path,
           class: "button" %>
     </div>
+  <% elsif current_team.submission.complete? %>
+    <p>
+      Congratulations! Your certificate is ready.
+    </p>
+
+    <div class="step-actions">
+      <%= link_to 'View your certificate',
+          student_scores_path,
+          class: "button" %>
+    </div>
   <% elsif !current_team.submission.complete? || !current_team.submission.present? %>
     <h3>No Scores Available</h3>
 
