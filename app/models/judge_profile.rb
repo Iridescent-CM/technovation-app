@@ -20,9 +20,7 @@ class JudgeProfile < ActiveRecord::Base
   scope :onboarded, -> { where(onboarded: true) }
   scope :onboarding, -> { where(onboarded: false) }
 
-  scope :current, -> {
-    joins(:current_account)
-  }
+  scope :current, -> { joins(:current_account) }
 
   scope :not_attending_live_event, -> {
     includes(:regional_pitch_events)
