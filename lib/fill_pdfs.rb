@@ -6,6 +6,7 @@ require 'fill_pdfs/completion'
 require 'fill_pdfs/participation'
 require 'fill_pdfs/mentor_appreciation'
 require 'fill_pdfs/semifinalist'
+require 'fill_pdfs/general_judge'
 
 module FillPdfs
   # PROD settings:
@@ -26,7 +27,7 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(account, team)
+  def self.call(account, team = nil)
     recipient = CertificateRecipient.new(account, team)
 
     recipient.needed_certificate_types.each do |certificate_type|

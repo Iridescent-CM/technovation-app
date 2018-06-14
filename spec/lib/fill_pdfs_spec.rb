@@ -11,4 +11,14 @@ RSpec.describe FillPdfs do
       student.certificates.current.completion.count
     }
   end
+
+  it "does not generate a certificate for onboarding judges" do
+    judge = FactoryBot.create(:judge)
+
+    expect {
+      FillPdfs.(judge.account)
+    }.not_to change {
+      judge.certificates.count
+    }
+  end
 end

@@ -14,6 +14,7 @@ FactoryBot.define do
       city "Chicago"
       state_province "IL"
       country "US"
+      number_of_scores 0
     end
 
     trait :general_certificate do
@@ -93,8 +94,12 @@ FactoryBot.define do
       end
     end
 
-    after(:create) do |j, e|
-      ProfileCreating.execute(j, FakeController.new)
+    after(:create) do |judge, evaluator|
+      ProfileCreating.execute(judge, FakeController.new)
+
+      evaluator.number_of_scores.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
     end
   end
 end

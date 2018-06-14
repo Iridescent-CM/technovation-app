@@ -35,4 +35,24 @@ RSpec.feature "Judge certificates" do
     expect(page).not_to have_css("#judge-certificate")
     expect(page).not_to have_link("View your certificate")
   end
+
+  Array(1..4).each do |n|
+    scenario "judge with #{n} completed current scores" do
+      SeasonToggles.display_scores_on!
+
+      judge = FactoryBot.create(:judge, :onboarded, number_of_scores: n)
+
+      expect {
+        sign_in(judge)
+      }.to change {
+        judge.current_general_judge_certificates.count
+      }.from(0).to(1)
+
+      expect(page).to have_css("#judge-certificate")
+      expect(page).to have_link(
+        "View your certificate",
+        href: judge.current_general_judge_certificates.last.file_url
+      )
+    end
+  end
 end

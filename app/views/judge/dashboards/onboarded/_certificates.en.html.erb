@@ -11,8 +11,9 @@
       </p>
 
       <%= link_to 'View your certificate',
-        judge_scores_path,
-        class: "button button--margin-top-lg" %>
+        current_judge.current_general_judge_certificates.last.file_url,
+        class: "button button--margin-top-lg",
+        target: :_blank %>
     </div>
 
     <div class="grid__col-6 grid__col--bleed-y">

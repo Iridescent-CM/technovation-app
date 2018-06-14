@@ -5,6 +5,24 @@ require "./app/null_objects/null_team_submission"
 
 RSpec.describe CertificateRecipient do
   describe "#needed_certificate_types" do
+    context "for a judge with 0 completed current scores" do
+      it "needs no certificates" do
+        judge_profile = double(:JudgeProfile)
+
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          judge_profile: judge_profile,
+          mentor_profile: NullProfile.new
+        )
+
+        recipient = CertificateRecipient.new(account)
+
+        expect(recipient.needed_certificate_types).to be_empty
+      end
+    end
+
     context "a team with no submission" do
       it "needs no certificates" do
         account = double(:Account, id: 1, name: "My full name", mentor_profile: NullProfile.new)
