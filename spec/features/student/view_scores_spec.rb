@@ -28,7 +28,7 @@ RSpec.feature "Students view scores" do
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     sign_in(submission.team.students.sample)
-    click_link "View your scores and certificates"
+    click_link "View your scores and certificate"
 
     expect(page).to have_content("earned 2 points")
   end
@@ -52,7 +52,7 @@ RSpec.feature "Students view scores" do
     )
 
     sign_in(submission.team.students.sample)
-    click_link "View your scores and certificates"
+    click_link "View your scores and certificate"
 
     expect(page).to have_content("earned 2 points")
   end

@@ -13,7 +13,7 @@ RSpec.feature "Student certificates" do
         student.certificates.current.semifinalist.count
       }.from(0).to(1)
 
-      click_link("View your scores and certificates")
+      click_link("View your scores and certificate")
 
       expect(page).to have_link(
         "Open your semifinalist certificate",
@@ -50,7 +50,7 @@ RSpec.feature "Student certificates" do
         student.certificates.current.completion.count
       }.from(0).to(1)
 
-      click_link("View your scores and certificates")
+      click_link("View your scores and certificate")
 
       expect(page).to have_link(
         "Open your completion certificate",
@@ -77,7 +77,7 @@ RSpec.feature "Student certificates" do
         student.certificates.count
       }
 
-      expect(page).not_to have_link("View your scores and certificates")
+      expect(page).not_to have_link("View your scores and certificate")
     end
   end
 
@@ -106,7 +106,7 @@ RSpec.feature "Student certificates" do
         student.certificates.current.completion.count
       }
 
-      expect(page).not_to have_link("View your scores and certificates")
+      expect(page).not_to have_link("View your scores and certificate")
     end
   end
 end

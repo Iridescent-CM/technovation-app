@@ -5,15 +5,15 @@
     </span>
   </div>
 
-  <h1 class="content-heading">Scores and Certificates</h1>
+  <h1 class="content-heading">Scores and Certificate</h1>
 
   <% if current_team.submission.complete? && current_team.submission.scores.complete.any? %>
     <p>
-      Congratulations! Your scores and certificates are ready.
+      Congratulations! Your scores and certificate are ready.
     </p>
 
     <div class="step-actions">
-      <%= link_to 'View your scores and certificates',
+      <%= link_to 'View your scores and certificate',
           student_scores_path,
           class: "button" %>
     </div>
