@@ -5,8 +5,44 @@ import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 
 import state from 'judge/scores/store/state'
-import { __createMocks as createMocks } from "judge/scores/store/__mocks__"
-import QuestionSection from "judge/scores/QuestionSection"
+import { __createMocks as createMocks } from 'judge/scores/store/__mocks__'
+import QuestionSection from 'judge/scores/QuestionSection'
+
+const sentimentResponse = [
+  {
+    compound: 0.508,
+    negative: 0.14500000000000002,
+    neutral: 0.521,
+    positive: 0.3350000000000001,
+    sentence: 'This old product sucks! But after the update it works like a charm!',
+  }
+];
+
+const profanityResponse = {
+  ass: 1,
+  damn: 1,
+  jackass: 1,
+  frack: 1,
+};
+
+// This is an anti-pattern. Since we aren't pulling in Algorithmia from npm we
+// have to mock the module directly. If we were pulling in via node_modules we
+// could use: jest.mock('Algorithmia')
+window.Algorithmia = {
+  client: () => ({
+    algo: (algorithm) => ({
+      pipe: () => {
+        if (algorithm === 'nlp/SocialSentimentAnalysis/0.1.4') {
+          return Promise.resolve({
+            result: sentimentResponse,
+          })
+        } else if (algorithm === 'nlp/ProfanityDetection/1.0.0') {
+          return Promise.resolve(profanityResponse)
+        }
+      }
+    })
+  })
+}
 
 const localVue = createLocalVue()
 
@@ -38,52 +74,126 @@ describe('Question comments section', () => {
         store: storeMocks.store,
         localVue,
         propsData: {
-          section: "ideation",
+          section: 'ideation',
         },
       }
     )
   })
 
-  test("initiates the comment on mount", (done) => {
+  test('initiates the comment on mount', (done) => {
     wrapper.vm.$nextTick().then(() => {
       expect(wrapper.vm.commentInitiated).toBe(true)
       done()
     })
   })
 
-  test("sets the comment storage with section name and score ID", (done) => {
+  test('sets the comment storage with section name and score ID', (done) => {
     wrapper.vm.$nextTick().then(() => {
-      expect(wrapper.vm.commentStorageKey).toEqual("ideation-comment-1")
+      expect(wrapper.vm.commentStorageKey).toEqual('ideation-comment-1')
       done()
     })
   })
 
-  test("saves comments after changes, even if analysis does not run", (done) => {
-    wrapper.vm.$nextTick().then(() => {
-      let storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
+  test('saves comments after changes, even if analysis does not run', (done) => {
+    const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
 
-      wrapper.vm.comment.isProfanityAnalyzed = true
-      wrapper.vm.comment.text = "hello wo"
+    wrapper.vm.comment.isProfanityAnalyzed = true
+    wrapper.vm.comment.text = 'hello wo'
 
-      wrapper.vm.handleCommentChange()
+    wrapper.vm.handleCommentChange()
 
-      wrapper.vm.$nextTick().then(() => {
-        wrapper.vm.$nextTick().then(() => {
-          expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
-          done()
-        })
-      })
+    setImmediate(() => {
+      expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
+      done()
     })
   })
 
-  test("it resets the word count when the text is deleted", (done) => {
+  test('saves comments after changes, if analysis is run', (done) => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          shouldRunSentimentAnalysis: () => true,
+          shouldRunProfanityAnalysis: () => true,
+        },
+      }
+    )
+
+    const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
+
+    wrapper.vm.handleCommentChange()
+
+    setImmediate(() => {
+      expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
+      done()
+    })
+  })
+
+  test('sets comment after sentiment analysis is run', (done) => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          shouldRunSentimentAnalysis: () => true,
+        },
+      }
+    )
+
+    const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
+
+    wrapper.vm.runSentimentAnalysis().then(() => {
+      expect(storeCommitSpy).toHaveBeenLastCalledWith('setComment', {
+        sectionName: 'ideation',
+        sentiment: sentimentResponse[0],
+        isSentimentAnalyzed: true,
+      })
+      done()
+    })
+  })
+
+  test('sets comment after profanity analysis is run', (done) => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          shouldRunProfanityAnalysis: () => true,
+          badWordCount: () => 4,
+        },
+      }
+    )
+
+    const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
+
+    wrapper.vm.runProfanityAnalysis().then(() => {
+      expect(storeCommitSpy).toHaveBeenLastCalledWith('setComment', {
+        sectionName: 'ideation',
+        bad_word_count: wrapper.vm.badWordCount,
+        isProfanityAnalyzed: true,
+      })
+      done()
+    })
+  })
+
+  test('it resets the word count when the text is deleted', (done) => {
     wrapper.vm.$nextTick().then(() => {
-      wrapper.vm.comment.text = "hello beautiful world"
+      wrapper.vm.comment.text = 'hello beautiful world'
 
       wrapper.vm.$nextTick().then(() => {
         expect(wrapper.vm.comment.word_count).toEqual(3)
 
-        wrapper.vm.comment.text = ""
+        wrapper.vm.comment.text = ''
 
         wrapper.vm.$nextTick().then(() => {
           expect(wrapper.vm.comment.word_count).toEqual(0)
@@ -99,7 +209,7 @@ describe('Question comments section', () => {
         store: storeMocks.store,
         localVue,
         propsData: {
-          section: "ideation",
+          section: 'ideation',
         },
         attachToDocument: true
       }
@@ -177,4 +287,120 @@ test('Getter sectionQuestions returns a filtered array based on the current sect
   const filteredQuestions = wrapper.vm.sectionQuestions(section);
 
   expect(filteredQuestions).toEqual(expectedQuestions);
+})
+
+describe('shouldRunSentimentAnalysis', () => {
+  it('should run if word count is greater than 19 and it has not yet been analyzed', () => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          commentIsSentimentAnalyzed: () => false,
+          wordCount: () => 21,
+        },
+      }
+    )
+
+    expect(wrapper.vm.shouldRunSentimentAnalysis).toBe(true)
+  })
+
+  it('should run if word count is greater than 19, it has been analyzed, ' +
+    'and the word count is divisible by 5', () => {
+      wrapper = shallow(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'ideation',
+          },
+          computed: {
+            commentIsSentimentAnalyzed: () => true,
+            wordCount: () => 25,
+          },
+        }
+      )
+
+      expect(wrapper.vm.shouldRunSentimentAnalysis).toBe(true)
+  })
+
+  it('should not run if word count is greater than 19, it has been analyzed, ' +
+    'and the word count is not divisible by 5', () => {
+      wrapper = shallow(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'ideation',
+          },
+          computed: {
+            commentIsSentimentAnalyzed: () => true,
+            wordCount: () => 23,
+          },
+        }
+      )
+
+      expect(wrapper.vm.shouldRunSentimentAnalysis).toBe(false)
+  })
+})
+
+describe('shouldRunProfanityAnalysis', () => {
+  it('should run if word count is greater than 0 and it has not yet been analyzed', () => {
+    wrapper = shallow(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          commentIsProfanityAnalyzed: () => false,
+          wordCount: () => 3,
+        },
+      }
+    )
+
+    expect(wrapper.vm.shouldRunProfanityAnalysis).toBe(true)
+  })
+
+  it('should run if word count is greater than 0, it has been analyzed, ' +
+    'and the word count is divisible by 2', () => {
+      wrapper = shallow(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'ideation',
+          },
+          computed: {
+            commentIsSentimentAnalyzed: () => true,
+            wordCount: () => 6,
+          },
+        }
+      )
+
+      expect(wrapper.vm.shouldRunProfanityAnalysis).toBe(true)
+  })
+
+  it('should not run if word count is greater than 0, it has been analyzed, ' +
+    'and the word count is not divisible by 2', () => {
+      wrapper = shallow(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'ideation',
+          },
+          computed: {
+            commentIsSentimentAnalyzed: () => true,
+            wordCount: () => 3,
+          },
+        }
+      )
+
+      expect(wrapper.vm.shouldRunProfanityAnalysis).toBe(false)
+  })
 })
