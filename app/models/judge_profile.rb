@@ -93,12 +93,7 @@ class JudgeProfile < ActiveRecord::Base
     prefix: false
 
   def method_missing(method_name, *args, &block)
-    begin
-      account.public_send(method_name, *args, &block)
-    rescue
-      raise NoMethodError,
-        "undefined method `#{method_name}' not found for #{self}"
-    end
+    account.public_send(method_name, *args, &block)
   end
 
   def is_team?
