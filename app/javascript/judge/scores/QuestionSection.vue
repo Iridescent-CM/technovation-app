@@ -221,6 +221,22 @@ export default {
     prevBtnTxt () {
       return _.capitalize(this.prevSection)
     },
+
+    shouldRunSentimentAnalysis () {
+      return (
+        this.wordCount > 19 &&
+          (this.wordCount % 5 === 0 ||
+            !this.commentIsSentimentAnalyzed)
+      )
+    },
+
+    shouldRunProfanityAnalysis () {
+      return (
+        this.wordCount > 0 &&
+          (this.wordCount % 2 === 0 ||
+            !this.commentIsProfanityAnalyzed)
+      )
+    },
   },
 
   props: [
@@ -288,13 +304,7 @@ export default {
 
     runSentimentAnalysis () {
       return new Promise((resolve, reject) => {
-        const shouldRunSentimentAnalysis = (
-          this.wordCount > 19 &&
-            (this.wordCount % 5 === 0 ||
-              !this.commentIsSentimentAnalyzed)
-        )
-
-        if (shouldRunSentimentAnalysis) {
+        if (this.shouldRunSentimentAnalysis) {
           Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
             .algo("nlp/SocialSentimentAnalysis/0.1.4")
             .pipe({ sentence: this.commentText })
@@ -314,13 +324,7 @@ export default {
 
     runProfanityAnalysis () {
       return new Promise((resolve, reject) => {
-        const shouldRunProfanityAlysis = (
-          this.wordCount > 0 &&
-            (this.wordCount % 2 === 0 ||
-              !this.commentIsProfanityAnalyzed)
-        )
-
-        if (shouldRunProfanityAlysis) {
+        if (this.shouldRunProfanityAnalysis) {
           Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
             .algo("nlp/ProfanityDetection/1.0.0")
             .pipe([this.commentText, ['suck', 'sucks'], false])
