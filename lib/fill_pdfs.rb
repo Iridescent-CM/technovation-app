@@ -59,6 +59,7 @@ module FillPdfs
   end
 
   def pdf
+    raise IOError, "file not found - #{pathname}" unless File.exist?(pathname)
     PdfForms::Pdf.new(pathname, PDFTK)
   end
 
