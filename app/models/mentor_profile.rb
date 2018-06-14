@@ -163,12 +163,7 @@ class MentorProfile < ActiveRecord::Base
     allow_nil: true
 
   def method_missing(method_name, *args)
-    begin
-      account.public_send(method_name, *args)
-    rescue
-      raise NoMethodError,
-        "undefined method `#{method_name}' not found for #{self}"
-    end
+    account.public_send(method_name, *args)
   end
 
   def status
