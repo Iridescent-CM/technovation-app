@@ -11,9 +11,9 @@ module FillPdfs
     def full_text
       "For her outstanding work as a member of Technovation " +
       "#{recipient.region} team " +
-      "#{recipient.teamName} " +
+      "#{recipient.team_name} " +
       "to develop the mobile application " +
-      "#{recipient.mobileAppName}."
+      "#{recipient.mobile_app_name}."
     end
   end
 end

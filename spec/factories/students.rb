@@ -19,9 +19,9 @@ FactoryBot.define do
       quarterfinalist
 
       after(:create) do |student|
-        student.account.certificates.create!(
-          season: Season.current.year,
-          cert_type: :completion
+        FactoryBot.create(:certificate,
+          cert_type: :completion,
+          account: student.account
         )
       end
     end

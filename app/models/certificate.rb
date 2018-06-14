@@ -3,13 +3,14 @@ class Certificate < ApplicationRecord
 
   enum cert_type: %i{
     completion
-    appreciation
+    mentor_appreciation
     rpe_winner
     participation
     semifinalist
   }
 
   belongs_to :account
+  belongs_to :team
 
   mount_uploader :file, FileProcessor
 end

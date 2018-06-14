@@ -1,3 +1,5 @@
+require "./app/null_objects/null_object"
+
 class NullProfile < NullObject
   def id; nil; end
   def authenticated?; false; end

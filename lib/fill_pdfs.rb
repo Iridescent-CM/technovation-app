@@ -4,7 +4,7 @@ require 'pdf_forms'
 
 require 'fill_pdfs/completion'
 require 'fill_pdfs/participation'
-require 'fill_pdfs/regional_winner'
+require 'fill_pdfs/mentor_appreciation'
 require 'fill_pdfs/semifinalist'
 
 module FillPdfs
@@ -37,11 +37,12 @@ module FillPdfs
     end
   end
 
-  attr_reader :recipient, :account
+  attr_reader :recipient, :account, :team
 
   def initialize(recipient)
     @recipient = recipient
     @account = recipient.account
+    @team = recipient.team
   end
 
   def generate_certificate
@@ -76,14 +77,15 @@ module FillPdfs
       file: file,
       season: Season.current.year,
       cert_type: type.to_sym,
+      team: team,
     })
   end
 
   def get_value(recipient, field_name)
     if ["fullText", "Description.Page 1"].include?(field_name)
       full_text
-    elsif field_name === "Firstname Lastname.Page 1"
-      recipient.fullName
+    elsif ["fullName", "Firstname Lastname.Page 1"].include?(field_name)
+      recipient.full_name
     else
       recipient.public_send(field_name)
     end
@@ -94,6 +96,6 @@ module FillPdfs
   end
 
   def tmp_output
-    "./tmp/#{Season.current.year}-#{type}-#{recipient.id}.pdf"
+    "./tmp/#{Season.current.year}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
   end
 end

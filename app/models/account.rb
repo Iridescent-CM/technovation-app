@@ -58,6 +58,9 @@ class Account < ActiveRecord::Base
   has_many :current_semifinalist_certificates, -> { current.semifinalist },
     class_name: "Certificate"
 
+  has_many :current_appreciation_certificates, -> { current.mentor_appreciation },
+    class_name: "Certificate"
+
   has_many :void_consent_waivers,
     -> { void },
     class_name: "ConsentWaiver",

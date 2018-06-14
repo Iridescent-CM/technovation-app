@@ -50,6 +50,23 @@
     }
   }
 
+  &.button--reward {
+    border-radius: 500px;
+    margin: 2rem 0;
+    background: $mulberry;
+    box-shadow: 0 2px 0 darken($mulberry-mid, 5);
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: darken($mulberry, 5);
+    }
+
+    &:active {
+      box-shadow: 0 0 0 darken($mulberry, 10);
+    }
+  }
+
   &.small,
   &.button--small {
     padding: 0.25rem 0.5rem;

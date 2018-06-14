@@ -16,6 +16,7 @@ FactoryBot.define do
       password nil
       date_of_birth nil
       not_onboarded false
+      number_of_teams 0
     end
 
     trait :onboarded do
@@ -79,6 +80,15 @@ FactoryBot.define do
 
     after(:create) do |m, e|
       ProfileCreating.execute(m, FakeController.new)
+
+      e.number_of_teams.times do
+        team = FactoryBot.create(:team, members_count: 0)
+        FactoryBot.create(
+          :team_membership,
+          member: m,
+          team: team
+        )
+      end
     end
 
     trait :with_expertises do

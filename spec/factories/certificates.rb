@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :certificate, aliases: [:cert] do
     account
+    team
 
     season { Season.current.year }
 

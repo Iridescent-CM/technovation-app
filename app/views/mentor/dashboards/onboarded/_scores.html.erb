@@ -62,9 +62,14 @@
             scores: quarterfinals_scores %>
       <% end %>
     <% end %>
+
+    <p>
+      <%= link_to(
+        "Open your certificate",
+        current_mentor.current_appreciation_certificates.find_by(team: team).file_url,
+        class: "button button--reward",
+        target: :_blank
+      ) %>
+    </p>
   </div>
 <% end %>
-
-<div class="panel">
-  Certs...
-</div>
