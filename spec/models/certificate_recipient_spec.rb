@@ -7,7 +7,10 @@ RSpec.describe CertificateRecipient do
   describe "#needed_certificate_types" do
     context "for a judge with 0 completed current scores" do
       it "needs no certificates" do
-        judge_profile = double(:JudgeProfile)
+        judge_profile = double(
+          :JudgeProfile,
+          current_completed_scores: []
+        )
 
         account = double(
           :Account,
@@ -25,7 +28,13 @@ RSpec.describe CertificateRecipient do
 
     context "a team with no submission" do
       it "needs no certificates" do
-        account = double(:Account, id: 1, name: "My full name", mentor_profile: NullProfile.new)
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          judge_profile: NullProfile.new,
+          mentor_profile: NullProfile.new
+        )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
 
         recipient = CertificateRecipient.new(account, team)
@@ -54,6 +63,7 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_participation_certificates: [],
           mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -68,7 +78,8 @@ RSpec.describe CertificateRecipient do
             id: 1,
             name: "My full name",
             current_participation_certificates: [double(:participation_certificate)],
-            mentor_profile: NullProfile.new
+            mentor_profile: NullProfile.new,
+            judge_profile: NullProfile.new,
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -98,7 +109,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           current_completion_certificates: [],
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -113,7 +125,8 @@ RSpec.describe CertificateRecipient do
             id: 1,
             name: "My full name",
             current_completion_certificates: [double(:completion_certificate)],
-            mentor_profile: NullProfile.new
+            mentor_profile: NullProfile.new,
+            judge_profile: NullProfile.new
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -143,7 +156,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           current_semifinalist_certificates: [],
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -158,7 +172,8 @@ RSpec.describe CertificateRecipient do
             id: 1,
             name: "My full name",
             current_semifinalist_certificates: [double(:semifinalist_certificate)],
-            mentor_profile: NullProfile.new
+            mentor_profile: NullProfile.new,
+            judge_profile: NullProfile.new
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -172,7 +187,14 @@ RSpec.describe CertificateRecipient do
   describe "#certificate_types" do
     context "a team with no submission" do
       it "gets no certificates" do
-        account = double(:Account, id: 1, name: "My full name", mentor_profile: NullProfile.new)
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
+        )
+
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
 
         recipient = CertificateRecipient.new(account, team)
@@ -200,7 +222,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           current_participation_certificates: [],
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -229,7 +252,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           current_completion_certificates: [],
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -258,7 +282,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           current_semifinalist_certificates: [],
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -271,7 +296,13 @@ RSpec.describe CertificateRecipient do
   describe "#certificates" do
     context "a team with no submission" do
       it "has no certificates" do
-        account = double(:Account, id: 1, name: "My full name", mentor_profile: NullProfile.new)
+        account = double(
+          :Account,
+          id: 1,
+          name: "My full name",
+          mentor_profile: NullProfile.new,
+          judge_profile: NullProfile.new,
+        )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
 
         recipient = CertificateRecipient.new(account, team)

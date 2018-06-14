@@ -8,4 +8,5 @@ class NullProfile < NullObject
   def is_an_ambassador?; false; end
   def past_teams; ::Team.none; end
   def mailer_token; false; end
+  def current_completed_scores; []; end
 end
