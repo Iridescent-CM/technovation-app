@@ -77,5 +77,28 @@
         </div>
       <% end %>
     </div>
+
+    <div class="grid panel">
+      <div class="grid__col-6">
+        <h2>Thank you!</h2>
+        <p>
+          Thank you for being a judge this season!
+        </p>
+        <p>
+          We appreciate your thoughtful feedback and the time you spent supporting teams around the world.
+        </p>
+
+        <%= link_to 'View your certificate',
+          judge_scores_path,
+          class: "button button--margin-top-lg" %>
+      </div>
+
+      <div class="grid__col-6">
+        <%= image_tag "tc-judge-icon.svg",
+        :class => 'grid__cell-img'%>
+
+        <h1>TC Judge</h1>
+      </div>
+    </div>
   </div>
 </div>
