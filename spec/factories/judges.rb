@@ -16,6 +16,14 @@ FactoryBot.define do
       country "US"
     end
 
+    trait :general_certificate do
+      onboarded
+
+      after(:create) do |judge, _evaluator|
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+    end
+
     trait :onboarded do
       onboarded true
     end
