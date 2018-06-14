@@ -34,6 +34,7 @@ jobs:
           STUDENT_SLACK_SIGNUP_URL: n-a
           JUDGE_SLACK_SIGNUP_URL: n-a
           PARENT_CONSENT_PDF: n-a
+          JUDGE_TRAINING_URL: n-a
       - image: circleci/postgres:9.6-alpine-ram
 
     steps:
