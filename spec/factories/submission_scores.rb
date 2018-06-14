@@ -5,6 +5,12 @@ FactoryBot.define do
     round :quarterfinals
     seasons [Season.current.year]
 
+    trait :past_season do
+      after(:create) do |score, _evaluator|
+        score.update(seasons: [Season.current.year - 1])
+      end
+    end
+
     trait :quarterfinals do
     end
 
