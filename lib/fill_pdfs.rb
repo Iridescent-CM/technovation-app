@@ -27,19 +27,26 @@ module FillPdfs
     recipient = CertificateRecipient.new(account, team)
 
     recipient.needed_certificate_types.each do |certificate_type|
-      generator_klass = "fill_pdfs/#{certificate_type}"
-      generator = generator_klass.camelize.constantize.new(recipient)
+      generator_klass_name = "fill_pdfs/#{certificate_type}"
+      generator_klass = generator_klass_name.camelize.safe_constantize
+
+      generator = if !!generator_klass
+                    generator_klass.new(recipient, certificate_type)
+                  else
+                    GenericPDFFiller.new(recipient, certificate_type)
+                  end
 
       generator.generate_certificate
     end
   end
 
-  attr_reader :recipient, :account, :team
+  attr_reader :recipient, :account, :team, :type
 
-  def initialize(recipient)
+  def initialize(recipient, type)
     @recipient = recipient
     @account = recipient.account
     @team = recipient.team
+    @type = type
   end
 
   def generate_certificate
@@ -97,7 +104,7 @@ module FillPdfs
     "./tmp/#{Season.current.year}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
   end
 
-  def type
-    self.class.name.split('::').last.underscore
+  class GenericPDFFiller
+    include FillPdfs
   end
 end
