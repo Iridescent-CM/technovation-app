@@ -1,3 +1,4 @@
+require "./app/constants/certificate_types"
 require "./app/technovation/friendly_country"
 
 class CertificateRecipient
@@ -26,26 +27,24 @@ class CertificateRecipient
     public_send(fieldName)
   end
 
-  def needed_certificate_types
-    types = []
-    types.push("participation")       if needs_participation_certificate?
-    types.push("completion")          if needs_completion_certificate?
-    types.push("semifinalist")        if needs_semifinalist_certificate?
-    types.push("mentor_appreciation") if needs_appreciation_certificate?
-    types.push("general_judge")       if needs_general_judge_certificate?
-    types.push("certified_judge")     if needs_certified_judge_certificate?
-    types
+  def certificate_types
+    CERTIFICATE_TYPES.select do |certificate_type|
+      gets_certificate?(certificate_type)
+    end
   end
 
-  def certificate_types
-    types = []
-    types.push("participation")       if gets_participation_certificate?
-    types.push("completion")          if gets_completion_certificate?
-    types.push("semifinalist")        if gets_semifinalist_certificate?
-    types.push("mentor_appreciation") if gets_appreciation_certificate?
-    types.push("general_judge")       if gets_general_judge_certificate?
-    types.push("certified_judge")     if gets_certified_judge_certificate?
-    types
+  def needed_certificate_types
+    certificate_types.select do |certificate_type|
+      needs_certificate?(certificate_type)
+    end
+  end
+
+  def gets_certificate?(certificate_type)
+    send("gets_#{certificate_type}_certificate?")
+  end
+
+  def needs_certificate?(certificate_type)
+    send("needs_#{certificate_type}_certificate?")
   end
 
   def certificates
@@ -93,12 +92,12 @@ class CertificateRecipient
     !!team && team.submission.semifinalist?
   end
 
-  def needs_appreciation_certificate?
-    gets_appreciation_certificate? &&
+  def needs_mentor_appreciation_certificate?
+    gets_mentor_appreciation_certificate? &&
       account.current_appreciation_certificates.count < account.mentor_profile.current_teams.count
   end
 
-  def gets_appreciation_certificate?
+  def gets_mentor_appreciation_certificate?
     account.mentor_profile.present? &&
       account.mentor_profile.current_teams.any?
   end
@@ -123,5 +122,13 @@ class CertificateRecipient
     !!account.judge_profile &&
       account.judge_profile.current_completed_scores.any? &&
         account.judge_profile.current_completed_scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+  end
+
+  def gets_rpe_winner_certificate?
+    false
+  end
+
+  def needs_rpe_winner_certificate?
+    false
   end
 end
