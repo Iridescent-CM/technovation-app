@@ -2,11 +2,7 @@
 
 require 'pdf_forms'
 
-require 'fill_pdfs/completion'
-require 'fill_pdfs/participation'
-require 'fill_pdfs/mentor_appreciation'
-require 'fill_pdfs/semifinalist'
-require 'fill_pdfs/general_judge'
+Dir[Rails.root.join('lib/fill_pdfs/*.rb')].each { |f| require f }
 
 module FillPdfs
   # PROD settings:

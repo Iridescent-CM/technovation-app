@@ -3,9 +3,5 @@
 module FillPdfs
   class GeneralJudge
     include FillPdfs
-
-    def type
-      "general_judge"
-    end
   end
 end

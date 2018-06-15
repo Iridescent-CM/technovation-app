@@ -4,10 +4,6 @@ module FillPdfs
   class Completion
     include FillPdfs
 
-    def type
-      "completion"
-    end
-
     def full_text
       "For her outstanding work as a member of Technovation " +
       "#{recipient.region} team " +
