@@ -10,6 +10,7 @@ module Judge
         FillPdfs.(current_account)
         recipient = CertificateRecipient.new(current_account)
         @certificate_file_url = recipient.certificate_url
+        @badge_recipient = BadgeRecipient.new(current_judge)
       end
     end
 

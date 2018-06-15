@@ -1,10 +1,8 @@
 require "./app/constants/certificate_types"
+require "./app/constants/badge_levels"
 require "./app/technovation/friendly_country"
 
 class CertificateRecipient
-  MAXIMUM_SCORES_FOR_GENERAL_JUDGE = 4
-  NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE = 5
-
   attr_reader :account, :team,
     :id, :mobile_app_name, :full_name,
     :team_name, :region, :team_id
@@ -122,6 +120,28 @@ class CertificateRecipient
     !!account.judge_profile &&
       account.judge_profile.current_completed_scores.any? &&
         account.judge_profile.current_completed_scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+  end
+
+  def needs_head_judge_certificate?
+    gets_head_judge_certificate? &&
+      !account.current_head_judge_certificates.any?
+  end
+
+  def gets_head_judge_certificate?
+    !!account.judge_profile &&
+      account.judge_profile.current_completed_scores.count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+        (account.judge_profile.events.any? ||
+          account.judge_profile.current_completed_scores.count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+  end
+
+  def needs_judge_advisor_certificate?
+    gets_judge_advisor_certificate? &&
+      !account.current_judge_advisor_certificates.any?
+  end
+
+  def gets_judge_advisor_certificate?
+    !!account.judge_profile &&
+      account.judge_profile.current_completed_scores.count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
   end
 
   def gets_rpe_winner_certificate?

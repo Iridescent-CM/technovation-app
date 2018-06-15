@@ -17,9 +17,9 @@
     </div>
 
     <div class="grid__col-6 grid__col--bleed-y">
-      <%= image_tag "tc-judge-icon.svg", class: 'grid__cell-img' %>
+      <%= image_tag "tc-#{@badge_recipient.icon_name}-icon.svg", class: 'grid__cell-img' %>
 
-      <h1>TC Judge</h1>
+      <h1><%= @badge_recipient.name %></h1>
     </div>
   </div>
 <% end %>

@@ -17,6 +17,15 @@ FactoryBot.define do
       number_of_scores 0
     end
 
+    trait :attending_live_event do
+      onboarded
+
+      after(:create) do |judge, _evaluator|
+        event = FactoryBot.create(:event)
+        event.judges << judge
+      end
+    end
+
     trait :general_certificate do
       onboarded
 

@@ -6,4 +6,6 @@ CERTIFICATE_TYPES =  %w{
   semifinalist
   general_judge
   certified_judge
+  head_judge
+  judge_advisor
 }
