@@ -7,13 +7,13 @@ Dir[Rails.root.join('lib/fill_pdfs/*.rb')].each { |f| require f }
 module FillPdfs
   # PROD settings:
   # heroku config:set LD_LIBRARY_PATH=/app/vendor/pdftk/lib --app APPNAME
-  # heroku config:set PDFTK_PATH: /app/vendor/pdftk/bin/pdftk --app APPNAME
+  # heroku config:set PDFTK_PATH=pdftk --app APPNAME
   #
   # DEV settings:
   # -- use `which pdftk` to find your executable path
   # -- install via homebrew or apt-get if needed
   #
-  # assuming this typical path:
+  # assuming this typical executable path:
   # echo "PDFTK_PATH=/usr/bin/pdftk" >> .env
 
   PDFTK = PdfForms::PdftkWrapper.new(ENV.fetch("PDFTK_PATH"))

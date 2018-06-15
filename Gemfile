@@ -135,7 +135,6 @@ end
 
 group :production do
   gem 'hiredis', "~> 0.6"
-  gem 'scout_apm', "~> 2.4"
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater',
     git: 'https://github.com/romanbsd/heroku-deflater.git',
