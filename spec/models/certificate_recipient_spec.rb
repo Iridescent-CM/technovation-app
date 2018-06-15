@@ -9,7 +9,8 @@ RSpec.describe CertificateRecipient do
       it "needs no certificates" do
         judge_profile = double(
           :JudgeProfile,
-          current_completed_scores: []
+          current_completed_scores: [],
+          events: [],
         )
 
         account = double(
