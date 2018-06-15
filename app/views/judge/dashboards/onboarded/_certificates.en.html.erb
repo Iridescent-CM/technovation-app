@@ -11,7 +11,7 @@
       </p>
 
       <%= link_to 'View your certificate',
-        current_judge.current_general_judge_certificates.last.file_url,
+        @certificate_file_url,
         class: "button button--margin-top-lg",
         target: :_blank %>
     </div>

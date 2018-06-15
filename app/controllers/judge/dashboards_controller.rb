@@ -8,6 +8,8 @@ module Judge
 
       if SeasonToggles.display_scores?
         FillPdfs.(current_account)
+        recipient = CertificateRecipient.new(current_account)
+        @certificate_file_url = recipient.certificate_url
       end
     end
 

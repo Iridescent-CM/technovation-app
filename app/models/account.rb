@@ -64,6 +64,9 @@ class Account < ActiveRecord::Base
   has_many :current_general_judge_certificates, -> { current.general_judge },
     class_name: "Certificate"
 
+  has_many :current_certified_judge_certificates, -> { current.certified_judge },
+    class_name: "Certificate"
+
   has_many :void_consent_waivers,
     -> { void },
     class_name: "ConsentWaiver",

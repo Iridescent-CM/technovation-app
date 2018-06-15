@@ -100,4 +100,8 @@ module FillPdfs
   def tmp_output
     "./tmp/#{Season.current.year}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
   end
+
+  def type
+    self.class.name.split('::').last.underscore
+  end
 end

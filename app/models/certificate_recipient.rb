@@ -2,6 +2,7 @@ require "./app/technovation/friendly_country"
 
 class CertificateRecipient
   MAXIMUM_SCORES_FOR_GENERAL_JUDGE = 4
+  NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE = 5
 
   attr_reader :account, :team,
     :id, :mobile_app_name, :full_name,
@@ -32,6 +33,7 @@ class CertificateRecipient
     types.push("semifinalist")        if needs_semifinalist_certificate?
     types.push("mentor_appreciation") if needs_appreciation_certificate?
     types.push("general_judge")       if needs_general_judge_certificate?
+    types.push("certified_judge")     if needs_certified_judge_certificate?
     types
   end
 
@@ -42,6 +44,7 @@ class CertificateRecipient
     types.push("semifinalist")        if gets_semifinalist_certificate?
     types.push("mentor_appreciation") if gets_appreciation_certificate?
     types.push("general_judge")       if gets_general_judge_certificate?
+    types.push("certified_judge")     if gets_certified_judge_certificate?
     types
   end
 
@@ -52,6 +55,12 @@ class CertificateRecipient
              .public_send(certificate_type)
              .last
     }.compact
+  end
+
+  def certificate_url
+    raise 'Recipient must be a judge' unless account.judge_profile.present?
+    !!account.certificates.current.last &&
+      account.certificates.current.last.file_url
   end
 
   private
@@ -103,5 +112,16 @@ class CertificateRecipient
     !!account.judge_profile &&
       account.judge_profile.current_completed_scores.any? &&
         account.judge_profile.current_completed_scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+  end
+
+  def needs_certified_judge_certificate?
+    gets_certified_judge_certificate? &&
+      !account.current_certified_judge_certificates.any?
+  end
+
+  def gets_certified_judge_certificate?
+    !!account.judge_profile &&
+      account.judge_profile.current_completed_scores.any? &&
+        account.judge_profile.current_completed_scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
   end
 end

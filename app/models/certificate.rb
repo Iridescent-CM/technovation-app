@@ -8,6 +8,7 @@ class Certificate < ApplicationRecord
     participation
     semifinalist
     general_judge
+    certified_judge
   }
 
   belongs_to :account
