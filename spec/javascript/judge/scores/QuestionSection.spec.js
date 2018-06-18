@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallow, createLocalVue } from '@vue/test-utils'
 
 import Vuex from 'vuex'
 import VTooltip from 'v-tooltip'
@@ -69,7 +69,7 @@ describe('Question comments section', () => {
       },
     })
 
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -109,7 +109,7 @@ describe('Question comments section', () => {
   })
 
   test('saves comments after changes, if analysis is run', (done) => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -134,7 +134,7 @@ describe('Question comments section', () => {
   })
 
   test('sets comment after sentiment analysis is run', (done) => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -160,7 +160,7 @@ describe('Question comments section', () => {
   })
 
   test('sets comment after profanity analysis is run', (done) => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -204,7 +204,7 @@ describe('Question comments section', () => {
   })
 
   test('textarea should update comment text in store on change', (done) => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -274,7 +274,7 @@ test('Getter sectionQuestions returns a filtered array based on the current sect
     state: initialState,
   })
 
-  wrapper = shallowMount(
+  wrapper = shallow(
     QuestionSection, {
       store: storeMocks.store,
       localVue,
@@ -291,7 +291,7 @@ test('Getter sectionQuestions returns a filtered array based on the current sect
 
 describe('shouldRunSentimentAnalysis', () => {
   it('should run if word count is greater than 19 and it has not yet been analyzed', () => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -310,7 +310,7 @@ describe('shouldRunSentimentAnalysis', () => {
 
   it('should run if word count is greater than 19, it has been analyzed, ' +
     'and the word count is divisible by 5', () => {
-      wrapper = shallowMount(
+      wrapper = shallow(
         QuestionSection, {
           store: storeMocks.store,
           localVue,
@@ -329,7 +329,7 @@ describe('shouldRunSentimentAnalysis', () => {
 
   it('should not run if word count is greater than 19, it has been analyzed, ' +
     'and the word count is not divisible by 5', () => {
-      wrapper = shallowMount(
+      wrapper = shallow(
         QuestionSection, {
           store: storeMocks.store,
           localVue,
@@ -349,7 +349,7 @@ describe('shouldRunSentimentAnalysis', () => {
 
 describe('shouldRunProfanityAnalysis', () => {
   it('should run if word count is greater than 0 and it has not yet been analyzed', () => {
-    wrapper = shallowMount(
+    wrapper = shallow(
       QuestionSection, {
         store: storeMocks.store,
         localVue,
@@ -368,7 +368,7 @@ describe('shouldRunProfanityAnalysis', () => {
 
   it('should run if word count is greater than 0, it has been analyzed, ' +
     'and the word count is divisible by 2', () => {
-      wrapper = shallowMount(
+      wrapper = shallow(
         QuestionSection, {
           store: storeMocks.store,
           localVue,
@@ -387,7 +387,7 @@ describe('shouldRunProfanityAnalysis', () => {
 
   it('should not run if word count is greater than 0, it has been analyzed, ' +
     'and the word count is not divisible by 2', () => {
-      wrapper = shallowMount(
+      wrapper = shallow(
         QuestionSection, {
           store: storeMocks.store,
           localVue,

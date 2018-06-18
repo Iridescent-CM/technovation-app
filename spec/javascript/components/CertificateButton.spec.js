@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallow } from '@vue/test-utils'
 
 import axios from 'axios'
 import Icon from 'components/Icon'
@@ -28,7 +28,7 @@ describe('CertificateButton Vue component', () => {
 
   describe('props', () => {
     it('teamId should default to 0', () => {
-      const wrapper = shallowMount(CertificateButton, {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -52,8 +52,8 @@ describe('CertificateButton Vue component', () => {
 
   describe('markup', () => {
     it('should display a loading spinner if the certificate button URL ' +
-      'is being requested', () => {
-      const wrapper = shallowMount(CertificateButton, {
+      'is being requested', (done) => {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -61,19 +61,22 @@ describe('CertificateButton Vue component', () => {
 
       wrapper.vm.state = 'requesting'
 
-      const componentHasButton = wrapper.contains({
-        ref: 'certificateButton'
-      })
+      wrapper.vm.$nextTick(() => {
+        const componentHasButton = wrapper.contains({
+          ref: 'certificateButton'
+        })
 
-      expect(wrapper.contains(Icon)).toBe(true)
-      expect(wrapper.find('span').html())
-        .toEqual('<span>Requesting certificate...</span>')
-      expect(componentHasButton).toBe(false)
+        expect(wrapper.contains(Icon)).toBe(true)
+        expect(wrapper.find('span').html())
+          .toEqual('<span>Requesting certificate...</span>')
+        expect(componentHasButton).toBe(false)
+        done()
+      })
     })
 
     it('should display a loading spinner if the certificate button URL ' +
-      'is being generated', () => {
-      const wrapper = shallowMount(CertificateButton, {
+      'is being generated', (done) => {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -81,19 +84,22 @@ describe('CertificateButton Vue component', () => {
 
       wrapper.vm.state = 'generating'
 
-      const componentHasButton = wrapper.contains({
-        ref: 'certificateButton'
-      })
+      wrapper.vm.$nextTick(() => {
+        const componentHasButton = wrapper.contains({
+          ref: 'certificateButton'
+        })
 
-      expect(wrapper.contains(Icon)).toBe(true)
-      expect(wrapper.find('span').html())
-        .toEqual('<span>Generating certificate...</span>')
-      expect(componentHasButton).toBe(false)
+        expect(wrapper.contains(Icon)).toBe(true)
+        expect(wrapper.find('span').html())
+          .toEqual('<span>Generating certificate...</span>')
+        expect(componentHasButton).toBe(false)
+        done()
+      });
     })
 
     it('should display a link to the certificate if the certificate button URL ' +
-      'has finished being generated', () => {
-      const wrapper = shallowMount(CertificateButton, {
+      'has finished being generated', (done) => {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -101,17 +107,20 @@ describe('CertificateButton Vue component', () => {
 
       wrapper.vm.state = 'ready'
 
-      const componentHasButton = wrapper.contains({
-        ref: 'certificateButton'
-      })
+      wrapper.vm.$nextTick(() => {
+        const componentHasButton = wrapper.contains({
+          ref: 'certificateButton'
+        })
 
-      expect(wrapper.contains(Icon)).toBe(false)
-      expect(wrapper.contains('span')).toBe(false)
-      expect(componentHasButton).toBe(true)
+        expect(wrapper.contains(Icon)).toBe(false)
+        expect(wrapper.contains('span')).toBe(false)
+        expect(componentHasButton).toBe(true)
+        done()
+      });
     })
 
-    it('certificate link button should be a valid link', () => {
-      const wrapper = shallowMount(CertificateButton, {
+    it('certificate link button should be a valid link', (done) => {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -119,20 +128,23 @@ describe('CertificateButton Vue component', () => {
 
       wrapper.vm.state = 'ready'
 
-      const linkButton = wrapper
-        .find('a.button')
-        .element
+      wrapper.vm.$nextTick(() => {
+        const linkButton = wrapper
+          .find('a.button')
+          .element
 
-      expect(linkButton.getAttribute('href')).toEqual('/mentor/certificates/')
-      expect(linkButton.classList.contains('button')).toBe(true)
-      expect(linkButton.text).toEqual('Open your certificate')
+        expect(linkButton.getAttribute('href')).toEqual('/mentor/certificates/')
+        expect(linkButton.classList.contains('button')).toBe(true)
+        expect(linkButton.text).toEqual('Open your certificate')
+        done()
+      })
     })
   })
 
   describe('methods', () => {
     describe('createJob', () => {
       it('should set the state to "generating"', () => {
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -146,7 +158,7 @@ describe('CertificateButton Vue component', () => {
       })
 
       it('should send a POST request to the request endpoint', () => {
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -168,7 +180,7 @@ describe('CertificateButton Vue component', () => {
           jobId: 8,
         }
 
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -183,7 +195,7 @@ describe('CertificateButton Vue component', () => {
 
       it('should not update the job id if the response does not contain ' +
         'a valid jobId', () => {
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -206,7 +218,7 @@ describe('CertificateButton Vue component', () => {
     })
 
     it('pollJobQueue should send a GET request to the job monitor endpoint', () => {
-      const wrapper = shallowMount(CertificateButton, {
+      const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -229,7 +241,7 @@ describe('CertificateButton Vue component', () => {
           status: 'queued',
         }
 
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -249,7 +261,7 @@ describe('CertificateButton Vue component', () => {
           status: 'complete',
         }
 
-        const wrapper = shallowMount(CertificateButton, {
+        const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -265,7 +277,7 @@ describe('CertificateButton Vue component', () => {
   })
 
   it('should contain the proper state once all AJAX requests and job have finished', (done) => {
-    const wrapper = shallowMount(CertificateButton, {
+    const wrapper = shallow(CertificateButton, {
       propsData: {
         teamId: 3,
         userScope: 'mentor',
