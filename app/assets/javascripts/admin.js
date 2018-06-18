@@ -33,6 +33,20 @@ document.addEventListener("turbolinks:load", function() {
 
     $(this).hide().next(".accordion-open").show();
   });
+
+  $(document).on("change", "[data-remote-select]", function(evt) {
+    var $el = $(this),
+        data = {}
+
+    data[$el.data('modelName')] = {}
+    data[$el.data('modelName')][$el.data('fieldName')] = evt.target.value
+
+    $.ajax({
+      method: "POST",
+      url: $el.data('url'),
+      data: data,
+    })
+  })
 });
 
 $(document).ajaxSend(function(_, xhr) {

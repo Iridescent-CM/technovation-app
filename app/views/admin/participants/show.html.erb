@@ -85,18 +85,39 @@
 
     <% if @account.judge_profile %>
       <div class="panel">
-        <h3 class="reset">Quarterfinals Scores:</h3>
-        <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
+        <div class="grid__col-12 grid__col--bleed">
+          <h3 class="heading--reset">Quarterfinals Scores:</h3>
+
           <%= render 'admin/participants/judge_scores',
             profile: @account.judge_profile,
             scores: @scores.quarterfinals %>
         </div>
 
-        <h3 class="reset">Semifinals Scores:</h3>
-        <div class="grid__col-12 grid__col--bleed-x grid__col--bleed-y">
+        <div class="grid__col-12 grid__col--bleed">
+          <h3 class="heading--reset">Semifinals Scores:</h3>
+
           <%= render 'admin/participants/judge_scores',
             profile: @account.judge_profile,
             scores: @scores.semifinals %>
+        </div>
+
+        <div class="grid__col-12 grid__col--bleed">
+          <h3 class="heading--reset">Judge Level / Certificate</h3>
+
+          <%= select_tag("account[override_certificate_type]",
+            options_from_collection_for_select(
+              CERTIFICATE_TYPES,
+              "to_s", "humanize",
+              @certificate_recipient.string_certificate_type,
+            ),
+            include_blank: true,
+            data: {
+              remote_select: true,
+              url: admin_certificate_overrides_path(account_id: @account.id),
+              model_name: "account",
+              field_name: "override_certificate_type",
+            }
+          ) %>
         </div>
       </div>
     <% end %>

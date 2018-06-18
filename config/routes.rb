@@ -271,6 +271,8 @@ Rails.application.routes.draw do
     resources :export_downloads, only: :update
 
     resource :season_schedule_settings, only: [:edit, :update]
+
+    resource :certificate_overrides, only: :create
   end
 
   namespace :application do

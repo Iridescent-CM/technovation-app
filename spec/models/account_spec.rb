@@ -1,6 +1,28 @@
 require "rails_helper"
+require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  it "can override the earned certificate type" do
+    account = FactoryBot.create(:judge, :general_certificate).account
+
+    account.update(
+      override_certificate_type: Account.override_certificate_types["judge_advisor"],
+    )
+
+    expect {
+      FillPdfs.(account.reload)
+    }.to change {
+      account.current_judge_advisor_certificates.count
+    }.from(0).to(1)
+    .and not_change {
+      account.current_general_judge_certificates.count
+    }
+
+    badge_recipient = BadgeRecipient.new(account.judge_profile)
+    expect(badge_recipient.icon_name).to eq("judge-advisor")
+    expect(badge_recipient.name).to eq("Judge Advisor")
+  end
+
   it "validates email uniqueness with dots" do
     FactoryBot.create(:account, email: "remove.dots@gmail.com")
     account = FactoryBot.build(:account, email: "removedots@gmail.com")

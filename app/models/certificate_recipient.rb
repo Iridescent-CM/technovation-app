@@ -38,11 +38,16 @@ class CertificateRecipient
   end
 
   def gets_certificate?(certificate_type)
-    send("gets_#{certificate_type}_certificate?")
+    if !!account.override_certificate_type
+      String(certificate_type) === String(CERTIFICATE_TYPES[account.override_certificate_type])
+    else
+      send("gets_#{certificate_type}_certificate?")
+    end
   end
 
   def needs_certificate?(certificate_type)
-    send("needs_#{certificate_type}_certificate?")
+    gets_certificate?(certificate_type) &&
+      send("needs_#{certificate_type}_certificate?")
   end
 
   def certificates
@@ -60,10 +65,25 @@ class CertificateRecipient
       account.certificates.current.last.file_url
   end
 
+  def certificate_type
+    if !!account.override_certificate_type
+      account.override_certificate_type
+    else
+      CERTIFICATE_TYPES.find_index(certificate_types.last)
+    end
+  end
+
+  def string_certificate_type
+    if !!account.override_certificate_type
+      CERTIFICATE_TYPES[account.override_certificate_type]
+    else
+      certificate_types.last
+    end
+  end
+
   private
   def needs_completion_certificate?
-    gets_completion_certificate? &&
-      !account.current_completion_certificates.any?
+    !account.current_completion_certificates.any?
   end
 
   def gets_completion_certificate?
@@ -73,8 +93,7 @@ class CertificateRecipient
   end
 
   def needs_participation_certificate?
-    gets_participation_certificate? &&
-      !account.current_participation_certificates.any?
+    !account.current_participation_certificates.any?
   end
 
   def gets_participation_certificate?
@@ -82,8 +101,7 @@ class CertificateRecipient
   end
 
   def needs_semifinalist_certificate?
-    gets_semifinalist_certificate? &&
-      !account.current_semifinalist_certificates.any?
+    !account.current_semifinalist_certificates.any?
   end
 
   def gets_semifinalist_certificate?
@@ -91,8 +109,7 @@ class CertificateRecipient
   end
 
   def needs_mentor_appreciation_certificate?
-    gets_mentor_appreciation_certificate? &&
-      account.current_appreciation_certificates.count < account.mentor_profile.current_teams.count
+    account.current_appreciation_certificates.count < account.mentor_profile.current_teams.count
   end
 
   def gets_mentor_appreciation_certificate?
@@ -101,8 +118,7 @@ class CertificateRecipient
   end
 
   def needs_general_judge_certificate?
-    gets_general_judge_certificate? &&
-      !account.current_general_judge_certificates.any?
+    !account.current_general_judge_certificates.any?
   end
 
   def gets_general_judge_certificate?
@@ -112,8 +128,7 @@ class CertificateRecipient
   end
 
   def needs_certified_judge_certificate?
-    gets_certified_judge_certificate? &&
-      !account.current_certified_judge_certificates.any?
+    !account.current_certified_judge_certificates.any?
   end
 
   def gets_certified_judge_certificate?
@@ -123,8 +138,7 @@ class CertificateRecipient
   end
 
   def needs_head_judge_certificate?
-    gets_head_judge_certificate? &&
-      !account.current_head_judge_certificates.any?
+    !account.current_head_judge_certificates.any?
   end
 
   def gets_head_judge_certificate?
@@ -135,8 +149,7 @@ class CertificateRecipient
   end
 
   def needs_judge_advisor_certificate?
-    gets_judge_advisor_certificate? &&
-      !account.current_judge_advisor_certificates.any?
+    !account.current_judge_advisor_certificates.any?
   end
 
   def gets_judge_advisor_certificate?

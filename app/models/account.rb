@@ -5,6 +5,8 @@ class Account < ActiveRecord::Base
     46986,
   ]
 
+  enum override_certificate_types: CERTIFICATE_TYPES
+
   acts_as_paranoid
 
   include Seasoned

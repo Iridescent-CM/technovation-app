@@ -18,7 +18,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           judge_profile: judge_profile,
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account)
@@ -34,7 +35,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           judge_profile: NullProfile.new,
-          mentor_profile: NullProfile.new
+          mentor_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
 
@@ -65,6 +67,7 @@ RSpec.describe CertificateRecipient do
           current_participation_certificates: [],
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -81,6 +84,7 @@ RSpec.describe CertificateRecipient do
             current_participation_certificates: [double(:participation_certificate)],
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
+            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -111,7 +115,8 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_completion_certificates: [],
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -127,7 +132,8 @@ RSpec.describe CertificateRecipient do
             name: "My full name",
             current_completion_certificates: [double(:completion_certificate)],
             mentor_profile: NullProfile.new,
-            judge_profile: NullProfile.new
+            judge_profile: NullProfile.new,
+            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -158,7 +164,8 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_semifinalist_certificates: [],
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -174,7 +181,8 @@ RSpec.describe CertificateRecipient do
             name: "My full name",
             current_semifinalist_certificates: [double(:semifinalist_certificate)],
             mentor_profile: NullProfile.new,
-            judge_profile: NullProfile.new
+            judge_profile: NullProfile.new,
+            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team)
@@ -193,7 +201,8 @@ RSpec.describe CertificateRecipient do
           id: 1,
           name: "My full name",
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
@@ -224,7 +233,8 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_participation_certificates: [],
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -254,7 +264,8 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_completion_certificates: [],
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -284,7 +295,8 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           current_semifinalist_certificates: [],
           mentor_profile: NullProfile.new,
-          judge_profile: NullProfile.new
+          judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team)
@@ -303,6 +315,7 @@ RSpec.describe CertificateRecipient do
           name: "My full name",
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
+          override_certificate_type: nil,
         )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
 

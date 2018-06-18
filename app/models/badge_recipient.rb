@@ -7,7 +7,9 @@ class BadgeRecipient
   end
 
   def icon_name
-    if scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+    if !!judge.override_certificate_type
+      CERTIFICATE_TYPES[judge.override_certificate_type].gsub("_", "-")
+    elsif scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
       "general-judge"
     elsif scores.any? && scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
       "certified-judge"

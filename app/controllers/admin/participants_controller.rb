@@ -10,6 +10,7 @@ module Admin
       @account = Account.find(params.fetch(:id))
       @teams = Team.current
       @scores = submission_score(@account)
+      @certificate_recipient = CertificateRecipient.new(@account)
     end
 
     def edit
