@@ -67,7 +67,7 @@ export default {
     jobMonitorUrl () {
       return `/${this.userScope}/job_statuses/${this.jobId}`
     },
-    createJobUrl () {
+    certificateJobUrl () {
       if (Boolean(this.teamId)) {
         return `/${this.userScope}/certificates/${this.teamId}`
       }
@@ -77,7 +77,7 @@ export default {
   methods: {
     createJob () {
       this.state = 'generating'
-      return axios.post(this.createJobUrl)
+      return axios.post(this.certificateJobUrl)
         .then(this.handleJobRequest)
     },
     handleJobRequest (response) {
