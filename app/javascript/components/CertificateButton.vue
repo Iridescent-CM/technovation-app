@@ -67,7 +67,7 @@ export default {
     jobMonitorUrl () {
       return `/${this.userScope}/job_statuses/${this.jobId}`
     },
-    requestUrl () {
+    createJobUrl () {
       if (Boolean(this.teamId)) {
         return `/${this.userScope}/certificates/${this.teamId}`
       }
@@ -77,7 +77,7 @@ export default {
   methods: {
     createJob () {
       this.state = 'generating'
-      return axios.post(this.requestUrl)
+      return axios.post(this.createJobUrl)
         .then(this.handleJobRequest)
     },
     handleJobRequest (response) {
@@ -94,6 +94,8 @@ export default {
         this.pollJobQueue()
       } else if (response.status === 'complete') {
         this.state = 'ready'
+        // TODO - Instead of setting the state to ready here, we should make a
+        // third request to fetch the fileUrl, which we then set via a function
       }
     },
   },
