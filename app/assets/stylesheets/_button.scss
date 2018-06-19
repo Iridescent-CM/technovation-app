@@ -135,8 +135,11 @@
     transform: translateY(2px);
   }
 
-  &:disabled, &[disabled], &.disabled {
-    opacity: 0.3;
+  &.button--disabled,
+  &:disabled,
+  &[disabled],
+  &.disabled {
+    opacity: 0.5;
     pointer-events: none;
 
     &:hover {

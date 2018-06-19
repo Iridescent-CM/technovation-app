@@ -32,7 +32,7 @@ RSpec.describe CertificateJob do
     job = Job.find_by(job_id: job_id)
 
     expect(job.payload).to eq({
-      "file_url" => mentor.current_appreciation_certificates.last.file_url,
+      "fileUrl" => mentor.current_appreciation_certificates.last.file_url,
     })
   end
 end

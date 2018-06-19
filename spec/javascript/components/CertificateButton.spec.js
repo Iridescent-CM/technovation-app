@@ -12,13 +12,15 @@ describe('CertificateButton Vue component', () => {
 
   axios.post.mockImplementation(() => {
     return Promise.resolve({
-      jobId: 5,
+      data: { jobId: 5 },
     })
   })
   axios.get.mockImplementation(() => {
     return Promise.resolve({
-      status: 'complete',
-      payload: {},
+      data: {
+        status: 'complete',
+        payload: {},
+      },
     })
   })
 
@@ -168,7 +170,9 @@ describe('CertificateButton Vue component', () => {
     describe('handleJobRequest', () => {
       it('sets the job id to that of the response', () => {
         const response = {
-          jobId: 8,
+          data: {
+            jobId: 8,
+          },
         }
 
         const wrapper = shallow(CertificateButton, {
@@ -181,7 +185,7 @@ describe('CertificateButton Vue component', () => {
 
         wrapper.vm.handleJobRequest(response)
 
-        expect(wrapper.vm.jobId).toEqual(response.jobId)
+        expect(wrapper.vm.jobId).toEqual(8)
       })
 
       it('does not update the job id if the response does not contain ' +
@@ -194,17 +198,42 @@ describe('CertificateButton Vue component', () => {
 
         expect(wrapper.vm.jobId).toBeNull()
 
-        wrapper.vm.handleJobRequest({ jobId: 0 })
+        wrapper.vm.handleJobRequest({ data: { jobId: 0 } })
 
         expect(wrapper.vm.jobId).toBeNull()
 
-        wrapper.vm.handleJobRequest({ noJobId: true })
+        wrapper.vm.handleJobRequest({ data: { noJobId: true } })
 
         expect(wrapper.vm.jobId).toBeNull()
 
-        wrapper.vm.handleJobRequest({ jobId: null })
+        wrapper.vm.handleJobRequest({ data: { jobId: null } })
 
         expect(wrapper.vm.jobId).toBeNull()
+      })
+
+      it('sets the state to ready if the POST response status is "complete"', () => {
+        const response = {
+          data: {
+            jobId: null,
+            status: 'complete',
+            payload: {
+              fileUrl: "some/pdf"
+            },
+          },
+        }
+
+        const wrapper = shallow(CertificateButton, {
+          propsData: {
+            userScope: 'mentor',
+          },
+        })
+
+        expect(wrapper.vm.state).toEqual('generating')
+
+        wrapper.vm.handleJobRequest(response)
+
+        expect(wrapper.vm.state).toEqual('ready')
+        expect(wrapper.vm.fileUrl).toEqual('some/pdf')
       })
     })
 
@@ -229,8 +258,10 @@ describe('CertificateButton Vue component', () => {
     describe('handleGenerationRequest', () => {
       it('polls the job status endpoint if the response status is "queued"', () => {
         const response = {
-          status: 'queued',
-          payload: {},
+          data: {
+            status: 'queued',
+            payload: {},
+          },
         }
 
         const wrapper = shallow(CertificateButton, {
@@ -250,8 +281,10 @@ describe('CertificateButton Vue component', () => {
 
       it('sets the state to ready if the response status is "complete"', () => {
         const response = {
-          status: 'complete',
-          payload: {},
+          data: {
+            status: 'complete',
+            payload: {},
+          },
         }
 
         const wrapper = shallow(CertificateButton, {
@@ -269,10 +302,12 @@ describe('CertificateButton Vue component', () => {
 
       it('sets the certificate fileUrl on status "complete"', () => {
         const response = {
-          status: 'complete',
-          payload: {
-            fileUrl: "my/url/dont/care"
-          }
+          data: {
+            status: 'complete',
+            payload: {
+              fileUrl: "my/url/dont/care"
+            },
+          },
         }
 
         const wrapper = shallow(CertificateButton, {

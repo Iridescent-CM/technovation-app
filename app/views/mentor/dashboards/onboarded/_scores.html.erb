@@ -4,7 +4,7 @@
     <% quarterfinals_scores = all_scores.quarterfinals %>
     <% semifinals_scores = all_scores.semifinals %>
 
-    <%= image_tag team.team_photo_url %>
+    <%= image_tag team.team_photo_url, class: "team-photo" %>
 
     <h3><span>Team</span> <%= link_to team.name, [:mentor, team] %></h3>
     <h3><span>Submission</span> <%= team.submission.app_name %></h3>
@@ -63,13 +63,11 @@
       <% end %>
     <% end %>
 
-    <p>
-      <%= link_to(
-        "Open your certificate",
-        current_mentor.current_appreciation_certificates.find_by(team: team).file_url,
-        class: "button button--reward",
-        target: :_blank
-      ) %>
+    <p class="vue-enable-certificate-btn">
+      <certificate-button
+        :team-id="<%= team.id %>"
+        user-scope="mentor"
+      />
     </p>
   </div>
 <% end %>

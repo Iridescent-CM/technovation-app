@@ -4,10 +4,6 @@ module Mentor
   class DashboardsController < MentorController
     def show
       @current_teams = current_mentor.teams.current.order("teams.name")
-
-      if SeasonToggles.display_scores?
-        @current_teams.each { |team| FillPdfs.(current_account, team) }
-      end
     end
 
     private

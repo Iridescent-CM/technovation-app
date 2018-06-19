@@ -1,17 +1,25 @@
 <template>
   <div class="certificate-button">
-    <template v-if="isLoading">
+    <div
+      v-if="isLoading"
+      class="button button--reward button--disabled"
+    >
       <icon
         v-if="isLoading"
         class="spin"
         name="spinner"
+        color="ffffff"
+        size="16"
       />
+
       <span>{{ getStateText }}</span>
-    </template>
+    </div>
+
     <a
       v-else
       ref="certificateButton"
-      class="button"
+      class="button button--reward"
+      target="_blank"
       :href="fileUrl"
     >Open your certificate</a>
   </div>
@@ -20,6 +28,15 @@
 <script>
 import axios from 'axios'
 import Icon from './Icon.vue'
+
+const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+if (csrfTokenMetaTag) {
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
+  }
+}
 
 export default {
   name: 'certificate-button',
@@ -85,8 +102,10 @@ export default {
       ).then(this.handleJobRequest)
     },
     handleJobRequest (response) {
-      if (Boolean(response.jobId)) {
-        this.jobId = response.jobId
+      if (Boolean(response.data.jobId)) {
+        this.jobId = response.data.jobId
+      } else if (response.data.status === 'complete') {
+        this.makeReady(response)
       }
     },
     pollJobQueue () {
@@ -94,13 +113,24 @@ export default {
         .then(this.handleGenerationRequest)
     },
     handleGenerationRequest (response) {
-      if (response.status === 'queued') {
+      if (response.data.status === 'queued') {
         this.pollJobQueue()
-      } else if (response.status === 'complete') {
-        this.state = 'ready'
-        this.fileUrl = response.payload.fileUrl
+      } else if (response.data.status === 'complete') {
+        this.makeReady(response)
       }
+    },
+
+    makeReady (response) {
+      this.state = 'ready'
+      this.fileUrl = response.data.payload.fileUrl
     },
   },
 }
 </script>
+
+<style scoped>
+  .button span {
+    display: inline-block;
+    padding-left: 0.25rem;
+  }
+</style>

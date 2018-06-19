@@ -19,7 +19,7 @@ class CertificateJob < ActiveJob::Base
       db_job.update_columns(
         status: "complete",
         payload: {
-          file_url: db_job.owner.current_certificates.last.file_url,
+          fileUrl: db_job.owner.current_certificates.last.file_url,
         },
       )
     end
