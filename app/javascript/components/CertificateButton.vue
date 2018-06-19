@@ -12,7 +12,7 @@
       v-else
       ref="certificateButton"
       class="button"
-      :href="certificateUrl"
+      :href="fileUrl"
     >Open your certificate</a>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
   },
   data () {
     return {
+      fileUrl: null,
       jobId: null,
       state: 'requesting',
     }
@@ -55,13 +56,6 @@ export default {
     })
   },
   computed: {
-    certificateUrl () {
-      if (Boolean(this.teamId)) {
-        return `/${this.userScope}/certificates/${this.teamId}`
-      } else {
-        return `/${this.userScope}/certificates/`
-      }
-    },
     getStateText () {
       const capitalizedState = this.state.charAt(0).toUpperCase() + this.state.slice(1);
 
@@ -74,6 +68,9 @@ export default {
       return `/${this.userScope}/job_statuses/${this.jobId}`
     },
     requestUrl () {
+      if (Boolean(this.teamId)) {
+        return `/${this.userScope}/certificates/${this.teamId}`
+      }
       return `/${this.userScope}/certificates/`
     },
   },
