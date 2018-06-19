@@ -287,7 +287,7 @@ describe('CertificateButton Vue component', () => {
   })
 
   describe('computed property', () => {
-    describe('certificateJobUrl', () => {
+    describe('certificateRequestData', () => {
       it('appends the team id if it is greater than 0', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
@@ -296,21 +296,23 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.certificateJobUrl).toEqual('/mentor/certificates/9')
+        expect(wrapper.vm.certificateRequestData).toEqual({
+          team_id: 9,
+        })
       })
 
-      it('returns the base url without team id if team id is 0 or null', () => {
+      it('sends nothing if the teamId is 0 or null', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
         })
 
-        expect(wrapper.vm.certificateJobUrl).toEqual('/mentor/certificates/')
+        expect(wrapper.vm.certificateRequestData).toEqual({})
 
         wrapper.teamId = null
 
-        expect(wrapper.vm.certificateJobUrl).toEqual('/mentor/certificates/')
+        expect(wrapper.vm.certificateRequestData).toEqual({})
       })
     })
   })
