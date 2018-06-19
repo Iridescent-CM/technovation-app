@@ -18,6 +18,9 @@ module DropLowestScores
       minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
 
       logger.info "FIND lowest complete semifinals score for Submission##{submission.id}"
+      logger.info "Team ID##{submission.team_id}"
+      logger.info "SF Average: #{submission.semifinals_average_score}"
+      logger.info submission.semifinals_complete_submission_scores.map(&:total).sort
 
       account = minimum_score.judge_profile.account
       certificate_recipient = CertificateRecipient.new(account)
@@ -27,8 +30,15 @@ module DropLowestScores
       OverrideCertificate.(account, certificate_recipient.certificate_type)
 
       logger.warn "DROP lowest score"
+      logger.info minimum_score.total
+
       submission.lowest_score_dropped!
       minimum_score.destroy
+
+      logger.info "Updated SF Average: #{submission.reload.semifinals_average_score}"
+
+      certificate_recipient = CertificateRecipient.new(account.reload)
+      logger.info "Reloaded judge certificate - #{certificate_recipient.string_certificate_type} - Judge Account##{account.id}"
     end
   end
 end

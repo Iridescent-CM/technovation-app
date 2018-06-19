@@ -14,10 +14,14 @@ RSpec.describe DropLowestScores do
     submission = double(
       :Submission,
       id: 1,
+      team_id: 2,
       semifinals_complete_submission_scores: scores,
       :lowest_score_dropped? => false,
       :lowest_score_dropped! => true,
+      semifinals_average_score: 64.209,
     )
+
+    allow(submission).to receive(:reload).and_return(submission)
 
     expect(lowest_score).to receive(:destroy)
     DropLowestScores.(submission)

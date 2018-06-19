@@ -8,6 +8,7 @@ class NullAccount < NullObject
   def judge_profile; ::NullProfile.new; end
   def current_certificates; NullCertificates.new; end
   def update_column(*); false; end
+  def reload; self; end
 
   class NullCertificates
     def destroy_all; false; end
