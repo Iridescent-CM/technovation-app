@@ -11,6 +11,7 @@ class ParentalConsent < ActiveRecord::Base
 
   scope :nonvoid, -> { current }
   scope :void, -> { past }
+  scope :unsigned, -> { where(electronic_signature: nil) }
 
   validates :electronic_signature, presence: true, if: :signed?
 
