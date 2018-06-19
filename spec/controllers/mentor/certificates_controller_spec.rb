@@ -9,12 +9,10 @@ RSpec.describe Mentor::CertificatesController, type: :controller do
 
       expect(CertificateJob).to receive(:perform_later).with(
         mentor.account_id,
-        mentor.current_teams.last.id,
+        mentor.current_teams.last.id.to_s,
       ).and_call_original
 
-      post :create
+      post :create, params: { team_id: mentor.current_teams.last.id }
     end
   end
-
-  it "renders JSON with the job ID"
 end
