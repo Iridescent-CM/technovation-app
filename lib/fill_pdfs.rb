@@ -5,18 +5,21 @@ require 'pdf_forms'
 Dir[Rails.root.join('lib/fill_pdfs/*.rb')].each { |f| require f }
 
 module FillPdfs
-  # PROD settings:
-  # heroku config:set LD_LIBRARY_PATH=/app/vendor/pdftk/lib --app APPNAME
-  # heroku config:set PDFTK_PATH=pdftk --app APPNAME
-  #
-  # DEV settings:
-  # -- use `which pdftk` to find your executable path
-  # -- install via homebrew or apt-get if needed
-  #
-  # assuming this typical executable path:
-  # echo "PDFTK_PATH=/usr/bin/pdftk" >> .env
+  def self.pdftk_wrapper
+    return @@pdftk_wrapper if defined?(@@pdftk_wrapper)
+    # PROD settings:
+    # heroku config:set LD_LIBRARY_PATH=/app/vendor/pdftk/lib --app APPNAME
+    # heroku config:set PDFTK_PATH=pdftk --app APPNAME
+    #
+    # DEV settings:
+    # -- use `which pdftk` to find your executable path
+    # -- install via homebrew or apt-get if needed
+    #
+    # assuming this typical executable path:
+    # echo "PDFTK_PATH=/usr/bin/pdftk" >> .env
 
-  PDFTK = PdfForms::PdftkWrapper.new(ENV.fetch("PDFTK_PATH"))
+    @@pdftk_wrapper = PdfForms::PdftkWrapper.new(ENV.fetch("PDFTK_PATH"))
+  end
 
   if Rails.env.production?
     # forcing this var to be set in production
@@ -63,11 +66,11 @@ module FillPdfs
 
   def pdf
     raise IOError, "file not found - #{pathname}" unless File.exist?(pathname)
-    PdfForms::Pdf.new(pathname, PDFTK)
+    PdfForms::Pdf.new(pathname, FillPdfs.pdftk_wrapper)
   end
 
   def fill_form
-    PDFTK.fill_form(
+    FillPdfs.pdftk_wrapper.fill_form(
       pathname,
       tmp_output,
       field_values,

@@ -105,7 +105,8 @@ class CertificateRecipient
   end
 
   def gets_semifinalist_certificate?
-    !!team && team.submission.semifinalist?
+    account.student_profile.present? &&
+      !!team && team.submission.semifinalist?
   end
 
   def needs_mentor_appreciation_certificate?
