@@ -78,8 +78,11 @@ export default {
   methods: {
     createJob () {
       this.state = 'generating'
-      return axios.post(`/${this.userScope}/certificates/`)
-        .then(this.handleJobRequest)
+
+      return axios.post(
+        `/${this.userScope}/certificates/`,
+         this.certificateRequestData
+      ).then(this.handleJobRequest)
     },
     handleJobRequest (response) {
       if (Boolean(response.jobId)) {

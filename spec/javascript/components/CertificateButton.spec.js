@@ -148,6 +148,7 @@ describe('CertificateButton Vue component', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
+            teamId: 42892,
           },
         })
 
@@ -157,7 +158,10 @@ describe('CertificateButton Vue component', () => {
 
         wrapper.vm.createJob()
 
-        expect(axios.post).toHaveBeenCalledWith('/mentor/certificates/')
+        expect(axios.post).toHaveBeenCalledWith(
+          '/mentor/certificates/',
+          { team_id: 42892 },
+        )
       })
     })
 
