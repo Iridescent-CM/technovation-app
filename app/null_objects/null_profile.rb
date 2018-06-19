@@ -1,4 +1,5 @@
 require "./app/null_objects/null_object"
+require "./app/null_objects/null_account"
 
 class NullProfile < NullObject
   def id; nil; end
@@ -10,4 +11,5 @@ class NullProfile < NullObject
   def mailer_token; false; end
   def current_completed_scores; []; end
   def events; []; end
+  def account; ::NullAccount.new; end
 end

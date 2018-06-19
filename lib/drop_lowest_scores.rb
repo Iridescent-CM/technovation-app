@@ -1,6 +1,7 @@
-module DropLowestScores
-  MIN_SCORES_LIMIT = 5
+require "./app/models/certificate_recipient"
+require "./app/technovation/override_certificate"
 
+module DropLowestScores
   def self.call(submission, logger_opt = nil)
     logger = Logger.new(logger_opt)
 
@@ -10,15 +11,16 @@ module DropLowestScores
 
     logger.info "----------------------------------------"
 
-    logger.info "CONSIDER complete semifinals scores for TeamSubmission##{submission.id}"
+    logger.info "DROP lowest complete semifinals score for TeamSubmission##{submission.id}"
 
-    if submission.semifinals_complete_submission_scores.count >= MIN_SCORES_LIMIT
-      logger.warn "DROP lowest score"
+    minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
 
-      minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
-      minimum_score.destroy
-    else
-      logger.info "SKIP"
-    end
+    logger.info "PRESERVE judge's certificate"
+    account = minimum_score.judge_profile.account
+    certificate_recipient = CertificateRecipient.new(account)
+    OverrideCertificate.(account, certificate_recipient.certificate_type)
+
+    logger.warn "DROP lowest score"
+    minimum_score.destroy
   end
 end

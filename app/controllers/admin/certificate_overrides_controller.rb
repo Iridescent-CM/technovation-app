@@ -3,12 +3,10 @@ module Admin
     def create
       account = Account.find(params.fetch(:account_id))
 
-      account.certificates.current.destroy_all
-
       parammed_type = override_params.fetch(:override_certificate_type)
       type_converted_to_int = Account.override_certificate_types[parammed_type]
 
-      account.update(override_certificate_type: type_converted_to_int)
+      OverrideCertificate.(account, type_converted_to_int)
 
       render json: {
         flash: {

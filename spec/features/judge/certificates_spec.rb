@@ -24,11 +24,14 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "onboarded judges with no completed scores see no certificates or badge" do
-    SeasonToggles.display_scores_on!
+    SeasonToggles.set_judging_round(:sf)
 
     judge = FactoryBot.create(:judge, :onboarded)
     FactoryBot.create(:score, :incomplete, judge_profile: judge)
     FactoryBot.create(:score, :past_season, :complete, judge_profile: judge)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
 
     sign_in(judge)
 
@@ -38,9 +41,12 @@ RSpec.feature "Judge certificates" do
 
   Array(1..4).each do |n|
     scenario "judge with #{n} completed current scores" do
-      SeasonToggles.display_scores_on!
+      SeasonToggles.set_judging_round(:sf)
 
       judge = FactoryBot.create(:judge, :onboarded, number_of_scores: n)
+
+      SeasonToggles.set_judging_round(:off)
+      SeasonToggles.display_scores_on!
 
       expect {
         sign_in(judge)
@@ -63,9 +69,12 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "judge with 5 completed current scores" do
-      SeasonToggles.display_scores_on!
+      SeasonToggles.set_judging_round(:sf)
 
       judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 5)
+
+      SeasonToggles.set_judging_round(:off)
+      SeasonToggles.display_scores_on!
 
       expect {
         sign_in(judge)
@@ -88,9 +97,12 @@ RSpec.feature "Judge certificates" do
 
   Array(6..10).each do |n|
     scenario "judge with #{n} completed current scores" do
-      SeasonToggles.display_scores_on!
+      SeasonToggles.set_judging_round(:sf)
 
       judge = FactoryBot.create(:judge, :onboarded, number_of_scores: n)
+
+      SeasonToggles.set_judging_round(:off)
+      SeasonToggles.display_scores_on!
 
       expect {
         sign_in(judge)
@@ -112,9 +124,12 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "judge with 10 or more completed current scores" do
-    SeasonToggles.display_scores_on!
+    SeasonToggles.set_judging_round(:sf)
 
     judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 11)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
 
     expect {
       sign_in(judge)
@@ -137,9 +152,12 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "RPE judges get a head judge certificate" do
-    SeasonToggles.display_scores_on!
+    SeasonToggles.set_judging_round(:sf)
 
     judge = FactoryBot.create(:judge, :onboarded, :attending_live_event)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
 
     expect {
       sign_in(judge)
@@ -162,9 +180,12 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "RPE judges with more than 10 scores get a judge advisor certificate" do
-    SeasonToggles.display_scores_on!
+    SeasonToggles.set_judging_round(:sf)
 
     judge = FactoryBot.create(:judge, :onboarded, :attending_live_event, number_of_scores: 11)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
 
     expect {
       sign_in(judge)

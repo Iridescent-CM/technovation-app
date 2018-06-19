@@ -107,7 +107,12 @@ FactoryBot.define do
       ProfileCreating.execute(judge, FakeController.new)
 
       evaluator.number_of_scores.times do
-        FactoryBot.create(:score, :complete, judge_profile: judge)
+        FactoryBot.create(
+          :score,
+          :complete,
+          judge_profile: judge,
+          round: SeasonToggles.judging_round(full_name: true)
+        )
       end
     end
   end
