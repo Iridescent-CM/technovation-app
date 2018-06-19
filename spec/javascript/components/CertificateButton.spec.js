@@ -376,21 +376,4 @@ describe('CertificateButton Vue component', () => {
       })
     })
   })
-
-  // Refactor this test once the logic for populating fileUrl is done
-  xit('contains the proper state once all AJAX requests and job have finished', (done) => {
-    const wrapper = shallow(CertificateButton, {
-      propsData: {
-        teamId: 3,
-        userScope: 'mentor',
-      },
-    })
-
-    setImmediate(() => {
-      expect(wrapper.vm.certificateUrl).toEqual('/mentor/certificates/3')
-      expect(wrapper.vm.jobId).toEqual(5)
-      expect(wrapper.vm.state).toEqual('ready')
-      done()
-    })
-  })
 })
