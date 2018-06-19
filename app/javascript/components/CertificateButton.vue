@@ -40,9 +40,11 @@ if (csrfTokenMetaTag) {
 
 export default {
   name: 'certificate-button',
+
   components: {
     Icon,
   },
+
   data () {
     return {
       fileUrl: null,
@@ -50,11 +52,13 @@ export default {
       state: 'requesting',
     }
   },
+
   props: {
     teamId: {
       type: Number,
       default: 0,
     },
+
     userScope: {
       type: String,
       required: true,
@@ -67,23 +71,26 @@ export default {
       }
     },
   },
+
   created () {
-    this.createJob().then((response) => {
-      this.pollJobQueue()
-    })
+    this.requestCertificate()
   },
+
   computed: {
     getStateText () {
       const capitalizedState = this.state.charAt(0).toUpperCase() + this.state.slice(1);
 
       return `${capitalizedState} certificate...`
     },
+
     isLoading () {
       return this.state !== 'ready'
     },
+
     jobMonitorUrl () {
       return `/${this.userScope}/job_statuses/${this.jobId}`
     },
+
     certificateRequestData () {
       if (Boolean(this.teamId)) {
         return { team_id: this.teamId }
@@ -92,27 +99,40 @@ export default {
       }
     },
   },
+
   methods: {
-    createJob () {
-      this.state = 'generating'
+    requestCertificate () {
+      this.state = 'requesting'
 
       return axios.post(
         `/${this.userScope}/certificates/`,
          this.certificateRequestData
-      ).then(this.handleJobRequest)
+      )
+      .then((response) => {
+        this.handleJobRequest(response).then(this.pollJobQueue)
+      })
     },
+
     handleJobRequest (response) {
-      if (Boolean(response.data.jobId)) {
-        this.jobId = response.data.jobId
-      } else if (response.data.status === 'complete') {
-        this.makeReady(response)
+      return new Promise((resolve, _reject) => {
+        if (Boolean(response.data.jobId)) {
+          this.jobId = response.data.jobId
+          this.state = 'generating'
+        } else if (response.data.status === 'complete') {
+          this.makeReady(response)
+        }
+
+        resolve()
+      })
+    },
+
+    pollJobQueue () {
+      if (this.isLoading) {
+        axios.get(this.jobMonitorUrl).then(this.handlePollRequest)
       }
     },
-    pollJobQueue () {
-      axios.get(this.jobMonitorUrl)
-        .then(this.handleGenerationRequest)
-    },
-    handleGenerationRequest (response) {
+
+    handlePollRequest (response) {
       if (response.data.status === 'queued') {
         this.pollJobQueue()
       } else if (response.data.status === 'complete') {

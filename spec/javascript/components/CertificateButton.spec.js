@@ -56,7 +56,7 @@ describe('CertificateButton Vue component', () => {
 
   describe('markup', () => {
     it('displays a loading spinner if the certificate button URL ' +
-      'is being requested', (done) => {
+        'is being requested', (done) => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
@@ -79,7 +79,7 @@ describe('CertificateButton Vue component', () => {
     })
 
     it('displays a loading spinner if the certificate button URL ' +
-      'is being generated', (done) => {
+        'is being generated', (done) => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
@@ -102,48 +102,56 @@ describe('CertificateButton Vue component', () => {
     })
 
     it('displays a link to the certificate if the certificate button URL ' +
-      'has finished being generated', (done) => {
-      const url = '/this/is/a/test/url'
+        'has finished being generated', (done) => {
+      axios.post.mockClear()
+
+      axios.post.mockImplementationOnce(() => {
+        return Promise.resolve({
+          data: {
+            status: "complete",
+            payload: {
+              fileUrl: "some/test/url",
+            },
+          },
+        })
+      })
+
       const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
       })
 
-      wrapper.vm.state = 'ready'
-      wrapper.vm.fileUrl = url
-
-      wrapper.vm.$nextTick(() => {
-        const button = wrapper
-          .find({
-            ref: 'certificateButton',
-          })
+      setImmediate(() => {
+        const button = wrapper.find({ ref: 'certificateButton' })
 
         expect(wrapper.contains(Icon)).toBe(false)
         expect(wrapper.contains('span')).toBe(false)
+
         expect(button.exists()).toBe(true)
         expect(button.classes()).toContain('button')
-        expect(button.attributes().href).toContain(url)
+        expect(button.attributes().href).toContain('some/test/url')
         expect(button.text()).toEqual('Open your certificate')
+
         done()
       });
     })
   })
 
   describe('methods', () => {
-    describe('createJob', () => {
-      it('sets the state to "generating"', () => {
+    describe('requestCertificate', () => {
+      it('sets the state to "requesting"', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
         })
 
-        wrapper.vm.state = 'requesting'
+        wrapper.vm.state = ''
 
-        wrapper.vm.createJob()
+        wrapper.vm.requestCertificate()
 
-        expect(wrapper.vm.state).toEqual('generating')
+        expect(wrapper.vm.state).toEqual('requesting')
       })
 
       it('sends a POST request to the request endpoint', () => {
@@ -158,7 +166,7 @@ describe('CertificateButton Vue component', () => {
 
         expect(axios.post).not.toHaveBeenCalled()
 
-        wrapper.vm.createJob()
+        wrapper.vm.requestCertificate()
 
         expect(axios.post).toHaveBeenCalledWith(
           '/mentor/certificates/',
@@ -189,7 +197,7 @@ describe('CertificateButton Vue component', () => {
       })
 
       it('does not update the job id if the response does not contain ' +
-        'a valid jobId', () => {
+          'a valid jobId', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
@@ -228,7 +236,7 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.state).toEqual('generating')
+        expect(wrapper.vm.state).toEqual('requesting')
 
         wrapper.vm.handleJobRequest(response)
 
@@ -237,25 +245,45 @@ describe('CertificateButton Vue component', () => {
       })
     })
 
-    it('sends a pollJobQueue GET request to the job monitor endpoint', () => {
-      const wrapper = shallow(CertificateButton, {
-        propsData: {
-          userScope: 'mentor',
-        },
+    describe('pollJobQueue', () => {
+      it('sends a GET request to the job monitor endpoint', () => {
+        const wrapper = shallow(CertificateButton, {
+          propsData: {
+            userScope: 'mentor',
+          },
+        })
+
+        axios.get.mockClear()
+
+        expect(axios.get).not.toHaveBeenCalled()
+
+        wrapper.vm.jobId = 6
+
+        wrapper.vm.pollJobQueue()
+
+        expect(axios.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
       })
 
-      axios.get.mockClear()
+      it('returns early if the state is already ready', () => {
+        const wrapper = shallow(CertificateButton, {
+          propsData: {
+            userScope: 'mentor',
+          },
+        })
 
-      expect(axios.get).not.toHaveBeenCalled()
+        axios.get.mockClear()
 
-      wrapper.vm.jobId = 6
+        expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper.vm.pollJobQueue()
+        wrapper.vm.state = 'ready'
 
-      expect(axios.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
+        wrapper.vm.pollJobQueue()
+
+        expect(axios.get).not.toHaveBeenCalled()
+      })
     })
 
-    describe('handleGenerationRequest', () => {
+    describe('handlePollRequest', () => {
       it('polls the job status endpoint if the response status is "queued"', () => {
         const response = {
           data: {
@@ -274,7 +302,7 @@ describe('CertificateButton Vue component', () => {
 
         expect(pollJobQueueSpy).not.toHaveBeenCalled()
 
-        wrapper.vm.handleGenerationRequest(response)
+        wrapper.vm.handlePollRequest(response)
 
         expect(pollJobQueueSpy).toHaveBeenCalled()
       })
@@ -293,9 +321,9 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.state).toEqual('generating')
+        expect(wrapper.vm.state).toEqual('requesting')
 
-        wrapper.vm.handleGenerationRequest(response)
+        wrapper.vm.handlePollRequest(response)
 
         expect(wrapper.vm.state).toEqual('ready')
       })
@@ -316,9 +344,9 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.state).toEqual('generating')
+        expect(wrapper.vm.state).toEqual('requesting')
 
-        wrapper.vm.handleGenerationRequest(response)
+        wrapper.vm.handlePollRequest(response)
 
         expect(wrapper.vm.fileUrl).toEqual('my/url/dont/care')
       })
