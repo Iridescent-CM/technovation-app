@@ -7,7 +7,7 @@ import CertificateButton from 'components/CertificateButton'
 describe('CertificateButton Vue component', () => {
   axiosMock.post.mockImplementation(() => {
     return Promise.resolve({
-      data: { jobId: 5, test: 'blah' },
+      data: { jobId: 5 },
     })
   })
   axiosMock.get.mockImplementation(() => {
