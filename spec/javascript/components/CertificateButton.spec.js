@@ -1,21 +1,16 @@
 import { shallow } from '@vue/test-utils'
 
-import axios from 'axios'
+import axiosMock from 'axios'
 import Icon from 'components/Icon'
 import CertificateButton from 'components/CertificateButton'
 
 describe('CertificateButton Vue component', () => {
-  // Mocking this out to prevent console from getting bogged down with warnings
-  // We will want to move this into a proper mock later on
-  axios.get = jest.fn()
-  axios.post = jest.fn()
-
-  axios.post.mockImplementation(() => {
+  axiosMock.post.mockImplementation(() => {
     return Promise.resolve({
-      data: { jobId: 5 },
+      data: { jobId: 5, test: 'blah' },
     })
   })
-  axios.get.mockImplementation(() => {
+  axiosMock.get.mockImplementation(() => {
     return Promise.resolve({
       data: {
         status: 'complete',
@@ -25,8 +20,8 @@ describe('CertificateButton Vue component', () => {
   })
 
   beforeEach(() => {
-    axios.post.mockClear()
-    axios.get.mockClear()
+    axiosMock.post.mockClear()
+    axiosMock.get.mockClear()
   })
 
   describe('props', () => {
@@ -103,9 +98,7 @@ describe('CertificateButton Vue component', () => {
 
     it('displays a link to the certificate if the certificate button URL ' +
         'has finished being generated', (done) => {
-      axios.post.mockClear()
-
-      axios.post.mockImplementationOnce(() => {
+      axiosMock.post.mockImplementationOnce(() => {
         return Promise.resolve({
           data: {
             status: "complete",
@@ -162,13 +155,13 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axios.post.mockClear()
+        axiosMock.post.mockClear()
 
-        expect(axios.post).not.toHaveBeenCalled()
+        expect(axiosMock.post).not.toHaveBeenCalled()
 
         wrapper.vm.requestCertificate()
 
-        expect(axios.post).toHaveBeenCalledWith(
+        expect(axiosMock.post).toHaveBeenCalledWith(
           '/mentor/certificates/',
           { team_id: 42892 },
         )
@@ -253,15 +246,15 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axios.get.mockClear()
+        axiosMock.get.mockClear()
 
-        expect(axios.get).not.toHaveBeenCalled()
+        expect(axiosMock.get).not.toHaveBeenCalled()
 
         wrapper.vm.jobId = 6
 
         wrapper.vm.pollJobQueue()
 
-        expect(axios.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
+        expect(axiosMock.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
       })
 
       it('returns early if the state is already ready', () => {
@@ -271,15 +264,15 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axios.get.mockClear()
+        axiosMock.get.mockClear()
 
-        expect(axios.get).not.toHaveBeenCalled()
+        expect(axiosMock.get).not.toHaveBeenCalled()
 
         wrapper.vm.state = 'ready'
 
         wrapper.vm.pollJobQueue()
 
-        expect(axios.get).not.toHaveBeenCalled()
+        expect(axiosMock.get).not.toHaveBeenCalled()
       })
     })
 
