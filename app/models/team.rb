@@ -14,11 +14,8 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
-  attr_accessor :destroyed
-  after_destroy -> { self.destroyed = true }
-
   after_commit -> {
-    return false if destroyed
+    return false if destroyed?
 
     if students.any? and students.all?(&:onboarded)
       update_columns(
