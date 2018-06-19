@@ -18,6 +18,7 @@ describe('CertificateButton Vue component', () => {
   axios.get.mockImplementation(() => {
     return Promise.resolve({
       status: 'complete',
+      payload: {},
     })
   })
 
@@ -225,6 +226,7 @@ describe('CertificateButton Vue component', () => {
       it('polls the job status endpoint if the response status is "queued"', () => {
         const response = {
           status: 'queued',
+          payload: {},
         }
 
         const wrapper = shallow(CertificateButton, {
@@ -245,6 +247,7 @@ describe('CertificateButton Vue component', () => {
       it('sets the state to ready if the response status is "complete"', () => {
         const response = {
           status: 'complete',
+          payload: {},
         }
 
         const wrapper = shallow(CertificateButton, {
@@ -258,6 +261,27 @@ describe('CertificateButton Vue component', () => {
         wrapper.vm.handleGenerationRequest(response)
 
         expect(wrapper.vm.state).toEqual('ready')
+      })
+
+      it('sets the certificate fileUrl on status "complete"', () => {
+        const response = {
+          status: 'complete',
+          payload: {
+            fileUrl: "my/url/dont/care"
+          }
+        }
+
+        const wrapper = shallow(CertificateButton, {
+          propsData: {
+            userScope: 'mentor',
+          },
+        })
+
+        expect(wrapper.vm.state).toEqual('generating')
+
+        wrapper.vm.handleGenerationRequest(response)
+
+        expect(wrapper.vm.fileUrl).toEqual('my/url/dont/care')
       })
     })
   })

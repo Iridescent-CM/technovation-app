@@ -94,8 +94,7 @@ export default {
         this.pollJobQueue()
       } else if (response.status === 'complete') {
         this.state = 'ready'
-        // TODO - Instead of setting the state to ready here, we should make a
-        // third request to fetch the fileUrl, which we then set via a function
+        this.fileUrl = response.payload.fileUrl
       }
     },
   },
