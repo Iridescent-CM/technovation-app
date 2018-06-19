@@ -27,7 +27,7 @@ describe('CertificateButton Vue component', () => {
   })
 
   describe('props', () => {
-    it('teamId should default to 0', () => {
+    it('defaults teamId to 0', () => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
@@ -43,7 +43,7 @@ describe('CertificateButton Vue component', () => {
     })
   })
 
-  it('should set the correct initial data state', () => {
+  it('sets the correct initial data state', () => {
     expect(CertificateButton.data()).toEqual({
       fileUrl: null,
       jobId: null,
@@ -52,7 +52,7 @@ describe('CertificateButton Vue component', () => {
   })
 
   describe('markup', () => {
-    it('should display a loading spinner if the certificate button URL ' +
+    it('displays a loading spinner if the certificate button URL ' +
       'is being requested', (done) => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
@@ -75,7 +75,7 @@ describe('CertificateButton Vue component', () => {
       })
     })
 
-    it('should display a loading spinner if the certificate button URL ' +
+    it('displays a loading spinner if the certificate button URL ' +
       'is being generated', (done) => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
@@ -98,7 +98,7 @@ describe('CertificateButton Vue component', () => {
       });
     })
 
-    it('should display a link to the certificate if the certificate button URL ' +
+    it('displays a link to the certificate if the certificate button URL ' +
       'has finished being generated', (done) => {
       const url = '/this/is/a/test/url'
       const wrapper = shallow(CertificateButton, {
@@ -129,7 +129,7 @@ describe('CertificateButton Vue component', () => {
 
   describe('methods', () => {
     describe('createJob', () => {
-      it('should set the state to "generating"', () => {
+      it('sets the state to "generating"', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
@@ -143,7 +143,7 @@ describe('CertificateButton Vue component', () => {
         expect(wrapper.vm.state).toEqual('generating')
       })
 
-      it('should send a POST request to the request endpoint', () => {
+      it('sends a POST request to the request endpoint', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
@@ -161,7 +161,7 @@ describe('CertificateButton Vue component', () => {
     })
 
     describe('handleJobRequest', () => {
-      it('should set the job id to that of the response', () => {
+      it('sets the job id to that of the response', () => {
         const response = {
           jobId: 8,
         }
@@ -179,7 +179,7 @@ describe('CertificateButton Vue component', () => {
         expect(wrapper.vm.jobId).toEqual(response.jobId)
       })
 
-      it('should not update the job id if the response does not contain ' +
+      it('does not update the job id if the response does not contain ' +
         'a valid jobId', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
@@ -203,7 +203,7 @@ describe('CertificateButton Vue component', () => {
       })
     })
 
-    it('pollJobQueue should send a GET request to the job monitor endpoint', () => {
+    it('sends a pollJobQueue GET request to the job monitor endpoint', () => {
       const wrapper = shallow(CertificateButton, {
         propsData: {
           userScope: 'mentor',
@@ -222,7 +222,7 @@ describe('CertificateButton Vue component', () => {
     })
 
     describe('handleGenerationRequest', () => {
-      it('should poll the job status endpoint if the response status is "queued"', () => {
+      it('polls the job status endpoint if the response status is "queued"', () => {
         const response = {
           status: 'queued',
         }
@@ -242,7 +242,7 @@ describe('CertificateButton Vue component', () => {
         expect(pollJobQueueSpy).toHaveBeenCalled()
       })
 
-      it('should set the state to ready if the response status is "complete"', () => {
+      it('sets the state to ready if the response status is "complete"', () => {
         const response = {
           status: 'complete',
         }
@@ -264,7 +264,7 @@ describe('CertificateButton Vue component', () => {
 
   describe('computed property', () => {
     describe('certificateJobUrl', () => {
-      it('should append the team id if it is greater than 0', () => {
+      it('appends the team id if it is greater than 0', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             teamId: 9,
@@ -275,7 +275,7 @@ describe('CertificateButton Vue component', () => {
         expect(wrapper.vm.certificateJobUrl).toEqual('/mentor/certificates/9')
       })
 
-      it('should return the base url without team id if team id is 0 or null', () => {
+      it('returns the base url without team id if team id is 0 or null', () => {
         const wrapper = shallow(CertificateButton, {
           propsData: {
             userScope: 'mentor',
@@ -292,7 +292,7 @@ describe('CertificateButton Vue component', () => {
   })
 
   // Refactor this test once the logic for populating fileUrl is done
-  xit('should contain the proper state once all AJAX requests and job have finished', (done) => {
+  xit('contains the proper state once all AJAX requests and job have finished', (done) => {
     const wrapper = shallow(CertificateButton, {
       propsData: {
         teamId: 3,
