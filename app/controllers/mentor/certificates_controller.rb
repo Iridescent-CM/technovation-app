@@ -3,11 +3,23 @@ require "fill_pdfs"
 module Mentor
   class CertificatesController < MentorController
     def create
-      current_mentor.current_teams.each do |team|
-        FillPdfs.(current_account, team)
-      end
+      team_id = params.fetch(:team_id)
 
-      redirect_to mentor_dashboard_path, success: "Your certificate is ready!"
+      if current_mentor.current_certificates.exists?(team_id: team_id)
+        render json: {
+          status: "complete",
+          payload: {
+            fileUrl: current_mentor.current_certificates.last.file_url,
+          },
+        }
+      else
+        job = CertificateJob.perform_later(
+          current_mentor.account_id,
+          team_id,
+        )
+
+        render json: { jobId: job.job_id }
+      end
     end
   end
 end

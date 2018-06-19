@@ -6,3 +6,20 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
+
+import Vue from 'vue/dist/vue.esm'
+import CertificateButton from '../components/CertificateButton'
+
+document.addEventListener('turbolinks:load', () => {
+  const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
+
+  btnEls.forEach((btnEl) => {
+    new Vue({
+      el: btnEl,
+
+      components: {
+        CertificateButton,
+      },
+    })
+  })
+})

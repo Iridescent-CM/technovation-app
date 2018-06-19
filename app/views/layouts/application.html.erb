@@ -24,10 +24,14 @@
       media: :all
     ) %>
 
+    <%= stylesheet_pack_tag("application", data: { turbolinks_track: :reload }) %>
+
     <%= yield :css %>
 
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
+
+    <%= javascript_pack_tag("application", data: { turbolinks_track: :reload }) %>
 
     <%= yield :js %>
   </head>

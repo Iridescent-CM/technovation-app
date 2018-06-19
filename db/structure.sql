@@ -551,7 +551,8 @@ CREATE TABLE public.jobs (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     owner_type character varying,
-    owner_id bigint
+    owner_id bigint,
+    payload json DEFAULT '{}'::json
 );
 
 
@@ -3018,6 +3019,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180501194208'),
 ('20180516145423'),
 ('20180614140324'),
-('20180618152654');
+('20180618152654'),
+('20180619154728');
 
 
