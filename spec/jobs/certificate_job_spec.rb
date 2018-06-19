@@ -24,4 +24,15 @@ RSpec.describe CertificateJob do
 
     expect(Job.last.job_id).to eq(job_id)
   end
+
+  it "adds the certificale file url to the DB job payload" do
+    mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
+
+    job_id = CertificateJob.perform_later(mentor.account_id).job_id
+    job = Job.find_by(job_id: job_id)
+
+    expect(job.payload).to eq({
+      "file_url" => mentor.current_appreciation_certificates.last.file_url,
+    })
+  end
 end

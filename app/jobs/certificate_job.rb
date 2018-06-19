@@ -16,7 +16,12 @@ class CertificateJob < ActiveJob::Base
 
   after_perform do |job|
     if db_job = Job.find_by(job_id: job.job_id)
-      db_job.update_column(:status, "complete")
+      db_job.update_columns(
+        status: "complete",
+        payload: {
+          file_url: db_job.owner.current_certificates.last.file_url,
+        },
+      )
     end
   end
 

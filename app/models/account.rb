@@ -51,6 +51,8 @@ class Account < ActiveRecord::Base
 
   has_many :certificates, dependent: :destroy
 
+  has_many :current_certificates, -> { current }, class_name: "Certificate"
+
   has_many :current_participation_certificates, -> { current.participation },
     class_name: "Certificate"
 
