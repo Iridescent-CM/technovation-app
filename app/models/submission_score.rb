@@ -9,7 +9,12 @@ class SubmissionScore < ActiveRecord::Base
   SENIOR_LOW_SCORE_THRESHOLD = 23
   JUNIOR_LOW_SCORE_THRESHOLD = 19
 
+  attr_accessor :destroyed
+  after_destroy -> { self.destroyed = true }
+
   after_commit -> {
+    return false if destroyed
+
     team_submission.update_average_scores
 
     update_columns(
@@ -20,14 +25,16 @@ class SubmissionScore < ActiveRecord::Base
     )
   }, if: :complete?
 
+  after_commit -> {
+    return false if destroyed
+
+    update_column(:official, official?)
+  }
+
   before_create -> {
     self.seasons = [Season.current.year]
     self.event_type ||= LiveEventJudgingEnabled.(judge_profile) ?
       "live" : "virtual"
-  }
-
-  after_commit -> {
-    update_column(:official, official?)
   }
 
   enum round: %w{

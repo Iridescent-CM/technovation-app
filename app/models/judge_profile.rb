@@ -85,6 +85,10 @@ class JudgeProfile < ActiveRecord::Base
   has_many :current_completed_scores, -> { current.complete },
    class_name: "SubmissionScore"
 
+  has_many :current_quarterfinals_complete_scores,
+    -> { current.complete.quarterfinals },
+    class_name: "SubmissionScore"
+
   validates :company_name, :job_title,
     presence: true
 

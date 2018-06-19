@@ -14,6 +14,25 @@ class Team < ActiveRecord::Base
     team.update_address_details_from_reverse_geocoding(results)
   end
 
+  attr_accessor :destroyed
+  after_destroy -> { self.destroyed = true }
+
+  after_commit -> {
+    return false if destroyed
+
+    if students.any? and students.all?(&:onboarded)
+      update_columns(
+        has_students: true,
+        all_students_onboarded: true
+      )
+    elsif students.any?
+      update_column(:all_students_onboarded, false)
+    else
+      update_column(:has_students, false)
+    end
+  }
+
+
   scope :has_students, -> { where(has_students: true) }
   scope :no_students, -> { where(has_students: false) }
 
@@ -237,19 +256,6 @@ class Team < ActiveRecord::Base
   validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
-
-  after_commit -> {
-    if students.any? and students.all?(&:onboarded)
-      update_columns(
-        has_students: true,
-        all_students_onboarded: true
-      )
-    elsif students.any?
-      update_column(:all_students_onboarded, false)
-    else
-      update_column(:has_students, false)
-    end
-  }
 
   def is_team?
     true

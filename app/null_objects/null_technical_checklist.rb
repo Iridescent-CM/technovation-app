@@ -11,4 +11,5 @@ class NullTechnicalChecklist < NullObject
   def database; []; end
   def mobile; []; end
   def process; []; end
+  def paranoid?; false; end
 end
