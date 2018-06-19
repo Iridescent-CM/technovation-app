@@ -2,16 +2,19 @@ require "rails_helper"
 
 RSpec.describe Mentor::CertificatesController, type: :controller do
   describe "POST #create" do
-    it "generates a completion cert for the current mentor" do
+    it "performs the background job for certificates" do
       mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
 
       sign_in(mentor)
 
-      expect {
-        post :create
-      }.to change {
-         mentor.certificates.completion.count
-      }.from(0).to(1)
+      expect(CertificateJob).to receive(:perform_later).with(
+        mentor.account_id,
+        mentor.current_teams.last.id,
+      ).and_call_original
+
+      post :create
     end
   end
+
+  it "renders JSON with the job ID"
 end
