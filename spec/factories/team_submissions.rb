@@ -4,6 +4,22 @@ FactoryBot.define do
 
     team
 
+    transient do
+      number_of_scores 0
+    end
+
+    after(:create) do |submission, evaluator|
+      evaluator.number_of_scores.times do
+        FactoryBot.create(
+          :score,
+          :complete,
+          team_submission: submission,
+          sdg_alignment: Array(1..5).sample,
+          round: SeasonToggles.judging_round(full_name: true),
+        )
+      end
+    end
+
     trait :past_season do
       seasons { [Season.current.year - (1..10).to_a.sample] }
     end

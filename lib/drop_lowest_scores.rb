@@ -11,16 +11,24 @@ module DropLowestScores
 
     logger.info "----------------------------------------"
 
-    logger.info "DROP lowest complete semifinals score for TeamSubmission##{submission.id}"
+    if submission.lowest_score_dropped?
+      logger.info "SKIP already dropped score for Submission##{submission.id}"
+      return false
+    else
+      minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
 
-    minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
+      logger.info "FIND lowest complete semifinals score for Submission##{submission.id}"
 
-    logger.info "PRESERVE judge's certificate"
-    account = minimum_score.judge_profile.account
-    certificate_recipient = CertificateRecipient.new(account)
-    OverrideCertificate.(account, certificate_recipient.certificate_type)
+      account = minimum_score.judge_profile.account
+      certificate_recipient = CertificateRecipient.new(account)
 
-    logger.warn "DROP lowest score"
-    minimum_score.destroy
+      logger.info "PRESERVE judge certificate - #{certificate_recipient.string_certificate_type} - Judge Account##{account.id}"
+
+      OverrideCertificate.(account, certificate_recipient.certificate_type)
+
+      logger.warn "DROP lowest score"
+      submission.lowest_score_dropped!
+      minimum_score.destroy
+    end
   end
 end

@@ -194,6 +194,14 @@ class TeamSubmission < ActiveRecord::Base
 
   alias_attribute :celebration_average_score, :average_unofficial_score
 
+  def lowest_score_dropped?
+    lowest_score_dropped_at != nil
+  end
+
+  def lowest_score_dropped!
+    update_column(:lowest_score_dropped_at, Time.current)
+  end
+
   def qualifies_for_participation?
     percent_complete < 100 &&
       percent_complete >= PARTICIPATION_MINIMUM_PERCENT

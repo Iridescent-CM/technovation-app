@@ -1453,7 +1453,8 @@ CREATE TABLE public.team_submissions (
     published_at timestamp without time zone,
     business_plan character varying,
     percent_complete integer DEFAULT 0 NOT NULL,
-    pitch_presentation character varying
+    pitch_presentation character varying,
+    lowest_score_dropped_at timestamp without time zone
 );
 
 
@@ -3020,6 +3021,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180516145423'),
 ('20180614140324'),
 ('20180618152654'),
-('20180619154728');
+('20180619154728'),
+('20180619194316');
 
 
