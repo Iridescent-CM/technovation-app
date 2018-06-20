@@ -10,6 +10,7 @@ describe('CertificateButton Vue component', () => {
       data: { jobId: 5 },
     })
   })
+
   axiosMock.get.mockImplementation(() => {
     return Promise.resolve({
       data: {
