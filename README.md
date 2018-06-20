@@ -41,8 +41,8 @@ Make sure XCode is installed.
 
 Under Xcode preferences locations, make sure there is a version set.
 
-Install qt5
 
+Install qt5
 
 ```
 brew install qt@5.5
@@ -71,6 +71,12 @@ Install postgresql (follow the post-install instructions)
 ```
 brew install postgresql
 createuser -s postgres
+```
+
+Install imagemagick
+
+```
+brew install imagemagick
 ```
 
 Install pdftk
