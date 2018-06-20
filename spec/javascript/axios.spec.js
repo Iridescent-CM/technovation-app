@@ -32,6 +32,22 @@ describe('axios mock', () => {
       })
     })
 
+    it('mocks implementations once with an option', (done) => {
+      axios.mockRequest('post', { always: 'resolved' })
+      axios.mockRequest('post', { resolved: 'once' }, { once: true })
+
+      axios.post('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'once' } })
+      })
+
+      axios.post('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { always: 'resolved' } })
+        done()
+      })
+    })
+
     it('does not disturb normal boilerplate mocking', (done) => {
       axios.get.mockImplementation(() => {
         return Promise.resolve({ data: { status: 'complete' } })

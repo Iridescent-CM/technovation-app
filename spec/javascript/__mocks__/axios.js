@@ -1,9 +1,13 @@
 export default {
   mockRequest (method, returnData, opts) {
     const options = Object.assign({}, opts)
+
     const promiseState = options.reject ? 'reject' : 'resolve'
 
-    this[method].mockImplementation(() => {
+    const mockImplementationFunc = options.once ?
+      'mockImplementationOnce' : 'mockImplementation'
+
+    this[method][mockImplementationFunc](() => {
       return Promise[promiseState]({
         data: returnData,
       })
