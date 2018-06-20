@@ -1,13 +1,14 @@
-import Vue from "vue";
+import { shallow } from '@vue/test-utils'
+
 import AttendeeSearch from "ra/events/AttendeeSearch";
 
 test('performs remote search when filteredItems is empty', () => {
-  const vm = new Vue(AttendeeSearch).$mount();
-  let spy = jest.spyOn(vm, "fetchRemoteItems");
+  const wrapper = shallow(AttendeeSearch);
+  const fetchRemoteItemsSpy = jest.spyOn(wrapper.vm, "fetchRemoteItems");
 
-  vm.query = "longer than 2 chars";
+  wrapper.vm.query = "longer than 2 chars";
 
   setTimeout(() => {
-    expect(spy).toBeCalledWith({ expandSearch: "1" });
+    expect(fetchRemoteItemsSpy).toBeCalledWith({ expandSearch: "1" });
   }, 300);
 });
