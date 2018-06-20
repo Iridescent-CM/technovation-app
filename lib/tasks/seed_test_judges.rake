@@ -1,3 +1,5 @@
+require 'factory_bot'
+
 desc "Seed QA with test judge data for badges / certificates"
 task seed_test_judges: :environment do
   def log(msg)

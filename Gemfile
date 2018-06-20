@@ -141,9 +141,7 @@ group :production do
     branch: 'master'
 end
 
-group :test, :development do
-  gem 'factory_bot_rails', "~> 4.10"
-end
+gem 'factory_bot_rails', "~> 4.10"
 
 group :legacy do
   # LEGACY MIGRATION
