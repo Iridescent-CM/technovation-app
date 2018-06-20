@@ -1,7 +1,10 @@
 export default {
-  mockRequest (method, returnData, options) {
+  mockRequest (method, returnData, opts) {
+    const options = Object.assign({}, opts)
+    const promiseState = options.reject ? 'reject' : 'resolve'
+
     this[method].mockImplementation(() => {
-      return Promise.resolve({
+      return Promise[promiseState]({
         data: returnData,
       })
     })
