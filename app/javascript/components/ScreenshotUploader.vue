@@ -73,10 +73,12 @@ export default {
       type: String,
       required: true,
     },
+
     screenshotsUrl: {
       type: String,
       required: true,
     },
+
     teamId: {
       type: Number,
       required: true,
