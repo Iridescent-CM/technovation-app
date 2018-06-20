@@ -1,72 +1,20 @@
 <div
   id="screenshots"
-  data-url="<%= send("#{current_scope}_screenshots_path") %>"
-  data-team-id="<%= @team_submission.team_id %>"
   class="panel"
 >
   <h3 class="panel--heading">Screenshots</h3>
 
-  <div id="app">
-    <template v-if="maxFiles > 0">
-      <label class="label--wraps-file-input">
-        <input type="file" multiple @change="handleFileInput" />
-
-        <span class="button button--small">
-          + Add {{ prefix }} {{ maxFiles }} {{ object }}
-        </span>
-      </label>
-    </template>
-
-    <template v-else>
-      You have uploaded the maximum of {{ maxAllowed }} screenshots.
-      You need to remove some if you want to add others.
-    </template>
-
-    <p v-if="screenshots.length > 1">
-      Sort your screenshots in the order that you want
-      the judges to see them:
-    </p>
-
-    <ol
-      v-dragula=""
-      id="sortable-list"
-      data-sort-url="<%=
+  <div id="vue-screenshot-uploader">
+    <screenshot-uploader
+      screenshots-url="<%= send("#{current_scope}_screenshots_path") %>"
+      :team-id="<%= @team_submission.team_id %>"
+      sort-url="<%=
         send(
           "#{current_scope}_team_submission_path",
           @team_submission
         )
       %>"
-      class="sortable-list submission-pieces__screenshots"
-    >
-      <li
-        class="sortable-list__item draggable"
-        v-for="screenshot in screenshots"
-        :key="screenshot.id"
-        :data-db-id="screenshot.id"
-      >
-        <img
-          class="submission-pieces__screenshot img-modal"
-          :src="screenshot.src"
-          :alt="screenshot.name"
-          :data-modal-url="screenshot.large_img_url"
-        />
-
-        <div class="sortable-list__item-actions">
-          <i
-            class="icon-remove icon--red"
-            @click="removeScreenshot(screenshot)"
-          ></i>
-        </div>
-      </li>
-
-      <li
-        class="submission-pieces__screenshot-placeholder"
-        v-for="upload in uploads"
-      >
-        <i class="icon-spinner2 spin"></i>
-        <span>{{ upload.name }}</span>
-      </li>
-    </ol>
+    ><screenshot-uploader>
   </div>
 
   <p class="grid__cell--padding-sm-y">
