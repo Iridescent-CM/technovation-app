@@ -23,7 +23,6 @@
     <ol
       v-dragula
       id="sortable-list"
-      data-sort-url="sortUrl"
       class="sortable-list submission-pieces__screenshots"
     >
       <li
@@ -60,11 +59,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueDragula from 'vue-dragula';
-
-Vue.use(VueDragula)
-
 export default {
   name: 'screenshot-uploader',
 
@@ -186,11 +180,11 @@ export default {
       },
     });
 
-    Vue.vueDragula.eventBus.$on('drop', (args) => {
+    window.vueDragula.eventBus.$on('drop', (args) => {
       var dropped = args[1],
           list = args[2];
 
-      var url = $(list).data("sort-url"),
+      var url = this.sortUrl,
           items = $(list).find(".sortable-list__item"),
           form = new FormData();
 
