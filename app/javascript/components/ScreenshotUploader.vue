@@ -89,15 +89,15 @@ export default {
 
   computed: {
     maxFiles () {
-      return this.maxAllowed - this.screenshots.length;
+      return this.maxAllowed - this.screenshots.length
     },
 
     object () {
-      return this.maxFiles != 1 ? "screenshots" : "screenshot";
+      return this.maxFiles > 1 ? "screenshots" : "screenshot"
     },
 
     prefix () {
-      return this.maxFiles != 1 ? "up to" : "";
+      return this.maxFiles > 1 ? "up to" : ""
     },
   },
 
