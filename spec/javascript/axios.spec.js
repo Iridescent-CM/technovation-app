@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 describe('axios mock', () => {
-  describe('axios.mockRequest', () => {
+  describe('axios.mockResponse', () => {
     it('mocks get implementations with resolve by default', (done) => {
-      axios.mockRequest('get', { myField: 'myValue' })
+      axios.mockResponse('get', { myField: 'myValue' })
 
       axios.get('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
@@ -13,7 +13,7 @@ describe('axios mock', () => {
     })
 
     it('mocks post implementations with resolve by default', (done) => {
-      axios.mockRequest('post', { some: 'value' })
+      axios.mockResponse('post', { some: 'value' })
 
       axios.post('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
@@ -23,7 +23,7 @@ describe('axios mock', () => {
     })
 
     it('mocks implementations with a reject by option', (done) => {
-      axios.mockRequest('post', { rejected: 'value' }, { reject: true })
+      axios.mockResponse('post', { rejected: 'value' }, { reject: true })
 
       axios.post('/test/url').catch((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
@@ -33,8 +33,8 @@ describe('axios mock', () => {
     })
 
     it('mocks implementations once with an option', (done) => {
-      axios.mockRequest('post', { always: 'resolved' })
-      axios.mockRequest('post', { resolved: 'once' }, { once: true })
+      axios.mockResponse('post', { always: 'resolved' })
+      axios.mockResponse('post', { resolved: 'once' }, { once: true })
 
       axios.post('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
@@ -56,6 +56,24 @@ describe('axios mock', () => {
       axios.get('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { status: 'complete' } })
+        done()
+      })
+    })
+  })
+
+  describe('axios.mockResponseOnce', () => {
+    it('mocks responses once', (done) => {
+      axios.mockResponse('get', { resolved: 'always' })
+      axios.mockResponseOnce('get', { resolved: 'once' })
+
+      axios.get('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'once' } })
+      })
+
+      axios.get('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'always' } })
         done()
       })
     })

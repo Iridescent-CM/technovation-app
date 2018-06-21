@@ -1,5 +1,5 @@
 export default {
-  mockRequest (method, returnData, opts) {
+  mockResponse (method, returnData, opts) {
     const options = Object.assign({}, opts)
 
     const promiseState = options.reject ? 'reject' : 'resolve'
@@ -12,6 +12,11 @@ export default {
         data: returnData,
       })
     })
+  },
+
+  mockResponseOnce (method, returnData, opts) {
+    const options = Object.assign({}, opts, { once: true })
+    this.mockResponse(method, returnData, options)
   },
 
   get: jest.fn((url) => {
