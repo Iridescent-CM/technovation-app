@@ -28,6 +28,8 @@ describe('ScreenshotUploader Vue component', () => {
         teamId: 1,
       },
     })
+
+    $.ajax.mockClear()
   })
 
   describe('props', () => {
