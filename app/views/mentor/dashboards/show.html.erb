@@ -63,7 +63,11 @@
     >
       <div class="col--sticky-spacer">
         <div class="col--sticky">
-          <%= render 'mentor/dashboards/onboarded/scores' %>
+          <% if current_mentor.current_teams.any? %>
+            <%= render 'mentor/dashboards/onboarded/scores' %>
+          <% else %>
+            <%= render 'mentor/dashboards/onboarded/scores_no_teams' %>
+          <% end %>
         </div>
       </div>
     </div>

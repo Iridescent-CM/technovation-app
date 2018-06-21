@@ -1,0 +1,14 @@
+<div class="panel">
+  <p>
+    Thank you for your participation in the <%= Season.current.year %>
+    Technovation season. Check out the finalists at
+    <%= link_to "technovationchallenge.org/season-results",
+      ENV.fetch("FINALISTS_URL") %>.
+  </p>
+
+  <p>
+    The <%= Season.next.year %> season will open in the Fall.
+    <%= link_to "Sign up for our newsletter", ENV.fetch("NEWSLETTER_URL") %>
+    to stay in the loop about important dates and updates.
+  </p>
+</div>
