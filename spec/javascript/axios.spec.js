@@ -61,7 +61,7 @@ describe('axios mock', () => {
     })
   })
 
-  describe('axios.mockResponse', () => {
+  describe('axios.mockResponseOnce', () => {
     it('mocks responses once', (done) => {
       axios.mockResponse('get', { resolved: 'always' })
       axios.mockResponseOnce('get', { resolved: 'once' })
