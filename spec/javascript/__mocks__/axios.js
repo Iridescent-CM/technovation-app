@@ -1,5 +1,5 @@
 export default {
-  mockRequest (method, returnData, opts) {
+  mockResponse (method, returnData, opts) {
     const options = Object.assign({}, opts)
 
     const promiseState = options.reject ? 'reject' : 'resolve'
