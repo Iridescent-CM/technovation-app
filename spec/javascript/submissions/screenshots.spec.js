@@ -13,6 +13,19 @@ import ScreenshotUploader from 'components/ScreenshotUploader'
 
 describe('ScreenshotUploader Vue component', () => {
 
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(ScreenshotUploader, {
+      localVue,
+      propsData: {
+        screenshotsUrl: '/student/screenshots',
+        sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
+        teamId: 1,
+      },
+    })
+  })
+
   describe('props', () => {
 
     it('contains valid sortUrl, screenshotsUrl, and teamId properties', () => {
@@ -50,26 +63,75 @@ describe('ScreenshotUploader Vue component', () => {
 
   describe('computed properties', () => {
 
-    it('maxFiles returns the the number of screenshots remaining for upload', () => {
-      const wrapper = shallow(ScreenshotUploader, {
-        localVue,
-        propsData: {
-          screenshotsUrl: '/student/screenshots',
-          sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
-          teamId: 1,
-        },
+    describe('maxFiles', () => {
+
+      it('returns the the number of screenshots remaining for upload', () => {
+        for (let i = 1; i <= wrapper.vm.maxAllowed; i += 1) {
+          wrapper.vm.screenshots.push({
+            id: i,
+            src: `https://s3.amazonaws.com/technovation-uploads-dev/${i}.png`,
+            name: null,
+            large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_${i}.png`,
+          })
+
+          expect(wrapper.vm.maxFiles).toEqual(wrapper.vm.maxAllowed - i)
+        }
       })
 
-      for (let i = 1; i <= wrapper.vm.maxAllowed; i += 1) {
-        wrapper.vm.screenshots.push({
-          id: i,
-          src: `https://s3.amazonaws.com/technovation-uploads-dev/${i}.png`,
-          name: null,
-          large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_${i}.png`,
+    })
+
+    describe('object', () => {
+
+      it('returns "screenshots" if more than one file upload remains', () => {
+        expect(wrapper.vm.maxFiles).toBeGreaterThan(1)
+        expect(wrapper.vm.object).toEqual('screenshots')
+      })
+
+      it('returns "screenshot" if only one file upload remains', () => {
+        wrapper = shallow(ScreenshotUploader, {
+          localVue,
+          propsData: {
+            screenshotsUrl: '/student/screenshots',
+            sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
+            teamId: 1,
+          },
+          computed: {
+            maxFiles () {
+              return 1
+            },
+          },
         })
 
-        expect(wrapper.vm.maxFiles).toEqual(wrapper.vm.maxAllowed - i)
-      }
+        expect(wrapper.vm.object).toEqual('screenshot')
+      })
+
+    })
+
+    describe('prefix', () => {
+
+      it('returns "up to" if more than one file upload remains', () => {
+        expect(wrapper.vm.maxFiles).toBeGreaterThan(1)
+        expect(wrapper.vm.prefix).toEqual('up to')
+      })
+
+      it('returns "" if only one file upload remains', () => {
+        wrapper = shallow(ScreenshotUploader, {
+          localVue,
+          propsData: {
+            screenshotsUrl: '/student/screenshots',
+            sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
+            teamId: 1,
+          },
+          computed: {
+            maxFiles () {
+              return 1
+            },
+          },
+        })
+
+        expect(wrapper.vm.prefix).toEqual('')
+      })
+
     })
 
   })
