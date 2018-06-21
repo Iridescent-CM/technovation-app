@@ -14,6 +14,11 @@ export default {
     })
   },
 
+  mockResponseOnce (method, returnData, opts) {
+    const options = Object.assign({}, opts, { once: true })
+    this.mockResponse(method, returnData, options)
+  },
+
   get: jest.fn((url) => {
     return Promise.resolve({
       data: {}

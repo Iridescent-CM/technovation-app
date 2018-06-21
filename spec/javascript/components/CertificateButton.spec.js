@@ -88,16 +88,12 @@ describe('CertificateButton Vue component', () => {
 
     it('displays a link to the certificate if the certificate button URL ' +
         'has finished being generated', (done) => {
-      axios.mockResponse(
-       'post',
+      axios.mockResponseOnce('post',
        {
           status: "complete",
           payload: {
             fileUrl: "some/test/url",
           },
-        },
-        {
-          once: true,
         }
       )
 

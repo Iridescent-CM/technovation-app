@@ -60,4 +60,22 @@ describe('axios mock', () => {
       })
     })
   })
+
+  describe('axios.mockResponse', () => {
+    it('mocks responses once', (done) => {
+      axios.mockResponse('get', { resolved: 'always' })
+      axios.mockResponseOnce('get', { resolved: 'once' })
+
+      axios.get('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'once' } })
+      })
+
+      axios.get('/test/url').then((response) => {
+        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'always' } })
+        done()
+      })
+    })
+  })
 })
