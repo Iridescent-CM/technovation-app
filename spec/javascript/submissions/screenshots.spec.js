@@ -7,7 +7,11 @@ import VueDragula from 'vue-dragula'
 const localVue = createLocalVue()
 localVue.use(VueDragula)
 window.vueDragula = localVue.vueDragula
+
+// TODO - Refactor out jQuery once tests are to a good state
+// Replace with axios
 window.$ = $
+window.$.ajax = jest.fn(() => {})
 
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
@@ -136,4 +140,87 @@ describe('ScreenshotUploader Vue component', () => {
 
   })
 
+  describe('methods', () => {
+
+    describe('removeScreenshot', () => {
+
+      const screenshot = {
+        id: 1,
+        src: `https://s3.amazonaws.com/technovation-uploads-dev/1.png`,
+        name: null,
+        large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_1.png`,
+      }
+
+      const screenshotTwo = {
+        id: 2,
+        src: `https://s3.amazonaws.com/technovation-uploads-dev/2.png`,
+        name: null,
+        large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_2.png`,
+      }
+
+      beforeAll(() => {
+        window.swal = jest.fn()
+
+        window.swal.mockImplementation(() => {
+          return Promise.resolve()
+        })
+      })
+
+      afterAll(() => {
+        window.swal.mockRestore()
+      })
+
+      beforeEach(() => {
+        wrapper.vm.screenshots.push(screenshot)
+        wrapper.vm.screenshots.push(screenshotTwo)
+      })
+
+      it('calls swal with the correct settings', () => {
+        wrapper.vm.removeScreenshot(screenshot)
+
+        expect(swal).toHaveBeenCalledWith({
+          text: "Are you sure you want to delete the screenshot?",
+          cancelButtonText: "No, go back",
+          confirmButtonText: "Yes, delete it",
+          confirmButtonColor: "#D8000C",
+          showCancelButton: true,
+          reverseButtons: true,
+          focusCancel: true,
+        })
+      })
+
+      it('removes the screenshot from the screenshots array when alert is confirmed', (done) => {
+        expect(wrapper.vm.screenshots).toHaveLength(2)
+        expect(wrapper.vm.screenshots).toContain(screenshot)
+        expect(wrapper.vm.screenshots).toContain(screenshotTwo)
+
+        wrapper.vm.removeScreenshot(screenshot)
+
+        setImmediate(() => {
+          expect(wrapper.vm.screenshots).toHaveLength(1)
+          expect(wrapper.vm.screenshots).not.toContain(screenshot)
+          expect(wrapper.vm.screenshots).toContain(screenshotTwo)
+          done()
+        })
+      })
+
+      it('removes the screenshot from the database via AJAX call when alert is confirmed', (done) => {
+        wrapper.vm.removeScreenshot(screenshot)
+
+        setImmediate(() => {
+          expect($.ajax).toHaveBeenCalledWith({
+            method: "DELETE",
+            url: wrapper.vm.screenshotsUrl +
+                  "/" +
+                  screenshot.id +
+                  "?team_id=" +
+                  wrapper.vm.teamId,
+          })
+          done()
+        })
+      })
+
+    })
+
+  })
 })
