@@ -181,10 +181,10 @@ describe('ScreenshotUploader Vue component', () => {
         wrapper.vm.removeScreenshot(screenshot)
 
         expect(swal).toHaveBeenCalledWith({
-          text: "Are you sure you want to delete the screenshot?",
-          cancelButtonText: "No, go back",
-          confirmButtonText: "Yes, delete it",
-          confirmButtonColor: "#D8000C",
+          text: 'Are you sure you want to delete the screenshot?',
+          cancelButtonText: 'No, go back',
+          confirmButtonText: 'Yes, delete it',
+          confirmButtonColor: '#D8000C',
           showCancelButton: true,
           reverseButtons: true,
           focusCancel: true,
@@ -211,11 +211,11 @@ describe('ScreenshotUploader Vue component', () => {
 
         setImmediate(() => {
           expect($.ajax).toHaveBeenCalledWith({
-            method: "DELETE",
+            method: 'DELETE',
             url: wrapper.vm.screenshotsUrl +
-                  "/" +
+                  '/' +
                   screenshot.id +
-                  "?team_id=" +
+                  '?team_id=' +
                   wrapper.vm.teamId,
           })
           done()
