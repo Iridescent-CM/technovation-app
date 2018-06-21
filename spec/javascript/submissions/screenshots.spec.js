@@ -144,21 +144,21 @@ describe('ScreenshotUploader Vue component', () => {
 
   describe('methods', () => {
 
+    const screenshot = {
+      id: 1,
+      src: 'https://s3.amazonaws.com/technovation-uploads-dev/1.png',
+      name: null,
+      large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_1.png',
+    }
+
+    const screenshotTwo = {
+      id: 2,
+      src: 'https://s3.amazonaws.com/technovation-uploads-dev/2.png',
+      name: null,
+      large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_2.png',
+    }
+
     describe('removeScreenshot', () => {
-
-      const screenshot = {
-        id: 1,
-        src: `https://s3.amazonaws.com/technovation-uploads-dev/1.png`,
-        name: null,
-        large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_1.png`,
-      }
-
-      const screenshotTwo = {
-        id: 2,
-        src: `https://s3.amazonaws.com/technovation-uploads-dev/2.png`,
-        name: null,
-        large_img_url: `https://s3.amazonaws.com/technovation-uploads-dev/large_2.png`,
-      }
 
       beforeAll(() => {
         window.swal = jest.fn()
@@ -224,5 +224,134 @@ describe('ScreenshotUploader Vue component', () => {
 
     })
 
+    describe('handleFileInput', () => {
+
+      const firstImage = new File(
+        [''],
+        'Screen Shot 2018-06-04 at 4.30.00 PM.png',
+        { type: 'image/png' }
+      )
+
+      const secondImage = new File(
+        [''],
+        'Screen Shot 2018-06-04 at 5.00.00 PM.png',
+        { type: 'image/png' }
+      )
+
+      let fileUploadEventMock
+
+      beforeEach(() => {
+        fileUploadEventMock = {
+          target: {
+            files: [
+              firstImage,
+              secondImage,
+            ],
+            value: 'Screen Shot 2018-06-04 at 4.30.00 PM.png',
+          },
+        }
+      })
+
+      it('adds the file input images to the uploads array', (done) => {
+        wrapper.vm.handleFileInput(fileUploadEventMock)
+
+        setImmediate(() => {
+          expect(wrapper.vm.uploads).toEqual([
+            firstImage,
+            secondImage,
+          ])
+          done()
+        })
+      })
+
+      it('calls AJAX with the correct parameters', (done) => {
+        wrapper.vm.handleFileInput(fileUploadEventMock)
+
+        setImmediate(() => {
+          expect($.ajax).toHaveBeenCalledTimes(2)
+
+          const imageFiles = [
+            firstImage,
+            secondImage,
+          ]
+
+          imageFiles.forEach((file) => {
+            const form = new FormData();
+
+            form.append('team_submission[screenshots_attributes][]image', file)
+            form.append('team_id', wrapper.vm.teamId)
+
+            expect($.ajax).toHaveBeenCalledWith({
+              method: 'POST',
+              url: wrapper.vm.screenshotsUrl,
+              data: form,
+              contentType: false,
+              processData: false,
+              success: expect.any(Function),
+            })
+          })
+
+          done()
+        })
+      })
+
+      describe('AJAX success callback', () => {
+
+        // Please note that these tests will become cleaner once we pull the
+        // success callback out of the actual AJAX call
+
+        it('adds each image object to the screenshots array', (done) => {
+          wrapper.vm.screenshots = []
+          wrapper.vm.handleFileInput(fileUploadEventMock)
+
+          setImmediate(() => {
+            expect(wrapper.vm.screenshots).toHaveLength(0)
+            expect($.ajax).toHaveBeenCalledTimes(2)
+
+            $.ajax.mock.calls[0][0].success(screenshot)
+            $.ajax.mock.calls[0][0].success(screenshotTwo)
+
+            expect(wrapper.vm.screenshots).toEqual([
+              screenshot,
+              screenshotTwo,
+            ])
+
+            done()
+          })
+        })
+
+        it('removes each file object from the uploads array', (done) => {
+          wrapper.vm.handleFileInput(fileUploadEventMock)
+
+          setImmediate(() => {
+            expect(wrapper.vm.uploads).toHaveLength(2)
+            expect($.ajax).toHaveBeenCalledTimes(2)
+
+            $.ajax.mock.calls[0][0].success(screenshot)
+            $.ajax.mock.calls[1][0].success(screenshotTwo)
+
+            expect(wrapper.vm.uploads).toHaveLength(0)
+
+            done()
+          })
+        })
+
+        it('sets the file input element value to ""', (done) => {
+          expect(fileUploadEventMock.target.value)
+            .toEqual('Screen Shot 2018-06-04 at 4.30.00 PM.png')
+
+          wrapper.vm.handleFileInput(fileUploadEventMock)
+
+          setImmediate(() => {
+            $.ajax.mock.calls[0][0].success(screenshot)
+            expect(fileUploadEventMock.target.value).toEqual('')
+            done()
+          })
+        })
+      })
+
+    })
+
   })
+
 })
