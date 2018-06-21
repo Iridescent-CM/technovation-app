@@ -1,28 +1,17 @@
 import { shallow } from '@vue/test-utils'
 
-import axiosMock from 'axios'
+import axios from 'axios'
 import Icon from 'components/Icon'
 import CertificateButton from 'components/CertificateButton'
 
 describe('CertificateButton Vue component', () => {
-  axiosMock.post.mockImplementation(() => {
-    return Promise.resolve({
-      data: { jobId: 5 },
-    })
-  })
+  axios.mockResponse('post', { jobId: 5 })
 
-  axiosMock.get.mockImplementation(() => {
-    return Promise.resolve({
-      data: {
-        status: 'complete',
-        payload: {},
-      },
-    })
-  })
+  axios.mockResponse('get', { status: 'complete', payload: {} })
 
   beforeEach(() => {
-    axiosMock.post.mockClear()
-    axiosMock.get.mockClear()
+    axios.post.mockClear()
+    axios.get.mockClear()
   })
 
   describe('props', () => {
@@ -99,16 +88,18 @@ describe('CertificateButton Vue component', () => {
 
     it('displays a link to the certificate if the certificate button URL ' +
         'has finished being generated', (done) => {
-      axiosMock.post.mockImplementationOnce(() => {
-        return Promise.resolve({
-          data: {
-            status: "complete",
-            payload: {
-              fileUrl: "some/test/url",
-            },
+      axios.mockResponse(
+       'post',
+       {
+          status: "complete",
+          payload: {
+            fileUrl: "some/test/url",
           },
-        })
-      })
+        },
+        {
+          once: true,
+        }
+      )
 
       const wrapper = shallow(CertificateButton, {
         propsData: {
@@ -156,13 +147,13 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axiosMock.post.mockClear()
+        axios.post.mockClear()
 
-        expect(axiosMock.post).not.toHaveBeenCalled()
+        expect(axios.post).not.toHaveBeenCalled()
 
         wrapper.vm.requestCertificate()
 
-        expect(axiosMock.post).toHaveBeenCalledWith(
+        expect(axios.post).toHaveBeenCalledWith(
           '/mentor/certificates/',
           { team_id: 42892 },
         )
@@ -247,15 +238,15 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axiosMock.get.mockClear()
+        axios.get.mockClear()
 
-        expect(axiosMock.get).not.toHaveBeenCalled()
+        expect(axios.get).not.toHaveBeenCalled()
 
         wrapper.vm.jobId = 6
 
         wrapper.vm.pollJobQueue()
 
-        expect(axiosMock.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
+        expect(axios.get).toHaveBeenCalledWith('/mentor/job_statuses/6')
       })
 
       it('returns early if the state is already ready', () => {
@@ -265,15 +256,15 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        axiosMock.get.mockClear()
+        axios.get.mockClear()
 
-        expect(axiosMock.get).not.toHaveBeenCalled()
+        expect(axios.get).not.toHaveBeenCalled()
 
         wrapper.vm.state = 'ready'
 
         wrapper.vm.pollJobQueue()
 
-        expect(axiosMock.get).not.toHaveBeenCalled()
+        expect(axios.get).not.toHaveBeenCalled()
       })
     })
 
