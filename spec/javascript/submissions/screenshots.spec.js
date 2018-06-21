@@ -1,9 +1,13 @@
+import $ from 'jquery'
 import { shallow, createLocalVue } from '@vue/test-utils'
 import VueDragula from 'vue-dragula'
 
+// We need to expose these globally since they are exposed globally in
+// application.js via Ruby
 const localVue = createLocalVue()
 localVue.use(VueDragula)
 window.vueDragula = localVue.vueDragula
+window.$ = $
 
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
@@ -44,7 +48,7 @@ describe('ScreenshotUploader Vue component', () => {
 
   })
 
-  xdescribe('computed properties', () => {
+  describe('computed properties', () => {
 
     it('maxFiles returns the the number of screenshots remaining for upload', () => {
       const wrapper = shallow(ScreenshotUploader, {
