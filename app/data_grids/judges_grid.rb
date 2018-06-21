@@ -39,6 +39,10 @@ class JudgesGrid
     asset.judge_profile.public_send("#{grid.current_judging_round}_scores_count")
   end
 
+  column :judge_rank do |account, grid|
+    BadgeRecipient.new(account.judge_profile).name
+  end
+
   column :virtual_judge_committee do
     if judge_profile.present?
       judge_profile.join_virtual? ? "yes" : "NO"

@@ -18,6 +18,8 @@ class BadgeRecipient
       "head-judge"
     elsif scores.count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
       "judge-advisor"
+    else
+      ""
     end
   end
 
