@@ -46,6 +46,18 @@ describe('ScreenshotUploader Vue component', () => {
     $.ajax.mockClear()
   })
 
+  describe('data', () => {
+
+    it('returns an object with the proper initialization', () => {
+      expect(ScreenshotUploader.data()).toEqual({
+        maxAllowed: 6,
+        screenshots: [],
+        uploads: [],
+      })
+    })
+
+  })
+
   describe('props', () => {
 
     it('contains valid sortUrl, screenshotsUrl, and teamId properties', () => {
@@ -157,20 +169,6 @@ describe('ScreenshotUploader Vue component', () => {
   })
 
   describe('methods', () => {
-
-    const screenshot = {
-      id: 1,
-      src: 'https://s3.amazonaws.com/technovation-uploads-dev/1.png',
-      name: null,
-      large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_1.png',
-    }
-
-    const screenshotTwo = {
-      id: 2,
-      src: 'https://s3.amazonaws.com/technovation-uploads-dev/2.png',
-      name: null,
-      large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_2.png',
-    }
 
     describe('removeScreenshot', () => {
 
