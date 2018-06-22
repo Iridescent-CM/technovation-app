@@ -2,6 +2,26 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  it "removes current certificates if the name is changed" do
+    account = FactoryBot.create(:judge, :general_certificate).account
+
+    FillPdfs.(account)
+
+    expect {
+      account.update(first_name: "Change")
+    }.to change {
+      account.reload.current_general_judge_certificates.count
+    }.from(1).to(0)
+
+    FillPdfs.(account)
+
+    expect {
+      account.update(last_name: "Change!!!")
+    }.to change {
+      account.reload.current_general_judge_certificates.count
+    }.from(1).to(0)
+  end
+
   it "can override the earned certificate type" do
     account = FactoryBot.create(:judge, :general_certificate).account
 

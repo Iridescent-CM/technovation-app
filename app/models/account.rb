@@ -166,6 +166,10 @@ class Account < ActiveRecord::Base
       end
 
     end
+
+    if saved_change_to_first_name || saved_change_to_last_name
+      current_certificates.destroy_all
+    end
   }
 
   def self.sort_column
