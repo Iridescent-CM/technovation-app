@@ -6,11 +6,10 @@ class AdminController < ApplicationController
   helper_method :current_admin
 
   before_action -> {
-    set_cookie(
-      :export_email,
-      get_cookie(:export_email) || ENV.fetch("ADMIN_EMAIL"),
-      permanent: true
-    )
+    if !current_account.full_admin? && !current_account.not_admin?
+      redirect_to admin_signup_path(token: current_account.admin_invitation_token),
+        alert: "You need to create a secure password" and return
+    end
 
     params.permit!
   }

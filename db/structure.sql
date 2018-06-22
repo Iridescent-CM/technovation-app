@@ -128,7 +128,9 @@ CREATE TABLE public.accounts (
     reminded_about_survey_count integer DEFAULT 0 NOT NULL,
     season_registered_at timestamp without time zone,
     deleted_at timestamp without time zone,
-    override_certificate_type integer
+    override_certificate_type integer,
+    admin_status integer DEFAULT 0 NOT NULL,
+    admin_invitation_token character varying
 );
 
 
@@ -2268,6 +2270,13 @@ CREATE INDEX events_invites_invite_id ON public.regional_pitch_events_user_invit
 
 
 --
+-- Name: index_accounts_on_admin_invitation_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_accounts_on_admin_invitation_token ON public.accounts USING btree (admin_invitation_token);
+
+
+--
 -- Name: index_accounts_on_auth_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3022,6 +3031,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180614140324'),
 ('20180618152654'),
 ('20180619154728'),
-('20180619194316');
+('20180619194316'),
+('20180622151517'),
+('20180622152409'),
+('20180622161117');
 
 

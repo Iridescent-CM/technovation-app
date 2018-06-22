@@ -2,6 +2,14 @@ require 'sidekiq/web'
 require 'admin_constraint'
 
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'signups/new'
+  end
+
+  namespace :admin do
+    get 'admins/index'
+  end
+
   mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
   mount ActionCable.server => '/cable', constraints: AdminConstraint.new
 
@@ -221,6 +229,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resource :dashboard, only: :show
+
+    resources :admins
+    get :signup, to: 'signups#new'
+    patch :signups, to: 'signups#update'
 
     resources :job_statuses, only: :show
 

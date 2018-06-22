@@ -1,0 +1,27 @@
+<h3>READ THIS MESSAGE FIRST</h3>
+
+<p>
+  It is Iridescent policy that
+  <strong>ALL WORK RELATED PASSWORDS</strong>
+  are generated with our password management software.
+</p>
+
+<p>
+  Make sure you create your password with the generator,
+  and please ensure that it is set to use at least 20 characters.
+</p>
+
+<p>Thank you for your help in keeping our user data secure!</p>
+
+<%= form_with model: @account, url: admin_signups_path, local: true do |f| %>
+  <%= render 'errors', record: @account %>
+
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password, id: :account_password %>
+  </p>
+
+  <p>
+    <%= f.submit "Save password", class: "button" %>
+  </p>
+<% end %>

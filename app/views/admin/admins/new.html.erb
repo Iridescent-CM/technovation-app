@@ -1,0 +1,37 @@
+<% provide :title, "Setup new Admin" %>
+
+<h1>Invite a new Admin</h1>
+
+<%= form_with model: @admin, url: admin_admins_path, local: true do |f| %>
+  <%= render 'errors', record: @admin %>
+
+  <p>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, id: :account_first_name %>
+  </p>
+
+  <p>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, id: :account_last_name %>
+  </p>
+
+  <p>
+    <%= f.label :email %>
+    <%= f.email_field :email, id: :account_email %>
+  </p>
+
+  <p class="hint">
+    They will receive an email with a link to setup a password.
+    <br />
+    <strong>Remember:</strong>
+    All work-related passwords, <strong>especially</strong> this one, must be generated
+    in our password management software.
+    <br />
+    Generate at least 20 characters.
+  </p>
+
+  <p>
+    <%= f.submit "Invite", class: "button" %>
+    or <%= link_to "cancel", admin_admins_path %>
+  </p>
+<% end %>

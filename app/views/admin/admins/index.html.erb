@@ -1,0 +1,34 @@
+<% provide :title, "Manage Admin Staff" %>
+
+<p><%= link_to "Setup a new admin", new_admin_admin_path, class: "button" %></p>
+
+<table class="datagrid">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="2">Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admins.each do |admin| %>
+      <tr>
+        <td><%= admin.name %></td>
+        <td><%= admin.email %></td>
+        <td><%= admin.admin_status.humanize %></td>
+        <% unless Account.full_admin.one? %>
+          <td>
+            <%= link_to 'delete',
+              admin_admin_path(admin),
+              class: "button button--remove-bg button--danger",
+              data: {
+                method: :delete,
+                confirm: "You are DELETING #{admin.name}!",
+              } %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

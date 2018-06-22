@@ -1,11 +1,16 @@
 class Account < ActiveRecord::Base
-  JUDGE_BLACKLISTED_ACCOUNT_IDS = [
+  JUDGE_BLOCKLISTED_ACCOUNT_IDS = [
     43662,
     29481,
     46986,
   ]
 
   enum override_certificate_types: CERTIFICATE_TYPES
+  enum admin_status: %w{
+    not_admin
+    temporary_password
+    full_admin
+  }
 
   acts_as_paranoid
 
@@ -26,7 +31,8 @@ class Account < ActiveRecord::Base
   attr_accessor :existing_password,
     :skip_existing_password,
     :confirm_sentence,
-    :admin_making_changes
+    :admin_making_changes,
+    :inviting_new_admin
 
   has_one :student_profile, dependent: :destroy
   has_one :mentor_profile, dependent: :destroy
@@ -356,10 +362,16 @@ class Account < ActiveRecord::Base
   has_secure_token :password_reset_token
   has_secure_token :session_token
   has_secure_token :mailer_token
+  has_secure_token :admin_invitation_token
   has_secure_password
 
   before_validation -> {
     self.email = email.to_s.strip.downcase
+
+    if !!inviting_new_admin
+      self.password = SecureRandom.hex(12)
+      self.admin_status = :temporary_password
+    end
   }
 
   validates :email,
@@ -387,7 +399,14 @@ class Account < ActiveRecord::Base
     length: {
       minimum: 8,
       on: :update,
-      if: :changing_password_or_temporary_password?
+      if: -> { not_admin? && changing_password_or_temporary_password? }
+    }
+
+  validates :password,
+    length: {
+      minimum: 20,
+      on: :update,
+      if: -> { !full_admin? && !not_admin? }
     }
 
   validates :date_of_birth, :first_name, :last_name, presence: true
@@ -492,7 +511,7 @@ class Account < ActiveRecord::Base
 
   def can_be_a_judge?
     not student_profile.present? and
-      not JUDGE_BLACKLISTED_ACCOUNT_IDS.include?(id) and
+      not JUDGE_BLOCKLISTED_ACCOUNT_IDS.include?(id) and
         regional_ambassador_profile.present? or
           mentor_profile.present?
   end
@@ -602,9 +621,9 @@ class Account < ActiveRecord::Base
     if new_record?
       SignupAttempt.temporary_password.where(
         "lower(email) = ?", email.downcase
-      ).exists? or UserInvitation.exists?(email: email)
+      ).exists? || UserInvitation.exists?(email: email)
     else
-      signup_attempt.present? and signup_attempt.temporary_password?
+      super || (signup_attempt.present? && signup_attempt.temporary_password?)
     end
   end
 
@@ -721,7 +740,8 @@ class Account < ActiveRecord::Base
 
   def changes_require_password?
     !!!skip_existing_password &&
-      (persisted? && (email_is_changing? || changing_password?))
+      !!!inviting_new_admin &&
+        (persisted? && (email_is_changing? || changing_password?))
   end
 
   def changing_password?
