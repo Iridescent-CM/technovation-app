@@ -1,22 +1,39 @@
-<p>
-  You have been added as an Admin on the Technovation platform
-</p>
-
-<p><strong>READ THIS MESSAGE FIRST</strong></p>
-
-<p>
-  It is Iridescent policy that
-  <strong>ALL WORK RELATED PASSWORDS</strong>
-  are generated with our password management software.
-</p>
-
-<p>
-  Make sure you create your password with the generator,
-  and please ensure that it is set to use at least 20 characters.
-</p>
-
-<p>Thank you for your help in keeping our user data secure!</p>
-
-<p>
-  <%= link_to "Create your password now", @url %>
-</p>
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Confirm Email"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          You have been added as an Admin on the Technovation platform
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong>READ THIS MESSAGE FIRST</strong>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <strong>ALL WORK RELATED PASSWORDS</strong>
+          must be generated with our password management software.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Make sure you create your password with the generator,
+          and please ensure that it is set to use at least 20 characters.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Thank you for your help in keeping our user data secure!
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Create your password now", @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
