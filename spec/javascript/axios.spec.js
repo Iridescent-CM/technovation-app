@@ -16,7 +16,17 @@ describe('axios mock', () => {
       axios.mockResponse('post', { some: 'value' })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { some: 'value' } })
+        done()
+      })
+    })
+
+    it('mocks delete implementations with resolve by default', (done) => {
+      axios.mockResponse('delete', { some: 'value' })
+
+      axios.delete('/test/url').then((response) => {
+        expect(axios.delete).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { some: 'value' } })
         done()
       })
@@ -26,7 +36,7 @@ describe('axios mock', () => {
       axios.mockResponse('post', { rejected: 'value' }, { reject: true })
 
       axios.post('/test/url').catch((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { rejected: 'value' } })
         done()
       })
@@ -37,12 +47,12 @@ describe('axios mock', () => {
       axios.mockResponse('post', { resolved: 'once' }, { once: true })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { resolved: 'once' } })
       })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { always: 'resolved' } })
         done()
       })
