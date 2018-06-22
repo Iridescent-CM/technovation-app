@@ -16,6 +16,11 @@
 <%= form_with model: @account, url: admin_signups_path, local: true do |f| %>
   <%= render 'errors', record: @account %>
 
+
+  <p>
+    <%= f.email_field :email, readonly: true %>
+  </p>
+
   <p>
     <%= f.label :password %>
     <%= f.password_field :password, id: :account_password %>
