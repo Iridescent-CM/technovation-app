@@ -17,6 +17,20 @@ import ScreenshotUploader from 'components/ScreenshotUploader'
 
 describe('ScreenshotUploader Vue component', () => {
 
+  const screenshot = {
+    id: 1,
+    src: 'https://s3.amazonaws.com/technovation-uploads-dev/1.png',
+    name: null,
+    large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_1.png',
+  }
+
+  const screenshotTwo = {
+    id: 2,
+    src: 'https://s3.amazonaws.com/technovation-uploads-dev/2.png',
+    name: null,
+    large_img_url: 'https://s3.amazonaws.com/technovation-uploads-dev/large_2.png',
+  }
+
   let wrapper
 
   beforeEach(() => {
