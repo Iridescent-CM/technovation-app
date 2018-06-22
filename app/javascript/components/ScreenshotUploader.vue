@@ -62,6 +62,14 @@
 export default {
   name: 'screenshot-uploader',
 
+  data () {
+    return {
+      maxAllowed: 6,
+      screenshots: [],
+      uploads: [],
+    }
+  },
+
   props: {
     sortUrl: {
       type: String,
@@ -79,25 +87,67 @@ export default {
     },
   },
 
-  data () {
-    return {
-      maxAllowed: 6,
-      screenshots: [],
-      uploads: [],
-    }
+  mounted () {
+    var vm = this;
+
+    $.ajax({
+      method: "GET",
+      url: this.screenshotsUrl + "?team_id=" + this.teamId,
+      success: function(data) {
+        vm.screenshots = data;
+      },
+    });
+
+    window.vueDragula.eventBus.$on('drop', (args) => {
+      var dropped = args[1],
+          list = args[2];
+
+      var url = this.sortUrl,
+          items = $(list).find(".sortable-list__item"),
+          form = new FormData();
+
+      [].forEach.call(items, (item) => {
+        form.append(
+          "team_submission[screenshots][]",
+          $(item).data("db-id")
+        );
+      });
+
+      form.append("team_id", this.teamId);
+
+      $.ajax({
+        method: "PATCH",
+        url: url,
+        data: form,
+        contentType: false,
+        processData: false,
+        success: function() {
+          if (window.timeout) {
+            clearTimeout(window.timeout);
+            window.timeout = null;
+          }
+
+          $(dropped).addClass("sortable-list--updated");
+
+          window.timeout = setTimeout(function () {
+            $(dropped).removeClass("sortable-list--updated");
+          }, 100);
+        },
+      });
+    });
   },
 
   computed: {
     maxFiles () {
-      return this.maxAllowed - this.screenshots.length;
+      return this.maxAllowed - this.screenshots.length
     },
 
     object () {
-      return this.maxFiles != 1 ? "screenshots" : "screenshot";
+      return this.maxFiles > 1 ? "screenshots" : "screenshot"
     },
 
     prefix () {
-      return this.maxFiles != 1 ? "up to" : "";
+      return this.maxFiles > 1 ? "up to" : ""
     },
   },
 
@@ -167,56 +217,6 @@ export default {
         });
       });
     },
-  },
-
-  mounted () {
-    var vm = this;
-
-    $.ajax({
-      method: "GET",
-      url: this.screenshotsUrl + "?team_id=" + this.teamId,
-      success: function(data) {
-        vm.screenshots = data;
-      },
-    });
-
-    window.vueDragula.eventBus.$on('drop', (args) => {
-      var dropped = args[1],
-          list = args[2];
-
-      var url = this.sortUrl,
-          items = $(list).find(".sortable-list__item"),
-          form = new FormData();
-
-      [].forEach.call(items, (item) => {
-        form.append(
-          "team_submission[screenshots][]",
-          $(item).data("db-id")
-        );
-      });
-
-      form.append("team_id", this.teamId);
-
-      $.ajax({
-        method: "PATCH",
-        url: url,
-        data: form,
-        contentType: false,
-        processData: false,
-        success: function() {
-          if (window.timeout) {
-            clearTimeout(window.timeout);
-            window.timeout = null;
-          }
-
-          $(dropped).addClass("sortable-list--updated");
-
-          window.timeout = setTimeout(function () {
-            $(dropped).removeClass("sortable-list--updated");
-          }, 100);
-        },
-      });
-    });
   },
 }
 </script>
