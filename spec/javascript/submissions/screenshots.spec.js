@@ -1,6 +1,10 @@
+// Module imports
 import $ from 'jquery'
 import { shallow, createLocalVue } from '@vue/test-utils'
 import VueDragula from 'vue-dragula'
+
+// Mocked module imports
+import axios from 'axios'
 
 // We need to expose these globally since they are exposed globally in
 // application.js via Ruby
@@ -257,7 +261,7 @@ describe('ScreenshotUploader Vue component', () => {
         window.swal = jest.fn()
 
         window.swal.mockImplementation(() => {
-          return Promise.resolve()
+          return Promise.resolve({ value: true })
         })
       })
 
@@ -300,17 +304,15 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('removes the screenshot from the database via AJAX call when alert is confirmed', (done) => {
+        axios.delete.mockClear()
+
         wrapper.vm.removeScreenshot(screenshot)
 
         setImmediate(() => {
-          expect($.ajax).toHaveBeenCalledWith({
-            method: 'DELETE',
-            url: wrapper.vm.screenshotsUrl +
-                  '/' +
-                  screenshot.id +
-                  '?team_id=' +
-                  wrapper.vm.teamId,
-          })
+          expect(axios.delete).toHaveBeenCalledWith(
+            wrapper.vm.screenshotsUrl +
+              `/${screenshot.id}?team_id=${wrapper.vm.teamId}`
+          )
           done()
         })
       })

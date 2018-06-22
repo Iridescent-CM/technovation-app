@@ -59,6 +59,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+if (csrfTokenMetaTag) {
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
+  }
+}
+
 export default {
   name: 'screenshot-uploader',
 
@@ -161,22 +172,21 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         focusCancel: true,
-      }).then(
-        () => {
-          var idx = this.screenshots.indexOf(screenshot);
-          this.screenshots.splice(idx, 1);
-          $.ajax({
-            method: "DELETE",
-            url: this.screenshotsUrl +
-                  "/" +
-                  screenshot.id +
-                  "?team_id=" +
-                  this.teamId,
-          });
-        },
+      }).then((result) => {
+        if (result.value) {
+          this.handleAlertConfirmation(screenshot)
+        }
+      })
+    },
 
-        () => { return false; }
-      );
+    handleAlertConfirmation (screenshot) {
+      const index = this.screenshots.indexOf(screenshot);
+      this.screenshots.splice(index, 1);
+
+      const url = this.screenshotsUrl +
+                  `/${screenshot.id}?team_id=${this.teamId}`
+
+      axios.delete(url);
     },
 
     handleFileInput (e) {
