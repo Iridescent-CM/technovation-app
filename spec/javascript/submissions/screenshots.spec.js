@@ -81,16 +81,97 @@ describe('ScreenshotUploader Vue component', () => {
 
   })
 
-  describe('data', () => {
+  describe('mounted lifecycle hook', () => {
 
-    it('returns an object with the proper initialization', () => {
-      expect(ScreenshotUploader.data()).toEqual({
-        maxAllowed: 6,
-        screenshots: [],
-        uploads: [],
-      })
+    beforeAll(() => {
+      jest.useFakeTimers()
     })
 
+    it('loads the previously saved screenshots via AJAX', () => {
+      expect($.ajax).not.toHaveBeenCalled()
+
+      wrapper = shallow(ScreenshotUploader, {
+        localVue,
+        propsData: {
+          screenshotsUrl: '/student/screenshots',
+          sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
+          teamId: 1,
+        },
+      })
+
+      expect($.ajax).toHaveBeenCalledWith({
+        method: 'GET',
+        url: `${wrapper.vm.screenshotsUrl}?team_id=${wrapper.vm.teamId}`,
+        success: expect.any(Function),
+      })
+
+      // Mock the success callback for the AJAX request
+      $.ajax.mock.calls[0][0].success([
+        screenshot,
+        screenshotTwo,
+      ])
+
+      expect(wrapper.vm.screenshots).toEqual([
+        screenshot,
+        screenshotTwo,
+      ])
+    })
+
+    // TODO - Refactor this test into much smaller pieces
+    // First we need to refactor the code into smaller chunks and make sure
+    // this test doesn't break.
+    it('sets up VueDragula drop event handler', (done) => {
+      wrapper.vm.screenshots.push(screenshot)
+      wrapper.vm.screenshots.push(screenshotTwo)
+
+      wrapper.vm.$nextTick(() => {
+        const vueDragulaArgs = [
+          'globalBag',
+          wrapper.find('li.sortable-list__item.draggable:first-child').element,
+          wrapper.find('ol#sortable-list.sortable-list.submission-pieces__screenshots').element,
+          wrapper.find('ol#sortable-list.sortable-list.submission-pieces__screenshots').element,
+          wrapper.find('li.sortable-list__item.draggable:last-child').element,
+        ]
+
+        window.vueDragula.eventBus.$emit('drop', vueDragulaArgs)
+
+        wrapper.vm.$nextTick(() => {
+          const form = new FormData()
+
+          form.append(
+            'team_submission[screenshots][]',
+            vueDragulaArgs[1].dataset.dbId
+          )
+
+          form.append(
+            'team_submission[screenshots][]',
+            vueDragulaArgs[4].dataset.dbId
+          )
+
+          form.append('team_id', wrapper.vm.teamId);
+
+          expect($.ajax).toHaveBeenCalledWith({
+            method: 'PATCH',
+            url: wrapper.vm.sortUrl,
+            data: form,
+            contentType: false,
+            processData: false,
+            success: expect.any(Function),
+          })
+
+          $.ajax.mock.calls[0][0].success()
+
+          expect(vueDragulaArgs[1].classList).toContain('sortable-list--updated')
+
+          jest.advanceTimersByTime(1000)
+
+          expect(vueDragulaArgs[1].classList).not.toContain('sortable-list--updated')
+
+          done()
+        })
+
+      })
+    })
   })
 
   describe('computed properties', () => {
