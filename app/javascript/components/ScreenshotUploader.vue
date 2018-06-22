@@ -101,13 +101,7 @@ export default {
   mounted () {
     var vm = this;
 
-    $.ajax({
-      method: "GET",
-      url: this.screenshotsUrl + "?team_id=" + this.teamId,
-      success: function(data) {
-        vm.screenshots = data;
-      },
-    });
+    this.loadScreenshots()
 
     window.vueDragula.eventBus.$on('drop', (args) => {
       var dropped = args[1],
@@ -163,6 +157,13 @@ export default {
   },
 
   methods: {
+    loadScreenshots () {
+      axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
+        .then(({data}) => {
+          this.screenshots = data
+        })
+    },
+
     removeScreenshot (screenshot) {
       swal({
         text: "Are you sure you want to delete the screenshot?",
