@@ -11,7 +11,7 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 We use BrowserStack to [test for cross-browser compatibility](https://www.browserstack.com/) so that we can support a worldwide community of volunteers!
 
 ## Rails Docs:
-[https://api.rubyonrails.org/v5.1.6](https://api.rubyonrails.org/v5.1.6)
+[http://api.rubyonrails.org/v5.1.6](api.rubyonrails.org/v5.1.6)
 
 ## Installation and Setup
 
