@@ -22,4 +22,6 @@
       <h1><%= @badge_recipient.name %></h1>
     </div>
   </div>
+<% elsif SeasonToggles.display_scores? %>
+  <%= render 'dashboards/no_certificates' %>
 <% end %>

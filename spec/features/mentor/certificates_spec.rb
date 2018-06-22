@@ -12,14 +12,21 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_content(
       "Thank you for your participation in the #{Season.current.year} " +
-      "Technovation season. Check out the finalists at " +
+      "Technovation season."
+    )
+
+    expect(page).to have_content(
+      "You can see this year's finalists at " +
       "technovationchallenge.org/season-results"
     )
 
     expect(page).to have_content(
-      "The #{Season.next.year} season will open in the Fall. " +
-      "Sign up for our newsletter to stay in the loop about important dates " +
-      "and updates."
+      "The #{Season.next.year} season will open in the Fall."
+    )
+
+    expect(page).to have_content(
+      "Stay informed about important dates and updates. " +
+      "Sign up for our newsletter."
     )
 
     expect(page).to have_link(
