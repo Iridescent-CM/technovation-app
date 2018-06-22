@@ -1,6 +1,13 @@
 import axios from 'axios'
 
 describe('axios mock', () => {
+
+  beforeEach(() => {
+    axios.get.mockClear()
+    axios.post.mockClear()
+    axios.delete.mockClear()
+  })
+
   describe('axios.mockResponse', () => {
     it('mocks get implementations with resolve by default', (done) => {
       axios.mockResponse('get', { myField: 'myValue' })
