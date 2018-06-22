@@ -17,7 +17,7 @@ task bootstrap: :environment do
   else
     AdminProfile.create!(
       account_attributes: {
-        first_name: "Oracle",
+        first_name: "Technovation",
         last_name: "Staff",
         email: email,
         password: ENV.fetch("ADMIN_PASSWORD"),
@@ -25,6 +25,7 @@ task bootstrap: :environment do
         state_province: "Jal.",
         country: "MX",
         date_of_birth: 100.years.ago,
+        admin_status: :full_admin,
       }
     )
     puts "Created Admin: #{email}"

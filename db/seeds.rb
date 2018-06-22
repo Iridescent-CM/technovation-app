@@ -262,6 +262,7 @@ if (admin = AdminProfile.create(
     state_province: "CA.",
     country: "US",
     date_of_birth: 100.years.ago,
+    admin_status: :full_admin,
   }
 )).valid?
   puts "Created Admin: #{admin.email}"
