@@ -191,42 +191,30 @@ export default {
     },
 
     handleFileInput (e) {
-      var keep = [].slice.call(e.target.files, 0, this.maxFiles),
-          vm = this;
+      const keep = [].slice.call(e.target.files, 0, this.maxFiles)
 
-      [].forEach.call(keep, (file) => {
-        this.uploads.push(file);
+      keep.forEach((file) => {
+        this.uploads.push(file)
 
-        var vm = this,
-            form = new FormData();
+        const form = new FormData()
+        form.append("team_submission[screenshots_attributes][]image", file)
+        form.append("team_id", this.teamId)
 
-        form.append(
-          "team_submission[screenshots_attributes][]image", file
-        );
-
-        form.append("team_id", this.teamId);
-
-        $.ajax({
-          method: "POST",
-          url: this.screenshotsUrl,
-          data: form,
-          contentType: false,
-          processData: false,
-          success: (data) => {
-            vm.screenshots.push({
+        axios.post(this.screenshotsUrl, form)
+          .then(({data}) => {
+            this.screenshots.push({
               id: data.id,
               src: data.src,
               name: data.name,
               large_img_url: data.large_img_url,
-            });
+            })
 
-            var i = vm.uploads.indexOf(file);
-            vm.uploads.splice(i, 1);
+            const i = this.uploads.indexOf(file)
+            this.uploads.splice(i, 1)
 
-            e.target.value = "";
-          },
-        });
-      });
+            e.target.value = ""
+          })
+      })
     },
   },
 }

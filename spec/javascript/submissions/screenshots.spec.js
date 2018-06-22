@@ -39,6 +39,7 @@ describe('ScreenshotUploader Vue component', () => {
 
   beforeEach(() => {
     axios.get.mockClear()
+    axios.post.mockClear()
 
     // Mock out the screenshot repopulation AJAX call before each test
     axios.mockResponse('get', [
@@ -347,6 +348,14 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('adds the file input images to the uploads array', (done) => {
+        // Mock .then() for axios.post calls so that we can test state
+        // before AJAX is complete and promise resolved
+        axios.post.mockImplementation(() => {
+          return {
+            then: () => {},
+          }
+        })
+
         wrapper.vm.handleFileInput(fileUploadEventMock)
 
         setImmediate(() => {
@@ -362,7 +371,7 @@ describe('ScreenshotUploader Vue component', () => {
         wrapper.vm.handleFileInput(fileUploadEventMock)
 
         setImmediate(() => {
-          expect($.ajax).toHaveBeenCalledTimes(2)
+          expect(axios.post).toHaveBeenCalledTimes(2)
 
           const imageFiles = [
             firstImage,
@@ -375,14 +384,10 @@ describe('ScreenshotUploader Vue component', () => {
             form.append('team_submission[screenshots_attributes][]image', file)
             form.append('team_id', wrapper.vm.teamId)
 
-            expect($.ajax).toHaveBeenCalledWith({
-              method: 'POST',
-              url: wrapper.vm.screenshotsUrl,
-              data: form,
-              contentType: false,
-              processData: false,
-              success: expect.any(Function),
-            })
+            expect(axios.post).toHaveBeenCalledWith(
+              wrapper.vm.screenshotsUrl,
+              form
+            )
           })
 
           done()
@@ -395,17 +400,17 @@ describe('ScreenshotUploader Vue component', () => {
         // success callback out of the actual AJAX call
         beforeEach(() => {
           wrapper.vm.screenshots = []
+          axios.mockResponseOnce('post', screenshot)
+          axios.mockResponseOnce('post', screenshotTwo)
         })
 
         it('adds each image object to the screenshots array', (done) => {
+          expect(wrapper.vm.screenshots).toHaveLength(0)
+
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            expect(wrapper.vm.screenshots).toHaveLength(0)
-            expect($.ajax).toHaveBeenCalledTimes(2)
-
-            $.ajax.mock.calls[0][0].success(screenshot)
-            $.ajax.mock.calls[0][0].success(screenshotTwo)
+            expect(axios.post).toHaveBeenCalledTimes(2)
 
             expect(wrapper.vm.screenshots).toEqual([
               screenshot,
@@ -420,12 +425,6 @@ describe('ScreenshotUploader Vue component', () => {
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            expect(wrapper.vm.uploads).toHaveLength(2)
-            expect($.ajax).toHaveBeenCalledTimes(2)
-
-            $.ajax.mock.calls[0][0].success(screenshot)
-            $.ajax.mock.calls[1][0].success(screenshotTwo)
-
             expect(wrapper.vm.uploads).toHaveLength(0)
 
             done()
@@ -439,7 +438,6 @@ describe('ScreenshotUploader Vue component', () => {
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            $.ajax.mock.calls[0][0].success(screenshot)
             expect(fileUploadEventMock.target.value).toEqual('')
             done()
           })
