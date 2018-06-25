@@ -12,11 +12,6 @@ const localVue = createLocalVue()
 localVue.use(VueDragula)
 window.vueDragula = localVue.vueDragula
 
-// TODO - Refactor out jQuery once tests are to a good state
-// Replace with axios
-window.$ = $
-window.$.ajax = jest.fn(() => {})
-
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
 describe('ScreenshotUploader Vue component', () => {
@@ -40,6 +35,7 @@ describe('ScreenshotUploader Vue component', () => {
   beforeEach(() => {
     axios.get.mockClear()
     axios.post.mockClear()
+    axios.patch.mockClear()
 
     // Mock out the screenshot repopulation AJAX call before each test
     axios.mockResponse('get', [
@@ -55,8 +51,6 @@ describe('ScreenshotUploader Vue component', () => {
         teamId: 1,
       },
     })
-
-    $.ajax.mockClear()
   })
 
   describe('data', () => {
@@ -157,16 +151,7 @@ describe('ScreenshotUploader Vue component', () => {
 
           form.append('team_id', wrapper.vm.teamId);
 
-          expect($.ajax).toHaveBeenCalledWith({
-            method: 'PATCH',
-            url: wrapper.vm.sortUrl,
-            data: form,
-            contentType: false,
-            processData: false,
-            success: expect.any(Function),
-          })
-
-          $.ajax.mock.calls[0][0].success()
+          expect(axios.patch).toHaveBeenCalledWith(wrapper.vm.sortUrl, form)
 
           expect(vueDragulaArgs[1].classList).toContain('sortable-list--updated')
 

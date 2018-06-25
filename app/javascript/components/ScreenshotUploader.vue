@@ -120,13 +120,8 @@ export default {
 
       form.append("team_id", this.teamId)
 
-      $.ajax({
-        method: "PATCH",
-        url: url,
-        data: form,
-        contentType: false,
-        processData: false,
-        success: function() {
+      axios.patch(url, form)
+        .then(() => {
           if (window.timeout) {
             clearTimeout(window.timeout)
             window.timeout = null
@@ -137,8 +132,7 @@ export default {
           window.timeout = setTimeout(() => {
             dropped.classList.remove('sortable-list--updated')
           }, 100)
-        },
-      })
+        })
     })
   },
 
