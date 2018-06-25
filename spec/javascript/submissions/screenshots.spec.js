@@ -120,9 +120,6 @@ describe('ScreenshotUploader Vue component', () => {
       })
     })
 
-    // TODO - Refactor this test into much smaller pieces
-    // First we need to refactor the code into smaller chunks and make sure
-    // this test doesn't break.
     it('sets up VueDragula drop event handler', (done) => {
       wrapper.vm.$nextTick(() => {
         const vueDragulaArgs = [
