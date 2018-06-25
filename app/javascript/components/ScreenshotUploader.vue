@@ -104,21 +104,21 @@ export default {
     this.loadScreenshots()
 
     window.vueDragula.eventBus.$on('drop', (args) => {
-      var dropped = args[1],
-          list = args[2];
+      const dropped = args[1]
+      const list = args[2]
 
-      var url = this.sortUrl,
-          items = $(list).find(".sortable-list__item"),
-          form = new FormData();
+      const url = this.sortUrl
+      const sortableItems = list.querySelectorAll('.sortable-list__item')
+      const form = new FormData()
 
-      [].forEach.call(items, (item) => {
+      sortableItems.forEach((item) => {
         form.append(
           "team_submission[screenshots][]",
-          $(item).data("db-id")
-        );
-      });
+          item.dataset.dbId
+        )
+      })
 
-      form.append("team_id", this.teamId);
+      form.append("team_id", this.teamId)
 
       $.ajax({
         method: "PATCH",
@@ -128,18 +128,18 @@ export default {
         processData: false,
         success: function() {
           if (window.timeout) {
-            clearTimeout(window.timeout);
-            window.timeout = null;
+            clearTimeout(window.timeout)
+            window.timeout = null
           }
 
-          $(dropped).addClass("sortable-list--updated");
+          dropped.classList.add('sortable-list--updated')
 
-          window.timeout = setTimeout(function () {
-            $(dropped).removeClass("sortable-list--updated");
-          }, 100);
+          window.timeout = setTimeout(() => {
+            dropped.classList.remove('sortable-list--updated')
+          }, 100)
         },
-      });
-    });
+      })
+    })
   },
 
   computed: {
