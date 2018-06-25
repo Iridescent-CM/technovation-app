@@ -1,5 +1,4 @@
 // Module imports
-import $ from 'jquery'
 import { shallow, createLocalVue } from '@vue/test-utils'
 import VueDragula from 'vue-dragula'
 
