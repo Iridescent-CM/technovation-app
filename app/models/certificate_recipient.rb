@@ -8,7 +8,7 @@ class CertificateRecipient
     :team_name, :region, :team_id
 
   def initialize(account, team = nil)
-    if team
+    if team.present?
       @team = team
       @team_id = team.id
       @mobile_app_name = team.submission.app_name
