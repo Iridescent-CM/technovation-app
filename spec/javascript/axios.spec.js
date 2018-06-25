@@ -39,6 +39,16 @@ describe('axios mock', () => {
       })
     })
 
+    it('mocks patch implementations with resolve by default', (done) => {
+      axios.mockResponse('patch', { some: 'value' })
+
+      axios.patch('/test/url').then((response) => {
+        expect(axios.patch).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { some: 'value' } })
+        done()
+      })
+    })
+
     it('mocks implementations with a reject by option', (done) => {
       axios.mockResponse('post', { rejected: 'value' }, { reject: true })
 

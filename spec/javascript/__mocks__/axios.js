@@ -36,4 +36,10 @@ export default {
       data: {}
     })
   }),
+
+  patch: jest.fn((url) => {
+    return Promise.resolve({
+      data: {}
+    })
+  }),
 };
