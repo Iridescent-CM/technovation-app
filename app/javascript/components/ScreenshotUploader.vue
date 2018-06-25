@@ -59,6 +59,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+if (csrfTokenMetaTag) {
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
+  }
+}
+
 export default {
   name: 'screenshot-uploader',
 
@@ -90,51 +101,39 @@ export default {
   mounted () {
     var vm = this;
 
-    $.ajax({
-      method: "GET",
-      url: this.screenshotsUrl + "?team_id=" + this.teamId,
-      success: function(data) {
-        vm.screenshots = data;
-      },
-    });
+    this.loadScreenshots()
 
     window.vueDragula.eventBus.$on('drop', (args) => {
-      var dropped = args[1],
-          list = args[2];
+      const dropped = args[1]
+      const list = args[2]
 
-      var url = this.sortUrl,
-          items = $(list).find(".sortable-list__item"),
-          form = new FormData();
+      const url = this.sortUrl
+      const sortableItems = list.querySelectorAll('.sortable-list__item')
+      const form = new FormData()
 
-      [].forEach.call(items, (item) => {
+      sortableItems.forEach((item) => {
         form.append(
           "team_submission[screenshots][]",
-          $(item).data("db-id")
-        );
-      });
+          item.dataset.dbId
+        )
+      })
 
-      form.append("team_id", this.teamId);
+      form.append("team_id", this.teamId)
 
-      $.ajax({
-        method: "PATCH",
-        url: url,
-        data: form,
-        contentType: false,
-        processData: false,
-        success: function() {
+      axios.patch(url, form)
+        .then(() => {
           if (window.timeout) {
-            clearTimeout(window.timeout);
-            window.timeout = null;
+            clearTimeout(window.timeout)
+            window.timeout = null
           }
 
-          $(dropped).addClass("sortable-list--updated");
+          dropped.classList.add('sortable-list--updated')
 
-          window.timeout = setTimeout(function () {
-            $(dropped).removeClass("sortable-list--updated");
-          }, 100);
-        },
-      });
-    });
+          window.timeout = setTimeout(() => {
+            dropped.classList.remove('sortable-list--updated')
+          }, 100)
+        })
+    })
   },
 
   computed: {
@@ -152,6 +151,13 @@ export default {
   },
 
   methods: {
+    loadScreenshots () {
+      axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
+        .then(({data}) => {
+          this.screenshots = data
+        })
+    },
+
     removeScreenshot (screenshot) {
       swal({
         text: "Are you sure you want to delete the screenshot?",
@@ -161,61 +167,48 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         focusCancel: true,
-      }).then(
-        () => {
-          var idx = this.screenshots.indexOf(screenshot);
-          this.screenshots.splice(idx, 1);
-          $.ajax({
-            method: "DELETE",
-            url: this.screenshotsUrl +
-                  "/" +
-                  screenshot.id +
-                  "?team_id=" +
-                  this.teamId,
-          });
-        },
+      }).then((result) => {
+        if (result.value) {
+          this.handleAlertConfirmation(screenshot)
+        }
+      })
+    },
 
-        () => { return false; }
-      );
+    handleAlertConfirmation (screenshot) {
+      const index = this.screenshots.indexOf(screenshot);
+      this.screenshots.splice(index, 1);
+
+      const url = this.screenshotsUrl +
+                  `/${screenshot.id}?team_id=${this.teamId}`
+
+      axios.delete(url);
     },
 
     handleFileInput (e) {
-      var keep = [].slice.call(e.target.files, 0, this.maxFiles),
-          vm = this;
+      const keep = [].slice.call(e.target.files, 0, this.maxFiles)
 
-      [].forEach.call(keep, (file) => {
-        this.uploads.push(file);
+      keep.forEach((file) => {
+        this.uploads.push(file)
 
-        var vm = this,
-            form = new FormData();
+        const form = new FormData()
+        form.append("team_submission[screenshots_attributes][]image", file)
+        form.append("team_id", this.teamId)
 
-        form.append(
-          "team_submission[screenshots_attributes][]image", file
-        );
-
-        form.append("team_id", this.teamId);
-
-        $.ajax({
-          method: "POST",
-          url: this.screenshotsUrl,
-          data: form,
-          contentType: false,
-          processData: false,
-          success: (data) => {
-            vm.screenshots.push({
+        axios.post(this.screenshotsUrl, form)
+          .then(({data}) => {
+            this.screenshots.push({
               id: data.id,
               src: data.src,
               name: data.name,
               large_img_url: data.large_img_url,
-            });
+            })
 
-            var i = vm.uploads.indexOf(file);
-            vm.uploads.splice(i, 1);
+            const i = this.uploads.indexOf(file)
+            this.uploads.splice(i, 1)
 
-            e.target.value = "";
-          },
-        });
-      });
+            e.target.value = ""
+          })
+      })
     },
   },
 }

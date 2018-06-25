@@ -1,6 +1,13 @@
 import axios from 'axios'
 
 describe('axios mock', () => {
+
+  beforeEach(() => {
+    axios.get.mockClear()
+    axios.post.mockClear()
+    axios.delete.mockClear()
+  })
+
   describe('axios.mockResponse', () => {
     it('mocks get implementations with resolve by default', (done) => {
       axios.mockResponse('get', { myField: 'myValue' })
@@ -16,7 +23,27 @@ describe('axios mock', () => {
       axios.mockResponse('post', { some: 'value' })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { some: 'value' } })
+        done()
+      })
+    })
+
+    it('mocks delete implementations with resolve by default', (done) => {
+      axios.mockResponse('delete', { some: 'value' })
+
+      axios.delete('/test/url').then((response) => {
+        expect(axios.delete).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { some: 'value' } })
+        done()
+      })
+    })
+
+    it('mocks patch implementations with resolve by default', (done) => {
+      axios.mockResponse('patch', { some: 'value' })
+
+      axios.patch('/test/url').then((response) => {
+        expect(axios.patch).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { some: 'value' } })
         done()
       })
@@ -26,7 +53,7 @@ describe('axios mock', () => {
       axios.mockResponse('post', { rejected: 'value' }, { reject: true })
 
       axios.post('/test/url').catch((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { rejected: 'value' } })
         done()
       })
@@ -37,12 +64,12 @@ describe('axios mock', () => {
       axios.mockResponse('post', { resolved: 'once' }, { once: true })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { resolved: 'once' } })
       })
 
       axios.post('/test/url').then((response) => {
-        expect(axios.get).toHaveBeenCalledWith('/test/url')
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
         expect(response).toEqual({ data: { always: 'resolved' } })
         done()
       })

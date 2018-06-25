@@ -1,17 +1,15 @@
-import $ from 'jquery'
+// Module imports
 import { shallow, createLocalVue } from '@vue/test-utils'
 import VueDragula from 'vue-dragula'
+
+// Mocked module imports
+import axios from 'axios'
 
 // We need to expose these globally since they are exposed globally in
 // application.js via Ruby
 const localVue = createLocalVue()
 localVue.use(VueDragula)
 window.vueDragula = localVue.vueDragula
-
-// TODO - Refactor out jQuery once tests are to a good state
-// Replace with axios
-window.$ = $
-window.$.ajax = jest.fn(() => {})
 
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
@@ -34,6 +32,16 @@ describe('ScreenshotUploader Vue component', () => {
   let wrapper
 
   beforeEach(() => {
+    axios.get.mockClear()
+    axios.post.mockClear()
+    axios.patch.mockClear()
+
+    // Mock out the screenshot repopulation AJAX call before each test
+    axios.mockResponse('get', [
+      screenshot,
+      screenshotTwo,
+    ])
+
     wrapper = shallow(ScreenshotUploader, {
       localVue,
       propsData: {
@@ -42,8 +50,6 @@ describe('ScreenshotUploader Vue component', () => {
         teamId: 1,
       },
     })
-
-    $.ajax.mockClear()
   })
 
   describe('data', () => {
@@ -87,8 +93,10 @@ describe('ScreenshotUploader Vue component', () => {
       jest.useFakeTimers()
     })
 
-    it('loads the previously saved screenshots via AJAX', () => {
-      expect($.ajax).not.toHaveBeenCalled()
+    it('loads the previously saved screenshots via AJAX', (done) => {
+      axios.get.mockClear()
+
+      expect(axios.get).not.toHaveBeenCalled()
 
       wrapper = shallow(ScreenshotUploader, {
         localVue,
@@ -99,31 +107,20 @@ describe('ScreenshotUploader Vue component', () => {
         },
       })
 
-      expect($.ajax).toHaveBeenCalledWith({
-        method: 'GET',
-        url: `${wrapper.vm.screenshotsUrl}?team_id=${wrapper.vm.teamId}`,
-        success: expect.any(Function),
+      expect(axios.get).toHaveBeenCalledWith(
+        `${wrapper.vm.screenshotsUrl}?team_id=${wrapper.vm.teamId}`
+      )
+
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.screenshots).toEqual([
+          screenshot,
+          screenshotTwo,
+        ])
+        done()
       })
-
-      // Mock the success callback for the AJAX request
-      $.ajax.mock.calls[0][0].success([
-        screenshot,
-        screenshotTwo,
-      ])
-
-      expect(wrapper.vm.screenshots).toEqual([
-        screenshot,
-        screenshotTwo,
-      ])
     })
 
-    // TODO - Refactor this test into much smaller pieces
-    // First we need to refactor the code into smaller chunks and make sure
-    // this test doesn't break.
     it('sets up VueDragula drop event handler', (done) => {
-      wrapper.vm.screenshots.push(screenshot)
-      wrapper.vm.screenshots.push(screenshotTwo)
-
       wrapper.vm.$nextTick(() => {
         const vueDragulaArgs = [
           'globalBag',
@@ -150,16 +147,7 @@ describe('ScreenshotUploader Vue component', () => {
 
           form.append('team_id', wrapper.vm.teamId);
 
-          expect($.ajax).toHaveBeenCalledWith({
-            method: 'PATCH',
-            url: wrapper.vm.sortUrl,
-            data: form,
-            contentType: false,
-            processData: false,
-            success: expect.any(Function),
-          })
-
-          $.ajax.mock.calls[0][0].success()
+          expect(axios.patch).toHaveBeenCalledWith(wrapper.vm.sortUrl, form)
 
           expect(vueDragulaArgs[1].classList).toContain('sortable-list--updated')
 
@@ -179,7 +167,9 @@ describe('ScreenshotUploader Vue component', () => {
     describe('maxFiles', () => {
 
       it('returns the the number of screenshots remaining for upload', () => {
-        for (let i = 1; i <= wrapper.vm.maxAllowed; i += 1) {
+        const nextIndex = wrapper.vm.screenshots.length + 1
+
+        for (let i = nextIndex; i <= wrapper.vm.maxAllowed; i += 1) {
           wrapper.vm.screenshots.push({
             id: i,
             src: `https://s3.amazonaws.com/technovation-uploads-dev/${i}.png`,
@@ -257,17 +247,12 @@ describe('ScreenshotUploader Vue component', () => {
         window.swal = jest.fn()
 
         window.swal.mockImplementation(() => {
-          return Promise.resolve()
+          return Promise.resolve({ value: true })
         })
       })
 
       afterAll(() => {
         window.swal.mockRestore()
-      })
-
-      beforeEach(() => {
-        wrapper.vm.screenshots.push(screenshot)
-        wrapper.vm.screenshots.push(screenshotTwo)
       })
 
       it('calls swal with the correct settings', () => {
@@ -300,17 +285,15 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('removes the screenshot from the database via AJAX call when alert is confirmed', (done) => {
+        axios.delete.mockClear()
+
         wrapper.vm.removeScreenshot(screenshot)
 
         setImmediate(() => {
-          expect($.ajax).toHaveBeenCalledWith({
-            method: 'DELETE',
-            url: wrapper.vm.screenshotsUrl +
-                  '/' +
-                  screenshot.id +
-                  '?team_id=' +
-                  wrapper.vm.teamId,
-          })
+          expect(axios.delete).toHaveBeenCalledWith(
+            wrapper.vm.screenshotsUrl +
+              `/${screenshot.id}?team_id=${wrapper.vm.teamId}`
+          )
           done()
         })
       })
@@ -346,6 +329,14 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('adds the file input images to the uploads array', (done) => {
+        // Mock .then() for axios.post calls so that we can test state
+        // before AJAX is complete and promise resolved
+        axios.post.mockImplementation(() => {
+          return {
+            then: () => {},
+          }
+        })
+
         wrapper.vm.handleFileInput(fileUploadEventMock)
 
         setImmediate(() => {
@@ -361,7 +352,7 @@ describe('ScreenshotUploader Vue component', () => {
         wrapper.vm.handleFileInput(fileUploadEventMock)
 
         setImmediate(() => {
-          expect($.ajax).toHaveBeenCalledTimes(2)
+          expect(axios.post).toHaveBeenCalledTimes(2)
 
           const imageFiles = [
             firstImage,
@@ -374,14 +365,10 @@ describe('ScreenshotUploader Vue component', () => {
             form.append('team_submission[screenshots_attributes][]image', file)
             form.append('team_id', wrapper.vm.teamId)
 
-            expect($.ajax).toHaveBeenCalledWith({
-              method: 'POST',
-              url: wrapper.vm.screenshotsUrl,
-              data: form,
-              contentType: false,
-              processData: false,
-              success: expect.any(Function),
-            })
+            expect(axios.post).toHaveBeenCalledWith(
+              wrapper.vm.screenshotsUrl,
+              form
+            )
           })
 
           done()
@@ -392,17 +379,19 @@ describe('ScreenshotUploader Vue component', () => {
 
         // Please note that these tests will become cleaner once we pull the
         // success callback out of the actual AJAX call
+        beforeEach(() => {
+          wrapper.vm.screenshots = []
+          axios.mockResponseOnce('post', screenshot)
+          axios.mockResponseOnce('post', screenshotTwo)
+        })
 
         it('adds each image object to the screenshots array', (done) => {
-          wrapper.vm.screenshots = []
+          expect(wrapper.vm.screenshots).toHaveLength(0)
+
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            expect(wrapper.vm.screenshots).toHaveLength(0)
-            expect($.ajax).toHaveBeenCalledTimes(2)
-
-            $.ajax.mock.calls[0][0].success(screenshot)
-            $.ajax.mock.calls[0][0].success(screenshotTwo)
+            expect(axios.post).toHaveBeenCalledTimes(2)
 
             expect(wrapper.vm.screenshots).toEqual([
               screenshot,
@@ -417,12 +406,6 @@ describe('ScreenshotUploader Vue component', () => {
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            expect(wrapper.vm.uploads).toHaveLength(2)
-            expect($.ajax).toHaveBeenCalledTimes(2)
-
-            $.ajax.mock.calls[0][0].success(screenshot)
-            $.ajax.mock.calls[1][0].success(screenshotTwo)
-
             expect(wrapper.vm.uploads).toHaveLength(0)
 
             done()
@@ -436,7 +419,6 @@ describe('ScreenshotUploader Vue component', () => {
           wrapper.vm.handleFileInput(fileUploadEventMock)
 
           setImmediate(() => {
-            $.ajax.mock.calls[0][0].success(screenshot)
             expect(fileUploadEventMock.target.value).toEqual('')
             done()
           })

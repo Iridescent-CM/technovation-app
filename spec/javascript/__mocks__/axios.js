@@ -29,5 +29,17 @@ export default {
     return Promise.resolve({
       data: {}
     })
-  })
+  }),
+
+  delete: jest.fn((url) => {
+    return Promise.resolve({
+      data: {}
+    })
+  }),
+
+  patch: jest.fn((url) => {
+    return Promise.resolve({
+      data: {}
+    })
+  }),
 };
