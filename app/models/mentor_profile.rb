@@ -160,7 +160,11 @@ class MentorProfile < ActiveRecord::Base
   after_save { current_teams.find_each(&:touch) }
   after_touch { current_teams.find_each(&:touch) }
 
-  validates :school_company_name, :job_title, presence: true
+  validates :school_company_name,
+            :job_title,
+            :mentor_type,
+    presence: true
+
   validates :bio,
     length: { minimum: 100 },
     allow_blank: true,

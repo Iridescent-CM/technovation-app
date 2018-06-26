@@ -11,6 +11,7 @@ module StudentConversionController
     account.create_mentor_profile!({
       school_company_name: profile.school_name,
       job_title: "Technovation Almunus",
+      mentor_type: MentorProfile.mentor_types["Industry professional"],
     })
 
     redirect_to [current_scope, :participant, id: account.to_param],

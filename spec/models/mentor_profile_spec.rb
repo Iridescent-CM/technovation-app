@@ -1,6 +1,16 @@
 require "rails_helper"
 
 RSpec.describe MentorProfile do
+  it "requires a mentor_type" do
+    mentor = FactoryBot.build(:mentor, mentor_type: nil)
+    expect(mentor).not_to be_valid
+
+    MentorProfile.mentor_types.keys.each do |type|
+      mentor.mentor_type = type
+      expect(mentor).to be_valid
+    end
+  end
+
   describe ".unmatched" do
     it "lists mentors without a team" do
       FactoryBot.create(:mentor, :on_team)
