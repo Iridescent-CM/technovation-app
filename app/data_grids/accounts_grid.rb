@@ -357,7 +357,12 @@ class AccountsGrid
         sql_str
       end
 
-      where(clauses.join(' OR '))
+      includes = values.flatten.map { |v| "#{v}_profile" }
+      references = values.flatten.map { |v| "#{v}_profiles" }
+
+      includes(*includes)
+      .references(*references)
+      .where(clauses.join(' OR '))
     end
 
 
