@@ -36,6 +36,7 @@ module Mentor
         :bio,
         :job_title,
         :school_company_name,
+        :mentor_type,
         expertise_ids: [],
         account_attributes: [
           :id,

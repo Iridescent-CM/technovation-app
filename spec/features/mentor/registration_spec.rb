@@ -16,11 +16,19 @@ RSpec.feature "Register as a mentor" do
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
 
+    MentorProfile.mentor_types.keys.shuffle.each do |mentor_type|
+      select mentor_type, from: "I am a..."
+    end
+
     click_button "Create Your Account"
   end
 
   scenario "Redirected to mentor dashboard" do
     expect(current_path).to eq(mentor_dashboard_path)
+  end
+
+  scenario "saves the mentor type" do
+    expect(MentorProfile.last.mentor_type).not_to be_nil
   end
 
   scenario "saves location details" do
