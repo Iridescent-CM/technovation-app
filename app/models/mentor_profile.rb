@@ -3,6 +3,12 @@ class MentorProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
+  enum mentor_type: %w{
+    Industry\ professional
+    Educator
+    Parent
+  }
+
   scope :unmatched, -> {
     select("DISTINCT #{table_name}.*")
       .joins(:current_account)
