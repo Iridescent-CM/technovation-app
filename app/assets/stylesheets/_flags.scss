@@ -1,23 +1,36 @@
-.flags {
+.flags,
+.flag--season {
   position: absolute;
   top: 1rem;
-  right: 0;
+  right: -0.25rem;
   z-index: $z-under-menu;
   -webkit-font-smoothing: antialiased;
+}
 
-  .flag {
-    display: block;
-    margin: 0 0 0.5rem;
-    padding: 0.2rem 0.5rem;
-    text-align: right;
-    font-size: 0.9rem;
-    font-weight: 700;
-    box-shadow: $shadow-small;
+.flag {
+  display: block;
+  margin: 0 0 0.5rem;
+  padding: 0.2rem 0.5rem;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: $shadow-small;
+  background: $mulberry;
+  color: white;
+
+  &.flag-notice {
+    background: $marine;
+  }
+
+  &.flag-season--new {
+    background: $shamrock;
+  }
+
+  &.flag-season--past {
     background: $mulberry;
-    color: white;
+  }
 
-    &.flag-notice {
-      background: $marine;
-    }
+  &.flag-season--returning {
+    background: $marine;
   }
 }

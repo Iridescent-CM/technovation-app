@@ -18,6 +18,7 @@ module RegionalAmbassador
                  end
 
       @teams = Team.current.in_region(current_ambassador)
+      @season_flag = SeasonFlag.new(@account)
     end
 
     private

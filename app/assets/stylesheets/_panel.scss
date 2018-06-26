@@ -19,6 +19,10 @@
     }
   }
 
+  &.panel--with-flags {
+    position: relative;
+  }
+
   .panel__heading,
   .panel--heading {
     margin: -1rem -1rem 1rem;
