@@ -22,7 +22,7 @@
   </li>
 <% end %>
 
-<% unless profile.mentor_type.present? %>
+<% if profile.needs_mentor_type? %>
   <li>
     <div class="flags">
       <span class="flag flag-registration">Registration</span>
