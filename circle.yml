@@ -84,7 +84,7 @@ jobs:
 
       - run:
           name: Parallel RSpec
-          command: bundle exec rspec --random
+          command: bundle exec rspec --order rand
 
       # Save artifacts
       - store_test_results:
