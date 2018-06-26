@@ -3,6 +3,8 @@
 <% provide :subnav, render('regional_ambassador/participants/sub_menu') %>
 
 <div class="panel">
+  <%= render "participant_flags/season", flag: @season_flag %>
+
   <div class="grid">
     <div class="grid__col-4">
       <% if params[:review_before] || params[:back] %>
@@ -25,6 +27,10 @@
       <h5 class="reset">
         <%= @account.scope_name.titleize %> Profile
       </h5>
+
+      <h6 class="reset">
+        Seasons: <span><%= @account.seasons.to_sentence %></span>
+      </h6>
     </div>
 
     <div class="grid__col-4">

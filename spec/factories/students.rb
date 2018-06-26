@@ -15,6 +15,22 @@ FactoryBot.define do
       not_onboarded false
     end
 
+    trait :past do
+      after(:create) do |student, _evaluator|
+        student.account.update_column(
+          :seasons, [Season.current.year - 1]
+        )
+      end
+    end
+
+    trait :returning do
+      after(:create) do |student, _evaluator|
+        student.account.update_column(
+          :seasons, [Season.current.year, Season.current.year - 1]
+        )
+      end
+    end
+
     trait :has_current_completion_certificate do
       quarterfinalist
 
