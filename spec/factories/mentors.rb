@@ -4,6 +4,7 @@ FactoryBot.define do
 
     school_company_name { "FactoryBot" }
     job_title { "Engineer" }
+    mentor_type { MentorProfile.mentor_types.keys.sample }
     bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
 
     transient do
