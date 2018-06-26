@@ -41,7 +41,7 @@ module Seasoned
     extend ActiveSupport::Concern
 
     def seasons
-      self[:seasons].flatten.map(&:to_i).uniq
+      self[:seasons].flatten.map(&:to_i).uniq.sort
     end
 
     module ClassMethods

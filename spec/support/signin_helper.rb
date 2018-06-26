@@ -1,8 +1,8 @@
 module SigninHelper
-  def sign_in(profile)
+  def sign_in(profile, *traits)
     signin = case profile
              when Symbol
-               FactoryBot.create(profile)
+               FactoryBot.create(profile, *traits)
              else
                profile
              end
