@@ -20,6 +20,8 @@ FactoryBot.define do
         student.account.update_column(
           :seasons, [Season.current.year - 1]
         )
+
+        student.parental_consents.update_all(seasons: [Season.current.year - 1])
       end
     end
 

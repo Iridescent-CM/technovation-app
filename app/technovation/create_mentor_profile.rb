@@ -1,6 +1,6 @@
 module CreateMentorProfile
   def self.call(account)
-    if account.can_be_a_mentor? and account.is_not_a_mentor?
+    if account.can_be_a_mentor? && account.is_not_a_mentor?
       create_mentor_profile(account)
       true
     else
@@ -21,8 +21,15 @@ module CreateMentorProfile
                 school_company_name: account.judge_profile.company_name,
                 job_title: account.judge_profile.job_title,
               }
+            else
+              {
+                school_company_name: account.student_profile.school_name,
+                job_title: "Technovation Alumnus",
+              }
             end
 
-    account.create_mentor_profile!(attrs)
+    account.create_mentor_profile!(
+      attrs.merge({ mentor_type: "Industry professional" })
+    )
   end
 end
