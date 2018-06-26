@@ -15,6 +15,8 @@ class MentorInvite < TeamMemberInvite
       .joins(:account)
       .where("lower(accounts.email) = ?", invitee_email.downcase)
       .first
+
+    self.invitee_email = invitee.email
   end
 
   # Overwriting parent validation

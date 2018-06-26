@@ -216,6 +216,7 @@ class AccountsGrid
     select: [
       ['Matched with a team', 'matched'],
       ['Unmatched', 'unmatched'],
+      ['Mentors with pending invites', 'invited_mentor_pending'],
     ],
     filter_group: "common",
     if: ->(g) {

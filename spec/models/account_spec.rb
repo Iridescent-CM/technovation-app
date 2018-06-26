@@ -58,6 +58,26 @@ RSpec.describe Account do
     expect(account).to be_valid
   end
 
+  describe ".invited_mentor_pending" do
+    it "only includes mentors with pending team invites" do
+      pending_mentor = FactoryBot.create(:mentor)
+      accepted_mentor = FactoryBot.create(:mentor)
+      declined_mentor = FactoryBot.create(:mentor)
+
+      FactoryBot.create(:mentor)
+      FactoryBot.create(:student)
+      FactoryBot.create(:judge)
+      FactoryBot.create(:ambassador)
+      FactoryBot.create(:admin)
+
+      FactoryBot.create(:mentor_invite, :pending, invitee: pending_mentor)
+      FactoryBot.create(:mentor_invite, :accepted, invitee: accepted_mentor)
+      FactoryBot.create(:mentor_invite, :declined, invitee: declined_mentor)
+
+      expect(Account.invited_mentor_pending).to eq([pending_mentor.account])
+    end
+  end
+
   describe "regioning" do
     it "works with primary region searches" do
       FactoryBot.create(:account, :los_angeles)

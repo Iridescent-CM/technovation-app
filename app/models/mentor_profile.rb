@@ -17,10 +17,10 @@ class MentorProfile < ActiveRecord::Base
     .includes(account: :background_check)
     .references(:accounts, :background_checks)
     .where(
-      "(accounts.country = ?
+      "(accounts.country = 'US'
         AND background_checks.status = ?)
-          OR accounts.country != ?",
-      "US", BackgroundCheck.statuses[:clear], true, "US"
+          OR accounts.country != 'US'",
+      BackgroundCheck.statuses[:clear]
     )
     .where("accounts.email_confirmed_at IS NOT NULL")
   }
@@ -125,6 +125,11 @@ class MentorProfile < ActiveRecord::Base
   has_many :mentor_invites,
     foreign_key: :invitee_id,
     dependent: :destroy
+
+  has_many :pending_mentor_invites,
+    -> { pending },
+    foreign_key: :invitee_id,
+    class_name: "MentorInvite"
 
   has_many :team_member_invites,
     foreign_key: :inviter_id

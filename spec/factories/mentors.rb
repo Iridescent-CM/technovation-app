@@ -23,6 +23,9 @@ FactoryBot.define do
       not_onboarded false
     end
 
+    trait :onboarding do
+    end
+
     trait :chicago do
       city "Chicago"
       state_province "IL"
