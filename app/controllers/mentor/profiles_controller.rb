@@ -6,8 +6,10 @@ module Mentor
 
     def profile_params
       [
+        :id,
         :school_company_name,
         :job_title,
+        :mentor_type,
         :bio,
         :accepting_team_invites,
         :virtual,

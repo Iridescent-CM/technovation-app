@@ -23,7 +23,7 @@ module Admin
       profile = @account.send("#{@account.scope_name}_profile")
 
       profile_params = account_params.delete(
-        "#{@account.scope_name}_profile_attributes"
+        "#{@account.scope_name}_profile"
       ) || {}
 
       profile_params[:account_attributes] = {
@@ -70,7 +70,7 @@ module Admin
     end
 
     def account_params
-      params.require(:account).permit(
+      @account_params ||= params.require(:account).permit(
         :id,
         :email,
         :first_name,
@@ -86,12 +86,10 @@ module Admin
         :profile_image,
         :profile_image_cache,
         :password,
-        "#{@account.scope_name.sub(/^\w+_r/, "r")}_profile_attributes" =>
-          "#{@account.scope_name.sub(/^\w+_r/, "r")}/profiles_controller"
-            .camelize
-            .constantize
-            .new
-            .profile_params,
+        mentor_profile: {},
+        student_profile: {},
+        judge_profile: {},
+        regional_ambassador_profile: {},
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
