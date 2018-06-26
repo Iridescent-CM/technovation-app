@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <% if SeasonToggles.display_scores? %>
+  <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
     <div
       class="
         grid__col-sm-9
