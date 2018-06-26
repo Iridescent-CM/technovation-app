@@ -37,7 +37,7 @@ jobs:
           JUDGE_TRAINING_URL: n-a
           FINALISTS_URL: "https://some/url"
           NEWSLETTER_URL: "https://some/other/url"
-      - image: circleci/postgres:10.4-alpine-ram
+      - image: circleci/postgres:9.6-alpine-ram
 
     steps:
       - checkout
@@ -59,9 +59,7 @@ jobs:
           name: Install dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
-      - run: sudo echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt/sources.list.d/pgdg.list
-      - run: sudo wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-      - run: sudo apt-get update; sudo apt-get install postgresql-client-10
+      - run: sudo apt-get update; sudo apt-get install postgresql-client
 
       # Store bundle cache
       - save_cache:
