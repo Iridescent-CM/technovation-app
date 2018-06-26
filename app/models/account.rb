@@ -516,11 +516,13 @@ class Account < ActiveRecord::Base
   end
 
   def can_be_a_mentor?
-    judge_profile.present? or regional_ambassador_profile.present?
+    judge_profile.present? ||
+      regional_ambassador_profile.present? ||
+        (student_profile.present? && age_by_cutoff > 17)
   end
 
   def is_not_a_mentor?
-    not mentor_profile.present?
+    !mentor_profile.present?
   end
 
   def can_be_a_judge?
