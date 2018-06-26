@@ -784,7 +784,8 @@ CREATE TABLE public.mentor_profiles (
     accepting_team_invites boolean DEFAULT true NOT NULL,
     virtual boolean DEFAULT true NOT NULL,
     connect_with_mentors boolean DEFAULT true NOT NULL,
-    user_invitation_id bigint
+    user_invitation_id bigint,
+    mentor_type integer
 );
 
 
@@ -3034,6 +3035,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180619194316'),
 ('20180622151517'),
 ('20180622152409'),
-('20180622161117');
+('20180622161117'),
+('20180626200957');
 
 

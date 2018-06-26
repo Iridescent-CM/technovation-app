@@ -9,6 +9,11 @@
 
 <%= f.input :job_title %>
 
+<%= f.input :mentor_type,
+  label: "I am a...",
+  collection: MentorProfile.mentor_types.keys,
+  prompt: "Choose one..." %>
+
 <% if f.object.persisted? %>
   <%= f.input :bio, label: "#{t('models.regional_ambassador_profile.bio.signup_label')}" %>
 <% end %>
