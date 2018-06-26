@@ -2,34 +2,25 @@ require "rails_helper"
 
 RSpec.describe Admin::StudentConversionsController do
   describe "POST #create" do
-    it "deletes the student profile" do
-      student = FactoryBot.create(:student)
+    let(:student) { FactoryBot.create(:student, date_of_birth: 18.years.ago) }
+    let(:account) { student.account }
 
-      sign_in(:admin)
+    before { sign_in(:admin) }
+    it "preserves the student profile for historical purposes" do
       post :create, params: { student_profile_id: student.id }
 
       expect {
         student.reload
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      }.not_to raise_error
     end
 
     it "does not delete the account" do
-      student = FactoryBot.create(:student)
-      account = student.account
-
-      sign_in(:admin)
       post :create, params: { student_profile_id: student.id }
-
       expect(account.reload).to be_present
     end
 
     it "adds a mentor profile to the account" do
-      student = FactoryBot.create(:student)
-      account = student.account
-
-      sign_in(:admin)
       post :create, params: { student_profile_id: student.id }
-
       expect(account.reload.mentor_profile).to be_present
     end
   end

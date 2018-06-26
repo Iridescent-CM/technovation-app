@@ -53,14 +53,10 @@ RSpec.describe RegisterToCurrentSeasonJob do
   end
 
   it "emails parents of returning students" do
-    student = FactoryBot.create(:student)
-
-    student.account.update(
-      seasons: [],
-    )
-
-    student.update(
-      parent_guardian_email: "something@exists.com",
+    student = FactoryBot.create(
+      :student,
+      :past,
+      parent_guardian_email: "something@exists.com"
     )
 
     mailer = double(:ParentMailer, deliver_later: true)
@@ -71,7 +67,7 @@ RSpec.describe RegisterToCurrentSeasonJob do
 
     expect(mailer).to receive(:deliver_later)
 
-    RegisterToCurrentSeasonJob.perform_now(student.account)
+    RegisterToCurrentSeasonJob.perform_now(student.reload.account)
   end
 
   it "records activity" do

@@ -177,11 +177,18 @@ RSpec.describe StudentProfile do
   end
 
   it "re-sends the parental consent on update of parent email" do
-    FactoryBot.create(:student_profile)
-               .update_attributes(parent_guardian_email: "something@else.com")
+    student = FactoryBot.create(:student)
+
+    ActionMailer::Base.deliveries.clear
+
+    expect {
+      student.update(parent_guardian_email: "something@else.com")
+    }.to change {
+      ActionMailer::Base.deliveries.count
+    }.from(0).to(1)
 
     mail = ActionMailer::Base.deliveries.last
-    expect(mail).to be_present, "no email sent"
+
     expect(mail.to).to eq(["something@else.com"])
     expect(mail.subject).to include("Your daughter")
   end

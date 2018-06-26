@@ -49,6 +49,7 @@ class MergeRAMentors
           m = ra.build_mentor_profile({
             school_company_name: mentor.school_company_name,
             job_title: mentor.job_title,
+            mentor_type: mentor.mentor_type,
             bio: mentor.bio,
             searchable: mentor.searchable,
             accepting_team_invites: mentor.accepting_team_invites,
