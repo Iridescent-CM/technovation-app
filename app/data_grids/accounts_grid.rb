@@ -6,12 +6,7 @@ class AccountsGrid
   self.batch_size = 10
 
   scope do
-    Account.not_admin.left_outer_joins([
-      :student_profile,
-      :mentor_profile,
-      :judge_profile,
-      :regional_ambassador_profile,
-    ])
+    Account.not_admin
   end
 
   column :profile_type do
