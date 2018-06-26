@@ -307,7 +307,12 @@ class MentorProfile < ActiveRecord::Base
     account.email_confirmed? and
       consent_signed? and
         background_check_complete? and
-            not bio.blank?
+            not bio.blank? and
+              not mentor_type.blank?
+  end
+
+  def needs_mentor_type?
+    mentor_type.blank?
   end
 
   private

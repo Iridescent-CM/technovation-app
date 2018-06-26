@@ -124,6 +124,10 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
     "regional_ambassador"
   end
 
+  def needs_mentor_type?
+    false
+  end
+
   private
   def after_status_changed
     if approved?
