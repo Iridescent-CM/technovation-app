@@ -14,6 +14,9 @@
   <dt>Job title</dt>
   <dd><%= current_mentor.job_title %></dd>
 
+  <dt>Mentor type</dt>
+  <dd><%= current_mentor.mentor_type || "–" %></dd>
+
   <dt>Expertise(s)</dt>
   <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
 
